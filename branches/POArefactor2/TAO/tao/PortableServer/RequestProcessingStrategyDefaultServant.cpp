@@ -108,17 +108,25 @@ namespace TAO
 
     TAO_SERVANT_LOCATION
     Default_Servant_Request_Processing_Strategy::locate_servant (
-      const PortableServer::ObjectId & /*system_id*/,
-      PortableServer::Servant & /*servant*/)
+      const PortableServer::ObjectId & system_id,
+      PortableServer::Servant & servant
+      ACE_ENV_ARG_DECL)
     {
-      if (this->default_servant_.in () == 0)
+      TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
+
+      location = this->poa_->servant_present (system_id,
+                                              servant
+                                              ACE_ENV_ARG_PARAMETER);
+
+      if (location == TAO_SERVANT_NOT_FOUND)
         {
-          return TAO_SERVANT_NOT_FOUND;
+          if (this->default_servant_.in () != 0)
+            {
+              location = TAO_DEFAULT_SERVANT;
+            }
         }
-      else
-        {
-          return TAO_DEFAULT_SERVANT;
-        }
+
+      return location;
     }
 
     PortableServer::Servant

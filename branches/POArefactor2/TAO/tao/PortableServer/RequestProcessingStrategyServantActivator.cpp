@@ -72,18 +72,25 @@ namespace TAO
 
     TAO_SERVANT_LOCATION
     Servant_Activator_Request_Processing_Strategy::locate_servant (
-      const PortableServer::ObjectId &/*system_id*/,
-      PortableServer::Servant &/*servant*/)
+      const PortableServer::ObjectId &system_id,
+      PortableServer::Servant &servant
+      ACE_ENV_ARG_DECL)
     {
-      if (CORBA::is_nil (this->servant_activator_.in ()))
+      TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
+
+      location = this->poa_->servant_present (system_id,
+                                              servant
+                                              ACE_ENV_ARG_PARAMETER);
+
+      if (location == TAO_SERVANT_NOT_FOUND)
         {
-          return TAO_SERVANT_NOT_FOUND;
+          if (!CORBA::is_nil (this->servant_activator_.in ()))
+            {
+              location = TAO_SERVANT_MANAGER;
+            }
         }
-      else
-        {
-          // Success
-          return TAO_SERVANT_MANAGER;
-        }
+
+      return location;
     }
 
     PortableServer::Servant

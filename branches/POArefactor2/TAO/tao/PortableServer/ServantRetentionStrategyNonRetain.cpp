@@ -151,12 +151,12 @@ namespace TAO
     }
 
     TAO_SERVANT_LOCATION
-    Non_Retain_Servant_Retention_Strategy::locate_servant (
-      const PortableServer::ObjectId &system_id,
-      PortableServer::Servant &servant
+    Non_Retain_Servant_Retention_Strategy::servant_present (
+      const PortableServer::ObjectId &/*system_id*/,
+      PortableServer::Servant &/*servant*/
       ACE_ENV_ARG_DECL_NOT_USED)
     {
-      return this->request_processing_strategy_->locate_servant (system_id, servant);
+      return TAO_SERVANT_NOT_FOUND;
     }
 
     PortableServer::Servant

@@ -58,7 +58,7 @@ namespace TAO
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                      int &wait_occurred_restart_call) = 0;
 
-      virtual TAO_SERVANT_LOCATION locate_servant (
+      virtual TAO_SERVANT_LOCATION servant_present (
         const PortableServer::ObjectId &system_id,
         PortableServer::Servant &servant
         ACE_ENV_ARG_DECL) = 0;

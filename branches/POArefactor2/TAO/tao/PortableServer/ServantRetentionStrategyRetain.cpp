@@ -220,10 +220,10 @@ namespace TAO
 
       result =
         active_object_map_->
-        find_servant_using_system_id_and_user_id (system_id,
-                                                  user_id,
-                                                  servant,
-                                                  entry);
+          find_servant_using_system_id_and_user_id (system_id,
+                                                    user_id,
+                                                    servant,
+                                                    entry);
 
       if (servant == 0)
         {
@@ -328,7 +328,7 @@ namespace TAO
     }
 
     TAO_SERVANT_LOCATION
-    Retain_Servant_Retention_Strategy::locate_servant (
+    Retain_Servant_Retention_Strategy::servant_present (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant
       ACE_ENV_ARG_DECL)
@@ -356,9 +356,7 @@ namespace TAO
         }
       else
         {
-          return
-            this->request_processing_strategy_->locate_servant (system_id,
-                                                                servant);
+          return TAO_SERVANT_NOT_FOUND;
         }
     }
 

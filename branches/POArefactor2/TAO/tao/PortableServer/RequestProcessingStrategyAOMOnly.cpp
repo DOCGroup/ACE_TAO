@@ -78,10 +78,13 @@ namespace TAO
 
     TAO_SERVANT_LOCATION
     AOM_Only_Request_Processing_Strategy::locate_servant (
-      const PortableServer::ObjectId & /*system_id*/,
-      PortableServer::Servant & /*servant*/)
+      const PortableServer::ObjectId & system_id,
+      PortableServer::Servant & servant
+      ACE_ENV_ARG_DECL)
     {
-      return TAO_SERVANT_NOT_FOUND;
+      return this->poa_->servant_present (system_id,
+                                          servant
+                                          ACE_ENV_ARG_PARAMETER);
     }
 
     PortableServer::Servant

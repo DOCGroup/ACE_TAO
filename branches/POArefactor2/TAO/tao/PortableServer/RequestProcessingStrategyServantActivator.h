@@ -58,10 +58,10 @@ namespace TAO
         ACE_THROW_SPEC ((CORBA::SystemException,
                          PortableServer::POA::WrongPolicy));
 
-      virtual
-      TAO_SERVANT_LOCATION
-      locate_servant (const PortableServer::ObjectId &system_id,
-                      PortableServer::Servant &servant);
+      virtual TAO_SERVANT_LOCATION locate_servant (
+        const PortableServer::ObjectId &system_id,
+        PortableServer::Servant &servant
+        ACE_ENV_ARG_DECL);
 
       virtual PortableServer::Servant locate_servant (
         const char *operation,

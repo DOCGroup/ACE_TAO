@@ -2448,9 +2448,19 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
                            PortableServer::Servant &servant
                            ACE_ENV_ARG_DECL)
 {
-  return this->active_policy_strategies_.servant_retention_strategy()->
+  return this->active_policy_strategies_.request_processing_strategy()->
           locate_servant (system_id, servant ACE_ENV_ARG_PARAMETER);
 }
+
+TAO_SERVANT_LOCATION
+TAO_POA::servant_present (const PortableServer::ObjectId &system_id,
+                          PortableServer::Servant &servant
+                          ACE_ENV_ARG_DECL)
+{
+  return this->active_policy_strategies_.servant_retention_strategy()->
+          servant_present (system_id, servant ACE_ENV_ARG_PARAMETER);
+}
+
 
 TAO::ORT_Adapter_Factory *
 TAO_POA::ORT_adapter_factory (void)

@@ -503,6 +503,12 @@ public:
 
   PortableServer::Servant find_servant (PortableServer::ObjectId system_id
                                         ACE_ENV_ARG_DECL);
+
+  TAO_SERVANT_LOCATION servant_present (
+    const PortableServer::ObjectId &system_id,
+    PortableServer::Servant &servant
+    ACE_ENV_ARG_DECL);
+
 protected:
 
   /// Template method for creating new POA's of this type.
