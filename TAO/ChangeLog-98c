@@ -1,3 +1,9 @@
+Thu Aug  6 09:46:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp : Used the new ARGV
+	constructor which creates a new ARGV with 2 argvs. Removed all
+	usages of 3*BUFSIZ.
+
 Wed Aug  5 22:14:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp,

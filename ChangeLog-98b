@@ -1,3 +1,12 @@
+Thu Aug  6 09:41:22 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* ace/ARGV.{h,cpp} : Added a new
+	ACE_ARGV(ASYS_TCHAR *first_argv,ASYS_TCHAR *second_argv,int) 
+	which creates a new ARGV which is the concatenation of the 2 argvs.
+
+	Also added a new private method argv_to_string
+	which converts an argv to a string.	
+
 Thu Aug  6 08:56:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Module.h: Pointed out that ACE_Module should't be subclassed
