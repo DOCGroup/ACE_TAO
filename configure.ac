@@ -7380,9 +7380,11 @@ AC_CONFIG_FILES([
   tests/SSL/Makefile
 ])
 
+dnl Note that the "ACE_VERSION" in the message below is an M4 macro
+dnl that expands to the version of ACE being configured.
 AC_CONFIG_COMMANDS([default],[
   echo ""
-  echo "Configuration of ACE is now complete."
+  echo "Configuration of ACE ACE_VERSION is now complete."
   echo ""
  ],[])
 AC_OUTPUT
