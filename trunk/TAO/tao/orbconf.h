@@ -836,19 +836,14 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #define TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT "5000"
 #endif /* TAO_DEFAULT_THREAD_PER_CONNECTION_TIMEOUT */
 
-// Default MINIMUM_SMART_PROXIES settings. This way if needed SMART PROXIES
-// could be enabled even with MINIMUM_CORBA.
-# if (TAO_HAS_MINIMUM_CORBA == 1)
+// By default SMART_PROXIES is disabled.
+# if !defined (TAO_HAS_SMART_PROXIES)
 #    define TAO_HAS_SMART_PROXIES 0
-#endif /*TAO_HAS_MINIMUM_CORBA == 1*/
+#endif /*TAO_HAS_SMART_PROXIES*/
 
-// SMART PROXIES support is disabled by default if TAO is not
-// configured for minimum CORBA.  If TAO is configured for minimum
-// CORBA, then SMART PROXIES will be disabled by default.
+// SMART PROXIES support is disabled by default.
 // To explicitly enable SMART_PROXIES support uncomment the following
 // #define TAO_HAS_SMART_PROXIES 1
-// To explicitly disable SMART PROXIES support uncomment the following
-// #define TAO_HAS_SMART_PROXIES 0
 
 #include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */
