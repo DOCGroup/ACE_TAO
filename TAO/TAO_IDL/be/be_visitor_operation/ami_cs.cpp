@@ -344,17 +344,19 @@ be_interpretive_visitor_operation_ami_cs::~be_interpretive_visitor_operation_ami
 
 int
 be_interpretive_visitor_operation_ami_cs::gen_pre_stub_info (be_operation *node,
-                                                         be_type *bt)
+                                                             be_type *bt)
 {
+  ACE_UNUSED_ARG (node);
+  ACE_UNUSED_ARG (bt);
   return 0;
 }
 
 int
-be_interpretive_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation
-                                                                  *node,
+be_interpretive_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node,
                                                                   be_type *bt)
 {
-
+  ACE_UNUSED_ARG (node);
+  ACE_UNUSED_ARG (bt);
   return 0;
 }
 
