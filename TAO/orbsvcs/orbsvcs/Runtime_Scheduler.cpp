@@ -129,7 +129,7 @@ ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
       || rt_info_[handle - 1].period != period
       || rt_info_[handle - 1].criticality != criticality
       || rt_info_[handle - 1].importance != ACE_static_cast (CORBA::Long, importance)
-      || rt_info_[handle - 1].quantum != ACE_static_cast (CORBA::Long, quantum)
+      || rt_info_[handle - 1].quantum != quantum
       || rt_info_[handle - 1].info_type != info_type
       || rt_info_[handle - 1].threads != ACE_static_cast (CORBA::Long, threads))
     ACE_ERROR ((LM_ERROR,
