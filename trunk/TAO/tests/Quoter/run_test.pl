@@ -227,8 +227,6 @@ if ($leave)
 }
 
 
-exit ();
-
 if ($^O eq "MSWin32")
 {
   system ("del ".$nsiorfile);
