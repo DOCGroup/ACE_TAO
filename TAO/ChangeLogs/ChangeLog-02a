@@ -1,3 +1,36 @@
+Tue Mar 21 20:13:01 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IIOP_Acceptor.h (TAO_IIOP_Acceptor):
+	* tao/IIOP_Acceptor.cpp (open_default, probe_interfaces):
+
+	  Moved network interface probing code into a separate helper
+	  function.  This makes the code a bit cleaner, and allows both
+	  open methods (see below) to use the same probing code.
+
+	  (open):
+
+	  Open an endpoint with a given port on each network interface for
+	  the case where the endpoint only contains a port, i.e. wildcard
+	  the hosts/interfaces but use the same port for each interface.
+	  For example, given the following network interfaces:
+
+	  	eth0	foo1.bar.baz
+		eth1	foo2.bar.baz
+
+	  and the following "-ORBEndpoint" option:
+
+		-ORBEndpoint iiop://:1234
+
+	  The following endpoints will be created (assuming a properly
+	  configured host table and/or DNS):
+
+		foo1.bar.baz:1234
+		foo2.bar.baz:1234
+
+	  Thanks to Chris Hafey <chris@stentorsoft.com> for motivating
+	  this feature.  He points out this feature is useful for
+	  persistent IORs.
+
 Tue Mar 21 21:43:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/InterfaceC.cpp:
