@@ -495,7 +495,7 @@ public:
   ACE_Allocator *transport_message_buffer_allocator (void);
 
 #if 0
-  /// @@todo: All these need to go. They were added in the first place
+  /// @todo All these need to go. They were added in the first place
   /// to get around a problem with input_cdr* methods. The input_cdr*
   /// methods would access from TSS if an option is set. Since some
   /// portions of the ORB didnt require memory from TSS, we had these
