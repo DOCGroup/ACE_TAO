@@ -36,7 +36,7 @@ TAO_Internal::default_svc_conf_entries (const char *resource_factory_args,
 int
 TAO_Internal::open_services (int &argc,
                              char **argv,
-                             int ignore_default_svc_conf,
+                             int ignore_default_svc_conf_file,
                              int skip_service_config_open)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, *ACE_Static_Object_Lock::instance (), -1));
