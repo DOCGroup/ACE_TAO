@@ -23,6 +23,9 @@ Thu Oct 01 12:04:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Thu Oct  1 08:51:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+        * tests/Thread_Pool_Reactor_Test.cpp: Reformatted the
+	  code a bit.
+
         * ace/ACE.cpp (max_handles): Added yet another fix for AIX.
           Thanks to Chris Lahey for this.
 
