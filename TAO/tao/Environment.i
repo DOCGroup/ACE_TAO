@@ -20,6 +20,20 @@ CORBA_Environment::exception (void) const
   return this->exception_;
 }
 
+ACE_INLINE CORBA_Environment *
+CORBA_Environment::_duplicate (CORBA_Environment *x)
+{
+  if (x != 0)
+    x->_incr_refcnt ();
+  return x;
+}
+
+ACE_INLINE CORBA_Environment_ptr
+CORBA_Environment::_nil (void)
+{
+  return (CORBA_Environment_ptr)0;
+}
+
 // Inline operations for class CORBA_Environment_var
 
 ACE_INLINE
