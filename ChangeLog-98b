@@ -1,3 +1,13 @@
+Sun Jan 03 09:12:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.* (ACE_U_LongLong): unioned the data members
+          with a double, to ensure alignment on 8-byte boundaries.  It
+          could matter when an ACE_U_LongLong is used as a true 8-byte
+          quantity, such as in a call to Solaris ::gethrtime ().
+
+        * tests/Time_Value_Test.cpp: replaced remaining #ifdef
+          ACE_HAS_STHREADS with #ifdef sun.
+
 Sat Jan  2 23:48:44 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/ACE-tutorials.html
