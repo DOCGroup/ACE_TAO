@@ -1,0 +1,8 @@
+//$Id$
+
+interface DD_Servant
+{
+  oneway void exec_method(in long value);
+
+  void shutdown ();
+};
