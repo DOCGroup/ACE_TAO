@@ -1,4 +1,6 @@
-Mon Aug 09 14:47:18 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Aug 09 15:10:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.h (wait): Rewrote comments.
 
 	* ace/Service_Config.h (open): Revised the comments for several
 	  service_config flags.  Thanks to Doug for pointing this out.
