@@ -3,7 +3,7 @@
 
 By me, Darrell Brunsch <brunsch@cs.wustl.edu>
 
-@subsection Status
+@subsection ce_status Status
 
 Been a while since I updated this file.  Where to begin.  Well, as of the next
 beta kit of ACE (5.1.11), it should be compiling for the PocketPC.  And it 
@@ -22,7 +22,7 @@ test (which I believe is what the WindozeCE stuff is), I'm going to let them
 remain GUI-less and perhaps write an application to read the log files after
 running the tests.  
 
-@subsection eMbedded Visual C++ Projects
+@subsection ce_evc eMbedded Visual C++ Projects
 
 ACE now uses the eMbedded Visual C++ project files (instead of the older
 Windows CE Toolkit for Visual C++ project files).  EVC is free from MS, either
@@ -30,7 +30,7 @@ it can be found in the MSDN subscriptions (not free) or a CD from MS
 -- which isn't completely free either, since you still have to pay for the 
 shipping and handling.  
 
-@subsection Subsets
+@subsection ce_subsets Subsets
 
 ACE on CE is currently split into two libraries, ace_os.dll and ace.dll.
 The ace_os library contains the files which are considered part of the ACE_OS
@@ -40,13 +40,13 @@ splittable, ace.dll will probably be broken apart even more.
 And unlike the current *nix subsets, these two libraries are truly separate
 and do not require recompilation when the subsets required are changed.  
 
-@subsection TAO
+@subsection ce_tao TAO
 
 While it would be nice to get TAO working on CE, I doubt I'll get a chance to
 work on it before graduating.  OCI has said there has been some interest in 
 it, but I don't know how that is going right now.  
 
-@subsection Unicode/WChar
+@subsection ce_wchar Unicode/WChar
 
 ACE on WindowsCE automatically has ACE_HAS_WCHAR and ACE_USES_WCHAR turned
 on.  Thus ACE_TCHAR and ACE_TEXT() are the wide char versions.  

@@ -1,3 +1,16 @@
+Wed Nov 22 09:29:32 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * etc/ace.doxygen:
+
+          Added the docs directory and *.txt files to be looked
+          at by doxygen.
+
+        * docs/CE-status.txt:
+        * docs/wchar.txt:
+
+          Fixed up these files, so they show up correctly in the
+          doxygen html pages.
+
 Tue Nov 21 19:55:49 200	0  Pradeep Gore  <pradeep@cs.wustl.edu>	
 
 	* ace/IPC_SAP.cpp:
