@@ -52,6 +52,9 @@ public:
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit interface forward
 
+  virtual int visit_string (be_string *node);
+  // visit the string type
+
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef type
 };
