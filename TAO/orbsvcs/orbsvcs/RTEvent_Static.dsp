@@ -43,7 +43,7 @@ RSC=rc.exe
 MTL=midl.exe
 LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "_LIB" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../" /I "../../" /I "../../../" /D "_LIB" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "NDEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -69,7 +69,7 @@ LIB32=link.exe -lib
 MTL=midl.exe
 LINK32=link.exe -lib
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_LIB" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_LIB" /D "_MBCS" /D "TAO_AS_STATIC_LIBS" /D "_DEBUG" /D "ACE_AS_STATIC_LIBS" /D "WIN32" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -783,27 +783,15 @@ SOURCE=.\Event\EC_Filter_Builder.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\EC_Gateway.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\EC_Gateway_IIOP.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\EC_Gateway_IIOP_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_ConsumerEC_Control.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_Reactive_ConsumerEC_Control.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_Reconnect_ConsumerEC_Control.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\EC_Gateway.cpp
 # End Source File
 # Begin Source File
 
@@ -939,11 +927,23 @@ SOURCE=.\Event\ECG_Complex_Address_Server.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\ECG_ConsumerEC_Control.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ECG_Mcast_EH.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Event\ECG_Mcast_Gateway.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Reactive_ConsumerEC_Control.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Reconnect_ConsumerEC_Control.cpp
 # End Source File
 # Begin Source File
 
@@ -1111,18 +1111,6 @@ SOURCE=.\Event\EC_Gateway_IIOP_Factory.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Event\ECG_ConsumerEC_Control.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_Reactive_ConsumerEC_Control.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Event\ECG_Reconnect_ConsumerEC_Control.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Event\EC_Group_Scheduling.h
 # End Source File
 # Begin Source File
@@ -1231,7 +1219,19 @@ SOURCE=.\Event\EC_UDP_Out_Endpoint.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Event\ECG_ConsumerEC_Control.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Event\ECG_Mcast_EH.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Reactive_ConsumerEC_Control.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Event\ECG_Reconnect_ConsumerEC_Control.h
 # End Source File
 # Begin Source File
 
