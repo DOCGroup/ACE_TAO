@@ -105,16 +105,16 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << ")" << be_uidt_nl
           << "{" << be_idt_nl
           << "return ";
-          
+
           if (node->is_abstract ())
             {
-              *os << "cdr << p;"
+              *os << "cdr << p;";
             }
           else
             {
-              *os << "CORBA::Object::marshal (p, cdr);"
+              *os << "CORBA::Object::marshal (p, cdr);";
             }
-            
+
       *os << be_uidt_nl
           << "}";
     }
@@ -192,7 +192,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "_setup_collocation (int collocated)" << be_nl
           << "{" << be_idt_nl
           << "if (collocated";
-       
+
        // Right now (29-01-04) we don't support collocation for
        // abstract interfaces, and the 'collocated' arg will always
        // be 0. However, just to be safe, we add a
