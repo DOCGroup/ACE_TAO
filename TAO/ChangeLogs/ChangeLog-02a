@@ -1,3 +1,8 @@
+Fri Aug  3 07:50:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO_Singleton_Manager.h: Changed the #ifndef to
+	  TAO_SINGLETON_MANAGER_H instead of TAO_OBJECT_MANAGER_H. 
+
 Fri Aug  3 07:30:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/DLL_ORB/Test_Client_Module.cpp:
