@@ -431,11 +431,6 @@ public:
   // Set/Get the IOR of the Implementation Repository service.
 
 protected:
-  int set_iiop_endpoint (int dotted_decimal_addresses,
-                         CORBA::UShort port,
-                         ACE_CString &host,
-                         ACE_CString &iiop_endpoint);
-  // Set the endpoint
 
   int init (int &argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
   // Initialize the guts of the ORB Core.  It is intended that this be

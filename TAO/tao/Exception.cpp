@@ -421,9 +421,6 @@ CORBA_SystemException::_info (void) const
         case TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL:
           location = "all protocols failed to parse the IOR";
           break;
-        case TAO_NULL_POINTER_MINOR_CODE:
-          location = "attempt to use null pointer";
-          break;
         case TAO_MPROFILE_CREATION_ERROR:
           location = "error during MProfile creation";
           break;

@@ -570,8 +570,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -608,12 +606,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -686,10 +681,15 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -850,8 +850,7 @@ realclean:
  POAC.i \
  Key_Adapters.i
 
-.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
+.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -1016,8 +1015,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -1053,12 +1050,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -1131,10 +1125,15 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -1148,8 +1147,7 @@ realclean:
  Acceptor_Registry.i \
  Forwarding_Servant.h
 
-.obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp \
- POAC.h \
+.obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp POAC.h \
  $(ACE_ROOT)/ace/pre.h \
  PolicyC.h \
  CurrentC.h \
@@ -1261,8 +1259,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  POAS.i \
  POA.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1348,12 +1344,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -1426,17 +1419,21 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
  POA.i
 
-.obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp \
- POAS.h \
+.obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp POAS.h \
  $(ACE_ROOT)/ace/pre.h \
  POAC.h \
  PolicyC.h \
@@ -1548,8 +1545,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  POAS.i \
  Server_Request.h \
  IOPC.h \
@@ -1750,8 +1745,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  POAS.i \
  poa_macros.h \
  POAManager.i \
@@ -1836,12 +1829,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -1914,10 +1904,15 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -2241,8 +2236,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -2317,12 +2310,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -2361,10 +2351,15 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -2685,14 +2680,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- PollableC.i \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -2805,17 +2795,20 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
- BoundsC.i \
- ImplRepoC.i
+ BoundsC.i ImplRepoC.i
 
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
- $(ACE_ROOT)/ace/pre.h \
- ImplRepoC.h \
+ $(ACE_ROOT)/ace/pre.h ImplRepoC.h \
  corba.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -2973,14 +2966,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- PollableC.i \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -3093,13 +3081,18 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
- BoundsC.i \
- ImplRepoC.i ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp ImplRepoS.i
+ BoundsC.i ImplRepoC.i \
+ ImplRepoS_T.h ImplRepoS_T.i ImplRepoS_T.cpp ImplRepoS.i
 
 .obj/Pluggable.o .obj/Pluggable.so .shobj/Pluggable.o .shobj/Pluggable.so: Pluggable.cpp \
  Pluggable.h \
@@ -3291,8 +3284,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -3320,12 +3311,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Reply_Dispatcher.i \
@@ -3598,8 +3586,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -3834,8 +3820,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -4236,8 +4220,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -4517,8 +4499,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -4804,8 +4784,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -4855,12 +4833,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -4886,10 +4861,15 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -5146,8 +5126,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5442,8 +5420,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -5687,8 +5663,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5952,8 +5926,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5975,10 +5947,7 @@ realclean:
  TimeBaseS_T.cpp \
  TimeBaseS.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
+ PollableC.h \
  MessagingC.i \
  MessagingS.i \
  Messaging_Policy_i.i \
@@ -6240,8 +6209,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -6528,8 +6495,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -6820,8 +6785,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -6871,12 +6834,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -6904,10 +6864,15 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -7170,8 +7135,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7474,8 +7437,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -7724,8 +7685,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7989,8 +7948,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8014,10 +7971,7 @@ realclean:
  TimeBaseS_T.cpp \
  TimeBaseS.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
+ PollableC.h \
  MessagingC.i \
  MessagingS.i \
  Messaging_Policy_i.i \
@@ -8281,8 +8235,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -8576,8 +8528,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8627,12 +8577,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -8660,10 +8607,15 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -8928,8 +8880,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9234,8 +9184,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -9487,8 +9435,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9757,8 +9703,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9788,8 +9732,7 @@ realclean:
  GIOP_Utils.i \
  GIOP_Message_Lite.i
 
-.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp \
- IORC.h \
+.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp IORC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -9979,8 +9922,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9999,12 +9940,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -10024,8 +9962,7 @@ realclean:
  target_specification.i \
  Invocation.i
 
-.obj/IORS.o .obj/IORS.so .shobj/IORS.o .shobj/IORS.so: IORS.cpp \
- IORS.h \
+.obj/IORS.o .obj/IORS.so .shobj/IORS.o .shobj/IORS.so: IORS.cpp IORS.h \
  $(ACE_ROOT)/ace/pre.h \
  IORC.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -10481,8 +10418,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10686,8 +10621,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10909,8 +10842,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -12225,8 +12156,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp \
- Any.h \
+.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp Any.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
  corbafwd.h \
@@ -12386,8 +12316,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -12612,9 +12540,7 @@ realclean:
  DynAnyC.h \
  DynAnyC.i \
  DomainC.h \
- DomainC.i \
- PollableC.h \
- PollableC.i
+ DomainC.i
 
 .obj/CurrentS.o .obj/CurrentS.so .shobj/CurrentS.o .shobj/CurrentS.so: CurrentS.cpp \
  CurrentC.h \
@@ -12755,8 +12681,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  Server_Request.h \
  IOPC.h \
  IOPC.i \
@@ -13098,8 +13022,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -13297,8 +13219,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -13359,12 +13279,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  ORB_Core.h \
@@ -13555,8 +13472,7 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp \
- ORB.h \
+.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -13783,8 +13699,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  ORB_Core.h \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -13835,12 +13749,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -13866,10 +13777,15 @@ realclean:
  Invocation.i \
  InconsistentTypeCodeC.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -14163,8 +14079,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
@@ -14186,12 +14100,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -14356,8 +14267,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -14565,8 +14474,6 @@ realclean:
  POA_CORBA.h \
  DynAnyC.h \
  DynAnyC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -14585,12 +14492,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -14755,8 +14659,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -15320,8 +15222,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -15516,8 +15416,7 @@ realclean:
  Environment.h \
  Environment.i
 
-.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp \
- Stub.h \
+.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp Stub.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
  corbafwd.h \
@@ -15709,8 +15608,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -15727,12 +15624,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -16094,8 +15988,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16527,8 +16419,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16985,8 +16875,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17028,12 +16916,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -17533,8 +17418,8 @@ realclean:
 
 .obj/Smart_Proxies.o .obj/Smart_Proxies.so .shobj/Smart_Proxies.o .shobj/Smart_Proxies.so: Smart_Proxies.cpp \
  Smart_Proxies.h \
- Object.h \
  $(ACE_ROOT)/ace/pre.h \
+ Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -17772,8 +17657,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17815,12 +17698,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -18014,8 +17894,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18124,12 +18002,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -18157,10 +18032,15 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -18169,10 +18049,6 @@ realclean:
  rtcorbafwd.h \
  rtcorbafwd.i \
  Priority_Mapping.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/INET_Addr.i \
  Sync_Strategies.h \
  Sync_Strategies.i
 
@@ -18334,8 +18210,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18613,8 +18487,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -18816,8 +18688,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -19147,8 +19017,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -19412,8 +19280,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -19780,9 +19646,7 @@ realclean:
  NVList.h \
  NVList.i \
  BoundsC.h \
- BoundsC.i \
- PollableC.h \
- PollableC.i
+ BoundsC.i
 
 .obj/IOR_LookupTable.o .obj/IOR_LookupTable.so .shobj/IOR_LookupTable.o .shobj/IOR_LookupTable.so: IOR_LookupTable.cpp \
  IOR_LookupTable.h \
@@ -19908,8 +19772,7 @@ realclean:
  Environment.i \
  debug.h
 
-.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp \
- TAO.h \
+.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -20241,8 +20104,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -20422,14 +20283,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- PollableC.i \
  MessagingC.i \
  Request.i \
  Reply_Dispatcher.i \
@@ -20615,14 +20471,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- PollableC.i \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -20677,8 +20528,7 @@ realclean:
  Leader_Follower.i \
  debug.h
 
-.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp \
- IOPC.h \
+.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp IOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
  corbafwd.h \
@@ -20779,8 +20629,7 @@ realclean:
  Environment.i \
  Any.i
 
-.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp \
- IOPS.h \
+.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp IOPS.h \
  $(ACE_ROOT)/ace/pre.h \
  IOPC.h \
  CDR.h \
@@ -20959,164 +20808,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- corbafwd.i \
- Object.h \
- Object.i \
- Exception.h \
- Exception.i \
- CDR.h \
- Typecode.h \
- Typecode.i \
- CDR.i \
- PollableC.i \
- POA_CORBA.h \
- CurrentC.h \
- CurrentC.i \
- PolicyC.h \
- Environment.h \
- Environment.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
- PolicyC.i \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
- DomainC.h \
- DomainC.i \
- Servant_Base.h \
- POAC.h \
- POAC.i \
- Servant_Base.i \
- Stub.h \
- Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- ORB.h \
- IOR_LookupTable.h \
- Services.h \
- Services.i \
- IORManipulation.h \
- IORS.h \
- IORC.h \
- IORC.i \
- IORS.i \
- Interceptor.h \
- InterceptorS.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- Stub.i \
- Invocation.h \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- params.h \
- params.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Reply_Dispatcher.h \
- Request.h \
- NVList.h \
- NVList.i \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- MessagingC.i \
- Request.i \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- operation_details.i \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- Invocation.i
+ corbafwd.i
 
 .obj/PollableS.o .obj/PollableS.so .shobj/PollableS.o .shobj/PollableS.so: PollableS.cpp \
  PollableS.h \
@@ -21196,92 +20888,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- corbafwd.i \
- Object.h \
- Object.i \
- Exception.h \
- Exception.i \
- CDR.h \
- Typecode.h \
- Typecode.i \
- CDR.i \
- PollableC.i \
- POA_CORBA.h \
- CurrentC.h \
- CurrentC.i \
- PolicyC.h \
- Environment.h \
- Environment.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
- PolicyC.i \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
- DomainC.h \
- DomainC.i \
- Servant_Base.h \
- POAC.h \
- POAC.i \
- Servant_Base.i \
- PollableS.i \
- Operation_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- Server_Request.h \
- IOPC.h \
- IOPC.i \
- Object_KeyC.h \
- Object_KeyC.i \
- Server_Request.i \
- ORB.h \
- IOR_LookupTable.h \
- Services.h \
- Services.i \
- IORManipulation.h \
- IORS.h \
- IORC.h \
- IORC.i \
- IORS.i \
- Interceptor.h \
- InterceptorS.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
- ORB.i
+ corbafwd.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
@@ -21789,8 +21396,7 @@ realclean:
  Any.i \
  BoundsC.i
 
-.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp \
- TAOC.h \
+.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -21906,15 +21512,12 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
  TAOS.i
 
-.obj/TAOS.o .obj/TAOS.so .shobj/TAOS.o .shobj/TAOS.so: TAOS.cpp \
- TAOS.h \
+.obj/TAOS.o .obj/TAOS.so .shobj/TAOS.o .shobj/TAOS.so: TAOS.cpp TAOS.h \
  $(ACE_ROOT)/ace/pre.h \
  TAOC.h \
  orbconf.h \
@@ -22030,8 +21633,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -22450,14 +22051,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- PollableC.i \
  MessagingC.i \
  Request.i \
  Stub.h \
@@ -22774,7 +22370,6 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- ValueBase.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -22836,9 +22431,6 @@ realclean:
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  Any.h \
  CDR.h \
  Typecode.h \
@@ -22870,7 +22462,6 @@ realclean:
  IOPC.h \
  IOPC.i \
  PollableC.h \
- PollableC.i \
  MessagingC.i \
  MessagingS.h \
  TimeBaseS.h \
@@ -23120,15 +22711,10 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  IOPC.h \
  IOPC.i \
+ PollableC.h \
  MessagingC.i \
  MessagingS.i \
  Operation_Table.h \
@@ -23362,8 +22948,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  ORB_Core.h \
  ORB.h \
@@ -23461,10 +23045,7 @@ realclean:
  TimeBaseS_T.cpp \
  TimeBaseS.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
+ PollableC.h \
  MessagingC.i \
  MessagingS.i \
  Messaging_Policy_i.i \
@@ -23592,15 +23173,10 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  IOPC.h \
  IOPC.i \
+ PollableC.h \
  MessagingC.i \
  MessagingS.i \
  Messaging_Policy_i.i \
@@ -23724,8 +23300,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -23850,8 +23424,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  TAOS_T.h \
  TAOS_T.i \
  TAOS_T.cpp \
@@ -24388,8 +23960,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -24595,8 +24165,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -24807,9 +24375,7 @@ realclean:
  Stub.i \
  POA_CORBA.h \
  DomainC.h \
- DomainC.i \
- PollableC.h \
- PollableC.i
+ DomainC.i
 
 .obj/DynAnyS.o .obj/DynAnyS.so .shobj/DynAnyS.o .shobj/DynAnyS.so: DynAnyS.cpp \
  DynAnyC.h \
@@ -24922,9 +24488,7 @@ realclean:
  Servant_Base.h \
  POAC.h \
  POAC.i \
- Servant_Base.i \
- PollableC.h \
- PollableC.i
+ Servant_Base.i
 
 .obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp \
  DynAny_i.h \
@@ -25039,8 +24603,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  DynStruct_i.h \
  DynSequence_i.h \
  DynEnum_i.h \
@@ -25166,8 +24728,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  DynArray_i.h \
  InconsistentTypeCodeC.h
 
@@ -25284,8 +24844,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  DynEnum_i.h \
  InconsistentTypeCodeC.h
 
@@ -25402,8 +24960,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  DynSequence_i.h \
  InconsistentTypeCodeC.h
 
@@ -25520,8 +25076,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  DynStruct_i.h \
  InconsistentTypeCodeC.h \
  ORB.h \
@@ -25681,8 +25235,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- PollableC.h \
- PollableC.i \
  DynUnion_i.h \
  DynUnion_i_T.h \
  DynUnion_i_T.cpp \
@@ -25840,12 +25392,10 @@ realclean:
  Interceptor.i \
  ORB.i
 
-.obj/InterfaceC.o .obj/InterfaceC.so .shobj/InterfaceC.o .shobj/InterfaceC.so: InterfaceC.cpp \
- InterfaceC.h \
+.obj/InterfaceC.o .obj/InterfaceC.so .shobj/InterfaceC.o .shobj/InterfaceC.so: InterfaceC.cpp InterfaceC.h \
  $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -25861,14 +25411,6 @@ realclean:
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
@@ -25889,6 +25431,15 @@ realclean:
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
@@ -25918,8 +25469,7 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
  corbafwd.i \
- Object.h \
- Object.i \
+ ifrfwd.h \
  Any.h \
  CDR.h \
  Typecode.h \
@@ -25929,17 +25479,19 @@ realclean:
  CDR.i \
  Environment.h \
  Environment.i \
+ Object.h \
+ Object.i \
  Any.i \
- Sequence_T.h \
+ varout.h \
+ varout.i \
+ varout.cpp \
  Sequence.h \
  Managed_Types.h \
  Managed_Types.i \
  Sequence.i \
+ Sequence_T.h \
  Sequence_T.i \
  Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -26032,8 +25584,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -26052,12 +25602,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
@@ -26076,243 +25623,6 @@ realclean:
  Object_KeyC.i \
  target_specification.i \
  Invocation.i
-
-.obj/InterfaceS.o .obj/InterfaceS.so .shobj/InterfaceS.o .shobj/InterfaceS.so: InterfaceS.cpp \
- InterfaceS.h \
- $(ACE_ROOT)/ace/pre.h \
- POA_CORBA.h \
- CurrentC.h \
- Object.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- try_macros.h \
- orbconf.h \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- corbafwd.i \
- Object.i \
- CurrentC.i \
- PolicyC.h \
- CDR.h \
- Typecode.h \
- Exception.h \
- Exception.i \
- Typecode.i \
- CDR.i \
- Environment.h \
- Environment.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- varout.h \
- varout.i \
- varout.cpp \
- PolicyC.i \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
- DomainC.h \
- DomainC.i \
- Servant_Base.h \
- POAC.h \
- POAC.i \
- Servant_Base.i \
- PollableC.h \
- PollableC.i \
- Operation_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- Stub.h \
- Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- ORB.h \
- IOR_LookupTable.h \
- Services.h \
- Services.i \
- IORManipulation.h \
- IORS.h \
- IORC.h \
- IORC.i \
- IORS.i \
- Interceptor.h \
- InterceptorS.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- Stub.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- params.h \
- params.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Server_Request.h \
- Object_KeyC.h \
- Object_KeyC.i \
- Server_Request.i \
- NVList.h \
- NVList.i \
- Object_Adapter.h \
- Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
- $(ACE_ROOT)/ace/Map.i \
- $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
- $(ACE_ROOT)/ace/Pair.i \
- $(ACE_ROOT)/ace/Pair_T.h \
- $(ACE_ROOT)/ace/Pair_T.i \
- $(ACE_ROOT)/ace/Pair_T.cpp \
- $(ACE_ROOT)/ace/Active_Map_Manager.h \
- $(ACE_ROOT)/ace/Active_Map_Manager.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Active_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Map_T.i \
- $(ACE_ROOT)/ace/Map_T.cpp \
- Key_Adapters.i \
- Server_Strategy_Factory.h \
- poa_macros.h \
- POAS.h \
- POAS.i \
- Active_Object_Map.h \
- Active_Object_Map.i \
- Object_Adapter.i
 
 .obj/Pluggable_Messaging.o .obj/Pluggable_Messaging.so .shobj/Pluggable_Messaging.o .shobj/Pluggable_Messaging.so: Pluggable_Messaging.cpp \
  Pluggable_Messaging.h \
@@ -27035,8 +26345,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -27110,12 +26418,9 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -27148,10 +26453,15 @@ realclean:
  Invocation.i \
  InconsistentTypeCodeC.h \
  DynAny_i.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -27504,8 +26814,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -27923,8 +27231,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -28137,8 +27443,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -28213,10 +27517,7 @@ realclean:
  Context.h \
  Context.i \
  MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
+ PollableC.h \
  MessagingC.i \
  Request.i \
  Server_Request.h \
@@ -28247,10 +27548,15 @@ realclean:
  InconsistentTypeCodeC.h \
  DynAny_i.h \
  Union.h \
+ ValueBase.h \
+ ValueBase.i \
+ ValueFactory.h \
+ ValueFactory.i \
  ObjectIDList.h \
  ObjectIDList.i \
  WrongTransactionC.h \
  InterfaceC.h \
+ ifrfwd.h \
  BoundsC.h \
  BoundsC.i \
  ImplRepoC.i \
@@ -28429,8 +27735,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- PollableC.h \
- PollableC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \

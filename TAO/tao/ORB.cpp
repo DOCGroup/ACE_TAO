@@ -1450,8 +1450,8 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
 
           ACE_THROW_RETURN (CORBA::MARSHAL (
                               CORBA_SystemException::_tao_minor_code (
-                                TAO_NULL_POINTER_MINOR_CODE,
-                                0),
+                                TAO_DEFAULT_MINOR_CODE,
+                                EINVAL),
                               CORBA::COMPLETED_NO),
                             0);
         }
@@ -1472,8 +1472,8 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
 
           ACE_THROW_RETURN (CORBA::MARSHAL (
                               CORBA_SystemException::_tao_minor_code (
-                                TAO_NULL_POINTER_MINOR_CODE,
-                                0),
+                                TAO_DEFAULT_MINOR_CODE,
+                                EINVAL),
                               CORBA::COMPLETED_NO),
                             0);
         }
@@ -1497,8 +1497,8 @@ CORBA_ORB::string_to_object (const char *str,
   if (str == 0)
     ACE_THROW_RETURN (CORBA::INV_OBJREF (
                           CORBA_SystemException::_tao_minor_code (
-                            TAO_NULL_POINTER_MINOR_CODE,
-                            0),
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
                           CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
@@ -1701,8 +1701,9 @@ CORBA_ORB::dll_string_to_object (const char *str,
     {
       ACE_THROW_RETURN
         (CORBA::INV_OBJREF
-         (CORBA_SystemException::_tao_minor_code
-          (TAO_NULL_POINTER_MINOR_CODE, 0),
+         (CORBA_SystemException::_tao_minor_code (
+            TAO_DEFAULT_MINOR_CODE,
+            EINVAL),
           CORBA::COMPLETED_NO),
          CORBA::Object::_nil ());
     }
@@ -1735,10 +1736,10 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
   if (retv != 0)
     {
       ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                                           CORBA_SystemException::_tao_minor_code (
-                                                                                   TAO_NULL_POINTER_MINOR_CODE,
-                                                                                   0),
-                                           CORBA::COMPLETED_NO),
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
                         CORBA::Object::_nil ());
     }
 
@@ -1746,7 +1747,11 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
   TAO_Stub *data = 0;
   ACE_NEW_THROW_EX (data,
                     TAO_Stub ((char *) 0, mprofile, this->orb_core_),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   TAO_Stub_Auto_Ptr safe_data (data);
@@ -1769,7 +1774,11 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
                     CORBA_Object (safe_data.get (),
                                   servant,
                                   (CORBA::Boolean) collocated),
-                    CORBA::NO_MEMORY ());
+                    CORBA::NO_MEMORY (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // All is well, so release the stub object from its auto_ptr.
