@@ -24,14 +24,10 @@ MARSHAL_SERVER_OBJS = marshalS.o orbix_marshal_impl.o orbix_marshal_server.o ser
 endif
 BIN = client server
 
-BUILD = $(BIN)
-
 #CLIENT_LIBS	= -lITini -liiop -lorbix
 #SERVER_LIBS	= -lITini -liiop -lDSI -lorbix -lIRclt
 CLIENT_LIBS	= -liiop -lorbix
 SERVER_LIBS	= -liiop -lDSI -lorbix -lIRclt
-
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

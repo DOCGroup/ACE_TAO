@@ -23,9 +23,6 @@ FILE_SVR_OBJS = Multiple_InheritanceC.o Multiple_InheritanceS.o server.o
 FILE_CLT_OBJS = Multiple_InheritanceC.o Multiple_InheritanceS.o client.o
 
 BIN = server client
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

@@ -39,7 +39,6 @@ SIMPLE_CLT_OBJS = Time_DateC.o \
                   Time_Date_Client_i.o
 SIMPLE_SVR_OBJS = server.o \
                   ../Simple_util.o
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2 = server \
        client

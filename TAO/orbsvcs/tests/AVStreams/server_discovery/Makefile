@@ -31,7 +31,6 @@ LDFLAGS += -L$(JAVA_ROOT)/jre/lib/sparc -L$(JAVA_ROOT)/jre/lib/sparc/native_thre
 
 LIBS = -lorbsvcs -lTAO -lACE -lmpeg_shared
 LDLIBS = -lavdemo -ljava -ljvm
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 CPPFLAGS +=  -I$(JAVA_ROOT)/include-old -I$(JAVA_ROOT)/include-old/solaris \
 	    -I$(TAO_ROOT)/orbsvcs -I$(MPEG_ROOT) -I$(TAO_ROOT) $(TSS_ORB_FLAG) -I$(TAO_ROOT)/orbsvcs/orbsvcs
 

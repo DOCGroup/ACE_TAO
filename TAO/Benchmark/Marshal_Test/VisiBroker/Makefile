@@ -21,10 +21,6 @@ MARSHAL_SERVER_OBJS = marshalC.o marshalS.o visi_marshal_impl.o visi_marshal_ser
 
 BIN = client server
 
-BUILD = $(BIN)
-
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

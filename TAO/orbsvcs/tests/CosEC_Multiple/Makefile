@@ -28,8 +28,6 @@ SIMPLE_SUP_OBJS = \
         CosEC_Multiple.o \
         CosECSupplier.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = supplier \
        consumer
 

@@ -21,11 +21,6 @@ TTCP_SERVER_OBJS = ttcp.o ttcp_s.o server.o ttcp_i.o utils.o
 
 BIN = client server
 
-BUILD = $(BIN)
-
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
-
 #----------------------------------------------------------------------------
 #	Include macros and targets
 #----------------------------------------------------------------------------

@@ -23,8 +23,6 @@ SRC = $(PROG_SRCS)
 SIMPLE_CLT_OBJS = Client_i.o \
         client.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = client
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,

@@ -26,7 +26,6 @@ CUBIT_CLT_OBJS = client.o
 CFLAGS += -I../IDL_Cubit
 
 BIN = client
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
@@ -68,7 +67,7 @@ client: $(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 ../IDL_Cubit/server:
-	cd ../IDL_Cubit; $(MAKE) BUILD=server
+	cd ../IDL_Cubit; $(MAKE) BIN=server
 
 realclean: clean
 	-$(RM) cubitC.* cubitS.* cubitS_T.*

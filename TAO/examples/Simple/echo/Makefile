@@ -38,8 +38,6 @@ SIMPLE_SVR_OBJS = \
                 ../Simple_util.o \
                 server.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = server \
        client
 

@@ -54,8 +54,11 @@ ifndef TAO_ORBSVCS
                 Sched \
                 Event \
                 CosEvent \
-                Event2 \
-                AV
+                Event2
+
+ifndef TEMPINCDIR # ! AIX
+  TAO_ORBSVCS += AV
+endif # TEMPINCDIR
 
 # This services is not compiled by default, it is rarely used and it
 # is not prepared to deal with exceptions

@@ -23,10 +23,6 @@ CLIENT_OBJS = client.o testC.o
 SERVER_OBJS = server.o test_i.o testC.o testS.o
 OCTETSEQ_OBJS = testC.o testS.o OctetSeq.o
 
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
-
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #	Include macros and targets

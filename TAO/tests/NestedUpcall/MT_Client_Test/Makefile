@@ -26,7 +26,6 @@ CLIENT_OBJS = MT_Client_TestS.o MT_Client_TestC.o \
 SERVER_OBJS = MT_Client_TestS.o MT_Client_TestC.o server.o \
         MT_Object_i.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 BIN = client server
 
 TAO_IDLFLAGS += -Ge 1

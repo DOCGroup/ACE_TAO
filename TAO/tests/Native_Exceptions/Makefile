@@ -21,8 +21,6 @@ SRC = $(addsuffix .cpp, $(BIN) $(IDLFILES) test_i)
 
 CLIENT_OBJS = client.o testC.o
 SERVER_OBJS = server.o test_i.o $(addsuffix .o, $(IDLFILES))
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 0
 
@@ -33,7 +31,7 @@ TAO_IDLFLAGS += -Ge 0
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 ifeq ($(exceptions),1)
-  BUILD = $(BIN)
+  BUILD = $(VBIN)
 else
 default:
 	@echo This directory only compiles if native exceptions are enabled!

@@ -22,9 +22,6 @@ LSRC = $(PROG_SRCS)
 TEST_OBJS = testC.o testS.o registration.o
 
 BIN = registration
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

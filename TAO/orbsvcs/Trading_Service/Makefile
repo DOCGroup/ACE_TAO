@@ -8,8 +8,6 @@
 
 LDLIBS  = -lorbsvcs -lTAO
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 SRC = $(addsuffix .cpp, $(BIN))
 
 BIN2 = Trading_Service

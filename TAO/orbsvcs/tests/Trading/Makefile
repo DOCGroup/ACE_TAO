@@ -39,7 +39,6 @@ LSRC    = $(addsuffix .cpp,$(FILES))
 PSRC    = $(addsuffix .cpp,$(BIN))
 LIBS    = -lorbsvcs -lTAO
 LDLIBS  = -lorbsvcs -lTAO
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.

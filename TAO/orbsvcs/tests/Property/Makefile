@@ -15,8 +15,6 @@ CosProperty_SERVER_OBJS = server.o
 CosProperty_CLIENT_OBJS = client.o
 SRC=server.cpp client.cpp
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = server client
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,

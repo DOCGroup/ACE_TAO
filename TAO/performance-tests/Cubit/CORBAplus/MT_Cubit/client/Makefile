@@ -19,9 +19,6 @@ LSRC = $(PROG_SRCS)
 CUBIT_CLIENT_OBJS = cubit.o Task_Client.o client.o
 
 BIN = client
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

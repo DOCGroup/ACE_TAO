@@ -23,9 +23,6 @@ FILE_SVR_OBJS = DatabaseC.o DatabaseS.o server.o Database_i.o
 FILE_CLT_OBJS = DatabaseC.o DatabaseS.o client.o
 
 BIN = server client
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

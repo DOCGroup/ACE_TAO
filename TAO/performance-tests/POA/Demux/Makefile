@@ -43,7 +43,6 @@ SRC     = $(addsuffix .cpp,$(SVR_FILES)) \
           $(addsuffix .cpp,$(STAT_FILE))
 
 BIN2 = server client
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #### If the TAO orbsvcs library wasn't built with sufficient components,

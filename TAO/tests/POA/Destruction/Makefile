@@ -22,9 +22,6 @@ LSRC = $(PROG_SRCS)
 SVR_OBJS = testC.o testS.o Destruction.o
 
 BIN = Destruction
-BUILD = $(BIN)
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------

@@ -53,8 +53,6 @@ NESTEA_SERVER_OBJS =  NesteaC.o \
                       nestea_server_i.o \
                       nestea_i.o
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN2 = airplane_server \
        airplane_client \
        nestea_server \

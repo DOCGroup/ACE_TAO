@@ -23,8 +23,6 @@ NESTEDUPCALLS_CLT_OBJS = testS.o testC.o client.o client_i.o
 SRC = $(sort $(NESTEDUPCALLS_SVR_OBJS:.o=.cpp) \
              $(NESTEDUPCALLS_CLT_OBJS:.o=.cpp))
 
-VLDLIBS = $(LDLIBS:%=%$(VAR))
-
 BIN = server client
 
 TAO_IDLFLAGS += -Ge 1
