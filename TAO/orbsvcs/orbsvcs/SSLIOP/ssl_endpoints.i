@@ -9,7 +9,7 @@
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_TAO_SSLENDPOINTSEQUENCE_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_TAO_SSLENDPOINTSEQUENCE_CI_
 
@@ -22,24 +22,24 @@
     ACE_NEW_RETURN (retval, SSLIOP::SSL[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::freebuf (SSLIOP::SSL *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::_TAO_Unbounded_Sequence_TAO_SSLEndpointSequence (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::_TAO_Unbounded_Sequence_TAO_SSLEndpointSequence (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::_TAO_Unbounded_Sequence_TAO_SSLEndpointSequence (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -48,7 +48,7 @@
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::_TAO_Unbounded_Sequence_TAO_SSLEndpointSequence (const _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence &rhs)
   // Copy constructor.
@@ -58,10 +58,10 @@
     {
       SSLIOP::SSL *tmp1 = _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::allocbuf (this->maximum_);
       SSLIOP::SSL * const tmp2 = ACE_reinterpret_cast (SSLIOP::SSL * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -69,14 +69,14 @@
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence &
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::operator= (const _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -89,18 +89,18 @@
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     SSLIOP::SSL *tmp1 = ACE_reinterpret_cast (SSLIOP::SSL *, this->buffer_);
     SSLIOP::SSL * const tmp2 = ACE_reinterpret_cast (SSLIOP::SSL * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE SSLIOP::SSL &
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::operator[] (CORBA::ULong i)
@@ -110,7 +110,7 @@
     SSLIOP::SSL* tmp = ACE_reinterpret_cast(SSLIOP::SSL*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const SSLIOP::SSL &
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::operator[] (CORBA::ULong i) const
   // operator []
@@ -119,9 +119,9 @@
     SSLIOP::SSL * const tmp = ACE_reinterpret_cast (SSLIOP::SSL* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE SSLIOP::SSL *
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::get_buffer (CORBA::Boolean orphan)
   {
@@ -155,13 +155,13 @@
     }
     return result;
   }
-  
+
   ACE_INLINE const SSLIOP::SSL *
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const SSLIOP::SSL * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   _TAO_Unbounded_Sequence_TAO_SSLEndpointSequence::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -178,11 +178,11 @@
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_TAO_SSLENDPOINTSEQUENCE_CI_)
 #define _TAO_SSLENDPOINTSEQUENCE_CI_
@@ -266,20 +266,20 @@ TAO_SSLEndpointSequence_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 TAO_SSLEndpointSequence_var::operator const ::TAO_SSLEndpointSequence &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-TAO_SSLEndpointSequence_var::operator ::TAO_SSLEndpointSequence &() // cast 
+ACE_INLINE
+TAO_SSLEndpointSequence_var::operator ::TAO_SSLEndpointSequence &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-TAO_SSLEndpointSequence_var::operator ::TAO_SSLEndpointSequence &() const // cast 
+ACE_INLINE
+TAO_SSLEndpointSequence_var::operator ::TAO_SSLEndpointSequence &() const // cast
 {
   return *this->ptr_;
 }
@@ -302,7 +302,7 @@ TAO_SSLEndpointSequence_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::TAO_SSLEndpointSequence *&
 TAO_SSLEndpointSequence_var::out (void)
 {
@@ -325,69 +325,6 @@ TAO_SSLEndpointSequence_var::ptr (void) const
   return this->ptr_;
 }
 
-// *************************************************************
-// Inline operations for class TAO_SSLEndpointSequence_out
-// *************************************************************
-
-ACE_INLINE
-TAO_SSLEndpointSequence_out::TAO_SSLEndpointSequence_out (TAO_SSLEndpointSequence *&p)
-  : ptr_ (p)
-{
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-TAO_SSLEndpointSequence_out::TAO_SSLEndpointSequence_out (TAO_SSLEndpointSequence_var &p) // constructor from _var
-  : ptr_ (p.out ())
-{
-  delete this->ptr_;
-  this->ptr_ = 0;
-}
-
-ACE_INLINE
-TAO_SSLEndpointSequence_out::TAO_SSLEndpointSequence_out (const ::TAO_SSLEndpointSequence_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (TAO_SSLEndpointSequence_out&, p).ptr_)
-{}
-
-ACE_INLINE ::TAO_SSLEndpointSequence_out &
-TAO_SSLEndpointSequence_out::operator= (const ::TAO_SSLEndpointSequence_out &p)
-{
-  this->ptr_ = ACE_const_cast (TAO_SSLEndpointSequence_out&, p).ptr_;
-  return *this;
-}
-
-ACE_INLINE ::TAO_SSLEndpointSequence_out &
-TAO_SSLEndpointSequence_out::operator= (TAO_SSLEndpointSequence *p)
-{
-  this->ptr_ = p;
-  return *this;
-}
-
-ACE_INLINE 
-TAO_SSLEndpointSequence_out::operator ::TAO_SSLEndpointSequence *&() // cast
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::TAO_SSLEndpointSequence *&
-TAO_SSLEndpointSequence_out::ptr (void) // ptr
-{
-  return this->ptr_;
-}
-
-ACE_INLINE ::TAO_SSLEndpointSequence *
-TAO_SSLEndpointSequence_out::operator-> (void)
-{
-  return this->ptr_;
-}
-
-ACE_INLINE SSLIOP::SSL &
-TAO_SSLEndpointSequence_out::operator[] (CORBA::ULong index)
-{
-  return this->ptr_->operator[] (index);
-}
-
-
 #endif /* end #if !defined */
 
 
@@ -404,4 +341,3 @@ CORBA::Boolean TAO_SSLIOP_Export operator>> (
   );
 
 #endif /* _TAO_CDR_OP_TAO_SSLEndpointSequence_I_ */
-

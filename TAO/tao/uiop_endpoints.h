@@ -58,53 +58,6 @@ struct TAO_Export TAO_UIOP_Endpoint_Info
   CORBA::Short priority;
 };
 
-class TAO_Export TAO_UIOP_Endpoint_Info_var
-{
-public:
-  TAO_UIOP_Endpoint_Info_var (void); // default constructor
-  TAO_UIOP_Endpoint_Info_var (TAO_UIOP_Endpoint_Info *);
-  TAO_UIOP_Endpoint_Info_var (const TAO_UIOP_Endpoint_Info_var &); // copy constructor
-  ~TAO_UIOP_Endpoint_Info_var (void); // destructor
-
-  TAO_UIOP_Endpoint_Info_var &operator= (TAO_UIOP_Endpoint_Info *);
-  TAO_UIOP_Endpoint_Info_var &operator= (const TAO_UIOP_Endpoint_Info_var &);
-  TAO_UIOP_Endpoint_Info *operator-> (void);
-  const TAO_UIOP_Endpoint_Info *operator-> (void) const;
-
-  operator const TAO_UIOP_Endpoint_Info &() const;
-  operator TAO_UIOP_Endpoint_Info &();
-  operator TAO_UIOP_Endpoint_Info &() const;
-  operator TAO_UIOP_Endpoint_Info *&(); // variable-size types only
-
-  // in, inout, out, _retn
-  const TAO_UIOP_Endpoint_Info &in (void) const;
-  TAO_UIOP_Endpoint_Info &inout (void);
-  TAO_UIOP_Endpoint_Info *&out (void);
-  TAO_UIOP_Endpoint_Info *_retn (void);
-  TAO_UIOP_Endpoint_Info *ptr (void) const;
-
-private:
-  TAO_UIOP_Endpoint_Info *ptr_;
-};
-
-class TAO_Export TAO_UIOP_Endpoint_Info_out
-{
-public:
-  TAO_UIOP_Endpoint_Info_out (TAO_UIOP_Endpoint_Info *&);
-  TAO_UIOP_Endpoint_Info_out (TAO_UIOP_Endpoint_Info_var &);
-  TAO_UIOP_Endpoint_Info_out (const TAO_UIOP_Endpoint_Info_out &);
-  TAO_UIOP_Endpoint_Info_out &operator= (const TAO_UIOP_Endpoint_Info_out &);
-  TAO_UIOP_Endpoint_Info_out &operator= (TAO_UIOP_Endpoint_Info *);
-  operator TAO_UIOP_Endpoint_Info *&();
-  TAO_UIOP_Endpoint_Info *&ptr (void);
-  TAO_UIOP_Endpoint_Info *operator-> (void);
-
-private:
-  TAO_UIOP_Endpoint_Info *&ptr_;
-  // assignment from T_var not allowed
-  void operator= (const TAO_UIOP_Endpoint_Info_var &);
-};
-
 extern TAO_Export CORBA::TypeCode_ptr  _tc_TAO_UIOP_Endpoint_Info;
 
 
@@ -229,42 +182,7 @@ private:
 
 #endif /* end #if !defined */
 
-
-#if !defined (_TAO_UIOPENDPOINTSEQUENCE___OUT_CH_)
-#define _TAO_UIOPENDPOINTSEQUENCE___OUT_CH_
-
-class TAO_Export TAO_UIOPEndpointSequence_out
-{
-public:
-  TAO_UIOPEndpointSequence_out (TAO_UIOPEndpointSequence *&);
-  TAO_UIOPEndpointSequence_out (TAO_UIOPEndpointSequence_var &);
-  TAO_UIOPEndpointSequence_out (const TAO_UIOPEndpointSequence_out &);
-  TAO_UIOPEndpointSequence_out &operator= (const TAO_UIOPEndpointSequence_out &);
-  TAO_UIOPEndpointSequence_out &operator= (TAO_UIOPEndpointSequence *);
-  operator TAO_UIOPEndpointSequence *&();
-  TAO_UIOPEndpointSequence *&ptr (void);
-  TAO_UIOPEndpointSequence *operator-> (void);
-  TAO_UIOP_Endpoint_Info &operator[] (CORBA::ULong index);
-
-private:
-  TAO_UIOPEndpointSequence *&ptr_;
-  // assignment from T_var not allowed
-  void operator= (const TAO_UIOPEndpointSequence_var &);
-};
-
-
-#endif /* end #if !defined */
-
 extern TAO_Export CORBA::TypeCode_ptr  _tc_TAO_UIOPEndpointSequence;
-
-TAO_Export void operator<<= (CORBA::Any &, const TAO_UIOP_Endpoint_Info &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, TAO_UIOP_Endpoint_Info*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_UIOP_Endpoint_Info *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TAO_UIOP_Endpoint_Info *&);
-TAO_Export void operator<<= (CORBA::Any &, const TAO_UIOPEndpointSequence &); // copying version
-TAO_Export void operator<<= (CORBA::Any &, TAO_UIOPEndpointSequence*); // noncopying version
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_UIOPEndpointSequence *&); // deprecated
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TAO_UIOPEndpointSequence *&);
 
 #ifndef __ACE_INLINE__
 

@@ -161,38 +161,7 @@ private:
 
 #endif /* end #if !defined */
 
-
-#if !defined (_TAO_SSLENDPOINTSEQUENCE___OUT_CH_)
-#define _TAO_SSLENDPOINTSEQUENCE___OUT_CH_
-
-class TAO_SSLIOP_Export TAO_SSLEndpointSequence_out
-{
-public:
-  TAO_SSLEndpointSequence_out (TAO_SSLEndpointSequence *&);
-  TAO_SSLEndpointSequence_out (TAO_SSLEndpointSequence_var &);
-  TAO_SSLEndpointSequence_out (const TAO_SSLEndpointSequence_out &);
-  TAO_SSLEndpointSequence_out &operator= (const TAO_SSLEndpointSequence_out &);
-  TAO_SSLEndpointSequence_out &operator= (TAO_SSLEndpointSequence *);
-  operator TAO_SSLEndpointSequence *&();
-  TAO_SSLEndpointSequence *&ptr (void);
-  TAO_SSLEndpointSequence *operator-> (void);
-  SSLIOP::SSL &operator[] (CORBA::ULong index);
-
-private:
-  TAO_SSLEndpointSequence *&ptr_;
-  // assignment from T_var not allowed
-  void operator= (const TAO_SSLEndpointSequence_var &);
-};
-
-
-#endif /* end #if !defined */
-
 extern TAO_SSLIOP_Export CORBA::TypeCode_ptr  _tc_TAO_SSLEndpointSequence;
-
-TAO_SSLIOP_Export void operator<<= (CORBA::Any &, const TAO_SSLEndpointSequence &); // copying version
-TAO_SSLIOP_Export void operator<<= (CORBA::Any &, TAO_SSLEndpointSequence*); // noncopying version
-TAO_SSLIOP_Export CORBA::Boolean operator>>= (const CORBA::Any &, TAO_SSLEndpointSequence *&); // deprecated
-TAO_SSLIOP_Export CORBA::Boolean operator>>= (const CORBA::Any &, const TAO_SSLEndpointSequence *&);
 
 #ifndef __ACE_INLINE__
 

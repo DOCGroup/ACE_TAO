@@ -175,11 +175,17 @@ TAO_SSLIOP_Profile::encode (TAO_OutputCDR &stream) const
   TAO_SSLIOP_Profile *p =
     ACE_const_cast (TAO_SSLIOP_Profile *, this);
 
+#if (TAO_HAS_RT_CORBA == 1)
+  // For now, use/transfer multiple endpoints per profile only with
+  // RTCORBA.
+
   if (!this->endpoints_encoded_)
     r = p->encode_endpoints ();
 
   if (r != 1)
     return r;
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   return this->TAO_IIOP_Profile::encode (stream);
 }
