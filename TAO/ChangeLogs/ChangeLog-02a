@@ -1,3 +1,35 @@
+Fri Jan  4 15:21:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/ifr_visitor.cpp (visit_factory):
+
+          Removed an unused argument.
+
+        * TAO_IDL/fe/fe_tmplinst.cpp:
+
+          Removed explicit instantiation of ACE_Node<char *>, since
+          it already appears in ACE.
+
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Changed isspace() to ACE_OS::ace_isspace().
+
+        * TAO_IDL/be/be_interface_strategy.cpp (compute_coll_names):
+
+          Changed a local const char[] to static const char*. The
+          string  "POA_" is assigned to this constant, and there
+          has been a long-standing intermittent problem with
+          garbage being generated in place of the string. Although
+          the problem has never been duplicated by the DOC Group,
+          Sorin Iordachescu <sorin.iordachescu@am-beo.com> has
+          produced it repeated and has suggested the above fix.
+
+        * TAO_IDL/util/utl_err.cpp:
+
+          Removed all use of ACE_TEXT from methods that return char*.
+          When compilation is done with ACE_USES_WCHAR, the return
+          type is incorrect. Thanks to Johnny Willemsen 
+          <johnny_willemsen@planet.nl> for reporting the problem.
+
 Fri Jan  4 14:32:43 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/Fill_QoS.h: Add #include <ace/OS_QoS.h>.
