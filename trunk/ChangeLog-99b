@@ -19,7 +19,7 @@ Tue Dec 21 21:27:48 1999  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_linux_cxx.GNU: added.
 
         * include/makeinclude/platform_osf1_4.0.GNU: changed comment
-          now that cxx code is int ace/config-cxx-common.h.
+          now that cxx code is in ace/config-cxx-common.h.
 
 Tue Dec 21 08:02:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
