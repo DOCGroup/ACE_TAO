@@ -1,14 +1,8 @@
-Tue Apr 29 14:27:19 1997    <harrison@samba.cs.wustl.edu>
+Tue Apr 29 17:39:40 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* OS.h: Added ACE_HAS_SVC_DLL.  If you write a library and
-	  want it to use ACE_Svc_Export, this will cause those macros
-	  to build dlls.  If you want your ACE service to be a static
-	  library, comment out this line.  As far as I know, the only
-	  reason to have a library be an ACE "service" is to leverage
-	  the ACE_Svc_Export macros.  It's just as easy to define your
-	  own export macros.
-
-Tue Apr 29 00:58:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* ace/config-mvs.h: Added #define ACE_LACKS_LINEBUFFERED_STREAMBUF
+	  for MVS.  Thanks to Chuck Gehr <gehr@sweng.stortek.com> for
+	  reporting this.
 
 	* ace: Commented out ACE_TRACE calls in constructors in
 	  several ACE classes in order to avoid problems with circular
@@ -44,6 +38,16 @@ Tue Apr 29 00:58:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 	* ace/OS: Added patches for Digital UNIX to handle the
  	  getpwnam_r() name.  Thanks to Thilo Kielmann
  	  <kielmann@informatik.uni-siegen.de> for these patches.
+
+Tue Apr 29 14:27:19 1997    <harrison@samba.cs.wustl.edu>
+
+	* OS.h: Added ACE_HAS_SVC_DLL.  If you write a library and
+	  want it to use ACE_Svc_Export, this will cause those macros
+	  to build dlls.  If you want your ACE service to be a static
+	  library, comment out this line.  As far as I know, the only
+	  reason to have a library be an ACE "service" is to leverage
+	  the ACE_Svc_Export macros.  It's just as easy to define your
+	  own export macros.
 
 Tue Apr 29 07:25:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
