@@ -47,9 +47,9 @@ public:
   // Default constructor.
 
   CDR_Test (ACE_CDR::Char o,
-	    ACE_CDR::Short s,
+            ACE_CDR::Short s,
             ACE_CDR::Long w,
-	    ACE_CDR::LongLong lw,
+            ACE_CDR::LongLong lw,
             ACE_CDR::Float f,
             ACE_CDR::Double d);
   // Constructor.
@@ -101,7 +101,7 @@ CDR_Test::CDR_Test (void)
 }
 
 CDR_Test::CDR_Test (ACE_CDR::Char o,
-		    ACE_CDR::Short s,
+                    ACE_CDR::Short s,
                     ACE_CDR::Long w,
                     ACE_CDR::LongLong lw,
                     ACE_CDR::Float f,
@@ -185,7 +185,7 @@ run_test (int write_file,
                   ACE_CDR_BYTE_ORDER ? "little" : "big"));
 
       n = file.send (output_mb->rd_ptr (),
-		     output_mb->length ());
+                     output_mb->length ());
       if (n != (size_t) output_mb->length())
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("send failed on %p\n"),
@@ -272,9 +272,9 @@ static void
 usage(ACE_TCHAR* cmd)
 {
   ACE_ERROR ((LM_ERROR,
-	      ACE_TEXT ("Usage: %s ")
-	      ACE_TEXT ("[-f filename [-w|-r]]"),
-	      cmd));
+              ACE_TEXT ("Usage: %s ")
+              ACE_TEXT ("[-f filename [-w|-r]]"),
+              cmd));
   ACE_OS::exit(1);
 }
 
@@ -287,7 +287,7 @@ main (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
-              ACE::major_version (),
+              ACE::major_version(),
               ACE::minor_version(),
               ACE::beta_version()));
 
@@ -326,7 +326,11 @@ main (int argc, ACE_TCHAR *argv[])
     }
 
   // Create a temporary filename.
-  ACE_FILE_Addr filename ((fn == 0) ? ACE_sap_any_cast (ACE_FILE_Addr &) : fn);
+  ACE_FILE_Addr filename(ACE_sap_any_cast (ACE_FILE_Addr &));
+  if (fn != 0)
+    {
+      filename.set (fn);
+    }
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
@@ -349,10 +353,10 @@ main (int argc, ACE_TCHAR *argv[])
       // Unlink this file right away so that it is automatically removed
       // when the process exits.
       if (file.unlink () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   ACE_TEXT ("unlink failed for %p\n"),
-			   filename.get_path_name ()),
-			  1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("unlink failed for %p\n"),
+                           filename.get_path_name ()),
+                          1);
     }
 
   // Unlink this file right away so that it is automatically removed
@@ -363,9 +367,9 @@ main (int argc, ACE_TCHAR *argv[])
                        filename.get_path_name ()),
                       1);
   CDR_Test cdr_test ('a',
- 		     0x00ff,
+                     0x00ff,
                      0xaabbccdd,
- 		     0x01234567,
+                     0x01234567,
                      1.54321f,
                      1.12345);
 
@@ -373,18 +377,18 @@ main (int argc, ACE_TCHAR *argv[])
     {
       // write the file.
       run_test (1,
-		file,
-		filename.get_path_name (),
-		cdr_test);
+                file,
+                filename.get_path_name (),
+                cdr_test);
     }
 
   if (reading)
     {
       // read the file.
       run_test (0,
-		file,
-		filename.get_path_name (),
-		cdr_test);
+                file,
+                filename.get_path_name (),
+                cdr_test);
     }
 
   ACE_END_TEST;
