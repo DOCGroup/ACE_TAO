@@ -4,7 +4,11 @@ Fri Jul 24 21:42:39 1998  David L. Levine  <levine@cs.wustl.edu>
           to ACE_Time_Value::max_time, because VxWorks #defines max.
 
         * tests/Message_Queue_Test.cpp: rearranged declarations so
-          that the test will build without ACE_HAS_THREADS.
+          that the test will build on non-threaded platforms.
+
+        * tests/Dynamic_Priority_Test.cpp: changed ACE_MT_SYNCH to
+          ACE_SYNCH, so that we have a chance of building on non-threaded
+          platforms.
 
 Fri Jul 24 15:15:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
