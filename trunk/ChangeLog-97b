@@ -25,6 +25,13 @@ Sat Nov 22 14:38:22 1997  Steve Huston  <shuston@riverace.com>
 	  Added 'const' to "char *" - can't initialize a char * with
 	  a const string.  Fixes Riverace problem ID P38, P40.
 
+	* examples/Threads/thread_specific.cpp, tss1.cpp:  Moved the Errno
+	  class out to a new file, thread_specific.h.  AIX xlC needs to have
+	  the class in a .h file for template generation.  Fixes Riverace
+	  problem P42.
+	* examples/Threads/Makefile: Make sure that, on AIX, the tempinc
+	  directory is cleared before building each new program.
+
 	* performance-tests/Synch-Benchmarks/Makefile: Changed SHLIB to use
 	  $(SOEXT) rather than .so.  Fixes Riverace problem ID P41.
 
