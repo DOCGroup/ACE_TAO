@@ -1,177 +1,182 @@
+Sun Jul 18 21:36:04 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * OS.cpp (sched_params): wrapped DIGITAL_UNIX preprocessor
+          symbol in parenthesis.
+
 Sun Jul 18 14:30:54 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/run_tests.sh: Reenabled the Future_Set_Test.  Hopefully,
-	  this will work on Solaris and the other platforms now!
+        * tests/run_tests.sh: Reenabled the Future_Set_Test.  Hopefully,
+          this will work on Solaris and the other platforms now!
 
-	* ace/Future*: Added some fixes for Future_Set that should prevent
-	  it from hanging indefinitely on certain platforms.  Also,
- 	  removed the Future_Node.h and Future_Node.cpp files since they
- 	  are no longer used.  Thanks to John Tucker
- 	  <jtucker@infoglide.com> for contributing these fixes.
+        * ace/Future*: Added some fixes for Future_Set that should prevent
+          it from hanging indefinitely on certain platforms.  Also,
+          removed the Future_Node.h and Future_Node.cpp files since they
+          are no longer used.  Thanks to John Tucker
+          <jtucker@infoglide.com> for contributing these fixes.
 
-	* ace/SOCK_Dgram_Mcast: Finished implementing the QoS-enabled APIs for 
-	  socket datagram multicast.  This required refactoring quite a
- 	  bit of code and adding some new methods that take the
- 	  ACE_QoS_Params.
+        * ace/SOCK_Dgram_Mcast: Finished implementing the QoS-enabled APIs for
+          socket datagram multicast.  This required refactoring quite a
+          bit of code and adding some new methods that take the
+          ACE_QoS_Params.
 
-	* ace/SOCK_Dgram.cpp: Finished integrating the QoS support
-	  for SOCK dgrams.
-	
-	* ace/SOCK_Dgram.cpp: Factored out common code in the
- 	  ACE_SOCK_Dgram constructors.
+        * ace/SOCK_Dgram.cpp: Finished integrating the QoS support
+          for SOCK dgrams.
 
-	* ace/SOCK_Connector: Finished implementing the QoS-enabled
- 	  connect() methods.  To make this cleaner, I've created a new
- 	  "shared_open()" method that factors out the common code.
+        * ace/SOCK_Dgram.cpp: Factored out common code in the
+          ACE_SOCK_Dgram constructors.
 
-	* ace/SOCK_Acceptor: Finished implementing the QoS-enabled open()
-	  method.  To make this cleaner, I've created a new
- 	  "shared_open()" method that factors out the common code.
+        * ace/SOCK_Connector: Finished implementing the QoS-enabled
+          connect() methods.  To make this cleaner, I've created a new
+          "shared_open()" method that factors out the common code.
+
+        * ace/SOCK_Acceptor: Finished implementing the QoS-enabled open()
+          method.  To make this cleaner, I've created a new
+          "shared_open()" method that factors out the common code.
 
 Sat Jul 17 13:36:03 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/High_Res_Timer.cpp (get_cpuinfo):
+        * ace/High_Res_Timer.cpp (get_cpuinfo):
 
-	  Removed extra `FILE *cpuinfo' declaration.
+          Removed extra `FILE *cpuinfo' declaration.
 
 Sat Jul 17 12:20:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/High_Res_Timer: Added integrated support for Alpha and
-	  Pentium that will eliminate the 5sec startup delay for Linux/PII
- 	  clients using the ACE high resolution timer.  Thanks to Thomas
- 	  Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for these fixes.
+        * ace/High_Res_Timer: Added integrated support for Alpha and
+          Pentium that will eliminate the 5sec startup delay for Linux/PII
+          clients using the ACE high resolution timer.  Thanks to Thomas
+          Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for these fixes.
 
-	* netsvcs/servers/main.cpp (main): Fixed a typo caused by recent
-	  integration of Jerry De Master's fixes.
+        * netsvcs/servers/main.cpp (main): Fixed a typo caused by recent
+          integration of Jerry De Master's fixes.
 
 Fri Jul 16 19:41:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/ACE.cpp (out_of_handles): Added a function to check if a
-	  process is out of handles (file descriptors).  This is required
-	  to avoid repeating this code in many places.  Also, note that
-	  all platform specific quirks can be captured in this function.
+        * ace/ACE.cpp (out_of_handles): Added a function to check if a
+          process is out of handles (file descriptors).  This is required
+          to avoid repeating this code in many places.  Also, note that
+          all platform specific quirks can be captured in this function.
 
-	* ace/Cached_Connect_Strategy_T.cpp (cached_connect):
-	* tests/Cached_Conn_Test.cpp (out_of_sockets_handler):
-	* tests/Cached_Accept_Conn_Test.cpp (out_of_sockets_handler):
+        * ace/Cached_Connect_Strategy_T.cpp (cached_connect):
+        * tests/Cached_Conn_Test.cpp (out_of_sockets_handler):
+        * tests/Cached_Accept_Conn_Test.cpp (out_of_sockets_handler):
 
-	  Changed the above to use the new ACE::out_of_handles() function.
+          Changed the above to use the new ACE::out_of_handles() function.
 
-	* ace/OS.h (ENFILE): Added ENFILE if missing on platform.  In that
-	  case, ENFILE will equal to EMFILE.
+        * ace/OS.h (ENFILE): Added ENFILE if missing on platform.  In that
+          case, ENFILE will equal to EMFILE.
 
 Fri Jul 16 13:55:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* include/makeinclude/{build_dll.bor,build_exe.bor,compiler.bor},
-	  ace/{Makefile.bor,ace.rc}:
-	  Updated these files to add version information to the DLLs so
- 	  when you right click them in windows explorer you can see what
- 	  version the file is (e.g., "4.6.45").  Thanks to Christopher
- 	  Kohlhoff <chris@kohlhoff.com> for contributing this.
+        * include/makeinclude/{build_dll.bor,build_exe.bor,compiler.bor},
+          ace/{Makefile.bor,ace.rc}:
+          Updated these files to add version information to the DLLs so
+          when you right click them in windows explorer you can see what
+          version the file is (e.g., "4.6.45").  Thanks to Christopher
+          Kohlhoff <chris@kohlhoff.com> for contributing this.
 
-	* netsvcs/servers/main.cpp (main): Disable debugging messages
-	  if the -d option isn't given to ACE_Service_Config.  Thanks to
- 	  Jerry De Master <jdemaste@ipdinc.com> for reporting this.
+        * netsvcs/servers/main.cpp (main): Disable debugging messages
+          if the -d option isn't given to ACE_Service_Config.  Thanks to
+          Jerry De Master <jdemaste@ipdinc.com> for reporting this.
 
-	* ace/config-win32-borland.h: Updated this file to enable some
-	  necessary macros.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.
+        * ace/config-win32-borland.h: Updated this file to enable some
+          necessary macros.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this.
 
-	* tests/DLL_Test.cpp,
-	  tests/run_test.bat: Updated these to handle the appropriate
- 	  directory where the Borland tests are built.  Thanks to
- 	  Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
+        * tests/DLL_Test.cpp,
+          tests/run_test.bat: Updated these to handle the appropriate
+          directory where the Borland tests are built.  Thanks to
+          Christopher Kohlhoff <chris@kohlhoff.com> for reporting this.
 
-	* netsvcs/lib/Logging_Strategy.cpp (init): When the application
- 	  program is started, none of the log output is sent to the
- 	  Client_Logging_Service.  Further investigation shows that the
- 	  ACE_Log_Msg::open() method is responsible for connecting to the
- 	  client logger if the ACE_Log_Msg::LOGGER flag is set.  However,
- 	  the connections never attempted because the ACE_Log_Msg::open()
- 	  method is called before the Logging_Strategy flags have been
- 	  parsed.  This problem was fixed by rearranging the point at
- 	  which the ACE_LOG_MSG->open() method was called.  Thanks to
- 	  Jerry De Master <jdemaste@ipdinc.com> for contributing this.
+        * netsvcs/lib/Logging_Strategy.cpp (init): When the application
+          program is started, none of the log output is sent to the
+          Client_Logging_Service.  Further investigation shows that the
+          ACE_Log_Msg::open() method is responsible for connecting to the
+          client logger if the ACE_Log_Msg::LOGGER flag is set.  However,
+          the connections never attempted because the ACE_Log_Msg::open()
+          method is called before the Logging_Strategy flags have been
+          parsed.  This problem was fixed by rearranging the point at
+          which the ACE_LOG_MSG->open() method was called.  Thanks to
+          Jerry De Master <jdemaste@ipdinc.com> for contributing this.
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (send),
-	  netsvcs/lib/Log_Message_Receiver.cpp (log_output):
-	  All log message output in ACE is done through one of the
- 	  ACE_Log_Record::print() methods.  Each of the overloaded methods
- 	  has a <flags> argument as the second argument.  However, all
- 	  uses of the ACE_Log_Record::print() method in
- 	  Log_Message_Receiver.cpp and Client_Logging_Handler.cpp pass
- 	  zero for the flags argument.  To fix this, simply pass
-	  ACE_Log_Msg::instance()->flags() instead of 0.  Thanks to Jerry
- 	  De Master <jdemaste@ipdinc.com> for contributing this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (send),
+          netsvcs/lib/Log_Message_Receiver.cpp (log_output):
+          All log message output in ACE is done through one of the
+          ACE_Log_Record::print() methods.  Each of the overloaded methods
+          has a <flags> argument as the second argument.  However, all
+          uses of the ACE_Log_Record::print() method in
+          Log_Message_Receiver.cpp and Client_Logging_Handler.cpp pass
+          zero for the flags argument.  To fix this, simply pass
+          ACE_Log_Msg::instance()->flags() instead of 0.  Thanks to Jerry
+          De Master <jdemaste@ipdinc.com> for contributing this.
 
-	* ace/Log_Record.cpp (format_msg): Added code for the new
-	  ACE_Log_Record::format_msg() method that adds the date/time
- 	  stamp to the ACE_Log_Msg::VERBOSE_LITE output.  Thanks to Jerry
- 	  De Master <jdemaste@ipdinc.com> for contributing this.
+        * ace/Log_Record.cpp (format_msg): Added code for the new
+          ACE_Log_Record::format_msg() method that adds the date/time
+          stamp to the ACE_Log_Msg::VERBOSE_LITE output.  Thanks to Jerry
+          De Master <jdemaste@ipdinc.com> for contributing this.
 
-	* netsvcs/lib/Logging_Strategy.cpp (init): Make sure the
-	  ACE_Log_Msg::VERBOSE_LITE flag is OR'd into the clr_flags()
- 	  call.  Thanks to Jerry De Master <jdemaste@ipdinc.com> for
- 	  reporting this.
+        * netsvcs/lib/Logging_Strategy.cpp (init): Make sure the
+          ACE_Log_Msg::VERBOSE_LITE flag is OR'd into the clr_flags()
+          call.  Thanks to Jerry De Master <jdemaste@ipdinc.com> for
+          reporting this.
 
-	* netsvcs/lib/Logging_Strategy.cpp (tokenize): Make sure that
-	  the ACE_Log_Msg::VERBOSE_LITE flag is correctly parsed.  Thanks
- 	  to Jerry De Master <jdemaste@ipdinc.com> for reporting this.
+        * netsvcs/lib/Logging_Strategy.cpp (tokenize): Make sure that
+          the ACE_Log_Msg::VERBOSE_LITE flag is correctly parsed.  Thanks
+          to Jerry De Master <jdemaste@ipdinc.com> for reporting this.
 
-	* ace/Memory_Pool.h: Added a way to set the segment_size in
- 	  ACE_Shared_Memory_Pool_Options and ACE_Shared_Memory_Pool.
-  	  Thanks to Serge Kolgan <skolgan@cisco.com> for this fix.  [This
- 	  feature was actually added a couple of beta releases ago, but
- 	  somehow the ChangeLog entry got lost.]
+        * ace/Memory_Pool.h: Added a way to set the segment_size in
+          ACE_Shared_Memory_Pool_Options and ACE_Shared_Memory_Pool.
+          Thanks to Serge Kolgan <skolgan@cisco.com> for this fix.  [This
+          feature was actually added a couple of beta releases ago, but
+          somehow the ChangeLog entry got lost.]
 
 Fri Jul 16 16:41:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Stats.cpp (print_summary):
+        * ace/Stats.cpp (print_summary):
 
-	  Fixed format specifier that was expecting an integer argument.
-	  It needed an additional percent specifier.
+          Fixed format specifier that was expecting an integer argument.
+          It needed an additional percent specifier.
 
 Fri Jul 16 09:20:42 1999  Arturo Montes <mitosys@colomsat.net.co>
 
         * ace/OS.i: Patch the dl* family to keep ACE
-	  compatible in SCO OpenServer 5.0.0, 5.0.2, 5.0.4 with 5.0.5
+          compatible in SCO OpenServer 5.0.0, 5.0.2, 5.0.4 with 5.0.5
 
-	* ace/config-sco-5.0.0.h: Bring OpenServer up to date.
+        * ace/config-sco-5.0.0.h: Bring OpenServer up to date.
 
         * include/makeinclude/platform_sco5.0.0-fsu-pthread.GNU:
-	  Use gcc-2.95.
+          Use gcc-2.95.
 
 Fri Jul 16 11:50:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (log):
-	* tests/Basic_Types_Test.cpp (main): Reverted my previous
-	  change.  It was not a safe assumption.
+        * ace/Log_Msg.cpp (log):
+        * tests/Basic_Types_Test.cpp (main): Reverted my previous
+          change.  It was not a safe assumption.
 
 Fri Jul 16 02:28:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (log): Changed (*va_arg (argp,PTF))(), which
-	  extracts a function pointer from va_list and makes a call using
-	  the pointer pointer to ACE_reinterpret_cast (PTF, va_arg (argp,
-	  long))().  This assumes the sizeof (long) is exactly equal to
-	  the size of a function pointer.
+        * ace/Log_Msg.cpp (log): Changed (*va_arg (argp,PTF))(), which
+          extracts a function pointer from va_list and makes a call using
+          the pointer pointer to ACE_reinterpret_cast (PTF, va_arg (argp,
+          long))().  This assumes the sizeof (long) is exactly equal to
+          the size of a function pointer.
 
-	* tests/Basic_Types_Test.cpp (main): Narrow down the check to
-	  ensure sizeof(long) == sizeof (a function pointer) (which is
-	  true for all the platforms that ACE runs on.)
+        * tests/Basic_Types_Test.cpp (main): Narrow down the check to
+          ensure sizeof(long) == sizeof (a function pointer) (which is
+          true for all the platforms that ACE runs on.)
 
 Fri Jul 16 00:07:23 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/Cached_Accept_Conn_Test.cpp (test_connection_management):
-	  Changed the test to allow for both one listen endpoint or
-	  multiple listen endpoints.
+        * tests/Cached_Accept_Conn_Test.cpp (test_connection_management):
+          Changed the test to allow for both one listen endpoint or
+          multiple listen endpoints.
 
 Thu Jul 15 22:42:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Message_Queue.h: (ACE_MESSAGE_QUEUE_DEFAULT_TYPE):
-	* ace/Future_Set.{h,cpp} (ACE_Future_Set): Typedef'ed the
-	  ACE_Message_Queue to ACE_MESSAGE_QUEUE_DEFAULT_TYPE and use the
-	  typedef'ed name in ACE_Future_Set's contstructor to get around a
-	  bug in vxworks' g++ compiler.
+        * ace/Message_Queue.h: (ACE_MESSAGE_QUEUE_DEFAULT_TYPE):
+        * ace/Future_Set.{h,cpp} (ACE_Future_Set): Typedef'ed the
+          ACE_Message_Queue to ACE_MESSAGE_QUEUE_DEFAULT_TYPE and use the
+          typedef'ed name in ACE_Future_Set's contstructor to get around a
+          bug in vxworks' g++ compiler.
 
 Thu Jul 15 22:14:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
@@ -180,12 +185,12 @@ Thu Jul 15 22:14:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
         * ace/Strategies_T.cpp
         * ace/Strategies_T.h
 
-	  Changed find()'s signature to help g++.
+          Changed find()'s signature to help g++.
 
         * tests/Cached_Accept_Conn_Test.cpp
         * tests/Conn_Test.cpp
 
-	  Added template instantiations.
+          Added template instantiations.
 
 Thu Jul 15 21:32:26 1999  David L. Levine  <levine@cs.wustl.edu>
 

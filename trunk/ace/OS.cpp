@@ -1277,7 +1277,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
       int result = ::sched_setscheduler (0, // this process
                                          sched_params.policy (),
                                          &param) == -1 ? -1 : 0;
-#   if defined DIGITAL_UNIX
+#   if defined (DIGITAL_UNIX)
         return result == 0
           ? // Use priocntl (2) to set the process in the RT class,
             // if using an RT policy.
