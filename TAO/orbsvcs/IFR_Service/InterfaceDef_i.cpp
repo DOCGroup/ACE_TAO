@@ -860,7 +860,7 @@ TAO_InterfaceDef_i::inherited_contents (
                                      path_queue,
                                      limit_type,
                                      ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);          
+      ACE_CHECK;          
     }
 }
 
