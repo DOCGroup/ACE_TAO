@@ -1833,15 +1833,14 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
 
   // The WrongPolicy exception is declared to allow future extensions.
 
-  // This operation returns the Object Id value encapsulated by the
-  // specified reference.
-
   // This operation is valid only if the reference was created by the
   // POA on which the operation is being performed.  If the object
   // reference was not created by this POA, the WrongAdapter exception
   // is raised.
   PortableServer::ObjectId system_id;
-  bool is_generated = this->is_poa_generated (reference, system_id ACE_ENV_ARG_PARAMETER);
+  bool is_generated = this->is_poa_generated (reference,
+                                              system_id
+                                              ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!is_generated)

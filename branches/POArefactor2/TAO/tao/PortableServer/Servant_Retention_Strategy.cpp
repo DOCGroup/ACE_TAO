@@ -816,41 +816,52 @@ namespace TAO
     {
       // @todo Johnny, this must be changed, we only want to call something to request_processing_strategy
 
-      // @todo, in case we don't have default servant but request processing is set , we should give another exception,
-      // an object not active should not be given
+      // We must have default servant, if not, wrong policy
+      if (this->poa_->cached_policies_.request_processing () != PortableServer::USE_DEFAULT_SERVANT)
+        {
+          ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                            0);
+        }
 
       // When request processing is default servant then we should use that
       PortableServer::Servant servant = 0;
       servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_default_servant ();
 
       if (servant != 0)
-      {
-        // A recursive thread lock without using a recursive thread
-        // lock.  Non_Servant_Upcall has a magic constructor and
-        // destructor.  We unlock the Object_Adapter lock for the
-        // duration of the servant activator upcalls; reacquiring once
-        // the upcalls complete.  Even though we are releasing the lock,
-        // other threads will not be able to make progress since
-        // <Object_Adapter::non_servant_upcall_in_progress_> has been
-        // set.
-        TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
-        ACE_UNUSED_ARG (non_servant_upcall);
+        {
+          // A recursive thread lock without using a recursive thread
+          // lock.  Non_Servant_Upcall has a magic constructor and
+          // destructor.  We unlock the Object_Adapter lock for the
+          // duration of the servant activator upcalls; reacquiring once
+          // the upcalls complete.  Even though we are releasing the lock,
+          // other threads will not be able to make progress since
+          // <Object_Adapter::non_servant_upcall_in_progress_> has been
+          // set.
+          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          ACE_UNUSED_ARG (non_servant_upcall);
 
-        // The POA invokes _add_ref once on the Servant before returning
-        // it. If the application uses reference counting, the caller of
-        // id_to_servant is responsible for invoking _remove_ref once on
-        // the returned Servant when it is finished with it. A
-        // conforming caller need not invoke _remove_ref on the returned
-        // Servant if the type of the Servant uses the default reference
-        // counting inherited from ServantBase.
-        servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-        ACE_CHECK_RETURN (0);
+          // The POA invokes _add_ref once on the Servant before returning
+          // it. If the application uses reference counting, the caller of
+          // id_to_servant is responsible for invoking _remove_ref once on
+          // the returned Servant when it is finished with it. A
+          // conforming caller need not invoke _remove_ref on the returned
+          // Servant if the type of the Servant uses the default reference
+          // counting inherited from ServantBase.
+          servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
 
-        return servant;
-      }
-
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+          return servant;
+        }
+      else
+        {
+          /*
+           * If using default servant request processing strategy but
+           * no default servant is available, we will raise the
+           * OBJ_ADAPTER system exception.
+           */
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
+        }
     }
 
     CORBA::Object_ptr
@@ -972,6 +983,11 @@ namespace TAO
 
       /*
        * Otherwise, the ServantNotActive exception is raised.
+       */
+
+      /*
+       * If no default servant is available, the POA will raise the
+       * OBJ_ADAPTER system exception.
        */
     }
 
