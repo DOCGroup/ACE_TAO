@@ -4,7 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 #include "tao/DynamicC.h"
-#include "tao/Typecode.h"
+#include "tao/TypeCode.h"
 
 ACE_RCSID (Dynamic,
            interceptors,
