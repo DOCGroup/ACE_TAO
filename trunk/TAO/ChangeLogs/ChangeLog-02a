@@ -1,3 +1,8 @@
+Tue Mar 20 06:17:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Schedule:/Service.cpp: Fixed a nagging
+	  warning in many platforms.  
+
 Mon Mar 19 19:49:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Basic/Atomic_Reconnect.bor:
