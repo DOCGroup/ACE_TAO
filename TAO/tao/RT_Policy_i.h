@@ -500,6 +500,12 @@ class TAO_Export TAO_GIOP_Properties :
 public:
   virtual ~TAO_GIOP_Properties ();
 
+  // = CDR encoding methods
+  
+  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
+
+  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
+
   // = Override CORBA::LocalObject no-op methods to
   // provide reference counting.
 
