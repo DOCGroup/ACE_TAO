@@ -1,3 +1,9 @@
+Thu Jul 02 09:14:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/Reactor/Misc/test_timer_queue.cpp (test_functionality):
+          use timer_id outside of an assert, so that we don't get compile
+          warnings with ACE_NDEBUG about it being unused.
+
 Wed Jul 01 21:31:40 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
         * ace/IOStream_T.i (recv_n, eof): fixed calculation of
