@@ -1,3 +1,25 @@
+Tue Nov 21 13:13:37 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tests/Multiple/Multiple.dsw:
+	* tests/Multiple/Server.dsp:
+	* tests/Multiple/Client.dsp:
+	* tests/Multiple/README:
+	* tests/Multiple/Makefile:
+
+	  VC++ workspace, VC++ project, Makefile and documentation files
+	  for the new  collocation test.
+
+	* tests/Multiple/Collocation_Tester.cpp:
+	* tests/Multiple/Collocation_Tester.h:
+	* tests/Multiple/Multiple_Impl.cpp:
+	* tests/Multiple/Multiple_Impl.h:
+	* tests/Multiple/client.cpp:
+	* tests/Multiple/server.cpp:
+	* tests/Multiple/Multiple.idl:
+
+	  Source file for the new collocation test.
+
+
 Tue Nov 21 09:40:51 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/releasenotes/index.html:
@@ -602,7 +624,7 @@ Sun Nov 19 19:11:19 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
           broker.
 
         * TAO_IDL/be_include/be_visitor_interface/strategized_proxy_broker_sh:
-        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:Mon Nov 20 01:32:48 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
 
           Visitor that generates the declaration for the stategized proxy
           broker.
