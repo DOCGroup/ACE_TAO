@@ -1,3 +1,10 @@
+Fri Mar 25 11:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Services.pidl:
+          Made the ServiceDetail struct compliant with the latest spec by
+          adding a new typedef and using this in the struct definition. We
+          will regenerate the corresponding files later today
+
 Fri Mar 25 07:09:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ImR_Client/ImR_Client.cpp:
