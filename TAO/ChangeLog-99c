@@ -1,3 +1,9 @@
+Wed Feb 10 19:39:27 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: Using
+	ACE_DEFAULT_TEMP_FILE for generating gperf input file. Thanks to
+	Lothar Werzinger <lwerzinger@krones.de> for suggesting this. 
+
 Wed Feb 10 18:55:09 1999 Fred Kuhns <fredk@cs.wustl.edu>
         * Changed Stub.i, set_fwd_profiles () so it doesn't
 	  complain about fwd_profiles which are themselves forwarded.
