@@ -1,3 +1,12 @@
+Sun Mar  7 17:29:33 2004  Olli Savia  <ops@iki.fi>
+
+	* ace/config-lynxos.h
+          Removed some unneeded ACE_LACKS_* macros.
+	
+	* ace/os_include/os_stdlib.h
+	* ace/os_include/os_strings.h
+	  Added missing prototypes for LynxOS 3.x.x
+
 Sat Mar 06 12:48:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Thread_Manager.cpp:
