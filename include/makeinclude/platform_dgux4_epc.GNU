@@ -2,9 +2,11 @@
 
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.x
 # *not* using Orbix
+
+debug = 1
+
 CC		= gcc
 CXX		= ec++
-CFLAGS		+= $(DCFLAGS)
 ## CCFLAGS	+= -relax -tproff
 CCFLAGS		+= $(CFLAGS) -relax -v -eh
 DCFLAGS		+= -g

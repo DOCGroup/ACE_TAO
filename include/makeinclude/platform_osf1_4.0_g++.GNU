@@ -3,9 +3,11 @@
 # This platform macros file is intended to work with Digital UNIX 4.0
 # (OSF/1 4.0) and GCC in version 2.7.2.1 (or newer).
 
+debug = 1
+
 CC		= gcc
 CXX		= g++
-CFLAGS          += $(DCFLAGS) -D_REENTRANT -O2
+CFLAGS          += -D_REENTRANT -O2
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates -fno-strict-prototypes
 DCFLAGS		+= -g
 LD		= $(CXX)

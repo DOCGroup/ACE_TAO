@@ -8,9 +8,11 @@
 # to compile it yourself (no binaries included) -- 
 # Jan Rychter <jwr@icm.edu.pl>
 
+debug = 1
+
 CC              = gcc
 CXX		= g++
-CFLAGS          += $(DCFLAGS) -Wall -fno-strict-prototypes -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
+CFLAGS          += -Wall -fno-strict-prototypes -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS		+= -g -O3
 DLD             = $(CXX)

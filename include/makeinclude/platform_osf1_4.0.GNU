@@ -3,9 +3,11 @@
 # This platform macros file is intended to work with 
 # Digital UNIX 4.0 (OSF/1 4.0).
 
+debug = 1
+
 CC              = cxx
 CXX             = $(CC)
-CFLAGS          += $(DCFLAGS) -pthread -ptr ptrepository
+CFLAGS          += -pthread -ptr ptrepository
 CCFLAGS         += $(CFLAGS) -w0
 DCFLAGS         += -g
 DLD             = $(CXX)

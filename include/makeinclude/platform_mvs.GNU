@@ -1,9 +1,10 @@
 # $Id$
 
 # For MVS OpenEdition platform
+
+debug = 1
  
 CXX           = cxx
-CFLAGS        += $(DCFLAGS)
 CCFLAGS       += $(CFLAGS)
 DCFLAGS	      += -g
 CPPFLAGS      = -+

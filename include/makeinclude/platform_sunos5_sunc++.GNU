@@ -15,10 +15,12 @@
 # 3) "Warning: <foo> hides the function " or "hides the same name in an
 #    outer scope".  A useful warning, perhaps, but not really a problem.
 # There should be no other warnings from Sun C++ when building ACE.
-#
+
+debug = 1
+
 CC              = cc
 CXX             = CC
-CFLAGS          += $(DCFLAGS) -mt
+CFLAGS          += -mt
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.

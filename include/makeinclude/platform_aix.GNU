@@ -7,11 +7,12 @@
 # separate product (free to AIX licensees) called shared library
 # hookable symbols (or slhs/6000).  If they don't have this patch, the
 # sv* commands for compiling and linking will not be present on the
-# system. 
+# system.
+
+debug = 1
 
 CC	    = xlC
 CXX	    = xlC_r
-CFLAGS      += $(DCFLAGS)
 CCFLAGS     += $(CFLAGS)
 DCFLAGS     += -g
 DLD	    = makeC++SharedLib_r

@@ -13,9 +13,11 @@
 # instruction to build your own.  You must have at least 3.0-current as
 # of 2/9/1997 to take advantage of the latest feature of pthread library.
 
+debug = 1
+
 CC              = gcc
 CXX		= g++
-CFLAGS          += $(DCFLAGS) -w -O2 -fno-strict-prototypes -D_POSIX_THREADS
+CFLAGS          += -w -O2 -fno-strict-prototypes -D_POSIX_THREADS
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = ld

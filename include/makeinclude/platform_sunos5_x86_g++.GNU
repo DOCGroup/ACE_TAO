@@ -1,12 +1,11 @@
 # $Id$
 
 # SunOS 5.x (Solaris 2.x) with g++ *not* using Orbix
-#
-# SOBUILD - compile into .so directly
-#
+
+debug = 1
+
 CC		= gcc 
 CXX		= g++
-CFLAGS          += $(DCFLAGS)
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates -fno-strict-prototypes
 DCFLAGS		+= -g
 DLD		= $(CXX)
@@ -18,6 +17,7 @@ AR		= ar
 ARFLAGS		= ruv
 RANLIB		= /bin/true
 SOFLAGS		= -G $(CPPFLAGS)
+# SOBUILD - compile into .so directly
 SOBUILD 	= $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK 	= cp $< $@
 # SOLINK 	= ln -s $< $@
