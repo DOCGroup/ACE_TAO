@@ -157,6 +157,7 @@ Video_Control_i::set_peer (const char *peer,
                       -1);
 
   VIDEO_SINGLETON::instance ()->videoSocket = VIDEO_SINGLETON::instance ()->dgram.get_handle ();
+
   return server_data_addr.get_port_number ();
 
 }
