@@ -16,6 +16,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
+#include "ace/Log_Msg.h"
 
 class ACE_Svc_Export Handle_R_Stream : public ACE_Service_Object, public ACE_SOCK_Acceptor
 {

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/WFMO_Reactor.h"
+#include "ace/Log_Msg.h"
 
 #include "Logging_Acceptor.h"
 #include "Logging_Handler.h"
@@ -45,8 +46,8 @@ Logging_Acceptor::~Logging_Acceptor (void)
 
 ACE_HANDLE
 Logging_Acceptor::get_handle (void) const
-{ 
-  return this->peer_acceptor_.get_handle (); 
+{
+  return this->peer_acceptor_.get_handle ();
 }
 
 // Accepts connections from client and registers new object with the
@@ -56,7 +57,7 @@ int
 Logging_Acceptor::handle_input (ACE_HANDLE)
 {
   Logging_Handler *svc_handler;
-  
+
   ACE_NEW_RETURN (svc_handler, Logging_Handler, -1);
 
   // Accept the connection from a client client daemon.
