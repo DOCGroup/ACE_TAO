@@ -27,7 +27,7 @@
 
 // Forward Declarations.
 class TAO_GIOP_Message_State;
-class TAO_GIOP_Version;
+class TAO_GIOP_Message_Version;
 class TAO_Transport;
 class TAO_Pluggable_Reply_Params;
 

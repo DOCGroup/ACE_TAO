@@ -269,7 +269,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 //         {
 //           // Now that we have the client connection handler object we need to
 //           // set the right messaging protocol for in the client side transport.
-//           const TAO_GIOP_Version& version = this->profile_->version ();
+//           const TAO_GIOP_Message_Version& version = this->profile_->version ();
 //           result = this->transport_->messaging_init (version.major,
 //                                                      version.minor);
 //           if (result == -1)
@@ -349,7 +349,7 @@ TAO_GIOP_Invocation::perform_call (TAO_Transport_Descriptor_Interface &desc,
     {
       // Now that we have the client connection handler object we need to
       // set the right messaging protocol for in the client side transport.
-      const TAO_GIOP_Version& version = this->profile_->version ();
+      const TAO_GIOP_Message_Version& version = this->profile_->version ();
       result = this->transport_->messaging_init (version.major,
                                                      version.minor);
       if (result == -1)
