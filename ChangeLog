@@ -1,3 +1,10 @@
+Thu Aug  7 07:35:56 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Corrected a bug in the dependency sorting logic by removing the
+          use of splice and manually moving the array entries.
+
 Thu Aug  7 06:18:57 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/rules.local.GNU:
