@@ -27,8 +27,7 @@ ACE_RCSID(Strategies, UIOP_Connection_Handler, "$Id$")
 TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_UIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    uiop_properties_ (0),
-    resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
+    uiop_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -45,8 +44,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core
   : TAO_UIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     uiop_properties_ (ACE_static_cast
-                     (TAO_UIOP_Properties *, arg)),
-    resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
+                     (TAO_UIOP_Properties *, arg))
 {
   TAO_UIOP_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
@@ -206,17 +204,15 @@ TAO_UIOP_Connection_Handler::fetch_handle (void)
 int
 TAO_UIOP_Connection_Handler::resume_handler (void)
 {
-  return this->resume_flag_;
+  return TAO_RESUMES_CONNECTION_HANDLER;
 }
 
 
 int
 TAO_UIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
-  // @@todo: We need to figure out whether we buy anything by resuming
-  // the handle ourselves. AFAICS, I dont think we buy anything. But I
-  // am not sure. Somebody can correct me if I am wrong.
-  this->resume_flag_ = TAO_DOESNT_RESUME_CONNECTION_HANDLER;
+  TAO_Resume_Handle  resume_handle (this->orb_core (),
+                                    this->get_handle ());
   return this->transport ()->handle_output ();
 }
 
@@ -245,8 +241,6 @@ int
 TAO_UIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
   this->incr_pending_upcalls ();
-
-  this->resume_flag_ = TAO_RESUMES_CONNECTION_HANDLER;
 
   TAO_Resume_Handle  resume_handle (this->orb_core (),
                                     this->fetch_handle ());

@@ -30,8 +30,7 @@ ACE_RCSID(tao, DIOP_Connect, "$Id$")
 TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_DIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    tcp_properties_ (0),
-    resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
+    tcp_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -48,8 +47,7 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
   : TAO_DIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
     tcp_properties_ (ACE_static_cast
-                     (TAO_DIOP_Properties *, arg)),
-    resume_flag_ (TAO_DOESNT_RESUME_CONNECTION_HANDLER)
+                     (TAO_DIOP_Properties *, arg))
 {
   TAO_DIOP_Transport* specific_transport = 0;
   ACE_NEW(specific_transport,
@@ -274,7 +272,7 @@ TAO_DIOP_Connection_Handler::fetch_handle (void)
 int
 TAO_DIOP_Connection_Handler::resume_handler (void)
 {
-  return this->resume_flag_;
+  return TAO_RESUMES_CONNECTION_HANDLER;
 }
 
 
@@ -344,8 +342,6 @@ TAO_DIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
   // Increase the reference count on the upcall that have passed us.
   this->incr_pending_upcalls ();
-
-  this->resume_flag_ = TAO_RESUMES_CONNECTION_HANDLER;
 
   TAO_Resume_Handle  resume_handle (this->orb_core (),
                                     this->fetch_handle ());
