@@ -333,4 +333,5 @@
 # define ACE_HAS_X86_STAT_MACROS
 #endif /* i386 */
 
+#define ACE_MALLOC_ALIGN 8
 #endif /* ACE_CONFIG_H */

@@ -240,5 +240,5 @@
 #define ACE_PSOS_DIAB
 
 #define ACE_PSOS_DIAB_MIPS
-
+#define ACE_MALLOC_ALIGN 8
 #endif /* ACE_CONFIG_H */
