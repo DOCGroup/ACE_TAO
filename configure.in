@@ -5503,24 +5503,7 @@ if test "$ace_user_enable_threads" = yes; then
 fi
 
 dnl Check for asynchronous IO calls
-if test "$ace_has_aio_funcs" = yes; then
-  ACE_CACHE_CHECK(for asynchronous IO calls,
-    ace_cv_feature_aio_calls,[
-      AC_TRY_COMPILE(
-        [
-#include <aio.h>
-        ],
-        [
-         aiocb* aiocb_ptr (void);
-        ],
-        [
-         ace_cv_feature_aio_calls=yes
-        ],
-        [
-         ace_cv_feature_aio_calls=no
-        ])
-    ], AC_DEFINE(ACE_HAS_AIO_CALLS),)
-fi dnl test "$ace_has_aio_funcs" = yes
+ACE_CHECK_ASYNCH_IO
 
 dnl Check for UNIX domain sockets
 ACE_CACHE_CHECK(for UNIX domain sockets,
