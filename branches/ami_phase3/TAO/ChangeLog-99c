@@ -1,3 +1,24 @@
+Wed Jun 23 23:19:34 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	   Added Asynch Invocation class. It makes invocations without 
+	   waiting for the reply. Implemented a portion of Asynch Reply
+	   Dispatcher and Muxed TMS. Not complete yet. 
+  
+  	 * tao/IIOP_Transport.cpp:
+	 * tao/Invocation.cpp:
+	 * tao/Invocation.p:
+	 * tao/Makefilp:
+	 * tao/Reply_Dispatcher.cpp:
+	 * tao/Reply_Dispatcher.p:
+	 * tao/Transport_Mux_Strategy.cpp:
+	 * tao/Transport_Mux_Strategy.p:
+  	
+  	Added the following files. 
+  
+	 * tao/Asynch_Invocation.cpp:
+	 * tao/Asynch_Invocation.h:
+	 * tao/Asynch_Invocation.i:
+  	
 Tue Jun 22 11:59:06 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
   
   	One more big step on generating AMI call back code. If I get rid
