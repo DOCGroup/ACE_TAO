@@ -325,7 +325,7 @@ else
   override minimum_corba =
 endif # minimum_corba
 
-ifeq ($(interface_repo),1)
+ifneq ($(interface_repo),1)
   CPPFLAGS += -DTAO_HAS_INTERFACE_REPOSITORY
 endif #interface_repo
 

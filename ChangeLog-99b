@@ -1,3 +1,10 @@
+Wed Aug  4 17:07:12 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU : Made the interface
+	  repository files to be compiled by default. If the user does not
+	  want these files to be compiled he can turn it off by issuing
+	  interface_repo=1 with the 'make' command.
+	
 Wed Aug  4 15:56:51 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* ace/Task.h (ACE_Task_Base): Changed the parameter name 
