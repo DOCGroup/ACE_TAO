@@ -53,12 +53,12 @@ class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
 class TAO_Priority_Mapping;
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 class TAO_None_Sync_Strategy;
 class TAO_Flush_Sync_Strategy;
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 class TAO_Transport_Sync_Strategy;
 
@@ -306,7 +306,7 @@ public:
   // on the heap and/or as class members; we need to investigate the
   // tradeoffs and take a decision.
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Policy_Manager *policy_manager (void);
   // Return the Policy_Manager for this ORB.
 
@@ -331,9 +331,9 @@ public:
 
   TAO_Buffering_Constraint_Policy *default_buffering_constraint (void) const;
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
   TAO_None_Sync_Strategy &none_sync_strategy (void);
   // This strategy will buffer messages.
@@ -341,25 +341,25 @@ public:
   TAO_Flush_Sync_Strategy &flush_sync_strategy (void);
   // This strategy will flush any buffered messages.
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   TAO_Transport_Sync_Strategy &transport_sync_strategy (void);
   // This strategy will sync with the transport.
 
-#if defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 1)
 
   TAO_Priority_Mapping *priority_mapping (void);
   // Access the priority mapping class, this is a TAO extension but
   // there is no standard way to get to it either.
 
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
   int get_thread_priority (CORBA::Short &priority);
   int set_thread_priority (CORBA::Short  priority);
   // Accessor and modifier to the current thread priority, used to
   // implement the RTCORBA::Current interface, but it is faster for
   // some critical components.
-  // If TAO_HAS_RT_CORBA is not defined the operations are noops.
+  // If TAO_HAS_RT_CORBA == 0, the operations are noops.
 
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
   // Obtain the TSS resources of this orb.
@@ -525,7 +525,7 @@ protected:
   CORBA::ULong collocation_strategy_;
   // Default collocation policy.  This should never be ORB_CONTROL.
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Policy_Manager *policy_manager_;
   // The Policy_Manager for this ORB.
 
@@ -534,7 +534,7 @@ protected:
 
   TAO_Policy_Current *policy_current_;
   // Policy current.
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   TAO_POA_Current *poa_current_;
   // POA current.
@@ -591,7 +591,7 @@ protected:
   TAO_Priority_Mapping *priority_mapping_;
   // The priority mapping.
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
   TAO_None_Sync_Strategy *none_sync_strategy_;
   // This strategy will buffer messages.
@@ -599,7 +599,7 @@ protected:
   TAO_Flush_Sync_Strategy *flush_sync_strategy_;
   // This strategy will flush any buffered messages.
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   TAO_Transport_Sync_Strategy *transport_sync_strategy_;
   // This strategy will sync with the transport.
@@ -673,14 +673,14 @@ public:
   // If the user (or library) provides no environment the ORB_Core
   // still holds one.
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   TAO_Policy_Current_Impl initial_policy_current_;
   // The initial PolicyCurrent for this thread. Should be a TSS
   // resource.
 
   TAO_Policy_Current_Impl *policy_current_;
   // This pointer is reset by the POA on each upcall.
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 };
 
 // @@ Must go away....

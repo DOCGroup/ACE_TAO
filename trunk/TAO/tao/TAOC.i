@@ -11,7 +11,7 @@
 // Inline operations for class TAO::PrioritySpecification_var
 // *************************************************************
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 ACE_INLINE
 TAO::PrioritySpecification_var::PrioritySpecification_var (void) // default constructor
@@ -655,4 +655,4 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, TAO::BufferingConstrai
 
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */

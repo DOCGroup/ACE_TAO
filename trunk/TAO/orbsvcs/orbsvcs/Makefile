@@ -40,7 +40,7 @@ ifndef TAO_ORBSVCS
                 CosEvent \
                 Event2
 
-ifndef minimum_corba
+ifeq ($(minimum_corba),0)
 
 # Trader uses DynAny which is disabled when compiling with minimum
 # CORBA support.  LifeCycle depend on Trader so don't build

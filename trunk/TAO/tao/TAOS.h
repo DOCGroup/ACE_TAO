@@ -12,11 +12,11 @@
 
 #include "tao/TAOC.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/POA_CORBA.h"
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +32,7 @@
 TAO_NAMESPACE  POA_TAO
 {
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
   class ClientPriorityPolicy;
   typedef ClientPriorityPolicy *ClientPriorityPolicy_ptr;
@@ -178,7 +178,7 @@ TAO_NAMESPACE  POA_TAO
 #endif /* end #if !defined */
 
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 }
 TAO_NAMESPACE_CLOSE

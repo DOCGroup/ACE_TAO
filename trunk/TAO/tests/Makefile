@@ -36,19 +36,26 @@ endif
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-ifndef minimum_corba
+ifeq ($(minimum_corba),0)
 
 # No DynAny in minimum CORBA
   DIRS += DynAny_Test
 
 # No NVList and Context in minimum CORBA
   DIRS += Param_Test \
-	DSI_Gateway
+	  DSI_Gateway
 
 # No Implicit activation in minimum CORBA
   DIRS += Faults
 
 endif # minimum_corba
+
+ifeq ($(ami_callback),1)
+
+# Requires AMI callbacks
+  DIRS += AMI
+
+endif # ami_callback
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU

@@ -12,7 +12,7 @@ TAO_Synch_Reply_Dispatcher::version (void) const
   return this->version_;
 }
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_POLLER)
+#if (TAO_HAS_CORBA_MESSAGING == 1) && (TAO_HAS_AMI_POLLER == 1)
 
 ACE_INLINE CORBA::ULong
 TAO_Asynch_Reply_Dispatcher::reply_status (void) const
@@ -26,7 +26,7 @@ TAO_Asynch_Reply_Dispatcher::version (void) const
   return this->version_;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_POLLER */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_AMI_POLLER == 1 */
 
 //*********************************************************************
 
@@ -45,4 +45,3 @@ TAO_DII_Deferred_Reply_Dispatcher::version (void) const
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-

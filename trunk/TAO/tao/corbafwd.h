@@ -1106,7 +1106,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_EnumMemberSeq *EnumMemberSeq_ptr;
   typedef CORBA_EnumMemberSeq_out EnumMemberSeq_out;
   typedef CORBA_EnumMemberSeq_var EnumMemberSeq_var;
-#endif /* TAO_HAS_INTERFACE_REPOSITORY */
+#endif /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
   typedef CORBA_Bounds Bounds;
   typedef CORBA_Bounds *Bounds_ptr;

@@ -114,7 +114,7 @@ TAO_ORB_Core::to_unicode (void) const
   return this->to_unicode_;
 }
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 ACE_INLINE TAO_Policy_Manager *
 TAO_ORB_Core::policy_manager (void)
 {
@@ -153,7 +153,7 @@ TAO_ORB_Core::default_buffering_constraint (void) const
   return this->default_policies_->buffering_constraint ();
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 ACE_INLINE TAO_ORB_Core_TSS_Resources*
 TAO_ORB_Core::get_tss_resources (void)
@@ -202,7 +202,7 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
 
 // ****************************************************************
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 ACE_INLINE TAO_None_Sync_Strategy &
 TAO_ORB_Core::none_sync_strategy (void)
@@ -216,7 +216,7 @@ TAO_ORB_Core::flush_sync_strategy (void)
   return *this->flush_sync_strategy_;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 ACE_INLINE TAO_Transport_Sync_Strategy &
 TAO_ORB_Core::transport_sync_strategy (void)
@@ -224,7 +224,7 @@ TAO_ORB_Core::transport_sync_strategy (void)
   return *this->transport_sync_strategy_;
 }
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 ACE_INLINE TAO_Policy_Current &
 TAO_ORB_Core::policy_current (void)
@@ -232,9 +232,9 @@ TAO_ORB_Core::policy_current (void)
   return *this->policy_current_;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-#if defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 1)
 
 ACE_INLINE TAO_Priority_Mapping *
 TAO_ORB_Core::priority_mapping (void)
@@ -242,7 +242,7 @@ TAO_ORB_Core::priority_mapping (void)
   return this->priority_mapping_;
 }
 
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 1 */
 
 ACE_INLINE TAO_POA_Current &
 TAO_ORB_Core::poa_current (void) const

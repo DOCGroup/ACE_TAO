@@ -15,7 +15,7 @@
 #include "tao/TAOC.i"
 #endif /* !defined INLINE */
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 static const CORBA::Long _oc_TAO_PrioritySelectionMode[] =
 {
@@ -529,7 +529,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, TAO::BufferingConstraint
 #  pragma instantiate TAO_Object_Manager<TAO::BufferingConstraintPolicy,TAO::BufferingConstraintPolicy_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (TAO)

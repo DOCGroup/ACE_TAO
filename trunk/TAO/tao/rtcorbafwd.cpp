@@ -2,7 +2,7 @@
 
 #include "tao/rtcorbafwd.h"
 
-#if defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 1)
 
 #if !defined (__ACE_INLINE__)
 # include "tao/rtcorbafwd.i"
@@ -20,4 +20,4 @@ TAO_NAMESPACE_BEGIN (RTCORBA)
 TAO_NAMESPACE_DEFINE (const RTCORBA::Priority, maxPriority, 32767)
 TAO_NAMESPACE_END
 
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 1 */

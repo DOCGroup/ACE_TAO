@@ -2,7 +2,7 @@
 
 #include "tao/Messaging_Policy_i.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #if ! defined (__ACE_INLINE__)
 #include "tao/Messaging_Policy_i.i"
@@ -229,4 +229,4 @@ TAO_Sync_Scope_Policy::_default_POA (CORBA_Environment &)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */

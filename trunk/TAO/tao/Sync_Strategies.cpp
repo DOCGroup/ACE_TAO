@@ -26,7 +26,7 @@ TAO_Transport_Sync_Strategy::send (TAO_Transport &transport,
                          max_wait_time);
 }
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 ssize_t
 TAO_None_Sync_Strategy::send (TAO_Transport &transport,
@@ -179,4 +179,4 @@ TAO_Flush_Sync_Strategy::buffering_constraints_reached (TAO_Transport &,
   return 1;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
