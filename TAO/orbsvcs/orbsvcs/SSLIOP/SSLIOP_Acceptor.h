@@ -96,7 +96,7 @@ namespace TAO
                          ACE_Reactor *reactor);
 
       /// Parse protocol specific options.
-      int parse_options (const char *options);
+      virtual int parse_options_i (int &argc, ACE_CString ** argv);
 
       /// Ensure that neither the endpoint configuration nor the ORB
       /// configuration violate security measures.

@@ -1,3 +1,24 @@
+Mon Feb 28 07:58:58 2005  Ciju John  <john_c@ociweb.com>
+
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
+        * orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
+          Refactored the parse_options method bringing common code to the
+          base class. In the future this work needs to be taken a
+          higher level with common code moved to TAO_Acceptor class. This
+          will affect all pluggable protocols, but saves from
+          code-duplication.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.h:
+          Added portspan capability to SSLIOP.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Set option SSL_MODE_ACCEPT_MOVING_WRITE_BUFFER during
+          non-blocking IO. This allows a retry of write to use a different
+          input buffer equating SSL_write behaviour with write(2).
+
 Mon Feb 28 11:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/LifespanStrategyPersistent.cpp:

@@ -133,7 +133,20 @@ protected:
    *                port but can't because you're behind a firewall and don't
    *                want to permit passage on all ephemeral ports)
    */
-  virtual int parse_options (const char *options);
+  int parse_options (const char *options);
+
+  /**
+   * Parse options splits the options list in to an argv array. This
+   * allows manipulation of the list in a manner similar to
+   * orb_init. By moving the consumed args to the tail of the list and
+   * reducing the argc count, the base parse_options_i can be called
+   * by derived parse_options_i. Method returns -1 if an ill-formed or
+   * otherwise bogus arg is encountered. The only strictly bogus arg
+   * was priority, which was a holdover from the early RT IIOP
+   * implementations. an ill-formed option is one which is missing an
+   * equal sign or something to the left of it.
+   */
+  virtual int parse_options_i (int &argc, ACE_CString ** argv);
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
