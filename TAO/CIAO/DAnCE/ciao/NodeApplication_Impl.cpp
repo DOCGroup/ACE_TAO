@@ -15,8 +15,17 @@ CORBA::Long
 CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  //@@TODO initialize this NodeApplication properties
+  return 0;
+}
+
+CORBA::Long
+CIAO::NodeApplication_Impl::init_containers (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+{
   //@@TODO We need to create all the containers in this stage
   // Which properties should be passed in?
+  this->create_container (this->properties_);
   this->create_container (this->properties_);
   return 0;
 }
@@ -165,6 +174,10 @@ CIAO::NodeApplication_Impl::install (
 
       CORBA::ULong num_containers = node_impl_info.length ();
 
+      //@@TODO:In my opinition, this is a good place to call init() to
+      // create the necessary containers and pass their properties..
+      this->init_containers ();
+
       // For each container, invoke <install> operation, this will return
       // the ComponentInfo for components installed in each container.
       // Merge all the returned ComponentInfo, which will be used
@@ -201,17 +214,22 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
-  // For each container, invoke <remove> operation.
+  // For each container, invoke <remove> operation to remove home and components.
   for (CORBA::ULong i = 0; i < this->container_set_.size (); ++i)
     {
       this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
 
-  if (CIAO::debug_level () > 1)
-    ACE_DEBUG ((LM_DEBUG, "Shutting down this NodeApplication!\n"));
+  // Remove all containers
+  this->container_set_.remove_all ();
 
-  //TODO: Find it out
+  if (CIAO::debug_level () > 1)
+    ACE_DEBUG ((LM_DEBUG, "Removed all containers from this NodeApplication!\n"));
+
+  //@TODO: Find it out whether we need to shutdown ORB or not.
+  // My thought is we shouldn't, in case we need to reinstall some other containers
+  // or components later, such as Jai's swappable components functionality.
   //this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 

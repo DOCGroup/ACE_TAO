@@ -81,7 +81,7 @@ main (int argc, char *argv[])
       // This is what we will send out, containing all the instance info the
       // NodeApplication needs
       Deployment::ContainerImplementationInfo container_info;
-      container_info.length (CORBA::ULong (comp_num));
+      container_info.impl_infos.length (CORBA::ULong (comp_num));
 
       CORBA::ULong i;
       for (i = 0; i < comp_num; ++i)
@@ -103,7 +103,7 @@ main (int argc, char *argv[])
             CORBA::string_dup ("createNodeAppTest_RoundTripHome_Servant");
 
           //Now add the info into the infos
-          container_info[i] = info;
+          container_info.impl_infos[i] = info;
         }
 
       // For debug purpose.
@@ -115,12 +115,14 @@ main (int argc, char *argv[])
           // Add the names and entry points of each of the DLLs
           ACE_DEBUG ((LM_DEBUG,
             "The info I will send out: \n\t%s\n\t%s\n\t%s\n\t%s\n\t%s\n",
-            container_info[i].component_instance_name.in (),
-            container_info[i].executor_dll.in (),
-            container_info[i].executor_entrypt.in (),
-            container_info[i].servant_dll.in (),
-            container_info[i].servant_entrypt.in () ));
+            container_info.impl_infos[i].component_instance_name.in (),
+            container_info.impl_infos[i].executor_dll.in (),
+            container_info.impl_infos[i].executor_entrypt.in (),
+            container_info.impl_infos[i].servant_dll.in (),
+            container_info.impl_infos[i].servant_entrypt.in () ));
         }
+
+      // container_info.container_config is not set for now
 
       ACE_DEBUG ((LM_DEBUG, "Try installing Homes and Components\n"));
 
