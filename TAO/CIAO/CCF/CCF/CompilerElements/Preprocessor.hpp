@@ -5,6 +5,7 @@
 #ifndef CCF_PREPROCESSOR_HPP
 #define CCF_PREPROCESSOR_HPP
 
+#include <locale>
 #include <deque>
 
 #include "CCF/CompilerElements/TokenStream.hpp"
