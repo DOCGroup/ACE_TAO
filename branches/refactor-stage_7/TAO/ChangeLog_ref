@@ -1,3 +1,8 @@
+Mon Oct 14 8:02:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Base.cpp: Fixed a compile error when compiled
+	  with native exceptions disabled.
+
 Mon Oct 13 21:22:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Collocated_Invocation.cpp: Fixed simple bugs with
