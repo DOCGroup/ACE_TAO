@@ -8,7 +8,6 @@ ACE_RCSID(ImplRepo, airplane_i, "$Id$")
 // Constructor
 
 Airplane_i::Airplane_i (int shutdown)
-: shutdown_ (shutdown)
 {
   // Seed the random number generator
   // Note: This server should not be run with thread-per-request since the seeding
@@ -36,9 +35,6 @@ Airplane_i::get_plane (CORBA::Environment &ACE_TRY_ENV)
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Airplane_i::get_plane\n"));
   
-  if (this->shutdown_ != 0)
-    TAO_ORB_Core_instance ()->orb ()->shutdown ();
-
   switch (ACE_OS::rand () % 24)
     {
     case 0:
