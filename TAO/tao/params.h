@@ -64,6 +64,18 @@ public:
 
   CORBA::UShort name_service_port (void);
   // Get the port of our name service.
+  
+  void trading_service_ior (CORBA::String ns);
+  // Set the IOR of our trading service.
+
+  CORBA::String trading_service_ior (void);
+  // Get the IOR of our trading service.
+
+  void trading_service_port (CORBA::UShort port);
+  // Set the port of our trading service.
+
+  CORBA::UShort trading_service_port (void);
+  // Get the port of our trading service.
 
   int sock_rcvbuf_size (void);
   // Get the size to be used for a socket's receive buffer.
@@ -86,6 +98,12 @@ private:
 
   CORBA::UShort name_service_port_;
   // The port number of our configured Naming Service.
+
+  CORBA::String trading_service_ior_;
+  // The IOR of our configured Trading Service.
+
+  CORBA::UShort trading_service_port_;
+  // The port number of our configured Trading Service.
 
   int sock_rcvbuf_size_;
   // Size to be used for a socket's receive buffer.
