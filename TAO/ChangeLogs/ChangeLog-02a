@@ -1,3 +1,16 @@
+Tue Mar 12 15:27:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Sequence.h:
+        * tao/Sequence.cpp:
+        * tao/Sequence_T.h"
+        * tao/Sequence_T.cpp:
+
+          Added replace() methods, with signatures as described on page
+          1-45 of the C++ mapping (00-01-02), to (un)bounded (w)string
+          sequences. Thanks to Espen Harlinn <espen.harlinn@seamos.no>
+          for pointing out the oversight. Also made many cosmetic changes
+          to all the above files.
+
 Tue Mar 12 12:30:16 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
