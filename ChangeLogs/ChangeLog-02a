@@ -1,15 +1,18 @@
+Thu Jun 01 12:35:00 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/ace_dll.dsp:  Fixed typos in ACEMFC configuration.  Thanks
+          to Steve for pointing this out.
+
 Thu Jun  1 10:08:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * bin\fuzz.pl:
+        * bin/fuzz.pl:
 
           Was printing out "line test" when doing the preprocessor
           comment test.
 
 Thu Jun  1 08:43:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
-        * bin\fuzz.pl: (added)
-          
-          Fuzz is a script whose purpose is to check through ACE/TAO 
+          Fuzz is a script whose purpose is to check through ACE/TAO
           files for easy to spot (by a perl script, at least) problems.
 
           Usage is:
@@ -31,47 +34,47 @@ Thu Jun  1 08:43:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed May 31 16:30:44 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in (AC_REVISION):
+        * configure.in (AC_REVISION):
 
-	  The RCS ID had to be quoted, otherwise the generated configure
-	  script would end up having a mangled version of the RCS ID.
+          The RCS ID had to be quoted, otherwise the generated configure
+          script would end up having a mangled version of the RCS ID.
 
 Wed May 31 16:18:35 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Fixed the informational message that is displayed when the
-	  configuration integrity check fails so that the shell will no
-	  longer interpret the RCS ID as a variable.  This was done by
-	  removing the dollar '$' signs from the RCS ID by using the M4
-	  translit() built-in.
+          Fixed the informational message that is displayed when the
+          configuration integrity check fails so that the shell will no
+          longer interpret the RCS ID as a variable.  This was done by
+          removing the dollar '$' signs from the RCS ID by using the M4
+          translit() built-in.
 
-	  (LIBS):
+          (LIBS):
 
-	  Removed "-lrt" from the hardcoded list of libraries for OSF/1
-	  {3,4,5}.  The ACE_CHECK_ASYNCH_IO test should be able to detect
-	  this library.
+          Removed "-lrt" from the hardcoded list of libraries for OSF/1
+          {3,4,5}.  The ACE_CHECK_ASYNCH_IO test should be able to detect
+          this library.
 
-	  (AC_REVISION):
+          (AC_REVISION):
 
-	  Changed revision string to be the RCS ID.
+          Changed revision string to be the RCS ID.
 
-	  (AC_OUTPUT):
+          (AC_OUTPUT):
 
-	  Removed the commented out TAO output files from the list files
-	  the configure script should create.  The latest CVS Autoconf
-	  flagged them as problems when generating the configure script.
+          Removed the commented out TAO output files from the list files
+          the configure script should create.  The latest CVS Autoconf
+          flagged them as problems when generating the configure script.
 
 Wed May 31 18:08:12 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* examples/QoS/QosEvent.h:
-	* examples/QoS/server.cpp:
-	* examples/QoS/client.cpp:
-	* examples/QoS/Receiver_QOS_Event_Handler.{cpp,h}:
-	* examples/QoS/Sender_QOS_Event_Handler.{cpp,h}:
+        * examples/QoS/QosEvent.h:
+        * examples/QoS/server.cpp:
+        * examples/QoS/client.cpp:
+        * examples/QoS/Receiver_QOS_Event_Handler.{cpp,h}:
+        * examples/QoS/Sender_QOS_Event_Handler.{cpp,h}:
 
-	  Fixed the calls to subsribe() and qos () methods that
-	  broke because of changes to ACE QoS API.
+          Fixed the calls to subsribe() and qos () methods that
+          broke because of changes to ACE QoS API.
 
 Wed May 31 12:29:12 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -106,7 +109,7 @@ Wed May 31 10:31:18 2000  Darrell Brunsch <brunsch@uci.edu>
         * examples/ConfigViewer/ConfigurationViewer.dsp:
 
           Changed the configuration type to "Win32 wxWindows Debug"
-          instead of "Win32 Debug" (and the same for Release).  
+          instead of "Win32 Debug" (and the same for Release).
           This will prevent this project from being picked up by
           the msvc_auto_compile.pl, since we do not have wxWindows
           installed with the auto builds.
@@ -120,7 +123,7 @@ Wed May 31 10:13:10 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed May 31 11:25:34 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Reactor/WFMO_Reactor/test_handle_close.cpp: Fixed
+        * examples/Reactor/WFMO_Reactor/test_handle_close.cpp: Fixed
 	  signed/unsigned comparison warning.
 
 Tue May 30 14:23:22 2000  Ossama Othman  <ossama@uci.edu>
