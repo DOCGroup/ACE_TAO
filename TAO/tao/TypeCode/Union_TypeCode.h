@@ -47,7 +47,7 @@ namespace TAO
     {
     public:
 
-      typedef TAO::TypeCode::Case_Base<StringType> Case;
+      typedef TAO::TypeCode::Case<StringType> Case;
 
       /// Constructor.
       Union (char const * id,

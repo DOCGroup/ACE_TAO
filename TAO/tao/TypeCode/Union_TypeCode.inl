@@ -57,7 +57,7 @@ TAO::TypeCode::Union<StringType,
       // below.
     }
 
-  return this->cases_[index];   
+  return this->cases_[index];
 }
 
 
