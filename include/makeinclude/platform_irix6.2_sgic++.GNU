@@ -3,25 +3,22 @@
 # This suppresses common compiler warnings which appear in the 
 # ACE code but should not matter.  The warnings can be turned on
 # again by removing the -woff clause in the CPPFLAGS definition.
-#
-# I (Gonzalo Diethelm <gonzo@@ing.puc.cl>) also turned off warning 85
-# from the linker; otherwise there are a lot of warnings about symbols
-# in the pthread library overriding symbols in the C library (which is
-# OK), and added libpthread.so to the link phase.
 
 CC		= cc
 CXX		= CC
-CFLAGS		+= $(DCFLAGS)
-CCFLAGS		+= $(CFLAGS)
-DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX) 
-CPPFLAGS	+= -ptused -prelink -D_SGI_MP_SOURCE 
-# For the new 32 bit C++ compiler (-n32)
+
+# Basic flags
+CPPFLAGS	+= -O +pp -D_SGI_MP_SOURCE
+# Instantiate everything...
+#CPPFLAGS	+= -ptall -woff 3203,3209,3161,3262,3665
+# Instantiate used templates, plus prelinking instantiation
+CPPFLAGS	+= -ptused -prelink -woff 3203,3209,3161,3262,3665
+# Unknown version of SGI CC, -n32 mode
+# NOTE: -32/-n32/-64 mode is usually better set by the environment variable 'SGI_ABI'
 #CPPFLAGS	+= -n32 -woff 1174,1209,1375,1506,1110,1552,1021,1171
-# For the old C++ compiler (-32)
-CPPFLAGS	+= +pp
-LDFLAGS		+= -rpath "$(WRAPPER_ROOT)/ace" -Wl,-woff,85
+LDFLAGS		+= -rpath "$(WRAPPER_ROOT)/ace"
 LIBS		+= -lpthread
 PIC		= -KPIC
 AR		= ar

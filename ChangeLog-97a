@@ -1,13 +1,21 @@
-Sat Apr 19 18:52:44 1997  David L. Levine  <levine@cs.wustl.edu>
-
-	* (format_hexdump): changed type of first arg to const char *
-	  for compatibility with Log_Msg::log_hexdump ().
-
 Sat Apr 19 11:56:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* include/makeinclude: Removed the platform_irix6.2_sgiCC.GNU
+	  from the release.  Thanks to Torbjorn Lindgren
+ 	  <tl@funcom.no> for these fixes.
+
+	* include/makeinclude/platform_irix6.2_sgic++.GNU: Updated the SGI
+ 	  C++ platform config file.  Thanks to Torbjorn Lindgren
+ 	  <tl@funcom.no> for these fixes.
 
 	* ace/Log_Msg.cpp (log_hexdump): The char * arguments should be
  	  const char *'s.  Thanks to Matthias Kerkhoff
  	  <make@cs.tu-berlin.de> for reporting this.
+
+Sat Apr 19 18:52:44 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* (format_hexdump): changed type of first arg to const char *
+	  for compatibility with Log_Msg::log_hexdump ().
 
 Thu Apr 17 08:25:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
