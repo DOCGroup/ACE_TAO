@@ -430,7 +430,8 @@ main (int argc, ACE_TCHAR *argv[])
   // command line is:   -p <port> -r (reactive) | -m (multithreaded)
 
   ACE_TCHAR lognm[MAXPATHLEN];
-  ACE_OS::sprintf(lognm, ACE_TEXT ("MEM_Stream_Test-%d"), ACE_OS::getpid());
+  int mypid (ACE_OS::getpid ());
+  ACE_OS::sprintf(lognm, ACE_TEXT ("MEM_Stream_Test-%d"), mypid);
   ACE_START_TEST (lognm);
 
   ACE_Get_Opt opts (argc, argv, ACE_TEXT ("p:rm"));

@@ -1,3 +1,7 @@
+Tue Aug 28 17:45:22 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/MEM_Stream_Test.cpp: Fixed compile warning on gcc.
+
 Tue Aug 28 13:16:31 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/vxworks_modify.pl:
