@@ -19,6 +19,87 @@
 
 ACE_RCSID(On_Demand_Activation, server, "$Id$")
 
+static char *ior_output_file = 0;
+
+static int
+parse_args (int argc, char **argv)
+{
+  ACE_Get_Opt get_opts (argc, argv, "f:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 'f':
+        ior_output_file = get_opts.optarg;
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "[-f ior_output_file]"
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+
+  // Indicates successful parsing of command line.
+  return 0;
+}
+
+static int
+write_iors_to_file (const char *first_ior,
+                    const char *second_ior)
+{
+  if (ior_output_file == 0)
+    // No filename was specified; simply return
+    return 0;
+
+  char ior_output_file_1[BUFSIZ];
+  char ior_output_file_2[BUFSIZ];
+
+  ACE_OS::sprintf (ior_output_file_1, "%s_1", ior_output_file);
+  ACE_OS::sprintf (ior_output_file_2, "%s_2", ior_output_file);
+
+  FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
+  FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
+  
+  if (output_file_1 == 0 || 
+      output_file_2 == 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s\n", 
+                       ior_output_file_1,
+                       ior_output_file_2), 
+                      -1);
+
+  int result = 0;
+
+  result = ACE_OS::fprintf (output_file_1,
+                            "%s", 
+                            first_ior);
+  if (result != ACE_OS::strlen (first_ior))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+                       first_ior,
+                       ior_output_file_1),
+                      -1);
+  
+  result = ACE_OS::fprintf (output_file_2,
+                            "%s", 
+                            second_ior);
+  if (result != ACE_OS::strlen (second_ior))
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "ACE_OS::fprintf failed while writing %s to %s\n", 
+                       second_ior,
+                       ior_output_file_2),
+                      -1);
+  
+  ACE_OS::fclose (output_file_1);
+  ACE_OS::fclose (output_file_2);
+
+  return 0;
+}
+
 int
 main (int argc, char **argv)
 {
@@ -33,6 +114,10 @@ main (int argc, char **argv)
       return -1;
     }
 
+  int result = parse_args (argc, argv);
+  if (result != 0)
+    return result;
+  
   // Get an Object reference to RootPOA.
   CORBA::Object_var obj =
     orb->resolve_initial_references ("RootPOA");
@@ -254,6 +339,11 @@ main (int argc, char **argv)
   ACE_DEBUG((LM_DEBUG,"%s\n%s\n",
 	     first_foo_ior.in (),
 	     second_foo_ior.in ()));
+
+  int write_result = write_iors_to_file (first_foo_ior.in (),
+                                         second_foo_ior.in ());
+  if (write_result != 0)
+    return write_result;
 
   // Set the poa_manager state to active, ready to process requests.
   poa_manager->activate (env);
