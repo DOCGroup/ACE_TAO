@@ -45,13 +45,18 @@ Server_Impl::parse_args (void)
 }
 
 int
-Server_Impl::init (int argc, char** argv, CORBA::Environment& env)
+Server_Impl::init (int argc, char *argv[], CORBA::Environment& env)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
-  if (this->orb_manager_.init_child_poa (argc, argv, "child_poa", env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
-
+  if (this->orb_manager_.init_child_poa (argc,
+                                         argv,
+                                         "child_poa",
+                                         env) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "init_child_poa"),
+                      -1);
   TAO_CHECK_ENV_RETURN (env, -1);
   
   this->argc_ = argc;
@@ -66,11 +71,14 @@ Server_Impl::init (int argc, char** argv, CORBA::Environment& env)
     this->orb_manager_.activate_under_child_poa ("server",
                                                  &this->server_impl,
                                                  env);
-  ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", str.in ()));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "The IOR is: <%s>\n",
+              str.in ()));
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
+      ACE_OS::fprintf (this->ior_output_file_,
+                       "%s",
+                       str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
 

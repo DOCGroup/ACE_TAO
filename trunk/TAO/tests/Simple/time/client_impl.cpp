@@ -86,48 +86,39 @@ Client_Impl::parse_args (void)
   return 0;
 }
 
-// calculate the cube from a long
+// Compute the time on a remote machine.
 
 void
-Client_Impl::cube_long (int i)
+Client_Impl::time (void)
 {
-  // Cube a long.
-  CORBA::Long ret_long;
-  {
-    ret_long = this->server_->simple_method (i, this->env_);
-  }
+  CORBA::Long timedate = this->server_->time (this->env_);
 
-  ACE_DEBUG ((LM_DEBUG, "The cube of %d is %d\n", i, ret_long));
+  ACE_DEBUG ((LM_DEBUG,
+              "The cube of %d is %d\n", i, ret_long));
 
   if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("from cube_long");
-    }
+    this->env_.print_exception ("from time");
   else
     {
-      dmsg2 ("cube long:  %d --> %d\n", i, ret_long);
-      CORBA::Long arg_long = i * i * i;
+      dmsg2 ("time:  %d --> %d\n", i, timedate);
 
-      if (arg_long != ret_long)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "** cube_long (%ld) ERROR (--> %ld)\n",
-                      ret_long,
-                      arg_long));
-        }
+      char *ascii_timedate = ACE_OS::ctime (&timedate);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "string time is %s\n",
+                  ascii_timedate));
     }
 }
-
 
 // Execute client example code.
 
 int
-Client_Impl::run ()
+Client_Impl::run (void)
 {
   u_int i;
 
   for (i = 0; i < this->loop_count_; i++)
-    this->cube_long (i);
+    this->time ();
 
   if (this->shutdown_)
     this->server_->shutdown (this->env_);
