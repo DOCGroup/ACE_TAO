@@ -1,3 +1,19 @@
+Mon Mar 26 22:34:39 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.cpp:
+
+          Changed the assignment operator from T_var for 
+          class TAO_Object_Manager to take a const T_var &.
+          The non-const parameter we had previously has
+          incorrect semantics and may cause the wrong
+          assignment operator (from T *) to be chosen by the
+          compiler in some cases, leading to problems because
+          the assignment from T * does not duplicate the
+          pointer. Thanks to Matt Cheers <Matt.Cheers@Australia.Boeing.com>
+          and Derek Dominish <Derek.Dominish@Australia.Boeing.com> for
+          pointing out the problem.
+
 Mon Mar 26 22:20:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * tao/IIOP_Connection_Handler.cpp:
