@@ -60,6 +60,13 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory (void)
     delete *iterator;
 
   this->protocol_factories_.reset ();
+
+  for (int i = 0;
+       i < this->parser_names_count_;
+       ++i)
+    CORBA::string_free (this->parser_names_[i]);
+
+  delete []this->parser_names_;
 }
 
 int
@@ -84,7 +91,13 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
       {
         // This is the last loop..
         this->parser_names_ =
-          new const char *[this->parser_names_count_];
+          new char *[this->parser_names_count_];
+
+        for (int i = 0;
+             i < this->parser_names_count_;
+             ++i)
+          this->parser_names_[i] = 0;
+
         this->index_ = 0;
       }
   }
@@ -361,7 +374,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
 }
 
 int
-TAO_Default_Resource_Factory::get_parser_names (const char **&names,
+TAO_Default_Resource_Factory::get_parser_names (char **&names,
                                                 int &number_of_names)
 {
   if (this->parser_names_count_ != 0)
@@ -376,7 +389,12 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
   // OK fallback on the hardcoded ones....
   this->parser_names_count_ = 4; /*HOW MANY DO WE HAVE?*/
 
-  this->parser_names_ = new const char * [this->parser_names_count_];
+  this->parser_names_ = new char *[this->parser_names_count_];
+
+  for (int i = 0;
+       i < this->parser_names_count_;
+       ++i)
+    this->parser_names_[i] = 0;
 
   // Ensure that there is enough space in the parser_names_ array */
 
@@ -400,7 +418,7 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
   int index = 0;
   if (tmp != 0)
     {
-      this->parser_names_[index] = "DLL_Parser";
+      this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
       index++;
     }
 
@@ -423,7 +441,7 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
     }
   if (tmp != 0)
     {
-      this->parser_names_[index] = "FILE_Parser";
+      this->parser_names_[index] = CORBA::string_dup ("FILE_Parser");
       index++;
     }
 
@@ -446,7 +464,7 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
         }
     }
 
-  this->parser_names_[index] = "CORBALOC_Parser";
+  this->parser_names_[index] = CORBA::string_dup ("CORBALOC_Parser");
   index++;
 
   // CORBANAME_Parser
@@ -467,7 +485,7 @@ TAO_Default_Resource_Factory::get_parser_names (const char **&names,
         }
     }
 
-  this->parser_names_[index] = "CORBANAME_Parser";
+  this->parser_names_[index] = CORBA::string_dup ("CORBANAME_Parser");
   index++;
 
   names = this->parser_names_;

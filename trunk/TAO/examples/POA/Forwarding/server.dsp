@@ -103,7 +103,7 @@ SOURCE=.\MyFooServant.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Servant_Locator.cpp
+SOURCE=.\Servant_Activator.cpp
 # End Source File
 # Begin Source File
 
@@ -131,7 +131,7 @@ SOURCE=.\MyFooServant.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Servant_Locator.h
+SOURCE=.\Servant_Activator.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

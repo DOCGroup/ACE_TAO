@@ -30,6 +30,11 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
           0),
         CORBA::COMPLETED_NO));
 
+  // Check if a non-servant upcall is in progress.  If a non-servant
+  // upcall is in progress, wait for it to complete.  Unless of
+  // course, the thread making the non-servant upcall is this thread.
+  poa.object_adapter ().wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
+
   if (check_for_destruction &&
       poa.cleanup_in_progress ())
     ACE_THROW (
@@ -38,8 +43,6 @@ TAO_POA_Guard::TAO_POA_Guard (TAO_POA &poa,
           TAO_POA_BEING_DESTROYED,
           0),
         CORBA::COMPLETED_NO));
-
-  poa.object_adapter ().wait_for_non_servant_upcalls_to_complete (ACE_TRY_ENV);
 }
 
 ACE_INLINE PortableServer::ThreadPolicyValue
@@ -849,6 +852,12 @@ ACE_INLINE CORBA::ULong
 TAO_POA::decrement_outstanding_requests (void)
 {
   return --this->outstanding_requests_;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_POA::waiting_destruction (void) const
+{
+  return this->waiting_destruction_;
 }
 
 ACE_INLINE void

@@ -186,7 +186,7 @@ public:
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
   // Configure the priority mapping for the ORB
 
-  virtual int get_parser_names (const char **&names,
+  virtual int get_parser_names (char **&names,
                                 int &number_of_names);
 };
 
