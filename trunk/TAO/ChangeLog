@@ -1,6 +1,6 @@
 Wed Apr 28 06:32:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
 	* tao/Exception.cpp:
 
 	  Removed the comment that _type () is decremented. Infact its
@@ -29,7 +29,7 @@ Tue Apr 27 17:12:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Tue Apr 27 16:39:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableInterceptor.pidl:
- 	* tao/Bounds.pidl:
+	* tao/Bounds.pidl:
 	* tao/Policy.pidl:
 	* tao/IOP_Codec.pidl:
 
