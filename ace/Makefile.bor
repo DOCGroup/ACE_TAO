@@ -63,6 +63,7 @@ OBJFILES = \
 	$(OBJDIR)\Local_Tokens.obj \
 	$(OBJDIR)\Log_Msg.obj \
 	$(OBJDIR)\Log_Record.obj \
+	$(OBJDIR)\Logging_Strategy.obj \
 	$(OBJDIR)\LSOCK.obj \
 	$(OBJDIR)\LSOCK_Acceptor.obj \
 	$(OBJDIR)\LSOCK_CODgram.obj \
