@@ -58,57 +58,45 @@ public:
   /*
    * Look up the value of a feature.
    */
-  virtual int getFeature (const ACEXML_Char *name,
-                  ACEXML_Env &xmlenv)
-    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-    //                       ACEXML_SAXNotSupportedException))
-    ;
+  virtual int getFeature (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+                           ACEXML_SAXNotSupportedException)) ;
 
   /*
    * Look up the value of a property.
    */
-  virtual void * getProperty (const ACEXML_Char *name,
-                              ACEXML_Env &xmlenv)
-    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-    //                       ACEXML_SAXNotSupportedException))
-    ;
+  virtual void * getProperty (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+                     ACEXML_SAXNotSupportedException)) ;
 
   /*
    * Parse an XML document.
    */
-  virtual void parse (ACEXML_InputSource *input,
-                      ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual void parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Parse an XML document from a system identifier (URI).
    */
-  virtual void parse (const ACEXML_Char *systemId,
-                      ACEXML_Env &xmlenv)
+  virtual void parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
     // @@ throw IOException???
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+        ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Set the state of a feature.
    */
   virtual void setFeature (const ACEXML_Char *name,
-                           int boolean_value,
-                           ACEXML_Env &xmlenv)
-    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-    //                       ACEXML_SAXNotSupportedException))
-    ;
+                           int boolean_value ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+                     ACEXML_SAXNotSupportedException)) ;
 
   /*
    * Set the value of a property.
    */
   virtual void setProperty (const ACEXML_Char *name,
-                            void *value,
-                            ACEXML_Env &xmlenv)
-    //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-    //                       ACEXML_SAXNotSupportedException))
-    ;
+                            void *value ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+                     ACEXML_SAXNotSupportedException)) ;
 
   /*
    * Get the parent reader.
@@ -165,75 +153,60 @@ public:
    */
   virtual void characters (const ACEXML_Char *ch,
                            int start,
-                           int length,
-                           ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+                           int length ACEXML_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual void endDocument (ACEXML_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Receive notification of the end of an element.
    */
   virtual void endElement (const ACEXML_Char *namespaceURI,
                            const ACEXML_Char *localName,
-                           const ACEXML_Char *qName,
-                           ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+                           const ACEXML_Char *qName ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * End the scope of a prefix-URI mapping.
    */
-  virtual void endPrefixMapping (const ACEXML_Char *prefix,
-                                 ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual void endPrefixMapping (const ACEXML_Char *prefix ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Receive notification of ignorable whitespace in element content.
    */
   virtual void ignorableWhitespace (const ACEXML_Char *ch,
                                     int start,
-                                    int length,
-                                    ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+                                    int length ACEXML_ENV_ARG_DECL)
+         ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Receive notification of a processing instruction.
    */
   virtual void processingInstruction (const ACEXML_Char *target,
-                                      const ACEXML_Char *data,
-                                      ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+                                      const ACEXML_Char *data ACEXML_ENV_ARG_DECL)
+          ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Receive an object for locating the origin of SAX document events.
    */
-  virtual void setDocumentLocator (ACEXML_Locator *locator,
-                                   ACEXML_Env &xmlenv) ;
+  virtual void setDocumentLocator (ACEXML_Locator *locator) ;
 
   /*
    * Receive notification of a skipped entity.
    */
-  virtual void skippedEntity (const ACEXML_Char *name,
-                              ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual void skippedEntity (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
+         ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual void startDocument (ACEXML_ENV_SINGLE_ARG_DECL)
+         ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Receive notification of the beginning of an element.
@@ -241,19 +214,15 @@ public:
   virtual void startElement (const ACEXML_Char *namespaceURI,
                              const ACEXML_Char *localName,
                              const ACEXML_Char *qName,
-                             ACEXML_Attributes *atts,
-                             ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+                             ACEXML_Attributes *atts ACEXML_ENV_ARG_DECL)
+         ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Begin the scope of a prefix-URI Namespace mapping.
    */
   virtual void startPrefixMapping (const ACEXML_Char *prefix,
-                                   const ACEXML_Char *uri,
-                                   ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+                                   const ACEXML_Char *uri ACEXML_ENV_ARG_DECL)
+            ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   // *** Methods inherit from ACEXML_DTDHandler.
 
@@ -262,10 +231,8 @@ public:
    */
   virtual void notationDecl (const ACEXML_Char *name,
                              const ACEXML_Char *publicId,
-                             const ACEXML_Char *systemId,
-                             ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
+            ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   /*
    * Receive notification of an unparsed entity declaration event.
@@ -273,10 +240,8 @@ public:
   virtual void unparsedEntityDecl (const ACEXML_Char *name,
                                    const ACEXML_Char *publicId,
                                    const ACEXML_Char *systemId,
-                                   const ACEXML_Char *notationName,
-                                   ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+                                   const ACEXML_Char *notationName ACEXML_ENV_ARG_DECL)
+            ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   // Methods inherit from ACEXML_EnitityResolver.
 
@@ -284,36 +249,28 @@ public:
    * Allow the application to resolve external entities.
    */
   virtual ACEXML_InputSource *resolveEntity (const ACEXML_Char *publicId,
-                                             const ACEXML_Char *systemId,
-                                             ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+                                             const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
+            ACE_THROW_SPEC ((ACEXML_SAXException)) ;
 
   // Methods inherit from ACEXML_ErrorHandler.
 
   /*
    * Receive notification of a recoverable error.
    */
-  virtual void error (ACEXML_SAXParseException &exception,
-                      ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual void error (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /*
    * Receive notification of a non-recoverable error.
    */
-  virtual void fatalError (ACEXML_SAXParseException &exception,
-                           ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual void fatalError (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((ACEXML_SAXException));
 
   /*
    * Receive notification of a warning.
    */
-  virtual void warning (ACEXML_SAXParseException &exception,
-                        ACEXML_Env &xmlenv)
-    //    ACE_THROW_SPEC ((ACEXML_SAXException))
-    ;
+  virtual void warning (ACEXML_SAXParseException &exception ACEXML_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((ACEXML_SAXException));
 protected:
   int setupParser (void);
   // Set up the event handlers of parent parser to this.

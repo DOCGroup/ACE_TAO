@@ -42,10 +42,9 @@ ACEXML_Parser::~ACEXML_Parser (void)
 }
 
 int
-ACEXML_Parser::getFeature (const ACEXML_Char *name,
-                           ACEXML_Env &xmlenv)
-  // ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-  //                       ACEXML_SAXNotSupportedException))
+ACEXML_Parser::getFeature (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
+   ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+                    ACEXML_SAXNotSupportedException))
 {
   if (ACE_OS::strcmp (name,
                              ACEXML_Parser::simple_parsing_feature_) == 0)
@@ -63,18 +62,16 @@ ACEXML_Parser::getFeature (const ACEXML_Char *name,
       return this->namespace_prefixes_;
     }
 
-  xmlenv.exception (new ACEXML_SAXNotRecognizedException ());
-  return -1;
+  ACEXML_THROW_RETURN (ACEXML_SAXNotRecognizedException (name), -1);
 }
 
 
 
 void
 ACEXML_Parser::setFeature (const ACEXML_Char *name,
-                           int boolean_value,
-                           ACEXML_Env &xmlenv)
-  //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-  //                       ACEXML_SAXNotSupportedException))
+                           int boolean_value ACEXML_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+                         ACEXML_SAXNotSupportedException))
 {
   if (ACE_OS::strcmp (name,
                              ACEXML_Parser::simple_parsing_feature_) == 0)
@@ -95,85 +92,71 @@ ACEXML_Parser::setFeature (const ACEXML_Char *name,
       return;
     }
 
-  xmlenv.exception (new ACEXML_SAXNotRecognizedException ());
-  return;
+  ACEXML_THROW (ACEXML_SAXNotRecognizedException (name));
 }
 
 void *
-ACEXML_Parser::getProperty (const ACEXML_Char *name,
-                            ACEXML_Env &xmlenv)
-  //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-  //                       ACEXML_SAXNotSupportedException))
+ACEXML_Parser::getProperty (const ACEXML_Char *name ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+                   ACEXML_SAXNotSupportedException))
 {
-  // @@ Not implemented.
-  ACE_UNUSED_ARG (name);
-
-  xmlenv.exception (new ACEXML_SAXNotSupportedException ());
-  return 0;
+  ACEXML_THROW_RETURN (ACEXML_SAXNotSupportedException (name), 0);
 }
 
 void
 ACEXML_Parser::setProperty (const ACEXML_Char *name,
-                            void *value,
-                            ACEXML_Env &xmlenv)
-  //      ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
-  //                       ACEXML_SAXNotSupportedException))
+                            void *value ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXNotRecognizedException,
+                   ACEXML_SAXNotSupportedException))
 {
-  // @@ Not implemented.
-  ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (value);
 
-  xmlenv.exception (new ACEXML_SAXNotSupportedException ());
-  return;
+  ACEXML_THROW (ACEXML_SAXNotSupportedException (name));
 }
 
 void
-ACEXML_Parser::report_error (const ACEXML_Char* message,
-                             ACEXML_Env& xmlenv)
+ACEXML_Parser::report_error (const ACEXML_Char* message ACEXML_ENV_ARG_DECL)
 {
   ACEXML_SAXParseException* exception = 0;
   ACE_NEW_NORETURN (exception,
                     ACEXML_SAXParseException (message));
-  xmlenv.exception (exception);
   if (this->error_handler_)
-    this->error_handler_->error (*exception, xmlenv);
+    this->error_handler_->error (*exception ACEXML_ENV_ARG_PARAMETER);
+  else
+    ACEXML_ENV_RAISE (exception);
   return;
 }
 
 void
-ACEXML_Parser::report_warning (const ACEXML_Char* message,
-                               ACEXML_Env& xmlenv)
+ACEXML_Parser::report_warning (const ACEXML_Char* message ACEXML_ENV_ARG_DECL)
 {
   ACEXML_SAXParseException* exception = 0;
   ACE_NEW_NORETURN (exception,
                     ACEXML_SAXParseException (message));
-  xmlenv.exception (exception);
   if (this->error_handler_)
-    this->error_handler_->warning (*exception, xmlenv);
+    this->error_handler_->warning (*exception ACEXML_ENV_ARG_PARAMETER);
   return;
 }
 
 void
-ACEXML_Parser::report_fatal_error (const ACEXML_Char* message,
-                                   ACEXML_Env& xmlenv)
+ACEXML_Parser::report_fatal_error (const ACEXML_Char* message ACEXML_ENV_ARG_DECL)
 {
   ACEXML_SAXParseException* exception = 0;
   ACE_NEW_NORETURN (exception,
                     ACEXML_SAXParseException (message));
-  xmlenv.exception (exception);
   if (this->error_handler_)
-    this->error_handler_->fatalError (*exception, xmlenv);
+    this->error_handler_->fatalError (*exception ACEXML_ENV_ARG_PARAMETER);
+  ACEXML_ENV_RAISE (exception);
   return;
 }
 
 void
-ACEXML_Parser::parse (ACEXML_InputSource *input,
-                      ACEXML_Env &xmlenv)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+ACEXML_Parser::parse (ACEXML_InputSource *input ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (input == 0 || (this->instream_ = input->getCharStream ())  == 0)
     {
-      this->report_fatal_error(ACE_TEXT ("Invalid input source"), xmlenv);
+      this->report_fatal_error(ACE_TEXT ("Invalid input source") ACEXML_ENV_ARG_PARAMETER);
       return;
     }
 
@@ -182,15 +165,15 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
   // currently, and according to the SAX spec, the parser should set up the
   // locator before reporting any document events.
   if (this->content_handler_)
-    this->content_handler_->setDocumentLocator (&this->locator_, xmlenv);
+    this->content_handler_->setDocumentLocator (&this->locator_);
 
   if (this->simple_parsing_ == 0)
     {
-      this->parse_xml_prolog (xmlenv);
+      this->parse_xml_prolog (ACEXML_ENV_SINGLE_ARG_PARAMETER);
       ACEXML_CHECK;
     }
 
-  this->content_handler_->startDocument (xmlenv);
+  this->content_handler_->startDocument (ACEXML_ENV_SINGLE_ARG_PARAMETER);
   ACEXML_CHECK;
 
   int doctype_defined = 0;
@@ -199,7 +182,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
     {
       if (this->skip_whitespace (0) != '<')
         {
-          this->report_fatal_error (ACE_TEXT ("Expecting '<'"), xmlenv);
+          this->report_fatal_error (ACE_TEXT ("Expecting '<'") ACEXML_ENV_ARG_PARAMETER);
           return;
         }
       ACEXML_Char fwd = this->peek ();
@@ -211,7 +194,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
           if (fwd == 'D' && !doctype_defined)       // DOCTYPE
             {
               // This will also take care of the trailing MISC block if any.
-              this->parse_doctypedecl (xmlenv);
+              this->parse_doctypedecl (ACEXML_ENV_SINGLE_ARG_PARAMETER);
               ACEXML_CHECK;
               doctype_defined = 1;
               break;
@@ -220,23 +203,22 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
             {
               if (this->grok_comment () < 0)
                 {
-                  this->report_fatal_error(ACE_TEXT ("Invalid comment"),
-                                           xmlenv);
+                  this->report_fatal_error(ACE_TEXT ("Invalid comment") ACEXML_ENV_ARG_PARAMETER);
                   return;
                 }
             }
           else
             {
-              this->report_fatal_error (ACE_TEXT ("Duplicate DOCTYPE definitions"), xmlenv);
+              this->report_fatal_error (ACE_TEXT ("Duplicate DOCTYPE definitions") ACEXML_ENV_ARG_PARAMETER);
               return;
             }
           break;
         case '?':
-          this->parse_processing_instruction (xmlenv);
+          this->parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_PARAMETER);
           ACEXML_CHECK;
           break;
         case 0:
-          this->report_fatal_error (ACE_TEXT ("Unexpected EOF"), xmlenv);
+          this->report_fatal_error (ACE_TEXT ("Unexpected EOF") ACEXML_ENV_ARG_PARAMETER);
           return;
         default:                // Root element begins
           prolog_done = 1;
@@ -245,37 +227,34 @@ ACEXML_Parser::parse (ACEXML_InputSource *input,
     }
 
   // Now parse root element.
-  this->parse_element (1, xmlenv);
+  this->parse_element (1 ACEXML_ENV_ARG_PARAMETER);
   ACEXML_CHECK;
 
-  this->content_handler_->endDocument (xmlenv);
-  // ACEXML_CHECK;
+  this->content_handler_->endDocument (ACEXML_ENV_SINGLE_ARG_PARAMETER);
+  ACEXML_CHECK;
 
   // Reset the Locator held within the parser
   this->locator_.reset();
 }
 
 void
-ACEXML_Parser::parse (const ACEXML_Char *systemId,
-                      ACEXML_Env &xmlenv)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+ACEXML_Parser::parse (const ACEXML_Char *systemId ACEXML_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // @@ Not implemented.
   ACE_UNUSED_ARG (systemId);
 
-  xmlenv.exception (new ACEXML_SAXNotSupportedException ());
-  return ;
+  ACEXML_THROW (ACEXML_SAXNotSupportedException ());
 }
 
 
 void
-ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+ACEXML_Parser::parse_xml_prolog (ACEXML_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->parse_token (ACE_TEXT("<?xml")) < 0)
     {
-      this->report_fatal_error(ACE_TEXT ("Invalid XMLDecl ('<?xml' ?)"),
-                               xmlenv);
+      this->report_fatal_error(ACE_TEXT ("Invalid XMLDecl ('<?xml' ?)") ACEXML_ENV_ARG_PARAMETER);
       return;
     }
 
@@ -286,8 +265,7 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
       || this->skip_equal () != 0
       || this->get_quoted_string (astring) != 0)
     {
-      this->report_fatal_error (ACE_TEXT ("Unrecognized XMLDecl ('version'?)"),
-                                xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Unrecognized XMLDecl ('version'?)") ACEXML_ENV_ARG_PARAMETER);
       return;
     }
   // @@ Handle version number here.
@@ -312,8 +290,7 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
                 {
                   if (seen_encoding)
                     {
-                      this->report_fatal_error (ACE_TEXT ("Duplicate encoding defined"),
-                                                xmlenv);
+                      this->report_fatal_error (ACE_TEXT ("Duplicate encoding defined") ACEXML_ENV_ARG_PARAMETER);
                       return;
                     }
                   else
@@ -352,8 +329,7 @@ ACEXML_Parser::parse_xml_prolog (ACEXML_Env &xmlenv)
         break;
       return;
     }   // End parsing XML Decl.
-  this->report_fatal_error (ACE_TEXT ("Unrecognized XML Decl ('standalone'?)"),
-                            xmlenv);
+  this->report_fatal_error (ACE_TEXT ("Unrecognized XML Decl ('standalone'?)") ACEXML_ENV_ARG_PARAMETER);
   return;
 }
 
@@ -384,11 +360,11 @@ ACEXML_Parser::grok_comment (void)
 }
 
 int
-ACEXML_Parser::parse_processing_instruction (ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   if (this->get () != '?')
     {                           // How did we get here?
-      this->report_fatal_error(ACE_TEXT ("Internal error"), xmlenv);
+      this->report_fatal_error(ACE_TEXT ("Internal error") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
   const ACEXML_Char *pitarget = this->read_name ();
@@ -397,7 +373,7 @@ ACEXML_Parser::parse_processing_instruction (ACEXML_Env &xmlenv)
   if (ACE_OS::strcasecmp (ACE_TEXT ("xml"), pitarget) != 0)
     {
       // Invalid PITarget name.
-      this->report_fatal_error(ACE_TEXT ("PITarget name cannot start with 'xml'"), xmlenv);
+      this->report_fatal_error(ACE_TEXT ("PITarget name cannot start with 'xml'") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
@@ -417,9 +393,9 @@ ACEXML_Parser::parse_processing_instruction (ACEXML_Env &xmlenv)
             {
               instruction = this->obstack_.freeze ();
               this->content_handler_->processingInstruction (pitarget,
-                                                             instruction,
-                                                             xmlenv);
+                                                             instruction ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK_RETURN (-1);
+              this->obstack_.unwind (ACE_const_cast (ACEXML_Char*, pitarget));
               return 0;
             }
           break;
@@ -440,21 +416,19 @@ ACEXML_Parser::parse_processing_instruction (ACEXML_Env &xmlenv)
 }
 
 int
-ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+ACEXML_Parser::parse_doctypedecl (ACEXML_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   if (this->parse_token (ACE_TEXT ("DOCTYPE")) < 0)
     {
-      this->report_fatal_error(ACE_TEXT ("Expecting keyword 'DOCTYPE'"),
-                               xmlenv);
+      this->report_fatal_error(ACE_TEXT ("Expecting keyword 'DOCTYPE'") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
   ACEXML_Char nextch = this->skip_whitespace (0);
   if (nextch == 0)
     {
-      this->report_fatal_error(ACE_TEXT ("Expecting a DOCTYPE name"),
-                               xmlenv);
+      this->report_fatal_error(ACE_TEXT ("Expecting a DOCTYPE name") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
@@ -465,32 +439,31 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
   if (nextch == 'S' || nextch == 'P') // ExternalID defined
     {
       this->parse_external_id_and_ref (this->dtd_public_,
-                                       this->dtd_system_,
-                                       xmlenv);
-      if (xmlenv.exception () != 0)
-        return -1;
-      else if (this->dtd_public_ == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACEXML Parser got external DTD id: SYSTEM %s\n"),
-                    this->dtd_system_));
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ACEXML Parser got DTD external id: PUBLIC %s %s\n"),
-                    this->dtd_public_, this->dtd_system_));
+                                       this->dtd_system_
+                                       ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_CHECK_RETURN (-1);
+//       if (this->dtd_public_ == 0)
+//         ACE_DEBUG ((LM_DEBUG,
+//                     ACE_TEXT ("ACEXML Parser got external DTD id: SYSTEM %s\n"),
+//                     this->dtd_system_));
+//       else
+//         ACE_DEBUG ((LM_DEBUG,
+//                     ACE_TEXT ("ACEXML Parser got DTD external id: PUBLIC %s %s\n"),
+//                     this->dtd_public_, this->dtd_system_));
     }
 
   nextch = this->skip_whitespace (0);
   switch (nextch)
     {
     case '[':                   // Internal DTD definition
-      if (this->parse_internal_dtd (xmlenv) < 0)
+      if (this->parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_PARAMETER) < 0)
         return -1;              // Error in markupdecl
       break;
     case '>':                   // End of DTD definition
       // this is an XML document without a dectypedecl.
       return 0;
     case '0':
-      this->report_fatal_error (ACE_TEXT ("Unexpected EOF"), xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Unexpected EOF") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     default:
       break;
@@ -498,27 +471,27 @@ ACEXML_Parser::parse_doctypedecl (ACEXML_Env &xmlenv)
 
   if (this->skip_whitespace (0) != '>')
     {
-      this->report_fatal_error(ACE_TEXT ("Internal error"), xmlenv);
+      this->report_fatal_error(ACE_TEXT ("Internal error") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
   return 0;
 }
 
 void
-ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
-  //    ACE_THROW_SPEC ((ACEXML_SAXException))
+ACEXML_Parser::parse_element (int is_root ACEXML_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   // Parse STag.
   const ACEXML_Char *startname = this->read_name ();
   if (startname == 0)
     {
-      this->report_fatal_error (ACE_TEXT ("Unexpected EOF"), xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Unexpected EOF") ACEXML_ENV_ARG_PARAMETER);
       return;
     }
   if (is_root && this->doctype_ != 0
       && ACE_OS::strcmp (startname, this->doctype_) != 0)
     {
-      this->report_fatal_error (ACE_TEXT ("Root element missing"), xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Root element missing") ACEXML_ENV_ARG_PARAMETER);
       return;
     }
   ACEXML_AttributesImpl attributes;
@@ -535,12 +508,12 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
       switch (ch)
         {
         case 0:
-          this->report_fatal_error(ACE_TEXT ("Internal error"), xmlenv);
+          this->report_fatal_error(ACE_TEXT ("Internal error") ACEXML_ENV_ARG_PARAMETER);
           return;
         case '/':
           if (this->get () != '>')
             {
-              this->report_fatal_error(ACE_TEXT ("Expecting '>'"), xmlenv);
+              this->report_fatal_error(ACE_TEXT ("Expecting '>'") ACEXML_ENV_ARG_PARAMETER);
               return;
             }
           else
@@ -548,16 +521,14 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
               this->xml_namespace_.processName(startname, ns_uri, ns_lname, 0);
               prefix = ACE_const_cast (ACEXML_Char*,
                                        this->xml_namespace_.getPrefix(ns_uri));
-              this->report_prefix_mapping (prefix, ns_uri, ns_lname, 1, xmlenv);
-                  ACEXML_CHECK;
+              this->report_prefix_mapping (prefix, ns_uri, ns_lname, 1 ACEXML_ENV_ARG_PARAMETER);
+              ACEXML_CHECK;
               this->content_handler_->startElement (ns_uri, ns_lname,
-                                                    startname, &attributes,
-                                                    xmlenv);
+                                                    startname, &attributes ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK;
-              this->content_handler_->endElement (ns_uri, ns_lname, startname,
-                                                  xmlenv);
+              this->content_handler_->endElement (ns_uri, ns_lname, startname ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK;
-              this->report_prefix_mapping (prefix, ns_uri, ns_lname, 0, xmlenv);
+              this->report_prefix_mapping (prefix, ns_uri, ns_lname, 0 ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK;
             }
           if (new_namespace != 0)
@@ -569,10 +540,10 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
             this->xml_namespace_.processName (startname, ns_uri, ns_lname, 0);
             prefix = ACE_const_cast (ACEXML_Char*,
                                      this->xml_namespace_.getPrefix (ns_uri));
-            this->report_prefix_mapping (prefix, ns_uri, ns_lname, 1, xmlenv);
+            this->report_prefix_mapping (prefix, ns_uri, ns_lname, 1 ACEXML_ENV_ARG_PARAMETER);
             ACEXML_CHECK;
             this->content_handler_->startElement (ns_uri, ns_lname, startname,
-                                                  &attributes, xmlenv);
+                                                  &attributes ACEXML_ENV_ARG_PARAMETER);
             ACEXML_CHECK;
             start_element_done = 1;
             break;
@@ -585,7 +556,7 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
               this->skip_equal () != 0 ||
               this->get_quoted_string (attvalue) != 0)
             {
-              this->report_fatal_error(ACE_TEXT ("Error reading attribute"),xmlenv);
+              this->report_fatal_error(ACE_TEXT ("Error reading attribute") ACEXML_ENV_ARG_PARAMETER);
               return;
             }
 
@@ -605,7 +576,7 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
                   if (this->xml_namespace_.declarePrefix (ns_name,
                                                           attvalue) == -1)
                     {
-                      this->report_fatal_error(ACE_TEXT ("Duplicate namespace prefix"),xmlenv);
+                      this->report_fatal_error(ACE_TEXT ("Duplicate namespace prefix") ACEXML_ENV_ARG_PARAMETER);
                       return;
                     }
                 }
@@ -617,13 +588,13 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
                                                default_attribute_type,
                                                attvalue) == -1)
                     {
-                      this->report_fatal_error(ACE_TEXT ("Duplicate attribute found"),xmlenv);
+                      this->report_fatal_error(ACE_TEXT ("Duplicate attribute found") ACEXML_ENV_ARG_PARAMETER);
                       return;
                     }
                 }
               if (!this->namespaces_ && !this->namespace_prefixes_)
                 {
-                  this->report_fatal_error(ACE_TEXT ("Both namespaces feature and namespace_prefixes feature are false. Illegal Mode"), xmlenv);
+                  this->report_fatal_error(ACE_TEXT ("Both namespaces feature and namespace_prefixes feature are false. Illegal Mode") ACEXML_ENV_ARG_PARAMETER);
                   return;
                 }
             }
@@ -635,7 +606,7 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
                                            default_attribute_type,
                                            attvalue) == -1)
                 {
-                  this->report_fatal_error(ACE_TEXT ("Duplicate attribute found"),xmlenv);
+                  this->report_fatal_error(ACE_TEXT ("Duplicate attribute found") ACEXML_ENV_ARG_PARAMETER);
                   return;
                 }
             }
@@ -653,16 +624,16 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
       switch (ch)
         {
         case 0:
-          this->report_fatal_error(ACE_TEXT ("Internal error"), xmlenv);
+          this->report_fatal_error(ACE_TEXT ("Internal error") ACEXML_ENV_ARG_PARAMETER);
           return;
         case '<':
           // Push out old 'characters' event.
           if (cdata_length != 0)
             {
               cdata = this->obstack_.freeze ();
-              this->content_handler_->characters (cdata, 0, cdata_length,
-                                                  xmlenv);
+              this->content_handler_->characters (cdata, 0, cdata_length ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK;
+              this->obstack_.unwind (cdata);
               cdata_length = 0;
             }
 
@@ -675,23 +646,23 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
                 {
                   if (this->grok_comment () < 0)
                     {
-                      this->report_fatal_error(ACE_TEXT ("Error parsing comment"), xmlenv);
+                      this->report_fatal_error(ACE_TEXT ("Error parsing comment") ACEXML_ENV_ARG_PARAMETER);
                       return;
                     }
                 }
               else if (ch == '[') // a CDATA section.
                 {
-                  this->parse_cdata (xmlenv);
+                  this->parse_cdata (ACEXML_ENV_SINGLE_ARG_PARAMETER);
                   ACEXML_CHECK;
                 }
               else
                 {
-                  this->report_fatal_error(ACE_TEXT ("Unexpected character"), xmlenv);
+                  this->report_fatal_error(ACE_TEXT ("Unexpected character") ACEXML_ENV_ARG_PARAMETER);
                   return;
                 }
               break;
             case '?':             // a PI.
-              this->parse_processing_instruction (xmlenv);
+              this->parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_PARAMETER);
               ACEXML_CHECK;
               break;
             case '/':             // an ETag.
@@ -701,28 +672,26 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
                 if (endname == 0 ||
                     ACE_OS::strcmp (startname, endname) != 0)
                   {
-                    this->report_fatal_error(ACE_TEXT ("Mismatched End-tag encountered"), xmlenv);
+                    this->report_fatal_error(ACE_TEXT ("Mismatched End-tag encountered") ACEXML_ENV_ARG_PARAMETER);
                     return ;
                   }
                 if (this->skip_whitespace (0) != '>')
                   {
-                    this->report_fatal_error(ACE_TEXT ("Expecting '>' in an end-tag"), xmlenv);
+                    this->report_fatal_error(ACE_TEXT ("Expecting '>' in an end-tag") ACEXML_ENV_ARG_PARAMETER);
                     return;
                   }
-                this->content_handler_->endElement (ns_uri, ns_lname, endname,
-                                                    xmlenv);
+                this->content_handler_->endElement (ns_uri, ns_lname, endname ACEXML_ENV_ARG_PARAMETER);
                 ACEXML_CHECK;
                 prefix = ACE_const_cast (ACEXML_Char*,
                                          this->xml_namespace_.getPrefix(ns_uri));
-                this->report_prefix_mapping (prefix, ns_uri, ns_lname, 0,
-                                             xmlenv);
+                this->report_prefix_mapping (prefix, ns_uri, ns_lname, 0 ACEXML_ENV_ARG_PARAMETER);
                     ACEXML_CHECK;
                 if (new_namespace != 0)
                   this->xml_namespace_.popContext ();
                 return;
               }
             default:              // a new nested element?
-              this->parse_element (0, xmlenv);
+              this->parse_element (0 ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK;
               break;
             }
@@ -748,19 +717,18 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
 
             if (replace == 0)
               {
-                this->report_fatal_error(ACE_TEXT ("Internal error"),
-                                         xmlenv);
+                this->report_fatal_error(ACE_TEXT ("Internal error") ACEXML_ENV_ARG_PARAMETER);
                 return;
               }
-            if (this->try_grow_cdata (replace->length (),
-                                      cdata_length, xmlenv) == 0)
-              {
+//             if (this->try_grow_cdata (replace->length (),
+//                                       cdata_length, xmlenv) == 0)
+//               {
                 cdata_length = replace->length ();
                 for (size_t i = 0; i < replace->length (); ++i)
                   this->obstack_.grow ((*replace)[i]);
-              }
-            else
-              return;
+//              }
+//            else
+//              return;
           }
           break;
         case 0x0D:                // End-of-Line handling
@@ -776,8 +744,7 @@ ACEXML_Parser::parse_element (int is_root, ACEXML_Env &xmlenv)
               cdata = this->obstack_.freeze ();
               this->content_handler_->characters (cdata,
                                                   0,
-                                                  cdata_length,
-                                                  xmlenv);
+                                                  cdata_length ACEXML_ENV_ARG_PARAMETER);
               ACEXML_CHECK;
               this->obstack_.grow (ch);
               cdata_length = 1;   // the missing char.
@@ -911,11 +878,11 @@ ACEXML_Parser::parse_reference (void)
 }
 
 int
-ACEXML_Parser::parse_cdata (ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_cdata (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   if (this->parse_token (ACE_TEXT ("[CDATA[")) < 0)
     {
-      this->report_fatal_error(ACE_TEXT ("'[CDATA[' expected"), xmlenv);
+      this->report_fatal_error(ACE_TEXT ("'[CDATA[' expected") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
@@ -944,9 +911,9 @@ ACEXML_Parser::parse_cdata (ACEXML_Env &xmlenv)
               cdata = this->obstack_.freeze ();
               this->content_handler_->characters (cdata,
                                                   0,
-                                                  datalen,
-                                                  xmlenv);
+                                                  datalen ACEXML_ENV_ARG_PARAMETER);
               // ACEXML_CHECK_RETURN (-1);
+              this->obstack_.unwind(cdata);
               return 0;
             }
           break;
@@ -961,7 +928,7 @@ ACEXML_Parser::parse_cdata (ACEXML_Env &xmlenv)
         }
       while (parse_state > 0)
         {
-          if (this->try_grow_cdata (1, datalen, xmlenv) < 0)
+          if (this->try_grow_cdata (1, datalen ACEXML_ENV_ARG_PARAMETER) < 0)
             return -1;
 
           if (parse_state != 1)
@@ -980,7 +947,7 @@ ACEXML_Parser::parse_cdata (ACEXML_Env &xmlenv)
 }
 
 int
-ACEXML_Parser::try_grow_cdata (size_t size, size_t &len, ACEXML_Env &xmlenv)
+ACEXML_Parser::try_grow_cdata (size_t size, size_t &len ACEXML_ENV_ARG_DECL)
 {
   if (this->obstack_.request (size) != 0)
     {
@@ -989,19 +956,18 @@ ACEXML_Parser::try_grow_cdata (size_t size, size_t &len, ACEXML_Env &xmlenv)
           ACEXML_Char *cdata = this->obstack_.freeze ();
           if (cdata == 0)
             {
-              this->report_fatal_error(ACE_TEXT ("Internal Error growing CDATA buffer"), xmlenv);
+              this->report_fatal_error(ACE_TEXT ("Internal Error growing CDATA buffer") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
           this->content_handler_->characters (cdata,
                                               0,
-                                              len,
-                                              xmlenv);
+                                              len ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK_RETURN (-1);
           len = 0;              // reset counter
           if (this->obstack_.request (size) == 0)
             return 0;
         }
-      this->report_fatal_error(ACE_TEXT ("Internal Error, buffer overflowed"), xmlenv);
+      this->report_fatal_error(ACE_TEXT ("Internal Error, buffer overflowed") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
   return 0;
@@ -1009,7 +975,7 @@ ACEXML_Parser::try_grow_cdata (size_t size, size_t &len, ACEXML_Env &xmlenv)
 
 
 int
-ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_internal_dtd (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   ACEXML_Char nextch = this->skip_whitespace (0);
 
@@ -1031,59 +997,57 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
                 switch (nextch)
                   {
                   case 'L':
-                    if (this->parse_element_decl (xmlenv) < 0)
+                    if (this->parse_element_decl (ACEXML_ENV_SINGLE_ARG_PARAMETER) < 0)
                       return -1;
                     break;
 
                   case 'N':
-                    if (this->parse_entity_decl (xmlenv) < 0)
+                    if (this->parse_entity_decl (ACEXML_ENV_SINGLE_ARG_PARAMETER) < 0)
                       return -1;
                     break;
 
                   default:
-                    this->report_fatal_error(ACE_TEXT ("Invalid keyword in decl spec"), xmlenv);
+                    this->report_fatal_error(ACE_TEXT ("Invalid keyword in decl spec") ACEXML_ENV_ARG_PARAMETER);
                     return -1;
                   }
                 break;
 
               case 'A':         // An ATTLIST decl
-                if (this->parse_attlist_decl (xmlenv) < 0)
+                if (this->parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_PARAMETER) < 0)
                   return -1;
                 break;
 
               case 'N':         // A NOTATION decl
-                if (this->parse_notation_decl (xmlenv) < 0)
+                if (this->parse_notation_decl (ACEXML_ENV_SINGLE_ARG_PARAMETER) < 0)
                   return -1;
                 break;
 
               case '-':         // a comment.
                 if (this->grok_comment () < 0)
                   {
-                    this->report_fatal_error(ACE_TEXT ("Error parsing comment"), xmlenv);
+                    this->report_fatal_error(ACE_TEXT ("Error parsing comment") ACEXML_ENV_ARG_PARAMETER);
                     return -1;
                   }
                 break;
               case 0:
-                this->report_fatal_error (ACE_TEXT ("Unexpected EOF"),
-                                          xmlenv);
+                this->report_fatal_error (ACE_TEXT ("Unexpected EOF") ACEXML_ENV_ARG_PARAMETER);
                 return -1;
               default:
-                this->report_fatal_error (ACE_TEXT ("Invalid char. follows '<!' in markupdecl"), xmlenv);
+                this->report_fatal_error (ACE_TEXT ("Invalid char. follows '<!' in markupdecl") ACEXML_ENV_ARG_PARAMETER);
                 return -1;
               }
             break;
 
           case '?':             // PI
-            this->parse_processing_instruction (xmlenv);
+            this->parse_processing_instruction (ACEXML_ENV_SINGLE_ARG_PARAMETER);
             ACEXML_CHECK_RETURN (-1);
             break;
 
           case 0:
-            this->report_fatal_error (ACE_TEXT ("Unexpected EOF"),
-                                      xmlenv);
+            this->report_fatal_error (ACE_TEXT ("Unexpected EOF") ACEXML_ENV_ARG_PARAMETER);
             return -1;
           default:
-            this->report_fatal_error (ACE_TEXT ("Invalid char. follows '<!' in markupdecl"), xmlenv);
+            this->report_fatal_error (ACE_TEXT ("Invalid char. follows '<!' in markupdecl") ACEXML_ENV_ARG_PARAMETER);
             return -1;
           }
         break;
@@ -1097,12 +1061,11 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
       case 0:                   // This may not be an error if we decide
                                 // to generalize this function to handle both
                                 // internal and external DTD definitions.
-        this->report_fatal_error (ACE_TEXT ("Unexpected EOF"),
-                                  xmlenv);
+        this->report_fatal_error (ACE_TEXT ("Unexpected EOF") ACEXML_ENV_ARG_PARAMETER);
         return -1;
 
       default:
-        this->report_fatal_error (ACE_TEXT ("Expecting markupdecl or DecSep"), xmlenv);
+        this->report_fatal_error (ACE_TEXT ("Expecting markupdecl or DecSep") ACEXML_ENV_ARG_PARAMETER);
         return -1;
       };
 
@@ -1119,20 +1082,19 @@ ACEXML_Parser::parse_internal_dtd (ACEXML_Env &xmlenv)
 }
 
 int
-ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_element_decl (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   if ((this->parse_token (ACE_TEXT ("LEMENT")) < 0) ||
       this->skip_whitespace_count () == 0)
     {
-      this->report_fatal_error (ACE_TEXT ("Expecting keyword `ELEMENT'"),
-                                xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Expecting keyword `ELEMENT'") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
   ACEXML_Char *element_name = this->read_name ();
   if (element_name == 0)
     {
-      this->report_fatal_error (ACE_TEXT ("Error reading element name while defining ELEMENT."), xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Error reading element name while defining ELEMENT.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
@@ -1144,43 +1106,42 @@ ACEXML_Parser::parse_element_decl (ACEXML_Env &xmlenv)
     case 'E':                   // EMPTY
       if (this->parse_token (ACE_TEXT ("EMPTY")) < 0)
         {
-          this->report_fatal_error (ACE_TEXT ("Expecting keyword `EMPTY' in ELEMENT definition."), xmlenv);
+          this->report_fatal_error (ACE_TEXT ("Expecting keyword `EMPTY' in ELEMENT definition.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
       break;
     case 'A':                   // ANY
       if (this->parse_token (ACE_TEXT ("ANY")) < 0)
         {
-          this->report_fatal_error (ACE_TEXT ("Expecting keyword `ANY' in ELEMENT definition."), xmlenv);
+          this->report_fatal_error (ACE_TEXT ("Expecting keyword `ANY' in ELEMENT definition.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
       break;
     case '(':                   // children
-      this->parse_children_definition (xmlenv);
+      this->parse_children_definition (ACEXML_ENV_SINGLE_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
       break;
     default:                    // error
-      this->report_fatal_error (ACE_TEXT ("Error reading ELEMENT definition."), xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Error reading ELEMENT definition.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
   if (this->skip_whitespace (0) != '>')
     {
-      this->report_fatal_error (ACE_TEXT ("Expecting '>' in ELEMENT definition."), xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Expecting '>' in ELEMENT definition.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
   return 0;
 }
 
 int
-ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_entity_decl (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   ACEXML_Char nextch;
 
   if ((this->parse_token (ACE_TEXT ("NTITY")) < 0) ||
       this->skip_whitespace_count (&nextch) == 0)
     {
-      this->report_fatal_error (ACE_TEXT ("Expecting keyword `ENTITY'"),
-                                xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Expecting keyword `ENTITY'") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
@@ -1191,7 +1152,7 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
       this->get ();             // consume the '%'
       if (this->skip_whitespace_count (&nextch) == 0)
         {
-          this->report_fatal_error (ACE_TEXT ("Can't use a reference when defining entity name"), xmlenv);
+          this->report_fatal_error (ACE_TEXT ("Can't use a reference when defining entity name") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
     }
@@ -1199,8 +1160,7 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
   ACEXML_Char *entity_name = this->read_name ();
   if (entity_name == 0)
     {
-      this->report_fatal_error (ACE_TEXT ("Error reading ENTITY name."),
-                                xmlenv);
+      this->report_fatal_error (ACE_TEXT ("Error reading ENTITY name.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
@@ -1212,8 +1172,7 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
 
       if (this->get_quoted_string (entity_value) != 0)
         {
-          this->report_fatal_error(ACE_TEXT("Error reading ENTITY value."),
-                                   xmlenv);
+          this->report_fatal_error(ACE_TEXT("Error reading ENTITY value.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
 
@@ -1221,26 +1180,25 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
         {
           if (this->entities_.add_entity (entity_name, entity_value) != 0)
             {
-              this->report_fatal_error(ACE_TEXT("Error storing entity definition (duplicate definition?)"), xmlenv);
+              this->report_fatal_error(ACE_TEXT("Error storing entity definition (duplicate definition?)") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
         }
       else
         {
           // @@ need to implement PEdecl lookup mechanism
-          xmlenv.exception (new ACEXML_SAXNotSupportedException ());
-          return -1;
+          ACEXML_THROW_RETURN (ACEXML_SAXNotSupportedException (), -1);
         }
     }
   else
     {
       ACEXML_Char *systemid, *publicid;
 
-      this->parse_external_id_and_ref (publicid, systemid, xmlenv);
+      this->parse_external_id_and_ref (publicid, systemid ACEXML_ENV_ARG_PARAMETER);
       ACEXML_CHECK_RETURN (-1);
       if (systemid == 0)
         {
-          this->report_fatal_error(ACE_TEXT("Invalid ExternalID definition (system ID missing.)"), xmlenv);
+          this->report_fatal_error(ACE_TEXT("Invalid ExternalID definition (system ID missing.)") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
       this->skip_whitespace_count (&nextch);
@@ -1248,15 +1206,14 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
         {
           if (is_GEDecl == 0)
             {
-              this->report_fatal_error(ACE_TEXT("Unexpected keyword NDATA in PEDecl."), xmlenv);
+              this->report_fatal_error(ACE_TEXT("Unexpected keyword NDATA in PEDecl.") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
 
           if ((this->parse_token (ACE_TEXT ("NDATA")) < 0) ||
               this->skip_whitespace_count (&nextch) == 0)
             {
-              this->report_fatal_error(ACE_TEXT("Expecting keyword NDATA"),
-                                       xmlenv);
+              this->report_fatal_error(ACE_TEXT("Expecting keyword NDATA") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
 
@@ -1264,8 +1221,7 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
           this->dtd_handler_->unparsedEntityDecl (entity_name,
                                                   publicid,
                                                   systemid,
-                                                  ndata,
-                                                  xmlenv);
+                                                  ndata ACEXML_ENV_ARG_PARAMETER);
           ACEXML_CHECK_RETURN (-1);
         }
       else
@@ -1289,27 +1245,26 @@ ACEXML_Parser::parse_entity_decl (ACEXML_Env &xmlenv)
   // End of ENTITY definition
   if (this->skip_whitespace (0) != '>')
     {
-      this->report_fatal_error(ACE_TEXT("Expecting end of ENTITY definition."), xmlenv);
+      this->report_fatal_error(ACE_TEXT("Expecting end of ENTITY definition.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
   return 0;
 }
 
 int
-ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_attlist_decl (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   if ((this->parse_token (ACE_TEXT ("ATTLIST")) < 0) ||
       this->skip_whitespace_count () == 0)
     {
-      this->report_fatal_error(ACE_TEXT("Expecting keyword `ATTLIST'"),
-                               xmlenv);
+      this->report_fatal_error(ACE_TEXT("Expecting keyword `ATTLIST'") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
   ACEXML_Char *element_name = this->read_name ();
   if (element_name == 0)
     {
-      this->report_fatal_error(ACE_TEXT("Error reading element name while defining ATTLIST."), xmlenv);
+      this->report_fatal_error(ACE_TEXT("Error reading element name while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
@@ -1322,7 +1277,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
       ACEXML_Char *att_name = this->read_name (nextch);
       if (att_name == 0)
         {
-          this->report_fatal_error(ACE_TEXT("Error reading attribute name while defining ATTLIST."), xmlenv);
+          this->report_fatal_error(ACE_TEXT("Error reading attribute name while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
 
@@ -1347,7 +1302,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
           if ((this->parse_token (ACE_TEXT ("DATA")) < 0) ||
               this->skip_whitespace_count () == 0)
             {
-              this->report_fatal_error(ACE_TEXT("Expecting keyword `CDATA' while defining ATTLIST."), xmlenv);
+              this->report_fatal_error(ACE_TEXT("Expecting keyword `CDATA' while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
           // Else, we have successfully identified the type of the
@@ -1384,7 +1339,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                 }
             }
           // Admittedly, this error message is not precise enough
-          this->report_fatal_error(ACE_TEXT("Expecting keyword `ID', `IDREF', or `IDREFS' while defining ATTLIST."), xmlenv);
+          this->report_fatal_error(ACE_TEXT("Expecting keyword `ID', `IDREF', or `IDREFS' while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         case 'E':               // ENTITY or ENTITIES
           if (this->parse_token (ACE_TEXT ("NTIT")) == 0)
@@ -1410,13 +1365,13 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                 }
             }
           // Admittedly, this error message is not precise enough
-          this->report_fatal_error(ACE_TEXT("Expecting keyword `ENTITY', or `ENTITIES' while defining ATTLIST."), xmlenv);
+          this->report_fatal_error(ACE_TEXT("Expecting keyword `ENTITY', or `ENTITIES' while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         case 'N':               // NMTOKEN, NMTOKENS, or, NOTATION
           nextch = this->get ();
           if (nextch != 'M' || nextch != 'O')
             {
-              this->report_fatal_error(ACE_TEXT("Expecting keyword `NMTOKEN', `NMTOKENS', or `NOTATION' while defining ATTLIST."), xmlenv);
+              this->report_fatal_error(ACE_TEXT("Expecting keyword `NMTOKEN', `NMTOKENS', or `NOTATION' while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
           if (nextch == 'M')
@@ -1438,7 +1393,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                       break;
                     }
                 }
-              this->report_fatal_error(ACE_TEXT("Expecting keyword `NMTOKEN' or `NMTOKENS' while defining ATTLIST."), xmlenv);
+              this->report_fatal_error(ACE_TEXT("Expecting keyword `NMTOKEN' or `NMTOKENS' while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
           else                  // NOTATION
@@ -1446,13 +1401,13 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
               if ((this->parse_token (ACE_TEXT ("TATION")) < 0) ||
                   this->skip_whitespace_count () == 0)
                 {
-                  this->report_fatal_error(ACE_TEXT("Expecting keyword `NOTATION' while defining ATTLIST."), xmlenv);
+                  this->report_fatal_error(ACE_TEXT("Expecting keyword `NOTATION' while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
                   return -1;
                 }
 
               if (this->get () != '(')
                 {
-                  this->report_fatal_error(ACE_TEXT("Expecting `(' following NOTATION while defining ATTLIST."), xmlenv);
+                  this->report_fatal_error(ACE_TEXT("Expecting `(' following NOTATION while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
                   return -1;
                 }
 
@@ -1462,7 +1417,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
                 ACEXML_Char *notation_name = this->read_name ();
                 if (notation_name == 0)
                   {
-                    this->report_fatal_error(ACE_TEXT("Error reading NOTATION name while defining ATTLIST."), xmlenv);
+                    this->report_fatal_error(ACE_TEXT("Error reading NOTATION name while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
                     return -1;
                   }
                 // @@ get another notation name, set up validator as such
@@ -1480,7 +1435,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
             ACEXML_Char *token_name = this->read_name (); // @@ need a special read_nmtoken?
             if (token_name == 0)
               {
-                this->report_fatal_error(ACE_TEXT("Error reading enumerated nmtoken name while defining ATTLIST."), xmlenv);
+                this->report_fatal_error(ACE_TEXT("Error reading enumerated nmtoken name while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
                 return -1;
               }
             // @@ get another nmtoken, set up validator as such
@@ -1492,7 +1447,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
           break;
         default:
           {
-            this->report_fatal_error(ACE_TEXT("Invalid Attribute Type while defining ATTLIST."), xmlenv);
+            this->report_fatal_error(ACE_TEXT("Invalid Attribute Type while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
             return -1;
           }
           ACE_NOTREACHED (break);
@@ -1515,7 +1470,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
             case 'R':
               if (this->parse_token (ACE_TEXT ("EQUIRED")) < 0)
                 {
-                  this->report_fatal_error(ACE_TEXT("Expecting keyword `#REQUIRED' while defining ATTLIST."), xmlenv);
+                  this->report_fatal_error(ACE_TEXT("Expecting keyword `#REQUIRED' while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
                   return -1;
                 }
               // We now know this attribute is required
@@ -1524,7 +1479,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
             case 'I':
               if (this->parse_token (ACE_TEXT ("MPLIED")) < 0)
                 {
-                  this->report_fatal_error(ACE_TEXT("Expecting keyword `#IMPLIED' while defining ATTLIST."), xmlenv);
+                  this->report_fatal_error(ACE_TEXT("Expecting keyword `#IMPLIED' while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
                   return -1;
                 }
               // We now know this attribute is impleid.
@@ -1534,7 +1489,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
               if (this->parse_token (ACE_TEXT ("IXED")) < 0 ||
                   this->skip_whitespace_count () == 0)
                 {
-                  this->report_fatal_error(ACE_TEXT("Expecting keyword `#FIXED' while defining ATTLIST."), xmlenv);
+                  this->report_fatal_error(ACE_TEXT("Expecting keyword `#FIXED' while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
                   return -1;
                 }
               // We now know this attribute is fixed.
@@ -1542,7 +1497,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
               ACEXML_Char *fixed_attr;
               if (this->get_quoted_string (fixed_attr) != 0)
                 {
-                  this->report_fatal_error(ACE_TEXT("Error parsing `#FIXED' attribute value while defining ATTLIST."), xmlenv);
+                  this->report_fatal_error(ACE_TEXT("Error parsing `#FIXED' attribute value while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
                   return -1;
                 }
               // @@ set up validator
@@ -1556,7 +1511,7 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
           ACEXML_Char *fixed_attr;
           if (this->get_quoted_string (fixed_attr) != 0)
             {
-              this->report_fatal_error(ACE_TEXT("Error parsing `#FIXED' attribute value while defining ATTLIST."), xmlenv);
+              this->report_fatal_error(ACE_TEXT("Error parsing `#FIXED' attribute value while defining ATTLIST.") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
           // @@ set up validator
@@ -1573,51 +1528,45 @@ ACEXML_Parser::parse_attlist_decl (ACEXML_Env &xmlenv)
 }
 
 int
-ACEXML_Parser::parse_notation_decl (ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_notation_decl (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   if (this->parse_token (ACE_TEXT ("NOTATION")) < 0 ||
       this->skip_whitespace_count () == 0)
     {
-      this->report_fatal_error(ACE_TEXT("Expecting keyword `NOTATION'"),
-                               xmlenv);
+      this->report_fatal_error(ACE_TEXT("Expecting keyword `NOTATION'") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
   ACEXML_Char *notation = this->read_name ();
   if (notation == 0)
     {
-      this->report_fatal_error(ACE_TEXT("Invalid notation name."), xmlenv);
+      this->report_fatal_error(ACE_TEXT("Invalid notation name.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
   this->skip_whitespace_count ();
   ACEXML_Char *systemid, *publicid;
 
-  this->parse_external_id_and_ref (publicid, systemid, xmlenv);
-  if (xmlenv.exception () != 0)
-    return -1;
+  this->parse_external_id_and_ref (publicid, systemid ACEXML_ENV_ARG_PARAMETER);
+  ACEXML_CHECK_RETURN (-1);
 
   if (this->get () != '>')
     {
-      this->report_fatal_error(ACE_TEXT("Expecting NOTATION closing '>'."),
-                               xmlenv);
+      this->report_fatal_error(ACE_TEXT("Expecting NOTATION closing '>'.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
   this->dtd_handler_->notationDecl (notation,
                                     publicid,
-                                    systemid,
-                                    xmlenv);
-  if (xmlenv.exception () != 0)
-    return -1;
+                                    systemid ACEXML_ENV_ARG_PARAMETER);
+  ACEXML_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
 ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
-                                          ACEXML_Char *&systemId,
-                                          ACEXML_Env &xmlenv)
+                                          ACEXML_Char *&systemId ACEXML_ENV_ARG_DECL)
 {
   publicId = systemId = 0;
   ACEXML_Char nextch = this->get ();
@@ -1628,13 +1577,12 @@ ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
       if (this->parse_token (ACE_TEXT ("YSTEM")) < 0 ||
           this->skip_whitespace_count () == 0)
         {
-          this->report_fatal_error(ACE_TEXT("Expecting keyword 'SYSTEM'"),
-                                   xmlenv);
+          this->report_fatal_error(ACE_TEXT("Expecting keyword 'SYSTEM'") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
       if (this->get_quoted_string (systemId) != 0)
         {
-          this->report_fatal_error(ACE_TEXT("Error while parsing SYSTEM literal for SYSTEM id."), xmlenv);
+          this->report_fatal_error(ACE_TEXT("Error while parsing SYSTEM literal for SYSTEM id.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
       this->locator_.setSystemId (systemId);
@@ -1643,12 +1591,12 @@ ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
       if (this->parse_token (ACE_TEXT ("UBLIC")) < 0 ||
           this->skip_whitespace_count () == 0)
         {
-          this->report_fatal_error(ACE_TEXT("Expecting keyword 'PUBLIC'"), xmlenv);
+          this->report_fatal_error(ACE_TEXT("Expecting keyword 'PUBLIC'") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
       if (this->get_quoted_string (publicId) != 0)
         {
-          this->report_fatal_error(ACE_TEXT("Error while parsing public literal for PUBLIC id."), xmlenv);
+          this->report_fatal_error(ACE_TEXT("Error while parsing public literal for PUBLIC id.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
       this->locator_.setPublicId (publicId);
@@ -1658,21 +1606,21 @@ ACEXML_Parser::parse_external_id_and_ref (ACEXML_Char *&publicId,
         {
           if (this->get_quoted_string (systemId) != 0)
             {
-              this->report_fatal_error(ACE_TEXT("Error while parsing system literal for PUBLIC id."), xmlenv);
+              this->report_fatal_error(ACE_TEXT("Error while parsing system literal for PUBLIC id.") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
           this->locator_.setSystemId (systemId);
         }
       break;
     default:
-      this->report_fatal_error(ACE_TEXT("Expecting either keyword `SYSTEM' or `PUBLIC'."), xmlenv);
+      this->report_fatal_error(ACE_TEXT("Expecting either keyword `SYSTEM' or `PUBLIC'.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
   return 0;
 }
 
 int
-ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_children_definition (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   this->get ();                 // consume the '('
 
@@ -1685,7 +1633,7 @@ ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
     case '#':                   // Mixed element,
       if (this->parse_token (ACE_TEXT ("#PCDATA")) < 0)
         {
-          this->report_fatal_error(ACE_TEXT("Expecting keyword `#PCDATA' while defining an element."), xmlenv);
+          this->report_fatal_error(ACE_TEXT("Expecting keyword `#PCDATA' while defining an element.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
 
@@ -1695,7 +1643,7 @@ ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
         {
           if (this->get () != '|')
             {
-              this->report_fatal_error(ACE_TEXT("Expecting end of Mixed section while defining an element."), xmlenv);
+              this->report_fatal_error(ACE_TEXT("Expecting end of Mixed section while defining an element.") ACEXML_ENV_ARG_PARAMETER);
               return -1;
             }
           this->skip_whitespace_count ();
@@ -1711,14 +1659,15 @@ ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
       if (this->get () != ')' ||
           (subelement_number && this->get () != '*'))
         {
-          this->report_fatal_error(ACE_TEXT("Expecting closing `)*' or ')' while defining an element."), xmlenv);
+          this->report_fatal_error(ACE_TEXT("Expecting closing `)*' or ')' while defining an element.") ACEXML_ENV_ARG_PARAMETER);
           return -1;
         }
       // @@ close the element definition in the validator.
       break;
     default:
-      if (this->parse_child (1, xmlenv) != 0 ||
-          xmlenv.exception () != 0)
+      int status = this->parse_child (1 ACEXML_ENV_ARG_PARAMETER);
+      ACEXML_CHECK_RETURN (-1);
+      if (status != 0)
         return -1;
     }
 
@@ -1726,14 +1675,13 @@ ACEXML_Parser::parse_children_definition (ACEXML_Env &xmlenv)
 }
 
 int
-ACEXML_Parser::parse_child (int skip_open_paren,
-                            ACEXML_Env &xmlenv)
+ACEXML_Parser::parse_child (int skip_open_paren ACEXML_ENV_ARG_DECL)
 {
   // Conditionally consume the open paren.
   if (skip_open_paren == 0 &&
       this->get () != '(')
     {
-      this->report_fatal_error(ACE_TEXT("Expecting opening `(' while defining an element."), xmlenv);
+      this->report_fatal_error(ACE_TEXT("Expecting opening `(' while defining an element.") ACEXML_ENV_ARG_PARAMETER);
       return -1;
     }
 
@@ -1745,16 +1693,15 @@ ACEXML_Parser::parse_child (int skip_open_paren,
     switch (nextch)
       {
       case '(':
-        this->parse_child (0, xmlenv);
-        if (xmlenv.exception () != 0)
-          return -1;
+        this->parse_child (0 ACEXML_ENV_ARG_PARAMETER);
+        ACEXML_CHECK_RETURN (-1);
         break;
       default:
         // must be an element name here.
         ACEXML_Char *subelement = this->read_name ();
         if (subelement == 0)
           {
-            this->report_fatal_error(ACE_TEXT("Error reading sub-element name while defining an element."), xmlenv);
+            this->report_fatal_error(ACE_TEXT("Error reading sub-element name while defining an element.") ACEXML_ENV_ARG_PARAMETER);
             return -1;
           }
         // @@ Inform validator of the new element here.
@@ -1774,7 +1721,7 @@ ACEXML_Parser::parse_child (int skip_open_paren,
           case '|':
             break;
           default:
-            this->report_fatal_error(ACE_TEXT("Expecting `,', `|', or `)' while defining an element."), xmlenv);
+            this->report_fatal_error(ACE_TEXT("Expecting `,', `|', or `)' while defining an element.") ACEXML_ENV_ARG_PARAMETER);
             return -1;
           }
         break;
@@ -1788,13 +1735,13 @@ ACEXML_Parser::parse_child (int skip_open_paren,
           case ',':
             break;
           default:
-            this->report_fatal_error(ACE_TEXT("Expecting `,', `|', or `)'while defining an element."), xmlenv);
+            this->report_fatal_error(ACE_TEXT("Expecting `,', `|', or `)'while defining an element.") ACEXML_ENV_ARG_PARAMETER);
             return -1;
           }
       case ')':
         break;
       default:
-        this->report_fatal_error(ACE_TEXT("Expecting `,', `|', or `)' while defining an element."), xmlenv);
+        this->report_fatal_error(ACE_TEXT("Expecting `,', `|', or `)' while defining an element.") ACEXML_ENV_ARG_PARAMETER);
         return -1;
       }
     this->get ();               // consume , | or )
@@ -1979,15 +1926,19 @@ void
 ACEXML_Parser::report_prefix_mapping (const ACEXML_Char* prefix,
                                       const ACEXML_Char* uri,
                                       const ACEXML_Char* name,
-                                      int start,
-                                      ACEXML_Env& xmlenv)
+                                      int start ACEXML_ENV_ARG_DECL)
 {
   if (this->namespaces_)
     {
       const ACEXML_Char* temp = (name == 0) ? empty_string : prefix;
-      if (start)
-        this->content_handler_->startPrefixMapping (temp, uri, xmlenv);
+      if (start) {
+        this->content_handler_->startPrefixMapping (temp, uri ACEXML_ENV_ARG_PARAMETER);
+        ACEXML_CHECK;
+      }
       else
-        this->content_handler_->endPrefixMapping(temp, xmlenv);
+        {
+          this->content_handler_->endPrefixMapping(temp ACEXML_ENV_ARG_PARAMETER);
+          ACEXML_CHECK;
+        }
     }
 }

@@ -5,32 +5,32 @@
 #include "ace/ACE.h"
 
 static const ACEXML_Char ACEXML_SAXException_name[] = {
-  'A', 'C', 'E', 'X', 'M', 'L',
+  'A', 'C', 'E', 'X', 'M', 'L', '_',
   'S', 'A', 'X',
-  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+  'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
 const ACEXML_Char *ACEXML_SAXException::exception_name_ = ACEXML_SAXException_name;
 
 static const ACEXML_Char ACEXML_SAXNotSupportedException_name[] = {
-  'A', 'C', 'E', 'X', 'M', 'L',
+  'A', 'C', 'E', 'X', 'M', 'L', '_',
   'S', 'A', 'X',
   'N', 'o', 't',
   'S', 'u', 'p', 'p', 'o', 'r', 't', 'e', 'd',
-  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+  'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
 const ACEXML_Char *ACEXML_SAXNotSupportedException::exception_name_ = ACEXML_SAXNotSupportedException_name;
 
 static const ACEXML_Char ACEXML_SAXNotRecognizedException_name[] = {
-  'A', 'C', 'E', 'X', 'M', 'L',
+  'A', 'C', 'E', 'X', 'M', 'L', '_',
   'S', 'A', 'X',
   'N', 'o', 't',
   'R', 'e', 'c', 'o', 'g', 'n', 'i', 'z', 'e', 'd',
-  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+  'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
 const ACEXML_Char *ACEXML_SAXNotRecognizedException::exception_name_ = ACEXML_SAXNotRecognizedException_name;
 
 static const ACEXML_Char ACEXML_SAXParseException_name[] = {
-  'A', 'C', 'E', 'X', 'M', 'L',
+  'A', 'C', 'E', 'X', 'M', 'L', '_',
   'S', 'A', 'X',
   'P', 'a', 'r', 's', 'e',
-  '_', 'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
+  'E', 'x', 'c', 'e', 'p', 't', 'i', 'o', 'n', 0};
 const ACEXML_Char *ACEXML_SAXParseException::exception_name_ = ACEXML_SAXParseException_name;
 
 #if !defined (__ACEXML_INLINE__)
@@ -54,26 +54,38 @@ ACEXML_SAXException::ACEXML_SAXException (const ACEXML_SAXException &ex)
 {
 }
 
+ACEXML_SAXException&
+ACEXML_SAXException::operator= (const ACEXML_SAXException& src)
+{
+  ACEXML_SAXException temp (src);
+  ACEXML_Char* message = this->message_;
+  this->exception_name_ = temp.exception_name_;
+  this->message_ = temp.message_;
+  temp.message_ = message;
+  return *this;
+}
+
+
+ACEXML_SAXException*
+ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
+{
+  if (ex->is_a ("ACEXML_SAXException"))
+    return ACE_dynamic_cast (ACEXML_SAXException*, ex);
+  return 0;
+}
 
 ACEXML_SAXException::~ACEXML_SAXException (void)
 {
   delete[] this->message_;
 }
 
-const ACEXML_Char *
-ACEXML_SAXException::id (void)
-{
-  return ACEXML_SAXException::exception_name_;
-}
+
 
 ACEXML_Exception *
-ACEXML_SAXException::duplicate (void)
+ACEXML_SAXException::duplicate (void) const
 {
   ACEXML_Exception *tmp;
-  ACE_NEW_RETURN (tmp,
-                  ACEXML_SAXException (*this),
-                  // Replace ACEXML_Exception with appropriate type.
-                  0);
+  ACE_NEW_RETURN (tmp, ACEXML_SAXException (*this), 0);
   return tmp;
 }
 
@@ -93,11 +105,9 @@ ACEXML_SAXException::is_a (const ACEXML_Char *name)
 void
 ACEXML_SAXException::print (void)
 {
-  // @@ Nanbor, I don't know how to handle the case
-  //    when we define ACEXML_UTF16 as ACEXML_Char
-  ACE_DEBUG ((LM_DEBUG,
-              "Exception: ACEXML_SAXException -- %s\n",
-              this->message_));
+    ACE_DEBUG ((LM_ERROR,
+              ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
+              this->exception_name_, this->message()));
 }
 
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (void)
@@ -109,26 +119,22 @@ ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_S
 {
 }
 
+ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_Char* msg)
+  : ACEXML_SAXException (msg)
+{
+}
 
 ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException (void)
 {
   delete[] this->message_;
 }
 
-const ACEXML_Char *
-ACEXML_SAXNotSupportedException::id (void)
-{
-  return ACEXML_SAXNotSupportedException::exception_name_;
-}
 
 ACEXML_Exception *
-ACEXML_SAXNotSupportedException::duplicate (void)
+ACEXML_SAXNotSupportedException::duplicate (void) const
 {
   ACEXML_Exception *tmp;
-  ACE_NEW_RETURN (tmp,
-                  ACEXML_SAXNotSupportedException (*this),
-                  // Replace ACEXML_Exception with appropriate type.
-                  0);
+  ACE_NEW_RETURN (tmp, ACEXML_SAXNotSupportedException (*this), 0);
   return tmp;
 }
 
@@ -148,9 +154,9 @@ ACEXML_SAXNotSupportedException::is_a (const ACEXML_Char *name)
 void
 ACEXML_SAXNotSupportedException::print (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Exception: ACEXML_SAXNotSupportedException -- %s\n",
-              this->message_));
+  ACE_DEBUG ((LM_ERROR,
+              ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
+              this->exception_name_, this->message()));
 }
 
 ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (void)
@@ -167,26 +173,16 @@ ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (const ACEXML
 {
 }
 
-
 ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException (void)
 {
   delete[] this->message_;
 }
 
-const ACEXML_Char *
-ACEXML_SAXNotRecognizedException::id (void)
-{
-  return ACEXML_SAXNotRecognizedException::exception_name_;
-}
-
 ACEXML_Exception *
-ACEXML_SAXNotRecognizedException::duplicate (void)
+ACEXML_SAXNotRecognizedException::duplicate (void) const
 {
   ACEXML_Exception *tmp;
-  ACE_NEW_RETURN (tmp,
-                  ACEXML_SAXNotRecognizedException (*this),
-                  // Replace ACEXML_Exception with appropriate type.
-                  0);
+  ACE_NEW_RETURN (tmp, ACEXML_SAXNotRecognizedException (*this), 0);
   return tmp;
 }
 
@@ -206,9 +202,9 @@ ACEXML_SAXNotRecognizedException::is_a (const ACEXML_Char *name)
 void
 ACEXML_SAXNotRecognizedException::print (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Exception: ACEXML_SAXNotRecognizedException -- %s\n",
-              this->message_));
+  ACE_DEBUG ((LM_ERROR,
+              ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
+              this->exception_name_, this->message()));
 }
 
 ACEXML_SAXParseException::ACEXML_SAXParseException (void)
@@ -225,25 +221,15 @@ ACEXML_SAXParseException::ACEXML_SAXParseException (const ACEXML_SAXParseExcepti
 {
 }
 
-
 ACEXML_SAXParseException::~ACEXML_SAXParseException (void)
 {
 }
 
-const ACEXML_Char *
-ACEXML_SAXParseException::id (void)
-{
-  return ACEXML_SAXParseException::exception_name_;
-}
-
 ACEXML_Exception *
-ACEXML_SAXParseException::duplicate (void)
+ACEXML_SAXParseException::duplicate (void) const
 {
   ACEXML_Exception *tmp;
-  ACE_NEW_RETURN (tmp,
-                  ACEXML_SAXParseException (*this),
-                  // Replace ACEXML_Exception with appropriate type.
-                  0);
+  ACE_NEW_RETURN (tmp, ACEXML_SAXParseException (*this), 0);
   return tmp;
 }
 
@@ -263,7 +249,7 @@ ACEXML_SAXParseException::is_a (const ACEXML_Char *name)
 void
 ACEXML_SAXParseException::print (void)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "Exception: ACEXML_SAXParseException -- %s\n",
-              this->message_));
+  ACE_DEBUG ((LM_ERROR,
+              ACE_TEXT ("ACEXML: (%P|%t) %s: %s\n"),
+                        this->exception_name_, this->message()));
 }

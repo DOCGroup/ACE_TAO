@@ -21,6 +21,14 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/XML_Types.h"
+#include "ACEXML/common/XML_Macros.h"
+
+#if defined (ACE_USES_NATIVE_EXCEPTIONS)
+# define ACEXML_RAISE(EXCEPTION) throw EXCEPTION
+#else
+# define ACEXML_RAISE(EXCEPTION)
+#endif
+
 
 /**
  * @class ACEXML_Exception Exception.h "ACEXML/common/Exception.h"
@@ -36,23 +44,27 @@
 class ACEXML_Export ACEXML_Exception
 {
 public:
-  /// Default contructor.
-  ACEXML_Exception (void);
 
   /// Copy constructor.
-  ACEXML_Exception (const ACEXML_Exception &ex);
+  ACEXML_Exception (const ACEXML_Exception &src);
+
+  /// Assignment operator.
+  ACEXML_Exception& operator= (const ACEXML_Exception& src);
 
   /// Destructor.
   virtual ~ACEXML_Exception (void);
 
-  /// Accessor for the exception name.
-  static const ACEXML_Char *name (void);
+  /// Throw the exception.
+  virtual void _raise (void) = 0;
+
+  /// Static narrow operation.
+  static ACEXML_Exception* _downcast (ACEXML_Exception* ex);
 
   /// Return the exception type.  (for safe downcast.)
-  virtual const ACEXML_Char *id (void);
+  virtual const ACEXML_Char *id (void) const ;
 
   /// Dynamically create a copy of this exception.
-  virtual ACEXML_Exception *duplicate (void) = 0;
+  virtual ACEXML_Exception *duplicate (void) const = 0;
 
   /// Check whether this is an exception of type specified by <name>.
   virtual int is_a (const ACEXML_Char *name) = 0;
@@ -61,6 +73,9 @@ public:
   virtual void print (void) = 0;
 
 protected:
+  /// Default contructor.
+  ACEXML_Exception (void);
+
   /// All exceptions have names.  This name is used to identify the
   /// type of an exception.
   static const ACEXML_Char *exception_name_;

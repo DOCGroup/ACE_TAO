@@ -63,7 +63,7 @@ ACEXML_HttpCharStream::open (const ACEXML_Char *url)
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_url"), -1);
   if (result != 200)
-    ACE_ERROR_RETURN ((LM_ERROR, "Server returned status %d : %s",
+    ACE_ERROR_RETURN ((LM_ERROR, "Server returned status %d : %s\n",
                        result,
                        "Refer HTTP/1.0 for details"), -1);
 

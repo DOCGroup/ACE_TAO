@@ -20,6 +20,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ACEXML/common/XML_Macros.h"
 #include "ACEXML/common/Exception.h"
 
 /**
@@ -37,36 +38,30 @@ class ACEXML_Export ACEXML_Env
 {
 public:
   /// Default constructor.
-  ACEXML_Env ();
+  ACEXML_Env (void);
 
   /// Copy constructor.
-  ACEXML_Env (const ACEXML_Env &ev);
+  ACEXML_Env (const ACEXML_Env& ACEXML_TRY_ENV);
+
+  /// Assignment
+  ACEXML_Env& operator= (const ACEXML_Env& ACEXML_TRY_ENV);
 
   /// Destructor.
   ~ACEXML_Env (void);
 
-  /// Check if exception has occured.
-  int exception_occured (void) const;
-
-  /// Clear the exception and reset the evnrionment.
-  void reset (void);
-
-  /// Return the underlying exception for examination
+  /// Return the contained exception.
   ACEXML_Exception *exception (void) const;
 
-  /// Set the underlying exception.  ACEXML_Env assumes
-  /// ownership of the exception.
-  void exception (ACEXML_Exception *exception);
+  /// Set the contained exception to @arg ex
+  void exception (ACEXML_Exception* ex);
+
+  /// Clear the exception and reset the evnrionment.
+  void clear (void);
 
 private:
   /// Place holder for exception (if one occurs.)
   ACEXML_Exception *exception_;
 };
-
-// = These macros are used to speed up programming.  I hope to
-// merge them with ACE_CHECK macros someday.
-#define ACEXML_CHECK if (xmlenv.exception ()) return
-#define ACEXML_CHECK_RETURN(VAL) if (xmlenv.exception ()) return VAL
 
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/common/Env.i"

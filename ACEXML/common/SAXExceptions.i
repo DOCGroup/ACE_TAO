@@ -8,26 +8,50 @@ ACEXML_SAXException::message (void)
           this->message_);
 }
 
+ACEXML_INLINE void
+ACEXML_SAXException::_raise (void)
+{
+  ACEXML_RAISE (*this);
+}
+
+ACEXML_INLINE void
+ACEXML_SAXNotSupportedException::_raise (void)
+{
+  ACEXML_RAISE (*this);
+}
+
+ACEXML_INLINE void
+ACEXML_SAXNotRecognizedException::_raise (void)
+{
+  ACEXML_RAISE (*this);
+}
+
+ACEXML_INLINE void
+ACEXML_SAXParseException::_raise (void)
+{
+  ACEXML_RAISE (*this);
+}
+
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_SAXException::name (void)
+ACEXML_SAXException::id (void) const
 {
   return ACEXML_SAXException::exception_name_;
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_SAXNotSupportedException::name (void)
+ACEXML_SAXNotSupportedException::id (void) const
 {
   return ACEXML_SAXNotSupportedException::exception_name_;
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_SAXNotRecognizedException::name (void)
+ACEXML_SAXNotRecognizedException::id (void) const
 {
   return ACEXML_SAXNotRecognizedException::exception_name_;
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_SAXParseException::name (void)
+ACEXML_SAXParseException::id (void) const
 {
   return ACEXML_SAXParseException::exception_name_;
 }
