@@ -1,3 +1,11 @@
+Wed Jul  3 09:30:12 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/ObectReferenceTemplateC.cpp:
+        * tao/ObectReferenceTemplateC.h:
+
+	  Added static tao_add_ref() and tao_remove_ref() methods
+	  to ObjectReferenceFactory_var.
+
 Wed Jul  3 09:17:50 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_root/cdr_op.cpp:

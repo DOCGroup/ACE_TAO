@@ -374,6 +374,22 @@ PortableInterceptor::ObjectReferenceFactory_var::_retn (void)
   return tmp;
 }
 
+void
+PortableInterceptor::ObjectReferenceFactory_var::tao_add_ref (
+    ObjectReferenceFactory *p
+  )
+{
+  CORBA::add_ref (p);
+}
+
+void
+PortableInterceptor::ObjectReferenceFactory_var::tao_remove_ref (
+    ObjectReferenceFactory *p
+  )
+{
+  CORBA::remove_ref (p);
+}
+
 // *************************************************************
 // Operations for class PortableInterceptor::ObjectReferenceFactory_out
 // *************************************************************
