@@ -56,9 +56,5 @@ private:
   Event_Forwarder::StructuredProxyPushSupplier_var event_forwarder_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "RT_StructuredProxyPushSupplier.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_RT_STRUCTUREDPROXYPUSHSUPPLIER_H */

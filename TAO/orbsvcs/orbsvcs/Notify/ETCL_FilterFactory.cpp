@@ -2,10 +2,6 @@
 
 #include "ETCL_FilterFactory.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ETCL_FilterFactory.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_ETCL_FilterFactory, "$Id$")
 
 #include "ETCL_Filter.h"

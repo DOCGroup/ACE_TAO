@@ -91,9 +91,5 @@ protected:
 
 };
 
-#if defined (__ACE_INLINE__)
-#include "SequencePushConsumer.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_SEQUENCEPUSHCONSUMER_H */

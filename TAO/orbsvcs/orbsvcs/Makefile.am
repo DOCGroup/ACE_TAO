@@ -2038,38 +2038,16 @@ nobase_include_HEADERS += \
   Notify/Worker_Task.h \
   Notify/Admin.inl \
   Notify/AdminProperties.inl \
-  Notify/Any/AnyEvent.inl \
-  Notify/Any/CosEC_ProxyPushConsumer.inl \
-  Notify/Any/CosEC_ProxyPushSupplier.inl \
-  Notify/Any/ProxyPushConsumer.inl \
-  Notify/Any/ProxyPushSupplier.inl \
-  Notify/Any/PushConsumer.inl \
-  Notify/Any/PushSupplier.inl \
   Notify/Buffering_Strategy.inl \
-  Notify/Builder.inl \
   Notify/Consumer.inl \
-  Notify/ConsumerAdmin.inl \
-  Notify/CosNotify_Service.inl \
-  Notify/Default_Factory.inl \
   Notify/Delivery_Request.inl \
-  Notify/ETCL_Filter.inl \
-  Notify/ETCL_FilterFactory.inl \
   Notify/Event.inl \
-  Notify/EventChannel.inl \
-  Notify/EventChannelFactory.inl \
   Notify/EventType.inl \
-  Notify/EventTypeSeq.inl \
   Notify/Event_Manager.inl \
   Notify/FilterAdmin.inl \
   Notify/ID_Factory.inl \
   Notify/Method_Request.inl \
-  Notify/Method_Request_Dispatch.inl \
-  Notify/Method_Request_Event.inl \
-  Notify/Method_Request_Lookup.inl \
-  Notify/Method_Request_Shutdown.inl \
-  Notify/Method_Request_Updates.inl \
   Notify/Method_Request_Updates_T.inl \
-  Notify/Name_Value_Pair.inl \
   Notify/Object.inl \
   Notify/POA_Helper.inl \
   Notify/Peer.inl \
@@ -2078,34 +2056,15 @@ nobase_include_HEADERS += \
   Notify/Property_Boolean.inl \
   Notify/Proxy.inl \
   Notify/ProxyConsumer.inl \
-  Notify/ProxyConsumer_T.inl \
   Notify/ProxySupplier.inl \
-  Notify/ProxySupplier_T.inl \
-  Notify/Proxy_T.inl \
   Notify/QoSProperties.inl \
   Notify/Reactive_Task.inl \
-  Notify/Reconnection_Registry.inl \
-  Notify/Refcountable.inl \
   Notify/Routing_Slip.inl \
   Notify/Routing_Slip_Queue.inl \
-  Notify/Sequence/Batch_Buffering_Strategy.inl \
-  Notify/Sequence/SequenceProxyPushConsumer.inl \
-  Notify/Sequence/SequenceProxyPushSupplier.inl \
-  Notify/Sequence/SequencePushConsumer.inl \
-  Notify/Sequence/SequencePushSupplier.inl \
-  Notify/Structured/StructuredEvent.inl \
-  Notify/Structured/StructuredProxyPushConsumer.inl \
-  Notify/Structured/StructuredProxyPushSupplier.inl \
-  Notify/Structured/StructuredPushConsumer.inl \
-  Notify/Structured/StructuredPushSupplier.inl \
   Notify/Subscription_Change_Worker.inl \
   Notify/Supplier.inl \
-  Notify/SupplierAdmin.inl \
   Notify/ThreadPool_Task.inl \
-  Notify/Timer_Queue.inl \
-  Notify/Timer_Reactor.inl \
   Notify/Topology_Object.inl \
-  Notify/Worker_Task.inl \
   Notify/Method_Request_Updates_T.cpp \
   Notify/ProxyConsumer_T.cpp \
   Notify/ProxySupplier_T.cpp \
@@ -4862,10 +4821,6 @@ nobase_include_HEADERS += \
   Notify/RT_POA_Helper.h \
   Notify/RT_Properties.h \
   Notify/Structured/RT_StructuredProxyPushSupplier.h \
-  Notify/RT_Builder.inl \
-  Notify/RT_Factory.inl \
-  Notify/RT_Notify_Service.inl \
-  Notify/RT_POA_Helper.inl \
   Notify/RT_Properties.inl \
   Notify/Structured/RT_StructuredProxyPushSupplier.inl
 

@@ -3,10 +3,6 @@
 #include "Method_Request_Shutdown.h"
 #include "ThreadPool_Task.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Method_Request_Shutdown.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Method_Request_Shutdown, "$Id$")
 
 TAO_Notify_Method_Request_Shutdown::TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task)

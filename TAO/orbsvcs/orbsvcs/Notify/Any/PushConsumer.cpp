@@ -2,10 +2,6 @@
 
 #include "PushConsumer.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "PushConsumer.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Notify,
            TAO_Notify_PushConsumer,
            "$Id$")

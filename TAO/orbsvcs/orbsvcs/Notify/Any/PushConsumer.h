@@ -69,9 +69,5 @@ protected:
   CosEventComm::PushConsumer_var push_consumer_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "PushConsumer.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PUSHCONSUMER_H */

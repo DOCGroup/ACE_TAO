@@ -2,10 +2,6 @@
 
 #include "ConsumerAdmin.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ConsumerAdmin.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (RT_Notify,
            TAO_Notify_ConsumerAdmin,
            "$Id$")

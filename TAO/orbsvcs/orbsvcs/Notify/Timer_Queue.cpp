@@ -2,10 +2,6 @@
 
 #include "Timer_Queue.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Timer_Queue.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Notify, TAO_Notify_Timer_Queue, "$Id$")
 
 TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue (void)

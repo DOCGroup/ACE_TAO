@@ -194,10 +194,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#if defined (__ACE_INLINE__)
-#include "EventChannelFactory.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_Notify_EVENTCHANNELFACTORY_H */

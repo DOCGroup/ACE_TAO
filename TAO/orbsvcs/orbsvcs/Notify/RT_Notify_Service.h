@@ -55,9 +55,5 @@ protected:
 
 ACE_FACTORY_DECLARE (TAO_RT_Notify,TAO_RT_Notify_Service)
 
-#if defined (__ACE_INLINE__)
-#include "RT_Notify_Service.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_RT_NOTIFY_SERVICE_H */

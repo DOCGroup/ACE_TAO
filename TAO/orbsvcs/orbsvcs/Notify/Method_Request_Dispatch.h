@@ -164,9 +164,5 @@ public:
 
 /*******************************************************************************************************/
 
-#if defined (__ACE_INLINE__)
-#include "Method_Request_Dispatch.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_DISPATCH_METHOD_REQUEST_H */

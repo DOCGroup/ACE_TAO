@@ -2,10 +2,6 @@
 
 #include "Timer_Reactor.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Timer_Reactor.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_Timer_Reactor, "$Id$")
 
 #include "ace/Reactor.h"

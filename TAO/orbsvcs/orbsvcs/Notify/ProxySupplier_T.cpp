@@ -5,10 +5,6 @@
 
 #include "ProxySupplier_T.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ProxySupplier_T.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_ProxySupplier_T, "$Id$")
 
 #include "Consumer.h"

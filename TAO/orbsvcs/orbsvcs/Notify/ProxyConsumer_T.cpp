@@ -6,10 +6,6 @@
 #include "ProxyConsumer_T.h"
 #include "SupplierAdmin.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ProxyConsumer_T.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_Notify_ProxyConsumer_T, "$Id$")
 
 #include "Event_Manager.h"

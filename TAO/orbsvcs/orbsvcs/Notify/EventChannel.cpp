@@ -2,10 +2,6 @@
 
 #include "EventChannel.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "EventChannel.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "Container_T.h"
 #include "EventChannelFactory.h"
 #include "ConsumerAdmin.h"

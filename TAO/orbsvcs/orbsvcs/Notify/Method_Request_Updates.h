@@ -81,9 +81,5 @@ public:
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 };
 
-#if defined (__ACE_INLINE__)
-#include "Method_Request_Updates.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_METHOD_REQUEST_UPDATES_H */

@@ -53,9 +53,5 @@ protected:
   CosNotifyComm::StructuredPushSupplier_var push_supplier_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "StructuredPushSupplier.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_STRUCTUREDPUSHSUPPLIER_H */

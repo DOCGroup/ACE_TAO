@@ -2,10 +2,6 @@
 
 #include "CosEC_ProxyPushSupplier.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "CosEC_ProxyPushSupplier.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (Notify, TAO_Notify_CosEC_ProxyPushSupplier, "$Id$")
 
 #include "tao/debug.h"

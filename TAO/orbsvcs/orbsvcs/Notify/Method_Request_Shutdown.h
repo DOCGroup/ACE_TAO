@@ -49,9 +49,5 @@ private:
   TAO_Notify_ThreadPool_Task* task_;
 };
 
-#if defined (__ACE_INLINE__)
-#include "Method_Request_Shutdown.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_METHOD_REQUEST_SHUTDOWN_H */
