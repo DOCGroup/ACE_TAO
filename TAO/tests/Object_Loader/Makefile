@@ -26,7 +26,7 @@ LSRC= \
 	Test_i.cpp \
 	Loader.cpp
 ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
-LDLIBS  = -lTAO
+LDLIBS  = -lTAO_PortableServer -lTAO
 
 DRIVER_OBJS = driver.o TestC.o
 PSRC=driver.cpp

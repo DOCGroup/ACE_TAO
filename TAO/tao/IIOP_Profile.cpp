@@ -27,6 +27,7 @@ TAO_IIOP_Profile::object_key_delimiter (void) const
 }
 
 
+
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Version &version,
@@ -102,6 +103,7 @@ TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 // -1 -> error
 //  0 -> can't understand this version
 //  1 -> success.
+
 int
 TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
 {
@@ -229,18 +231,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, ':');  // Look for a port
-
-  if (cp == 0)
-    {
-      // No host/port delimiter!
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        -1);
-    }
+  char *cp_pos = ACE_OS::strchr (start, ':');  // Look for a port
 
   char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
 
@@ -255,27 +246,92 @@ TAO_IIOP_Profile::parse_string (const char *string,
         -1);
     }
 
-  // Don't increment the pointer 'cp' directly since we still need
-  // to use it immediately after this block.
+  // The default port number.
+  const char def_port [] = ":683";
 
-  CORBA::ULong length = okd - (cp + 1);
-  // Don't allocate space for the colon ':'.
+  // Length of port.
+  CORBA::ULong length = 0;
+
+  // Length of host string.
+  CORBA::ULong length_host = 0;
+
+  // Length of <cp>
+  CORBA::ULong length_cp =
+    ACE_OS::strlen ((const char *)okd) + sizeof (def_port);
+
+  CORBA::String_var cp = CORBA::string_alloc (length_cp);
+
+  if (cp_pos == 0)
+    {
+      // No host/port delimiter! Dont raise an exception. Use the
+      // default port No. 683
+      ACE_OS::strcpy (cp, def_port);
+      ACE_OS::strcat (cp, okd);
+
+      length =
+        ACE_OS::strlen (cp.in ()) -
+        ACE_OS::strlen ((const char *)okd) -
+        1;
+
+      length_host =
+        ACE_OS::strlen (start) +
+        sizeof (def_port) -
+        ACE_OS::strlen (cp.in ()) -1;
+    }
+  else
+    {
+      // The port is specified:
+      cp = (const char *)cp_pos;
+      length =
+        ACE_OS::strlen (cp.in ())
+        - ACE_OS::strlen ((const char *)okd) + 1;
+      length_host =
+        ACE_OS::strlen ((const char *)start)
+        - ACE_OS::strlen (cp.in ());
+    }
 
   CORBA::String_var tmp = CORBA::string_alloc (length);
 
-  ACE_OS::strncpy (tmp.inout (), cp + 1, length);
+  ACE_OS::strncpy (tmp.inout (), cp.in () + 1, length);
   tmp[length] = '\0';
 
   this->endpoint_.port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
 
-  length = cp - start;
+  tmp = CORBA::string_alloc (length_host);
 
-  tmp = CORBA::string_alloc (length);
-
-  ACE_OS::strncpy (tmp.inout (), start, length);
-  tmp[length] = '\0';
+  ACE_OS::strncpy (tmp.inout (), start, length_host);
+  tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
+
+  ACE_INET_Addr host_addr;
+
+  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+    {
+      char tmp_host [MAXHOSTNAMELEN + 1];
+
+      // If no host is specified: assign the default host : the local host.
+      if (host_addr.get_host_name (tmp_host,
+                                   sizeof (tmp_host)) != 0)
+        {
+          const char *tmp = host_addr.get_host_addr ();
+          if (tmp == 0)
+            {
+              if (TAO_debug_level > 0)
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("\n\nTAO (%P|%t) ")
+                            ACE_TEXT ("IIOP_Profile::parse_string ")
+                            ACE_TEXT ("- %p\n\n"),
+                            ACE_TEXT ("cannot determine hostname")));
+              return -1;
+            }
+          this->endpoint_.host_ = tmp;
+        }
+      else
+        {
+          this->endpoint_.host_ = (const char *) tmp_host;
+        }
+    }
 
   if (this->endpoint_.object_addr_.set (this->endpoint_.port_,
                                         this->endpoint_.host_.in ()) == -1)
@@ -283,6 +339,8 @@ TAO_IIOP_Profile::parse_string (const char *string,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Error Occured !")
                       ACE_TEXT ("TAO (%P|%t) IIOP_Profile::parse_string - \n")
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
@@ -432,6 +490,7 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
   this->create_profile_body (encap);
 
   // write the encapsulation as an octet sequence...
+
   stream << CORBA::ULong (encap.total_length ());
   stream.write_octet_array_mb (encap.begin ());
 

@@ -32,6 +32,7 @@
 #include "tao/TAO_Singleton_Manager.h"
 #include "tao/TAO_Singleton.h"
 #include "tao/Adapter.h"
+#include "tao/Parser_Registry.h"
 
 #include "ace/Hash_Map_Manager.h"
 
@@ -177,8 +178,12 @@ public:
   // = Get the acceptor registry
   TAO_Acceptor_Registry  *acceptor_registry  (void);
 
+  // = Get the IOR parser registry
+  TAO_Parser_Registry *parser_registry (void);
+
   // = Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
+
 
   // = Set/get pointer to the ORB.
   CORBA::ORB_ptr orb (void);
@@ -760,6 +765,9 @@ protected:
   // handlers from the Reactor.  This is particularly important for
   // dynamically loaded ORBs where an application level reactor, such
   // as the Singleton reactor, is used instead of an ORB created one.
+
+  TAO_Parser_Registry parser_registry_;
+  // The IOR parser registry
 };
 
 // ****************************************************************
