@@ -471,8 +471,8 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
 {
   // Construct a REPLY header.
   TAO_GIOP::start_message (TAO_GIOP::Reply,
-			   *this->outgoing_,
-			   this->orb_core_);
+			                     *this->outgoing_,
+			                     this->orb_core_);
 
   TAO_GIOP_ServiceContextList resp_ctx;
   resp_ctx.length (0);
@@ -508,8 +508,8 @@ IIOP_ServerRequest::init_reply (CORBA::Environment &env)
 
       this->outgoing_->write_ulong (this->exception_type_);
 
-      // we know that the value () will return the ACE_Message_Block
-      TAO_InputCDR cdr ((ACE_Message_Block*)this->exception_->value ());
+      // we use the any's ACE_Message_Block
+      TAO_InputCDR cdr (this->exception_->_tao_get_cdr ());
       (void) this->outgoing_->append (except_tc, &cdr, env);
     }
   else // Normal reply
@@ -542,14 +542,13 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
       if (this->retval_)
         {
           CORBA::TypeCode_var tc = this->retval_->type ();
-	        void* value = ACE_const_cast(void*,this->retval_->value ());
 	        if (this->retval_->any_owns_data ())
             {
-              (void) this->outgoing_->encode (tc.in (), value, 0, env);
+              (void) this->outgoing_->encode (tc.in (), retval_->value (), 0, env);
             }
           else
             {
-              TAO_InputCDR cdr ((ACE_Message_Block *)value);
+              TAO_InputCDR cdr (retval_->_tao_get_cdr ());
               (void) this->outgoing_->append (tc.in (), &cdr, env);
             }
         }
@@ -567,14 +566,13 @@ IIOP_ServerRequest::dsi_marshal (CORBA::Environment &env)
 
               CORBA::Any_ptr any = nv->value ();
               CORBA::TypeCode_var tc = any->type ();
-              void* value = ACE_const_cast(void*,any->value ());
               if (any->any_owns_data ())
                 {
-                  (void) this->outgoing_->encode (tc.in (), value, 0, env);
+                  (void) this->outgoing_->encode (tc.in (), any->value (), 0, env);
                 }
               else
                 {
-                  TAO_InputCDR cdr ((ACE_Message_Block *)value);
+                  TAO_InputCDR cdr (any->_tao_get_cdr ());
                   (void) this->outgoing_->append (tc.in (), &cdr, env);
                 }
             }
