@@ -33,18 +33,9 @@ public:
   
   Signal_Handler (void);
 
-  Signal_Handler (const ACE_CString &sender_name);
-  // constructor.
-  
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
   // Override this method to implement graceful shutdown.
 
-  const ACE_CString& sender_name (void);
-  void sender_name (const ACE_CString &);
-
-private:
-  
-  ACE_CString sender_name_;
 };
 
 
@@ -131,11 +122,6 @@ public:
   Connection_Manager &connection_manager (void);
   /// Accessor to the connection manager.
 
-//    void add_stream (void);
-//    void remove_stream (void);
-//    int stream_alive (void);
-//    ///Methods that allow to keep track of the exisiting streams.
-   
 private:
   int parse_args (int argc, char **argv);
   /// Method to parse the command line arguments.
@@ -171,7 +157,7 @@ private:
   /// Teh count of the number of streams that are active
   
   Signal_Handler signal_handler_;
-  
+  /// Reference to the signal handler.
 };
 
 
