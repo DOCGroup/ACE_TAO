@@ -13,6 +13,7 @@ common_defines        = UNICODE _UNICODE
 need_staticflags      = 1
 pdb                   = 1
 stack                 =
+use_modifier          =
 
 WCE x86 {
   type_code   = 0x8301

@@ -11,6 +11,7 @@
 OCFLAGS      = <%if(optimize)%>-O2<%endif%><%foreach(defines)%> -D<%define%><%endfor%>
 INTERMEDIATE = <%intermediate_dir%>\<%noextension(project_file)%>
 LIBMODIFIER  = <%lib_modifier%>
+EXEMODIFIER  = <%if(use_modifier)%><%lib_modifier%><%endif%>
 <%if(postlinkrmext)%>
 POSTLINKRM   = <%postlinkrmext%>
 <%endif%>
@@ -39,7 +40,7 @@ LIBFLAGS     = <%libflags%>
 EXEFLAGS     = <%exeflags%>
 <%endfor%>
 <%if(exename)%>
-NAME         = <%exename%>
+NAME         = <%exename%>$(EXEMODIFIER)
 <%else%>
 <%if(sharedname)%>
 NAME         = <%sharedname%>$(LIBMODIFIER)
