@@ -1,3 +1,15 @@
+Wed Jul 24 08:13:48 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * include/makeinclude/build_dll.bor:
+        * include/makeinclude/build_exe.bor:
+        * include/makeinclude/build_lib.bor:
+        * include/makeinclude/make_flags.bor:
+          Improve debugging support with Borland C++Builder by invoking the
+          compiler with a full path to each source file. This can be disabled
+          by setting a NO_FULL_PATH environment variable to 1 or by passing
+          -DNO_FULL_PATH when running make, which may be necessary when doing
+          a debug build on Win9x.
+
 Wed Jul 24 07:45:43 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * THANKS: Added Tim Bradley to the hall of fame.
