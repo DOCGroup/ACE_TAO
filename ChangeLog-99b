@@ -1,3 +1,13 @@
+Tue Jul 27 10:25:41 1999  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Added a note about required HP-UX 10.20
+          patch. Updated aC++ versions.
+
+        * ace/Process.{h cpp} (ACE_Process_Options::command_line): Added
+          'const' to make the entire array and contents const. Restores
+          ability for users of pre-5.0 to still pass char **. Thanks to
+          Bill Tovrea <gwtovrea@west.raytheon.com> for reporting this.
+
 Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Future.h: Moved the static methods until the bottom
