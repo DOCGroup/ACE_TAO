@@ -70,7 +70,8 @@ interface Param_Test
   // variable structures
   struct Var_Struct
   {
-    StrSeq seq; // this field makes the structure variable
+    string dummy;
+    StrSeq seq;
   };
 
   Var_Struct test_var_struct (in Var_Struct s1,

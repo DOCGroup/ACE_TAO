@@ -1,28 +1,42 @@
+Thu Jan  8 21:58:18 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: be_interface::relative_skel_name ()
+	was producing incorrect results because we were overwriting an
+	internal string with '\0'
+
+	* TAO/tao/deep_free.cpp: Marshal_Struct::deep_free. Commented out
+	the call to String::deep_free if a member is a string because that
+	free should happen automatically as the member is a String_var
+	type. In addition, String::deep_free was setting the pointer to 0.
+
+	* TAO/tests/Param_Test: Added a string member field to the
+	var_struct. Also some modifications. Needs more improvement.
+
 Thu Jan 08 17:48:49 1998    <coryan@CHA-CHA>
 
-	* Naming_Service/NS_CosNaming.cpp: 
-	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
+	* Naming_Service/NS_CosNaming.cpp:
+	* orbsvcs/Naming_Service/CosNaming_i.cpp:
 	  ACE_NESTED is only needed in the generated code.
 
-	* Scheduling_Service/Scheduling_Service.cpp: 
+	* Scheduling_Service/Scheduling_Service.cpp:
 	  MSVC++ 5.0 seems to have a bug: if the implementation for the
 	  scheduling service is stored into a RtecScheduler::Scheduler_ptr
 	  then the server crashes; this is OK in other platforms and looks
 	  OK since the pointers are in fact compatible.
 
-	* tests/Event_Latency/Event_Latency.cpp: 
+	* tests/Event_Latency/Event_Latency.cpp:
 	  Removed some warnings by using "CORBA::ULong" instead of "int"
 	  in comparisons against sequence<>::length.
 
-	* Dump_Schedule/Dump_Schedule.dsp: 
-	* orbsvcs/orbsvcs_lib.dsp: 
+	* Dump_Schedule/Dump_Schedule.dsp:
+	* orbsvcs/orbsvcs_lib.dsp:
 	  Fixed some names and missing options.
 
 Thu Jan 08 15:55:21 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
-	* tao/objtable.cpp: 
-	* tao/optable.cpp: 
-	* tao/orbobj.cpp: 
+	* tao/objtable.cpp:
+	* tao/optable.cpp:
+	* tao/orbobj.cpp:
 	* orbsvcs/Naming_Service/CosNaming_i.cpp: Added missing template
  	  instantiation codes.
 
@@ -33,39 +47,52 @@ Thu Jan  8 12:53:28 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
  	these functions in the 2.0 or 2.1 spec, but what good are wstrings
  	if you can't make copies?  Plus, Irfan really wanted it.
 
+Thu Jan  8 11:36:38 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h, TAO_IDL/be/be_interface.cpp:
+	Added a method called "relative_skel_name" to be used for
+	generating names of inherited interfaces in the keleton class
+	name.
+
+	* TAO_IDL/be/be_state_argument.cpp: Generation of space was
+	missing after the "native" type in a parameter list declaration.
+
+	* TAO_IDL/fe/{y.tab.*, lex.yy.cpp}: Due to changes in the idl.ll
+	and idl.yy files, these had to be regenerated.
+
 Thu Jan 08 00:14:56 1998    <coryan@MILONGA>
 
-	* orbsvcs/orbsvcs.dsw: 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp: 
-	* orbsvcs/Dump_Schedule/Dump_Schedule.dsw: 
-	* orbsvcs/Event_Service/Event_Service.dsp: 
-	* orbsvcs/Event_Service/Event_Service.dsw: 
-	* orbsvcs/Naming_Service/Naming_Service.dsp: 
-	* orbsvcs/Naming_Service/Naming_Service.dsw: 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.dsp: 
-	* orbsvcs/Scheduling_Service/Scheduling_Service.dsw: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.dsp: 
-	* orbsvcs/tests/Event_Latency/Event_Latency.dsw: 
+	* orbsvcs/orbsvcs.dsw:
+	* orbsvcs/Dump_Schedule/Dump_Schedule.dsp:
+	* orbsvcs/Dump_Schedule/Dump_Schedule.dsw:
+	* orbsvcs/Event_Service/Event_Service.dsp:
+	* orbsvcs/Event_Service/Event_Service.dsw:
+	* orbsvcs/Naming_Service/Naming_Service.dsp:
+	* orbsvcs/Naming_Service/Naming_Service.dsw:
+	* orbsvcs/Scheduling_Service/Scheduling_Service.dsp:
+	* orbsvcs/Scheduling_Service/Scheduling_Service.dsw:
+	* orbsvcs/tests/Event_Latency/Event_Latency.dsp:
+	* orbsvcs/tests/Event_Latency/Event_Latency.dsw:
 	  Added preliminar (untested) versions of the project files for
 	  MSVC++ 5.0.
 
 Wed Jan  7 22:41:41 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* tao/corba.h: 
+	* tao/corba.h:
 	  Removed varout.h from the list of included files; it is no used
 	  and would abort compilation on IRIX.
 
-	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp: 
-	* tao/orbobj.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp:
+	* tao/orbobj.cpp:
 	  Added missing template instantiations.
 
-	* tao/varout.h: 
+	* tao/varout.h:
 	  Some fixes, but actually the changes were aborted, Andy informed
 	  me that the file wasn't really used.
 
 Wed Jan 07 21:52:20 1998    <coryan@MILONGA>
 
-	* TAO_IDL/tao_idl.dsp: 
+	* TAO_IDL/tao_idl.dsp:
 	  Added the new native_* functions to the project file.
 	  Also use the new tao_idl.cpp file in the top level directory.
 
@@ -78,10 +105,10 @@ Wed Jan  7 20:20:56 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 Wed Jan  7 18:00:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/Makefile: 
-	* TAO_IDL/tao_idl.cpp: 
-	* TAO_IDL/driver/Makefile: 
-	* TAO_IDL/driver/drv_main.cpp: 
+	* TAO_IDL/Makefile:
+	* TAO_IDL/tao_idl.cpp:
+	* TAO_IDL/driver/Makefile:
+	* TAO_IDL/driver/drv_main.cpp:
 	  Moved the main() routine to the topmost directory, this is
 	  needed for platforms like SGI that will not link a group of
 	  shared libraries without any object files. It also seems more
