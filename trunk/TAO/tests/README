@@ -46,6 +46,10 @@ how to run the following tests:
           A little test to check the the ORB can handle server and
           client crashes.
 
+        . Forwarding
+        
+          
+
         . IDL_Test
 
           A collection of the IDL examples that have caused problems

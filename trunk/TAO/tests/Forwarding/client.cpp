@@ -161,10 +161,8 @@ Worker::run_test (CORBA::Environment &ACE_TRY_ENV)
         object->_is_a ("IDL:Simple_Server:1.0", ACE_TRY_ENV);
       ACE_CHECK;
       if (!is_simple_server)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) unexpected result from _is_a()\n"));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) unexpected result from _is_a()\n"));
     }
 
   CORBA::Object_var object =
@@ -189,10 +187,8 @@ Worker::run_test (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK;
 
       if (r != 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) unexpected result = %d\n",
-                      r));
-        }
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) unexpected result = %d\n",
+                    r));
     }
 }
