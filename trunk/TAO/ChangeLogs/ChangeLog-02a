@@ -1,3 +1,10 @@
+Tue Jun  6 14:28:19 2000  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* docs/interceptors.html:
+	  Clarified the position of the current implementation with
+	  respect to use in collocation optimizations.  Also indicated
+	  future directions of interceptors and collocation optimizations.
+
 Tue Jun  6 12:21:23 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/ImplRepo/NameService/test.cpp:
