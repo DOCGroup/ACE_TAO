@@ -124,8 +124,15 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (result == -1)
           {
             // If the execv fails, this child needs to exit.
-            ACE_DEBUG ((LM_MAX,
-                        "(%P): ACE_Process::spawn (); exec failed: exiting!!!!\n"));
+            
+            // Print the message if debug_ is enabled in the service
+            // configurator.  
+            if (ACE_Service_Config::debug_)
+              ACE_DEBUG ((LM_MAX,
+                          "(%P): ACE_Process::spawn (); exec failed: exiting!!!!\n"));
+            
+            // Exit with the errno so that the calling process can
+            // catch this and figure out what went wrong.
             ACE_OS::exit (errno);
           }
 
