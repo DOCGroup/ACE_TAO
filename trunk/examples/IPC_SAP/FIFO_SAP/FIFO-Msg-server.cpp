@@ -4,6 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_stropts.h"
 #include "ace/OS_main.h"
 
@@ -39,10 +40,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   return 0;
 }
 #else
-#include <stdio.h>
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_OS::fprintf (stderr, "This feature is not supported\n");
+  ACE_ERROR ((LM_INFO,
+              ACE_TEXT ("This feature is not supported\n")));
   return 0;
 }
 #endif /* ACE_HAS_STREAM_PIPES */
