@@ -347,7 +347,7 @@ ACE_Location_Node::~ACE_Location_Node (void)
 const ACE_DLL &
 ACE_Location_Node::dll (void)
 {
-  return this->dll_; 
+  return this->dll_;
 }
 
 const ACE_TCHAR *
