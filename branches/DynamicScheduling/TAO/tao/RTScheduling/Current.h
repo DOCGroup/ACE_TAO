@@ -206,6 +206,10 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 
   RTScheduling::Scheduler_ptr scheduler (void);
 
+  DT_Hash_Map* dt_hash (void);
+
+  RTScheduling::Scheduler_ptr scheduler (void);
+
  private:
   RTScheduling::Scheduler_var scheduler_;
   TAO_ORB_Core* orb_;

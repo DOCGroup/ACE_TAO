@@ -20,11 +20,6 @@ TAO_RTScheduler_Current::TAO_RTScheduler_Current (TAO_ORB_Core* orb)
 {
 }
 
-TAO_ORB_Core* 
-TAO_RTScheduler_Current_i::orb (void)
-{
-  return this->orb_;
-}
 
 void
 TAO_RTScheduler_Current::rt_current (RTCORBA::Current_ptr rt_current)
@@ -251,6 +246,21 @@ TAO_RTScheduler_Current::implementation (void)
   return impl;
 
 }
+
+TAO_ORB_Core* 
+TAO_RTScheduler_Current_i::orb (void)
+{
+  return this->orb_;
+}
+
+DT_Hash_Map*
+TAO_RTScheduler_Current_i::dt_hash (void)
+{
+  return this ->dt_hash_;
+}
+
+RTScheduling::Scheduler
+TAO_RTScheduler_Current_i::
 
 TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
 						      DT_Hash_Map* dt_hash)
