@@ -10,6 +10,9 @@ Sun Nov  2 13:28:19 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	*does not* own the value. In contrast, for the rest of the cases
 	the result (of type Any) owns the result.
 
+	* be_sequence.cpp: Additional work in progress. Full changelog
+	entry will be available in the next commit.
+
 Fri Oct 31 22:20:06 1997    <irfan@TWOSTEP>
 
 	* tao/encode.cpp (encode): Changed cast of data from
