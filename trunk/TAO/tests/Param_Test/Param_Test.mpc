@@ -1,4 +1,4 @@
-project: messaging {
+project: messaging, minimum_corba {
   Source_Files {
     param_test_i.cpp
     tmplinst
@@ -6,7 +6,7 @@ project: messaging {
   }
 }
 
-project(client): messaging {
+project(client): messaging, minimum_corba {
   depends += DynamicInterface
   libs    += TAO_DynamicInterface
   exename  = client
@@ -58,7 +58,7 @@ project(client): messaging {
   }
 }
 
-project(anyop): messaging {
+project(anyop): messaging, minimum_corba {
   exename = anyop
 
   Source_Files {

@@ -1,5 +1,6 @@
 project: server {
-  idlflags = -Ge 0 -Sc
+  idlflags  = -Ge 0 -Sc
+  requires += exceptions
 
   Source_Files {
     test_i.cpp
@@ -8,7 +9,8 @@ project: server {
 }
 
 project: client {
-  idlflags = -Ge 0 -Sc
+  idlflags  = -Ge 0 -Sc
+  requires += exceptions
 
   Source_Files {
     testC.cpp

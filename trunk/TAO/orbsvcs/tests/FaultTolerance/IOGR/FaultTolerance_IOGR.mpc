@@ -1,6 +1,7 @@
 project: server, orbsvcsexe {
   depends += FTORB IORManip
   libs    += TAO_FTORB TAO_IORManip
+  comps   += FTORB
 
   Source_Files {
     test_i.cpp
@@ -12,6 +13,7 @@ project(Manager): server, orbsvcsexe {
   depends += FTORB IORManip
   libs    += TAO_FTORB TAO_IORManip
   exename  = Manager
+  comps   += FTORB
 
   Source_Files {
     testC.cpp

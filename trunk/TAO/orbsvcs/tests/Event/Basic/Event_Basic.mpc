@@ -1,6 +1,6 @@
-project(Reconnect): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Reconnect): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Reconnect
 
@@ -9,9 +9,9 @@ project(Reconnect): orbsvcsexe, messaging {
   }
 }
 
-project(Shutdown): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Shutdown): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Shutdown
 
@@ -20,9 +20,9 @@ project(Shutdown): orbsvcsexe, messaging {
   }
 }
 
-project(Observer): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Observer): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Observer
 
@@ -31,9 +31,9 @@ project(Observer): orbsvcsexe, messaging {
   }
 }
 
-project(BCast): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(BCast): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = BCast
 
@@ -42,9 +42,9 @@ project(BCast): orbsvcsexe, messaging {
   }
 }
 
-project(Timeout): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Timeout): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Timeout
 
@@ -53,9 +53,9 @@ project(Timeout): orbsvcsexe, messaging {
   }
 }
 
-project(Wildcard): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Wildcard): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Wildcard
 
@@ -64,9 +64,9 @@ project(Wildcard): orbsvcsexe, messaging {
   }
 }
 
-project(Negation): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Negation): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Negation
 
@@ -75,9 +75,9 @@ project(Negation): orbsvcsexe, messaging {
   }
 }
 
-project(Disconnect): orbsvcsexe, messaging {
-  depends  += "Event Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Disconnect): messaging, rteventexe {
+  depends  += "Event Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Disconnect
 
@@ -86,9 +86,9 @@ project(Disconnect): orbsvcsexe, messaging {
   }
 }
 
-project(MT_Disconnect): orbsvcsexe, messaging {
-  depends  += "RTEvent Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(MT_Disconnect): messaging, rteventexe {
+  depends  += "RTEvent Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = MT_Disconnect
 
@@ -97,9 +97,9 @@ project(MT_Disconnect): orbsvcsexe, messaging {
   }
 }
 
-project(Atomic_Reconnect): orbsvcsexe, messaging {
-  depends  += "RTEvent Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Atomic_Reconnect): messaging, rteventexe {
+  depends  += "RTEvent Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Atomic_Reconnect
 
@@ -108,9 +108,9 @@ project(Atomic_Reconnect): orbsvcsexe, messaging {
   }
 }
 
-project(Bitmask): orbsvcsexe, messaging {
-  depends  += "RTEvent Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Bitmask): messaging, rteventexe {
+  depends  += "RTEvent Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Bitmask
 
@@ -119,9 +119,9 @@ project(Bitmask): orbsvcsexe, messaging {
   }
 }
 
-project(Complex): orbsvcsexe, messaging {
-  depends  += "RTEvent Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Complex): messaging, rteventexe {
+  depends  += "RTEvent Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Complex
 
@@ -130,9 +130,9 @@ project(Complex): orbsvcsexe, messaging {
   }
 }
 
-project(Gateway): orbsvcsexe, messaging {
-  depends  += "RTEvent Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Gateway): messaging, rteventexe {
+  depends  += "RTEvent Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Gateway
 
@@ -141,9 +141,9 @@ project(Gateway): orbsvcsexe, messaging {
   }
 }
 
-project(Control): orbsvcsexe, messaging {
-  depends  += "RTEvent Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Control): messaging, rteventexe {
+  depends  += "RTEvent Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Control
 
@@ -152,9 +152,9 @@ project(Control): orbsvcsexe, messaging {
   }
 }
 
-project(Random): orbsvcsexe, messaging {
-  depends  += "RTEvent Test Lib" RTEvent CosNaming Svc_Utils IORTable
-  libs     += ECTests TAO_RTEvent TAO_CosNaming TAO_Svc_Utils TAO_IORTable
+project(Random): messaging, rteventexe {
+  depends  += "RTEvent Test Lib" CosNaming IORTable
+  libs     += ECTests TAO_CosNaming TAO_IORTable
   includes += ../lib
   exename   = Random
 

@@ -1,4 +1,5 @@
 project: server {
+  requires += interceptors
   Source_Files {
     test_i.cpp
     Server_ORBInitializer.cpp
@@ -8,6 +9,7 @@ project: server {
 }
 
 project: client {
+  requires += interceptors
   Source_Files {
     testC.cpp
     Client_ORBInitializer.cpp
