@@ -91,14 +91,53 @@ SOURCE=.\CosEventChannelFactory.idl
 
 !IF  "$(CFG)" == "FactoryClient - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "FactoryClient - Win32 Debug"
-
+# PROP Ignore_Default_Tool 1
+USERDEP__COSEV="..\..\..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL compiler
 InputPath=.\CosEventChannelFactory.idl
 InputName=CosEventChannelFactory
 
 BuildCmds= \
-	tao_idl -Ge 1 -I..\..\.. $(InputName).idl
+	..\..\..\..\..\bin\Release\tao_idl -Ge 1 -I..\..\.. $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "FactoryClient - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+USERDEP__COSEV="..\..\..\..\..\bin\tao_idl"	
+# Begin Custom Build - Invoking TAO IDL compiler
+InputPath=.\CosEventChannelFactory.idl
+InputName=CosEventChannelFactory
+
+BuildCmds= \
+	..\..\..\..\..\bin\tao_idl -Ge 1 -I..\..\.. $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)

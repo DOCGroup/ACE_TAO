@@ -11,10 +11,7 @@ else {
   $ACE_ROOT = $ENV{ACE_ROOT};
 }
 
-@directories = ($ACE_ROOT."\\examples",
-                $ACE_ROOT."\\performance-tests",
-                $ACE_ROOT."\\apps",
-                $ACE_ROOT."\\netsvcs");
+@directories = ($ACE_ROOT);
 
 $Verbose = 0;
 $Ignore_errors = 0;              # By default, bail out if an error occurs.
@@ -23,6 +20,7 @@ $Build_LIB = 0;
 $Build_Debug = 0;
 $Build_Release = 0;
 $Build_All = 1;
+$build_core_only = 0;
 $Build_Cmd = "/BUILD";
 $use_custom_dir = 0;
 
@@ -60,7 +58,11 @@ sub Find_dsp ($)
 
   my $old_cwd = getcwd ()."\\";
 
-  chdir ($dir);
+  if (!chdir ($dir))
+  {
+    print "Error changing dir to $dir: $!\n";
+    return @config_array;
+  }
 
   find(\&wanted, ".");
 
@@ -75,7 +77,10 @@ sub Find_dsp ($)
     }
   }
 
-  chdir ($old_cwd);
+  if (!chdir ($old_cwd."\\"))
+  {
+    print "Error changing dir to $old_cwd\\: $!\n";
+  }
   return @config_array;
 }
 
@@ -94,9 +99,16 @@ sub Build_Config ($)
 # Only builds the TAOACE core.
 sub Build_Core ()
 {
-  print "Building Core of ACE/TAO" if ($Verbose == 1);
+  print "Building Core of ACE/TAO\n" if ($Verbose == 1);
 
-  chdir ("$ACE_ROOT/TAO");
+  print "Build \n" if ($Verbose);
+  print "Debug " if ($Verbose) && ($Build_Debug);
+  print "Release " if ($Verbose) && ($Build_Release);
+  print "DLL " if ($Verbose) && ($Build_DLL);
+  print "LIB " if ($Verbose) && ($Build_LIB);
+  print "\n" if ($Verbose);
+
+  die "Cannot chdir to ACE_ROOT\n" if (!chdir ($ACE_ROOT));
 
   if ($Build_DLL)
   {
@@ -136,7 +148,7 @@ sub Build_All ()
     push @configurations, Find_dsp ($d);
   }
 
-  print "\nwin32_auto_compile: First Pass (libraries)\n";
+  print "\nmsvc_auto_compile: First Pass (libraries)\n";
 
   foreach $c (@configurations)
   {
@@ -151,7 +163,7 @@ sub Build_All ()
   }
 
 
-  print "\nwin32_auto_compile: Second Pass\n";
+  print "\nmsvc_auto_compile: Second Pass\n";
 
   foreach $c (@configurations)
   {
@@ -176,6 +188,11 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     elsif ( $ARGV[0] =~ '(-|\/)v' )   # Verbose mode
     {
         $Verbose = 1;
+    }
+    elsif ( $ARGV[0] =~ '(-|\/)core' )  # Build only the core of ace/tao
+    {
+        print "Building Core only\n" if ( $Verbose );
+	$build_core_only = 1;
     }
     elsif ( $ARGV[0] =~ '(-|\/)dir' )
     {
@@ -213,13 +230,13 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     elsif ( $ARGV[0] =~ '(-|\/)DLL' )  # Build DLL only
     {
         print "Build DLL only\n" if ( $Verbose );
-        $Build_LIB = 1;
+        $Build_DLL = 1;
         $Build_All = 0;
     }
     elsif ( $ARGV[0] =~ '(-|\/)LIB' )  # Build LIB only
     {
         print "Build LIB only\n" if ( $Verbose );
-        $Build_DLL = 1;
+        $Build_LIB = 1;
         $Build_All = 0;
     }
     elsif ( $ARGV[0] =~ '(-|\/)(\?|h)')
@@ -227,6 +244,7 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "Options\n";
         print "-k         = Ignore Errors\n";
         print "-v         = Script Verbose Mode\n";
+        print "-core      = Build the Core\n";
         print "-dir <dir> = Compile custom directories\n";
         print "-rebuild   = Rebuild All\n";
         print "-clean     = Clean\n";
@@ -244,21 +262,21 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     shift;
 }
 
-if (!$Build_DLL || !$Build_LIB)
+if (!$Build_DLL && !$Build_LIB)
 {
   $Build_DLL = 1;
   $Build_LIB = 1;
 }
 
-if (!$Build_Debug || !$Build_Release)
+if (!$Build_Debug && !$Build_Release)
 {
   $Build_Debug = 1;
   $Build_Release = 1;
 }
 
-print "win32_auto_compile: Begin\n";
+print "msvc_auto_compile: Begin\n";
 
-Build_Core if (!$use_custom_dir);
-Build_All;
+Build_Core if (!$use_custom_dir || $build_core_only);
+Build_All if (!$build_core_only);
 
-print "win32_auto_compile: End\n";
+print "msvc_auto_compile: End\n";

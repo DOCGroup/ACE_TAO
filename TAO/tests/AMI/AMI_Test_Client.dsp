@@ -62,7 +62,7 @@ LINK32=link.exe
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Debug"
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
@@ -121,6 +121,8 @@ SOURCE=.\ami_test.idl
 
 !IF  "$(CFG)" == "AMI_Test_Client - Win32 Release"
 
+# PROP Ignore_Default_Tool 1
+USERDEP__AMI_T="..\..\..\bin\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\ami_test.idl
 InputName=ami_test
@@ -158,6 +160,7 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "AMI_Test_Client - Win32 Debug"
 
+USERDEP__AMI_T="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\ami_test.idl
 InputName=ami_test
