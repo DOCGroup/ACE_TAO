@@ -12,14 +12,14 @@ $iorfile = PerlACE::LocalFile ("server.ior");
 unlink $iorfile;
 use Getopt::Std;
 
-local ($opt_i, $opt_p);
+local ($opt_i);
 
-if (!getopts ('i:p:')) {
+if (!getopts ('i:')) {
     print "Usage: run_test.pl [-i iterations]\n";
     exit 1;
 }
 
-my $iterations = 2000;
+my $iterations = 100;
 if (defined $opt_i) {
     $iterations = $opt_i;
 }
@@ -34,18 +34,31 @@ if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     exit 1;
 } 
 
+$count = 0;
 for ($i = 0; $i != $iterations; $i++) {
+  # First spawn all the processes
+  my @CL = ();
 
-    $CL = new PerlACE::Process ("client", " -k file://$iorfile");
-    $client = $CL->SpawnWaitKill (20);
+  my $concurrent_clients = 20;
+
+  for ($j = 0; $j != $concurrent_clients; $j++) {
+    $CL[$j] = new PerlACE::Process ("client", " -k file://$iorfile");
+
+    $CL[$j]->Spawn ();
+    $count++;
+  }
+  # Now wait for each one
+  for ($j = 0; $j != $concurrent_clients; $j++) {
+    $client = $CL[$j]->WaitKill (2);
 
     if ($client != 0) {
-	print STDERR "ERROR: client returned $client in iteration $i\n";
-	$status = 1;
+      print STDERR "ERROR: client $j returned $client in iteration $i\n";
+      $status = 1;
     }
-    if ($i % 100 == 0) {
-	print STDERR "Iteration $i / $iterations\n";
-    }
+  }
+  if ($count % 100 == 0) {
+    print STDERR "Iteration $i has created $count clients\n";
+  }
 }
 
 $CL = new PerlACE::Process ("client", " -k file://$iorfile -x");

@@ -1,18 +1,31 @@
+Sat Mar 10 18:12:58 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Client_Leaks/client.cpp:
+          Increase the number of iterations, the lower number did not
+          trigger the problem on TAO-1.1.12
+
+        * tests/Server_Leaks/client.cpp:
+          The do_shutdown flag was not initialized correctly.
+
+        * tests/Server_Leaks/run_test.pl:
+          Run multiple clients simultaneously, this speeds up the test
+          significantly.
+
 Sat Mar 10 16:51:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* docs/tutorials/Quoter/RT_Event_Service/index.html:
-	  Fixed misleading instructions in the document.
+        * docs/tutorials/Quoter/RT_Event_Service/index.html:
+          Fixed misleading instructions in the document.
 
 Sat Mar 10 16:08:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Makefile:
-	  Add the new test to the recursive build
+          Add the new test to the recursive build
 
         * tests/Server_Leaks/Makefile:
-	  Fix the Makefile
+          Fix the Makefile
 
-	* examples/Simple/echo/Echo_i.cpp:
-	  Fixed stupid typo.
+        * examples/Simple/echo/Echo_i.cpp:
+          Fixed stupid typo.
 
 Sat Mar 10 15:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
