@@ -1,3 +1,15 @@
+Fri Oct 18 22:07:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Only define ACE_HAS_ALLOCA for IBM
+          compilers. They do it via "builtin" trickery and g++ doesn't
+          know that trick.
+
+        * include/makeinclude/platform_aix4_g++.GNU: Set with_ld to aix
+          to avoid trying to do an soname - AIX's ld doesn't do that.
+
+        * include/makeinclude/platform_g++_common.GNU: If with_ld is aix,
+          don't try to add to soname option to the linker.
+
 Fri Oct 18 20:13:29 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_gcc.GNU: Added an optional
