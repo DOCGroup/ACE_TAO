@@ -1,3 +1,28 @@
+Thu May  6 22:14:05 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* rules.tao.GNU:
+	* TAO_IDL/be/be_global.cpp (BE_GlobalData):
+	* TAO_IDL/driver/drv_args.cpp:
+
+	  ".inl" is now the default TAO_IDL generated stub/skeleton inline
+	  file extension instead of ".i".  The latter is generally used
+	  for preprocessed C sources.  Updated these files accordingly.
+
+	* TAO_IDL/driver/drv_preproc.cpp:
+
+	  Fixed potential buffer overrun problem where temporary filename
+	  could extend beyond character array boundary.
+
+	  Use mkstemp() to create temporary files if supported by the
+	  platform.  Closes some security holes (e.g. easily guessed
+	  temporary filenames, and race condition between check for
+	  existence of file with selected name and opening that file).
+	  Also addresses GNU linker warnings about dangerous use of
+	  mktemp() function.
+
+	  Cleaned up some ACE_ERROR macro arguments.  They were
+	  unnecessarily complicated (e.g. unnecessarily using too many
+	  "%s" arguments).
 
 Thu May 7 2:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
@@ -22,26 +47,26 @@ Thu May 7 1:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
           AVStreams*.mpd moved tt AVS*.mpc
           Projects names inside *mp changed according to rules:
           *sender*   -> *send*
-          *receiver* -> *recv* 
+          *receiver* -> *recv*
         * orbsvcs/tests/InterfaceRepo/*mpc:
           InterfaceRepo*.mpc moved to IFR*.mpc
 
 Thu May 6 23:00:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/Smart_Proxies/Smart_Proxies*.mpc: truncated to SP_*.mpc 
+	* tests/Smart_Proxies/Smart_Proxies*.mpc: truncated to SP_*.mpc
         * tests/NestedUpcall/Triangle_Test/Traingle_Test.mpc:
           truncated to TT.mpc
 
 Thu May 6 22:30:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
 	* tests/RTCORBA/Profile_And_Endpoint_Selection/Profile_And_Endpoint_Selection.mpc:
-          truncated to PaESelection.mpc 
+          truncated to PaESelection.mpc
         * tests/RTCORBA/MT_Client_Protocol_Priority/RTCORBA_MT_Client_Protocol_Priority.mpc
           truncated to RTCORBA_MT_Client_Proto_Prio.mpc
 
 Thu May 6 22:12:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* tests/Portable_Interceptors: Portable_Interceptors*.mpc were 
+	* tests/Portable_Interceptors: Portable_Interceptors*.mpc were
 	truncated to PI_*.mpc.
 
 Thu May  6 13:12:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
