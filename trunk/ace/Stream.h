@@ -104,13 +104,15 @@ public:
   // Remove a pipe formed between two Streams.
 
   // = Blocking data transfer operations 
-  int put (ACE_Message_Block *mb, ACE_Time_Value *timeout);
+  int put (ACE_Message_Block *mb,
+           ACE_Time_Value *timeout = 0);
   // Send the message <mb> down the stream, starting at the Module
   // below the Stream head.  Wait for upto <timeout> amount of time
   // for the operation to complete (or block forever if <timeout> ==
   // 0).
 
-  int get (ACE_Message_Block *&mb, ACE_Time_Value *timeout);
+  int get (ACE_Message_Block *&mb,
+           ACE_Time_Value *timeout = 0);
   // Read the message <mb> that is stored in the the stream head.
   // Wait for upto <timeout> amount of time for the operation to
   // complete (or block forever if <timeout> == 0).
