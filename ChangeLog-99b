@@ -1,3 +1,15 @@
+Mon Aug 09 10:09:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h,streams.h: moved ACE_OSTREAM_TYPE #define from
+          streams.h to OS.h, so that it is seen with
+          ACE_LACKS_IOSTREAM_TOTALLY. And, provide default value
+          for ACE_DEFAULT_LOG_STREAM. [Bug 208]
+
+        * ace/Log_Msg.cpp: changed a couple remaining ostream occurrences
+          to ACE_OSTREAM_TYPE.  Replaced conditional use of
+          ACE_DEFAULT_LOG_STREAM/&cerr with ACE_DEFAULT_LOG_STREAM,
+          now that it's always defined. [Bug 208]
+
 Mon Aug 09 09:47:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Log_Msg.{h,cpp}: replaced the ACE_Log_Msg_key_created_

@@ -601,11 +601,7 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
       ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::OSTREAM);
       // Only set this to cerr if it hasn't already been set.
       if (this->msg_ostream () == 0)
-#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
         this->msg_ostream (ACE_DEFAULT_LOG_STREAM);
-#else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-        this->msg_ostream (&cerr);
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
     }
 
   if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::MSG_CALLBACK))
@@ -1227,7 +1223,7 @@ ACE_Log_Msg::set (const ASYS_TCHAR *filename,
                   int status,
                   int err,
                   int rs,
-                  ostream *os,
+                  ACE_OSTREAM_TYPE *os,
                   ACE_Log_Msg_Callback *c)
 {
   ACE_TRACE ("ACE_Log_Msg::set");
@@ -1472,14 +1468,14 @@ ACE_Log_Msg::msg_callback (ACE_Log_Msg_Callback *c)
   this->msg_callback_ = c;
 }
 
-ostream *
+ACE_OSTREAM_TYPE *
 ACE_Log_Msg::msg_ostream (void) const
 {
   return this->ostream_;
 }
 
 void
-ACE_Log_Msg::msg_ostream (ostream *m)
+ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m)
 {
   this->ostream_ = m;
 }
