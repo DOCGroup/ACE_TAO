@@ -106,6 +106,7 @@ public:
 
         // Invoke the request
         int result = request->call ();
+        delete request;
         if (result == -1)
           break;
 
@@ -246,32 +247,32 @@ int
 Manager::shut_down (void)
 {
   ACE_TRACE (ACE_TEXT ("Manager::shut_down"));
-  ACE_Unbounded_Queue<Worker* >::ITERATOR iter = this->workers_.begin();
-  Worker** worker_ptr = NULL;
+  ACE_Unbounded_Queue<Worker* >::ITERATOR iter = this->workers_.begin ();
+  Worker **worker_ptr = NULL;
   do
     {
-      iter.next(worker_ptr);
+      iter.next (worker_ptr);
       Worker *worker = (*worker_ptr);
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Attempting shutdown of %d\n"),
-                 thread_id(worker)));
+                  thread_id (worker)));
 
-      Exit* req;
+      Exit *req;
       ACE_NEW_RETURN (req, Exit(), -1);
 
       // Send the hangup message
-      worker->perform(req);
+      worker->perform (req);
 
       // Wait for the exit.
-      worker->wait();
+      worker->wait ();
 
       ACE_DEBUG ((LM_DEBUG,
-                 "(%t) Worker %d shut down.\n",
-                 thread_id(worker)));
+                  ACE_TEXT ("(%t) Worker %d shut down.\n"),
+                  thread_id (worker)));
 
       delete worker;
 
     }
-  while (iter.advance());
+  while (iter.advance ());
 
   shutdown_ = 1;
 
