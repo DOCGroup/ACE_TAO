@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Coll_Tester.h"
+#include "tao/Strategies/advanced_resource.h"
 
 ACE_RCSID(Collocation, main, "$Id$")
 
