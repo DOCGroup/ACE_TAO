@@ -1,3 +1,10 @@
+Wed Mar  3 13:43:17 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+          Use a variable $TARGET_SEP instead of '-' to seperate the
+          project name from the target.  Thanks to Chad Elliott
+          <elliott_c@ociweb.com> for reporting the problem.
+
 Wed Mar  3 07:42:54 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/StringProcessor.pm:

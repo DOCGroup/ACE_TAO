@@ -86,6 +86,10 @@ sub write_comps {
     my($count) = 0;  
 
     print $fh $crlf .
+        "TARGET_SEP=---" . $crlf .
+        "KEEPGOING ?=" . $crlf;
+
+    print $fh $crlf .
         "ifeq (\$(findstring k,\$(MAKEFLAGS)),k)$crlf" .
         "  KEEP_GOING = -$crlf" .
         "endif$crlf$crlf";
@@ -105,32 +109,32 @@ sub write_comps {
     print $fh "$crlf$crlf";
 
     print $fh "# Phony targets, these targets aren't real files.$crlf";
-    print $fh ".PHONY: \$(targets) \$(foreach ext, \$(targets), \$(addsuffix -\$(ext), \$(projects)))$crlf$crlf";
+    print $fh ".PHONY: \$(targets) \$(foreach ext, \$(targets), \$(addsuffix \$(TARGET_SEP)\$(ext), \$(projects)))$crlf$crlf";
 
     print $fh "# Default target.$crlf";
-    print $fh "all: \$(addsuffix -all, \$(projects))$crlf$crlf";
+    print $fh "all: \$(addsuffix \$(TARGET_SEP)all, \$(projects))$crlf$crlf";
 
     print $fh "" .
         "# This is the rule for all the standard targets listed above.$crlf" .
-        "# The dependencies are formed by adding '-<target name>' to$crlf" .
+        "# The dependencies are formed by adding '\$)TARGET_SEP)<target name>' to$crlf" .
         "# each project, e.g., GNUmakefile.project-all.$crlf";
-    print $fh "\$(targets): %: \$(addsuffix -%, \$(projects))$crlf$crlf";
+    print $fh "\$(targets): %: \$(addsuffix \$(TARGET_SEP)%, \$(projects))$crlf$crlf";
 
 
-    print $fh "\$(foreach ext, \$(targets), \$(addsuffix -\$(ext), \$(projects))):" . $crlf;
-    print $fh "\t\@echo \$(KEEP_GOING)\$(MAKE) -f \$(notdir \$(word 1,\$(subst -, ,\$@))) \\" . $crlf .
-              "\t       -C \$(dir \$(word 1,\$(subst -, ,\$@))) \$(word 2,\$(subst -, ,\$@));" . $crlf;
-     print $fh "\t\$(KEEP_GOING)\@\$(MAKE) -f \$(notdir \$(word 1,\$(subst -, ,\$@))) \\" . $crlf .
-              "\t       -C \$(dir \$(word 1,\$(subst -, ,\$@))) \$(word 2,\$(subst -, ,\$@));" . $crlf . $crlf;
+    print $fh "\$(foreach ext, \$(targets), \$(addsuffix \$(TARGET_SEP)\$(ext), \$(projects))):" . $crlf;
+    print $fh "\t\@echo \$(KEEP_GOING)\$(MAKE) -f \$(notdir \$(word 1,\$(subst \$(TARGET_SEP), ,\$@))) \\" . $crlf .
+              "\t       -C \$(dir \$(word 1,\$(subst \$(TARGET_SEP), ,\$@))) \$(word 2,\$(subst \$(TARGET_SEP), ,\$@));" . $crlf;
+     print $fh "\t\$(KEEP_GOING)\@\$(MAKE) -f \$(notdir \$(word 1,\$(subst \$(TARGET_SEP), ,\$@))) \\" . $crlf .
+              "\t       -C \$(dir \$(word 1,\$(subst \$(TARGET_SEP), ,\$@))) \$(word 2,\$(subst \$(TARGET_SEP), ,\$@));" . $crlf . $crlf;
 
 
     ## Print out each of the individual targets
     foreach my $project (@list) {
       if (defined $targnum{$project}) {
-        print $fh "\$(foreach ext, \$(targets), \$(addsuffix -\$(ext), " .
-                  $project . ")): \\" . $crlf . "  " . $project . "-%:";
+        print $fh "\$(foreach ext, \$(targets), \$(addsuffix \$(TARGET_SEP)\$(ext), " .
+                  $project . ")): \\" . $crlf . "  " . $project . '$(TARGET_SEP)%:';
         foreach my $number (@{$targnum{$project}}) {
-          print $fh ' \\' . $crlf . '    ' .  $list[$number] . '-%';
+          print $fh ' \\' . $crlf . '    ' .  $list[$number] . '$(TARGET_SEP)%';
         }
         print $fh $crlf . $crlf;
       }
