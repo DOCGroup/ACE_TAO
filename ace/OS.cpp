@@ -5553,7 +5553,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 }
 
 int
-ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, LPCTSTR name, void *arg)
 {
 ACE_TRACE ("ACE_OS::cond_init");
 # if defined (ACE_HAS_THREADS)
