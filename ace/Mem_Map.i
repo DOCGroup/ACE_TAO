@@ -106,6 +106,20 @@ ACE_Mem_Map::unmap (int len)
 
   this->close_filemapping_handle ();
 
+#if defined (__Lynx__)
+  int writeback_result = 0;
+  if (write_enabled_)
+    {
+      // Write back the contents of the shared memory object to the file.
+      const off_t filesize = ACE_OS::filesize (handle_);
+      writeback_result = ACE_OS::lseek (handle_, 0, 0) != -1  &&
+                         ACE_OS::write (handle_,
+                                        base_addr_,
+                                        (int) filesize) == filesize  ?  0
+                                                                     : -1;
+    }
+#endif /* __Lynx__ */
+
   if (this->base_addr_ != MAP_FAILED)
     {
       int result = ACE_OS::munmap (this->base_addr_, len < 0 ? this->length_ : len);
@@ -113,7 +127,11 @@ ACE_Mem_Map::unmap (int len)
       return result;
     }
   else
+#if defined (__Lynx__)
+    return writeback_result;
+#else  /* ! __Lynx__ */
     return 0;
+#endif /* ! __Lynx__ */
 }
 
 // Unmap the region starting at <addr_>.
@@ -125,7 +143,26 @@ ACE_Mem_Map::unmap (void *addr, int len)
 
   this->close_filemapping_handle ();
 
+#if defined (__Lynx__)
+  int writeback_result = 0;
+  if (write_enabled_)
+    {
+      // Write back the contents of the shared memory object to the file.
+      const off_t filesize = ACE_OS::filesize (handle_);
+      writeback_result = ACE_OS::lseek (handle_, 0, 0) != -1  &&
+                         ACE_OS::write (handle_,
+                                        base_addr_,
+                                        (int) filesize) == filesize  ?  0
+                                                                     : -1;
+    }
+#endif /* __Lynx__ */
+
+#if defined (__Lynx__)
+  return ACE_OS::munmap (addr, len < 0 ? this->length_ : len) |
+    writeback_result;;
+#else  /* ! __Lynx__ */
   return ACE_OS::munmap (addr, len < 0 ? this->length_ : len);
+#endif /* ! __Lynx__ */
 }
 
 // Sync <len> bytes of the memory region to the backing store starting
