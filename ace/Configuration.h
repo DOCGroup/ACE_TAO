@@ -14,13 +14,13 @@
  *  section contains other sections or values.  Values may contain string,
  *  unsigned integer and binary data.
  *
- *  Note: these classes are not thread safe, if multiple threads use these
+ *  @note These classes are not thread safe, if multiple threads use these
  *  classes, you are responsible for serializing access.
  *
  *  For examples of using this class, see:
- *   1) The test code in ACE_Wrappers/test
- *   2) wxConfigViewer, a Windows like Registry Editor for ACE_Configuration
- *   3) TAO's IFR, it makes extensive use of ACE_Configuration
+ *   -# The test code in ACE_wrappers/test
+ *   -# wxConfigViewer, a Windows like Registry Editor for ACE_Configuration
+ *   -# TAO's IFR, it makes extensive use of ACE_Configuration
  *
  *  @todo Templatize this class with an ACE_LOCK to provide thread safety
  *
@@ -52,6 +52,8 @@
 /**
  * @class ACE_Section_Key_Internal
  *
+ * @internal
+ *
  * @brief A base class for internal handles to section keys for
  * configuration implementations
  *
@@ -81,7 +83,7 @@ protected:
 /**
  * @class ACE_Configuration_Section_Key
  *
- * @brief Referenced counted wrapper for <ACE_Section_Key_Internal>.
+ * @brief Reference counted wrapper for ACE_Section_Key_Internal.
  *
  * Reference counted wrapper class for the abstract internal
  * section key.  A user gets one of these to represent a section
@@ -91,21 +93,23 @@ class ACE_Export ACE_Configuration_Section_Key
 {
   friend class ACE_Configuration;
 public:
-  /// Default ctor
+  /// Default constructor.
   ACE_Configuration_Section_Key (void);
 
-  /// Ctor based on a pointer to a concrete internal key, does an
-  /// add_ref on <key>.
+  /// Constructor that initializes to a pointer to a concrete internal key.
+  /**
+   * @arg key The section key to reference. Calls add_ref() with @a key.
+   */
   ACE_EXPLICIT ACE_Configuration_Section_Key (ACE_Section_Key_Internal *key);
 
-  /// Copy ctor, does an add_ref on rhs.key_.
+  /// Copy constructor, increments the reference count on the key.
   ACE_Configuration_Section_Key (const ACE_Configuration_Section_Key &rhs);
 
-  /// Destructor, does a <dec_ref> on <key_>.
+  /// Destructor, decrements reference count on the referenced key.
   ~ACE_Configuration_Section_Key (void);
 
-  /// Assignment operator, does a <dec_ref> on <key_> and <add_ref> to
-  /// <rhs.key_>
+  /// Assignment operator, increments reference count for this object
+  /// and decrements it on @a rhs.
   ACE_Configuration_Section_Key &
     operator= (const ACE_Configuration_Section_Key &rhs);
 private:
@@ -115,9 +119,15 @@ private:
 /**
  * @class ACE_Configuration
  *
+ * @internal
+ *
  * @brief Base class for configuration databases
  *
- * This class provides an interface for configuration databases.
+ * This class provides an interface for configuration databases. A concrete
+ * class is required that implements the interface.
+ *
+ * @sa ACE_Configuration_Heap
+ * @sa ACE_Configuration_Win32Registry
  */
 class ACE_Export ACE_Configuration
 {
@@ -134,34 +144,61 @@ public:
   /// Destructor
   virtual ~ACE_Configuration (void);
 
-  /// Returns the root section of this configuration.
+  /// Obtain a reference to the root section of this configuration.
+  /*
+   * @return Reference to the configuration's root section. Note that
+   *         it is a const reference.
+   */
   virtual const ACE_Configuration_Section_Key& root_section (void) const;
 
   /**
-   * Finds a <sub_section> in <base> and places the resulting key in
-   * <result>. If create is non zero, the sub_section will be created
-   * if it doesn't exist
+   * Opens a named section in an existing section.
+   *
+   * @arg base        Existing section in which to open the named section.
+   * @arg sub_section Name of the section to open.
+   * @arg create      If zero, the named section must exist. If non-zero,
+   *                  the named section will be created if it does not exist.
+   * @arg result      Reference; receives the section key for the new section.
+   *
+   * @retval   0 for success.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
   virtual int open_section (const ACE_Configuration_Section_Key &base,
                             const ACE_TCHAR *sub_section,
                             int create,
                             ACE_Configuration_Section_Key& result) = 0;
 
-  /// Removes the <sub_section> from <key>.  If recursive is non zero,
-  /// any subkeys below <sub_section> are remove as well.
+  /// Removes a named section.
+  /**
+   * @arg key          Section key to remove the named section from.
+   * @arg sub_section  Name of the section to remove.
+   * @arg recursive    If non zero, any subkeys below @a sub_section are
+   *                   removed as well.
+   *
+   * @retval   0 for success.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
+   */
   virtual int remove_section (const ACE_Configuration_Section_Key &key,
                               const ACE_TCHAR *sub_section,
                               int recursive) = 0;
 
   /**
-   * Method to enumerate through the <name> and <type> of values in a
-   * <key>.  To begin iteration, <index> must be zero. to continue
-   * iteration, invoke enumerate_values again while incrementing
-   * index.  Each iteration will return the <name> of the value and
-   * its <type>.  This method returns 0 on success, <0 on error and 1
-   * when there are no more values to iterate through.  Note - you may
-   * not delete or add values while enumerating.  If you need to do
-   * this, you start the enumeration over again.
+   * Enumerates through the values in a section.
+   *
+   * @arg key    Section key to iterate through.
+   * @arg index  Iteration position. Must be zero on the first call to iterate
+   *             through @a key. Increment @a index by one on each successive
+   *             call to this method.
+   * @arg name   Receives the value's name.
+   * @arg type   Receives the value's data type.
+   *
+   * @note  You may not delete or add values while enumerating.  If the
+   *        section is modified during enumeration, results are undefined;
+   *        you must restart the enumeration from index 0.
+   *
+   * @retval   0 for success, @a name and @a type are valid.
+   * @retval   1 there are no more values in the section.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
   virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
                                 int index,
@@ -169,52 +206,110 @@ public:
                                 VALUETYPE& type) = 0;
 
   /**
-   * Method to enumerate through the <name> subsections in <key>.  To
-   * begin iteration, <index> must zero. to continue iteration, invoke
-   * enumerate_sections again while incrementing index.  Each
-   * iteration will return the <name> of the sub section.  This method
-   * returns 0 on success, <0 on error and 1 when there are no more
-   * subsections to iterate through.  Note - you may not delete or add
-   * values while enumerating.  If you need to do this, you start the
-   * enumeration over again.
+   * Enumerates through the subsections in a section.
+   *
+   * @arg key    Section key to iterate through.
+   * @arg index  Iteration position. Must be zero on the first call to iterate
+   *             through @a key. Increment @a index by one on each successive
+   *             call to this method.
+   * @arg name   Receives the subsection's name.
+   *
+   * @note  You may not modify the @a key section while enumerating.  If the
+   *        section is modified during enumeration, results are undefined;
+   *        you must restart the enumeration from index 0.
+   *
+   * @retval   0 for success, @a name has a valid name.
+   * @retval   1 there are no more subsections in the section.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
   virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
                                   int index, ACE_TString& name) = 0;
 
-  /// Sets the value in <key> with <name> to a string of <value>
+  /// Sets a string-typed value.
+  /**
+   * @arg key     Configuration section to set the value in.
+   * @arg name    Name of the configuration value to set. If a value with
+   *              the specified name exists, it is replaced.
+   * @arg value   The string to set the configuration value to.
+   *
+   * @retval   0 for success.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
+   */
   virtual int set_string_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 const ACE_TString& value) = 0;
 
-  /// Sets the value in <key> with <name> to an integer of <value>
+  /// Sets a integer-typed value.
+  /**
+   * @arg key     Configuration section to set the value in.
+   * @arg name    Name of the configuration value to set. If a value with
+   *              the specified name exists, it is replaced.
+   * @arg value   The integer to set the configuration value to.
+   *
+   * @retval   0 for success.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
+   */
   virtual int set_integer_value (const ACE_Configuration_Section_Key& key,
                                  const ACE_TCHAR* name,
                                  u_int value) = 0;
 
-  /// Sets the value in <key> with <name> to binary data of <data> with
-  /// <length>.
+  /// Sets a binary-typed value.
+  /**
+   * @arg key     Configuration section to set the value in.
+   * @arg name    Name of the configuration value to set. If a value with
+   *              the specified name exists, it is replaced.
+   * @arg data    Pointer to the binary data for the value.
+   * @arg length  Number of bytes for the new value.
+   *
+   * @retval   0 for success.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
+   */
   virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 const void* data,
                                 u_int length) = 0;
 
-  /// Gets the string value of <name> from <key> and places it in
-  /// <value>.  Returns non zero on error (if value is not a string).
+  /// Gets a string-typed value.
+  /**
+   * @arg key     Configuration section to get the value from.
+   * @arg name    Name of the configuration value to get.
+   * @arg value   Receives the configuration value if it exists and
+   *              has type STRING.
+   *
+   * @retval   0 for success.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
+   */
   virtual int get_string_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
                                 ACE_TString& value) = 0;
 
-  /// Gets the integer value of <name> from <key> and places it in
-  /// <value>.  Returns non zero on error (if value is not an integer).
+  /// Gets an integer-typed value.
+  /**
+   * @arg key     Configuration section to get the value from.
+   * @arg name    Name of the configuration value to get.
+   * @arg value   Receives the configuration value if it exists and
+   *              has type INTEGER.
+   *
+   * @retval   0 for success.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
+   */
   virtual int get_integer_value (const ACE_Configuration_Section_Key& key,
                                  const ACE_TCHAR* name,
                                  u_int& value) = 0;
 
+  /// Gets a binary-typed value.
   /**
-   * Gets the binary value of <name> from <key> and places a copy in
-   * <data> and sets <length> to the length of the data.  caller is
-   * responsible for deleting <data>.  Returns non zero on error (if
-   * value is not binary).
+   * @arg key     Configuration section to get the value from.
+   * @arg name    Name of the configuration value to get.
+   * @arg data    Receives a pointer to memory holding the binary data
+   *              for the value. This method allocates the memory pointed
+   *              to using operator new[]. The caller is responsible for
+   *              freeing the memory using operator delete[].
+   * @arg length  Receives the number of bytes in the value.
+   *
+   * @retval   0 for success; caller is responsible for freeing the
+   *             returned memory.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
   virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
                                 const ACE_TCHAR* name,
@@ -222,17 +317,27 @@ public:
                                 u_int& length) = 0;
 
   /**
-   * Checks to see if an entry of <name> is in <key> and places the
-   * data type in <type>.  Returns 0 on success (entry is found),
-   * -1 on error
+   * Retrieves the type of a named configuration value.
+   *
+   * @arg key     Configuration section to look up the name in.
+   * @arg name    Name of the configuration value to get the type of.
+   * @arg type    Receives the data type of the named value, if it exists.
+   *
+   * @retval   0 for success.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
   virtual int find_value(const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,
                          VALUETYPE& type) = 0;
 
-
-  /// Removes the the value <name> from <key>.  returns non zero on
-  /// error.
+  /// Removes a named value.
+  /**
+   * @arg key     Configuration section to remove the named value from.
+   * @arg name    Name of the configuration value to remove.
+   *
+   * @retval   0 for success.
+   * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
+   */
   virtual int remove_value (const ACE_Configuration_Section_Key& key,
                             const ACE_TCHAR* name) = 0;
 
@@ -251,7 +356,7 @@ public:
 
   /**
    * @deprecated Exports the configuration database to filename.
-   * If <filename> is already present, it is overwritten. This function is
+   * If @a filename is already present, it is overwritten. This function is
    * deprecated and will be removed in a future version of ACE. Please use
    * either ACE_Registry_ImpExp or ACE_Ini_ImpExp instead.
    */
