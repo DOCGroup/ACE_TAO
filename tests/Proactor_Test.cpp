@@ -313,7 +313,7 @@ MyTask::stop ()
   if (this->proactor_ != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("End Proactor event loop\n")));
+                  ACE_TEXT (" (%t) Calling End Proactor event loop\n")));
 
       ACE_Proactor::end_event_loop ();
     }
@@ -360,6 +360,10 @@ public:
   long get_total_w   (void) { return this->total_w_; }
   long get_total_r   (void) { return this->total_r_; }
 
+  // This is called to pass the new connection's addresses.
+  virtual void addresses (const ACE_INET_Addr& peer,
+                          const ACE_INET_Addr& local);
+
   /// This is called after the new connection has been accepted.
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
@@ -391,12 +395,12 @@ private:
   ACE_HANDLE handle_;
   ACE_SYNCH_MUTEX lock_;
 
-  long io_count_;
+  long io_count_;            // Number of currently outstanding I/O requests
   int flg_cancel_;
-  size_t total_snd_;
-  size_t total_rcv_;
-  long total_w_;
-  long total_r_;
+  size_t total_snd_;         // Number of bytes successfully sent
+  size_t total_rcv_;         // Number of bytes successfully received
+  long total_w_;             // Number of write operations
+  long total_r_;             // Number of read operations
 };
 
 class Acceptor : public ACE_Asynch_Acceptor<Receiver>
@@ -492,7 +496,8 @@ Acceptor::on_new_receiver (Receiver & rcvr)
   this->sessions_++;
   this->list_receivers_[rcvr.index_] = &rcvr;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Receiver::CTOR sessions_ = %d\n"),
+              ACE_TEXT ("(%t) Acceptor: receiver %d up; now have %d.\n"),
+              rcvr.index_,
               this->sessions_));
 }
 
@@ -513,22 +518,9 @@ Acceptor::on_delete_receiver (Receiver & rcvr)
       && this->list_receivers_[rcvr.index_] == &rcvr)
     this->list_receivers_[rcvr.index_] = 0;
 
-  ACE_TCHAR bufs [256];
-  ACE_TCHAR bufr [256];
-
-  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
-                   rcvr.get_total_snd (),
-                   rcvr.get_total_w ());
-
-  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
-                   rcvr.get_total_rcv (),
-                   rcvr.get_total_r ());
-  
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Receiver::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
+              ACE_TEXT ("(%t) Acceptor: receiver %d gone; %d remain\n"),
               rcvr.index_,
-              bufs,
-              bufr,
               this->sessions_));
 }
 
@@ -571,6 +563,41 @@ Receiver::Receiver (Acceptor * acceptor, int index)
 
 Receiver::~Receiver (void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Receiver %d dtor; %d sends (%d bytes); ")
+              ACE_TEXT ("%d recvs (%d bytes)\n"),
+              this->index_,
+              this->total_w_, this->total_snd_,
+              this->total_r_, this->total_rcv_));
+  if (this->io_count_ != 0)
+    ACE_ERROR ((LM_WARNING,
+                ACE_TEXT ("(%t) Receiver %d deleted with ")
+                ACE_TEXT ("%d I/O outstanding\n"),
+                this->index_,
+                this->io_count_));
+
+  // This test bounces data back and forth between Senders and Receivers.
+  // Therefore, if there was significantly more data in one direction, that's
+  // a problem. Remember, the byte counts are unsigned values.
+  int issue_data_warning = 0;
+  if (this->total_snd_ > this->total_rcv_)
+    {
+      if (this->total_rcv_ == 0)
+        issue_data_warning = 1;
+      else if (this->total_snd_ / this->total_rcv_ > 2)
+        issue_data_warning = 1;
+    }
+  else
+    {
+      if (this->total_snd_ == 0)
+        issue_data_warning = 1;
+      else if (this->total_rcv_ / this->total_snd_ > 2)
+        issue_data_warning = 1;
+    }
+  if (issue_data_warning)
+    ACE_DEBUG ((LM_WARNING,
+                ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
+
   if (this->acceptor_ != 0)
     this->acceptor_->on_delete_receiver (*this);
 
@@ -594,20 +621,44 @@ Receiver::cancel ()
 
 
 void
+Receiver::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr&)
+{
+  ACE_TCHAR str[256];
+  if (0 == peer.addr_to_string (str, sizeof (str) / sizeof (ACE_TCHAR)))
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%t) Receiver %d connection from %s\n"),
+                this->index_,
+                str));
+  else
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Receiver %d %p\n"),
+                this->index_,
+                ACE_TEXT ("addr_to_string")));
+  return;
+}
+
+
+void
 Receiver::open (ACE_HANDLE handle, ACE_Message_Block &)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
 
     this->handle_ = handle;
+    int nodelay = 1;
+    ACE_SOCK_Stream option_setter (handle);
+    if (-1 == option_setter.set_option (SOL_SOCKET,
+                              TCP_NODELAY,
+                              &nodelay,
+                              sizeof (nodelay)))  // Don't buffer serial sends.
+      ACE_ERROR ((LM_ERROR, "%p\n", "set_option"));
 
     if (this->ws_.open (*this, this->handle_) == -1)
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("Receiver::ACE_Asynch_Write_Stream::open")));
     else if (this->rs_.open (*this, this->handle_) == -1)
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("Receiver::ACE_Asynch_Read_Stream::open")));
     else
       this->initiate_read_stream ();
@@ -634,7 +685,7 @@ Receiver::initiate_read_stream (void)
     {
       mb->release ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("(%t) %p\n"),
                          ACE_TEXT ("Receiver::ACE_Asynch_Stream::read")),
                         -1);
     }
@@ -657,7 +708,7 @@ Receiver::initiate_write_stream (ACE_Message_Block &mb, size_t nbytes)
     {
       mb.release ();
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("Receiver::ACE_Asynch_Write_Stream::write nbytes <0 ")),
+                        ACE_TEXT ("(%t) Receiver::ACE_Asynch_Write_Stream::write nbytes <0 ")),
                        -1);
     }
 
@@ -665,7 +716,7 @@ Receiver::initiate_write_stream (ACE_Message_Block &mb, size_t nbytes)
     {
       mb.release ();
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("(%t) %p\n"),
                         ACE_TEXT ("Receiver::ACE_Asynch_Write_Stream::write")),
                        -1);
     }
@@ -693,7 +744,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         LogLocker log_lock;
 
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("**** Receiver::handle_read_stream() SessionId = %d ****\n"),
+                    ACE_TEXT ("(%t) **** Receiver %d: handle_read_stream() ****\n"),
                     this->index_));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
@@ -729,6 +780,13 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     mb.rd_ptr ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%t) Receiver %d: read %d bytes ok\n"),
+                    this->index_,
+                    result.bytes_transferred ()));
       }
 
     if (result.error () == 0 && result.bytes_transferred () > 0)
@@ -770,7 +828,7 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         mb.rd_ptr (mb.rd_ptr () - result.bytes_transferred ());
 
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("**** Receiver::handle_write_stream() SessionId = %d ****\n"),
+                    ACE_TEXT ("(%t) **** Receiver %d: handle_write_stream() ****\n"),
                     this->index_));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
@@ -806,6 +864,13 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     mb.rd_ptr ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%t) Receiver %d: wrote %d bytes ok\n"),
+                    this->index_,
+                    result.bytes_transferred ()));
       }
 
     mb.release ();
@@ -847,6 +912,10 @@ public:
   size_t get_total_rcv (void) { return this->total_rcv_; }
   long get_total_w   (void) { return this->total_w_; }
   long get_total_r   (void) { return this->total_r_; }
+
+  // This is called to pass the new connection's addresses.
+  virtual void addresses (const ACE_INET_Addr& peer,
+                          const ACE_INET_Addr& local);
 
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
   // This is called when asynchronous reads from the socket complete
@@ -969,7 +1038,8 @@ Connector::on_new_sender (Sender &sndr)
   this->sessions_++;
   this->list_senders_[sndr.index_] = &sndr;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sender::CTOR sessions_ = %d\n"),
+              ACE_TEXT ("(%t) Connector: sender %d up; now have %d.\n"),
+              sndr.index_,
               this->sessions_));
 }
 
@@ -989,22 +1059,9 @@ Connector::on_delete_sender (Sender &sndr)
       && this->list_senders_[sndr.index_] == &sndr)
     this->list_senders_[sndr.index_] = 0;
 
-  ACE_TCHAR bufs [256];
-  ACE_TCHAR bufr [256];
-
-  ACE_OS::sprintf (bufs, ACE_TEXT ("%d(%ld)"),
-                   sndr.get_total_snd (),
-                   sndr.get_total_w ());
-
-  ACE_OS::sprintf (bufr, ACE_TEXT ("%d(%ld)"),
-                   sndr.get_total_rcv (),
-                   sndr.get_total_r ());
-  
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sender::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
+              ACE_TEXT ("(%t) Connector: sender %d gone; %d remain\n"),
               sndr.index_,
-              bufs,
-              bufr,
               this->sessions_));
 }
 
@@ -1052,7 +1109,7 @@ Connector::start (const ACE_INET_Addr& addr, int num)
   if (this->open (1, 0, 1) != 0)
   {
      ACE_ERROR ((LM_ERROR,
-                 ACE_LIB_TEXT ("%p\n"),
+                 ACE_LIB_TEXT ("(%t) %p\n"),
                  ACE_LIB_TEXT ("Connector::open failed")));
      return rc;
   }
@@ -1062,8 +1119,8 @@ Connector::start (const ACE_INET_Addr& addr, int num)
       if (this->connect (addr) != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("%p\n"),
-                      ACE_LIB_TEXT ("Connector::connect failed")));
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("Connector::connect failed")));
           break;
         }
     }
@@ -1088,6 +1145,40 @@ Sender::Sender (Connector * connector, int index)
 
 Sender::~Sender (void)
 {
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Sender %d dtor; %d sends (%d bytes); ")
+              ACE_TEXT ("%d recvs (%d bytes)\n"),
+              this->index_,
+              this->total_w_, this->total_snd_,
+              this->total_r_, this->total_rcv_));
+  if (this->io_count_ != 0)
+    ACE_ERROR ((LM_WARNING,
+                ACE_TEXT ("(%t) Sender %d deleted with %d I/O outstanding\n"),
+                this->index_,
+                this->io_count_));
+
+  // This test bounces data back and forth between Senders and Receivers.
+  // Therefore, if there was significantly more data in one direction, that's
+  // a problem. Remember, the byte counts are unsigned values.
+  int issue_data_warning = 0;
+  if (this->total_snd_ > this->total_rcv_)
+    {
+      if (this->total_rcv_ == 0)
+        issue_data_warning = 1;
+      else if (this->total_snd_ / this->total_rcv_ > 2)
+        issue_data_warning = 1;
+    }
+  else
+    {
+      if (this->total_snd_ == 0)
+        issue_data_warning = 1;
+      else if (this->total_rcv_ / this->total_snd_ > 2)
+        issue_data_warning = 1;
+    }
+  if (issue_data_warning)
+    ACE_DEBUG ((LM_WARNING,
+                ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
+
   if (this->connector_ != 0)
     this->connector_->on_delete_sender (*this);
 
@@ -1113,22 +1204,46 @@ Sender::cancel ()
 
 
 void
+Sender::addresses (const ACE_INET_Addr& /* peer */, const ACE_INET_Addr& local)
+{
+  ACE_TCHAR str[256];
+  if (0 == local.addr_to_string (str, sizeof (str) / sizeof (ACE_TCHAR)))
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("(%t) Sender %d connected on %s\n"),
+                this->index_,
+                str));
+  else
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) Receiver %d %p\n"),
+                this->index_,
+                ACE_TEXT ("addr_to_string")));
+  return;
+}
+
+
+void
 Sender::open (ACE_HANDLE handle, ACE_Message_Block &)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
     this->handle_ = handle;
+    int nodelay = 1;
+    ACE_SOCK_Stream option_setter (handle);
+    if (option_setter.set_option (SOL_SOCKET,
+                              TCP_NODELAY,
+                              &nodelay,
+                              sizeof (nodelay)))  // Don't buffer serial sends.
+      ACE_ERROR ((LM_ERROR, "%p\n", "set_option"));
 
     // Open ACE_Asynch_Write_Stream
     if (this->ws_.open (*this, this->handle_) == -1)
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("Sender::ACE_Asynch_Write_Stream::open")));
 
     // Open ACE_Asynch_Read_Stream
     else if (this->rs_.open (*this, this->handle_) == -1)
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("(%t) %p\n"),
                   ACE_TEXT ("Sender::ACE_Asynch_Read_Stream::open")));
 
     else if (this->initiate_write_stream () == 0)
@@ -1185,7 +1300,7 @@ Sender::initiate_write_stream (void)
     {
       mb1->release ();
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("(%t) %p\n"),
                         ACE_TEXT ("Sender::ACE_Asynch_Stream::writev")),
                        -1);
     }
@@ -1203,7 +1318,7 @@ Sender::initiate_write_stream (void)
     {
       mb->release ();
       ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
+                        ACE_TEXT ("(%t) %p\n"),
                         ACE_TEXT ("Sender::ACE_Asynch_Stream::write")),
                        -1);
     }
@@ -1267,7 +1382,7 @@ Sender::initiate_read_stream (void)
     {
       mb1->release ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("(%t) %p\n"),
                          ACE_TEXT ("Sender::ACE_Asynch_Read_Stream::readv")),
                         -1);
     }
@@ -1290,7 +1405,7 @@ Sender::initiate_read_stream (void)
     {
       mb->release ();
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("(%t) %p\n"),
                          ACE_TEXT ("Sender::ACE_Asynch_Read_Stream::read")),
                         -1);
     }
@@ -1316,7 +1431,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         LogLocker log_lock;
 
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("**** Sender::handle_write_stream() SessionId = %d ****\n"),
+                    ACE_TEXT ("(%t) **** Sender %d: handle_write_stream() ****\n"),
                     index_));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
@@ -1392,6 +1507,13 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
       }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%t) Sender %d: wrote %d bytes ok\n"),
+                    this->index_,
+                    result.bytes_transferred ()));
+      }
 
     mb.release ();
 
@@ -1399,9 +1521,11 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
       {
         this->total_snd_ += result.bytes_transferred ();
 
-        if (duplex != 0 &&  // full duplex, continue write
-            (this->total_snd_- this->total_rcv_) < 1024*32 ) //flow control
-          this->initiate_write_stream ();
+        if (duplex != 0)   // full duplex, continue write
+          {
+            if ((this->total_snd_- this->total_rcv_) < 1024*32 ) //flow control
+              this->initiate_write_stream ();
+          }
         else  // half-duplex   read reply, after read we will start write
           this->initiate_read_stream ();
       }
@@ -1428,7 +1552,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         LogLocker log_lock;
 
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("**** Sender::handle_read_stream() SessionId = %d ****\n"),
+                    ACE_TEXT ("(%t) **** Sender %d: handle_read_stream() ****\n"),
                     index_));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %d\n"),
@@ -1486,6 +1610,13 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%t) Sender %d: read %d bytes ok\n"),
+                    this->index_,
+                    result.bytes_transferred ()));
       }
 
     mb.release ();
@@ -1591,15 +1722,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
       max_aio_operations = 512;       // POSIX Proactor params
 #if defined (sun)
       proactor_type = SUN;            // Proactor type for SunOS
+      threads = 1;                    // aiosuspend() not MT Safe.
 #else
       proactor_type = DEFAULT;        // Proactor type = default
-#endif
       threads = 3;                    // size of Proactor thread pool
+#endif
 
 #if defined(__sgi) || defined (ACE_LINUX_COMMON_H)
       ACE_DEBUG (( LM_DEBUG,
                    "Weak AIO implementation, test will work with 1 client"));
-      senders = 1;                   // number of senders
+      senders = 1;                    // number of senders
 #else
       senders = 20;                   // number of senders
 #endif   
@@ -1708,27 +1840,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   //Cancel all pending AIO on Connector and Senders
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Cancel Connector/Senders: sessions_=%d\n"),
+              ACE_TEXT ("(%t) Cancel Connector/Senders: sessions_=%d\n"),
               connector.get_number_sessions ()
             ));
   //connector.cancel_all ();
  
   //Cancel all pending AIO on Acceptor And Receivers
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Cancel Acceptor/Receivers:sessions_=%d\n"),
+              ACE_TEXT ("(%t) Cancel Acceptor/Receivers:sessions_=%d\n"),
               acceptor.get_number_sessions ()
             ));
   //acceptor.cancel_all ();
    
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Stop Thread Pool Task\n")
+              ACE_TEXT ("(%t) Stop Thread Pool Task\n")
             ));
   task1.stop ();
  
   // As Proactor event loop now is inactive it is safe to destroy all
   // Senders
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Stop Connector/Senders: sessions_=%d\n"),
+              ACE_TEXT ("(%t) Stop Connector/Senders: sessions_=%d\n"),
               connector.get_number_sessions ()
             ));
   connector.stop ();
@@ -1736,7 +1868,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // As Proactor event loop now is inactive it is safe to destroy all
   // Receivers
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Stop Acceptor/Receivers:sessions_=%d\n"),
+              ACE_TEXT ("(%t) Stop Acceptor/Receivers:sessions_=%d\n"),
               acceptor.get_number_sessions ()
             ));
   acceptor.stop ();

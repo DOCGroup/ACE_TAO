@@ -104,12 +104,12 @@ protected:
   /// Return: 1 - AIO completed , 0 - not completed yet
   virtual int get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
                                  int &error_status,
-                                 int &return_status);
+                                 size_t &transfer_count);
 
   /// Extract the results of aio.
   ACE_POSIX_Asynch_Result *find_completed_aio (aio_result_t *result,
                                                int &error_status,
-                                               int &return_status);
+                                               size_t &transfer_count);
 
   /// From ACE_POSIX_AIOCB_Proactor.
   /// Attempt to cancel running request

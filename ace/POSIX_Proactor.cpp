@@ -757,10 +757,10 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
 
       // Get the error and return status of the aio_ operation.
       int error_status  = 0;
-      int return_status = 0;
+      size_t transfer_count = 0;
       int flg_completed = this->get_result_status (result_list_[ai],
                                                    error_status,
-                                                   return_status);
+                                                   transfer_count);
 
       //don't delete uncompleted AIOCB's
       if (flg_completed == 0)  // not completed !!!
@@ -776,12 +776,12 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
 
 
           ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT("slot=%d op=%s status=%d return=%d %s\n"),
-                  ai,
-                  op,
-                  error_status,
-                  return_status,
-                  errtxt ));
+                      ACE_LIB_TEXT("slot=%d op=%s status=%d xfercnt=%d %s\n"),
+                      ai,
+                      op,
+                      error_status,
+                      transfer_count,
+                      errtxt));
 #endif /* 0 */
         }
       else // completed , OK
@@ -792,16 +792,16 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
         }
     }
 
-  //if it is not possible cancel some operation (num_pending > 0 ),
-  //we can we  do only one thing -report about this
-  //and complain about POSIX implementation
-  //we know that we have memory leaks,
-  //but it is better than segmentation fault!
-  ACE_DEBUG ((LM_DEBUG,
-             ACE_LIB_TEXT("ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list\n")
-             ACE_LIB_TEXT(" number pending AIO=%d\n"),
-             num_pending
-            ));
+  // If it is not possible cancel some operation (num_pending > 0 ),
+  // we can do only one thing -report about this
+  // and complain about POSIX implementation.
+  // We know that we have memory leaks, but it is better than
+  // segmentation fault!
+  ACE_DEBUG
+    ((LM_DEBUG,
+      ACE_LIB_TEXT("ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list\n")
+      ACE_LIB_TEXT(" number pending AIO=%d\n"),
+      num_pending));
 
   delete [] this->aiocb_list_;
   this->aiocb_list_ = 0;
@@ -1160,13 +1160,13 @@ ACE_POSIX_AIOCB_Proactor::handle_events (u_long milli_seconds)
       size_t index = 0;
       size_t count = aiocb_list_max_size_;  // max number to iterate
       int error_status = 0;
-      int return_status = 0;
+      size_t transfer_count = 0;
 
       for (;; retval++)
         {
           ACE_POSIX_Asynch_Result *asynch_result =
             find_completed_aio (error_status,
-                                return_status,
+                                transfer_count,
                                 index,
                                 count);
 
@@ -1175,9 +1175,9 @@ ACE_POSIX_AIOCB_Proactor::handle_events (u_long milli_seconds)
 
           // Call the application code.
           this->application_specific_code (asynch_result,
-                                         return_status, // Bytes transferred.
-                                         0,             // No completion key.
-                                         error_status); // Error
+                                           transfer_count,
+                                           0,             // No completion key.
+                                           error_status);
         }
     }
 
@@ -1188,49 +1188,27 @@ ACE_POSIX_AIOCB_Proactor::handle_events (u_long milli_seconds)
 }
 
 int
-ACE_POSIX_AIOCB_Proactor::get_result_status (ACE_POSIX_Asynch_Result* asynch_result,
+ACE_POSIX_AIOCB_Proactor::get_result_status (ACE_POSIX_Asynch_Result *asynch_result,
                                              int &error_status,
-                                             int &return_status)
+                                             size_t &transfer_count)
 {
-  return_status = 0;
+  transfer_count = 0;
 
   // Get the error status of the aio_ operation.
   error_status  = aio_error (asynch_result);
+  if (error_status == EINPROGRESS)
+    return 0;  // not completed
 
-#if 0
-  if (error_status == -1) // <aio_error> itself has failed.
-    ACE_ERROR ((LM_ERROR,
-                "%N:%l:(%P | %t)::%p\n",
-                "ACE_POSIX_AIOCB_Proactor::get_result_status:"
-                "<aio_error> has failed\n"));
-#endif /* 0 */
-
-   if (error_status == EINPROGRESS)
-     {
-       return_status = 0;
-       return 0;  // not completed
-     }
-
-   return_status = aio_return (asynch_result);
-
-   if (return_status < 0)
-     {
-       return_status = 0; // zero bytes transferred
-#if 0
-       if (error_status == 0)  // nonsense
-         ACE_ERROR ((LM_ERROR,
-                     "%N:%l:(%P | %t)::%p\n",
-                     "ACE_POSIX_AIOCB_Proactor::get_result_status:"
-                     "<aio_return> failed\n"));
-#endif /* 0 */
-     }
-
-   return 1; // completed
+  ssize_t op_return = aio_return (asynch_result);
+  if (op_return > 0)
+    transfer_count = ACE_static_cast (size_t, op_return);
+  // else transfer_count is already 0, error_status reports the error.
+  return 1; // completed
 }
 
 ACE_POSIX_Asynch_Result *
 ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
-                                              int &return_status,
+                                              size_t &transfer_count,
                                               size_t &index,
                                               size_t &count)
 {
@@ -1241,12 +1219,8 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
   ACE_POSIX_Asynch_Result *asynch_result = 0;
 
-  error_status = 0;
-  return_status= 0;
-
   if (num_started_aio_ == 0)  // save time
-    return asynch_result;
-
+    return 0;
 
   for (; count > 0; index++ , count--)
     {
@@ -1258,14 +1232,13 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
       if (0 != this->get_result_status (result_list_[index],
                                         error_status,
-                                        return_status))  // completed
+                                        transfer_count))  // completed
         break;
 
     } // end for
 
   if (count == 0) // all processed , nothing found
-    return asynch_result;
-
+    return 0;
   asynch_result = result_list_[index];
 
   aiocb_list_[index] = 0;
@@ -1273,7 +1246,7 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
   aiocb_list_cur_size_--;
 
   num_started_aio_--;  // decrement count active aios
-  index++;            // for next iteration
+  index++;             // for next iteration
   count--;             // for next iteration
 
   this->start_deferred_aio ();
@@ -1283,17 +1256,6 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
   return asynch_result;
 }
 
-void
-ACE_POSIX_AIOCB_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
-                                                     size_t bytes_transferred,
-                                                     const void *completion_key,
-                                                     u_long error)
-{
-  ACE_POSIX_Proactor::application_specific_code (asynch_result,
-                                                 bytes_transferred,
-                                                 completion_key,
-                                                 error);
-}
 
 int
 ACE_POSIX_AIOCB_Proactor::register_and_start_aio (ACE_POSIX_Asynch_Result *result,
@@ -1329,27 +1291,22 @@ ACE_POSIX_AIOCB_Proactor::register_and_start_aio (ACE_POSIX_Asynch_Result *resul
   if (ret_val != 0)   // No free slot
     {
       errno = EAGAIN;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%N:%l:(%P | %t)::\n"
-                         "register_and_start_aio: "
-                         "No space to store the <aio>info\n"),
-                        -1);
+      return -1;
     }
 
   // Find a free slot and store.
 
-  ret_val = allocate_aio_slot (result);
+  ssize_t slot = allocate_aio_slot (result);
 
-  if (ret_val < 0)
+  if (slot < 0)
     return -1;
 
-  size_t index = ACE_static_cast (size_t, ret_val);
+  size_t index = ACE_static_cast (size_t, slot);
 
   result_list_[index] = result;   //Store result ptr anyway
   aiocb_list_cur_size_++;
 
   ret_val = start_aio (result);
-
   switch (ret_val)
     {
     case 0 :     // started OK
@@ -1373,7 +1330,7 @@ ACE_POSIX_AIOCB_Proactor::register_and_start_aio (ACE_POSIX_Asynch_Result *resul
   return -1;
 }
 
-int
+ssize_t
 ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 {
   size_t i = 0;
@@ -1407,11 +1364,10 @@ ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
               "internal Proactor error 1\n"),
               -1);
 
-
   //setup OS notification methods for this aio
   result->aio_sigevent.sigev_notify = SIGEV_NONE;
 
-  return ACE_static_cast (int, i);
+  return ACE_static_cast (ssize_t, i);
 }
 
 // start_aio  has new return codes
@@ -1432,30 +1388,30 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result)
   switch (result->aio_lio_opcode )
     {
     case LIO_READ :
-      ptype = "read ";
+      ptype = ACE_LIB_TEXT ("read ");
       ret_val = aio_read (result);
       break;
     case LIO_WRITE :
-      ptype = "write";
+      ptype = ACE_LIB_TEXT ("write");
       ret_val = aio_write (result);
       break;
     default:
-      ptype = "?????";
+      ptype = ACE_LIB_TEXT ("?????");
       ret_val = -1;
       break;
     }
 
   if (ret_val == 0)
-    num_started_aio_ ++;
+    this->num_started_aio_++;
   else // if (ret_val == -1)
     {
       if (errno == EAGAIN)  //Ok, it will be deferred AIO
          ret_val = 1;
       else
         ACE_ERROR ((LM_ERROR,
-                "%N:%l:(%P | %t)::start_aio: aio_%s %p\n",
-                ptype,
-                "queueing failed\n"));
+                    ACE_LIB_TEXT ("%N:%l:(%P | %t)::start_aio: aio_%s %p\n"),
+                    ptype,
+                    ACE_LIB_TEXT ("queueing failed\n")));
     }
 
   return ret_val;
@@ -1854,7 +1810,7 @@ ACE_POSIX_SIG_Proactor::mask_signals (const sigset_t *signals) const
   return 0;
 }
 
-int
+ssize_t
 ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 {
   size_t i = 0;
@@ -1871,19 +1827,17 @@ ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
               "internal Proactor error 1\n"),
               -1);
 
-  int retval = ACE_static_cast (int, i);
-
   // setup OS notification methods for this aio
   // store index!!, not pointer in signal info
   result->aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   result->aio_sigevent.sigev_signo = result->signal_number ();
 #if defined (__FreeBSD__)
-  result->aio_sigevent.sigev_value.sigval_int = retval;
+  result->aio_sigevent.sigev_value.sigval_int = ACE_static_cast (int, i);
 #else
-  result->aio_sigevent.sigev_value.sival_int = retval;
+  result->aio_sigevent.sigev_value.sival_int = ACE_static_cast (int, i);
 #endif /* __FreeBSD__ */
 
-  return retval;
+  return ACE_static_cast (ssize_t, i);
 }
 
 int
@@ -1916,7 +1870,7 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
   size_t index = 0;          // start index to scan aiocb list
   size_t count = aiocb_list_max_size_;  // max number to iterate
   int error_status = 0;
-  int return_status = 0;
+  size_t transfer_count = 0;
   int flg_aio = 0;          // 1 if AIO Completion possible
   int flg_que = 0;          // 1 if SIGQUEUE possible
 
@@ -2020,7 +1974,7 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
       {
         ACE_POSIX_Asynch_Result *asynch_result =
           find_completed_aio (error_status,
-                              return_status,
+                              transfer_count,
                               index,
                               count);
 
@@ -2029,7 +1983,7 @@ ACE_POSIX_SIG_Proactor::handle_events (u_long milli_seconds)
 
         // Call the application code.
         this->application_specific_code (asynch_result,
-                                         return_status, // Bytes transferred.
+                                         transfer_count,
                                          0,             // No completion key.
                                          error_status); // Error
       }

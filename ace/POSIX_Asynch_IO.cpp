@@ -370,15 +370,14 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                     int signal_number)
 {
   size_t space = message_block.space ();
-  if ( bytes_to_read > space )
+  if (bytes_to_read > space)
      bytes_to_read=space;
 
-  if ( bytes_to_read == 0 )
-    ACE_ERROR_RETURN 
-      ((LM_ERROR,
-        ACE_LIB_TEXT ("ACE_POSIX_Asynch_Read_Stream::read:")
-        ACE_LIB_TEXT ("Attempt to read 0 bytes or no space in the message block\n")),
-       -1);
+  if (bytes_to_read == 0)
+    {
+      errno = ENOSPC;
+      return -1;
+    }
 
   // Create the Asynch_Result.
   ACE_POSIX_Asynch_Read_Stream_Result *result = 0;
