@@ -18,6 +18,7 @@
 #if !defined (TAO_CLIENT_FACTORY_H)
 #  define TAO_CLIENT_FACTORY_H
 
+#if 0
 #  include "ace/SOCK_Acceptor.h"
 #  include "ace/SOCK_Connector.h"
 #  include "ace/Svc_Handler.h"
@@ -26,6 +27,7 @@
 #  include "ace/Synch.h"
 
 #  include "tao/params.h"
+#endif /* 0 */
 
 class TAO_Client_Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
@@ -42,14 +44,14 @@ public:
   virtual int open (void *);
   // Initialization hook
 
-  void in_use (CORBA_Boolean);
+  void in_use (CORBA::Boolean);
   // Set the in-use flag.
 
-  CORBA_Boolean in_use (void);
+  CORBA::Boolean in_use (void);
   // Return state of the in-use flag.
 
 private:
-  CORBA_Boolean in_use_;
+  CORBA::Boolean in_use_;
   // True value indicates that something is using this handler.
 };
 

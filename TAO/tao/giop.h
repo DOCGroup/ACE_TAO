@@ -19,6 +19,7 @@
 #if !defined (TAO_GIOP_H)
 #  define TAO_GIOP_H
 
+#if 0
 #  include "ace/OS.h"
 #  include "ace/SOCK_Stream.h"
 
@@ -27,9 +28,11 @@
 
 #  include "tao/iiopobj.h"		// XXX -- not generic!
 #  include "tao/factories.h"
+#endif
 
 // XXX this same typedef is used in other places, e.g. iiopobj.hh
-typedef CORBA_SEQUENCE <CORBA_Octet> opaque;
+//typedef CORBA_SEQUENCE <CORBA_Octet> opaque;
+typedef CORBA::OctetSeq opaque;
 
 class IOP 
 {				// namespace
@@ -40,7 +43,7 @@ public:
   //
   // Email to tag-request@omg.org to allocate tags.
 
-  typedef CORBA_ULong ProfileId;
+  typedef CORBA::ULong ProfileId;
 
   enum 
   {
@@ -76,7 +79,7 @@ public:
   //
   // Email to tag-request@omg.org to allocate tags.
 
-  typedef CORBA_ULong ComponentId;
+  typedef CORBA::ULong ComponentId;
 
   enum 
   {
@@ -120,7 +123,7 @@ class GIOP // namespace
   // invocations safely, since the GIOP code is reentrant.
 {
 public:
-  struct Version { CORBA_Octet major, minor; };
+  struct Version { CORBA::Octet major, minor; };
 
   // GIOP protocol version information
 
@@ -142,16 +145,16 @@ public:
 
   struct MessageHeader 
   {
-    CORBA_Char magic [4]; // "GIOP"
+    CORBA::Char magic [4]; // "GIOP"
     Version giop_version;
-    CORBA_Octet byte_order; // 0 = big, 1 = little
-    CORBA_Octet message_type; // MsgType above
-    CORBA_ULong message_size; // in byte_order!
+    CORBA::Octet byte_order; // 0 = big, 1 = little
+    CORBA::Octet message_type; // MsgType above
+    CORBA::ULong message_size; // in byte_order!
   };
 
   // Support for Implicit ORB Service Context
 
-  typedef CORBA_ULong 	ServiceID;
+  typedef CORBA::ULong 	ServiceID;
 
   enum 
   {
@@ -174,11 +177,11 @@ public:
   struct RequestHeader 
   {
     ServiceContextList service_info;    // @@ More info needed
-    CORBA_ULong request_id;             // Unique identifier for a request
-    CORBA_Boolean response_expected;    // true if this request requires a response
+    CORBA::ULong request_id;             // Unique identifier for a request
+    CORBA::Boolean response_expected;    // true if this request requires a response
     opaque object_key;                  // @@ the object key of the destination object (is this right?)
-    CORBA_String operation;             // Name of the operation being performed
-    CORBA_Principal_ptr	requesting_principal;   // Identifies the requester
+    CORBA::String operation;             // Name of the operation being performed
+    CORBA::Principal_ptr	requesting_principal;   // Identifies the requester
   };
 
   enum ReplyStatusType 
@@ -192,7 +195,7 @@ public:
   struct ReplyHeader 
   {
     ServiceContextList service_info;    // @@ More info
-    CORBA_ULong request_id;             // Unique identifier of the request for which this is a reply
+    CORBA::ULong request_id;             // Unique identifier of the request for which this is a reply
     ReplyStatusType reply_status;       // Status of the reply (see above enum)
   };
 
@@ -200,14 +203,14 @@ public:
 
   struct CancelRequestHeader 
   {
-    CORBA_ULong request_id;             // Unique identifier of the request being cancelled
+    CORBA::ULong request_id;             // Unique identifier of the request being cancelled
   };
 
   // = Location service support
 
   struct LocateRequestHeader 
   {
-    CORBA_ULong request_id;
+    CORBA::ULong request_id;
     opaque object_key;
   };
 
@@ -220,7 +223,7 @@ public:
 
   struct LocateReplyHeader 
   {
-    CORBA_ULong request_id;
+    CORBA::ULong request_id;
     LocateStatusType locate_status;
   };
 
@@ -232,32 +235,32 @@ public:
   public:
     Invocation (IIOP_Object *data,
 		const char *operation,
-		CORBA_Boolean is_roundtrip);
+		CORBA::Boolean is_roundtrip);
 
     ~Invocation (void);
 
-    void start (CORBA_Environment &env);
+    void start (CORBA::Environment &env);
     // <start> goes beyond initialising data structures, and makes
     // calls that may fail -- and thus throw exceptions.
 
-    void put_param (CORBA_TypeCode_ptr tc, 
+    void put_param (CORBA::TypeCode_ptr tc, 
 		    void *value, 
-		    CORBA_Environment &env)
+		    CORBA::Environment &env)
       {
 	(void) stream.encode(tc, value, 0, env);
       }
 
-    ReplyStatusType invoke (CORBA_ExceptionList &exceptions,
-			    CORBA_Environment &env);
+    ReplyStatusType invoke (CORBA::ExceptionList &exceptions,
+			    CORBA::Environment &env);
 
-    void get_value (CORBA_TypeCode_ptr tc,
+    void get_value (CORBA::TypeCode_ptr tc,
 		   void *value,
-		   CORBA_Environment &env)
+		   CORBA::Environment &env)
       {
 	(void) stream.decode (tc, value, 0, env);
       }
 
-    // No CORBA_Context support (deprecated).
+    // No CORBA::Context support (deprecated).
 
   private:
     // @@ Please add comments.
@@ -265,9 +268,9 @@ public:
 
     const char *opname;
 
-    CORBA_Boolean do_rsvp;
+    CORBA::Boolean do_rsvp;
 
-    CORBA_ULong my_request_id;
+    CORBA::ULong my_request_id;
 
     ACE_Thread_Mutex lock_;
 
@@ -306,29 +309,29 @@ public:
   // Return: 1==success,0==EOF,-1==error
 
   typedef LocateStatusType (*ForwardFunc) (opaque &,
-					   CORBA_Object_ptr &,
+					   CORBA::Object_ptr &,
 					   void *);
 
   typedef void (*RequestHandler) (RequestHeader &,
 				  CDR &,
 				  CDR *,
 				  void *,
-				  CORBA_Environment &);
+				  CORBA::Environment &);
 
   static int incoming_message (ACE_SOCK_Stream &peer,
 			       ForwardFunc check_forward,
 			       RequestHandler handle_request,
 			       void *context,
-			       CORBA_Environment &env);
+			       CORBA::Environment &env);
 
-  static CORBA_Boolean send_message (CDR &stream, 
+  static CORBA::Boolean send_message (CDR &stream, 
 				     ACE_SOCK_Stream &peer);
 
   // = Reads message, returns message type from header.
 
   static MsgType read_message (ACE_SOCK_Stream &peer, 
 			       CDR &msg, 
-			       CORBA_Environment &env);
+			       CORBA::Environment &env);
 };
 
 #endif /* TAO_GIOP_H */

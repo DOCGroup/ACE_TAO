@@ -16,17 +16,17 @@
 #if !defined (TAO_IIOPORB_H)
 #  define TAO_IIOPORB_H
 
+#if 0
 #  include "ace/OS.h"
 #  include "ace/Singleton.h"
 #  include "orbobj.h"
+#endif
 
 typedef class IIOP_ORB *IIOP_ORB_ptr;
 
-extern "C" const IID IID_IIOP_ORB;
-
 // ORB pseudo-objref
 
-class ACE_Svc_Export IIOP_ORB : public CORBA_ORB
+class ACE_Svc_Export IIOP_ORB : public CORBA::ORB
 // = TITLE
 //    Bridge implementation of IIOP_ORB
 //
@@ -41,12 +41,12 @@ public:
   ~IIOP_ORB (void);
   // destructor
 
-  CORBA_Object_ptr string_to_object (CORBA_String str,
-				     CORBA_Environment &env);
+  CORBA::Object_ptr string_to_object (CORBA::String str,
+				     CORBA::Environment &env);
   // Get an object reference from the IOR string
 
-  CORBA_String object_to_string (CORBA_Object_ptr obj,
-				 CORBA_Environment &env);
+  CORBA::String object_to_string (CORBA::Object_ptr obj,
+				 CORBA::Environment &env);
   // Convert an object reference to an IOR stringified form
 
   HRESULT __stdcall QueryInterface (REFIID riid, 
@@ -54,13 +54,13 @@ public:
   // COM stuff - get the underlying IUnknown object based on the riid
 
   // = ACCESSORS
-  void use_omg_ior_format (CORBA_Boolean ior);
+  void use_omg_ior_format (CORBA::Boolean ior);
   // Set the IOR flag.
-  CORBA_Boolean use_omg_ior_format (void);
+  CORBA::Boolean use_omg_ior_format (void);
   // Get the IOR flag.
   
 private:
-  CORBA_Boolean use_omg_ior_format_;
+  CORBA::Boolean use_omg_ior_format_;
   // decides whether to use the URL notation or to use IOR notation
 
   // These are not provided.
@@ -73,9 +73,5 @@ typedef IIOP_ORB *IIOP_ORB_ptr;
 // Create a type for the singleton. 
 typedef ACE_Singleton<IIOP_ORB, ACE_SYNCH_MUTEX> 
 	TAO_ORB; 
-
-#  if defined(__ACE_INLINE__)
-#    include "iioporb.i"
-#  endif
 
 #endif	/* TAO_IIOPORB_H */

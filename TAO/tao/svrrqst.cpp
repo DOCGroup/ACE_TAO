@@ -4,6 +4,7 @@
 //
 // Implementation of the Dynamic Server Skeleton Interface
 
+#if 0
 #include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
@@ -13,6 +14,9 @@
 #include "tao/svrrqst.h"
 #include "tao/nvlist.h"
 #include "tao/debug.h"
+#endif
+
+#include "tao/corba.h"
 
 // {77420086-F276-11ce-9598-0000C07CA898}
 DEFINE_GUID (IID_IIOP_ServerRequest,
@@ -31,7 +35,7 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
   ACE_ASSERT (refcount_ == 0);
 
   if (_params)
-    CORBA_release (_params);
+    CORBA::release (_params);
   if (_retval)
     delete _retval;
   if (_exception)
@@ -86,8 +90,8 @@ IIOP_ServerRequest::QueryInterface (REFIID riid,
 // inout/out/return values later on.
 
 void __stdcall
-IIOP_ServerRequest::params (CORBA_NVList_ptr list,
-			    CORBA_Environment &env)
+IIOP_ServerRequest::params (CORBA::NVList_ptr list,
+			    CORBA::Environment &env)
 {
   env.clear ();
 
@@ -97,14 +101,14 @@ IIOP_ServerRequest::params (CORBA_NVList_ptr list,
   // Then unmarshal each "in" and "inout" parameter
   for (u_int i = 0; i < list->count (); i++) 
     {
-      CORBA_NamedValue_ptr nv;
-      CORBA_Any_ptr any;
-      CORBA_TypeCode_ptr tc;
+      CORBA::NamedValue_ptr nv;
+      CORBA::Any_ptr any;
+      CORBA::TypeCode_ptr tc;
       void *value;
 
       nv = list->item (i);
 
-      if (ACE_BIT_DISABLED (nv->flags (), CORBA_ARG_IN | CORBA_ARG_INOUT))
+      if (ACE_BIT_DISABLED (nv->flags (), CORBA::ARG_IN | CORBA::ARG_INOUT))
 	continue;
 
       // First, make sure the memory into which we'll be unmarshaling
@@ -120,7 +124,7 @@ IIOP_ServerRequest::params (CORBA_NVList_ptr list,
       tc = any->type ();
       tc->AddRef ();
       ACE_NEW (value, char [tc->size (env)]);
-      any->replace (tc, value, CORBA_B_TRUE, env);
+      any->replace (tc, value, CORBA::B_TRUE, env);
 
       // Decrement the refcount of "tc".
       //
@@ -144,7 +148,7 @@ IIOP_ServerRequest::params (CORBA_NVList_ptr list,
     {
       dmsg1 ("params (), %d bytes remaining (error)", 
 	     _incoming->bytes_remaining ());
-      env.exception (new CORBA_BAD_PARAM (COMPLETED_NO));
+      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
     }
 }
 
@@ -153,13 +157,13 @@ IIOP_ServerRequest::params (CORBA_NVList_ptr list,
 // only after the parameter list has been provided (maybe empty).
 
 void __stdcall
-IIOP_ServerRequest::result (CORBA_Any_ptr value,
-			    CORBA_Environment &env)
+IIOP_ServerRequest::result (CORBA::Any_ptr value,
+			    CORBA::Environment &env)
 {
   env.clear ();
 
   if (!_params || _retval || _exception)
-    env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
+    env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
     _retval = value;
     
@@ -169,12 +173,12 @@ IIOP_ServerRequest::result (CORBA_Any_ptr value,
 // Store the exception value.
 
 void __stdcall
-IIOP_ServerRequest::exception (CORBA_ExceptionType type,
-			       CORBA_Any_ptr value,
-			       CORBA_Environment &env)
+IIOP_ServerRequest::exception (CORBA::ExceptionType type,
+			       CORBA::Any_ptr value,
+			       CORBA::Environment &env)
 {
   if (!_params || _retval || _exception)
-    env.exception (new CORBA_BAD_INV_ORDER (COMPLETED_NO));
+    env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else 
     {
       env.clear ();
@@ -187,33 +191,33 @@ IIOP_ServerRequest::exception (CORBA_ExceptionType type,
 
 // Invocation attributes.
 
-CORBA_String __stdcall
+CORBA::String __stdcall
 IIOP_ServerRequest::op_name (void)
 {
   return _opname;
 }
 
-CORBA_Object_ptr __stdcall
+CORBA::Object_ptr __stdcall
 IIOP_ServerRequest::target (void)
 {
   // XXX implement me!!  Code from TCP_OA exists ...
   return 0;
 }
 
-CORBA_Principal_ptr __stdcall
+CORBA::Principal_ptr __stdcall
 IIOP_ServerRequest::caller (void)
 {
   // XXX ... return client's principal
   return 0;
 }
 
-CORBA_ORB_ptr __stdcall
+CORBA::ORB_ptr __stdcall
 IIOP_ServerRequest::orb (void)
 {
   return _orb;
 }
 
-CORBA_BOA_ptr __stdcall
+CORBA::BOA_ptr __stdcall
 IIOP_ServerRequest::oa (void)
 {
   return _boa;

@@ -16,47 +16,29 @@
 #if !defined (TAO_NVLIST_H)
 #  define TAO_NVLIST_H
 
-#  include "ace/OS.h"
-
-#  include "tao/any.h"
-
 // @@ IS it necessary to use ACE_Svc_Export on a forward decl?  I
 // simply did a global replace of _EXPCLASS with ACE_Svc_Export.  I'm
 // not familiar enough with crazy MSVC nuances to know if this is
 // necessary, what it means, etc.  Perhaps Brian can shed some light
 // on the subject? --cjc
-class ACE_Svc_Export CORBA_NamedValue;
-
-void CORBA_release (CORBA_NamedValue_ptr x);
-CORBA_Boolean CORBA_is_nil (CORBA_NamedValue_ptr x);
-
-// No IID required
-enum 
-{ 
-  CORBA_ARG_IN = 0x01,
-  CORBA_ARG_OUT = 0x02,
-  CORBA_ARG_INOUT = 0x04,
-  CORBA_IN_COPY_VALUE = 0x08,
-  CORBA_OUT_LIST_MEMORY = 0x10
-};
 
 class ACE_Svc_Export CORBA_NamedValue
-// = TITLE
-// NamedValue ... these occur only in "NVList" (named value list) data
-// structures.  The binary form of the data structure is frozen and
-// visible to programs using it (e.g. from C).  The C++ class supports
-// some programming discipline, e.g. to avoid memory leaks.
-//
-// They just represent parameters to calls.  The name is optional, and
-// the value is packaged as an Any.  The flags indicate parameter
-// mode, and some ownership rules for "top level" memory.
 {
+  // = TITLE
+  // NamedValue ... these occur only in "NVList" (named value list) data
+  // structures.  The binary form of the data structure is frozen and
+  // visible to programs using it (e.g. from C).  The C++ class supports
+  // some programming discipline, e.g. to avoid memory leaks.
+  //
+  // They just represent parameters to calls.  The name is optional, and
+  // the value is packaged as an Any.  The flags indicate parameter
+  // mode, and some ownership rules for "top level" memory.
 public:
-  TAO_CONST CORBA_String _FAR name (void) 
-    { return (const CORBA_String) _name; }
+  TAO_CONST CORBA::String _FAR name (void) 
+    { return (const CORBA::String) _name; }
 
-  CORBA_Any_ptr	_FAR value (void) { return &_any; }
-  CORBA_Flags flags (void) const { return _flags; }
+  CORBA::Any_ptr	_FAR value (void) { return &_any; }
+  CORBA::Flags flags (void) const { return _flags; }
 
   ~CORBA_NamedValue (void);
 
@@ -71,9 +53,9 @@ private:
   u_int refcount_;
   ACE_SYNCH_MUTEX lock_;
 
-  CORBA_Any _any;
-  CORBA_Flags _flags;
-  const CORBA_Char *_FAR _name;
+  CORBA::Any _any;
+  CORBA::Flags _flags;
+  const CORBA::Char *_FAR _name;
 
   CORBA_NamedValue (void) : _flags (0), _name (0) { }
 
@@ -81,16 +63,8 @@ private:
   friend class CORBA_Request;
 };
 
-class ACE_Svc_Export CORBA_NVList;
-
-void CORBA_release (CORBA_NVList_ptr x);
-CORBA_Boolean CORBA_is_nil (CORBA_NVList_ptr x);
-
-// @@ Why is this extern "C"?
-// See prior comments...
-extern "C" const IID IID_CORBA_NVList;
-
 class ACE_Svc_Export CORBA_NVList
+{
   // = TITLE
   // NVList ... this is used in the (client side) DII (Dynamic
   // Invocation Interface) to hold parameters, except for the return
@@ -102,17 +76,16 @@ class ACE_Svc_Export CORBA_NVList
   // Request or ServerRequest pseudo-object.  The ORB copies data
   // to/from the IPC messages (e.g. IIOP::Request, IIOP::Response) as
   // appropriate.
-{
 public:
-  CORBA_ULong count (void) const
+  CORBA::ULong count (void) const
   { return _len; }
 
-  CORBA_NamedValue_ptr add_value (const CORBA_Char *_FAR ,
-				  const CORBA_Any _FAR &,
-				  CORBA_Flags,
-				  CORBA_Environment _FAR &);
+  CORBA::NamedValue_ptr add_value (const CORBA::Char *_FAR ,
+				   const CORBA::Any _FAR &,
+				   CORBA::Flags,
+				   CORBA::Environment _FAR &);
 
-  CORBA_NamedValue_ptr item (CORBA_Long n) const
+  CORBA::NamedValue_ptr item (CORBA::Long n) const
   { return &_values [(u_int) n]; }
 
   ~CORBA_NVList (void);
@@ -126,7 +99,7 @@ public:
 
 private:
   // @@ Do we really need to keep these _FAR macros?
-  CORBA_NamedValue *_FAR _values;
+  CORBA::NamedValue *_FAR _values;
   u_int _max;
   u_int _len;
   ACE_SYNCH_MUTEX lock_;

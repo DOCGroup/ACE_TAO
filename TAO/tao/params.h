@@ -16,11 +16,13 @@
 #if !defined (TAO_PARAMS_H)
 #  define TAO_PARAMS_H
 
+#if 0
 #  include "ace/OS.h"
 
 #  include "tao/orb.h" // get types
 #  include "tao/boa.h" // Need the DSI Handler
-#  include "tao/sequence.h" // for CORBA_OctetSeq
+#  include "tao/sequence.h" // for CORBA::OctetSeq
+#endif /* 0 */
 
 // Forward decls.
 
@@ -64,10 +66,20 @@ public:
   static TAO_OA_Parameters *instance (TAO_OA_Parameters*);
   // Set the Singleton instance.
 
-  typedef CORBA_BOA::dsi_handler UpcallFunc;
-  typedef void (*ForwardFunc)(CORBA_OctetSeq &,
-			      CORBA_Object_ptr &, void *, 
-			      CORBA_Environment &);
+#if 0
+  enum DEMUX_STRATEGY
+  {
+    TAO_LINEAR,
+    TAO_DYNAMIC_HASH,
+    TAO_ACTIVE_DEMUX,
+    TAO_USER_DEFINED
+  };
+#endif /* 0 */
+
+  typedef CORBA::BOA::dsi_handler UpcallFunc;
+  typedef void (*ForwardFunc)(CORBA::OctetSeq &,
+			      CORBA::Object_ptr &, void *, 
+			      CORBA::Environment &);
 
   TAO_OA_Parameters (void);
 
@@ -110,12 +122,12 @@ public:
   // Haven't figured out what the forwarder really does...don't really
   // care right now.
 
-  CORBA_BOA_ptr oa (void);
+  CORBA::BOA_ptr oa (void);
   // Return the handle to the One True Object Adapter.  The code from
   // which <{TAO}> is derived makes a vast assumption that there will
   // only be one Object Adapter in process.
 
-  void oa (CORBA_BOA_ptr anOA);
+  void oa (CORBA::BOA_ptr anOA);
   // Set the handle to the One True Object Adapter.
 
   void addr (ACE_INET_Addr &addr);
@@ -143,10 +155,10 @@ public:
   TAO_Object_Table *userdef_lookup_strategy (void);
   // return the lookup strategy
 
-  void tablesize (CORBA_ULong tablesize);
+  void tablesize (CORBA::ULong tablesize);
   // set the table size for lookup table
 
-  CORBA_ULong tablesize (void);
+  CORBA::ULong tablesize (void);
   // get the table size for the lookup table
 
 protected:
@@ -177,7 +189,7 @@ private:
 
   ForwardFunc forwarder_;	
 
-  CORBA_BOA_ptr oa_;		
+  CORBA::BOA_ptr oa_;		
   // Pointer to One True Object Adapter
 
   TAO_Demux_Strategy demux_;  
@@ -186,7 +198,7 @@ private:
   ACE_INET_Addr addr_;          
   // host + port number we are listening on
 
-  CORBA_ULong tablesize_;       
+  CORBA::ULong tablesize_;       
   // size of object lookup table
 
   TAO_Object_Table *ot_;
@@ -195,9 +207,5 @@ private:
 
 // Create a type for the singleton
 typedef TAO_OA_Parameters TAO_OA_PARAMS;
-
-#  if defined(__ACE_INLINE__)
-#    include "params.i"
-#  endif
 
 #endif /* TAO_PARAMS_H */

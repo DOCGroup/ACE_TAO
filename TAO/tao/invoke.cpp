@@ -28,11 +28,15 @@
 // generate better code, which in some cases may be very hard to
 // unwind.
 
+#if 0
 #include "tao/orb.h"
 #include "tao/cdr.h"
 #include "tao/giop.h"
 #include "tao/nvlist.h"
 #include "tao/debug.h"
+#endif
+
+#include "tao/corba.h"
 
 class ACE_Synchronous_Cancellation_Required
   // = TITLE
@@ -79,7 +83,7 @@ private:
 // patent application is pending.
 
 void 
-IIOP_Object::do_call (CORBA_Environment &env,	// exception reporting
+IIOP_Object::do_call (CORBA::Environment &env,	// exception reporting
                       const TAO_Call_Data *info,	// call description
                       ...)                       // ... any parameters
 
@@ -159,10 +163,10 @@ IIOP_Object::do_call (CORBA_Environment &env,	// exception reporting
       // ones.
 
       GIOP::ReplyStatusType status;
-      CORBA_ExceptionList exceptions;
+      CORBA::ExceptionList exceptions;
 
       exceptions.length = exceptions.maximum = info->except_count;
-      exceptions.buffer = (CORBA_TypeCode_ptr *) info->excepts;
+      exceptions.buffer = (CORBA::TypeCode_ptr *) info->excepts;
 
       status = call.invoke (exceptions, env);
 
@@ -208,7 +212,7 @@ IIOP_Object::do_call (CORBA_Environment &env,	// exception reporting
                   else
                     {
                       // assert (value_size == tc->size());
-                      *(void **)ptr = new CORBA_Octet [pdp->value_size];
+                      *(void **)ptr = new CORBA::Octet [pdp->value_size];
                       call.get_value (pdp->tc, *(void **)ptr, env);
                     }
 
@@ -236,12 +240,12 @@ IIOP_Object::do_call (CORBA_Environment &env,	// exception reporting
 
 void
 IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
-                              CORBA_Boolean is_roundtrip,	// results required?
-                              CORBA_NVList_ptr args,		// parameters
-                              CORBA_NamedValue_ptr result,	// result
-                              CORBA_Flags flags,		// per-call flag (one!)
-                              CORBA_ExceptionList &exceptions,	// possible user exceptions
-                              CORBA_Environment &env)		// exception reporting
+                              CORBA::Boolean is_roundtrip,	// results required?
+                              CORBA::NVList_ptr args,		// parameters
+                              CORBA::NamedValue_ptr result,	// result
+                              CORBA::Flags flags,		// per-call flag (one!)
+                              CORBA::ExceptionList &exceptions,	// possible user exceptions
+                              CORBA::Environment &env)		// exception reporting
 {
   ACE_Synchronous_Cancellation_Required NOT_USED;
 
@@ -268,13 +272,13 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
 
       for (i = 0; i < args->count (); i++)
         {
-          CORBA_NamedValue_ptr value = args->item (i);
+          CORBA::NamedValue_ptr value = args->item (i);
 
-          if (value->flags () == CORBA_ARG_IN
-              || value->flags () == CORBA_ARG_INOUT)
+          if (value->flags () == CORBA::ARG_IN
+              || value->flags () == CORBA::ARG_INOUT)
             {
               call.put_param (value->value ()->type (),
-                              value->value ()->value (), env);
+                              (void *) value->value ()->value (), env);
               if (env.exception ())
                 {
                   dexc (env, "do_dynamic_call, put request parameter");
@@ -311,9 +315,9 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
               // If caller didn't set OUT_LIST_MEMORY flag, allocate
               // memory for return value ...
 
-              if (!(flags & CORBA_OUT_LIST_MEMORY))
+              if (!(flags & CORBA::OUT_LIST_MEMORY))
                 {
-                  CORBA_TypeCode_ptr tcp;
+                  CORBA::TypeCode_ptr tcp;
                   size_t size;
 
                   tcp = result->value ()->type ();
@@ -322,31 +326,31 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
 
                   if (size != 0)
                     {
-                      void *ptr = new CORBA_Octet [size];
+                      void *ptr = new CORBA::Octet [size];
 
                       tcp->AddRef ();
                       result->value ()->replace (tcp, ptr,
-                                                 CORBA_B_TRUE, env);
+                                                 CORBA::B_TRUE, env);
                       dexc (env, "do_dynamic_call, set result mem");
                     }
                 }
 
               call.get_value (result->value ()->type (),
-                              result->value ()->value (), env);
+                              (void *) result->value ()->value (), env);
             }
 
           for (i = 0; i < args->count (); i++)
             {
-              CORBA_NamedValue_ptr	value = args->item (i);
+              CORBA::NamedValue_ptr	value = args->item (i);
 
-              if (value->flags () == CORBA_ARG_OUT
-                  || value->flags () == CORBA_ARG_INOUT)
+              if (value->flags () == CORBA::ARG_OUT
+                  || value->flags () == CORBA::ARG_INOUT)
                 {
                   // If caller didn't set OUT_LIST_MEMORY flag, allocate
                   // memory for this parameter ...
-                  if (!(flags & CORBA_OUT_LIST_MEMORY))
+                  if (!(flags & CORBA::OUT_LIST_MEMORY))
                     {
-                      CORBA_TypeCode_ptr tcp;
+                      CORBA::TypeCode_ptr tcp;
                       size_t size;
 
                       tcp = value->value ()->type ();
@@ -355,17 +359,17 @@ IIOP_Object::do_dynamic_call (const char *opname,       	// operation name
 
                       if (size != 0)
                         {
-                          void *ptr = new CORBA_Octet [size];
+                          void *ptr = new CORBA::Octet [size];
 
                           tcp->AddRef ();
                           value->value ()->replace (tcp, ptr,
-                                                    CORBA_B_TRUE, env);
+                                                    CORBA::B_TRUE, env);
                           dexc (env, "do_dynamic_call, set result mem");
                         }
                     }
 
                   call.get_value (value->value ()->type (),
-                                  value->value ()->value (), env);
+                                  (void *) value->value ()->value (), env);
                   if (env.exception ())
                     {
                       dexc (env, "do_dynamic_call, get response parameter");

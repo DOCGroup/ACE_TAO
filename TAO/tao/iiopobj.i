@@ -1,5 +1,5 @@
 ACE_INLINE
-IIOP::Version::Version (CORBA_Octet maj, CORBA_Octet min)
+IIOP::Version::Version (CORBA::Octet maj, CORBA::Octet min)
   : major (maj),
     minor (min)
 {}

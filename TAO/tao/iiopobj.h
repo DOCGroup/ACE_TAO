@@ -23,19 +23,21 @@
 #if !defined (TAO_IIOPOBJ_H)
 #  define TAO_IIOPOBJ_H
 
+#if 0
 #  include "ace/OS.h"
 
 #  include "tao/corbacom.h"
 #  include "tao/sequence.h"
 #  include "tao/object.h"
 #  include "tao/stub.h"
+#endif
 
 // @@ Can we use the ACE_SYNCH_MUTEX here rather than these typedefs?
 #  if !defined (ACE_HAS_THREADS)
 typedef ACE_Null_Mutex ACE_Thread_Mutex;
 #  endif /* ACE_HAS_THREADS */
 
-typedef CORBA_SEQUENCE <CORBA_Octet> opaque;
+typedef CORBA::OctetSeq opaque;
 
 class ACE_Svc_Export IIOP // namespace
 {			
@@ -46,10 +48,10 @@ public:
 
   struct Version
   {
-    CORBA_Octet	major;
-    CORBA_Octet minor;
+    CORBA::Octet	major;
+    CORBA::Octet minor;
 
-    Version (CORBA_Octet maj = MY_MAJOR, CORBA_Octet min = MY_MINOR);
+    Version (CORBA::Octet maj = MY_MAJOR, CORBA::Octet min = MY_MINOR);
   };
 
   // IOR support ... ProfileBody is encapsulated in an IIOP
@@ -58,16 +60,16 @@ public:
   struct ProfileBody
   {
     Version iiop_version;
-    CORBA_String host;
-    CORBA_UShort port;
+    CORBA::String host;
+    CORBA::UShort port;
     opaque object_key;
 
     ProfileBody (void);
 
     ProfileBody (const ProfileBody &src);
     ProfileBody (const Version &v, 
-		 const CORBA_String &h, 
-		 const CORBA_UShort &p, 
+		 const CORBA::String &h, 
+		 const CORBA::UShort &p, 
 		 const opaque &object_key);
 
     ~ProfileBody (void);
@@ -88,31 +90,29 @@ public:
 // that it is visible to DCOM, which is a C linkage, I believe.  This
 // is all holdover from the original DB code, and the COM integration
 // is the least understood fo any of it.
-extern "C" const IID IID_IIOP_Object;
-
 class ACE_Svc_Export IIOP_Object : public STUB_Object
 {
 public:
-  void do_call (CORBA_Environment &env,
+  void do_call (CORBA::Environment &env,
 		const TAO_Call_Data *info,
 		...);
   // Stub-based invocation.
 
   void do_dynamic_call (const char *opname,
-			CORBA_Boolean is_roundtrip,
-			CORBA_NVList_ptr args,
-			CORBA_NamedValue_ptr result,
-			CORBA_Flags flags,
-			CORBA_ExceptionList &exceptions,
-			CORBA_Environment &env);
+			CORBA::Boolean is_roundtrip,
+			CORBA::NVList_ptr args,
+			CORBA::NamedValue_ptr result,
+			CORBA::Flags flags,
+			CORBA::ExceptionList &exceptions,
+			CORBA::Environment &env);
   // DII based invocation.
 
   // = Support for tables keyed by objrefs.
 
-  CORBA_ULong hash (CORBA_ULong maximum,
-		    CORBA_Environment &env);
-  CORBA_Boolean	is_equivalent (CORBA_Object_ptr other_obj,
-			       CORBA_Environment &env);
+  CORBA::ULong hash (CORBA::ULong maximum,
+		    CORBA::Environment &env);
+  CORBA::Boolean	is_equivalent (CORBA::Object_ptr other_obj,
+			       CORBA::Environment &env);
 
   // XXX All objref representations should know how to marshal
   // themselves.  That will involve ensuring that the IOR that gets
@@ -138,10 +138,10 @@ public:
   HRESULT __stdcall QueryInterface (REFIID type_id, 
 				    void **ppv);
 
-  virtual CORBA_String _get_name (CORBA_Environment &env);
+  virtual CORBA::String _get_name (CORBA::Environment &env);
 
 private:
-  CORBA_Object base;
+  CORBA::Object base;
   ACE_Thread_Mutex lock_;
   u_int refcount_;
 
@@ -159,9 +159,5 @@ private:
   friend class everyone_needs_a_friend;
 #endif /* __GNUG__ */
 };
-
-#  if defined (__ACE_INLINE__)
-#    include "iiopobj.i"
-#  endif /* __ACE_INLINE__ */
 
 #endif	/* TAO_IIOPOBJ_H */

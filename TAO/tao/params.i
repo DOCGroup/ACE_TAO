@@ -57,14 +57,14 @@ TAO_OA_Parameters::forwarder (TAO_OA_Parameters::ForwardFunc f)
   forwarder_ = f;
 }
 
-ACE_INLINE CORBA_BOA_ptr
+ACE_INLINE CORBA::BOA_ptr
 TAO_OA_Parameters::oa (void)
 {
   return oa_;
 }
 
 ACE_INLINE void
-TAO_OA_Parameters::oa (CORBA_BOA_ptr anOA)
+TAO_OA_Parameters::oa (CORBA::BOA_ptr anOA)
 {
   oa_ = anOA;
 }
@@ -99,19 +99,20 @@ TAO_OA_Parameters::demux_strategy (TAO_Demux_Strategy strategy)
   this->demux_ = strategy;      // Trust that the value is valid!
 }
 
-ACE_INLINE TAO_OA_Parameters::TAO_Demux_Strategy
+//ACE_INLINE TAO_OA_Parameters::TAO_Demux_Strategy
+ACE_INLINE TAO_Demux_Strategy
 TAO_OA_Parameters::demux_strategy (void)
 {
   return this->demux_;
 }
 
 ACE_INLINE void
-TAO_OA_Parameters::tablesize (CORBA_ULong tblsize)
+TAO_OA_Parameters::tablesize (CORBA::ULong tblsize)
 {
   this->tablesize_ = tblsize;
 }
 
-ACE_INLINE CORBA_ULong
+ACE_INLINE CORBA::ULong
 TAO_OA_Parameters::tablesize (void)
 {
   return this->tablesize_;

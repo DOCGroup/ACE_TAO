@@ -24,38 +24,35 @@
 #if !defined (TAO_SVRRQST_H)
 #define TAO_SVRRQST_H
 
+#if 0
 #include "ace/OS.h"
 #include "tao/cdr.h"
-
-void CORBA_release (CORBA_ServerRequest_ptr req);
-CORBA_Boolean CORBA_is_nil (CORBA_ServerRequest_ptr req);
-
-extern "C" const IID IID_CORBA_ServerRequest;
+#endif
 
 class ACE_Svc_Export CORBA_ServerRequest : public IUnknown
-// = TITLE
-// XXX this is currently in an intermediate state; this is not
-// supposed to be IIOP-specific, or to expose quite so many
-// implementation details, but right now it is.
 {
+  // = TITLE
+  // XXX this is currently in an intermediate state; this is not
+  // supposed to be IIOP-specific, or to expose quite so many
+  // implementation details, but right now it is.
 public:
-  virtual void __stdcall params (CORBA_NVList_ptr list,
-				 CORBA_Environment &env) = 0;
+  virtual void __stdcall params (CORBA::NVList_ptr list,
+				 CORBA::Environment &env) = 0;
   // Implementation uses this to provide the ORB with the operation's
   // parameter list ... on return, their values are available; the
   // list fed in has typecodes and (perhap) memory assigned.
 
-  virtual void __stdcall result (CORBA_Any_ptr value,
-				 CORBA_Environment &env) = 0;
+  virtual void __stdcall result (CORBA::Any_ptr value,
+				 CORBA::Environment &env) = 0;
   // Implementation uses this to provide the operation result
   // ... illegal if exception() was called or params() was not called.
   //
   // XXX Implementation should be able to assume response has been
   // sent when this returns, and reclaim memory it allocated.
 
-  virtual void __stdcall exception (CORBA_ExceptionType	type,
-				    CORBA_Any_ptr value,
-				    CORBA_Environment &env) = 0;
+  virtual void __stdcall exception (CORBA::ExceptionType	type,
+				    CORBA::Any_ptr value,
+				    CORBA::Environment &env) = 0;
   // Implementation uses this to provide the exception value which is
   // the only result of this particular invocation.
   //
@@ -72,44 +69,42 @@ public:
   // basic CORBA Object Model.
   //
   // XXX should not be not assuming all OAs implement the BOA API !!
-  virtual CORBA_Principal_ptr __stdcall	caller (void) = 0;
-  virtual CORBA_Object_ptr __stdcall target (void) = 0;
-  virtual CORBA_String __stdcall op_name (void) = 0;
-  virtual CORBA_BOA_ptr __stdcall oa (void) = 0;
-  virtual CORBA_ORB_ptr __stdcall orb (void) = 0;
+  virtual CORBA::Principal_ptr __stdcall	caller (void) = 0;
+  virtual CORBA::Object_ptr __stdcall target (void) = 0;
+  virtual CORBA::String __stdcall op_name (void) = 0;
+  virtual CORBA::BOA_ptr __stdcall oa (void) = 0;
+  virtual CORBA::ORB_ptr __stdcall orb (void) = 0;
 };
 
-extern "C" const IID IID_IIOP_ServerRequest;
-
-class ACE_Svc_Export IIOP_ServerRequest : public CORBA_ServerRequest
+class ACE_Svc_Export IIOP_ServerRequest : public CORBA::ServerRequest
 {
 public:
   // Constructor, destructor
 
   IIOP_ServerRequest (CDR *msg,
-		      CORBA_ORB_ptr the_orb,
-		      CORBA_BOA_ptr the_boa);
+		      CORBA::ORB_ptr the_orb,
+		      CORBA::BOA_ptr the_boa);
 
   virtual ~IIOP_ServerRequest (void);
 
   // = General ServerRequest operations
-  void __stdcall params (CORBA_NVList_ptr list,
-			 CORBA_Environment &env);
+  void __stdcall params (CORBA::NVList_ptr list,
+			 CORBA::Environment &env);
 
-  void __stdcall result (CORBA_Any_ptr value,
-			 CORBA_Environment &env);
+  void __stdcall result (CORBA::Any_ptr value,
+			 CORBA::Environment &env);
 
-  void __stdcall exception (CORBA_ExceptionType	type,
-			    CORBA_Any_ptr value,
-			    CORBA_Environment &env);
+  void __stdcall exception (CORBA::ExceptionType	type,
+			    CORBA::Any_ptr value,
+			    CORBA::Environment &env);
 
   // = Request attributes
 
-  CORBA_String __stdcall op_name (void);
-  CORBA_Principal_ptr __stdcall	caller (void);
-  CORBA_Object_ptr __stdcall target (void);
-  CORBA_ORB_ptr __stdcall orb (void);
-  CORBA_BOA_ptr __stdcall oa (void);
+  CORBA::String __stdcall op_name (void);
+  CORBA::Principal_ptr __stdcall	caller (void);
+  CORBA::Object_ptr __stdcall target (void);
+  CORBA::ORB_ptr __stdcall orb (void);
+  CORBA::BOA_ptr __stdcall oa (void);
 
   // Stuff required for COM IUnknown support
 
@@ -119,12 +114,12 @@ public:
 				    void **ppv);
 
   // private:
-  CORBA_String _opname;
+  CORBA::String _opname;
   CDR *_incoming;
-  CORBA_NVList_ptr _params;
-  CORBA_Any_ptr _retval;
-  CORBA_Any_ptr _exception;
-  CORBA_ExceptionType _ex_type;
+  CORBA::NVList_ptr _params;
+  CORBA::Any_ptr _retval;
+  CORBA::Any_ptr _exception;
+  CORBA::ExceptionType _ex_type;
 
   void release (void) { refcount_--; }
   // Just drop the refcount, don't destroy the object; most of these
@@ -135,13 +130,9 @@ private:
 
   u_int refcount_;
 
-  CORBA_ORB_ptr _orb;
+  CORBA::ORB_ptr _orb;
 
-  CORBA_BOA_ptr _boa;
+  CORBA::BOA_ptr _boa;
 };
-
-#  if defined(__ACE_INLINE__)
-#    include "svrrqst.i"
-#  endif
 
 #endif /* TAO_SVRRQST_H */
