@@ -1,3 +1,8 @@
+Tue Apr 30 23:17:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Fixed some typos and removed duplicate
+	  definitions. 
+
 Tue Apr 30 23:06:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Stub.cpp (TAO_Stub): Fixed compile errors in minimum corba
