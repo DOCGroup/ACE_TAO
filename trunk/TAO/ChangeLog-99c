@@ -1,3 +1,24 @@
+Sat Oct 30 19:32:49 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Load_Balancing_persistent/README: 
+	* examples/Load_Balancing_persistent/Identity_Client.cpp:
+	* examples/Load_Balancing_persistent/Identity_Client.h
+	* examples/Load_Balancing_persistent/Identity_Server.cpp:
+	* examples/Load_Balancing_persistent/Identity_Server.h:
+	* examples/Load_Balancing_persistent/Identity_i.h:
+	* examples/Load_Balancing_persistent/Identity_i.cpp:
+	* examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+	* examples/Load_Balancing_persistent/Load_Balancer_i.h:
+	* examples/Load_Balancing_persistent/Load_Balancer_Service.cpp:
+	* examples/Load_Balancing_persistent/Load_Balancer_Service.h:
+	* examples/Load_Balancing_persistent/Load_Balancer.idl:
+	* examples/Load_Balancing_persistent/Identity.idl:
+	* examples/Load_Balancing_persistent/Makefile: An example that
+	  demonstrates how to make a service persistent. This is a simple
+	  extension of the Load_Balancing_Service in
+	  $TAO_ROOT/Load_Balancing. Please refer to the README for more
+	  details. 
+
 Sat Oct 30 12:16:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/Trading_Service/: Split off the main() function into a
