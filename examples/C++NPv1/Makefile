@@ -8,26 +8,31 @@
 #----------------------------------------------------------------------------
 #	Local macros
 #----------------------------------------------------------------------------
+MAKEFILE=Makefile
 
-EXAMPLES = Logging_Client \
-       Iterative_Logging_Server \
-       Process_Per_Connection_Logging_Server \
-       Thread_Per_Connection_Logging_Server
+MKLIST = Makefile.Iterative_Logging_Server \
+	Makefile.Logging_Client \
+	Makefile.Process_Per_Connection_Logging_Server \
+	Makefile.Reactive_Logging_Server \
+	Makefile.Reactive_Logging_Server_Ex \
+	Makefile.RT_Thread_Per_Connection_Logging_Server \
+	Makefile.Thread_Per_Connection_Logging_Server
 
-all:
-	@for ex in $(EXAMPLES); \
-	do \
-		$(MAKE) -f Makefile.$$ex; \
-	done
+## Makefile.Reactive_Logging_Server_Ex.mkfile is a dummy target which will cause
+## $(MAKE) -f Makefile.Svc_Utils to be invoked
+%.mkfile: %
+	@echo $(MAKE) -f $< $(MKFILE_TARGET)
+	@$(MAKE) -f $< $(MKFILE_TARGET)
 
-clean:
-	@for ex in $(EXAMPLES); \
-	do \
-		$(MAKE) -f Makefile.$$ex clean; \
-	done
+# This rule invokes make again with the list of .mkfile targets as a
+# parameter.  For example, if the all target is being made, make is invoked
+# as follows:
+#
+# make -f Makefile MKFILE_TARGET=all Makefile.Reactive_Logging_Server_Ex 
 
-realclean:
-	@for ex in $(EXAMPLES); \
-	do \
-		$(MAKE) -f Makefile.$$ex realclean; \
-	done	
+all clean depend realclean:
+ifneq ($(MKLIST),)
+	@echo $(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
+	@$(MAKE) -f $(MAKEFILE) MKFILE_TARGET=$@ $(addsuffix .mkfile, $(MKLIST))
+endif
+
