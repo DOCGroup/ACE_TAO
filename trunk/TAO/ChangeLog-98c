@@ -45,6 +45,10 @@ Fri Jul 24 21:44:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Some IDL files include others, we need to add an explicit
 	  dependency in those cases.
 
+	* TAO_IDL/driver/drv_preproc.cpp: 
+	  Added a #lineno "filename" directive to the temporary files, so
+	  the IDL compiler can generate better error messages.
+
 Fri Jul 24 17:00:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp (open_queue):
