@@ -255,7 +255,68 @@ be_decl::flatname (void)
   return this->flatname_;
 }
 
+char *
+be_decl::compute_flatname  (const char *prefix, const char *suffix)
+{
+  if (prefix == 0 || suffix == 0)
+    return 0;
+  
+  ACE_CString prefix_str (prefix);
+  ACE_CString suffix_str (suffix);
+  
+  ACE_CString result_str;
 
+  // Get parent.
+  if (this->defined_in () == 0)
+    {
+      // Global scope.
+      
+      // Prefix.
+      result_str = prefix_str;
+
+      // Local name.
+      result_str += ACE_CString (this->local_name ()->get_string ());
+      
+      // Suffix.
+      result_str += suffix_str;
+    }
+  else
+    {
+      // Get scope name.
+      be_decl *parent = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+      if (parent == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_decl::"
+                             "compute_flat_name - "
+                             "scope name is nil\n"),
+                            0);
+        }
+      
+      // Parent name.
+      result_str = ACE_CString (parent->fullname ());
+      
+      // _
+      if (ACE_OS::strcmp (parent->fullname (), "") != 0)
+        result_str += ACE_CString ("_");
+      
+      // Prefix.
+      result_str += ACE_CString ("AMI_");
+      
+      // Local name.
+      result_str += ACE_CString (this->local_name ()->get_string ());
+      
+      // Suffix.
+      result_str += suffix_str;
+    }
+
+  // Allocate memory. Release 0.
+  ACE_CString return_str (result_str.rep (),
+                          0,
+                          0);
+
+  return return_str.rep ();
+}
 
 
 // compute stringified repository ID
@@ -330,6 +391,149 @@ be_decl::compute_repoID (void)
     }
   return;
 }
+
+// Apply the prefix and suffix to the local name and compute the
+// repoID.  Both the parameters should be non-null. 
+char *
+be_decl::compute_repoID (const char *prefix, const char *suffix)
+{
+  // Prefix and suffix should be valid.
+  if (prefix == 0 || suffix == 0)
+    return 0;
+
+  // First prepare the result without IDL: and  :1.0 strings. 
+
+  // repoID without IDL: and :1.0 strings. 
+  char *result = 0;
+  
+  long namelen;
+  UTL_IdListActiveIterator *i;
+  long first = I_TRUE;
+  long second = I_FALSE;
+  
+  // In the first loop compute the total length.
+  namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
+  namelen += ACE_OS::strlen (this->prefix ()) + 1;
+  i = new UTL_IdListActiveIterator (this->name ());
+  while (!(i->is_done ()))
+    {
+      if (!first)
+        namelen += 1; // for "/"
+      else if (second)
+        first = second = I_FALSE;
+      // print the identifier
+      namelen += ACE_OS::strlen (i->item ()->get_string ());
+      if (first)
+        {
+          if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+            // does not start with a ""
+            first = I_FALSE;
+          else
+            second = I_TRUE;
+        }
+      i->next ();
+    }
+  delete i;
+  
+  // Get the result.
+
+  result = new char [namelen+1];
+  result[0] = '\0';
+
+  // Start the result with prefix.
+  ACE_OS::sprintf (result, "%s", this->prefix ());
+
+  // Add the "/" only if there is a prefix
+  if (ACE_OS::strcmp (this->prefix (), "") != 0)
+    ACE_OS::strcat (result, "/");
+
+  i = new UTL_IdListActiveIterator (this->name ());
+  first = I_TRUE;
+  second = I_FALSE;
+  while (!(i->is_done ()))
+    {
+      if (!first)
+        ACE_OS::strcat (result, "/");
+      else if (second)
+        first = second = I_FALSE;
+      // print the identifier
+      ACE_OS::strcat (result, i->item ()->get_string ());
+      if (first)
+        {
+          if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+            // does not start with a ""
+            first = I_FALSE;
+          else
+            second = I_TRUE;
+        }
+      i->next ();
+    }
+  delete i;
+
+  // Add prefix and suffix.
+  
+  // Search where the last / is. If it is not there put AMI_ right
+  // after IDL: and _Handler after that and then the :1.0 string.
+  // Otherwise put AMI after the last / and _Handler at the end and
+  // then the 1.0 string.
+  
+  // CStrings are cool.
+
+  ACE_CString result_str (result);
+
+  // Return val. Release = 0 so that we can return the <c_str>.  
+  ACE_CString repoID ("IDL:", 0, 0);
+
+  // Useful CStrings.
+  ACE_CString prefix_str (prefix);
+  ACE_CString suffix_str (suffix);
+  ACE_CString version_str (":1.0");
+  
+  // Find the last /.
+  int last_name_pos = result_str.rfind ('/');
+
+  if (last_name_pos == ACE_CString::npos)
+    {
+      // '/' not present.
+
+      // Add prefix + result.
+      repoID += prefix_str;
+
+      repoID += result_str;
+      
+      // Add suffix.
+      repoID += suffix_str;
+    }
+  else
+    {
+      // '/' present.
+      
+      // IDl:<result except the last name>'/'. Watch get the last /
+      // also. 
+      repoID += result_str.substring (0, last_name_pos+1);
+      
+      // Put prefix.
+      repoID += prefix_str;
+
+      // Put the last name.
+      repoID += result_str.substr (last_name_pos + 1);
+
+      // Add suffix.
+      repoID += suffix_str;
+    }
+  
+  // Add 1.0.
+  repoID += version_str;
+
+  // Delete result.
+  delete result;
+  result = 0;
+  
+  return repoID.rep ();
+}  
+  
+
+
 
 const char *
 be_decl::repoID (void)

@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_operation.h"
 
@@ -65,7 +65,7 @@ be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
   *os << "AMI_"
       << interface->fullname ()
       << "_Handler_ptr "
-      << "ami_handler"
+      << "_tao_ami_handler"
       << ",\n";
   // #endif /* TAO_IDL_HAS_AMI */
 
@@ -79,16 +79,18 @@ be_visitor_operation_ami_arglist::visit_operation (be_operation *node)
                         -1);
     }
 
-
-  // @@ When some out arguments are skipped, the indentation seems to
-  //    get messed up. Fix that. (Alex).
-  
   // Last argument - is always CORBA::Environment.
+
   os->indent ();
+
   *os << "CORBA::Environment &ACE_TRY_ENV";
-  *os << " = " << be_idt_nl
-      << "TAO_default_environment ()"
-      << be_uidt;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH)
+    {
+      *os << " = " << be_idt_nl
+          << "TAO_default_environment ()"
+          << be_uidt;
+    }
   
   // Done with the argument list.
   *os << be_uidt_nl << ")" << be_uidt;

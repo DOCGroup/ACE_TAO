@@ -283,14 +283,40 @@ public:
     TAO_ARGUMENT_AMI_ARGLIST_CS,              // Arg list in AMI stub.
     TAO_AMI_HANDLER_FWD_CH,                // FWD decl for AMI handler.           
     TAO_AMI_HANDLER_FWD_CI,                // FWD decl for AMI handler.
-    // @ Alex: FWD does nt make sense.
-    //         Should rename it.
-    TAO_AMI_HANDLER_CH,
-    TAO_AMI_HANDLER_STUB_CH,
-    TAO_AMI_HANDLER_OPERATION_CH,
-    TAO_AMI_HANDLER_OPERATION_ARGLIST,
-    TAO_ARGUMENT_AMI_HANDLER_ARGLIST,
+
+    TAO_AMI_HANDLER_SERVANT_CH,            // POA_AMI_*_Handler.
+    TAO_AMI_HANDLER_SERVANT_CS,            // POA_AMI_*_Handler.
+
+    TAO_AMI_HANDLER_STUB_CH,               // AMI_*_Handler class visitor.
+
+    TAO_AMI_HANDLER_STUB_CS,               // AMI_*_Handler class visitor.
+    
+    TAO_AMI_HANDLER_SERVANT_OPERATION_CH,  // Operation in AMI_*_Handler.
+    TAO_AMI_HANDLER_STUB_OPERATION_CH,     // Operation in POA_AMI_*_Handler.
+    TAO_AMI_HANDLER_OPERATION_ARGLIST_CH,
+    TAO_AMI_HANDLER_OPERATION_ARGLIST_CS,
+    TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CH,
+    TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CS,
     TAO_ARGUMENT_ARGLIST_AMI_HANDLER,
+    TAO_AMI_HANDLER_OPERATION_RESULT_ARG,  
+
+    TAO_AMI_HANDLER_TYPECODE_DECL,           // Typecode decl for the AMI_*_Handler.
+
+    TAO_COLLOCATED_AMI_HANDLER_CH,           // Collocated AMI_*_Handler class.
+
+    TAO_COLLOCATED_AMI_HANDLER_OPERATION_CH, // Operation insidee collocated handler.
+
+    TAO_AMI_HANDLER_ARGUMENT_INVOKE_CS,
+
+    TAO_AMI_HANDLER_OPERATION_ARG_INVOKE_CS, 
+
+    TAO_AMI_HANDLER_STUB_OPERATION_CS,
+
+    TAO_AMI_HANDLER_TYPECODE_DEFN,           // Typecode definition for AMI Handler class.
+
+    TAO_AMI_OPERATION_ARG_INVOKE_CS,         // Invoke arguments for AMI's sendc method.
+
+    TAO_AMI_ARGUMENT_INVOKE_CS,
 
     // Emitting code for root.
     TAO_ROOT_CH,
@@ -414,11 +440,16 @@ public:
     // these are for typecode generation
     TAO_TC_DEFN_TYPECODE, // top level typecode
     TAO_TC_DEFN_TYPECODE_NESTED, // nested tc
+
     TAO_TC_DEFN_ENCAPSULATION, // encapsulation
+    TAO_AMI_HANDLER_TC_DEFN_ENCAPSULATION, // encapsulation
+
     TAO_TC_DEFN_SCOPE, // scope
     TAO_TC_DEFN_TC_SIZE, // tc size computation
     TAO_TC_DEFN_ENCAP_LEN, // encap size computation
     TAO_TC_DEFN_SCOPE_LEN, // scope size computation
+    
+    TAO_AMI_HANDLER_TC_DEFN_TYPECODE, // For AMI Handler interface.
 
     // used to denote either error or don't care
     TAO_SUB_STATE_UNKNOWN

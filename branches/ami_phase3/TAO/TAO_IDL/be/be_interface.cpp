@@ -162,10 +162,92 @@ be_interface::full_coll_name (void)
 const char*
 be_interface::local_coll_name (void) const
 {
+  
   if (this->local_coll_name_ == 0)
     ACE_const_cast (be_interface*, this)->compute_coll_name ();
 
   return this->local_coll_name_;
+}
+
+// Generate collocated local and full names for the arbitrary local
+// name under the scope of this interface. Usefull to generate AMI
+// Handlers. 
+int
+be_interface::compute_coll_names (const char *local_name, 
+                                  char *&coll_local_name,
+                                  char *&coll_full_name)
+  
+{
+  const char collocated[] = "_tao_collocated_";
+  const char poa[] = "POA_";
+
+  // Reserve enough room for the "POA_" prefix, the "_tao_collocated_"
+  // prefix and the local name and the (optional) "::"
+  int namelen = sizeof (collocated) + sizeof (poa);
+
+  UTL_IdListActiveIterator *i;
+  ACE_NEW_RETURN (i, UTL_IdListActiveIterator (this->name ()), -1);
+  while (!i->is_done ())
+    {
+      // reserve 2 characters for "::".
+      namelen += ACE_OS::strlen (i->item ()->get_string ()) + 2;
+      i->next ();
+    }
+  delete i;
+
+  ACE_NEW_RETURN (coll_full_name,
+                  char[namelen+1],
+                  -1);
+  coll_full_name[0] = 0; // null terminate the string...
+
+  // Iterate again....
+  ACE_NEW_RETURN (i, UTL_IdListActiveIterator (this->name ()), -1);
+
+  // Only the first component get the "POA_" preffix.
+  int poa_added = 0;
+  while (!i->is_done ())
+    {
+      const char* item = i->item ()->get_string ();
+
+      // Increase right away, so we can test for the final component
+      // in the loop.
+      i->next ();
+
+      // We add the POA_ preffix only if the first component is not
+      // the global scope...
+      if (ACE_OS::strcmp (item, "") != 0)
+        {
+          if (!i->is_done ())
+            {
+              // We only add the POA_ preffix if there are more than
+              // two components in the name, in other words, if the
+              // class is inside some scope.
+              if (!poa_added)
+                {
+                  ACE_OS::strcat (coll_full_name, poa);
+                  poa_added = 1;
+                }
+              ACE_OS::strcat (coll_full_name, item);
+              ACE_OS::strcat (coll_full_name, "::");
+            }
+          else
+            {
+              ACE_OS::strcat (coll_full_name, collocated);
+              ACE_OS::strcat (coll_full_name, item);
+            }
+        }
+    }
+  delete i;
+
+  // Compute the local name for the collocated class.
+  int localen = sizeof (collocated);
+  localen += ACE_OS::strlen (local_name);
+  ACE_NEW_RETURN (coll_local_name, char[localen], -1);
+  ACE_OS::strcpy(coll_local_name, collocated);
+  ACE_OS::strcat(coll_local_name,
+                 local_name);
+
+  return 0;
 }
 
 // compute stringified fully scoped skel name

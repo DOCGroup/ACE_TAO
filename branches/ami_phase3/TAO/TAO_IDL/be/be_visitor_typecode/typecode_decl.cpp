@@ -45,7 +45,16 @@ be_visitor_typecode_decl::visit_type (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // Generate the typecode decl
+  // Generate the typecode decl.
+  char *prefix = 0;
+  char *postfix = 0;
+
+  if (this->ctx_->state () == TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DECL)
+    {
+      prefix = "AMI_";
+      postfix = "_Handler";
+    }
+
   if (node->is_nested ())
     {
       // we have a scoped name
@@ -58,14 +67,14 @@ be_visitor_typecode_decl::visit_type (be_type *node)
       else
         *os << "static ";
       *os << "CORBA::TypeCode_ptr "
-          << node->tc_name ()->last_component () << ";\n\n";
+          << node->tc_name (prefix, postfix)->last_component () << ";\n\n";
     }
   else
     {
       // we are in the ROOT scope
       os->indent ();
       *os << "extern " << idl_global->export_macro () << " CORBA::TypeCode_ptr "
-          << " " << node->tc_name ()->last_component () << ";\n\n";
+          << " " << node->tc_name (prefix, postfix)->last_component () << ";\n\n";
     }
   return 0;
 }

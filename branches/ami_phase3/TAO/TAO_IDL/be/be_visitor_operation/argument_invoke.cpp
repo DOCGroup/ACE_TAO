@@ -62,6 +62,7 @@ be_compiled_visitor_operation_argument_invoke::pre_process (be_decl *bd)
                          "Bad argument node\n"),
                         -1);
     }
+  
   switch (arg->direction ())
     {
     case AST_Argument::dir_IN:

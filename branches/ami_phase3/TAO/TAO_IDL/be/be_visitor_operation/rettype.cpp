@@ -45,8 +45,6 @@ be_visitor_operation_rettype::~be_visitor_operation_rettype (void)
 int
 be_visitor_operation_rettype::visit_array (be_array *node)
 {
-
-
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
   be_type *bt; // return type
 

@@ -125,7 +125,17 @@ be_visitor_interface_ami_handler_stub_ch::visit_interface (be_interface *node)
           << ");" << be_uidt_nl
           << "static " << local_name << "_ptr " << "_nil (void);\n\n";
 
-      // We dont visit the scope to generate anything.
+      // Visit the scope to generate the stubs for the call back
+      // methods.   
+      if (this->visit_scope (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interface_ami_handler_stub_ch::"
+                             "visit_interface - "
+                             "codegen for scope failed\n"),
+                            -1);
+        }
+
       
       // the _is_a method
       os->indent ();
@@ -166,7 +176,7 @@ be_visitor_interface_ami_handler_stub_ch::visit_interface (be_interface *node)
       // based on the command line options. This is still TO-DO
       be_visitor *visitor;
       be_visitor_context ctx (*this->ctx_);
-      ctx.state (TAO_CodeGen::TAO_TYPECODE_DECL);
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_TYPECODE_DECL);
       visitor = tao_cg->make_visitor (&ctx);
       if (!visitor || (node->accept (visitor) == -1))
         {
