@@ -87,7 +87,7 @@ UTL_ScopeStack::~UTL_ScopeStack (void)
 {
   if (this->pd_stack_data != 0)
     {
-      delete this->pd_stack_data;
+      delete [] this->pd_stack_data;
     }
 }
 

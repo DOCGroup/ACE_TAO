@@ -553,109 +553,109 @@ be_interface_default_strategy::~be_interface_default_strategy (void)
 {
   if (this->base_proxy_impl_name_ != 0)
     {
-      delete this->base_proxy_impl_name_;
+      delete [] this->base_proxy_impl_name_;
       this->base_proxy_impl_name_ = 0;
     }
 
   if (this->remote_proxy_impl_name_ != 0)
     {
-      delete this->remote_proxy_impl_name_;
+      delete [] this->remote_proxy_impl_name_;
       this->remote_proxy_impl_name_ = 0;
     }
 
   if (this->thruPOA_proxy_impl_name_ != 0)
     {
-      delete this->thruPOA_proxy_impl_name_;
+      delete [] this->thruPOA_proxy_impl_name_;
       this->thruPOA_proxy_impl_name_ = 0;
     }
 
   if (this->direct_proxy_impl_name_ != 0)
     {
-      delete this->direct_proxy_impl_name_;
+      delete [] this->direct_proxy_impl_name_;
       this->direct_proxy_impl_name_ = 0;
     }
 
   if (this->full_base_proxy_impl_name_ != 0)
     {
-      delete this->full_base_proxy_impl_name_;
+      delete [] this->full_base_proxy_impl_name_;
       this->full_base_proxy_impl_name_ = 0;
     }
 
   if (this->full_remote_proxy_impl_name_ != 0)
     {
-      delete this->full_remote_proxy_impl_name_;
+      delete [] this->full_remote_proxy_impl_name_;
       this->full_remote_proxy_impl_name_ = 0;
     }
 
   if (this->full_thruPOA_proxy_impl_name_ != 0)
     {
-      delete this->full_thruPOA_proxy_impl_name_;
+      delete [] this->full_thruPOA_proxy_impl_name_;
       this->full_thruPOA_proxy_impl_name_ = 0;
     }
 
   if (this->full_direct_proxy_impl_name_ != 0)
     {
-      delete this->full_direct_proxy_impl_name_;
+      delete [] this->full_direct_proxy_impl_name_;
       this->full_direct_proxy_impl_name_ = 0;
     }
 
   if (this->base_proxy_broker_ != 0)
     {
-      delete this->base_proxy_broker_;
+      delete [] this->base_proxy_broker_;
       this->base_proxy_broker_ = 0;
     }
 
   if (this->remote_proxy_broker_ != 0)
     {
-      delete this->remote_proxy_broker_;
+      delete [] this->remote_proxy_broker_;
       this->remote_proxy_broker_ = 0;
     }
 
   if (this->strategized_proxy_broker_ != 0)
     {
-      delete this->strategized_proxy_broker_;
+      delete [] this->strategized_proxy_broker_;
       this->strategized_proxy_broker_ = 0;
     }
 
   if (this->full_base_proxy_broker_name_ != 0)
     {
-      delete this->full_base_proxy_broker_name_;
+      delete [] this->full_base_proxy_broker_name_;
       this->full_base_proxy_broker_name_ = 0;
     }
 
   if (this->full_remote_proxy_broker_name_ != 0)
     {
-      delete this->full_remote_proxy_broker_name_;
+      delete [] this->full_remote_proxy_broker_name_;
       this->full_remote_proxy_broker_name_ = 0;
     }
 
   if (this->full_strategized_proxy_broker_name_ != 0)
     {
-      delete this->full_strategized_proxy_broker_name_;
+      delete [] this->full_strategized_proxy_broker_name_;
       this->full_strategized_proxy_broker_name_ = 0;
     }
 
   if (this->client_scope_ != 0)
     {
-      delete this->client_scope_;
+      delete [] this->client_scope_;
       this->client_scope_ = 0;
     }
 
   if (this->flat_client_scope_ != 0)
     {
-      delete this->flat_client_scope_;
+      delete [] this->flat_client_scope_;
       this->flat_client_scope_ = 0;
     }
 
   if (this->server_scope_ != 0)
     {
-      delete this->server_scope_;
+      delete [] this->server_scope_;
       this->server_scope_ = 0;
     }
 
   if (this->flat_server_scope_ != 0)
     {
-      delete this->flat_server_scope_;
+      delete [] this->flat_server_scope_;
       this->flat_server_scope_ = 0;
     }
 }
