@@ -2,10 +2,6 @@
 
 #include "ORB_Run_Task.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ORB_Run_Task.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_NS_ORB_Run_Task, "$id$")
 
 TAO_NS_ORB_Run_Task::TAO_NS_ORB_Run_Task (TAO_NS_ORB_Objects& orb_objects)

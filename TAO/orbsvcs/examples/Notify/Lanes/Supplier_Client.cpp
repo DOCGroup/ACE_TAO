@@ -10,10 +10,6 @@
 #include "orbsvcs/orbsvcs/NotifyExtC.h"
 #include "orbsvcs/orbsvcs/CosNamingC.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Supplier_Client.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_NS_Supplier_Client, "$id$")
 
 TAO_NS_Supplier_Client::TAO_NS_Supplier_Client (TAO_NS_ORB_Objects& orb_objects)

@@ -1,3 +1,14 @@
+Mon Jun 30 11:52:22 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	* orbsvcs\examples\Notify\Lanes\Consumer.cpp:
+	* orbsvcs\examples\Notify\Lanes\Consumer_Client.cpp:
+	* orbsvcs\examples\Notify\Lanes\ORB_Objects.cpp:
+	* orbsvcs\examples\Notify\Lanes\ORB_Run_Task.cpp:
+	* orbsvcs\examples\Notify\Lanes\Supplier.cpp:
+	* orbsvcs\examples\Notify\Lanes\Supplier_Client.cpp:
+
+	  Removed references to .inl files.
+	
 Mon Jun 30 09:33:31 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
         * performance-tests/Sequence_Latency/Deferred/client.bor

@@ -9,10 +9,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Consumer_Client.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_NS_Consumer_Client, "$id$")
 
 TAO_NS_Consumer_Client::TAO_NS_Consumer_Client (TAO_NS_ORB_Objects& orb_objects)
