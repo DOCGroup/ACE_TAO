@@ -1,3 +1,13 @@
+Tue Dec  7 14:57:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_root.cpp:
+        
+          Reverted a previous change to the cleanup in global scope
+          between processing of multiple IDL files. This is a quick
+          fix to get the IDL importer (tao_picml) working for a
+          CoSMIC release. When there is time, I'll track down the
+          actual source of the problem.
+
 Tue Dec  7 20:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging_SyncScopeC.{h,cpp,i,inl}:

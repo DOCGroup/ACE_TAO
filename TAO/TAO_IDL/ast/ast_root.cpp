@@ -232,7 +232,10 @@ AST_Root::destroy ()
       // scope around and not add them each time.
       if (d->node_type () == AST_Decl::NT_pre_defined)
         {
-          j = i;
+          // This needs to be j = i, but it has been temporarily
+          // changed for the CoSMIC release. Need to actually
+          // track down the source of the problem with tao_picml.
+          j = i + 1;
           break;
         }
 
@@ -262,7 +265,7 @@ void
 AST_Root::fini (void)
 {
   long i = 0;
-   
+  
   for (i = this->pd_referenced_used; i > 0; --i)
     {
       AST_Decl *d = this->pd_referenced[i - 1];
