@@ -102,7 +102,7 @@ main (int argc, char *argv[])
       orb->run (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "server - event loop finished\n"));
 
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -110,7 +110,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+                           "Exception caught in server:");
       return 1;
     }
   ACE_ENDTRY;
