@@ -2,7 +2,7 @@
 
 #include "RT_Properties.h"
 
-ACE_RCSID(tao, RT_Properties.cpp, "$Id$");
+//ACE_RCSID(ExposedPolicies, RT_Properties.cpp, "$Id$")
 
 RT_Properties::RT_Properties (void)
   : priority_ (10)

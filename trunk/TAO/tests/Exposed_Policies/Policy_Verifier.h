@@ -24,7 +24,7 @@
 #include "CounterC.h"
 #include "RT_Properties.h"
 #include "Policy_Tester.h"
-// -- ACE Include -- 
+// -- ACE Include --
 #include "ace/Arg_Shifter.h"
 
 // -- TAO Include --
@@ -33,33 +33,33 @@
 class Policy_Verifier
 {
 public:
-  
+
   // -- Ctor/Dtor --
   Policy_Verifier (void);
   ~Policy_Verifier (void);
 
-  void init (int argc, 
+  void init (int argc,
              char *argv[],
-             CORBA::Environment &ACE_TRY_ENV 
+             CORBA::Environment &ACE_TRY_ENV
              = TAO_default_environment ());
-  
+
   void run (CORBA::Environment &ACE_TRY_ENV
             = TAO_default_environment ());
-  
+
 private:
   // -- Helper methods --
   void verify_reference (Counter_ptr counter,
                          RT_Properties *rt_properties,
                          CORBA::Environment &ACE_TRY_ENV
                          = TAO_default_environment ());
-  
+
 private:
-  
+
   CORBA::ORB_var orb_;
 
   RT_Properties *rt_object_properties_;
   RT_Properties *rt_poa_properties_;
-  
+
   Counter_var base_object_;
   Counter_var overridden_object_;
 

@@ -1,6 +1,35 @@
+Tue Oct 03 12:48:10 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/MProfile.i (policy_list):
+
+	  Moved assignment of flag used for enabling lazy-evaluation
+	  to a more opportune place.
+
+	* tao/Makefile.bor:
+
+	  Added missing .obj extesion to the file Remote_Object_Proxy_Impl,
+	  to fix build problem.
+
+	* tests/Makefile:
+	* tests/Exposed_Policies/Makefile:
+
+	  Updated Makefiles.
+
+	* test/Exposed_Policies/run_test.pl:
+
+	  Added Perl Script to automatically run the test.
+
+	* tests/Exposed_Policies/Policy_Tester.cpp:
+	* tests/Exposed_Policies/Policy_Verifier.cpp:
+	* tests/Exposed_Policies/Policy_Verifier.h:
+	* tests/Exposed_Policies/RT_Properties.cpp:
+
+	  Fixed some typo in the error messages. Removed some dependencies
+	  that were not needed.
+
 Tue Oct  3 10:36:25 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.cpp (parse_string_rir_helper): 
+	* tao/CORBALOC_Parser.cpp (parse_string_rir_helper):
 	  Removed the declaration of an unused variable.
 
 Tue Oct  3 09:47:12 2000  Darrell Brunsch <brunsch@uci.edu>

@@ -44,7 +44,8 @@ DIRS  = CDR \
 	Policies \
 	LongUpcalls \
 	RTCORBA \
-	Forwarding
+	Forwarding \
+	Exposed_Policies
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
