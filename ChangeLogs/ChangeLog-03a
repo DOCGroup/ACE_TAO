@@ -1,3 +1,10 @@
+Mon Dec  9 17:27:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Recursive_Condition_Test.cpp: In test_4, wait for the
+          waiter thread to wake up and exit itself before checking the
+          mutex recursion count. Else, the waiter may have the mutex while
+          the main thread is checking the count and detect a false fail.
+
 Mon Dec  9 17:02:41 2002  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix_ibm.GNU: Change from using
