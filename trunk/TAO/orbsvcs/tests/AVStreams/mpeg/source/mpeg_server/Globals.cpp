@@ -287,6 +287,7 @@ Video_Global::send_to_network (int timeToUse)
           msg = (VideoMessage *) ((char *)msg + this->msgsize);
           memcpy ((char *)msg, (char *)msghd, sizeof (* msg));
         }
+
         msg->msgsn = htonl (this->msgsn++);
         msg->msgOffset = htonl (offset);
         msg->msgSize = htonl (min (size, this->msgsize));
