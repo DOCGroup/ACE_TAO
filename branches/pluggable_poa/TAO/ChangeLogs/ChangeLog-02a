@@ -1,3 +1,10 @@
+Wed Aug 30 13:56:53 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/DomainS_T.h:
+        * tao/PortableServer/DomainS_T.i:
+        * tao/PortableServer/DomainS_T.cpp:
+          These files were left behind in the first commit.
+
 Wed Aug 30 13:51:36 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PortableServer/Makefile:
