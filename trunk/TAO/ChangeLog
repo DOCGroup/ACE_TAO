@@ -1,3 +1,11 @@
+Tue Oct  8 09:36:38 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile (MKLIST):
+
+	  The basic Telecom Logging Service library code depends on the
+	  TAO_ETCL library.  Build the latter when building the logging
+	  service library.  Addresses some link-time errors.
+
 Tue Oct  8 09:15:44 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/Logging_Service/RTEvent_Logging_Service/Makefile
