@@ -1,3 +1,9 @@
+Tue Jul  9 07:16:10 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * */*.mpc:
+
+          Commit the first version of the Make Project Creator input files.
+
 Tue Jul  9 07:14:38 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:
