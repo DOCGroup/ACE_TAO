@@ -3,12 +3,12 @@
 
 #include "ace/SOCK_Acceptor.h"
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SOCK_Acceptor.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/SOCK_Acceptor.i"
+#endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"
