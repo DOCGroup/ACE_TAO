@@ -780,6 +780,7 @@ Dennis D Noll <Dennis.Noll@MW.Boeing.com>
 Fabrizio Giannotti <fabrizio.giannotti@alephinfo.it>
 Harald Finster <finster@ave.ac.agit.de>
 Fritz Bosch <FBosch@alcatel.de>
+Charles Frasch <cfrasch@spawar.navy.mil>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
