@@ -416,7 +416,7 @@ public:
     /// Thread is suspended.
     ACE_THR_SUSPENDED = 0x00000004,
 
-    /// Thread has been cancelled (which is an indiction that it needs to
+    /// Thread has been cancelled (which is an indication that it needs to
     /// terminate...).
     ACE_THR_CANCELLED = 0x00000008,
 
