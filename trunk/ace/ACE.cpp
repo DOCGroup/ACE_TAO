@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-// ACE.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
@@ -18,8 +16,8 @@ size_t ACE::pagesize_ = 0;
 
 void
 ACE::unique_name (const void *object,
-		  LPTSTR name,
-		  size_t length)
+                  LPTSTR name,
+                  size_t length)
 {
   // The process ID will provide uniqueness between processes on the
   // same machine. The "this" pointer of the <object> will provide
@@ -38,8 +36,8 @@ ACE::terminate_process (pid_t pid)
   // Create a handle for the given process id.
   ACE_HANDLE process_handle =
     ::OpenProcess (PROCESS_TERMINATE,
-		   FALSE, // New handle is not inheritable.
-		   pid);
+                   FALSE, // New handle is not inheritable.
+                   pid);
 
   if (process_handle == ACE_INVALID_HANDLE || process_handle == NULL)
     return -1;
@@ -79,8 +77,8 @@ ACE::process_active (pid_t pid)
 #else
   // Create a handle for the given process id.
   ACE_HANDLE process_handle = ::OpenProcess (PROCESS_QUERY_INFORMATION,
-					     FALSE,
-					     pid);
+                                             FALSE,
+                                             pid);
   if (process_handle == ACE_INVALID_HANDLE
       || process_handle == NULL)
     return 0;
@@ -89,20 +87,20 @@ ACE::process_active (pid_t pid)
       DWORD status;
 
       if (::GetExitCodeProcess (process_handle,
-				&status) == 0
-	  || status != STILL_ACTIVE)
-	return 0;
+                                &status) == 0
+          || status != STILL_ACTIVE)
+        return 0;
       else
-	return 1;
+        return 1;
     }
 #endif /* ACE_WIN32 */
 }
 
 int
 ACE::register_stdin_handler (ACE_Event_Handler *eh,
-			     ACE_Reactor *reactor,
-			     ACE_Thread_Manager *thr_mgr,
-			     int flags)
+                             ACE_Reactor *reactor,
+                             ACE_Thread_Manager *thr_mgr,
+                             int flags)
 {
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (reactor);
@@ -148,8 +146,8 @@ ACE::execname (const char *old_name)
       char *new_name;
 
       ACE_NEW_RETURN (new_name, char[ACE_OS::strlen (old_name) +
-				     ACE_OS::strlen (".exe") +
-				     1], -1);
+                                     ACE_OS::strlen (".exe") +
+                                     1], -1);
       char *end = new_name;
       end = ACE::strecpy (new_name, old_name);
       // Concatenate the .exe suffix onto the end of the executable.
@@ -212,8 +210,8 @@ ACE::strrepl (char *s, char search, char replace)
   for (size_t i = 0; s[i] != '\0'; i++)
     if (s[i] == search)
       {
-	s[i] = replace;
-	replaced++;
+        s[i] = replace;
+        replaced++;
       }
 
   return replaced;
@@ -240,20 +238,20 @@ Examples:
 Source               NT                       UNIX
 ===============================================================
 netsvc               netsvc.dll               libnetsvc.so
-		     (PATH will be evaluated) (LD_LIBRARY_PATH evaluated)
+                     (PATH will be evaluated) (LD_LIBRARY_PATH evaluated)
 
 libnetsvc.dll        libnetsvc.dll            libnetsvc.dll + warning
 netsvc.so            netsvc.so + warning      libnetsvc.so
 
 ..\../libs/netsvc    ..\..\libs\netsvc.dll     ../../libs/netsvc.so
-		     (absolute path used)         (absolute path used)
+                     (absolute path used)         (absolute path used)
 
 */
 
 int
 ACE::ldfind (const char filename[],
- 	     char pathname[],
-	     size_t maxpathnamelen)
+             char pathname[],
+             size_t maxpathnamelen)
 {
   ACE_TRACE ("ACE::ldfind");
 
@@ -304,11 +302,11 @@ ACE::ldfind (const char filename[],
     {
       // Check whether this matches the appropriate platform-specific suffix.
       if (ACE_OS::strcmp (s, ACE_DLL_SUFFIX) == 0)
-	got_suffix = 1;
+        got_suffix = 1;
       else
-	ACE_ERROR ((LM_WARNING,
-		    "Warning: improper suffix for a shared library on this platform: %s\n",
-		    s));
+        ACE_ERROR ((LM_WARNING,
+                    "Warning: improper suffix for a shared library on this platform: %s\n",
+                    s));
     }
 
   // Make sure we've got enough space in searchfilename.
@@ -324,35 +322,35 @@ ACE::ldfind (const char filename[],
   if (ACE_OS::strlen (searchpathname) > 0)
     {
       if (ACE_OS::strlen (searchfilename)
-	  + ACE_OS::strlen (searchpathname) >= maxpathnamelen)
-	{
-	  errno = ENOMEM;
-	  return -1;
-	}
+          + ACE_OS::strlen (searchpathname) >= maxpathnamelen)
+        {
+          errno = ENOMEM;
+          return -1;
+        }
       else
-	{
-	  if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
-	    // Revert to native path name separators
-	    ACE::strrepl (searchpathname, '/', ACE_DIRECTORY_SEPARATOR_CHAR);
+        {
+          if (ACE_DIRECTORY_SEPARATOR_CHAR != '/')
+            // Revert to native path name separators
+            ACE::strrepl (searchpathname, '/', ACE_DIRECTORY_SEPARATOR_CHAR);
 
-	  // First, try matching the filename *without* adding a
-	  // prefix.
-	  ACE_OS::sprintf (pathname, "%s%s%s",
+          // First, try matching the filename *without* adding a
+          // prefix.
+          ACE_OS::sprintf (pathname, "%s%s%s",
                            searchpathname,
                            searchfilename,
                            got_suffix ? "" : ACE_DLL_SUFFIX);
-	  if (ACE_OS::access (pathname, F_OK) == 0)
-	    return 0;
+          if (ACE_OS::access (pathname, F_OK) == 0)
+            return 0;
 
-	  // Second, try matching the filename *with* adding a prefix.
-	  ACE_OS::sprintf (pathname, "%s%s%s%s",
+          // Second, try matching the filename *with* adding a prefix.
+          ACE_OS::sprintf (pathname, "%s%s%s%s",
                            searchpathname,
                            ACE_DLL_PREFIX,
                            searchfilename,
                            got_suffix ? "" : ACE_DLL_SUFFIX);
-	  if (ACE_OS::access (pathname, F_OK) == 0)
-	    return 0;
-	}
+          if (ACE_OS::access (pathname, F_OK) == 0)
+            return 0;
+        }
     }
 
   // Use relative filenames via LD_LIBRARY_PATH or PATH (depending on
@@ -362,7 +360,7 @@ ACE::ldfind (const char filename[],
       char *ld_path = ACE_OS::getenv (ACE_LD_SEARCH_PATH);
 
       if (ld_path != 0 && (ld_path = ACE_OS::strdup (ld_path)) != 0)
-	{
+        {
           // strtok has the strange behavior of not separating the
           // string ":/foo:/bar" into THREE tokens.  One would expect
           // that the first iteration the token would be an empty
@@ -376,22 +374,22 @@ ACE::ldfind (const char filename[],
           // directory' as an empty entry.  So, we introduce the
           // following special code to cope with this:
               
-	  // Look at each dynamic lib directory in the search path.
+          // Look at each dynamic lib directory in the search path.
           char *nextholder = 0;
           char *path_entry = ACE_OS::strsplit_r
             (ld_path, ACE_LD_SEARCH_PATH_SEPARATOR_STR, nextholder);
 
           int result = 0;
 
-	  while (path_entry != 0)
-	    {
-	      if (ACE_OS::strlen (path_entry)
-		  + 1 + ACE_OS::strlen (searchfilename) >= maxpathnamelen)
-		{
-		  errno = ENOMEM;
-		  result = -1;
-		  break;
-		}
+          while (path_entry != 0)
+            {
+              if (ACE_OS::strlen (path_entry)
+                  + 1 + ACE_OS::strlen (searchfilename) >= maxpathnamelen)
+                {
+                  errno = ENOMEM;
+                  result = -1;
+                  break;
+                }
 
               // This works around the issue where a path might have
               // an empty component indicating 'current directory'.
@@ -400,35 +398,35 @@ ACE::ldfind (const char filename[],
               if (path_entry[0] == '\0')
                 path_entry = ".";
               
-	      // First, try matching the filename *without* adding a
-	      // prefix.
-	      ACE_OS::sprintf (pathname, "%s%c%s%s",
-			       path_entry,
-			       ACE_DIRECTORY_SEPARATOR_CHAR,
-			       searchfilename,
+              // First, try matching the filename *without* adding a
+              // prefix.
+              ACE_OS::sprintf (pathname, "%s%c%s%s",
+                               path_entry,
+                               ACE_DIRECTORY_SEPARATOR_CHAR,
+                               searchfilename,
                                got_suffix ? "" : ACE_DLL_SUFFIX);
-	      if (ACE_OS::access (pathname, F_OK) == 0)
-		break;
+              if (ACE_OS::access (pathname, F_OK) == 0)
+                break;
 
-	      // Second, try matching the filename *with* adding a
-	      // prefix.
-	      ACE_OS::sprintf (pathname, "%s%c%s%s%s",
-			       path_entry,
-			       ACE_DIRECTORY_SEPARATOR_CHAR,
-			       ACE_DLL_PREFIX,
-			       searchfilename,
+              // Second, try matching the filename *with* adding a
+              // prefix.
+              ACE_OS::sprintf (pathname, "%s%c%s%s%s",
+                               path_entry,
+                               ACE_DIRECTORY_SEPARATOR_CHAR,
+                               ACE_DLL_PREFIX,
+                               searchfilename,
                                got_suffix ? "" : ACE_DLL_SUFFIX);
-	      if (ACE_OS::access (pathname, F_OK) == 0)
-		break;
+              if (ACE_OS::access (pathname, F_OK) == 0)
+                break;
 
               // Fetch the next item in the path
-	      path_entry = ACE_OS::strsplit_r
-		(0, ACE_LD_SEARCH_PATH_SEPARATOR_STR, nextholder);
-	    }
+              path_entry = ACE_OS::strsplit_r
+                (0, ACE_LD_SEARCH_PATH_SEPARATOR_STR, nextholder);
+            }
 
-	  ACE_OS::free ((void *) ld_path);
-	  return result;
-	}
+          ACE_OS::free ((void *) ld_path);
+          return result;
+        }
     }
 
   errno = ENOENT;
@@ -556,14 +554,14 @@ ACE::send_n (ACE_HANDLE handle, const void *buf, size_t len)
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
     {
       n = ACE::send (handle, (const char *) buf + bytes_written,
-		     len - bytes_written);
+                     len - bytes_written);
       if (n == -1)
-	{
-	  if (errno != EWOULDBLOCK)
-	    return -1;
-	  else
-	    n = 0; // Keep trying to send.
-	}
+        {
+          if (errno != EWOULDBLOCK)
+            return -1;
+          else
+            n = 0; // Keep trying to send.
+        }
     }
 
   return bytes_written;
@@ -571,9 +569,9 @@ ACE::send_n (ACE_HANDLE handle, const void *buf, size_t len)
 
 ssize_t
 ACE::send_n (ACE_HANDLE handle,
-	     const void *buf,
-	     size_t len,
-	     int flags)
+             const void *buf,
+             size_t len,
+             int flags)
 {
   ACE_TRACE ("ACE::send_n");
   size_t bytes_written;
@@ -582,15 +580,15 @@ ACE::send_n (ACE_HANDLE handle,
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
     {
       n = ACE_OS::send (handle, (const char *) buf + bytes_written,
-			len - bytes_written, flags);
+                        len - bytes_written, flags);
 
       if (n == -1)
-	{
-	  if (errno != EWOULDBLOCK)
-	    return -1;
-	  else
-	    n = 0; // Keep trying to send.
-	}
+        {
+          if (errno != EWOULDBLOCK)
+            return -1;
+          else
+            n = 0; // Keep trying to send.
+        }
     }
 
   return bytes_written;
@@ -601,8 +599,8 @@ ACE::send_n (ACE_HANDLE handle,
 
 ssize_t
 ACE::write_n (ACE_HANDLE handle,
-	      const void *buf,
-	      size_t len)
+              const void *buf,
+              size_t len)
 {
   ACE_TRACE ("ACE::write_n");
 
@@ -612,14 +610,14 @@ ACE::write_n (ACE_HANDLE handle,
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
     {
       n = ACE_OS::write (handle, (const char *) buf + bytes_written,
-			 len - bytes_written);
+                         len - bytes_written);
       if (n == -1)
-	{
-	  if (errno != EWOULDBLOCK)
-	    return -1;
-	  else
-	    n = 0; // Keep trying to send.
-	}
+        {
+          if (errno != EWOULDBLOCK)
+            return -1;
+          else
+            n = 0; // Keep trying to send.
+        }
     }
 
   return bytes_written;
@@ -637,14 +635,14 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len)
       n = ACE::recv (handle, (char *) buf + bytes_read, len - bytes_read);
 
       if (n == -1)
-	{
-	  if (errno != EWOULDBLOCK)
-	    return -1;
-	  else
-	    n = 0; // Keep trying to read.
-	}
+        {
+          if (errno != EWOULDBLOCK)
+            return -1;
+          else
+            n = 0; // Keep trying to read.
+        }
       else if (n == 0)
-	break;
+        break;
     }
   return bytes_read;
 }
@@ -659,19 +657,19 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len, int flags)
   for (bytes_read = 0; bytes_read < len; bytes_read += n)
     {
       n = ACE::recv (handle,
-		     (char *) buf + bytes_read,
-		     len - bytes_read,
-		     flags);
+                     (char *) buf + bytes_read,
+                     len - bytes_read,
+                     flags);
 
       if (n == -1)
-	{
-	  if (errno != EWOULDBLOCK)
-	    return -1;
-	  else
-	    n = 0; // Keep trying to read.
-	}
+        {
+          if (errno != EWOULDBLOCK)
+            return -1;
+          else
+            n = 0; // Keep trying to read.
+        }
       else if (n == 0)
-	break;
+        break;
     }
 
   return bytes_read;
@@ -682,8 +680,8 @@ ACE::recv_n (ACE_HANDLE handle, void *buf, size_t len, int flags)
 
 ssize_t
 ACE::read_n (ACE_HANDLE handle,
-	     void *buf,
-	     size_t len)
+             void *buf,
+             size_t len)
 {
   ACE_TRACE ("ACE::read_n");
 
@@ -695,14 +693,14 @@ ACE::read_n (ACE_HANDLE handle,
       n = ACE_OS::read (handle, (char *) buf + bytes_read, len - bytes_read);
 
       if (n == -1)
-	{
-	  if (errno != EWOULDBLOCK)
-	    return -1;
-	  else
-	    n = 0; // Keep trying to read.
-	}
+        {
+          if (errno != EWOULDBLOCK)
+            return -1;
+          else
+            n = 0; // Keep trying to read.
+        }
       else if (n == 0)
-	break;
+        break;
     }
 
   return bytes_read;
@@ -710,8 +708,8 @@ ACE::read_n (ACE_HANDLE handle,
 
 int 
 ACE::enter_recv_timedwait (ACE_HANDLE handle,
-			   const ACE_Time_Value *timeout,
-			   int &val)
+                           const ACE_Time_Value *timeout,
+                           int &val)
 {
   // Give value a default value to keep Purify happy!
   val = 0;
@@ -724,10 +722,10 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
 
   // Wait for input to arrive or for the timeout to elapse.
   switch (ACE_OS::select (int (handle) + 1,
-			  (fd_set *) handle_set, // read_fds.
-			  (fd_set *) 0, // write_fds.
-			  (fd_set *) 0, // exception_fds.
-			  timeout))
+                          (fd_set *) handle_set, // read_fds.
+                          (fd_set *) 0, // write_fds.
+                          (fd_set *) 0, // exception_fds.
+                          timeout))
     {
     case 1: // OK to read now.
       // We need to record whether we are already *in* nonblocking
@@ -736,9 +734,9 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
       val = ACE::get_flags (handle);
 
       if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
-	// Set the descriptor into non-blocking mode if it's not
-	// already in it.
-	ACE::set_flags (handle, ACE_NONBLOCK);
+        // Set the descriptor into non-blocking mode if it's not
+        // already in it.
+        ACE::set_flags (handle, ACE_NONBLOCK);
       return 1;
     case 0: // Timer expired.
       errno = ETIME;
@@ -750,8 +748,8 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
 
 void 
 ACE::leave_recv_timedwait (ACE_HANDLE handle,
-			   const ACE_Time_Value *timeout,
-			   int val)
+                           const ACE_Time_Value *timeout,
+                           int val)
 {
   if (timeout != 0 
       && ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
@@ -769,8 +767,8 @@ ACE::leave_recv_timedwait (ACE_HANDLE handle,
 
 int 
 ACE::enter_send_timedwait (ACE_HANDLE handle,
-			   const ACE_Time_Value* timeout,
-			   int &val)
+                           const ACE_Time_Value* timeout,
+                           int &val)
 {
   // Give value a default value to keep Purify happy!
   val = 0;
@@ -786,10 +784,10 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
   // of time do we put it in non-blocking mode
 
   switch (ACE_OS::select (int (handle) + 1,
-			  (fd_set *) 0, 
-			  (fd_set *) handle_set,
-			  (fd_set *) 0,
-			  timeout))
+                          (fd_set *) 0, 
+                          (fd_set *) handle_set,
+                          (fd_set *) 0,
+                          timeout))
     {
     case 1: // Ok to write now.
       // We need to record whether we are already *in* nonblocking
@@ -798,9 +796,9 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
       val = ACE::get_flags (handle);
 
       if (ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
-	// Set the descriptor into non-blocking mode if it's not
-	// already in it.
-	ACE::set_flags (handle, ACE_NONBLOCK);
+        // Set the descriptor into non-blocking mode if it's not
+        // already in it.
+        ACE::set_flags (handle, ACE_NONBLOCK);
       return 1;
     case 0: // Timer expired.
       errno = ETIME;
@@ -812,8 +810,8 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
 
 void 
 ACE::leave_send_timedwait (ACE_HANDLE handle,
-			   const ACE_Time_Value *timeout,
-			   int val)
+                           const ACE_Time_Value *timeout,
+                           int val)
 {
   if (timeout != 0
       && ACE_BIT_ENABLED (val, ACE_NONBLOCK) == 0)
@@ -831,12 +829,12 @@ ACE::leave_send_timedwait (ACE_HANDLE handle,
 
 ssize_t
 ACE::sendto (ACE_HANDLE handle,
-	     const char *buf,
-	     int len, 
-	     int flags,
-	     const struct sockaddr *addr,
-	     int addrlen,
-	     const ACE_Time_Value *timeout)
+             const char *buf,
+             int len, 
+             int flags,
+             const struct sockaddr *addr,
+             int addrlen,
+             const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE::sendto");
 #if defined (ACE_HAS_SENDTO_TIMEDWAIT)
@@ -864,9 +862,9 @@ ACE::sendto (ACE_HANDLE handle,
 
 ssize_t
 ACE::sendmsg (ACE_HANDLE handle, 
-	      const struct msghdr *msg,
-	      int flags,
-	      const ACE_Time_Value *timeout)
+              const struct msghdr *msg,
+              int flags,
+              const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE::sendmsg");
 #if defined (ACE_HAS_SENDMSG_TIMEDWAIT)
@@ -894,9 +892,9 @@ ACE::sendmsg (ACE_HANDLE handle,
 
 ssize_t
 ACE::readv (ACE_HANDLE handle,
-	    struct iovec *iov,
-	    int iovcnt,
-	    const ACE_Time_Value *timeout)
+            struct iovec *iov,
+            int iovcnt,
+            const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE::readv");
 #if defined (ACE_HAS_READV_TIMEDWAIT)
@@ -923,9 +921,9 @@ ACE::readv (ACE_HANDLE handle,
 
 ssize_t
 ACE::writev (ACE_HANDLE handle,
-	     const struct iovec *iov,
-	     int iovcnt,
-	     const ACE_Time_Value *timeout)
+             const struct iovec *iov,
+             int iovcnt,
+             const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE::writev");
 #if defined (ACE_HAS_WRITEV_TIMEDWAIT)
@@ -974,47 +972,47 @@ ACE::format_hexdump (const char *buffer, int size, char *obuf, int obuf_sz)
       int j;
 
       for (j = 0 ; j < 16; j++)
-	{
-	  c = buffer[(i << 4) + j];
-	  ACE_OS::sprintf (obuf, "%02x ", c);
-	  obuf += 3;
-	  if (j == 7)
-	    {
-	      ACE_OS::sprintf (obuf, " ");
-	      obuf++;
-	    }
-	  textver[j] = (c < 0x20 || c > 0x7e) ? '.' : c;
-	}
+        {
+          c = buffer[(i << 4) + j];
+          ACE_OS::sprintf (obuf, "%02x ", c);
+          obuf += 3;
+          if (j == 7)
+            {
+              ACE_OS::sprintf (obuf, " ");
+              obuf++;
+            }
+          textver[j] = (c < 0x20 || c > 0x7e) ? '.' : c;
+        }
 
       textver[j] = 0;
 
       ACE_OS::sprintf (obuf, "  %s\n", textver);
 
       while (*obuf != '\0')
-	obuf++;
+        obuf++;
     }
 
   if (size % 16)
     {
       for (i = 0 ; i < size % 16; i++)
-	{
-	  c = buffer[size - size % 16 + i];
-	  ACE_OS::sprintf (obuf,"%02x ",c);
-	  obuf += 3;
-	  if (i == 7)
-	    {
-	      ACE_OS::sprintf (obuf, " ");
-	      obuf++;
-	    }
-	  textver[i] = (c < 0x20 || c > 0x7e) ? '.' : c;
-	}
+        {
+          c = buffer[size - size % 16 + i];
+          ACE_OS::sprintf (obuf,"%02x ",c);
+          obuf += 3;
+          if (i == 7)
+            {
+              ACE_OS::sprintf (obuf, " ");
+              obuf++;
+            }
+          textver[i] = (c < 0x20 || c > 0x7e) ? '.' : c;
+        }
 
       for (i = size % 16; i < 16; i++)
-	{
-	  ACE_OS::sprintf (obuf, "   ");
-	  obuf += 3;
-	  textver[i] = ' ';
-	}
+        {
+          ACE_OS::sprintf (obuf, "   ");
+          obuf += 3;
+          textver[i] = ' ';
+        }
 
       textver[i] = 0;
       ACE_OS::sprintf (obuf, "  %s\n", textver);
@@ -1093,8 +1091,8 @@ ACE::round_to_pagesize (off_t len)
 
 ACE_HANDLE
 ACE::handle_timed_complete (ACE_HANDLE h,
-			    ACE_Time_Value *timeout,
-			    int is_tli)
+                            ACE_Time_Value *timeout,
+                            int is_tli)
 {
   ACE_TRACE ("ACE::handle_timed_complete");
   ACE_Handle_Set rd_handles;
@@ -1110,15 +1108,15 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 
 #if defined (ACE_WIN32)
   int n = ACE_OS::select (int (h) + 1,
-			  rd_handles,
-			  wr_handles,
-			  ex_handles,
-			  timeout);
+                          rd_handles,
+                          wr_handles,
+                          ex_handles,
+                          timeout);
 #else
   int n = ACE_OS::select (int (h) + 1,
-			  rd_handles,
-			  wr_handles,
-			  0, timeout);
+                          rd_handles,
+                          wr_handles,
+                          0, timeout);
 #endif /* ACE_WIN32 */
 
   // If we failed to connect within the time period allocated by the
@@ -1127,7 +1125,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   if (n <= 0)
     {
       if (n == 0)
-	errno = ETIME;
+        errno = ETIME;
       return ACE_INVALID_HANDLE;
     }
 
@@ -1159,11 +1157,11 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       n = ACE::recv (h, &dummy, 1, MSG_PEEK);
 
       if (n <= 0)
-	{
-	  if (n == 0)
-	    errno = ECONNREFUSED;
-	  return ACE_INVALID_HANDLE;
-	}
+        {
+          if (n == 0)
+            errno = ECONNREFUSED;
+          return ACE_INVALID_HANDLE;
+        }
     }
 
   // 1. The HANDLE is ready for writing or 2. recv() returned that
@@ -1174,9 +1172,9 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 
 ACE_HANDLE
 ACE::handle_timed_open (ACE_Time_Value *timeout,
-			LPCTSTR name,
-			int flags,
-			int perms)
+                        LPCTSTR name,
+                        int flags,
+                        int perms)
 {
   ACE_TRACE ("ACE::handle_timed_open");
 
@@ -1184,13 +1182,13 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
     {
       // Open the named pipe or file using non-blocking mode...
       ACE_HANDLE handle = ACE_OS::open (name,
-					flags | ACE_NONBLOCK,
-					perms);
+                                        flags | ACE_NONBLOCK,
+                                        perms);
       if (handle == ACE_INVALID_HANDLE
-	  && (errno == EWOULDBLOCK
-	      && (timeout->sec () > 0 || timeout->usec () > 0)))
-	// This expression checks if we were polling.
-	errno = ETIMEDOUT;
+          && (errno == EWOULDBLOCK
+              && (timeout->sec () > 0 || timeout->usec () > 0)))
+        // This expression checks if we were polling.
+        errno = ETIMEDOUT;
 
       return handle;
     }
@@ -1202,8 +1200,8 @@ ACE::handle_timed_open (ACE_Time_Value *timeout,
 
 int
 ACE::handle_timed_accept (ACE_HANDLE listener,
-			  ACE_Time_Value *timeout,
-			  int restart)
+                          ACE_Time_Value *timeout,
+                          int restart)
 {
   ACE_TRACE ("ACE::handle_timed_accept");
   // Make sure we don't bomb out on erroneous values.
@@ -1219,30 +1217,30 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
   for (;;)
     {
       switch (ACE_OS::select (int (listener) + 1,
-			      rd_handle, 0, 0,
-			      timeout))
-	{
-	case -1:
-	  if (errno == EINTR && restart)
-	    continue;
-	  else
-	    return -1;
-	  /* NOTREACHED */
-	case 0:
-	  if (timeout != 0 && timeout->sec() == 0 && timeout->usec() == 0)
-	    errno = EWOULDBLOCK;
-	  else
-	    errno = ETIMEDOUT;
-	  return -1;
-	  /* NOTREACHED */
-	case 1:
-	  return 0;
-	  /* NOTREACHED */
-	default:
-	  errno = EINVAL;
-	  return -1;
-	  /* NOTREACHED */
-	}
+                              rd_handle, 0, 0,
+                              timeout))
+        {
+        case -1:
+          if (errno == EINTR && restart)
+            continue;
+          else
+            return -1;
+          /* NOTREACHED */
+        case 0:
+          if (timeout != 0 && timeout->sec() == 0 && timeout->usec() == 0)
+            errno = EWOULDBLOCK;
+          else
+            errno = ETIMEDOUT;
+          return -1;
+          /* NOTREACHED */
+        case 1:
+          return 0;
+          /* NOTREACHED */
+        default:
+          errno = EINVAL;
+          return -1;
+          /* NOTREACHED */
+        }
     }
   /* NOTREACHED */
   return 0;
@@ -1273,29 +1271,29 @@ ACE::bind_port (ACE_HANDLE handle)
       sin.sin_port = htons (upper_limit);
 
       if (ACE_OS::bind (handle, (sockaddr *) &sin, sizeof sin) >= 0)
-	{
+        {
 #if defined (ACE_WIN32)
-	  upper_limit--;
+          upper_limit--;
 #endif
-	  return 0;
-	}
+          return 0;
+        }
       else if (errno != EADDRINUSE)
-	return -1;
+        return -1;
       else
-	{
-	  upper_limit--;
+        {
+          upper_limit--;
 
-	  // Wrap back around when we reach the bottom.
-	  if (upper_limit <= lower_limit)
-	    upper_limit = ACE_MAX_DEFAULT_PORT;
+          // Wrap back around when we reach the bottom.
+          if (upper_limit <= lower_limit)
+            upper_limit = ACE_MAX_DEFAULT_PORT;
 
-	  // See if we have already gone around once!
-	  if (upper_limit == round_trip)
-	    {
-	      errno = EAGAIN;
-	      return -1;
-	    }
-	}
+          // See if we have already gone around once!
+          if (upper_limit == round_trip)
+            {
+              errno = EAGAIN;
+              return -1;
+            }
+        }
     }
 }
 
@@ -1394,8 +1392,8 @@ ACE::set_flags (ACE_HANDLE handle, int flags)
       // nonblocking argument (1)
       // blocking:            (0)
       {
-	u_long nonblock = 1;
-	return ACE_OS::ioctl (handle, FIONBIO, &nonblock);
+        u_long nonblock = 1;
+        return ACE_OS::ioctl (handle, FIONBIO, &nonblock);
       }
     default:
       ACE_NOTSUP_RETURN (-1);
@@ -1430,8 +1428,8 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
       // nonblocking argument (1)
       // blocking:            (0)
       {
-	u_long nonblock = 0;
-	return ACE_OS::ioctl (handle, FIONBIO, &nonblock);
+        u_long nonblock = 0;
+        return ACE_OS::ioctl (handle, FIONBIO, &nonblock);
       }
     default:
       ACE_NOTSUP_RETURN (-1);
@@ -1468,10 +1466,10 @@ ACE::map_errno (int error)
 
 ssize_t
 ACE::send (ACE_HANDLE handle,
-	   const void *buf,
-	   size_t n,
-	   int flags,
-	   const ACE_Time_Value *timeout)
+           const void *buf,
+           size_t n,
+           int flags,
+           const ACE_Time_Value *timeout)
 {
 #if defined (ACE_HAS_SEND_TIMEDWAIT)
   if (timeout == 0)
@@ -1499,9 +1497,9 @@ ACE::send (ACE_HANDLE handle,
 
 ssize_t
 ACE::send (ACE_HANDLE handle,
-	   const void *buf,
-	   size_t n,
-	   const ACE_Time_Value *timeout)
+           const void *buf,
+           size_t n,
+           const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE_OS::write");
 #if defined (ACE_HAS_WRITE_TIMEDWAIT)
@@ -1530,10 +1528,10 @@ ACE::send (ACE_HANDLE handle,
 
 ssize_t
 ACE::send_n (ACE_HANDLE handle,
-	     const void *buf,
-	     size_t n,
-	     int flags,
-	     const ACE_Time_Value *timeout)
+             const void *buf,
+             size_t n,
+             int flags,
+             const ACE_Time_Value *timeout)
 {
   // Total number of bytes written.
   size_t bytes_written;
@@ -1546,9 +1544,9 @@ ACE::send_n (ACE_HANDLE handle,
        bytes_written += i)
     {
       i = ACE::send (handle, (char *) buf + bytes_written,
-		     n - bytes_written, flags, timeout);
+                     n - bytes_written, flags, timeout);
       if (i == -1)
-	break;
+        break;
     }
 
   return bytes_written;
@@ -1556,12 +1554,12 @@ ACE::send_n (ACE_HANDLE handle,
 
 ssize_t
 ACE::recvfrom (ACE_HANDLE handle,
-	       char *buf,
-	       int len, 
-	       int flags,
-	       struct sockaddr *addr,
-	       int *addrlen,
-	       const ACE_Time_Value *timeout)
+               char *buf,
+               int len, 
+               int flags,
+               struct sockaddr *addr,
+               int *addrlen,
+               const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE::recvfrom");
 #if defined (ACE_HAS_RECVFROM_TIMEDWAIT)
@@ -1589,9 +1587,9 @@ ACE::recvfrom (ACE_HANDLE handle,
 
 ssize_t
 ACE::recvmsg (ACE_HANDLE handle,
-	      struct msghdr *msg,
-	      int flags,
-	      const ACE_Time_Value *timeout)
+              struct msghdr *msg,
+              int flags,
+              const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE::recvmsg");
 #if defined (ACE_HAS_RECVMSG_TIMEDWAIT)
@@ -1619,9 +1617,9 @@ ACE::recvmsg (ACE_HANDLE handle,
 
 ssize_t
 ACE::recv (ACE_HANDLE handle,
-	   void *buf,
-	   size_t n,
-	   const ACE_Time_Value *timeout)
+           void *buf,
+           size_t n,
+           const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE::read");
 #if defined (ACE_HAS_READ_TIMEDWAIT)
@@ -1650,10 +1648,10 @@ ACE::recv (ACE_HANDLE handle,
 
 ssize_t 
 ACE::recv (ACE_HANDLE handle,
-	   void *buf,
-	   size_t len,
-	   int flags,
-	   const ACE_Time_Value *timeout)
+           void *buf,
+           size_t len,
+           int flags,
+           const ACE_Time_Value *timeout)
 {
   // ACE_TRACE ("ACE::recv");
 #if defined (ACE_HAS_RECV_TIMEDWAIT)
@@ -1681,10 +1679,10 @@ ACE::recv (ACE_HANDLE handle,
 
 ssize_t
 ACE::recv_n (ACE_HANDLE handle,
-	     void *buf,
-	     size_t n,
-	     int flags,
-	     const ACE_Time_Value *timeout)
+             void *buf,
+             size_t n,
+             int flags,
+             const ACE_Time_Value *timeout)
 {
   size_t bytes_received;
 
@@ -1694,10 +1692,10 @@ ACE::recv_n (ACE_HANDLE handle,
   for (bytes_received = 0; bytes_received < n; bytes_received += i)
     {
       i = ACE::recv (handle, (char *) buf + bytes_received,
-		     n - bytes_received, flags, timeout);
+                     n - bytes_received, flags, timeout);
 
       if (i == -1 || i == 0)
-	break;
+        break;
     }
 
   return bytes_received;
@@ -1705,14 +1703,14 @@ ACE::recv_n (ACE_HANDLE handle,
 
 u_long
 ACE::is_prime (const u_long n,
-	       const u_long min_factor,
-	       const u_long max_factor)
+               const u_long min_factor,
+               const u_long max_factor)
 {
   if (n > 3)
     {
       for (u_long factor = min_factor; factor <= max_factor; ++factor)
-	if (n / factor * factor == n)
-	  return factor;
+        if (n / factor * factor == n)
+          return factor;
 
       return 0;
     }
@@ -1748,9 +1746,9 @@ ACE::sock_error (int error)
       return "Valid name, no data record for type";
       /* NOTREACHED */
       /*
-	case WSANO_ADDRESS:
-	return "Valid name, no MX record";
-	  */
+        case WSANO_ADDRESS:
+        return "Valid name, no MX record";
+          */
     case WSANOTINITIALISED:
       return "WSA Startup not initialized";
       /* NOTREACHED */
@@ -1826,9 +1824,9 @@ ACE::sock_error (int error)
 
 int
 ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
-		     const char *host_name,
-		     ACE_UINT32 host_addr,
-		     ACE_HANDLE handle)
+                     const char *host_name,
+                     ACE_UINT32 host_addr,
+                     ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE::get_bcast_addr");
 
@@ -1864,18 +1862,18 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       hostent *hp = ACE_OS::gethostbyname (host_name);
 
       if (hp == 0)
-	return -1;
+        return -1;
       else
-	ACE_OS::memcpy ((char *) &ip_addr.sin_addr.s_addr,
-			(char *) hp->h_addr,
-			hp->h_length);
+        ACE_OS::memcpy ((char *) &ip_addr.sin_addr.s_addr,
+                        (char *) hp->h_addr,
+                        hp->h_length);
     }
   else
     {
       ACE_OS::memset ((void *) &ip_addr, 0, sizeof ip_addr);
       ACE_OS::memcpy ((void *) &ip_addr.sin_addr,
-		      (void*) &host_addr,
-		      sizeof ip_addr.sin_addr);
+                      (void*) &host_addr,
+                      sizeof ip_addr.sin_addr);
     }
 
   for (int n = ifc.ifc_len / sizeof (struct ifreq);
@@ -1929,12 +1927,12 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                               sizeof if_req.ifr_broadaddr);
 
               ACE_OS::memcpy ((void *) &host_addr,
-			      (void *) &ip_addr.sin_addr,
+                              (void *) &ip_addr.sin_addr,
                               sizeof host_addr);
 
-	      if (handle == ACE_INVALID_HANDLE)
-		ACE_OS::close (s);
-	      bcast_addr = host_addr;
+              if (handle == ACE_INVALID_HANDLE)
+                ACE_OS::close (s);
+              bcast_addr = host_addr;
               return 0;
             }
         }
@@ -1943,7 +1941,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                    "ACE::get_bcast_addr: Broadcast is not enable for this interface."));
 
       if (handle == ACE_INVALID_HANDLE)
-	ACE_OS::close (s);
+        ACE_OS::close (s);
       bcast_addr = host_addr;
       return 0;
     }
@@ -1964,13 +1962,13 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
 int
 ACE::count_interfaces (ACE_HANDLE handle,
-		       size_t &how_many)
+                       size_t &how_many)
 {
 #if defined (sparc) && defined (SIOCGIFNUM)
   if (ACE_OS::ioctl (handle, SIOCGIFNUM, (caddr_t) &how_many) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "ACE::get_ip_interfaces:ioctl - SIOCGIFNUM failed"), -1);
    return 0;
-#elif defined (unix)
+#elif defined (__unix)  /* Note: DEC CXX doesn't define "unix" */
 // BSD compatible OS: HP UX, AIX, SunOS 4.x perform some ioctls to
 // retrieve ifconf list of ifreq structs no SIOCGIFNUM on SunOS 4.x,
 // so use guess and scan algorithm
@@ -2009,7 +2007,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
   for (i = 0; i < num_ifs; p_ifs++, i++)
     {
       if (p_ifs->ifr_name[0] == '\0')
-	  break;
+          break;
       if_count++;
     }
 
@@ -2033,7 +2031,7 @@ ACE::get_handle (void)
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 #if defined (sparc)
   handle = ACE_OS::open ("/dev/udp", O_RDONLY);
-#elif defined (unix)
+#elif defined (__unix)  /* Note: DEC CXX doesn't define "unix" */
 // BSD compatible OS: HP UX, AIX, SunOS 4.x
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 #endif /* __SVR4 */
@@ -2046,9 +2044,9 @@ ACE::get_handle (void)
 
 static int
 get_reg_value (const TCHAR *key,
-	       const TCHAR *name,
-	       TCHAR *buffer,
-	       DWORD &buf_len)
+               const TCHAR *name,
+               TCHAR *buffer,
+               DWORD &buf_len)
 {
   HKEY hk;
   DWORD buf_type;
@@ -2060,7 +2058,7 @@ get_reg_value (const TCHAR *key,
     return -1;
 
   rc = ::RegQueryValueEx (hk, name, 0, &buf_type,
-			  (u_char *) buffer, &buf_len);
+                          (u_char *) buffer, &buf_len);
 
   if (rc != ERROR_SUCCESS)
     {
@@ -2080,7 +2078,7 @@ get_reg_value (const TCHAR *key,
 
 int
 ACE::get_ip_interfaces (size_t &count,
-			ACE_INET_Addr *&addrs)
+                        ACE_INET_Addr *&addrs)
 {
   ACE_TRACE ("ACE::get_ip_interfaces");
 
@@ -2100,9 +2098,9 @@ ACE::get_ip_interfaces (size_t &count,
   DWORD buf_len = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
 
   if (::get_reg_value (LINKAGE_KEY1,
-		       BIND_NAME_ID,
-		       raw_buffer,
-		       raw_buflen))
+                       BIND_NAME_ID,
+                       raw_buffer,
+                       raw_buflen))
     return -1;
   // return buffer contains NULL delimited strings
 
@@ -2130,24 +2128,24 @@ ACE::get_ip_interfaces (size_t &count,
 
       // chop off the "\Device" and keep last name.
       if (the_dev.length() < 8)
-	return -3;		// Something's wrong
+        return -3;              // Something's wrong
       else
-	{
-	  the_dev = the_dev.substring (8);  // rest of string from offset 8
-	  ifdevkey += the_dev;
-	  ifdevkey += TCP_PARAM_SUBKEY;
+        {
+          the_dev = the_dev.substring (8);  // rest of string from offset 8
+          ifdevkey += the_dev;
+          ifdevkey += TCP_PARAM_SUBKEY;
 
-	  // b. extract value
-	  if (get_reg_value (ifdevkey.rep(), IPADDR_NAME_ID, buffer, buf_len))
-	    return -4;
+          // b. extract value
+          if (get_reg_value (ifdevkey.rep(), IPADDR_NAME_ID, buffer, buf_len))
+            return -4;
 
-	  if (ACE_OS::strcmp (buffer, INVALID_TCPIP_DEVICE_ADDR) == 0)
-	    continue;		// Don't count this device
+          if (ACE_OS::strcmp (buffer, INVALID_TCPIP_DEVICE_ADDR) == 0)
+            continue;           // Don't count this device
 
-	  // c. store in hostinfo object array and up the counter
-	  addrs[count++] = ACE_INET_Addr ((u_short) 0,
-					  ACE_MULTIBYTE_STRING (buffer));
-	}
+          // c. store in hostinfo object array and up the counter
+          addrs[count++] = ACE_INET_Addr ((u_short) 0,
+                                          ACE_MULTIBYTE_STRING (buffer));
+        }
     }
   return 0;
 #elif defined(__unix)
@@ -2155,7 +2153,7 @@ ACE::get_ip_interfaces (size_t &count,
 
   size_t num_ifs;
 
-  ACE_HANDLE handle = get_handle();	// call specific routine as necessary
+  ACE_HANDLE handle = get_handle();     // call specific routine as necessary
 
   if (handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE::get_ip_interfaces:open"), -1);
@@ -2209,8 +2207,8 @@ ACE::get_ip_interfaces (size_t &count,
     {
       if (pcur->ifr_addr.sa_family == AF_INET)
         {
-	  struct sockaddr_in *_addr_ = (struct sockaddr_in *)&(pcur->ifr_addr);
-	  addrs[count].set ((u_short)0, _addr_->sin_addr.s_addr, 0);
+          struct sockaddr_in *_addr_ = (struct sockaddr_in *)&(pcur->ifr_addr);
+          addrs[count].set ((u_short)0, _addr_->sin_addr.s_addr, 0);
           count++;
         }
     }
@@ -2218,7 +2216,7 @@ ACE::get_ip_interfaces (size_t &count,
 #else
   ACE_UNUSED_ARG (count);
   ACE_UNUSED_ARG (addrs);
-  ACE_NOTSUP_RETURN (-1);;			// no implementation
+  ACE_NOTSUP_RETURN (-1);;                      // no implementation
 #endif /* ACE_WIN32 */
 }
 
@@ -2229,4 +2227,3 @@ template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
 #pragma instantiate ACE_Auto_Array_Ptr<struct ifreq>
 #pragma instantiate ACE_Auto_Basic_Array_Ptr<struct ifreq>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
