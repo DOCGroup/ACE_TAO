@@ -100,7 +100,7 @@ Test_Var_Array::add_args (CORBA::NVList_ptr param_list,
                         CORBA::B_FALSE);
 
   CORBA::Any out_arg (Param_Test::_tc_Var_Array,
-                      this->out_,
+                      this->out_.out (),
                       CORBA::B_FALSE);
 
   // add parameters
@@ -121,7 +121,7 @@ Test_Var_Array::add_args (CORBA::NVList_ptr param_list,
 
   // add return value type
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Var_Array,
-                                            this->ret_,
+                                            this->ret_.in (),
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;

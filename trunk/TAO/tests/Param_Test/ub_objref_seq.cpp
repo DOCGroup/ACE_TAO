@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "helper.h"
 #include "ub_objref_seq.h"
 
 ACE_RCSID(Param_Test, ub_objref_seq, "$Id$")
@@ -162,8 +163,8 @@ Test_ObjRef_Sequence::check_validity (void)
   TAO_TRY
     {
       if (this->compare (this->in_,
-                        this->inout_.in ()
-                        TAO_TRY_ENV))
+			 this->inout_.in (),
+			 TAO_TRY_ENV))
         {
           TAO_CHECK_ENV;
           if (this->compare (this->in_,

@@ -1,3 +1,13 @@
+Sun Aug  9 12:56:12 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Param_Test/fixed_struct.cpp: 
+	* tests/Param_Test/objref.cpp: 
+	* tests/Param_Test/ub_objref_seq.cpp: 
+	* tests/Param_Test/ub_string.cpp: 
+	* tests/Param_Test/var_array.cpp: 
+	  Added missing includes and fixed some T_var to base type
+	  translation problems (it wouldn't compile on Sun/CC otherwise).
+
 Sun Aug  9 08:51:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Trader.cpp: Added a #include of

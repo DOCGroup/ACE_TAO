@@ -16,6 +16,7 @@
 //
 // ============================================================================
 
+#include "helper.h"
 #include "ub_string.h"
 
 ACE_RCSID(Param_Test, ub_string, "$Id$")
