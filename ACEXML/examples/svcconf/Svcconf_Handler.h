@@ -78,27 +78,6 @@ protected:
   ACEXML_Char *init_params_;
 };
 
-class ACE_Stream_Parsed_Info : public ACE_Parsed_Info
-{
-public:
-  ACE_Stream_Parsed_Info ();
-  ~ACE_Stream_Parsed_Info ();
-
-  /**
-   * Set/get name of a parsed entity.
-   */
-  int stream_name (const ACEXML_Char *n);
-  const ACEXML_Char *stream_name (void);
-
-  /**
-   * Reset Stream_Parsed_Info.
-   */
-  void reset (void);
-
-protected:
-  ACEXML_Char *stream_name_;
-};
-
 /**
  * @class ACEXML_Svcconf_Handler
  *
@@ -317,7 +296,7 @@ private:
 
   ACE_Parsed_Info parsed_info_;
 
-  ACE_Stream_Parsed_Info stream_info_;
+  ACE_Parsed_Info stream_info_;
 };
 
 #if defined (__ACEXML_INLINE__)

@@ -11,7 +11,6 @@
 <!-- what to do with it.  The identity of a stream is defined  -->
 <!-- in the first dynamic/static element.  -->
 <!ELEMENT streamdef ((dynamic|static),module)>
-<!ATTLIST streamdef id IDREF #REQUIRED>
 <!-- @@ Do we ever need to suspend/resume/remove modules when  -->
 <!--    constructing a stream?  Should we leave only dynamic   -->
 <!--    and static here?  -->

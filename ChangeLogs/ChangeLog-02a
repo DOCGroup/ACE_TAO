@@ -1,3 +1,12 @@
+Tue Feb 12 17:10:34 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* XML/examples/svcconf/Svcconf_Handler.h:
+	* XML/examples/svcconf/Svcconf_Handler.i:
+	* XML/examples/svcconf/Svcconf_Handler.cpp: Added Svcconf handling
+	  simulation.
+
+	* XML/examples/test_docs/svcconf.dtd: Revised Svcconf DTD.
+
 Mon Feb 11 16:56:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * XML/examples/test_docs/svcconf.dtd: Updated the DTD again.
