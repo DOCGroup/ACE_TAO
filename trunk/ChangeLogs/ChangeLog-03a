@@ -1,3 +1,9 @@
+Mon Mar 11 18:48:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Logging_Client.cpp: Added a compile-time check
+          for Win32 to be sure ACE_HAS_STANDARD_CPP_LIBRARY is set, else
+          trying to use the new getline() method with an old cin won't work.
+
 Mon Mar 11 17:43:00 2002  Si Mong Park  <spark@ociweb.com>
 
 	* ace/Svc_Conf_l.cpp:

@@ -14,6 +14,11 @@
 
 #include <string>
 
+#if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
+                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
+#  error "Must add to config.h: #define ACE_HAS_STANDARD_CPP_LIBRARY 1"
+#endif
+
 int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record)
 {
   size_t msglen = log_record.msg_data_len ();
