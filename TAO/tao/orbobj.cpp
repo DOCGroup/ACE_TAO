@@ -441,7 +441,7 @@ CORBA_ORB::resolve_name_service (void)
 		  response_addr.get_port_number (),
 		  n_bytes));
 
-      char buf[BUFSIZ];
+      char buf[ACE_MAX_DGRAM_SIZE];
       // Wait for response until TAO_DEFAULT_NAME_SERVER_TIMEOUT.
       ACE_Time_Value timeout (TAO_DEFAULT_NAME_SERVER_TIMEOUT);
 
