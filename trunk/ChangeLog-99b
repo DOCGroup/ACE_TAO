@@ -1,3 +1,8 @@
+Wed May 19 06:34:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-minimal.h: added #define ACE_USE_THREAD_MANAGER_ADAPTER,
+          so that ACE_Thread_Exit isn't needed in the ACE_OS layer.
+
 Tue May 18 22:03:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU,platform_osf1_cxx.GNU:
