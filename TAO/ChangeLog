@@ -1,3 +1,15 @@
+Mon Mar 24 18:15:51 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+
+          Fixed code for generating CDR operator for a typedef'd
+          sequence whose element is itself a typedef'd sequence.
+          The IDL compiler source code that handles this case was
+          inadvertently removed in an earlier checkin. Also fixed
+          the CDR operator in PortableServer where the problem
+          was noticed.
+
 Mon Mar 24 17:36:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
