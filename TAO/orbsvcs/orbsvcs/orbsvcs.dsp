@@ -29993,15 +29993,13 @@ BuildCmds= \
 
 # PROP Ignore_Default_Tool 1
 USERDEP__TIMEBAS="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO_IDL Compiler on TimeBase.idl
+# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputName)
 InputPath=.\TimeBase.idl
 InputName=TimeBase
 
 BuildCmds= \
-	..\..\..\bin\tao_idl  -Ge  1                   -I../../ \
-                       -Wb,export_macro=TAO_ORBSVCS_Export \
-                                                                  -Wb,export_include=orbsvcs_export.h                   $(InputName).idl \
-                     -I..\..\ 
+	..\..\..\bin\tao_idl -Ge 1 -I../../ -Wb,export_macro=TAO_ORBSVCS_Export\
+                                                 -Wb,export_include=orbsvcs_export.h $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
