@@ -1,3 +1,15 @@
+Thu Aug 20 19:52:21 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* ace/OS.i: 
+          ACE_INLINE int
+	  ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
+	  ...
+	  #else /* this is Draft 7 or STD */
+	  *data = pthread_getspecific (key);
+
+	  changed the ::pthread_getspecific to pthread_getspecific as it 
+	  is a macro in Chorus. Thanks to David Levine for finding this.
+
 Thu Aug 20 17:05:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Service_Configurator/Misc/Timer_Service.cpp: Added some
