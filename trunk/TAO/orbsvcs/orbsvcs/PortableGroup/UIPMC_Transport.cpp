@@ -407,15 +407,15 @@ TAO_UIPMC_Transport::handle_input_i (TAO_Resume_Handle &rh,
   ACE_Data_Block db (sizeof (buf),
                      ACE_Message_Block::MB_DATA,
                      buf,
-                     this->orb_core_->message_block_buffer_allocator (),
+                     this->orb_core_->input_cdr_buffer_allocator (),
                      this->orb_core_->locking_strategy (),
                      ACE_Message_Block::DONT_DELETE,
-                     this->orb_core_->message_block_dblock_allocator ());
+                     this->orb_core_->input_cdr_dblock_allocator ());
 
   // Create a message block
   ACE_Message_Block message_block (&db,
                                    ACE_Message_Block::DONT_DELETE,
-                                   this->orb_core_->message_block_msgblock_allocator ());
+                                   this->orb_core_->input_cdr_msgblock_allocator ());
 
 
   // Align the message block
