@@ -1,3 +1,8 @@
+2004-03-11  Venkita Subramonian  <venkita@harry.cs.wustl.edu>
+
+	* ciao/Container_Base.cpp: Removed an ACE_DEBUG statement which
+	got in by mistake.
+
 Wed Mar 10 14:59:19 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* docs/static_ciao_toc.html: 

@@ -160,7 +160,6 @@ CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
   HomeFactory hcreator=0;
   ServantFactory screator=0;
 
-  ACE_DEBUG ((LM_DEBUG, "static config flag = %d\n", this->static_config_flag_));
   if (this->static_config_flag_ == 0)
     {
       if (exe_dll_name == 0 || sv_dll_name == 0)
