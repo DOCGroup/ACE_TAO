@@ -823,11 +823,11 @@ If you use the GNU GCC g++ compiler please note the following:
       and comment out the <code>OCFLAGS</code> line.<P>
 
   <li>ACE/TAO don't seem to build well with g++ 2.8.1.  We routinely
-      use egcs 1.1.1 (on Solaris) and 1.1.2, and recommend those versions.<p>
+      use g++ 2.95.x and g++ 3.x, and recommend those versions or better.<p>
 
-  <LI>Earlier (prior to 2.7.2) versions of g++ may not compile
+  <LI>Earlier (prior to 2.95.2) versions of g++ may not compile
       certain parts of ACE correctly due to compiler bugs.  Please
-      upgrade to g++ 2.7.2 or greater.<P>
+      upgrade to g++ 2.95.2 or greater.<P>
 
   <LI>Make sure to update your gcc <code>config.status</code>
       file.  This file is produced when installing gcc; it specifies
@@ -944,14 +944,11 @@ option available with
       which you will use egcs.<p>
 
   <li><strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
-      The default behavior of the ACE Makefiles is to add
-      <code>-fno-exceptions</code> to egcs (and g++ starting with
-      version 2.8.0) invocations.  This disables exception handling
-      support.  On Solaris/sparc and Linux/alpha, it results in a 25
-      percent reduction in the size of libACE.so.  To enable exception
-      handling, add <code>exceptions=1</code> to your
-      <code>make</code> command line invocation, or to your
-      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>.<p>
+      The default behavior of the ACE Makefiles is to enable native
+      exception support.  To disable exception handling, add
+      <code>exceptions=0</code> to your <code>make</code> command line
+      invocation, or to your 
+      <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code> file.<p>
 
   <li>egcs may have trouble linking some executables, such as the ACE
       IOStream_Test, if its static libraries are used.  Though
@@ -1033,7 +1030,7 @@ option available with
        grok long names.
 
        Thanks to <a href="mailto:ssweeney@sanders.com">Skye Sweeney</a> for trying it
-       out and <a href="mailto:othman@cs.wustl.edu">Ossama Othman</a> for discovering the
+       out and <a href="mailto:ossama@uci.edu">Ossama Othman</a> for discovering the
        option with egcs.<p>
 
        Heres a note on how to go about this (contributed by Skye
