@@ -283,6 +283,7 @@ TAO_LoadBalancing_ReplicationManager_i::create_object (
                                           ACE_TRY_ENV);
 }
 
+#if 0
 void
 TAO_LoadBalancing_ReplicationManager_i::process_criteria (
   const LoadBalancing::Criteria & the_criteria,
@@ -332,6 +333,7 @@ TAO_LoadBalancing_ReplicationManager_i::process_criteria (
   if (found_factory == 0)
     ACE_THROW (LoadBalancing::NoFactory ());
 }
+#endif  /* 0 */
 
 void
 TAO_LoadBalancing_ReplicationManager_i::delete_object (
@@ -445,17 +447,4 @@ TAO_LoadBalancing_ReplicationManager_i::init (
   ACE_ENDTRY;
 
   return 0;
-}
-
-void
-TAO_LoadBalancing_ReplicationManager_i::operator= (
-  LoadBalancing::FactoryInfo &lhs,
-  const LoadBalancing::FactoryInfo &rhs)
-{
-  lhs.the_factory =
-    LoadBalancing::GenericFactory::_duplicate (rhs.the_factory);
-
-  lhs.the_location = rhs.the_location;
-
-  lhs.the_criteria = rhs.the_criteria;
 }

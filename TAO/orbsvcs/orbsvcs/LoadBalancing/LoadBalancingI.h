@@ -301,10 +301,6 @@ private:
     const LoadBalancing::Criteria &the_criteria,
     LoadBalancing::FactoryInfos &factory_infos) const;
 
-  /// Assignment operator for LoadBalancing::FactoryInfo instances.
-  void operator= (LoadBalancing::FactoryInfo &lhs,
-                  const LoadBalancing::FactoryInfo &rhs);
-
 private:
 
   /// The object that tells the invoking client to forward its requests
@@ -337,6 +333,7 @@ private:
   TAO_LB_Balancing_Strategy *balancing_strategy_;
 
 };
+
 
 #include "ace/post.h"
 
