@@ -33,6 +33,8 @@
 
 namespace CIAO
 {
+  class Dynamic_Component_Servant_Base;
+
   class CIAO_SERVER_Export Swapping_Container : public Session_Container
   {
   public:
@@ -51,17 +53,17 @@ namespace CIAO
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+    void update_servant_map (PortableServer::ObjectId &oid,
+                             Dynamic_Component_Servant_Base* servant
+                             ACE_ENV_ARG_DECL);
+
   private:
 
     /// Create POA  for the component.
-    // @@ Jai, do you want to rename this method? BTW, why don't you
-    // share the implementation of create_facet_consumer_POA ()? This
-    // implementation is totally wrong and atleast sharing code would
-    // help you.
-    void create_component_POA (const char *name,
-                               const CORBA::PolicyList *p,
-                               PortableServer::POA_ptr root
-                               ACE_ENV_ARG_DECL);
+    void create_servant_POA (const char *name,
+                             const CORBA::PolicyList *p,
+                             PortableServer::POA_ptr root
+                             ACE_ENV_ARG_DECL);
   protected:
     long number_;
 
