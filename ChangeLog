@@ -1,3 +1,57 @@
+Thu May 11 02:04:58 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/OS.h
+	* ace/OS.cpp
+	* ace/SOCK_Stream.h
+	* ace/SOCK_Stream.i
+	* ace/TLI_Stream.h
+	* ace/TLI_Stream.i
+	* ace/ACE.cpp
+	* ace/ACE.h
+	* ace/ACE.i
+
+	  In order to make the return values of recv_n() and send_n()
+	  match the return values of recv() and send(), the following
+	  changes were made to the interface:
+
+          old interface:
+
+            static ssize_t recv_n (ACE_HANDLE handle,
+                                   void *buf,
+                                   size_t len,
+                                   const ACE_Time_Value *timeout = 0,
+                                   int error_on_eof = 1);
+
+          new interface:
+
+            static ssize_t recv_n (ACE_HANDLE handle,
+                                   void *buf,
+                                   size_t len,
+                                   const ACE_Time_Value *timeout = 0,
+                                   size_t *bytes_transferred = 0);
+
+	  Return value are:
+
+	  - On complete transfer, <len> is returned.
+	  - On timeout, -1 is returned, errno == ETIME.
+	  - On error, -1 is returned, errno is set to appropriate error.
+	  - On EOF, 0 is returned, errno is irrelevant.
+
+	  On partial transfers, i.e., if any data is transferred before
+	  timeout/error/EOF, <bytes_transferred> will contain the number
+	  of bytes transferred.  These return values now close match the
+	  return values from the non "_n" methods.
+
+	  Thanks to Douglas Schmidt, Chris Cleeland, Steve Huston, James
+	  Hu, and Rich Seibel for helping out!
+
+Thu May 11 01:59:10 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Pipe.cpp: Reader and writer handles were being left open
+	  when there was an error in ACE_Pipe::open().  This fixes bug
+	  549.  Thanks to Rick Ohnemus <rjohnemus@systemware-inc.com> for
+	  reporting this bug and providing patches.
+
 Wed May 10 18:36:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * THANKS:
