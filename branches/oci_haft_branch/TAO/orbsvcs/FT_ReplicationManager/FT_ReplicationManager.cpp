@@ -329,17 +329,6 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
-  if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
-  {
-    ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT (
-        "Enter TAO::FT_ReplicationManager::register_fault_notifier_i.\n")
-    ));
-  }
-
   if (CORBA::is_nil (fault_notifier))
   {
     ACE_ERROR ((LM_ERROR,
@@ -354,17 +343,6 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
       CORBA::COMPLETED_NO));
   }
 
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
-  if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
-  {
-    ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT (
-        "TAO::FT_ReplicationManager::register_fault_notifier_i: "
-        "Duplicate FaultNotifier object reference.\n")
-    ));
-  }
-
   // Cache new Fault Notifier object reference.
   this->fault_notifier_ = FT::FaultNotifier::_duplicate (fault_notifier);
 
@@ -373,31 +351,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   int result = 0;
   ACE_TRY_NEW_ENV
   {
-
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
-    if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
-    {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManager::register_fault_notifier_i: "
-          "Calling fault_consumer_.fini().\n")
-      ));
-    }
-
     result = this->fault_consumer_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
-
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
-    if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
-    {
-      ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManager::register_fault_notifier_i: "
-          "Calling fault_consumer_.init().\n")
-      ));
-    }
 
     // Create a fault analyzer.
     TAO::FT_FaultAnalyzer * analyzer = 0;
@@ -448,17 +403,6 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
         EINVAL),
       CORBA::COMPLETED_NO));
   }
-
-#if (TAO_DEBUG_LEVEL_NEEDED == 1)
-  if (TAO_debug_level > 1)
-#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
-  {
-    ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT (
-        "Leave TAO::FT_ReplicationManager::register_fault_notifier_i.\n")
-    ));
-  }
-
 }
 
 
