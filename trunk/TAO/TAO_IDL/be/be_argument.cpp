@@ -23,6 +23,7 @@
 #include "be_type.h"
 #include "be_visitor.h"
 #include "nr_extern.h"
+#include "global_extern.h"
 
 ACE_RCSID (be,
            be_argument,
@@ -56,7 +57,7 @@ be_argument::be_argument (AST_Argument::Direction d,
 
   // If there have been previous errors, dcl may be 0,
   // and we don't want to crash, so we check for non-zero.
-  if (dcl != 0 && !dcl->is_local ())
+  if (dcl != 0 && !dcl->is_local () && idl_global->in_main_file ())
     {
       be_type *bt = be_type::narrow_from_decl (ft);
       bt->seen_in_operation (I_TRUE);

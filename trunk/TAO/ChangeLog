@@ -1,3 +1,17 @@
+Thu Nov 25 13:42:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_argument.cpp:
+        
+          Changed marking of argument types as 'seen in operation'
+          only if the argument node is created in the main file.
+          This change eliminates problematic generation of arg
+          template class specializations in a file other than
+          the one in which the type is actually used as an operation
+          parameter. Thanks again to Johnny Willemsen 
+          <jwillemsen@remedy.nl> for reporting the scoreboard error
+          in compilation of the DsLogAdmin library that uncovered 
+          the problem.
+
 Thu Nov 25 09:53:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp:
