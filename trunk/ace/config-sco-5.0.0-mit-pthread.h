@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 // The following configuration file is designed to work for SCO UNIX
 // version 5.0 with MIT pthreads.
 
@@ -8,10 +11,17 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+  // This config file has not been tested with ACE_HAS_TEMPLATE_SPECIALIZATION.
+  // Maybe it will work?
+# undef ACE_HAS_TEMPLATE_SPECIALIZATION
+#endif /* __GNUG__ */
+
 // Compiling for SCO.
 #if !defined (SCO)
 #define SCO
-#define	_SVID3
+#define _SVID3
 #endif /* SCO */
 
 #define ACE_DEFAULT_CLOSE_ALL_HANDLES 0
@@ -24,10 +34,7 @@
 #endif /* SCO */
 
 #define ACE_LACKS_PWD_FUNCTIONS
-#define ACE_TEMPLATES_REQUIRE_SOURCE
 #define ACE_HAS_LONG_FDMASK
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 
 //#define ACE_LACKS_SYSCALL
 //#define ACE_LACKS_STRRECVFD
@@ -37,14 +44,11 @@
 
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
-// Compiler doesn't support static data member templates.
-//#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC			
-#define	ACE_HAS_NONCONST_MSGSND
-// #define	ACE_LACKS_POSIX_PROTOTYPES
-#define	ACE_HAS_SVR4_DYNAMIC_LINKING
+#define ACE_HAS_SYSV_IPC
+#define ACE_HAS_NONCONST_MSGSND
+// #define      ACE_LACKS_POSIX_PROTOTYPES
+#define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
 // Platform supports Term Ioctls
@@ -89,7 +93,7 @@
 
 // ???
 // #define ACE_HAS_SUNOS4_GETTIMEOFDAY
-#define	ACE_HAS_TIMEZONE_GETTIMEOFDAY
+#define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
 // HP/UX has an undefined syscall for GETRUSAGE...
 //#define ACE_HAS_SYSCALL_GETRUSAGE
@@ -102,12 +106,12 @@
 
 // Platform has prototypes for ACE_TLI.
 #define ACE_HAS_TLI
-//#define	ACE_HAS_SVR4_TLI
+//#define       ACE_HAS_SVR4_TLI
 #define ACE_HAS_T_OPMGMT
 #define ACE_HAS_TLI_PROTOTYPES
-#define	ACE_HAS_TIMOD_H
-#define	ACE_HAS_TIUSER_H
-#define	ACE_LACKS_T_ERRNO
+#define ACE_HAS_TIMOD_H
+#define ACE_HAS_TIUSER_H
+#define ACE_LACKS_T_ERRNO
 
 // Platform has the XLI version of ACE_TLI.
 // #define ACE_HAS_XLI
@@ -120,43 +124,43 @@
 #endif /* ACE_NTRACE */
 
 #define ACE_HAS_SIGINFO_T
-#define	ACE_HAS_UCONTEXT_T
+#define ACE_HAS_UCONTEXT_T
 
-#define	ACE_NEEDS_SYSTIME_H
+#define ACE_NEEDS_SYSTIME_H
 #define ACE_HAS_INLINED_OSCALLS
 
-#define	ACE_HAS_STRBUF_T
-#define	ACE_HAS_STREAMS
-//#define	ACE_HAS_STREAM_PIPES
-#define	ACE_HAS_IP_MULTICAST
+#define ACE_HAS_STRBUF_T
+#define ACE_HAS_STREAMS
+//#define       ACE_HAS_STREAM_PIPES
+#define ACE_HAS_IP_MULTICAST
 
 // Threads
-#define	ACE_HAS_THREADS
+#define ACE_HAS_THREADS
 #if !defined (ACE_MT_SAFE)
-	#define ACE_MT_SAFE 1
+# define ACE_MT_SAFE 1
 #endif
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
-#define	ACE_HAS_PTHREADS
-#define	ACE_HAS_PTHREAD_T
-#define	ACE_LACKS_PTHREAD_CANCEL
+#define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREAD_T
+#define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_HAS_PTHREAD_SIGMASK
-#define	ACE_HAS_SIGWAIT
-//#define	ACE_HAS_ONEARG_SIGWAIT
-//#define	ACE_HAS_PTHREAD_YIELD_VOID_PTR
-//#define	ACE_HAS_YIELD_VOID_PTR
-//#define	ACE_HAS_PTHREAD_ATTR_INIT
-//#define	ACE_HAS_PTHREAD_ATTR_DESTROY
-//#define	ACE_HAS_PTHREAD_DSTATE_PTR
-//#define	ACE_HAS_PTHREAD_EQUAL
-//#define	ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
+#define ACE_HAS_SIGWAIT
+//#define       ACE_HAS_ONEARG_SIGWAIT
+//#define       ACE_HAS_PTHREAD_YIELD_VOID_PTR
+//#define       ACE_HAS_YIELD_VOID_PTR
+//#define       ACE_HAS_PTHREAD_ATTR_INIT
+//#define       ACE_HAS_PTHREAD_ATTR_DESTROY
+//#define       ACE_HAS_PTHREAD_DSTATE_PTR
+//#define       ACE_HAS_PTHREAD_EQUAL
+//#define       ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 //#define ACE_LACKS_THREAD_STACK_ADDR
 //#define ACE_LACKS_KEYDELETE
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_RWLOCK_T
-#define	ACE_LACKS_SETSCHED
+#define ACE_LACKS_SETSCHED
 #define ACE_LACKS_RPC_H
-#define	ACE_HAS_POSIX_TIME
+#define ACE_HAS_POSIX_TIME
 
 #include <pthread.h>
 #include <sys/regset.h>

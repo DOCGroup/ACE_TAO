@@ -1,3 +1,6 @@
+/* -*- C++ -*- */
+// $Id$
+
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
 
