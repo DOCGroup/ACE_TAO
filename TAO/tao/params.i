@@ -94,12 +94,12 @@ TAO_OA_Parameters::addr (void)
 }
 
 ACE_INLINE void
-TAO_OA_Parameters::demux_strategy (DEMUX_STRATEGY strategy)
+TAO_OA_Parameters::demux_strategy (TAO_Demux_Strategy strategy)
 {
   this->demux_ = strategy;      // Trust that the value is valid!
 }
 
-ACE_INLINE TAO_OA_Parameters::DEMUX_STRATEGY
+ACE_INLINE TAO_OA_Parameters::TAO_Demux_Strategy
 TAO_OA_Parameters::demux_strategy (void)
 {
   return this->demux_;

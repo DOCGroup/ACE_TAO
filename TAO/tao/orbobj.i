@@ -3,6 +3,10 @@
 // Constructor and destructor are accessible to subclasses
 ACE_INLINE
 CORBA_ORB::CORBA_ORB (void)
+  : client_factory_(0),
+    client_factory_from_service_config_(CORBA_B_FALSE),
+    server_factory_(0),
+    server_factory_from_service_config_(CORBA_B_FALSE)
 {
   refcount_ = 1;
 }
@@ -10,6 +14,14 @@ CORBA_ORB::CORBA_ORB (void)
 ACE_INLINE
 CORBA_ORB::~CORBA_ORB (void)
 {
+  ACE_Service_Config::close();
+
+  if (! client_factory_from_service_config_)
+    delete client_factory_;
+
+  if (! server_factory_from_service_config_)
+    delete server_factory_;
+
   assert (refcount_ == 0);
 }
 
@@ -50,20 +62,6 @@ CORBA_ORB::AddRef (void)
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, guard, lock_, 0));
 
   return refcount_++;
-}
-
-ACE_INLINE
-TAO_Client_Factory&
-CORBA_ORB::client_factory(void)
-{
-  return client_factory_;
-}
-
-ACE_INLINE
-TAO_Server_Factory&
-CORBA_ORB::server_factory(void)
-{
-  return server_factory_;
 }
 
 ACE_INLINE
