@@ -1,3 +1,8 @@
+Tue Sep 15 15:35:31 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Replaced "\"s with
+	"\\"s. 
+
 Tue Sep 15 14:34:04 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.h: 
