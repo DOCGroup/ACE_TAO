@@ -73,6 +73,7 @@ static char *host = 0;
 
 // number of Senders instances
 static int senders = 1;
+static const int MaxSenders = 100;
 
 // duplex mode: ==0 half-duplex 
 //              !=0 full duplex
@@ -122,18 +123,18 @@ MyTask::create_proactor (void)
       switch (proactor_type)
         {
         case 1:	proactor = new ACE_POSIX_AIOCB_Proactor (max_aio_operations);
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=AIOCB"));
+          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=AIOCB\n"));
           break;
         case 2:	proactor = new ACE_POSIX_SIG_Proactor; 
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG"));
+          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
           break;
 #  if defined (sun)
         case 3:	proactor = new ACE_SUN_Proactor (max_aio_operations);
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SUN"));
+          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SUN\n"));
           break;
 #  endif /* sun */
         default:proactor = new ACE_POSIX_SIG_Proactor;
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG"));
+          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
           break;
         }
 #endif 
@@ -686,10 +687,12 @@ parse_args (int argc, char *argv[])
 		break;
       case 's':     // number of senders
         senders = ACE_OS::atoi (get_opt.optarg);
-		break;
-        case 'o':     // max number of aio for proactor 
+	if (senders > MaxSenders)
+	  senders = MaxSenders;
+	break;
+      case 'o':     // max number of aio for proactor 
         max_aio_operations = ACE_OS::atoi (get_opt.optarg);
-		break;
+	break;
       case 't':    //  Proactor Type
 	if (set_proactor_type (get_opt.optarg))
           break;
@@ -739,7 +742,7 @@ main (int argc, char *argv[])
   // wait for creation of Proactor
   task1.waitready ();
 
-  Sender * send_list[senders];
+  Sender * send_list[MaxSenders];
 
   ACE_Asynch_Acceptor<Receiver> acceptor;
 
