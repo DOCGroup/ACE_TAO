@@ -15,7 +15,9 @@
 # include "Linear_Network_Priority_Mapping.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(Strategies, Linear_Network_Priority_Mapping, "$Id$")
+ACE_RCSID (RTCORBA,
+           Linear_Network_Priority_Mapping,
+           "$Id$")
 
 #define IPDSFIELD_DSCP_DEFAULT  0x00
 #define IPDSFIELD_DSCP_CS1      0x08
@@ -98,18 +100,19 @@ TAO_Linear_Network_Priority_Mapping::TAO_Linear_Network_Priority_Mapping (long)
 }
 
 CORBA::Boolean
-TAO_Linear_Network_Priority_Mapping::to_network (RTCORBA::Priority corba_priority,
-                                                 RTCORBA::NetworkPriority &network_priority)
+TAO_Linear_Network_Priority_Mapping::to_network (
+  RTCORBA::Priority corba_priority,
+  RTCORBA::NetworkPriority &network_priority)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Linear_Network_Priority_Mapping::to_network corba_priority %d\n",
                 corba_priority));
 
-  int total_slots = sizeof (dscp) / sizeof (int);
+  const int total_slots = sizeof (dscp) / sizeof (int);
 
   int array_slot =
-    ((corba_priority - RTCORBA::minPriority) / double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots;
+    static_cast<int> (((corba_priority - RTCORBA::minPriority) / double (RTCORBA::maxPriority - RTCORBA::minPriority)) * total_slots);
 
   if (array_slot == total_slots)
     array_slot -= 1;
