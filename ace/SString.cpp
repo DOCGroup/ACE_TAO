@@ -169,8 +169,6 @@ ACE_Tokenizer::next (void)
           // Increment to the next token.
           index_++;
         }
-      else
-        next_token = buffer_ + index_;
 
       goto EXIT_LABEL;
     }
