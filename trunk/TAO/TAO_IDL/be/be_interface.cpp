@@ -781,7 +781,7 @@ be_interface::gen_operation_table (const char *flat_name,
         *os << "};" << be_nl << be_nl;
         *os << "static const CORBA::Long _tao_" << flat_name
             << "_optable_size = sizeof (ACE_Hash_Map_Entry<const char *,"
-            << " TAO_Skeleton>) * (" << (3 * this->skel_count_)
+            << " TAO::Operation_Skeletons>) * (" << (3 * this->skel_count_)
             << ");" << be_nl;
         *os << "static char _tao_" << flat_name << "_optable_pool "
             << "[_tao_" << flat_name << "_optable_size];" << be_nl;
