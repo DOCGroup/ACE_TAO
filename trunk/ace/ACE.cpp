@@ -1716,7 +1716,7 @@ ACE::bind_port (ACE_HANDLE handle,
   // The OS kernel should select a free port for us.
   sin.sin_port = 0;
   return ACE_OS::bind (handle,
-                       (sockaddr *) &sin,
+                       ACE_reinterpret_cast(sockaddr *, &sin),
                        sizeof sin);
 #else
   static u_short upper_limit = ACE_MAX_DEFAULT_PORT;
@@ -1730,7 +1730,7 @@ ACE::bind_port (ACE_HANDLE handle,
       sin.sin_port = htons (upper_limit);
 
       if (ACE_OS::bind (handle,
-                        (sockaddr *) &sin,
+                        ACE_reinterpret_cast(sockaddr *, &sin),
                         sizeof sin) >= 0)
         {
 #if defined (ACE_WIN32)
@@ -2514,8 +2514,8 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                         ASYS_TEXT ("ioctl (get broadaddr)")));
           else
             {
-              ACE_OS::memcpy ((struct sockaddr_in *) &ip_addr,
-                              (struct sockaddr_in *) &if_req.ifr_broadaddr,
+              ACE_OS::memcpy (ACE_reinterpret_cast(sockaddr_in *, &ip_addr),
+                              ACE_reinterpret_cast(sockaddr_in *, &if_req.ifr_broadaddr),
                               sizeof if_req.ifr_broadaddr);
 
               ACE_OS::memcpy ((void *) &host_addr,
@@ -2853,7 +2853,7 @@ ACE::get_ip_interfaces (size_t &count,
       if (pcur->ifr_addr.sa_family == AF_INET)
         {
           struct sockaddr_in *addr =
-            (struct sockaddr_in *) &pcur->ifr_addr;
+            ACE_reinterpret_cast(sockaddr_in *, &pcur->ifr_addr);
           addrs[count].set ((u_short) 0,
                             addr->sin_addr.s_addr,
                             0);

@@ -101,7 +101,7 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
       else
         {
           if (ACE_OS::bind (this->get_handle (), 
-                            (sockaddr *) &local_inet_addr, 
+                            ACE_reinterpret_cast(sockaddr *, &local_inet_addr), 
                             sizeof local_inet_addr) == -1)
             error = 1;
         }
