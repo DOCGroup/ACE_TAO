@@ -27,8 +27,11 @@
 #include <orbsvcs/PortableGroup/PG_GenericFactory.h>
 #include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
 #include <orbsvcs/PortableGroup/PG_FactoryRegistry.h>
-#include <orbsvcs/PortableGroup/PG_Object_Group_Map.h>
 #include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
+
+// Note: the new, improved versions...
+#include <orbsvcs/PortableGroup/PG_Object_Group_Map.h>
+#include <orbsvcs/PortableGroup/PG_Typeid_Properties_Map.h>
 
 namespace TAO
 {
@@ -467,6 +470,10 @@ namespace TAO
     // but not right now.   Dale Wilson wilson_d@ociweb.com
     /// A container for our object group information
     TAO::PG_Object_Group_Map object_group_map_;
+
+    TAO_PG::Properties_Decoder default_properties_;
+
+    TAO::PG_Typeid_Properties_Map typeid_properties_map_;
 
 
     /// The fault notifier.

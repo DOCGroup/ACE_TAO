@@ -534,6 +534,11 @@ TAO::FT_ReplicationManager::set_default_properties (
 {
   this->property_manager_.set_default_properties (props
                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Alternative implementation
+  this->default_properties_.decode(props);
+  //@@ validate properties?
 }
 
 PortableGroup::Properties *
@@ -541,9 +546,17 @@ TAO::FT_ReplicationManager::get_default_properties (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ( (CORBA::SystemException))
 {
+#if 0
   return
     this->property_manager_.get_default_properties (
       ACE_ENV_SINGLE_ARG_PARAMETER);
+#else
+  PortableGroup::Properties_var result;
+  ACE_NEW_THROW_EX ( result, PortableGroup::Properties(), CORBA::NO_MEMORY());
+  this->default_properties_.export_properties (*result ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (PortableGroup::Properties::_nil());
+  return result._retn ();
+#endif
 }
 
 void
@@ -556,6 +569,9 @@ TAO::FT_ReplicationManager::remove_default_properties (
 {
   this->property_manager_.remove_default_properties (props
                                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->default_properties_.remove (props ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -570,6 +586,21 @@ TAO::FT_ReplicationManager::set_type_properties (
   this->property_manager_.set_type_properties (type_id,
                                                overrides
                                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  
+  TAO_PG::Properties_Decoder * typeid_properties;
+  if ( 0 != this->typeid_properties_map_.find (type_id, typeid_properties))
+  {
+    ACE_NEW_THROW_EX (
+      typeid_properties, 
+      TAO_PG::Properties_Decoder (overrides, & this->default_properties_), 
+      CORBA::NO_MEMORY());
+    this->typeid_properties_map_.bind (type_id, typeid_properties);
+  }
+  typeid_properties->clear ();
+  typeid_properties->decode (overrides ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 PortableGroup::Properties *
@@ -578,9 +609,22 @@ TAO::FT_ReplicationManager::get_type_properties (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ( (CORBA::SystemException))
 {
+#if 0
   return
     this->property_manager_.get_type_properties (type_id
                                                  ACE_ENV_ARG_PARAMETER);
+#else
+  PortableGroup::Properties_var result;
+  ACE_NEW_THROW_EX (result, PortableGroup::Properties(), CORBA::NO_MEMORY ());
+
+  TAO_PG::Properties_Decoder * typeid_properties;
+  if ( 0 != this->typeid_properties_map_.find (type_id, typeid_properties))
+  {
+    typeid_properties->export_properties (*result ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+  return result._retn ();  
+#endif
 }
 
 void
@@ -595,6 +639,13 @@ TAO::FT_ReplicationManager::remove_type_properties (
   this->property_manager_.remove_type_properties (type_id,
                                                   props
                                                   ACE_ENV_ARG_PARAMETER);
+
+  TAO_PG::Properties_Decoder * typeid_properties;
+  if ( 0 != this->typeid_properties_map_.find (type_id, typeid_properties))
+  {
+    typeid_properties->remove (props ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
 }
 
 void
@@ -610,6 +661,17 @@ TAO::FT_ReplicationManager::set_properties_dynamically (
   this->property_manager_.set_properties_dynamically (object_group,
                                                       overrides
                                                       ACE_ENV_ARG_PARAMETER);
+
+  TAO::PG_Object_Group * group = 0;
+  if (this->object_group_map_.find_group (object_group, group))
+  {
+    group->set_properties_dynamically (overrides ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+  else
+  {
+    ACE_THROW (PortableGroup::ObjectGroupNotFound ());
+  }
 }
 
 PortableGroup::Properties *
@@ -619,9 +681,26 @@ TAO::FT_ReplicationManager::get_properties (
   ACE_THROW_SPEC ( (CORBA::SystemException,
                    PortableGroup::ObjectGroupNotFound))
 {
+#if 0
   return
     this->property_manager_.get_properties (object_group
                                             ACE_ENV_ARG_PARAMETER);
+#else
+  PortableGroup::Properties_var result;
+  ACE_NEW_THROW_EX (result, PortableGroup::Properties(), CORBA::NO_MEMORY ());
+
+  TAO::PG_Object_Group * group = 0;
+  if (this->object_group_map_.find_group (object_group, group))
+  {
+    group->get_properties (result ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+  }
+  else
+  {
+    ACE_THROW (PortableGroup::ObjectGroupNotFound ());
+  }
+  return result._retn();
+#endif
 }
 
 
@@ -690,7 +769,7 @@ TAO::FT_ReplicationManager::create_member (
                                                the_criteria
                                                ACE_ENV_ARG_PARAMETER);
 
-  int todo;
+//@@  int todo;
 }
 
 
@@ -893,12 +972,24 @@ TAO::FT_ReplicationManager::create_object (
   // then create the corresponding
   // entry in our object group map
 
+  // first find the properties for this type of object group
+  TAO_PG::Properties_Decoder * typeid_properties;
+  if ( 0 != this->typeid_properties_map_.find (type_id, typeid_properties))
+  {
+    ACE_NEW_THROW_EX (
+      typeid_properties, 
+      TAO_PG::Properties_Decoder (& this->default_properties_), 
+      CORBA::NO_MEMORY());
+    this->typeid_properties_map_.bind (type_id, typeid_properties);
+  }
+
   TAO::PG_Object_Group * objectGroup
     = TAO::PG_Object_Group::create (
       this->orb_.in (),
       obj.in (),
       type_id,
-      the_criteria
+      the_criteria,
+      typeid_properties
       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -942,6 +1033,6 @@ TAO::FT_ReplicationManager::delete_object (
   this->generic_factory_.delete_object (factory_creation_id
                                         ACE_ENV_ARG_PARAMETER);
 
-  int todo;
+//@@  int todo;
   ACE_CHECK;
 }
