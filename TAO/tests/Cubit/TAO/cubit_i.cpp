@@ -10,7 +10,7 @@
 #include "tao/corba.h"    // ... and skeletons
 #include "cubit_i.h"
 
-Cubit_i::Cubit_i (const char* obj_name)
+Cubit_i::Cubit_i (const char *obj_name)
   : _skel_Cubit (obj_name)
 {
 }
