@@ -33,6 +33,7 @@ project(RGKokyu) : acelib {
   sharedname  = RGKokyu
   dynamicflags = KOKYU_BUILD_DLL KOKYU_HAS_RELEASE_GUARD
   includes += $(ACE_ROOT)/Kokyu
+  after += Kokyu
 
   verbatim (gnuace,top) {
     all : clean
