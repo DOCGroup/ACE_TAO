@@ -103,72 +103,40 @@ int
 TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                                      TAO_Transport_Descriptor_Interface *desc)
 {
-  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
-  TAO_Endpoint *endpoint = desc->endpoint ();
+  if (TAO_debug_level > 2)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
+                ACE_LIB_TEXT ("making a new connection\n")));
 
-  if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
+
+
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    this->narrow_endpoint (desc->endpoint ());
+
+  if (iiop_endpoint == 0)
     return -1;
 
-   TAO_IIOP_Endpoint *iiop_endpoint =
-     ACE_dynamic_cast (TAO_IIOP_Endpoint *,
-                       endpoint );
-   if (iiop_endpoint == 0)
-     return -1;
-
-   const ACE_INET_Addr &remote_address =
-     iiop_endpoint->object_addr ();
-
-   // Verify that the remote ACE_INET_Addr was initialized properly.
-   // Failure can occur if hostname lookup failed when initializing the
-   // remote ACE_INET_Addr.
-   if (remote_address.get_type () != AF_INET)
-     {
-       if (TAO_debug_level > 0)
-         {
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
-                       ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
-                       ACE_LIB_TEXT ("due to a hostname lookup ")
-                       ACE_LIB_TEXT ("failure.\n")));
-         }
-
-       return -1;
-     }
-
    int result = 0;
+
    TAO_IIOP_Connection_Handler *svc_handler = 0;
-
-
-   if (TAO_debug_level > 2)
-     ACE_DEBUG ((LM_DEBUG,
-                 ACE_LIB_TEXT ("(%P|%t) IIOP_Connector::connect - ")
-                 ACE_LIB_TEXT ("making a new connection\n")));
 
    // Purge connections (if necessary)
    // @@TODO: This is not the right place for this!
    this->orb_core ()->lane_resources ().transport_cache ().purge ();
 
-   // @@todo: Need to add code for non-blocking connects..
-   if (max_wait_time != 0)
-     {
-       ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                        *max_wait_time);
+   ACE_Time_Value *max_wait_time =
+     invocation->max_wait_time ();
 
-       // We obtain the transport in the <svc_handler> variable. As
-       // we know now that the connection is not available in Cache
-       // we can make a new connection
-       result = this->base_connector_.connect (svc_handler,
-                                               remote_address,
-                                               synch_options);
-     }
-   else
-     {
-       // We obtain the transport in the <svc_handler> variable. As
-       // we know now that the connection is not available in Cache
-       // we can make a new connection
-       result = this->base_connector_.connect (svc_handler,
-                                               remote_address);
-     }
+   /////////////****************
+   ACE_Synch_Options synch_options (ACE_Synch_Options::USE_REACTOR,
+                                    *max_wait_time);
+
+   // We obtain the transport in the <svc_handler> variable. As
+   // we know now that the connection is not available in Cache
+   // we can make a new connection
+   result = this->base_connector_.connect (svc_handler,
+                                           remote_address,
+                                           synch_options);
 
    if (result == -1)
      {
@@ -349,6 +317,42 @@ TAO_IIOP_Connector::init_tcp_properties (void)
     no_delay;
 
   return 0;
+}
+
+TAO_IIOP_Endpoint *
+TAO_IIOP_Connector::narrow_endpoint (TAO_Endpoint *endpoint)
+{
+  if (endpoint->tag () != TAO_TAG_IIOP_PROFILE)
+    return -1;
+
+  TAO_IIOP_Endpoint *iiop_endpoint =
+    ACE_dynamic_cast (TAO_IIOP_Endpoint *,
+                      endpoint );
+
+  if (iiop_endpoint == 0)
+    return 0;
+
+  const ACE_INET_Addr &remote_address =
+    iiop_endpoint->object_addr ();
+
+  // Verify that the remote ACE_INET_Addr was initialized properly.
+  // Failure can occur if hostname lookup failed when initializing the
+  // remote ACE_INET_Addr.
+  if (remote_address.get_type () != AF_INET)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection failed.\n")
+                      ACE_LIB_TEXT ("TAO (%P|%t) This is most likely ")
+                      ACE_LIB_TEXT ("due to a hostname lookup ")
+                      ACE_LIB_TEXT ("failure.\n")));
+        }
+
+      return 0;
+    }
+
+  return iiop_endpoint;
 }
 
 #if 0
