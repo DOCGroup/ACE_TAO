@@ -1,3 +1,17 @@
+Thu Jun 29 18:30:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+        * tao/GIOP_Message_Base.cpp: Fixed a bug in calculating the number
+	  of bytes that  needs to be copied into queue.
+
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.h: Changed the signature of copy
+          (). It returns the number of bytes copied instead of a void.
+
+	* tao/Transport.cpp (parse_consolidate_messages):
+	* tao/Transport.h: Added a new method parse_consolidate_messages
+	  () to the class. It does some common functaionalities like
+	  parsing the messages & consolidating the messages.
+
 Thu Jun 28 18:30:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Resume_Handle.cpp: Added a check for resumable_handlers
