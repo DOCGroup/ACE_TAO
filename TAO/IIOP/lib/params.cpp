@@ -1,5 +1,6 @@
 #include "params.hh"
 #include "connect.hh"
+#include "objtable.hh"
 
 ROA_Parameters::ROA_Parameters()
   : using_threads_(0),
@@ -46,8 +47,30 @@ ROA_Factory::concurrency_strategy()
   return concurrency_strategy_;
 }
 
+TAO_Object_Table* ROA_Factory::objlookup_strategy()
+{
+  ROA_Parameters* p = ROA_PARAMS::instance();
+
+  switch(p->demux_strategy())
+    {
+    case ROA_Parameters::TAO_LINEAR:
+      break;
+    case ROA_Parameters::TAO_USER_DEFINED:
+      // it is assumed that the user will use the hooks to supply a
+      // user-defined instance of the object table
+      break;
+    case ROA_Parameters::TAO_ACTIVE_DEMUX:
+      break;
+    case ROA_Parameters::TAO_DYNAMIC_HASH:
+    default:
+      this->objtable_ = new TAO_Dynamic_Hash_ObjTable (p->tablesize());
+    }
+  return this->objtable_;
+}
+
 ROA_Factory::ROA_Factory()
-  : concurrency_strategy_(0)
+  : concurrency_strategy_(0),
+    objtable_(0)
 {
 }
 

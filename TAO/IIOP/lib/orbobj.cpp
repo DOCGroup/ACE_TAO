@@ -323,6 +323,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init(int &argc, char **argv, const char *boa_identi
   CORBA_String_var host = CORBA_string_dup("");
   CORBA_String_var demux = CORBA_string_dup("dynamic_hash"); // default atleast for now
   CORBA_UShort port = 5001;  // some default port -- needs to be a #defined value
+  CORBA_ULong tablesize = 0; // default table size for lookup tables
   CORBA_Boolean numeric = CORBA_B_FALSE;
   CORBA_Boolean use_threads = CORBA_B_FALSE;
   const char* ior = 0;
@@ -385,6 +386,19 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init(int &argc, char **argv, const char *boa_identi
 
 	  argc -= 2;
 	}
+      else if (strcmp(argv[i], "-OAtablesize") == 0)
+	{
+	  if (i + 1 < argc)
+	    tablesize = ACE_OS::atoi(argv[i+1]);
+	  else
+            {
+            }
+
+	  for(int j = i ; j + 2 < argc ; j++)
+	    argv[j] = argv[j + 2];
+
+	  argc -= 2;
+	}
       else if (strcmp(argv[i], "-OArcvsock") == 0)
 	{
 	}
@@ -421,6 +435,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init(int &argc, char **argv, const char *boa_identi
   params->demux_strategy(demux);
   params->addr(rendezvous);
   params->upcall(CORBA_BOA::dispatch);
+  params->tablesize(tablesize);
 
 #if defined(ROA_NEED_REQ_KEY)
   (void) ACE_Thread::keycreate(&req_key_);
