@@ -1,0 +1,27 @@
+// $Id$
+
+// OBV Factorial test.
+
+valuetype registry
+{
+  public long value;
+
+  //  factory init (in long x);
+};
+
+typedef sequence<registry> registries;
+
+interface series
+{
+  // Basic value type check.
+  registry cube (in registry v);
+
+  // Add series
+  registries sum (in registries x);
+
+  // Factorial operation.
+  //  registries factorial (in registries init);
+
+  // shutting down the server
+  void shutdown ();
+};
