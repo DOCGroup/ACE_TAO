@@ -69,6 +69,8 @@ public:
 
     int xonlim;  // min bytes in input buffer before xon
     int xofflim; // max bytes in input buffer before xoff
+
+    int dtrdisable; // Controls whether DTR is disabled or not.
   };
 
   /// Interface for reading/writing serial device parameters.
