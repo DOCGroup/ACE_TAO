@@ -1,9 +1,12 @@
 // $Id$
 
+#include /**/ "ace/pre.h"
+
 #include "Any_Handler.h"
 #include "DataType_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "tao/Any.h"
+
 
 namespace CIAO
 {
@@ -54,7 +57,7 @@ namespace CIAO
       else if (value.boolean_p ())
         {
           toconfig <<= 
-            CORBA::Boolean (static_cast <bool &> (value.boolean ()));
+			  CORBA::Any::from_boolean (static_cast <bool &> (value.boolean ()));
         }
       else if (value.double_p ())
         {
@@ -83,12 +86,12 @@ namespace CIAO
       else if (value.longlong_p ())
         {
           toconfig <<= 
-            CORBA::LongLong (static_cast <long long &> (value.longlong ()));
+            CORBA::LongLong (static_cast <ACE_INT64 &> (value.longlong ()));
         }
       else if (value.ulonglong_p ())
         {
           toconfig <<=
-            CORBA::ULongLong (static_cast <unsigned long long &> (value.ulonglong ()));
+            CORBA::ULongLong (static_cast <ACE_UINT64 &> (value.ulonglong ()));
         }
     }
 
@@ -105,3 +108,4 @@ namespace CIAO
     }
   }
 }
+#include /**/ "ace/post.h"

@@ -1,3 +1,9 @@
+Wed Mar 23 13:00:32 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+	* DAnCE/Config_Handlers/Any_Handler.cpp
+
+	Fixed compile errors for VC6.
+
 Wed Mar 23 12:39:43 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/examples/Swapping/Sender/Sender.mpc:
