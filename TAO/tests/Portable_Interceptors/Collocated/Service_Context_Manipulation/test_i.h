@@ -19,7 +19,8 @@
  *
  * Implements the Visual interface in test.idl
  */
-class Visual_i : public POA_Test_Interceptors::Visual
+class Visual_i : public virtual POA_Test_Interceptors::Visual,
+                 public virtual PortableServer::RefCountServantBase
 {
 
 public:
