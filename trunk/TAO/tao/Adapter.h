@@ -75,7 +75,7 @@ public:
     // The key is not in the right format for this Adapter, try the
     // next one.
 
-    DS_FORWARD,
+    DS_FORWARD
     // Forward the request to another object reference, this decouples
     // the ORB from the PortableServer::ForwardRequest exception
   };

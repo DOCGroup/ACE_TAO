@@ -1,8 +1,14 @@
+Fri Sep  1 13:07:23 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/Adapter.h:
+          SunCC 4.2 does not like trailing commas at the end of an enum
+          list, removed it to stop the warnings.
+
 Fri Sep 01 11:49:08 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tao/Stub.cpp
+        * tao/Stub.cpp
 
-	  Fixed waring caused by an unused local variable.
+          Fixed waring caused by an unused local variable.
 
 Fri Sep  1 08:32:01 2000  Carlos O'Ryan  <coryan@uci.edu>
 
