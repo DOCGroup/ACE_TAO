@@ -19,12 +19,12 @@
 //
 // ============================================================================
 
+#include <iostream>
+#include <fstream>
+#include <strstream>
 #include "server.h"
 #include <algorithm>
 #include "icp.h"
-#include <strstream>
-#include <fstream>
-#include <iostream>
 
 // The following headers are #included automatically by ACE+TAO.
 // Therefore, they don't need to be included explicitly.
@@ -32,7 +32,7 @@
 // #include <iostream.h>
 
 const char *Controller_oid = "Controller";
-
+const unsigned int           DeviceLocator_impl::MAX_EQ_SIZE = 100;
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
@@ -314,10 +314,10 @@ Controller_impl (PortableServer::POA_ptr poa,
     : m_poa (PortableServer::POA::_duplicate (poa)),
       m_asset_file (asset_file)
 {
-  fstream afile (m_asset_file.in (), ios::in|ios::out, 0666);
+  std::ifstream afile (m_asset_file.in (), std::ios::in|std::ios::out);//, 0666);
   if  (!afile)
     {
-      cerr << "Cannot open " << m_asset_file.in () << endl;
+      std::cerr << "Cannot open " << m_asset_file.in () << std::endl;
       throw 0;
     }
   CCS::AssetType anum;
@@ -339,20 +339,20 @@ Controller_impl::
 {
   // Write out the current set of asset numbers
   // and clean up all servant instances.
-  ofstream afile (m_asset_file.in ());
+  std::ofstream afile (m_asset_file.in ());
   if  (!afile)
     {
-      cerr << "Cannot open " << m_asset_file.in () << endl;
+      std::cerr << "Cannot open " << m_asset_file.in () << std::endl;
       assert (0);
     }
   AssetMap::iterator i;
 
   for  (i = m_assets.begin (); i != m_assets.end (); i++)
     {
-      afile << i->first << endl;
+      afile << i->first << std::endl;
       if  (!afile)
         {
-          cerr << "Cannot update " << m_asset_file.in () << endl;
+          std::cerr << "Cannot update " << m_asset_file.in () << std::endl;
           assert (0);
         }
       delete i->second;
@@ -360,7 +360,7 @@ Controller_impl::
   afile.close ();
   if  (!afile)
     {
-      cerr << "Cannot close " << m_asset_file.in () << endl;
+      std::cerr << "Cannot close " << m_asset_file.in () << std::endl;
       assert (0);
     }
 }
@@ -687,7 +687,7 @@ main (int argc, char * argv[])
 
       // Write a reference for the controller to stdout.
       CORBA::String_var str = orb->object_to_string (obj.in ());
-      cout << str.in () << endl << endl;
+      cout << str.in () << std::endl << std::endl;
 
       // Instantiate the servant locator for devices.
       PortableServer::ServantManager_var locator =
@@ -704,7 +704,9 @@ main (int argc, char * argv[])
     }
   catch  (const CORBA::Exception & e)
     {
-      cerr << "Uncaught CORBA exception: " << e << endl;
+      std::cerr << "Uncaught CORBA exception: " 
+                //<< e 
+                << std::endl;
       return 1;
     }
   catch  (...)
