@@ -205,7 +205,10 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
     new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
                         0);
   
-  inherit_name->nconc (new UTL_ScopedName (new Identifier ("ExceptionHolder", 0,0,0),
+  inherit_name->nconc (new UTL_ScopedName (new Identifier ("ExceptionHolder", 
+                                                           0,
+                                                           0,
+                                                           0),
                                            0));
  
   be_valuetype *inherit_vt = new be_valuetype (inherit_name,
@@ -214,7 +217,10 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                                0);
   inherit_vt->set_name (inherit_name);
 
-  be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
+  be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging", 
+                                                                      0,
+                                                                      0,
+                                                                      0),
                                                             0),
                                   0);
  
@@ -236,10 +242,10 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
   p_intf[0] = (AST_Interface *)inherit_vt;
 
   be_valuetype *excep_holder = new be_valuetype (excep_holder_name,  // name
-                                                    p_intf,             // list of inherited
-                                                    1,                  // number of inherited
-                                                    0,                  // pragmas
-                                                    0);                 // set abstract
+                                                 p_intf,             // list of inherited
+                                                 1,                  // number of inherited
+                                                 0,                  // pragmas
+                                                 0);                 // set abstract
   excep_holder->set_name (excep_holder_name);
 
   // Now our customized valuetype is created, we have to 
@@ -280,7 +286,10 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
               // Create the return type, which is "void"
               be_predefined_type *rt = new be_predefined_type (AST_PredefinedType::PT_void,
                                                                new UTL_ScopedName
-                                                                 (new Identifier ("void", 1, 0, I_FALSE), 
+                                                                 (new Identifier ("void", 
+                                                                                  1, 
+                                                                                  0, 
+                                                                                  I_FALSE), 
                                                                   0),
                                                                0);
 
@@ -290,7 +299,10 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
               ACE_CString new_local_name ("raise_");
               new_local_name += op->name ()->last_component ()->get_string ();
   
-              new_name->nconc (new UTL_ScopedName (new Identifier (new_local_name.rep (), 0,0,0),
+              new_name->nconc (new UTL_ScopedName (new Identifier (new_local_name.rep (), 
+                                                                   0,
+                                                                   0,
+                                                                   0),
                                                    0));
 
               be_operation *operation = new be_operation (rt,
@@ -298,10 +310,13 @@ be_visitor_ami_pre_proc::create_exception_holder (be_interface *node)
                                                           new_name,
                                                           0);
 
+              AST_Operation *op_base = ACE_reinterpret_cast (AST_Operation *,
+                                                             op);
+
               // Copy the exceptions.
-              if (((AST_Operation *)op)->exceptions ())
+              if (op_base->exceptions ())
                 {
-                  UTL_ExceptList *exceptions = (UTL_ExceptList *)((AST_Operation *)op)->exceptions ()->copy ();
+                  UTL_ExceptList *exceptions = (UTL_ExceptList *)op_base->exceptions ()->copy ();
                   operation->be_add_exceptions (exceptions);
                 }
 
