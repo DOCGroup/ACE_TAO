@@ -19,9 +19,6 @@
 // They forgot a const in the prototype of putmsg and putpmsg...
 #define ACE_LACKS_CONST_STRBUF_PTR
 
-// They forgot a const in the prototype of const_timewait...
-#define ACE_LACKS_CONST_TIMESPEC_PTR
-
 // Compiler's template mechanism must see source code (i.e., .C files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 // Compiler doesn't support static data member templates.

@@ -670,7 +670,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, LOCK>::advance (void)
        && this->map_man_.search_structure_[this->next_].is_free_;
        this->next_--)
     continue;
-  return size_t (this->next_) >= 0;
+  return this->next_ >= 0;
 }
 
 #endif /* ACE_MAP_MANAGER_C */

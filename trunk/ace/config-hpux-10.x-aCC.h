@@ -2,7 +2,6 @@
 // $Id$
 
 // The following configuration file is designed to work for HP
-// platforms running HP/UX 10.x.  For using HP C++ compiler with
 // platforms running HP/UX 10.x and using the HP/aCC compiler.
 
 #if !defined (ACE_CONFIG_H)
@@ -19,7 +18,7 @@
 
 #define _HPUX_SOURCE
 #include /**/ <sys/stdsyms.h>
-#include /**/ <sched.h>                              /*  pthread.h doesn't include this */
+#include /**/ <sched.h> /*  pthread.h doesn't include this */
 
 #define ACE_HAS_BROKEN_CONVERSIONS
 

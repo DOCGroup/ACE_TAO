@@ -68,7 +68,7 @@ public:
   ssize_t send (const ACE_Str_Buf *cntl, 
 		const ACE_Str_Buf *data,
 		int band, 
-		int flags = 0) const;
+		int flags) const;
   // Send bytes via STREAM pipes using "band" mode.
 
   ssize_t recv (ACE_Str_Buf *cntl, 

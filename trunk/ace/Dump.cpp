@@ -41,7 +41,7 @@ ACE_Dumpable_Ptr::operator= (const ACE_Dumpable *dumper) const
   ACE_TRACE ("ACE_Dumpable_Ptr::operator=");
   if (this->dumper_ != dumper) 
     {
-      delete (ACE_Dumpable_Ptr *) this->dumper_;
+      delete (ACE_Dumpable *) this->dumper_;
       ((ACE_Dumpable_Ptr *) this)->dumper_ = dumper;
     }
 }

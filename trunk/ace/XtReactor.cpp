@@ -299,7 +299,7 @@ void ACE_XtReactor::reset_timeout (void)
     }
 }
 
-int
+long
 ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler, 
 			       const void *arg,
 			       const ACE_Time_Value &delta_time, 
@@ -308,14 +308,16 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
   ACE_TRACE ("ACE_XtReactor::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_REACTOR_MUTEX, ace_mon, this->token_, -1));
 
-  int result = 
+  long result = 
     ACE_Reactor::schedule_timer (handler, arg, delta_time, interval);
 
   if (result == -1)
-    return result;
-
-  this->reset_timeout ();
-  return result;
+    return -1;
+  else
+    {
+      this->reset_timeout ();
+      return result;
+    }
 }
 
 int
@@ -324,31 +326,32 @@ ACE_XtReactor::cancel_timer (ACE_Event_Handler *handler,
 {
   ACE_TRACE ("ACE_XtReactor::cancel_timer");
 
-  int result = ACE_Reactor::cancel_timer (handler, 
-					  dont_call_handle_close);
-      
-  if (result == -1)
+  if (ACE_Reactor::cancel_timer (handler, 
+				 dont_call_handle_close) == -1)
     return -1;
-
-  this->reset_timeout ();
-  return 0;
+  else
+    {
+      this->reset_timeout ();
+      return 0;
+    }
 }
 
 int
-ACE_XtReactor::cancel_timer (int timer_id, 
+ACE_XtReactor::cancel_timer (long timer_id, 
 			     const void **arg,
 			     int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_XtReactor::cancel_timer");
 
-  int result = ACE_Reactor::cancel_timer (timer_id, 
-					  arg,
-					  dont_call_handle_close);
-  if (result == -1)
+  if (ACE_Reactor::cancel_timer (timer_id, 
+				 arg,
+				 dont_call_handle_close) == -1)
     return -1;
-
-  this->reset_timeout ();
-  return 0;
+  else
+    {
+      this->reset_timeout ();
+      return 0;
+    }
 }
 
 #endif /* ACE_HAS_XT */
