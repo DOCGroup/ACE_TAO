@@ -1,3 +1,9 @@
+Fri Aug 24 08:24:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * examples/simple/time-date/time-date.bor:
+          Added target, so that time-date dll name is appended with
+          decorator string
+
 Thu Aug 23 09:49:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/include/utl_err.h:
@@ -5,7 +11,7 @@ Thu Aug 23 09:49:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAO_IDL/util/utl_identifier.cpp:
 
           Added new error message saying that an idenifier has
-          more than one leading underscore, and a check for 
+          more than one leading underscore, and a check for
           that condition in the UTL_Identifier contstructor.
           Thanks to Daniel Manfis <dany_100@yahoo.com> for
           reporting this bug.
