@@ -1,3 +1,11 @@
+Fri Jan  2 10:39:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_type.cpp: Completely reimplemented the way
+	ACE_NESTED_CLASS macro gets generated.
+
+	* TAO_IDL/be/be_state_sequence.cpp: Fixed an error where the
+	reference operator "&" was getting generated at the wrong place.
+
 Wed Dec 31 23:29:59 1997  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* tao/nvlist.cpp (add_value_consume): Added a space between * and
