@@ -1,3 +1,10 @@
+Fri Apr 23 22:16:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Event/Mcast/Common/Gateway_EC.cpp:
+
+	  Include "ace/OS_NS_stdio.h" to pull in f{open,close,printf}()
+	  function prototypes.
+
 Fri Apr 23 20:28:35 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/PSS/PSDL_String.cpp:
