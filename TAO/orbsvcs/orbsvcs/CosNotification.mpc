@@ -1,8 +1,8 @@
 project(CosNotification) : orbsvcslib, core, etcl, dynamicany, portableserver {
   sharedname   = TAO_CosNotification
   // Warning : The idlflags must match exactly those used in CosEvent, because
-  //           we don't know which project will actually generate the IDL. 
-  //           For this reason we also just use the event_export.h and macros for 
+  //           we don't know which project will actually generate the IDL.
+  //           For this reason we also just use the event_export.h and macros for
   //           both services.
   idlflags    += -Wb,export_macro=TAO_Event_Export -Wb,export_include=CosEvent/event_export.h
 
@@ -51,7 +51,6 @@ project(CosNotification) : orbsvcslib, core, etcl, dynamicany, portableserver {
       Notify/Builder.cpp
       Notify/Consumer.cpp
       Notify/ConsumerAdmin.cpp
-      Notify/Container_T.cpp
       Notify/CosNotify_Initializer.cpp
       Notify/CosNotify_Service.cpp
       Notify/Default_Factory.cpp
@@ -63,20 +62,15 @@ project(CosNotification) : orbsvcslib, core, etcl, dynamicany, portableserver {
       Notify/EventType.cpp
       Notify/EventTypeSeq.cpp
       Notify/Event_Manager.cpp
-      Notify/Event_Map_Entry_T.cpp
-      Notify/Event_Map_T.cpp
       Notify/FilterAdmin.cpp
-      Notify/Find_Worker_T.cpp
       Notify/ID_Factory.cpp
       Notify/Method_Request.cpp
       Notify/Method_Request_Dispatch.cpp
       Notify/Method_Request_Dispatch_T.cpp
       Notify/Method_Request_Event.cpp
       Notify/Method_Request_Lookup.cpp
-      Notify/Method_Request_Lookup_T.cpp
       Notify/Method_Request_Shutdown.cpp
       Notify/Method_Request_Updates.cpp
-      Notify/Method_Request_Updates_T.cpp
       Notify/Notify_Constraint_Interpreter.cpp
       Notify/Notify_Constraint_Visitors.cpp
       Notify/Notify_Default_Collection_Factory.cpp
@@ -94,15 +88,10 @@ project(CosNotification) : orbsvcslib, core, etcl, dynamicany, portableserver {
       Notify/Property_T.cpp
       Notify/Proxy.cpp
       Notify/ProxyConsumer.cpp
-      Notify/ProxyConsumer_T.cpp
       Notify/ProxySupplier.cpp
-      Notify/ProxySupplier_T.cpp
-      Notify/Proxy_T.cpp
       Notify/QoSProperties.cpp
       Notify/Reactive_Task.cpp
       Notify/Refcountable.cpp
-      Notify/Refcountable_Guard_T.cpp
-      Notify/Seq_Worker_T.cpp
       Notify/Subscription_Change_Worker.cpp
       Notify/Supplier.cpp
       Notify/SupplierAdmin.cpp
