@@ -27,7 +27,7 @@ public:
     // Spawn the new process; prepare() hook is called first.
     ACE_Process_Options options;
     pid_t pid = this->spawn (options);
-    if (pid == -1)
+    if (pid == ACE_INVALID_PID)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT ("%p\n"),
                         ACE_TEXT ("spawn")), -1);
 
