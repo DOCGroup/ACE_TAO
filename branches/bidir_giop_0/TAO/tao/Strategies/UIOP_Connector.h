@@ -33,47 +33,11 @@
 
 #include "ace/Connector.h"
 #include "ace/LSOCK_Connector.h"
-#include "UIOP_Connect.h"
+#include "UIOP_Connection_Handler.h"
 #include "tao/Resource_Factory.h"
+#include "tao/Connector_Impl.h"
 
-// ****************************************************************
-class TAO_Strategies_Export TAO_UIOP_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
-{
-  // = TITLE
-  //   Helper creation strategy
-  //
-  // = DESCRIPTION
-  //   Creates UIOP_Client_Connection_Handler objects but satisfies
-  //   the interface required by the
-  //   ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
-  //
-public:
-  TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
-                                      TAO_ORB_Core* orb_core = 0,
-                                      void *arg = 0,
-                                      CORBA::Boolean flag = 0);
-  // Constructor. <arg> parameter is used to pass any special
-  // state/info to the service handler upon creation.  Currently used
-  // by IIOP and UIOP to pass protocol configuration properties.
 
-  ~TAO_UIOP_Connect_Creation_Strategy (void);
-  // Destructor
-
-  virtual int make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh);
-  // Makes TAO_UIOP_Client_Connection_Handlers
-
-private:
-  TAO_ORB_Core* orb_core_;
-  // The ORB
-
-  void *arg_;
-  // Some info/state to be passed to the service handler we create.
-
-  CORBA::Boolean lite_flag_;
-  // Are we using lite?
-};
-
-// ****************************************************************
 
 class TAO_Strategies_Export TAO_UIOP_Connector : public TAO_Connector
 {
@@ -120,23 +84,23 @@ protected:
 
 public:
 
-  typedef ACE_Concurrency_Strategy<TAO_UIOP_Client_Connection_Handler>
-          TAO_ACTIVATION_STRATEGY;
+  typedef TAO_Connect_Concurrency_Strategy<TAO_UIOP_Connection_Handler>
+          TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY;
 
-  typedef ACE_Connect_Strategy<TAO_UIOP_Client_Connection_Handler,
-                               ACE_LSOCK_CONNECTOR>
-          TAO_CONNECT_STRATEGY ;
+  typedef TAO_Connect_Creation_Strategy<TAO_UIOP_Connection_Handler>
+          TAO_UIOP_CONNECT_CREATION_STRATEGY;
 
-  typedef ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler,
+  typedef ACE_Connect_Strategy<TAO_UIOP_Connection_Handler,
                                ACE_LSOCK_CONNECTOR>
+          TAO_UIOP_CONNECT_STRATEGY ;
+
+  typedef ACE_Strategy_Connector<TAO_UIOP_Connection_Handler,
+                                 ACE_LSOCK_CONNECTOR>
           TAO_UIOP_BASE_CONNECTOR;
 
 private:
 
-  TAO_ACTIVATION_STRATEGY null_activation_strategy_;
-  // Our activation strategy
-
-  TAO_CONNECT_STRATEGY connect_strategy_;
+  TAO_UIOP_CONNECT_STRATEGY connect_strategy_;
   // Our connect strategy
 
   TAO_UIOP_BASE_CONNECTOR base_connector_;

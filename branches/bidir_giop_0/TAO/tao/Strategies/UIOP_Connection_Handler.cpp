@@ -1,6 +1,6 @@
 // $Id$
 
-#include "UIOP_Connect.h"
+#include "UIOP_Connection_Handler.h"
 
 #if TAO_HAS_UIOP == 1
 
@@ -31,7 +31,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t)
     TAO_Connection_Handler (0),
     transport_ (this, 0, 0),
     refcount_ (1),
-    tcp_properties_ (0)
+    uiop_properties_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -49,7 +49,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core
     TAO_Connection_Handler (orb_core),
     transport_ (this, orb_core, flag),
     refcount_ (1),
-    tcp_properties_ (ACE_static_cast
+    uiop_properties_ (ACE_static_cast
                      (TAO_UIOP_Properties *, arg))
 {
 }
@@ -84,40 +84,22 @@ int
 TAO_UIOP_Connection_Handler::open (void*)
 {
   if (this->set_socket_option (this->peer (),
-                               this->tcp_properties_->send_buffer_size,
-                               this->tcp_properties_->recv_buffer_size) == -1)
+                               this->uiop_properties_->send_buffer_size,
+                               this->uiop_properties_->recv_buffer_size) == -1)
     return -1;
 
-#if !defined (ACE_LACKS_TCP_NODELAY)
+  // Called by the <Strategy_Acceptor> when the handler is completely
+  // connected.
+  ACE_UNIX_Addr addr;
 
-  if (this->peer ().set_option (ACE_IPPROTO_TCP,
-                                TCP_NODELAY,
-                                (void *) &tcp_properties_->no_delay,
-                                sizeof (int)) == -1)
-    return -1;
-#endif /* ! ACE_LACKS_TCP_NODELAY */
-
-  // Called by the <Strategy_Acceptor> when the handler is
-  // completely connected.
-  ACE_INET_Addr addr;
-
-  char client[MAXHOSTNAMELEN + 16];
-
-  // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  // Verify that we can resolve the peer hostname.
-  else if (addr.addr_to_string (client, sizeof (client)) == -1)
-    return -1;
-
   if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) UIOP connection from client")
-                  ACE_TEXT ("<%s> on %d\n"),
-                  client, this->peer ().get_handle ()));
-    }
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) UIOP connection to server ")
+                ACE_TEXT ("<%s> on %d\n"),
+                addr.get_path_name (), this->peer ().get_handle ()));
 
   return 0;
 }
@@ -243,7 +225,7 @@ TAO_UIOP_Connection_Handler::close (u_long)
 int
 TAO_UIOP_Connection_Handler::add_handler_to_cache (void)
 {
-  ACE_INET_Addr addr;
+  ACE_UNIX_Addr addr;
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)

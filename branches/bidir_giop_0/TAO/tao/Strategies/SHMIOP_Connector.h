@@ -98,15 +98,14 @@ private:
   ACE_MEM_Addr address_;
   // local address
 
-  /// Our connect strategy
   TAO_SHMIOP_CONNECT_STRATEGY connect_strategy_;
+  // Our connect strategy
 
-  /// The connector initiating connection requests for IIOP.
   TAO_SHMIOP_BASE_CONNECTOR base_connector_;
+  // The connector initiating connection requests for SHMIOP.
 
-  /// Are we using GIOP lite??
   CORBA::Boolean lite_flag_;
-
+  // Are we using GIOP lite??
 };
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

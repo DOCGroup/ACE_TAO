@@ -26,13 +26,14 @@
 
 # if TAO_HAS_UIOP == 1
 #include "ace/LSOCK_Acceptor.h"
-#include "tao/GIOP_Message_State.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 
 // Forward decls.
 
 class TAO_ORB_Core;
+class TAO_UIOP_Connection_Handler;
+class TAO_Pluggable_Messaging;
 
 typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
         TAO_UIOP_SVC_HANDLER;

@@ -24,7 +24,7 @@
 
 #include "strategies_export.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Mem_Stream.h"
+#include "ace/MEM_Stream.h"
 #include "tao/Pluggable.h"
 
 class TAO_SHMIOP_Connection_Handler;

@@ -145,7 +145,7 @@ private:
   u_long refcount_;
 
   /// TCP configuration for this connection.
-  TAO_UIOP_Properties *tcp_properties_;
+  TAO_UIOP_Properties *uiop_properties_;
 };
 
 

@@ -32,7 +32,7 @@
 
 #include "strategies_export.h"
 #include "tao/Object_KeyC.h"
-#include "UIOP_Connect.h"
+#include "UIOP_Connection_Handler.h"
 #include "UIOP_Endpoint.h"
 
 #include "ace/UNIX_Addr.h"
