@@ -170,12 +170,21 @@ AST_Module::fe_add_module (AST_Module *t)
   AST_Module *m = 0;
 
   UTL_Scope *scope = t->defined_in ();
+  const char *prefix_holder = 0;
 
   // If our prefix is empty, we check to see if an ancestor has one.
   while (ACE_OS::strcmp (t->prefix (), "") == 0 && scope != 0)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
-      t->prefix (ACE_const_cast (char *, parent->prefix ()));
+      prefix_holder = parent->prefix ();
+
+      // We have reached global scope.
+      if (prefix_holder == 0)
+        {
+          break;
+        }
+
+      t->prefix (ACE_const_cast (char *, prefix_holder));
       scope = parent->defined_in ();
     }
 
