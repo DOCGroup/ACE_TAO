@@ -115,7 +115,7 @@ main (int argc, char *argv[])
         factory_creation_id;
 
       // Create a replicated Hasherobject (object group)
-      obj = factory->create_object (HasherFactory::repository_type_id (),
+      obj = factory->create_object ("IDL:Hasher:1.0",
                                     the_criteria,
                                     factory_creation_id.out (),
                                     ACE_TRY_ENV);

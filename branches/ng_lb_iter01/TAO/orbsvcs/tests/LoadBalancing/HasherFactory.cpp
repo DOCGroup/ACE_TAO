@@ -50,16 +50,16 @@ HasherFactory::~HasherFactory (void)
 CORBA::Object_ptr
 HasherFactory::create_object (
     const char *type_id,
-    const TAO_LoadBalancing::Criteria &the_criteria,
-    TAO_LoadBalancing::GenericFactory::FactoryCreationId_out
+    const LoadBalancing::Criteria &the_criteria,
+    LoadBalancing::GenericFactory::FactoryCreationId_out
       factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancing::NoFactory,
-                   TAO_LoadBalancing::ObjectNotCreated,
-                   TAO_LoadBalancing::InvalidCriteria,
-                   TAO_LoadBalancing::InvalidProperty,
-                   TAO_LoadBalancing::CannotMeetCriteria))
+                   LoadBalancing::NoFactory,
+                   LoadBalancing::ObjectNotCreated,
+                   LoadBalancing::InvalidCriteria,
+                   LoadBalancing::InvalidProperty,
+                   LoadBalancing::CannotMeetCriteria))
 {
   // This factory is only designed to create Hasher objects.
   // However, a GenericFactory need not be limited to being able to
@@ -69,9 +69,9 @@ HasherFactory::create_object (
   // objects, throw an exception if the type_id does not match that of
   // the Hasher.
   if (ACE_OS::strcmp (type_id,
-                      this->_interface_repository_id () /* TAO extension */
+                      "IDL:Hasher:1.0"
                       ) != 0)
-    ACE_THROW_RETURN (TAO_LoadBalancing::NoFactory (the_location,
+    ACE_THROW_RETURN (LoadBalancing::NoFactory (the_location,
                                                     type_id),
                       CORBA::Object::_nil ());
 
@@ -80,9 +80,9 @@ HasherFactory::create_object (
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   // Allocate a new FactoryCreationId for use as an "out" parameter.
-  TAO_LoadBalancing::GenericFactory::FactoryCreationId *tmp = 0;
+  LoadBalancing::GenericFactory::FactoryCreationId *tmp = 0;
   ACE_NEW_THROW_EX (tmp,
-                    TAO_LoadBalancing::GenericFactory::FactoryCreationId,
+                    LoadBalancing::GenericFactory::FactoryCreationId,
                     CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -112,11 +112,11 @@ HasherFactory::create_object (
 
 void
 HasherFactory::delete_object (
-    const TAO_LoadBalancing::GenericFactory::FactoryCreationId
+    const LoadBalancing::GenericFactory::FactoryCreationId
       &factory_creation_id,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   TAO_LoadBalancer::ObjectNotFound))
+                   LoadBalancing::ObjectNotFound))
 {
   HasherFactory::FactoryCreationId fcid;
 
@@ -141,7 +141,7 @@ HasherFactory::delete_object (
                     "HasherFactory: Unable to extract "
                     "FactoryCreationId.\n"));
 
-      ACE_THROW (TAO_LoadBalancer::ObjectNotFound ());  // @@ Correct?
+      ACE_THROW (LoadBalancing::ObjectNotFound ());  // @@ Correct?
     }
 }
 
@@ -183,7 +183,7 @@ HasherFactory::init (CORBA::Environment &ACE_TRY_ENV)
 
       policies[1]->destroy (ACE_TRY_ENV);
       ACE_CHECK;
-                                            
+
       // No longer need the RootPOA.
       CORBA::release (this->root_poa_._retn ());
 
@@ -194,13 +194,13 @@ HasherFactory::init (CORBA::Environment &ACE_TRY_ENV)
 
 void
 HasherFactory::parse_criteria (
-  const TAO_LoadBalancer::Criteria &criteria,
+  const LoadBalancing::Criteria &criteria,
   CORBA::Environment &ACE_TRY_ENV)
 {
   // We don't use any criteria!
 
   if (criteria.length () != 0)
-    ACE_THROW (TAO_LoadBalancer::CannotMeetCriteria (criteria));
+    ACE_THROW (LoadBalancing::CannotMeetCriteria (criteria));
 }
 
 HasherFactory::FactoryCreationId
@@ -234,7 +234,7 @@ HasherFactory::bind_fcid (PortableServer::ObjectId *oid,
       return fcid;
     }
 
-  ACE_THROW_RETURN (TAO_LoadBalancer::ObjectNotCreated (), 0);
+  ACE_THROW_RETURN (LoadBalancing::ObjectNotCreated (), 0);
 }
 
 void
@@ -248,7 +248,7 @@ HasherFactory::unbind_fcid (
 
   // Unbind the ObjectId/FactoryCreationId from the table.
   if (this->table_.unbind (fcid, oid) != 0)
-    ACE_THROW (TAO_LoadBalancer::ObjectNotFound ());
+    ACE_THROW (LoadBalancing::ObjectNotFound ());
 }
 
 const char *
@@ -260,9 +260,6 @@ HasherFactory::replica_type_id (void) const
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Hash_Map_Entry<HasherFactory::FactoryCreationId, PortableServer::ObjectId *>;
-template class ACE_Hash_Map_Manager<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Base_Ex<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator_Ex<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>;
@@ -271,9 +268,6 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<HasherFactory::FactoryCreationId
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Hash_Map_Entry<HasherFactory::FactoryCreationId, PortableServer::ObjectId *>
-#pragma instantiate ACE_Hash_Map_Manager<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<HasherFactory::FactoryCreationId, PortableServer::ObjectId *, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_Null_Mutex>
