@@ -430,6 +430,10 @@ libACE_la_LIBADD = $(X_PRE_LIBS) $(ACE_XLIBS) $(X_EXTRA_LIBS)
 TEMPLATE_FILES = \
   Acceptor.cpp \
   Active_Map_Manager_T.cpp \
+  Array_Base.cpp \
+  Node.cpp \
+  Unbounded_Set.cpp \
+  Unbounded_Queue.cpp \
   Asynch_Acceptor.cpp \
   Auto_IncDec_T.cpp \
   Auto_Ptr.cpp \

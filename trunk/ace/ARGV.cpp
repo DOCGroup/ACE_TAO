@@ -1,7 +1,7 @@
 // ARGV.cpp
 // $Id$
 
-// Transforms a string BUF into an ARGV-style vector of strings. 
+// Transforms a string BUF into an ARGV-style vector of strings.
 
 #include "ace/ARGV.h"
 #include "ace/Log_Msg.h"
@@ -74,7 +74,7 @@ ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
 
   // Create this->argv_.
   if (this->string_to_argv () == -1)
-    ACE_ERROR ((LM_ERROR, 
+    ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("string_to_argv")));
 }
@@ -95,7 +95,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
     return;
 
   int buf_len = 0;
-  
+
   // Determine the length of the buffer.
 
   for (int i = 0; argv[i] != 0; i++)
@@ -107,7 +107,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
       if (this->substitute_env_args_
 	  && (argv[i][0] == '$'
 	  && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
-	buf_len += ACE_OS::strlen (temp);	
+	buf_len += ACE_OS::strlen (temp);
       else
 #endif /* !ACE_LACKS_ENV */
 	buf_len += ACE_OS::strlen (argv[i]);
@@ -151,7 +151,7 @@ ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
   *end = '\0';
 }
 
-ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[], 
+ACE_ARGV::ACE_ARGV (ACE_TCHAR *first_argv[],
                     ACE_TCHAR *second_argv[],
                     int substitute_env_args)
   : substitute_env_args_ (substitute_env_args),
@@ -236,7 +236,7 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
 
   // Wipe argv_ and buf_ away so that they will be recreated if the
   // user calls argv () or buf ().
-  if (this->argv_ != 0) 
+  if (this->argv_ != 0)
     {
       for (int i = 0; this->argv_[i] != 0; i++)
 	ACE_OS::free ((void *) this->argv_[i]);
@@ -266,7 +266,7 @@ ACE_ARGV::add (ACE_TCHAR *argv[])
 ACE_ARGV::~ACE_ARGV (void)
 {
   ACE_TRACE ("ACE_ARGV::~ACE_ARGV");
- 
+
   if (this->argv_ != 0)
     for (int i = 0; this->argv_[i] != 0; i++)
       ACE_OS::free ((void *) this->argv_[i]);
@@ -301,7 +301,7 @@ ACE_ARGV::create_buf_from_queue (void)
   size_t len;
   int more = 0;
 
-  while (!iter.done ()) 
+  while (!iter.done ())
     {
       // Get next argument from the queue.
       iter.next (arg);
@@ -318,7 +318,7 @@ ACE_ARGV::create_buf_from_queue (void)
       ptr += len;
 
       // Put in an argument separating space.
-      if (more != 0) 
+      if (more != 0)
 	*ptr++ = ' ';
     }
 

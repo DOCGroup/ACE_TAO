@@ -23,7 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers.h"
 #include "ace/Malloc_T.h"
 #include "ace/Synch.h"
 

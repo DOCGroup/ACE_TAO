@@ -93,13 +93,17 @@ ACE_TkReactor::TimerCallbackProc (ClientData cd)
   self->reset_timeout ();
 }
 
-// This could be made shorter if we know which *kind* of event we were
-// about to get.  Here we use <select> to find out which one might be
-// available.
-
+/**
+ * @todo the unused mask argument is probably quite useful, but we
+ *       ignore it, why?  In fact the following comment probably
+ *       relates to that:
+ *       This could be made shorter if we know which *kind* of event
+ *       we were about to get.  Here we use <select> to find out which
+ *       one might be available.
+ */
 void
 ACE_TkReactor::InputCallbackProc (ClientData cd,
-				  int mask)
+				  int /* mask */)
 {
   ACE_TkReactor_Input_Callback *callback = (ACE_TkReactor_Input_Callback *) cd;
   ACE_TkReactor *self = callback->reactor_;
@@ -357,7 +361,7 @@ ACE_TkReactor::reset_timeout (void)
 
 int
 ACE_TkReactor::reset_timer_interval
-  (long timer_id, 
+  (long timer_id,
    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_TkReactor::reset_timer_interval");

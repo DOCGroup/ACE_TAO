@@ -12,16 +12,16 @@
 
 
 #ifndef ACE_TIMER_QUEUE_ADAPTERS_H
-# define ACE_TIMER_QUEUE_ADAPTERS_H
-# include "ace/pre.h"
+#define ACE_TIMER_QUEUE_ADAPTERS_H
+#include "ace/pre.h"
 
-# include "ace/Task.h"
+#include "ace/Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# include "ace/Signal.h"
+#include "ace/Signal.h"
 
 /**
  * @class ACE_Async_Timer_Queue_Adapter
@@ -214,17 +214,17 @@ private:
   ACE_thread_t thr_id_;
 };
 
-# if defined (__ACE_INLINE__)
-#  include "ace/Timer_Queue_Adapters.i"
-# endif /* __ACE_INLINE__ */
+#if defined (__ACE_INLINE__)
+# include "ace/Timer_Queue_Adapters.i"
+#endif /* __ACE_INLINE__ */
 
-# if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#  include "ace/Timer_Queue_Adapters.cpp"
-# endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+# include "ace/Timer_Queue_Adapters.cpp"
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
-# if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#  pragma implementation ("Timer_Queue_Adapters.cpp")
-# endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+# pragma implementation ("Timer_Queue_Adapters.cpp")
+#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-# include "ace/post.h"
+#include "ace/post.h"
 #endif /* ACE_TIMER_QUEUE_ADAPTERS_H */
