@@ -506,7 +506,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   // arguments. Let us then use the name in this node.
   if (interface_local_name == 0 || interface_full_name == 0)
     {
-      interface_local_name = (char *) local_name ();
+      interface_local_name = (char *) this->local_name ();
       interface_full_name = (char *) this->full_name ();
     }
 
@@ -546,13 +546,15 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
-  *ci << "  " << ": ptr_ (" << interface_full_name << "::_nil ())" << nl;
+  *ci << "  " << ": ptr_ (" << "::" << interface_full_name 
+      << "::_nil ())" << nl;
   *ci << "{}\n\n";
 
   // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << interface_full_name << "_ptr p)" << nl;
+  *ci << fname << "::" << lname << " (" << "::" << interface_full_name 
+      << "_ptr p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
@@ -561,7 +563,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   // constructor because this inline function is used elsewhere. Hence to make
   // inlining of this function possible, we must define it before its use.
   ci->indent ();
-  *ci << "ACE_INLINE " << interface_full_name << "_ptr " << nl;
+  *ci << "ACE_INLINE " << "::" << interface_full_name << "_ptr" << nl;
   *ci << fname << "::ptr (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -572,9 +574,10 @@ be_interface::gen_var_impl (char *interface_local_name,
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const " << fname <<
-    " &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (" << interface_full_name << "::_duplicate (p.ptr ()))" << nl;
+  *ci << fname << "::" << lname << " (const " << "::" << interface_full_name 
+      << "_var &p) // copy constructor" << nl;
+  *ci << "  : ptr_ (" << "::" << interface_full_name 
+      << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
   // destructor
@@ -590,8 +593,8 @@ be_interface::gen_var_impl (char *interface_local_name,
   // assignment operator
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << interface_full_name <<
-    "_ptr p)" << nl;
+  *ci << fname << "::operator= (" << "::" << interface_full_name 
+      << "_ptr p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
@@ -603,15 +606,16 @@ be_interface::gen_var_impl (char *interface_local_name,
   // assignment operator from _var
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (const " << fname <<
-    " &p)" << nl;
+  *ci << fname << "::operator= (const " 
+      << "::" << interface_full_name << "_var &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (this != &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << interface_full_name << "::_duplicate (p.ptr ());\n";
+  *ci << "this->ptr_ = " << "::" << interface_full_name 
+      << "::_duplicate (p.ptr ());\n";
   ci->decr_indent ();
   *ci << "}" << nl;
   *ci << "return *this;\n";
@@ -621,8 +625,8 @@ be_interface::gen_var_impl (char *interface_local_name,
   // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator const " << interface_full_name <<
-    "_ptr &() const // cast" << nl;
+  *ci << fname << "::operator const " << "::" << interface_full_name 
+      << "_ptr &() const // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -631,7 +635,8 @@ be_interface::gen_var_impl (char *interface_local_name,
 
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << interface_full_name << "_ptr &() // cast " << nl;
+  *ci << fname << "::operator " << "::" << interface_full_name 
+      << "_ptr &() // cast " << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -640,7 +645,7 @@ be_interface::gen_var_impl (char *interface_local_name,
 
   // operator->
   ci->indent ();
-  *ci << "ACE_INLINE " << interface_full_name << "_ptr " << nl;
+  *ci << "ACE_INLINE " << "::" << interface_full_name << "_ptr" << nl;
   *ci << fname << "::operator-> (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -650,7 +655,7 @@ be_interface::gen_var_impl (char *interface_local_name,
 
   // in, inout, out, and _retn
   ci->indent ();
-  *ci << "ACE_INLINE " << interface_full_name << "_ptr" << nl;
+  *ci << "ACE_INLINE " << "::" << interface_full_name << "_ptr" << nl;
   *ci << fname << "::in (void) const" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -659,7 +664,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << interface_full_name << "_ptr &" << nl;
+  *ci << "ACE_INLINE " << "::" << interface_full_name << "_ptr &" << nl;
   *ci << fname << "::inout (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -668,24 +673,26 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << interface_full_name << "_ptr &" << nl;
+  *ci << "ACE_INLINE " << "::" << interface_full_name << "_ptr &" << nl;
   *ci << fname << "::out (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << interface_full_name << "::_nil ();" << nl;
+  *ci << "this->ptr_ = " << "::" << interface_full_name 
+      << "::_nil ();" << nl;
   *ci << "return this->ptr_;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
   ci->indent ();
-  *ci << "ACE_INLINE " << interface_full_name << "_ptr " << nl;
+  *ci << "ACE_INLINE " << "::" << interface_full_name << "_ptr" << nl;
   *ci << fname << "::_retn (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "// yield ownership of managed obj reference" << nl;
-  *ci << interface_full_name << "_ptr val = this->ptr_;" << nl;
-  *ci << "this->ptr_ = " << interface_full_name << "::_nil ();" << nl;
+  *ci << "::" << interface_full_name << "_ptr val = this->ptr_;" << nl;
+  *ci << "this->ptr_ = " << "::" << interface_full_name 
+      << "::_nil ();" << nl;
   *ci << "return val;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -806,43 +813,48 @@ be_interface::gen_out_impl (char *interface_local_name,
       // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << interface_full_name << "_ptr &p)" << nl;
+  *ci << fname << "::" << lname << " (" 
+      << "::" << interface_full_name << "_ptr &p)" << nl;
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = " << interface_full_name << "::_nil ();\n";
+  *ci << "this->ptr_ = " << "::" << interface_full_name 
+      << "::_nil ();\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
   // constructor from _var &
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (" << interface_full_name <<
-    "_var &p) // constructor from _var" << nl;
+  *ci << fname << "::" << lname << " (" << "::" << interface_full_name 
+      << "_var &p) // constructor from _var" << nl;
   *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
-  *ci << "this->ptr_ = " << interface_full_name << "::_nil ();\n";
+  *ci << "this->ptr_ = " << "::" << interface_full_name 
+      << "::_nil ();\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
   // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const " << fname <<
-    " &p) // copy constructor" << nl;
-  *ci << "  : ptr_ (ACE_const_cast (" << fname << "&,p).ptr_)" << nl;
+  *ci << fname << "::" << lname << " (const " << "::" << interface_full_name 
+      << "_out &p) // copy constructor" << nl;
+  *ci << "  : ptr_ (ACE_const_cast (" << "::" << interface_full_name 
+      << "_out &, p).ptr_)" << nl;
   *ci << "{}\n\n";
 
       // assignment operator from _out &
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (const " << fname <<
-    " &p)" << nl;
+  *ci << fname << "::operator= (const " << "::" << interface_full_name 
+      << "_out &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = ACE_const_cast (" << fname << "&,p).ptr_;" << nl;
+  *ci << "this->ptr_ = ACE_const_cast (" << "::" << interface_full_name 
+      << "_out&, p).ptr_;" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -850,11 +862,12 @@ be_interface::gen_out_impl (char *interface_local_name,
       // assignment operator from _var
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (const " << interface_full_name <<
-    "_var &p)" << nl;
+  *ci << fname << "::operator= (const " << "::" << interface_full_name 
+      << "_var &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
-  *ci << "this->ptr_ = " << interface_full_name << "::_duplicate (p.ptr ());" << nl;
+  *ci << "this->ptr_ = " << "::" << interface_full_name 
+      << "::_duplicate (p.ptr ());" << nl;
   *ci << "return *this;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
@@ -862,8 +875,8 @@ be_interface::gen_out_impl (char *interface_local_name,
       // assignment operator from _ptr
   ci->indent ();
   *ci << "ACE_INLINE " << fname << " &" << nl;
-  *ci << fname << "::operator= (" << interface_full_name <<
-    "_ptr p)" << nl;
+  *ci << fname << "::operator= (" << "::" << interface_full_name 
+      << "_ptr p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = p;" << nl;
@@ -874,8 +887,8 @@ be_interface::gen_out_impl (char *interface_local_name,
       // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
-  *ci << fname << "::operator " << interface_full_name <<
-    "_ptr &() // cast" << nl;
+  *ci << fname << "::operator " << "::" << interface_full_name 
+      << "_ptr &() // cast" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "return this->ptr_;\n";
@@ -884,7 +897,7 @@ be_interface::gen_out_impl (char *interface_local_name,
 
   // ptr function
   ci->indent ();
-  *ci << "ACE_INLINE " << interface_full_name << "_ptr &" << nl;
+  *ci << "ACE_INLINE " << "::" << interface_full_name << "_ptr &" << nl;
   *ci << fname << "::ptr (void) // ptr" << nl;
   *ci << "{\n";
   ci->incr_indent ();
@@ -894,7 +907,7 @@ be_interface::gen_out_impl (char *interface_local_name,
 
       // operator->
   ci->indent ();
-  *ci << "ACE_INLINE " << interface_full_name << "_ptr " << nl;
+  *ci << "ACE_INLINE " << "::" << interface_full_name << "_ptr" << nl;
   *ci << fname << "::operator-> (void)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
