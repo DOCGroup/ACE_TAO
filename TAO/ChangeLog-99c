@@ -1,10 +1,79 @@
+Tue Sep  7 20:26:16 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/params.h:
+	* tao/params.i:
+	* tao/params.cpp:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.cpp:
+
+	  Removed references to init_ref(). It only held the argument of
+	  the last -ORBInitRef option, which is pointless if there are
+	  multiple -ORBInitRef options on the command line.
+
+	* tao/ORB.h:
+
+	  Added a default exception argument to each of the
+	  run() methods.
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Make sure an existing ORB hasn't been shutdown before returning
+	  it.  [Bug 274]
+
+	* tao/ORB.cpp (url_ior_string_to_object):
+
+	  Disabled use of TAO_Stub_Auto_Ptr.  A seg fault occurs whenever
+	  its destructor tries to get a lock on Linux.  This fixes some URL
+	  style IOR problems.  It's on my TODO list (see bug 307).
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+
+	  Initialize orb_ in the member initializer list with
+	  CORBA::ORB::_nil().
+
+	  Corrected ACE_NEW_RETURN in init() that returned zero on error
+	  instead of the correct -1.
+
+	  Implemented a destroy() method which is also the implementation
+	  for the CORBA::ORB::destroy() method.
+
+	  Added some missing ACE_THROW_SPEC specifications.
+
+	  Added an exception argument to the run() method.
+
+	  Deprecated the -ORBNameServiceIOR, -ORBTradingServiceIOR and
+	  -ORBImplRepoServiceIOR ORB initialization options.  They still
+	  exist for backward compatiblity.  Their functionality is fully
+	  supported by the -ORBInitRef option.  Using -ORBInitRef is also
+	  the standard way of setting such IORs.  [Bugs 300, 301, 302]
+
+	* tao/Exception.h:
+
+	  Updated missing descriptions of some CORBA system exceptions.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
+
+	  Fixed format specifier mismatch warning.
+
+	* orbsvcs/Naming_Service/README:
+	* orbsvcs/tests/ImplRepo/run_test.pl:
+	* orbsvcs/tests/Simple_Naming/run_test.pl:
+	* orbsvcs/tests/Trading/run_test.pl:
+
+	  Updated with information about using -ORBInitRef instead of the
+	  now deprecated -ORB*ServiceIOR options.
+
 Tue Sep  7 19:15:24 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/RTCP.cpp (fmod): 
 	* orbsvcs/orbsvcs/AV/RTCP.h: 
 	Added the fmod(x,y) function to calculate the floating point
 	remainder of x/y. Thanks to David Levine for suggesting this.
-	
 
 Tue Sep  7 16:38:59 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
