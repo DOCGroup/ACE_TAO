@@ -1,6 +1,6 @@
 Sun Mar  1 13:54:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Makefile: Added cvs command to automatically tag the CVS
+	* Makefile: Added cvs commands to automatically tag the CVS
 	  repository with version number 'ACE_9_9_99' tag and 'Current'
 	  tag.
 
