@@ -1,0 +1,348 @@
+<!-- $Id$ -->
+
+<HTML>
+<HEAD>
+<TITLE>Building and Installing TAO</TITLE>
+</HEAD>
+<BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
+
+<HR>
+<H3>Building and Installing TAO</H3>
+
+<!--#include virtual="/~schmidt/TAO-versions-i.html" --> If you can
+help port TAO to other platforms we'd appreciate it. <P>
+
+TAO can be obtained <A
+HREF="http://www.cs.wustl.edu/~schmidt/TAO-obtain.html">electronically</A>
+via the WWW and ftp.  <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A> is bundled
+with the TAO release.  You'll always need the most recent version of
+ACE because TAO tracks changes to ACE very closely. <P>
+
+<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+For users who have used ACE with other ORBs, linking TAO with a
+version of ACE that is also linked against another ORB vendor's
+library, <EM>e.g.</EM>, liborbix.so, will produce undefined and most
+likely unpredictable and erroneous results. <P>
+
+
+<HR><P>
+<H3>On UNIX platforms</H3>
+
+<OL>
+  <LI>Set <CODE>ACE_ROOT</CODE> environment variable as outlined in
+      the <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">ACE
+      installation notes</A>.<P>
+
+  <LI>Build and install ACE under <CODE>$ACE_ROOT</CODE>.<P>
+
+      <UL>
+        <LI>Change directory to <CODE>$ACE_ROOT/ace</CODE> and execute
+            <CODE><A HREF="#makenotes">make</A></CODE>.<P>
+      </UL>
+
+  <LI>Set <CODE>TAO_ROOT</CODE> environment variable to
+      <CODE>$ACE_ROOT/TAO</CODE>. <P>
+
+  <LI>Build and install the TAO release under
+        <CODE>$TAO_ROOT</CODE>.<P>
+
+        <P>The easiest and recommended way to compile the
+          <B>complete</B> TAO distribution by simply simply executing
+          <code><a href="#makenotes">make</a></code>
+          in the <CODE>$TAO_ROOT</CODE> directory.
+        </P>
+
+        <P>A smaller subset, that may be of interest to test basic TAO
+          functionality, is:
+          <CODE>$TAO_ROOT/tao</CODE>,
+          <CODE>$TAO_ROOT/TAO_IDL</CODE>,
+          <CODE>$TAO_ROOT/tests/Param_Test</CODE>.
+          Then you can execute the <CODE>run_test.pl</CODE> script in
+          <CODE>$TAO_ROOT/tests/Param_Test</CODE> and/or
+          follow the instructions contained in the <CODE>README</CODE>
+          file in the same directory.
+        </P>
+
+        <P>If you wish to compile the services distributed with TAO,
+          including the <CODE>Naming_Service</CODE> you
+          must include <CODE>$TAO_ROOT/orbsvcs</CODE> to the list
+          above.
+        </P>
+
+  <LI>To test that the TAO release is properly configured,
+        follow instructions on executing the various examples under
+      <CODE>$TAO_ROOT/tests</CODE>.<P>
+
+</OL>
+
+<h4><strong><a name="makenotes">A Note On Make</a></strong></h4>
+
+Since TAO is built atop ACE, TAO re-uses ACE's Makefile structure as
+well.  Thus, just like ACE requires GNU Make, so too does TAO.  More
+exactly, versions of <code>make</code> which are known to <em>not</em>
+work include those from Solaris 4.x and 5.x, HP-UX, the latest BSD,
+etc.<p>
+
+GNU Make can be obtained from various places in source form.<P>
+
+
+<HR><P>
+<h3>For Cross-Compiled Targets, such as VxWorks and LynxOS</h3>
+
+If you are building TAO for a VxWorks target, please see the detailed
+instructions for building and installing ACE and TAO in <a
+href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
+
+Cross-compiling TAO is not much different than building it for
+self-host.  The one major difference is that TAO's IDL compiler must
+be built and run on the host; it's not necessary to run it on the
+target.  It's easiest to set this up by using a symlink (Unix) or copy
+of <code>tao_idl</code> (NT).  By way of example, here is how I setup
+my Unix (SunOS5, using g++) workspace to support cross-compilation
+(for VxWorks).  It assumes that the ACE+TAO distribution has been
+unpacked, with TAO below ACE_wrappers.  It uses the
+ACE_wrappers/bin/create_ace_build script to create a shadow build
+tree:<p>
+<ol>
+  <li><code>cd ACE_wrappers</code>
+  <li><code>bin/create_ace_build SunOS5_g++</code>
+  <li><code>bin/create_ace_build vxworks</code>
+  <li><code>cd build/vxworks/TAO</code>
+  <li><code>/bin/rm -r TAO_IDL</code>
+  <li><code>ln -s ../../SunOS5_g++/TAO/TAO_IDL</code>
+</ol><p>
+
+To build on the host:
+<ol>
+  <li><code>cd build/SunOS5_g++</code>
+  <li><code>export ACE_ROOT=`pwd`;
+    export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH</code>
+  <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
+    make.log</code>
+  <li><code>cd ../vxworks</code>
+  <li><code>export ACE_ROOT=`pwd`</code>
+  <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
+    make.log</code>
+</ol><p>
+
+For NT hosts, please see the detailed instructions for building and
+installing ACE and TAO in <a
+href="../ACE-INSTALL.html#vxworks">../ACE-INSTALL.html</a>.<p>
+
+Please note that dynamic loading of libraries is not supported by TAO
+for any cross-compiled target.  Therefore, dynamic service
+configuration of the TAO ORB is not supported.<p>
+
+If using perfect hashing, TAO_IDL needs gperf to be built on the host.
+That's the default on many platforms.  First, build <code>gperf</code>
+in the <code>ACE_wrappers/apps/gperf/src/</code> directory.  Then, add
+a symlink or copy to the <code>bin/</code> directory for the
+target.<p>
+
+
+<HR><P>
+<H3>On Windows NT</H3>
+
+<P><CODE>TAO_IDL</CODE> on NT will look for the Microsoft Visual C++
+compiler as "C:\Program Files\DevStudio\VC\bin\CL.EXE".  If this
+compiler is located elsewhere (or if using a different compiler)
+add a variable CPP_LOCATION to your environment and set it to the compiler
+you want to use.  This variable will override the default.
+</P>
+
+<p><a href="http://www.panix.com/~hoggardb/index.shtml">Barry
+Hoggard</a> maintains a <a
+href="http://www.panix.com/~hoggardb/corba/">CORBA Page</a>
+which contains very helpful information on setting MSVC project
+settings for TAO applications.</P>
+
+Remember to <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">set
+up ACE</A> before building TAO.
+
+<H4>Visual C++ 5.0/6.0</H4>
+
+<P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
+<CODE>ACE_wrappers\TAO</CODE> because the Visual C++ 5 Project files
+are set up to work in this configuration. If you move it, then make
+sure you change the project files to look for the include and library
+files in the correct place.</P>
+
+<OL>
+  <LI>Make sure ACE is built (For Visual C++ 5.0/6.0, use ace.dsw). <P>
+
+  <LI>First make sure <CODE>ACE_wrappers\bin</CODE> is listed in the Executable
+      Directories in Tools|Options.  This is needed if using the TAO_IDL
+      compiler under MSVC.  If you intend to also use the release version of the
+          libraries, also add <CODE>ACE_wrappers\bin\Release</CODE> to the directories.
+          <STRONG>Note:</STRONG> The order that these are listed is important.  If your
+          main development is with the debug versions, make sure \bin is before
+          \bin\Release, otherwise put the \bin\Release first.  Because the output names
+          for the release and debug versions of TAO_IDL are the same, extra care must be
+          taken when both versions are generated simulataneously. <P>
+
+  <LI>Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO
+      library. <P>
+
+  <LI>To build the Cubit test, load the workspace
+      <CODE>performance-tests\Cubit\TAO\IDL_Cubit\IDL_Cubit.dsw</CODE>
+      and build both client and server. <P>
+</OL>
+
+<H4><A NAME="taoace">TAOACE.dsw</A></H4>
+
+<P>TAOACE.dsw is a Visual C++ 5.0/6.0 workspace that loads the projects
+ACE, TAO, TAO_IDL (the compiler), orbsvcs, gperf and the Naming Service.
+The dependencies are set up to correctly between the projects so for
+example, ACE will be built automatically when TAO is built.  An easy
+way to compile everything is to just compile the debug or release
+version of the Naming Service.</P>
+
+<H4>Visual C++ 4.x</H4>
+
+<OL>
+  <LI>In Tools|Options, go to the Directories page and make sure that
+      include files paths includes ACE_wrappers\ and the root directory of
+      TAO (which can be <CODE>ACE_wrappers\TAO</CODE> if installed there).
+      The library files paths should include <CODE>ACE_wrappers\ace</CODE>.<P>
+
+  <LI>Load the project file <CODE>tao\TAO.mdp</CODE> and build the TAO
+      library.<P>
+
+  <LI>To build the Cubit test, load the project file
+      <CODE>tests\Cubit\TAO\test.mdp</CODE> and build both client and
+      server.<P>
+</OL>
+
+<H4>Upgrading From Older Releases</H4>
+
+<P>When a newer version of ACE/TAO is installed, rebuild all should be
+used to make sure everything is built correctly.</P>
+
+<H4>Changing Include Paths</H4>
+
+<P>If you prefer <code>#include &lt;corba.h&gt;</code> over <code> #include
+&lt;tao/corba.h&gt;</code> then you will need to change your Project Settings
+to also contain the <code>TAO/tao</code> directory.  You'll find this in the
+C/C++ settings under Input.</P>
+
+<H4>Creating Static Libraries (*.lib)</H4>
+
+<P>TAO, orbsvcs, TAO_IDL, and the Simple Test all have extra project files
+for static library builds.  TAOACE_static.dsw contains all these projects,
+and is set up much like <A HREF="#taoace">TAOACE.dsw</A>.  To use the static
+libraries in a project, make sure to the following settings are used in
+the Project Settings.</P>
+
+<UL>
+  <LI><strong>C/C++ | General:</strong> Add the Preprocessor Definitions
+      <CODE>TAO_HAS_DLL=0</CODE>, <CODE>ACE_HAS_DLL=0</CODE> and
+      <CODE>__ACE_INLINE__=0</CODE>
+  <LI><strong>C/C++ | Code Generation:</strong> Change Run-time
+      library to <CODE>Debug Multithreaded</CODE> (or
+      <CODE>Multithreaded</CODE> for Release)
+  <LI><strong>Link:</strong> Link with the static libs, such as
+      TAOs.lib or TAOsd.lib
+</UL>
+
+<HR>
+<H3><A NAME="#VC">How to add IDL files into your Visual C++ projects</A></H3>
+Point of contact: <A HREF="mailto:nanbor@cs.wustl.edu">Nanbor Wang</A>.
+
+<P>Each IDL file generates .h, .i and .cpp files. Here is an example of
+adding an IDL file named foobar.idl into a VC project.
+<OL>
+  <LI>Create/open the workspace. Create server project and client project if
+      you haven't had them ready. Add the IDL file &lt;foobar.idl&gt and other
+      non-IDL generated files into both client and server projects.</LI>
+
+  <LI>Added foobarC.h, foobarC.i, foobarC.cpp, foobarS.h, foobarS.i, and
+      foobarS.cpp into both server and client projects.</LI>
+
+  <LI>Now open the project setting window (Project -&gt; Setting... or just
+      press Alt-F7.) Select the IDL files in both client and server projects.
+          Choose to set the setting for "All Configuration." Make sure the
+          "Always use custom build step" is checked and "Exclude from build" is
+          unchecked.</LI>
+
+  <LI>Click on the "Custom Build" tab. Add this entry as the build command
+      for IDL files:<BR><BR>
+
+      <PRE>tao_idl $(InputName).idl</PRE>
+      Notice that your absolute path to TAO_IDL may vary.</LI>
+
+  <LI>Now add the following entries as "Output file(s)."<BR><BR>
+
+      <PRE>
+      $(InputName)S.h
+      $(InputName)C.h
+      $(InputName)C.i
+      $(InputName)C.cpp
+      $(InputName)S.i
+      $(InputName)S.cpp
+      $(InputName)S_T.h
+      $(InputName)S_T.i
+      $(InputName)S_T.cpp
+      </PRE>
+      Add only one entry in each line.</LI>
+
+  <LI>You might also want to add the TAO_IDL compiler in as a dependency here
+      if you update TAO often.  That way, if the compiler is changed, the
+          IDL files are recompiled automatically in the next build.</LI>
+
+  <LI>We are all set. Click OK.</LI>
+
+  <LI>Add foobarC.cpp and foobarS.cpp to both the client and server
+      project.</LI>
+</OL>
+
+<p>Notice that these procedures only setup the IDL compiler to perform
+correctly. </p>
+
+<P>P.S. If anyone knows how to set a default setting in VC so we don't
+need to perform these procedures every time a new project gets set up,
+please let us know. Thanks.
+
+
+<P>
+<HR>
+<H3>Perl Scripts</H3>
+
+<P>Several of TAO's tests and examples contain perl scripts that automate the
+execution of these tests. The scripts are found as "run_test.pl" in the
+directory of the test.</p>
+
+<P> The versions of perl that we use are 5.005_02 on NT and 5.003 on Solaris.
+The scripts may work on earlier versions of perl, but we cannot say for sure
+that they do.</P>
+
+<HR>
+<H3>Native Exceptions</H3>
+
+<P>TAO will use native exceptions if TAO_HAS_EXCEPTIONS is defined when it is
+compiled. This can be accomplished in two ways: by defining ACE_HAS_EXCEPTIONS
+in the config.h or config-*.h files (such as on Windows) or by using
+<CODE>make exceptions=1</CODE> when you compile TAO.</P>
+
+<P>Take note though, that this only enables support in ACE/TAO, the correct
+compiler flags must also be given to the compiler to enable them.</P>
+
+<HR>
+<P>
+
+<H3>minimumTAO</H3>
+
+<P>By default, all components in TAO will be compiled.  If you only
+want support for <A HREF="docs/minimumTAO.html">minimumTAO</A>, define
+TAO_HAS_MINIMUM_CORBA. This can be accomplished in two ways: by
+defining TAO_HAS_MINIMUM_CORBA in the config.h or orbconf.h files or
+by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
+
+<HR>
+<P>
+
+Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> home page.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+</BODY>
+</HTML>
