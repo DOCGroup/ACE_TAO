@@ -25,14 +25,13 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
       = this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
-    CORBA::PolicyList policies (0);
-
     this->callback_poa_ =
       this->poa_->create_POA ("callback_poa",
-                            mgr.in (),
-                            policies
-                            ACE_ENV_ARG_PARAMETER);
+                              mgr.in (),
+                              0
+                              ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
+
   }
   ACE_CATCHANY
   {
@@ -41,12 +40,11 @@ CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
     ACE_RE_THROW;
   }
   ACE_ENDTRY;
-
 }
 
 CIAO::NodeDaemon_Impl::~NodeDaemon_Impl ()
 {
-
+  
 }
 
 PortableServer::POA_ptr
@@ -54,6 +52,7 @@ CIAO::NodeDaemon_Impl::_default_POA (void)
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+
 
 char *
 CIAO::NodeDaemon_Impl::name (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -111,30 +110,31 @@ CIAO::NodeDaemon_Impl::preparePlan (const Deployment::DeploymentPlan &plan
       PortableServer::ServantBase_var safe (app_mgr);
 	   
 	   //@@ Note: after the init call the servant ref count would become 2. so
-      //   we can leave the safeservant along and be dead. Also note that I added
-	  app_mgr->init (this->nodeapp_location_,
-					 this->spawn_delay_,
-					 plan,
-					 this->callback_poa_.in ()
-					 ACE_ENV_ARG_PARAMETER);
+     //   we can leave the safeservant along and be dead. Also note that I added
+      this->manager_ = 
+	    app_mgr->init (this->nodeapp_location_,
+                     this->spawn_delay_,
+                     plan,
+                     this->callback_poa_.in ()
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the Object Reference
-      CORBA::Object_var obj =
-        this->poa_->servant_to_reference (app_mgr ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      //CORBA::Object_var obj =
+      //  this->poa_->servant_to_reference (app_mgr ACE_ENV_ARG_PARAMETER);
+      //ACE_TRY_CHECK;
 
-      this->manager_ =
-        Deployment::NodeApplicationManager::_narrow (obj.in ());
-
+      //this->manager_ =
+      //  Deployment::NodeApplicationManager::_narrow (obj.in ());
       if (CORBA::is_nil (this->manager_.in ()))
         {
-            ACE_DEBUG ((LM_DEBUG, "NodeDaemon_Impl:preparePlan: NodeApplicationManager ref is nil\n"));
+          ACE_DEBUG ((LM_DEBUG, "NodeDaemon_Impl:preparePlan: NodeApplicationManager ref is nil\n"));
           ACE_THROW (Deployment::StartError ());
         }
     }
+   
     // Duplicate this reference to the caller
-    return
+    return 
       Deployment::NodeApplicationManager::_duplicate (this->manager_.in ());
   }
   ACE_CATCHANY
@@ -155,15 +155,15 @@ CIAO::NodeDaemon_Impl::destroyManager (Deployment::NodeApplicationManager_ptr
 {
   ACE_TRY
   {
-	// Deactivate this object
-	PortableServer::ObjectId_var id =
-		this->poa_->reference_to_id (this->manager_.in () ACE_ENV_ARG_PARAMETER);
-	ACE_TRY_CHECK;
+    // Deactivate this object
+    PortableServer::ObjectId_var id =
+  	  this->poa_->reference_to_id (this->manager_.in () ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-	this->poa_->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
-	ACE_TRY_CHECK;
+    this->poa_->deactivate_object (id.in () ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
 
-	this->manager_ = Deployment::NodeApplicationManager::_nil ();
+    this->manager_ = Deployment::NodeApplicationManager::_nil ();
   }
   ACE_CATCHANY
   {

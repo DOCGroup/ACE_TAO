@@ -47,11 +47,11 @@ namespace CIAO
 
     /// Constructor
     NodeDaemon_Impl (const char *name,
-		            CORBA::ORB_ptr orb,
-		            PortableServer::POA_ptr p,
-                   const char * nodeapp_loc,
-                   int spawn_delay
-                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                     CORBA::ORB_ptr orb,
+                     PortableServer::POA_ptr p,
+                     const char * nodeapp_loc,
+                     int spawn_delay
+                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
 		ACE_THROW_SPEC ((CORBA::SystemException));
     /// Destructor
     virtual ~NodeDaemon_Impl (void);
@@ -92,13 +92,6 @@ namespace CIAO
                        Deployment::StopError));
 
   protected:
-    // Helper operations to maintain list of NodeApplication
-    // Managers
-    int bind (const char *id,
-              CORBA::Object_ptr obj);
-
-    int unbind (const char *id);
-
     // Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 

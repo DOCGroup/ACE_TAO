@@ -7,12 +7,11 @@
 #if !defined (__ACE_INLINE__)
 # include "NodeApplicationManager_Impl.inl"
 #endif /* __ACE_INLINE__ */
-
 CIAO::NodeApplicationManager_Impl::~NodeApplicationManager_Impl ()
 {
 }
 
-void
+Deployment::NodeApplicationManager_ptr
 CIAO::NodeApplicationManager_Impl::
 init (const char *nodeapp_location,
       const CORBA::ULong delay,
@@ -38,7 +37,7 @@ init (const char *nodeapp_location,
 
     // Cache the call back POA for callback object.
     this->callback_poa_ = PortableServer::POA::_duplicate (callback_poa);
-    
+
     // Activate the ourself.
     PortableServer::ObjectId_var oid
       = this->poa_->activate_object (this
@@ -52,7 +51,11 @@ init (const char *nodeapp_location,
     // And cache the object reference.
     this->objref_ = Deployment::NodeApplicationManager::_narrow (obj.in ()
 								 ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_TRY_CHECK;
+
+    //return this object reference
+    return Deployment::NodeApplicationManager::_duplicate (this->objref_.in ());
+
   }
   ACE_CATCHANY
   {
@@ -96,9 +99,9 @@ create_node_application (const ACE_CString & options
   CIAO::NodeApplication_Callback_Impl * callback_servant = 0;
   ACE_NEW_THROW_EX (callback_servant,
                     CIAO::NodeApplication_Callback_Impl (this->orb_.in (),
-							 this->callback_poa_.in (),
-							 this->objref_,
-							 prop.in ()),
+							      this->callback_poa_.in (),
+							      this->objref_.in (),
+							      prop.in ()),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (CORBA::_nil ());
 
@@ -274,7 +277,8 @@ startLaunch (const Deployment::Properties & configProperty,
 
   // Now spawn the NodeApplication process.
   ACE_CString cmd_option ("");
-  create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
+  Deployment::NodeApplication_var tmp =
+    create_node_application (cmd_option.c_str () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // This is what we will get back, a sequence of compoent object refs.
@@ -332,7 +336,7 @@ destroyApplication (Deployment::Application_ptr app
 {
   ACE_UNUSED_ARG (app);
 
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+  //ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   //@@ Since we know there is only 1 nodeapp so the passed in
   //   parameter is ignored for now.
 
