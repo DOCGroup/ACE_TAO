@@ -30,10 +30,12 @@ ACE_INLINE int
 ACE_Reactor::run_event_loop (void)
 {
   ACE_TRACE ("ACE_Reactor::run_event_loop");
+  ACE_Reactor *r = ACE_Reactor::instance ();
 
-  return
-    ACE_Reactor::instance ()
-      ->run_reactor_event_loop (ACE_Reactor::check_reconfiguration);
+  if (r == 0)
+    return -1;
+
+  return r->run_reactor_event_loop (ACE_Reactor::check_reconfiguration);
 }
 
 // Run the event loop until the <ACE_Reactor::handle_events>
@@ -44,11 +46,13 @@ ACE_INLINE int
 ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Reactor::run_event_loop");
+  ACE_Reactor *r = ACE_Reactor::instance ();
 
-  return
-    ACE_Reactor::instance ()
-      ->run_reactor_event_loop (tv,
-                                ACE_Reactor::check_reconfiguration);
+  if (r == 0)
+    return -1;
+
+  return r->run_reactor_event_loop 
+    (tv, ACE_Reactor::check_reconfiguration);
 }
 
 // Run the event loop until the <ACE_Reactor::alertable_handle_events> method
@@ -58,10 +62,12 @@ ACE_INLINE int
 ACE_Reactor::run_alertable_event_loop (void)
 {
   ACE_TRACE ("ACE_Reactor::run_alertable_event_loop");
+  ACE_Reactor *r = ACE_Reactor::instance ();
 
-  return
-    ACE_Reactor::instance ()
-      ->run_alertable_reactor_event_loop (ACE_Reactor::check_reconfiguration);
+  if (r == 0)
+    return -1;
+
+  return r->run_alertable_reactor_event_loop (ACE_Reactor::check_reconfiguration);
 }
 
 // Run the event loop until the <ACE_Reactor::alertable_handle_events>
@@ -72,11 +78,13 @@ ACE_INLINE int
 ACE_Reactor::run_alertable_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Reactor::run_alertable_event_loop");
+  ACE_Reactor *r = ACE_Reactor::instance ();
 
-  return
-    ACE_Reactor::instance ()
-      ->run_alertable_reactor_event_loop (tv,
-                                          ACE_Reactor::check_reconfiguration);
+  if (r == 0)
+    return -1;
+
+  return r->run_alertable_reactor_event_loop 
+    (tv, ACE_Reactor::check_reconfiguration);
 }
 
 ACE_INLINE void

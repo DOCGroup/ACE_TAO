@@ -4,6 +4,9 @@
 #include "ace/Proactor_Impl.h"
 #include "ace/Object_Manager.h"
 #include "ace/Task_T.h"
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_ACE_SVCCONF)
+#    include "ace/Service_Config.h"
+#  endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Proactor.i"
@@ -340,6 +343,19 @@ ACE_Proactor::close_singleton (void)
 }
 
 int
+ACE_Proactor::check_reconfiguration (ACE_Proactor *)
+{
+#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_SVCCONF)
+  if (ACE_Service_Config::reconfig_occurred ())
+    {
+      ACE_Service_Config::reconfigure ();
+      return 1;
+    }
+#endif /* ! ACE_HAS_WINCE || ! ACE_LACKS_ACE_SVCCONF */
+  return 0;
+}
+
+int
 ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
 {
   ACE_TRACE ("ACE_Proactor::proactor_run_event_loop");
@@ -370,9 +386,6 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
 
       if (eh != 0 && (*eh) (this))
         continue;
-
-      if (ACE_Service_Config::reconfig_occurred ())
-        ACE_Service_Config::reconfigure ();
 
       if (result == -1)
         break;
@@ -430,9 +443,6 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
 
       if (eh != 0 && (*eh) (this))
         continue;
-
-      if (ACE_Service_Config::reconfig_occurred ())
-        ACE_Service_Config::reconfigure ();
 
       if (result == -1)
         break;

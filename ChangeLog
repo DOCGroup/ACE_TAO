@@ -1,5 +1,12 @@
 Mon Dec 24 08:08:40 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/Proactor.i (run_event_loop): Refactored the code to
+	  use the new ACE_Proactor::check_reconfiguration() static method,
+ 	  just like the Reactor!
+
+	* ace/Proactor.h: Added the check_reconfiguration() static method
+	  to ACE_Proactor, a la the Reactor!
+
 	* ace/Reactor.h: Changed the signature of
 	  ACE_Reactor::check_reconfiguration() to reflect the following
  	  change.

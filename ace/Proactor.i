@@ -10,7 +10,7 @@ ACE_Proactor::run_event_loop (void)
   if (p == 0)
     return -1;
 
-  return p->proactor_run_event_loop ();
+  return p->proactor_run_event_loop (ACE_Proactor::check_reconfiguration);
 }
 
 int
@@ -22,7 +22,8 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
   if (p == 0)
     return -1;
 
-  return p->proactor_run_event_loop (tv);
+  return p->proactor_run_event_loop 
+    (tv, ACE_Proactor::check_reconfiguration);
 }
 
 int
