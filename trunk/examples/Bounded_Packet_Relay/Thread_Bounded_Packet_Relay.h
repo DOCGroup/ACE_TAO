@@ -14,7 +14,7 @@
 //    of the bounded packet relay example.
 //
 // = AUTHORS
-//    Chris Gill           <cdgill@cs.wustl.edu>  and			
+//    Chris Gill           <cdgill@cs.wustl.edu>  and
 //    Douglas C. Schmidt   <schmidt@cs.wustl.edu>
 //
 //    Based on the Timer Queue Test example written by
@@ -28,6 +28,9 @@
 #if !defined (_THREAD_BOUNDED_PACKET_RELAY_H_)
 #define _THREAD_BOUNDED_PACKET_RELAY_H_
 
+#define ACE_HAS_DEFERRED_TIMER_COMMANDS
+
+#include "ace/Functor.h"
 #include "ace/Task.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
@@ -54,7 +57,7 @@ class Thread_Bounded_Packet_Relay_Driver;
 class Text_Input_Device_Wrapper : public Input_Device_Wrapper_Base
 {
   // = TITLE
-  //    Defines a wrapper for a simple active looping text input 
+  //    Defines a wrapper for a simple active looping text input
   //    pseudo-device.
   //
   // = DESCRIPTION
@@ -72,13 +75,13 @@ class Text_Input_Device_Wrapper : public Input_Device_Wrapper_Base
 public:
 
   // = Enumerated logging level flags
-  enum Logging_Flags {NO_LOGGING = 0, 
+  enum Logging_Flags {NO_LOGGING = 0,
                       LOG_MSGS_CREATED = 1};
 
   // = Initialization and termination methods.
   Text_Input_Device_Wrapper (ACE_Thread_Manager *input_task_mgr,
-                             size_t read_length, 
-                             const char* text, 
+                             size_t read_length,
+                             const char* text,
                              int logging = 0);
   // Constructor.
 
@@ -116,7 +119,7 @@ private:
 class Text_Output_Device_Wrapper : public Output_Device_Wrapper_Base
 {
   // = TITLE
-  //    Implements a simple wrapper for a output pseudo-device.  
+  //    Implements a simple wrapper for a output pseudo-device.
   //
   // = DESCRIPTION
   //    Data from the passed output message is printed to the standard
@@ -124,7 +127,7 @@ class Text_Output_Device_Wrapper : public Output_Device_Wrapper_Base
 public:
 
   // = Enumerated logging level flags
-  enum Logging_Flags {NO_LOGGING = 0, 
+  enum Logging_Flags {NO_LOGGING = 0,
                       LOG_MSGS_RCVD = 2,
                       PRINT_MSGS_RCVD = 4};
 
@@ -161,8 +164,10 @@ class User_Input_Task : public ACE_Task_Base
   //   the control of a Timer_Queue, which is dispatched by another
   //   thread.
 public:
+
+  // = Trait for command accessible entry points.
+
   typedef int (User_Input_Task::*ACTION) (void *);
-  // Trait for command accessible entry points.
 
   User_Input_Task (Bounded_Packet_Relay *relay,
                    Thread_Timer_Queue *queue,
@@ -231,20 +236,30 @@ class BPR_Handler_Base : public ACE_Event_Handler
   //     Base event handler class for bounded packet relay example.
   //
   // = DESCRIPTION
-  //     The <handle_timeout> hook method calls the relay's send
-  //     method and decrements its count of messages to send.  
-  //     If there are still messages to send, it re-registers itself
-  //     with the timer queue.  Otherwise it calls the relay's end
-  //     transmission method, clears the timer queue, and then deletes "this".
+  //     The base class provides a helper method that derived classes
+  //     can register as a deferred execution callback that will cancel
+  //     all timers in the underlying timer queue, and then delete "this".
+  //
 public:
+
+  // = Trait for command accessible entry points.
+
+  typedef int (BPR_Handler_Base::*ACTION) (void *);
+
+  // = Trait for callback commands to methods of this base class
+
+  typedef ACE_Command_Callback<BPR_Handler_Base, BPR_Handler_Base::ACTION> COMMAND;
+
   BPR_Handler_Base (Bounded_Packet_Relay &relay,
                     Thread_Timer_Queue &queue);
   // Constructor.
 
-  ~BPR_Handler_Base (void);
+  virtual ~BPR_Handler_Base (void);
   // Destructor.
 
-  virtual int clear_all_timers (void);
+  // = Command accessible entry points.
+
+  virtual int clear_all_timers (void *);
   // Helper method: clears all timers.
 
 protected:
@@ -264,19 +279,29 @@ class Send_Handler : public BPR_Handler_Base
   //
   // = DESCRIPTION
   //     The <handle_timeout> hook method calls the relay's send
-  //     method and decrements its count of messages to send.  
+  //     method and decrements its count of messages to send.
   //     If there are still messages to send, it re-registers itself
   //     with the timer queue.  Otherwise it calls the relay's end
-  //     transmission method, clears the timer queue, and then deletes "this".
+  //     transmission method, and registers a deferred execution
+  //     callback to clear the timer queue, and then delete "this".
 public:
-  Send_Handler (u_long send_count, 
+
+  // = Trait for command accessible entry points.
+
+  typedef int (Send_Handler::*ACTION) (void *);
+
+  // = Trait for callback commands to methods of this class
+
+  typedef ACE_Command_Callback<Send_Handler, Send_Handler::ACTION> COMMAND;
+
+  Send_Handler (u_long send_count,
                 const ACE_Time_Value &duration,
                 Bounded_Packet_Relay &relay,
                 Thread_Timer_Queue &queue,
                 Thread_Bounded_Packet_Relay_Driver &driver);
   // Constructor.
 
-  ~Send_Handler (void);
+  virtual ~Send_Handler (void);
   // Destructor.
 
   virtual int handle_timeout (const ACE_Time_Value &current_time,
@@ -286,13 +311,19 @@ public:
   virtual int cancelled (void);
   // Cancellation hook.
 
+  // = Command accessible entry points.
+
+  virtual int reregister (void *timeout);
+  // Helper method: re-registers this handler.
+
 private:
+
   u_long send_count_;
   // Count of the number of messages to send from the
   // relay object to the output device object.
 
   ACE_Time_Value duration_;
-  // Stores the expected duration until expiration, and is used to 
+  // Stores the expected duration until expiration, and is used to
   // re-register the handler if there are still sends to perform.
 
   Thread_Bounded_Packet_Relay_Driver &driver_;
@@ -306,14 +337,15 @@ class Termination_Handler : public BPR_Handler_Base
   //
   // = DESCRIPTION
   //     The <handle_timeout> hook method calls the relay's end
-  //     transmission method, and then deletes "this".
+  //     transmission method, then registers a deferred execution
+  //     callback to clear all timers and then delete "this".
 public:
   Termination_Handler (Bounded_Packet_Relay &relay,
                        Thread_Timer_Queue &queue,
                        Thread_Bounded_Packet_Relay_Driver &driver);
   // Constructor.
 
-  ~Termination_Handler (void);
+  virtual ~Termination_Handler (void);
   // Destructor.
 
   virtual int handle_timeout (const ACE_Time_Value &current_time,
@@ -340,10 +372,13 @@ class Thread_Bounded_Packet_Relay_Driver : public Bounded_Packet_Relay_Driver <T
   //    called from the base class to print a menu specific to the
   //    thread implementation of the timer queue.
 public:
+
   // = Trait for commands issued from this driver
-  typedef Command<User_Input_Task, User_Input_Task::ACTION> COMMAND;
+
+  typedef ACE_Command_Callback<User_Input_Task, User_Input_Task::ACTION> COMMAND;
 
   // = Initialization and termination methods.
+
   Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);
   // Constructor.
 

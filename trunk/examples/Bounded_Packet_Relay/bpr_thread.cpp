@@ -31,7 +31,7 @@ ACE_RCSID(Bounded_Packet_Relay, bpr_thread, "$Id$")
 typedef Bounded_Packet_Relay_Driver<Thread_Timer_Queue>
 	THREAD_BOUNDED_PACKET_RELAY_DRIVER;
 
-typedef Command<Bounded_Packet_Relay, Bounded_Packet_Relay::ACTION>
+typedef ACE_Command_Callback<Bounded_Packet_Relay,Bounded_Packet_Relay::ACTION>
 	INPUT_CALLBACK;
 
 // A snippet from Andrew Marvell (Oliver Cromwell's poet laureate)

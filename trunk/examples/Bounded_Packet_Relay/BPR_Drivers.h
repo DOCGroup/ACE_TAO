@@ -29,27 +29,13 @@
 #if !defined (_BPR_DRIVERS_H_)
 #define _BPR_DRIVERS_H_
 
+#include "ace/Functor.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
 
 // forward declarations
 class Input_Device_Wrapper_Base;
 class Output_Device_Wrapper_Base;
-
-class Command_Base
-{
-  // = TITLE
-  //    Defines an abstract class that allows us to invoke commands
-  //    without knowing anything about the implementation.
-  //
-  // = DESCRIPTION
-  //    This class declares an interface to execute a command
-  //    independent of the effect of the command, or the objects used
-  //    to implement it.
-public:
-  virtual int execute (void *arg) = 0;
-  // Invokes the method <action_> from the object <receiver_>.
-};
 
 class Bounded_Packet_Relay
 {
@@ -67,7 +53,7 @@ class Bounded_Packet_Relay
   //     transmission call.
 public:
   // = Enumerates possible status values for a transmission.
-  enum Transmission_Status 
+  enum Transmission_Status
   {
     UN_INITIALIZED,
     STARTED,
@@ -211,8 +197,8 @@ public:
 
   virtual ~Input_Device_Wrapper_Base ();
   // Destructor.
- 
-  int set_send_input_msg_cmd (Command_Base *send_input_msg_cmd);
+
+  int set_send_input_msg_cmd (ACE_Command_Base *send_input_msg_cmd);
   // Sets send input message command in the input device driver
   // object.
 
@@ -244,7 +230,7 @@ protected:
   // underlying input device, by passing a pointer to the message
   // block to its command execution.
 
-  Command_Base *send_input_msg_cmd_;
+  ACE_Command_Base *send_input_msg_cmd_;
   // Send newly created input message.
 
   u_long input_period_;
@@ -254,7 +240,7 @@ protected:
   // Reactor used to multiplex input streams, timeouts.
 
   int is_active_;
-  // Flag to indicate whether or not input object is 
+  // Flag to indicate whether or not input object is
   // (and should remain) active.
 
   long send_count_;
@@ -262,7 +248,7 @@ protected:
   // device should not stop).
 
   long current_count_;
-  // Currently remaining count of messages to send before stopping 
+  // Currently remaining count of messages to send before stopping
   // (-1 indicates the device should not stop).
 
 };
