@@ -1,5 +1,8 @@
+#
+# $Id$
+#
 # Makefile for building the server exe with Borland C++ Builder
-
+#
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
 
