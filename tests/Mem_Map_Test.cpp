@@ -24,7 +24,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
-ACE_RCSID(tests, Mem_Map_Test, "$Id$")
+ACE_RCSID(tests, Mem_Map_Test, "Mem_Map_Test.cpp,v 4.36 2003/11/01 11:15:25 dhinton Exp")
 
 #if !defined (ACE_LACKS_MMAP)
 
@@ -68,11 +68,16 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
   ACE_NEW_RETURN (mybuf, char[line_length + 1], -1);
   const char *c = ACE_ALPHABET;
   const char *d = c;
-
+#if defined (__QNXNTO__) 
+  // For NTO has to applied to open the file, as Mem_Map can map only shared memory
+  ACE_Mem_Map mmap_4_open;
+  mmap_4_open.open (filename, O_RDWR | O_CREAT | O_TRUNC, ACE_DEFAULT_FILE_PERMS);
+  ACE_HANDLE file_handle  = mmap_4_open.handle();
+#else
   ACE_HANDLE file_handle = ACE_OS::open (filename,
                                          O_RDWR | O_CREAT | O_TRUNC,
                                          ACE_DEFAULT_FILE_PERMS);
-
+#endif
   if (file_handle  == ACE_INVALID_HANDLE)
     {
       delete [] mybuf;
@@ -111,8 +116,11 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
                             -1);
         }
     }
-
+#if defined (__QNXNTO__) 
+  mmap_4_open.close();
+#else
   ACE_OS::close (file_handle);
+#endif
 
   delete [] mybuf;
   return 0;
@@ -126,6 +134,11 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Mem_Map_Test"));
 
 #if !defined (ACE_LACKS_MMAP)
+
+#if defined (__QNXNTO__)
+  ACE_ERROR ((LM_INFO,
+                 ACE_TEXT ("mmap on QNX Neutrino can map only shared memory files\n")));
+#endif
 
   // = Initialize the temporary variable names
 
@@ -167,9 +180,17 @@ run_main (int, ACE_TCHAR *[])
                       -1);
 
   // Now create a temporary file for intermediate processing
+#if defined (__QNXNTO__) 
+  ACE_Mem_Map mmap_4_open;
+  mmap_4_open.open(temp_file1,
+                   O_RDWR | O_TRUNC | O_CREAT,
+                   ACE_DEFAULT_FILE_PERMS);
+  ACE_HANDLE temp_file_handle = mmap_4_open.handle();
+#else
   ACE_HANDLE temp_file_handle = ACE_OS::open (temp_file1,
                                               O_RDWR | O_TRUNC | O_CREAT,
                                               ACE_DEFAULT_FILE_PERMS);
+#endif
 
   if (temp_file_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -181,8 +202,11 @@ run_main (int, ACE_TCHAR *[])
   reverse_file (temp_file_handle,
                 (char *) mmap.addr (),
                 mmap.size ());
-
+#if defined (__QNXNTO__) 
+  mmap_4_open.close();
+#else
   ACE_OS::close (temp_file_handle);
+#endif
 
   ACE_Mem_Map temp_mmap;
 
@@ -192,11 +216,18 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("%n: %p\n%a"),
                        ACE_TEXT ("mmap")),
                       -1);
+#if defined (__QNXNTO__) 
+  mmap_4_open.open(temp_file2,
+	  O_RDWR | O_TRUNC | O_CREAT,
+	  ACE_DEFAULT_FILE_PERMS);
+  temp_file_handle = mmap_4_open.handle();
+#else
+  temp_file_handle = ACE_OS::open (temp_file2,
+	  O_RDWR | O_TRUNC | O_CREAT,
+	  ACE_DEFAULT_FILE_PERMS);
+#endif
+  if ( temp_file_handle == ACE_INVALID_HANDLE)
 
-  if ((temp_file_handle = ACE_OS::open (temp_file2,
-                                        O_RDWR | O_TRUNC | O_CREAT,
-                                        ACE_DEFAULT_FILE_PERMS))
-               == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Open failed\n")), -1);
 
   // Now reverse the temporary file and write everything to the second
@@ -204,8 +235,11 @@ run_main (int, ACE_TCHAR *[])
   reverse_file (temp_file_handle,
                 (char *) temp_mmap.addr (),
                 temp_mmap.size ());
-
+#if defined (__QNXNTO__) 
+  mmap_4_open.close();
+#else
   ACE_OS::close (temp_file_handle);
+#endif
 
   // Memory map the second temporary file
   ACE_Mem_Map temp_mmap2;
