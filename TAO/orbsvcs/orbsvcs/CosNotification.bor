@@ -56,7 +56,10 @@ OBJFILES = \
 	$(OBJDIR)\Notify_StructuredProxyPushSupplier_i.obj \
 	$(OBJDIR)\Notify_SupplierAdmin_i.obj \
 	$(OBJDIR)\Notify_Update_Dispatch_Command.obj \
-	$(OBJDIR)\Notify_Worker_Task.obj
+	$(OBJDIR)\Notify_Worker_Task.obj \
+	$(OBJDIR)\Notify_AdminProperties.obj \
+	$(OBJDIR)\Notify_Buffering_Strategy.obj \
+	$(OBJDIR)\Notify_MT_Worker_Task.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
