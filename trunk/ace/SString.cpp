@@ -206,8 +206,8 @@ ACE_CString::operator = (const ACE_CString &s)
 
 // Return substring.
 ACE_CString 
-ACE_CString::substring (const size_t offset,
-			const size_t length)
+ACE_CString::substring (size_t offset,
+			ssize_t length)
 {
   ACE_CString nil;
   size_t count = len_;
@@ -689,8 +689,8 @@ ACE_WString::operator = (const ACE_WString &s)
 
 // return substring
 ACE_WString 
-ACE_WString::substring (const size_t offset,
-			const size_t length)
+ACE_WString::substring (size_t offset,
+			ssize_t length)
 {
   ACE_WString nil;
   size_t count = len_;
