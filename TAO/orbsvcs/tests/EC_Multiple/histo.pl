@@ -1,8 +1,8 @@
 #
 # $Id$
 #
-# Extract a histogram, minium, maximum and average for the latency
-# results produced by the test.
+# Extract a histogram, minium, maximum and average from a file,
+# filtering by a given RE.
 #
 
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
@@ -15,8 +15,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use Getopt::Std;
 
-$opt_k = 'LCL';
-$opt_r = 10;
+$opt_k = 'Latency\[LCL,[A-Z]*\]';
+$opt_r = 1;
 
 getopts ('k:r:');
 
@@ -28,7 +28,7 @@ $n = 0;
 %histo = ();
 
 while (<>) {
-    if (!m/^Latency\[$opt_k\]/) {
+    if (!m/^$opt_k/) {
 	next;
     }
     chop;
@@ -37,7 +37,7 @@ while (<>) {
 	$min = $f[1];
 	$max = $f[1];
 	$sum = $f[1];
-	$sum2 = $f[1];
+	$sum2 = $f[1] * $f[1];
 	$n = 1;
     } else {
 	if ($min > $f[1]) {
@@ -55,12 +55,18 @@ while (<>) {
 }
 
 print "Latency results for $opt_k:\n";
-$s2 = $sum2 - ($sum * $sum) / $n;
-$sigma = int(sqrt ( $s2 / ($n - 1) ));
-print "Minimum: $min,",
-    " Maximum: $max,",
-    " Average: ", int($sum / $n),
-    " Deviation: ", $sigma,
+$s2 = $sum2 / ($n - 1) - $sum / $n * $sum / ($n - 1);
+if ($s2 >= 0) {
+    $sigma = int(sqrt ( $s2 ));
+} else {
+    print "Error: $sum, $sum2, $n\n";
+    $sigma = $sum2;
+}
+
+print "Min: $min,",
+    " Max: $max,",
+    " Avg: ", int($sum / $n),
+    " Dev: ", $sigma,
     "\n";
 
 while ( ($key,$value) = each %histo ) {

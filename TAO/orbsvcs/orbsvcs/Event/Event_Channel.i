@@ -78,7 +78,7 @@ ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
 
   if (push_consumer_ == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "Push to disconnected consumer %s: ",
+      ACE_DEBUG ((LM_DEBUG, "Push to disconnected consumer %s\n",
 		  ::ACE_ES_Consumer_Name (this->qos ())));
       // ACE_ES_DEBUG_ST (::dump_sequence (events));
       return;

@@ -618,16 +618,29 @@ ACE_EventChannel::report_connect (u_long event)
   if (ace_mon.locked () == 0)
     ACE_ERROR ((LM_ERROR, "ACE_EventChannel::report_connect"));
 
+  this->report_connect_i (event);
+}
+
+void
+ACE_EventChannel::report_connect_i (u_long event)
+{
   ACE_CLR_BITS (state_, event);
 }
 
 void
 ACE_EventChannel::report_disconnect (u_long event)
 {
+  // No need to gtrab the lock is already take by our callers.
   ACE_ES_GUARD ace_mon (lock_);
   if (ace_mon.locked () == 0)
     ACE_ERROR ((LM_ERROR, "ACE_EventChannel::report_disconnect"));
 
+  this->report_disconnect (event);
+}
+
+void
+ACE_EventChannel::report_disconnect_i (u_long event)
+{
   ACE_SET_BITS (state_, event);
   if (state_ == SHUTDOWN)
     ACE_DEBUG ((LM_DEBUG, "(%t) Event Channel has no consumers or suppliers.\n"));
@@ -893,7 +906,7 @@ ACE_ES_Consumer_Module::shutdown_request (ACE_ES_Dispatch_Request *request)
   if (all_consumers_.size () <= 0)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) No more consumers connected.\n"));
-      channel_->report_disconnect (ACE_EventChannel::CONSUMER);
+      channel_->report_disconnect_i (ACE_EventChannel::CONSUMER);
     }
 }
 
@@ -1141,6 +1154,8 @@ ACE_ES_Correlation_Module::schedule_timeout (ACE_ES_Consumer_Rep_Timeout *consum
   // after the scheduler has been run).
   consumer->preemption_priority (::IntervalToPriority (interval));
 
+  ACE_DEBUG ((LM_DEBUG, "Adding timer at preemption %d, rate = (%d,%d)\n",
+	      consumer->preemption_priority (), interval.low, interval.high));
   // Register the timer.
   int id = channel_->timer ()->schedule_timer (consumer->dependency ()->rt_info,
                                                consumer,
@@ -2478,7 +2493,7 @@ ACE_ES_Supplier_Module::disconnecting (ACE_Push_Supplier_Proxy *supplier,
   if (all_suppliers_.size () <= 0)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) No more suppliers connected.\n"));
-      channel_->report_disconnect (ACE_EventChannel::SUPPLIER);
+      channel_->report_disconnect_i (ACE_EventChannel::SUPPLIER);
     }
 
   // IMHO this release is broken: supplier is a parameter, we never
