@@ -94,12 +94,48 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\RMCast.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Fragment.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_IO_UDP.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Module.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Module_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Partial_Message.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Reassembly.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Event_Handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Proxy.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
+# Begin Source File
+
+SOURCE=.\RMCast.h
+# End Source File
 # Begin Source File
 
 SOURCE=.\RMCast_Export.h
@@ -110,11 +146,31 @@ SOURCE=.\RMCast_Fragment.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\RMCast_IO_UDP.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Module.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Module_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Partial_Message.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\RMCast_Reassembly.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Event_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Proxy.h
 # End Source File
 # End Group
 # Begin Group "Inline Files"
@@ -122,7 +178,23 @@ SOURCE=.\RMCast_Reassembly.h
 # PROP Default_Filter "i"
 # Begin Source File
 
+SOURCE=.\RMCast.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\RMCast_Fragment.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_IO_UDP.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Module.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_Module_Factory.i
 # End Source File
 # Begin Source File
 
@@ -132,20 +204,18 @@ SOURCE=.\RMCast_Partial_Message.i
 
 SOURCE=.\RMCast_Reassembly.i
 # End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Event_Handler.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\RMCast_UDP_Proxy.i
+# End Source File
 # End Group
 # Begin Group "Template Files"
 
 # PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\RMCast_Fragment.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\RMCast_Reassembly.cpp
-# PROP Exclude_From_Build 1
-# End Source File
 # End Group
 # End Target
 # End Project

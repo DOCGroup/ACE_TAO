@@ -23,7 +23,7 @@ class ACE_RMCast_Fragment_Tester
 public:
   ACE_RMCast_Fragment_Tester (void);
 
-  virtual int put_data (ACE_RMCast::Data &data);
+  virtual int data (ACE_RMCast::Data &data);
   virtual int svc (void);
 
 private:
@@ -84,7 +84,7 @@ ACE_RMCast_Fragment_Tester::svc (void)
 
     ACE_RMCast::Data data;
     data.payload = &big_blob;
-    if (this->fragment_.put_data (data) == -1)
+    if (this->fragment_.data (data) == -1)
       return -1;
 
     if (this->received_bytes_ != n)
@@ -126,7 +126,7 @@ ACE_RMCast_Fragment_Tester::svc (void)
 
     ACE_RMCast::Data data;
     data.payload = small;
-    if (this->fragment_.put_data (data) == -1)
+    if (this->fragment_.data (data) == -1)
       return -1;
 
     ACE_UINT32 total = n * size;
@@ -176,7 +176,7 @@ ACE_RMCast_Fragment_Tester::svc (void)
 
     ACE_RMCast::Data data;
     data.payload = small;
-    if (this->fragment_.put_data (data) == -1)
+    if (this->fragment_.data (data) == -1)
       return -1;
 
     if (this->received_bytes_ != total)
@@ -246,7 +246,7 @@ ACE_RMCast_Fragment_Tester::compare (ACE_Message_Block *mb)
 }
 
 int
-ACE_RMCast_Fragment_Tester::put_data (ACE_RMCast::Data &data)
+ACE_RMCast_Fragment_Tester::data (ACE_RMCast::Data &data)
 {
   ACE_UINT32 sequence_number = data.sequence_number;
   ACE_UINT32 message_size = data.total_size;

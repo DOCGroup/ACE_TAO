@@ -34,7 +34,7 @@ public:
   // Destructor
 
   // = The ACE_RMCast_Module methods
-  virtual int put_data (ACE_RMCast::Data &data);
+  virtual int data (ACE_RMCast::Data &data);
 
 private:
   ACE_SYNCH_MUTEX mutex_;

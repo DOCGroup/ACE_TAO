@@ -34,7 +34,7 @@ ACE_RMCast_Reassembly::~ACE_RMCast_Reassembly (void)
 }
 
 int
-ACE_RMCast_Reassembly::put_data (ACE_RMCast::Data &data)
+ACE_RMCast_Reassembly::data (ACE_RMCast::Data &data)
 {
   if (this->next () == 0)
     return 0;
@@ -42,7 +42,7 @@ ACE_RMCast_Reassembly::put_data (ACE_RMCast::Data &data)
   if (data.payload->length () + data.fragment_offset > data.total_size)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "RMCast_Reassembly::put_data - invalid size\n"));
+                  "RMCast_Reassembly::data - invalid size\n"));
       return -1; // Corrupt message?
     }
 
@@ -92,7 +92,7 @@ ACE_RMCast_Reassembly::put_data (ACE_RMCast::Data &data)
   downstream_data.fragment_offset = 0;
   downstream_data.payload = message->message_body ();
 
-  int r = this->next ()->put_data (downstream_data);
+  int r = this->next ()->data (downstream_data);
 
   delete message;
 

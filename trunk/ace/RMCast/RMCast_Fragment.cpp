@@ -25,7 +25,7 @@ ACE_RMCast_Fragment::~ACE_RMCast_Fragment (void)
 }
 
 int
-ACE_RMCast_Fragment::put_data (ACE_RMCast::Data &received_data)
+ACE_RMCast_Fragment::data (ACE_RMCast::Data &received_data)
 {
   if (this->next () == 0)
     return 0;
@@ -38,7 +38,7 @@ ACE_RMCast_Fragment::put_data (ACE_RMCast::Data &received_data)
   // @@ We should keep the total size precomputed
   data.total_size = mb->total_size ();
 
-  // We must leave room for the header 
+  // We must leave room for the header
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
   const int ACE_RMCAST_WRITEV_MAX = IOV_MAX - 2;
 #else
@@ -126,7 +126,7 @@ ACE_RMCast_Fragment::put_data (ACE_RMCast::Data &received_data)
                               + last_sent_mb_len);
 
           data.payload = blocks;
-          if (this->next ()->put_data (data) == -1)
+          if (this->next ()->data (data) == -1)
             return -1;
 
           // adjust the offset
@@ -172,7 +172,7 @@ ACE_RMCast_Fragment::put_data (ACE_RMCast::Data &received_data)
       // have:
       if (iovcnt == ACE_RMCAST_WRITEV_MAX)
         {
-          if (this->next ()->put_data (data) == -1)
+          if (this->next ()->data (data) == -1)
             return -1;
 
           iovcnt = 0;
@@ -184,5 +184,5 @@ ACE_RMCast_Fragment::put_data (ACE_RMCast::Data &received_data)
   if (iovcnt == 0)
     return 0;
 
-  return this->next ()->put_data (data);
+  return this->next ()->data (data);
 }

@@ -62,8 +62,8 @@ public:
   // +---------+----------------------+
   // | 32 bits | fragment_offset      |
   // +---------+----------------------+
-  // | 32 bits | payload_size         |
-  // +---------+----------------------+
+  // ? ? ? ? ? | 32 bits | payload_size         |
+  // ? ? ? ? ? +---------+----------------------+
   // |         | payload              |
   // +---------+----------------------+
   //
@@ -84,9 +84,9 @@ public:
   // +---------+----------------------+
   // | 8 bits  | MT_ACK               |
   // +---------+----------------------+
-  // | 32 bits | last_successful      |
+  // | 32 bits | highest_in_sequence  |
   // +---------+----------------------+
-  // | 32 bits | last_received        |
+  // | 32 bits | highest_received     |
   // +---------+----------------------+
   //
 
@@ -196,17 +196,7 @@ public:
     ACE_Message_Block *payload;
   };
 
-  struct Ack
-  {
-    ACE_UINT32 expected;
-    ACE_UINT32 last_received;
-  };
-
-  struct Join
-  {
-  };
-
-  struct Leave
+  struct Poll
   {
   };
 
@@ -216,6 +206,20 @@ public:
   };
 
   struct Ack_Leave
+  {
+  };
+
+  struct Ack
+  {
+    ACE_UINT32 highest_in_sequence;
+    ACE_UINT32 highest_received;
+  };
+
+  struct Join
+  {
+  };
+
+  struct Leave
   {
   };
 };

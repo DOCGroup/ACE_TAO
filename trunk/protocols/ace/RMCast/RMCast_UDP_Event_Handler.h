@@ -4,7 +4,7 @@
 //
 // = DESCRIPTION
 //   Implement an adapter between the ACE Reactor and the
-//   ACE_RMCast_UDP_Receiver
+//   ACE_RMCast_IO_UDP
 //
 // = AUTHOR
 //   Carlos O'Ryan <coryan@uci.edu>
@@ -22,13 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ACE_RMCast_UDP_Receiver;
+class ACE_RMCast_IO_UDP;
 class ACE_INET_Addr;
 
 class ACE_RMCast_Export ACE_RMCast_UDP_Event_Handler : public ACE_Event_Handler
 {
 public:
-  ACE_RMCast_UDP_Event_Handler (ACE_RMCast_UDP_Receiver *receiver);
+  ACE_RMCast_UDP_Event_Handler (ACE_RMCast_IO_UDP *receiver);
   // Constructor
 
   ~ACE_RMCast_UDP_Event_Handler (void);
@@ -41,7 +41,7 @@ public:
                               const void *act = 0);
 
 private:
-  ACE_RMCast_UDP_Receiver *receiver_;
+  ACE_RMCast_IO_UDP *io_udp_;
   // The sender
 };
 
