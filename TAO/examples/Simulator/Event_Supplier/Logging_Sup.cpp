@@ -254,7 +254,7 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
   const TimeBase::TimeT TEN_HZ_PERIOD = ONE_HZ_PERIOD / 10;
   const TimeBase::TimeT TWENTY_HZ_PERIOD = ONE_HZ_PERIOD / 20;
 
-  TAO_TRY
+  ACE_TRY_NEW_ENV
   {
     Schedule_Viewer_Data **sched_data;
 
@@ -304,7 +304,7 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
         navigation_.utilization = (double) (20.0 + ACE_OS::rand() % 10);
         navigation_.overhead = (double) (ACE_OS::rand() % 10);
 
-        data.replace (_tc_Navigation, &navigation_, 0, TAO_TRY_ENV);
+        data.replace (_tc_Navigation, &navigation_, 0, ACE_TRY_ENV);
       }
       else if ((strcmp((*sched_data)->operation_name, "high_10") == 0) ||
                (strcmp((*sched_data)->operation_name, "low_10") == 0)  ||
@@ -356,7 +356,7 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
         weapons_.update_data =       update_data_;
 
 
-        data.replace (_tc_Weapons, &weapons_, 0, TAO_TRY_ENV);
+        data.replace (_tc_Weapons, &weapons_, 0, ACE_TRY_ENV);
       }
       else {
         ACE_ERROR ((LM_ERROR,
@@ -365,7 +365,7 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
                     (*sched_data)->operation_name));
       }
 
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
 
             if (last_completion > (*sched_data)->completion_time)
@@ -390,12 +390,12 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
     if (schedule_iter.done ())
       schedule_iter.first ();
   }
-  TAO_CATCHANY
+  ACE_CATCHANY
   {
     ACE_ERROR ((LM_ERROR,
                 "(%t)Error in Logging_Supplier::insert_event_data.\n"));
   }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 }
 
 
@@ -486,15 +486,15 @@ Logging_Supplier::get_options (int argc, char *argv [])
 int
 main (int argc, char *argv [])
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Initialize ORB.
       TAO_ORB_Manager orb_Manager;
 
       orb_Manager.init (argc,
                         argv,
-                        TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
 
       // Create the demo supplier.
@@ -513,14 +513,14 @@ main (int argc, char *argv [])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-      TAO_CHECK_ENV;
+      ACE_TRY_CHECK;
 
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "SYS_EX");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
