@@ -148,6 +148,28 @@ CORBA_Exception::_decr_refcnt (void)
   return 0;
 }
 
+// Convenient ostrean operator.
+ostream& operator<< (ostream &os, 
+                     const CORBA_Exception &e)
+{
+  CORBA::Any tmp;
+  tmp <<= e;
+ 
+  CORBA::TypeCode_var tc = tmp.type ();
+  const char *p = tc->name ();
+
+  if (*p != '\0') 
+    {
+      os << p << " (" << tc->id () << ')';
+    }
+  else 
+    {
+      os << tc->id ();
+    }
+
+  return os;
+}
+
 // Avoid zillions of not-quite-inlined copies of utilities.
 
 CORBA_UserException::CORBA_UserException (void)
@@ -958,7 +980,6 @@ CORBA_ExceptionList::_decr_refcnt (void)
     delete this;
 
 }
-
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
 TAO_DONT_CATCH::TAO_DONT_CATCH (void)
