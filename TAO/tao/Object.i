@@ -2,19 +2,6 @@
 
 // ****************************************************************
 
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
-{
-  return obj == 0;
-}
-
-ACE_INLINE void
-CORBA::release (CORBA_Object_ptr obj)
-{
-  if (obj)
-    obj->_decr_refcnt ();
-}
-
 ACE_INLINE CORBA::ULong
 CORBA_Object::_incr_refcnt (void)
 {
@@ -62,6 +49,22 @@ ACE_INLINE TAO_Stub *
 CORBA_Object::_stubobj (void) const
 {
   return this->protocol_proxy_;
+}
+
+// ************************************************************
+// These are in CORBA namespace
+
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::Object_ptr obj)
+{
+  return obj == 0;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA_Object_ptr obj)
+{
+  if (obj)
+    obj->_decr_refcnt ();
 }
 
 // DII hook to objref

@@ -1,19 +1,5 @@
 // $Id$
 
-// returns true if the typecode is NULL
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::TypeCode_ptr tc)
-{
-  return tc == 0;
-}
-
-ACE_INLINE void
-CORBA::release (CORBA::TypeCode_ptr tc)
-{
-  if (tc)
-    tc->_decr_refcnt ();
-}
-
 ACE_INLINE CORBA::ULong
 CORBA_TypeCode::_incr_refcnt (void)
 {
@@ -122,6 +108,22 @@ CORBA_TypeCode::alignment (CORBA::Environment &env)
     return this->private_state_->tc_alignment_;
   else
     return this->private_alignment (env);
+}
+
+// ************************************************************
+// These are in CORBA namespace
+
+ACE_INLINE CORBA::Boolean
+CORBA::is_nil (CORBA::ORB_ptr obj)
+{
+  return obj == 0;
+}
+
+ACE_INLINE void
+CORBA::release (CORBA::ORB_ptr obj)
+{
+  if (obj)
+    obj->_decr_refcnt ();
 }
 
 // ****************************************************************
