@@ -54,7 +54,7 @@ public:
    */
   long schedule (ACE_Event_Handler *type,
                  const void *act,
-                 const ACE_Time_Value &delay,
+                 const ACE_Time_Value &future_time,
                  const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /// Cancel the <timer_id> and pass back the <act> if an address is
@@ -124,7 +124,7 @@ public:
   /// up the dispatching thread.
   long schedule (ACE_Event_Handler *handler,
                  const void *act,
-                 const ACE_Time_Value &delay,
+                 const ACE_Time_Value &future_time,
                  const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /// Cancel the <timer_id> and return the <act> parameter if an

@@ -63,7 +63,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule_ualarm (void)
 template <class TQ> long
 ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
                                              const void *act,
-                                             const ACE_Time_Value &delay,
+                                             const ACE_Time_Value &future_time,
                                              const ACE_Time_Value &interval)
 {
   ACE_UNUSED_ARG (act);
@@ -74,7 +74,7 @@ ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
   ACE_UNUSED_ARG (sg);
 
   // @@ We still need to implement interval timers...
-  long tid = this->timer_queue_.schedule (eh, act, delay);
+  long tid = this->timer_queue_.schedule (eh, act, future_time);
 
   if (tid == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -165,12 +165,12 @@ template<class TQ> long
 ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
     (ACE_Event_Handler* handler,
      const void *act,
-     const ACE_Time_Value &delay,
+     const ACE_Time_Value &future_time,
      const ACE_Time_Value &interval)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-  long result = this->timer_queue_.schedule (handler, act, delay, interval);
+  long result = this->timer_queue_.schedule (handler, act, future_time, interval);
   this->condition_.signal ();
   return result;
 }
