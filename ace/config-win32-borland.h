@@ -85,6 +85,7 @@
 # define ACE_STRCASECMP_EQUIVALENT std::strcasecmp
 # define ACE_STRNCASECMP_EQUIVALENT std::strncasecmp
 # define ACE_USES_EXPLICIT_STD_NAMESPACE
+# define ACE_HAS_3_PARAM_WCSTOK
 #else
 # define ACE_STRCASECMP_EQUIVALENT ::stricmp
 # define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
