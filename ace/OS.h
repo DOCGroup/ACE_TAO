@@ -2359,15 +2359,45 @@ typedef short ACE_pri_t;
 #else
   #if defined (ACE_HAS_LONGLONG_T)
     #if defined (__GNUC__)
-      // Need to use {u_}longlong_t with g++ 2.7.2, because its
-      // long {unsigned} long types are only 4 bytes.
-      typedef u_longlong_t ACE_hrtime_t;
+      #if defined (VXWORKS)
+        typedef unsigned long long ACE_hrtime_t;  // confirmed: 8 bytes!
+      #else
+        // Need to use {u_}longlong_t with g++ 2.7.2, because its
+        // long {unsigned} long types are only 4 bytes.
+        typedef u_longlong_t ACE_hrtime_t;
+      #endif /* VXWORKS */
     #else
       // Sun C++ 4.1 won't accept "long u_long" or "u_long long".
       typedef unsigned long long ACE_hrtime_t;
     #endif /* __GNUC__ */
   #else
-    typedef u_long ACE_hrtime_t;
+    class ACE_U_LongLong
+    {
+    public:
+      ACE_U_LongLong (u_long lo = 0, u_long hi = 0) : hi_ (hi), lo_ (lo) {}
+
+      ACE_U_LongLong operator+ (const ACE_U_LongLong &);
+      ACE_U_LongLong operator- (const ACE_U_LongLong &);
+
+      ACE_U_LongLong &operator+= (const ACE_U_LongLong &);
+      ACE_U_LongLong &operator-= (const ACE_U_LongLong &);
+
+      void dump (FILE * = stdout);
+
+      u_long hi () const { return hi_; }
+      u_long lo () const { return lo_; }
+
+      void hi (const u_long hi) { hi_ = hi; }
+      void lo (const u_long lo) { lo_ = lo; }
+
+      ACE_ALLOC_HOOK_DECLARE;
+
+    private:
+      u_long hi_;
+      u_long lo_;
+    };
+
+    typedef ACE_U_LongLong ACE_hrtime_t;
   #endif /* ACE_HAS_LONGLONG_T */
 #endif /* ACE_HAS_HI_RES_TIMER */
 
