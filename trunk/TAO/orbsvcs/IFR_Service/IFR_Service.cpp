@@ -2,11 +2,11 @@
 // $Id$
 
 #include "IFR_Service.h"
-#include "orbsvcs/orbsvcs/IFR_Service/ComponentRepository_i.h"
-#include "orbsvcs/orbsvcs/IFR_Service/Servant_Locator.h"
-#include "orbsvcs/orbsvcs/IFR_Service/Options.h"
-#include "orbsvcs/orbsvcs/IFR_Service/IFR_ComponentsS.h"
-#include "orbsvcs/orbsvcs/IFR_Service/IFR_Service_Utils.h"
+#include "orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h"
+#include "orbsvcs/orbsvcs/IFRService/Servant_Locator.h"
+#include "orbsvcs/orbsvcs/IFRService/Options.h"
+#include "orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h"
+#include "orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
