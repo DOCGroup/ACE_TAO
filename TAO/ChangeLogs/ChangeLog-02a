@@ -1,3 +1,17 @@
+Fri Apr 21 20:04:53 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/Explicit_Event_Loop/Explicit_Event_Loop.dsw: (added)
+        * tests/Explicit_Event_Loop/client.dsp: (added)
+        * tests/Explicit_Event_Loop/server.dsp: (added)
+
+          Added the MSVC projects for this test.
+
+        * tests/Explicit_Event_Loop/server.cpp:
+
+          Fixed a warning on Kai, at the end there was return 0 that
+          was unreached.  Altered the return statements so this should
+          not occur anymore.
+
 Fri Apr 21 20:13:49 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * performance-tests/POA/Demux/demux_test_client.cpp:
