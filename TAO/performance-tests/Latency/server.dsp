@@ -7,22 +7,23 @@
 CFG=Latency Tests Server - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "server.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "server.mak" CFG="Latency Tests Server - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
-!MESSAGE "Latency Tests Server - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Latency Tests Server - Win32 Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE
+!MESSAGE 
+!MESSAGE "Latency Tests Server - Win32 Release" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Latency Tests Server - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE 
 
 # Begin Project
-# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -76,7 +77,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib taod.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -132,6 +133,7 @@ SOURCE=.\test.idl
 !IF  "$(CFG)" == "Latency Tests Server - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\bin\release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
@@ -170,6 +172,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "Latency Tests Server - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
+USERDEP__TEST_="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test.idl
 InputName=test
@@ -205,7 +208,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group
