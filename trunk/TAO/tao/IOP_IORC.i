@@ -1083,7 +1083,7 @@ IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::replace (
 #define _IOP_MULTIPLECOMPONENTPROFILE_CI_
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_ci.cpp:226
+// be/be_visitor_sequence/sequence_ci.cpp:257
 
 // *************************************************************
 // Inline operations for class IOP::MultipleComponentProfile_var
@@ -1253,7 +1253,7 @@ IOP::MultipleComponentProfile_var::ptr (void) const
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_ci.cpp:566
+// be/be_visitor_sequence/sequence_ci.cpp:597
 
 // *************************************************************
 // Inline operations for class IOP::MultipleComponentProfile_out
@@ -1541,7 +1541,7 @@ IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::replace (
 #define _IOP_TAGGEDCOMPONENTLIST_CI_
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_ci.cpp:226
+// be/be_visitor_sequence/sequence_ci.cpp:257
 
 // *************************************************************
 // Inline operations for class IOP::TaggedComponentList_var
@@ -1711,7 +1711,7 @@ IOP::TaggedComponentList_var::ptr (void) const
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_ci.cpp:566
+// be/be_visitor_sequence/sequence_ci.cpp:597
 
 // *************************************************************
 // Inline operations for class IOP::TaggedComponentList_out
@@ -1999,7 +1999,7 @@ IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::replace (
 #define _IOP_TAGGEDCOMPONENTSEQ_CI_
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_ci.cpp:226
+// be/be_visitor_sequence/sequence_ci.cpp:257
 
 // *************************************************************
 // Inline operations for class IOP::TaggedComponentSeq_var
@@ -2169,7 +2169,7 @@ IOP::TaggedComponentSeq_var::ptr (void) const
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_ci.cpp:566
+// be/be_visitor_sequence/sequence_ci.cpp:597
 
 // *************************************************************
 // Inline operations for class IOP::TaggedComponentSeq_out
@@ -2668,7 +2668,7 @@ IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::replace (
 #define _IOP_SERVICECONTEXTLIST_CI_
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_ci.cpp:226
+// be/be_visitor_sequence/sequence_ci.cpp:257
 
 // *************************************************************
 // Inline operations for class IOP::ServiceContextList_var
@@ -2838,7 +2838,7 @@ IOP::ServiceContextList_var::ptr (void) const
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_ci.cpp:566
+// be/be_visitor_sequence/sequence_ci.cpp:597
 
 // *************************************************************
 // Inline operations for class IOP::ServiceContextList_out
