@@ -76,7 +76,7 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -208,7 +208,7 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -319,7 +319,7 @@ CORBA_Object::_get_interface (CORBA::Environment &ACE_TRY_ENV)
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (

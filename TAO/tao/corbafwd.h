@@ -901,30 +901,25 @@ TAO_NAMESPACE CORBA
 
 // ****************************************************************
 
-// @@ The following numbers where requested to the OMG, we should
-//    obtain them in the next few days.
+// Several OMG assigned numbers, for a complete list check:
+//
+// ftp://ftp.omg.org/pub/docs/ptc/99-05-02.txt
+//
+// For details on how to ask more numbers check:
+//
+// http://www.omg.org/cgi-bin/doc?ptc/99-02-01 
+//
 
 // These numbers were assigned by the OMG.  Do *NOT* change.
 // The ASCII representation is "TAO\x00", we can request more ORB
 // types later.
 #define TAO_ORB_TYPE 0x54414f00U
 
-// There numbers are assigned by the OpenGroup, a database is
-// available at ftp://ftp.opengroup.orb/pub/codeset_registry/
-#define TAO_CODESET_ID_ISO8859_1 0x00010001U
-#define TAO_CODESET_ID_UNICODE   0x00010109U
-
-// There are the default codesets that TAO declares, of course they
-// could be different on each platform, once the complete support for
-// character sets is implemented
-#define TAO_DEFAULT_CHAR_CODESET_ID  TAO_CODESET_ID_ISO8859_1
-#define TAO_DEFAULT_WCHAR_CODESET_ID TAO_CODESET_ID_UNICODE
-
 // We reserved the range 0x54414f00 - 0x54414f0f with the OMG to
 // define our own profile ids in TAO.
-// @@ The macros below are suggestions and some list of the protocols
-//    we have thought of...
-// #define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Unix Domain */
+#define TAO_TAG_UIOP_PROFILE   0x54414f00U /* Unix Domain */
+// @@ The values below are suggestions for some of the protocols
+//    we have thought of, subject to change at any point
 // #define TAO_TAG_AIOP_PROFILE   0x54414f01U /* ATM/AAL5 */
 // #define TAO_TAG_SHMEM_PROFILE  0x54414f02U /* Shared memory */
 // #define TAO_TAG_MSGQ_PROFILE   0x54414f03U /* Message Queue */
@@ -985,6 +980,19 @@ TAO_NAMESPACE CORBA
 #define TAO_EAFNOSUPPORT_MINOR_CODE 0xAU
 #define TAO_UNKNOWN_MINOR_CODE      0xFU
 
+// These numbers are assigned by the OpenGroup, a database is
+// available at
+//
+// ftp://ftp.opengroup.orb/pub/codeset_registry/
+//
+#define TAO_CODESET_ID_ISO8859_1 0x00010001U
+#define TAO_CODESET_ID_UNICODE   0x00010109U
+
+// These are the default codesets that TAO declares, of course they
+// will be different on each platform, once the complete support for
+// character sets is implemented
+#define TAO_DEFAULT_CHAR_CODESET_ID  TAO_CODESET_ID_ISO8859_1
+#define TAO_DEFAULT_WCHAR_CODESET_ID TAO_CODESET_ID_UNICODE
 
 // ****************************************************************
 

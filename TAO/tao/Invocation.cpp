@@ -122,7 +122,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   // assert (this->stub_ != 0);
 
   if (this->stub_ == 0)
-    ACE_THROW (CORBA::INV_OBJREF ());
+    ACE_THROW (CORBA::INTERNAL ());
 
   // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.

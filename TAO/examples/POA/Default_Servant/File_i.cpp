@@ -47,7 +47,8 @@ FileImpl::System::open (const char *file_name,
 {
   // Do an ACE_OS::open
   ACE_HANDLE file_descriptor = ACE_OS::open (file_name,
-                                             flags);
+                                             flags,
+                                             0644);
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
@@ -116,7 +117,7 @@ FileImpl::Descriptor::fd (CORBA::Environment &ACE_TRY_ENV)
   // Get the ObjectId from the reference
   PortableServer::ObjectId_var oid =
     this->poa_->reference_to_id (me.in (), ACE_TRY_ENV);
-  
+
   ACE_CHECK_RETURN (ACE_INVALID_HANDLE);
 
     // Convert the ObjectId to a string

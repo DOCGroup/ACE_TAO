@@ -1,3 +1,36 @@
+Sat Jun 12 20:29:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/corbafwd.h:
+	  Documented the tags obtained from the OMG.
+
+	* tao/ORB.cpp:
+	  Improve debugging messages
+
+	* tao/GIOP.h:
+	  Use an OMG assigned profile ID for the unix domain sockets
+
+	* examples/POA/Default_Servant/File_i.cpp:
+	  Create the files in 644 mode, so we can write on them!
+
+	* examples/POA/Default_Servant/run_test.pl:
+	* tests/MT_Client/run_test.pl:
+	* tests/NestedUpcall/Reactor/run_test.pl:
+	  Use the new timed routines to drive this test.
+
+	* orbsvcs/tests/Simple_Naming/run_test.pl:
+	  Minor revision to the multithreaded test
+
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* tao/DomainC.cpp:
+	* tao/Invocation.cpp:
+	* tao/MessagingC.cpp:
+	* tao/Object.cpp:
+	* tao/POAC.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PollableC.cpp:
+	  The right exception to raise if the stubobj is nil() is
+	  CORBA::INTERNAL
+
 Sat Jun 12 19:51:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
