@@ -228,6 +228,9 @@ TAO_SHMIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                       buffer,
                       ACE_TEXT ("errno")));
         }
+
+      (void) this->active_connect_strategy_->post_failed_connect (svc_handler);
+
       return -1;
     }
 
