@@ -1,3 +1,16 @@
+Sat Mar 30 22:19:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * ace/OS.h:
+          Removed FaCE_MAIN definition originally added during WinCE port
+          and moved to FaCE_OS.h in the FaCE package since it is FaCE
+          specific macro.
+
+        * apps/Face_OS.h:
+          Contains FaCE_MAIN macro definition to set entry point on WinCE.
+
+        * apps/ReadMe.txt:
+          Updated installation part for FacE_OS.h.
+
 Fri Mar 29 17:35:39 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Proactor.h: Doxygen-ize some comments; correct the
