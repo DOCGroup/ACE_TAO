@@ -69,17 +69,18 @@ int
 Repository::resolve (const char *key, Repository::Record &rec)
 {
   char *value = 0, *type = 0; // Temp variables needed for resolve
+  char *lasts = 0; // For strtok_r
   int retval = this->repository_.resolve (key, value, type);
 
   if (retval == 0)
     {
       // +1 to get rid of the space
-      rec.comm_line = ACE::strnew (ACE_OS::strtok (value, "\n") + 1);
-      rec.env = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
-      rec.wdir = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
-      rec.host = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
-      ::sscanf (ACE_OS::strtok (NULL, "\n"), "%hu", &rec.port);
-      rec.ping_ior = ACE::strnew (ACE_OS::strtok (NULL, "\n") + 1);
+      rec.comm_line = ACE::strnew (ACE_OS::strtok_r (value, "\n", &lasts) + 1);
+      rec.env = ACE::strnew (ACE_OS::strtok_r (NULL, "\n", &lasts) + 1);
+      rec.wdir = ACE::strnew (ACE_OS::strtok_r (NULL, "\n", &lasts) + 1);
+      rec.host = ACE::strnew (ACE_OS::strtok_r (NULL, "\n", &lasts) + 1);
+      ::sscanf (ACE_OS::strtok_r (NULL, "\n", &lasts), "%hu", &rec.port);
+      rec.ping_ior = ACE::strnew (ACE_OS::strtok_r (NULL, "\n", &lasts) + 1);
     }
   else
     {
