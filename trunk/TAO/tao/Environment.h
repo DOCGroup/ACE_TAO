@@ -102,7 +102,7 @@ public:
   // = Obtain a default environment to use with TAO.
   static CORBA_Environment &default_environment (void);
 
-#if defined (TAO_USES_FLICK)
+#if !defined (TAO_USES_FLICK)
 private:
 #endif /* TAO_USES_FLICK */
 
