@@ -157,7 +157,7 @@ SYSEX(DATA_CONVERSION);
 
 #undef	SYSEX
 
-class CORBA_Environment
+class ACE_Svc_Export CORBA_Environment
 {
   // = TITLE
   // A CORBA_Environment is a way to automagically ensure that
