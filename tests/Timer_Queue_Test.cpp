@@ -24,6 +24,7 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Hash.h"
+#include "ace/Timer_Queue.h"
 #include "test_config.h"
 
 template <class T> void
