@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 #include "tao/Environment.h"
@@ -77,4 +79,47 @@ TAO_POA_Manager::get_state (ACE_ENV_SINGLE_ARG_DECL)
   TAO_OBJECT_ADAPTER_GUARD_RETURN (this->state_);
 
   return this->get_state_i ();
+}
+
+ACE_INLINE PortableInterceptor::AdapterManagerId
+TAO_POA_Manager::generate_manager_id (void) const
+{
+  // The AdapterManagerId must be unique across all Adapter Managers
+  // (e.g. POAManagers) within a given process.  To avoid locking
+  // overhead, the address of the POAManager object is used as the
+  // AdapterManagerId.  This guarantees that the AdapterManagerId is
+  // unique.
+  //
+  // For 64-bit platforms, only the lower 32 bits are used.  Hopefully
+  // that will be enough to ensure uniqueness.
+
+  // This is basically the same trick used in
+  // TAO_GIOP_Invocation::generate_request_id().  However, no right
+  // shifting of 64 bit addresses is performed since the
+  // TAO_POA_Manager object is not large enough to allow that trick.
+
+  PortableInterceptor::AdapterManagerId id = 0;
+
+  // Note that we reinterpret_cast to an "unsigned long" instead of
+  // CORBA::ULong since we need to first cast to an integer large
+  // enough to hold an address to avoid compile-time warnings on some
+  // 64-bit platforms.
+
+  if (sizeof (this) == 4)       // 32 bit address
+    id =
+      ACE_reinterpret_cast (unsigned long, this);
+
+  else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
+    id =
+      ACE_reinterpret_cast (unsigned long, this) & 0xFFFFFFFFu;
+
+  // @@ If we ever hit a platform where neither of the above cases are
+  //    satisfied, we're up the creek!
+
+//   else
+//     // Fallback on an atomically incremented variable specific to the
+//     // ORB, or perhaps specific to the process.
+//     id = ...GENERATE_ID_ATOMICALLY...;  // Fallback
+
+  return id;
 }

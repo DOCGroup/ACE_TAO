@@ -11,16 +11,14 @@
 # include "POAManager.i"
 #endif /* ! __ACE_INLINE__ */
 
-PortableInterceptor::AdapterManagerId TAO_POA_Manager::global_id_ = 0;
 
 TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
   : state_ (PortableServer::POAManager::HOLDING),
     lock_ (object_adapter.lock ()),
     poa_collection_ (),
-    object_adapter_ (object_adapter)
+    object_adapter_ (object_adapter),
+    poa_manager_id_ (this->generate_manager_id ())
 {
-  ++TAO_POA_Manager::global_id_;
-  this->poa_manager_id_ = TAO_POA_Manager::global_id_;
 }
 
 TAO_POA_Manager::~TAO_POA_Manager (void)
@@ -28,7 +26,7 @@ TAO_POA_Manager::~TAO_POA_Manager (void)
 }
 
 PortableInterceptor::AdapterManagerId
-TAO_POA_Manager::get_manager_id (ACE_ENV_SINGLE_ARG_DECL)
+TAO_POA_Manager::get_manager_id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
   return this->poa_manager_id_;
 }
@@ -154,9 +152,10 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
 
   for (size_t i = 0; i < interceptor_count; ++i)
     {
-      interceptors[i]->adapter_manager_state_changed (TAO_POA_Manager::poa_manager_id_,
-                                                      adapter_state
-                                                      ACE_ENV_ARG_PARAMETER);
+      interceptors[i]->adapter_manager_state_changed (
+        TAO_POA_Manager::poa_manager_id_,
+        adapter_state
+        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
@@ -218,7 +217,9 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
         }
     }
 
-  this->adapter_manager_state_changed (this->state_);
+  this->adapter_manager_state_changed (this->state_
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 void
@@ -278,7 +279,8 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
         }
     }
 
-  this->adapter_manager_state_changed (this->state_);
+  this->adapter_manager_state_changed (this->state_
+                                       ACE_ENV_ARG_PARAMETER);
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -166,7 +166,7 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 void
 TAO_POA::set_obj_ref_factory (
   PortableInterceptor::ObjectReferenceFactory *current_factory
-  ACE_ENV_ARG_DECL)
+  ACE_ENV_ARG_DECL_NOT_USED)
 {
   CORBA::add_ref (current_factory);
   this->obj_ref_factory_ = current_factory;
