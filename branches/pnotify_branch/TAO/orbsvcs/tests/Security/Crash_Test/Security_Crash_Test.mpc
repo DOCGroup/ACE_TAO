@@ -1,0 +1,16 @@
+// -*- MPC -*-
+// $Id$
+
+project(*server): taoexe, portableserver, ssliop {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(*client): taoexe, portableserver, ssliop {
+  Source_Files {
+    client.cpp
+  }
+}
+
