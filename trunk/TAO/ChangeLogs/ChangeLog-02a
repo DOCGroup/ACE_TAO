@@ -1,3 +1,10 @@
+Sat Jul  8 16:10:27 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/IFR_Service.dsp:
+
+	  Added a missing preprocessor include path in the 
+	  release version.
+
 Sat Jul 08 14:50:34 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * all Makefiles: updated dependencies.
