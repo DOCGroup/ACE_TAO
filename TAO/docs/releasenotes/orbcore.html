@@ -426,6 +426,17 @@ new ORB Core structure.
       <code>iioploc://</code> and <code>iiopname://</code>
       formats.</p>
   </li>
+
+  <li><p>Added Vendor ID and TAO-specific information to
+     the <code>CORBA_SystemException</code> minor status component.
+     The TAO-specific information currently consists of location
+     (in the TAO source code) and errno indications.  See
+     <a href="../tao/corbafwd.h"><code>tao/corbafwd.h</code></a>
+     for values.  These values will be expanded as needed.
+     <code>CORBA_SystemException::print_exception_tao_ ()</code>
+     should be used to print system exceptions.</p>
+  </li>
+
 </ul>
 <!-- --------------------- -->
 <a href="#toc">Back to TOC</a>
