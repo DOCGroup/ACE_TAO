@@ -11,6 +11,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Singleton.h"
+#include "ace/Atomic_Op.h"
 
 /*
    This is a cheap memory leak detector.  Each class I want to watch over
