@@ -1,3 +1,8 @@
+Fri Nov 26 14:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+          Fixed compile problem
+
 Fri Nov 26 10:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1535_Regression/Bug_1535_Regression.mpc:
