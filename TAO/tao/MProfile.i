@@ -3,8 +3,8 @@
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
-  :  forward_from_(0),
-     policy_list_ (0),
+  :  policy_list_ (0),
+     forward_from_(0),
      pfiles_ (0),
      current_ (0),
      size_ (0),
@@ -15,8 +15,8 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
-  :  forward_from_(0),
-     policy_list_ (0),
+  :  policy_list_ (0),
+     forward_from_(0),
      pfiles_ (0),
      current_ (0),
      size_ (0),
@@ -148,7 +148,7 @@ TAO_MProfile::rewind (void)
 {
   current_ = 0;
 }
-
+ACE_INLINE int
 TAO_MProfile::give_profile (TAO_Profile *pfile)
 {
   // skip by the used slots
