@@ -16,6 +16,8 @@
 #include "ace/LSOCK_CODgram.h"
 #include "ace/UNIX_Addr.h"
 
+#if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+
 class Handle_L_CODgram : public ACE_Service_Object, public ACE_LSOCK_CODgram
 {
 public:
@@ -43,4 +45,5 @@ extern ACE_Service_Object_Type lc;
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
+#endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif /* _HANDLE_L_CODGRAM_H */
