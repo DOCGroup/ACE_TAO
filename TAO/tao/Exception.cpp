@@ -96,7 +96,7 @@ CORBA_Exception::print_exception (const char *info,
 {
   const char *id = this->_id ();
 
-  ACE_DEBUG ((LM_ERROR, 
+  ACE_DEBUG ((LM_ERROR,
               "(%P|%t) EXCEPTION, %s\n",
               info));
 
@@ -234,7 +234,7 @@ CORBA_SystemException::_raise (void)
 CORBA::ULong
 CORBA_SystemException::errno_tao_ (int errno_value)
 {
-  switch (errno_value) 
+  switch (errno_value)
     {
     case 0:
       return TAO_UNSPECIFIED_MINOR_CODE;
@@ -258,8 +258,8 @@ CORBA_SystemException::minor_code_tao_ (u_int location,
                                         int errno_value)
 {
   return
-    TAO_DEFAULT_MINOR_CODE  
-    | location  
+    TAO_DEFAULT_MINOR_CODE
+    | location
     | errno_tao_ (errno_value);
 }
 
@@ -276,13 +276,13 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
               "(%P|%t) system exception, ID '%s'\n",
               _id ()));
 
-  CORBA::ULong VMCID = 
+  CORBA::ULong VMCID =
     this->minor () & 0xFFFFF000u;
 
   if (VMCID == TAO_DEFAULT_MINOR_CODE)
     {
       const char *location;
-      switch (this->minor () & 0x00000FF0u) 
+      switch (this->minor () & 0x00000FF0u)
         {
         case TAO_INVOCATION_CONNECT_MINOR_CODE :
           location = "invocation connect failed";
@@ -310,7 +310,7 @@ CORBA_SystemException::print_exception_tao_ (FILE *) const
         }
 
       const char *errno_indication;
-      switch (this->minor () & 0x0000000Fu) 
+      switch (this->minor () & 0x0000000Fu)
         {
         case TAO_UNSPECIFIED_MINOR_CODE :
           errno_indication = "unspecified errno";
@@ -637,7 +637,7 @@ TAO_Exceptions::init (CORBA::Environment &ACE_TRY_ENV)
                                               ACE_TRY_ENV);
 }
 
-CORBA_Exception *
+CORBA_SystemException *
 TAO_Exceptions::create_system_exception (const char *id,
                                          CORBA::Environment &ACE_TRY_ENV)
 {

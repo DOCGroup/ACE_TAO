@@ -153,8 +153,17 @@ Cubit_Task::get_servant_ior (u_int index)
 int
 Cubit_Task::create_servants (void)
 {
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
+      CORBA::Object_var obj =
+        this->orb_->resolve_initial_references ("RootPOA",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa =
+        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Create the array of cubit implementations.
       ACE_NEW_RETURN (this->servants_,
                       Cubit_i *[this->num_of_objs_],
@@ -186,7 +195,8 @@ Cubit_Task::create_servants (void)
                            this->task_id_);
 
           ACE_NEW_RETURN (this->servants_[i],
-                          Cubit_i (this->orb_.in ()),
+                          Cubit_i (this->orb_.in (),
+                                   poa.in ()),
                           -1);
 
           if (this->servants_[i] == 0)
@@ -196,24 +206,19 @@ Cubit_Task::create_servants (void)
                                i),
                               2);
 
-          this->orb_manager_.activate_under_child_poa
-            (buffer,
-             this->servants_[i],
-             TAO_TRY_ENV);
-          TAO_CHECK_ENV;
-
           // Stringify the objref we'll be implementing, and print it
           // to stdout.  Someone will take that string and give it to
           // some client.  Then release the object.
 
           Cubit_var cubit =
-            this->servants_[i]->_this (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+            this->servants_[i]->_this (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
 
           CORBA::String_var str =
             this->orb_->object_to_string (cubit.in (),
-                                          TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+                                          ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
           this->servants_iors_[i] =
             ACE_OS::strdup (str.in ());
@@ -221,11 +226,12 @@ Cubit_Task::create_servants (void)
 
       delete [] buffer;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("print IOR");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Cubit_Task::create_servants");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
   return 0;
 }
