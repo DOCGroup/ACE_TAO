@@ -6343,6 +6343,25 @@ ACE_CACHE_CHECK([for UNIX domain sockets],
       ])
    ], , [AC_DEFINE([ACE_LACKS_UNIX_DOMAIN_SOCKETS])])
 
+dnl Check for raw sockets
+ACE_CACHE_CHECK([for raw sockets],
+  [ace_cv_feature_raw_sockets],
+   [
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <sys/socket.h>
+#include <netinet/in.h>
+      ]], [[
+return socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
+      ]])],[
+       ace_cv_feature_raw_sockets=yes
+      ],[
+       ace_cv_feature_raw_sockets=no
+      ])
+   ], [AC_DEFINE([ACE_HAS_ICMP_SUPPORT])])
+
 dnl Check for ACE_Handle_Set optimized for select()
 ACE_CACHE_CHECK([for ACE_Handle_Set optimized for select()],
   [ace_cv_feature_handle_set_optimized_for_select],[
@@ -7502,7 +7521,7 @@ AC_CONFIG_FILES([
   examples/QOS/Diffserv/Makefile
   examples/QOS/Simple/Makefile
   examples/RMCast/Makefile
-  examples/RMCast/Send_File/Makefile
+  examples/RMCast/Send_Msg/Makefile
   examples/Reactor/Makefile
   examples/Reactor/Dgram/Makefile
   examples/Reactor/FIFO/Makefile
@@ -7558,7 +7577,6 @@ AC_CONFIG_FILES([
   tests/HTBP/Send_Large_Msg/Makefile
   tests/HTBP/Send_Recv_Tests/Makefile
   tests/HTBP/ping/Makefile
-  tests/RMCast/Makefile
   tests/SSL/Makefile
   websvcs/Makefile
   websvcs/lib/Makefile
