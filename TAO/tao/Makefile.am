@@ -1139,7 +1139,6 @@ libTAO_PortableServer_la_CPPFLAGS = \
   -DTAO_PORTABLESERVER_BUILD_DLL
 
 libTAO_PortableServer_la_SOURCES = \
-  PortableServer/AMH_Response_Handler.cpp \
   PortableServer/Active_Object_Map.cpp \
   PortableServer/Collocated_Object_Proxy_Broker.cpp \
   PortableServer/Default_Acceptor_Filter.cpp \
@@ -1182,7 +1181,6 @@ libTAO_PortableServer_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
-  PortableServer/AMH_Response_Handler.h \
   PortableServer/Active_Object_Map.h \
   PortableServer/Collocated_Object_Proxy_Broker.h \
   PortableServer/Default_Acceptor_Filter.h \
@@ -1394,6 +1392,7 @@ libTAO_Messaging_la_CPPFLAGS = \
   -DTAO_MESSAGING_BUILD_DLL
 
 libTAO_Messaging_la_SOURCES = \
+  Messaging/AMH_Response_Handler.cpp \
   Messaging/Asynch_Invocation.cpp \
   Messaging/Asynch_Invocation_Adapter.cpp \
   Messaging/Asynch_Reply_Dispatcher.cpp \
@@ -1422,6 +1421,7 @@ libTAO_Messaging_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  Messaging/AMH_Response_Handler.h \
   Messaging/Asynch_Invocation.h \
   Messaging/Asynch_Invocation_Adapter.h \
   Messaging/Asynch_Reply_Dispatcher.h \
