@@ -12,7 +12,8 @@ module help
   interface c_supp1 {};
   interface c_supp2 {};
   component c_base {};
-  valuetype v_base {};
+  valuetype v_base_base {};
+  valuetype v_base : v_base_base {};
   interface v_supp1 {};
   abstract interface v_supp2 {};
 };
@@ -55,6 +56,19 @@ module mod
     attribute long c_attr1 
       getraises (help::doh) 
       setraises (help::whups, help::doh);
+
+    string v_op (inout string inoutarg,
+                 in help::v_supp1 inarg,
+                 out long outarg)
+      raises (help::doh, help::whups);
+
+    public string test_mem1;
+    private short test_mem2;
+
+    factory default_factory (in string set_tm1);
+    factory create_tv (in string set_tm1,
+                       in short set_tm2)
+      raises (help::whups, help::doh);
   };
 };
 
