@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Synch.h"
 
 #if defined (ACE_HAS_THREADS)

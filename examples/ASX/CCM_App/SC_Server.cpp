@@ -3,6 +3,7 @@
 
 
 #include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Synch.h"
 #include "ace/Signal.h"
 
