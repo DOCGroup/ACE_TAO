@@ -1,3 +1,9 @@
+Tue Aug 24 08:53:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * docs/compiler.html:
+
+          Removed documentation of '-Sv' option. See [Bug 1908].
+
 Tue Aug 24 06:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/PolicyFactory/PI_PolicyFactory.mpc:
