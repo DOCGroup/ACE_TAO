@@ -120,21 +120,15 @@ public:
   // path to run a process, this method *must* be called!  Returns 0
   // on success, -1 on failure.
 
-  int command_line (LPTSTR argv[]);
   int command_line (LPCTSTR argv[]);
   // Same as above in argv format.  <argv> must be null terminated.
-  // @@ The non-const version is provided only for backwards
-  //    compatibility
 
   u_long creation_flags (void) const;
-  // Get.
+  // Get the creation flags.
   void creation_flags (u_long);
-  // Set.
+  // Set the creation flags.
 
-  // ************************************************************
-  // = These operations are used by ACE_Process to retrieve options
-  // values.
-  // ************************************************************
+  // = <ACE_Process> uses these operations to retrieve option values.
 
   LPTSTR working_directory (void);
   // Current working directory.  Returns "" if nothing has been set.
