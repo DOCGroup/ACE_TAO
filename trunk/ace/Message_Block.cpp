@@ -14,7 +14,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Message_Block)
 void
 ACE_Message_Block::data_block (ACE_Data_Block *db)
 {
-  ACE_TRACE ("ACE_Data_Block::data_block");
+  ACE_TRACE ("ACE_Message_Block::data_block");
   if (this->data_block_ != 0)
     this->data_block_->release ();
 
@@ -67,7 +67,7 @@ ACE_Data_Block::dump (void) const
   ACE_TRACE ("ACE_Data_Block::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, 
-	     "-----( Message Block )-----\n"
+	     "-----( Data Block )-----\n"
 	     "type_ = %d\n"
 	     "cur_size_ = %u\n"
 	     "max_size_ = %u\n"
