@@ -1,3 +1,34 @@
+Tue Mar  2 19:57:30 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h: 
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp: 
+
+	  Added the Receiver_Callback::handle_destroy method to shutdown
+	  the receiver when the stream was destroyed.
+	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp: 
+
+	  Set the QoS Params in Sender::fill_qos to Diffserv_Codepoint if
+	  rapi=0. Else the QoS Params are set to the intserv values. This
+	  ensures that when rapi=0 and the modify_qos method is called
+	  then the diffserv codepoint is set for all the frames sent..
+
+	  Added the graceful shutdown of the process when all frames were
+	  sent.
+	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/README: 
+
+	  Modified to include details of diffserv testing.
+	  
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/runtest.pl: 	
+
+	  Modified to specify transport protocols and debug levels from
+	  the command line.
+	
+	* orbsvcs/tests/AVStreams/Makefile:
+
+	  Added the compilation of Simple_Two_Stage_With_QoS test.
+
 Tue Mar  2 13:12:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Transport.cpp (drain_queue_helper):
