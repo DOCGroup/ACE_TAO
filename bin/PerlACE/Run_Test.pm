@@ -70,6 +70,8 @@ sub waitforfile_timed
 {
   my $file = shift;
   my $maxtime = shift;
+  $maxtime *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+
   while ($maxtime-- != 0) {
     if (-e $file && -s $file) {
       return 0;
