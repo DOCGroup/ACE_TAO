@@ -77,7 +77,7 @@ protected:
    * Find the operation, cast the type to the most derived type,
    * demarshall all the parameters from the request and finally
    * invokes the operation, storing the results and out parameters (if
-   * any) or the exceptions thrown into @param request.
+   * any) or the exceptions thrown into @a request.
    */
   virtual void _dispatch (TAO_ServerRequest &request,
                           void *servant_upcall
