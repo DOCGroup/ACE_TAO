@@ -1,3 +1,13 @@
+Tue Jan 22 19:14:22 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+          Shortened some line lengths that were over 80 characters
+          in both source code and generated code. plus other
+          cosmetic changes.
+
 Tue Jan 22 15:32:10 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be_include/be_visitor_operation/operation.h:
