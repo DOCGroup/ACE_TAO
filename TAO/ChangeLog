@@ -1,3 +1,9 @@
+Tue Mar 18 18:00:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/fe_declarator.cpp:
+
+          Added a check for 0 prefix before doing a string compare.
+
 Tue Mar 18 17:48:15 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * performace-tests/Latency/DSI/Roundtrip.cpp:
