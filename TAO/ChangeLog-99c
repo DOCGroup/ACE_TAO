@@ -1,3 +1,14 @@
+Mon Sep 13 13:49:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	  (visit_interface): The implementation of _duplicate method was
+	  mistakenly removed from the code for locality constaint
+	  interfaces.  Thanks to Marina for reporting this.
+
+	  The _unchecked_narrow will be part of the future CORBA standard,
+	  so we should always support it even for locality constraint
+	  interfaces.  Thanks to Irfan for pointing this out.
+
 Mon Sep 13 10:02:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/ORB_Internals.html:
@@ -57,7 +68,7 @@ Mon Sep 13 08:34:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tests/Param_Test/bd_array_seq.cpp:
 	* tests/Param_Test/ub_array_seq.h:
 	* tests/Param_Test/ub_array_seq.cpp:
-	  New files for the new array sequences tests.	 
+	  New files for the new array sequences tests.
 
 	* tests/Param_Test/bd_struct_seq.cpp:
 	* tests/Param_Test/ub_struct_seq.cpp:
@@ -70,16 +81,16 @@ Sun Sep 12 19:25:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sat Sep 11 17:11:54 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a compile error on aCC 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Fixed a compile error on aCC
 
 Sat Sep 11 14:28:55 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 	  Fixed warnings with Sun C++
-	* RTCP.cpp: 
-	* orbsvcs/orbsvcs/AV/RTCP.h: 
+	* RTCP.cpp:
+	* orbsvcs/orbsvcs/AV/RTCP.h:
 	  Fixed warnings with egcs
-	
+
 
 Sat Sep 11 14:13:35 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
