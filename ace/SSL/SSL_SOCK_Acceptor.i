@@ -1,7 +1,6 @@
 // -*- C++ -*-
+//
 // $Id$
-
-// SSL_SOCK_Acceptor.i
 
 
 ASYS_INLINE
@@ -80,7 +79,11 @@ ASYS_INLINE int
 ACE_SSL_SOCK_Acceptor::close (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::close ()");
-  return this->acceptor_.close ();
+
+  int result = this->acceptor_.close ();
+  this->set_handle (ACE_INVALID_HANDLE);
+
+  return result;
 }
 
 ASYS_INLINE void

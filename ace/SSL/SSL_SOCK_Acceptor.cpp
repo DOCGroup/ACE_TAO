@@ -105,12 +105,20 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream) const
 
   int status = ::SSL_accept (new_stream.ssl ());
 
-  if (::SSL_get_error (new_stream.ssl (), status) != SSL_ERROR_NONE)
+  switch (::SSL_get_error (new_stream.ssl (), status))
     {
+    case SSL_ERROR_NONE:
+      break;
+    case SSL_ERROR_ZERO_RETURN:
+      // The peer has notified us that it is shutting down via
+      // the SSL "close_notify" message so we need to
+      // shutdown, too.
+      (void) new_stream.close ();
+      return -1;
+    default:
 #ifndef ACE_NDEBUG
-      ERR_print_errors_fp (stderr);
+      // ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-
       return -1;
     }
 
@@ -121,11 +129,13 @@ int
 ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                                    ACE_Time_Value *timeout) const
 {
-  if (SSL_is_init_finished (new_stream.ssl ()))
+  SSL *ssl = new_stream.ssl ();
+
+  if (SSL_is_init_finished (ssl))
     return 0;
 
-  if (!SSL_in_accept_init (new_stream.ssl ()))
-    ::SSL_set_accept_state (new_stream.ssl ());
+  if (!SSL_in_accept_init (ssl))
+    ::SSL_set_accept_state (ssl);
 
   // Register an event handler to complete the non-blocking SSL
   // accept.  A specialized event handler is necessary since since
@@ -142,25 +152,80 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
         reactor_mask) == -1)
     return -1;
 
-  // Make the current thread take ownership of the Reactor.
-  this->reactor_->owner (ACE_Thread::self ());
+  // In case a thread other than the one running the Reactor event
+  // loop
+  // performs the passive SSL connection establishment, transfer
+  // ownership of the Reactor to the current thread.  Control will be
+  // passed back to the previous owner when accepting or rejecting the
+  // passive SSL connection.
+  ACE_thread_t old_owner;
+
+  if (this->reactor_->owner (ACE_Thread::self (),
+                             &old_owner) != 0)
+    return -1;  // Failed to transfer ownership!  Should never happen!
 
   // Have the Reactor complete the SSL passive connection.  Run the
   // event loop until the passive connection is completed.  Since
   // the Reactor is used, this isn't a busy wait.
-  while (SSL_in_accept_init (new_stream.ssl ()))
-    if (this->reactor_->handle_events (timeout) == -1)
-      {
-        (void) this->reactor_->remove_handler (&eh, reactor_mask);
-        return -1;
-      }
+  while (SSL_in_accept_init (ssl))
+    {
+      // Before blocking in the Reactor, do an SSL_accept() in case
+      // OpenSSL buffered additional data sent within an SSL record
+      // during session negotiation.  The buffered data must be
+      // handled prior to entering the Reactor event loop since the
+      // Reactor may end up waiting indefinitely for data that has
+      // already arrived.
+      int status = ::SSL_accept (ssl);
+
+      switch (::SSL_get_error (ssl, status))
+        {
+        case SSL_ERROR_NONE:
+          break;
+
+        case SSL_ERROR_WANT_WRITE:
+        case SSL_ERROR_WANT_READ:
+          // No data buffered by OpenSSL, so wait for data in the
+          // Reactor.
+          if (this->reactor_->handle_events (timeout) == -1
+              || new_stream.get_handle () == ACE_INVALID_HANDLE)
+            {
+              (void) this->reactor_->remove_handler (&eh, reactor_mask);
+              (void) this->reactor_->owner (old_owner);
+              return -1;
+            }
+
+          break;
+
+        case SSL_ERROR_ZERO_RETURN:
+          // The peer has notified us that it is shutting down via
+          // the SSL "close_notify" message so we need to
+          // shutdown, too.
+          (void) new_stream.close ();
+
+          return -1;
+
+        default:
+
+#ifndef ACE_NDEBUG
+          //ERR_print_errors_fp (stderr);
+#endif  /* ACE_NDEBUG */
+
+          (void) this->reactor_->remove_handler (&eh, reactor_mask);
+          (void) this->reactor_->owner (old_owner);
+
+          return -1;
+        }
+
+    }
 
   // SSL passive connection was completed.  Deregister the event
   // handler from the Reactor, but don't close it.
-  return
-    this->reactor_->remove_handler (&eh,
-                                    reactor_mask |
-                                    ACE_Event_Handler::DONT_CALL);
+  (void) this->reactor_->remove_handler (&eh,
+                                         reactor_mask |
+                                         ACE_Event_Handler::DONT_CALL);
+
+  // Transfer control of the Reactor to the previous owner.
+  return this->reactor_->owner (old_owner);
 }
 
 // General purpose routine for accepting new connections.
