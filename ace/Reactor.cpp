@@ -551,7 +551,8 @@ ACE_Notification_Handler::open (ACE_Reactor *r)
   ACE_TRACE ("ACE_Notification_Handler::open");
 
   this->reactor_ = r;
-  this->notification_pipe_.open ();
+  if (this->notification_pipe_.open () == -1)
+    return -1;
 
 #if !defined (ACE_WIN32) // There seems to be a Win32 bug with this...
   // Set this into non-blocking mode.

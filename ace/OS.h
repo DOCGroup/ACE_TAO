@@ -503,7 +503,6 @@ typedef struct
 } ACE_sema_t;
 #endif /* ACE_HAS_POSIX_SEM */
 
-#if !defined (PTHREAD_CANCEL_ENABLE)
 struct cancel_state
 {
   int cancelstate;
@@ -513,7 +512,6 @@ struct cancel_state
   int canceltype;
   // e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
 };
-#endif /* PTHREAD_CANCEL_ENABLE */
 
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)

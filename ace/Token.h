@@ -26,7 +26,7 @@
 class ACE_Export ACE_Token
   // = TITLE
   //    Class that acquires, renews, and releases a synchronization
-  //    token that is local to the process.
+  //    token that is serviced in strict FIFO ordering.
   //
   // = DESCRIPTION 
   //    This class is a more general-purpose synchronization mechanism
@@ -34,8 +34,8 @@ class ACE_Export ACE_Token
   //    mutex" semantics, where a thread that owns the token can
   //    reacquire it without deadlocking.  In addition, threads that are
   //    blocked awaiting the token are serviced in strict FIFO order as
-  //    other threads release the token (SunOS 5.x mutexes don't strictly
-  //    enforce an acquisition order).
+  //    other threads release the token (Solaris and Pthread mutexes don't 
+  //    strictly enforce an acquisition order).
 {
 public:
   // = Initialization and termination.
