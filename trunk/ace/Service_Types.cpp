@@ -52,8 +52,10 @@ ACE_Service_Type_Impl::fini (void) const
   delete [] (char *) this->name_;
   ((ACE_Service_Type_Impl *) this)->name_ = 0;
 
+#if 0
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
     operator delete ((void *) this->object ());	// cast to remove const-ness
+#endif /* 0 */
 
   if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_THIS))
     delete (ACE_Service_Type_Impl *) this; 
@@ -353,10 +355,21 @@ int
 ACE_Service_Object_Type::fini (void) const
 {
   ACE_TRACE ("ACE_Service_Object_Type::fini");
+
   const void *obj = this->object ();
+
   ACE_Service_Object *so = (ACE_Service_Object *) obj;
+
   if (so)
-    so->fini ();
+    {
+      so->fini ();
+
+#if 1
+      if (ACE_BIT_ENABLED (this->flags_, ACE_Service_Type::DELETE_OBJ))
+	delete so;
+#endif /* 1 */
+    }
+
   return ACE_Service_Type_Impl::fini ();
 }
 

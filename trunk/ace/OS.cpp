@@ -1436,9 +1436,9 @@ ACE_Thread_Adapter::invoke (void)
   // thread now if we are running an MFC thread.
   CWinThread *pThread = ::AfxGetThread ();
   if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-    {
-      ::_endthreadex ((DWORD) status);
-    }
+    ::_endthreadex ((DWORD) status);
+  else
+    ::AfxEndThread ((DWORD)status);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
   return status;
