@@ -29,10 +29,10 @@ PLATFORM_AIO_SUPPORT := \
 ifeq ($(threads),0)
   CPPFLAGS += -DACE_MT_SAFE=0
 else
-  LIBS += libpthread
+  LIBS += libpthread.so
   ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
     CPPFLAGS += -DACE_HAS_AIO_CALLS
-    LIBS += liblrt
+    LIBS += liblrt.so
   endif
 endif # threads
 
