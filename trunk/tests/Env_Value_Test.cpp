@@ -26,8 +26,8 @@ int
 main (int argc, char *[])
 {
       ACE_UNUSED_ARG (argc);
-      ::putenv("TEST_VALUE_POSITIVE=10.2");
-      ::putenv("TEST_VALUE_NEGATIVE=-10.2");
+      ACE_OS::putenv("TEST_VALUE_POSITIVE=10.2");
+      ACE_OS::putenv("TEST_VALUE_NEGATIVE=-10.2");
 #else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
   main (int argc, char *[], char* envp[])
 {
@@ -60,8 +60,8 @@ main (int argc, char *[])
           if (val != (expval)) \
             { \
               ACE_ERROR ((LM_ERROR, \
-                               "val %u does not expected value of %u\n", \
-                               (u_int) val, (u_int) (expval))); \
+                          "val %u does not match expected value of %u\n", \
+                          (u_int) val, (u_int) (expval))); \
             } \
           ACE_ASSERT (val == (expval)); \
         } \
