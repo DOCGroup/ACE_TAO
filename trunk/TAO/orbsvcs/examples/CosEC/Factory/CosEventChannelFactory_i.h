@@ -47,12 +47,14 @@ class TAO_CosEventChannelFactory_i :
   //    raise exceptions, but I'm undecided.
   // @@ Pradeep: when is the child poa destroyed? Maybe we should add
   //    a destroy() method to the factory interface (in IDL).
+  // @@ Carlos: if we add a <destroy> to the factory, any client will be
+  // able to destroy the factory!
 
   // = CosEventChannelFactory::ChannelFactory methods.
   virtual CosEventChannelAdmin::EventChannel_ptr create
     (
      const char * channel_id,
-      CORBA::Boolean store_in_naming_service,
+     CORBA::Boolean store_in_naming_service,
      CORBA::Environment &ACE_TRY_ENV
      );
 
@@ -60,7 +62,7 @@ class TAO_CosEventChannelFactory_i :
     (
      const char * channel_id,
      CORBA::Boolean unbind_from_naming_service,
-      CORBA::Environment &ACE_TRY_ENV
+     CORBA::Environment &ACE_TRY_ENV
      );
 
   virtual CosEventChannelAdmin::EventChannel_ptr find

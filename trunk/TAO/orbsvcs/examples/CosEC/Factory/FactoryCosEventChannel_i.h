@@ -20,35 +20,13 @@
 #ifndef FACTORYCOSEVENTCHANNEL_I_H
 #define FACTORYCOSEVENTCHANNEL_I_H
 
-#include "CosEventChannelFactoryS.h"
-
-// @@ reduce these includes.. not all are needed.
-// @@ Pradeep: could remove as many of this includes as possible?
-//    This is how:
-//    + Remove them all, and only include "FactoryCosEventChannel_i.h"
-//      in the .cpp file
-//    + Now compile, if there is an error in the .h file then try with 
-//      a forward declaration, if that doesn't work then add an
-//      include file.
-//    + For the errors in the .cpp file add the include to the .cpp
-//      file, but *not* to the header
-//
-//    Thanks
-//
-#include "orbsvcs/Naming/Naming_Utils.h"
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/Sched/Config_Scheduler.h"
-#include "orbsvcs/Runtime_Scheduler.h"
-#include "orbsvcs/Event/Event_Channel.h"
-#include "orbsvcs/Event/Module_Factory.h"
-#include "orbsvcs/CosEvent/EventChannel_i.h"
-#include "orbsvcs/Event/EC_Basic_Factory.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
+#include "orbsvcs/CosEventChannelAdminS.h"
+#include "orbsvcs/Event_Utilities.h"
+
+class ACE_Config_Scheduler;
+class TAO_EC_Event_Channel;
+class TAO_CosEC_EventChannel_i;
 
 class FactoryCosEventChannel_i :
   public virtual POA_CosEventChannelAdmin::EventChannel ,

@@ -1,9 +1,17 @@
+Fri May 14 20:27:59 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.{h,cpp}:
+	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.{h,cpp}:
+ 	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+	* orbsvcs/examples/CosEC/Factory/main.cpp:
+	  code review changes and compile error fixes.
+
 Fri May 14 17:00:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp (send),
-	  tao/UIOP_Transport.cpp (send): Removed the local const for 
+	  tao/UIOP_Transport.cpp (send): Removed the local const for
 	  TAO_WRITEV_MAX and replaced it with the new
-	  ACE_DEFAULT_WRITEV_MAX. 
+	  ACE_DEFAULT_WRITEV_MAX.
 
 Fri May 14 17:14:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -12,7 +20,7 @@ Fri May 14 17:14:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Fri May 14 16:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-        * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler.{cpp, h}: more on a 
+        * orbsvcs\orbsvcs\Sched\Reconfig_Scheduler.{cpp, h}: more on a
 	  very rough draft of the initial implementation.
 
 Fri May 14 15:25:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -36,11 +44,11 @@ Fri May 14 15:06:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Fri May 14 12:34:27 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/DomainC.i: 
+	* tao/DomainC.i:
 	* tao/DomainC.cpp: Moved CORBA_DomainManager::_nil () from
  	  DomainC.i to DomainC.cpp file.
 
-	* tao/Request.i: 
+	* tao/Request.i:
 	* tao/Request.cpp: Moved two methods CORBA::release () and
  	  CORBA_Request::_nil () from the Request.i to Request.cpp. This
  	  would help us to avoid annoying warnings with Sun_g++ which was
