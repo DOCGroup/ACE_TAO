@@ -1,27 +1,48 @@
+Sat Apr 29 20:57:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Buffering_Constraint_Policy.h:
+        * tao/Buffering_Constraint_Policy.cpp:
+        * tao/Client_Priority_Policy.h:
+        * tao/Client_Priority_Policy.cpp:
+        * tao/Messaging_Policy_i.h:
+        * tao/Messaging_Policy_i.cpp:
+          Fixed throw specs for several methods, most compilers did not
+          caught this problem, but KAI is always ready.
+
+        * tao/POA_CORBA.h:
+          Remove the POA_CORBA::*Pollable* classes.
+
+        * tests/MProfile_Forwarding/Servant_Locator.h:
+        * tests/MProfile_Forwarding/Servant_Locator.cpp:
+          Use the new macros for exception enabled ServantManagers.
+
+        * examples/Simulator/Event_Supplier/Makefile:
+          Updated dependencies
+
 Sat Apr 29 22:41:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Pluggable_Messaging.h:
-	* tao/Pluggable_Messaging.cpp: Fixed a compile error in
-	  KAI. Thanks to Darrell for reporting this.
+        * tao/Pluggable_Messaging.h:
+        * tao/Pluggable_Messaging.cpp: Fixed a compile error in
+          KAI. Thanks to Darrell for reporting this.
 
 Sat Apr 29 19:41:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tao/Invocation.cpp:
-	* tao/Transport_Mux_Strategy.h:
-	* tao/Transport_Mux_Strategy.cpp:
-	  If a timeout expires while sending a request we need to clear
-	  the reply dispatcher from the transport object.  There was no
-	  way to do that.
+        * tao/Invocation.cpp:
+        * tao/Transport_Mux_Strategy.h:
+        * tao/Transport_Mux_Strategy.cpp:
+          If a timeout expires while sending a request we need to clear
+          the reply dispatcher from the transport object.  There was no
+          way to do that.
 
-	* tests/Timeout/client.cpp:
-	* tests/Timeout/server.cpp:
-	* tests/Timeout/test_i.cpp:
-	  Change the test to ensure that the ORB does not crash if a reply
-	  is received after the request timeout has expired.
-	  Reduce debugging output.
+        * tests/Timeout/client.cpp:
+        * tests/Timeout/server.cpp:
+        * tests/Timeout/test_i.cpp:
+          Change the test to ensure that the ORB does not crash if a reply
+          is received after the request timeout has expired.
+          Reduce debugging output.
 
-	* tests/Timeout/run_test.pl:
-	  Extend the range of timeouts that the we check for.
+        * tests/Timeout/run_test.pl:
+          Extend the range of timeouts that the we check for.
 
 Sat Apr 29 19:41:39 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -187,12 +208,12 @@ Sat Apr 29 19:20:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Apr 29 19:26:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	  Further change to my fix of Apr 27. Used the
-	  ACE_NESTED_CLASS macro on the generation of the
-	  pointer to the ancestor's _narrow() method in
-	  _tao_QueryInterface(). Thanks to Darrell for pointing
-	  out the error in the SUNCC5 build that prompted this.
+        * TAO_IDL/be/be_interface.cpp:
+          Further change to my fix of Apr 27. Used the
+          ACE_NESTED_CLASS macro on the generation of the
+          pointer to the ancestor's _narrow() method in
+          _tao_QueryInterface(). Thanks to Darrell for pointing
+          out the error in the SUNCC5 build that prompted this.
 
 Sat Apr 29 15:44:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -29,7 +29,7 @@ class Servant_Locator : public POA_PortableServer::ServantLocator
   //   NON_RETAIN policy.
 public:
   Servant_Locator (CORBA::ORB_ptr orb_ptr);
-          
+
   // constructor
 
   ~Servant_Locator ();
@@ -37,8 +37,8 @@ public:
   virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr adapter,
                                              const char *operation,
-                                             PortableServer::ServantLocator::Cookie &the_cookie,
-                                             CORBA::Environment &ACE_TRY_ENV);
+                                             PortableServer::ServantLocator::Cookie &the_cookie
+                                             TAO_ENV_ARG_DECL);
   // This method is invoked by a POA whenever it receives a request
   // for MyFoo object that is not currently active.
 
@@ -46,8 +46,8 @@ public:
                            PortableServer::POA_ptr adapter,
                            const char *operation,
                            PortableServer::ServantLocator::Cookie the_cookie,
-                           PortableServer::Servant the_servant,
-                           CORBA::Environment &ACE_TRY_ENV);
+                           PortableServer::Servant the_servant
+                           TAO_ENV_ARG_DECL);
   // This method is invoked whenever a MyFooServant completes a
   // request.
 
@@ -58,8 +58,7 @@ public:
   CORBA::ORB_var orb_var_;
 
   CORBA::Object_var objref_;
-  // To be removed 
+  // To be removed
 };
 
 #endif /* _SERVANT_LOCATOR_H */
-

@@ -69,7 +69,8 @@ public:
   virtual TAO::PrioritySpecification priority_specification (
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
-    );
+    )
+    ACE_THROW_SPEC (());
   virtual CORBA::PolicyType policy_type (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     );

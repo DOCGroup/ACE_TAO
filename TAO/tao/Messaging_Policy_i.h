@@ -58,7 +58,8 @@ public:
   // Returns a copy of <this>.
 
   // = The Messaging::RelativeRoundtripTimeoutPolicy methods
-  virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV);
+  virtual TimeBase::TimeT relative_expiry (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC (());
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
 
@@ -107,7 +108,8 @@ public:
 
   // = The Messaging::SyncScopePolicy methods.
 
-  virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV);
+  virtual Messaging::SyncScope synchronization (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC (());
   void get_synchronization (Messaging::SyncScope &synchronization) const;
 
   virtual CORBA::PolicyType policy_type (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
