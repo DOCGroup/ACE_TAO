@@ -58,8 +58,9 @@ Svc_Handler<PR_ST_2>::handle_input (ACE_HANDLE)
 
   // Read data from client (terminate on error).
 
-  cerr << "in handle_input" << endl;
-  for (int r_bytes; (r_bytes = this->peer ().recv (buf, sizeof buf)) > 0; )
+  ACE_DEBUG ((LM_DEBUG, "(%t) in handle_input\n"));
+
+  for (ssize_t r_bytes; (r_bytes = this->peer ().recv (buf, sizeof buf)) > 0; )
     if (ACE_OS::write (ACE_STDOUT, buf, r_bytes) != r_bytes)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE::send_n"), -1);
 

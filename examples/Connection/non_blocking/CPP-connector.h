@@ -32,8 +32,6 @@ protected:
 
   int (Peer_Handler<ACE_PEER_STREAM_2>::*action_) (void);
   // Keeps track of which state we are in.
-
-private:
 };
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
