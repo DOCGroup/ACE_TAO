@@ -1,3 +1,9 @@
+Wed Jan 21 15:38:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Event_Service/Makefile: 
+	  Removed GPlot_File from the list, it does not compile on
+	  Solaris/g++, but it is not needed.
+
 Wed Jan 21 11:48:19 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/encode.cpp: Updated the ObjRef::encode routine to encode NUL
