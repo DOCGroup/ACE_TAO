@@ -126,7 +126,7 @@ private:
   TAO_UIOP_BASE_CONNECTOR base_connector_;
 
   /// Do we need to use a GIOP_Lite for sending messages?
-  CORBA::Boolean lite_flag_;
+  const bool lite_flag_;
 
   /// UIOP configuration properties for all connections established by
   /// this connector.

@@ -421,7 +421,7 @@ namespace CORBA
   TAO_SYSTEM_EXCEPTION(ACTIVITY_REQUIRED);
   TAO_SYSTEM_EXCEPTION(THREAD_CANCELLED);
 
-  #undef TAO_SYSTEM_EXCEPTION
+#undef TAO_SYSTEM_EXCEPTION
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
@@ -484,7 +484,7 @@ public:
 private:
   /// Flag that denotes that the TAO's CORBA exceptions have been
   /// initialized.
-  static int initialized_;
+  static bool initialized_;
 };
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)

@@ -106,8 +106,7 @@ protected:
   TAO_IIOP_Properties tcp_properties_;
 
   /// Do we need to use a GIOP_Lite for sending messages?
-  CORBA::Boolean lite_flag_;
-
+  const bool lite_flag_;
 
 private:
 

@@ -108,14 +108,12 @@ TAO_UIOP_Connector::close (void)
 int
 TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
-  TAO_UIOP_Endpoint *uiop_endpoint =
-    this->remote_endpoint (endpoint);
+  TAO_UIOP_Endpoint *uiop_endpoint = this->remote_endpoint (endpoint);
 
   if (uiop_endpoint == 0)
     return -1;
 
-   const ACE_UNIX_Addr &remote_address =
-     uiop_endpoint->object_addr ();
+   const ACE_UNIX_Addr &remote_address = uiop_endpoint->object_addr ();
 
    // @@ Note, POSIX.1g renames AF_UNIX to AF_LOCAL.
    // Verify that the remote ACE_UNIX_Addr was initialized properly.
@@ -209,15 +207,15 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
        // of timeouts, so the event will complete (either success or
        // failure) within timeout.
       result =
-        this->active_connect_strategy_->wait (svc_handler,
-                                              0);
+        this->active_connect_strategy_->wait (svc_handler, 0);
 
       if (TAO_debug_level > 2)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - UIOP_Connector::make_connection"
                       "wait done for handle[%d], result = %d\n",
-                      svc_handler->get_handle (), result));
+                      svc_handler->get_handle (),
+                      result));
         }
 
        // There are three possibilities when wait() returns: (a)
@@ -228,12 +226,10 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
        // following code deals with (c).
 
        // Check if the handler has been closed.
-       int closed =
-         svc_handler->is_closed ();
+       int closed = svc_handler->is_closed ();
 
        // In case of failures and close() has not be called.
-       if (result == -1 &&
-           !closed)
+       if (result == -1 && !closed)
          {
            // First, cancel from connector.
            this->base_connector_.cancel (svc_handler);
@@ -245,15 +241,14 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
            // connector.  Once connector.cancel() has been processed,
            // we are assured that the connector will no longer
            // open/close this handler.
-           closed =
-             svc_handler->is_closed ();
+           closed = svc_handler->is_closed ();
 
            // If closed, there is nothing to do here.  If not closed,
            // it was either opened or is still pending.
            if (!closed)
              {
                // Check if the handler has been opened.
-               int open =
+               const int open =
                  svc_handler->is_open ();
 
                // Some other thread was able to open the handler even
@@ -354,7 +349,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
                   TAO_UIOP_Profile (this->orb_core ()),
                   0);
 
-  int r = pfile->decode (cdr);
+  const int r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();
@@ -388,12 +383,12 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
   if (!endpoint || !*endpoint)
     return -1;  // Failure
 
-  const char *protocol[] = { "uiop", "uioploc" };
+  static const char *protocol[] = { "uiop", "uioploc" };
 
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  const size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
 
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
+  const size_t len0 = ACE_OS::strlen (protocol[0]);
+  const size_t len1 = ACE_OS::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
@@ -443,9 +438,9 @@ TAO_UIOP_Connector::init_uiop_properties (void)
 
   if (tph != 0)
     {
-      const char protocol [] = "uiop";
+      static const char protocol[] = "uiop";
       const char *protocol_type = protocol;
-      int hook_result =
+      const int hook_result =
         tph->call_client_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
@@ -457,10 +452,8 @@ TAO_UIOP_Connector::init_uiop_properties (void)
     }
 
     // Extract and locally store properties of interest.
-    this->uiop_properties_.send_buffer_size =
-      send_buffer_size;
-    this->uiop_properties_.recv_buffer_size =
-      recv_buffer_size;
+    this->uiop_properties_.send_buffer_size = send_buffer_size;
+    this->uiop_properties_.recv_buffer_size = recv_buffer_size;
 
   return 0;
 }
@@ -472,8 +465,8 @@ TAO_UIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
     return 0;
 
   TAO_UIOP_Endpoint *uiop_endpoint =
-    ACE_dynamic_cast (TAO_UIOP_Endpoint *,
-                      endpoint );
+    dynamic_cast<TAO_UIOP_Endpoint *> (endpoint);
+
   if (uiop_endpoint == 0)
     return 0;
 

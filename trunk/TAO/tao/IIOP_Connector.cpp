@@ -12,7 +12,7 @@
 #include "ace/OS_NS_string.h"
 
 
-ACE_RCSID (TAO,
+ACE_RCSID (tao,
            IIOP_Connector,
            "$Id$")
 
@@ -136,21 +136,20 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                      TAO_Transport_Descriptor_Interface &desc,
                                      ACE_Time_Value *max_wait_time)
 {
-  TAO_IIOP_Endpoint *iiop_endpoint =
-    this->remote_endpoint (desc.endpoint ());
+  TAO_IIOP_Endpoint *iiop_endpoint = this->remote_endpoint (desc.endpoint ());
 
   if (iiop_endpoint == 0)
     return 0;
 
-  const ACE_INET_Addr &remote_address =
-    iiop_endpoint->object_addr ();
+  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
                   "to <%s:%d>\n",
-                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()), iiop_endpoint->port()));
+                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host()),
+                  iiop_endpoint->port()));
     }
 
   // Get the right synch options
@@ -226,8 +225,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
         svc_handler->is_closed ();
 
       // In case of failures and close() has not be called.
-      if (result == -1 &&
-          !closed)
+      if (result == -1 && !closed)
         {
           // First, cancel from connector.
           this->base_connector_.cancel (svc_handler);
@@ -239,16 +237,14 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
           // Once connector.cancel() has been processed, we are
           // assured that the connector will no longer open/close this
           // handler.
-          closed =
-            svc_handler->is_closed ();
+          closed = svc_handler->is_closed ();
 
           // If closed, there is nothing to do here.  If not closed,
           // it was either opened or is still pending.
           if (!closed)
             {
               // Check if the handler has been opened.
-              int open =
-                svc_handler->is_open ();
+              const int open = svc_handler->is_open ();
 
               // Some other thread was able to open the handler even
               // though wait failed for this thread.
@@ -293,12 +289,12 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - IIOP_Connector::make_connection, "
                   "new connection to <%s:%d> on Transport[%d]\n",
-                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()), iiop_endpoint->port (),
+                  ACE_TEXT_CHAR_TO_TCHAR(iiop_endpoint->host ()),
+                  iiop_endpoint->port (),
                   svc_handler->peer ().get_handle ()));
     }
 
-  TAO_Transport *transport =
-    svc_handler->transport ();
+  TAO_Transport *transport = svc_handler->transport ();
 
   // Add the handler to Cache
   int retval =
@@ -356,7 +352,7 @@ TAO_IIOP_Connector::create_profile (TAO_InputCDR& cdr)
                   TAO_IIOP_Profile (this->orb_core ()),
                   0);
 
-  int r = pfile->decode (cdr);
+  const int r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();
@@ -394,12 +390,12 @@ TAO_IIOP_Connector::check_prefix (const char *endpoint)
   if (!endpoint || !*endpoint)
     return -1;  // Failure
 
-  const char *protocol[] = { "iiop", "iioploc" };
+  static const char *protocol[] = { "iiop", "iioploc" };
 
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  const size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
 
-  size_t len0 = ACE_OS::strlen (protocol[0]);
-  size_t len1 = ACE_OS::strlen (protocol[1]);
+  const size_t len0 = ACE_OS::strlen (protocol[0]);
+  const size_t len1 = ACE_OS::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
@@ -448,17 +444,17 @@ TAO_IIOP_Connector::init_tcp_properties (void)
 
   if (tph != 0)
     {
-      const char protocol [] = "iiop";
+      static const char protocol[] = "iiop";
       const char *protocol_type = protocol;
 
-      int hook_result =
+      const int hook_result =
         tph->call_client_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
                                          enable_network_priority,
                                          protocol_type);
 
-      if(hook_result == -1)
+      if (hook_result == -1)
         return -1;
     }
 
@@ -484,6 +480,7 @@ TAO_IIOP_Connector::remote_endpoint (TAO_Endpoint *endpoint)
 
   TAO_IIOP_Endpoint *iiop_endpoint =
     dynamic_cast<TAO_IIOP_Endpoint *> (endpoint );
+
   if (iiop_endpoint == 0)
     return 0;
 

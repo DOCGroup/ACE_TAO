@@ -25,7 +25,7 @@ CORBA::string_dup (const char *str)
       return 0;
     }
 
-  size_t len = ACE_OS::strlen (str);
+  const size_t len = ACE_OS::strlen (str);
 
   // This allocates an extra byte for the '\0';
   char * copy = CORBA::string_alloc (static_cast<CORBA::ULong> (len));
