@@ -48,6 +48,25 @@ int run_main (int, ACE_TCHAR *[])
   for (i = 0; i < TOP; ++i)
     ACE_ASSERT (vector[i] == i);
 
+  // Test to be sure the iterator gets the correct count and entries.
+  ITERATOR iter (vector);
+  DATA *p_item = 0 ;
+  size_t iter_count = 0;
+  while (!iter.done ())
+    {
+      if (iter.next (p_item) == 0)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fail to get value on iter pass %d\n"),
+                    iter_count));
+      if (*p_item != iter_count)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iter pass %d got %d\n"),
+                    iter_count, *p_item));
+      iter_count++;
+      iter.advance();
+    }
+  if (iter_count != TOP)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iterated %d elements; expected %d\n"),
+                iter_count, TOP));
+
   for (i = 0; i < (TOP - LEFT); ++i)
     vector.pop_back ();
 
