@@ -556,7 +556,9 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Non-empty IDL context.",               // 38
       "Unsupported RMI/IDL customer value type stream format.",  // 39
       "ORB output stream does not support ValueOutputStream interface.", // 40
-      "ORB input stream does not support ValueInputStream interface."    // 41
+      "ORB input stream does not support ValueInputStream interface.",    // 41
+      "Character support limited to ISO 8859-1 for this object reference", // 42
+      "Attempt to add a Pollable to a second PollableSet."
     };
 
   static const char *IMP_LIMIT_TABLE[] =
@@ -584,7 +586,10 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Attempt to marshal Local object.", // 4
       "wchar or wstring data erroneously sent by client over GIOP 1.0 connection.", // 5
       "wchar or wstring data erroneously returned by server over GIOP 1.0 connection.", //6
-      "Unsupported RMI/IDL custom value type stream format." // 7
+      "Unsupported RMI/IDL custom value type stream format.", // 7
+      "Custom data not compatible with ValueHandler read operation.", // 8
+      "Codeset service contexts with different values recieved on the same connection." // 9
+
     };
 
   static const char *BAD_TYPECODE_TABLE[] =
@@ -602,7 +607,8 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Attempt to use DII on Local object.",        // 4
       "Biomolecular Sequence Analysis iterator cannot be reset.",         // 5
       "Biomolecular Sequence Analysis metadata is not available as XML.", // 6
-      "Genomic Maps iterator cannot be rest."       // 7
+      "Genomic Maps iterator cannot be rest.",       // 7
+      "Operation not implemented in local object"   // 8
     };
 
   static const char *NO_RESOURCE_TABLE[] =
@@ -632,7 +638,14 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "POA cannot create POAs while undergoing destruction.", // 17
       "Attempt to reassign priority.", // 18
       "An OTS/XA integration xa_start call returned XAER_OUTSIDE.", // 19
-      "An OTS/XA integration xa_call returned XAER_PROTO." // 20
+      "An OTS/XA integration xa_call returned XAER_PROTO.", // 20
+      "Transaction context of request & client threads do not match in interceptor.", // 21
+      "Poller has not returned any response yet.", // 22
+      "Registration of TaggedProfileFactory failed because a factory already exists for the given id.", // 23
+      "Registration of TaggedComponentFactory failed because a factory already exists for the given id.", // 24
+       "Iteration has no more elements.", // 25
+       "Invocation of this operation not allowed in post_init." // 26
+
     };
 
   static const char *TRANSIENT_TABLE[] =
@@ -665,7 +678,8 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Attempt to pass an unactivated (unregistered) value as an object reference.", // 1
       "Failed to create or locate Object Adapter.", // 2
       "Biomolecular Sequence Analysis Service is no longer available.", // 3
-      "Object Adapter inactive." // 4
+      "Object Adapter inactive.", // 4
+      "This Poller has already delivered a reply to some client." // 5
     };
 
   static const char *INV_POLICY_TABLE[] =
@@ -689,6 +703,24 @@ CORBA::SystemException::_tao_get_omg_exception_description (
     {
       "ServantManager returned wrong servant type.", // 1
       "Operation or attribute not known to target object." // 2
+    };
+
+  static const char *BAD_CONTEXT_TABLE[] =
+    {
+      "IDL context not found.", // 1
+      "No matching IDL context property." // 2
+    };
+
+  static const char *CODESET_INCOMPATIBLE_TABLE[] =
+    {
+      "Codeset negotiation failed.", // 1
+      "Codeset delivered in CodeSetContext is not supported by server as transmission codeset." // 2
+    };
+
+  static const char *INTF_REPOS_TABLE[] =
+    {
+      "Interface Repository not available.", // 1
+      "No entry for requested interface in Interface Repository." // 2
     };
 
   if (minor_code == 0)
@@ -767,6 +799,18 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   if (exc._is_a ("IDL:omg.org/CORBA/BAD_OPERATION:1.0")
       && minor_code < sizeof BAD_OPERATION_TABLE / sizeof (char *))
     return BAD_OPERATION_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/BAD_CONTEXT:1.0")
+      && minor_code < sizeof BAD_CONTEXT_TABLE / sizeof (char *))
+    return BAD_CONTEXT_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/CODESET_INCOMPATIBLE:1.0")
+      && minor_code < sizeof CODESET_INCOMPATIBLE_TABLE / sizeof (char *))
+    return CODESET_INCOMPATIBLE_TABLE[minor_code];
+
+  if (exc._is_a ("IDL:omg.org/CORBA/INTF_REPOS:1.0")
+      && minor_code < sizeof INTF_REPOS_TABLE / sizeof (char *))
+    return INTF_REPOS_TABLE[minor_code];
 
 #else
   ACE_UNUSED_ARG (exc);
