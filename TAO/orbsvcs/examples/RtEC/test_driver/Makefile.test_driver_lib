@@ -53,7 +53,7 @@ $(TEMPINCDIR):
 	@-test -d $(TEMPINCDIR) || mkdir -p $(TEMPINCDIR) $(ACE_NUL_STDERR)
 
 endif
-OUTPUT_DIRECTORY = $(ACE_ROOT)/lib
+OUTPUT_DIRECTORY = ../../../../../lib
 all: $(OUTPUT_DIRECTORY)
 
 $(OUTPUT_DIRECTORY):
@@ -108,7 +108,7 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 
-INSTALL_CHECK = $(ACE_ROOT)/lib
+INSTALL_CHECK = ../../../../../lib
 ifeq ($(INSTALL_CHECK),.)
   INSLIB = $(PWD)
 else
@@ -119,7 +119,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-CPPFLAGS     += -I$(ACE_ROOT)/ACEXML/common -I$(ACE_ROOT)/Kokyu -I$(DATASTREAM_ROOT)/include -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
+CPPFLAGS     += -I../../../../../ACEXML/common -I../../../../../Kokyu -I$(DATASTREAM_ROOT)/include -I../../../../orbsvcs -I../../../.. -I../../../../tao -I../../../../..
 ifeq ($(static_libs),1)
   ifneq ($(LIB),)
     CPPFLAGS += -DTAO_AS_STATIC_LIBS -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
@@ -127,7 +127,7 @@ ifeq ($(static_libs),1)
 endif
 
 
-LDFLAGS      += -L$(DATASTREAM_ROOT)/lib -L$(ACE_ROOT)/lib
+LDFLAGS      += -L$(DATASTREAM_ROOT)/lib -L../../../../../lib
 
 #----------------------------------------------------------------------------
 #       Local targets

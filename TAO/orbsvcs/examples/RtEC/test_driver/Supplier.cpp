@@ -20,7 +20,9 @@ Supplier::~Supplier()
 void
 Supplier::update(ACE_ENV_SINGLE_ARG_DECL)
 {
+  /*
   ACE_DEBUG((LM_DEBUG,"Supplier %d (%P|%t) received update\n",this->_supplier_id));
+  */
 
   //only react to update if ready=1
   if (*this->_ready == 1 && this->_num_sent < this->_to_send)
@@ -32,12 +34,16 @@ Supplier::update(ACE_ENV_SINGLE_ARG_DECL)
       this->_consumer_proxy->push(this->_events ACE_ENV_ARG_PARAMETER);
 
       ++this->_num_sent;
+      /*
       ACE_DEBUG((LM_DEBUG,"Sent events; %d sent\t%d total\n",this->_num_sent,this->_to_send));
+      */
       if (this->_num_sent >= this->_to_send)
         {
           //just finished; only want to do this once!
+            /*
           ACE_DEBUG((LM_DEBUG,"RELEASE read lock from Supplier %d\n",
                      this->_supplier_id));
+                     */
           this->_done->release();
           this->_hold_mtx = 0;
         }
@@ -95,8 +101,10 @@ Supplier::connect (int *ready,
   //create supplier RT_Info
   std::ostringstream supp_entry_pt;
   supp_entry_pt << entry_prefix << " Supplier " << this->_supplier_id; //unique RT_Info entry point
+    /*
   ACE_DEBUG((LM_DEBUG,"Creating %s\n",supp_entry_pt.str().c_str()));
   ACE_DEBUG((LM_DEBUG,"\timportance: %d\tcriticality: %d\n",importance,criticality));
+  */
   RtecScheduler::handle_t rt_info = scheduler->create (supp_entry_pt.str().c_str()
                                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -115,6 +123,7 @@ Supplier::connect (int *ready,
   ACE_CHECK;
 
   // Register as supplier of events
+  ACE_DEBUG((LM_DEBUG,"Supplier %d inserting %d events into SupplierQOS_Factory\n",this->_supplier_id,events.length()));
   ACE_SupplierQOS_Factory supplierQOS;
   for (size_t i=0; i<events.length(); ++i)
     {
@@ -140,14 +149,20 @@ Supplier::connect (int *ready,
   this->_consumer_proxy->connect_push_supplier (supplierv.in (),
                                                 supplierQOS.get_SupplierQOS ()
                                                 ACE_ENV_ARG_PARAMETER);
+  ACE_DEBUG((LM_DEBUG, "Supplier (%t) "));
+  printf("object pointer (%p) ---> push_consumer (%p)\n",
+	this,
+	this->_consumer_proxy.in());
+
   ACE_CHECK;
 
+  /*
   ACE_DEBUG((LM_DEBUG,"Supplier %d connected\n",this->_supplier_id));
   for (size_t i=0; i<events.length(); ++i)
     {
       ACE_DEBUG((LM_DEBUG,"\tEvent Type: %d\n",events[i].header.type));
     }
-
+    */
   //connect TimeoutConsumer for timeouts.
   this->timeoutconsumer.connect(scheduler,supp_entry_pt.str().c_str(),period,
                                 importance,criticality,ec ACE_ENV_ARG_PARAMETER);

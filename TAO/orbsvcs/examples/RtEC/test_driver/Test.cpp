@@ -49,7 +49,7 @@ main (int argc, char *argv[])
 
       ACEXML_FileCharStream *fcs = new ACEXML_FileCharStream();
       if ((retval = fcs->open(args.filename_.c_str())) != 0) {
-        ACE_DEBUG ((LM_DEBUG, "Could not open file %s\n",args.filename_.c_str()));
+        //ACE_DEBUG ((LM_DEBUG, "Could not open file %s\n",args.filename_.c_str()));
         return retval;
       }
 
@@ -67,11 +67,11 @@ main (int argc, char *argv[])
       ACEXML_TRY_CHECK;
 
       if ((retval = fcs->close()) != 0) {
-        ACE_DEBUG ((LM_DEBUG, "Could not close file %s\n",args.filename_.c_str()));
+        //ACE_DEBUG ((LM_DEBUG, "Could not close file %s\n",args.filename_.c_str()));
         return retval;
       }
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished parsing\n")));
+      //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished parsing\n")));
 
       // configure according to parsed XML
       ConfigFactory::Default_Config_Factory fact;
@@ -109,7 +109,7 @@ main (int argc, char *argv[])
     }
   ACEXML_ENDTRY;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished successfully\n")));
+  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finished successfully\n")));
 
   return retval;
 }
@@ -124,7 +124,7 @@ int parse_args (int argc, char *argv[], Arguments &args)
       {
       case 'f':
         args.filename_.set(get_opts.opt_arg());
-        ACE_DEBUG((LM_DEBUG,ACE_TEXT("Filename argument: %s\n"),args.filename_.c_str()));
+        //ACE_DEBUG((LM_DEBUG,ACE_TEXT("Filename argument: %s\n"),args.filename_.c_str()));
         break;
       case '?':
       default:
