@@ -1,3 +1,9 @@
+Fri Nov  3 17:22:10 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/config-sunos5.5.h: Backed of changes given by Russ
+	  Noseworthy through bug id #710. This was breaking SunCC5.0
+	  builds. 
+
 Fri Nov  3 09:41:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/RMCast/RMCast_Membership_Test.cpp:
