@@ -513,6 +513,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -524,8 +526,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -772,6 +772,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -783,12 +785,11 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i
 
-.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp $(ACE_ROOT)/ace/Auto_Ptr.h \
+.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -924,6 +925,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -935,8 +938,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -1054,7 +1055,8 @@ realclean:
  $(TAO_ROOT)/tao/Acceptor_Registry.i \
  $(TAO_ROOT)/tao/Forwarding_Servant.h
 
-.obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp $(TAO_ROOT)/tao/POAC.h \
+.obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp \
+ $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/Object.h \
@@ -1140,6 +1142,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -1151,8 +1155,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/Servant_Base.h \
@@ -1308,7 +1310,8 @@ realclean:
  $(TAO_ROOT)/tao/ImplRepoC.i \
  $(TAO_ROOT)/tao/POA.i
 
-.obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp $(TAO_ROOT)/tao/POAS.h \
+.obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp \
+ $(TAO_ROOT)/tao/POAS.h \
  $(TAO_ROOT)/tao/POAC.h \
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -1395,6 +1398,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -1406,8 +1411,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/Servant_Base.i \
@@ -1595,6 +1598,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -1606,8 +1611,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/Servant_Base.i \
@@ -1894,6 +1897,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -1905,8 +1910,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -2005,6 +2008,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -2016,8 +2021,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
@@ -2263,6 +2266,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -2274,8 +2279,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.i \
  $(TAO_ROOT)/tao/ORB.h \
@@ -2419,6 +2422,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -2428,8 +2433,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/Servant_Base.i \
@@ -2577,7 +2580,8 @@ realclean:
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
- $(TAO_ROOT)/tao/Invocation.i ImplRepoC.i
+ $(TAO_ROOT)/tao/Invocation.i \
+ ImplRepoC.i
 
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
  $(TAO_ROOT)/tao/ImplRepoC.h \
@@ -2669,6 +2673,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -2678,8 +2684,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/Servant_Base.i \
@@ -6106,11 +6110,11 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -8604,7 +8608,8 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
-.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp $(TAO_ROOT)/tao/IORC.h \
+.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp \
+ $(TAO_ROOT)/tao/IORC.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Min_Max.h \
@@ -8822,7 +8827,8 @@ realclean:
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/Invocation.i
 
-.obj/IORS.o .obj/IORS.so .shobj/IORS.o .shobj/IORS.so: IORS.cpp $(TAO_ROOT)/tao/IORS.h \
+.obj/IORS.o .obj/IORS.so .shobj/IORS.o .shobj/IORS.so: IORS.cpp \
+ $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
@@ -11580,7 +11586,8 @@ realclean:
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i
 
-.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp $(TAO_ROOT)/tao/Any.h \
+.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -11774,7 +11781,8 @@ realclean:
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- $(TAO_ROOT)/tao/singletons.h
+ $(TAO_ROOT)/tao/singletons.h \
+ $(TAO_ROOT)/tao/debug.h
 
 .obj/CurrentC.o .obj/CurrentC.so .shobj/CurrentC.o .shobj/CurrentC.so: CurrentC.cpp \
  $(TAO_ROOT)/tao/CurrentC.h \
@@ -12077,6 +12085,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -12090,8 +12100,6 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
@@ -12274,7 +12282,13 @@ realclean:
  $(ACE_ROOT)/ace/CORBA_macros.h \
  $(TAO_ROOT)/tao/corbafwd.i \
  $(TAO_ROOT)/tao/Exception.h \
- $(TAO_ROOT)/tao/Exception.i
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i
 
 .obj/Environment.o .obj/Environment.so .shobj/Environment.o .shobj/Environment.so: Environment.cpp \
  $(TAO_ROOT)/tao/Environment.h \
@@ -12601,6 +12615,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -12612,8 +12628,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/Key_Adapters.i \
  $(TAO_ROOT)/tao/Server_Strategy_Factory.h \
@@ -12869,7 +12883,8 @@ realclean:
  $(TAO_ROOT)/tao/Interceptor.i \
  $(TAO_ROOT)/tao/ORB.i
 
-.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp $(TAO_ROOT)/tao/ORB.h \
+.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -13343,6 +13358,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -13421,8 +13438,6 @@ realclean:
  $(TAO_ROOT)/tao/IORManipulation.h \
  $(TAO_ROOT)/tao/IORS.h \
  $(TAO_ROOT)/tao/IORC.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/IORC.i \
  $(TAO_ROOT)/tao/Servant_Base.h \
  $(TAO_ROOT)/tao/POAC.h \
@@ -13562,6 +13577,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -13611,8 +13628,6 @@ realclean:
  $(TAO_ROOT)/tao/POA_CORBA.h \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
@@ -13724,6 +13739,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -13735,8 +13752,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DomainC.i \
@@ -13942,6 +13957,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -13953,8 +13970,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DomainC.i \
@@ -14496,9 +14511,9 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/Any.h \
@@ -14748,7 +14763,8 @@ realclean:
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i
 
-.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp $(TAO_ROOT)/tao/Stub.h \
+.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp \
+ $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -16027,7 +16043,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i
 
-.obj/GIOP.o .obj/GIOP.so .shobj/GIOP.o .shobj/GIOP.so: GIOP.cpp $(TAO_ROOT)/tao/GIOP.h \
+.obj/GIOP.o .obj/GIOP.so .shobj/GIOP.o .shobj/GIOP.so: GIOP.cpp \
+ $(TAO_ROOT)/tao/GIOP.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -18792,11 +18809,11 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.h \
  $(TAO_ROOT)/tao/CurrentC.h \
  $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -19304,7 +19321,8 @@ realclean:
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/debug.h
 
-.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp $(TAO_ROOT)/tao/TAO.h \
+.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp \
+ $(TAO_ROOT)/tao/TAO.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -19391,6 +19409,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -19402,8 +19422,6 @@ realclean:
  $(TAO_ROOT)/tao/varout.i \
  $(TAO_ROOT)/tao/varout.cpp \
  $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/POAC.i \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/IOR_LookupTable.h \
@@ -20046,7 +20064,8 @@ realclean:
  $(TAO_ROOT)/tao/Leader_Follower.i \
  $(TAO_ROOT)/tao/debug.h
 
-.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp $(TAO_ROOT)/tao/IOPC.h \
+.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp \
+ $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
@@ -20145,7 +20164,8 @@ realclean:
  $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i
 
-.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp $(TAO_ROOT)/tao/IOPS.h \
+.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp \
+ $(TAO_ROOT)/tao/IOPS.h \
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
@@ -20804,126 +20824,7 @@ realclean:
  $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i
 
-.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp $(TAO_ROOT)/tao/TAOC.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- $(TAO_ROOT)/tao/varout.h \
- $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.h \
- $(ACE_ROOT)/ace/Based_Pointer_T.i \
- $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
- $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/SString.i \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- $(TAO_ROOT)/tao/try_macros.h \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- $(TAO_ROOT)/tao/corbafwd.i \
- $(TAO_ROOT)/tao/Object.i \
- $(TAO_ROOT)/tao/varout.i \
- $(TAO_ROOT)/tao/varout.cpp \
- $(TAO_ROOT)/tao/Sequence.h \
- $(TAO_ROOT)/tao/Managed_Types.h \
- $(TAO_ROOT)/tao/Managed_Types.i \
- $(TAO_ROOT)/tao/Sequence.i \
- $(TAO_ROOT)/tao/Sequence_T.h \
- $(TAO_ROOT)/tao/Sequence_T.i \
- $(TAO_ROOT)/tao/Sequence_T.cpp \
- $(TAO_ROOT)/tao/PolicyC.h \
- $(TAO_ROOT)/tao/CurrentC.h \
- $(TAO_ROOT)/tao/CurrentC.i \
- $(TAO_ROOT)/tao/CDR.h \
- $(TAO_ROOT)/tao/Typecode.h \
- $(TAO_ROOT)/tao/Exception.h \
- $(TAO_ROOT)/tao/Exception.i \
- $(TAO_ROOT)/tao/Typecode.i \
- $(TAO_ROOT)/tao/CDR.i \
- $(TAO_ROOT)/tao/PolicyC.i \
- $(TAO_ROOT)/tao/TimeBaseC.h \
- $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
- $(TAO_ROOT)/tao/Any.i \
- $(TAO_ROOT)/tao/TimeBaseC.i \
- $(TAO_ROOT)/tao/TAOC.i \
- $(TAO_ROOT)/tao/TAOS.h \
- $(TAO_ROOT)/tao/POA_CORBA.h \
- $(TAO_ROOT)/tao/DynAnyC.h \
- $(TAO_ROOT)/tao/DynAnyC.i \
- $(TAO_ROOT)/tao/DomainC.h \
- $(TAO_ROOT)/tao/DomainC.i \
- $(TAO_ROOT)/tao/Servant_Base.h \
- $(TAO_ROOT)/tao/POAC.h \
- $(TAO_ROOT)/tao/POAC.i \
- $(TAO_ROOT)/tao/Servant_Base.i \
- $(TAO_ROOT)/tao/TAOS_T.h \
- $(TAO_ROOT)/tao/TAOS_T.i \
- $(TAO_ROOT)/tao/TAOS_T.cpp \
- $(TAO_ROOT)/tao/TAOS.i
-
-.obj/TAOS.o .obj/TAOS.so .shobj/TAOS.o .shobj/TAOS.so: TAOS.cpp $(TAO_ROOT)/tao/TAOS.h \
+.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -21020,11 +20921,132 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
+ $(TAO_ROOT)/tao/Any.i \
+ $(TAO_ROOT)/tao/TimeBaseC.i \
+ $(TAO_ROOT)/tao/TAOC.i \
+ $(TAO_ROOT)/tao/TAOS.h \
+ $(TAO_ROOT)/tao/POA_CORBA.h \
+ $(TAO_ROOT)/tao/DynAnyC.h \
+ $(TAO_ROOT)/tao/DynAnyC.i \
+ $(TAO_ROOT)/tao/DomainC.h \
+ $(TAO_ROOT)/tao/DomainC.i \
+ $(TAO_ROOT)/tao/Servant_Base.h \
+ $(TAO_ROOT)/tao/POAC.h \
+ $(TAO_ROOT)/tao/POAC.i \
+ $(TAO_ROOT)/tao/Servant_Base.i \
+ $(TAO_ROOT)/tao/TAOS_T.h \
+ $(TAO_ROOT)/tao/TAOS_T.i \
+ $(TAO_ROOT)/tao/TAOS_T.cpp \
+ $(TAO_ROOT)/tao/TAOS.i
+
+.obj/TAOS.o .obj/TAOS.so .shobj/TAOS.o .shobj/TAOS.so: TAOS.cpp \
+ $(TAO_ROOT)/tao/TAOS.h \
+ $(TAO_ROOT)/tao/TAOC.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/inc_user_config.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(TAO_ROOT)/tao/varout.h \
+ $(TAO_ROOT)/tao/Object.h \
+ $(TAO_ROOT)/tao/corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ $(TAO_ROOT)/tao/try_macros.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ $(TAO_ROOT)/tao/corbafwd.i \
+ $(TAO_ROOT)/tao/Object.i \
+ $(TAO_ROOT)/tao/varout.i \
+ $(TAO_ROOT)/tao/varout.cpp \
+ $(TAO_ROOT)/tao/Sequence.h \
+ $(TAO_ROOT)/tao/Managed_Types.h \
+ $(TAO_ROOT)/tao/Managed_Types.i \
+ $(TAO_ROOT)/tao/Sequence.i \
+ $(TAO_ROOT)/tao/Sequence_T.h \
+ $(TAO_ROOT)/tao/Sequence_T.i \
+ $(TAO_ROOT)/tao/Sequence_T.cpp \
+ $(TAO_ROOT)/tao/PolicyC.h \
+ $(TAO_ROOT)/tao/CurrentC.h \
+ $(TAO_ROOT)/tao/CurrentC.i \
+ $(TAO_ROOT)/tao/CDR.h \
+ $(TAO_ROOT)/tao/Typecode.h \
+ $(TAO_ROOT)/tao/Exception.h \
+ $(TAO_ROOT)/tao/Exception.i \
+ $(TAO_ROOT)/tao/Typecode.i \
+ $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
+ $(TAO_ROOT)/tao/PolicyC.i \
+ $(TAO_ROOT)/tao/TimeBaseC.h \
+ $(TAO_ROOT)/tao/Any.h \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -22203,6 +22225,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -22216,8 +22240,6 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
@@ -22559,11 +22581,11 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -22681,11 +22703,11 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/TimeBaseC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/TimeBaseC.i \
  $(TAO_ROOT)/tao/TAOC.i \
@@ -23840,6 +23862,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -23853,8 +23877,6 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
@@ -23963,6 +23985,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -23976,8 +24000,6 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
@@ -24077,6 +24099,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -24090,8 +24114,6 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
@@ -24191,6 +24213,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -24204,8 +24228,6 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
@@ -24305,6 +24327,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -24318,8 +24342,6 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
@@ -24462,6 +24484,8 @@ realclean:
  $(TAO_ROOT)/tao/Exception.i \
  $(TAO_ROOT)/tao/Typecode.i \
  $(TAO_ROOT)/tao/CDR.i \
+ $(TAO_ROOT)/tao/Environment.h \
+ $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Managed_Types.h \
  $(TAO_ROOT)/tao/Managed_Types.i \
@@ -24475,8 +24499,6 @@ realclean:
  $(TAO_ROOT)/tao/PolicyC.i \
  $(TAO_ROOT)/tao/DynAnyC.h \
  $(TAO_ROOT)/tao/Any.h \
- $(TAO_ROOT)/tao/Environment.h \
- $(TAO_ROOT)/tao/Environment.i \
  $(TAO_ROOT)/tao/Any.i \
  $(TAO_ROOT)/tao/DynAnyC.i \
  $(TAO_ROOT)/tao/DomainC.h \
