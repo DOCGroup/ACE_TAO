@@ -14,7 +14,7 @@ ACE_RCSID (ace,
 
 #include "ace/OS_NS_unistd.h"
 
-#if defined (ACE_LACKS_MKTEMP)
+#if defined (ACE_LACKS_MKTEMP) \
     || defined (ACE_LACKS_MKSTEMP) \
     || defined (ACE_LACKS_REALPATH)
 #  include "ace/OS_NS_stdio.h"
