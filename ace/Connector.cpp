@@ -426,15 +426,15 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   ACE_Reactor_Mask mask = ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK;
 
 #if defined (ACE_WIN32)
+  // Win32 has some screwy semantics here...
   mask |= ACE_Event_Handler::EXCEPT_MASK;
 #endif /* ACE_WIN32 */
 
-  if (this->reactor ()->register_handler (this, 
-					  mask) == -1)
+  // Bind ACE_Svc_Tuple with the ACE_HANDLE we're trying to connect.
+  if (this->handler_map_.bind (this->get_handle (), ast) == -1)
     goto fail1;
 
-  // Bind ACE_Svc_Tuple with the ACE_HANDLE we're trying to connect.
-  else if (this->handler_map_.bind (this->get_handle (), ast) == -1)
+  else if (this->reactor ()->register_handler (this, mask) == -1)
     goto fail2;
   // If we're starting connection under timer control then we need to
   // schedule a timeout with the ACE_Reactor.
@@ -468,13 +468,11 @@ ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
   // Undo previous actions using the ol' "goto label and fallthru"
   // trick...
 fail3:
-  this->handler_map_.unbind (this->get_handle ());
+  this->reactor ()->remove_handler (this, 
+				    mask | ACE_Event_Handler::DONT_CALL);
   /* FALLTHRU */
 fail2:
-  this->reactor ()->remove_handler (this, 
-				    ACE_Event_Handler::READ_MASK 
-				    | ACE_Event_Handler::WRITE_MASK 
-				    | ACE_Event_Handler::DONT_CALL);
+  this->handler_map_.unbind (this->get_handle ());
   /* FALLTHRU */
 fail1:
 

@@ -23,12 +23,18 @@ ACE_Process::getpid (void)
 ACE_INLINE int
 ACE_Process::kill (int signum)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (CHORUS)
   ACE_UNUSED_ARG (signum);
-  return (int) ::TerminateProcess (this->process_info_.hProcess, 0);
+  ACE_NOTSUP_RETURN (-1);
 #else
   return ACE_OS::kill (this->getpid (), signum);
 #endif /* ACE_WIN32 */
+}
+
+ACE_INLINE int
+ACE_Process::terminate (void)
+{
+  return ACE::terminate_process (this->getpid ());
 }
 
 // ************************************************************

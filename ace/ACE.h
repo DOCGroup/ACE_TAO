@@ -387,8 +387,15 @@ public:
   // Returns a string containing the error message corresponding to a
   // WinSock error.  This works around an omission in the Win32 API...
 
-  static is_process_active (pid_t pid);
-  // Checks if process with <pid> is still alive
+  static int process_active (pid_t pid);
+  // Checks if process with <pid> is still alive.  Returns 1 if it is
+  // still alive, 0 if it isn't alive, and -1 if something weird
+  // happened.
+
+  static int terminate_process (pid_t pid);
+  // Terminate the process with id <pid>.  Note that this call is
+  // potentially dangerous to use since the process being terminated
+  // may not have a chance to cleanup before it shuts down.
 
 private:
   ACE (void);

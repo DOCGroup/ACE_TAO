@@ -20,12 +20,12 @@
 #include "ace/OS.h"
 
 class ACE_Export ACE_Process_Options
-// = TITLE
-//    Process Options
-//
-// = DESCRIPTION
-//    This class controls the options passed to CreateProcess (or fork
-//    and exec).
+  // = TITLE
+  //    Process Options
+  //
+  // = DESCRIPTION
+  //    This class controls the options passed to <CreateProcess> (or <fork>
+  //    and <exec>).
 {
 public:
   enum { DEFAULT_COMMAND_LINE_BUF_LEN = 1024 };
@@ -229,11 +229,11 @@ protected:
 // ************************************************************
 
 class ACE_Export ACE_Process
-// = TITLE
-//     Process
-//
-// = DESCRIPTION
-//     A Portable encapsulation for creating new processes.
+  // = TITLE
+  //     Process
+  //
+  // = DESCRIPTION
+  //     A Portable encapsulation for creating new processes.
 {
 public:
   ACE_Process (void);
@@ -252,7 +252,12 @@ public:
   // Timed wait for the process we just created to exit.
 
   int kill (int signum = SIGINT);
-  // Send the process a signal.
+  // Send the process a signal.  This is only portable to operating
+  // systems that support signals (e.g., POSIX).
+
+  int terminate (void);
+  // Terminate the process.  This call doesn't give the process a
+  // chance to cleanup, so use with caution...
 
   pid_t getpid (void);
   // Return the pid of the new process.
@@ -268,19 +273,18 @@ protected:
   pid_t child_id_;
   // Process id of the child.
 #endif /* ACE_WIN32 */
-  
 };
 
 // ************************************************************
 
 class ACE_Export ACE_Tokenizer
-// = TITLE
-//    Tokenizer
-//
-// = DESCRIPTION
-//    Tokenizes a buffer.  Allows application to set delimiters and
-//    preserve designators.  Does not allow special characters, yet
-//    (e.g., printf ("\"like a quoted string\"").
+  // = TITLE
+  //    Tokenizer
+  //
+  // = DESCRIPTION
+  //    Tokenizes a buffer.  Allows application to set delimiters and
+  //    preserve designators.  Does not allow special characters, yet
+  //    (e.g., printf ("\"like a quoted string\"").
 {
 public:
   ACE_Tokenizer (LPTSTR buffer);

@@ -11,35 +11,57 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/INET_Addr.h"
 
-// TESTING ADDITION
-// This is needed for AIX 3.2.5 
-#if defined(_AIX)
-#include /**/ <sys/ioctl.h>
-#endif
-#if defined(__sun__) && !defined(_SVR4)
-#include /**/ <sys/sockio.h>
-#endif
-// END TESTING ADDITION
-
 // Size of a VM page.
 size_t ACE::pagesize_ = 0;
 
 int
-ACE::is_process_active (pid_t pid)
+ACE::terminate_process (pid_t pid)
+{
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (signum);
+
+  // Create a handle for the given process id.
+  ACE_HANDLE process_handle = 
+    ::OpenProcess (PROCESS_TERMINATE,
+		   FALSE, // New handle is not inheritable.
+		   pid);
+
+  if (process_handle == ACE_INVALID_HANDLE || process_handle == NULL)
+    return -1;
+  else
+    {
+      // Kill the process associated with process_handle.
+      BOOL terminate_result = ::TerminateProcess (process_handle, 0);
+      // Free up the kernel resources.
+      ACE_OS::close (process_handle);
+      return terminate_result;
+    }
+#elif defined (CHORUS)
+  ACE_UNUSED_ARG (signum);
+  KnCap cap_;
+
+  // Use the pid to find out the actor's capability, then kill it.
+  if (::acap (AM_MYSITE, pid, &cap_) == 0)
+    ACE_OSCALL_RETURN (::akill (&cap_), int, -1);
+  else
+    return -1;
+#else
+  ACE_OSCALL_RETURN (::kill (pid, 9), int, -1);
+#endif /* ACE_WIN32 */
+}
+
+int
+ACE::process_active (pid_t pid)
 {
 #if !defined(ACE_WIN32)
   int retval = ACE_OS::kill (pid, 0);
+
   if (retval == 0)
-    {
-      return 1;
-    }
+    return 1;
+  else if (errno == ESRCH)
+    return 0;
   else
-    {
-      if (errno == ESRCH)
-	return 0;
-      else
-	return retval;
-    }
+    return -1;
 #else
   // Create a handle for the given process id.
   ACE_HANDLE process_handle = ::OpenProcess (PROCESS_QUERY_INFORMATION,
@@ -53,15 +75,11 @@ ACE::is_process_active (pid_t pid)
       DWORD status;
 
       if (::GetExitCodeProcess (process_handle,
-				&status) == 0)
+				&status) == 0
+	  || status != STILL_ACTIVE)
 	return 0;
       else
-        {
-	  if (status == STILL_ACTIVE)
-	    return 1;
-	  else
-	    return 0;
-        }
+	return 1;
     }
 #endif /* ACE_WIN32 */
 }
