@@ -7,6 +7,8 @@ debug = 1
 
 CC              = cxx
 CXX             = $(CC)
+#### Note: -pthread uses POSIX threads.  If you want to use DCE threads
+####       instead, change "-pthread" to "-threads".
 CFLAGS          += -pthread
 
 #### These flags can only be used with cxx Version 6.0 and later.
