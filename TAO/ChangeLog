@@ -1,3 +1,11 @@
+Sat May 17 09:44:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/Options.html: Revamped the original documentation to be
+	  more usefule for the users. Thanks to Tao Lu, Andy and
+	  Dr. Schmidt for working on this and donating it to TAO.
+
+	* doc/Options_new.html: Removed from the repository.
+
 Fri May 16 18:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any.cpp:
