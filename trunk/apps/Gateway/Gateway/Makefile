@@ -35,7 +35,7 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 #### This works around an apparent problem with template
 #### instantiation with Sun C++ 4.1 and 4.2 (the symptom is link
 #### error due to ACE_TimeValue::normalize () not being found).
-BUILD 	= $(VSHLIB) $(SHLIBA) $(VLIB) $(VBIN)
+BUILD 	= $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

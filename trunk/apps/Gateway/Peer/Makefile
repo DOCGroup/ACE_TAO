@@ -23,7 +23,7 @@ LDLIBS	= -lPeer
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BUILD 	= $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
+BUILD 	= $(VSHLIB) $(SHLIBA) $(VBIN)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
