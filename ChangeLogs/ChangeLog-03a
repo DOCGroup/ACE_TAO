@@ -1,3 +1,13 @@
+Fri Oct 18 17:12:03 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* examples/C++NPv2/display_logfile.cpp: 
+	* examples/C++NPv2/Client_Logging_Daemon.cpp:
+	* examples/C++NPv2/TP_Logging_Server.h:
+	* examples/C++NPv2/TP_Logging_Server.cpp: Fixed compile errors in
+	  single threaded builds. All they needed was the usage of the
+	  right macros like ACE_SYNCH instead of ACE_MT_SYNCH and
+	  ACE_SYNCH_MUTEX instead of ACE_Thread_Mutex. 
+
 Fri Oct 18 16:25:09 2002  Yuanfang Zhang <yfzhang@cse.wustl.edu>
 
         * tests/RB_Tree_Test.h:

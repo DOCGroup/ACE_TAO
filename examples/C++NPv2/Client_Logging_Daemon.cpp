@@ -57,7 +57,7 @@ protected:
   static ACE_THR_FUNC_RETURN run_svc (void *arg);
 
   // A synchronized <ACE_Message_Queue> that queues messages.
-  ACE_Message_Queue<ACE_MT_SYNCH> msg_queue_;
+  ACE_Message_Queue<ACE_SYNCH> msg_queue_;
 
   // Manage the forwarder thread.
   ACE_Thread_Manager thr_mgr_;
