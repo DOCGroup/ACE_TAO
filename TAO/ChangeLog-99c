@@ -1,3 +1,9 @@
+Thu Feb 11 18:01:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+        * TAO/performance-tests/cubit/tao/idl_cubit/Cubit_Client.cpp:
+          Took out one too many "unused args". Had to put one back.
+          Thanks to Nanbor for pointing this out.
+
 Thu Feb 11 17:37:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/time/client.cpp (main): 
