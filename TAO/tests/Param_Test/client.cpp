@@ -24,6 +24,8 @@
 #include "results.h"
 #include "client.h"
 
+#include "tao/DynamicInterface/Request.h"
+
 ACE_RCSID(Param_Test, client, "$Id$")
 
 // Constructor.p
