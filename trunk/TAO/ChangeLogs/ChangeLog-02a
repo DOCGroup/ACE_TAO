@@ -1,3 +1,7 @@
+Wed Dec 13 17:45:09 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile.SSLIOP: Updated dependencies.
+
 Wed Dec 13 10:52:55 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/AV/AV_Core.cpp:
