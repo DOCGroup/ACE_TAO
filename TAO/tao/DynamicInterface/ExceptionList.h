@@ -21,10 +21,13 @@
 
 #ifndef TAO_CORBA_EXCEPTIONLIST_H
 #define TAO_CORBA_EXCEPTIONLIST_H
-
 #include "ace/pre.h"
 
 #include "dynamicinterface_export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corbafwd.h"
 #include "tao/Pseudo_VarOut_T.h"
@@ -33,10 +36,10 @@
 #include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
 
 namespace CORBA
 {

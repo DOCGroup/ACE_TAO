@@ -31,6 +31,11 @@
 #include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
 
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
+
 namespace CORBA
 {
   TAO_NAMESPACE_INLINE_FUNCTION void release (ContextList_ptr);
