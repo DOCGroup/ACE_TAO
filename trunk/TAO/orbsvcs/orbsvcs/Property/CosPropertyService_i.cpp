@@ -1004,11 +1004,9 @@ TAO_PropertySet::delete_property (const char *property_name,
   // Unbind this property.
   if (this->hash_table_.unbind (entry_ptr) != 0)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "Unbind failed\n"));
-      TAO_THROW (CORBA::UNKNOWN ());
+      ACE_THROW (CORBA::UNKNOWN ());
     }
-
+  
   return;
 }
 
