@@ -1,3 +1,8 @@
+Mon Sep 28 15:03:02 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
+
+	* TAO/docs/releasenotes/index.html: updated releasenotes for the
+	Naming Service to reflect recent changes.
+
 Mon Sep 28 14:41:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time_Utilities.cpp: added #define ACE_BUILD_DLL.
