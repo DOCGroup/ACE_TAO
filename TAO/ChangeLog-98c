@@ -1,3 +1,21 @@
+Wed Nov 05 20:35:52 1997    <irfan@TWOSTEP>
+
+	* tao/orb_core.cpp (fini): Close down the connector. Other
+ 	  ORB_Core specific objects also need to be cleaned up (and
+ 	  deleted).
+
+	* tests: Made sure that the orb pointer returned by ORB::init() is
+ 	  correctly freed up.  Following files were updated:
+
+	  TAO/tests/Cubit/TAO/DII_Cubit/clnt.cpp
+	  TAO/tests/Cubit/TAO/DII_Cubit/svr.cpp
+	  TAO/tests/Cubit/TAO/IDL_Cubit/clnt.cpp
+	  TAO/tests/Cubit/TAO/IDL_Cubit/clnt.h
+	  TAO/tests/Cubit/TAO/IDL_Cubit/svr.cpp
+	  TAO/tests/Cubit/TAO/MT_Cubit/client/Task_Client.cpp
+	  TAO/tests/Cubit/TAO/MT_Cubit/server/svr.cpp
+	  TAO/tests/Cubit/VisiBroker/base_server/server.cpp
+
 Wed Nov  5 19:37:25 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL compiler:

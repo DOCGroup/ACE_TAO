@@ -176,7 +176,7 @@ LINK32_OBJS= \
 OUTDIR=.
 INTDIR=.\Debug
 
-ALL : "$(OUTDIR)\TAOd.dll"
+ALL : "$(OUTDIR)\TAO.dll"
 
 CLEAN : 
 	-@erase "$(INTDIR)\any.obj"
@@ -215,11 +215,11 @@ CLEAN :
 	-@erase "$(INTDIR)\typecode.obj"
 	-@erase "$(INTDIR)\vc40.idb"
 	-@erase "$(INTDIR)\vc40.pdb"
-	-@erase "$(OUTDIR)\TAOd.dll"
-	-@erase "$(OUTDIR)\TAOd.exp"
-	-@erase "$(OUTDIR)\TAOd.ilk"
-	-@erase "$(OUTDIR)\TAOd.lib"
-	-@erase "$(OUTDIR)\TAOd.pdb"
+	-@erase "$(OUTDIR)\TAO.dll"
+	-@erase "$(OUTDIR)\TAO.exp"
+	-@erase "$(OUTDIR)\TAO.ilk"
+	-@erase "$(OUTDIR)\TAO.lib"
+	-@erase "$(OUTDIR)\TAO.pdb"
 
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
@@ -244,12 +244,12 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /out:"TAOd.dll"
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
 LINK32_FLAGS=aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
  comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
  odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /incremental:yes\
- /pdb:"$(OUTDIR)/TAOd.pdb" /debug /machine:I386 /out:"$(OUTDIR)/TAOd.dll"\
- /implib:"$(OUTDIR)/TAOd.lib" 
+ /pdb:"$(OUTDIR)/TAO.pdb" /debug /machine:I386 /out:"$(OUTDIR)/TAO.dll"\
+ /implib:"$(OUTDIR)/TAO.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\any.obj" \
 	"$(INTDIR)\cdr.obj" \
@@ -286,7 +286,7 @@ LINK32_OBJS= \
 	"$(INTDIR)\tc_const.obj" \
 	"$(INTDIR)\typecode.obj"
 
-"$(OUTDIR)\TAOd.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+"$(OUTDIR)\TAO.dll" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
