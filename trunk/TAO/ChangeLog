@@ -1,3 +1,13 @@
+Thu Nov 20 21:02:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_DynamicImplementation.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEvent.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
+
+	  Added missing includes to get them compiling on VC7.1
+
 Thu Nov 20 20:25:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/UNKNOWN_Exception/server.dsp:

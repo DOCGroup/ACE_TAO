@@ -8,6 +8,7 @@
 #include "CEC_TypedSupplierAdmin.h"
 #include "CEC_ConsumerControl.h"
 #include "CEC_SupplierControl.h"
+#include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
