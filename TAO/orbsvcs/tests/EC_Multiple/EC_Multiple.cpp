@@ -274,6 +274,11 @@ Test_ECG::run (int argc, char* argv[])
         case Test_ECG::ss_runtime:
           if (ACE_OS::strcmp (this->lcl_name_, "ECM1") == 0)
             {
+              // This setups Scheduler_Factory to use the runtime version
+              ACE_Scheduler_Factory::use_runtime (
+                sizeof (runtime_infos_1)/sizeof (runtime_infos_1[0]),
+                runtime_infos_1);
+
               scheduler_impl =
                 auto_ptr<POA_RtecScheduler::Scheduler>
                     (new ACE_Runtime_Scheduler (runtime_infos_1_size,
@@ -285,6 +290,11 @@ Test_ECG::run (int argc, char* argv[])
             }
           else if (ACE_OS::strcmp (this->lcl_name_, "ECM2") == 0)
             {
+              // This setups Scheduler_Factory to use the runtime version
+              ACE_Scheduler_Factory::use_runtime (
+                sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
+                runtime_infos_2);
+
               scheduler_impl =
                 auto_ptr<POA_RtecScheduler::Scheduler>
                     (new ACE_Runtime_Scheduler (runtime_infos_2_size,
@@ -296,6 +306,11 @@ Test_ECG::run (int argc, char* argv[])
             }
           else if (ACE_OS::strcmp (this->lcl_name_, "ECM3") == 0)
             {
+              // This setups Scheduler_Factory to use the runtime version
+              ACE_Scheduler_Factory::use_runtime (
+                sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
+                runtime_infos_3);
+
               scheduler_impl =
                 auto_ptr<POA_RtecScheduler::Scheduler>
                     (new ACE_Runtime_Scheduler (runtime_infos_3_size,
@@ -1293,6 +1308,7 @@ Test_Supplier::open (const char* name,
       ACE_Time_Value tv (0, 2000);
       TimeBase::TimeT time;
       ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
+      ACE_DEBUG ((LM_DEBUG, "register supplier \"%s\"\n", name));
       server->set (rt_info,
                    RtecScheduler::VERY_HIGH_CRITICALITY,
                    time, time, time,
@@ -1382,6 +1398,7 @@ Test_Supplier::activate (const char* name,
       ACE_Time_Value tv (0, 2000);
       TimeBase::TimeT time;
       ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
+      ACE_DEBUG ((LM_DEBUG, "activate \"%s\"\n", buf));
       server->set (rt_info,
                    RtecScheduler::VERY_HIGH_CRITICALITY,
                    time, time, time,
@@ -1543,6 +1560,7 @@ Test_Consumer::open (const char* name,
       ACE_Time_Value tv (0, 2000);
       TimeBase::TimeT time;
       ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
+      ACE_DEBUG ((LM_DEBUG, "register consumer \"%s\"\n", name));
       server->set (rt_info,
                    RtecScheduler::VERY_HIGH_CRITICALITY,
                    time, time, time,
