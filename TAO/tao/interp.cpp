@@ -785,16 +785,16 @@ TAO_IIOP_Interpreter::calc_array_attributes (CDR *stream,
 
 CORBA::TypeCode::traverse_status
 TAO_IIOP_Interpreter::struct_traverse (CDR *stream,
-                             const void *value1,
-                             const void *nvalue2,
-                             CORBA::TypeCode::traverse_status (_FAR *visit)
-                             (CORBA::TypeCode_ptr tc,
-                              const void *value1,
-                              const void *value2,
-                              void *context,
-                              CORBA::Environment &env),
-                             void *context,
-                             CORBA::Environment &env)
+                                       const void *value1,
+                                       const void *value2,
+                                       CORBA::TypeCode::traverse_status (_FAR *visit)
+                                       (CORBA::TypeCode_ptr tc,
+                                        const void *value1,
+                                        const void *value2,
+                                        void *context,
+                                        CORBA::Environment &env),
+                                       void *context,
+                                       CORBA::Environment &env)
 {
   // Skip over the type ID and type name in the parameters, then get
   // the number of members.
