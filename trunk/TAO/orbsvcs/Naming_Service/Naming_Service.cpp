@@ -1,6 +1,5 @@
-//
 // $Id$
-//
+
 #include "ace/streams.h"
 
 #include "orbsvcs/Naming/CosNaming_i.h"
@@ -20,7 +19,7 @@ IOR_Multicast::IOR_Multicast (char * ior,
 			      const char *mcast_addr)
   : mcast_addr_ (port, mcast_addr),
     ior_ (ior),
-    response_addr_((u_short) 0),
+    response_addr_ ((u_short) 0),
     response_ (response_addr_)
 {
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
@@ -59,14 +58,13 @@ IOR_Multicast::handle_input (ACE_HANDLE)
   // @@ Probably not needed
 
   if (retcode != sizeof (CORBA::Short))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR, 
-			 "Reply to multicast not sent. Received %d bytes, expected %d.", 
-			 retcode, 
-			 sizeof(CORBA::Short)), -1);
-    }
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "Reply to multicast not sent. Received %d bytes, expected %d.", 
+                       retcode, 
+                       sizeof (CORBA::Short)),
+                      -1);
 
-  // convert port number received to network byte order.
+  // Convert port number received to network byte order.
   CORBA::Short reply_port_number = ntohs (*(CORBA::Short *)this->buf_);
 
   // set port number to reply.

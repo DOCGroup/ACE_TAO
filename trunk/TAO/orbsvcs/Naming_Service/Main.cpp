@@ -1,7 +1,6 @@
 // $Id$
 
 #include "ace/streams.h"
-
 #include "CosNaming_i.h"
 #include "Naming_Service.h"
 
@@ -10,6 +9,8 @@ main (int argc, char ** argv)
 {
   TAO_TRY
     {
+      // @@ Naga, can you please integrate the TAO_ORB_Manager
+      // component here to further simplify main?
       CORBA::ORB_var orb = CORBA::ORB_init (argc, 
 					    argv, 
 					    "internet", 
@@ -79,12 +80,18 @@ main (int argc, char ** argv)
       ACE_DEBUG ((LM_DEBUG, "listening as object <%s>\n", str.in ()));
 
 #if defined (ACE_HAS_IP_MULTICAST)
-      // get reactor instance from TAO
+      // @@ Naga, it looks like we're duplicating this code in all the
+      // tests now.  Can you please see if you can figure a way to
+      // factor it out so we can reuse it as a method in one of the
+      // helper classes?
+
+      // Get reactor instance from TAO.
       ACE_Reactor *reactor = TAO_ORB_Core_instance ()->reactor ();
   
       // First, see if the user has given us a multicast port number
       // for the name service on the command-line;
       u_short port = TAO_ORB_Core_instance ()->orb_params ()->name_service_port ();
+
       if (port == 0)
 	{
 	  const char *port_number = ACE_OS::getenv ("NameServicePort");
