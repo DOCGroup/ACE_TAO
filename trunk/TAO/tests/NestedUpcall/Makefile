@@ -14,20 +14,18 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
+LDLIBS = -lorbsvcs -lTAO
 
-IDL_FILES = Reactor
-IDL_SRC = $(IDL_FILES:%=%.idl)
-IDL_GENERATED = $(foreach idlfile,$(IDL_FILES),$(addprefix $(idlfile),C.cpp S.cpp))
-PROG_SRCS = $(IDL_GENERATED) server.cpp client.cpp \
-            reactor_i.cpp eh_i.cpp tmplinst.cpp
+IDL_SRC = ReactorC.cpp ReactorS.cpp
+PROG_SRCS = $(IDL_SRC) server.cpp client.cpp #tmplinst.cpp
 
 LSRC = $(PROG_SRCS)
 
-SVR_OBJS = $(IDL_GENERATED:%.cpp=%.o) server.o reactor_i.o #tmplinst.o
-CLT_OBJS = $(IDL_GENERATED:%.cpp=%.o) client.o eh_i.o #tmplinst.o
+NESTEDUPCALLS_SVR_OBJS = ReactorS.o ReactorC.o server.o reactor_i.o
+NESTEDUPCALLS_CLT_OBJS = ReactorS.o ReactorC.o client.o eh_i.o
+TEST_OBJS			   = NestedUpCalls_Test.o
 
-BIN = server client
+BIN = server client NestedUpCalls_Test
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
@@ -48,21 +46,25 @@ include $(TAO_ROOT)/taoconfig.mk
 #	Local targets
 #----------------------------------------------------------------------------
 
+LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs 
+
 DCFLAGS = -g
 
-server:	$(addprefix $(VDIR),$(SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+server:	$(addprefix $(VDIR),$(NESTEDUPCALLS_SVR_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-client:	$(addprefix $(VDIR),$(CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
-
-.PRECIOUS:	$(IDL_GENERATED)
+client:	$(addprefix $(VDIR),$(NESTEDUPCALLS_CLT_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
+NestedUpCalls_Test: $(addprefix $(VDIR),$(TEST_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf $(IDL_GENERATED)
+	-/bin/rm -rf ReactorS.* ReactorC.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
 
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
