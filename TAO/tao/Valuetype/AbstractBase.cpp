@@ -1,6 +1,6 @@
 // "$Id$"
 
-#include "tao/AbstractBase.h"
+#include "AbstractBase.h"
 #include "tao/ValueBase.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
@@ -8,11 +8,11 @@
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/AbstractBase.inl"
+# include "AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 
-ACE_RCSID (tao,
+ACE_RCSID (Valuetype,
            AbstractBase,
            "$Id$")
 

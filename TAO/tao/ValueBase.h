@@ -226,7 +226,7 @@ namespace CORBA
  *
  * @see CORBA 2.3 -- Section 15.3.4
  */
-class TAO_OBV_GIOP_Flags
+class TAO_Export TAO_OBV_GIOP_Flags
 {
 public:
   static const CORBA::ULong Value_tag_base;

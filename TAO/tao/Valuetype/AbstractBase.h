@@ -15,19 +15,33 @@
 #define TAO_ABSTRACTBASE_H
 
 #include "ace/pre.h"
+#include "valuetype_export.h"
 #include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+//#include "tao/Pseudo_VarOut_T.h"
 #include "ace/CORBA_macros.h"
 
 class TAO_Stub;
 class TAO_Abstract_ServantBase;
 
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_Valuetype_Export
+
 namespace CORBA
 {
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (AbstractBase_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (AbstractBase_ptr);
+
+//  class AbstractBase;
+//  typedef TAO_Pseudo_Var_T<AbstractBase> AbstractBase_var;
+//  typedef TAO_Pseudo_Out_T<AbstractBase, AbstractBase_var> AbstractBase_out;
+
   /**
    * @class AbstractBase
    *
@@ -36,7 +50,7 @@ namespace CORBA
    * Allows the determination of whether an object has been passed by
    * reference or by value to be deferred until runtime.
    */
-  class TAO_Export AbstractBase
+  class TAO_Valuetype_Export AbstractBase
   {
   public:
 
@@ -120,7 +134,7 @@ namespace CORBA
    *
    * _var class for AbstractBase
    */
-  class TAO_Export AbstractBase_var
+  class TAO_Valuetype_Export AbstractBase_var
   {
   public:
     AbstractBase_var (void);
@@ -159,7 +173,7 @@ namespace CORBA
    *
    * _out class for AbstractBase
    */
-  class TAO_Export AbstractBase_out
+  class TAO_Valuetype_Export AbstractBase_out
   {
   public:
     AbstractBase_out (CORBA::AbstractBase_ptr &);
@@ -177,10 +191,10 @@ namespace CORBA
   };
 }
 
-TAO_Export CORBA::Boolean
+TAO_Valuetype_Export CORBA::Boolean
 operator<< (TAO_OutputCDR &, const CORBA::AbstractBase_ptr);
 
-TAO_Export CORBA::Boolean
+TAO_Valuetype_Export CORBA::Boolean
 operator>> (TAO_InputCDR &, CORBA::AbstractBase_ptr &);
 
 

@@ -1,3 +1,43 @@
+Wed Apr 30 18:11:05 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_operation.cpp:
+
+          Changes to keep in sync with changes in ACE.
+
+        * tao/ClientRequestInfo_i.cpp:
+        * tao/IORInterceptor_Adapter.h:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/TAO.dsp:
+        * tao/TAO.dsw:
+        * TAOACE.dsw:
+        * tao/ValueBase.h:
+        * tao/corbafwd.h:
+
+          Progress in constructing the Valuetype library.
+
+        * tao/Valuetype_Adapter.cpp:
+        * tao/Valuetype_Adapter.h:
+        * tao/ObjRefTemplate/Makefile:
+        * tao/ObjRefTemplate/Makefile.bor:
+        * tao/Valuetype/AbstractBase.cpp:
+        * tao/Valuetype/AbstractBase.h:
+        * tao/Valuetype/AbstractBase.inl:
+        * tao/Valuetype/TAO_Valuetype.dsp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.cpp:
+        * tao/Valuetype/Valuetype_Adapter_Impl.h:
+        * tao/Valuetype/valuetype_export.h:
+
+          New files.
+
+        * tao/AbstractBase.cpp:
+        * tao/AbstractBase.h:
+        * tao/AbstractBase.inl:
+
+          Moved these files to the Valuetype library.
+
 Tue Apr 29 17:21:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_T.h:

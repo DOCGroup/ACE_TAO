@@ -39,6 +39,7 @@
 #include "be_visitor.h"
 #include "utl_identifier.h"
 #include "ace/Log_Msg.h"
+#include "ace/String_Base.h"
 
 ACE_RCSID (be, 
            be_decl, 
