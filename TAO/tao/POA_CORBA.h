@@ -60,7 +60,6 @@ public:
     virtual void* _downcast (
         const char* logical_type_id
       );
-    static void _is_a_skel (CORBA::ServerRequest &req, void *obj, void *context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
     virtual void _dispatch (CORBA::ServerRequest &_tao_req, void *_tao_context, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -102,15 +101,28 @@ public:
   public:
     Policy (const Policy& rhs);
     virtual ~Policy (void);
+
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+
     virtual void* _downcast (
         const char* logical_type_id
       );
+
     virtual CORBA::PolicyType policy_type (
         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
        ) = 0;
+
+    virtual CORBA::Policy_ptr copy (
+        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+       ) = 0;
+
+    virtual void destroy (
+        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
+       ) = 0;
+
+#if !defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
     static void _get_policy_type_skel (
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
@@ -118,9 +130,6 @@ public:
         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
       );
 
-    virtual CORBA::Policy_ptr copy (
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
-       ) = 0;
     static void copy_skel (
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
@@ -128,9 +137,6 @@ public:
         CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
       );
 
-    virtual void destroy (
-        CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
-       ) = 0;
     static void destroy_skel (
         CORBA::ServerRequest &_tao_req,
         void *_tao_obj,
@@ -153,6 +159,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+#endif /* !TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
 
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
@@ -223,44 +230,12 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
-    static void get_policy_overrides_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &_tao_env =
-          CORBA::Environment::default_environment ()
-      );
-
     virtual void set_policy_overrides (
         const CORBA::PolicyList & policies,
         CORBA::SetOverrideType set_add,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       ) = 0;
-    static void set_policy_overrides_skel (
-        CORBA::ServerRequest &_tao_req,
-        void *_tao_obj,
-        void *_tao_context,
-        CORBA::Environment &_tao_env =
-          CORBA::Environment::default_environment ()
-      );
-
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-
     virtual void _dispatch (
         CORBA::ServerRequest &_tao_req,
         void *_tao_context,
@@ -315,44 +290,15 @@ public:
   public:
     PolicyCurrent (const PolicyCurrent& rhs);
     virtual ~PolicyCurrent (void);
+
     virtual CORBA::Boolean _is_a (
         const char* logical_type_id,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
     virtual void* _downcast (
         const char* logical_type_id
-      );
-    static void _is_a_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-
-    static void _non_existent_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          CORBA::Environment::default_environment ()
-      );
-
-    static void get_policy_overrides_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          CORBA::Environment::default_environment ()
-      );
-
-    static void set_policy_overrides_skel (
-        CORBA::ServerRequest &req,
-        void *obj,
-        void *context,
-        CORBA::Environment &env =
-          CORBA::Environment::default_environment ()
       );
 
     virtual void _dispatch (
@@ -366,6 +312,7 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
+
     virtual const char* _interface_repository_id (void) const;
   };
 
