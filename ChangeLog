@@ -1,3 +1,8 @@
+Thu Nov 18 16:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/protocols.mwc:
+          Added missing Id tag
+
 Thu Nov 18 09:35:01 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/APG/Processes/Spawn.cpp:
