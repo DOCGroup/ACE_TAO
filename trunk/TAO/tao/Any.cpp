@@ -786,10 +786,10 @@ template class TAO::Var_Size_Arg_Traits_T<CORBA::Any,
                                           CORBA::Any_var,
                                           CORBA::Any_out>;
 
-template TAO::In_Var_Size_Argument_T<CORBA::Any>;
-template TAO::Out_Var_Size_Argument_T<CORBA::Any, CORBA::Any_out>;
-template TAO::Inout_Var_Size_Argument_T<CORBA::Any>;
-template TAO::Ret_Var_Size_Argument_T<CORBA::Any, CORBA::Any_var>;
+template class TAO::In_Var_Size_Argument_T<CORBA::Any>;
+template class TAO::Out_Var_Size_Argument_T<CORBA::Any, CORBA::Any_out>;
+template class TAO::Inout_Var_Size_Argument_T<CORBA::Any>;
+template class TAO::Ret_Var_Size_Argument_T<CORBA::Any, CORBA::Any_var>;
 
 #if 0
 // Needed in the future..
