@@ -193,7 +193,7 @@ main (int argc, char* argv[])
       mcast_eh.open (event_channel.in ()
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       // Again the receiver connects to the event channel as a
       // supplier of events, using the Observer features to detect
       // local consumers and their interests:
@@ -288,8 +288,8 @@ main (int argc, char* argv[])
       receiver->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int r = mcast_eh.shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      int r = mcast_eh.shutdown ();
+
       if (r == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
