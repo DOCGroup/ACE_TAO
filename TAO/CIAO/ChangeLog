@@ -1,3 +1,24 @@
+Mon May 10 19:04:57 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/DT_Handler.h:
+        * DnC/Config_Handlers/DT_Handlers.cpp:
+
+          Type code operations especially creation of dynamic typecodes
+          require operations defined in the ORB interface. Hence, instead
+          of calling ORB::init within this common handlers, changed the
+          interface of the process_DataType method to require a
+          CORBA::ORB_ptr. Also modularized the creation of typecodes into
+          process_basic_tc, process_enum_tc etc depending on the *type* of
+          typecode to be created
+
+        * DnC/Config_Handlers/Utils.h:
+        * DnC/Config_Handlers/Utils.cpp:
+
+          Added helper methods that allow coversion to CORBA::* types from
+          string values. These helper methods will be used by the Any
+          handler to insert the required values into a CORBA::Any object
+          dynamically.
+
 Mon May 10 18:56:11 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/Domain_Handler.h:
