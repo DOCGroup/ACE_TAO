@@ -7,7 +7,7 @@
 // Constructor
 
 TAO_Property_Evaluator::
-TAO_Property_Evaluator(CosTrading::PropertySeq& props,
+TAO_Property_Evaluator(const CosTrading::PropertySeq& props,
 		       CORBA::Boolean supports_dp)
   : props_ (props),
     supports_dp_ (supports_dp)
@@ -34,7 +34,7 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
   if (index >= 0 && index < num_properties)
     {
       // Obtain the value of the property at index <index>.
-      CORBA::Any& value = this->props_[index].value;
+      const CORBA::Any& value = this->props_[index].value;
       CORBA::TypeCode* type = value.type();
       
       if (type->equal(CosTradingDynamic::_tc_DynamicProp, env))
@@ -52,14 +52,14 @@ TAO_Property_Evaluator::property_value(int index,
   CORBA::Any* prop_val = 0;
   
   if (! this->is_dynamic_property(index))
-    prop_val = &(this->props_[index].value);
+    prop_val = (CORBA::Any *) &(this->props_[index].value);
   else if (this->supports_dp_)
     {
       // Property is defined at this point.
       DP_Eval* dp_eval;
       DP_Struct dp_struct;
-      CORBA::String_var name = this->props_[index].name;
-      CORBA::Any& value = this->props_[index].value;
+      const CORBA::String_var name = this->props_[index].name;
+      const CORBA::Any& value = this->props_[index].value;
 
       // Extract the DP_Struct.
       //value >>= dp_struct;
@@ -99,7 +99,7 @@ TAO_Property_Evaluator::property_type(int index)
   if (this->is_dynamic_property (index))
     {
       // Extract type information from the DP_Struct.
-      CORBA::Any& value = this->props_[index].value;
+      const CORBA::Any& value = this->props_[index].value;
       DP_Struct dp_struct;
       //value >>= dp_struct;
       
@@ -114,27 +114,22 @@ TAO_Property_Evaluator::property_type(int index)
 }
 
 TAO_Property_Evaluator_By_Name::
-TAO_Property_Evaluator_By_Name (CosTrading::PropertySeq& properties,
+TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties,
 				CORBA::Environment& _env,
 				CORBA::Boolean supports_dp)
   TAO_THROW_SPEC ((CosTrading::DuplicatePropertyName,
-		  CosTrading::IllegalPropertyName))
-  : TAO_Property_Evaluator (properties, supports_dp)
+		   CosTrading::IllegalPropertyName))
+    : TAO_Property_Evaluator (properties, supports_dp)
 {
   string prop_name;
   int length = this->props_.length();
 
   for (int i = 0; i < length; i++)
     {
-      CosTrading::Property& prop = this->props_[i];
+      const CosTrading::Property& prop = this->props_[i];
 
-#ifdef CLIENT_LIB
-      if (! ::is_valid_identifier_name (prop.name))
-	TAO_THROW (CosTrading::IllegalPropertyName (prop.name));
-#else
       if (! TAO_Trader_Base::is_valid_identifier_name (prop.name))
 	TAO_THROW (CosTrading::IllegalPropertyName (prop.name));
-#endif /* CLIENT_LIB */
       
       prop_name = prop.name;
       if (! (this->table_.insert (make_pair (prop_name, i))).second)
@@ -151,7 +146,7 @@ TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
 
   for (int i = 0; i < length; i++)
     {
-      string prop_name = (char*)this->props_[i].name;
+      string prop_name = (const char*) this->props_[i].name;
       this->table_[prop_name] = i;
     }
 }
@@ -221,7 +216,7 @@ TAO_Property_Evaluator_By_Name::get_property (const char* property_name)
   Lookup_Table_Iter lookup_iter = this->table_.find(prop_name);
 
   if (lookup_iter != this->table_.end())
-    property = &this->props_[(*lookup_iter).second];
+    property = (CosTrading::Property *) &this->props_[(*lookup_iter).second];
 
   return property;
 }
