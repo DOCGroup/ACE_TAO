@@ -65,11 +65,11 @@ Test_i::test_method (CORBA::Short priority,
   // Print out the info.
   int index = -1;
   ACE_DEBUG ((LM_DEBUG,
-              "Object bands: \n"));
+              "\nObject bands: \n"));
   for (CORBA::ULong i = 0; i < this->bands_.length (); ++i)
     {      
       ACE_DEBUG ((LM_DEBUG,
-                  "%ld) %d  %d\n", 
+                  "%d) %d  %d\n", 
                   (i + 1), this->bands_[i].low, this->bands_[i].high));
 
       if (priority <= this->bands_[i].high
@@ -530,7 +530,7 @@ main (int argc, char *argv[])
       pool.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
+      ACE_DEBUG ((LM_DEBUG, "\nServer ORB event loop finished\n\n"));
     }
   ACE_CATCHANY
     {
