@@ -1,3 +1,18 @@
+Wed Oct  6 11:20:53 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Message_Queue.cpp:
+	* ace/Message_Queue.inl:
+
+	  Move virtual dtor ACE_Message_Queue_Base::~ACE_Message_Queue_Base
+	  and virtual method ACE_Message_Queue_Base::state() from *.inl to
+	  *.cpp.
+
+	* ace/Signal.cpp:
+	* ace/Signal.inl:
+
+	  Move virtual dtor ACE_Sig_Adapter::~ACE_Sig_Adapter() from *.inl
+	  to *.cpp.
+
 Wed Oct  6 12:25:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Logging/Change_Mask.cpp:
