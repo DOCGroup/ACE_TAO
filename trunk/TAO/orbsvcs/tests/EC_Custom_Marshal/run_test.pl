@@ -11,22 +11,22 @@ $NS_ior = "NameService.ior";
 $sleeptime = 5;
 
 $NS = Process::Create ("..".$DIR_SEPARATOR.
-		       "..".$DIR_SEPARATOR.
-		       "Naming_Service".$DIR_SEPARATOR.
-		       "Naming_Service".$Process::EXE_EXT.
-		       " -o $NS_ior ");
+                       "..".$DIR_SEPARATOR.
+                       "Naming_Service".$DIR_SEPARATOR.
+                       "Naming_Service".$Process::EXE_EXT.
+                       " -o $NS_ior ");
 sleep $sleeptime;
 
 $ES = Process::Create ("..".$DIR_SEPARATOR.
-		       "..".$DIR_SEPARATOR.
-		       "Event_Service".$DIR_SEPARATOR.
-		       "Event_Service".$Process::EXE_EXT);
+                       "..".$DIR_SEPARATOR.
+                       "Event_Service".$DIR_SEPARATOR.
+                       "Event_Service".$Process::EXE_EXT);
 
-$C = Process::Create ("ECM_Consumer".$Process::EXE_EXT);
+$C = Process::Create ('.' . $DIR_SEPARATOR . "ECM_Consumer".$Process::EXE_EXT);
 
 sleep $sleeptime;
 
-$S = Process::Create ("ECM_Supplier".$Process::EXE_EXT);
+$S = Process::Create ('.' . $DIR_SEPARATOR . "ECM_Supplier".$Process::EXE_EXT);
 
 $C->Wait ();
 $S->Wait ();
