@@ -19,8 +19,9 @@
 
 #include "Task_Client.h"
 
-// @@ Please comment me.
-const int CUBIT_ARBIT_NUMBER = 2064885;
+// This is the arbitrary number that the Util_Thread
+// uses to check for primality.
+const int CUBIT_ARBIT_NUMBER = 10000019;
 
 class Util_Thread : public ACE_Task<ACE_SYNCH>
 {
@@ -44,9 +45,13 @@ private:
   int run_computations (void);
   // Run the computations.
 
-  // @@ Sumedh, please add comments here.
   double number_of_computations_;
+  // This stores the number of computations performed
+  // by the Util_Thread so far
+
   Task_State *ts_;
+  // Pointer to the Task state. Stores the state
+  // common to the multiple client threads
 };
 
 #endif /* !defined (UTIL_THREAD_H) */
