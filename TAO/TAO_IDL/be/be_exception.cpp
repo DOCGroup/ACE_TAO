@@ -135,6 +135,33 @@ be_exception::in_recursion (be_type *node)
 }
 
 int
+be_exception::gen_iostream_op_hdr (TAO_OutStream *os)
+{
+  *os << "# if !defined (ACE_LACKS_IOSTREAM_TOTALLY)" << be_nl << be_nl;
+  *os << "ostream& operator<< (ostream &, const "
+      << this->full_name () << " &);" << be_nl << be_nl;
+  *os << "# endif /* ACE_LACKS_IOSTREAM_TOTALLY */" << be_nl;
+
+  return 0;
+}
+
+int
+be_exception::gen_iostream_op_impl (TAO_OutStream *os)
+{
+  *os << "#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)" << be_nl << be_nl;
+  *os << "ACE_INLINE" << be_nl;
+  *os << "ostream & operator<< (ostream &os, const "
+      << this->full_name ()<< " &_tao_aggregate)" << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "os << _tao_aggregate._id ();" << be_nl;
+  *os << "return os;" << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
+  *os << "#endif /* ACE_LACKS_IOSTREAM_TOTALLY */" << be_nl << be_nl;
+
+  return 0;
+}
+
+int
 be_exception::accept (be_visitor *visitor)
 {
   return visitor->visit_exception (this);

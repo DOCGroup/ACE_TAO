@@ -34,6 +34,12 @@ public:
   virtual idl_bool in_recursion (be_type *node = 0);
   // check if we or the parameter node is in recursion
 
+  virtual int gen_iostream_op_hdr (TAO_OutStream *os);
+  // Generate declaration of iostream operator(s).
+
+  virtual int gen_iostream_op_impl (TAO_OutStream *os);
+  // Generate definition of iostream operator(s).
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 
