@@ -1,9 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project(*Client) : namingexe {
-  Source_Files {
-    client.cpp
-  }
-}
-

@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : rtsched, rtevent {
-  after     += RTSchedEvent
-  libs      += TAO_RTSchedEvent
-  tagchecks += RTSchedEvent
-}
