@@ -717,9 +717,9 @@ nobase_include_HEADERS += \
   Fixed_Size_Argument_T.inl \
   Fixed_Size_SArgument_T.inl \
   FloatSeqC.inl \
-  GIOPC.i \
-  GIOPS.i \
-  GIOPS_T.i \
+  GIOPC.inl \
+  GIOPS.inl \
+  GIOPS_T.inl \
   GIOP_Message_Base.i \
   GIOP_Message_Generator_Parser.inl \
   GIOP_Message_Generator_Parser_10.inl \

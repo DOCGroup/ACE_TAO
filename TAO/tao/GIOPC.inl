@@ -60,7 +60,7 @@ GIOP::TargetAddress::_d (void) const
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_union_branch/public_ci.cpp:875
+// be\be_visitor_union_branch/public_ci.cpp:899
 
 // Accessor to set the member.
 ACE_INLINE
@@ -93,7 +93,7 @@ GIOP::TargetAddress::object_key (void)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_union_branch/public_ci.cpp:1184
+// be\be_visitor_union_branch/public_ci.cpp:1208
 
 // Accessor to set the member.
 ACE_INLINE
@@ -126,7 +126,7 @@ GIOP::TargetAddress::profile (void)
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_union_branch/public_ci.cpp:1184
+// be\be_visitor_union_branch/public_ci.cpp:1208
 
 // Accessor to set the member.
 ACE_INLINE
@@ -157,4 +157,3 @@ GIOP::TargetAddress::ior (void)
 {
   return *this->u_.ior_;
 }
-
