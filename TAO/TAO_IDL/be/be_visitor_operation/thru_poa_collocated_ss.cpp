@@ -100,8 +100,8 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
     }
   delete visitor;
 
-  *os << " " << intf->full_coll_name (be_interface::THRU_POA) << "::"
-      << node->local_name () << " ";
+  *os << " " << intf->full_coll_name (be_interface::THRU_POA) << "::";
+  *os << node->local_name () << " ";
 
   // STEP 4: generate the argument list with the appropriate mapping (same as
   // in the header file)

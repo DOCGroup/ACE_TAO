@@ -266,10 +266,10 @@ be_visitor_operation_ami_handler_arglist::visit_argument (be_argument *node)
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CH);
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_ARGLIST_CH);
       break;
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CS);
+      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_ARGLIST_CS);
       break;
     default:
       {

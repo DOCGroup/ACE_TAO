@@ -158,7 +158,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_cs (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_SH:
-    case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH:
       return new be_visitor_interface_sh (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_IH:
@@ -168,7 +168,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_si (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_SS:
-    case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SS:
       return new be_visitor_interface_ss (new_ctx);
 
     case TAO_CodeGen::TAO_INTERFACE_IS:
@@ -195,6 +195,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
       return new be_visitor_interface_any_op_cs (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_TIE_SH:
       return new be_visitor_interface_tie_sh (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return new be_visitor_interface_tie_si (new_ctx);
@@ -428,6 +429,15 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SH:
     case TAO_CodeGen::TAO_ATTRIBUTE_DIRECT_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_CS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_SS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_TIE_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_THRU_POA_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ATTRIBUTE_DIRECT_COLLOCATED_SS:
       return new be_visitor_attribute (new_ctx);
 
     case TAO_CodeGen::TAO_EXCEPTION_CH:
@@ -469,32 +479,32 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ARRAY_CDR_OP_CS:
       return new be_visitor_array_cdr_op_cs (new_ctx);
 
-    case TAO_CodeGen::TAO_ARGUMENT_AMI:
+    case TAO_CodeGen::TAO_AMI_ARGUMENT:
       // @@ Alex: I am not sure about this case, yet (Alex).
       //    noop.
       return new be_visitor_decl (new_ctx);
 
     // @@ Michael: With the strategy we can use the default one.
-    case TAO_CodeGen::TAO_AMI_HANDLER_FWD_CH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_FWD_CH:
           return new be_visitor_interface_ami_handler_fwd_ch (new_ctx);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_FWD_CI:
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_FWD_CI:
       return new be_visitor_interface_ami_handler_fwd_ci (new_ctx);
 
     // @@ Michael: We use 1:1 the server servant code, but
     // use different operations.
 #if 0
-    case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_SH:
       return new be_visitor_interface_ami_handler_servant_ch (new_ctx);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_CS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CS:
       return new be_visitor_interface_ami_handler_servant_cs (new_ctx);
 #endif /* 0 */
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_CH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CH:
       return new be_visitor_interface_ami_handler_stub_ch (new_ctx);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_CS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CS:
       return new be_visitor_interface_ami_handler_stub_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RESULT_ARG:
@@ -653,38 +663,36 @@ TAO_Interpretive_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_ARGUMENT_POST_MARSHAL_SS:
       return new be_visitor_args_post_marshal_ss (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_AMI_CH:
+    case TAO_CodeGen::TAO_AMI_OPERATION_CH:
       return new be_visitor_operation_ami_ch (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_AMI_CS:
+    case TAO_CodeGen::TAO_AMI_OPERATION_CS:
       return new be_interpretive_visitor_operation_ami_cs (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH:
-    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CS:
+    case TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CS:
       return new be_visitor_operation_ami_arglist (new_ctx);
 
-      // case TAO_CodeGen::TAO_OPERATION_ARG_AMI:
-      // return new be_visitor_operation_argument (new_ctx);
-
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CH:
+    case TAO_CodeGen::TAO_AMI_ARGUMENT_ARGLIST_CH:
       return new be_visitor_args_ami_arglist (new_ctx);
 
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CS:
+    case TAO_CodeGen::TAO_AMI_ARGUMENT_ARGLIST_CS:
       return new be_visitor_args_ami_arglist (new_ctx);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_SH:
-    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH:
       return new be_visitor_operation_ami_handler_operation_ch (new_ctx);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CS:
+      // @@ Michael: I think we do not need that any more
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CS:
       return new be_interpretive_visitor_operation_ami_handler_operation_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:
       return new be_visitor_operation_ami_handler_arglist (new_ctx);
 
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CH:
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_ARGLIST_CH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_ARGLIST_CS:
       return new be_visitor_args_ami_handler_arglist (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_SKELETON_CS:
@@ -859,23 +867,20 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       // this is a NO-OP
       return new be_visitor_decl (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_AMI_CS:
+    case TAO_CodeGen::TAO_AMI_OPERATION_CS:
       return new be_compiled_visitor_operation_ami_cs (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_AMI_CH:
+    case TAO_CodeGen::TAO_AMI_OPERATION_CH:
       return new be_visitor_operation_ami_ch (new_ctx);
 
-    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CH:
-    case TAO_CodeGen::TAO_OPERATION_AMI_ARGLIST_CS:
+    case TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CH:
+    case TAO_CodeGen::TAO_AMI_OPERATION_ARGLIST_CS:
       return new be_visitor_operation_ami_arglist (new_ctx);
 
-      //  case TAO_CodeGen::TAO_OPERATION_ARG_AMI:
-      //  return new be_visitor_operation_argument (new_ctx);
-
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CH:
+    case TAO_CodeGen::TAO_AMI_ARGUMENT_ARGLIST_CH:
       return new be_visitor_args_ami_arglist (new_ctx);
 
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_ARGLIST_CS:
+    case TAO_CodeGen::TAO_AMI_ARGUMENT_ARGLIST_CS:
       return new be_visitor_args_ami_arglist (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_VARDECL_CS:
@@ -889,25 +894,26 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_MARSHAL_CS:
       return new be_visitor_args_ami_handler_compiled_marshal_cs (new_ctx);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_SH:
-    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_TIE_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CH:
       return new be_visitor_operation_ami_handler_operation_ch (new_ctx);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_STUB_OPERATION_CS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_CS:
       return new be_compiled_visitor_operation_ami_handler_operation_cs (new_ctx);
 
-    case TAO_CodeGen::TAO_AMI_HANDLER_SERVANT_OPERATION_SS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SS:
       return new be_compiled_visitor_operation_ami_handler_servant_operation_ss (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:
       return new be_visitor_operation_ami_handler_arglist (new_ctx);
 
-    case TAO_CodeGen::TAO_ARGUMENT_ARGLIST_AMI_HANDLER:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_ARGLIST:
       return new be_visitor_args_ami_handler_arglist (new_ctx);
 
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CH:
-    case TAO_CodeGen::TAO_ARGUMENT_AMI_HANDLER_ARGLIST_CS:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_ARGLIST_CH:
+    case TAO_CodeGen::TAO_AMI_HANDLER_ARGUMENT_ARGLIST_CS:
       return new be_visitor_args_ami_handler_arglist (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_SKELETON_CS:

@@ -296,7 +296,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_predefined_type (be_pre
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_operation_rettype_compiled_marshal::"
-                             "visit_array - "
+                             "visit_predefined_type - "
                              "Bad predefined type\n"),
                             -1);
         }
@@ -337,7 +337,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_predefined_type (be_pre
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_operation_rettype_compiled_marshal::"
-                             "visit_array - "
+                             "visit_predefined_type - "
                              "Bad predefined type\n"),
                             -1);
         }
@@ -346,7 +346,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_predefined_type (be_pre
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_array - "
+                         "visit_predefined_type - "
                          "Bad substate\n"),
                         -1);
     }
@@ -369,7 +369,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_sequence (be_sequence *
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_interface - "
+                         "visit_sequence - "
                          "Bad substate\n"),
                         -1);
     }
@@ -427,7 +427,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_string (be_string *node
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_interface - "
+                         "visit_string - "
                          "Bad substate\n"),
                         -1);
     }
@@ -456,7 +456,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_structure (be_structure
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_interface - "
+                         "visit_structure - "
                          "Bad substate\n"),
                         -1);
     }
@@ -485,7 +485,7 @@ int be_visitor_operation_rettype_compiled_marshal::visit_union (be_union *node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_rettype_compiled_marshal::"
-                         "visit_interface - "
+                         "visit_union - "
                          "Bad substate\n"),
                         -1);
     }

@@ -61,7 +61,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           be_visitor_context ctx (*this->ctx_);
 
           // Set the state.
-          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_FWD_CH);
+          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_FWD_CH);
 
           // Create the visitor.
           be_visitor *visitor = tao_cg->make_visitor (&ctx);
@@ -225,6 +225,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
       // that only legal syntactic elements appear in our scope.
+
       if (this->visit_scope (node) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -296,7 +297,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           be_visitor_context ctx (*this->ctx_);
 
           // Set the state.
-          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_STUB_CH);
+          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_INTERFACE_CH);
 
           // Create the visitor.
           be_visitor *visitor = tao_cg->make_visitor (&ctx);

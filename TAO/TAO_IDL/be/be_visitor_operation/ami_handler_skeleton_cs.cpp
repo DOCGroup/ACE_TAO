@@ -95,7 +95,17 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << parent->compute_name ("AMI_", "_Handler");
 
   // Generate the operation name.
-  *os << "::" << node->local_name () << "_skel (" << be_idt_nl;
+  *os << "::";
+  // Check if we are an attribute node in disguise
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "_set_";
+      else
+        *os << "_get_";
+    }
+  *os << node->local_name () << "_skel (" << be_idt_nl;
 
   // Generate the argument list.
   *os << "TAO_InputCDR &_tao_in, " << be_nl
@@ -391,8 +401,8 @@ be_compiled_visitor_operation_ami_handler_skeleton_cs::gen_pre_stub_info (be_ope
 
 int
 be_compiled_visitor_operation_ami_handler_skeleton_cs::
-gen_marshal_and_invoke (be_operation *node,
-                        be_type *bt)
+  gen_marshal_and_invoke (be_operation *node,
+                          be_type *bt)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_visitor *visitor = 0;
@@ -424,13 +434,15 @@ gen_marshal_and_invoke (be_operation *node,
                                 -1);
             }
           delete visitor;
+
+          if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
+              this->has_param_type (node, AST_Argument::dir_OUT))
+            *os << " &&\n";
         }
 
       if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
           this->has_param_type (node, AST_Argument::dir_OUT))
         {
-          *os << " &&\n";
-
           // demarshal each in and inout argument
           ctx = *this->ctx_;
           ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS);
@@ -454,16 +466,24 @@ gen_marshal_and_invoke (be_operation *node,
 
   // Invoke the callback method
   *os << "// Invoke the call back method." << be_nl
-      << "_tao_reply_handler_object->"
-      << node->local_name () << " (" << be_idt_nl;
+      << "_tao_reply_handler_object->";
+  *os << node->local_name () << " (" << be_idt_nl;
+
 
   // if we have a non-void return type then pass it as the first argument
   if (!this->void_return_type (bt))
-    *os << "_tao_retval,\n";
+    {
+      *os << "_tao_retval,\n";
 
-  // generate the argument list containing the inout and inout arguments
+    }
+
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_UPCALL_CS);
+
+  if (this->has_param_type (node, AST_Argument::dir_INOUT)
+      || this->has_param_type (node, AST_Argument::dir_OUT))
+    ctx.sub_state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS);
+  // generate the argument list containing the inout and inout arguments
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
