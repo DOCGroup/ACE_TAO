@@ -132,7 +132,21 @@ class ACE_Export ACE_Thread_Manager
   //    Manages a pool of threads.
   //
   // = DESCRIPTION
+
   //    This class allows operations on groups of threads atomically.
+  //    The default behavior behavior of thread manager is to wait on
+  //    all threads under it's management when it gets destructed.
+  //    Therefore, remember to remove a thread from thread manager if
+  //    you don't want it to wait for the thread.  There are also
+  //    function to diable this default wait-on-exit behavior.
+  //    However, if your program depends on turning this off to run
+  //    correctly, you are probably doing something wrong.  Rule of
+  //    thumb, use ACE_Thread to manage your daemon threads.
+  //
+  //    Notice that if there're threads live beyond the scope of main (),
+  //    you are sure to have resource leaks in your program.  Remember
+  //    to wait on threads before exiting main() if that could happen
+  //    in your programs.
 {
 friend class ACE_Thread_Control;
 public:
@@ -483,7 +497,7 @@ protected:
                    int = 0);
   // Suspend the thread described in <tda>.
 
-  int kill_thr (ACE_Thread_Descriptor *td, 
+  int kill_thr (ACE_Thread_Descriptor *td,
                 int signum);
   // Send signal <signum> to the thread described in <tda>.
 
