@@ -1,3 +1,16 @@
+Tue Sep 24 23:11:02 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitializer_Registry.h (TAO_ORBInitializer_Registry):
+
+	  No need to export this class from the TAO DLL on Windows.  Only
+	  the standard PortableInterceptor::register_orb_initializer()
+	  method should be used.
+
+	* orbsvcs/ImplRepo_Service/XML_ContentHandler.cpp
+	  (endPrefixMapping):
+
+	  Fixed unused argument warning.
+
 Tue Sep 24 15:29:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Dynamic_Adapter.cpp:

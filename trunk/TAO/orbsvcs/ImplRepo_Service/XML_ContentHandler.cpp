@@ -85,11 +85,10 @@ XML_ContentHandler::endElement (const ACEXML_Char *,
 }
 
 void
-XML_ContentHandler::endPrefixMapping (const ACEXML_Char *prefix,
+XML_ContentHandler::endPrefixMapping (const ACEXML_Char * /* prefix */,
                                       ACEXML_Env & /* xmlenv */)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-
   //  cout << "* Event endPrefixMapping (" << prefix << ") ***************" << endl;
 }
 
