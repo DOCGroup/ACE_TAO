@@ -1,3 +1,9 @@
+Sun Dec 10 14:05:35 2000  Angelo Corsaro  <angelo@cs.wustl.edu>
+
+	* docs/releasenotes/index.html: 
+
+	  Fixed link problem to the RT-CORBA documentation.
+
 Sat Dec  9 23:17:36 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/SSLIOP.bor:
