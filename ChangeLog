@@ -1,3 +1,17 @@
+Fri Nov 25 10:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Removed some old info about os-patches, these are gone already for
+          some time, also corrected the location of the main define, it is now
+          in OS_main.h. As last, changed the references to several files from
+          the site of Doug to the local directory. This because of two reasons,
+          first there are development teams without internet access (yes, they
+          still exist in the world), and the site of Doug always gives the
+          latest version, but when using a certain ACE version I want to have
+          the documentation of MPC belonging to that version, not with the
+          current version, which can be something completely different in
+          a few years.
+
 Fri Nov 25 08:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
