@@ -4,6 +4,7 @@
 #include "DynArray_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
+#include "tao/Any_Unknown_IDL_Type.h"
 
 ACE_RCSID (DynamicAny,
            DynArray_i,
@@ -194,7 +195,7 @@ TAO_DynArray_i::_narrow (CORBA::Object_ptr _tao_objref
     {
       return 0;
     }
-  
+
   return dynamic_cast<TAO_DynArray_i *> (_tao_objref);
 }
 
@@ -641,4 +642,3 @@ TAO_DynArray_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
             this->da_members_[index].in ()
           );
 }
-
