@@ -26,6 +26,7 @@ class TAO_Export TAO_ServantBase
   //   class.
 {
   friend class TAO_POA;
+  friend class CORBA_Object;
 public:
   virtual ~TAO_ServantBase (void);
   // destructor
