@@ -5,6 +5,15 @@ Mon Jan  5 01:20:51 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 Sun Jan 04 19:45:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * ace/IPC_SAP.cpp (enable,disable): moved return 0 at end
+          to inside the #endif, to avoid warning about unreachable
+          return statement on ghs/VxWorks.  Thanks to Brian Mendel
+          for reporting this.
+
+        * ace/OS.i (rw_trywrlock_upgrade): moved return 0 inside the
+          #if 0 block to avoid warning about unreachable return statement
+          on ghs/VxWorks.  Thanks to Brian Mendel for reporting this.
+
         * ace/OS.i (rw_trywrlock_upgrade): added ACE_UNUSED_ARG (rw)
           to temporary code.
 
