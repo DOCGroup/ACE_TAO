@@ -176,15 +176,12 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
 #endif /* SO_REUSEPORT */
     }
 
-  // Create an address/port# to bind the socket to.
-  ACE_INET_Addr bind_addy;
-  if (ACE_BIT_ENABLED (this->opts_, OPT_BINDADDR_YES))
-    {
-      // Bind to explicit addr and port#.
-      if (bind_addy.set (mcast_addr) == -1)
-        return -1;
-    }
-  else
+  // Create an address/port# to bind the socket to. Use mcast_addr to
+  // initialize bind_addy to pick up the correct protocol family. If
+  // OPT_BINDADDR_YES is set, then we're done. Else use mcast_addr's
+  // port number and use the "any" address.
+  ACE_INET_Addr bind_addy (mcast_addr);
+  if (ACE_BIT_DISABLED (this->opts_, OPT_BINDADDR_YES))
     {
       // Bind to "any" address and explicit port#.
       if (bind_addy.set (mcast_addr.get_port_number ()) == -1)
@@ -192,7 +189,7 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
     }
 
   // Bind to the address (which may be INADDR_ANY) and port# (which may be 0)
-  if (ACE_SOCK_Dgram::shared_open (bind_addy, PF_INET) == -1)
+  if (ACE_SOCK_Dgram::shared_open (bind_addy, bind_addy.get_type ()) == -1)
     return -1;
 
   // Cache the actual bound address (which may be INADDR_ANY)

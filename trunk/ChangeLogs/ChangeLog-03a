@@ -1,3 +1,11 @@
+Wed Dec 18 20:52:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram_Mcast.cpp (open_i): Call shared_open using the
+          protocol family from the specified address, not PF_INET. Allows
+          working with IPv6.
+
+        * tests/Multicast_Test.cpp: If join fails, log the error reason.
+
 Wed Dec 18 19:57:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.7.h: Added ACE_HAS_SNPRINTF. I have verified
