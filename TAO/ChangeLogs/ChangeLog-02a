@@ -1,3 +1,13 @@
+Sun Apr  1 16:51:24 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.cpp:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+	* tao/RT_ORB.cpp:
+	  Fixed several ACE_TRY fuzz errors.
+
 Sun Apr  1 09:29:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/tutorials/Quoter/*/Makefile: Updated dependencies. The last

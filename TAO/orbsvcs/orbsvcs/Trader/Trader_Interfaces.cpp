@@ -505,10 +505,14 @@ retrieve_links (TAO_Policies& policies,
   // is waranted if the follow_rule governing this query is 'always'
   // or if_no_local and the local query returned nothing.
   if ((follow_rule == CosTrading::always ||
-       (follow_rule == CosTrading::if_no_local && offers_returned == 0))
-      && policies.hop_count (ACE_TRY_ENV) > 0)
-    should_follow = 1;
-  ACE_CHECK_RETURN (0);
+       (follow_rule == CosTrading::if_no_local && offers_returned == 0)))
+    {
+      CORBA::ULong hc = policies.hop_count (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (hc > 0)
+        should_follow = 1;
+    }
 
   if (should_follow)
     {
@@ -1694,9 +1698,12 @@ add_link (const char *name,
 
   // Ensure that the limiting link behavior for this link doesn't
   // exceed the maximum allowed for a link.
-  if (limiting_follow_rule < this->max_link_follow_policy (ACE_TRY_ENV))
+  CosTrading::FollowOption follow_policy =
+    this->max_link_follow_policy (ACE_TRY_ENV);
+  ACE_CHECK;
+  if (limiting_follow_rule < follow_policy)
     ACE_THROW (CosTrading::Link::LimitingFollowTooPermissive
-               (limiting_follow_rule, this->max_link_follow_policy (ACE_TRY_ENV)));
+               (limiting_follow_rule, follow_policy));
 
   // Create a link info structure for this link of the federation.
   CosTrading::Link::LinkInfo link_info;
@@ -1827,10 +1834,13 @@ modify_link (const char *name,
 
   // Ensure that the limiting link behavior for this link doesn't
   // exceed the maximum allowed for a link.
-  // @@ Seth, rethrowing an exception?  This is probably not exception safe.
-  if (limiting_follow_rule < this->max_link_follow_policy (ACE_TRY_ENV))
+  CosTrading::FollowOption follow_policy =
+    this->max_link_follow_policy (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (limiting_follow_rule < follow_policy)
     ACE_THROW (CosTrading::Link::LimitingFollowTooPermissive
-               (limiting_follow_rule, this->max_link_follow_policy (ACE_TRY_ENV)));
+               (limiting_follow_rule, follow_policy));
 
   // Adjust the link settings
   CosTrading::Link::LinkInfo& link_info = link_entry->int_id_;

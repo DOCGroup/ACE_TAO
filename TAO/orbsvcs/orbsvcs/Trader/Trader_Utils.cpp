@@ -611,8 +611,10 @@ TAO_Policies::ulong_prop (POLICY_TYPE pol,
       const CosTrading::PolicyValue& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
-      // @@ Seth, rethrowing a different exception?  need ACE_CHECK_RETURN here.
-      if (!type->equal (CORBA::_tc_ulong, ACE_TRY_ENV))
+      CORBA::Boolean equal_ulong = type->equal (CORBA::_tc_ulong, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (return_value);
+
+      if (!equal_ulong)
         ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
                           return_value);
       else
@@ -680,8 +682,11 @@ TAO_Policies::boolean_prop (POLICY_TYPE pol,
       const CosTrading::PolicyValue& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
-      // Seth, should we need to check the exception before throwing another one?
-      if (!type->equal (CORBA::_tc_boolean, ACE_TRY_ENV))
+      CORBA::Boolean equal_boolean =
+        type->equal (CORBA::_tc_boolean, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (return_value);
+
+      if (!equal_boolean)
         ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
                           return_value);
       else
@@ -740,10 +745,16 @@ TAO_Policies::starting_trader (CORBA::Environment& ACE_TRY_ENV) const
       CosTrading::PolicyValue& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
-      // @@ Seth, complex statements are not portable, exception-wise
-      // We also need to check here.
-      if (! (type->equal (CosTrading::_tc_TraderName, ACE_TRY_ENV) ||
-             type->equal (CosTrading::_tc_LinkNameSeq, ACE_TRY_ENV)))
+      CORBA::Boolean equal_tradername =
+        type->equal (CosTrading::_tc_TraderName, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (trader_name);
+
+      CORBA::Boolean equal_linknameseq =
+        type->equal (CosTrading::_tc_LinkNameSeq, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (trader_name);
+
+      if (!equal_tradername ||
+          !equal_linknameseq)
         ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
                           trader_name);
       else
@@ -770,7 +781,11 @@ TAO_Policies::link_follow_rule (CORBA::Environment& ACE_TRY_ENV) const
       CORBA::TypeCode_var type = value.type ();
 
       // Extract the link follow rule
-      if (!type->equal (CosTrading::_tc_FollowOption, ACE_TRY_ENV))
+      CORBA::Boolean type_equal =
+        type->equal (CosTrading::_tc_FollowOption, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (return_value);
+
+      if (!type_equal)
         ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
                           return_value);
       else
@@ -829,7 +844,11 @@ TAO_Policies::request_id (CORBA::Environment& ACE_TRY_ENV) const
       CosTrading::PolicyValue& value = policy->value;
       CORBA::TypeCode_var type = value.type ();
 
-      if (!type->equal (CosTrading::Admin::_tc_OctetSeq, ACE_TRY_ENV))
+      CORBA::Boolean equal_octetseq =
+        type->equal (CosTrading::Admin::_tc_OctetSeq, ACE_TRY_ENV);
+      ACE_CHECK_RETURN (request_id);
+
+      if (!equal_octetseq)
         ACE_THROW_RETURN (CosTrading::Lookup::PolicyTypeMismatch (*policy),
                           request_id);
       else
@@ -847,19 +866,14 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
   ACE_THROW_SPEC ((CosTrading::Lookup::PolicyTypeMismatch,
                    CosTrading::Lookup::InvalidPolicyValue))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-
   CosTrading::FollowOption follow_option = CosTrading::local_only;
   CosTrading::FollowOption trader_max_follow_policy =
     this->trader_.import_attributes ().max_follow_policy ();
 
-  // @@ Seth, I am quite lost here, are you tring to catch an exception here,
-  // or, you are trying to pass exceptions out?  Why do you use a different env here?
   if (this->policies_[LINK_FOLLOW_RULE] != 0)
     {
-      CORBA::Environment env;
       CosTrading::FollowOption query_link_follow_rule =
-        this->link_follow_rule (env);
+        this->link_follow_rule (ACE_TRY_ENV);
       ACE_CHECK;
 
       follow_option = link_info.limiting_follow_rule < trader_max_follow_policy
@@ -1146,11 +1160,22 @@ merge_properties (const CosTrading::PropertySeq& modifies,
           CORBA::TypeCode_ptr type_def = 0;
           if (this->prop_types_.find (prop_name, type_def) == 0)
             {
-              // @@ Seth, are we trying to ignore the exception here?
-              CORBA::Environment ACE_TRY_ENV;
               CORBA::TypeCode_var prop_type = prop_eval.property_type (i);
 
-              if (! type_def->equal (prop_type.in (), ACE_TRY_ENV))
+              // @@ Frank: This code used to have this comment and line
+              //    of code before I fixed the "ACE_TRY" fuzz warning here.
+              // @@ Seth, are we trying to ignore the exception here?
+              // CORBA::Environment ACE_TRY_ENV;
+              // @@ Frank: It seems clear that this is not going to work as
+              // expected.  Is the purpose to ignore any exceptions from
+              // equal ()?  For now, exceptions are returned since this
+              // seemed "safest".
+
+              CORBA::Boolean td_equal =
+                type_def->equal (prop_type.in (), ACE_TRY_ENV);
+              ACE_CHECK;
+
+              if (!td_equal)
                 ACE_THROW (CosTrading::PropertyTypeMismatch (mname, modifies[i]));
             }
 
@@ -1223,16 +1248,27 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 
 TAO_Offer_Filter::TAO_Offer_Filter (TAO_Policies& policies,
                                     CORBA::Environment& ACE_TRY_ENV)
-  // @@ Seth, this is definitely no exception safe.  But I don't know of a better way.
-  : search_card_ (policies.search_card (ACE_TRY_ENV)),
-    match_card_ (policies.match_card (ACE_TRY_ENV)),
-    return_card_ (policies.return_card (ACE_TRY_ENV)),
-    dp_ (policies.use_dynamic_properties (ACE_TRY_ENV)),
-    mod_ (policies.use_modifiable_properties (ACE_TRY_ENV))
 {
+  search_card_ = policies.search_card (ACE_TRY_ENV);
   ACE_CHECK;
-  // @@ Seth, need another ACE_CHECK here.
-  if (policies.exact_type_match (ACE_TRY_ENV) == 1)
+
+  match_card_ = policies.match_card (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  return_card_ = policies.return_card (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  dp_ = policies.use_dynamic_properties (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  mod_ = policies.use_modifiable_properties (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CORBA::Boolean exact_type_match =
+    policies.exact_type_match (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (exact_type_match == 1)
     {
       TAO_String_Hash_Key exact_match
         (TAO_Policies::POLICY_NAMES[TAO_Policies::EXACT_TYPE_MATCH]);
