@@ -1252,10 +1252,7 @@ nobase_include_HEADERS += \
   PortableGroup/PG_Location_Hash.inl \
   PortableGroup/PG_Properties_Encoder.inl \
   PortableGroup/UIPMC_Acceptor.i \
-  PortableGroup/UIPMC_Connection_Handler.i \
   PortableGroup/UIPMC_Endpoint.i \
-  PortableGroup/UIPMC_Profile.i \
-  PortableGroup/UIPMC_Transport.i \
   PortableGroupC.inl \
   PortableGroupS.inl \
   PortableGroupS_T.inl \
@@ -5272,7 +5269,6 @@ nobase_include_HEADERS += \
   SSLIOP/SSLIOP_Current.inl \
   SSLIOP/SSLIOP_Current_Impl.inl \
   SSLIOP/SSLIOP_Endpoint.i \
-  SSLIOP/SSLIOP_Profile.i \
   SSLIOP/ssl_endpoints.i \
   SSLIOPC.inl \
   SSLIOPS.inl \
