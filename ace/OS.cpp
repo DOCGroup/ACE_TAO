@@ -574,7 +574,7 @@ public:
 extern "C" void *
 ace_thread_adapter (void *args)
 {
-  // ACE_TRACE ("ACE_Thread_Adapter::svc_run");
+  // ACE_TRACE ("ace_thread_adapter");
   ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
 
   ACE_THR_FUNC func = thread_args->func_;
@@ -609,7 +609,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC f, void *a)
   : func_(f), 
     arg_(a) 
 {
-// ACE_TRACE ("ACE_Thread_Adapter::ACE_Thread_Adapter");
+// ACE_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
 }
 #endif /* VXWORKS */
 
