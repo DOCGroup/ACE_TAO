@@ -49,10 +49,10 @@ public:
   ACE_RMCast_Copy_On_Write_Container (void);
 
   //! Let the Write_Guard access the internal fields.
-  friend ACE_RMCast_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR>;
+  friend class ACE_RMCast_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR>;
 
   //! Let the Read_Guard access the internal fields.
-  friend ACE_RMCast_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR>;
+  friend class ACE_RMCast_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR>;
 
   //! A shorter name for the actual collection type
   typedef ACE_RMCast_Copy_On_Write_Collection<COLLECTION,ITERATOR> Collection;
