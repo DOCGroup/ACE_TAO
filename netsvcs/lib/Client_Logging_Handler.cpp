@@ -132,7 +132,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 #else
   ACE_INT32 length;
 
-  // We need to use the ol' two-read trick here since TCP sockets
+  // We need to use the old two-read trick here since TCP sockets
   // don't support framing natively.  Note that the first call is just
   // a "peek" -- we don't actually remove the data until the second
   // call.  Note that this code is portable as long as ACE_UNIT32 is
@@ -194,8 +194,17 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                                         (char *) &log_record,
                                         (int) length);
  
-      // We go a ``short-read.''  Try once more, then abandon all hope
-      // on this socket.
+      // We got a ``short-read.''  Try once more, then abandon all
+      // hope on this socket.  Note that if we were trying to write a
+      // totally "bullet-proof" app that couldn't lose any data
+      // unnecessarily we might want to put the socket into
+      // non-blocking model and loop until we either get all the bytes
+      // or something else happens to convince us that we won't get
+      // the remainder of the data.  In this case, however, we're in
+      // "loopback" mode, so a failure to get all the data by the
+      // second try is probably an indication that something is
+      // seriously wrong, so shutting down the connection is probably
+      // the best solution.
       if (retrieved != length)
        {
            ACE_DEBUG ((LM_DEBUG,
@@ -216,12 +225,10 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                     ACE_Event_Handler::READ_MASK
                     | ACE_Event_Handler::EXCEPT_MASK
                     | ACE_Event_Handler::DONT_CALL) == -1)
-                 {
-                   ACE_ERROR_RETURN ((LM_ERROR,
-                                      ACE_TEXT ("%n: %p\n"),
-                                      ACE_TEXT ("remove_handler")),
-                                     0);
-                 }
+                 ACE_ERROR_RETURN ((LM_ERROR,
+                                    ACE_TEXT ("%n: %p\n"),
+                                    ACE_TEXT ("remove_handler")),
+                                   0);
  
                ACE_OS::closesocket (handle);
                
