@@ -1,3 +1,9 @@
+Tue Mar 28 16:53:07 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/corbafwd.h:
+        * tao/POA_CORBA.h:
+           Fixed a couple of missing defined(TAO_HAS_MINIMUM_CORBA)
+
 Tue Mar 28 16:05:20 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Event.dsw:
