@@ -47,7 +47,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
 
   // generate the class name
   be_type  *pt; // base types
-      
+
   if (bt->node_type () == AST_Decl::NT_typedef)
   {
     // get the primitive base type of this typedef node
@@ -73,7 +73,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   os->gen_ifdef_macro (class_name);
 
   os->indent ();
-  
+
   //forward declaration of the object manager;
   *os << "class " << object_manager << ";" << be_nl << be_nl;
 
@@ -92,7 +92,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   // constructor
   *os << class_name << " (CORBA::ULong maximum," << be_idt_nl
       << "CORBA::ULong length," << be_nl;
-  pt->accept (visitor); 
+  pt->accept (visitor);
   *os <<"* *value," << be_nl
       << "CORBA::Boolean release = 0);" << be_uidt_nl;
 
@@ -109,8 +109,8 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << object_manager << " operator[] (CORBA::ULong index) const;" << be_nl;
 
   // allocbuf
-  *os << "static "; 
-  pt->accept (visitor); 
+  *os << "static ";
+  pt->accept (visitor);
   *os << " **allocbuf (CORBA::ULong nelems);" << be_nl;
 
   // freebuf
@@ -126,17 +126,17 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << "virtual void _deallocate_buffer (void);" << be_nl;
 
   // get_buffer
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os << "* *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
   // get_buffer
-  *os << "const "; 
-  pt->accept (visitor); 
+  *os << "const ";
+  pt->accept (visitor);
   *os << "* *get_buffer (void) const;" << be_nl;
 
   // shrink_buffer
   *os << "virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);" << be_nl;
-  
+
   be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
   if ((pt->node_type () != AST_Decl::NT_pre_defined) ||
       (prim && (prim->pt () == AST_PredefinedType::PT_pseudo) &&
@@ -147,13 +147,13 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
 	  << "void* target," << be_nl
 	  << "CORBA_Object *src," << be_nl
 	  << "CORBA_Environment &ACE_TRY_ENV = "  << be_idt_nl
-	  << "CORBA::Environment::default_environment ()"
+	  << "CORBA::default_environment ()"
 	  << be_uidt << be_uidt_nl
 	  << ");" << be_uidt_nl;
 
       *os << "virtual CORBA_Object* _upcast (void *src) const;" <<  be_nl;
     }
-  *os << be_uidt_nl << "};\n"; 
+  *os << be_uidt_nl << "};\n";
 
   os->gen_endif (); // endif macro
 
@@ -169,4 +169,3 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   delete visitor;
   return 0;
 }
-

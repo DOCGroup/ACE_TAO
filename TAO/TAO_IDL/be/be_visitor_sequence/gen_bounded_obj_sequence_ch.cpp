@@ -46,7 +46,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
 
   // generate the class name
   be_type  *pt; // base types
-      
+
   if (bt->node_type () == AST_Decl::NT_typedef)
   {
     // get the primitive base type of this typedef node
@@ -87,7 +87,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
 
   // constructor
   *os << class_name << " (CORBA::ULong length," << be_idt_nl;
-  // the accept is here the first time used and if an 
+  // the accept is here the first time used and if an
   // error occurs, it will occur here. Later no check
   // for errors will be done.
   if (pt->accept (visitor) == -1)
@@ -118,14 +118,14 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
       << "// Read-write accessor." << be_nl;
 
   // allocbuf
-  *os << "static "; 
-  pt->accept (visitor); 
+  *os << "static ";
+  pt->accept (visitor);
   *os << " **allocbuf (CORBA::ULong length); "
       << "// Allocate storage for a sequence.." << be_nl;
 
   // freebuf
-  *os << "static void freebuf ("; 
-  pt->accept (visitor); 
+  *os << "static void freebuf (";
+  pt->accept (visitor);
   *os << " **buffer);" << be_nl;
 
   // allocate_buffer
@@ -136,12 +136,12 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   *os << "virtual void _deallocate_buffer (void);" << be_nl;
 
   // get_buffer
-  pt->accept(visitor); 
+  pt->accept(visitor);
   *os << "* *get_buffer (CORBA::Boolean orphan = 0);" << be_nl;
 
   // get_buffer
-  *os << "const "; 
-  pt->accept (visitor); 
+  *os << "const ";
+  pt->accept (visitor);
   *os << "* *get_buffer (void) const;" << be_nl;
 
   // _shrink_buffer
@@ -157,7 +157,7 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
 	  << "void* target," << be_nl
 	  << "CORBA_Object *src," << be_nl
 	  << "CORBA_Environment &ACE_TRY_ENV = "  << be_idt_nl
-	  << "CORBA::Environment::default_environment ()"
+	  << "CORBA::default_environment ()"
 	  << be_uidt << be_uidt_nl
 	  << ");" << be_uidt_nl;
 
@@ -179,4 +179,3 @@ be_visitor_sequence_ch::gen_bounded_obj_sequence (be_sequence *node)
   delete visitor;
   return 0;
 }
-

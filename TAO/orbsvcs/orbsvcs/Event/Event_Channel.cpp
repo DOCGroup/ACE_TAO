@@ -1150,8 +1150,9 @@ ACE_ES_Consumer_Module::shutdown_request (ACE_ES_Dispatch_Request *request)
       poa->deactivate_object (id.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      // Delete the consumer proxy.
-      delete sc->consumer ();
+      // Delete the consumer proxy, no need to delete it, is is owned
+      // by the POA
+      // delete sc->consumer ();
 
       if (!dont_update)
         this->channel_->update_consumer_gwys (TAO_TRY_ENV);
@@ -1229,7 +1230,8 @@ ACE_ES_Consumer_Module::shutdown (void)
             ACE_ERROR ((LM_ERROR, "%p Failed to remove consumer.\n", "ACE_ES_Consumer_Module::shutdown"));
         }
 
-        delete *proxy;
+        // No need to delete it, owned by the POA
+        // delete *proxy;
       }
   }
 
@@ -1323,8 +1325,11 @@ ACE_ES_Consumer_Module::push (const ACE_ES_Dispatch_Request *request,
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
-ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &TAO_IN_ENV)
+ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 {
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr proxy = 
+    RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
+
   auto_ptr<ACE_Push_Consumer_Proxy> new_consumer (new ACE_Push_Consumer_Proxy (this));
 
   // Get a new supplier proxy object.
@@ -1332,20 +1337,25 @@ ACE_ES_Consumer_Module::obtain_push_supplier (CORBA::Environment &TAO_IN_ENV)
     {
       ACE_ERROR ((LM_ERROR, "ACE_EventChannel"
                   "::obtain_push_supplier failed.\n"));
-      TAO_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+      TAO_THROW_RETURN (CORBA::NO_MEMORY (), proxy);
     }
 
   {
-    TAO_GUARD_THROW_RETURN (ACE_ES_MUTEX, ace_mon, this->lock_, 0, TAO_IN_ENV,
-                            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+    ACE_GUARD_THROW_EX (ACE_ES_MUTEX, ace_mon, this->lock_,
+                        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+    ACE_CHECK_RETURN (proxy);
 
     if (all_consumers_.insert (new_consumer.get ()) == -1)
       ACE_ERROR ((LM_ERROR, "ACE_ES_Consumer_Module insert failed.\n"));
   }
 
-  // Return the CORBA object reference to the new supplier proxy,
-  // there is no need to hold a pointer, it is now help in the map...
-  return new_consumer.release ()->get_ref (TAO_IN_ENV);
+  proxy = new_consumer->_this (ACE_TRY_ENV);
+  TAO_CHECK_RETURN (proxy);
+
+  // Give away ownership to the POA....
+  new_consumer.release ()->_remove_ref ();
+
+  return proxy;
 }
 
 void
@@ -3194,22 +3204,32 @@ ACE_ES_Supplier_Module::shutdown (void)
 }
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &TAO_IN_ENV)
+ACE_ES_Supplier_Module::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
 {
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = 
+    RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
+
   auto_ptr<ACE_Push_Supplier_Proxy> new_supplier (new ACE_Push_Supplier_Proxy (this));
 
   if (new_supplier.get () == 0)
-    TAO_THROW_RETURN (CORBA::NO_MEMORY (), 0);
+    ACE_THROW_RETURN (CORBA::NO_MEMORY (), proxy);
 
   {
-    TAO_GUARD_THROW_RETURN (ACE_ES_MUTEX, ace_mon, this->lock_, 0, TAO_IN_ENV,
-                            RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+    ACE_GUARD_THROW_EX (ACE_ES_MUTEX, ace_mon, this->lock_,
+                        RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
+    ACE_CHECK_RETURN (proxy);
 
     if (all_suppliers_.insert (new_supplier.get ()) == -1)
       ACE_ERROR ((LM_ERROR, "ACE_ES_Supplier_Module insert failed.\n"));
   }
 
-  return new_supplier.release ()->get_ref (TAO_IN_ENV);
+  proxy = new_supplier->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (proxy);
+
+  // Give ownership to the POA
+  new_supplier.release ()->_remove_ref ();
+
+  return proxy;
 }
 
 void

@@ -22,19 +22,14 @@ TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel *ec,
       this->supplier_set_ =
         this->event_channel_->create_proxy_push_supplier_set ();
     }
+  this->default_POA_ =
+    this->event_channel_->consumer_poa ();
 }
 
 TAO_EC_ConsumerAdmin::~TAO_EC_ConsumerAdmin (void)
 {
   this->event_channel_->destroy_proxy_push_supplier_set (this->supplier_set_);
   this->supplier_set_ = 0;
-}
-
-void
-TAO_EC_ConsumerAdmin::set_default_POA (PortableServer::POA_ptr poa)
-{
-  this->default_POA_ =
-    PortableServer::POA::_duplicate (poa);
 }
 
 void
@@ -98,10 +93,6 @@ TAO_EC_ConsumerAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_EC_ProxyPushSupplier* supplier =
     this->event_channel_->create_proxy_push_supplier ();
-
-  PortableServer::POA_var poa =
-    this->event_channel_->supplier_poa (ACE_TRY_ENV);
-  supplier->set_default_POA (poa.in ());
 
   return supplier->_this (ACE_TRY_ENV);
 }

@@ -1478,6 +1478,10 @@ CORBA::Object_ptr
 CORBA_ORB::iioploc_string_to_object (const char *string,
                                      CORBA::Environment &env)
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "TAO (%P|%t) - iioploc_string_to_object <%s>\n",
+                string));
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
   // NIL objref encodes as just "iioploc:" ... which has already been
@@ -1725,6 +1729,10 @@ int
 CORBA_ORB::_tao_find_in_IOR_table (ACE_CString &object_id,
                                    CORBA::Object_ptr &obj)
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t): lookup service ID <%s>\n",
+                object_id.c_str ()));
+
   ACE_CString ior;
 
   if (this->lookup_table_.find_ior (object_id, ior) != 0)

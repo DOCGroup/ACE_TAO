@@ -21,12 +21,13 @@ TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* ec)
 {
   this->lock_ =
     this->event_channel_->create_supplier_lock ();
+
+  this->default_POA_ =
+    this->event_channel_->supplier_poa ();
 }
 
 TAO_EC_ProxyPushSupplier::~TAO_EC_ProxyPushSupplier (void)
 {
-  delete this->child_;
-  this->child_ = 0;
   this->event_channel_->destroy_supplier_lock (this->lock_);
 }
 
@@ -52,25 +53,10 @@ TAO_EC_ProxyPushSupplier::_decr_refcnt (void)
   return 0;
 }
 
-void
-TAO_EC_ProxyPushSupplier::set_default_POA (PortableServer::POA_ptr poa)
-{
-  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-  this->default_POA_ = PortableServer::POA::_duplicate (poa);
-}
-
-PortableServer::POA_ptr
-TAO_EC_ProxyPushSupplier::_default_POA_i ()
-{
-  return PortableServer::POA::_duplicate (this->default_POA_.in ());
-}
-
 PortableServer::POA_ptr
 TAO_EC_ProxyPushSupplier::_default_POA (CORBA::Environment&)
 {
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_,
-                    PortableServer::POA::_nil ());
-  return this->_default_POA_i ();
+  return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
@@ -136,18 +122,25 @@ TAO_EC_ProxyPushSupplier::disconnect_push_supplier (
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
     ACE_CHECK;
 
+    if (this->is_connected_i () == 0)
+      ACE_THROW (CORBA::BAD_INV_ORDER ());
+
     this->consumer_ =
       RtecEventComm::PushConsumer::_nil ();
 
-    PortableServer::POA_var poa =
-      this->_default_POA_i ();
-
-    PortableServer::ObjectId_var id =
-      poa->servant_to_id (this, ACE_TRY_ENV);
-    ACE_CHECK;
-    poa->deactivate_object (id.in (), ACE_TRY_ENV);
-    ACE_CHECK;
+    // @@ Why don't we have a destroy() method in the filter_builder?
+    delete this->child_;
+    this->child_ = 0;
   }
+
+  PortableServer::POA_var poa =
+    this->_default_POA (ACE_TRY_ENV);
+  ACE_CHECK;
+  PortableServer::ObjectId_var id =
+    poa->servant_to_id (this, ACE_TRY_ENV);
+  ACE_CHECK;
+  poa->deactivate_object (id.in (), ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Notify the event channel...
   this->event_channel_->disconnected (this, ACE_TRY_ENV);
@@ -239,7 +232,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (const RtecEventComm::EventSet& event
     ACE_CHECK;
 
     if (this->is_connected_i () == 0)
-      return; // TAO_THROW (RtecEventComm::Disconnected ());????
+      return; // ACE_THROW (RtecEventComm::Disconnected ());????
 
     if (this->suspended_ != 0)
       return;
@@ -312,6 +305,18 @@ TAO_EC_ProxyPushSupplier::can_match (
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
   return this->child_->can_match (header);
+}
+
+void
+TAO_EC_ProxyPushSupplier::_add_ref (CORBA::Environment &)
+{
+  this->_incr_refcnt ();
+}
+
+void
+TAO_EC_ProxyPushSupplier::_remove_ref (CORBA::Environment &)
+{
+  this->_decr_refcnt ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
