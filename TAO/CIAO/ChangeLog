@@ -1,3 +1,8 @@
+Thu May 13 19:46:24 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
+
+        * DnC/Deployment.xsd: Reverted an accidental check-in that
+          introduced a bogus schema.
+
 Thu May 13 17:50:16 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 
         * DnC/Deployment.xsd:
