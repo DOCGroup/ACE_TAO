@@ -1,3 +1,11 @@
+Thu Jan 08 15:55:21 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* tao/objtable.cpp: 
+	* tao/optable.cpp: 
+	* tao/orbobj.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: Added missing template
+ 	  instantiation codes.
+
 Thu Jan  8 12:53:28 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/corbacom.i (wstring_dup): Added this, which simply calls

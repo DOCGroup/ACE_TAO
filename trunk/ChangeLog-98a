@@ -1,3 +1,14 @@
+Thu Jan 08 16:02:33 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/Hash_Map_Manager.{h,cpp}: Added STL-styled iterator
+ 	  functions.
+
+	* tests/Map_Manager_Test.cpp: 
+	* tests/Hash_Map_Manager_Test.cpp: 
+	* tests/Conn_Test.cpp: 
+	* ace/Local_Name_Space.cpp: 
+	* ace/Filecache.cpp: Added missing template instantiation codes.
+
 Thu Jan  8 15:58:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* apps/Gateway/{Peer,Gateway}/Options.{h,cpp}: Added a missing
