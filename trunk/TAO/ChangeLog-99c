@@ -1,282 +1,288 @@
+Sat May 01 08:22:12 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+          check to see that the executables exist before trying
+          to run them.
+
 Sat May 01 03:03:47 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.{h,cpp}:
-	* orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.{h,cpp}:
-	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
-	* orbsvcs/orbsvcs/CosEvent/Event_Channel_i.h:
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: Disable MSVC's warning
-	  4250.
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.{h,cpp}:
+        * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.{h,cpp}:
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
+        * orbsvcs/orbsvcs/CosEvent/Event_Channel_i.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.h: Disable MSVC's warning
+          4250.
 
-	* tao/tao[_static].dsp: Added IIOP_Server_Request.{h,i,cpp}.
+        * tao/tao[_static].dsp: Added IIOP_Server_Request.{h,i,cpp}.
 
 Fri Apr 30 21:43:29 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/server.cpp
-	* orbsvcs/tests/Property/README
-	* orbsvcs/tests/Property/client.cpp
-	* orbsvcs/tests/Property/client.h
-	* orbsvcs/tests/Property/main.cpp
-	* orbsvcs/tests/Property/server.cpp
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.h:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
-	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.cpp:
-	Update the code to use ACE exception macros.
-	Also updated the destroy method semantics to do POA deactivate.
-	Removed unnecessary ACE_DEBUG's from the code.
+        * orbsvcs/tests/Property/server.cpp
+        * orbsvcs/tests/Property/README
+        * orbsvcs/tests/Property/client.cpp
+        * orbsvcs/tests/Property/client.h
+        * orbsvcs/tests/Property/main.cpp
+        * orbsvcs/tests/Property/server.cpp
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i_T.h:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i_T.cpp:
+        Update the code to use ACE exception macros.
+        Also updated the destroy method semantics to do POA deactivate.
+        Removed unnecessary ACE_DEBUG's from the code.
 
 Fri Apr 30 20:06:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode_Constants.cpp:
-	  Fixed a bunch of 'Memory in Use' reports from Purify
-	  reported by Irfan. Of a group of 10 Policy-related
-	  Typecodes in init(), only 3 had been added to fini().
+        * tao/Typecode_Constants.cpp:
+          Fixed a bunch of 'Memory in Use' reports from Purify
+          reported by Irfan. Of a group of 10 Policy-related
+          Typecodes in init(), only 3 had been added to fini().
 
 Fri Apr 30 19:55:26 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent/EventChannel_i.*:
-	* orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.*:
-	* orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.*:
+        * orbsvcs/orbsvcs/CosEvent/EventChannel_i.*:
+        * orbsvcs/orbsvcs/CosEvent/ConsumerAdmin_i.*:
+        * orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.*:
         * orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.*:
         * orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.*:
-	modified the CosEvent Channel to use reference counted
-	servants.
+        modified the CosEvent Channel to use reference counted
+        servants.
 
 Fri Apr 30 19:05:32 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Server_Request.*:
-	* tao/IIOP_Server_Request.*:
-	* tao/UIOP_Server_Request.*:
+        * tao/Server_Request.*:
+        * tao/IIOP_Server_Request.*:
+        * tao/UIOP_Server_Request.*:
 
-	  Moved IIOP specific stuff from Server_Request.* to
-	  IIOP_Server_Request.*.  Created UIOP-specific UIOP_Server_Request
-	  files based on the IIOP ones.
+          Moved IIOP specific stuff from Server_Request.* to
+          IIOP_Server_Request.*.  Created UIOP-specific UIOP_Server_Request
+          files based on the IIOP ones.
 
-	* tao/Makefile:
+        * tao/Makefile:
 
-	  Added IIOP_Server_Request files to the Makefile and updated the
-	  dependencies.
+          Added IIOP_Server_Request files to the Makefile and updated the
+          dependencies.
 
-	* tao/UIOP_Connect.{h,i,cpp}:
+        * tao/UIOP_Connect.{h,i,cpp}:
 
-	  Rough implementation of UIOP connection handlers based on the IIOP
-	  connection handlers.  Not operational yet.
+          Rough implementation of UIOP connection handlers based on the IIOP
+          connection handlers.  Not operational yet.
 
-	* tao/Connect.*:
+        * tao/Connect.*:
 
-	  Changed all references of TAO_SVC_HANDLER to TAO_IIOP_SVC_HANDLER.
+          Changed all references of TAO_SVC_HANDLER to TAO_IIOP_SVC_HANDLER.
 
-	* tao/LSOCK_*:
-	* tao/UIOP_*:
+        * tao/LSOCK_*:
+        * tao/UIOP_*:
 
-	  Changed all references of "LSOCK" to "UIOP" (except for ACE
-	  related LSOCK references).  Renamed all `LSOCK*' files to
-	  `UIOP*'.  Thanks to Fred for motivating these naming
-	  conventions.
+          Changed all references of "LSOCK" to "UIOP" (except for ACE
+          related LSOCK references).  Renamed all `LSOCK*' files to
+          `UIOP*'.  Thanks to Fred for motivating these naming
+          conventions.
 
 Fri Apr 30 18:46:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	  Added a couple of cases to the character constant switch
-	  that eliminated a couple of IDL compiler error messages
-	  produced from one of the test IDL files in the OMG tests.
-	  The output still looks wrong for some of the cases, but
-	  the compiler itself produces no error messages, so the
-	  branding test should pass us on this.
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Added a couple of cases to the character constant switch
+          that eliminated a couple of IDL compiler error messages
+          produced from one of the test IDL files in the OMG tests.
+          The output still looks wrong for some of the cases, but
+          the compiler itself produces no error messages, so the
+          branding test should pass us on this.
 
 Fri Apr 30 17:41:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Typecode.{h,cpp}:
-	  Added a no-op parameter() function. This function has been
-	  deprecated since CORBA 1.2 and is completely gone from 2.3a,
-	  but the branding tests have it so... It just throws
-	  CORBA::NO_IMPLEMENT.
+        * tao/Typecode.{h,cpp}:
+          Added a no-op parameter() function. This function has been
+          deprecated since CORBA 1.2 and is completely gone from 2.3a,
+          but the branding tests have it so... It just throws
+          CORBA::NO_IMPLEMENT.
 
-	  Also found twp methods, ulong_param and typecode_param, that
-	  were internal hacks to use until other member functions had
-	  been written. They were never part of the spec and not now
-	  used by anything in TAO, orbsvcs, or any of the tests or
-	  examples, so they have been removed.
+          Also found twp methods, ulong_param and typecode_param, that
+          were internal hacks to use until other member functions had
+          been written. They were never part of the spec and not now
+          used by anything in TAO, orbsvcs, or any of the tests or
+          examples, so they have been removed.
 
 Fri Apr 30 14:06:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* COPYING: Updated the COPYING file to reflect the use new of
- 	  ACE(TM) and TAO(TM).
+        * COPYING: Updated the COPYING file to reflect the use new of
+          ACE(TM) and TAO(TM).
 
 Fri Apr 30 12:42:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
-	  Generate CORBA::default_environment() instead of
-	  CORBA::Environment::default_environment. It is easier to
-	  generate code for the TAO library that way and it is slightly
-	  more efficient.
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+          Generate CORBA::default_environment() instead of
+          CORBA::Environment::default_environment. It is easier to
+          generate code for the TAO library that way and it is slightly
+          more efficient.
 
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
-	  Added support for reference counting of ProxyPushConsumer and
-	  ProxyPushSupplier objects.
-	  Also fixed the initialization of the default_POAs for those
-	  classes and the Admin interfaces.
-	  Added strategized locking to the
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.i:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+          Added support for reference counting of ProxyPushConsumer and
+          ProxyPushSupplier objects.
+          Also fixed the initialization of the default_POAs for those
+          classes and the Admin interfaces.
+          Added strategized locking to the
 
-	* tao/Context.h:
-	* tao/Context.cpp:
-	  Use CORBA::defaul_environment() instead of
-	  CORBA::Environment::default_environment() that way we can
-	  include Context.h without requiring Environment.h
-	  Also reordered some includes in the .cpp file to validate the
-	  Context.h file on its own.
+        * tao/Context.h:
+        * tao/Context.cpp:
+          Use CORBA::defaul_environment() instead of
+          CORBA::Environment::default_environment() that way we can
+          include Context.h without requiring Environment.h
+          Also reordered some includes in the .cpp file to validate the
+          Context.h file on its own.
 
-	* tao/IOR_LookupTable.cpp:
-	* tao/ORB.cpp:
-	  Protected some debug messages with TAO_debug_level. Also added a
-	  few more to check the iioploc support.
+        * tao/IOR_LookupTable.cpp:
+        * tao/ORB.cpp:
+          Protected some debug messages with TAO_debug_level. Also added a
+          few more to check the iioploc support.
 
 Fri Apr 30 11:58:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Request.{h,cpp} (operator[]): Changed the return type from
-	  "const CORBA::Request_ptr" to "const CORBA::Request*".
+        * tao/Request.{h,cpp} (operator[]): Changed the return type from
+          "const CORBA::Request_ptr" to "const CORBA::Request*".
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect): Reordered the code
-	  to avoid putting compiler specific code here.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect): Reordered the code
+          to avoid putting compiler specific code here.
 
 Fri Apr 30 02:05:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
-	  (Cubit_Factory_i): Make sure to deactivate the cubit servant (in
-	  addition to cubit factory servant) from the POA.
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp
+          (Cubit_Factory_i): Make sure to deactivate the cubit servant (in
+          addition to cubit factory servant) from the POA.
 
-	* tao/TAO.cpp (deactivate_under_child_poa and deactivate): The
-	  code was incorrect in assuming that the <id> parameter is the
-	  object id; it is actually the ior. Anyway, it should work now.
+        * tao/TAO.cpp (deactivate_under_child_poa and deactivate): The
+          code was incorrect in assuming that the <id> parameter is the
+          object id; it is actually the ior. Anyway, it should work now.
 
 Fri Apr 30 01:56:37 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/corbafwd.h;
-	* tao/Request.{h,cpp}:
-	* tao/ORB.{h,cpp}:
-	  Added the RequestSeq class, inherited from
-	  TAO_Unbounded_Sequence. Used as an arg in the
-	  (no-op) new ORB functions send_multiple_requests_oneway()
-	  and send_multiple_requests_deferred(), although the
-	  RequestSeq class itself is fully functional, should any
-	  of this ever really get implemented.
+        * tao/corbafwd.h;
+        * tao/Request.{h,cpp}:
+        * tao/ORB.{h,cpp}:
+          Added the RequestSeq class, inherited from
+          TAO_Unbounded_Sequence. Used as an arg in the
+          (no-op) new ORB functions send_multiple_requests_oneway()
+          and send_multiple_requests_deferred(), although the
+          RequestSeq class itself is fully functional, should any
+          of this ever really get implemented.
 
-	  Added several spec-required ORB functions:
-	  - create_environment()
-	  - create_exceptions()
-	  - create_context_list()
-	  - create_named_value()
-	  - get_default_context()
-	  - send_multiple_requests_onewasy()
-	  - send_multiple_requests_deferred()
-	  - get_next_response()
-	  - poll_next_response()
-	  All of these are no-ops and just throw CORBA::NO_IMPLEMENT.
+          Added several spec-required ORB functions:
+          - create_environment()
+          - create_exceptions()
+          - create_context_list()
+          - create_named_value()
+          - get_default_context()
+          - send_multiple_requests_onewasy()
+          - send_multiple_requests_deferred()
+          - get_next_response()
+          - poll_next_response()
+          All of these are no-ops and just throw CORBA::NO_IMPLEMENT.
 
 Fri Apr 30 00:40:44 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Server_Manager.h:
+        * examples/POA/On_Demand_Loading/Server_Manager.h:
         * examples/POA/On_Demand_Loading/Servant_Activator.h:
         * examples/POA/On_Demand_Loading/Servant_Loader.h:
-	  Changed TAO_TRY to ACE_TRY macros.
-	* examples/POA/On_Demand_Loading/Server_Manager.cpp:
-	* examples/POA/On_Demand_Loading/Servant_Activator.cpp:
-	* examples/POA/On_Demand_Loading/Servant_Loader.cpp:
-	  Added ACE_NEW_DECLARE_CORBA_ENV instead of ACE_TRY_NEW_ENV
-	  and also changed the CORBA::OBJECT_NOT_EXIST() exception
-	  to fit the current api.
-	* examples/POA/Loader/Server_Manager.h:
+          Changed TAO_TRY to ACE_TRY macros.
+        * examples/POA/On_Demand_Loading/Server_Manager.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Activator.cpp:
+        * examples/POA/On_Demand_Loading/Servant_Loader.cpp:
+          Added ACE_NEW_DECLARE_CORBA_ENV instead of ACE_TRY_NEW_ENV
+          and also changed the CORBA::OBJECT_NOT_EXIST() exception
+          to fit the current api.
+        * examples/POA/Loader/Server_Manager.h:
         * examples/POA/Loader/Servant_Activator.h:
         * examples/POA/Loader/Servant_Loader.h:
-	  Changed TAO_TRY to ACE_TRY macros.
-	* examples/POA/Loader/Server_Manager.cpp:
+          Changed TAO_TRY to ACE_TRY macros.
+        * examples/POA/Loader/Server_Manager.cpp:
         * examples/POA/Loader/Servant_Activator.cpp:
         * examples/POA/Loader/Servant_Loader.cpp:
-	  Added ACE_NEW_DECLARE_CORBA_ENV instead of ACE_TRY_NEW_ENV
-	  and also changed the CORBA::OBJECT_NOT_EXIST() exception
-	  to fit the current api.
+          Added ACE_NEW_DECLARE_CORBA_ENV instead of ACE_TRY_NEW_ENV
+          and also changed the CORBA::OBJECT_NOT_EXIST() exception
+          to fit the current api.
 
 Thu Apr 29 22:12:25 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/tests/Simple_Naming/client.cpp:
-	modified the dummy servants to use POA reference counting.
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        modified the dummy servants to use POA reference counting.
 
 Thu Apr 29 19:58:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Simple: Added the new time-date example, which
-	  will illustrate how to dynamically link an ORB via the
-	  svc.conf!
+        * examples/Simple: Added the new time-date example, which
+          will illustrate how to dynamically link an ORB via the
+          svc.conf!
 
 Thu Apr 29 19:53:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added corbafwd.h and Invocation.h to the projects.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Added corbafwd.h and Invocation.h to the projects.
 
 Thu Apr 29 19:21:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp (find_servant_i): We are grabbing the
-	  lock in this function when we had already grabbed it in
-	  find_servant().  This causes a deadlock when the lock are
-	  non-recursive (i.e., on all non-NT platforms).  Thanks to Marina
-	  for helping with this.
+        * tao/Object_Adapter.cpp (find_servant_i): We are grabbing the
+          lock in this function when we had already grabbed it in
+          find_servant().  This causes a deadlock when the lock are
+          non-recursive (i.e., on all non-NT platforms).  Thanks to Marina
+          for helping with this.
 
 Thu Apr 29 19:28:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Request.{h,i,cpp}:
-	* tao/Object.cpp:
+        * tao/Request.{h,i,cpp}:
+        * tao/Object.cpp:
           Added the contexts() and env() operations to Request.
-	  Since this involved adding an env_ member to Request,
-	  I modified Objects's _create_request and _request
-	  methods to pass along their environment args to the
-	  Request constructors, whicn were also modified to
-	  accept them and initialize env_. This won't change the
-	  signature or the functionality of any existing code.
+          Since this involved adding an env_ member to Request,
+          I modified Objects's _create_request and _request
+          methods to pass along their environment args to the
+          Request constructors, whicn were also modified to
+          accept them and initialize env_. This won't change the
+          signature or the functionality of any existing code.
 
 Thu Apr 29 19:16:04 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
-	  Fixed a Vxworks warning for ACE_NOTREACHED in the connect
-	  function.Thanks to Irfan for pointing this out.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp (connect):
+          Fixed a Vxworks warning for ACE_NOTREACHED in the connect
+          function.Thanks to Irfan for pointing this out.
 
 Thu Apr 29 18:35:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Request.{h,cpp}:
-	  Added no-op versions of send_deferred, get_response,
-	  and poll_response. These just throw CORBA::NO_IMPLEMENT.
+        * tao/Request.{h,cpp}:
+          Added no-op versions of send_deferred, get_response,
+          and poll_response. These just throw CORBA::NO_IMPLEMENT.
 
 Thu Apr 29 17:28:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	Added support to allow Policy objects to be locality constraint.
-	This reduces the footprint of TAO when policy objects will never
-	be accessed remotely.  You can enable this feature by defining
-	TAO_HAS_LOCALITY_CONSTRAINT_POLICIES.
+        Added support to allow Policy objects to be locality constraint.
+        This reduces the footprint of TAO when policy objects will never
+        be accessed remotely.  You can enable this feature by defining
+        TAO_HAS_LOCALITY_CONSTRAINT_POLICIES.
 
-	* tao/POAC.{h,cpp}:
-	* tao/CurrentS.cpp:
-	* tao/POAS.{h,i,cpp}:
-	* tao/POA_CORBA.h
-	* tao/PolicyS.cpp: Other than supporting locality constraint
-	  policies, also removed unused op_tables, skeletons, stubs.
+        * tao/POAC.{h,cpp}:
+        * tao/CurrentS.cpp:
+        * tao/POAS.{h,i,cpp}:
+        * tao/POA_CORBA.h
+        * tao/PolicyS.cpp: Other than supporting locality constraint
+          policies, also removed unused op_tables, skeletons, stubs.
 
 Thu Apr 29 16:33:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -330,7 +336,7 @@ Thu Apr 29 09:34:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/MT_Cubit_Test:
           check to see that the executables exist before trying
-          to them (and wait for the ior file to be created).
+          to run them (and wait for the ior file to be created).
 
 Thu Apr 29 06:41:34 1999  David L. Levine  <levine@cs.wustl.edu>
 
