@@ -94,12 +94,12 @@ public:
   static CORBA::TypeCode_ptr _nil (void);
   // Returns a NULL typecode.
 
-  CORBA::Boolean equal (const CORBA::TypeCode_ptr,
+  CORBA::Boolean equal (CORBA::TypeCode_ptr,
                         CORBA_Environment &ACE_TRY_ENV =
                           TAO_default_environment ()) const;
   // Compares two typecodes. Must be identical in every respect.
 
-  CORBA::Boolean equivalent (const CORBA::TypeCode_ptr,
+  CORBA::Boolean equivalent (CORBA::TypeCode_ptr,
                              CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ()) const;
   // Conforms to CORBA 2.3.1 (99-10-07).
