@@ -1,3 +1,14 @@
+Thu Aug 10 11:05:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp:
+
+	  In the usage message output, the sub-options for the
+	  generation of implementation classes were getting put
+	  under the smart proxies option, instead of under the
+	  implementation class option. Thanks to 
+	  Craig Rodrigues <rodrigc@mediaone.net> for pointing
+	  this out.
+
 Thu Aug 10 10:51:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/DynAny_Test/test_dynunion.cpp:
