@@ -10,25 +10,24 @@ SHLIB    = libACE_RMCast.$(SOEXT)
 
 FILES= \
 	RMCast \
+	RMCast_Ack_Worker \
+	RMCast_Fork \
+	RMCast_Fragment \
+	RMCast_IO_UDP \
+	RMCast_Membership \
 	RMCast_Module \
 	RMCast_Module_Factory \
-	RMCast_Fragment \
-	RMCast_Reassembly \
 	RMCast_Partial_Message \
 	RMCast_Proxy \
-	RMCast_Membership \
-	RMCast_Retransmission \
-	RMCast_Resend_Worker \
-	RMCast_Ack_Worker \
-	RMCast_Reordering \
-	RMCast_Reliable_Factory \
-	RMCast_Singleton_Factory \
-	RMCast_Resend_Handler \
+	RMCast_Reassembly \
 	RMCast_Receiver_Module \
+	RMCast_Reliable_Factory \
+	RMCast_Reordering \
+	RMCast_Resend_Handler \
+	RMCast_Resend_Worker \
+	RMCast_Retransmission \
 	RMCast_Sequencer \
-	RMCast_Fork \
-	\
-	RMCast_IO_UDP \
+	RMCast_Singleton_Factory \
 	RMCast_UDP_Event_Handler \
 	RMCast_UDP_Proxy \
 	RMCast_UDP_Reliable_Receiver \

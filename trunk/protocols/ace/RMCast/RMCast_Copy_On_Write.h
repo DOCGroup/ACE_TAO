@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 // $Id$
-//
 
 #ifndef ACE_RMCAST_COPY_ON_WRITE_H
 #define ACE_RMCAST_COPY_ON_WRITE_H
