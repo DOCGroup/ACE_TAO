@@ -72,6 +72,14 @@ module Deployment {
 
   typedef sequence < Bridge > Bridges;
 
+  struct Property {
+    string name;
+    any value;
+  };
+
+  typedef sequence < Property > Properties;
+
+
   struct Domain {
     string UUID;
     string label;
@@ -79,14 +87,8 @@ module Deployment {
     Nodes node;
     Interconnects interconnect;
     Bridges bridge;
+    Properties infoProperty;
   };
-
-  struct Property {
-    string name;
-    any value;
-  };
-
-  typedef sequence < Property > Properties;
 
   enum CCMComponentPortKind {
     Facet,
