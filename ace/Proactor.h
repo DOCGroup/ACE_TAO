@@ -219,6 +219,14 @@ public:
   virtual int handle_events (void);
   // Block indefinitely until at least one event is dispatched.
 
+  virtual int post_completion (ACE_Asynch_Result *result);
+  // Post a result to the completion port of the Proactor.  If errors
+  // occur, the result will be deleted by this method.  If successful,
+  // the result will be deleted by the Proactor when the result is
+  // removed from the completion port.  Therefore, the result should
+  // have been dynamically allocated and should be orphaned by the
+  // user once this method is called.
+
   int wake_up_dispatch_threads (void);
   // Add wakeup dispatch threads (reinit).
 
@@ -273,7 +281,7 @@ protected:
       Asynch_Timer (ACE_Handler &handler,
 		    const void *act,
 		    const ACE_Time_Value &tv, 
-		    ACE_HANDLE event);
+		    ACE_HANDLE event = ACE_INVALID_HANDLE);
       
     protected:
       virtual void complete (u_long bytes_transferred,
