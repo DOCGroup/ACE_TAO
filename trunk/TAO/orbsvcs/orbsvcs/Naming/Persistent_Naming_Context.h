@@ -37,14 +37,14 @@ public:
 
   // = Initialization and termination methods.
   TAO_Persistent_Naming_Context (TAO_Naming_Context *interface,
-                                 TAO_Index *index,
+                                 TAO_Index *context_index,
                                  PortableServer::POA_ptr poa,
                                  const char *poa_id,
                                  size_t default_hash_table_size = ACE_DEFAULT_MAP_SIZE);
   // Default constructor.  Sets the implementation pointer of the interface.
 
   TAO_Persistent_Naming_Context (TAO_Naming_Context *interface,
-                                 TAO_Index *index,
+                                 TAO_Index *context_index,
                                  PortableServer::POA_ptr poa,
                                  const char *poa_id,
                                  HASH_MAP * map,

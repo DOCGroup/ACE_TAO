@@ -325,24 +325,24 @@ TAO_Persistent_Context_Index<ACE_MEM_POOL_2, ACE_LOCK>::create_index (void)
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
-  void *index = 0;
+  void *context_index = 0;
 
   // This is the easy case since if we find the Context Index Map
   // we know it's already initialized.
-  if (this->allocator_->find (TAO_NAME_CONTEXTS_INDEX, index) == 0)
-    this->index_ = (INDEX *) index;
+  if (this->allocator_->find (TAO_NAME_CONTEXTS_INDEX, context_index) == 0)
+    this->index_ = (INDEX *) context_index;
 
   else
     {
       size_t index_size = sizeof (INDEX);
-      index = this->allocator_->malloc (index_size);
+      context_index = this->allocator_->malloc (index_size);
 
       // Initialize the map into its memory location (e.g., shared memory).
       ACE_NEW_RETURN (this->index_,
-                      (index) INDEX (this->allocator_),
+                      (context_index) INDEX (this->allocator_),
                       -1);
 
-      if (this->allocator_->bind (TAO_NAME_CONTEXTS_INDEX, index) == -1)
+      if (this->allocator_->bind (TAO_NAME_CONTEXTS_INDEX, context_index) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "create_index\n"), -1);
     }
 
