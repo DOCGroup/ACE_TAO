@@ -986,11 +986,16 @@ public:\
 };\
 static ACE_Static_Svc_##X ace_static_svc_##X;
 
+
+// More generic dynamic/static service macros.
+#define ACE_FACTORY_DECLARE(CLS,X) extern "C" CLS##_Export ACE_Service_Object *_make_##X (void);
+#define ACE_FACTORY_DEFINE(CLS,X) extern "C" ACE_Service_Object *_make_##X () { ACE_TRACE (#X); return new X; }
+
 // Dynamic/static service macros.
-#define ACE_SVC_FACTORY_DECLARE(X) extern "C" ACE_Svc_Export ACE_Service_Object *_make_##X (void);
+#define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
 #define ACE_SVC_INVOKE(X) _make_##X ()
 #define ACE_SVC_NAME(X) _make_##X
-#define ACE_SVC_FACTORY_DEFINE(X) extern "C" ACE_Service_Object *_make_##X () { ACE_TRACE (#X); return new X; }
+#define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
 # define ACE_TSS_TYPE(T) ACE_TSS< T >
