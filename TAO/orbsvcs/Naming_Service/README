@@ -17,6 +17,7 @@ How to Run the TAO Naming Service
                         [-t time]
                         [-f persitence_file_name]
                         [-b base_address]
+			[-m (1=enable multicast(default),0=disable]
 
 2. Optional Command-line Arguments
 
@@ -54,6 +55,16 @@ How to Run the TAO Naming Service
                 with the "-f" option above.  The value supplied with
                 this option is only used when the Naming Service runs
                 in persistent mode, i.e., "-f" option is present.
+
+	-m <0|1>
+		By default the Naming Service will respond to
+		multicast queries.  This is a non-standard but very
+		simple way to discover the Naming Service in TAO.
+		In real applications the multicast lookup mechanism
+		can be innadequate, for example, if there are multiple
+		naming services running on the network.
+		In such cases the Interoperable Naming Service
+		bootstrap options are a better choice.
 
 3. Environment Variables
 

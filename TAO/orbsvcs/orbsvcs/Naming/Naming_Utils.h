@@ -68,7 +68,8 @@ public:
                      ACE_Time_Value *timeout = 0,
                      int resolve_for_existing_naming_service = 1,
                      const ACE_TCHAR *persistence_location = 0,
-                     void *base_addr = TAO_NAMING_BASE_ADDR);
+                     void *base_addr = TAO_NAMING_BASE_ADDR,
+                     int enable_multicast = 1);
   // Constructor.  Attempts to find an existing Naming Service if
   // <resolve_for_existing_naming_service> is set to true.  If it is
   // false, or no Naming Service was found during a <timeout> period,
@@ -79,6 +80,8 @@ public:
   // (<persistence_location> specifies name of the file to use for
   // persistent storage, <base_addr> specifies the address used for
   // memory mapping <persistent_location> file).
+  // If <enable_multicast> is not zero then the service will respond
+  // to multicast location queries.
 
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa,
@@ -86,7 +89,8 @@ public:
             ACE_Time_Value *timeout = 0,
             int resolve_for_existing_naming_service = 1,
             const ACE_TCHAR *persistence_location = 0,
-            void *base_addr = TAO_NAMING_BASE_ADDR);
+            void *base_addr = TAO_NAMING_BASE_ADDR,
+            int enable_multicast = 1);
   // Initializer.  Attempts to find an existing Naming Service if
   // <resolve_for_existing_naming_service> is set to true.  If it is
   // false, or no Naming Service was found during a <timeout> period,
@@ -97,6 +101,8 @@ public:
   // (<persistence_location> specifies name of the file to use for
   // persistent storage, <base_addr> specifies the address used for
   // memory mapping <persistent_location> file).
+  // If <enable_multicast> is not zero then the service will respond
+  // to multicast location queries.
 
   ~TAO_Naming_Server (void);
   // Destructor.
@@ -112,13 +118,16 @@ protected:
                        PortableServer::POA_ptr root_poa,
                        const ACE_TCHAR *persistence_location,
                        void *base_addr,
-                       size_t context_size);
+                       size_t context_size,
+                       int enable_multicast);
   // Helper method: create Naming Service locally.
   // Make the root context of size
   // <context_size>, register it under the <root_poa>, and make the Naming
   // Service persistent if <persistence_location> is not 0.
   // (<persistence_location> specifies name of the file to use for
   // persistent storage).
+  // If <enable_multicast> is not zero then the service will respond
+  // to multicast location queries.
 
   CosNaming::NamingContext_var naming_context_;
   // Root NamingContext_ptr.
