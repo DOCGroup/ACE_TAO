@@ -1,3 +1,9 @@
+Sat Nov  1 16:27:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/os_signal.h:
+          Added prototype for pthread_sigmask() for those platforms that
+          don't include it in signal.h, ie. Free BSD.
+
 Sat Nov  1 05:40:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/Cleanup.{h,inl,cpp}:

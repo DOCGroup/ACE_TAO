@@ -316,6 +316,8 @@ extern "C"
   typedef void (*ACE_SIGNAL_C_FUNC)(int,siginfo_t*,void*);
 #endif /* ACE_WIN32 */
 
+  int pthread_sigmask(int, const sigset_t *, sigset_t *);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
