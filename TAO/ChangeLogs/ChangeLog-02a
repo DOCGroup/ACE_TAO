@@ -1,3 +1,9 @@
+Mon Apr  2 07:37:24 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/AMI/README (simple-client): Reworded this so that it's
+	  correct.  Thanks to Gautam Thaker <gthaker@atl.lmco.com> for
+ 	  reporting this.
+
 Sun Apr 01 22:02:20 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * TAOACE.dsw:
