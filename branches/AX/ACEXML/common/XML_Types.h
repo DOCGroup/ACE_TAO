@@ -33,13 +33,24 @@ typedef ACE_UINT32 ACEXML_UCS4;
 
 typedef char ACEXML_UTF8;
 
+/**
+ * @typedef ACEXML_Char
+ * ACEXML_Char only maps to ACEXML_UTF16 when ACE_USES_WCHAR is defined.
+ * Here we assume sizeof (wchar_t) is always 2 bytes.
+ */
+#if defined (ACE_USES_WCHAR)
+typedef ACEXML_UTF16 ACEXML_Char;
+typedef ACE_WString ACEXML_String;
+#else
 typedef ACEXML_UTF8 ACEXML_Char;
+typedef ACE_CString ACEXML_String
+#endif
 // Default XML character encoding.  We can change this to either
 // ACEXML_UTF8 or ACEXML_UTF16
 
 #if 0  // defined (ACE_HAS_STANDARD_CPP_LIBRARY)
 typedef string ACEXML_String;
-#else
+//#else
 typedef ACE_CString ACEXML_String;
 // Defulat XML strings will use UTF-8 encoding.  We would like to use
 // the string classes in standard C++ Library here.  But they are not

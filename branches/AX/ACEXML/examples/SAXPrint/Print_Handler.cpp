@@ -25,10 +25,9 @@ ACEXML_Print_Handler::characters (const ACEXML_Char *cdata,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event characters () ** start: " << start
-       << "  end: " << end << " ***************" << endl;
-  cout << cdata << endl;
-  cout << "- End event characters () ---------------" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event characters () ** start: %d  end: %d ***************\n%s\n- End event characters () ---------------\n"),
+              start, end, cdata));
 }
 
 void
@@ -37,7 +36,8 @@ ACEXML_Print_Handler::endDocument (ACEXML_Env &xmlenv)
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event endDocument () ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event endDocument () ***************\n")));
 }
 
 void
@@ -49,8 +49,9 @@ ACEXML_Print_Handler::endElement (const ACEXML_Char *uri,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event endElement (" << uri << ", " << name << ", "
-       << qName << ") ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event endElement (%s, %s, ) ***************\n"),
+              uri, name, qName));
 }
 
 void
@@ -60,7 +61,9 @@ ACEXML_Print_Handler::endPrefixMapping (const ACEXML_Char *prefix,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event endPrefixMapping (" << prefix << ") ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
+              prefix));
 }
 
 void
@@ -72,7 +75,8 @@ ACEXML_Print_Handler::ignorableWhitespace (const ACEXML_Char *,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event ignorableWhitespace () ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event ignorableWhitespace () ***************\n")));
 }
 
 void
@@ -83,8 +87,9 @@ ACEXML_Print_Handler::processingInstruction (const ACEXML_Char *target,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event processingInstruction (" << target << ", "
-       << data << ") ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event processingInstruction (%s, %s) ***************\n"),
+              target, data));
 }
 
 void
@@ -93,7 +98,8 @@ ACEXML_Print_Handler::setDocumentLocator (ACEXML_Locator *,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event setDocumentLocator () ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
 
 void
@@ -103,7 +109,9 @@ ACEXML_Print_Handler::skippedEntity (const ACEXML_Char *name,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event skippedEntity (" << name << ") ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event skippedEntity (%s) ***************\n"),
+              name));
 }
 
 void
@@ -112,7 +120,8 @@ ACEXML_Print_Handler::startDocument (ACEXML_Env &xmlenv)
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event startDocument () ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event startDocument () ***************\n")));
 }
 
 void
@@ -125,13 +134,16 @@ ACEXML_Print_Handler::startElement (const ACEXML_Char *uri,
 {
   ACE_UNUSED_ARG (xmlenv);
 
-  cout << "* Event startElement (" << uri << ", "
-       << name << ", " << qName << ") ***************" << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event startElement (%s, %s, %s) ***************\n"),
+              uri, name, qName));
+
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
-        cout << "   " << alist->getQName (i) << " = \""
-             << alist->getValue (i) << "\"" << endl;
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_LIB_TEXT ("    %s = \"%s\"\n"),
+                    alist->getQName (i), alist->getValue (i)));
       }
 }
 
@@ -153,14 +165,22 @@ ACEXML_Print_Handler::notationDecl (const ACEXML_Char *name,
                                     ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  cout << "* Event notationDecl: (" << name << ") ";
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Event notationDecl: (%s) "),
+              name));
 
   if (publicID == 0)
-    cout << "SYSTEM " << systemID << endl;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("SYSTEM %s\n"),
+                systemID));
   else if (systemID == 0)
-    cout << "PUBLIC " << publicID << endl;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("PUBLIC %s\n"),
+                publicID));
   else
-    cout << "PUBLIC " << publicID << " " << systemID << endl;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT ("PUBLIC %s %s\n"),
+                publicID, systemID));
 }
 
 void
@@ -171,14 +191,22 @@ ACEXML_Print_Handler::unparsedEntityDecl (const ACEXML_Char *name,
                                           ACEXML_Env &)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  cout << "* Unparsed Entity: " << name;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT ("* Unparsed Entity: %s"),
+              name));
 
   if (publicID == 0)
-    cout << " SYSTEM " << systemID;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT (" SYSTEM %s"),
+                systemID));
   else
-    cout << " PUBLIC " << publicID << " " << systemID;
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_LIB_TEXT (" PUBLIC %s %s"),
+                publicID, systemID));
 
-  cout << " NDATA " << notationName << endl;
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_LIB_TEXT (" NDATA %s\n"),
+              notationName));
 }
 
 // Methods inherit from ACEXML_EnitityResolver.
