@@ -11,7 +11,7 @@ Sun May 16 21:07:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/fe/lex.yy.cpp.diff: Added this file to preserve patches
 	  that can't be done using 'sed'.  It also prevents me from
-	  throwing tantrum.
+	  throwing tantrums.
 
 Sun May 16 18:47:38 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
