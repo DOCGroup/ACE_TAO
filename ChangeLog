@@ -1,3 +1,11 @@
+Mon Oct 21 06:54:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Recursive_Condition_Test.cpp (test_4):
+	* tests/RB_Tree_Test.cpp: Fixed compile errors arising out of M$
+	  quirks. The scoping rules for 'for' loops are busted and hence
+	  these fixes. These fixes basically change the variable names for
+	  the different for loops inside the same scope.
+
 Sun Oct 20 21:40:13 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * ACEXML/common/HttpCharStream.cpp: Handle all the error paths
