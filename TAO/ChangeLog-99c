@@ -19,7 +19,7 @@ Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  exceptions like say g++, the compiler  generates the environment
 	  variables.
 
-	  - cross platform compilation wherein he may compile on SUN CC
+	  - cross platform compilation wherein one may compile on SUN CC
 	  with native exceptions but for VxWorks which does not have that
 	  capability.. In which case a handle is needed to generate the
 	  environment variables. This handle is denoted as a command line
