@@ -86,9 +86,7 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs $(PLATFORM_SSL_CPPFLAGS)
 LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs $(PLATFORM_SSL_LDFLAGS)
 LIBS += $(PLATFORM_SSL_LIBS)
 
-ifeq ($(HPUX_VERS),)
 ACE_SHLIBS = -lTAO_Security -lTAO_PortableServer -lTAO -lACE_SSL -lACE -lssl -lcrypto
-endif # HPUX_VERS
 
 # Extra dependencies not caught by make depend.
 
