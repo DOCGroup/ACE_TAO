@@ -44,6 +44,8 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                     ACEXML_Env &xmlenv)
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
+  ACE_UNUSED_ARG(xmlenv);
+
   if (ACE_OS_String::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
     {
       if (this->in_stream_def_)
@@ -339,6 +341,8 @@ int
 ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist,
                                        ACEXML_Env &xmlenv)
 {
+  ACE_UNUSED_ARG(xmlenv);
+
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
@@ -359,6 +363,8 @@ int
 ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist,
                                 ACEXML_Env &xmlenv)
 {
+  ACE_UNUSED_ARG(xmlenv);
+
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
@@ -379,6 +385,8 @@ int
 ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist,
                                            ACEXML_Env &xmlenv)
 {
+  ACE_UNUSED_ARG(xmlenv);
+
   if (alist != 0)
     {
       ACE_Parsed_Info *info = (this->in_stream_def_ == 0 ?
@@ -436,6 +444,8 @@ int
 ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist,
                                                ACEXML_Env &xmlenv)
 {
+  ACE_UNUSED_ARG(xmlenv);
+
   if (alist != 0)
     {
       ACE_Parsed_Info *info = (this->in_stream_def_ == 0 ?
@@ -469,6 +479,8 @@ int
 ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist,
                                           ACEXML_Env &xmlenv)
 {
+  ACE_UNUSED_ARG(xmlenv);
+
   if (alist != 0)
     {
       ACE_Parsed_Info *info = (this->in_stream_def_ == 0 ?
