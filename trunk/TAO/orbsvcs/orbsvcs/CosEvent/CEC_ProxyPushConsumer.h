@@ -130,6 +130,10 @@ private:
   CosEventComm::PushSupplier_var supplier_;
   // The supplier....
 
+  int connected_;
+  // If the flag is not zero then we are connected, notice that the
+  // supplier can be nil.
+
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 };
@@ -159,7 +163,7 @@ public:
 
   int locked (void) const;
   // Returns 1 if the reference count successfully acquired
-  
+
 private:
   ACE_Lock *lock_;
   // The lock used to protect the reference count

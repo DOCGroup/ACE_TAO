@@ -210,6 +210,10 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
                      RtecEventChannelAdmin::AlreadyConnected,
                      RtecEventChannelAdmin::TypeError))
 {
+  // Nil PushConsumers are illegal
+  if (CORBA::is_nil (push_consumer))
+    ACE_THROW (CORBA::BAD_PARAM ());
+
   {
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
