@@ -28,7 +28,7 @@ template class ACE_Connector<TAO_IIOP_Connection_Handler, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>;
 
 /*
-// TODO: Where are they needed?
+// TODO: Where are they needed? If not used needs to be removed.
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator_Base<ACE_HANDLE, ACE_Svc_Tuple<TAO_IIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>;
 template class ACE_Map_Entry<ACE_HANDLE,ACE_Svc_Tuple<TAO_IIOP_Connection_Handler>*>;
