@@ -54,40 +54,34 @@ public:
   char* get_current (void) const;
   // Get the current head of the vector.
 
-  char* is_or_contains_ignore_case(const char* flag);
-  // Check if the current argument matches <flag>
+  int cur_arg_strncasecmp(const char* flag);
+  // Check if the current argument matches (case insensitive) <flag>
   //
-  // An argument matches if:
-  // - it STARTS with <flag>
-  // - any character may appear after the flag including
-  // - digits, spaces, characters or nothing at all
-  // - match is case insensitive.
-  // - ie: "-Foobar" "-FOOBAR" "-fOobAr" "-foobarVALUE"
-  // - all match the <flag> "-FooBar"
+  // ------------------------------------------------------------
   //
-  // If there is NOT a match, nil is returned
+  // Case A: Perfect Match (case insensitive)
+  // 0 is returned.
   //
-  // If there IS a match:
-  // An attempt is made to return the <flag>'s parameter (or 'value')
+  //     ie: when current_arg = "-foobar" or "-FOOBAR" or "-fooBAR"
+  //         this->cur_arg_strncasecmp ("-FooBar);
+  //         will return 0
   //
-  // Case A: value is separated from flag with a space:
-  // Arg_Shifter calls consume_arg() (<flag>) and advances to the next arg
-  // If the new current argument passes is_parameter_next()
-  // - we return the 'new' current argument, ('value')
-  // else, we return nil
+  // ------------------------------------------------------------
   //
-  // Case B: value is mangled together with flag: ie: "-fooBarVALUE"
-  // A char* is returned - pointing to VALUE
+  // Case B: Perfect Match (case insensitive) but the current_arg
+  // is longer than the flag. Returns a number equal to the index
+  // in the char* indicating the start of the extra characters
   //
-  // This operation consumes the current argument if:
-  // - there is a match &&
-  // - and the value for the flag is separated from the flag with a space.
-  // This operation does not consume the current argument if:
-  // - there is a match but
-  // - there is no space separating the value from the flag "-FooBarVALUE"
+  //     ie: when current_arg = "-foobar98023"
+  //         this->cur_arg_strncasecmp ("-FooBar);
+  //         will return 7
   //
-  // This method is safe to call without checking for a valid
-  // current argument.
+  // Notice: this number will always be > 0
+  //
+  // ------------------------------------------------------------
+  //
+  // Case C: If neither of Case A or B is met (no match)
+  // then -1 is returned
 
   int consume_arg (int number = 1);
   // Consume <number> argument(s) by sticking them/it on the end of
