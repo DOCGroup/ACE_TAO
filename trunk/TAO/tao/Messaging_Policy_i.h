@@ -24,6 +24,10 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_Export TAO_RelativeRoundtripTimeoutPolicy_i : public POA_Messaging::RelativeRoundtripTimeoutPolicy, public TAO_RefCountServantBase
 {
   // = TITLE
@@ -75,6 +79,10 @@ private:
 #if defined (__ACE_INLINE__)
 #include "tao/Messaging_Policy_i.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
