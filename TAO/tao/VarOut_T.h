@@ -20,6 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_Memory.h"
+
 /**
  * @class TAO_Var_Base_T
  *
@@ -39,14 +41,14 @@ public:
 
   T * operator-> (void);
   const T * operator-> (void) const;
-  
+
   operator const T & () const;
   operator T & ();
   operator T & () const;
 
   typedef const T &   _in_type;
   typedef       T &   _inout_type;
-  
+
   // Common mapping for fixed and variable size types.
   _in_type      in (void) const;
   _inout_type   inout (void);
@@ -78,7 +80,7 @@ public:
 
   TAO_Fixed_Var_T & operator= (T *);
   TAO_Fixed_Var_T & operator= (const TAO_Fixed_Var_T<T> &);
-  
+
   // Fixed-size types only.
   TAO_Fixed_Var_T & operator= (const T &);
 
@@ -141,7 +143,7 @@ public:
   T *& ptr (void);
 
   T * operator-> (void);
-  
+
 private:
   typedef TAO_Out_T<T,T_var> THIS_OUT_TYPE;
   T *& ptr_;
