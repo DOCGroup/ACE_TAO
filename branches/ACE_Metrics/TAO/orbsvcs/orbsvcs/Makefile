@@ -94,6 +94,9 @@ ifndef TAO_ORBSVCS
 
   TAO_ORBSVCS += Notify 
 
+  ifeq ($(metrics),1)
+    TAO_ORBSVCS += Metrics
+  endif # metrics
 endif # TAO_ORBSVCS
 
 # The order in this list is important as some libraries depend on
@@ -227,7 +230,9 @@ endif
 ifneq (,$(findstring  IFRService, $(TAO_ORBSVCS)))
   MKLIST += Makefile.IFRService
 endif
-
+ifneq (,$(findstring  Metrics, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.Metrics
+endif
 #----------------------------------------------------------------------------
 #       Local rules
 #----------------------------------------------------------------------------
