@@ -43,18 +43,14 @@ main (int, ASYS_TCHAR *[])
   ACE_Ordered_MultiSet<int> set;
   ACE_Ordered_MultiSet_Iterator<int> iter(set);
 
-  // put in a range of odd ints, without an iterator
+  // Put in a range of odd ints, without an iterator.
   int i;
   for (i = -10; i < 10; ++i)
-  {
     set.insert (2 * i + 1);
-  }
 
   // put in an interleaved range of even ints, using an iterator
   for (i = -10; i <= 10; ++i)
-  {
     set.insert (2 * i, iter);
-  }
 
   // remove the first and last elements of range
   while (set.remove (-20) == 0);
@@ -67,18 +63,18 @@ main (int, ASYS_TCHAR *[])
   // iterate forward through the range we created: should be one of each
   iter.first ();
   for (i = -19; i <= 19; ++i)
-  {
-    // we should still be in the set
-    ACE_ASSERT (iter.done () == 0);
+    {
+      // we should still be in the set
+      ACE_ASSERT (iter.done () == 0);
 
-    // make sure the current element is what we expect
-    iter.next (ptr);
-    ACE_ASSERT (ptr != 0);
-    ACE_ASSERT (*ptr == i);
+      // make sure the current element is what we expect
+      iter.next (ptr);
+      ACE_ASSERT (ptr != 0);
+      ACE_ASSERT (*ptr == i);
     
-    // move to the next element in the set
-    iter.advance ();
-  }
+      // move to the next element in the set
+      iter.advance ();
+    }
 
   // we should have iterated through the entire set
   ACE_ASSERT (iter.done () != 0);
@@ -86,19 +82,19 @@ main (int, ASYS_TCHAR *[])
   // iterate backward through the range we created: should be one of each
   iter.last ();
   for (i = 19; i >= -19; --i)
-  {
-    // we should still be in the set
-    ACE_ASSERT (iter.done () == 0);
+    {
+      // we should still be in the set
+      ACE_ASSERT (iter.done () == 0);
 
-    // make sure the current element is what we expect
-    int *ptr;
-    iter.next (ptr);
-    ACE_ASSERT (ptr != 0);
-    ACE_ASSERT (*ptr == i);
+      // make sure the current element is what we expect
+      int *ptr;
+      iter.next (ptr);
+      ACE_ASSERT (ptr != 0);
+      ACE_ASSERT (*ptr == i);
     
-    // move to the previous element in the set
-    iter.retreat ();
-  }
+      // move to the previous element in the set
+      iter.retreat ();
+    }
 
   // we should have iterated through the entire set
   ACE_ASSERT (iter.done () != 0);
@@ -173,16 +169,16 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (*ptr == 201);  
   iter.advance ();
   for (i = 1; i <= 5; ++i)
-  {
-    // should be in the set, able to access the element, value should be 205
-    ACE_ASSERT (iter.done () == 0);
-    iter.next (ptr);
-    ACE_ASSERT (ptr != 0);
-    ACE_ASSERT (*ptr == 205);  
+    {
+      // should be in the set, able to access the element, value should be 205
+      ACE_ASSERT (iter.done () == 0);
+      iter.next (ptr);
+      ACE_ASSERT (ptr != 0);
+      ACE_ASSERT (*ptr == 205);  
 
-    // move to the next element in the set
-    iter.advance ();
-  }
+      // move to the next element in the set
+      iter.advance ();
+    }
 
   // should not be anything else in the set
   ACE_ASSERT (iter.done () != 0);
