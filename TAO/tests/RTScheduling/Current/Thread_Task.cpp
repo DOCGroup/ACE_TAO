@@ -33,22 +33,27 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
       CORBA::Policy_ptr sched_param = 0;
       CORBA::Policy_ptr implicit_sched_param = 0;
 
-      ACE_TRY_EX(yamuna_give_this_a_better_name_1)
+      ACE_TRY_EX (ESS_out_of_cxt)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Making an end_scheduling_segment call without first calling begin_scheduling_segment\n"));
           this->current_->end_scheduling_segment (name
                                                   ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX(yamuna_give_this_a_better_name_1);
+          ACE_TRY_CHECK_EX(ESS_out_of_cxt);
         }
+      ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "End Scheduling Segment is out of context - Expected Exception\n"));
+	}
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                               "End Scheduling Segment is out of context");
+                               "\n");
         }
       ACE_ENDTRY;
 
-      ACE_TRY_EX(yamuna_give_this_a_better_name_2)
+      ACE_TRY_EX(USS_out_of_cxt)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Making an update_scheduling_segment call without first calling begin_scheduling_segment\n"));
@@ -57,8 +62,13 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb,
                                                      sched_param,
                                                      implicit_sched_param
                                                      ACE_ENV_ARG_PARAMETER);
-          ACE_TRY_CHECK_EX(yamuna_give_this_a_better_name_2);
+          ACE_TRY_CHECK_EX(USS_out_of_cxt);
         }
+      ACE_CATCH (CORBA::BAD_INV_ORDER, thr_ex)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      "Update Scheduling Segment is out of context - Expected Exception\n"));
+	}
       ACE_CATCHANY
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
