@@ -271,12 +271,16 @@ MT_Test::svc (void)
                               TAO_TRY_ENV);
       TAO_CHECK_ENV_EX (RESOLVE);
 
-      if (!CORBA::is_nil (result_object.in ())
-          && result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
-      TAO_CHECK_ENV_EX (RESOLVE);
-      ACE_DEBUG ((LM_DEBUG,
-                  "Resolved name OK in thread %8.8x \n",
-                  ACE_OS::thr_self ()));
+      if (!CORBA::is_nil (result_object.in ()))
+        {
+          CORBA::Short id = result_object->id (TAO_TRY_ENV);
+          TAO_CHECK_ENV_EX (RESOLVE);
+
+          if (id == CosNaming_Client::OBJ1_ID)
+            ACE_DEBUG ((LM_DEBUG,
+                        "Resolved name OK in thread %8.8x \n",
+                        ACE_OS::thr_self ()));
+        }
     }
   TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
@@ -442,12 +446,17 @@ Loop_Test::execute (TAO_Naming_Client &root_context)
                                   TAO_TRY_ENV);
           TAO_CHECK_ENV_EX (RESOLVE);
 
-          if (!CORBA::is_nil (result_object.in ())
-              && result_object->id (TAO_TRY_ENV) == CosNaming_Client::OBJ1_ID)
-            TAO_CHECK_ENV_EX (RESOLVE);
-          ACE_DEBUG ((LM_DEBUG,
-                      "Resolved name OK in process %8.8x \n",
-                      ACE_OS::getpid ()));
+
+          if (!CORBA::is_nil (result_object.in ()))
+            {
+              CORBA::Short id = result_object->id (TAO_TRY_ENV);
+              TAO_CHECK_ENV_EX (RESOLVE);
+
+              if (id == CosNaming_Client::OBJ1_ID)
+                ACE_DEBUG ((LM_DEBUG,
+                            "Resolved name OK in process %8.8x \n",
+                            ACE_OS::getpid ()));
+            }
         }
       TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
         {

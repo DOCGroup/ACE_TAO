@@ -254,7 +254,7 @@ public:
   // Initialize the client communication endpoint with server.
 
   // = Symbolic ids.
-  enum
+  enum OBJ_ID
   {
     OBJ1_ID = 5,
     OBJ2_ID = 6
