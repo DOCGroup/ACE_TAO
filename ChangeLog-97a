@@ -1,3 +1,7 @@
+Tue Jan 28 12:42:39 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: Added strncat to the OS class.
+
 Tue Jan 28 09:13:00 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/ACE.cpp (ACE::ldfind),

@@ -150,23 +150,23 @@ main (int argc, char *argv[])
     }
 
   // Add some bindings to the database
-  bind (ns_context);
+  bind (*ns_context);
   
   // Should find the entries
-  find (ns_context, 1, 0);
+  find (*ns_context, 1, 0);
 
   // Rebind with negative values
-  rebind (ns_context);
+  rebind (*ns_context);
 
   // Should find the entries
-  find (ns_context, -1, 0);
+  find (*ns_context, -1, 0);
 
   // Remove all bindings from database
-  unbind (ns_context); 
+  unbind (*ns_context); 
   
   // Should not find the entries
-  find (ns_context,  1, -1);
-  find (ns_context, -1, -1);
+  find (*ns_context,  1, -1);
+  find (*ns_context, -1, -1);
 
   delete ns_context;
 

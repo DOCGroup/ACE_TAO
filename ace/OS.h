@@ -2574,6 +2574,7 @@ public:
   static size_t strlen (const char *s);
   static int strncmp (const char *s, const char *t, size_t len);
   static char *strncpy (char *s, const char *t, size_t len);
+  static char *strncat (char *s, const char *t, size_t len);
   static char *strtok (char *s, const char *tokens);
   static char *strtok_r (char *s, const char *tokens, char **lasts);
   static long strtol (const char *s, char **ptr, int base);
@@ -2588,6 +2589,7 @@ public:
   static size_t strlen (const wchar_t *s);
   static int strncmp (const wchar_t *s, const wchar_t *t, size_t len);
   static wchar_t *strncpy (wchar_t *s, const wchar_t *t, size_t len);
+  static wchar_t *strncat (wchar_t *s, const wchar_t *t, size_t len);
   static wchar_t *strtok (wchar_t *s, const wchar_t *tokens);
   static long strtol (const wchar_t *s, wchar_t **ptr, int base);
   //static int isspace (wint_t c);
