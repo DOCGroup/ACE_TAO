@@ -497,6 +497,10 @@ protected:
 
   // = Initialization and termination methods.
 
+  ACE_RB_Tree_Iterator_Base (void);
+  // Create the singular iterator.  No valid iterator can be equal to
+  // it, it is illegal to dereference a singular iterator, etc. etc.
+
   ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
                              int set_first);
   // Constructor.  Takes an ACE_RB_Tree over which to iterate, and
@@ -542,6 +546,11 @@ class ACE_RB_Tree_Iterator : public ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, CO
 public:
 
   // = Initialization and termination methods.
+  ACE_RB_Tree_Iterator (void);
+  // Create the singular iterator.
+  // It is illegal to deference the iterator, no valid iterator is
+  // equal to a singular iterator, etc. etc.
+
   ACE_RB_Tree_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
                         int set_first = 1);
   // Constructor.  Takes an ACE_RB_Tree over which to iterate, and
@@ -631,6 +640,11 @@ class ACE_RB_Tree_Reverse_Iterator : public ACE_RB_Tree_Iterator_Base<EXT_ID, IN
 public:
 
   // = Initialization and termination methods.
+  ACE_RB_Tree_Reverse_Iterator (void);
+  // Create the singular iterator.
+  // It is illegal to deference the iterator, no valid iterator is
+  // equal to a singular iterator, etc. etc.
+
   ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
                                 int set_last = 1);
   // Constructor.  Takes an ACE_RB_Tree over which to iterate, and
