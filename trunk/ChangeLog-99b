@@ -1,3 +1,9 @@
+Wed Mar 17 03:12:43 1999  James C. Hu  <jxh@entera.com>
+
+	* ace/Message_Block.i: Changed the definition of space () to be
+          something more useful than it was.  Thanks to Bill Rizzi
+	  (rizzi@softserv.com) for pointing out the problem.
+
 Wed Mar 17 03:06:20 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Service_Config.cpp (close): Re-enabled cleaning up the lex
