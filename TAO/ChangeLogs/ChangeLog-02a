@@ -1,5 +1,6 @@
 Mon Dec 18 23:17:58 2000  Ossama Othman  <ossama@uci.edu>
 
+	* tao/PortableServer/DomainS.h:
 	* tao/PortableServer/DomainS.cpp:
 
 	  Fixed compile-time error that occurs when Interface Repository

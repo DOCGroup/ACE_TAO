@@ -1055,18 +1055,20 @@ void POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::make_domain_manager 
 #if (TAO_HAS_INTERCEPTORS == 1) && (TAO_HAS_INTERFACE_REPOSITORY == 1)
 
 POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager (
-    _tao_server_request,
+    TAO_ServerRequest &tao_server_request,
+    POA_CORBA_ConstructionPolicy *tao_impl,
     IR_InterfaceDef *object_type,
     CORBA::Boolean &constr_policy,
     CORBA::Environment &
   )
   : TAO_ServerRequestInfo (_tao_server_request),
+    _tao_impl (tao_impl),
     object_type_ (object_type),
     constr_policy_ (constr_policy)
 {}
 
 Dynamic::ParameterList *
-POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::arguments (CORBA::Environment &)
+POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager::arguments (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Generate the arg list on demand

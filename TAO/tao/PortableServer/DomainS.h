@@ -427,11 +427,12 @@ public:
     void operator= (
         const TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager &
       );
-    IR_InterfaceDef *object_type_;
-    CORBA::Boolean &constr_policy_;
 
     TAO_Server_Request &_tao_server_request;
     POA_CORBA_ConstructionPolicy *_tao_impl;
+
+    IR_InterfaceDef *object_type_;
+    CORBA::Boolean &constr_policy_;
 };
 
 #endif /* TAO_HAS_INTERCEPTORS */
