@@ -1,3 +1,9 @@
+Sun Aug 10 13:44:14 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* server/HTTP_Helpers.cpp (HTTP_date): We can't use
+ 	  ACE_Thread_Mutex directly in the code since that breaks
+ 	  platforms that lack threads.
+
 Wed Aug  6 16:45:48 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
 
 	* server/main.cpp: Added another signal handler so I can kill JAWS
