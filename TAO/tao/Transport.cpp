@@ -177,16 +177,18 @@ TAO_Transport::provide_handler (TAO::Connection_Handler_Set &handlers)
   handlers.insert (this->connection_handler_i ());
 }
 
-void
+bool
 TAO_Transport::provide_blockable_handler (TAO::Connection_Handler_Set &h)
 {
   if (this->ws_->non_blocking () ||
       this->opening_connection_role_ == TAO::TAO_SERVER_ROLE)
-    return;
+    return false;
 
   (void) this->add_reference ();
 
   h.insert (this->connection_handler_i ());
+
+  return true;
 }
 
 bool

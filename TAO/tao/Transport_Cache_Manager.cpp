@@ -338,8 +338,13 @@ namespace TAO
       {
         // Get the transport to fill its associated connection's
         // handler.
-        (*iter).int_id_.transport ()->provide_blockable_handler (h);
-        (*iter).int_id_.recycle_state (ENTRY_CLOSED);
+        bool retval =
+          (*iter).int_id_.transport ()->provide_blockable_handler (h);
+
+        // Do not mark the entry as closed if we don't have a
+        // blockable handler added
+        if (retval)
+          (*iter).int_id_.recycle_state (ENTRY_CLOSED);
       }
 
     return true;
