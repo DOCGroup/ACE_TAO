@@ -1,3 +1,15 @@
+Thu Nov 14 22:08:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: Make this test behave better:
+          - At the end of running time, close all the Senders. This should
+            cancel all the Sender outstanding operations and trip all the
+            Receivers into finishing their receives and closing themselves.
+          - Change the default Sender/Receiver count from 20 to 10. This
+            shrinks the log a bit without sacrificing test quality.
+          - Change the "inferior platforms" default Sender/Receiver count
+            from 1 to 3. With Proactor improvements made so far, let's give
+            these platforms some more exercise and see what happens.
+
 Thu Nov 14 23:10:32 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* ace/POSIX_CB_Proactor.cpp:

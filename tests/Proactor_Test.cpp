@@ -737,9 +737,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     // Reset pointers.
     mb.rd_ptr ()[result.bytes_transferred ()] = '\0';
 
-    if (loglevel == 0
-        || result.bytes_transferred () == 0
-        || result.error () != 0)
+    if (loglevel == 0)
       {
         LogLocker log_lock;
 
@@ -781,10 +779,23 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
       }
+    else if (result.error () != 0)
+      {
+        ACE_Log_Priority prio;
+        if (result.error () == ECANCELED)
+          prio = LM_DEBUG;
+        else
+          prio = LM_ERROR;
+        ACE_Log_Msg::instance ()->errnum (result.error ());
+        ACE_Log_Msg::instance ()->log (prio,
+                                       ACE_TEXT ("(%t) Receiver %d; %p\n"),
+                                       this->index_,
+                                       ACE_TEXT ("read"));
+      }
     else
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Receiver %d: read %d bytes ok\n"),
+                    ACE_TEXT ("(%t) Receiver %d: read %d bytes\n"),
                     this->index_,
                     result.bytes_transferred ()));
       }
@@ -818,9 +829,7 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 
     ACE_Message_Block & mb = result.message_block ();
 
-    if (loglevel == 0 ||
-        result.bytes_transferred () == 0 ||
-        result.error () != 0)
+    if (loglevel == 0)
       {
         LogLocker log_lock;
 
@@ -864,6 +873,19 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     mb.rd_ptr ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
+      }
+    else if (result.error () != 0)
+      {
+        ACE_Log_Priority prio;
+        if (result.error () == ECANCELED)
+          prio = LM_DEBUG;
+        else
+          prio = LM_ERROR;
+        ACE_Log_Msg::instance ()->errnum (result.error ());
+        ACE_Log_Msg::instance ()->log (prio,
+                                       ACE_TEXT ("(%t) Receiver %d; %p\n"),
+                                       this->index_,
+                                       ACE_TEXT ("write"));
       }
     else
       {
@@ -926,7 +948,8 @@ public:
 private:
   int initiate_read_stream (void);
   int initiate_write_stream (void);
-  void cancel ();
+  void cancel (void);
+  void close (void);
 
   int  index_;
   Connector * connector_;
@@ -961,6 +984,7 @@ public:
   int  start (const ACE_INET_Addr &addr, int num);
   void stop (void);
   void cancel_all (void);
+  void close_all (void);
 
   // Virtual from ACE_Asynch_Connector
   Sender *make_handler (void);
@@ -1013,6 +1037,21 @@ Connector::cancel_all(void)
     }
   return;
 }
+
+
+void
+Connector::close_all (void)
+{
+  ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, monitor, this->lock_);
+
+  for (int i = 0; i < MAX_SENDERS; ++i)
+    {
+      if (this->list_senders_[i] != 0)
+        this->list_senders_[i]->close ();
+    }
+  return;
+}
+
 
 void
 Connector::stop (void)
@@ -1197,6 +1236,18 @@ Sender::cancel ()
   this->flg_cancel_ = 1;
   this->ws_.cancel ();
   this->rs_.cancel ();
+  return;
+}
+
+void
+Sender::close ()
+{
+  ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Closing Sender %d; %d I/O outstanding\n"),
+              this->index_, this->io_count_));
+  ACE_OS::closesocket (this->handle_);
+  this->handle_ = ACE_INVALID_HANDLE;
   return;
 }
 
@@ -1424,9 +1475,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 
     ACE_Message_Block & mb = result.message_block ();
 
-    if (loglevel == 0
-        || result.bytes_transferred () == 0
-        || result.error () != 0)
+    if (loglevel == 0)
       { 
         LogLocker log_lock;
 
@@ -1507,6 +1556,19 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
       }
+    else if (result.error () != 0)
+      {
+        ACE_Log_Priority prio;
+        if (result.error () == ECANCELED)
+          prio = LM_DEBUG;
+        else
+          prio = LM_ERROR;
+        ACE_Log_Msg::instance ()->errnum (result.error ());
+        ACE_Log_Msg::instance ()->log (prio,
+                                       ACE_TEXT ("(%t) Sender %d; %p\n"),
+                                       this->index_,
+                                       ACE_TEXT ("write"));
+      }
     else
       {
         ACE_DEBUG ((LM_DEBUG,
@@ -1545,9 +1607,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
     ACE_Message_Block & mb = result.message_block ();
 
-    if (loglevel == 0
-        || result.bytes_transferred () == 0
-        || result.error () != 0)
+    if (loglevel == 0)
       {
         LogLocker log_lock;
 
@@ -1610,6 +1670,19 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("**** end of message ****************\n")));
+      }
+    else if (result.error () != 0)
+      {
+        ACE_Log_Priority prio;
+        if (result.error () == ECANCELED)
+          prio = LM_DEBUG;
+        else
+          prio = LM_ERROR;
+        ACE_Log_Msg::instance ()->errnum (result.error ());
+        ACE_Log_Msg::instance ()->log (prio,
+                                       ACE_TEXT ("(%t) Sender %d; %p\n"),
+                                       this->index_,
+                                       ACE_TEXT ("read"));
       }
     else
       {
@@ -1730,14 +1803,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 #if defined(__sgi) || defined (ACE_LINUX_COMMON_H)
       ACE_DEBUG (( LM_DEBUG,
-                   "Weak AIO implementation, test will work with 1 client"));
-      senders = 1;                    // number of senders
+                   "Weak AIO implementation, test will work with 3 clients"));
+      senders = 3;                    // number of senders
 #else
-      senders = 20;                   // number of senders
+      senders = 10;                   // number of senders
 #endif   
 
       loglevel = 1;                   // log level : 0 full/ 1 only errors
-      seconds = 20;                   // time to run in seconds
+      seconds = 15;                   // time to run in seconds
       return 0;
     }
 
@@ -1838,12 +1911,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_OS::sleep (seconds);
     }
 
-  //Cancel all pending AIO on Connector and Senders
+  // Now close all the connector/senders. This should trip all the receivers
+  // to close as well.
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%t) Close Connector/Senders: sessions_=%d\n"),
+              connector.get_number_sessions ()
+            ));
+  connector.close_all ();
+
+  // Wait til all the sessions run down.
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Sleeping til sessions run down.\n")));
+  while (acceptor.get_number_sessions () > 0 ||
+         connector.get_number_sessions () > 0   )
+    ACE_OS::sleep (1);
+#if 0
+  // Cancel all pending AIO on Connector and Senders
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Cancel Connector/Senders: sessions_=%d\n"),
               connector.get_number_sessions ()
             ));
   connector.cancel_all ();
+#endif
  
   //Cancel all pending AIO on Acceptor And Receivers
   ACE_DEBUG ((LM_DEBUG,
