@@ -3,7 +3,7 @@
 #include "testC.h"
 
 #include "tao/Messaging.h"
-#include "tao/RT_CORBA.h"
+#include "tao/TAOC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 

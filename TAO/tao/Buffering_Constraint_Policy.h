@@ -73,6 +73,9 @@ public:
   virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  // Return the cached policy type for this policy.
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+
 private:
   /// The attribute
   TAO::BufferingConstraint buffering_constraint_;

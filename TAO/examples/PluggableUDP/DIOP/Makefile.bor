@@ -13,6 +13,7 @@ OBJFILES = \
         $(OBJDIR)\DIOP_Acceptor.obj \
         $(OBJDIR)\DIOP_Connection_Handler.obj \
         $(OBJDIR)\DIOP_Endpoint.obj \
+	$(OBJDIR)\DIOP.obj
 
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_DIOP_CFLAGS)

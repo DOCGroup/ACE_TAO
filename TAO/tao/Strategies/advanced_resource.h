@@ -64,13 +64,6 @@ public:
     TAO_REACTOR_TP
   };
 
-  // = Priority mapping types
-  enum
-  {
-    TAO_PRIORITY_MAPPING_LINEAR,
-    TAO_PRIORITY_MAPPING_DIRECT
-  };
-
   // = Reactor mappings strategy
   enum
   {
@@ -87,8 +80,6 @@ public:
   virtual int input_cdr_allocator_type_locked (void);
   virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
 
-  virtual TAO_Priority_Mapping *get_priority_mapping (void);
-
   virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
   virtual TAO_LF_Strategy *create_lf_strategy (void);
 
@@ -100,18 +91,11 @@ protected:
   TAO_ProtocolFactorySet protocol_factories_;
   // list of loaded protocol factories.
 
-  int sched_policy_;
-  // The scheduling policy used to initialize the priority mapping
-  // strategy.
-
   int reactor_registry_type_;
   // The type of reactor registry.
 
   int reactor_type_;
   // Flag indicating which kind of reactor we should use.
-
-  int priority_mapping_type_;
-  // The type of priority mapping class created by this factory.
 
   int cdr_allocator_type_;
   // The type of CDR allocators.

@@ -10,8 +10,6 @@
 #include "SHMIOP_Factory.h"
 
 #include "Reactor_Per_Priority.h"
-#include "Direct_Priority_Mapping.h"
-#include "Linear_Priority_Mapping.h"
 #include "LFU_Connection_Purging_Strategy.h"
 #include "FIFO_Connection_Purging_Strategy.h"
 #include "NULL_Connection_Purging_Strategy.h"
@@ -49,10 +47,8 @@ TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 }
 
 TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory (void)
-  :sched_policy_ (ACE_SCHED_OTHER),
-   reactor_registry_type_ (TAO_SINGLE_REACTOR),
+  :reactor_registry_type_ (TAO_SINGLE_REACTOR),
    reactor_type_ (TAO_REACTOR_TP),
-   priority_mapping_type_ (TAO_PRIORITY_MAPPING_DIRECT),
    cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK)
 {
   // Constructor
@@ -105,9 +101,9 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
             char *name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name, "null") == 0)
-              reactor_type_ = TAO_REACTOR_SELECT_ST;
+              this->reactor_type_ = TAO_REACTOR_SELECT_ST;
             else if (ACE_OS::strcasecmp (name, "token") == 0)
-              reactor_type_= TAO_REACTOR_SELECT_MT;
+              this->reactor_type_= TAO_REACTOR_SELECT_MT;
           }
       }
 
@@ -121,14 +117,14 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
 
             if (ACE_OS::strcasecmp (name,
                                     "select_mt") == 0)
-              reactor_type_ = TAO_REACTOR_SELECT_MT;
+              this->reactor_type_ = TAO_REACTOR_SELECT_MT;
             else if (ACE_OS::strcasecmp (name,
                                          "select_st") == 0)
-              reactor_type_ = TAO_REACTOR_SELECT_ST;
+              this->reactor_type_ = TAO_REACTOR_SELECT_ST;
             else if (ACE_OS::strcasecmp (name,
                                          "fl") == 0)
 #if defined(ACE_HAS_FL)
-              reactor_type_ = TAO_REACTOR_FL;
+              this->reactor_type_ = TAO_REACTOR_FL;
 #else
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO_Advanced_Factory - FlReactor")
@@ -136,7 +132,7 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
 #endif /* ACE_HAS_FL */
             else if (ACE_OS::strcasecmp (name, "tk_reactor") == 0)
 #if defined(ACE_HAS_TK)
-              reactor_type_ = TAO_REACTOR_TK;
+              this->reactor_type_ = TAO_REACTOR_TK;
 #else
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO_Advanced_Factory - TkReactor")
@@ -145,7 +141,7 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
             else if (ACE_OS::strcasecmp (name,
                                          "wfmo") == 0)
 #if defined(ACE_WIN32)
-              reactor_type_ = TAO_REACTOR_WFMO;
+              this->reactor_type_ = TAO_REACTOR_WFMO;
 #else
               ACE_DEBUG ((LM_DEBUG,
                           "TAO_Advanced_Factory - WFMO Reactor"
@@ -154,7 +150,7 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
             else if (ACE_OS::strcasecmp (name,
                                          "msg_wfmo") == 0)
 #if defined(ACE_WIN32)
-              reactor_type_ = TAO_REACTOR_MSGWFMO;
+              this->reactor_type_ = TAO_REACTOR_MSGWFMO;
 #else
               ACE_DEBUG ((LM_DEBUG,
                           "TAO_Advanced_Factory - MsgWFMO Reactor"
@@ -163,7 +159,7 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
 
             else if (ACE_OS::strcasecmp (name,
                                          "tp") == 0)
-              reactor_type_ = TAO_REACTOR_TP;
+              this->reactor_type_ = TAO_REACTOR_TP;
             else
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO_Advanced_Factory - unknown argument")
@@ -193,49 +189,14 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
               }
           }
       }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBSchedPolicy") == 0)
+    else
       {
-        curarg++;
-        if (curarg < argc)
+        if (TAO_debug_level > 0)
           {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    "SCHED_OTHER") == 0)
-              this->sched_policy_ = ACE_SCHED_OTHER;
-            else if (ACE_OS::strcasecmp (name,
-                                         "SCHED_FIFO") == 0)
-              this->sched_policy_ = ACE_SCHED_FIFO;
-            else if (ACE_OS::strcasecmp (name,
-                                         "SCHED_RR") == 0)
-              this->sched_policy_ = ACE_SCHED_RR;
-            else
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO_Default_Factory - unknown argument")
-                          ACE_TEXT (" <%s> for -ORBSchedPolicy\n"), name));
-          }
-      }
-
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBPriorityMapping") == 0)
-      {
-        curarg++;
-        if (curarg < argc)
-          {
-            char *name = argv[curarg];
-
-            if (ACE_OS::strcasecmp (name,
-                                    "linear") == 0)
-              this->priority_mapping_type_ = TAO_PRIORITY_MAPPING_LINEAR;
-            else if (ACE_OS::strcasecmp (name,
-                                         "direct") == 0)
-              this->priority_mapping_type_ = TAO_PRIORITY_MAPPING_DIRECT;
-            else
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO_Default_Factory - unknown argument")
-                          ACE_TEXT (" <%s> for -ORBPriorityMapping\n"), name));
+            ACE_DEBUG ((LM_ERROR,
+                        ACE_TEXT ("TAO_Advanced_Factory: Unknown option ")
+                        ACE_TEXT ("<%s>.\n"),
+                        argv[curarg]));
           }
       }
 
@@ -658,35 +619,6 @@ TAO_Advanced_Resource_Factory::create_lf_strategy (void)
                       0);
     }
   return strategy;
-}
-
-TAO_Priority_Mapping *
-TAO_Advanced_Resource_Factory::get_priority_mapping (void)
-{
-#if (TAO_HAS_RT_CORBA == 0)
-  return 0;
-#else
-  TAO_Priority_Mapping *pm;
-  switch (this->priority_mapping_type_)
-    {
-    case TAO_PRIORITY_MAPPING_LINEAR:
-      ACE_NEW_RETURN (pm,
-                      TAO_Linear_Priority_Mapping (this->sched_policy_),
-                      0);
-      break;
-    case TAO_PRIORITY_MAPPING_DIRECT:
-      ACE_NEW_RETURN (pm,
-                      TAO_Direct_Priority_Mapping (this->sched_policy_),
-                      0);
-      break;
-    default:
-      ACE_NEW_RETURN (pm,
-                      TAO_Priority_Mapping,
-                      0);
-      break;
-    }
-  return pm;
-#endif /* TAO_HAS_RT_CORBA == 0 */
 }
 
 // ****************************************************************

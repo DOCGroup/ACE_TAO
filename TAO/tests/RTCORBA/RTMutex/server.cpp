@@ -1,12 +1,10 @@
 // $Id$
 
 #include "tao/corba.h"
-#include "tao/RTCORBAC.h"
+#include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Thread_Manager.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
-
-#if (TAO_HAS_RT_CORBA == 1)
 
 static int test_try_lock_flag =
 #if defined (ACE_HAS_MUTEX_TIMEOUTS) && !defined (ACE_HAS_WTHREADS)
@@ -575,14 +573,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#else /* TAO_HAS_RT_CORBA == 1 */
-int
-main (int argc, char *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "\nRTCORBA must be enabled to run this test!\n"),
-                    1);
-}
-#endif /* TAO_HAS_RT_CORBA == 1 */

@@ -30,8 +30,6 @@
 // -- TAO Include --
 #include "tao/corba.h"
 
-#if (TAO_HAS_RT_CORBA == 1)
-
 class Policy_Verifier
 {
 public:
@@ -71,8 +69,5 @@ private:
   char base_object_ref_[256];
   char overridden_object_ref_[256];
 };
-
-#endif /* (TAO_HAS_RT_CORBA == 1) */
-
 
 #endif /* POLICY_VERIFIER_H_ */

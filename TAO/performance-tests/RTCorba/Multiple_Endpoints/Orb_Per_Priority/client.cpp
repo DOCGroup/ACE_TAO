@@ -151,8 +151,8 @@ main (int argc, char *argv[])
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TAO::PriorityMappingManager_var mapping_manager =
-        TAO::PriorityMappingManager::_narrow (object.in (),
+      RTCORBA::PriorityMappingManager_var mapping_manager =
+        RTCORBA::PriorityMappingManager::_narrow (object.in (),
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -305,11 +305,11 @@ Client::svc (void)
           // Grab timestamp again.
           ACE_hrtime_t now = ACE_OS::gethrtime ();
 
-	  if (period != -1)
-	    {
-	      ACE_Time_Value tv (0, period * 1000);
-	      ACE_OS::sleep (tv);
-	    }
+          if (period != -1)
+            {
+              ACE_Time_Value tv (0, period * 1000);
+              ACE_OS::sleep (tv);
+            }
 
           // Record statistics.
           this->throughput_.sample (now - throughput_base,

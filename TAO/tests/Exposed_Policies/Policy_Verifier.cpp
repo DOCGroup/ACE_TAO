@@ -2,8 +2,6 @@
 
 ACE_RCSID (tao, Policy_Verifier, "$Id$")
 
-#if (TAO_HAS_RT_CORBA == 1)
-
 Policy_Verifier::Policy_Verifier (void)
   : priority_bands_ (0)
 {
@@ -247,4 +245,3 @@ Policy_Verifier::check_reference (CORBA::Object_ptr object,
   return 1;
 }
 
-#endif /* (TAO_HAS_RT_CORBA == 1) */

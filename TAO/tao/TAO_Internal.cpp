@@ -20,6 +20,9 @@
 
 #include "Object_Loader.h"
 
+#include "Default_Stub_Factory.h"
+#include "Default_Endpoint_Selector_Factory.h"
+
 ACE_RCSID (tao,
            TAO_Internal,
            "$Id$")
@@ -209,6 +212,11 @@ TAO_Internal::open_services_i (int &argc,
         insert (&ace_svc_desc_TAO_FILE_Parser);
       ACE_Service_Config::static_svcs ()->
         insert (&ace_svc_desc_TAO_DLL_Parser);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Default_Stub_Factory);
+      ACE_Service_Config::static_svcs ()->
+        insert (&ace_svc_desc_TAO_Default_Endpoint_Selector_Factory);
+
       int result = 0;
 
       if (skip_service_config_open == 0)

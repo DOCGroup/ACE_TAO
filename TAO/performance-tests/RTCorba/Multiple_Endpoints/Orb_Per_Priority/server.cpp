@@ -130,8 +130,8 @@ main (int argc, char *argv[])
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TAO::PriorityMappingManager_var mapping_manager =
-        TAO::PriorityMappingManager::_narrow (object.in (),
+      RTCORBA::PriorityMappingManager_var mapping_manager =
+        RTCORBA::PriorityMappingManager::_narrow (object.in (),
                                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
 

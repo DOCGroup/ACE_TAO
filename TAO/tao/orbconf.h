@@ -476,25 +476,6 @@ enum MCAST_SERVICEID
 # define TAO_HAS_SHMIOP 0
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-
-// RT_CORBA support is enabled by default if TAO is not configured for
-// minimum CORBA.  If TAO is configured for minimum CORBA, then
-// RT_CORBA will be disabled by default.
-// To explicitly enable RT_CORBA support uncomment the following
-// #define TAO_HAS_RT_CORBA 1
-// To explicitly disable RT_CORBA support uncomment the following
-// #define TAO_HAS_RT_CORBA 0
-
-// Default RT_CORBA settings
-#if !defined (TAO_HAS_RT_CORBA)
-#  if (TAO_HAS_MINIMUM_CORBA == 1)
-#    define TAO_HAS_RT_CORBA 0
-#  else
-#    define TAO_HAS_RT_CORBA 1
-#  endif  /* TAO_HAS_MINIMUM_CORBA */
-#endif  /* !TAO_HAS_RT_CORBA */
-
-
 // NAMED_RT_MUTEX support is disabled by default.
 // To explicitly enable NAMED_RT_MUTEX support uncomment the following
 // #define TAO_HAS_NAMED_RT_MUTEXES 1
@@ -504,10 +485,6 @@ enum MCAST_SERVICEID
 // Default NAMED_RT_MUTEX settings
 #if !defined (TAO_HAS_NAMED_RT_MUTEXES)
 #  define TAO_HAS_NAMED_RT_MUTEXES 0
-#else
-#  if (TAO_HAS_RT_CORBA == 1)
-#  error "tao/orbconf.h: You need RT_CORBA for NAMED_RT_MUTEX support"
-#  endif /* TAO_HAS_RT_CORBA == 1 */
 #endif  /* !TAO_HAS_NAMED_RT_MUTEXES */
 
 // MINIMUM_POA support is disabled by default if TAO is not
@@ -560,13 +537,6 @@ enum MCAST_SERVICEID
 #    define TAO_HAS_CORBA_MESSAGING 1
 #  endif  /* TAO_HAS_MINIMUM_CORBA */
 #endif  /* !TAO_HAS_CORBA_MESSAGING */
-
-// Additional settings for RT CORBA
-#  if (TAO_HAS_RT_CORBA == 1) && \
-      (TAO_HAS_CORBA_MESSAGING == 0)
-#  error "tao/orbconf.h: You need CORBA_MESSAGING for RT CORBA support"
-#  endif /* TAO_HAS_RT_CORBA == 1 &&
-            TAO_HAS_CORBA_MESSAGING == 0 */
 
 // For all the policies, support is enabled by default if TAO is
 // configured for CORBA Messaging.  If TAO is not configured for CORBA
@@ -745,22 +715,6 @@ enum MCAST_SERVICEID
              TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
 #endif  /* !TAO_HAS_QUEUE_ORDER_POLICY */
 
-// CLIENT_PRIORITY_POLICY has been deprecated!  It is disabled by
-// default.  It's functionality is replaced by RTCORBA policies, see
-// TAO's RTCORBA documentation for more details.
-//
-//To explicitly enable CLIENT_PRIORITY_POLICY support uncomment the
-//following #define TAO_HAS_CLIENT_PRIORITY_POLICY 1
-//
-// RTCORBA policies and CLIENT_PRIORITY_POLICY are mutually exclusive,
-// i.e., if you enable CLIENT_PRIORITY_POLICY, RTCORBA policies will have no
-// effect.
-
-// Default CLIENT_PRIORITY_POLICY settings
-#if !defined (TAO_HAS_CLIENT_PRIORITY_POLICY)
-#    define TAO_HAS_CLIENT_PRIORITY_POLICY 0
-#endif  /* !TAO_HAS_CLIENT_PRIORITY_POLICY */
-
 // To explicitly disable BUFFERING_CONSTRAINT_POLICY support uncomment the following
 // #define TAO_HAS_BUFFERING_CONSTRAINT_POLICY 0
 
@@ -906,6 +860,52 @@ enum MCAST_SERVICEID
 #define TAO_MESSAGING_ROUTING_POLICY_TYPE 33
 #define TAO_MESSAGING_MAX_HOPS_POLICY_TYPE 34
 #define TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE 35
+
+/// Policies that are accessed on the critical path and need to be
+/// incur minimal retrieval overhead.
+enum TAO_Cached_Policy_Type
+{
+  TAO_CACHED_POLICY_UNCACHED = -1,
+  TAO_CACHED_POLICY_PRIORITY_MODEL = 0,
+  TAO_CACHED_POLICY_THREADPOOL,
+  TAO_CACHED_POLICY_RT_SERVER_PROTOCOL,
+  TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL,
+  TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION,
+  TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION,
+
+  TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT,
+  TAO_CACHED_POLICY_SYNC_SCOPE,
+
+  TAO_CACHED_POLICY_LIFESPAN,
+  TAO_CACHED_POLICY_ID_UNIQUENESS,
+  TAO_CACHED_POLICY_ID_ASSIGNMENT,
+
+#if (TAO_HAS_MINIMUM_POA == 0)
+  TAO_CACHED_POLICY_THREAD,
+  TAO_CACHED_POLICY_IMPLICIT_ACTIVATION,
+  TAO_CACHED_POLICY_SERVANT_RETENTION,
+  TAO_CACHED_POLICY_REQUEST_PROCESSING,
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+  TAO_CACHED_POLICY_BUFFERING_CONSTRAINT,
+#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
+
+  TAO_CACHED_POLICY_MAX_CACHED
+};
+
+// This enum provides a mask that represent the scope at which a given
+// policy can be applied
+enum TAO_Policy_Scope
+{
+  TAO_POLICY_OBJECT_SCOPE   = 0x01,
+  TAO_POLICY_THREAD_SCOPE   = 0x02,
+  TAO_POLICY_ORB_SCOPE      = 0x04,
+  TAO_POLICY_POA_SCOPE      = 0x08,
+  TAO_POLICY_CLIENT_EXPOSED = 0x10
+};
+
+#define TAO_POLICY_DEFAULT_SCOPE (ACE_static_cast(TAO_Policy_Scope, TAO_POLICY_OBJECT_SCOPE | TAO_POLICY_THREAD_SCOPE | TAO_POLICY_ORB_SCOPE | TAO_POLICY_POA_SCOPE))
 
 // Control the default version of GIOP used by TAO.
 // The ORB is always able to communicate with 1.0, 1.1 and 1.2

@@ -145,6 +145,12 @@ TAO_RelativeRoundtripTimeoutPolicy::destroy (CORBA_Environment &)
 {
 }
 
+TAO_Cached_Policy_Type
+TAO_RelativeRoundtripTimeoutPolicy::_tao_cached_type (void) const
+{
+  return TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT;
+}
+
 void
 TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 {
@@ -286,6 +292,11 @@ void
 TAO_Sync_Scope_Policy::destroy (CORBA_Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+TAO_Cached_Policy_Type
+TAO_Sync_Scope_Policy::_tao_cached_type (void) const
+{
+  return TAO_CACHED_POLICY_SYNC_SCOPE;
 }
 
 #endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */

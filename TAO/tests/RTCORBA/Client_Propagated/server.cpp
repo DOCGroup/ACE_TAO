@@ -3,9 +3,7 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
 
-#include "tao/Strategies/advanced_resource.h"
-
-#if (TAO_HAS_RT_CORBA == 1)
+#include "tao/RTCORBA/RTCORBA.h"
 
 class Test_i : public POA_Test
 {
@@ -235,16 +233,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-int
-main (int argc, char *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "\nRTCORBA must be enabled to run this test!\n"),
-                    1);
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */

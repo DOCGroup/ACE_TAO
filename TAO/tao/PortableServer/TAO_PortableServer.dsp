@@ -168,6 +168,10 @@ SOURCE=.\Default_Acceptor_Filter.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Policy_Validator.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Default_Servant_Dispatcher.cpp
 # End Source File
 # Begin Source File
@@ -212,7 +216,23 @@ SOURCE=.\POA.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\POA_Cached_Policies.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\POA_Policies.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\POA_Policy_Set.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\POAManager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Validator.cpp
 # End Source File
 # Begin Source File
 
@@ -225,18 +245,6 @@ SOURCE=.\PortableServer.cpp
 # Begin Source File
 
 SOURCE=.\PortableServerC.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Acceptor_Filters.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Servant_Dispatcher.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTPortableServerC.cpp
 # End Source File
 # Begin Source File
 
@@ -277,6 +285,10 @@ SOURCE=.\Collocated_Object.h
 # Begin Source File
 
 SOURCE=.\Default_Acceptor_Filter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Policy_Validator.h
 # End Source File
 # Begin Source File
 
@@ -332,11 +344,27 @@ SOURCE=.\POA.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\POA_Cached_Policies.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\poa_macros.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\POA_Policies.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\POA_Policy_Set.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\POAManager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Validator.h
 # End Source File
 # Begin Source File
 
@@ -353,18 +381,6 @@ SOURCE=.\portableserver_export.h
 # Begin Source File
 
 SOURCE=.\PortableServerC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Acceptor_Filters.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Servant_Dispatcher.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTPortableServerC.h
 # End Source File
 # Begin Source File
 
@@ -436,19 +452,23 @@ SOURCE=.\POA.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\POA_Cached_Policies.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\POA_Policies.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\POA_Policy_Set.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\POAManager.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\PortableServerC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Acceptor_Filters.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTPortableServerC.i
 # End Source File
 # Begin Source File
 

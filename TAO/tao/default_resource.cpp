@@ -9,7 +9,6 @@
 #include "tao/Acceptor_Registry.h"
 #include "tao/Connector_Registry.h"
 #include "tao/Single_Reactor.h"
-#include "tao/Priority_Mapping.h"
 
 #include "tao/Reactive_Flushing_Strategy.h"
 #include "tao/Block_Flushing_Strategy.h"
@@ -38,8 +37,8 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     purge_percentage_ (TAO_PURGE_PERCENT),
     reactor_mask_signals_ (1),
     dynamically_allocated_reactor_ (0),
-    cached_connection_lock_type_ (TAO_THREAD_LOCK)
-  , flushing_strategy_type_ (TAO_REACTIVE_FLUSHING)
+    cached_connection_lock_type_ (TAO_THREAD_LOCK),
+    flushing_strategy_type_ (TAO_REACTIVE_FLUSHING)
 {
 }
 
@@ -834,21 +833,6 @@ TAO_Default_Resource_Factory::create_lf_strategy (void)
                   0);
 
   return strategy;
-}
-
-TAO_Priority_Mapping *
-TAO_Default_Resource_Factory::get_priority_mapping (void)
-{
-#if (TAO_HAS_RT_CORBA == 0)
-  return 0;
-#else
-  TAO_Priority_Mapping *pm;
-
-  ACE_NEW_RETURN (pm,
-                  TAO_Priority_Mapping,
-                  0);
-  return pm;
-#endif /* TAO_HAS_RT_CORBA == 0 */
 }
 
 // ****************************************************************

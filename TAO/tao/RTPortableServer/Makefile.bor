@@ -1,0 +1,24 @@
+#
+# Makefile for building the TAO RTCorba library
+#
+
+NAME = TAO_RTCORBA
+
+OBJFILES = \
+	$(OBJDIR)\ThruPOA_Object_Proxy_Impl.obj
+
+!ifdef STATIC
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_RTCORBA_CFLAGS)
+!else
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_RTCORBA_CFLAGS) \
+	-DTAO_RTCORBA_BUILD_DLL
+!endif
+
+CPPDIR = .
+
+INCDIR_NAME = tao\RTCORBA
+INCLUDES = *.h *.i *.inl *_T.cpp PortableServer.pidl ImplRepo.pidl
+
+LIBFILES = $(ACE_LIB) $(TAO_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>

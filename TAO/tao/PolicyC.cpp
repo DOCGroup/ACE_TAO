@@ -40,7 +40,7 @@
 #endif /* !defined INLINE */
 
 // ****************************************************************
-  
+
 TAO_NAMESPACE_TYPE (const CORBA::PolicyErrorCode)
 TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (const CORBA::PolicyErrorCode, BAD_POLICY, 0)
@@ -1551,6 +1551,19 @@ CORBA::Boolean
 CORBA_Policy::_tao_decode (TAO_InputCDR &)
 {
   return 0;
+}
+
+TAO_Cached_Policy_Type
+CORBA_Policy::_tao_cached_type (void) const
+{
+  // By default, all policies are uncached.
+  return TAO_CACHED_POLICY_UNCACHED;
+}
+
+TAO_Policy_Scope
+CORBA_Policy::_tao_scope (void) const
+{
+  return TAO_POLICY_DEFAULT_SCOPE;
 }
 
 CORBA::PolicyType CORBA_Policy::policy_type (

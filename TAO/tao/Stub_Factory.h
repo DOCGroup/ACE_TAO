@@ -18,11 +18,15 @@
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
-#include "tao/Stub.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+// Forward references
+class TAO_MProfile;
+class TAO_ORB_Core;
 
 /**
  * @class TAO_Stub_Factory
@@ -35,6 +39,7 @@
  * Stub Objects.
  */
 class TAO_Export TAO_Stub_Factory
+  : public ACE_Service_Object
 {
 public:
   // -- Ctor/Dtor --
@@ -44,7 +49,8 @@ public:
   virtual TAO_Stub *create_stub (const char *repository_id,
                                  const TAO_MProfile &profiles,
                                  TAO_ORB_Core *orb_core,
-                                 CORBA::Environment &ACE_TRY_ENV);
+                                 CORBA::Environment &ACE_TRY_ENV) = 0;
 };
+
 #include "ace/post.h"
 #endif /* TAO_STUB_FACTORY_H_ */

@@ -145,15 +145,10 @@ TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
                 cdr.length (),
                 encap_len));
 
-#if (TAO_HAS_RT_CORBA == 1)
-  // This protection is here not for correctness but for efficiency.
-  // Currently there are > 1 endpoint per profile only with RTCORBA.
-
-  // Decode endpoints, if any.
+  // Decode any additional endpoints per profile.  (At the present,
+  // only RTCORBA takes advantage of this feature.)
   if (this->decode_endpoints () == -1)
     return -1;
-
-#endif  /* TAO_HAS_RT_CORBA == 1 */
 
   if (cdr.good_bit ())
     {

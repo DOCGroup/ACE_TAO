@@ -2,11 +2,9 @@
 
 #include "testS.h"
 #include "ace/Get_Opt.h"
-#include "tao/RT_Policy_i.h"
+#include "tao/RTCORBA/RT_Policy_i.h"
 
 #include "tao/Strategies/advanced_resource.h"
-
-#if (TAO_HAS_RT_CORBA == 1)
 
 class Test_i : public POA_Test
 {
@@ -92,8 +90,8 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
   // It is for testing purposes only! (Unfortunately, there
   // is no standard way to access ORB default policies).
   CORBA_ORB *tao_orb = ACE_dynamic_cast (CORBA_ORB *, orb);
-  CORBA::Policy_var server_protocol = 
-    tao_orb->orb_core ()->default_server_protocol ();
+  CORBA::Policy_var server_protocol =
+    tao_orb->orb_core ()->get_default_policies ()->get_policy (RTCORBA::SERVER_PROTOCOL_POLICY_TYPE);
 
   RTCORBA::ServerProtocolPolicy_var policy =
     RTCORBA::ServerProtocolPolicy::_narrow (server_protocol.in (),
@@ -289,15 +287,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-int
-main (int argc, char *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "\nRTCORBA must be enabled to run this test!\n"),
-                    1);
-}
-#endif /* TAO_HAS_RT_CORBA == 1 */

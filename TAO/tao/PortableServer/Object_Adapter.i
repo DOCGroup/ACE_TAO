@@ -6,6 +6,18 @@ TAO_POA_Current::TAO_POA_Current (void)
 {
 }
 
+ACE_INLINE TAO_POA_Policy_Validator &
+TAO_Object_Adapter::validator (void)
+{
+  return this->default_validator_;
+}
+
+ACE_INLINE TAO_POA_Policy_Set &
+TAO_Object_Adapter::default_poa_policies (void)
+{
+  return this->default_poa_policies_;
+}
+
 ACE_INLINE ACE_Lock &
 TAO_Object_Adapter::lock (void)
 {

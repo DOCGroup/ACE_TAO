@@ -20,13 +20,13 @@
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_GIOP_Invocation;
-class TAO_Default_Endpoint_Selector;
 class TAO_Invocation_Endpoint_Selector;
 
 // ****************************************************************
@@ -48,11 +48,9 @@ class TAO_Invocation_Endpoint_Selector;
  * strategy object can be used by many invocations concurrently.
  */
 class TAO_Export TAO_Endpoint_Selector_Factory
+  : public ACE_Service_Object
 {
 public:
-  /// Constructor.
-  TAO_Endpoint_Selector_Factory (void);
-
   /// Destructor.
   virtual ~TAO_Endpoint_Selector_Factory (void);
 
@@ -60,13 +58,7 @@ public:
   /// initialize the endpoint selection state instance.
   virtual TAO_Invocation_Endpoint_Selector *get_selector (
                              TAO_GIOP_Invocation *invocation,
-                             CORBA::Environment &ACE_TRY_ENV);
-
-protected:
-  /// The possible endpoint selector strategies that can be 
-  /// returned by this factory
-
-  TAO_Default_Endpoint_Selector *default_endpoint_selector_;
+                             CORBA::Environment &ACE_TRY_ENV) = 0;
 };
 
 #include "ace/post.h"

@@ -7,25 +7,12 @@
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Invocation.h"
-#include "tao/Client_Priority_Policy.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
-#include "tao/RT_Invocation_Endpoint_Selectors.h"
 #include "tao/Base_Transport_Property.h"
 
 ACE_RCSID(tao, Invocation_Endpoint_Selectors, "$Id$")
-
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-TAO_Endpoint_Selection_State::~TAO_Endpoint_Selection_State (void)
-{
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
-// ****************************************************************
 
 TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector (void)
 {

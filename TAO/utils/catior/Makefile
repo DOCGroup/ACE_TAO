@@ -43,8 +43,7 @@ include $(TAO_ROOT)/taoconfig.mk
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/catior.o .obj/catior.so .shobj/catior.o .shobj/catior.so: catior.cpp \
- $(ACE_ROOT)/ace/Get_Opt.h \
+.obj/catior.o .obj/catior.so .shobj/catior.o .shobj/catior.so: catior.cpp $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \

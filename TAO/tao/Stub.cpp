@@ -21,9 +21,7 @@
 #include "Sync_Strategies.h"
 #include "Buffering_Constraint_Policy.h"
 #include "Messaging_Policy_i.h"
-#include "Client_Priority_Policy.h"
 #include "debug.h"
-
 
 #include "ace/Auto_Ptr.h"
 
@@ -467,8 +465,9 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
 
   if (CORBA::is_nil (result.in ()))
     {
-      result = this->orb_core_->get_default_policy (type,
-                                                    ACE_TRY_ENV);
+      result = this->orb_core_->
+              get_default_policies ()->get_policy (type,
+                                                   ACE_TRY_ENV);
       ACE_CHECK_RETURN (CORBA::Policy::_nil ());
     }
 
@@ -481,8 +480,8 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   // Notice the use of an explicit constructor....
-  auto_ptr<TAO_Policy_Manager_Impl> policy_manager (
-    new TAO_Policy_Manager_Impl);
+  auto_ptr<TAO_Policy_Set> policy_manager (
+    new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
@@ -618,14 +617,14 @@ TAO_Stub::relative_roundtrip_timeout (void)
   // No need to lock, the stub only changes its policies at
   // construction time...
   if (this->policies_ != 0)
-      result = this->policies_->relative_roundtrip_timeout ();
+      result = this->policies_->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
 
   // No need to lock, the object is in TSS storage....
   if (result == 0)
     {
       TAO_Policy_Current &policy_current =
         this->orb_core_->policy_current ();
-      result = policy_current.relative_roundtrip_timeout ();
+      result = policy_current.get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
     }
 
   // @@ Must lock, but is is harder to implement than just modifying
@@ -636,55 +635,17 @@ TAO_Stub::relative_roundtrip_timeout (void)
       TAO_Policy_Manager *policy_manager =
         this->orb_core_->policy_manager ();
       if (policy_manager != 0)
-        result = policy_manager->relative_roundtrip_timeout ();
+        result = policy_manager->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
     }
 
   if (result == 0)
-    result = this->orb_core_->default_relative_roundtrip_timeout ();
+    result = this->orb_core_->get_default_policies ()->get_cached_policy (TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT);
 
   return result;
 }
 
 #endif /* TAO_HAS_REALTIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
-#if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
-
-TAO_Client_Priority_Policy *
-TAO_Stub::client_priority (void)
-{
-  TAO_Client_Priority_Policy *result = 0;
-
-  // No need to lock, the stub only changes its policies at
-  // construction time...
-  if (this->policies_ != 0)
-    result = this->policies_->client_priority ();
-
-  // No need to lock, the object is in TSS storage....
-  if (result == 0)
-    {
-      TAO_Policy_Current &policy_current =
-        this->orb_core_->policy_current ();
-      result = policy_current.client_priority ();
-    }
-
-  // @@ Must lock, but is is harder to implement than just modifying
-  //    this call: the ORB does take a lock to modify the policy
-  //    manager
-  if (result == 0)
-    {
-      TAO_Policy_Manager *policy_manager =
-        this->orb_core_->policy_manager ();
-      if (policy_manager != 0)
-        result = policy_manager->client_priority ();
-    }
-
-  if (result == 0)
-    result = this->orb_core_->default_client_priority ();
-
-  return result;
-}
-
-#endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
@@ -696,7 +657,7 @@ TAO_Stub::sync_scope (void)
   // No need to lock, the stub only changes its policies at
   // construction time...
   if (this->policies_ != 0)
-    result = this->policies_->sync_scope ();
+    result = this->policies_->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
 
   this->orb_core_->stubless_sync_scope (result);
 
@@ -714,15 +675,27 @@ TAO_Stub::buffering_constraint (void)
 
   // No need to lock, the stub only changes its policies at
   // construction time...
+
   if (this->policies_ != 0)
-    result = this->policies_->buffering_constraint ();
+    {
+      CORBA::Policy_var policy =
+        this->policies_->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+      TAO::BufferingConstraintPolicy_var bcp =
+        TAO::BufferingConstraintPolicy::_narrow (policy.in());
+      result = ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp.in ());
+    }
 
   // No need to lock, the object is in TSS storage....
   if (result == 0)
     {
       TAO_Policy_Current &policy_current =
         this->orb_core_->policy_current ();
-      result = policy_current.buffering_constraint ();
+
+      CORBA::Policy_var policy = policy_current.get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+      TAO::BufferingConstraintPolicy_var bcp =
+        TAO::BufferingConstraintPolicy::_narrow (policy.in());
+
+      result = ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp.in ());
     }
 
   // @@ Must lock, but is is harder to implement than just modifying
@@ -733,7 +706,13 @@ TAO_Stub::buffering_constraint (void)
       TAO_Policy_Manager *policy_manager =
         this->orb_core_->policy_manager ();
       if (policy_manager != 0)
-        result = policy_manager->buffering_constraint ();
+        {
+          CORBA::Policy_var policy = policy_manager->get_cached_policy (TAO_CACHED_POLICY_BUFFERING_CONSTRAINT);
+          TAO::BufferingConstraintPolicy_var bcp =
+            TAO::BufferingConstraintPolicy::_narrow (policy.in());
+
+          result = ACE_dynamic_cast (TAO_Buffering_Constraint_Policy *, bcp.in ());
+        }
     }
 
   if (result == 0)
@@ -750,8 +729,8 @@ TAO_Stub::buffering_constraint (void)
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-template class auto_ptr<TAO_Policy_Manager_Impl>;
-template class ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>;
+template class auto_ptr<TAO_Policy_Set>;
+template class ACE_Auto_Basic_Ptr<TAO_Policy_Set>;
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -759,8 +738,8 @@ template class ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>;
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#pragma instantiate auto_ptr<TAO_Policy_Manager_Impl>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>
+#pragma instantiate auto_ptr<TAO_Policy_Set>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Set>
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 

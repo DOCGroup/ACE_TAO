@@ -171,10 +171,6 @@ SOURCE=.\Cleanup_Func_Registry.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Client_Priority_Policy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Client_Strategy_Factory.h
 # End Source File
 # Begin Source File
@@ -251,6 +247,10 @@ SOURCE=.\default_client.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Endpoint_Selector_Factory.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Default_Protocols_Hooks.h
 # End Source File
 # Begin Source File
@@ -260,6 +260,10 @@ SOURCE=.\default_resource.h
 # Begin Source File
 
 SOURCE=.\default_server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Stub_Factory.h
 # End Source File
 # Begin Source File
 
@@ -595,7 +599,15 @@ SOURCE=.\Pluggable_Messaging_Utils.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\POA_Extension_Initializer.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Policy_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Set.h
 # End Source File
 # Begin Source File
 
@@ -619,10 +631,6 @@ SOURCE=.\PollableS_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableInterceptor.h
 # End Source File
 # Begin Source File
@@ -632,18 +640,6 @@ SOURCE=.\PortableInterceptorC.h
 # Begin Source File
 
 SOURCE=.\Principal.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping_Manager.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Private_Transport_Descriptor.h
 # End Source File
 # Begin Source File
 
@@ -688,70 +684,6 @@ SOURCE=.\RequestInfo_Util.h
 # Begin Source File
 
 SOURCE=.\Resource_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Endpoint_Selector_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Endpoint_Utils.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Invocation_Endpoint_Selectors.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Mutex.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORB.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORB_Loader.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORBInitializer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Policy_i.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_PolicyFactory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Protocols_Hooks.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Stub.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Stub_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS_T.h
 # End Source File
 # Begin Source File
 
@@ -852,10 +784,6 @@ SOURCE=.\TAOS.h
 # Begin Source File
 
 SOURCE=.\target_specification.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Pool.h
 # End Source File
 # Begin Source File
 
@@ -992,10 +920,6 @@ SOURCE=.\cdr.i
 # Begin Source File
 
 SOURCE=.\Cleanup_Func_Registry.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Client_Priority_Policy.i
 # End Source File
 # Begin Source File
 
@@ -1323,6 +1247,10 @@ SOURCE=.\Policy_Manager.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Policy_Set.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\PolicyC.i
 # End Source File
 # Begin Source File
@@ -1339,27 +1267,11 @@ SOURCE=.\PollableS_T.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableInterceptorC.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Principal.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping_Manager.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Private_Transport_Descriptor.inl
 # End Source File
 # Begin Source File
 
@@ -1376,42 +1288,6 @@ SOURCE=.\Reactor_Registry.i
 # Begin Source File
 
 SOURCE=.\Reply_Dispatcher.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Invocation_Endpoint_Selectors.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Mutex.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORB.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Policy_i.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Protocols_Hooks.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAS_T.i
 # End Source File
 # Begin Source File
 
@@ -1631,10 +1507,6 @@ SOURCE=.\Cleanup_Func_Registry.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Client_Priority_Policy.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Client_Strategy_Factory.cpp
 # End Source File
 # Begin Source File
@@ -1703,6 +1575,10 @@ SOURCE=.\default_client.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Default_Endpoint_Selector_Factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Default_Protocols_Hooks.cpp
 # End Source File
 # Begin Source File
@@ -1712,6 +1588,10 @@ SOURCE=.\default_resource.cpp
 # Begin Source File
 
 SOURCE=.\default_server.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Default_Stub_Factory.cpp
 # End Source File
 # Begin Source File
 
@@ -2019,7 +1899,15 @@ SOURCE=.\Pluggable_Messaging_Utils.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\POA_Extension_Initializer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Policy_Manager.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Policy_Set.cpp
 # End Source File
 # Begin Source File
 
@@ -2035,27 +1923,11 @@ SOURCE=.\PollableC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\PortableInterceptorC.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\Principal.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Priority_Mapping_Manager.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Private_Transport_Descriptor.cpp
 # End Source File
 # Begin Source File
 
@@ -2100,62 +1972,6 @@ SOURCE=.\RequestInfo_Util.cpp
 # Begin Source File
 
 SOURCE=.\Resource_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Current.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Endpoint_Selector_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Endpoint_Utils.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Invocation_Endpoint_Selectors.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Mutex.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORB.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORB_Loader.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_ORBInitializer.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Policy_i.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_PolicyFactory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Protocols_Hooks.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Stub.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RT_Stub_Factory.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\RTCORBAC.cpp
 # End Source File
 # Begin Source File
 
@@ -2240,10 +2056,6 @@ SOURCE=.\TAOC.cpp
 # Begin Source File
 
 SOURCE=.\target_specification.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Pool.cpp
 # End Source File
 # Begin Source File
 

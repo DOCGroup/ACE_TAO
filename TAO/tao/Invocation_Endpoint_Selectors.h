@@ -28,69 +28,6 @@
 
 class TAO_GIOP_Invocation;
 
-/**
- * @class TAO_Endpoint_Selection_State
- *
- * @brief Per-Invocation state for endpoint selection activities.
- *
- * Stores effective policy overrides for an Invocation, as well as
- * some state about which endpoint was selected (so we know where
- * we left off in case we need to try another endpoint during the
- * same invocation).  This class is used by
- * 1) TAO_Endpoint_Selector_Factory to determine which endpoint
- * selection strategy is appropriate for the Invocation
- * 2) Concrete Invocation_Endpoint_Selectors to look up/store
- * selection state.
- */
-class TAO_Export TAO_Endpoint_Selection_State
-{
-public:
-
-  // = Initialization and termination.
-
-  /// Constructor.
-  TAO_Endpoint_Selection_State (void);
-
-  /// Destructor.
-  ~TAO_Endpoint_Selection_State (void);
-
-  // = State.
-
-  // RTCORBA policies that affect profile/endpoint selection.
-  // Effective overrides of the RTCORBA policies that affect
-  // profile/endpoint selection.
-  //    CORBA::Policy *priority_model_policy_;
-  //    CORBA::Policy *client_protocol_policy_;
-  //    CORBA::Policy *private_connection_;
-  //    CORBA::Policy *bands_policy_;
-
-  /**
-   * Index into the RTCORBA::ProtocolList of the
-   * <client_protocol_policy_>, identifying the protocol we should
-   * attempt using next.
-   * TAO_Client_Priority_Policy_Selector uses this data member to keep
-   * track of the profile index to try next.
-   */
-
-  /// Flag indicating whether at least one endpoint satisfying all the
-  /// policies was found during the lifetime of this object.
-  //    int valid_endpoint_found_;
-
-  /// If using RTCORBA::CLIENT_PROPAGATED priority model, cache our
-  /// client priority here.
-  //    CORBA::Short client_priority_;
-
-  /**
-   * If we need to select endpoint based on a range of priorities,
-   * e.g., as in TAO_Bands_Endpoint_Selector, cache the target range
-   * here.
-   */
-  //    CORBA::Short min_priority_;
-  //    CORBA::Short max_priority_;
-
-};
-
-// ****************************************************************
 
 /**
  * @class TAO_Invocation_Endpoint_Selector

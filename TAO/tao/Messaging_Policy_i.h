@@ -76,6 +76,9 @@ public:
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
 
+  // Return the cached policy type for this policy.
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+
 private:
   /// The attribute
   TimeBase::TimeT relative_expiry_;
@@ -136,6 +139,8 @@ public:
   virtual void destroy (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  // Return the cached policy type for this policy.
+  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 private:
 
   /// The attribute

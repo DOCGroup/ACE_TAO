@@ -28,7 +28,6 @@
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/debug.h"
 #include "tao/Protocols_Hooks.h"
-#include "tao/RT_Policy_i.h"
 
 ACE_RCSID(Strategies, UIOP_Acceptor, "$Id$")
 
@@ -315,7 +314,7 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous)
   (void) this->base_acceptor_.acceptor().enable (ACE_CLOEXEC);
   // This avoids having child processes acquire the listen socket thereby
   // denying the server the opportunity to restart on a well-known endpoint.
-  // This does not affect the aberrent behavior on Win32 platforms. 
+  // This does not affect the aberrent behavior on Win32 platforms.
 
   // @@ If Profile creation is slow we may need to cache the
   //    rendezvous point here
@@ -531,8 +530,6 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 int
 TAO_UIOP_Acceptor::init_uiop_properties (void)
 {
-#if (TAO_HAS_RT_CORBA == 1)
-
   // @@ Currently (in the code below), we obtain protocol properties from
   // ORB-level ServerProtocol, even though the policy may
   // have been overridden on POA level.  That's because currently all
@@ -545,11 +542,14 @@ TAO_UIOP_Acceptor::init_uiop_properties (void)
   // ServerProtocolPolicy.
   ACE_DECLARE_NEW_CORBA_ENV;
 
-  int send_buffer_size = 0;
-  int recv_buffer_size = 0;
+  // Initialize the settings to the ORB defaults.  If RT CORBA is enabled,
+  // it may override these.
+  int send_buffer_size = this->orb_core_->orb_params ()->sock_sndbuf_size ();
+  int recv_buffer_size = this->orb_core_->orb_params ()->sock_rcvbuf_size ();
   int no_delay = 0;
 
-  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks ();
+  TAO_Protocols_Hooks *tph = this->orb_core_->get_protocols_hooks (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (tph != 0)
     {
@@ -557,8 +557,7 @@ TAO_UIOP_Acceptor::init_uiop_properties (void)
       const char *protocol_type = protocol;
 
       int hook_result =
-        tph->call_server_protocols_hook (this->orb_core_,
-                                         send_buffer_size,
+        tph->call_server_protocols_hook (send_buffer_size,
                                          recv_buffer_size,
                                          no_delay,
                                          protocol_type);
@@ -572,15 +571,6 @@ TAO_UIOP_Acceptor::init_uiop_properties (void)
     send_buffer_size;
   this->uiop_properties_.recv_buffer_size =
    recv_buffer_size;
-
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-  this->uiop_properties_.send_buffer_size =
-    this->orb_core_->orb_params ()->sock_sndbuf_size ();
-  this->uiop_properties_.recv_buffer_size =
-    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
   return 0;
 }

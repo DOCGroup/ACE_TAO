@@ -1154,8 +1154,7 @@ realclean: clean
  include/global_extern.h include/fe_private.h \
  include/fe_interface_header.h include/fe_declarator.h
 
-.obj/lex.yy.o .obj/lex.yy.so .shobj/lex.yy.o .shobj/lex.yy.so: fe/lex.yy.cpp \
- $(ACE_ROOT)/ace/OS.h \
+.obj/lex.yy.o .obj/lex.yy.so .shobj/lex.yy.o .shobj/lex.yy.so: fe/lex.yy.cpp $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

@@ -3,10 +3,7 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
-
-#include "tao/Strategies/advanced_resource.h"
-
-#if (TAO_HAS_RT_CORBA == 1)
+#include "tao/RTCORBA/RTCORBA.h"
 
 const char *ior1 = "file://test1.ior";
 const char *ior2 = "file://test2.ior";
@@ -111,7 +108,7 @@ main (int argc, char *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-	  // Test object 1.
+          // Test object 1.
       CORBA::Object_var object =
         orb->string_to_object (ior1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -125,7 +122,7 @@ main (int argc, char *argv[])
       object = orb->string_to_object (ior2, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-	  Test_var server2 = Test::_narrow (object.in (), ACE_TRY_ENV);
+          Test_var server2 = Test::_narrow (object.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (check_for_nil (server2.in (), "server2") == -1)
         return 1;
@@ -138,17 +135,17 @@ main (int argc, char *argv[])
         check_policy (server1.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-	  if (server1_priority == -1)
+          if (server1_priority == -1)
         return 1;
 
-	  // Test object 2.
+          // Test object 2.
       CORBA::Short server2_priority =
         check_policy (server2.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       if (server2_priority == -1)
         return 1;
 
-	  // Testing: make several invocations on test objects.
+          // Testing: make several invocations on test objects.
       for (int i = 0; i < 5; ++i)
         {
           server1->test_method (server1_priority, ACE_TRY_ENV);
@@ -157,7 +154,7 @@ main (int argc, char *argv[])
           server2->test_method (server2_priority, ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-	  }
+          }
 
       // Testing over. Shut down Server ORB.
       server1->shutdown (ACE_TRY_ENV);
@@ -175,16 +172,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#else /* TAO_HAS_RT_CORBA == 1 */
-
-int
-main (int argc, char *argv[])
-{
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "\nRTCORBA must be enabled to run this test!\n"),
-                    1);
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
