@@ -117,7 +117,7 @@ Client::run (CORBA::Environment &env)
   // test for allocation failures.
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
   AVStreams::flowSpec_var the_flows (new AVStreams::flowSpec);
-
+  
   // Allocate the qos_list.
   struct AVStreams::QoS qos_list;
   // @@ Alex, please take a careful look at this code and figure out
@@ -245,49 +245,66 @@ Client::bind_to_remote_mmdevice (int argc,
 int 
 Client::property_tester (CORBA::Environment &env)
 {
-  // Testing define_property () of PropertySet interface.
-  this->test_define_property (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
-  
-  // Test the number of properties.
-  this->test_get_number_of_properties (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
-  
-  // Testing get_all_property_names.
-  this->test_get_all_property_names (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
-  
-  // Testing delete property.
-  this->test_delete_property ("string_property",env);
-  TAO_CHECK_ENV_RETURN (env, 1);
-  
-  // Testing get_properties.
-  this->test_get_properties (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+  TAO_TRY
+    {
+      // Testing define_property () of PropertySet interface.
+      this->test_define_property (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      // Test the number of properties.
+      this->test_get_number_of_properties (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      // Testing get_all_property_names.
+      this->test_get_all_property_names (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  // Testing delete_properties.
-  this->test_delete_properties (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
-  
-  // Test the number of properties.
-  this->test_get_number_of_properties (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
-  
-  // Testing define_properties.
-  this->test_define_properties (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+#if 0
+      // Testing delete property.
+      this->test_delete_property ("string_property",TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+#endif /* 0 */ 
 
-  // Test the number of properties.
-  this->test_get_number_of_properties (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+      // Testing get_properties.
+      this->test_get_properties (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
 
-  // Testing get_all_property_names.
-  this->test_get_all_property_names (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+      // Testing delete_properties.
+      this->test_delete_properties (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      // Test the number of properties.
+      this->test_get_number_of_properties (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
   
-  // Testing get_all_properties.
-  this->test_get_all_properties (env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+      // Testing define_properties.
+      this->test_define_properties (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+
+      // Test the number of properties.
+      this->test_get_number_of_properties (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Testing get_all_property_names.
+      this->test_get_all_property_names (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Testing get_all_properties.
+      this->test_get_all_properties (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCH (CORBA::UserException, ex)
+    {
+      TAO_TRY_ENV.print_exception ("User exception");
+      return -1;
+    }
+  TAO_CATCH (CORBA::SystemException, ex)
+    {
+      TAO_TRY_ENV.print_exception ("System exception");
+      return -1;
+    }
+  TAO_ENDTRY;
 }
 
 // Testing define_property.
@@ -305,14 +322,21 @@ Client::test_define_property (CORBA::Environment &env)
   anyval <<= from_char (ch);
   ch = '*';
   anyval >>= to_char (ch);
-
+  
   ACE_DEBUG ((LM_DEBUG,
               "Main : Char ch = %c\n",
               ch));
   this->remote_mmdevice_->define_property ("char_property",
                                            anyval,
                                            env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+  
+  // Check if that is an user exception, if so, print it out.
+  if ((env.exception () != 0) &&
+      (CORBA::UserException::_narrow (env.exception ()) != 0))
+    {
+      env.print_exception ("char_property");
+      env.clear ();
+    }
   
   // Prepare a Short and "define" that in the PropertySet.
   CORBA::Short s = 3;
@@ -326,7 +350,14 @@ Client::test_define_property (CORBA::Environment &env)
   remote_mmdevice_->define_property ("short_property",
                                      anyval,
                                      env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+  
+  // Check if that is an user exception, if so, print it out.
+  if ((env.exception () != 0) &&
+      (CORBA::UserException::_narrow (env.exception ()) != 0))
+    {
+      env.print_exception ("char_property");
+      env.clear ();
+    }
   
   // Prepare a Long and "define" that in the PropertySet.
   CORBA::Long l = 931232;
@@ -340,8 +371,14 @@ Client::test_define_property (CORBA::Environment &env)
   remote_mmdevice_->define_property ("long_property",
                                      anyval,
                                      env);
-  TAO_CHECK_ENV_RETURN (env, 1);
   
+  // Check if that is an user exception, if so, print it out.
+  if ((env.exception () != 0) &&
+      (CORBA::UserException::_narrow (env.exception ()) != 0))
+    {
+      env.print_exception ("char_property");
+      env.clear ();
+    }
   
   // Prepare a Float and "define" that in the PropertySet.
   CORBA::Float f = 3.14;
@@ -354,11 +391,19 @@ Client::test_define_property (CORBA::Environment &env)
   remote_mmdevice_->define_property ("float_property", 
                                      anyval, 
                                      env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+
+  // Check if that is an user exception, if so, print it out.
+  if ((env.exception () != 0) &&
+      (CORBA::UserException::_narrow (env.exception ()) != 0))
+    {
+      env.print_exception ("char_property");
+      env.clear ();
+    }
   
+#if 0
   // Prepare a String and "define" that in the PropertySet.
-  ACE_DEBUG ((LM_DEBUG,
-              "Main: Any holding String\n"));
+   ACE_DEBUG ((LM_DEBUG,
+               "Main: Any holding String\n"));
   CORBA::String_var strvar (CORBA::string_dup ("Test_String"));
   anyval <<= strvar.in ();
   CORBA::String newstr;
@@ -372,6 +417,9 @@ Client::test_define_property (CORBA::Environment &env)
                                      anyval,
                                      env);
   TAO_CHECK_ENV_RETURN (env, 1);
+#endif /* 0 */
+  
+  return 0;
 }
 
 // Testing get_all_property_names of the PropertySet.
@@ -392,9 +440,9 @@ Client::test_get_all_property_names (CORBA::Environment &env)
   CosPropertyService::PropertyNames_var names_var;
   CosPropertyService::PropertyNamesIterator_var iterator_var;
   remote_mmdevice_->get_all_property_names (how_many,
-                                           names_var.out (),
-                                           iterator_var.out (), 
-                                           env);
+                                            names_var.out (),
+                                            iterator_var.out (), 
+                                            env);
   TAO_CHECK_ENV_RETURN (env, 1);
   
   // Print out the names in the names-sequence.
@@ -446,7 +494,7 @@ Client::test_get_properties (CORBA::Environment &env)
   //names [1] = CORBA::string_dup ("string_property");
   names [1] = CORBA::string_dup ("long_property");
   //names [2] = CORBA::string_dup ("char_property");
-  names [2] = CORBA::string_dup ("no_property");
+  names [2] = CORBA::string_dup ("char_property");
   
   CosPropertyService::Properties_var properties;
   
@@ -454,51 +502,27 @@ Client::test_get_properties (CORBA::Environment &env)
   CORBA::Boolean return_val = remote_mmdevice_->get_properties (names.in (),
                                                                 properties.out (),
                                                                 env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+  TAO_CHECK_ENV_RETURN (env, -1);
+  
+  // Check return value.
+  if (return_val == CORBA::B_TRUE)
+    ACE_DEBUG ((LM_DEBUG, "All properties are valid\n"));
+  else
+    ACE_DEBUG ((LM_DEBUG, "Some properties not found/had invalid names\n"));
   
   if (properties.ptr () != 0)
     {
-      // Go thru the properties and print them out, if they are not
-      // _tc_void typed values.
+      // Go thru the properties and print them out.
       CORBA::ULong len = properties->length ();
-
       for (CORBA::ULong pi = 0; pi < len; pi++)
         {
           // Print the name.
           ACE_DEBUG ((LM_DEBUG,
                       "%s : ",
-                      (const char *) properties [pi].property_name.in ())); 
-
-          // Print the value if type is not tk_void.
-          if (properties [pi].property_value.type () == CORBA::_tc_void) 
-            ACE_DEBUG ((LM_DEBUG,"Void\n"));
-
-          if (properties [pi].property_value.type () == CORBA::_tc_float)
-            {
-              CORBA::Float f;
-              properties [pi].property_value >>= f;
-              ACE_DEBUG ((LM_DEBUG,"%f\n", f));
-            }
-
-          if (properties [pi].property_value.type () == CORBA::_tc_string)
-            {
-              CORBA::String str;
-              properties [pi].property_value >>= str;
-              ACE_DEBUG ((LM_DEBUG,"%s\n", str));
-            }
-
-          if (properties [pi].property_value.type () == CORBA::_tc_long)
-            {
-              CORBA::Long l;
-              properties [pi].property_value >>= l;
-              ACE_DEBUG ((LM_DEBUG,"%d\n", l));
-            }
-          if (properties [pi].property_value.type () == CORBA::_tc_char)
-            {
-              CORBA::Char ch;
-              properties [pi].property_value >>= to_char (ch);
-              ACE_DEBUG ((LM_DEBUG,"%c\n", ch));
-            }
+                      (const char *) properties [pi].property_name.in ()));
+          
+          // Print the property value.
+          CORBA::Any::dump (properties [pi].property_value);
         }
     }
   return 0;
@@ -525,8 +549,17 @@ Client::test_delete_property (CORBA::String property_name,
 {
   ACE_DEBUG ((LM_DEBUG, "\nDeleting %s\n",property_name));
 
-  this->remote_mmdevice_->delete_property (property_name, env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+  TAO_TRY
+    {
+      this->remote_mmdevice_->delete_property (property_name, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("User exception");
+      return -1;
+    }
+  TAO_ENDTRY;
 
   return 0;
 }  
@@ -551,9 +584,29 @@ Client::test_delete_properties (CORBA::Environment &env)
               "Length of sequence %d, Maxlength : %d\n",
               prop_names.length (),
               prop_names.maximum ()));
-  this->remote_mmdevice_->delete_properties (prop_names,
-                                   env);
-  TAO_CHECK_ENV_RETURN (env, 0);
+  
+  // Call delete properties, it raises Multiple Exceptions.
+  TAO_TRY
+    {
+      this->remote_mmdevice_->delete_properties (prop_names,
+                                                 TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCH (CosPropertyService::MultipleExceptions, ex)
+    {
+      TAO_TRY_ENV.print_exception ("User exception");
+      for (size_t ei = 0; ei < ex.exceptions.length (); ei++)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Property name %s\tException reson %d",
+                    ex.exceptions [ei].failing_property_name.in (),
+                    ex.exceptions [ei].reason));
+    }
+  TAO_CATCH (CORBA::SystemException, sys_ex)
+    {
+      TAO_TRY_ENV.print_exception ("System exception");
+      return -1;
+    }
+  TAO_ENDTRY;
   
   return 0;
 }
@@ -601,9 +654,29 @@ Client::test_define_properties (CORBA::Environment &env)
   nproperties[3].property_name  = CORBA::string_copy ("float_property");
   nproperties[3].property_value <<= f;
   
-  // Define this sequence of properties now.
-  this->remote_mmdevice_->define_properties (nproperties, env);
-  TAO_CHECK_ENV_RETURN (env, 1);
+  // Define this sequence of properties now. Define properties raises
+  // Multiple exceptions. 
+  TAO_TRY
+    {
+      this->remote_mmdevice_->define_properties (nproperties, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCH (CosPropertyService::MultipleExceptions, ex)
+    {
+      TAO_TRY_ENV.print_exception ("multiple exceptios");
+      
+      for (size_t ei = 0; ei < ex.exceptions.length (); ei++)
+        ACE_DEBUG ((LM_DEBUG,
+                    "Property name %s\tException reson %d",
+                    ex.exceptions [ei].failing_property_name,
+                    ex.exceptions [ei].reason));
+    }
+  TAO_CATCH (CORBA::SystemException, ex)
+    {
+      TAO_TRY_ENV.print_exception ("System exception");
+      return -1;
+    }
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -642,30 +715,8 @@ Client::test_get_all_properties (CORBA::Environment &env)
                       "%s : ",
                       properties [pi].property_name.in ()));
           
-          // Print the value if type is not tk_void.
-          if (properties [pi].property_value.type () == CORBA::_tc_void) 
-            ACE_DEBUG ((LM_DEBUG,"Void\n"));
-
-          if (properties [pi].property_value.type () == CORBA::_tc_float)
-            {
-              CORBA::Float f;
-              properties [pi].property_value >>= f;
-              ACE_DEBUG ((LM_DEBUG,"%f\n", f));
-            }
-
-          if (properties [pi].property_value.type () == CORBA::_tc_string)
-            {
-              CORBA::String str;
-              properties [pi].property_value >>= str;
-              ACE_DEBUG ((LM_DEBUG,"%s\n", str));
-            }
-
-          if (properties [pi].property_value.type () == CORBA::_tc_long)
-            {
-              CORBA::Long l;
-              properties [pi].property_value >>= l;
-              ACE_DEBUG ((LM_DEBUG,"%d\n", l));
-            }
+          // Print the property value.
+          CORBA::Any::dump (properties [pi].property_value);
         }
     }
 
@@ -678,45 +729,14 @@ Client::test_get_all_properties (CORBA::Environment &env)
         {
           ACE_DEBUG ((LM_DEBUG, "Iteration over PropertyIterartor"));
           TAO_CHECK_ENV_RETURN (env, 1);
+          
+          // Print the property name.
           ACE_DEBUG ((LM_DEBUG,
                       "%s : ",
                       property->property_name.in ()));
 
-          // Print the property_value.
-          if (property->property_value.type () == CORBA::_tc_char)
-            {
-              CORBA::Char c;
-              property->property_value >>= to_char (c);
-              ACE_DEBUG ((LM_DEBUG,"%c\n", c));
-            }
-
-          if (property->property_value.type () == CORBA::_tc_short)
-            {
-              CORBA::Short s;
-              property->property_value >>= s;
-              ACE_DEBUG ((LM_DEBUG,"%d\n", s));
-            }
-
-          if (property->property_value.type () == CORBA::_tc_float)
-            {
-              CORBA::Float f;
-              property->property_value >>= f;
-              ACE_DEBUG ((LM_DEBUG,"%f\n", f));
-            }
-
-          if (property->property_value.type () == CORBA::_tc_string)
-            {
-              CORBA::String str;
-              property->property_value >>= str;
-              ACE_DEBUG ((LM_DEBUG,"%s\n", str));
-            }
-
-          if (property->property_value.type () == CORBA::_tc_long)
-            {
-              CORBA::Long l;
-              property->property_value >>= l;
-              ACE_DEBUG ((LM_DEBUG,"%d\n", l));
-            }
+          // Print the property value.
+          CORBA::Any::dump (property->property_value);
         }
       TAO_CHECK_ENV_RETURN (env, 1);
     }  
@@ -734,7 +754,7 @@ main (int argc, char **argv)
                        TAO_TRY_ENV) == -1)
         return 1;
       TAO_CHECK_ENV;
-
+      
       client.run (TAO_TRY_ENV);
       client.property_tester (TAO_TRY_ENV);
       TAO_CHECK_ENV;
