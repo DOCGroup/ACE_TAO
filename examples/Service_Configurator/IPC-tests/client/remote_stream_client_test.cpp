@@ -4,6 +4,7 @@
 
 #include "ace/OS_main.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Mem_Map.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_CODgram.h"
