@@ -426,19 +426,6 @@ be_sequence::object_manager_name ()
       return namebuf;
     }
 
-
-  // We need that later, when we generate it on a global scope
-  /*
-  be_type  *prim_type; // base types
-  if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    prim_type = t->primitive_base_type ();
-  }
-  else
-    prim_type = bt;
-  */
   be_scope * bs = be_scope::narrow_from_scope (this->defined_in());
 
   if (!bs)
