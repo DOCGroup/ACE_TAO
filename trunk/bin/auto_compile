@@ -114,7 +114,7 @@ $REVISION='$Revision$ ';
 
 $disable_file = $LOGDIR . '/.disable';
 $histfile = $LOGDIR . '/history';
-$LOGBASE = POSIX::strftime("%b%d_%Y.log", localtime);
+$LOGBASE = POSIX::strftime("%b%d_%Y.txt", localtime);
 $LOGFILE = $LOGDIR . '/' . $LOGBASE;
 $HOST = `hostname`;
 chop $HOST;
@@ -194,7 +194,7 @@ sub report_errors {
  if (open (THELOG, "$LOGFILE"))
     {
       while (<THELOG>) {
-	print MAIL $_;
+        print MAIL $_;
       }
       close (THELOG);
     }
@@ -220,7 +220,7 @@ close (DISABLE)
 
 open(HIST, '>>' . $histfile)
     # Do not use 'mydie' to report the problem, it tries to remove the
-    # disable file  
+    # disable file
     || mydie "cannot open history file \"$histfile\"\n";
 
 $date = localtime;
@@ -314,7 +314,7 @@ if ($pre_realclean) {
       # Ignore errors....
     }
     if (close(MAKE) == 0) {
-	push @failures, "errors while cleaning $i";
+        push @failures, "errors while cleaning $i";
     }
     $date = localtime;
     print LOG "$CMD: make realclean in $i finished at ", $date, "\n";
@@ -328,7 +328,7 @@ foreach $i (@BUILD_LIST) {
     print LOG "$CMD: =============================================\n";
     print LOG "$CMD: make for $i started at ", $date, "\n";
     open(MAKE, "make -k $MAKEFLAGS -C $i 2>&1 |")
-	|| mydie "cannot start make for $i";
+        || mydie "cannot start make for $i";
 
     local $current_dir = $i;
     local $last_error = "";
@@ -340,32 +340,32 @@ foreach $i (@BUILD_LIST) {
         }
         print LOG $_, "\n";
 
-	if (m/^make(\[[0-9]+\])?: Entering directory /) {
-	    s/^make(\[[0-9]+\])?: Entering directory //;
-	    s%^$ENV{'ACE_ROOT'}/%%;
-	    $current_dir = $_;
-	}
-	if (m/error:/i || m/error /i
-	    || m/^make(\[[0-9]+\])?: \*\*\*/) {
-	    if ($last_error ne $current_dir
-		|| STATUS eq "COMPILATION WARNING") {
-	      $STATUS = "COMPILATION ERROR";
-	      push @failures, "Error while compiling in $current_dir \n";
-	      $last_error = $current_dir;
-	    }
-	}
-	if (m/warning:/i || m/warning /i) {
-	  if ($last_error ne $current_dir) {
-	    if ($STATUS eq "OK") {
-	      $STATUS = "COMPILATION WARNING";
-	    }
-	    push @failures, "Warning while compiling in $current_dir\n";
-	    $last_error = $current_dir;
-	  }
-	}
+        if (m/^make(\[[0-9]+\])?: Entering directory /) {
+            s/^make(\[[0-9]+\])?: Entering directory //;
+            s%^$ENV{'ACE_ROOT'}/%%;
+            $current_dir = $_;
+        }
+        if (m/error:/i || m/error /i
+            || m/^make(\[[0-9]+\])?: \*\*\*/) {
+            if ($last_error ne $current_dir
+                || STATUS eq "COMPILATION WARNING") {
+              $STATUS = "COMPILATION ERROR";
+              push @failures, "Error while compiling in $current_dir \n";
+              $last_error = $current_dir;
+            }
+        }
+        if (m/warning:/i || m/warning /i) {
+          if ($last_error ne $current_dir) {
+            if ($STATUS eq "OK") {
+              $STATUS = "COMPILATION WARNING";
+            }
+            push @failures, "Warning while compiling in $current_dir\n";
+            $last_error = $current_dir;
+          }
+        }
     }
     if (close(MAKE) == 0) {
-	push @failures, "errors while running make in $i";
+        push @failures, "errors while running make in $i";
     }
     $date = localtime;
     print LOG "$CMD: make for $i finished at ", $date, "\n";
@@ -393,31 +393,31 @@ if ($dont_run == 0) {
     print LOG "$CMD: =============================================\n";
     print LOG "$CMD: running $program in $directory at ", $date, "\n";
     local $subdir =
-	$CHECKOUT .'/'. $MODULE .'/build/'. $BUILD .'/'. $directory;
+        $CHECKOUT .'/'. $MODULE .'/build/'. $BUILD .'/'. $directory;
     chdir ($subdir)
-	|| mydie "cannot chdir to $subdir";
+        || mydie "cannot chdir to $subdir";
 
     $run_error = 0;
     if (open(RUN, "perl $program 2>&1 |") == 0) {
-	push @failures, "cannot run $program in $directory";
-	next;
+        push @failures, "cannot run $program in $directory";
+        next;
     }
     while (<RUN>) {
-	print LOG $_;
-	if (m/Error/
-	    || m/ERROR/
-	    || m/FAILED/
-	    || m/EXCEPTION/
-	    || m/pure virtual /i) {
-	  if ($STATUS eq "OK") {
-	    $STATUS = "RUNTIME ERROR";
-	  }
-	  $run_error = 1;
-	}
+        print LOG $_;
+        if (m/Error/
+            || m/ERROR/
+            || m/FAILED/
+            || m/EXCEPTION/
+            || m/pure virtual /i) {
+          if ($STATUS eq "OK") {
+            $STATUS = "RUNTIME ERROR";
+          }
+          $run_error = 1;
+        }
     }
     if (close(RUN) == 0) {
       if ($STATUS eq "OK") {
-	$STATUS = "RUNTIME ERROR";
+        $STATUS = "RUNTIME ERROR";
       }
       push @failures, "Error when closing pipe for $program in $directory";
       next;
@@ -443,7 +443,7 @@ if ($post_realclean) {
       # Ignore errors....
     }
     if (close(MAKE) == 0) {
-	push @failures, "errors while cleaning $i";
+        push @failures, "errors while cleaning $i";
     }
     $date = localtime;
     print LOG "$CMD: make realclean in $i finished at ", $date, "\n";

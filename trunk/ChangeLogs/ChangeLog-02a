@@ -1,13 +1,20 @@
+Fri Jul 21 19:22:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * bin/auto_compile:
+          Use a .txt extension instead of .log for the log files, that
+          makes it possible to view them in web browsers without
+          downloading.
+
 Fri Jul 21 14:46:37 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/QoS_Decorator.h: Added ACE_Export for decorator classes for
-	  WinNT.
-	* ace/QoS_Decorator.cpp: Removed an extra semi-colon.
+        * ace/QoS_Decorator.h: Added ACE_Export for decorator classes for
+          WinNT.
+        * ace/QoS_Decorator.cpp: Removed an extra semi-colon.
 
 Fri Jul 21 09:11:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager: Updated the documentation to reflect the recent
-	  change in the notify() implementation.
+        * ace/Process_Manager: Updated the documentation to reflect the recent
+          change in the notify() implementation.
 
 Thu Jul 20 23:21:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -18,75 +25,75 @@ Thu Jul 20 23:21:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Fri Jul 21 00:29:38 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* examples/QOS/Receiver_QoS_Event_Handler.h:
-	* examples/QOS/Receiver_QoS_Event_Handler.cpp: Added this event
-	  handler to handle QoS and socket data for the receiver.
+        * examples/QOS/Receiver_QoS_Event_Handler.h:
+        * examples/QOS/Receiver_QoS_Event_Handler.cpp: Added this event
+          handler to handle QoS and socket data for the receiver.
 
-	* examples/QOS/Sender_QoS_Event_Handler.h:
-	* examples/QOS/Sender_QoS_Event_Handler.cpp: Added this event 
-	  handler to handle QoS and socket data for the Sender.
-	
-	* examples/QOS/QoS_Util.h:
-	* examples/QOS/QoS_Util.cpp: This class provides utility funtions 
-	  like parsing QoS parameters for the QoS enabled applications.
-	
-	* examples/QOS/QoS_Signal_Handler.h:
-	* examples/QOS/QoS_Signal_Handler.cpp: Used to gracefully close 
-	  QoS sessions and shutdown RSVP signalling.
-	
-	* examples/QOS/FlowSpec_Dbase.h: Provides a name-Flowspec mapping 
-	  for the standard QoS flowspecs like g711. Typical QoS flowspecs 
-	  required for different video encoding/decoding schemes can be 
-	  listed here.
- 	
-	* examples/QOS/Fill_ACE_QoS.h:
-	* examples/QOS/Fill_ACE_QoS.cpp: This class helps users to add 
-	  new flow specs and provides utility functions for filling up the
-	  flow specs for simplex/duplex sessions.
+        * examples/QOS/Sender_QoS_Event_Handler.h:
+        * examples/QOS/Sender_QoS_Event_Handler.cpp: Added this event 
+          handler to handle QoS and socket data for the Sender.
+        
+        * examples/QOS/QoS_Util.h:
+        * examples/QOS/QoS_Util.cpp: This class provides utility funtions 
+          like parsing QoS parameters for the QoS enabled applications.
+        
+        * examples/QOS/QoS_Signal_Handler.h:
+        * examples/QOS/QoS_Signal_Handler.cpp: Used to gracefully close 
+          QoS sessions and shutdown RSVP signalling.
+        
+        * examples/QOS/FlowSpec_Dbase.h: Provides a name-Flowspec mapping 
+          for the standard QoS flowspecs like g711. Typical QoS flowspecs 
+          required for different video encoding/decoding schemes can be 
+          listed here.
+        
+        * examples/QOS/Fill_ACE_QoS.h:
+        * examples/QOS/Fill_ACE_QoS.cpp: This class helps users to add 
+          new flow specs and provides utility functions for filling up the
+          flow specs for simplex/duplex sessions.
 
-	* examples/QOS/server.cpp: QoS enabled receiver application.
-	* examples/QOS/client.cpp: QoS enabled sender application.
-	
-	* examples/QOS/Makefile:
-	* examples/QOS/README
-	* examples/QOS/QOS.dsw:
-	* examples/QOS/client.dsp:
-	* examples/QOS/server.dsp: Updated these files to reflect changes 
-	  to the test. The above test demonstrates the use of various 
-	  aspects of AQoSA (ACE QoS API).
-	
+        * examples/QOS/server.cpp: QoS enabled receiver application.
+        * examples/QOS/client.cpp: QoS enabled sender application.
+        
+        * examples/QOS/Makefile:
+        * examples/QOS/README
+        * examples/QOS/QOS.dsw:
+        * examples/QOS/client.dsp:
+        * examples/QOS/server.dsp: Updated these files to reflect changes 
+          to the test. The above test demonstrates the use of various 
+          aspects of AQoSA (ACE QoS API).
+        
 Thu Jul 20 23:04:30 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ace/Thread_Manager.cpp
-	* ace/OS_String.inl
-	  Added pace functionality.
+        * ace/Thread_Manager.cpp
+        * ace/OS_String.inl
+          Added pace functionality.
 
 Thu Jul 20 18:28:43 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/SV_Message_Queue: Made the get_id() method const.  Thanks
-	  to Mike Winter for suggesting this.
+        * ace/SV_Message_Queue: Made the get_id() method const.  Thanks
+          to Mike Winter for suggesting this.
 
-	* ace/Typed_SV_Message_Queue: Added a get_id() accessor.  Thanks
-	  to Mike Winter <Mike.Winter@Schwab.com> for reporting this.
+        * ace/Typed_SV_Message_Queue: Added a get_id() accessor.  Thanks
+          to Mike Winter <Mike.Winter@Schwab.com> for reporting this.
 
 Thu Jul 20 14:19:06 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Thread_Manager.h: Updated the comments on the various *kill*()
-	  methods to clarify what they do and where they are not portable.
-  	  Thanks to Steve Huston for motivating this.
+        * ace/Thread_Manager.h: Updated the comments on the various *kill*()
+          methods to clarify what they do and where they are not portable.
+          Thanks to Steve Huston for motivating this.
 
 Thu Jul 20 11:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Caching_Utility_T.cpp: To get rid of egcs warnings on Linux,
-	static casted both fields of ACE_MAX in method <clear_cache>.
-	Thanks to David Levine <levine@cs.wustl.edu> for pointing this
-	out. Also changed ssize_t to size_t in the cast.
+        * ace/Caching_Utility_T.cpp: To get rid of egcs warnings on Linux,
+        static casted both fields of ACE_MAX in method <clear_cache>.
+        Thanks to David Levine <levine@cs.wustl.edu> for pointing this
+        out. Also changed ssize_t to size_t in the cast.
 
 Thu Jul 20 08:04:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: Rearranged some code so that the operator *=
-	  and the ACE_Time_Value copy constructor appear in the right
- 	  order...  Thanks to David for reporting this.
+        * ace/OS.i: Rearranged some code so that the operator *=
+          and the ACE_Time_Value copy constructor appear in the right
+          order...  Thanks to David for reporting this.
 
 Wed Jul 19 22:51:42 2000  Steve Huston  <shuston@riverace.com>
 
@@ -97,41 +104,41 @@ Wed Jul 19 22:51:42 2000  Steve Huston  <shuston@riverace.com>
 
 Wed Jul 19 19:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Caching_Utility_T.cpp: Rectified a typo made in method
-	<clear_cache>.
+        * ace/Caching_Utility_T.cpp: Rectified a typo made in method
+        <clear_cache>.
 
 Wed Jul 19 17:12:50 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ace/OS.h
-	* ace/OS.i
-	  Wrapped most pace calls with ACE_OSCALL to handle EINTR
-	  correctly, minor corrections and adjustments to pace
-	  functions.
+        * ace/OS.h
+        * ace/OS.i
+          Wrapped most pace calls with ACE_OSCALL to handle EINTR
+          correctly, minor corrections and adjustments to pace
+          functions.
 
 Wed Jul 19 16:50:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Caching_Utility_T.cpp: Changed the formula to calculate the
-	<entries_to_remove> as per the contribution by Edan Ayal
-	<edana@bandwiz.com>. Thanks to Edan for discovering this bug and
-	contributing the solution for it.
+        * ace/Caching_Utility_T.cpp: Changed the formula to calculate the
+        <entries_to_remove> as per the contribution by Edan Ayal
+        <edana@bandwiz.com>. Thanks to Edan for discovering this bug and
+        contributing the solution for it.
 
 Wed Jul 19 08:40:10 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/OS.i: Moved the new operator *= so that it's *after*
-	  the inlined sec() and usec() members.
+        * ace/OS.i: Moved the new operator *= so that it's *after*
+          the inlined sec() and usec() members.
 
 Tue Jul 18 23:30:59 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ace/OS.h
+        * ace/OS.h
 
-	  Modified earlier changes to improve support for LynxOS
-	  signals using pace.
+          Modified earlier changes to improve support for LynxOS
+          signals using pace.
 
-	* ace/ACE.cpp
-	* ace/OS_Memory.h
+        * ace/ACE.cpp
+        * ace/OS_Memory.h
 
-	  Use pace system calls instead of regular calls
-	  when pace is enabled.
+          Use pace system calls instead of regular calls
+          when pace is enabled.
 
 Tue Jul 18 12:55:55 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
@@ -141,21 +148,21 @@ Tue Jul 18 12:55:55 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Mon Jul 17 23:44:36 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/Makefile (OTHER_FILES): Moved SOCK_Dgram_Mcast_QoS to the
-	  other files category. It really belongs to a separate category
-	  that I'll create later.
+        * ace/Makefile (OTHER_FILES): Moved SOCK_Dgram_Mcast_QoS to the
+          other files category. It really belongs to a separate category
+          that I'll create later.
 
 Mon Jul 17 12:41:25 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
 
-	* ace/Log_Msg.cpp (LOCAL_EXTERN_PREFIX):
+        * ace/Log_Msg.cpp (LOCAL_EXTERN_PREFIX):
 
-	Changed #define LOCALEXTERN_PREFIX to #define LOCAL_EXTERN_PREFIX
+        Changed #define LOCALEXTERN_PREFIX to #define LOCAL_EXTERN_PREFIX
 
 Mon Jul 17 05:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager.cpp (open): Zapped a stray register_handler()
-	  call that was mistakenly left around during the recent merge.
-  	  Thanks to Darrell Brunsch for reporting this.
+        * ace/Process_Manager.cpp (open): Zapped a stray register_handler()
+          call that was mistakenly left around during the recent merge.
+          Thanks to Darrell Brunsch for reporting this.
 
 Sun Jul 16 18:53:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
@@ -164,47 +171,47 @@ Sun Jul 16 18:53:42 2000  Darrell Brunsch  <brunsch@uci.edu>
 
 Sun Jul 16 19:36:17 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ace/QoS_Session.h:
-	* ace/QoS_Session_Impl.{cpp,h,i}:
-	* ace/SOCK_Dgram_Mcast_QoS.cpp: Changed these files to accomodate
-	  the new QoS decorator classes.
+        * ace/QoS_Session.h:
+        * ace/QoS_Session_Impl.{cpp,h,i}:
+        * ace/SOCK_Dgram_Mcast_QoS.cpp: Changed these files to accomodate
+          the new QoS decorator classes.
 
-	* ace/QoS_Decorator.{cpp,h}: Added the QoS decoration for the
-	  ACE_Event_Handler that enables it to catch the RAPI events along
-	  with the usual socket events.
+        * ace/QoS_Decorator.{cpp,h}: Added the QoS decoration for the
+          ACE_Event_Handler that enables it to catch the RAPI events along
+          with the usual socket events.
 
 Sun Jul 16 08:49:44 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS: Added multiplication operators to ACE_Time_Value.  Thanks
-	  to Tomer Amiaz <Tomer@bandwiz.com> for contributing these.
+        * ace/OS: Added multiplication operators to ACE_Time_Value.  Thanks
+          to Tomer Amiaz <Tomer@bandwiz.com> for contributing these.
 
-	* ace/Process_Manager: To fix deadlocks with the Process_Manager
-	  on UNIX applied the following fixes:
+        * ace/Process_Manager: To fix deadlocks with the Process_Manager
+          on UNIX applied the following fixes:
 
           Use the notify() capability of the reactor from the signal
- 	  handler. This allows the signal handler to notify the reactor
- 	  (over a pipe) that the signal should be processed. This is done
- 	  completely without MT locks.  If
- 	  ACE_HAS_REACTOR_NOTIFICATION_QUEUE is defined,
- 	  ACE_Select_Reactor_Notify::notify_queue_lock_ is now made a
- 	  recursive mutex.
+          handler. This allows the signal handler to notify the reactor
+          (over a pipe) that the signal should be processed. This is done
+          completely without MT locks.  If
+          ACE_HAS_REACTOR_NOTIFICATION_QUEUE is defined,
+          ACE_Select_Reactor_Notify::notify_queue_lock_ is now made a
+          recursive mutex.
 
-	  Thanks to Roger Larsson <larssoro@hotmail.com> for contribution
- 	  these fixes.
+          Thanks to Roger Larsson <larssoro@hotmail.com> for contribution
+          these fixes.
 
-	* ace/TTY_IO: Added additional support for the ACE serial line I/O
-	  wrapper facades.  Thanks to Martin Stack <mstack@cambertx.com>
- 	  for contribution this.
+        * ace/TTY_IO: Added additional support for the ACE serial line I/O
+          wrapper facades.  Thanks to Martin Stack <mstack@cambertx.com>
+          for contribution this.
 
-	* ace/Service_Repository.h,
-  	* ace/Service_Object.h,
-  	* ace/Service_Config.h: Added the following aliases:
+        * ace/Service_Repository.h,
+        * ace/Service_Object.h,
+        * ace/Service_Config.h: Added the following aliases:
 
-	  #define ACE_Component ACE_Service_Object
-  	  #define ACE_Component_Config ACE_Service_Config
-  	  #define ACE_Component_Repository ACE_Service_Repository
+          #define ACE_Component ACE_Service_Object
+          #define ACE_Component_Config ACE_Service_Config
+          #define ACE_Component_Repository ACE_Service_Repository
 
-	  to be consistent with the terminology in the POSA2 book.
+          to be consistent with the terminology in the POSA2 book.
 
 Fri Jul 14 19:31:39 2000  Eric Ding  <qnd1@cs.wustl.edu>
 
@@ -220,10 +227,10 @@ Fri Jul 14 19:03:49 2000  John Heitmann  <jwh1@cs.wustl.edu>
         * include/makeinclude/wrapper_macros.GNU:
           Added -DPACE_HAS_ALL_POSIX_FUNCS to the pace flag.
 
-	* ace/OS.h:
-	  Changed typedef of ACE_SignalHandler on LynxOS to
-	  use pace_sig_pf when pace is enabled. Also changed
-	  SIG_IGN accordingly.
+        * ace/OS.h:
+          Changed typedef of ACE_SignalHandler on LynxOS to
+          use pace_sig_pf when pace is enabled. Also changed
+          SIG_IGN accordingly.
 
 Fri Jul 14 17:25:29 2000  Steve Huston  <shuston@riverace.com>
 
@@ -244,52 +251,52 @@ Fri Jul 14 12:00:26 2000  Steve Huston  <shuston@riverace.com>
 
 Fri Jul 14 00:28:07 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ace/OS.i
+        * ace/OS.i
 
-	  Updates to srand and qsort to eliminate return (for pace).
+          Updates to srand and qsort to eliminate return (for pace).
 
 Thu Jul 13 20:25:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ACE-INSTALL.html: Updated this file to reflect current reality
-	  wrt Borland C++.  Thanks to Christopher Kohlhoff
- 	  <chris@kohlhoff.com> for reporting this.
+        * ACE-INSTALL.html: Updated this file to reflect current reality
+          wrt Borland C++.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this.
 
 Thu Jul 13 16:34:36 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
 
-	  Added 'pace' flag to use pace as the underpinnings
-	  of ACE_OS.
+          Added 'pace' flag to use pace as the underpinnings
+          of ACE_OS.
 
 Thu Jul 13 14:50:39 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS.h: Undid the change
-	  Mon Jun 19 17:33:28 2000  Douglas C. Schmidt
+        * ace/OS.h: Undid the change
+          Mon Jun 19 17:33:28 2000  Douglas C. Schmidt
 
-	  This was creating problems in the IRIX builds. Moreover this
-	  also busted the 'thread-per-connection' strategy in TAO. The
-	  change actually removed a conditional check. I have added that
-	  back. Thanks to Nanbor Wang for guiding me through this.
+          This was creating problems in the IRIX builds. Moreover this
+          also busted the 'thread-per-connection' strategy in TAO. The
+          change actually removed a conditional check. I have added that
+          back. Thanks to Nanbor Wang for guiding me through this.
 
 Thu Jul 13 14:41:58 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ace/OS.i:
+        * ace/OS.i:
 
-	  Minor updates to PACE functions which used to use
-	  double parenthesis.
+          Minor updates to PACE functions which used to use
+          double parenthesis.
 
 Thu Jul 13 12:58:26 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/ACE_SSL.dsp:
+        * ace/SSL/ACE_SSL.dsp:
 
-	  Added `SSL_Export.h' to the list of headers.
+          Added `SSL_Export.h' to the list of headers.
 
-	* ace/SSL/SSL_Context.cpp:
+        * ace/SSL/SSL_Context.cpp:
 
-	  Moved preprocessor conditional that checks if ACE_HAS_SSL is
-	  defined after the inclusion of SSL_Context.h.  This fixes a link
-	  error that occurs when ACE_HAS_SSL is defined in the config
-	  header instead of on the command line.
+          Moved preprocessor conditional that checks if ACE_HAS_SSL is
+          defined after the inclusion of SSL_Context.h.  This fixes a link
+          error that occurs when ACE_HAS_SSL is defined in the config
+          header instead of on the command line.
 
 Thu Jul 13 10:55:44 2000  David L. Levine <levine@cs.wustl.edu>
 
