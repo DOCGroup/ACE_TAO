@@ -1041,7 +1041,11 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
   // Copy the timeval, because this platform doesn't declare the timeval
   // as a pointer to const.
   timeval tv_copy = tv;
-  ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &tv_copy), int, -1);
+#  if defined(ACE_TANDEM_T1248_PTHREADS)
+     ACE_OSCALL_RETURN (::spt_select (0, 0, 0, 0, &tv_copy), int, -1);
+#  else
+     ACE_OSCALL_RETURN (::select (0, 0, 0, 0, &tv_copy), int, -1);
+#  endif
 # else  /* ! ACE_HAS_NONCONST_SELECT_TIMEVAL */
   const timeval *tvp = tv;
   ACE_OSCALL_RETURN (::select (0, 0, 0, 0, tvp), int, -1);
