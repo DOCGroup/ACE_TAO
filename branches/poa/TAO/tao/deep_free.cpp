@@ -436,14 +436,16 @@ CORBA::TypeCode::traverse_status
 TAO_Marshal_Sequence::deep_free (CORBA::TypeCode_ptr  tc,
                                  const void *source,
                                  const void *dest,
-                                 CORBA::Environment &env){
+                                 CORBA::Environment &env)
+{
   // TAO implements sequences using inheritance from a base
   // class. That class allocate  and deallocates the buffer, using
   // virtual methods.
 
   if (tc)
     {
-      TAO_Base_Sequence *src = ACE_reinterpret_cast(TAO_Base_Sequence*,source);
+      TAO_Base_Sequence *src =
+	ACE_reinterpret_cast(TAO_Base_Sequence*,ACE_const_cast(void*,source));
 
       src->_deallocate_buffer ();
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
