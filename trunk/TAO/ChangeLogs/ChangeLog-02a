@@ -1,3 +1,16 @@
+Tue Nov 21 23:25:57 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp (visit_interface):
+
+	  Added global scope specifier in the proxy factory function. This
+	  should fix the problem with VxWorks compilers.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp (visit_interface):
+
+	  Added ACE_NESTED_CLASS in the code generated for the method
+	  setup_collocation to fix the problem that some compiler had with
+	  the current implementation.
+
 Tue Nov 21 21:32:30 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
@@ -7,26 +20,26 @@ Tue Nov 21 21:32:30 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	  this out.
 
 Tue Nov 21 17:52:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
-    
-	* tests/Nested_Event_Loop/server.dsp: 
-	* tests/Nested_Event_Loop/client.dsp: 
-	   
+
+	* tests/Nested_Event_Loop/server.dsp:
+	* tests/Nested_Event_Loop/client.dsp:
+
 	  Updated settings to link TAO_Strategies.
 
 Tue Nov 21 17:37:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/Nested_Event_Loop/Makefile: 
+	* tests/Nested_Event_Loop/Makefile:
 
 	  Updated to link TAO_Strategies.
-	
-	* tests/Nested_Event_Loop/client.cpp: 
-	* tests/Nested_Event_Loop/server.cpp: 
+
+	* tests/Nested_Event_Loop/client.cpp:
+	* tests/Nested_Event_Loop/server.cpp:
 
 	  Included tao/Stratgies/advanced_resource.h
-	
-	* tests/Nested_Event_Loop/svc.conf: 
+
+	* tests/Nested_Event_Loop/svc.conf:
 	  Passed -ORBReactorType select_mt as the argument.
-	
+
 Tue Nov 21 17:23:45 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
 	* tests/RTCORBA/Client_Protocol/server.dsp
@@ -37,7 +50,7 @@ Tue Nov 21 19:20:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/DynamicInterface/Server_Request.cpp:
 
 	  Updated the raising of system exceptions by arguements(),
-	  set_result() and set_exception() to conform to changes in 
+	  set_result() and set_exception() to conform to changes in
 	  CORBA 2.4.
 
 Tue Nov 21 16:26:03 2000  Ossama Othman  <ossama@uci.edu>
@@ -52,7 +65,7 @@ Tue Nov 21 16:26:03 2000  Ossama Othman  <ossama@uci.edu>
 	  Removed these attributes.  They are no longer needed since the
 	  Service Configurator is now initialized in the CORBA::ORB_init()
 	  function.
-	
+
 	* tao/ORB_Core.cpp (init):
 
 	  Moved all Service Configurator related option parsing code to
@@ -106,7 +119,7 @@ Tue Nov 21 18:04:00 2000  Marina Spivak  <marina@cs.wustl.edu>
 	* tests/RTCORBA/README
 	* tests/RTCORBA/Banded_Connections/README:
 
-	  Added test description and expected output.	  
+	  Added test description and expected output.
 
 Tue Nov 21 15:56:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
