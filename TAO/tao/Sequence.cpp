@@ -290,7 +290,7 @@ TAO_Unbounded_Sequence<CORBA::Octet>::operator= (const TAO_Unbounded_Sequence<CO
 }
 
 TAO_Unbounded_Sequence<CORBA::Octet>::
-TAO_Unbounded_Sequence (CORBA::Ulong length,
+TAO_Unbounded_Sequence (CORBA::ULong length,
 			const ACE_Message_Block *mb)
   :  TAO_Unbounded_Base_Sequence (length,
                                   length,
