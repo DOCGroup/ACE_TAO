@@ -60,6 +60,7 @@ BIN =   Aio_Platform_Test \
 	Task_Test \
 	Thread_Manager_Test \
 	Thread_Mutex_Test \
+	Thread_Pool_Reactor_Test \
 	Thread_Pool_Test \
 	Timeprobe_Test \
 	Time_Service_Test \
