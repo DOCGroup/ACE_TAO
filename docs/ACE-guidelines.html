@@ -1076,6 +1076,13 @@ Foo::bar ()
       <code>ACE_ASSERT</code>s won't work either, <em>i.e.</em>, because
       the code is removed.<p>
 
+  <li>Be <strong>very</strong> careful with the code that you put
+      in a signal handler.  On Solaris, the man pages document systems
+      calls as being Async-Signal-Safe if they can be called from signal
+      handlers.  In general, it's best to just set a flag in a signal
+      handler and take appropriate action elsewhere.  It's also best
+      to avoid using signals, especially asynchronous signals.<p>
+
   <li>Immediately after opening a temporary file, unlink it.  For
       example:
       <pre><code>
