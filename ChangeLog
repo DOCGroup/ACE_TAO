@@ -5,8 +5,8 @@ Sat Jul 27 17:35:06 2002  Krishnakumar B  <kitty@cs.wustl.edu>
           Allow building of shared libraries with gcc and Solaris ld.
           There wasn't any reason that it wouldn't work.
 
-        * Changelog: Remove >>>>> out by merge conflicts. People should be
-          more careful about checking for conflicts.
+        * Changelog: Remove >>>>> left out by merge conflicts. People
+          should be more careful about checking for conflicts.
 
 Sat Jul 27 16:20:19 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
