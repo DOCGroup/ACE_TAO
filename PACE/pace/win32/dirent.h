@@ -17,21 +17,44 @@
 #define PACE_DIRENT_H_WIN32
 
 #include "pace/sys/types.h"
-#include <dirent.h>
+#include "windows.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+#ifndef PACE_DIRENT_T
+#define PACE_DIRENT_T
+  typedef struct dirent
+  {
+    unsigned short d_ino;
+    unsigned short d_off;
+    unsigned short d_reclen;
+    const PACE_TCHAR * d_name;
+  } pace_dirent;
+#endif /* PACE_DIRENT_T */
+
 #ifndef PACE_DIR_T
 #define PACE_DIR_T
-typedef DIR PACE_DIR;
-#endif /* PACE_DIR_T */
+  typedef WIN32_FIND_DATA PACE_TEXT_WIN32_FIND_DATA;
+  typedef struct DIR
+  {
+    PACE_TCHAR * directory_name_;
+    // The name of the directory we are looking into
 
-#ifndef PACE_DIRENT
-#define PACE_DIRENT
-typedef struct dirent pace_dirent;
-#endif /* PACE_DIRENT */
+    HANDLE current_handle_;
+    // Remember the handle between calls.
+
+    pace_dirent dirent_;
+    // The struct for the results
+
+    PACE_TEXT_WIN32_FIND_DATA fdata_;
+    // The struct for intermediate results.
+
+    int started_reading_;
+    // A flag to remember if we started reading already.
+  } pace_dir;
+#endif /* PACE_DIR_T */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
