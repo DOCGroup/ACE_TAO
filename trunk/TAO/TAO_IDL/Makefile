@@ -183,7 +183,8 @@ else  # ! CROSS-COMPILE
   endif # cxx
   endif # g++
 
-  CPPFLAGS += -Iinclude -Ibe_include -Ife -DCPP_LOCATION=\"$(CXX)\" \
+  CPPFLAGS += -Iinclude -Ibe_include -Ife \
+              -DCPP_LOCATION=\"$(strip $(CXX))\" \
               -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 
   clean:
