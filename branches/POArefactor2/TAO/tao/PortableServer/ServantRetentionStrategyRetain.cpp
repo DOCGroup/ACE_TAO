@@ -319,9 +319,8 @@ namespace TAO
       int result = -1;
 
       result =
-        this->active_object_map_->
-        find_servant_using_user_id (id,
-                                    servant);
+        this->active_object_map_->find_servant_using_user_id (id,
+                                                              servant);
 
       if (servant == 0)
         {
@@ -330,6 +329,8 @@ namespace TAO
             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
+
+      return servant;
     }
 
     CORBA::Object_ptr
