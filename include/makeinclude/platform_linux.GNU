@@ -15,15 +15,18 @@ endif
 ifeq (,$(optimize))
   optimize = 1
 endif
+
 ifeq (,$(threads))
   threads = 1
 endif
+
 ifeq ($(threads),0)
   CPPFLAGS += -DACE_MT_SAFE=0
 endif # threads
 
+
 PLATFORM_XT_CPPFLAGS=
-PLATFORM_XT_LIBS=-lXt  
+PLATFORM_XT_LIBS=-lXt
 LATFORM_XT_LDFLAGS=
 
 PLATFORM_FL_CPPFLAGS=
@@ -57,15 +60,30 @@ CC  = gcc
 CXX = g++
 endif
 
+CXX_VERSION := $(shell $(CXX) -dumpversion)
+
+ifeq (2.95,$(findstring 2.95,$(CXX_VERSION)))
+  implicit_templates = 1
+else
+  ifeq (3.,$(findstring 3.,$(CXX_VERSION)))
+     implicit_templates = 1
+  endif
+  ifeq (2.96,$(findstring 2.96,$(CXX_VERSION)))
+     implicit_templates = 1
+  endif
+endif
+
+ifeq ($(implicit_templates),)
+  ifeq ($(IMPLICIT_TEMPLATES_FLAG),)
+    IMPLICIT_TEMPLATES_FLAG=-fno-implicit-templates
+  endif
+endif
+
 CFLAGS  += -W -Wall -Wpointer-arith -pipe
 ifeq ($(threads),1)
     CPPFLAGS  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
                $(PLATFORM_AIO_SUPPORT)
 endif # threads
-
-ifeq ($(IMPLICIT_TEMPLATES_FLAG),)
-  IMPLICIT_TEMPLATES_FLAG=-fno-implicit-templates
-endif
 
 CCFLAGS += $(CFLAGS) $(IMPLICIT_TEMPLATES_FLAG)
 DCFLAGS += -g
@@ -73,12 +91,12 @@ DLD     = $(CXX)
 LD      = $(CXX)
 LIBS    += -ldl
 
-ifeq ($(threads),1) 
+ifeq ($(threads),1)
   LIBS += -lpthread
   ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
     LIBS += -lrt
   endif
-endif 
+endif
 
 PLATFORM_QT_CPPFLAGS=-I$(QTDIR)/include
 PLATFORM_QT_LIBS=-lqt
@@ -97,7 +115,7 @@ PRELIB  = @true
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
-ifeq ($(threads),1) 
+ifeq ($(threads),1)
     ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
     ifndef PRELIB
        PRELIB = @true
