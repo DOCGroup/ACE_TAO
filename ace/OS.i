@@ -6327,18 +6327,48 @@ ACE_OS::recvv (ACE_HANDLE handle,
                iovec *buffers,
                int n)
 {
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+#if defined (ACE_HAS_WINSOCK2)
+
   DWORD bytes_received = 0;
-  int result = ::WSARecv ((SOCKET) handle,
-                          (WSABUF *) buffers,
-                          n,
-                          &bytes_received,
-                          0,
-                          0,
-                          0);
-  if (result != 0)
+  int result = 1;
+
+  // Winsock 2 has WSASend and can do this directly, but Winsock 1 needs
+  // to do the recvs piece-by-piece.
+
+# if (ACE_HAS_WINSOCK2 != 0)
+  result = ::WSARecv ((SOCKET) handle,
+                      (WSABUF *) buffers,
+                      n,
+                      &bytes_received,
+                      0,
+                      0,
+                      0);
+# else
+  int i, chunklen;
+  char *chunkp = 0;
+
+  // Step through the buffers requested by caller; for each one, cycle
+  // through reads until it's filled or an error occurs.
+  for (i = 0; i < n && result > 0; i++)
     {
-      errno = ::GetLastError ();
+      chunkp = buffers[i].iov_base;     // Point to part of chunk being read
+      chunklen = buffers[i].iov_len;    // Track how much to read to chunk
+      while (chunklen > 0 && result > 0)
+        {
+          result = ::recv ((SOCKET) handle, chunkp, chunklen, 0);
+          if (result > 0)
+            {
+              chunkp += result;
+              chunklen -= result;
+              bytes_received += result;
+            }
+        }
+    }
+# endif /* ACE_HAS_WINSOCK2 != 0 */
+
+  if (result == SOCKET_ERROR)
+    {
+      errno = ::WSAGetLastError ();
       return -1;
     }
   else
@@ -6353,22 +6383,40 @@ ACE_OS::sendv (ACE_HANDLE handle,
                const iovec *buffers,
                int n)
 {
-#if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+#if defined (ACE_HAS_WINSOCK2)
   DWORD bytes_sent = 0;
-  int result = ::WSASend ((SOCKET) handle,
-                          (WSABUF *) buffers,
-                          n,
-                          &bytes_sent,
-                          0,
-                          0,
-                          0);
-  if (result != 0)
+  int result = 0;
+
+  // Winsock 2 has WSASend and can do this directly, but Winsock 1 needs
+  // to do the sends one-by-one.
+# if (ACE_HAS_WINSOCK2 != 0)
+  result = ::WSASend ((SOCKET) handle,
+                      (WSABUF *) buffers,
+                      n,
+                      &bytes_sent,
+                      0,
+                      0,
+                      0);
+# else
+  int i;
+  for (i = 0; i < n && result != SOCKET_ERROR; i++)
     {
-      errno = ::GetLastError ();
+      result = ::send ((SOCKET) handle,
+                       buffers[i].iov_base,
+                       buffers[i].iov_len,
+                       0);
+      bytes_sent += buffers[i].iov_len;     // Gets ignored on error anyway
+    }
+# endif /* ACE_HAS_WINSOCK2 != 0 */
+
+  if (result == SOCKET_ERROR)
+    {
+      errno = ::WSAGetLastError ();
       return -1;
     }
   else
     return (ssize_t) bytes_sent;
+
 #else
   return ACE_OS::writev (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */
