@@ -224,7 +224,7 @@ sub check_log ($)
             close (LOG); # ignore errors
 
             if ($starting_matched == 0) {
-                print STDERR "Error ($log): no line with 'starting'\n";
+                print STDERR "Error ($log): no line with 'Starting'\n";
                 $print_log = 1;
             }
 
@@ -258,8 +258,16 @@ sub check_log ($)
                     print STDERR "Error: Cannot open sublog file $log\n";
                 }
                 else {
+                    my $number_starting = 0;
+                    my $number_ending = 0;
                     while (<LOG>) {
                         chomp;
+                        if (m/Starting/) {
+                            $number_starting++;
+                        }
+                        if (m/Ending/) {
+                            $number_ending++;
+                        }
                         if (/LM\_ERROR\@(.*)$/) {
                             print STDERR "Error: ($log): $1\n";
                             $print_log = 1;
@@ -268,6 +276,21 @@ sub check_log ($)
                             print STDERR "Warning: ($log): $1\n";
                             $print_log = 1;
                         }
+                    }
+
+                    if ($number_starting == 0) {
+                       print STDERR "Error ($log): no line with 'Starting'\n";
+                       $print_log = 1;
+                    }
+ 
+                    if ($number_ending == 0) {
+                       print STDERR "Error ($log): no line with 'Ending'\n";
+                       $print_log = 1;
+                    }
+
+                    if ($number_starting != $number_ending) {
+                       print STDERR "Error ($log): Nuber of 'Starting' does not match number of 'Ending' ($number_starting != $number_ending)\n";
+                       $print_log = 1;
                     }
 
                     close (LOG); # ignore errors
