@@ -142,8 +142,8 @@ csdb_generator::read_from (const char *srcfile)
       if (entry_.max_bytes_ == 0)
         fail ("entry does not define max_bytes");
       write_entry ();
-      delete [] entry_.desc_;
-      delete [] entry_.loc_name_;
+      delete [] ACE_const_cast (char *, entry_.desc_);
+      delete [] ACE_const_cast (char *, entry_.loc_name_);
       count_++;
       in_entry_ = 0;
       break;
@@ -197,7 +197,8 @@ csdb_generator::read_from (const char *srcfile)
     case 7: // max_bytes
       if (entry_.max_bytes_ != 0)
         fail ("duplicate max_bytes");
-      entry_.max_bytes_ = strtol(line_data_,&ptr,10);
+      entry_.max_bytes_ =
+        ACE_static_cast (ACE_CDR::UShort, strtol(line_data_,&ptr,10));
       if (*ptr != 0)
         fail ("invalid max_bytes");
       break;
