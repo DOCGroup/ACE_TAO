@@ -29,6 +29,7 @@ $server = $SV->TerminateWaitKill (10);
 
 unlink $iorfile;
 unlink "test"; # created by the program
+unlink "big.txt"; # created by the program
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
