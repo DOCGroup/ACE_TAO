@@ -1832,7 +1832,12 @@ balancers at run-time, rather than at application start up time.</li>
 
 <h4>Recent Work:</h4>
 <ul>
-<li>TBD</li>
+<li>Replaced use of DSI for forwarding requests in favor of a
+    ServantLocator.  The ServantLocator implementation provides a more
+    robust way of forwarding requests.  The DSI implementation was a
+    bit of a hack since ForwardRequest exceptions are only supposed to
+    be thrown from ServantManagers, such as ServantLocators.</li>
+<li>All code is now thread-safe.</li>
 </ul>
 
 <h4>Future Work:</h4>
