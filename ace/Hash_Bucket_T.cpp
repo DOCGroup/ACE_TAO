@@ -302,7 +302,7 @@ ACE_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::done (void) const
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC>
 ACE_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>
-::ACE_Hash_Bucket_Manager (ACE_Allocator *alloc = 0)
+::ACE_Hash_Bucket_Manager (ACE_Allocator *alloc)
   : dlcstack_ (alloc)
 {
   if (alloc == 0)
