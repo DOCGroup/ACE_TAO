@@ -48,6 +48,8 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
     result_ (result),
     flags_ (flags),
     env_ (TAO_IN_ENV),
+    contexts_ (0),
+    ctx_ (0),
     refcount_ (1)
 {
   target_ = CORBA::Object::_duplicate (obj);
@@ -59,6 +61,8 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
                               CORBA::Environment &TAO_IN_ENV)
   : flags_ (0),
     env_ (TAO_IN_ENV),
+    contexts_ (0),
+    ctx_ (0),
     refcount_ (1)
 {
   target_ = CORBA::Object::_duplicate (obj);
