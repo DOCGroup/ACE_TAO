@@ -1,3 +1,7 @@
+Mon May 15 20:03:11 2000  Pradeep Gore  <pradeep@cumbia.cs.wustl.edu>
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+	  Put in the fix for "inheritance via dominance error"
+
 Mon May 15 15:40:46 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/IIOP_Connect.cpp (open):
@@ -20,7 +24,7 @@ Mon May 15 14:43:23 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	* tao/BoundsC.cpp
 	* tao/BoundsC.h
 	* tao/DynAnyC.cpp
-	* tao/DynAnyC.h	
+	* tao/DynAnyC.h
 	* tao/Environment.cpp
 	* tao/Exception.cpp
 	* tao/Exception.h
@@ -49,7 +53,7 @@ Mon May 15 14:43:23 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Added support for Exception::_downcast (). Changed _narrow () to
 	  _downcast () in all these files. Thanks to William Horn
 	<whorn1984@my-deja.com>
-	
+
 Mon May 15 16:26:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
@@ -58,11 +62,11 @@ Mon May 15 16:26:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  much inline code as possible at that point, saving only
 	  the generation of members' inline code for the full
 	  definition. Since the be_interface_fwd node contains
-	  a reference to its full definition node, we can set the 
-	  cli_inline_gen flag in that node as well, to avoid redundant 
+	  a reference to its full definition node, we can set the
+	  cli_inline_gen flag in that node as well, to avoid redundant
 	  code generation. Recent changes to generated _var code
 	  for interfaces have made all this necessary. Agressively
-	  inlining compilers like cxx now need to see the _var code 
+	  inlining compilers like cxx now need to see the _var code
 	  sooner if the forward declared interface is used as an arg
 	  or a member before it is fully defined.
 
@@ -88,7 +92,7 @@ Mon May 15 14:20:38 2000  Ossama Othman  <ossama@uci.edu>
 Mon May 15 14:55:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/TypeCodeFactory_i.cpp:
-	  Filled in empty method bodies create_native_tc and 
+	  Filled in empty method bodies create_native_tc and
 	  create_value_box_tc.
 
 Mon May 15 11:08:52 2000  Carlos O'Ryan  <coryan@uci.edu>
