@@ -6,9 +6,14 @@ Tue Aug 25 07:42:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * examples/IPC_SAP/UPIPE_SAP/ex3.cpp (consumer): changed
           ACE_Auto_Basic_Ptr <char> to ACE_Auto_Basic_Array_Ptr <char>.
 
-        * examples/IPC_SAP/UPIPE_SAP/ex{2,3}.cpp: removed explicit
-          ACE_Auto_Basic_Array_Ptr <char> instantiation because it's
-          now in libACE.
+        * examples/IPC_SAP/UPIPE_SAP/ex{2,3}.cpp:
+          replaced char with ASYS_TCHAR, for consistency with
+          tests/Reactor_Performance_Test.cpp.
+
+        * tests/Reactor_Performance_Test.cpp,
+          examples/IPC_SAP/UPIPE_SAP/ex{2,3}.cpp:
+          removed explicit ACE_Auto_Basic_Array_Ptr <char> instantiation
+          because it's now in libACE.
 
 Tue Aug 25 05:23:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
