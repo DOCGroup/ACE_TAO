@@ -21,21 +21,22 @@ create_persistent_POA (PortableServer::POA_ptr parent,
   plist[0] =
     parent->create_lifespan_policy (PortableServer::PERSISTENT
                                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   plist[1] =
     parent->create_id_assignment_policy (PortableServer::USER_ID
                                          ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   plist[2] =
     parent->create_implicit_activation_policy (
       PortableServer::NO_IMPLICIT_ACTIVATION
       ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   PortableServer::POAManager_var mgr =
-    parent->the_POAManager();
+    parent->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   return parent->create_POA (name,
                              mgr.in(),
