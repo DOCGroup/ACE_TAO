@@ -1,3 +1,5 @@
+# $Id$
+
 # AIX 4.2.0
 # *not* using Orbix
 # The AIX fileset bos.rte.bind_cmds must be at version 4.2.0.2 in order to

@@ -1,3 +1,5 @@
+# $Id$
+
 # This platform macros file is intended to work with Digital UNIX 3.2 (OSF/1 3.2).
 
 CC		= cxx

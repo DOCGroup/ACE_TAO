@@ -1,3 +1,5 @@
+# $Id$
+
 # SunOS 5.x (Solaris 2.x) with SunC++ 4.2 or earlier
 # *not* using Orbix
 #

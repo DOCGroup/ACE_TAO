@@ -1,3 +1,5 @@
+# $Id$
+
 # Chorus 3.1b with GNU g++ 2.7.2
 
 include         $(CLASSIXDIR)/dtool/htgt-cf.rf

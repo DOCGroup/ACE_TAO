@@ -1,3 +1,5 @@
+# $Id$
+
 # Requires MIT pthreads and gcc 2.7.2 installed in /usr/progressive
 # to produce libACE.so correctly changed the specs file for gcc 2.7.2
 # for not link -lc and -lgcc and other not shared libraries

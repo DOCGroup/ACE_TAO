@@ -1,3 +1,5 @@
+# $Id$
+
 # SCO v5.0.2; gcc version 2.7-95q4(Skunkware96 distribution from media images)
 
 CC              = gcc

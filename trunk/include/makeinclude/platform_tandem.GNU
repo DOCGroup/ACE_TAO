@@ -1,3 +1,5 @@
+# $Id$
+
 # NonStop-UX NCC 3.20
 
 # Please see  the config-NonS... file for more information about status

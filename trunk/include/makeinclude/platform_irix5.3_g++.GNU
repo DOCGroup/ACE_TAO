@@ -1,3 +1,5 @@
+# $Id$
+
 # Irix 5.3 with GNU C++
 
 CC              = gcc

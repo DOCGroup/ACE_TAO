@@ -1,3 +1,5 @@
+# $Id$
+
 # This platform macros file is intended to work with Digital UNIX 4.0
 # (OSF/1 4.0) and GCC in version 2.7.2.1 (or newer).
 

@@ -1,3 +1,5 @@
+# $Id$
+
 # Assume the existence of Orbix with HP/UX...
 CC		= /bin/cc
 CXX		= /usr/bin/CC
