@@ -1,3 +1,11 @@
+Mon Nov 17 10:04:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_array/array_ci.cpp:
+
+          For generation of inline array traits methods, changed
+          ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION to 
+          ACE_TEMPLATE_METHOD_SPECIALIZATION.
+
 Sun Nov 16 22:47:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.cpp: 
