@@ -156,9 +156,9 @@ ACE_Overlapped_IO::operator ACE_OVERLAPPED * (void)
 }
 
 ACE_Proactor::ACE_Proactor (size_t number_of_threads, ACE_Timer_Queue *tq)
-  : completion_port_ (0), // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
-    number_of_threads_ (number_of_threads),
-    timer_queue_ (tq)
+  : timer_queue_ (tq),
+    completion_port_ (0), // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE!!!!
+    number_of_threads_ (number_of_threads)
 {
   if (this->timer_queue_ == 0)
     {
@@ -259,19 +259,18 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
 
   int error = 0;
   ACE_HANDLE io_handle = ACE_INVALID_HANDLE;
+#if defined (ACE_WIN32)
   int timeout = how_long == 0 ? INFINITE : how_long->msec ();
 
   BOOL result = 0;
  
   // When we port this to use Posix async I/O, this call will be
   // replace will a generic ACE_OS call.
-#if defined (ACE_WIN32)
   result = ::GetQueuedCompletionStatus (completion_port_,
 					&bytes_transferred,
 					(u_long *) &io_handle,
 					(ACE_OVERLAPPED **) &overlapped,
 					timeout);
-#endif /* ACE_WIN32 */
 
   // Check for a failed dequeue.  This can happen either because
   // of problems with the IO completion port (in which case
@@ -281,6 +280,7 @@ ACE_Proactor::handle_events (ACE_Time_Value *how_long)
   // appropriate later on.
   if (result == FALSE)
     error = ACE_OS::last_error ();
+#endif /* ACE_WIN32 */
 
   // Check for any timers that can be handled before we dispatch the
   // dequeued event.  Note that this is done irrespective of whether
@@ -380,12 +380,10 @@ ACE_Proactor::initiate (ACE_Event_Handler *handler,
 int
 ACE_Proactor::initiate (ACE_Overlapped_IO *overlapped)
 {
+#if defined (ACE_WIN32)
   u_long bytes_transferred = 0;
-
   ACE_HANDLE io_handle = overlapped->handler_->get_handle ();
   ACE_HANDLE cp = 0;
-
-#if defined (ACE_WIN32)
   cp = ::CreateIoCompletionPort (io_handle,
 				 this->completion_port_,
 				 (u_long) io_handle,
