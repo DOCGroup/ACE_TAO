@@ -1,3 +1,16 @@
+Tue Sep 23 10:13:57 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Select_Reactor.cpp: added #include of ace/Thread.h.
+	  Thanks to Vladimir Schipunov <vlad@staff.prodigy.com> for
+	  reporting this.
+
+	* ace/Object_Manager.cpp: added #include of ace/Malloc.h.
+	  Thanks to Vladimir Schipunov <vlad@staff.prodigy.com> for
+	  reporting this.
+ 	
+	* ace/Token_Manager.{h,cpp},Object_Manager.{h,cpp}:
+	  preallocate ACE_Token_Manager creation lock.
+
 Mon Sep 22 16:51:44 1997    <irfan@TWOSTEP>
 
 	* ace/OS.i (open): Changed code so that (_O_CREAT | _O_TRUNC)
