@@ -53,10 +53,7 @@ FTP_Client_Callback::handle_timeout (void *)
       int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
       if (n < 0)
         {
-          
           ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
-          TAO_AV_CORE::instance ()->orb_manager ()->fini (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
         }
     
       if (n == 0)
@@ -91,7 +88,6 @@ FTP_Client_Callback::handle_timeout (void *)
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
       ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
-      return 0;
     }
   ACE_CATCHANY
     {
