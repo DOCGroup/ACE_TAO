@@ -744,7 +744,7 @@ TAO_DynAny_i::get_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (val.out (),
                     CORBA_Any,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA_Any::_nil ());
+  ACE_CHECK_RETURN (0);
 
   if (!(this->value_ >>= *val.out ()))
     {
