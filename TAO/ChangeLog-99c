@@ -1,3 +1,12 @@
+Tue Jun 22 21:11:56 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/Repository.cpp:Added missing template
+	  instantiations
+	
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+	* orbsvcs/ImplRepo_Service/ImplRepo_i.h: Added few missing
+	  exceptions in the signature.
+	
 Tue Jun 22 20:11:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/POA.cpp (locate_servant_i): If incarnate() returns 0, then
