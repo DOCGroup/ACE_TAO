@@ -19,7 +19,7 @@ server
 server -f <output_filename>
 
 -f <output_filename> -> The name of the file under which the received stream
-                        data has to be stored.
+                        data has to be stored (defaults to "output")
 
 ftp:
 ----
@@ -27,19 +27,21 @@ ftp:
 ftp [-f <filename>] [-a <address>] [-p <protocol>] [-s] [-r <frame rate>] [-d] 
 
 
--f filename --> The file to be streamed to the server. It is currently
-                streamed at the rate of 0.5kbytes/s.
+-f filename --> The file to be streamed to the server (defaults to
+                "input"). It is currently streamed at the rate of
+                0.5kbytes/s.
 
--a address  --> Multicast address or the host on which the client is running
-                Default is multicast address
+-a address  --> Address or the host on which the client is running
+                Default is multicast address "localhost:0"
 
--p protocol --> The protocol string could be UDP or TCP. But with the 
-                multicast address it should be UDP.
+-p protocol --> The protocol string could be UDP or TCP (defaults to
+                UDP). But with the multicast address it should be UDP.
 
 -s          --> flag to use SFP. This option cannot be used with -p
                 TCP since SFP currently runs only over UDP.
 
--r framerate--> The rate at which tha data frames need to be sent.
+-r framerate--> The rate at which tha data frames need to be sent
+                (defaults to 30 frames per second).
 
 -d          --> Increament the TAO_debug_level for debug messages.
 

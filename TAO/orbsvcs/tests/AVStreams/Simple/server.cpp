@@ -1,5 +1,3 @@
-
-
 // $Id$
 
 #include "server.h"
@@ -38,12 +36,12 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
                                             frame->length (),
                                             1,
                                             output_file);
-      
+
       if (result == frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "FTP_Server_Flow_Handler::fwrite failed\n"),
                           -1);
-      
+
       frame = frame->cont ();
     }
   return 0;
@@ -66,7 +64,6 @@ Server::Server (void)
 
 Server::~Server (void)
 {
-  delete this->mmdevice_;
 }
 
 int
@@ -80,10 +77,13 @@ Server::init (int,
   if (result != 0)
     return result;
 
-  // Register the server mmdevice object with the ORB 
+  // Register the server mmdevice object with the ORB
   ACE_NEW_RETURN (this->mmdevice_,
                   TAO_MMDevice (&this->reactive_strategy_),
                   -1);
+
+  PortableServer::ServantBase_var safe_servant =
+    this->mmdevice_;
 
   // Register the mmdevice with the naming service.
   CosNaming::Name server_mmdevice_name (1);
@@ -92,7 +92,7 @@ Server::init (int,
 
   CORBA::Object_var mmdevice =
     this->mmdevice_->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN(-1);
+  ACE_CHECK_RETURN (-1);
 
   // Initialize the naming services
   if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
@@ -167,7 +167,7 @@ main (int argc,
                           -1);
 
       else ACE_DEBUG ((LM_DEBUG,
-		       "File Opened Successfull\n"));
+                       "File Opened Successfull\n"));
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA",
@@ -199,11 +199,14 @@ main (int argc,
                      argv,
                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (result != 0)
         return result;
-      
+
       orb->run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -220,13 +223,9 @@ main (int argc,
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class TAO_AV_Endpoint_Reactive_Strategy_B
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
-template class TAO_AV_Endpoint_Reactive_Strategy
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy_B<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_AV_Endpoint_Reactive_Strategy<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
-#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy
-<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy_B<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
+#pragma instantiate TAO_AV_Endpoint_Reactive_Strategy<FTP_Server_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
