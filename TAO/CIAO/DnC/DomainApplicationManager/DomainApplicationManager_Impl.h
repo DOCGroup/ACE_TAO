@@ -22,8 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "ciao/Object_Set_T.h"
-#include "../DeploymentS.h"
+#include "Core/Object_Set_T.h"
+#include "Core/DeploymentS.h"
 
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
@@ -69,6 +69,12 @@ namespace CIAO
      * @@ What else do we need to initialize here?
      */
     int init (int num_child_plans, const ACE_CString * node_manager_names);
+
+    /**
+     * Check whether all the NodeManager names are present in the
+     * deployment information data file.
+     */
+    bool check_validity ();
 
     /**
      * Split the global (domain-level) deployment plan to a set of 
@@ -165,6 +171,9 @@ namespace CIAO
                             ACE_Hash<ACE_CString>,
                             ACE_Equal_To<ACE_CString>,
                             ACE_Null_Mutex> child_plans_info_;
+
+    /// The deployment information data file.
+    ACE_CString & deployment_file_;
   };
 }
 
