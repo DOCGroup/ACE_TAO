@@ -35,7 +35,7 @@ static const char *Coffee_Flavor [] = {
 };
 
 Test_ObjRef_Sequence::Test_ObjRef_Sequence (void)
-  : opname_ (CORBA::string_dup ("test_objref_sequence")),
+  : opname_ (CORBA::string_dup ("test_coffe_mix")),
     inout_ (new Param_Test::Coffee_Mix),
     out_ (new Param_Test::Coffee_Mix),
     ret_ (new Param_Test::Coffee_Mix)
@@ -153,7 +153,7 @@ Test_ObjRef_Sequence::add_args (CORBA::NVList_ptr param_list,
 
   // add return value
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Coffee_Mix,
-                                            &this->ret_,
+                                            &this->ret_.inout (),
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;
@@ -204,16 +204,7 @@ Test_ObjRef_Sequence::check_validity (void)
 CORBA::Boolean
 Test_ObjRef_Sequence::check_validity (CORBA::Request_ptr req)
 {
-#if 0
-  CORBA::Environment env;
-  this->inout_ = new Param_Test::Coffee_Mix (*(Param_Test::Coffee_Mix *)
-                                                req->arguments ()->item
-                                                (1, env)->value ()->value ());
-  this->out_ = new Param_Test::Coffee_Mix (*(Param_Test::Coffee_Mix *) req->arguments
-                                              ()->item (2, env)->value ()->value ());
-  this->ret_ = new Param_Test::Coffee_Mix (*(Param_Test::Coffee_Mix *)req->result
-                                              ()->value ()->value ());
-#endif
+  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 

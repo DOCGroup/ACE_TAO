@@ -51,7 +51,7 @@ To run the client, type
        Data types supported in this version are:
 
        short                for shorts
-       short                for long long
+       ulonglong            for unsigned long long
        ubstring             for unbounded string
        bdstring             for bounded string
        fixed_struct         for fixed sized structs
@@ -94,13 +94,3 @@ run_test.pl:
         -t type             -- runs only one type of param test
         -i (dii|sii)        -- Changes the type of invocation (default is sii)
         
-NOTE**
-----
-	Currently there are still problems with multiple virtual inheritance
-	used in the objref data type. In these tests, type objref works with
-	sii but not dii, and objref_sequence does not work for either sii or dii.
-
-
-
-
-
