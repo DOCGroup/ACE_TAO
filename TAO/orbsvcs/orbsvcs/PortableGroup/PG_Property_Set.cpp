@@ -34,7 +34,9 @@ TAO::PG_Property_Set::PG_Property_Set (
   ACE_THROW_SPEC ((CORBA::SystemException))
   : defaults_ (0)
 {
-  this->decode (property_set ACE_ENV_ARG_PARAMETER);
+  this->decode (property_set
+                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 TAO::PG_Property_Set::PG_Property_Set (
