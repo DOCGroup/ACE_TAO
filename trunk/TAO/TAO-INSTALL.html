@@ -318,6 +318,18 @@ compiler flags must also be given to the compiler to enable them.</P>
 
 <HR>
 <P>
+
+<H3>minimumTAO</H3>
+
+<P>By default, all components in TAO will be compiled.  If you only
+want support for <A HREF="docs/minimumTAO.html">minimumTAO</A>, define
+TAO_HAS_MINIMUM_CORBA. This can be accomplished in two ways: by
+defining TAO_HAS_MINIMUM_CORBA in the config.h or orbconf.h files or
+by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
+
+<HR>
+<P>
+
 Back to the <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A> home page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
