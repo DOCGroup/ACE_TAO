@@ -6,7 +6,8 @@
  *
  *  $Id$
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Carlos O'Ryan <coryan@uci.edu>
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Carlos O'Ryan <coryan@atdesk.com>
  */
 //=============================================================================
 

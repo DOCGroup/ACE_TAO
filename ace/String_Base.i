@@ -1,5 +1,7 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+//
 // $Id$
+
 
 #include "ace/Malloc_Base.h"
 
@@ -32,10 +34,10 @@ ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
 
   size_t length;
   if (s != 0)
-    length = ACE_OS::strlen (s);
+    length = ACE_OS_String::strlen (s);
   else
     length = 0;
-  
+
   this->set (s, length, release);
 }
 
@@ -141,7 +143,7 @@ ACE_String_Base<CHAR>::set (const CHAR *s, int release)
 {
   size_t length;
   if (s != 0)
-    length = ACE_OS::strlen (s);
+    length = ACE_OS_String::strlen (s);
   else
     length = 0;
 
@@ -195,7 +197,7 @@ ACE_String_Base<CHAR>::rep (void) const
 
   CHAR *new_string;
   ACE_NEW_RETURN (new_string, CHAR[this->len_ + 1], 0);
-  ACE_OS::strsncpy (new_string, this->rep_, this->len_+1);
+  ACE_OS_String::strsncpy (new_string, this->rep_, this->len_+1);
 
   return new_string;
 }
@@ -220,7 +222,7 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
   // Pick smaller of the two lengths and perform the comparison.
   size_t smaller_length = ace_min (this->len_, s.len_);
 
-  int result = ACE_OS::memcmp (this->rep_,
+  int result = ACE_OS_String::memcmp (this->rep_,
                                s.rep_,
                                smaller_length * sizeof (CHAR));
 
@@ -242,7 +244,7 @@ ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
 
 // Less than comparison operator.
 
-template <class CHAR> ACE_INLINE int 
+template <class CHAR> ACE_INLINE int
 ACE_String_Base<CHAR>::operator < (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator <");
@@ -272,8 +274,8 @@ template <class CHAR> ACE_INLINE ssize_t
 ACE_String_Base<CHAR>::find (const CHAR *s, size_t pos) const
 {
   CHAR *substr = this->rep_ + pos;
-  size_t len = ACE_OS::strlen (s);
-  CHAR *pointer = ACE_OS::strnstr (substr, s, len);
+  size_t len = ACE_OS_String::strlen (s);
+  CHAR *pointer = ACE_OS_String::strnstr (substr, s, len);
   if (pointer == 0)
     return ACE_String_Base<CHAR>::npos;
   else
@@ -284,7 +286,7 @@ template <class CHAR> ACE_INLINE ssize_t
 ACE_String_Base<CHAR>::find (CHAR c, size_t pos) const
 {
   CHAR *substr = this->rep_ + pos;
-  CHAR *pointer = ACE_OS::strnchr (substr, c, this->len_ - pos);
+  CHAR *pointer = ACE_OS_String::strnchr (substr, c, this->len_ - pos);
   if (pointer == 0)
     return ACE_String_Base<CHAR>::npos;
   else
@@ -316,15 +318,6 @@ ACE_String_Base<CHAR>::rfind (CHAR c, ssize_t pos) const
       return i;
 
   return ACE_String_Base<CHAR>::npos;
-}
-
-template <class CHAR> ACE_INLINE u_long
-ACE_String_Base<CHAR>::hash (void) const
-{
-  return ACE::hash_pjw ((ACE_reinterpret_cast (char *,
-                                               ACE_const_cast (CHAR *,
-                                                               this->rep_))),
-                        this->len_ * sizeof (CHAR));
 }
 
 template <class CHAR> ACE_INLINE ACE_String_Base<CHAR>

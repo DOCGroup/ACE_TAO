@@ -187,6 +187,54 @@ typedef void *ACE_MALLOC_T;
 
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
+//@{
+/**
+ * @name Efficiently compute aligned pointers to powers of 2 boundaries.
+ */
+
+/**
+ * Efficiently align "value" up to "alignment", knowing that all such
+ * boundaries are binary powers and that we're using two's complement
+ * arithmetic.
+ *
+ * Since the alignment is a power of two its binary representation is:
+ *
+ * alignment      = 0...010...0
+ *
+ * hence
+ *
+ * alignment - 1  = 0...001...1 = T1
+ *
+ * so the complement is:
+ *
+ * ~(alignment - 1) = 1...110...0 = T2
+ *
+ * Notice that there is a multiple of <alignment> in the range
+ * [<value>,<value> + T1], also notice that if
+ *
+ * X = ( <value> + T1 ) & T2
+ *
+ * then
+ *
+ * <value> <= X <= <value> + T1
+ *
+ * because the & operator only changes the last bits, and since X is a
+ * multiple of <alignment> (its last bits are zero) we have found the
+ * multiple we wanted.
+ */
+/// Return the next integer aligned to a required boundary
+/**
+ * @param ptr the base pointer
+ * @param alignment the required alignment
+ */
+#define ACE_align_binary(ptr, alignment) \
+    ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptrdiff_t)((alignment)-1))))
+
+/// Return the next address aligned to a required boundary
+#define ACE_ptr_align_binary(ptr, alignment) \
+        ((char *) ACE_align_binary (((ptrdiff_t) (ptr)), (alignment)))
+//@}
+
 /**
  * @class ACE_OS_Memory
  *
