@@ -129,6 +129,10 @@ SOURCE=.\IORInterceptorC.i
 # Begin Group "Resource Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\TAO_IORInterceptor.rc
+# End Source File
 # End Group
 # End Target
 # End Project

@@ -8,6 +8,7 @@
 MAKEFILE = Makefile.dirs
 
 DIRS = \
+  IORInterceptor \
   PortableServer \
   DynamicAny \
   DynamicInterface \

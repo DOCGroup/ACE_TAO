@@ -211,14 +211,12 @@ TAO_IORInterceptor_List::~TAO_IORInterceptor_List (void)
         TAO_ORB_Core::iorinterceptor_adapter_name ()
       );
 
-  if (adapter == 0)
+  if (adapter != 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
-    }
-
-  for (size_t i = 0; i < len; ++i)
-    {
-      adapter->tao_iorinterceptor_release (this->interceptors_[i]);
+      for (size_t i = 0; i < len; ++i)
+        {
+          adapter->tao_iorinterceptor_release (this->interceptors_[i]);
+        }
     }
 }
 
@@ -244,6 +242,8 @@ TAO_IORInterceptor_List::interceptor (size_t index)
 
   if (adapter == 0)
     {
+      ACE_DECLARE_NEW_CORBA_ENV;
+
       ACE_THROW_RETURN (CORBA::INTERNAL (),
                         PortableInterceptor::Interceptor::_nil ());
     }
