@@ -1,3 +1,10 @@
+Thu Aug 12 11:45:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/IDL_Test/Makefile:
+	  Sometimes the canonical rule for reopened_modules.idl was
+	  invoked, and not our special one, this resulted in some annoying 
+	  warnings that we want to silence.
+
 Wed Aug 11 13:35:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tao/Typecode_Constants.cpp (init): I didn't remove all
