@@ -7,6 +7,10 @@ Tue Apr 28 06:49:50 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES with egcs.  egcs 1.0.2
           won't compile netsvcs/lib without it.
 
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU: fixed location
+          of parenthesis in ppc check.  Thanks to Brian Mendel
+          <bmendel@mdc.com> for reporting this.
+
 Mon Apr 27 07:18:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/Service_Types.cpp: Changes to use typedef
