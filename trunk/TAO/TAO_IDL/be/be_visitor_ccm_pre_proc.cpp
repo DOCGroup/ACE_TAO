@@ -1651,6 +1651,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   event_consumer->set_defined_in (s);
   event_consumer->set_imported (node->imported ());
   event_consumer->set_name (consumer_name);
+  be_type::narrow_from_decl (event_consumer)->gen_fwd_helper_name ();
   m->be_add_interface (event_consumer);
   return this->gen_push_op (node,
                             event_consumer);
