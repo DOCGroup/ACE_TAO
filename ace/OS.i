@@ -8119,7 +8119,9 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #   endif /* ACE_LACKS_POSIX_PROTOTYPES */
 # elif defined (ACE_WIN32)
-  ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
+  ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
+                                          ASYS_ONLY_MULTIBYTE_STRING (symbolname)),
+                        void *, 0);
 # elif defined (__hpux)
 
   void *value;
@@ -8841,7 +8843,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 #endif /* ! ACE_LACKS_DIFFTIME */
 
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
 ACE_INLINE char *
 ACE_OS::ctime (const time_t *t)
 {
@@ -8854,7 +8856,9 @@ ACE_OS::ctime (const time_t *t)
   ACE_OSCALL_RETURN (::ctime (t), char *, 0);
 # endif    /* ACE_HAS_BROKEN_CTIME) */
 }
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
+#if !defined (ACE_HAS_WINCE)
 ACE_INLINE char *
 ACE_OS::ctime_r (const time_t *t, char *buf, int buflen)
 {
