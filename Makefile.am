@@ -10,7 +10,7 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
-AUTOMAKE_OPTIONS = 1.7 foreign
+AUTOMAKE_OPTIONS = foreign
 
 
 bin_SCRIPTS = ace-config
