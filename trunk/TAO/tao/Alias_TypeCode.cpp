@@ -58,7 +58,7 @@ template <typename StringType, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Alias<StringType, RefCountPolicy>::equal_i (
   CORBA::TypeCode_ptr tc
-  ACE_ENV_ARG_DECL_NOT_USED) const
+  ACE_ENV_ARG_DECL) const
 {
   // The CORBA::TypeCode base class already verified equality of the
   // base attributes (id and name).  Perform an equality comparison of
