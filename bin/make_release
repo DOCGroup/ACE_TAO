@@ -264,10 +264,45 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
   }
 
   $status = &create_kit ();
+
   unless ($status) {
-    &diff ();
-  } else {
-    warn "$0: diffs not create because create_kit returned $status\n";
+    if ("$ace_tag") {
+      my $major_v = 0;
+      my $minor_v = 0;
+      my $beta_v = 0;
+      if ($ace_tag =~ /(\d+)_(\d+)_(\d+)/o) {
+        my $major_v = $1;
+        my $minor_v = $2;
+        my $beta_v = $3;
+
+        #### $previous_version is used by diff ().
+        if ($beta_v > 0) {
+          my $previous_beta = $beta_v - 1;
+          $previous_version = "$major_v.$minor_v.$previous_beta";
+
+          &diff ('ACE_wrappers', "ACE-$previous_version", "$ace_tag");
+        }
+      }
+    }
+
+    if ("$tao_tag") {
+      my $major_v = 0;
+      my $minor_v = 0;
+      my $beta_v = 0;
+      if ($tao_tag =~ /(\d+)_(\d+)_(\d+)/o) {
+        my $major_v = $1;
+        my $minor_v = $2;
+        my $beta_v = $3;
+
+        #### $previous_version is used by diff ().
+        if ($beta_v > 0) {
+          my $previous_beta = $beta_v - 1;
+          $previous_version = "$major_v.$minor_v.$previous_beta";
+
+          &diff ('ACE_wrappers/TAO', "TAO-$previous_version", "$tao_tag");
+        }
+      }
+    }
   }
 
   if ("$ace_tag"  ||  "$tao_tag") {
@@ -360,12 +395,6 @@ sub get_versions () {
   close VERSION;
 
   if ($release_type eq 'beta') {
-    if ($beta_version > 0) {
-      $previous_version = "$major_version.$minor_version.$beta_version";
-    } else {
-      $previous_version = "$major_version.$minor_version";
-    }
-
     ++$beta_version;
     $version = "$major_version.$minor_version.$beta_version";
   } elsif ($release_type eq 'minor' ) {
@@ -540,28 +569,20 @@ sub tag () {
 ######## If building a beta, create a diff from the previous version.
 ########
 sub diff () {
+  my ($module, $previous_tag, $tag) = @_;
+
   if ("$previous_version") {
     #### Only create a diff for a beta version.
-
-    my $previous_tag = "$KIT-$previous_version";
-    my $tag = "$KIT-$version";
 
     #### cvs tag does not allow dots.
     $previous_tag =~ tr/./_/;
     $tag =~ tr/./_/;
-
-    my $module = "$kit" eq 'ace'  ?  'ACE_wrappers'  :  'ACE_wrappers/TAO';
 
     &ex ("nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
            "$module 2>/dev/null | " .
          "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
          "nice -15 $gzip -9 > $diffs_dir/$previous_tag-$tag.diff.gz")
      if -d "$diffs_dir";
-
-    warn "$0: diffs not created because \"$diffs_dir\" does not exist\n"
-      unless -d "$diffs_dir";
-  } else {
-    warn "$0: diffs not created because previous_version is null\n";
   }
 
   #### Ignore return value.  No promises on diffs.
