@@ -3,9 +3,13 @@
 #
 # needed for the trading service stuff
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif # TAO_ROOT
+
 ifndef STL_ROOT
-STL_ROOT=/project/doc/irfan/ObjectSpace/SC4.0
-endif
+  STL_ROOT=/project/doc/irfan/ObjectSpace/SC4.0
+endif # STL_ROOT
 
 STD=$(STL_ROOT)/ospace/std
 STL=$(STL_ROOT)/stl
@@ -88,9 +92,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #### Local rules and variables...
 
-ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
-endif
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
 DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
