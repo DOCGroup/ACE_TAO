@@ -6,7 +6,13 @@
 
 #include "tao/DynamicAny/DynSequence_i.h"
 
-ACE_RCSID(Trader, Constraint_Visitors, "$Id$")
+#include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (Trader,
+           Constraint_Visitors,
+           "$Id$")
+
 
 TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
 {

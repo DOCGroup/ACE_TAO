@@ -21,6 +21,7 @@
 #define TAO_FT_NOTIFIER_I_H_
 #include /**/ "ace/pre.h"
 #include "ace/ACE.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

@@ -3,6 +3,8 @@
 
 #include "tao/debug.h"
 
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (LoadBalancing,
            LB_ServerRequestInterceptor,
