@@ -26,6 +26,8 @@ static const char *TAO_IIOP_Object_Timeprobe_Description[] =
 {
   "IIOP_Object::do_static_call - start",
   "IIOP_Object::do_static_call - end",
+  "IIOP_Object::do_static_call - set_cancel",
+  "IIOP_Object::do_static_call - grab_orb_core",
   "IIOP_Object::do_static_call - invocation_ctor",
   "IIOP_Object::do_static_call - invocation_start",
   "IIOP_Object::do_static_call - put_params"
@@ -36,6 +38,8 @@ enum
   // Timeprobe description table start key
   TAO_IIOP_OBJECT_DO_STATIC_CALL_START = 500,
   TAO_IIOP_OBJECT_DO_STATIC_CALL_END,
+  TAO_IIOP_OBJECT_DO_STATIC_CALL_SET_CANCEL,
+  TAO_IIOP_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE,
   TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR,
   TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_START,
   TAO_IIOP_OBJECT_DO_STATIC_CALL_PUT_PARAMS
@@ -434,10 +438,16 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
 
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
+  ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_SET_CANCEL);
+
+  TAO_ORB_Core* orb_core = TAO_ORB_Core_instance ();
+
+  ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_GRAB_ORB_CORE);
+
   // Do a locate_request if necessary/wanted.
   if (this->use_locate_request_ && this->first_locate_request_)
   {
-    TAO_GIOP_Locate_Request_Invocation call (this);
+    TAO_GIOP_Locate_Request_Invocation call (this, orb_core);
 
     call.start (env);
          
@@ -449,10 +459,9 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
       return;
   }
 
-
   if (info->is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, info->opname);
+      TAO_GIOP_Twoway_Invocation call (this, info->opname, orb_core);
       ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
       // We may need to loop through here more than once if we're
@@ -582,7 +591,7 @@ IIOP_Object::do_static_call (CORBA::Environment &env,   // exception reporting
     }
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, info->opname);
+      TAO_GIOP_Oneway_Invocation call (this, info->opname, orb_core);
       ACE_TIMEPROBE (TAO_IIOP_OBJECT_DO_STATIC_CALL_INVOCATION_CTOR);
 
       // Start the call by constructing the request message header.
@@ -676,9 +685,10 @@ IIOP_Object::do_dynamic_call (const char *opname,
 {
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   if (is_roundtrip)
     {
-      TAO_GIOP_Twoway_Invocation call (this, opname);
+      TAO_GIOP_Twoway_Invocation call (this, opname, orb_core);
 
       // Loop as needed for forwarding; see above.
 
@@ -856,7 +866,7 @@ IIOP_Object::do_dynamic_call (const char *opname,
     }
   else
     {
-      TAO_GIOP_Oneway_Invocation call (this, opname);
+      TAO_GIOP_Oneway_Invocation call (this, opname, orb_core);
       call.start (env);
       if (env.exception () != 0) return;
 

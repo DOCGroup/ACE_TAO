@@ -214,6 +214,15 @@ public:
   ACE_SYNCH_CONDITION *get_next_follower (void);
   // returns randomly a follower from the leader-follower set
   // returns follower on success, else 0
+
+  ACE_Allocator *data_block_allocator (void);
+  // This allocator is always TSS and has no locks. It is intended for
+  // allocating the ACE_Data_Blocks used in *outgoing* CDR streams.
+
+  ACE_Allocator *cdr_buffer_allocator (void);
+  // This allocator is always TSS and has no locks. It is intended for
+  // allocating the buffers used in *outgoing* CDR streams.
+
 private:
   int init (int& argc, char ** argv);
   // Initialize the guts of the ORB Core.  It is intended that this be
@@ -309,6 +318,14 @@ private:
   // A string of comma-separated <{host}>:<{port}> pairs used to
   // pre-establish connections using <preconnect>.
 
+  typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> TSS_MALLOC;
+  typedef ACE_Allocator_Adapter<TSS_MALLOC> TSS_ALLOCATOR;
+
+  TSS_ALLOCATOR data_block_allocator_;
+  // The Allocator for the ACE_Data_Blocks.
+  
+  TSS_ALLOCATOR cdr_buffer_allocator_;
+  // The Allocator for the CDR buffers.
 };
 
 class TAO_Default_Reactor : public ACE_Reactor
@@ -421,6 +438,8 @@ public:
   // Get the global collocation table.  Return the pointer to the
   // global collocation table if we are using one, otherwise, return
   // 0.
+
+  // = Modifiers
 
   void set_allocator (ACE_Allocator *alloc);
   // Set the allocator pointer which will be returned by

@@ -19,13 +19,16 @@ $ES = Process::Create ("../../Event_Service/Event_Service".$Process::EXE_EXT);
 sleep $sleeptime;
 
 $C = Process::Create ("ECT_Consumer".$Process::EXE_EXT);
+
+sleep $sleeptime;
+
 $S = Process::Create ("ECT_Supplier".$Process::EXE_EXT);
 
 $C->Wait ();
 $S->Wait ();
 
-$NS->Kill ();
-$ES->Kill ();
+$NS->Kill (); $NS->Wait ();
+$ES->Kill (); $ES->Wait ();
 
 unlink $NS_ior;
 

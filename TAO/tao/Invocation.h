@@ -44,7 +44,8 @@ class TAO_Export TAO_GIOP_Invocation
 public:
   // = Initialization and termination methods.
   TAO_GIOP_Invocation (IIOP_Object *data,
-		       const char *operation);
+		       const char *operation,
+		       TAO_ORB_Core* orb_core);
   ~TAO_GIOP_Invocation (void);
 
   void put_param (CORBA::TypeCode_ptr tc,
@@ -59,7 +60,7 @@ public:
 protected:
   void start (CORBA::Boolean is_roundtrip,
               TAO_GIOP::Message_Type message_type,
-	            CORBA::Environment &env);
+	      CORBA::Environment &env);
   // Locates the right Client_Connection_Handler and initializes the
   // CDR stream.
   // The message_type tells how to initialize the output CDR stream
@@ -92,6 +93,9 @@ protected:
 
   TAO_OutputCDR out_stream_;
   // Stream into which the response is placed.
+
+  TAO_ORB_Core* orb_core_;
+  // The orb_core context where we make this invocation.
 };
 
 class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
@@ -108,7 +112,8 @@ class TAO_Export TAO_GIOP_Twoway_Invocation : public TAO_GIOP_Invocation
 public:
   // = Initialization and termination methods.
   TAO_GIOP_Twoway_Invocation (IIOP_Object *data,
-			      const char *operation);
+			      const char *operation,
+			      TAO_ORB_Core* orb_core);
 
   void start (CORBA::Environment &env);
   // Calls TAO_GIOP_Invocation::start.
@@ -147,7 +152,8 @@ class TAO_Export TAO_GIOP_Oneway_Invocation : public TAO_GIOP_Invocation
 public:
   // = Initialization and termination methods.
   TAO_GIOP_Oneway_Invocation (IIOP_Object *data,
-			      const char *operation);
+			      const char *operation,
+			      TAO_ORB_Core* orb_core);
 
   void start (CORBA::Environment &env);
   // Call TAO_GIOP_Invocation::start()
@@ -164,7 +170,8 @@ class TAO_Export TAO_GIOP_Locate_Request_Invocation : public TAO_GIOP_Invocation
   //
 public:
   // = Initialization and termination methods.
-  TAO_GIOP_Locate_Request_Invocation (IIOP_Object *data);
+  TAO_GIOP_Locate_Request_Invocation (IIOP_Object *data,
+				      TAO_ORB_Core* orb_core);
 
   void start (CORBA::Environment &env);
   // Calls TAO_GIOP_Invocation::start.
