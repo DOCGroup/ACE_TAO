@@ -29,7 +29,9 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     use_locked_data_blocks_ (1),
     reactor_type_ (TAO_REACTOR_SELECT_MT),
     cdr_allocator_type_ (TAO_ALLOCATOR_THREAD_LOCK),
-    protocol_factories_ ()
+    protocol_factories_ (),
+    connection_caching_type_ (TAO_CONNECTION_CACHING_STRATEGY),
+    purge_percentage_ (TAO_PURGE_PERCENT)
 {
 }
 
