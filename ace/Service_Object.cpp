@@ -43,30 +43,31 @@ ACE_Service_Type::~ACE_Service_Type (void)
   delete [] (ACE_TCHAR *) this->name_;
 }
 
-void
+int
 ACE_Service_Type::fini (void)
 {
   if (!this->fini_already_called_)
     {
-      this->type_->fini ();
       this->fini_already_called_ = 1;
+      return this->type_->fini ();
     }
+  return 0;
 }
 
-void
+int
 ACE_Service_Type::suspend (void) const
 {
   ACE_TRACE ("ACE_Service_Type::suspend");
   ((ACE_Service_Type *) this)->active_ = 0;
-  this->type_->suspend ();
+  return this->type_->suspend ();
 }
 
-void
+int
 ACE_Service_Type::resume (void) const
 {
   ACE_TRACE ("ACE_Service_Type::resume");
   ((ACE_Service_Type *) this)->active_ = 1;
-  this->type_->resume ();
+  return this->type_->resume ();
 }
 
 ACE_Service_Object::ACE_Service_Object (ACE_Reactor *r)

@@ -99,13 +99,13 @@ public:
   void type (const ACE_Service_Type_Impl *,
              int active = 1);
 
-  void suspend (void) const;
-  void resume (void) const;
+  int suspend (void) const;
+  int resume (void) const;
   int  active (void) const;
   void active (int);
 
   /// Calls <fini> on <type_>
-  void fini (void);
+  int fini (void);
 
   /// Check if the service has been fini'ed.
   int fini_called (void) const;
