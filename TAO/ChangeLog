@@ -1,3 +1,12 @@
+Sun Mar 06 21:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
+        * tests/Portable_Interceptors/Collocated/Dynamic/Server_Task.cpp:
+          Print out where the exception is caught
+
+        * tests/Portable_Interceptors/Collocated/Dynamic/test.idl:
+          Converted documentation to doxygen style
+
 Sun Mar 06 21:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Service_Context_Manipulation/client.cpp:
