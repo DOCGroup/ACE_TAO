@@ -1,5 +1,9 @@
 Thu Feb 27 17:06:12 1997    <harrison@samba.cs.wustl.edu>
 
+	* ace/High_Res_Timer.h (get_env_global_scale_factor):  This static
+	  method will set the global_scale_factor to the value in an
+ 	  environment variable (ACE_SCALE_FACTOR by default).
+
 	* ace/High_Res_Timer.*: Changed all calculations to divide by
 	  scale_factor before doing / and %.  This must be done before the
 	  mod for correctness.
