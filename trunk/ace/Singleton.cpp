@@ -70,11 +70,14 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
           // Use the Object_Manager's preallocated lock.
           ACE_LOCK *lock =
             ACE_Object_Manager::get_singleton_lock ((ACE_LOCK *) 0);
+#if 0 // ???? HACK!  Don't guard until singleton lock issue is resolved!
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+#endif // 0
 
           if (singleton == 0)
             {
-              ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
+              ACE_NEW_RETURN (singleton,
+                              (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with ACE_Object_Manager.
               ACE_Object_Manager::at_exit (singleton);
@@ -157,7 +160,9 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
           // Use the Object_Manager's preallocated lock.
           ACE_LOCK *lock =
             ACE_Object_Manager::get_singleton_lock ((ACE_LOCK *) 0);
+#if 0 // ???? HACK!  Don't guard until singleton lock issue is resolved!
           ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *lock, 0);
+#endif // 0
 
           if (singleton == 0)
             {
