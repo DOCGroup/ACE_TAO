@@ -269,12 +269,17 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  // RT CORBA Policies processing code.  This is a temporary location
+  // @@ RT CORBA Policies processing code.  This is a temporary location
   // for this code until more of it is accumulated.  It will likely be
   // factored into separate method(s)/split/moved to different
   // locations within this method/<prepare_header>.  (Marina)
 
   // RTCORBA::PriorityModelPolicy related processing.
+  // @@ This processing isn't necessary for Locate Requests, since they
+  // do not have Service Context Lists.  However, since this method is
+  // called from TAO_GIOP_Locate_Request_Invocation::start, the
+  // processing does happen for Locate Requests.  It works, but we are
+  // losing some performance ...
   TAO_PriorityModelPolicy *priority_model_policy =
     this->stub_->exposed_priority_model ();
 
@@ -296,8 +301,10 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                                CORBA::COMPLETED_NO));
 
           TAO_OutputCDR cdr;
-          cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
-          cdr << thread_priority;
+          if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
+               == 0)
+              || (cdr << thread_priority) == 0)
+            ACE_THROW (CORBA::MARSHAL ());
 
           IOP::ServiceContextList context_list =
             this->service_info ();
@@ -322,8 +329,9 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      // @@ What do we do if the PriorityModel wasn't exported: throw
-      // exception (which one) or assume some priority model?
+      // The Object does not contain PriorityModel policy in its IOR.
+      // We must be talking to a non-RT ORB.  Do nothing special -
+      // just proceed with the regular invocation.
     }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

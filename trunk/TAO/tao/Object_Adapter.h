@@ -34,6 +34,9 @@
 // Active Object Table
 #include "tao/Active_Object_Map.h"
 
+// RTCORBA
+#include "tao/RTCORBAC.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -664,7 +667,69 @@ public:
   };
 
   friend class Servant_Upcall;
+
+#if (TAO_HAS_RT_CORBA == 1)
+
+  class Priority_Model_Processing
+  {
+    // = TITLE
+    //     This class encapsulates processing necessary for
+    //     RTCORBA CLIENT_PROPAGATED priority model.
+    //
+    //     Although the destructor of this class resets the priority of
+    //     the thread to it's original value, application should use
+    //     <post_invoke> method for that purpose: destructor cannot
+    //     propagate possible exceptions to the callee.  Destructor's
+    //     reset capability is intended as a last resort, i.e., if
+    //     <post_invoke> isn't reached for some reason.
+    //
+  public:
+
+    Priority_Model_Processing (TAO_POA &poa);
+    // Constructor.
+
+    ~Priority_Model_Processing (void);
+    // Resets the priority of the current thread back to its original
+    // value if necessary, i.e., if it was changed and the
+    // <post_invoke> method hasn't been called.  Unlike <post_invoke>,
+    // this method cannot propagate exceptions to the user.
+
+    void pre_invoke (IOP::ServiceContextList &service_context_list,
+                     CORBA::Environment &ACE_TRY_ENV);
+    // Checks if target POA supports RTCORBA::CLIENT_PROPAGATED
+    // PriorityModel.  If so, stores the original priority of the
+    // current thread, and sets the thread to the client-propagated
+    // priority.
+
+    void post_invoke (CORBA::Environment &ACE_TRY_ENV);
+    // Resets the priority of the current thread back to its original
+    // value, if necessary.
+
+  private:
+
+    Priority_Model_Processing (const Priority_Model_Processing &);
+    void operator= (const Priority_Model_Processing &);
+
+    enum State
+    {
+      NO_ACTION_REQUIRED,
+      PRIORITY_RESET_REQUIRED
+    };
+
+    State state_;
+    // Indicates whether the priority of the thread needs to be reset
+    // back to its original value.
+
+    TAO_POA &poa_;
+    // Poa of the target servant.
+
+    RTCORBA::Priority original_priority_;
+    // Original priority of the thread.
+  };
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
 };
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
