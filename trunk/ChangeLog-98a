@@ -6,8 +6,9 @@ Thu Feb 19 11:18:08 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i: added ACE_OS::shm_{open,unlink}, and mmap support on
           LynxOS.
 
-        * ace/Mem_Map.*: default share value to ACE_MAP_PRIVATE instead
-          of MAP_PRIVATE, to allow easy overriding in config files.
+        * ace/Mem_Map.*,Shared_Memory_MM.h: default share value to
+          ACE_MAP_PRIVATE instead of MAP_PRIVATE, to allow easy overriding
+          in config files.
 
         * ace/config-lynxos.h: added ACE_HAS_SHM_OPEN, and map
           ACE_MAP_PRIVATE to ACE_MAP_SHARED because MAP_PRIVATE is
