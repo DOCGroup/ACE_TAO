@@ -55,28 +55,31 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
   if (this->queue_->dequeue_head (mb, tv) != -1)
     {
       // Get the next <Method_Request>.
-      ACE_Method_Request *mo =
+      ACE_Method_Request *mr =
         ACE_reinterpret_cast (ACE_Method_Request *,
                               mb->base ());
 
       // Delete the message block.
       mb->release ();
-      return mo;
+      return mr;
     }
   else
     return 0;
 }
 
 int 
-ACE_Activation_Queue::enqueue (ACE_Method_Request *mo,
+ACE_Activation_Queue::enqueue (ACE_Method_Request *mr,
 			       ACE_Time_Value *tv)
 {
   ACE_Message_Block *mb;
 
+  // We pass sizeof (*mr) here so that flow control will work
+  // correctly.  Since we also pass <mr> note that no unnecessary
+  // memory is actually allocated -- just the size field is set.
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block ((char *) mo,
-                                     sizeof (*mo),
-                                     mo->priority ()),
+                  ACE_Message_Block ((char *) mr,
+                                     sizeof (*mr),
+                                     mr->priority ()),
                   -1);
 
   // Enqueue in priority order.

@@ -1,3 +1,9 @@
+Tue May  1 09:57:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Activation_Queue.cpp (enqueue): Clarified the behavior
+	  of passing sizeof (*mr).  Thanks to Guy Bolton King
+ 	  <guy_bolton_king@non.agilent.com>
+
 Tue May  1 07:13:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst : Sun CC 5.1 cannot work with
