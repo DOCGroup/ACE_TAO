@@ -1,3 +1,14 @@
+Mon Nov  9 13:04:56 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Consumer_Input_Handler.cpp (handle_input): 
+	  added TAO try macro exceptions.
+	
+Sun Nov  8 15:59:07 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/Notifier_Input_Handler.cpp (handle_input): 
+	  Rectified an parse error due to an arbitary symbol ' in this
+	  method.
+	
 Mon Nov 09 09:59:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: changed some
@@ -55,7 +66,16 @@ Mon Nov 09 09:59:45 1998  David L. Levine  <levine@cs.wustl.edu>
         * Makefile: detects if the g++ compiler version is lesser than
           2.8.0 and if so, prints a warning message.
 
+
 Sun Nov 08 14:55:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/orbconf.h: Please uncomment TAO_HAS_EXCEPTIONS and
+ 	  TAO_USE_EXCEPTIONS once exceptions are working in TAO.  For now,
+ 	  they are not working properly.
+
+	* tao/Object_Table.cpp (find): Fixed the find routine.  It was
+ 	  considering the is_free_ field in all cases, but this field is
+ 	  not used when the dynamic hashing mechanism is used.
 
         * tao/orbconf.h: Please uncomment TAO_HAS_EXCEPTIONS and
           TAO_USE_EXCEPTIONS once exceptions are working in TAO.  For now,
