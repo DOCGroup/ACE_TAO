@@ -827,7 +827,7 @@ GIOP::Invocation::invoke (
 	// error reports to applications.
 	//
 	{
-	  ACE_GUARD(ACE_Thread_Mutex, guard, lock_);
+	  ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, SYSTEM_EXCEPTION);
 
 	  delete _data->fwd_profile;
 	  _data->fwd_profile = 0;
@@ -1066,7 +1066,7 @@ GIOP::Invocation::invoke (
 	    // be recorded here.  (This is just an optimization, and is
 	    // not related to correctness.)
 	    //
-	    ACE_GUARD(ACE_Thread_Mutex, guard, lock_);
+	    ACE_GUARD_RETURN(ACE_Thread_Mutex, guard, lock_, SYSTEM_EXCEPTION);
 
 	    delete _data->fwd_profile;
 	    _data->fwd_profile = new IIOP::ProfileBody (obj2->profile);
