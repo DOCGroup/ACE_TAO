@@ -1,3 +1,53 @@
+Thu Oct 19 14:30:59 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/DynamicC.i:
+	* tao/DynamicC.h:
+	* tao/DynamicC.cpp:
+	* tao/PortableInterceptorC.i:
+	* tao/PortableInterceptorC.cpp:
+	* tao/PortableInterceptorC.h :
+	  Regenerated so that they are properly locality constrained.
+	  This reduces the footprint.
+
+	* tao/Dynamic.pidl:
+	* tao/PortableInterceptor.pidl:
+	  Corrected idl typedefs to match the spec.
+
+	* tao/orb.idl:
+	* tao/corbafwd.h:
+	* tao/corba.h:
+	* tao/StringSeq.inl:
+	* tao/StringSeq.h:
+	* tao/StringSeq.cpp:
+	* tao/Request_Info.h:
+	  Updates necessary to make the code work with the corrected pidl
+	  and the newly generated locality constrained stubs. 
+
+	Thanks to Ossama for making all these changes.
+
+	* tao/OctetSeq.pidl: 
+	* tao/OctetSeqC.i: 
+	* tao/OctetSeqC.h: 
+	* tao/OctetSeqC.cpp: 
+	  Added the new pidl file for Octet Sequence and generated stubs.
+
+	* tao/Makefile: 
+	  Added the new files to the Makefile.
+	
+	* tao/diffs/Dynamic.diff: 
+	* tao/diffs/PortableInterceptorC.i.diff: 
+	* tao/diffs/PortableInterceptorC.h.diff: 
+	* tao/diffs/PortableInterceptorC.cpp.diff: 
+	  Generated the diffs.
+
+	* tests/Portable_Interceptors/Dynamic/interceptors.cpp:
+	* tests/Portable_Interceptors/Dynamic/interceptors.h :
+	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
+	* tests/Portable_Interceptors/Benchmark/interceptors.h :
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.cpp:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/interceptors.h :
+	  Added dummy virtual functions to get the code compiled.
+
 Thu Oct 19 11:54:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:

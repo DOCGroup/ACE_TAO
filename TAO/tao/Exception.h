@@ -238,6 +238,7 @@ private:
 
   CORBA::CompletionStatus completed_;
   // Completion status.
+
 };
 
 // Declarations for all of the CORBA standard exceptions.
@@ -404,6 +405,7 @@ private:
   static int initialized_;
   // Flag that denotes that the TAO's CORBA exceptions have been
   // initialized.
+
 };
 
 class CORBA_ExceptionList;

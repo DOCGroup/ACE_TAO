@@ -395,14 +395,14 @@ TAO_ServerRequest_Info::_sending_exception (CORBA::Environment &)
   return this->caught_exception_;
 }
   
-PortableInterceptor::OctetSeq * 
+CORBA::OctetSeq * 
 TAO_ServerRequest_Info::object_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return 0; 
 }
 
-PortableInterceptor::OctetSeq * 
+CORBA::OctetSeq * 
 TAO_ServerRequest_Info::adapter_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

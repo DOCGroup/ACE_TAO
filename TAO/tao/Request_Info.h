@@ -1,16 +1,18 @@
+// -*- C++ -*-
+//
 // $Id$
 
 //========================================================================
 //
 // = LIBRARY
-//     TAO/tao/
+//     TAO
 //
 // = FILENAME
 //     Request_Info.h
 //
 // = DESCRIPTION
 //     This is the implementation of the RequestInfo interface of the
-//   Portable Interceptor specification.
+//     Portable Interceptor specification.
 //
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
@@ -18,11 +20,10 @@
 //=========================================================================
 
 
-#ifndef REQUEST_INFO_H
-#define REQUEST_INFO_H
+#ifndef TAO_REQUEST_INFO_H
+#define TAO_REQUEST_INFO_H
 
-//#include "tao/corbafwd.h"
-#include "tao/PortableInterceptorC.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,17 +37,23 @@
 #endif /* _MSC_VER */
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+
+#include "tao/PortableInterceptorC.h"
+#include "tao/LocalObject.h"
+#include "tao/StringSeq.h"
+
 //****************************************************************
 
 class TAO_Export TAO_ClientRequest_Info
-: public virtual PortableInterceptor::ClientRequestInfo
+: public virtual PortableInterceptor::ClientRequestInfo,
+  public virtual CORBA::LocalObject
 {
  public:
   TAO_ClientRequest_Info (const char * operation,
                           IOP::ServiceContextList &service_context_list,
-                      CORBA::Object * target,
-                      CORBA::Environment &ACE_TRY_ENV =
-                      TAO_default_environment ());
+                          CORBA::Object * target,
+                          CORBA::Environment &ACE_TRY_ENV =
+                          TAO_default_environment ());
 
   virtual CORBA::ULong request_id (CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
@@ -182,13 +189,14 @@ class TAO_Export TAO_ClientRequest_Info
 //****************************************************************
 
 class TAO_Export TAO_ServerRequest_Info
- : public virtual PortableInterceptor::ServerRequestInfo
+  : public virtual PortableInterceptor::ServerRequestInfo,
+    public virtual CORBA::LocalObject
 {
  public:
   TAO_ServerRequest_Info (const char * operation,
-                      IOP::ServiceContextList &service_context_list ,
-                      CORBA::Environment &ACE_TRY_ENV =
-                      TAO_default_environment ());
+                          IOP::ServiceContextList &service_context_list ,
+                          CORBA::Environment &ACE_TRY_ENV =
+                          TAO_default_environment ());
 
   virtual CORBA::ULong request_id (CORBA::Environment &ACE_TRY_ENV =
                                    TAO_default_environment ())
@@ -265,12 +273,12 @@ class TAO_Export TAO_ServerRequest_Info
   // Note: This is TAO specific and was done to combat the previous
   // problem to some extent.
 
-  virtual PortableInterceptor::OctetSeq * object_id (CORBA::Environment &ACE_TRY_ENV =
-                                                     TAO_default_environment ())
+  virtual CORBA::OctetSeq * object_id (CORBA::Environment &ACE_TRY_ENV =
+                                       TAO_default_environment ())
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual PortableInterceptor::OctetSeq * adapter_id (CORBA::Environment &ACE_TRY_ENV =
-                                                      TAO_default_environment ())
+  virtual CORBA::OctetSeq * adapter_id (CORBA::Environment &ACE_TRY_ENV =
+                                        TAO_default_environment ())
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual char * target_most_derived_interface (CORBA::Environment &ACE_TRY_ENV =
@@ -319,8 +327,8 @@ class TAO_Export TAO_ServerRequest_Info
   IOP::ServiceContextList &service_context_list_;
 
   CORBA::Any result_val_;
-  PortableInterceptor::OctetSeq_var object_id_;
-  PortableInterceptor::OctetSeq_var adapter_id_;
+  CORBA::OctetSeq_var object_id_;
+  CORBA::OctetSeq_var adapter_id_;
   CORBA::Any any_exception_;
   CORBA::Exception *caught_exception_;
 };
@@ -333,4 +341,4 @@ class TAO_Export TAO_ServerRequest_Info
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* REQUEST_INFO_H */
+#endif /* TAO_REQUEST_INFO_H */
