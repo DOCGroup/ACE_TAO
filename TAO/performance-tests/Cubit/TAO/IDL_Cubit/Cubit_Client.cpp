@@ -996,7 +996,10 @@ Cubit_Client::run ()
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_oneway", elapsed_time);
 
+#if !defined (VXWORKS)
+  // This causes a memPartFree on VxWorks.
   this->shutdown_server (this->shutdown_);
+#endif /* ! VXWORKS */
 
   return this->error_count_ == 0 ? 0 : 1;
 }
@@ -1042,6 +1045,7 @@ Cubit_Client::shutdown_server (int do_shutdown)
           TAO_CHECK_ENV;
 
 	  ACE_DEBUG ((LM_DEBUG, "shutdown on shutdown object\n"));
+
           dexc (this->env_,
                 "server, please ACE_OS::exit");
         }
@@ -1059,6 +1063,7 @@ Cubit_Client::shutdown_server (int do_shutdown)
       this->cubit_->shutdown (this->env_);
       dexc (this->env_, "server, please ACE_OS::exit");
     }
+
   return 0;
 }
 
