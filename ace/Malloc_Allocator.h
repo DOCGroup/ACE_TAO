@@ -5,8 +5,7 @@
  *  @file   Malloc_Allocator.h
  *
  *  $Id$
- * 
- *  @author Priyanka Gontla <pgontla@ece.uci.edu>
+ *
  *  @author Based on code that formerly existed in another ACE file.
  */
 //==========================================================================
@@ -49,7 +48,7 @@
  * functionality, please use: ACE_Allocator_Adapter <ACE_Malloc
  * <ACE_LOCAL_MEMORY_POOL, MUTEX> >, which will allow you to use the
  * added functionality of bind/find/etc. while using the new/delete
- * operators.  
+ * operators.
  */
 class ACE_Export ACE_New_Allocator : public ACE_Allocator
 {
