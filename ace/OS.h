@@ -463,10 +463,10 @@ typedef int key_t;
 
 //    #include /**/ <prepc.h>    /* pREPC+ ANSI C Standard Library calls */
 
-    /*  #include /**/ <rpc.h>       pRPC+ Remote Procedure Call Library calls   */
+    /*   include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */
     /*                         are not supported by pSOSim                 */
     /*                                                                     */
-    /*  #include /**/ <phile.h>     pHILE+ file system calls are not supported  */
+    /*   include <phile.h>     pHILE+ file system calls are not supported  */
     /*                         by pSOSim *so*, for the time being, we make */
     /*                         use of UNIX file system headers and then    */
     /*                         when we have time, we wrap UNIX file system */
