@@ -1,3 +1,8 @@
+Thu Nov 14 11:48:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosNotification.bor: Added a wild card charecter
+	  to the list of files to be compiled.
+
 Thu Nov 14 09:43:40 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/AMI/server.dsp:

@@ -119,7 +119,7 @@ CPPDIR = .;Notify;Notify\Any;Notify\Structured\;Notify\Sequence
 IDLDIR = .
 
 INCDIR_NAME = orbsvcs\Notify
-INCLUDES = Notify\*.h Notify\*.i Notify\*_T.cpp
+INCLUDES = Notify\*.h Notify\*.i* Notify\*_T.cpp
 
 LIBFILES = \
 	$(ACE_LIB) \
