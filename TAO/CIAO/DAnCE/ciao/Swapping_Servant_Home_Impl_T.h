@@ -19,7 +19,6 @@
 #include /**/ "ace/pre.h"
 
 #include "Swapping_Servant_Home_Impl_Base.h"
-#include "Dynamic_Component_Activator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -96,8 +95,6 @@ namespace CIAO
 
   protected:
     EXEC_VAR executor_;
-
-    Dynamic_Component_Activator activator_;
 
     ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
                             COMP_SVNT *,
