@@ -760,18 +760,23 @@ ACE_INET_Addr::get_ip_address (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_ip_address");
 #if defined (ACE_HAS_IPV6)
-  if(IN6_IS_ADDR_V4MAPPED(&this->inet_addr_.sin6_addr)) {
-    ACE_UINT32 addr;
-    // Return the last 32 bits of the address
-    char *thisaddrptr = (char*)this->addr_pointer();
-    thisaddrptr += 128/8 - 32/8;
-    memcpy((void*)&addr,(void*)(thisaddrptr),sizeof(addr));
-    return ntohl(addr);
-  } else {
-    ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_INET_Addr::get_ip_address: address is a IPv6 address not IPv4\n")));
-    return 0;
-  }
+  if(IN6_IS_ADDR_V4MAPPED (&this->inet_addr_.sin6_addr) ||
+     IN6_IS_ADDR_V4COMPAT (&this->inet_addr_.sin6_addr)    )
+    {
+      ACE_UINT32 addr;
+      // Return the last 32 bits of the address
+      char *thisaddrptr = (char*)this->addr_pointer ();
+      thisaddrptr += 128/8 - 32/8;
+      memcpy ((void*)&addr, (void*)(thisaddrptr), sizeof(addr));
+      return ntohl (addr);
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+		  ACE_LIB_TEXT ("ACE_INET_Addr::get_ip_address: address is a IPv6 address not IPv4\n")));
+      errno = EAFNOSUPPORT;
+      return 0;
+    }
 #else
   return ntohl (ACE_UINT32 (this->inet_addr_.sin_addr.s_addr));
 #endif
