@@ -117,6 +117,11 @@ private:
 class TAO_Export CORBA_DynAny : public virtual ACE_CORBA_1 (Object)
 {
 public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef CORBA_DynAny_ptr _ptr_type;
+    typedef CORBA_DynAny_var _var_type;
+  #endif /* __GNUC__ */
+
   // the static operations
   static CORBA_DynAny_ptr _duplicate (CORBA_DynAny_ptr obj);
   static CORBA_DynAny_ptr _narrow (
@@ -556,6 +561,11 @@ private:
 class TAO_Export CORBA_DynEnum: public virtual CORBA_DynAny
 {
 public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef CORBA_DynEnum_ptr _ptr_type;
+    typedef CORBA_DynEnum_var _var_type;
+  #endif /* __GNUC__ */
+
   // the static operations
   static CORBA_DynEnum_ptr _duplicate (CORBA_DynEnum_ptr obj);
   static CORBA_DynEnum_ptr _narrow (
@@ -1027,6 +1037,11 @@ private:
 class TAO_Export CORBA_DynStruct: public virtual CORBA_DynAny
 {
 public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef CORBA_DynStruct_ptr _ptr_type;
+    typedef CORBA_DynStruct_var _var_type;
+  #endif /* __GNUC__ */
+
   // the static operations
   static CORBA_DynStruct_ptr _duplicate (CORBA_DynStruct_ptr obj);
   static CORBA_DynStruct_ptr _narrow (
@@ -1148,6 +1163,11 @@ private:
 class TAO_Export CORBA_DynUnion: public virtual CORBA_DynAny
 {
 public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef CORBA_DynUnion_ptr _ptr_type;
+    typedef CORBA_DynUnion_var _var_type;
+  #endif /* __GNUC__ */
+
   // the static operations
   static CORBA_DynUnion_ptr _duplicate (CORBA_DynUnion_ptr obj);
   static CORBA_DynUnion_ptr _narrow (
@@ -1577,6 +1597,11 @@ private:
 class TAO_Export CORBA_DynSequence: public virtual CORBA_DynAny
 {
 public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef CORBA_DynSequence_ptr _ptr_type;
+    typedef CORBA_DynSequence_var _var_type;
+  #endif /* __GNUC__ */
+
   // the static operations
   static CORBA_DynSequence_ptr _duplicate (CORBA_DynSequence_ptr obj);
   static CORBA_DynSequence_ptr _narrow (
@@ -1699,6 +1724,11 @@ private:
 class TAO_Export CORBA_DynArray: public virtual CORBA_DynAny
 {
 public:
+  #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
+    typedef CORBA_DynArray_ptr _ptr_type;
+    typedef CORBA_DynArray_var _var_type;
+  #endif /* __GNUC__ */
+
   // the static operations
   static CORBA_DynArray_ptr _duplicate (CORBA_DynArray_ptr obj);
   static CORBA_DynArray_ptr _narrow (
