@@ -38,7 +38,7 @@ namespace Sender_Impl
 
     /// Secondary construction.
     Sender_exec_i (const char* local_message)
-        : message_ (local_message)
+      : message_ (CORBA::string_dup (local_message))
     {
     }
 
