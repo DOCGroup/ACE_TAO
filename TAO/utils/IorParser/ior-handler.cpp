@@ -87,7 +87,6 @@ IorHandler::skipNullOctets (char *readPtr, int *hexCharsRead)
 char *
 IorHandler::getString (char *readPtr, int givenLen)
 {
-  char parsedStr[MAX_IOR_FIELD_LEN];
   int j = 0;
 
   // i indexes hexChars while j indexes octet pairs
@@ -117,7 +116,7 @@ IorHandler::getString (char *readPtr, int givenLen)
 }
 
 void
-IorHandler::prettyPrintIOR (struct IOR thisIor)
+IorHandler::prettyPrintIOR (IOR thisIor)
 {
   ACE_DEBUG ((LM_DEBUG,
               "TypeIdLen\t: %lu bytes\n",
@@ -149,7 +148,7 @@ IorHandler::prettyPrintIOR (struct IOR thisIor)
 }
 
 void
-IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
+IorHandler::interpretIor (char *thisIor, IOR *thisIorInfo)
 {
   int numCharsToSkip;
 
@@ -347,7 +346,6 @@ IorHandler::interpretIor (char *thisIor, struct IOR *thisIorInfo)
 char *
 IorHandler::getIdlInterface (char *typeId)
 {
-  char idlInterface[MAX_TYPE_ID_LEN];
   int lenInterface;
 
   char *readStart = strchr (typeId, ':');
