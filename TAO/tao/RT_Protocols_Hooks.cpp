@@ -6,6 +6,7 @@
 #include "tao/Invocation.h"
 #include "tao/Stub.h"
 #include "tao/MProfile.h"
+#include "tao/Priority_Mapping_Manager.h"
 
 #include "ace/Dynamic_Service.h"
 
@@ -112,10 +113,6 @@ TAO_RT_Protocols_Hooks::validate_policy_type (CORBA::ULong type,
 {
   // Validity check.  Make sure requested policy type is appropriate
   // for this scope.
-  if (type == RTCORBA::THREADPOOL_POLICY_TYPE
-      || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
-    ACE_THROW (CORBA::INV_POLICY ());
-
   if (type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
     type_value = 0;
 
@@ -124,97 +121,13 @@ TAO_RT_Protocols_Hooks::validate_policy_type (CORBA::ULong type,
 
   if (type == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE)
     type_value = 2;
-}
 
-CORBA::Policy *
-TAO_RT_Protocols_Hooks::effective_priority_banded_connection_hook (CORBA::Policy *override,
-                                                         CORBA::Policy *exposed,
-                                                         CORBA::Environment &ACE_TRY_ENV)
-{
-  RTCORBA::PriorityBandedConnectionPolicy_var override_policy_ptr =
-    RTCORBA::PriorityBandedConnectionPolicy::_narrow (override,
-                                                      ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  TAO_PriorityBandedConnectionPolicy *override_policy =
-    ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
-                     override_policy_ptr.in ());
-
-  RTCORBA::PriorityBandedConnectionPolicy_var exposed_policy_ptr =
-    RTCORBA::PriorityBandedConnectionPolicy::_narrow (exposed,
-                                                      ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  TAO_PriorityBandedConnectionPolicy *exposed_policy =
-    ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
-                      exposed_policy_ptr.in ());
-
-  // Both override and exposed have been set.
-  // See if either of them has empty priority bands.
-  CORBA::Object_var auto_release_exp = exposed_policy;
-  CORBA::Object_var auto_release_ov = override_policy;
-
-  if (exposed_policy->priority_bands_rep ().length () == 0)
+  if (type == RTCORBA::THREADPOOL_POLICY_TYPE
+      || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
     {
-      auto_release_ov._retn ();
-      return override;
+      type_value = 3;
+      ACE_THROW (CORBA::INV_POLICY ());
     }
-
-  if (override_policy->priority_bands_rep ().length () == 0)
-    {
-      auto_release_exp._retn ();
-      return exposed;
-    }
-
-  // Both override and exposed have been set and neither has empty
-  // priority bands.  This is illegal (ptc/99-05-03, sec. 4.12.1).
-  ACE_THROW_RETURN (CORBA::INV_POLICY (),
-                    0);
-}
-
-CORBA::Policy *
-TAO_RT_Protocols_Hooks::effective_client_protocol_hook (
-                           CORBA::Policy_ptr override,
-                           CORBA::Policy_ptr exposed,
-                           CORBA::Environment &ACE_TRY_ENV)
-{
-  RTCORBA::ClientProtocolPolicy_var override_policy_var =
-    RTCORBA::ClientProtocolPolicy::_narrow (override,
-                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  TAO_ClientProtocolPolicy *override_policy =
-    ACE_static_cast (TAO_ClientProtocolPolicy *,
-                     override_policy_var.in ());
-
-  RTCORBA::ClientProtocolPolicy_var exposed_policy_var =
-    RTCORBA::ClientProtocolPolicy::_narrow (exposed,
-                                            ACE_TRY_ENV);
-  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
-
-  TAO_ClientProtocolPolicy *exposed_policy =
-    ACE_static_cast (TAO_ClientProtocolPolicy *,
-                     exposed_policy_var.in ());
-
-  // Both override and exposed have been set.
-  // See if either of them has empty priority bands.
-  RTCORBA::ProtocolList &protocols_rep_var =
-    exposed_policy->protocols_rep ();
-
-  if (protocols_rep_var.length () == 0)
-    {
-      return override;
-    }
-
-  if (override_policy->protocols_rep ().length () == 0)
-    {
-      return exposed;
-    }
-
-  // Both override and exposed have been set and neither has empty
-  // protocols.  This is illegal (ptc/99-05-03, sec. 4.15.4).
-  ACE_THROW_RETURN (CORBA::INV_POLICY (),
-                    0);
 }
 
 void
@@ -332,69 +245,237 @@ TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (
   return;
 }
 
-void
-TAO_RT_Protocols_Hooks::select_endpoint_hook (
-                          TAO_GIOP_Invocation *invocation,
-                          CORBA::Policy *client_protocol_policy,
-                          TAO_Profile *& profile,
-                          CORBA::Environment &ACE_TRY_ENV)
+CORBA::Policy *
+TAO_RT_Protocols_Hooks::effective_priority_banded_connection_hook (CORBA::Policy *override,
+                                                         CORBA::Policy *exposed,
+                                                         CORBA::Environment &ACE_TRY_ENV)
 {
-  RTCORBA::ClientProtocolPolicy_var cp_policy =
-    RTCORBA::ClientProtocolPolicy::_narrow (client_protocol_policy,
+  RTCORBA::PriorityBandedConnectionPolicy_var override_policy_ptr =
+    RTCORBA::PriorityBandedConnectionPolicy::_narrow (override,
+                                                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  TAO_PriorityBandedConnectionPolicy *override_policy =
+    ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
+                     override_policy_ptr.in ());
+
+  RTCORBA::PriorityBandedConnectionPolicy_var exposed_policy_ptr =
+    RTCORBA::PriorityBandedConnectionPolicy::_narrow (exposed,
+                                                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  TAO_PriorityBandedConnectionPolicy *exposed_policy =
+    ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
+                      exposed_policy_ptr.in ());
+
+  // Both override and exposed have been set.
+  // See if either of them has empty priority bands.
+  CORBA::Object_var auto_release_exp = exposed_policy;
+  CORBA::Object_var auto_release_ov = override_policy;
+
+  if (exposed_policy->priority_bands_rep ().length () == 0)
+    {
+      auto_release_ov._retn ();
+      return override;
+    }
+
+  if (override_policy->priority_bands_rep ().length () == 0)
+    {
+      auto_release_exp._retn ();
+      return exposed;
+    }
+
+  // Both override and exposed have been set and neither has empty
+  // priority bands.  This is illegal (ptc/99-05-03, sec. 4.12.1).
+  ACE_THROW_RETURN (CORBA::INV_POLICY (),
+                    0);
+}
+
+CORBA::Policy *
+TAO_RT_Protocols_Hooks::effective_client_protocol_hook (
+                           CORBA::Policy_ptr override,
+                           CORBA::Policy_ptr exposed,
+                           CORBA::Environment &ACE_TRY_ENV)
+{
+  RTCORBA::ClientProtocolPolicy_var override_policy_var =
+    RTCORBA::ClientProtocolPolicy::_narrow (override,
                                             ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  TAO_ClientProtocolPolicy *override_policy =
+    ACE_static_cast (TAO_ClientProtocolPolicy *,
+                     override_policy_var.in ());
+
+  RTCORBA::ClientProtocolPolicy_var exposed_policy_var =
+    RTCORBA::ClientProtocolPolicy::_narrow (exposed,
+                                            ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  TAO_ClientProtocolPolicy *exposed_policy =
+    ACE_static_cast (TAO_ClientProtocolPolicy *,
+                     exposed_policy_var.in ());
+
+  // Both override and exposed have been set.
+  // See if either of them has empty priority bands.
+  RTCORBA::ProtocolList &protocols_rep_var =
+    exposed_policy->protocols_rep ();
+
+  if (protocols_rep_var.length () == 0)
+    {
+      return override;
+    }
+
+  if (override_policy->protocols_rep ().length () == 0)
+    {
+      return exposed;
+    }
+
+  // Both override and exposed have been set and neither has empty
+  // protocols.  This is illegal (ptc/99-05-03, sec. 4.15.4).
+  ACE_THROW_RETURN (CORBA::INV_POLICY (),
+                    0);
+}
+
+int
+TAO_RT_Protocols_Hooks::get_thread_priority (TAO_ORB_Core *orb_core,
+                                             CORBA::Short &priority,
+                                             CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_hthread_t current;
+  ACE_Thread::self (current);
+
+  int native_priority;
+  if (ACE_Thread::getprio (current, native_priority) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - RT_Protocols_Hooks::get_thread_priority: ")
+                  ACE_TEXT (" ACE_Thread::get_prio\n")));
+      return -1;
+    }
+
+  CORBA::Object_var obj =
+    orb_core->priority_mapping_manager ();
+
+  TAO_Priority_Mapping_Manager_var mapping_manager = 
+    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
+                                           ACE_TRY_ENV);
+
+  TAO_Priority_Mapping *priority_mapping =
+    mapping_manager.in ()->mapping ();
+
+  if (priority_mapping->to_CORBA (native_priority, priority) == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - RT_Protocols_Hooks::get_thread_priority: ")
+                  ACE_TEXT (" Priority_Mapping::to_CORBA\n")));
+      return -1;
+    }
+
+  return 0;
+}
+
+int
+TAO_RT_Protocols_Hooks::set_thread_priority (TAO_ORB_Core *orb_core,
+                                             CORBA::Short priority,
+                                             CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::Object_var obj =
+    orb_core->priority_mapping_manager ();
+
+  TAO_Priority_Mapping_Manager_var mapping_manager = 
+    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
+                                           ACE_TRY_ENV);
+
+  TAO_Priority_Mapping *priority_mapping =
+    mapping_manager.in ()->mapping ();
+
+  CORBA::Short native_priority;
+  if (priority_mapping->to_native (priority, native_priority) == 0)
+    return -1;
+  ACE_hthread_t current;
+  ACE_Thread::self (current);
+
+  if (ACE_Thread::setprio (current, native_priority) == -1)
+    return -1;
+
+  return 0;
+}
+
+void
+TAO_RT_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *orb_core,
+                                              TAO_Resource_Factory
+                                              *trf,
+                                              CORBA::Environment &ACE_TRY_ENV)
+{
+  /// 
+  CORBA::Object_var obj =
+    orb_core->priority_mapping_manager ();
+      
+  /// Narrow it down correctly
+  TAO_Priority_Mapping_Manager_var priority_mapping_manager = 
+    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
+                                           ACE_TRY_ENV);
   ACE_CHECK;
 
-  TAO_ClientProtocolPolicy *client_protocol =
-    ACE_static_cast (TAO_ClientProtocolPolicy *,
-                     cp_policy.in ());
+  if (!CORBA::is_nil (priority_mapping_manager.in ()))
+      priority_mapping_manager->mapping (trf->get_priority_mapping ());
+}
 
-  RTCORBA::ProtocolList & protocols =
-    client_protocol->protocols_rep ();
+int 
+TAO_RT_Protocols_Hooks::set_default_policies (TAO_ORB_Core *orb_core)
+{
+#if (TAO_HAS_RT_CORBA == 1)
+  // Set RTCORBA policy defaults.
+  // Set RTCORBA::ServerProtocolPolicy and
+  // RTCORBA::ClientProtocolPolicy defaults to include all protocols
+  // that were loaded into this ORB.
+  // First, create a protocol list.
 
-  CORBA::ULong protocol_index =
-    invocation->get_endpoint_selection_state ().client_protocol_index_;
+  TAO_ProtocolFactorySet *pfs = orb_core->protocol_factories ();
 
-  if (protocols.length () == protocol_index)
-    // We have tried all the protocols specified in the client
-    // protocol policy with no success.  Throw exception.
+  RTCORBA::ProtocolList protocols;
+  protocols.length (pfs->size ());
+
+  int i = 0;
+  for (TAO_ProtocolFactorySetItor factory = pfs->begin ();
+       factory != pfs->end ();
+       ++factory, ++i)
     {
-      // Figure out proper exception.
-      if (!invocation->get_endpoint_selection_state ().valid_endpoint_found_)
-        {
-          if (invocation->get_inconsistent_policies ())
-            {
-              invocation->get_inconsistent_policies ()->length (1);
-              CORBA::PolicyList_var inconsistent_policies =
-                invocation->get_inconsistent_policies ();
-              inconsistent_policies [0u] =
-                CORBA::Policy::_duplicate (invocation->
-                                           get_endpoint_selection_state ().client_protocol_policy_);
-            }
-          ACE_THROW (CORBA::INV_POLICY ());
-        }
-      else
-        // At least one satisfactory endpoint was found, but
-        // connection could not be established.
-        ACE_THROW (CORBA::COMM_FAILURE ());
+      CORBA::ULong protocol_type = (*factory)->factory ()->tag ();
+      protocols[i].protocol_type = protocol_type;
+      protocols[i].orb_protocol_properties =
+        RTCORBA::ProtocolProperties::_nil ();
+      // @@ Later, we will likely migrate to using RTCORBA protocol
+      // policies for configuration of protocols in nonRT use cases.
+      // Then, the code below will change to each protocol factory
+      // being responsible for creation of its own default protocol
+      // properties.
+      protocols[i].transport_protocol_properties =
+        TAO_Protocol_Properties_Factory::create_transport_protocol_property
+        (protocol_type);
     }
 
-  // Find a Profile for the next protocol we would like to try.
-  TAO_MProfile& mprofile = invocation->get_stub ()->base_profiles ();
+  // Set ServerProtocolPolicy.
+  TAO_ServerProtocolPolicy *server_protocol_policy = 0;
+  ACE_NEW_RETURN (server_protocol_policy,
+                  TAO_ServerProtocolPolicy (protocols),
+                  -1);
+  orb_core->get_default_policies ()->server_protocol (server_protocol_policy);
 
-  for (TAO_PHandle i = 0;
-       i < mprofile.profile_count ();
-       ++i)
-    {
-      TAO_Profile *pf = mprofile.get_profile (i);
-      if (pf->tag ()
-          == protocols[protocol_index].protocol_type)
-        {
-          profile = pf;
-          break;
-        }
-    }
+  // Set ClientProtocolPolicy.
+  // NOTE: ClientProtocolPolicy default is used ONLY for protocol
+  // configuration (not protocol preference) IF there is no ORB-level
+  // override.  It is not used when computing effective policy value
+  // for preferencing protocols.
+  TAO_ClientProtocolPolicy *client_protocol_policy = 0;
+  ACE_NEW_RETURN (client_protocol_policy,
+                  TAO_ClientProtocolPolicy (protocols),
+                  -1);
+  orb_core->get_default_policies ()->client_protocol (client_protocol_policy);
 
-  return;
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+  return 0;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,

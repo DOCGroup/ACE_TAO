@@ -27,6 +27,8 @@ TAO_Reactor_Per_Priority::~TAO_Reactor_Per_Priority (void)
 ACE_Reactor *
 TAO_Reactor_Per_Priority::reactor (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   TAO_ORB_Core_TSS_Resources *tss =
     this->orb_core ()->get_tss_resources ();
 
@@ -38,7 +40,11 @@ TAO_Reactor_Per_Priority::reactor (void)
     return leader_follower->reactor ();
 
   CORBA::Short priority = 0;
-  if (this->orb_core ()->get_thread_priority (priority) == -1)
+  if (this->orb_core ()->get_protocols_hooks ()->
+      get_thread_priority (this->orb_core (),
+                           priority,
+                           ACE_TRY_ENV) 
+      == -1)
     {
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
@@ -67,6 +73,8 @@ TAO_Reactor_Per_Priority::reactor (TAO_Acceptor *acceptor)
 TAO_Leader_Follower &
 TAO_Reactor_Per_Priority::leader_follower (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   TAO_ORB_Core_TSS_Resources *tss =
     this->orb_core ()->get_tss_resources ();
 
@@ -78,7 +86,11 @@ TAO_Reactor_Per_Priority::leader_follower (void)
     return *leader_follower;
 
   CORBA::Short priority = 0;
-  if (this->orb_core ()->get_thread_priority (priority) == -1)
+  if (this->orb_core ()->get_protocols_hooks ()->
+      get_thread_priority (this->orb_core (),
+                           priority,
+                           ACE_TRY_ENV) 
+      == -1)
     return *leader_follower;
 
   return *this->leader_follower_i (priority);

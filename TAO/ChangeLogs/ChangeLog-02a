@@ -1,3 +1,94 @@
+Fri Dec 22 14:13:46 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.h :
+	* tao/ORB_Core.cpp :
+	* tao/ORB_Core.i: 
+
+	  This change is aimed at making ORB_Core not-dependent on RT_ORB,
+	  RT_Current, Priority_Mapping_Manager and RT_Policy_i.
+
+	  Removed the set_default_policies method. It now is in
+	  Protocols_Hooks and derived classes. The default implementation
+	  does nothing and the RT_Protocols_Hooks implementation does the
+	  actual setting of the policies. With this change, ORB_Core doesnt
+	  depend on RT_Policy_i.
+
+	  Similar is the case with get_thread_priority and
+	  set_thread_priority methods.
+
+	  Added resolve_rt_orb_i (CORBA::Environment &) method.
+	  This method creates the RT_ORB with the help of the
+	  TAO_RT_ORB_Loader class. And also helps set the RT_Current
+	  object. This method is called by TAO_ORB_Core::rt_orb ().
+
+	  Added and modified accessor methods for
+	  TAO_Priority_Mapping_Manager.
+	  CORBA::Object_ptr priority_mapping_manager (void);
+	  void priority_mapping_manager (CORBA::Object_ptr obj);
+
+	  The set method is called from RT_ORBInitializer which sets the
+	  static variable CORBA::Object_ptr priority_mapping_manager_.
+
+	  Added a accessor method to retrieve the protected
+	  TAO_Policy_Manager_Impl *default_policies_.
+
+	  The methods rt_orb and rt_current return CORBA::Object_ptr.
+	  Modified the corresponding variables to be CORBA::Object_ptr's.
+
+	  Changed the signature of rt_orb to take CORBA::Environment as an
+	  argument.
+
+	* tao/RT_ORB_Loader.h: 
+	* tao/RT_ORB_Loader.cpp: 
+	  The factory class that helps create an RT_ORB object and set the
+	  RT_Current object.
+	
+	* tao/ORB.cpp (resolve_rt_current):
+	  Started using the unused ACE_TRY_ENV in resolve_rt_orb.
+	  Passed ACE_TRY_ENV as an argument when invoking
+	  TAO_ORB_Core::rt_orb.
+
+	* tao/RT_Protocols_Hooks.cpp :
+	* tao/RT_Protocols_Hooks.h :
+	* tao/Default_Protocols_Hooks.cpp :
+	* tao/Default_Protocols_Hooks.h :
+	* tao/Protocols_Hooks.cpp :
+	* tao/Protocols_Hooks.h :
+
+	  Added the following virtual functions. As before, the default
+	  implementation does nothing and the RT implementation does the
+	  needful.
+
+	  int get_thread_priority (TAO_ORB_Core *,
+          int set_thread_priority (TAO_ORB_Core *,
+	  int set_default_policies (TAO_ORB_Core *orb_core);
+	      These methods are moved from ORB_Core.
+
+          void set_priority_mapping (TAO_ORB_Core *,
+	       This method is called from ORB_Core to set the
+	  priority_mapping. Added this new method to not use
+	  TAO_Priority_Mapping_Manager class in ORB_Core.
+
+	* tao/Invocation_Endpoint_Selectors.cpp :
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/Strategies/Reactor_Per_Priority.cpp:
+	* tao/RT_Current.cpp:
+	* tao/Pool_Per_Endpoint.cpp:
+
+	  Changed the signatures and the way the methods are invoked
+	  according to the changes done with regards to the modified
+	  methods.
+
+	* tao/Makefile: 
+	  Added the new files. RT_ORB_Loader.{h.cpp}
+
+	* tao/Stub.cpp :
+	  Fixed the KCC warnings related to the previous change.
+	  Added some comments regarding the way I am throwing exceptions.	
+	* tao/RT_Protocols_Hooks.cpp (validate_policy_type):
+	  Set type_value=3 in the other 'if' case so that I can check on
+	  the value of type_value to throw the needed exception.
+	
 Fri Dec 22 15:25:51 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
