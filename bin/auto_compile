@@ -49,10 +49,12 @@ $MODULE='ACE_wrappers';
     ( 'tests , run_tests.sh',
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
+      'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl',
       'TAO/tests/MT_Client , run_test.pl',
       'TAO/orbsvcs/tests/Simple_Naming , run_test.pl',
-      'TAO/orbsvcs/tests/Property , run_test.pl',
-      'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl');
+      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane',
+      'TAO/orbsvcs/tests/ImplRepo , run_test.pl airplane_ir',
+      'TAO/orbsvcs/tests/Property , run_test.pl' );
 
 # We obtain our revision to report errors.
 $REVISION='$Revision$';

@@ -1,3 +1,8 @@
+Wed Apr  7 11:30:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Added more tests to the script.
+
 Wed Apr 07 09:54:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU: instead of trying to
