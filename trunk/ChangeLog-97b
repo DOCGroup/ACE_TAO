@@ -1,6 +1,6 @@
 Mon Nov 03 08:15:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
-        * include/makeinclude/platform_linux.GNU,ace/Makefile,
+        * include/makeinclude/{platform_linux*.GNU,wrapper_macros.GNU},
           netsvcs/lib/Makefile: suppress -g when compiling ace/Timer_Hash.cpp
           and netsvcs/lib/Server_Logging_Handler.cpp on Linux only.
           (It really only needs to be suppressed on Linux/Alpha.)
