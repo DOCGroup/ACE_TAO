@@ -5,13 +5,14 @@ project {
   // Set the idl compiler and flags as template values
   specific {
     tao_idl      = $(ACE_ROOT)/bin/tao_idl
+    tao_idl_dep  = $(ACE_ROOT)/bin/tao_idl
     tao_idlflags = -Ge 1 -Wb,pre_include=ace/pre.h \
                    -Wb,post_include=ace/post.h -I$(TAO_ROOT)
   }
 
   Define_Custom(IDL) {
     automatic            = 1
-    dependent            = 1
+    dependent            = $(TAO_IDL_DEP)
     command              = $(TAO_IDL)
     libpath              = $(ACE_ROOT)/lib
     inputext             = .idl

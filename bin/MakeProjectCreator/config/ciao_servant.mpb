@@ -7,7 +7,7 @@ project : ciao_component {
 
   Define_Custom(CIDL) {
     automatic         = 0
-    dependent         = 1
+    dependent         = $(CIAO_ROOT)/bin/cidlc
     command           = $(CIAO_ROOT)/bin/cidlc
     commandflags      = -I$(CIAO_ROOT) -I$(CIAO_ROOT)/ciao -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(TAO_ROOT)/orbsvcs --
     inputext          = .cidl
