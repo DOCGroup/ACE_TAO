@@ -21,7 +21,6 @@ libnetsvcs_la_SOURCES = \
          Base_Optimizer.cpp  \
          Client_Logging_Handler.cpp  \
          Log_Message_Receiver.cpp  \
-         Logging_Strategy.cpp  \
          Name_Handler.cpp  \
          Server_Logging_Handler.cpp  \
          Server_Logging_Handler_T.cpp  \
@@ -36,7 +35,6 @@ noinst_HEADERS = \
          Base_Optimizer.h  \
          Client_Logging_Handler.h  \
          Log_Message_Receiver.h  \
-         Logging_Strategy.h  \
          Name_Handler.h  \
          Server_Logging_Handler.h  \
          Server_Logging_Handler_T.h  \

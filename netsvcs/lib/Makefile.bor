@@ -9,7 +9,6 @@ OBJFILES = \
 	$(OBJDIR)\Log_Message_Receiver.obj \
 	$(OBJDIR)\Server_Logging_Handler.obj \
 	$(OBJDIR)\Token_Handler.obj \
-	$(OBJDIR)\Logging_Strategy.obj \
 	$(OBJDIR)\Base_Optimizer.obj
 
 CFLAGS = $(ACE_CFLAGS)
