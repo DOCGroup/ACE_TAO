@@ -18,6 +18,62 @@ Wed Oct 22 07:23:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/OS.i (getpgid): fixed (commented) ACE_TRACE identifer.
 	  Thanks to Eric Newton <ecn@smart.net> for reporting this.
 
+	* ace/Singleton.{h,cpp},Object_Manager.{h,cpp}: moved
+	  ace_singleton_lock_ to Object_Manager.  ace_singleton_lock_
+	  was a static data member:  in addition to the usual troubles
+	  associated with being a static, it was a static member of a
+	  template class.  g++ can't handle those, so we used a local
+	  static; initialization of that static was not thread safe.
+
+	  The fix relies on knowledge from the Object_Manager about
+	  whether the program is in static construction phase or not.
+	  A critical assumption is that construction of static objects
+	  does not spawn threads.  With that assumption, we know that
+	  there is only one (main) thread in the program prior to the
+	  Object_Manager instance being constructed.  At that time,
+	  locking is not needed.  The ACE_{TSS_}Singleton::instance ()
+	  methods rely on the state of the Object_Manager:  if it has
+	  not been constructed yet, then they don't guard allocation
+ 	  of their singleton instance.
+
+	  The Object_Manager constructs three locks (of types ACE_Null_Mutex,
+	  ACE_Thread_Mutex, and ACE_Recursive_Thread_Mutex) for use only
+	  by ACE_Singleton classes.  After the Object_Manager has been
+	  constructed, ACE_{TSS_}Singleton instantiations use one of those
+	  locks to guard their allocation of a new instance, via double-
+	  checked locking.
+
+	  This change has two impacts:
+	  1) ACE_{TSS_}Singleton users are limited to the following types
+	     for their ACE_LOCK instantiation parameters:  ACE_Null_Mutex,
+	     ACE_Thread_Mutex, and ACE_Recursive_Thread_Mutex.  If another
+	     type is needed, it can be easily added to ACE_Object_Manager:
+	     another overloaded get_singleton_lock () function and
+	     preallocated lock would have to be added.
+
+	  2) A single lock of each of the types mentioned above is used
+	     for all ACE_{TSS_}Singleton instantiations.  Previously,
+	     there was one lock per instantiation.  This change could
+	     have an impacted in threaded programs (ACE_MT_SAFE) with
+	     recursively constructed ACE_{TSS_}Singletons.  In that case,
+	     either ACE_Null_Mutex or ACE_Recursive_Thread_Mutex should
+	     be used for the ACE_LOCK instantiation parameter.  Use of
+	     ACE_Thread_Mutex would lead to deadlock.  Beyond that, I
+	     don't expect the smaller number of locks to have any
+	     negative impact because they're just used when initially
+	     allocating the singleton instances.
+
+	  In addition to the above change, I made these two other
+	  changes:
+	  1) ACE_Static_Object_Lock::instance ():  dynamically allocate
+	     a lock if the Object_Manager has not been constructed yet.
+	     This approach replaces the static lock that was necessary
+	     to allow the static services to be constructed.
+
+	  2) Consolidated the singleton_ access in ACE_TSS_Singleton
+	     via a singleton_i () internal accessor function.  Now,
+ 	     ACE_TSS_Singleton looks just like ACE_Singleton.
+
 	* ACE-INSTALL.html: updated DEC CXX 6.0 build/test status.
 
 	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i
