@@ -17,6 +17,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_ctype.h"
 
 #if !defined (__ACE_INLINE__)
 #include "EC_Mcast.i"
