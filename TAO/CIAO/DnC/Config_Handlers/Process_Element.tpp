@@ -27,8 +27,10 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
     {
       DOMNode* attribute_node = named_node_map->item (j);
       XStr strattrnodename (attribute_node->getNodeName ());
-      ACE_TString aceattrnodevalue =
+      char* aceattrnodevalue_ch =
         XMLString::transcode (attribute_node->getNodeValue ());
+      ACE_TString aceattrnodevalue = aceattrnodevalue_ch;
+      XMLString::release (&aceattrnodevalue_ch);
 
       // if xmi::id is given process the element and bind the value
       if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
@@ -43,12 +45,16 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
           XMLURL xml_url (aceattrnodevalue.c_str ());
           XMLURL result (aceattrnodevalue.c_str ());
           std::string url_string = aceattrnodevalue.c_str ();
-          ACE_TString doc_path =
+          char* doc_path_ch =
             XMLString::transcode ( doc->getDocumentURI ());
+          ACE_TString doc_path = doc_path_ch;
+          XMLString::release (&doc_path_ch);
           result.makeRelativeTo
             (XMLString::transcode (doc_path.c_str ()));
-          ACE_TString final_url =
+          char* final_url_ch =
             XMLString::transcode (result.getURLText ());
+          ACE_TString final_url = final_url_ch;
+          XMLString::release (&final_url_ch);
 
           DOMDocument* href_doc;
 
