@@ -1,3 +1,9 @@
+Fri Feb 25 18:39:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Domain/DomainS.{h,cpp,inl}:
+        * tao/Domain/DomainS_T.{h,cpp,inl}:
+          Regenerated
+
 Fri Feb 25 07:00:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/performance-tests/LoadBalancing/LBPerf/RPS/Makefile.am:
