@@ -90,30 +90,6 @@ TAO_UIOP_Transport::idle (void)
   return this->connection_handler_->make_idle ();
 }
 
-
-ssize_t
-TAO_UIOP_Transport::send (TAO_Stub *stub,
-                          int two_way,
-                          const ACE_Message_Block *message_block,
-                          const ACE_Time_Value *max_wait_time)
-{
-  if (stub == 0 || two_way)
-    {
-      return this->send (message_block,
-                         max_wait_time);
-    }
-  else
-    {
-      TAO_Sync_Strategy &sync_strategy = stub->sync_strategy ();
-
-      return sync_strategy.send (*this,
-                                 *stub,
-                                 message_block,
-                                 max_wait_time);
-    }
-}
-
-
 ssize_t
 TAO_UIOP_Transport::send (const ACE_Message_Block *message_block,
                           const ACE_Time_Value *max_wait_time,
@@ -240,10 +216,10 @@ TAO_UIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send (stub,
-                          twoway,
-                          stream.begin (),
-                          max_wait_time);
+  ssize_t n = this->send_or_buffer (stub,
+                                    twoway,
+                                    stream.begin (),
+                                    max_wait_time);
 
   if (n == -1)
     {
