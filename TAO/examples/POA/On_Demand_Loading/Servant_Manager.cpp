@@ -184,14 +184,24 @@ ServantManager_i::destroy_servant (PortableServer::Servant servant,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Entry<PortableServer::ObjectId,ACE_DLL*>;
+template class ACE_Hash<PortableServer::ObjectId>;
+template class ACE_Equal_To<PortableServer::ObjectId>;
 template class ACE_Hash_Map_Manager<PortableServer::ObjectId,ACE_DLL*, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<PortableServer::ObjectId,ACE_DLL*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId, ACE_DLL*, ACE_Hash<PortableServer::ObjectId>, ACE_Equal_To<PortableServer::ObjectId>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<PortableServer::ObjectId, ACE_DLL*, ACE_Hash<PortableServer::ObjectId>, ACE_Equal_To<PortableServer::ObjectId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<PortableServer::ObjectId,ACE_DLL*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<PortableServer::ObjectId, ACE_DLL*, ACE_Hash<PortableServer::ObjectId>, ACE_Equal_To<PortableServer::ObjectId>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<PortableServer::ObjectId,ACE_DLL*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<PortableServer::ObjectId, ACE_DLL*, ACE_Hash<PortableServer::ObjectId>, ACE_Equal_To<PortableServer::ObjectId>, ACE_Null_Mutex>;
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Entry<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex> 
+#pragma instantiate ACE_Hash_Map_Entry<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash<PortableServer::ObjectId,ACE_DLL*>
+#pragma instantiate ACE_Equal_To<PortableServer::ObjectId,ACE_DLL*>
 #pragma instantiate ACE_Hash_Map_Manager<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId, ACE_DLL*, ACE_Hash<PortableServer::ObjectId>, ACE_Equal_To<PortableServer::ObjectId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<PortableServer::ObjectId, ACE_DLL*, ACE_Hash<PortableServer::ObjectId>, ACE_Equal_To<PortableServer::ObjectId>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterato<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<PortableServer::ObjectId, ACE_DLL*, ACE_Hash<PortableServer::ObjectId>, ACE_Equal_To<PortableServer::ObjectId>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<PortableServer::ObjectId,ACE_DLL*,ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<PortableServer::ObjectId, ACE_DLL*, ACE_Hash<PortableServer::ObjectId>, ACE_Equal_To<PortableServer::ObjectId>, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

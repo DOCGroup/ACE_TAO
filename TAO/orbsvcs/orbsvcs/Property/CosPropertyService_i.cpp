@@ -1924,18 +1924,28 @@ TAO_PropertiesIterator::destroy (CORBA::Environment &_env)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>;
+template class ACE_Hash<CosProperty_Hash_Key>;
+template class ACE_Equal_To<CosProperty_Hash_Key>;
 template class ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>;
 template class TAO_Unbounded_Sequence<TAO_PropertySet*>;
 template class TAO_Unbounded_Sequence<TAO_PropertySetDef*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<CosProperty_Hash_Key, CosProperty_Hash_Value>
+#pragma instantiate ACE_Hash<CosProperty_Hash_Key>
+#pragma instantiate ACE_Equal_To<CosProperty_Hash_Key>
 #pragma instantiate ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Hash<CosProperty_Hash_Key>, ACE_Equal_To<CosProperty_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySet*>
 #pragma instantiate TAO_Unbounded_Sequence<TAO_PropertySetDef*>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

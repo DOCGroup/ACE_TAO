@@ -1471,19 +1471,29 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Property*>;
+template class ACE_Hash<TAO_String_Hash_Key>;
+template class ACE_Equal_To<TAO_String_Hash_Key>;
 template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>;
 template class ACE_Node<CosTrading::Property*>;
 template class ACE_Unbounded_Queue<CosTrading::Property*>;
 template class ACE_Unbounded_Queue_Iterator<CosTrading::Property*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Entry<TAO_String_Hash_Key, CosTrading::Property*>
+#pragma instantiate ACE_Hash<TAO_String_Hash_Key>
+#pragma instantiate ACE_Equal_To<TAO_String_Hash_Key>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Iterator<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<TAO_String_Hash_Key, CosTrading::Property*, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, CosTrading::Property*, ACE_Hash<TAO_String_Hash_Key>, ACE_Equal_To<TAO_String_Hash_Key>, ACE_Null_Mutex>
 #pragma instantiate ACE_Node<CosTrading::Property*>
 #pragma instantiate ACE_Unbounded_Queue<CosTrading::Property*>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CosTrading::Property*>
