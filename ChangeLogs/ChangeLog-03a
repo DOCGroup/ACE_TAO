@@ -1,3 +1,20 @@
+Fri Jul 13 12:16:03 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Asynch_BIO.h:
+	* ace/SSL/SSL_Asynch_BIO.cpp:
+	* ace/SSL/SSL_Asynch_Stream.h:
+	* ace/SSL/SSL_Asynch_Stream.cpp:
+
+	  New asynchrounous SSL stream implementation contributed by
+	  Alexander Libman <alexander.libman@baltimore.com>.
+
+	* ace/SSL/ACE_SSL.dsp:
+	* ace/SSL/Makefile:
+	* ace/SSL/Makefile.bor:
+
+	  Added new asynchronous SSL stream source files to these
+	  Makefiles and project files.
+
 Fri Jul 13 09:40:08 2001  Jerry D. De Master <jdemaster@rite-solutions.com>
 
 	* ace/Log_Msg.*,

@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACE_SSL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /D "NDEBUG" /D "_WINDOWS" /D "WIN32" /D "ACE_SSL_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /I "$(OPENSSL_ROOT)\inc32" /D "NDEBUG" /D "_WINDOWS" /D "WIN32" /D "ACE_SSL_BUILD_DLL" /FD /c
 # SUBTRACT CPP /X /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib libeay32.lib ssleay32.lib /nologo /dll /pdb:none /machine:I386 /out:"..\..\bin\ACE_SSL.dll" /libpath:"../"
+# ADD LINK32 ace.lib libeay32.lib ssleay32.lib /nologo /dll /pdb:none /machine:I386 /out:"..\..\bin\ACE_SSL.dll" /libpath:"../" /libpath:"$(OPENSSL_ROOT)\out32dll"
 
 !ELSEIF  "$(CFG)" == "ACE_SSL - Win32 Debug"
 
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "ACE_SSL_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_SSL_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../" /I "$(OPENSSL_ROOT)\inc32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_SSL_BUILD_DLL" /FD /c
 # SUBTRACT CPP /Fr /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -81,7 +81,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib libeay32.lib ssleay32.lib /nologo /dll /debug /machine:I386 /out:"..\..\bin\ACE_SSLd.dll" /libpath:"../"
+# ADD LINK32 aced.lib libeay32.lib ssleay32.lib /nologo /dll /debug /machine:I386 /out:"..\..\bin\ACE_SSLd.dll" /libpath:"../" /libpath:"$(OPENSSL_ROOT)\out32dll.dbg"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -96,6 +96,14 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\SSL_Accept_Handler.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSL_Asynch_BIO.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSL_Asynch_Stream.cpp
 # End Source File
 # Begin Source File
 
@@ -128,6 +136,10 @@ SOURCE=.\SSL_SOCK_Stream.cpp
 # Begin Source File
 
 SOURCE=.\SSL_Accept_Handler.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSL_Asynch_Stream.h
 # End Source File
 # Begin Source File
 
