@@ -1,3 +1,13 @@
+Fri Mar 10 11:33:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Smart_Proxies/On_Demand/Smart_Test_Factory.cpp: Fixed a
+	  typo that was preventing compilation. 
+	* tests/Smart_Proxies/On_Demand/run_test.pl: Made the run_test.pl
+	  to look in to the right directory for ACEutils. 
+	  
+	  DISCLAIMER:The above fixes does not mean that the test actually
+	  works. I feel the test is broken.
+	
 Thu Mar 09 22:55:52 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Servant_Base.cpp (_create_stub): We must not use the stub
@@ -13,18 +23,16 @@ Thu Mar 09 18:25:00 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 	* TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.h:
 	* TAO/orbsvcs/orbsvcs/CosEvent/ProxyPushSupplier_i.h:
 	* TAO/orbsvcs/orbsvcs/CosEvent/SupplierAdmin_i.h:
-	* TAO/orbsvcs/orbsvcs/AV/Transport.h:
-
-	 These files were using the  #if !defined (WHATEVER) as multiple
-	 inclusion guard instead of  #ifndef WHATEVER. Thanks to Paul
-	 Calabrese <calabrese_p@ociweb.com> for reporting that.
+	* TAO/orbsvcs/orbsvcs/AV/Transport.h: These files were using the
+	  #if !defined (WHATEVER) as multiple inclusion guard instead of
+	  #ifndef WHATEVER. Thanks to Paul Calabrese
+	  <calabrese_p@ociweb.com> for reporting that. 
 
 	* TAO/orbsvcs/orbsvcs/AV/TCP.h:
 	* TAO/orbsvcs/orbsvcs/Event/Debug_Macros.h:
-	* TAO/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h:
-
-	While this file were missing multiple inclusion guard. Thanks to
-	Paul Calabrese <calabrese_p@ociweb.com> for reporting that.
+	* TAO/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h: While this file
+	  were missing multiple inclusion guard. Thanks to Paul Calabrese
+	  <calabrese_p@ociweb.com> for reporting that. 
 
 Thu Mar 09 16:22:10 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
