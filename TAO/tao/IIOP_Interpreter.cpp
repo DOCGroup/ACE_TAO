@@ -740,7 +740,7 @@ TAO_IIOP_Interpreter::calc_key_union_attributes (TAO_InputCDR *stream,
         align_ptr ap;
 
         member_size = sizeof (void*);
-        member_alignment = (char *) &ap.two - (char *) &ap.one 
+        member_alignment = (char *) &ap.two - (char *) &ap.one
           - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
         (void) CORBA::TypeCode::skip_typecode (*stream);
       }
@@ -1032,7 +1032,7 @@ TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
   return retval;
 }
 
-int 
+int
 TAO_IIOP_Interpreter
 ::calc_union_attr_is_var_sized_member (TAO_InputCDR *stream,
                                        CORBA::Boolean &flag)
@@ -1099,9 +1099,9 @@ TAO_IIOP_Interpreter
           }
 
         assert (encap <= UINT_MAX);
-        
+
         TAO_InputCDR nested (*stream, temp);
-        
+
         if (nested.good_bit () == 0)
           {
             return -1;
@@ -1130,9 +1130,9 @@ TAO_IIOP_Interpreter
           }
 
         assert (encap <= UINT_MAX);
-        
+
         TAO_InputCDR nested (*stream, temp);
-        
+
         if (nested.good_bit () == 0)
           {
             return -1;
@@ -1145,7 +1145,7 @@ TAO_IIOP_Interpreter
           {
             return -1;
           }
-        
+
         CORBA::ULong member_count;
         if (nested.read_ulong (member_count) == 0)
           {
@@ -1179,7 +1179,7 @@ TAO_IIOP_Interpreter
       return -1;
     }
   // cannot reach here
-  return -1;
+  ACE_NOTREACHED (return -1);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
