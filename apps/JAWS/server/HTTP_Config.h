@@ -15,8 +15,6 @@
 // 
 // ============================================================================
 
-#include "ace/Singleton.h"
-
 class HTTP_Config_Info;
 
 class HTTP_Config
