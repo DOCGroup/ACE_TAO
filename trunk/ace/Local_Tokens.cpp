@@ -495,6 +495,8 @@ ACE_Mutex_Token::acquire (ACE_TPQ_Entry *caller,
 
   errno = EWOULDBLOCK;
   ACE_RETURN (-1);
+
+  ACE_NOTREACHED (return -1);
 }
 
 int
@@ -528,6 +530,8 @@ ACE_Mutex_Token::tryacquire (ACE_TPQ_Entry *caller)
       errno = EWOULDBLOCK;
       ACE_RETURN (-1);
     }
+
+  ACE_NOTREACHED (return -1);
 }
 
 int
@@ -562,6 +566,8 @@ ACE_Mutex_Token::renew (ACE_TPQ_Entry *caller,
   // Tell the caller that the operation would block.
   errno = EWOULDBLOCK;
   ACE_RETURN (-1);
+
+  ACE_NOTREACHED (return -1);
 }
 
 // Release the current holder of the token (which had
@@ -766,6 +772,8 @@ ACE_RW_Token::acquire (ACE_TPQ_Entry *caller,
 
   errno = EWOULDBLOCK;
   ACE_RETURN (-1);
+
+  ACE_NOTREACHED (return -1);
 }
 
 int
@@ -821,6 +829,8 @@ ACE_RW_Token::tryacquire (ACE_TPQ_Entry *caller)
 
   errno = EWOULDBLOCK;
   ACE_RETURN (-1);
+
+  ACE_NOTREACHED (return -1);
 }
 
 int
@@ -865,6 +875,8 @@ ACE_RW_Token::renew (ACE_TPQ_Entry *caller,
   // Tell the caller that the operation would block.
   errno = EWOULDBLOCK;
   ACE_RETURN (-1);
+
+  ACE_NOTREACHED (return -1);
 }
 
 int

@@ -49,8 +49,8 @@ ACE_Token_Invariant_Manager::mutex_acquired (const ACE_TCHAR *token_name)
   ACE_Mutex_Invariants *inv = 0;
   if (this->get_mutex (token_name, inv) == -1)
     return -1;
-  else
-    return inv->acquired ();
+
+  return inv->acquired ();
 }
 
 int
@@ -102,8 +102,8 @@ ACE_Token_Invariant_Manager::reader_acquired (const ACE_TCHAR *token_name)
   ACE_RWLock_Invariants *inv = 0;
   if (this->get_rwlock (token_name, inv) == -1)
     return -1;
-  else
-    return inv->reader_acquired ();
+
+  return inv->reader_acquired ();
 }
 
 int
@@ -116,8 +116,8 @@ ACE_Token_Invariant_Manager::writer_acquired (const ACE_TCHAR *token_name)
   ACE_RWLock_Invariants *inv = 0;
   if (this->get_rwlock (token_name, inv) == -1)
     return -1;
-  else
-   return inv->writer_acquired ();
+
+  return inv->writer_acquired ();
 }
 
 void

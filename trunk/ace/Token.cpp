@@ -314,16 +314,14 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
       // Return error.
       return -1;
     }
-  else
-    {
-      // If this is a normal wakeup, this thread should be runnable.
-      ACE_ASSERT (my_entry.runable_);
 
-      if (this->signal_all_threads_ != 0)
-        return 2;
-      else
-        return ret;
-    }
+  // If this is a normal wakeup, this thread should be runnable.
+  ACE_ASSERT (my_entry.runable_);
+
+  if (this->signal_all_threads_ != 0)
+    return 2;
+
+  return ret;
 }
 
 // By default this is a no-op.
@@ -468,19 +466,17 @@ ACE_Token::renew (int requeue_position,
       // Return error.
       return -1;
     }
-  else
-    {
-      // If this is a normal wakeup, this thread should be runnable.
-      ACE_ASSERT (my_entry.runable_);
 
-      // Reinstate nesting level.
-      this->nesting_level_ = save_nesting_level_;
+  // If this is a normal wakeup, this thread should be runnable.
+  ACE_ASSERT (my_entry.runable_);
 
-      if (this->signal_all_threads_ != 0)
-        return 2;
-      else
-        return 0;
-    }
+  // Reinstate nesting level.
+  this->nesting_level_ = save_nesting_level_;
+
+  if (this->signal_all_threads_ != 0)
+    return 2;
+
+  return 0;
 }
 
 // Release the current holder of the token (which had
