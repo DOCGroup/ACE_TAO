@@ -15,18 +15,25 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// be/be_codegen.cpp:314
 
 
 #include "Default_ORTC.h"
-
-#include "tao/Any_T.h"
+#include "tao/Any.h"
 #include "tao/ValueFactory.h"
+
+
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -37,7 +44,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_TAO_Default_ORT_ObjectReferenceTemplate[] =
 {
@@ -86,7 +93,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_cs.cpp:94
+// be/be_visitor_valuetype/valuetype_cs.cpp:94
 
 void
 TAO_Default_ORT::tao_ObjectReferenceTemplate_life::tao_add_ref (
@@ -244,7 +251,7 @@ CORBA::Boolean TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_obv_cs.cpp:58
+// be/be_visitor_valuetype/valuetype_obv_cs.cpp:58
 
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
 {}
@@ -262,7 +269,7 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal__TAO_Default_ORT_Ob
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/any_op_cs.cpp:56
+// be/be_visitor_valuetype/any_op_cs.cpp:57
 
 // Copying insertion.
 void
@@ -307,15 +314,13 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-template class TAO_Valuetype_Manager<TAO_Default_ORT::ObjectReferenceTemplate, TAO_Default_ORT::ObjectReferenceTemplate_var,TAO_Default_ORT::tao_ObjectReferenceTemplate_life>;
-template class TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>;
+  template class TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Valuetype_Manager<TAO_Default_ORT::ObjectReferenceTemplate, TAO_Default_ORT::ObjectReferenceTemplate_var,TAO_Default_ORT::tao_ObjectReferenceTemplate_life>
 #  pragma instantiate TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:270
+// be/be_valuetype.cpp:245
 
 void
 CORBA::add_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
@@ -336,7 +341,7 @@ CORBA::remove_ref (TAO_Default_ORT::ObjectReferenceTemplate * vt)
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_cs.cpp:73
+// be/be_visitor_valuetype/cdr_op_cs.cpp:73
 
 CORBA::Boolean
 operator<< (
@@ -365,7 +370,7 @@ operator>> (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/marshal_cs.cpp:44
+// be/be_visitor_valuetype/marshal_cs.cpp:44
 
 CORBA::Boolean
 OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_marshal_state (TAO_OutputCDR &)

@@ -15,13 +15,19 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
+// TAO_IDL - Generated from 
+// be/be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
@@ -31,7 +37,7 @@ ACE_INLINE
 TAO_Default_ORT::ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
 {}
 
-ACE_INLINE const char*
+ACE_INLINE const char* 
 TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 {
   return "IDL:TAO_Default_ORT/ObjectReferenceTemplate:1.0";
@@ -50,7 +56,7 @@ TAO::Any_Impl_T<TAO_Default_ORT::ObjectReferenceTemplate>::to_value (
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:242
+// be/be_valuetype.cpp:217
 
 #if defined (__ACE_INLINE__)
 
@@ -64,7 +70,8 @@ TAO_NAMESPACE_CLOSE
 #endif /*__ACE_INLINE__*/
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+// be/be_visitor_valuetype/cdr_op_ci.cpp:60
 
- CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
- CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
+TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
+TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);
+
