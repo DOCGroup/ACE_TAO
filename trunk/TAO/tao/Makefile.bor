@@ -6,7 +6,8 @@ NAME = TAO
 
 OBJFILES = \
 	$(OBJDIR)\Acceptor_Registry.obj \
-	$(OBJDIR)\Active_Object_Map.obj \
+        $(OBJDIR)\Acceptor_Filter.obj \
+        $(OBJDIR)\Adapter.obj \
 	$(OBJDIR)\Any.obj \
 	$(OBJDIR)\append.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
@@ -29,11 +30,10 @@ OBJFILES = \
 	$(OBJDIR)\Direct_Priority_Mapping.obj \
 	$(OBJDIR)\DLL_ORB.obj \
 	$(OBJDIR)\DomainC.obj \
-	$(OBJDIR)\DomainS.obj \
+        $(OBJDIR)\DynamicC.obj \
 	$(OBJDIR)\Encodable.obj \
 	$(OBJDIR)\Environment.obj \
 	$(OBJDIR)\Exception.obj \
-	$(OBJDIR)\Forwarding_Servant.obj \
 	$(OBJDIR)\GIOP_Message_Accept_State.obj \
 	$(OBJDIR)\GIOP_Message_Acceptors.obj \
 	$(OBJDIR)\GIOP_Message_Base.obj \
@@ -51,8 +51,6 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Lite_Factory.obj \
 	$(OBJDIR)\IIOP_Profile.obj \
 	$(OBJDIR)\IIOP_Transport.obj \
-	$(OBJDIR)\ImplRepoC.obj \
-	$(OBJDIR)\ImplRepoS.obj \
 	$(OBJDIR)\InterfaceC.obj \
 	$(OBJDIR)\Invocation.obj \
 	$(OBJDIR)\IOPC.obj \
@@ -60,7 +58,6 @@ OBJFILES = \
 	$(OBJDIR)\IOR_LookupTable.obj \
 	$(OBJDIR)\IORC.obj \
 	$(OBJDIR)\IORManipulation.obj \
-	$(OBJDIR)\Key_Adapters.obj \
 	$(OBJDIR)\Leader_Follower.obj \
 	$(OBJDIR)\Linear_Priority_Mapping.obj \
 	$(OBJDIR)\LocalObject.obj \
@@ -68,32 +65,27 @@ OBJFILES = \
 	$(OBJDIR)\Marshal.obj \
 	$(OBJDIR)\Messaging_Policy_i.obj \
 	$(OBJDIR)\MessagingC.obj \
-	$(OBJDIR)\MessagingS.obj \
 	$(OBJDIR)\MProfile.obj \
 	$(OBJDIR)\NVList.obj \
 	$(OBJDIR)\Object.obj \
-	$(OBJDIR)\Object_Adapter.obj \
 	$(OBJDIR)\Object_KeyC.obj \
 	$(OBJDIR)\Object_Loader.obj \
 	$(OBJDIR)\ObjectIDList.obj \
 	$(OBJDIR)\operation_details.obj \
-	$(OBJDIR)\Operation_Table.obj \
 	$(OBJDIR)\ORB.obj \
 	$(OBJDIR)\ORB_Core.obj \
 	$(OBJDIR)\params.obj \
 	$(OBJDIR)\Pluggable.obj \
 	$(OBJDIR)\Pluggable_Messaging.obj \
 	$(OBJDIR)\Pluggable_Messaging_Utils.obj \
-	$(OBJDIR)\POA.obj \
-	$(OBJDIR)\PortableServerC.obj \
-	$(OBJDIR)\POAManager.obj \
         $(OBJDIR)\Policy_Factory.obj \
 	$(OBJDIR)\Policy_Manager.obj \
 	$(OBJDIR)\PolicyC.obj \
-	$(OBJDIR)\PolicyS.obj \
 	$(OBJDIR)\PollableC.obj \
 	$(OBJDIR)\PollableS.obj \
 	$(OBJDIR)\Pool_Per_Endpoint.obj \
+        $(OBJDIR)\PortableInterceptor.obj \
+        $(OBJDIR)\PortableInterceptorC.obj \
 	$(OBJDIR)\Principal.obj \
 	$(OBJDIR)\Priority_Mapping.obj \
 	$(OBJDIR)\Priority_Mapping_Manager.obj \
@@ -106,6 +98,7 @@ OBJFILES = \
 	$(OBJDIR)\Asynch_Reply_Dispatcher.obj \
 	$(OBJDIR)\DII_Reply_Dispatcher.obj \
 	$(OBJDIR)\Request.obj \
+        $(OBJDIR)\Request_info.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\RT_Current.obj \
 	$(OBJDIR)\RT_Mutex.obj \
@@ -114,7 +107,6 @@ OBJFILES = \
 	$(OBJDIR)\RTCORBAC.obj \
 	$(OBJDIR)\RTCORBAS.obj \
 	$(OBJDIR)\Sequence.obj \
-	$(OBJDIR)\Servant_Base.obj \
 	$(OBJDIR)\Server_Request.obj \
 	$(OBJDIR)\Server_Strategy_Factory.obj \
 	$(OBJDIR)\Services.obj \
@@ -131,7 +123,6 @@ OBJFILES = \
 	$(OBJDIR)\Sync_Strategies.obj \
 	$(OBJDIR)\Tagged_Components.obj \
 	$(OBJDIR)\Tagged_Profile.obj \
-	$(OBJDIR)\TAO.obj \
 	$(OBJDIR)\TAO_Internal.obj \
 	$(OBJDIR)\TAO_Singleton_Manager.obj \
 	$(OBJDIR)\TAOC.obj \

@@ -1,8 +1,14 @@
 #
+
 # Makefile for building the TAO IDL compiler
+
 #
 
+
+
 NAME = tao_idl
+
+
 
 OBJFILES = \
 	$(OBJDIR)\tao_idl.obj \
@@ -36,7 +42,6 @@ OBJFILES = \
 	$(OBJDIR)\ast_union.obj \
 	$(OBJDIR)\ast_union_branch.obj \
 	$(OBJDIR)\ast_union_label.obj \
-	$(OBJDIR)\be_args.obj \
 	$(OBJDIR)\be_argument.obj \
 	$(OBJDIR)\be_array.obj \
 	$(OBJDIR)\be_attribute.obj \
@@ -49,8 +54,8 @@ OBJFILES = \
 	$(OBJDIR)\be_expression.obj \
 	$(OBJDIR)\be_field.obj \
 	$(OBJDIR)\be_generator.obj \
+        $(OBJDIR)\be_global.obj \
 	$(OBJDIR)\be_helper.obj \
-	$(OBJDIR)\be_init.obj \
 	$(OBJDIR)\be_interface.obj \
 	$(OBJDIR)\be_interface_fwd.obj \
 	$(OBJDIR)\be_interface_strategy.obj \
@@ -101,13 +106,12 @@ OBJFILES = \
 	$(OBJDIR)\be_visitor_valuetype.obj \
 	$(OBJDIR)\be_visitor_valuetype_fwd.obj \
 	$(OBJDIR)\drv_args.obj \
-	$(OBJDIR)\drv_fork.obj \
 	$(OBJDIR)\drv_init.obj \
-	$(OBJDIR)\drv_link.obj \
 	$(OBJDIR)\drv_preproc.obj \
 	$(OBJDIR)\drv_private.obj \
 	$(OBJDIR)\fe_declarator.obj \
 	$(OBJDIR)\fe_extern.obj \
+        $(OBJDIR)\fe_global.obj \
 	$(OBJDIR)\fe_init.obj \
 	$(OBJDIR)\fe_interface_header.obj \
 	$(OBJDIR)\fe_lookup.obj \
@@ -139,3 +143,4 @@ LIBFILES = $(ACE_LIB)
 CPPDIR = .;ast;be;driver;fe;narrow;util
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
+
