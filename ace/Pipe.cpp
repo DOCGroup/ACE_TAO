@@ -5,7 +5,11 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_NS_unistd.h"
+
+#if defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
+#  include "ace/OS_NS_unistd.h"
+#endif  // ACE_HAS_STREAM_PIPES || __QNX__
+
 #include "ace/os_include/netinet/os_tcp.h"
 
 #if !defined (__ACE_INLINE__)
