@@ -13,7 +13,7 @@ require Uniqueid;
 
 # amount of delay between running the servers
 
-$sleeptime = 10;
+$sleeptime = 8;
 
 # variables for parameters
 
@@ -30,17 +30,38 @@ sub name_server
 
 sub client
 {
-  my $args = "-ORBnameserviceport $nsmport";
+  my $args = $_[0]." "."-ORBnameserviceport $nsmport";
   my $prog = "client".$Process::EXE_EXT;
     
   system ($prog." ".$args);
 }
 
-name_server ();
-sleep $sleeptime;
-client ();
+# Options for all tests recognized by the 'client' program. 
+@opts = ("-s", "-t", "-i", "-e");
 
-$NS->Kill ();
+@comments = ("Simple Test: \n", 
+	     "Tree Test: \n",
+	     "Iterator Test: \n",
+	     "Exceptions Test: \n");
+
+$test_number = 0;
+
+# Run server and client with each option available to the client.
+foreach $o (@opts)
+{
+  name_server ();
+
+  sleep $sleeptime;
+  print "\n";
+  print "          ".$comments[$test_number];
+
+  client ($o);
+
+  $NS->Kill ();
+  $test_number++;
+}
+
+print "\n";
 
 # @@ Capture any exit status from the processes.
 exit 0;

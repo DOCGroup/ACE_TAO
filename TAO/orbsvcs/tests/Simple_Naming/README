@@ -70,7 +70,9 @@ root->rebind (level1/level2/foo, obj2) to have a different object under the name
 root->resolve (level1/level2/foo) to make sure correct reference is returned.
 
 
-Expected Output: none
+Expected Output: 
+
+All funtions work properly
 ********************************************
 
 Exceptions Test.
