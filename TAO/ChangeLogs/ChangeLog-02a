@@ -1,3 +1,12 @@
+Tue Aug 21 09:41:17 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/IORManipulation/TAO_IORManip.dsp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Static.dsp:
+
+          Changed the names of the libraries in some configurations
+          to be more consistent. Thanks to Frank Wolf <WolfF@Becker.de>
+          for pointing these out.
+
 Mon Aug 20 11:27:37 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
         * test/Strategies/Strategies.dsw:
