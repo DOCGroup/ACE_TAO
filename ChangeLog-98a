@@ -1,3 +1,8 @@
+Thu Jan 15 00:00:56 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Message_Queue.cpp (open): The fix from Slawomir Kuzniar was
+ 	  incorrect.  I reverted the change.
+
 Wed Jan 14 20:41:35 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Signal.i (is_member): 
@@ -13,7 +18,7 @@ Wed Jan 14 20:27:44 1998    <coryan@MILONGA>
 Wed Jan 14 19:01:59 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Message_Queue.cpp (open): In Message_Queue::open
- 	  deactivated_ flag is beeing set to 0 instead of
+ 	  deactivated_ flag is being set to 0 instead of
  	  WAS_INACTIVE. This is causing incorrect return value from
  	  first-time call to activate().  Thanks to Slawomir Kuzniar
  	  <kuzniar@Bear.COM> for reporting this.
