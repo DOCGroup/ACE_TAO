@@ -86,7 +86,7 @@
 // used within try blocks.
 # define ACE_THROW(EXCEPTION) throw EXCEPTION
 // Throwing an exception when the function reqires a return value.
-# if defined (WIN32)
+# if defined (WIN32) || defined (__HP_aCC)
 #   define ACE_THROW_RETURN(EXCEPTION, RETV) \
       do \
         { \
