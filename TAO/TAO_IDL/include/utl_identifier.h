@@ -100,12 +100,15 @@ public:
   long  compare (Identifier *other);
   // compare with other Identifier
 
+  long case_compare (Identifier *other);
+  // also check for case-only difference
+
   // =Dumping
 
   virtual void  dump (ostream &o);
   // dump to an ostream
 
-  private:
+private:
     // Storage for data
     char        *pv_string;
 };
