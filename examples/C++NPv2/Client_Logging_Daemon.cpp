@@ -51,7 +51,7 @@ protected:
   virtual void *forward ();
 
   // Send the buffered log records using a gather-write operation.
-  virtual int send (ACE_Message_Block *blocks[], size_t count);
+  virtual int send (ACE_Message_Block *blocks[], size_t &count);
 
   // Entry point into forwarder thread of control.
   static void *run_svc (void *arg);
