@@ -73,14 +73,12 @@ AV_Svc_Handler::open (void *)
       // socket the connection is actually closed. otherwise, the
       // connection would remain open forever because the parent still
       // has a connected socket.
-      this->destroy ();
-
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Parent Returning from AV_Svc_Handler::open\n"));
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
       //shutdown the ORB
-      TAO_ORB_Core_instance ()->reactor ()->run_event_loop ();
-      // run the event loop again.
+
+      this->destroy ();
       return 0;
       
     }
@@ -275,19 +273,16 @@ AV_Server_Sig_Handler::register_handler (void)
                        "register_handler"),
                       -1);
 
-  // Create a sigset_t corresponding to the signals we want to catch.
-  ACE_Sig_Set sig_set;
-
   // handles these signals.
-  sig_set.sig_add (SIGCHLD);  
-  sig_set.sig_add (SIGBUS);
-  sig_set.sig_add (SIGINT);
-  sig_set.sig_add (SIGTERM);
+  this->sig_set.sig_add (SIGCHLD);  
+  this->sig_set.sig_add (SIGBUS);
+  this->sig_set.sig_add (SIGINT);
+  this->sig_set.sig_add (SIGTERM);
 
   // Register the signal handler object to catch the signals.  if
-  // (ACE_Reactor::instance ()->register_handler (sig_set,
+  // (ACE_Reactor::instance ()->register_handler (this->sig_set,
   if (TAO_ORB_Core_instance ()->reactor ()->register_handler 
-      (sig_set, this) == -1)
+      (this->sig_set, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "%p\n", 
                        "register_handler"),
@@ -409,6 +404,11 @@ AV_Server_Sig_Handler::int_handler (int sig)
   ACE_DEBUG ((LM_DEBUG, 
               "(%P|%t) killed by signal %d",
               sig));
+}
+
+AV_Server_Sig_Handler::~AV_Server_Sig_Handler (void)
+{
+  TAO_ORB_Core_instance ()->reactor ()->remove_handler (this->sig_set);
 }
 
 // AV_Server routines
@@ -595,8 +595,16 @@ AV_Server::run (CORBA::Environment& env)
   // Run the ORB event loop
   this->orb_manager_.run (env);
 
-  TAO_CHECK_ENV_RETURN (env,-1);
-
+  /*
+  if (this->acceptor_.open (this->server_control_addr_,
+                             TAO_ORB_Core_instance ()->reactor ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  */
+  TAO_ORB_Core_instance ()->reactor ()->register_handler (&this->acceptor_,
+                                                          ACE_Event_Handler::ACCEPT_MASK);
+  TAO_ORB_Core_instance ()->reactor ()->run_event_loop ();
+  //run the event loop again.
+      
   ACE_DEBUG ((LM_DEBUG,
               "(%P)AV_Server::run () "
               "came out of the (acceptor) "
@@ -626,16 +634,17 @@ AV_Server::~AV_Server (void)
 int
 main (int argc, char **argv)
 {
-  AV_Server vcr_server;
+  AV_Server *vcr_server 
+    = new AV_Server;
 
   TAO_TRY
     {
       // Parses the arguments, and initializes the server.
-      if (vcr_server.init (argc, argv, TAO_TRY_ENV) == -1)
+      if (vcr_server->init (argc, argv, TAO_TRY_ENV) == -1)
         return 1;
   
       // Runs the reactor event loop.
-      vcr_server.run (TAO_TRY_ENV);
+      vcr_server->run (TAO_TRY_ENV);
     }
   TAO_CATCHANY
     {
