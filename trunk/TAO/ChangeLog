@@ -1,3 +1,10 @@
+Thu Jan 16 16:27:59 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+       * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.{h,cpp}: Added patches from
+	 this checkin "Mon Oct 28 18:21:18 CET 2002  Oliver Kellogg
+         <oliver.kellogg@sysde.eads.net>". The patches mysteriously
+	 dissappeared. Thanks to Oliver Kellogg for alerting me. 
+
 Thu Jan 16 13:25:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/rtcorba/features.html: Fixed obsolete references to the

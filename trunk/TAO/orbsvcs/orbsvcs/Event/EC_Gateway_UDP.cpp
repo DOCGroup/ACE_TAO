@@ -401,8 +401,14 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
   //              from.get_ip_address (), from.get_port_number (),
   //              fragment_id, fragment_count));
 
+
   TAO_ECG_UDP_Request_Index map_index (from, request_id);
   Request_Map_Entry* entry;
+
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    tao_mon,
+                    this->request_map_protector_,
+	            -1);
 
   if (this->request_map_.find (map_index, entry) == -1)
     {
@@ -548,6 +554,11 @@ int
 TAO_ECG_UDP_Receiver::handle_timeout (const ACE_Time_Value& /* tv */,
                                       const void* /* act */)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    tao_mon,
+                    this->request_map_protector_,
+                    -1);
+
   Request_Map::iterator begin = this->request_map_.begin ();
   Request_Map::iterator end = this->request_map_.end ();
   {
