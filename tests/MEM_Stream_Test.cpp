@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 #include "ace/MEM_Connector.h"

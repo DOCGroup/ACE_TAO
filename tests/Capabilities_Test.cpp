@@ -17,6 +17,8 @@
 //
 // ============================================================================
 
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Capabilities.h"
 #include "test_config.h"
 

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
