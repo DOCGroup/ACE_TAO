@@ -87,7 +87,7 @@ ACE_ODB::register_object (const ACE_Dumpable *dumper)
 {
   ACE_TRACE ("ACE_ODB::register_object");
   int i;
-  int slot;
+  int slot = 0;
 
   for (i = 0; i < this->current_size_; i++)
     {
