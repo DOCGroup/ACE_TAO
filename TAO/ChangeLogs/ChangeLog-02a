@@ -13,20 +13,29 @@ Sun Mar 11 10:39:14 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/LongUpcalls/ami_server.bor:
         * tests/LongUpcalls/blocking_client.bor:
         * tests/LongUpcalls/blocking_server.bor:
-        * MT_Client/Makefile.bor:
-        * MT_Client/client.bor:
-        * MT_Client/orb_creation.bor:
-        * MT_Client/server.bor:
-        * MT_Client/simple-client.bor:
-        * MT_Server/Makefile.bor:
-        * MT_Server/client.bor:
-        * MT_Server/server.bor:
-        * Muxing/Makefile.bor:
-        * Muxing/client.bor:
-        * Muxing/server.bor:
-        * Server_Leaks/Makefile.bor:
-        * Server_Leaks/client.bor:
-        * Server_Leaks/server.bor:
+        * tests/MT_Client/Makefile.bor:
+        * tests/MT_Client/client.bor:
+        * tests/MT_Client/orb_creation.bor:
+        * tests/MT_Client/server.bor:
+        * tests/MT_Client/simple-client.bor:
+        * tests/MT_Server/Makefile.bor:
+        * tests/MT_Server/client.bor:
+        * tests/MT_Server/server.bor:
+        * tests/Muxing/Makefile.bor:
+        * tests/Muxing/client.bor:
+        * tests/Muxing/server.bor:
+        * tests/Server_Leaks/Makefile.bor:
+        * tests/Server_Leaks/client.bor:
+        * tests/Server_Leaks/server.bor:
+        * performance-tests/Makefile.bor:
+        * performance-tests/Latency/Makefile.bor:
+        * performance-tests/Latency/ami-latency-client.bor:
+        * performance-tests/Latency/ami-throughput-client.bor:
+        * performance-tests/Latency/client.bor:
+        * performance-tests/Latency/dii_client.bor:
+        * performance-tests/Latency/server.bor:
+        * performance-tests/Latency/st_client.bor:
+        * performance-tests/Latency/st_server.bor:
           Add Borland Makefiles for several crucial tests.
 
 Sun Mar 11 09:53:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>

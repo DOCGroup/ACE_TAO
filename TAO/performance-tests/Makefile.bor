@@ -4,6 +4,7 @@
 #
 
 DIRS = \
-        RTCorba
+        RTCorba \
+	Latency
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
