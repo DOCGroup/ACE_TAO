@@ -1,3 +1,11 @@
+Mon Dec 29 13:00:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1568_Regression/client.dsp:
+	* tests/Bug_1568_Regression/server.dsp:
+	* tests/Bug_1568_Regression/Bug_1568_Regression.dsw:
+
+	  New project and workspace files.
+
 Mon Dec 29 12:55:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1670_Regression/server.dsp (BuildCmds): 
