@@ -4,8 +4,6 @@
 # is, you would pick it up and take it to another computer.
 #
 
-BINDIR = $(CORE_BINDIR)
-
 INSTALL_THIS_TARGET = 1
 
 !include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
