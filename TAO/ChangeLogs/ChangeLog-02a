@@ -1,3 +1,9 @@
+Sat Dec 23 11:54:07 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed compile
+	  errors. 
+
 Fri Dec 22 17:31:24 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/RT_ORB_Loader.cpp: 

@@ -15,6 +15,7 @@
 #include "tao/IIOP_Endpoint.h"
 
 
+
 #if !defined (__ACE_INLINE__)
 # include "SSLIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
@@ -272,9 +273,14 @@ TAO_SSLIOP_Connection_Handler::process_listen_point_list (
                           listen_point.host.in ());
 
 
+        // Construct an  IIOP_Endpoint object
+      TAO_IIOP_Endpoint tmpoint (addr,
+                                 0);
+
       // Construct an  IIOP_Endpoint object
-      TAO_SSLIOP_Endpoint endpoint (addr,
-                                    0);
+      TAO_SSLIOP_Endpoint endpoint (0,
+                                    &tmpoint);
+
 
       // Construct a property object
       TAO_Base_Connection_Property prop (&endpoint);
