@@ -429,15 +429,11 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
       // because stat is better supported on most non-unix platforms.
       ACE_stat exists;
       if (ACE_OS::stat (file, &exists) == 0)
-        {
-          // If it exists, but we couldn't open it for reading then
-          // we must not have permission to read it.
-          errno = EPERM;
-        }
+        // If it exists, but we couldn't open it for reading then we
+        // must not have permission to read it.
+        errno = EPERM;
       else
-       {
-          errno = ENOENT;
-       }
+        errno = ENOENT;
       result = -1;
     }
   else

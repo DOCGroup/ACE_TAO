@@ -681,8 +681,10 @@ Thu Nov 18 07:38:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Service_Config.cpp:
 
-          Distinguish between the existence of and the file permissions for
-          the default service configurator file (svc.conf).
+          Distinguish between the existence of and the file permissions
+ 	  for the default service configurator file (svc.conf).  Thanks to
+ 	  Dipa Suri <dipa.suri@lmco.com> and Adam Howell
+ 	  <adam.s.howell@lmco.com> for reporting this.
 
 Thu Nov 18 07:10:26 2004  Chad Elliott  <elliott_c@ociweb.com>
 
