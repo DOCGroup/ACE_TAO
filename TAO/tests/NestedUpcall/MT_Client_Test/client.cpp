@@ -24,10 +24,11 @@
 #include "local_server.h"
 
 
-MT_Client_Task::MT_Client_Task (int argc,
-                                char **argv)
+MT_Client_Task::MT_Client_Task (int argc, char **argv,
+				int client_number)
   : argc_ (argc),
-    argv_ (argv)
+    argv_ (argv),
+    client_number_ (client_number)
 {
 }
 
@@ -35,7 +36,8 @@ int
 MT_Client_Task::svc (void)
 {
   if (this->mT_Client_.init (this->argc_,
-                             this->argv_) == -1)
+                             this->argv_,
+			     this->client_number_) == -1)
     return 1;
   else
     return this->mT_Client_.run ();
@@ -93,7 +95,7 @@ MT_Client::parse_args (void)
         break;
         // Depending on the thread ID we pick the IOR
       case 'f': // read the IOR from the file.
-        if ((this->thread_ID_ % 2) == 0)
+        if ((this->client_number_ % 2) == 0)
         {
           result = this->read_ior (get_opts.optarg);
           // read IOR for MT Object
@@ -105,7 +107,7 @@ MT_Client::parse_args (void)
         }
         break;
       case 'g': // read the IOR from the file.
-        if ((this->thread_ID_ % 2) == 1)
+        if ((this->client_number_ % 2) == 1)
         {
           result = this->read_ior (get_opts.optarg);
           // read IOR for Object A
@@ -180,8 +182,8 @@ MT_Client::~MT_Client (void)
 
 
 int
-MT_Client::init (int argc,
-                 char **argv)
+MT_Client::init (int argc, char **argv,
+		 int client_number)
 {
 
   // Make a copy of argv since ORB_init will change it.
@@ -191,9 +193,7 @@ MT_Client::init (int argc,
     this->argv_[i] = argv[i];
 
 
-  // This has to be a reinterpret_cast on platforms that define
-  // ACE_thread_t as a pointer, such as DU 4.0.
-  this->thread_ID_ = ACE_reinterpret_cast (unsigned long, ACE_Thread::self ());
+  this->client_number_ = client_number;
 
   TAO_TRY
   {
@@ -286,8 +286,7 @@ main (int argc, char **argv)
   MT_Client_Task **clients = new MT_Client_Task*[threads];
 
   for (i = 0; i < threads; i++)
-    clients[i] = new MT_Client_Task (argc,
-                                     argv);
+    clients[i] = new MT_Client_Task (argc, argv, i);
 
   for (i = 0; i < threads; i++)
     clients[i]->activate (THR_BOUND | ACE_SCHED_FIFO, 1, 0, ACE_DEFAULT_THREAD_PRIORITY);

@@ -23,15 +23,15 @@ Legend:
         c = compiles but does not work correctly
         x = not attempted or unknown
         P = Purified
- 		   
+ 	           
  A B C D E F G H   
 [1 1 x 1 x 1 1 x] libTAO compiles
 [1 1 x 1 x 1 1 x] TAO_IDL compiles
 [1 1 x 1 x 1 1 x] liborbsvcs compiles
        	           
-[1 1 x 1 x 1 x x] IDL_Cubit server
-[1 1 x 1 x 1 x x] IDL_Cubit client
-[x c x x x x x x] DII_Cubit client
+[1 1 x 1 x 1 c x] IDL_Cubit server
+[1 1 x 1 x 1 c x] IDL_Cubit client
+[x c x c x c c x] DII_Cubit client
        	           
 [1 1 x 1 x 1 1 x] Param_Test compiles
 [1 1 x 1 x 1 1 x]    SII short
