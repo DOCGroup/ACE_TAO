@@ -95,9 +95,11 @@ AC_DEFUN(ACE_USE_TEMP_FILE, dnl
    touch ${srcdir}/$1
  fi
 
- if test -f ./$1; then
-   mv ./$1 ./$1.conf
-   touch ./$1
+ if test $srcdir != "."; then
+   if test -f ./$1; then
+     mv ./$1 ./$1.conf
+     touch ./$1
+   fi
  fi
 
  $2
@@ -108,10 +110,12 @@ AC_DEFUN(ACE_USE_TEMP_FILE, dnl
    rm ${srcdir}/$1
  fi
 
- if test -f ./$1.conf; then
-   mv ./$1.conf ./$1
- else
-   rm ./$1
+ if test $srcdir != "."; then
+   if test -f ./$1.conf; then
+     mv ./$1.conf ./$1
+   else
+     rm ./$1
+   fi
  fi
 ])
 
