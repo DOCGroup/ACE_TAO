@@ -12,13 +12,13 @@ LogMgr_i::~LogMgr_i ()
   // No-Op.
 }
 
-DsLogAdmin::LogList_ptr
+DsLogAdmin::LogList*
 LogMgr_i::list_logs (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
 {
-  DsLogAdmin::LogList_ptr list;
+  DsLogAdmin::LogList* list;
 
   // Figure out the length of the list.
   CORBA::ULong len = hash_map_.current_size ();
@@ -83,7 +83,7 @@ LogMgr_i::find_log (DsLogAdmin::LogId id,
     }
 }
 
-DsLogAdmin::LogIdList_ptr
+DsLogAdmin::LogIdList*
 LogMgr_i::list_logs_by_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException

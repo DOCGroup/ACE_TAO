@@ -82,7 +82,7 @@ Iterator_i::get (CORBA::ULong position,
   // Iterate over and populate the list.
   LogRecordStore::LOG_RECORD_HASH_MAP_ENTRY *hash_entry;
 
-  DsLogAdmin::RecordList_ptr rec_list;
+  DsLogAdmin::RecordList* rec_list;
   // Figure out the length of the list.
 
   // Allocate the list of <max_rec_list_len_> length.
