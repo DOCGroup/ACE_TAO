@@ -154,7 +154,7 @@ main(int argc, char * argv[])
                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      rootpoa->destroy (0 , 0 ACE_ENV_SINGLE_ARG_PARAMETER);
+      rootpoa->destroy (0 , 0 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
