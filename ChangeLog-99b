@@ -1,3 +1,28 @@
+Tue Jun 15 17:41:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: Added a new wrapper for WSASocket(), which is needed for
+	  all the new GQoS stuff.
+
+	* ace/SOCK_Dgram_Mcast: The API for many of the methods in this
+	  class was broken since it was different for pSoS and for
+	  non-pSoS platforms, which violates "The ACE Way."  The fix is to
+	  make the API the same, i.e., use ASYS_TCHAR * consistently, and
+	  then handle this by converting these into numbers via
+	  ACE_OS::atoi() where necessary, e.g., for pSoS.
+
+	* ace/INET_Addr: For some strange reason there were several
+	  ACE_INET_Addr constructors that weren't consistent with their
+	  corresponding set() method, i.e., they didn't have the "encode"
+	  argument to allow the caller to select whether network encoding
+	  should be performed or not.  This has been fixed to make the
+	  interfaces consistent.  However, no existing code should be
+	  affected since the API extensions are done using default values.
+
+	* ACE-INSTALL.html: Updated the documentation to recommend
+ 	  building gperf so that TAO's IDL compiler will work optimally.
+  	  Thanks to Jim Penny <jpenny@universal-fasteners.com> for
+ 	  suggesting this.
+
 Tue Jun 15 22:26:43 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
 	* tests/DLL_Test.cpp
@@ -5,8 +30,8 @@ Tue Jun 15 22:26:43 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 	* ace/Thread_Manager.h,cpp
 	* ace/Template_Instantiations.cpp
 	* ace/Containers_T.h,cpp,i
-	* ace/Containers.h,cpp
-	  Added new classes ACE_Double_Linked_List_Iterator_Base,
+	* ace/Containers.h,cpp: Added new classes
+	  ACE_Double_Linked_List_Iterator_Base,
 	  ACE_Double_Linked_List_Reverse_Iterator and
 	  ACE_DLList_Reverse_Iterator. I also had to adjust friend
 	  declarations accordingly (as the iterator base and reverse
@@ -25,13 +50,6 @@ Tue Jun 15 17:55:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  ACE_HAS_WINNT5 is defined, the macro is *not* automatically
 	  defined because we couldn't figure out a way to automagically
 	  determine the OS version.
-
-Tue Jun 15 17:41:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ACE-INSTALL.html: Updated the documentation to recommend
- 	  building gperf so that TAO's IDL compiler will work optimally.
-  	  Thanks to Jim Penny <jpenny@universal-fasteners.com> for
- 	  suggesting this.
 
 Tue Jun 15 15:22:53 1999  Steve Huston  <shuston@riverace.com>
 
