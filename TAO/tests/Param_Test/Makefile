@@ -44,7 +44,6 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 TSS_ORB_FLAG = #-DTAO_HAS_TSS_ORBCORE
-DCFLAGS = -g
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
 .PRECIOUS: $(IDL_HDR) $(IDL_SRC)
