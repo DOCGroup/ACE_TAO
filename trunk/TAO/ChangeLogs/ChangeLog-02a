@@ -1,3 +1,21 @@
+Fri Jul  7 14:47:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/Makefile:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
+
+	  Updated dependencies.
+
+	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+
+	  Added check for interface_repo=1. Automated builds
+	  will need to have this turned on for TAO.
+
+	* orbsvcs/tests/InterfaceRepo/IFR_Test:
+
+	  When a string member of a struct or sequence is matched
+	  with a '%s' in ACE_DEBUG, egcs can't seem to turn it
+	  into a const char*. Had to add .in() to all these cases.
+
 Fri Jul  7 11:08:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs.IFR_Service/ConstantDef_i.cpp:
