@@ -194,6 +194,17 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
   if (endp == 0)
     return 0;
 
+      // @@ TODO The following code looks funky, why only the host
+      //    name is compared?  What if there are multiple SHMIOP
+      //    servers in the same address?  Why do SHMIOP_Endpoints keep
+      //    a INET_Addr but not a MEM_Addr?  And why is there no lazy
+      //    evaluation of IP-addresses for SHMIOP endpoints?  Is it
+      //    because it is always 'localhost'?  We need answers to
+      //    these questions to solve:
+      //
+      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+      //
+  // The following code is suspec
   // compare the port and sin_addr (numeric host address)
   return this->address_.same_host (endp->object_addr ());
 }
