@@ -1,10 +1,9 @@
-Thu May 15 08:54:53 1997  David L. Levine  <levine@cs.wustl.edu>
+Thu May 15 13:10:12 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* Makefile: '(release, cleanrelease): use -prune option to "find"
-	  instead of filtering its output.  Thanks to Chris Cleeland for
-	  suggesting this.
-
-Thu May 15 00:26:42 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+	* ace/config-osf1-4.0[-g++].h: Added a #define for
+ 	  ACE_POLL_IS_BROKEN since DEC UNIX's poll() doesn't seem to work
+ 	  correctly as a highres timer.  Thanks to James Johnson and Thilo
+ 	  for reporting this.
 
 	* examples/Threads/thread_specific.cpp (worker): Changes
 	  size_t i back to int i to avoid a signed/unsigned complaint.
@@ -38,6 +37,12 @@ Thu May 15 00:26:42 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  useful for situations where you need to avoid deadlock
  	  efficiently when <ACE_Event_Handlers> are used in multiple
  	  threads.  Thanks to Detlef for pointing out the utility of this.
+
+Thu May 15 08:54:53 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* Makefile: '(release, cleanrelease): use -prune option to "find"
+	  instead of filtering its output.  Thanks to Chris Cleeland for
+	  suggesting this.
 
 Wed May 14 21:52:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 

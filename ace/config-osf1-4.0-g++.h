@@ -50,6 +50,8 @@
 // sendmsg() has a non-const msgheader parameter.
 #define ACE_HAS_BROKEN_SENDMSG
 
+#define ACE_POLL_IS_BROKEN
+
 // Platform's implementation of writev() has a non-const iovec
 // parameter.
 #define ACE_HAS_BROKEN_WRITEV
