@@ -1,3 +1,12 @@
+Wed Jun 14 11:55:56 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Cleanup_Strategies_T.cpp:
+
+	  This file was still including a file that was removed from the
+	  distribution, i.e. `ace/Cleanup_Strategies_T.i', which caused
+	  compile-time errors to occur when building with inlining
+	  disabled.
+
 Wed Jun 14 10:24:02 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Logging_Strategy.cpp (handle_timeout): Removed a
