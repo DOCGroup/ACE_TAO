@@ -9,9 +9,6 @@
 //    This module defines the Log, Iterator, LogMgr and LogFactory
 //    interfaces for the OMG's Telecom Event Log Service
 //
-// = AUTHOR
-//    Matthew Braun (mjb2@cs.wustl.edu)
-//
 // ============================================================================
 
 #ifndef DS_LOG_ADMIN_IDL

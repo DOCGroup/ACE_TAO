@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-// $Id$
-
 #include "Log_Constraint_Visitors.h"
 #include "orbsvcs/ETCL/ETCL_Constraint.h"
 #include "orbsvcs/ETCL/ETCL_y.h"
@@ -11,15 +8,22 @@
 #include "tao/DynamicAny/DynEnum_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 
-TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord &rec)
-:rec_ (rec)
+
+ACE_RCSID (Log,
+           Log_Constraint_Visitors,
+           "$Id$")
+
+
+TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (
+  DsLogAdmin::LogRecord &rec)
+  :rec_ (rec)
 {
   ACE_CString name1 = (ACE_CString)"id";
   ACE_CString name2 = (ACE_CString)"time";
   ACE_CString name3 = (ACE_CString)"info";
 
   CORBA::Any *value = 0;
-  ACE_NEW_THROW_EX (value, CORBA::Any, CORBA::NO_MEMORY ());
+  ACE_NEW (value, CORBA::Any);
 
 #if defined (ACE_LACKS_LONGLONG_T)
   *value <<= ACE_U64_TO_U32 (this->rec_.id)
@@ -27,14 +31,13 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord &r
   *value <<= ACE_static_cast (ACE_UINT32, (this->rec_.id));
 #endif
   if (value != 0)
-  {
-        this->property_lookup_.bind (
-          name1, value          
-          );
-  }
-  
+    {
+      // @@ Where's the error check?
+      this->property_lookup_.bind (name1, value);
+    }
+
   CORBA::Any *value2 = 0;
-  ACE_NEW_THROW_EX (value2, CORBA::Any, CORBA::NO_MEMORY ());
+  ACE_NEW (value2, CORBA::Any);
 
 #if defined (ACE_LACKS_LONGLONG_T)
   *value2 <<= ACE_U64_TO_U32 (this->rec_.time)
@@ -42,29 +45,25 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord &r
   *value2 <<= ACE_static_cast (ACE_UINT32, (this->rec_.time));
 #endif
   if (value2 != 0)
-  {
-        this->property_lookup_.bind (
-          name2, value2          
-          );
-  }
+    {
+      // @@ Where's the error check?
+      this->property_lookup_.bind (name2, value2);
+    }
 
   CORBA::Any *value3 = 0;
-  ACE_NEW_THROW_EX (value3, CORBA::Any, CORBA::NO_MEMORY ());
+  ACE_NEW (value3, CORBA::Any);
 
   *value3 <<= this->rec_.info;
 
   if (value3 != 0)
-  {
-        this->property_lookup_.bind (
-          name3, value3         
-          );
-  }
+    {
+      // @@ Where's the error check?
+      this->property_lookup_.bind (name3, value3);
+    }
 }
 
 CORBA::Boolean
-TAO_Log_Constraint_Visitor::evaluate_constraint (
-    TAO_ETCL_Constraint* root
-  )
+TAO_Log_Constraint_Visitor::evaluate_constraint (TAO_ETCL_Constraint* root)
 {
   CORBA::Boolean result = 0;
   this->queue_.reset ();
@@ -291,14 +290,13 @@ TAO_Log_Constraint_Visitor::visit_union_pos (
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 int
-TAO_Log_Constraint_Visitor::visit_component_pos (
-    TAO_ETCL_Component_Pos *pos
-  )
+TAO_Log_Constraint_Visitor::visit_component_pos (TAO_ETCL_Component_Pos *pos)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -388,14 +386,14 @@ TAO_Log_Constraint_Visitor::visit_component_pos (
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 int
 TAO_Log_Constraint_Visitor::visit_component_assoc (
-    TAO_ETCL_Component_Assoc *assoc
-  )
+  TAO_ETCL_Component_Assoc *assoc)
 {
   // @@@ (JP) The spec reserves this type of constraint for NVLists.
   // Since NVLists don't have type codes or Any operators, there's
@@ -528,8 +526,9 @@ TAO_Log_Constraint_Visitor::visit_component_array (
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 int
@@ -602,8 +601,9 @@ TAO_Log_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 int
@@ -699,8 +699,9 @@ TAO_Log_Constraint_Visitor::visit_default (TAO_ETCL_Default *def)
       return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 int
@@ -1032,6 +1033,7 @@ TAO_Log_Constraint_Visitor::visit_in (
                   return return_value;
                 }
               ACE_ENDTRY;
+              ACE_CHECK_RETURN (return_value);
 
               CORBA::Boolean result = 0;
 
@@ -1132,6 +1134,7 @@ TAO_Log_Constraint_Visitor::sequence_does_contain (
       return 0;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
   return 0;
 }
@@ -1186,6 +1189,7 @@ TAO_Log_Constraint_Visitor::array_does_contain (
       return 0;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
   return 0;
 }
@@ -1242,6 +1246,7 @@ TAO_Log_Constraint_Visitor::struct_does_contain (
       return 0;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
   return 0;
 }
@@ -1291,8 +1296,9 @@ TAO_Log_Constraint_Visitor::union_does_contain (
       return 0;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
 
-  ACE_NOTREACHED (return 0);
+  return 0;
 }
 
 CORBA::Boolean
