@@ -3844,6 +3844,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   TCHAR name1[ACE_UNIQUE_NAME_LEN];
   TCHAR name2[ACE_UNIQUE_NAME_LEN];
   TCHAR name3[ACE_UNIQUE_NAME_LEN];
+  TCHAR name4[ACE_UNIQUE_NAME_LEN];
 
   ACE::unique_name ((const void *) &rw->lock_,
                     name1,
@@ -3854,15 +3855,20 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   ACE::unique_name ((const void *) &rw->waiting_writers_,
                     name3,
                     ACE_UNIQUE_NAME_LEN);
+  ACE::unique_name ((const void *) &rw->waiting_important_writer_,
+                    name4,
+                    ACE_UNIQUE_NAME_LEN);
 
   if (ACE_OS::mutex_init (&rw->lock_, type, name1, arg) == 0
       && ACE_OS::cond_init (&rw->waiting_readers_, type, name2, arg) == 0
-      && ACE_OS::cond_init (&rw->waiting_writers_, type, name3, arg) == 0)
-    {
+      && ACE_OS::cond_init (&rw->waiting_writers_, type, name3, arg) == 0
+      && ACE_OS::cond_init (&rw->waiting_important_writer_, type, name4, arg) == 0)
+  {
       // Success!
       rw->ref_count_ = 0;
       rw->num_waiting_writers_ = 0;
       rw->num_waiting_readers_ = 0;
+      rw->important_writer_ = 0;
 
       result = 0;
     }
@@ -3873,6 +3879,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
       ACE_OS::mutex_destroy (&rw->lock_);
       ACE_OS::cond_destroy (&rw->waiting_readers_);
       ACE_OS::cond_destroy (&rw->waiting_writers_);
+      ACE_OS::cond_destroy (&rw->waiting_important_writer_);
       errno = error;
     }
   return result;
