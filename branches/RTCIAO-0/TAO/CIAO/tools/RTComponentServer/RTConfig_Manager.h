@@ -50,7 +50,7 @@ namespace CIAO
     ~RTResource_Config_Manager ();
 
     /// Initializing the RTResource_Config_Manager
-    void init (const CIAO::RTConfiguration::RTORB_Resources_Info &info
+    void init (const CIAO::RTConfiguration::RTORB_Resource_Info &info
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
