@@ -9,8 +9,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_INTERCEPTORS == 1)
-
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)
@@ -139,5 +137,4 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* (TAO_HAS_INTERCEPTORS == 1) */
 #endif /* TAO_INTERCEPTORS_H */
