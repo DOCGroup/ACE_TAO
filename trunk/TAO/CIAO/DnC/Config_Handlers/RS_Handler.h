@@ -6,7 +6,7 @@
  *
  *  @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */
-//=====================================================================
+//==================================================================
 
 #ifndef RS_HANDLER_H
 #define RS_HANDLER_H
@@ -34,15 +34,15 @@ namespace CIAO
      *
      * @brief Handler class for <RequirementSatisfier> type
      *
-     * This class defines handler methods to parse Implementation
-     * Dependency types in the descriptor files. The corresponding
+     * This class defines handler methods to parse RequirementSatisfier
+     * types in the descriptor files. The corresponding
      * CORBA IDL type for the schema element is returned.
      *
      */
     class Config_Handler_Export RS_Handler
     {
     public:
-      static ::Deployment::RequirementSatisfier *
+      static Deployment::RequirementSatisfier *
         process_RequirementSatisfier (DOMNodeIterator * iter);
       // process elements of type RequirementSatisfier definitions in
       // the descriptor files

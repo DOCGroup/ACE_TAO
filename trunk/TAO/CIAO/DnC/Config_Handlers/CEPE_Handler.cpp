@@ -9,13 +9,13 @@
 
 using CIAO::Config_Handler::Utils;
 
-::Deployment::ComponentExternalPortEndpoint *
+Deployment::ComponentExternalPortEndpoint *
 CIAO::Config_Handler::CEPE_Handler::process_ComponentExternalPortEndpoint (DOMNodeIterator * iter)
 {
-  ::Deployment::ComponentExternalPortEndpoint_var ret_struct = 0;
-  ACE_NEW_RETURN (ret_struct,
-                  ::Deployment::ComponentExternalPortEndpoint (),
-                  NULL);
+  Deployment::ComponentExternalPortEndpoint_var ret_struct = 0;
+  ACE_NEW_THROW_EX (ret_struct,
+                    Deployment::ComponentExternalPortEndpoint,
+                    CORBA::NO_MEMORY ());
 
   //Check if the Schema IDs for both the elements match
   DOMNode * node = iter->nextNode ();
@@ -24,7 +24,7 @@ CIAO::Config_Handler::CEPE_Handler::process_ComponentExternalPortEndpoint (DOMNo
   if (name != XStr (ACE_TEXT ("portName")))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Config_Handlers::ID_Handler::process_ImplDependency \
+                  "Config_Handlers::CEPE_Handler::process_ComponentExtPortEndPoint \
                    element mismatch expected <portName>"));
       ACE_THROW (CORBA::INTERNAL ());
     }

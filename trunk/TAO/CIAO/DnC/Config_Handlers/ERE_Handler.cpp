@@ -8,13 +8,13 @@
 
 using CIAO::Config_Handler::Utils;
 
-::Deployment::ExternalReferenceEndpoint *
+Deployment::ExternalReferenceEndpoint *
 CIAO::Config_Handler::ERE_Handler::process_ExternalReferenceEndpoint (DOMNodeIterator * iter)
 {
-  ::Deployment::ExternalReferenceEndpoint_var ret_struct = 0;
-  ACE_NEW_RETURN (ret_struct,
-                  ::Deployment::ExternalReferenceEndpoint (),
-                  NULL);
+  Deployment::ExternalReferenceEndpoint_var ret_struct = 0;
+  ACE_NEW_THROW_EX (ret_struct,
+                    Deployment::ExternalReferenceEndpoint,
+                    CORBA::NO_MEMORY ());
 
   //Check if the Schema IDs for both the elements match
   DOMNode * node = iter->nextNode ();
@@ -23,7 +23,7 @@ CIAO::Config_Handler::ERE_Handler::process_ExternalReferenceEndpoint (DOMNodeIte
   if (name != XStr (ACE_TEXT ("location")))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Config_Handlers::ID_Handler::process_ImplDependency \
+                  "Config_Handlers::ERE_Handler::process_ExternalRefEndPoint \
                    element mismatch expected <location>"));
       ACE_THROW (CORBA::INTERNAL ());
     }
