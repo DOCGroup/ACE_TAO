@@ -55,8 +55,6 @@
 #define TAO_CATCHALL } catch (...) {
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
 
-#define TAO_CATCHANY TAO_CATCH(CORBA_Exception, ex)
-
 #define TAO_ENDTRY }} while (0)
 
 // Use this macro if there's a return statement following TAO_ENDTRY
@@ -190,11 +188,6 @@ if (TAO_TRY_ENV.exception () != 0 && \
   TYPE &VAR = *TYPE::_narrow (TAO_TRY_ENV.exception ()); \
   ACE_UNUSED_ARG (VAR);
 
-#define TAO_CATCHANY \
-} while (0); \
-do { \
-if (TAO_TRY_ENV.exception () != 0)
-
 #define TAO_CATCHALL \
 } while (0); \
 do { \
@@ -210,7 +203,7 @@ continue;
 // and the statement is the last statement in the function.
 #define TAO_ENDTRY_RETURN(X) TAO_ENDTRY; return X
 
-// If continue is called, control will skip to the next TAO_CATCHANY
+// If continue is called, control will skip to the next TAO_CATCH
 // statement.
 #define TAO_CHECK_ENV \
 {\
@@ -282,6 +275,8 @@ return
 #define TAO_RAISE(EXCEPTION)
 
 #endif /* TAO_HAS_EXCEPTIONS */
+
+#define TAO_CATCHANY TAO_CATCH(CORBA_Exception, ex)
 
 // This macros can be used even outside the TAO_TRY blocks, in fact
 // some are designed for that purpose.
