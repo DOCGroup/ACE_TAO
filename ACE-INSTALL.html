@@ -201,14 +201,21 @@ need to do: <P>
 
 <LI> Add an environment variable called WRAPPER_ROOT that contains the
    name of the root of the directory where you keep the ACE wrapper
-   source tree.  For example, in my .login file I have the following
-   entry: <P>
+   source tree.  The ACE recursive Makefile scheme needs this information. 
+   There are several ways to set the WRAPPER_ROOT variable.  For
+     instance, in my .login file I have the following entry: <P>
 
 <pre><code>
 % setenv WRAPPER_ROOT /home/cs/faculty/schmidt/ACE_wrappers <P>
 </pre></code>
 
-   The ACE recursive Makefile system needs this information. <P>
+However, if you're building a number of versions of ACE (e.g., for
+different OS platforms or for different releases of ACE) you might use
+the following approach:
+
+<pre><code>
+% setenv WRAPPER_ROOT $cwd 
+</pre></code>
 
 <LI> Edit the $WRAPPER_ROOT/ace/OS.h file to update things like default
    hostname and port numbers you'd like the programs in the

@@ -1,3 +1,14 @@
+Thu Jan 16 17:03:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Timer_{Heap,List}.cpp: Added ACE_BUILD_DLL so that things
+ 	  will link.  Thanks to John Morey for reporting this.
+
+	* ace/Synch_T.h: Fixed: class ACE_Write_Guard: method:
+ 	  tryacquire_write so that it will call
+ 	  ...->lock_->tryacquire_write() and not
+ 	  ...->lock_->acquire_write().  Thanks to Alexandre Karev
+	  <Alexandre.Karev@cern.ch> for this fix.
+
 Thu Jan 16 15:51:16 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* Dump.cpp (register_object): initialized "slot" so that g++ doesn't
@@ -19,6 +30,12 @@ Thu Jan 16 15:51:16 1997  David L. Levine  <levine@cs.wustl.edu>
 	* OS.h, config-vxworks*.h: removed ACE_HAS_GREENHILLS_SOCKETS
 	  ACE macro because the code it wrapped applies to all VxWorks
 	  compilers, not just GreenHills
+
+Wed Jan 15 02:06:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/ACE.cpp (round_to_pagesize): If _SC_PAGESIZE is enabled then
+ 	  we set the ACE::pagesize_ variable using sysconf(2).  Thanks to
+ 	  James Mansion for this suggestion.
 
 Wed Jan 15 02:06:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
@@ -59,8 +76,8 @@ Wed Jan 15 02:06:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  ExitProcess() call, some process resources (e.g., file handles)
  	  are freed before the static variable destructors are
  	  called. This results in an application error when tracing is
- 	  enabled. Calling ACE_LOG_MSG->stop_tracing() before the
- 	  ExitProcess() does the job.  Thanks to Luca for this fix.
+ 	  enabled.  Removing the ACE_TRACE call in ~ACE_Event_Handler
+	  seems to fix this.  Thanks to Luca for this fix.
 
 	* ace/OS: Fixed the implementation of semaphores for the POSIX
  	  port (POSIX lacks semaphores).  The trick was to add a "waiters"
