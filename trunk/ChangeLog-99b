@@ -1,3 +1,8 @@
+Tue Feb 09 10:43:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_{dll,lib}.dsp: Removed entries of Service_Record.{h,i}.
+	  Thanks to David for noticing this.
+
 Tue Feb 09 10:21:33 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * Service_Types.{i,cpp},README: removed obsolete references to
