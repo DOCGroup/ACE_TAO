@@ -1,3 +1,8 @@
+Wed May 20 08:40:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Propery/CosPropertyService_i.cpp: fixed
+          instantiation #pragmas.
+
 Tue May 19 12:19:42 1998  Carlos O'Ryan  <coryan@JIG>
 
 	* tao/Typecode.cpp: 
@@ -41,6 +46,9 @@ Sat May 16 13:56:01 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_OS::lwp_getparams ().  This allowed removal of #includes
           of the priocntl headers, which were causing warnings with
           g++ because _REENTRANT was #defined after they were #included.
+
+        * orbsvcs/orbsvcs/Propery/CosPropertyService_i.cpp: fixed
+          instantiation #pragmas.
 
 1998-05-15  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
