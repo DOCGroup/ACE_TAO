@@ -1,3 +1,8 @@
+Thu May 17 17:01:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst: Re-enabled Core and Full builds on
+	  RedHat 7.1.
+
 Thu May 17 14:36:57 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Asynch_IO.cpp
