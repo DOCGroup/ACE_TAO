@@ -920,9 +920,6 @@ public:
   enum MMDevice_Type {MMDEVICE_A = 0,MMDEVICE_B = 1};
   TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy_);
 
-  /// Copy constructor to fool g++
-  TAO_MMDevice (TAO_MMDevice const &);
-
   virtual AVStreams::StreamEndPoint_ptr create_A_B (MMDevice_Type type,
                                                     AVStreams::StreamCtrl_ptr the_requester,
                                                      AVStreams::VDev_out the_vdev,
