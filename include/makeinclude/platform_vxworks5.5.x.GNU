@@ -128,7 +128,6 @@ ifeq ("$(VXWORKSLINK)","true")
   override LARGE_PROJECT =
   PRJ_OBJS = $(addprefix $(VDIR), $(OBJS))
   LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)
-##  LD_PARTIAL_LAST_FLAGS += $(OPTION_PASS_TO_LD)--split-by-reloc
   PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS)) $(VLDLIBS)
   PRJ_OBJS_FOR_LD=$(addprefix $(VDIR), $(OBJS))
   PRJ_OBJS_FOR_NM=$(addprefix $(VDIR), $(OBJS))
