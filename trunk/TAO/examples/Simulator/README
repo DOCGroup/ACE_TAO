@@ -38,8 +38,9 @@ Requirements:
 
 	- the file ss has been moved one level up and it got
 	  renamed to "start_services". So use it to start the 
-	  naming, scheduling and event service.
+	  naming and event service.
 
+	- it is no longer required to start the scheduling service
 
 Parts of the Demo:
 
@@ -143,7 +144,6 @@ Compiling:
 Starting:
 	Start in the following order on different ORB ports:
 		* Naming Service
-		* Scheduling Service
 		* Event Service
 
 		You can use "start_services" on Unix machines. The

@@ -1,3 +1,14 @@
+Fri Jun 26 16:45:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/README: Added information about the 
+	  new version of the event service.
+
+	* orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.cpp: removed the
+	  "cout" commands.
+	
+	* orbsvcs/tests/Simulator/Event_Supplier/Event_Con.cpp: Made the 
+	  Event consumer work.
+
 Fri Jun 26 14:22:40 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tests/Param_Test:
