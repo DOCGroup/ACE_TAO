@@ -281,6 +281,10 @@ SOURCE=.\Codeset_Translator_Factory.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocated_Invocation.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Collocation_Resolver.cpp
 # End Source File
 # Begin Source File
@@ -525,6 +529,10 @@ SOURCE=.\Interceptor_List.cpp
 # Begin Source File
 
 SOURCE=.\Invocation.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation_Adapter.cpp
 # End Source File
 # Begin Source File
 
@@ -1212,6 +1220,14 @@ SOURCE=.\Codeset_Translator_Factory.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Collocated_Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Collocation_Proxy_Broker.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Collocation_Resolver.h
 # End Source File
 # Begin Source File
@@ -1477,6 +1493,10 @@ SOURCE=.\Interceptor_List.h
 # Begin Source File
 
 SOURCE=.\Invocation.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation_Adapter.h
 # End Source File
 # Begin Source File
 
