@@ -25,7 +25,7 @@
 #include "ace/Timer_Hash.h"
 #include "test_config.h"
 
-template <class T> static void
+template <class T> void
 randomize_array (T array[], size_t size)
 {
   size_t i;
