@@ -1,9 +1,14 @@
+Mon Jul 12 10:32:53 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/*.h: inserted pragma once into a bunch of headers
+          that didn't have it.  Thanks to Ossama for reporting this.
+
 Mon Jul 12 09:55:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/include/AST_Interface.h:
-	* TAO_IDL/ast/AST_Interface.cpp:
-	  Modified fwd_redefinition_helper method to allow for
-	  reopened modules.
+        * TAO_IDL/include/AST_Interface.h:
+        * TAO_IDL/ast/AST_Interface.cpp:
+          Modified fwd_redefinition_helper method to allow for
+          reopened modules.
 
 Mon Jul 12 09:50:22 1999  Steve Huston  <shuston@riverace.com>
 
