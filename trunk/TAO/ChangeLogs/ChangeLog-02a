@@ -1,3 +1,10 @@
+Thu Mar 23 15:26:52 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* PROBLEM-REPORT-FORM:
+	  Modified the text to encourage users to report real bugs to
+	  Bugzilla, that way we don't have to enter them ourselves.  Only
+	  dubious stuff should be reported to the mailing list.
+
 Thu Mar 23 17:02:46 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/AMI/Makefile:
