@@ -242,7 +242,7 @@ TAO_GIOP::send_request (TAO_Transport  *transport,
   *ACE_reinterpret_cast(CORBA::ULong*,buf + offset) = bodylen;
 #else
   if (!stream->do_byte_swap ())
-o    *ACE_reinterpret_cast (CORBA::ULong *,
+    *ACE_reinterpret_cast (CORBA::ULong *,
                            buf + offset) = bodylen;
   else
     ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
