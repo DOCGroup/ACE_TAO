@@ -17,6 +17,10 @@ Thu Sep 04 10:26:11 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Token_Invariants.{h,cpp}: register ACE_Token_Invariant_Manager
 	  singleton for deletion with ACE_Object_Manager.
 
+	* tests/Reactors_Test (~Test_Task): moved ASSERT after the printout,
+	  so we can see why it failed.  (svc): added printout with thread ID.
+ 	  (main): deleted reactor at end of test to prevent leak.
+
 Thu Sep 04 09:39:08 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ACE version 4.3.3, released Thu Sep 04 09:39:08 1997.
