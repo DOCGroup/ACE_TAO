@@ -8,7 +8,7 @@ Sat Apr 29 15:24:03 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Object.cpp:
 	* tao/POAC.cpp:
 	* tao/PolicyC.cpp:
-	* tao/Stub.cpp:Replaced all occurences of the magic number 131
+	* tao/Stub.cpp: Replaced all occurences of the magic number 131
 	  with TAO_TWOWAY_RESPONSE_FLAG. This will indicate a regular two
 	  way operation in TAO.
 	
