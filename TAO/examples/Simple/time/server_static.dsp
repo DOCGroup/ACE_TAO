@@ -13,18 +13,16 @@ CFG=Simple Time Server Static - Win32 Debug
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "server_static.mak"\
- CFG="Simple Time Server Static - Win32 Debug"
+!MESSAGE NMAKE /f "server_static.mak" CFG="Simple Time Server Static - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Time Server Static - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Simple Time Server Static - Win32 Release" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server Static - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Time Server Static - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -46,7 +44,7 @@ RSC=rc.exe
 # PROP Target_Dir "server"
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\..\..\\" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D ACE_NO_INLINE /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "_DEBUG" /D "WIN32" /D "_CONSOLE" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D TAO_NAMING_HAS_DLL=0 /D TAO_SVC_UTILS_HAS_DLL=0 /D "ACE_NO_INLINE" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -55,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 acesd.lib TAOsd.lib orbsvcssd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 advapi32.lib user32.lib acesd.lib TAOsd.lib TAO_CosNamingsd.lib TAO_Svc_Utilssd.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
 !ELSEIF  "$(CFG)" == "Simple Time Server Static - Win32 Release"
 
@@ -73,7 +71,7 @@ LINK32=link.exe
 # PROP Target_Dir "server"
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_HAS_DLL=0 /D ACE_NO_INLINE /D ACE_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\\" /I "..\..\..\..\\" /I "..\..\..\orbsvcs" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D TAO_NAMING_HAS_DLL=0 /D TAO_SVC_UTILS_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
@@ -82,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 aces.lib TAOs.lib orbsvcss.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
+# ADD LINK32 TAO_CosNamings.lib TAO_Svc_Utilss.lib TAOs.lib aces.lib advapi32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\..\tao" /libpath:"..\..\..\..\ace" /libpath:"..\..\..\orbsvcs\orbsvcs"
 
 !ENDIF 
 
@@ -115,10 +113,6 @@ SOURCE=.\TimeS.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
 # Begin Source File
 
-SOURCE=.\Server_i.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Time_i.h
 # End Source File
 # End Group
@@ -132,7 +126,6 @@ SOURCE=.\Time.idl
 !IF  "$(CFG)" == "Simple Time Server Static - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__TIME_="..\..\..\tao_idl\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Time.idl
 InputName=Time
@@ -170,13 +163,12 @@ BuildCmds= \
 
 !ELSEIF  "$(CFG)" == "Simple Time Server Static - Win32 Release"
 
-USERDEP__TIME_="..\..\..\tao_idl\Release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\Time.idl
 InputName=Time
 
 BuildCmds= \
-	..\..\..\tao_idl\Release\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
