@@ -1,27 +1,33 @@
+Thu Aug  5 16:43:29 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* tests/Malloc_Test.cpp: Rearranged the #ifdefs so that 
+	  we don't do much of anything if the platform doesn't support
+ 	  processes.  Thanks to David Levine for reporting this.
+
 Thu Aug  5 16:27:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/rules.lib.GNU:
 	* include/makeinclude/wrapper_macros.GNU:
 	  Added new macro (ACE_SHLIBS) to control the final link line of
-	  shared libraries.  Use this macro to list the -l options
-	  required by your shared library that are *not* included in the
-	  system LIBS macro, for example "-lTAO -lACE"; the system will
-	  automagically change that to be "-lTAOshr -lACEshr" on AIX.
-	  This also decouples the shared library link line from the
-	  binaries, which use LDLIBS and ACELIB, allowing the application
-	  developers to easily mix shared libraries and binaries in the
-	  same directory, even if the binaries depend on the generated
-	  shared library.
+ 	  shared libraries.  Use this macro to list the -l options
+ 	  required by your shared library that are *not* included in the
+ 	  system LIBS macro, for example "-lTAO -lACE"; the system will
+ 	  automagically change that to be "-lTAOshr -lACEshr" on AIX.
+  	  This also decouples the shared library link line from the
+ 	  binaries, which use LDLIBS and ACELIB, allowing the application
+ 	  developers to easily mix shared libraries and binaries in the
+ 	  same directory, even if the binaries depend on the generated
+ 	  shared library.
 
 Thu Aug 05 15:44:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:  on
-          WIN32 host, assume that $(CC) is on the user's path
-          (or is a full pathname).  That way, we don't need to
-          determine ACE_CC dynamically, which causes trouble with
-          the WIN32 shell.  Thanks to Erik Johannes <ejohannes@oresis.com>
-          for reporting this.  [NOTE:  this had been committed
-          on a branch, but never on the main line.]
+          WIN32 host, assume that $(CC) is on the user's path (or is a
+ 	  full pathname).  That way, we don't need to determine ACE_CC
+ 	  dynamically, which causes trouble with the WIN32 shell.  Thanks
+ 	  to Erik Johannes <ejohannes@oresis.com> for reporting this.
+  	  [NOTE: this had been committed on a branch, but never on the
+ 	  main line.]
 
 Thu Aug 05 15:35:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -30,7 +36,7 @@ Thu Aug 05 15:35:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/ace_lib.dsp:
 	* ace/ace_dll.dsp: Changed the default configuration to Win32
 	  Debug so if anyone doesn't know what he is doing, he'll most
-	  likely to success.
+ 	  likely to success.
 
 Thu Aug 05 15:30:32 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -45,16 +51,16 @@ Thu Aug 05 15:13:01 1999  David L. Levine  <levine@cs.wustl.edu>
 Thu Aug 05 14:53:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-vxworks5.x.h: added support for the Diab
-          compiler, version 4.2a or later.  Compilation succeeds
-          but links still have unresolved symbols related to
-          new and delete. [Bug 207]
+          compiler, version 4.2a or later.  Compilation succeeds but links
+ 	  still have unresolved symbols related to new and delete. [Bug
+ 	  207]
 
         * ace/OS.h,README: added support for ACE_LACKS_NEW_H. [Bug 207]
 
         * ace/OS.h: for VxWorks, use the ANSI prototypes for
-          inet_ntoa.h, etc., for all VxWorks compilers, not just
-          Green Hills.  This allows compilation to succeed with Diab 4.2a.
-          [Bug 207]
+          inet_ntoa.h, etc., for all VxWorks compilers, not just Green
+ 	  Hills.  This allows compilation to succeed with Diab 4.2a.  [Bug
+ 	  207]
 
         Thanks to Erik Johannes <ejohannes@oresis.com> for helping with
         this quick port to Diab 4.2a for VxWorks.
@@ -63,14 +69,14 @@ Thu Aug 05 14:31:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/iosfwd.h: #include iosfwd with
           ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION as well as without
-          ACE_HAS_OLD_IOSTREAMS.  This allows builds to succeed
-          for Tornado II with its egcs. [Bug 206]
+ 	  ACE_HAS_OLD_IOSTREAMS.  This allows builds to succeed for
+ 	  Tornado II with its egcs. [Bug 206]
 
         * ace/streams.h: added #includes of istream.h, ostream.h,
           and iomanip.h with ACE_HAS_STD_CPP_LIBRARY and
-          ACE_USES_OLD_IOSTREAMS.  It's necessary for builds for
-          Tornado II, but should be harmless and helpful on other
-          platforms. [Bug 206]
+ 	  ACE_USES_OLD_IOSTREAMS.  It's necessary for builds for Tornado
+ 	  II, but should be harmless and helpful on other platforms. [Bug
+ 	  206]
 
         Thanks to Matthias Schumann <matthias.schumann@xcc.de> for
         first reporting the solution to the build problem for Tornado II.
