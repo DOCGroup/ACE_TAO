@@ -91,7 +91,29 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__;
+
+  *os << be_nl << be_nl
+      << "template<>" << be_nl
+      << "void" << be_nl
+      << "TAO::Value_Traits<" << node->name  () << ">::tao_add_ref (" 
+      << be_idt << be_idt_nl
+      << node->name () << " * p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::add_ref (p);" << be_uidt_nl
+      << "}";
+
+  *os << be_nl << be_nl
+      << "template<>" << be_nl
+      << "void" << be_nl
+      << "TAO::Value_Traits<" << node->name () << ">::tao_remove_ref ("
+      << be_idt << be_idt_nl
+      << node->name () << " * p" << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl
+      << "CORBA::remove_ref (p);" << be_uidt_nl
+      << "}";
 
   const char *fhname = node->fwd_helper_name ();
 
@@ -103,7 +125,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   // Helper functions to allow non-defined forward declared valuetypes
   // access to some methods in the full definition.
-  *os << "void" << be_nl
+  *os << be_nl << be_nl
+      << "void" << be_nl
       << fhname << "_life::tao_add_ref (" 
       << be_idt << be_idt_nl
       << node->full_name () << " * p" << be_uidt_nl

@@ -38,6 +38,8 @@ namespace TAO
     static T * tao_duplicate (T *);
     static void tao_release (T *);
     static T * tao_nil (void);
+    static CORBA::Boolean tao_marshal (T *,
+                                       TAO_OutputCDR &);
   };
 };
 

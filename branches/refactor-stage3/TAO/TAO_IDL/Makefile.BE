@@ -98,6 +98,7 @@ FILES = be/be_array \
         be/be_visitor_sequence \
         be/be_visitor_structure \
         be/be_visitor_structure_fwd \
+        be/be_visitor_traits \
         be/be_visitor_typecode \
         be/be_visitor_typedef \
         be/be_visitor_union \

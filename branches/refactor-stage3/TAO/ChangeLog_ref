@@ -1,3 +1,51 @@
+Wed Jun 25 19:01:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be_include/be_visitor_traits.h:
+        * TAO_IDL/be/be_visitor_traits.cpp:
+
+          New files, a visitor that generates specialized traits template
+          classes in a separate pass over the AST.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/be/be_argument.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_operation.cpp:
+        * TAO_IDL/be/be_type.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_type.h:
+        * tao/Objref_VarOut_T.cpp:
+        * tao/Objref_VarOut_T.h:
+        * tao/PolicyC.cpp:
+        * tao/Policy_ForwardC.h:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.h:
+        * tao/Valuetype/Sequence_T.inl:
+        * tao/Valuetype/Value_VarOut_T.cpp:
+        * tao/Valuetype/Value_VarOut_T.h:
+
+	        Partial support for traits code generation, along with
+	        corresponding changes to ORB code, some of it temporary
+	        until the hand-crafted files can be regenerated. These
+	        changes add code generation for interface and valuetype
+	        traits, and  modify sequence code to use some of these
+	        traits.
+
+          Also removed the _upcast and _downcast methods from
+          bounded and unbounded versions of object sequences.
+          These methods never seem to be called.
+
 Wed Jun 25 08:36:06 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Sequence_T.cpp:
