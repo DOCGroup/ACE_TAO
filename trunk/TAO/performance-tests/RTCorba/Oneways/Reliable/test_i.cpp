@@ -11,25 +11,25 @@ ACE_RCSID(Reliable, test_i, "$Id$")
 #endif /* __ACE_INLINE__ */
 
 void
-Test_i::oneway_op (CORBA::ULong request_number,
+Test_i::oneway_op (CORBA::ULong work,
                    CORBA::Environment &) 
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "server: Oneway iteration %d @ %T\n",
-                request_number));
+  for (CORBA::ULong i = 0; i < work; i++)
+    {
+      for (int j = 0; j < 1000; j++);
+    }
 }
 
 void
-Test_i::twoway_op (CORBA::ULong request_number,
+Test_i::twoway_op (CORBA::ULong work,
                    CORBA::Environment &) 
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "server: Twoway iteration %d @ %T\n",
-                request_number));
+  for (CORBA::ULong i = 0; i < work; i++)
+    {
+      for (int j = 0; j < 1000; j++);
+    }
 }
 
 void

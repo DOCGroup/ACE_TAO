@@ -11,8 +11,10 @@ require ACEutils;
 $iorfile = "test.ior";
 $iterations = 4000;
 $bufsize = 4000;
-$nagle = "";
+$work = 10;
+$transport = "";
 $type = "";
+$shutdown = "";
 $all = 1;
 $other = "";
 
@@ -20,17 +22,22 @@ sub run_test
 {
   my $type = shift(@_);
 
-  if ($type == "none") {
-    $nagle = "-ORBNodelay 0"
+  if ($type == "none" || $type == "transport") {
+    $transport = "-ORBNodelay 0";
   }
   else {
-    $nagle = "";
+    $transport = "";
+  }
+
+  if ($all == 0) {
+    $shutdown = "-x";
   }
 
   print STDERR "\n***************** STARTING TEST ******************\n";
 
-  $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-                         "$nagle -t $type -i $iterations -m $bufsize");
+  $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
+                         " $transport -t $type -i $iterations "
+			 . "-m $bufsize -w $work $shutdown ");
 
   $client = $CL->TimedWait (60);
   if ($client == -1) {
@@ -57,7 +64,7 @@ sub run_buffered
 
 # Parse the arguments
 
-@types = ("none", "transport", "server", "target", "twoway");
+@types = ("none", "transport", "server", "target", "twoway -x");
 
 @bufsizes = (10, 40, 100, 400, 1000, 2000);
 
@@ -73,6 +80,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "-t test type        -- runs only one type of oneway test\n";
       print "-i iterations       -- number of calls in each test\n";
       print "-m buffer size      -- queue size for buffered oneways\n";
+      print "-w servant work	 -- number of loops of 1000 by servant\n";
       exit 0;
     }
     if ($ARGV[$i] eq "-i")
@@ -84,6 +92,12 @@ for ($i = 0; $i <= $#ARGV; $i++)
     if ($ARGV[$i] eq "-m")
     {
       $bufsize = $ARGV[$i + 1];
+      $i++;
+      last SWITCH;
+    }
+    if ($ARGV[$i] eq "-w")
+    {
+      $work = $ARGV[$i + 1];
       $i++;
       last SWITCH;
     }

@@ -14,6 +14,9 @@ static const char *ior = "file://test.ior";
 // Default iterations.
 static CORBA::ULong iterations = 100;
 
+// Default argument value.
+static CORBA::ULong work = 10;
+
 // Default number of invocations to buffer before flushing.
 static CORBA::Long message_limit = -1;
 
@@ -81,9 +84,9 @@ print_params (void)
 }
 
 static void 
-twoway_latency (Test_ptr servant,
-                ACE_UINT32 gsf,
-                CORBA::Environment &ACE_TRY_ENV)
+twoway_test (Test_ptr servant,
+             ACE_UINT32 gsf,
+             CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_Throughput_Stats latency;
 
@@ -93,7 +96,7 @@ twoway_latency (Test_ptr servant,
     {
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
       
-      servant->twoway_op (i,
+      servant->twoway_op (work,
                           ACE_TRY_ENV);
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -110,9 +113,9 @@ twoway_latency (Test_ptr servant,
 }
 
 static void 
-oneway_latency (Test_ptr servant,
-                ACE_UINT32 gsf,
-                CORBA::Environment &ACE_TRY_ENV)
+reliable_test (Test_ptr servant,
+               ACE_UINT32 gsf,
+               CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_Throughput_Stats latency;
 
@@ -122,7 +125,7 @@ oneway_latency (Test_ptr servant,
     {
       ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
       
-      servant->oneway_op (i,
+      servant->oneway_op (work,
                           ACE_TRY_ENV);
 
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -137,7 +140,38 @@ oneway_latency (Test_ptr servant,
 
   print_params ();
 
-  latency.dump_results ("Oneway", gsf);
+  latency.dump_results ("Reliable oneway", gsf);
+}
+
+static void 
+buffered_test (Test_ptr servant,
+               ACE_UINT32 gsf,
+               CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_Throughput_Stats latency;
+
+  ACE_hrtime_t base = ACE_OS::gethrtime ();
+
+  for (CORBA::ULong i = 0; i != iterations; ++i)
+    {
+      ACE_hrtime_t latency_base = ACE_OS::gethrtime ();
+      
+      servant->oneway_op (0,
+                          ACE_TRY_ENV);
+
+      ACE_hrtime_t now = ACE_OS::gethrtime ();
+
+      ACE_CHECK;
+
+//      hist_array[i] = now - latency_base;
+
+      latency.sample (now - base,
+                      now - latency_base);
+    }
+
+  print_params ();
+
+  latency.dump_results ("Buffered oneway", gsf);
 }
 
 void flush_queue (Test_var &server,
@@ -194,7 +228,7 @@ void flush_queue (Test_var &server,
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "i:t:m:x");
+  ACE_Get_Opt get_opts (argc, argv, "i:t:m:w:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -223,6 +257,7 @@ parse_args (int argc, char *argv[])
                                  "-i <# of iterations> "
                                  "-t <none|transport|server|target|twoway> "
                                  "-m <message count> "
+                                 "-w <# of servant loops of 1000> "
                                  "-x shutdown server "
                                  "\n",
                                  argv [0]),
@@ -232,6 +267,9 @@ parse_args (int argc, char *argv[])
           }
         case 'm':
           message_limit = ACE_OS::atoi (get_opts.optarg);
+          break;
+        case 'w':
+          work = ACE_OS::atoi (get_opts.optarg);
           break;
         case 'x':
           do_shutdown = 1;
@@ -243,6 +281,7 @@ parse_args (int argc, char *argv[])
                              "-i <# of iterations> "
                              "-t <none|transport|server|target> "
                              "-m <message count> "
+                             "-w <# of servant loops of 1000> "
                              "-x shutdown server "
                              "\n",
                              argv [0]),
@@ -358,9 +397,9 @@ main (int argc, char *argv[])
                              ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          twoway_latency (server.in (),
-                          gsf,
-                          ACE_TRY_ENV);
+          twoway_test (server.in (),
+                       gsf,
+                       ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       else
@@ -454,10 +493,21 @@ main (int argc, char *argv[])
             }
 
           // Run the oneway test.
-          oneway_latency (server.in (),
-                          gsf,
-                          ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          if (sync_scope == Messaging::SYNC_NONE
+              || sync_scope == Messaging::SYNC_WITH_TRANSPORT)
+            {
+              buffered_test (server.in (),
+                             gsf,
+                             ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
+          else
+            {
+              reliable_test (server.in (),
+                             gsf,
+                             ACE_TRY_ENV);
+              ACE_TRY_CHECK;
+            }
 
           // We are done with this policy.
           sync_scope_policy_list[0]->destroy (ACE_TRY_ENV);

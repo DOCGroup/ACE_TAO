@@ -31,12 +31,12 @@ public:
   // ctor
 
   // = The Test methods.
-  void oneway_op (CORBA::ULong request_number,
+  void oneway_op (CORBA::ULong work,
                   CORBA::Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void twoway_op (CORBA::ULong request_number,
+  void twoway_op (CORBA::ULong work,
                   CORBA::Environment &ACE_TRY_ENV =
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
