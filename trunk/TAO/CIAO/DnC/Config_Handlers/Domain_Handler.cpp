@@ -82,17 +82,15 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
+                  CORBA::ULong i (domain.sharedResource.length ());
+                  domain.sharedResource.length (i + 1);
                   if (length == 1)
                     {
-                      CORBA::ULong i (domain.sharedResource.length ());
-                      domain.sharedResource.length (i + 1);
                       this->process_sr 
                         (this->doc_, this->iter_, domain.sharedResource[i]);
                     }
                   else if (length > 1)
                     {
-                      CORBA::ULong i (domain.sharedResource.length ());
-                      domain.sharedResource.length (i + 1);
                       this->process_attributes_for_sr
                         (named_node_map, this->doc_,
                          this->iter_, i, domain.sharedResource[i]);
@@ -105,18 +103,16 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
+                  CORBA::ULong i (domain.node.length ());
+                  domain.node.length (i + 1);
                   if (length == 1)
                     {
-                      CORBA::ULong i (domain.node.length ());
-                      domain.node.length (i + 1);
                       this->process_node (this->doc_,
                                           this->iter_,
                                           domain.node[i]);
                     }
                   else if (length > 1)
                     {
-                      CORBA::ULong i (domain.node.length ());
-                      domain.node.length (i + 1);
                       this->process_attributes_for_node
                         (named_node_map, this->doc_,
                          this->iter_, i, domain.node[i]);
@@ -129,18 +125,15 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
-
+                  CORBA::ULong i (domain.interconnect.length ());
+                  domain.interconnect.length (i + 1);
                   if (length == 1)
                     {
-                      CORBA::ULong i (domain.interconnect.length ());
-                      domain.interconnect.length (i + 1);
                       this->process_interconnect 
                          (this->doc_, this->iter_, domain.interconnect[i]);
                     }
                   else if (length > 1)
                     {
-                      CORBA::ULong i (domain.interconnect.length ());
-                      domain.interconnect.length (i + 1);
                       this->process_attributes_for_ic
                         (named_node_map, this->doc_,
                          this->iter_, i, domain.interconnect[i]);
@@ -153,18 +146,16 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
+                  CORBA::ULong i (domain.bridge.length ());
+                  domain.bridge.length (i + 1);
                   if (length == 1)
                     {
-                      CORBA::ULong i (domain.bridge.length ());
-                      domain.bridge.length (i + 1);
                       this->process_bridge (this->doc_,
                                                    this->iter_,
                                                    domain.bridge[i]);
                     }
                   else if (length > 1)
                     {
-                      CORBA::ULong i (domain.bridge.length ());
-                      domain.bridge.length (i + 1);
                       this->process_attributes_for_bridge
                         (named_node_map, this->doc_,
                          this->iter_, i, domain.bridge[i]);
@@ -238,19 +229,16 @@ namespace CIAO
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
+                  CORBA::ULong resource_length 
+                     (domain_node.resource.length ());
+                  domain_node.resource.length (resource_length + 1);
                   if (length == 1)
                     {
-                      CORBA::ULong resource_length 
-                         (domain_node.resource.length ());
-                      domain_node.resource.length (resource_length + 1);
                       this->process_resource 
                         (doc, iter, domain_node.resource[resource_length]);
                     }
                   else if (length > 1)
                     {
-                      CORBA::ULong resource_length 
-                         (domain_node.resource.length ());
-                      domain_node.resource.length (resource_length + 1);
                       this->process_attributes_for_resource 
                         (named_node_map, doc,
                          iter, resource_length,
@@ -263,24 +251,11 @@ namespace CIAO
               CORBA::ULong connection_ref_length = 
                 domain_node.connectionRef.length ();
               domain_node.connectionRef.length (connection_ref_length + 1);
+              domain_node.connectionRef[connection_ref_length] = 0;
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-
-                  for (int j = 0; j < length; j++)
-                    {
-                      DOMNode* attribute_node = named_node_map->item (j);
-                      XStr strattrnodename (attribute_node->getNodeName ());
-                      ACE_TString aceattrnodevalue = XMLString::transcode 
-                         (attribute_node->getNodeValue ());
-                      if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_node.connectionRef[connection_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                    }
+                  this->process_refs (named_node_map);
                 }
             }
           else if (node_name == XStr (ACE_TEXT ("sharedResource")))
@@ -289,24 +264,11 @@ namespace CIAO
                 domain_node.sharedResourceRef.length ();
               domain_node.sharedResourceRef.length 
                 (shared_resource_ref_length + 1);
+              domain_node.sharedResourceRef[shared_resource_ref_length] = 0;
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  for (int j = 0; j < length; j++)
-                    {
-                      DOMNode* attribute_node = named_node_map->item (j);
-                      XStr strattrnodename (attribute_node->getNodeName ());
-                      ACE_TString aceattrnodevalue = XMLString::transcode 
-                         (attribute_node->getNodeValue ());
-                      if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_node.sharedResourceRef
-                            [shared_resource_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                    }
+                  this->process_refs (named_node_map);
                 }
             }
           else
@@ -451,17 +413,11 @@ namespace CIAO
                   int length = named_node_map->getLength ();
                   if (length == 1)
                     {
-                      CORBA::ULong resource_length 
-                         (domain_bridge.resource.length ());
-                      domain_bridge.resource.length (resource_length + 1);
                       this->process_resource 
                         (doc, iter, domain_bridge.resource[resource_length]);
                     }
                   else if (length > 1)
                     {
-                      CORBA::ULong resource_length 
-                         (domain_bridge.resource.length ());
-                      domain_bridge.resource.length (resource_length + 1);
                       this->process_attributes_for_resource 
                         (named_node_map, doc,
                          iter, resource_length,
@@ -474,27 +430,11 @@ namespace CIAO
               CORBA::ULong connect_ref_length = 
                  domain_bridge.connectRef.length ();
               domain_bridge.connectRef.length (connect_ref_length + 1);
-
+              domain_bridge.connectRef[connect_ref_length] = 0;
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  for (int j = 0; j < length; j++)
-                    {
-                      DOMNode* attribute_node = named_node_map->item (j);
-                      XStr strattrnodename (attribute_node->getNodeName ());
-                      ACE_TString aceattrnodevalue = XMLString::transcode 
-                        (attribute_node->getNodeValue ());
-                      if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_bridge.connectRef[connect_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                    }
-                }
-              else
-                {
+                  this->process_refs (named_node_map);
                 }
             }
           else
@@ -531,24 +471,17 @@ namespace CIAO
             {
               CORBA::ULong resource_length = (domain_ic.resource.length ());
               domain_ic.resource.length (resource_length + 1);
-
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
                   int length = named_node_map->getLength ();
                   if (length == 1)
                     {
-                      CORBA::ULong resource_length 
-                         (domain_ic.resource.length ());
-                      domain_ic.resource.length (resource_length + 1);
                       this->process_resource 
                         (doc, iter, domain_ic.resource[resource_length]);
                     }
                   else if (length > 1)
                     {
-                      CORBA::ULong resource_length 
-                         (domain_ic.resource.length ());
-                      domain_ic.resource.length (resource_length + 1);
                       this->process_attributes_for_resource 
                         (named_node_map, doc,
                          iter, resource_length,
@@ -561,26 +494,11 @@ namespace CIAO
               CORBA::ULong connect_ref_length = 
                   (domain_ic.connectRef.length ());
               domain_ic.connectRef.length (connect_ref_length + 1);
+              domain_ic.connectRef[connect_ref_length] = 0;
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  for (int j = 0; j < length; j++)
-                    {
-                      DOMNode* attribute_node = named_node_map->item (j);
-                      XStr strattrnodename (attribute_node->getNodeName ());
-                      ACE_TString aceattrnodevalue = XMLString::transcode 
-                          (attribute_node->getNodeValue ());
-                      if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_ic.connectRef[connect_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                    }
-                }
-              else
-                {
+                  this->process_refs (named_node_map);
                 }
             }
           else if (node_name == XStr (ACE_TEXT ("connection")))
@@ -588,26 +506,11 @@ namespace CIAO
               CORBA::ULong connection_ref_length = 
                  (domain_ic.connectionRef.length ());
               domain_ic.connectionRef.length (connection_ref_length + 1);
+              domain_ic.connectionRef[connection_ref_length] = 0;
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  for (int j = 0; j < length; j++)
-                    {
-                      DOMNode* attribute_node = named_node_map->item (j);
-                      XStr strattrnodename (attribute_node->getNodeName ());
-                      ACE_TString aceattrnodevalue = XMLString::transcode 
-                         (attribute_node->getNodeValue ());
-                      if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_ic.connectionRef[connection_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                    }
-                }
-              else
-                {
+                  this->process_refs (named_node_map);
                 }
             }
           else
@@ -645,26 +548,11 @@ namespace CIAO
             {
               CORBA::ULong node_ref_length = (domain_sr.nodeRef.length ());
               domain_sr.nodeRef.length (node_ref_length + 1);
+              domain_sr.nodeRef[node_ref_length] = 0;
               if (node->hasAttributes ())
                 {
                   DOMNamedNodeMap* named_node_map = node->getAttributes ();
-                  int length = named_node_map->getLength ();
-                  for (int j = 0; j < length; j++)
-                    {
-                      DOMNode* attribute_node = named_node_map->item (j);
-                      XStr strattrnodename (attribute_node->getNodeName ());
-                      ACE_TString aceattrnodevalue = XMLString::transcode 
-                         (attribute_node->getNodeValue ());
-                      if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
-                        {
-                          domain_sr.nodeRef[node_ref_length] = 0;
-                          this->index_ = this->index_ + 1;
-                          idref_map_.bind (this->index_, aceattrnodevalue);
-                        }
-                    }
-                }
-              else
-                {
+                  this->process_refs (named_node_map);
                 }
             }
           else if (node_name == XStr (ACE_TEXT ("property")))
@@ -806,52 +694,6 @@ namespace CIAO
       root_node_name = XMLString::transcode (doc->getDocumentElement ()->getNodeName ());
 
       return doc;
-    }
-
-    void Domain_Handler::parse_resource_href_doc (DOMDocument* href_doc,
-                                                  unsigned long filter,
-                                                  Deployment::Resource& domain_resource)
-    {
-      DOMDocumentTraversal* traverse (href_doc);
-      DOMNode* root (href_doc->getDocumentElement ());
-
-      DOMNodeIterator* iter (traverse->createNodeIterator (root,
-                                                           filter,
-                                                           0,
-                                                           true));
-      for (DOMNode* node = iter->nextNode();
-           node != 0;
-           node = iter->nextNode())
-        {
-          XStr node_name = node->getNodeName ();
-          if (node_name == XStr (ACE_TEXT ("name")))
-            {
-              node = iter->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              domain_resource.name = XMLString::transcode 
-                (text->getNodeValue ());
-            }
-          else if (node_name == XStr (ACE_TEXT ("resourceType")))
-            {
-              node = iter->nextNode();
-              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              CORBA::ULong resource_type_length = 
-                 domain_resource.resourceType.length ();
-              domain_resource.resourceType.length 
-                 (resource_type_length + 1);
-              domain_resource.resourceType[resource_type_length] = 
-                XMLString::transcode (text->getNodeValue ());
-            }
-          else if (node_name == XStr (ACE_TEXT ("property")))
-            {
-            }
-          else
-            {
-              iter->previousNode ();
-              break;
-            }
-        }
-      return;
     }
 
     void Domain_Handler::parse_property_href_doc (DOMDocument* href_doc,
@@ -1427,6 +1269,24 @@ namespace CIAO
                       domain.sharedResource[x].nodeRef[y] = orig_value;
                     }
                 }
+            }
+        }
+    }
+
+    void Domain_Handler::process_refs (DOMNamedNodeMap* named_node_map)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue = XMLString::transcode
+             (attribute_node->getNodeValue ());
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:idref")))
+            {
+              this->index_ = this->index_ + 1;
+              idref_map_.bind (this->index_, aceattrnodevalue);
             }
         }
     }
