@@ -46,7 +46,7 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
   // Initialize an iterator.  We need to go thru each entry and free
   // up storage allocated to hold the external ids.  In this case,
   // these are strings.
-  OP_MAP_MANAGER::ITERATOR iterator (this->hash_);  
+  OP_MAP_MANAGER::ITERATOR iterator (this->hash_);
 
   for (OP_MAP_MANAGER::ENTRY *entry = 0;
        iterator.next (entry) != 0;
@@ -54,11 +54,11 @@ TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
     {
       // We had allocated memory and stored the string. So we free the
       // memory.
-      CORBA::string_free ((char *) entry->ext_id_); 
+      CORBA::string_free ((char *) entry->ext_id_);
       entry->ext_id_ = 0;
 
       // We do not own this. So we just set it to 0.
-      entry->int_id_ = 0;  
+      entry->int_id_ = 0;
     }
 }
 
@@ -210,6 +210,48 @@ TAO_Active_Demux_OpTable_Entry::~TAO_Active_Demux_OpTable_Entry (void)
 {
   this->skel_ptr_ = 0;  // cannot delete this as we do not own it
 }
+
+// Do nothing constructor.
+TAO_Perfect_Hash_OpTable::TAO_Perfect_Hash_OpTable (void)
+{
+}
+
+// Do nothing destrctor.
+TAO_Perfect_Hash_OpTable::~TAO_Perfect_Hash_OpTable (void)
+{
+}
+
+
+// Uses <{opname}> to look up the skeleton function and pass it back
+// in <{skelfunc}>.  Returns non-negative integer on success, or -1
+// on failure.
+int
+TAO_Perfect_Hash_OpTable::find (const char *opname,
+                                TAO_Skeleton &skelfunc)
+{
+  const TAO_operation_db_entry *entry = lookup (opname,
+                                                ACE_OS::strlen (opname));
+  if (entry == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO_Perfect_Hash_Table:find failed\n"),
+                      -1);
+
+  // Valid entry. Figure out the skel_ptr.
+  skelfunc = entry->skel_ptr_;
+
+  return 0;
+}
+
+int
+TAO_Perfect_Hash_OpTable::bind (const char *opname,
+                                const TAO_Skeleton skel_ptr)
+{
+  ACE_UNUSED_ARG (opname);
+  ACE_UNUSED_ARG (skel_ptr);
+  return 0;
+}
+
+
 
 // constructor
 TAO_Operation_Table_Parameters::TAO_Operation_Table_Parameters (void)
