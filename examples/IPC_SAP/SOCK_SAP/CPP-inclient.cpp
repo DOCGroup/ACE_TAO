@@ -8,9 +8,10 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Singleton.h"
 #include "ace/Get_Opt.h"
-                                                        
+#include "ace/Synch.h"
+
 // ACE SOCK_SAP client.
-                                                        
+
 class Options
   // = TITLE
   //   Define the options for this test.
@@ -27,11 +28,11 @@ public:
 
   u_short port (void) const;
   // Port of the server.
-  
+
   const char *host (void) const;
   // Host of the server.
 
-  int threads (void) const;
+  size_t threads (void) const;
   // Number of threads.
 
   const char *quit_string (void) const;
@@ -39,7 +40,7 @@ public:
 
   ssize_t read (char *buf, size_t len, size_t &iterations);
   // Read from the appropriate location.
-  
+
 private:
   const char *host_;
   // Host of the server.
@@ -50,7 +51,7 @@ private:
   ACE_Time_Value timeout_;
   // Timeout value.
 
-  int threads_;
+  size_t threads_;
   // Number of threads.
 
   const char *quit_string_;
@@ -74,7 +75,7 @@ Options::Options (void)
 {
 }
 
-int
+ssize_t
 Options::read (char *buf, size_t len, size_t &iteration)
 {
   if (io_source_ == ACE_STDIN)
@@ -116,13 +117,13 @@ Options::parse_args (int argc, char *argv[])
         this->io_source_ = ACE_STDIN;
         break;
       case 't':
-        this->threads_ = ACE_OS::atoi (getopt.optarg);
+        this->threads_ = (size_t) ACE_OS::atoi (getopt.optarg);
         break;
       case 'T':
         this->timeout_ = ACE_OS::atoi (getopt.optarg);
         break;
       default:
-        ACE_ERROR_RETURN ((LM_ERROR, 
+        ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) usage: %s [-h <host>] [-p <port>] [-q <quit string>] [-s] [-t <threads>] [-T <timeout>]"),
                           1);
       }
@@ -148,7 +149,7 @@ Options::quit_string (void) const
   return this->quit_string_;
 }
 
-int
+size_t
 Options::threads (void) const
 {
   return this->threads_;
@@ -161,7 +162,7 @@ Options::timeout (void) const
 }
 
 // Options Singleton.
-typedef ACE_Singleton<Options, ACE_Recursive_Thread_Mutex> OPTIONS;
+typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
 
 // Entry point to the client service.
 
@@ -177,7 +178,7 @@ client (void *)
                              options->host ());
 
   ACE_SOCK_Connector con;
-                                                        
+
   // Initiate blocking connection with server.
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting connect\n"));
 
@@ -189,7 +190,7 @@ client (void *)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) connected to %s\n",
-                remote_addr.get_host_name ()));    
+                remote_addr.get_host_name ()));
 
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -202,12 +203,12 @@ client (void *)
   size_t iteration = 0;
 
   // Send data to server (correctly handles "incomplete writes").
-  
+
   for (ssize_t r_bytes;
        (r_bytes = options->read (buf, sizeof buf, iteration)) > 0;
        )
-    if (ACE_OS::strncmp (buf, 
-                         options->quit_string (), 
+    if (ACE_OS::strncmp (buf,
+                         options->quit_string (),
                          ACE_OS::strlen (options->quit_string ())) == 0)
       break;
     else if (cli_stream.send (buf, r_bytes, 0, options->timeout ()) == -1)
@@ -218,7 +219,7 @@ client (void *)
           // Breakout if we didn't fail due to a timeout.
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%P|%t) %p\n",
-                             "send_n"), 
+                             "send_n"),
                             0);
       }
     else if (cli_stream.recv (buf, sizeof buf) <= 0)
@@ -227,8 +228,8 @@ client (void *)
                          "recv"),
                         0);
 
-  // Close the connection completely. 
-  if (cli_stream.close () == -1) 
+  // Close the connection completely.
+  if (cli_stream.close () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) %p\n",
                        "close"),
@@ -236,26 +237,26 @@ client (void *)
   return 0;
 }
 
-int 
-main (int argc, char *argv[])                       
-{                                                       
+int
+main (int argc, char *argv[])
+{
   OPTIONS::instance ()->parse_args (argc, argv);
 
 #if defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn_n (OPTIONS::instance ()->threads (),
-                                                client) == -1)
+                                                (ACE_THR_FUNC) client) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "spawn_n"), 1);
   else
     ACE_Thread_Manager::instance ()->wait ();
 #else
-  client ();
+  client (0);
 #endif /* ACE_HAS_THREADS */
-  
+
   return 0;
-}                                                       
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<Options, ACE_Recursive_Thread_Mutex>;
+template class ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<Options, ACE_Recursive_Thread_Mutex>
+#pragma instantiate ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
