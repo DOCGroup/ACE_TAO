@@ -1,3 +1,18 @@
+Mon May 10 23:13:05 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp: 
+	* tao/Connect.cpp 
+ 	* tao/GIOP.cpp	  
+ 	* tao/GIOP.h	  
+        * tao/IIOP_Transport.h
+ 	* tao/Invocation.cpp
+ 	* tao/Invocation.i
+	
+	 First attempt towards revamping the ORB for AMI model implementation.
+	 Integrated all of Carlos' suggestions on to the architecture. First
+	 tried to get the "Wait_On_Read" strategy to work. Not complete yet.			
+
+
 Thu May  6 15:46:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_args.cpp:
