@@ -801,196 +801,55 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DynEnum (CORBA::tk_objref,
 
 CORBA::TypeCode_ptr _tc_CORBA_DynEnum = &_tc_TAO_tc_CORBA_DynEnum;
 
-static const CORBA::Long _oc_FieldName[] =
-{
-  TAO_ENCAP_BYTE_ORDER,     // byte order
-  19,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x2f466965),
-  ACE_NTOHL (0x6c644e61),
-  ACE_NTOHL (0x6d653a31),
-  ACE_NTOHL (0x2e3000fd),   // repository ID = IDL:/FieldName:1.0
-  10,
-  ACE_NTOHL (0x4669656c),
-  ACE_NTOHL (0x644e616d),
-  ACE_NTOHL (0x6500fdfd),   // name = FieldName
-  CORBA::tk_string,
-  0,                        // string length
-};
-static CORBA::TypeCode _tc_TAO_tc_FieldName (CORBA::tk_alias,
-                                          sizeof (_oc_FieldName),
-                                          (char *) &_oc_FieldName,
-                                          0,
-                                          sizeof (FieldName));
-
-CORBA::TypeCode_ptr _tc_FieldName = &_tc_TAO_tc_FieldName;
-
-static const CORBA::Long _oc_NameValuePair[] =
-{
-  TAO_ENCAP_BYTE_ORDER,     // byte order
-  23,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x2f4e616d),
-  ACE_NTOHL (0x6556616c),
-  ACE_NTOHL (0x75655061),
-  ACE_NTOHL (0x69723a31),
-  ACE_NTOHL (0x2e3000fd),   // repository ID = IDL:/NameValuePair:1.0
-  14,
-  ACE_NTOHL (0x4e616d65),
-  ACE_NTOHL (0x56616c75),
-  ACE_NTOHL (0x65506169),
-  ACE_NTOHL (0x7200fdfd),   // name = NameValuePair
-  2,                        // member count
-  3,
-  ACE_NTOHL (0x696400fd),   // name = id
-  CORBA::tk_alias,          // typecode kind for typedefs
-  52,                       // encapsulation length
-  TAO_ENCAP_BYTE_ORDER,     // byte order
-  19,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x2f466965),
-  ACE_NTOHL (0x6c644e61),
-  ACE_NTOHL (0x6d653a31),
-  ACE_NTOHL (0x2e3000fd),   // repository ID = IDL:/FieldName:1.0
-  10,
-  ACE_NTOHL (0x4669656c),
-  ACE_NTOHL (0x644e616d),
-  ACE_NTOHL (0x6500fdfd),   // name = FieldName
-  CORBA::tk_string,
-  0,                        // string length
-  6,
-  ACE_NTOHL (0x76616c75),
-  ACE_NTOHL (0x6500fdfd),   // name = value
-  CORBA::tk_any,
-};
-
-static CORBA::TypeCode _tc_TAO_tc_NameValuePair (CORBA::tk_struct,
-                                              sizeof (_oc_NameValuePair),
-                                              (char *) &_oc_NameValuePair,
-                                              0,
-                                              sizeof (NameValuePair));
-
-CORBA::TypeCode_ptr _tc_NameValuePair = &_tc_TAO_tc_NameValuePair;
-
-
-#if !defined (_NAMEVALUEPAIRSEQ_CS_)
-#define _NAMEVALUEPAIRSEQ_CS_
+#if !defined (_CORBA_NAME_VALUE_PAIR_SEQ_CS_)
+#define _CORBA_NAME_VALUE_PAIR_SEQ_CS_
 
 // *************************************************************
-// NameValuePairSeq
+// CORBA_NameValuePairSeq
 // *************************************************************
 
-NameValuePairSeq::NameValuePairSeq (void)
+CORBA_NameValuePairSeq::CORBA_NameValuePairSeq (void)
 {}
-NameValuePairSeq::NameValuePairSeq (CORBA::ULong max) // uses max size
+CORBA_NameValuePairSeq::CORBA_NameValuePairSeq (CORBA::ULong max) // uses max size
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-  _TAO_Unbounded_Sequence_NameValuePairSeq
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq
 #else /* AHETI */
-  TAO_Unbounded_Sequence<NameValuePair>
+  TAO_Unbounded_Sequence<CORBA::NameValuePair>
 #endif /* AHETI */
  (max)
 {}
-NameValuePairSeq::NameValuePairSeq (CORBA::ULong max,
+CORBA_NameValuePairSeq::CORBA_NameValuePairSeq (CORBA::ULong max,
                                     CORBA::ULong length,
-                                    NameValuePair *buffer,
+                                    CORBA::NameValuePair *buffer,
                                     CORBA::Boolean release)
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-  _TAO_Unbounded_Sequence_NameValuePairSeq
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq
 #else /* AHETI */
-  TAO_Unbounded_Sequence<NameValuePair>
+  TAO_Unbounded_Sequence<CORBA::NameValuePair>
 #endif /* AHETI */
  (max, length, buffer, release)
 {}
-NameValuePairSeq::NameValuePairSeq (
-    const NameValuePairSeq &seq
+CORBA_NameValuePairSeq::CORBA_NameValuePairSeq (
+    const CORBA_NameValuePairSeq &seq
   ) // copy ctor
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-  _TAO_Unbounded_Sequence_NameValuePairSeq
+  _TAO_Unbounded_Sequence_CORBA_NameValuePairSeq
 #else /* AHETI */
-  TAO_Unbounded_Sequence<NameValuePair>
+  TAO_Unbounded_Sequence< CORBA::NameValuePair>
 #endif /* AHETI */
  (seq)
 {}
-NameValuePairSeq::~NameValuePairSeq (void) // dtor
+CORBA_NameValuePairSeq::~CORBA_NameValuePairSeq (void) // dtor
 {}
 
 
 #endif /* end #if !defined */
-
-static const CORBA::Long _oc_NameValuePairSeq[] =
-{
-  TAO_ENCAP_BYTE_ORDER,     // byte order
-  26,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x2f4e616d),
-  ACE_NTOHL (0x6556616c),
-  ACE_NTOHL (0x75655061),
-  ACE_NTOHL (0x69725365),
-  ACE_NTOHL (0x713a312e),
-  ACE_NTOHL (0x3000fdfd),   // repository ID = IDL:/NameValuePairSeq:1.0
-  17,
-  ACE_NTOHL (0x4e616d65),
-  ACE_NTOHL (0x56616c75),
-  ACE_NTOHL (0x65506169),
-  ACE_NTOHL (0x72536571),
-  ACE_NTOHL (0xfdfdfd),     // name = NameValuePairSeq
-  CORBA::tk_sequence,       // typecode kind
-  156,                      // encapsulation length
-  TAO_ENCAP_BYTE_ORDER,     // byte order
-  CORBA::tk_struct,         // typecode kind
-  140,                      // encapsulation length
-  TAO_ENCAP_BYTE_ORDER,     // byte order
-  23,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x2f4e616d),
-  ACE_NTOHL (0x6556616c),
-  ACE_NTOHL (0x75655061),
-  ACE_NTOHL (0x69723a31),
-  ACE_NTOHL (0x2e3000fd),   // repository ID = IDL:/NameValuePair:1.0
-  14,
-  ACE_NTOHL (0x4e616d65),
-  ACE_NTOHL (0x56616c75),
-  ACE_NTOHL (0x65506169),
-  ACE_NTOHL (0x7200fdfd),   // name = NameValuePair
-  2,                        // member count
-  3,
-  ACE_NTOHL (0x696400fd),   // name = id
-  CORBA::tk_alias,          // typecode kind for typedefs
-  52,                       // encapsulation length
-  TAO_ENCAP_BYTE_ORDER,     // byte order
-  19,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x2f466965),
-  ACE_NTOHL (0x6c644e61),
-  ACE_NTOHL (0x6d653a31),
-  ACE_NTOHL (0x2e3000fd),   // repository ID = IDL:/FieldName:1.0
-  10,
-  ACE_NTOHL (0x4669656c),
-  ACE_NTOHL (0x644e616d),
-  ACE_NTOHL (0x6500fdfd),   // name = FieldName
-  CORBA::tk_string,
-  0,                        // string length
-  6,
-  ACE_NTOHL (0x76616c75),
-  ACE_NTOHL (0x6500fdfd),   // name = value
-  CORBA::tk_any,
-  0,
-};
-
-static CORBA::TypeCode _tc_TAO_tc_NameValuePairSeq (
-    CORBA::tk_alias,
-    sizeof (_oc_NameValuePairSeq),
-    (char *) &_oc_NameValuePairSeq,
-    0,
-    sizeof (NameValuePairSeq));
-
-CORBA::TypeCode_ptr _tc_NameValuePairSeq = &_tc_TAO_tc_NameValuePairSeq;
 
 CORBA_DynStruct_ptr CORBA_DynStruct::_duplicate (CORBA_DynStruct_ptr obj)
 {
@@ -1032,7 +891,7 @@ CORBA_DynStruct_ptr CORBA_DynStruct::_nil (void)
   return (CORBA_DynStruct_ptr) NULL;
 } // end of _nil
 
-FieldName
+CORBA::FieldName
 CORBA_DynStruct::current_member_name (CORBA::Environment  &)
 {
   return 0;
@@ -1044,14 +903,14 @@ CORBA_DynStruct::current_member_kind (CORBA::Environment &)
   return CORBA::tk_null;
 }
 
-NameValuePairSeq*
+CORBA_NameValuePairSeq*
 CORBA_DynStruct::get_members (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynStruct::set_members (const NameValuePairSeq &,
+CORBA_DynStruct::set_members (const CORBA_NameValuePairSeq &,
                               CORBA::Environment &)
 {
 }
@@ -1234,79 +1093,53 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_DynUnion (
 CORBA::TypeCode_ptr _tc_CORBA_DynUnion = &_tc_TAO_tc_CORBA_DynUnion;
 
 
-#if !defined (_ANYSEQ_CS_)
-#define _ANYSEQ_CS_
+#if !defined (_CORBA_ANYSEQ_CS_)
+#define _CORBA_ANYSEQ_CS_
 
 // *************************************************************
-// AnySeq
+// CORBA_AnySeq
 // *************************************************************
 
-AnySeq::AnySeq (void)
+CORBA_AnySeq::CORBA_AnySeq (void)
 {}
-AnySeq::AnySeq (CORBA::ULong max) // uses max size
+CORBA_AnySeq::CORBA_AnySeq (CORBA::ULong max) // uses max size
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
        || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-  _TAO_Unbounded_Sequence_AnySeq
+  _TAO_Unbounded_Sequence_CORBA_AnySeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<CORBA::Any>
 #endif /* AHETI */
  (max)
 {}
-AnySeq::AnySeq (CORBA::ULong max,
+CORBA_AnySeq::CORBA_AnySeq (CORBA::ULong max,
                 CORBA::ULong length,
                 CORBA::Any *buffer,
                 CORBA::Boolean release)
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-  _TAO_Unbounded_Sequence_AnySeq
+  _TAO_Unbounded_Sequence_CORBA_AnySeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<CORBA::Any>
 #endif /* AHETI */
  (max, length, buffer, release)
 {}
-AnySeq::AnySeq (const AnySeq &seq) // copy ctor
+CORBA_AnySeq::CORBA_AnySeq (const CORBA_AnySeq &seq) // copy ctor
   :
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) \
              || !defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-  _TAO_Unbounded_Sequence_AnySeq
+  _TAO_Unbounded_Sequence_CORBA_AnySeq
 #else /* AHETI */
   TAO_Unbounded_Sequence<CORBA::Any>
 #endif /* AHETI */
  (seq)
 {}
-AnySeq::~AnySeq (void) // dtor
+CORBA_AnySeq::~CORBA_AnySeq (void) // dtor
 {}
 
 
 #endif /* end #if !defined */
-
-static const CORBA::Long _oc_AnySeq[] =
-{
-  TAO_ENCAP_BYTE_ORDER,     // byte order
-  16,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x2f416e79),
-  ACE_NTOHL (0x5365713a),
-  ACE_NTOHL (0x312e3000),   // repository ID = IDL:/AnySeq:1.0
-  7,
-  ACE_NTOHL (0x416e7953),
-  ACE_NTOHL (0x657100fd),   // name = AnySeq
-  CORBA::tk_sequence,       // typecode kind
-  12,                       // encapsulation length
-  TAO_ENCAP_BYTE_ORDER,     // byte order
-  CORBA::tk_any,
-  0,
-};
-
-static CORBA::TypeCode _tc_TAO_tc_AnySeq (CORBA::tk_alias,
-                                       sizeof (_oc_AnySeq),
-                                       (char *) &_oc_AnySeq,
-                                       0,
-                                       sizeof (AnySeq));
-
-CORBA::TypeCode_ptr _tc_AnySeq = &_tc_TAO_tc_AnySeq;
 
 CORBA_DynSequence_ptr CORBA_DynSequence::_duplicate (
     CORBA_DynSequence_ptr obj
@@ -1361,14 +1194,14 @@ CORBA_DynSequence::length (CORBA::ULong,
 {
 }
 
-AnySeq_ptr
+CORBA_AnySeq_ptr
 CORBA_DynSequence::get_elements (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynSequence::set_elements (const AnySeq &,
+CORBA_DynSequence::set_elements (const CORBA_AnySeq &,
                                  CORBA::Environment &)
 {
 }
@@ -1459,14 +1292,14 @@ CORBA_DynArray_ptr CORBA_DynArray::_nil (void)
   return (CORBA_DynArray_ptr) NULL;
 } // end of _nil
 
-AnySeq_ptr
+CORBA_AnySeq_ptr
 CORBA_DynArray::get_elements (CORBA::Environment &)
 {
   return 0;
 }
 
 void
-CORBA_DynArray::set_elements (const AnySeq &,
+CORBA_DynArray::set_elements (const CORBA_AnySeq &,
                               CORBA::Environment &)
 {
 }

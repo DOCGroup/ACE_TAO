@@ -151,6 +151,11 @@ TAO_SYSTEM_EXCEPTION_LIST
 class CORBA_WrongTransaction;
 typedef CORBA_WrongTransaction *CORBA_WrongTransaction_ptr;
 
+struct CORBA_NameValuePair;
+class CORBA_NameValuePair_var;
+class CORBA_NameValuePair_out;
+typedef CORBA_NameValuePair *CORBA_NameValuePair_ptr;
+
 class CORBA_Request;
 class CORBA_Request_var;
 class CORBA_Request_out;
@@ -186,6 +191,17 @@ class CORBA_ConstructionPolicy;
 class CORBA_ConstructionPolicy_var;
 class CORBA_ConstructionPolicy_out;
 typedef class CORBA_ConstructionPolicy *CORBA_ConstructionPolicy_ptr;
+
+class CORBA_AnySeq;
+class CORBA_AnySeq_var;
+class CORBA_AnySeq_out;
+typedef class CORBA_AnySeq *CORBA_AnySeq_ptr;
+
+// Forward declarations.
+class CORBA_NameValuePairSeq;
+class CORBA_NameValuePairSeq_var;
+class CORBA_NameValuePairSeq_out;
+typedef CORBA_NameValuePairSeq *CORBA_NameValuePairSeq_ptr;
 
 #endif /* ! TAO_HAS_MINIMUM_CORBA */
 
@@ -441,6 +457,10 @@ public:
   typedef CORBA_ContextList *ContextList_ptr;
   typedef CORBA_ContextList_var ContextList_var;
   typedef CORBA_ContextList_out ContextList_out;
+
+  typedef char *CORBA_FieldName;
+  typedef CORBA_String_var CORBA_FieldName_var;
+  typedef CORBA_String_out CORBA_FieldName_out;
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -788,6 +808,29 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA_WrongTransaction WrongTransaction;
   typedef WrongTransaction *WrongTransaction_ptr;
   static CORBA::TypeCode_ptr _tc_WrongTransaction;
+
+  typedef CORBA_AnySeq AnySeq;
+  typedef CORBA_AnySeq *AnySeq_ptr;
+  typedef CORBA_AnySeq_var AnySeq_var;
+  typedef CORBA_AnySeq_out AnySeq_out;
+  static CORBA::TypeCode_ptr _tc_AnySeq;
+
+  typedef CORBA_FieldName FieldName;
+  typedef CORBA_FieldName_var FieldName_var;
+  typedef CORBA_FieldName_out FieldName_out;
+  static CORBA::TypeCode_ptr _tc_FieldName;
+
+  typedef CORBA_NameValuePair NameValuePair;
+  typedef CORBA_NameValuePair *NameValuePair_ptr;
+  typedef CORBA_NameValuePair_var NameValuePair_var;
+  typedef CORBA_NameValuePair_out NameValuePair_out;
+  static CORBA::TypeCode_ptr _tc_NameValuePair;
+
+  typedef CORBA_NameValuePairSeq NameValuePairSeq;
+  typedef CORBA_NameValuePairSeq *NameValuePairSeq_ptr;
+  typedef CORBA_NameValuePairSeq_var NameValuePairSeq_var;
+  typedef CORBA_NameValuePairSeq_out NameValuePairSeq_out;
+  static CORBA::TypeCode_ptr _tc_NameValuePairSeq;
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
 
