@@ -3,7 +3,9 @@
 #include "interceptors.h"
 
 
-ACE_RCSID(Interceptors, interceptors, "$Id$")
+ACE_RCSID (Service_Context_Manipulation,
+           interceptors,
+           "$Id$")
 
 const CORBA::ULong request_ctx_id = 0xdead;
 const CORBA::ULong reply_ctx_id = 0xbeef;
@@ -11,13 +13,13 @@ const char *request_msg = "The Echo_Request_Interceptor request message";
 const char *reply_msg = "The Echo_Request_Interceptor reply message";
 
 Echo_Client_Request_Interceptor::
-     Echo_Client_Request_Interceptor (const char *id)
+Echo_Client_Request_Interceptor (const char *id)
   : myname_ ("Echo_Client_Interceptor"),
     orb_id_ (CORBA::string_dup (id))
 {
 }
 
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
+Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor (void)
 {
 }
 
@@ -44,8 +46,8 @@ Echo_Client_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 Echo_Client_Request_Interceptor::send_poll (
-            PortableInterceptor::ClientRequestInfo_ptr
-            TAO_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ClientRequestInfo_ptr
+    TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Do Nothing
@@ -53,10 +55,10 @@ Echo_Client_Request_Interceptor::send_poll (
 
 void
 Echo_Client_Request_Interceptor::send_request (
-     PortableInterceptor::ClientRequestInfo_ptr ri
-     TAO_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ClientRequestInfo_ptr ri
+    TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   TAO_ENV_ARG_DEFN;
 
@@ -72,8 +74,11 @@ Echo_Client_Request_Interceptor::send_request (
   CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
   ACE_CHECK;
 
+  CORBA::Object_var target = ri->target (ACE_TRY_ENV);
+  ACE_CHECK;
+
   CORBA::String_var ior =
-    this->orb_->object_to_string (ri->target (), ACE_TRY_ENV);
+    this->orb_->object_to_string (target.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -90,21 +95,23 @@ Echo_Client_Request_Interceptor::send_request (
 
   CORBA::ULong string_len = ACE_OS::strlen (request_msg) + 1;
   CORBA::Octet *buf = 0;
-  ACE_NEW (buf,
-           CORBA::Octet [string_len]);
+  ACE_NEW_THROW_EX (buf,
+                    CORBA::Octet [string_len],
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
   ACE_OS::strcpy (ACE_reinterpret_cast (char *, buf), request_msg);
 
   sc.context_data.replace (string_len, string_len, buf, 1);
 
   // Add this context to the service context list.
-  ri->add_request_service_context (sc, 0);
+  ri->add_request_service_context (sc, 0, ACE_TRY_ENV);
 }
 
 void
 Echo_Client_Request_Interceptor::receive_reply (
-     PortableInterceptor::ClientRequestInfo_ptr ri
-     TAO_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+    PortableInterceptor::ClientRequestInfo_ptr ri
+    TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ENV_ARG_DEFN;
 
@@ -120,20 +127,26 @@ Echo_Client_Request_Interceptor::receive_reply (
   CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
   ACE_CHECK;
 
+  CORBA::Object_var target = ri->target (ACE_TRY_ENV);
+  ACE_CHECK;
+
   CORBA::String_var ior =
-    this->orb_->object_to_string (ri->target (), ACE_TRY_ENV);
+    this->orb_->object_to_string (target.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Client_Request_Interceptor::receive_reply from \"%s\" on object: %s\n",
-              operation.in (), ior.in ()));
+              "Echo_Client_Request_Interceptor::receive_reply from "
+              "\"%s\" on object: %s\n",
+              operation.in (),
+              ior.in ()));
 
   IOP::ServiceId id = reply_ctx_id;
   IOP::ServiceContext_var sc =
     ri->get_reply_service_context (id, ACE_TRY_ENV);
   ACE_CHECK;
 
-  const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+  const char *buf =
+    ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %s\n",
               buf));
@@ -141,10 +154,10 @@ Echo_Client_Request_Interceptor::receive_reply (
 
 void
 Echo_Client_Request_Interceptor::receive_other (
-     PortableInterceptor::ClientRequestInfo_ptr
-     TAO_ENV_ARG_DECL_NOT_USED)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ClientRequestInfo_ptr
+    TAO_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_other\n"));
@@ -152,10 +165,10 @@ Echo_Client_Request_Interceptor::receive_other (
 
 void
 Echo_Client_Request_Interceptor::receive_exception (
-     PortableInterceptor::ClientRequestInfo_ptr ri
-     TAO_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableInterceptor::ForwardRequest))
+    PortableInterceptor::ClientRequestInfo_ptr ri
+    TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   TAO_ENV_ARG_DEFN;
 
@@ -171,8 +184,11 @@ Echo_Client_Request_Interceptor::receive_exception (
   CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
   ACE_CHECK;
 
+  CORBA::Object_var target = ri->target (ACE_TRY_ENV);
+  ACE_CHECK;
+
   CORBA::String_var ior =
-    this->orb_->object_to_string (ri->target (), ACE_TRY_ENV);
+    this->orb_->object_to_string (target.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -187,7 +203,7 @@ Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
 {
 }
 
-Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
+Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor (void)
 {
 }
 
@@ -213,25 +229,30 @@ Echo_Server_Request_Interceptor::name (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Echo_Server_Request_Interceptor::receive_request (
-     PortableInterceptor::ServerRequestInfo_ptr ri
-     TAO_ENV_ARG_DECL)
+Echo_Server_Request_Interceptor::receive_request_service_contexts (
+    PortableInterceptor::ServerRequestInfo_ptr ri
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
   TAO_ENV_ARG_DEFN;
 
+  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::receive_request from \"%s\"",
-              ri->operation ()));
+              "Echo_Server_Request_Interceptor::"
+              "receive_request_service_contexts from "
+              "\"%s\"",
+              operation.in ()));
 
   IOP::ServiceId id = request_ctx_id;
-  IOP::ServiceContext *sc = ri->get_request_service_context (id);
+  IOP::ServiceContext_var sc =
+    ri->get_request_service_context (id, ACE_TRY_ENV);
+  ACE_CHECK;
 
-  if (sc == 0)
-    ACE_THROW (CORBA::NO_MEMORY ());
-
-  const char *buf = ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
+  const char *buf =
+    ACE_reinterpret_cast (const char *, sc->context_data.get_buffer ());
   ACE_DEBUG ((LM_DEBUG,
               "  Received service context: %s\n",
               buf));
@@ -243,45 +264,50 @@ Echo_Server_Request_Interceptor::receive_request (
 
   CORBA::ULong string_len = ACE_OS::strlen (reply_msg) + 1;
   CORBA::Octet *buff = 0;
-  ACE_NEW (buff,
-           CORBA::Octet [string_len]);
+  ACE_NEW_THROW_EX (buff,
+                    CORBA::Octet [string_len],
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK;
 
   ACE_OS::strcpy (ACE_reinterpret_cast (char *, buff), reply_msg);
 
   scc.context_data.replace (string_len, string_len, buff, 1);
 
   // Add this context to the service context list.
-  ri->add_reply_service_context (scc, 0);
-
+  ri->add_reply_service_context (scc, 0, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
+
 void
-Echo_Server_Request_Interceptor::receive_request_service_contexts (
-     PortableInterceptor::ServerRequestInfo_ptr
-     TAO_ENV_ARG_DECL_NOT_USED)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::ForwardRequest))
+Echo_Server_Request_Interceptor::receive_request (
+    PortableInterceptor::ServerRequestInfo_ptr
+    TAO_ENV_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   PortableInterceptor::ForwardRequest))
 {
   // Do nothing
 }
 
 void
 Echo_Server_Request_Interceptor::send_reply (
-     PortableInterceptor::ServerRequestInfo_ptr ri
-     TAO_ENV_ARG_DECL)
+    PortableInterceptor::ServerRequestInfo_ptr ri
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ENV_ARG_DEFN;
+
+  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"",
               ri->operation ()));
 
   IOP::ServiceId id = reply_ctx_id;
-  IOP::ServiceContext *sc = ri->get_reply_service_context (id);
-
-  if (sc == 0)
-    ACE_THROW (CORBA::NO_MEMORY ());
+  IOP::ServiceContext_var sc =
+    ri->get_reply_service_context (id, ACE_TRY_ENV);
+  ACE_CHECK;
 
   const char *buf = ACE_reinterpret_cast (const char *,
                                           sc->context_data.get_buffer ());
@@ -292,14 +318,20 @@ Echo_Server_Request_Interceptor::send_reply (
 
 void
 Echo_Server_Request_Interceptor::send_exception (
-     PortableInterceptor::ServerRequestInfo_ptr ri
-     TAO_ENV_ARG_DECL_NOT_USED)
+    PortableInterceptor::ServerRequestInfo_ptr ri
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  TAO_ENV_ARG_DEFN;
+
+  CORBA::String_var operation = ri->operation (ACE_TRY_ENV);
+  ACE_CHECK;
+
   ACE_DEBUG ((LM_DEBUG,
-              "Echo_Server_Request_Interceptor::send_exception from \"%s\"",
-              ri->operation ()));
+              "Echo_Server_Request_Interceptor::send_exception from "
+              "\"%s\"",
+              operation.in ()));
 }
 
 void

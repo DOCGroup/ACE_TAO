@@ -43,11 +43,12 @@ run_test (Test_Interceptors::Visual_ptr server,
   server->normal (10, ACE_TRY_ENV);
   ACE_CHECK;
 
-  cout << "normal done"<<endl;
-  server->nothing (ACE_TRY_ENV);
+  ACE_DEBUG ((LM_DEBUG, "\"normal\" operation done\n"));
 
-  cout<< "nothing done"<<endl;
+  server->nothing (ACE_TRY_ENV);
   ACE_CHECK;
+
+  ACE_DEBUG ((LM_DEBUG, "\"nothing\" operation done\n"));
 
   ACE_TRY
     {
@@ -68,9 +69,10 @@ run_test (Test_Interceptors::Visual_ptr server,
     }
   ACE_CATCH (CORBA::INV_OBJREF, sysex)
     {
-      ACE_DEBUG ((LM_DEBUG, "Caught Inv_Objref\n"));
+      ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 int
@@ -89,9 +91,6 @@ main (int argc, char *argv[])
       PortableInterceptor::register_orb_initializer (initializer.in (),
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      // Transfer ownership to the ORB.
-      (void) initializer._retn ();
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
@@ -117,6 +116,7 @@ main (int argc, char *argv[])
         }
 
       run_test (server.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       server->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -124,7 +124,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;
