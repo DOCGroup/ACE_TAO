@@ -575,7 +575,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "TAO_InputCDR stream ((ACE_Message_Block *)_tao_any.value ());"
           << be_nl
           << "if (stream.decode (" << node->tc_name ()
-          << ", &_tao_elem, 0, _tao_env)" << be_nl
+          << ", _tao_elem, 0, _tao_env)" << be_nl
           << "  == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
           << "{" << be_idt_nl
           << "((CORBA::Any *)&_tao_any)->replace (_tao_any.type (), "
