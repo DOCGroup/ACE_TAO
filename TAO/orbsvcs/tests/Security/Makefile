@@ -9,6 +9,7 @@
 #----------------------------------------------------------------------------
 
 DIRS = \
+  Big_Request \
   Secure_Invocation \
   SecurityLevel1
 
