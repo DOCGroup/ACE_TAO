@@ -75,6 +75,10 @@ protected:
             int protocol = 0,
 	    int reuse_addr = 0);
   // Constructor with arguments to call the <socket> system call.
+
+  ACE_SOCK (void);
+  // Default constructor is private to prevent instances of this class
+  // from being defined.
 };
 
 #include "ace/SOCK.i"
