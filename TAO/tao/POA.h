@@ -343,9 +343,6 @@ public:
 
 private:
   
-  // 32 bit ulong requires 8 octets
-  static const int max_space_required_for_two_ulong_to_hex;
-
   // Timestamp buffer
   char time_stamp_[(8 * 2) + 1];
 
@@ -375,8 +372,14 @@ class TAO_Export TAO_POA : public POA_PortableServer::POA
 {
 public:
 
+  enum 
+  {
+    // This is the maximum space require to convert the ulong into a
+    // string.
+    MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX = 16
+  };
+
   typedef ACE_CString String;
-  //typedef std::string String;
 
   virtual PortableServer::POA_ptr create_POA (const char *adapter_name,
                                               PortableServer::POAManager_ptr poa_manager,
@@ -632,7 +635,8 @@ protected:
                                TAO_POA::String &tail_poa_name,
                                CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual PortableServer::ObjectId *create_object_id (void);
+  virtual PortableServer::ObjectId *create_object_id (PortableServer::Servant servant,
+                                                      CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
   virtual TAO_ObjectKey *create_object_key (const PortableServer::ObjectId &id);
 
@@ -644,6 +648,7 @@ protected:
                          String &poa_name,
                          PortableServer::ObjectId &id,
                          CORBA::Boolean &persistent,
+                         CORBA::Boolean &system_id,
                          TAO_Temporary_Creation_Time &poa_creation_time);
 
   virtual int rfind (const TAO_ObjectKey &key,
@@ -691,19 +696,31 @@ protected:
                             TAO_POA_Current *poa_current,
                             CORBA_Environment &_env = CORBA_Environment::default_environment ());
 
-  virtual CORBA::Boolean persistent (void);
-
   virtual const TAO_Creation_Time &creation_time (void);
 
-  virtual char object_key_type (void);
+  virtual CORBA::Boolean persistent (void);
 
-  static char persistent_key_type (void);
+  virtual char persistent_key_type (void);
 
-  static char transient_key_type (void);
+  static char persistent_key_char (void);
+
+  static char transient_key_char (void);
   
-  static CORBA::ULong object_key_type_length (void);
+  static CORBA::ULong persistent_key_type_length (void);
+
+  virtual CORBA::Boolean system_id (void);
+
+  virtual char system_id_key_type (void);
+
+  static char system_id_key_char (void);
+
+  static char user_id_key_char (void);
+  
+  static CORBA::ULong system_id_key_type_length (void);
 
   virtual void create_internal_lock (void);
+
+  virtual void create_active_object_map (void);
 
   String name_;
 
@@ -735,11 +752,11 @@ protected:
 
   int closing_down_;
 
-  CORBA::ULong counter_;
+  int persistent_;
+
+  int system_id_;
 
   TAO_Creation_Time creation_time_;
-
-  static const int max_space_required_for_ulong;
 };
 
 class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager

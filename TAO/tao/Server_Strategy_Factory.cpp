@@ -84,6 +84,12 @@ TAO_Server_Strategy_Factory::create_cached_connector_lock (void)
   return 0;
 }
 
+u_long 
+TAO_Server_Strategy_Factory::object_table_size (void) const
+{
+  return TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Creation_Strategy<TAO_Server_Connection_Handler>;
 template class ACE_Acceptor<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>;

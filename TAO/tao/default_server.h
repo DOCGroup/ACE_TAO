@@ -96,6 +96,9 @@ public:
   virtual int init (int argc, char *argv[]);
   // Initialize the ORB when it's linked dynamically.
 
+  virtual u_long object_table_size (void) const;
+  // Return the object table size
+
   int parse_args (int argc, char *argv[]);
   // Arguments are in the form of -ORBxxx.  Valid arguments are:
   // <-ORBconcurrency> <{which}>
