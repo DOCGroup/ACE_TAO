@@ -1,3 +1,9 @@
+Sun Jun  6 18:04:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/include/drv_extern.h:
+	* TAO_IDL/driver/drv_preproc.cpp:
+	  More constness fixes
+
 Sun Jun  6 17:42:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl.cpp:
