@@ -1,3 +1,8 @@
+Tue Dec  2 18:55:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ClientScheduler_i.{i,cpp}:
+          Fixed compile errors when TAO_HAS_INTERCEPTORS has been defined to 0
+
 Tue Dec  2 11:04:21 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
@@ -22,7 +27,7 @@ Tue Dec  2 14:42:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* utils/NamingView/NamingViewer.cpp:
           Added include of ace/ACE.h to fix compile errors. Thanks to
-          UV Wildner <> for reporting this.
+          UV Wildner <djuv@gmx.net> for reporting this.
 
 Tue Dec  2 13:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
