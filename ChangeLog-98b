@@ -1,3 +1,10 @@
+Tue Aug 11 12:23:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ARGV.{h,cpp}: Made a series of changes to make the file CE
+	  friendly.
+
+	* ace/Message_Queue_T.cpp: Adjusted the indentation.
+
 Tue Aug 11 02:06:55 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp (dispatch_handles): Because dispatch_index
