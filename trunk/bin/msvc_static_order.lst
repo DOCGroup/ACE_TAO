@@ -34,6 +34,8 @@ TAO/orbsvcs/orbsvcs/CosNaming_Serv
 TAO/orbsvcs/orbsvcs/CosNaming_Skel
 TAO/orbsvcs/orbsvcs/CosProperty
 TAO/orbsvcs/orbsvcs/CosTrading
+TAO/orbsvcs/orbsvcs/CosTrading_Serv
+TAO/orbsvcs/orbsvcs/CosTrading_Skel
 TAO/orbsvcs/orbsvcs/AV
 TAO/orbsvcs/orbsvcs/ETCL
 TAO/orbsvcs/orbsvcs/RTCosScheduling
@@ -42,6 +44,8 @@ TAO/orbsvcs/orbsvcs/RTSched
 TAO/orbsvcs/orbsvcs/RTSchedEvent
 TAO/orbsvcs/orbsvcs/RTOLDEvent
 TAO/orbsvcs/orbsvcs/CosEvent
+TAO/orbsvcs/orbsvcs/CosEvent_Serv
+TAO/orbsvcs/orbsvcs/CosEvent_Skel
 TAO/orbsvcs/orbsvcs/RTKokyuEvent
 TAO/orbsvcs/orbsvcs/CosConcurrency
 TAO/orbsvcs/orbsvcs/CosLifeCycle
