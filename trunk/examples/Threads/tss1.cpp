@@ -114,6 +114,8 @@ Tester<ACE_SYNCH_2>::svc (void)
     if ((i % 10) == 1)
       ACE_DEBUG ((LM_DEBUG, "(%t) error = %d\n", TSS_Error->error ()));  
 
+  this->close ();
+
   return 0;
 }
 

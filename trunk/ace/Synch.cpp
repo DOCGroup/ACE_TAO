@@ -27,7 +27,7 @@ ACE_TSS_Adapter::ACE_TSS_Adapter (void *object, ACE_THR_DEST f)
 void
 ACE_TSS_Adapter::cleanup (void)
 {
-  // ACE_TRACE ("ACE_TSS_Adapter::~ACE_TSS_Adapter");
+  // ACE_TRACE ("ACE_TSS_Adapter::cleanup");
   (*this->func_)(this->ts_obj_);  // call cleanup routine for ts_obj_
 }
 
@@ -153,14 +153,13 @@ ACE_RW_Mutex::ACE_RW_Mutex (int type, LPCTSTR name, void *arg)
 {
 // ACE_TRACE ("ACE_RW_Mutex::ACE_RW_Mutex");
   if (ACE_OS::rwlock_init (&this->lock_, type, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_RW_Mutex::~ACE_RW_Mutex"));
+    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_RW_Mutex::ACE_RW_Mutex"));
 }
 
 ACE_RW_Mutex::~ACE_RW_Mutex (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::~ACE_RW_Mutex");
-  if (this->remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_RW_Mutex::~ACE_RW_Mutex"));
+  this->remove ();
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Semaphore)
@@ -190,8 +189,7 @@ ACE_Semaphore::ACE_Semaphore (u_int count,
 ACE_Semaphore::~ACE_Semaphore (void)
 {
 // ACE_TRACE ("ACE_Semaphore::~ACE_Semaphore");
-  if (this->remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Semaphore_Mutex::~ACE_Semaphore_Mutex"));
+  this->remove ();
 }
 
 void
@@ -225,8 +223,7 @@ ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
 ACE_File_Lock::~ACE_File_Lock (void)
 {
 // ACE_TRACE ("ACE_File_Lock::~ACE_File_Lock");
-  if (this->remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_File_Lock::~ACE_File_Lock"));
+  this->remove ();
 }
 
 void
@@ -322,8 +319,7 @@ ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
 ACE_Mutex::~ACE_Mutex (void)
 {
 // ACE_TRACE ("ACE_Mutex::~ACE_Mutex");
-  if (this->remove () != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Mutex::~ACE_Mutex"));
+  this->remove ();
 }
 
 ACE_Event::ACE_Event (int manual_reset, 
@@ -343,8 +339,7 @@ ACE_Event::ACE_Event (int manual_reset,
 
 ACE_Event::~ACE_Event (void)
 {
-  if (this->remove () != 0)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Event::~ACE_Event"));
+  this->remove ();
 }
 
 int 
@@ -504,9 +499,7 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (LPCTSTR name,
 
 ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
 {
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex");
-  if (this->remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Process_Mutex::~ACE_Process_Mutex"));
+  // ACE_TRACE ("ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex");
 }
 
 int
@@ -655,8 +648,7 @@ ACE_Condition_Thread_Mutex::ACE_Condition_Thread_Mutex (const ACE_Thread_Mutex &
 ACE_Condition_Thread_Mutex::~ACE_Condition_Thread_Mutex (void)
 {
 // ACE_TRACE ("ACE_Condition_Thread_Mutex::~ACE_Condition_Thread_Mutex");
-  if (this->remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Condition_Thread_Mutex::~ACE_Condition_Thread_Mutex"));
+  this->remove ();
 }
 
 // Peform an "alertable" timed wait.  If the argument <abstime> == 0
@@ -861,8 +853,7 @@ ACE_Thread_Mutex::dump (void) const
 ACE_Thread_Mutex::~ACE_Thread_Mutex (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::~ACE_Thread_Mutex");
-  if (this->remove () == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread_Mutex::~ACE_Thread_Mutex"));
+  this->remove ();
 }
 
 ACE_Thread_Mutex::ACE_Thread_Mutex (LPCTSTR name, void *arg)
