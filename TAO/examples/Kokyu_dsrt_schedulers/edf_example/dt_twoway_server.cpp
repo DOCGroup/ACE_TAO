@@ -1,4 +1,4 @@
-//$Id$ 
+//$Id$
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
@@ -43,7 +43,7 @@ parse_args (int argc, char *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
-			   "-n (thread num)"
+                           "-n (thread num)"
                            "-s (disable yield)"
                            "\n",
                            argv [0]),
