@@ -4226,6 +4226,45 @@ NODEP_CPP_MESSA=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\Message_Queue.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+# PROP BASE Exclude_From_Build 1
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Method_Object.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -13654,32 +13693,8 @@ SOURCE=.\Map_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Message_Queue.cpp
-# PROP BASE Exclude_From_Build 1
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
 SOURCE=.\Message_Queue_T.cpp
-
-!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
-
-!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
-
-!ENDIF 
-
+# PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
 

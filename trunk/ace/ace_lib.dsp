@@ -40,6 +40,7 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 # Begin Project
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
+# PROP WCE_Configuration "H/PC Ver. 2.00"
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
 
@@ -55,7 +56,7 @@ CFG=ACE static library - Win32 Alpha Unicode Debug
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\STL" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
-# ADD CPP /nologo /G5 /MTd /W3 /Gm /vd1 /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "..\\" /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o"ace.bsc"
@@ -1501,6 +1502,45 @@ SOURCE=.\Message_Block.cpp
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
 
 !ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Message_Queue.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+# PROP BASE Exclude_From_Build 1
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+# PROP BASE Exclude_From_Build 1
 
 !ENDIF 
 
@@ -4874,8 +4914,7 @@ SOURCE=.\Map_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Message_Queue.cpp
-# PROP BASE Exclude_From_Build 1
+SOURCE=.\Message_Queue_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
