@@ -1,3 +1,12 @@
+Thu Apr 22 13:01:55 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadAverage.h:
+
+          Made changes to include some files.
+
+          This change will fix some more windows builds.
+
 Thu Apr 22 12:53:49 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosLoadBalancing.mpc:
