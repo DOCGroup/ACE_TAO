@@ -1,74 +1,11 @@
 // $Id$
+#include "ace/pre.h"
 #include "FT_DetectorFactory_i.h"
+#include "Detector_i.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/CosNamingC.h"
 #include "tao/PortableServer/ORB_Manager.h"
-
-class PropertySetDecoder
-{
-public:
-  class PropertyValue
-  {
-   protected:
-    PropertyValue()
-    {
-    }
-   public:
-    virtual ~PropertyValue()
-    {
-    }
-  };
-
-  template<typename TYPE>
-  class TypedPropertyValue : public PropertyValue
-  {
-   public:
-    TypedPropertyValue (const TYPE & value, int type)
-      : value_(value)
-      , type_(type)
-    {
-    }
-
-    virtual ~TypedPropertyValue ()
-    {
-    }
-
-    int type ()const
-    {
-      return type_;
-    }
-
-    const TYPE & value ()const
-    {
-      return value_;
-    }
-   private:
-    TYPE value_;
-    int type_;
-  };
-
-  PropertySetDecoder (const FT::Properties & property_set);
-  ~PropertySetDecoder ();
-
-  // convenience methods
-  int find (const std::string & key, long & value)const;
-  int find (const std::string & key, double & value)const;
-  int find (const std::string & key, std::string & value)const;
-
-  // general purpose method
-  int find (const std::string & key, PropertyValue *& pValue)const;
-
-  // note: if we had templated members:
-  // template <typename TYPE>
-  // int find (const std::string & key, TypedPropertyValue<TYPE> *& pValue)const;
-
-private:
-  PropertySetDecoder();
-  PropertySetDecoder(const PropertySetDecoder & rhs);
-  PropertySetDecoder & operator = (const PropertySetDecoder & rhs);
-
-};
-
+#include "PG_Property_Set_Helper.h"
 
 FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i (void)
   : ior_output_file_(0)
@@ -79,6 +16,25 @@ FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i (void)
 
 FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i (void)
 {
+  InternalGuard guard (internals_);
+
+  // be sure all detectors are gone
+  // before this object disappears
+  shutdown_i ();
+  threadManager_.close ();
+}
+
+void FT_FaultDetectorFactory_i::shutdown_i()
+{
+  // assume mutex is locked
+  for (size_t nDetector = 0; nDetector < detectors_.size(); ++nDetector)
+  {
+    Detector_i * detector = detectors_[nDetector];
+    if (detector != 0)
+    {
+      detector->requestQuit();
+    }
+  }
 }
 
 int FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
@@ -106,16 +62,9 @@ int FT_FaultDetectorFactory_i::parse_args (int argc, char * argv[])
   return 0;
 }
 
-void FT_FaultDetectorFactory_i::identity (ostream & out) const
+const char * FT_FaultDetectorFactory_i::identity () const
 {
-  if (ior_output_file_)
-  {
-    out << " file:" << ior_output_file_;
-  }
-  else if (nsName_ != 0)
-  {
-    out << " name:" << nsName_;
-  }
+  return identity_.c_str();
 }
 
 
@@ -131,6 +80,8 @@ int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager)
 
   if (ior_output_file_ != 0)
   {
+    identity_ = "file:";
+    identity_ += ior_output_file_;
     result = write_IOR();
   }
   else
@@ -142,13 +93,16 @@ int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager)
 
   if(nsName_ != 0)
   {
+    identity_ = "name:";
+    identity_ += nsName_;
+
     CORBA::Object_var naming_obj =
       orb_->resolve_initial_references ("NameService" ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (CORBA::is_nil(naming_obj.in ())){
       ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Unable to find the Naming Service\n"),
+                         "%T %n (%P|%t) Unable to find the Naming Service\n"),
                         1);
     }
 
@@ -169,33 +123,6 @@ int FT_FaultDetectorFactory_i::self_register (TAO_ORB_Manager & orbManager)
 }
 
 
-/////////////////
-// Everything you need to know about properties
-//  typedef sequence<Property> Properties;
-//  struct Property {
-//      Name nam;
-//    Value val;
-//  };
-//  typedef CosNaming::Name Name;
-//  typedef any Value;
-//  typedef sequence <NameComponent> CosNaming::Name;
-//  struct NameComponent
-//  {
-//    // = TITLE
-//    //   This is a 'simple' name.
-//    //
-//    // = DESCRIPTION
-//    //   Both id and kind fields are used in resolving names.
-//
-//    Istring id;
-//    // This is the name that is used to identify object references.
-//
-//    Istring kind;
-//    // Stores any addtional info about the object reference.
-//  };
-
-
-
 void FT_FaultDetectorFactory_i::change_properties (
     const FT::Properties & property_set
   )
@@ -203,8 +130,26 @@ void FT_FaultDetectorFactory_i::change_properties (
     CORBA::SystemException
   ))
 {
-  int todo;
-  // Add your implementation here
+    // TimeT is expressed in 10E-7 seconds (== 100 nSec == 0.1 uSec)
+  static const long timeT_per_uSec = 10L;
+  static const long uSec_per_sec = 1000000L;
+
+  Portable_Group::Property_Set::Decoder decoder(property_set);
+
+  TimeBase::TimeT value = 0;
+  if( Portable_Group::Property_Set::find (decoder, FT::FT_FAULT_MONITORING_INTERVAL, value) )
+  {
+    // note: these should be unsigned long, but
+    // ACE_Time_Value wants longs.
+    long uSec = static_cast<long>((value / timeT_per_uSec) % uSec_per_sec);
+    long sec = static_cast<long>((value / timeT_per_uSec) / uSec_per_sec);
+    ACE_Time_Value atv(sec, uSec);
+    Detector_i::setTimeValue(atv);
+  }
+  else
+  {
+    ACE_THROW (::FT::InvalidProperty ());
+  }
 }
 
 void FT_FaultDetectorFactory_i::shutdown (  )
@@ -212,8 +157,7 @@ void FT_FaultDetectorFactory_i::shutdown (  )
     CORBA::SystemException
   ))
 {
-  int todo;
-  // Add your implementation here
+  delete this;
 }
 
 CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
@@ -230,9 +174,98 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
     , FT::CannotMeetCriteria
   ))
 {
-  // Add your implementation here
-  CORBA::Object_ptr ptr = CORBA::Object::_nil();
-  return ptr;
+  InternalGuard guard (internals_);
+
+  ::Portable_Group::Property_Set::Decoder decoder (the_criteria);
+
+  // boolean, becomes true if a required parameter is missing
+  int missingParameter = 0;
+   
+
+  CORBA::ULong detectorId = detectors_.size();
+
+  FT::FaultNotifier_var notifier;
+  if (! ::Portable_Group::Property_Set::find (
+    decoder,
+    ::FT::FT_NOTIFIER,
+    notifier) )
+  {
+    missingParameter = 1;
+  }
+
+  FT::PullMonitorable_var monitorable;
+  if (! ::Portable_Group::Property_Set::find (
+    decoder,
+    ::FT::FT_MONITORABLE,
+    monitorable) )
+  {
+    missingParameter = 1;
+  }
+
+  FT::FTDomainId domain_id = 0;
+  if (! ::Portable_Group::Property_Set::find (
+    decoder,
+    ::FT::FT_DOMAIN_ID,
+    domain_id) )
+  {
+    missingParameter = 1;
+  }
+
+  FT::ObjectGroupId group_id = 0;
+  if (! ::Portable_Group::Property_Set::find (
+    decoder,
+    ::FT::FT_GROUP_ID,
+    group_id) )
+  {
+    missingParameter = 1;
+  }
+
+  FT::TypeId object_type = 0;
+  if (! ::Portable_Group::Property_Set::find (
+    decoder,
+    ::FT::FT_TYPE_ID,
+    object_type) )
+  {
+    missingParameter = 1;
+  }
+
+  FT::Location_var object_location;
+  if (! ::Portable_Group::Property_Set::find (
+    decoder,
+    ::FT::FT_LOCATION,
+    object_location) )
+  {
+    missingParameter = 1;
+  }
+
+  if (missingParameter)
+  {
+    ACE_THROW ( FT::InvalidCriteria() );
+  }
+
+  Detector_i * detector;
+  ACE_NEW_NORETURN(detector, Detector_i(
+    *this,
+    detectorId,
+    notifier,
+    monitorable,
+    domain_id,
+    group_id,
+    object_type,
+    object_location));
+  if (detector == 0)
+  {
+    ACE_THROW ( FT::ObjectNotCreated() );
+  }
+
+  detectors_.push_back(detector);
+
+  (*factory_creation_id) <<= detectorId;
+  
+ 
+  // since FaultDetector is not a CORBA object (it does not implement
+  // an interface.) we always return NIL;
+  return CORBA::Object::_nil();
 }
 
 void FT_FaultDetectorFactory_i::delete_object (
@@ -243,8 +276,25 @@ void FT_FaultDetectorFactory_i::delete_object (
     , FT::ObjectNotFound
   ))
 {
-  int todo;
-  // Add your implementation here
+  InternalGuard guard (internals_);
+
+  CORBA::ULong detectorId;
+  factory_creation_id >>= detectorId;
+  if (detectorId < detectors_.size())
+  {
+    if(detectors_[detectorId] != 0)
+    {
+      detectors_[detectorId]->requestQuit();
+    }
+    else
+    {
+      ACE_THROW(::FT::ObjectNotFound());
+    }
+  }
+  else
+  {
+    ACE_THROW(::FT::ObjectNotFound());
+  }
 }
 
 int FT_FaultDetectorFactory_i::write_IOR()
@@ -259,4 +309,19 @@ int FT_FaultDetectorFactory_i::write_IOR()
   }
   return result;
 }
+
+
+void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Detector_i * detector)
+{
+  InternalGuard guard (internals_);
+  if (id < detectors_.size())
+  {
+    if(detectors_[id] == detector)
+    {
+      delete detectors_[id];
+      detectors_[id] = 0;
+    }
+  }
+}
+
 

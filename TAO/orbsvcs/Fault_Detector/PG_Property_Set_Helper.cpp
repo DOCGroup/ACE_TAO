@@ -1,5 +1,39 @@
 // $Id$
+//=============================================================================
+/**
+ *  @file    Detector.h
+ *
+ *  $Id$
+ *
+ *  This file implements classes to help manage the Property_Sets 
+ *  defined in the Portable Object Group.
+ *
+ *  @author Dale Wilson <wilson_d@ociweb.com>
+ */
+//=============================================================================
+#include "ace/pre.h"
 #include "PG_Property_Set_Helper.h"
+
+/////////////////
+// Everything you need to know about properties
+//  typedef sequence<Property> Properties;
+//  struct Property {
+//      Name nam;
+//    Value val;
+//  };
+//  typedef CosNaming::Name Name;
+//  typedef any Value;
+//  typedef sequence <NameComponent> CosNaming::Name;
+//  struct NameComponent
+//  {
+//    Istring id;
+//    // This is the name that is used to identify object references.
+//
+//    Istring kind;
+//    // Stores any addtional info about the object reference.
+//  };
+
+
 
 //////////
 // Encoder
@@ -48,9 +82,9 @@ void Portable_Group::Property_Set::Encoder::encode (
 
 //////////
 // Decoder
-Portable_Group::Property_Set::Decoder::Decoder (FT::Properties_var & property_set)
+Portable_Group::Property_Set::Decoder::Decoder (const FT::Properties & property_set)
 {
-  size_t count = property_set->length();
+  size_t count = property_set.length();
   for (size_t nItem = 0; nItem < count; ++nItem)
   {
     const FT::Property & property = property_set[nItem];
@@ -58,10 +92,12 @@ Portable_Group::Property_Set::Decoder::Decoder (FT::Properties_var & property_se
     // note assumption one level name with no kind
     // TODO: fix this
     const CosNaming::NameComponent & nc = nsName[0];
-    std::string name = nc.id;
+    ACE_CString name = nc.id;
     if (0 != values_.bind(name, property.val))
     {
-      std::cerr << "property_set: bind failed." << std::endl;
+      ACE_ERROR ((LM_ERROR,
+        "%T %n: Property_set: bind failed.\n"
+        ));
     }
   }
 }
@@ -71,77 +107,13 @@ Portable_Group::Property_Set::Decoder::~Decoder ()
 }
 
 int Portable_Group::Property_Set::Decoder::find (
-  const std::string & key,
+  const ACE_CString & key,
   CORBA::Any & anyValue)const
 {
   int found = 0;
   if (0 == values_.find(key, anyValue))
   {
     found = 1;
-  }
-  return found;
-}
-
-// convenience methods
-int Portable_Group::Property_Set::Decoder::find (
-  const std::string & key,
-  long & value)const
-{
-  CORBA::Any any;
-  int found = find (key, any);
-  if (found)
-  {
-    CORBA::Long v;
-    if ( any >>= v )
-    {
-      value = v;
-    }
-    else
-    {
-      found = 0;
-    }
-  }
-  return found;
-}
-
-int Portable_Group::Property_Set::Decoder::find (
-  const std::string & key,
-  double & value)const
-{
-  CORBA::Any any;
-  int found = find (key, any);
-  if (found)
-  {
-    CORBA::Double v;
-    if ( any >>= v )
-    {
-      value = v;
-    }
-    else
-    {
-      found = 0;
-    }
-  }
-  return found;
-}
-
-int Portable_Group::Property_Set::Decoder::find (
-  const std::string & key,
-  std::string & value)const
-{
-  CORBA::Any any;
-  int found = find (key, any);
-  if (found)
-  {
-    const char * v;
-    if ( any >>= v )
-    {
-      value = v;
-    }
-    else
-    {
-      found = 0;
-    }
   }
   return found;
 }
@@ -177,52 +149,75 @@ int Portable_Group::Property_Set::test_encode_decode ()
 
   Portable_Group::Property_Set::Decoder decoder(property_set);
 
-  long longResult;
-  if (decoder.find (testLongKey, longResult) )
+  CORBA::Long longResult = 0;
+  if (find (decoder, testLongKey, longResult) )
   {
     if (longResult != testLong)
     {
-      std::cerr << testLongKey << " = " << longResult
-        << " expecting " << testLong << std::endl;
+      ACE_ERROR ((LM_ERROR,
+        "%T %n: %s = %d expecting %d\n",
+          testLongKey,
+          (int)longResult,
+          (int)testLong
+        ));
       result = 0;
     }
   }
   else
   {
-    std::cerr << "Can't find value for " << testLongKey << endl;
+    ACE_ERROR ((LM_ERROR,
+      "%T %n: Can't find value for %s\n", testLongKey
+      ));
     result = 0;
   }
 
-  std::string stringResult;
-  if (decoder.find (testStringKey, stringResult))
+  const char * stringResult = "";
+  if (find (decoder, testStringKey, stringResult))
   {
-    if(stringResult != testString)
+    if(0 != ACE_OS::strcmp(testString, stringResult))
     {
-      std::cerr << testStringKey << " = " << stringResult
-        << " expecting " << testString << std::endl;
+      ACE_ERROR ((LM_ERROR,
+        "%T %n: %s = \"%s\" expecting \"%s\"\n",
+          testStringKey,
+          (int)stringResult,
+          (int)testString
+        ));
       result = 0;
     }
   }
   else
   {
-    std::cerr << "Can't find value for " << testStringKey << endl;
+    ACE_ERROR ((LM_ERROR,
+      "%T %n: Can't find value for %s\n", testStringKey
+      ));
     result = 0;
   }
 
 
-  double doubleResult;
-  if (decoder.find (testDoubleKey, doubleResult))
+  CORBA::Double doubleResult = 0.0;
+  if (find (decoder, testDoubleKey, doubleResult))
   {
     if(doubleResult != testDouble)
     {
-      std::cerr << testDoubleKey << " = " << doubleResult
-        << " expecting " << testDouble << std::endl;
+      // ACE_ERROR doesn't format doubles, so...
+      char buffer[200];
+      ACE_OS::snprintf(buffer, sizeof(buffer),
+              "%s = \"%f\" expecting \"%f\"\n",
+          testDoubleKey,
+          doubleResult,
+          testDouble
+        );
+      ACE_ERROR ((LM_ERROR, 
+        "%T %n: %s", buffer
+        ));
       result = 0;
     }
   }
   else
   {
-    std::cerr << "Can't find value for " << testDoubleKey << endl;
+    ACE_ERROR ((LM_ERROR,
+      "%T %n: Can't find value for %s\n", testDoubleKey
+      ));
     result = 0;
   }
 
