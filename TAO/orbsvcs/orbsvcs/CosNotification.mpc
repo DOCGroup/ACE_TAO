@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(CosNotification) : orbsvcslib, core, etcl, dynamicany, portableserver {
+project(CosNotification) : orbsvcslib, core, svc_utils, etcl, dynamicany, portableserver {
   sharedname   = TAO_CosNotification
   // Warning : The idlflags must match exactly those used in CosEvent, because
   //           we don't know which project will actually generate the IDL.
