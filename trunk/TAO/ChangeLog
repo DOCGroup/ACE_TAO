@@ -1,3 +1,8 @@
+Thu Apr 22 08:33:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.inl:
+          Fixed Tru64 warning
+
 Thu Apr 22 07:51:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.h:
