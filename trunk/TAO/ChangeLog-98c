@@ -1,7 +1,7 @@
 Thu Apr 23 16:20:58 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* TAO_IDL/fe/Makefile (LFLAGS): Added a -Ptao_ prefix
-	  to the lexer to avoid conflicts.
+	* TAO/TAO_IDL/Makefile: Change the YY* symbols to ACE_YY* symbols
+ 	  to avoid clashes if we link with other flex/yacc generated code.
 
 Thu Apr 23 15:48:29 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 

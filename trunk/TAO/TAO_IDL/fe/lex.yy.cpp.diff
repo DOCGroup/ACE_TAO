@@ -1,34 +1,34 @@
 --- lex.yy.cpp.orig	Mon Mar 23 15:30:42 1998
 +++ lex.yy.cpp	Mon Mar 23 15:30:42 1998
 @@ -215,12 +215,14 @@
- void yy_delete_buffer YY_PROTO(( YY_BUFFER_STATE b ));
- void yy_init_buffer YY_PROTO(( YY_BUFFER_STATE b, FILE *file ));
+ void tao_yy_delete_buffer TAO_YY_PROTO(( TAO_YY_BUFFER_STATE b ));
+ void tao_yy_init_buffer TAO_YY_PROTO(( TAO_YY_BUFFER_STATE b, FILE *file ));
  
 +#if 0
- static int yy_start_stack_ptr = 0;
- static int yy_start_stack_depth = 0;
- static int *yy_start_stack = 0;
- static void yy_push_state YY_PROTO(( int new_state ));
- static void yy_pop_state YY_PROTO(( void ));
- static int yy_top_state YY_PROTO(( void ));
+ static int tao_yy_start_stack_ptr = 0;
+ static int tao_yy_start_stack_depth = 0;
+ static int *tao_yy_start_stack = 0;
+ static void tao_yy_push_state TAO_YY_PROTO(( int new_state ));
+ static void tao_yy_pop_state TAO_YY_PROTO(( void ));
+ static int tao_yy_top_state TAO_YY_PROTO(( void ));
 +#endif /* 0 */
  
- static void *yy_flex_alloc YY_PROTO(( unsigned int ));
- static void *yy_flex_realloc YY_PROTO(( void *, unsigned int ));
+ static void *tao_yy_flex_alloc TAO_YY_PROTO(( unsigned int ));
+ static void *tao_yy_flex_realloc TAO_YY_PROTO(( void *, unsigned int ));
 @@ -1777,6 +1779,7 @@
  	}
  
  
 +#if 0
- #ifdef YY_USE_PROTOS
- static void yy_push_state( int new_state )
+ #ifdef TAO_YY_USE_PROTOS
+ static void tao_yy_push_state( int new_state )
  #else
 @@ -1822,7 +1825,7 @@
  	{
- 	return yy_start_stack[yy_start_stack_ptr - 1];
+ 	return tao_yy_start_stack[tao_yy_start_stack_ptr - 1];
  	}
 -
 +#endif /* 0 */
  
- #ifdef YY_USE_PROTOS
- static void yy_fatal_error( const char msg[] )
+ #ifdef TAO_YY_USE_PROTOS
+ static void tao_yy_fatal_error( const char msg[] )

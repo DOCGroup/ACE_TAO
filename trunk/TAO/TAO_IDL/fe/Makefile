@@ -57,21 +57,24 @@ CPPFLAGS += -D_REENTRANT -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VE
 YACC   = yacc
 LEX	= flex
 YFLAGS	= -t -d
-LFLAGS	= -t -Ptao_
+LFLAGS	= -t 
 
 # Create the parser and lexer
 y.tab.h y.tab.cpp: idl.yy
 	@-$(RM) -f $@
 	$(YACC) $(YFLAGS) idl.yy
-	@mv -f y.tab.c y.tab.cpp
+	sed -e "s/yy/tao_yy/g" \
+	    -e "s/YY/TAO_YY/g" < y.tab.c > y.tab.cpp
 	@patch < y.tab.cpp.diff
-	@-$(RM) -f y.tab.cpp.orig
+	@-$(RM) -f y.tab.cpp.orig y.tab.c 
 
 lex.yy.cpp: idl.ll y.tab.h
 	$(LEX) $(LFLAGS) idl.ll > /tmp/$@
 	@#### Replace #includes of standard headers with #include of ace/OS.h,
 	@#### so that ace/config.h is #included first.
 	@sed -e 's%#include.*<stdio.h>%#include "ace/OS.h"%g' \
+             -e "s/yy/tao_yy/g" \
+             -e "s/YY/TAO_YY/g" \
 	     -e '/#include.*stdlib.h/D' \
 	     -e '/#include.*unistd.h/D' \
 	     -e 's/ECHO/TAO_ECHO/g' < /tmp/$@ > $@

@@ -26,49 +26,49 @@
 #include "ace/OS.h"
 
 /* Use prototypes in function declarations. */
-#define YY_USE_PROTOS
+#define ACE_YY_USE_PROTOS
 
 /* The "const" storage-class-modifier is valid. */
-#define YY_USE_CONST
+#define ACE_YY_USE_CONST
 
 #else	/* ! __cplusplus */
 
 #ifdef __STDC__
 
-#define YY_USE_PROTOS
-#define YY_USE_CONST
+#define ACE_YY_USE_PROTOS
+#define ACE_YY_USE_CONST
 
 #endif	/* __STDC__ */
 #endif	/* ! __cplusplus */
 
 
 #ifdef __TURBOC__
-#define YY_USE_CONST
+#define ACE_YY_USE_CONST
 #endif
 
 
-#ifndef YY_USE_CONST
+#ifndef ACE_YY_USE_CONST
 #ifndef const
 #define const
 #endif
 #endif
 
 
-#ifdef YY_USE_PROTOS
-#define YY_PROTO(proto) proto
+#ifdef ACE_YY_USE_PROTOS
+#define ACE_YY_PROTO(proto) proto
 #else
-#define YY_PROTO(proto) ()
+#define ACE_YY_PROTO(proto) ()
 #endif
 
 /* Returned upon end-of-file. */
-#define YY_NULL 0
+#define ACE_YY_NULL 0
 
 /* Promotes a possibly negative, possibly signed char to an unsigned
  * integer for use as an array index.  If the signed char is negative,
  * we want to instead treat it as an 8-bit unsigned char, hence the
  * double cast.
  */
-#define YY_SC_TO_UI(c) ((unsigned int) (unsigned char) c)
+#define ACE_YY_SC_TO_UI(c) ((unsigned int) (unsigned char) c)
 
 /* Enter a start condition.  This macro really ought to take a parameter,
  * but we do it the disgusting crufty way forced on us by the ()-less
@@ -79,22 +79,22 @@
 /* Translate the current start state into a value that can be later handed
  * to BEGIN to return to the state.
  */
-#define YY_START ((ace_yy_start - 1) / 2)
+#define ACE_YY_START ((ace_yy_start - 1) / 2)
 
 /* Action number for EOF rule of a given start state. */
-#define YY_STATE_EOF(state) (YY_END_OF_BUFFER + state + 1)
+#define ACE_YY_STATE_EOF(state) (ACE_YY_END_OF_BUFFER + state + 1)
 
 /* Special action meaning "start processing a new file".  Now included
  * only for backward compatibility with previous versions of flex.
  */
-#define YY_NEW_FILE ace_yyrestart( ace_yyin )
+#define ACE_YY_NEW_FILE ace_yyrestart( ace_yyin )
 
-#define YY_END_OF_BUFFER_CHAR 0
+#define ACE_YY_END_OF_BUFFER_CHAR 0
 
 /* Size of default input buffer. */
-#define YY_BUF_SIZE 16384
+#define ACE_YY_BUF_SIZE 16384
 
-typedef struct ace_yy_buffer_state *YY_BUFFER_STATE;
+typedef struct ace_yy_buffer_state *ACE_YY_BUFFER_STATE;
 
 extern int ace_yyleng;
 extern FILE *ace_yyin, *ace_yyout;
@@ -102,7 +102,7 @@ extern FILE *ace_yyin, *ace_yyout;
 #ifdef __cplusplus
 extern "C" {
 #endif
-	extern int ace_yywrap YY_PROTO(( void ));
+	extern int ace_yywrap ACE_YY_PROTO(( void ));
 #ifdef __cplusplus
 	}
 #endif
@@ -132,8 +132,8 @@ extern "C" {
 		{ \
 		/* Undo effects of setting up ace_yytext. */ \
 		*ace_yy_cp = ace_yy_hold_char; \
-		ace_yy_c_buf_p = ace_yy_cp = ace_yy_bp + n - YY_MORE_ADJ; \
-		YY_DO_BEFORE_ACTION; /* set up ace_yytext again */ \
+		ace_yy_c_buf_p = ace_yy_cp = ace_yy_bp + n - ACE_YY_MORE_ADJ; \
+		ACE_YY_DO_BEFORE_ACTION; /* set up ace_yytext again */ \
 		} \
 	while ( 0 )
 
@@ -172,10 +172,10 @@ struct ace_yy_buffer_state
 	int ace_yy_fill_buffer;
 
 	int ace_yy_buffer_status;
-#define YY_BUFFER_NEW 0
-#define YY_BUFFER_NORMAL 1
+#define ACE_YY_BUFFER_NEW 0
+#define ACE_YY_BUFFER_NORMAL 1
 	/* When an EOF's been seen but there's still some text to process
-	 * then we mark the buffer as YY_EOF_PENDING, to indicate that we
+	 * then we mark the buffer as ACE_YY_EOF_PENDING, to indicate that we
 	 * shouldn't try reading from the input source any more.  We might
 	 * still have a bunch of tokens to match, though, because of
 	 * possible backing-up.
@@ -184,16 +184,16 @@ struct ace_yy_buffer_state
 	 * (via ace_yyrestart()), so that the user can continue scanning by
 	 * just pointing ace_yyin at a new input file.
 	 */
-#define YY_BUFFER_EOF_PENDING 2
+#define ACE_YY_BUFFER_EOF_PENDING 2
 	};
 
-static YY_BUFFER_STATE ace_yy_current_buffer = 0;
+static ACE_YY_BUFFER_STATE ace_yy_current_buffer = 0;
 
 /* We provide macros for accessing buffer states in case in the
  * future we want to put the buffer states in a more general
  * "scanner state".
  */
-#define YY_CURRENT_BUFFER ace_yy_current_buffer
+#define ACE_YY_CURRENT_BUFFER ace_yy_current_buffer
 
 
 /* ace_yy_hold_char holds the character lost when ace_yytext is formed. */
@@ -215,79 +215,79 @@ static int ace_yy_start = 0;	/* start state number */
 static int ace_yy_did_buffer_switch_on_eof;
 
 #if 0
-static void ace_yyunput YY_PROTO(( int c, char *buf_ptr ));
+static void ace_yyunput ACE_YY_PROTO(( int c, char *buf_ptr ));
 #endif /* 0 */
-void ace_yyrestart YY_PROTO(( FILE *input_file ));
-void ace_yy_switch_to_buffer YY_PROTO(( YY_BUFFER_STATE new_buffer ));
-void ace_yy_load_buffer_state YY_PROTO(( void ));
-YY_BUFFER_STATE ace_yy_create_buffer YY_PROTO(( FILE *file, int size ));
-void ace_yy_delete_buffer YY_PROTO(( YY_BUFFER_STATE b ));
-void ace_yy_init_buffer YY_PROTO(( YY_BUFFER_STATE b, FILE *file ));
+void ace_yyrestart ACE_YY_PROTO(( FILE *input_file ));
+void ace_yy_switch_to_buffer ACE_YY_PROTO(( ACE_YY_BUFFER_STATE new_buffer ));
+void ace_yy_load_buffer_state ACE_YY_PROTO(( void ));
+ACE_YY_BUFFER_STATE ace_yy_create_buffer ACE_YY_PROTO(( FILE *file, int size ));
+void ace_yy_delete_buffer ACE_YY_PROTO(( ACE_YY_BUFFER_STATE b ));
+void ace_yy_init_buffer ACE_YY_PROTO(( ACE_YY_BUFFER_STATE b, FILE *file ));
 
 #if 0
 static int ace_yy_start_stack_ptr = 0;
 static int ace_yy_start_stack_depth = 0;
 static int *ace_yy_start_stack = 0;
-static void ace_yy_push_state YY_PROTO(( int new_state ));
-static void ace_yy_pop_state YY_PROTO(( void ));
-static int ace_yy_top_state YY_PROTO(( void ));
+static void ace_yy_push_state ACE_YY_PROTO(( int new_state ));
+static void ace_yy_pop_state ACE_YY_PROTO(( void ));
+static int ace_yy_top_state ACE_YY_PROTO(( void ));
 #endif /* 0 */
 
-static void *ace_yy_flex_alloc YY_PROTO(( unsigned int ));
-static void *ace_yy_flex_realloc YY_PROTO(( void *, unsigned int ));
-static void ace_yy_flex_free YY_PROTO(( void * ));
+static void *ace_yy_flex_alloc ACE_YY_PROTO(( unsigned int ));
+static void *ace_yy_flex_realloc ACE_YY_PROTO(( void *, unsigned int ));
+static void ace_yy_flex_free ACE_YY_PROTO(( void * ));
 
 #define ace_yy_new_buffer ace_yy_create_buffer
 
 #define INITIAL 0
 #define PARAMETERS 1
 #define NORMAL 2
-typedef unsigned char YY_CHAR;
+typedef unsigned char ACE_YY_CHAR;
 typedef int ace_yy_state_type;
 FILE *ace_yyin = (FILE *) 0, *ace_yyout = (FILE *) 0;
 extern char *ace_yytext;
 #define ace_yytext_ptr ace_yytext
 
 #ifndef ace_yytext_ptr
-static void ace_yy_flex_strncpy YY_PROTO(( char *, const char *, int ));
+static void ace_yy_flex_strncpy ACE_YY_PROTO(( char *, const char *, int ));
 #endif
 
 #ifdef __cplusplus
-static int ace_yyinput YY_PROTO(( void ));
+static int ace_yyinput ACE_YY_PROTO(( void ));
 #else
-static int input YY_PROTO(( void ));
+static int input ACE_YY_PROTO(( void ));
 #endif
 
-static ace_yy_state_type ace_yy_get_previous_state YY_PROTO(( void ));
-static ace_yy_state_type ace_yy_try_NUL_trans YY_PROTO(( ace_yy_state_type current_state ));
-static int ace_yy_get_next_buffer YY_PROTO(( void ));
-static void ace_yy_fatal_error YY_PROTO(( const char msg[] ));
+static ace_yy_state_type ace_yy_get_previous_state ACE_YY_PROTO(( void ));
+static ace_yy_state_type ace_yy_try_NUL_trans ACE_YY_PROTO(( ace_yy_state_type current_state ));
+static int ace_yy_get_next_buffer ACE_YY_PROTO(( void ));
+static void ace_yy_fatal_error ACE_YY_PROTO(( const char msg[] ));
 
 /* Done after the current pattern has been matched and before the
  * corresponding action - sets up ace_yytext.
  */
-#define YY_DO_BEFORE_ACTION \
+#define ACE_YY_DO_BEFORE_ACTION \
 	ace_yytext_ptr = ace_yy_bp; \
 	ace_yyleng = ace_yy_cp - ace_yy_bp; \
 	ace_yy_hold_char = *ace_yy_cp; \
 	*ace_yy_cp = '\0'; \
 	ace_yy_c_buf_p = ace_yy_cp;
 
-#define YY_END_OF_BUFFER 26
-static const short int ace_yy_accept[103] =
+#define ACE_YY_END_OF_BUFFER 26
+static const short int ace_yy_accept[104] =
     {   0,
         0,    0,    0,    0,    0,    0,   26,   24,   22,   23,
-       24,   15,   16,   14,   21,   13,   20,   20,   20,   20,
-       20,   20,   20,   20,   20,   17,   18,   24,   22,    0,
-       19,   21,   20,    0,   20,   20,   20,   20,   20,   20,
-       20,   20,   20,    0,    1,   20,   20,   20,   20,   20,
+       24,   21,   15,   16,   14,   21,   13,   20,   20,   20,
+       20,   20,   20,   20,   20,   20,   17,   18,   24,   22,
+        0,   19,   21,    0,   20,   20,   20,   20,   20,   20,
+       20,   20,   20,   20,    0,    1,   20,   20,   20,   20,
        20,   20,   20,   20,   20,   20,   20,   20,   20,   20,
        20,   20,   20,   20,   20,   20,   20,   20,   20,   20,
-       20,   20,   20,   20,   20,   20,   20,   20,    8,   10,
-       20,   11,   20,   20,    6,    5,    3,    7,   20,   20,
-        2,   20,    4,   20,   12,   20,   20,   20,   20,   20,
+       20,   20,   20,   20,   20,   20,   20,   20,   20,    8,
+       10,   20,   11,   20,   20,    6,    5,    3,    7,   20,
+       20,    2,   20,    4,   20,   12,   20,   20,   20,   20,
 
-        9,    0
+       20,    9,    0
     } ;
 
 static const int ace_yy_ec[256] =
@@ -295,17 +295,17 @@ static const int ace_yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    4,    5,    6,    7,    5,    5,    5,    5,    8,
-        9,   10,    5,    5,   11,   11,   11,   12,   12,   12,
-       12,   12,   12,   12,   12,   12,   12,   13,    5,    5,
-        5,    5,    5,    5,   14,   15,   15,   15,   16,   15,
-       15,   15,   15,   15,   15,   15,   17,   15,   18,   15,
-       15,   19,   20,   21,   15,   15,   15,   15,   15,   15,
-        5,   11,    5,    5,   22,    5,   23,   24,   25,   26,
+        1,    4,    5,    6,    7,    5,    8,    5,    5,    9,
+       10,   11,    5,    5,   12,   12,   12,   13,   13,   13,
+       13,   13,   13,   13,   13,   13,   13,   14,    5,    5,
+        5,    5,    5,    5,   15,   16,   16,   16,   17,   16,
+       16,   16,   16,   16,   16,   16,   18,   16,   19,   16,
+       16,   20,   21,   22,   16,   16,   16,   16,   16,   16,
+        5,   12,    5,    5,   23,    5,   24,   25,   26,   27,
 
-       27,   15,   15,   15,   28,   29,   15,   30,   31,   32,
-       33,   34,   15,   35,   36,   37,   38,   39,   15,   15,
-       40,   15,   41,    5,   42,    5,    1,    1,    1,    1,
+       28,   16,   16,   16,   29,   30,   16,   31,   32,   33,
+       34,   35,   16,   36,   37,   38,   39,   40,   16,   16,
+       41,   16,   42,    5,   43,    5,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -322,131 +322,159 @@ static const int ace_yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const int ace_yy_meta[43] =
+static const int ace_yy_meta[44] =
     {   0,
-        1,    1,    1,    2,    2,    2,    2,    2,    2,    2,
-        3,    3,    4,    3,    3,    3,    3,    3,    3,    3,
+        1,    1,    1,    2,    2,    2,    2,    3,    2,    2,
+        2,    3,    3,    3,    3,    3,    3,    3,    3,    3,
         3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
         3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        2,    2
+        3,    2,    2
     } ;
 
-static const short int ace_yy_base[107] =
+static const short int ace_yy_base[108] =
     {   0,
-        0,  112,    0,  111,    0,  107,   97,  313,   41,  313,
-       85,  313,  313,  313,    0,  313,   33,   36,   37,   40,
-       41,   44,   48,   49,   52,  313,  313,   82,   66,   76,
-       72,    0,   60,    0,   61,   64,   68,   75,   81,   82,
-       85,   88,   89,   64,  313,   93,  104,   96,  111,  115,
-      116,   97,  121,  129,  133,  134,  137,  138,  142,  143,
-      150,  151,  158,  161,  162,  166,  167,  172,  185,  180,
-      173,  190,  193,  196,  197,  200,  201,  204,  209,  215,
-      216,  220,  224,  227,  228,  231,  234,  235,  239,  240,
-      243,  244,  247,  250,  256,  259,  262,  263,  267,  266,
+        0,  112,    0,  107,    0,   99,  104,  439,   42,  439,
+       95,   79,  439,  439,  439,   77,  439,   37,   40,   45,
+       48,   56,   57,   64,   67,   72,  439,  439,   87,   59,
+       79,   71,   52,   44,   75,   80,   88,   91,  101,  104,
+      109,  112,  117,  120,   52,  439,  128,  138,  146,  151,
+      154,  161,  162,  169,  176,  177,  185,  186,  195,  204,
+      207,  214,  215,  222,  223,  230,  237,  240,  252,  255,
+      262,  263,  270,  271,  278,  281,  289,  290,  299,  300,
+      309,  312,  317,  322,  325,  330,  333,  338,  341,  346,
+      349,  354,  362,  363,  370,  371,  379,  380,  387,  388,
 
-      271,  313,  302,   53,  304,  308
+      395,  404,  439,  432,   47,   44,  435
     } ;
 
-static const short int ace_yy_def[107] =
+static const short int ace_yy_def[108] =
     {   0,
-      102,    1,    1,    1,    1,    1,  102,  102,  102,  102,
-      103,  102,  102,  102,  104,  102,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  102,  102,  106,  102,  103,
-      103,  104,  105,  104,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  106,  102,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
+      103,    1,    1,    1,    1,    1,  103,  103,  103,  103,
+      104,  105,  103,  103,  103,  105,  103,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  103,  103,  107,  103,
+      104,  104,  105,  105,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  107,  103,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,  106,
+      106,  106,  106,  106,  106,  106,  106,  106,  106,  106,
 
-      105,    0,  102,  102,  102,  102
+      106,  106,    0,  103,  103,  103,  103
     } ;
 
-static const short int ace_yy_nxt[356] =
+static const short int ace_yy_nxt[483] =
     {   0,
         8,    9,   10,    9,    8,   11,    8,   12,   13,   14,
-       15,   15,   16,   17,   17,   17,   18,   17,   17,   19,
-       17,   20,   21,   17,   17,   22,   17,   23,   17,   17,
-       17,   17,   17,   17,   24,   25,   17,   17,   17,   17,
-       26,   27,   29,   32,   29,   34,   32,   32,   34,   34,
-       32,   32,  102,   34,   32,   32,   34,   36,   32,   32,
-       34,   34,   32,   37,   34,   38,   45,   29,   35,   29,
-       32,   32,  102,  102,   32,   41,  102,   31,   32,   40,
-      102,   31,   47,   39,   45,   32,   46,  102,   42,   43,
-       31,   32,   32,  102,  102,   32,  102,  102,   32,   32,
+       15,   16,   16,   17,   18,   18,   18,   19,   18,   18,
+       20,   18,   21,   22,   18,   18,   23,   18,   24,   18,
+       18,   18,   18,   18,   18,   25,   26,   18,   18,   18,
+       18,   27,   28,   30,   33,   30,   35,   33,   33,   33,
+       34,   33,   33,   34,   46,   33,   33,  103,   34,   33,
+       30,  103,   30,   33,   33,  103,   37,   33,   33,   34,
+       34,   33,   38,   36,   33,   33,   32,   34,   33,   33,
+       34,   39,   33,   33,   32,   34,   33,   33,  103,   46,
+      103,   33,   34,  103,   42,   33,   41,   40,   33,   33,
 
-      102,  102,   48,   32,   51,  102,   32,   32,  102,  102,
-       54,   49,   50,   28,   32,   52,  102,   28,   28,   58,
-       53,   32,   55,  102,   56,   32,   32,  102,  102,   63,
-       57,   32,  102,  102,   59,  102,  102,   61,   60,   32,
-       62,  102,  102,   32,   32,  102,  102,   32,   32,  102,
-      102,   69,   32,   32,  102,  102,  102,  102,   64,   66,
-       32,   32,  102,  102,  102,   65,   68,   67,   32,   70,
-      102,   32,   32,  102,  102,  102,   32,   32,  102,  102,
-       72,   71,   32,   32,  102,  102,  102,   73,   77,   76,
-       32,   75,  102,   78,  102,   32,   74,  102,   79,   82,
+       32,  103,   33,  103,  103,   29,   47,   48,   33,   43,
+       44,   33,   33,   29,  103,   33,   33,  103,   29,   33,
+       33,  103,  103,   33,   33,  103,   49,   33,   33,  103,
+      103,   33,   52,  103,  103,   33,   51,  103,   50,   33,
+       55,  103,  103,   53,  103,   33,  103,  103,   54,   33,
+      103,  103,   56,   33,   59,  103,   57,   33,   33,  103,
+      103,   33,   33,  103,  103,   33,   58,  103,   33,   33,
+      103,  103,   33,   33,  103,  103,   33,   62,  103,   61,
+       33,  103,  103,   33,   33,   60,   63,   33,   33,  103,
+      103,  103,   33,   33,  103,   64,   33,   33,  103,  103,
 
-       32,   80,  102,   32,   81,  102,   32,   32,  102,  102,
-       32,   32,  102,  102,   32,  102,  102,   83,  102,   32,
-       84,  102,   85,   86,   87,   32,   32,  102,  102,  102,
-       32,   88,  102,  102,   32,   89,  102,   32,   32,  102,
-      102,   32,   90,  102,   32,   32,  102,  102,   91,   32,
-       32,  102,  102,   32,   32,  102,  102,   32,  102,  102,
-       32,   94,  102,  102,   93,   92,   32,   96,  102,   32,
-       95,  102,   32,   32,  102,  102,   32,   32,  102,  102,
-      102,   32,   97,  102,  102,  102,  102,  102,  102,   99,
-       98,  100,  102,  102,  102,  102,  102,  102,  102,  102,
+      103,  103,   33,  103,   67,  103,   33,   65,  103,   70,
+      103,   33,  103,   66,   33,   33,   69,  103,   33,   68,
+      103,   33,   33,  103,  103,   33,   33,  103,  103,   33,
+       33,  103,   71,   33,   33,  103,  103,   33,  103,  103,
+      103,   33,  103,  103,   33,   73,   72,   33,   33,  103,
+      103,   33,   74,  103,   76,  103,  103,  103,   77,   33,
+       78,   75,   33,   33,  103,  103,   33,   79,  103,   33,
+       33,  103,   81,   33,   33,  103,  103,   33,   33,   80,
+      103,   33,   33,  103,  103,   33,  103,   82,   33,   33,
+       83,  103,   33,  103,  103,  103,   33,   33,   84,   85,
 
-      102,  102,  101,   30,   30,   30,   33,   33,   44,   44,
-       44,   44,    7,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102
+       33,   33,  103,  103,  103,   86,   33,   33,   87,  103,
+       33,   33,  103,  103,   88,  103,   33,  103,  103,   33,
+       33,   89,  103,   33,   33,  103,  103,  103,   33,   33,
+      103,   90,   33,   33,  103,  103,   33,   33,  103,   91,
+       33,   33,  103,  103,   33,   33,  103,   92,   33,   33,
+      103,  103,   33,   33,  103,  103,   33,   33,  103,  103,
+       33,   33,  103,  103,   93,   33,  103,  103,  103,   33,
+       33,   95,   94,   33,   33,  103,  103,   33,   33,  103,
+      103,   33,   33,  103,  103,  103,   33,   33,   97,   96,
+       33,   33,  103,  103,   33,   33,  103,  103,   33,   33,
+
+      103,  103,   33,   98,  103,  103,   33,  103,  103,   99,
+      103,   33,  103,  101,  100,   33,  103,  103,  103,  103,
+      103,  103,  103,  103,  103,  103,  103,  103,  103,  103,
+      103,  103,  102,   31,   31,   45,   45,   45,    7,  103,
+      103,  103,  103,  103,  103,  103,  103,  103,  103,  103,
+      103,  103,  103,  103,  103,  103,  103,  103,  103,  103,
+      103,  103,  103,  103,  103,  103,  103,  103,  103,  103,
+      103,  103,  103,  103,  103,  103,  103,  103,  103,  103,
+      103,  103
     } ;
 
-static const short int ace_yy_chk[356] =
+static const short int ace_yy_chk[483] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    9,   17,    9,   17,   18,   19,   18,   19,
-       20,   21,   20,   21,   22,  104,   22,   19,   23,   24,
-       23,   24,   25,   19,   25,   21,   44,   29,   18,   29,
-       33,   35,   33,   35,   36,   24,   36,   31,   37,   23,
-       37,   30,   36,   22,   28,   38,   35,   38,   25,   25,
-       11,   39,   40,   39,   40,   41,    7,   41,   42,   43,
+        1,    1,    1,    9,   18,    9,  106,   19,   18,  105,
+       18,   19,   20,   19,   45,   21,   20,   34,   20,   21,
+       30,   21,   30,   22,   23,   33,   20,   22,   23,   22,
+       23,   24,   20,   19,   25,   24,   32,   24,   25,   26,
+       25,   22,   35,   26,   31,   26,   35,   36,   35,   29,
+       16,   36,   12,   36,   25,   37,   24,   23,   38,   37,
 
-       42,   43,   37,   46,   40,   46,   48,   52,   48,   52,
-       42,   38,   39,    6,   47,   41,   47,    4,    2,   47,
-       41,   49,   42,   49,   43,   50,   51,   50,   51,   52,
-       46,   53,    0,   53,   48,    0,    0,   50,   49,   54,
-       51,   54,    0,   55,   56,   55,   56,   57,   58,   57,
-       58,   58,   59,   60,   59,   60,    0,    0,   53,   55,
-       61,   62,   61,   62,    0,   54,   57,   56,   63,   59,
-       63,   64,   65,   64,   65,    0,   66,   67,   66,   67,
-       61,   60,   68,   71,   68,   71,    0,   62,   66,   65,
-       70,   64,   70,   67,    0,   69,   63,   69,   68,   71,
+       11,   37,   38,    7,   38,    6,   36,   37,   39,   26,
+       26,   40,   39,    4,   39,   40,   41,   40,    2,   42,
+       41,    0,   41,   42,   43,   42,   38,   44,   43,    0,
+       43,   44,   41,   44,    0,   47,   40,    0,   39,   47,
+       43,   47,    0,   42,    0,   48,    0,    0,   42,   48,
+        0,   48,   43,   49,   48,    0,   44,   49,   50,   49,
+        0,   51,   50,    0,   50,   51,   47,   51,   52,   53,
+        0,    0,   52,   53,   52,   53,   54,   51,    0,   50,
+       54,    0,   54,   55,   56,   49,   52,   55,   56,   55,
+       56,    0,   57,   58,    0,   53,   57,   58,   57,   58,
 
-       72,   69,   72,   73,   70,   73,   74,   75,   74,   75,
-       76,   77,   76,   77,   78,    0,   78,   72,    0,   79,
-       73,   79,   74,   75,   76,   80,   81,   80,   81,    0,
-       82,   77,   82,    0,   83,   78,   83,   84,   85,   84,
-       85,   86,   81,   86,   87,   88,   87,   88,   83,   89,
-       90,   89,   90,   91,   92,   91,   92,   93,    0,   93,
-       94,   90,   94,    0,   89,   84,   95,   94,   95,   96,
-       92,   96,   97,   98,   97,   98,  100,   99,  100,   99,
-        0,  101,   96,  101,    0,    0,    0,    0,    0,   98,
-       97,   99,    0,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,   59,    0,   56,    0,   59,   54,   59,   59,
+        0,   60,    0,   55,   61,   60,   58,   60,   61,   57,
+       61,   62,   63,    0,    0,   62,   63,   62,   63,   64,
+       65,    0,   60,   64,   65,   64,   65,   66,    0,    0,
+        0,   66,    0,   66,   67,   62,   61,   68,   67,    0,
+       67,   68,   63,   68,   65,    0,    0,    0,   66,   69,
+       67,   64,   70,   69,    0,   69,   70,   68,   70,   71,
+       72,    0,   70,   71,   72,   71,   72,   73,   74,   69,
+        0,   73,   74,   73,   74,   75,    0,   71,   76,   75,
+       72,   75,   76,    0,   76,    0,   77,   78,   73,   74,
 
-        0,    0,  100,  103,  103,  103,  105,  105,  106,  106,
-      106,  106,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102
+       77,   78,   77,   78,    0,   75,   79,   80,   76,    0,
+       79,   80,   79,   80,   77,    0,   81,    0,    0,   82,
+       81,   78,   81,   82,   83,   82,    0,    0,   83,   84,
+       83,   79,   85,   84,    0,   84,   85,   86,   85,   82,
+       87,   86,    0,   86,   87,   88,   87,   84,   89,   88,
+        0,   88,   89,   90,   89,    0,   91,   90,    0,   90,
+       91,   92,   91,    0,   85,   92,    0,   92,    0,   93,
+       94,   91,   90,   93,   94,   93,   94,   95,   96,    0,
+        0,   95,   96,   95,   96,    0,   97,   98,   95,   93,
+       97,   98,   97,   98,   99,  100,    0,    0,   99,  100,
+
+       99,  100,  101,   97,    0,    0,  101,    0,  101,   98,
+        0,  102,    0,  100,   99,  102,    0,  102,    0,    0,
+        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+        0,    0,  101,  104,  104,  107,  107,  107,  103,  103,
+      103,  103,  103,  103,  103,  103,  103,  103,  103,  103,
+      103,  103,  103,  103,  103,  103,  103,  103,  103,  103,
+      103,  103,  103,  103,  103,  103,  103,  103,  103,  103,
+      103,  103,  103,  103,  103,  103,  103,  103,  103,  103,
+      103,  103
     } ;
 
 static ace_yy_state_type ace_yy_last_accepting_state;
@@ -457,7 +485,7 @@ static char *ace_yy_last_accepting_cpos;
  */
 #define REJECT reject_used_but_not_detected
 #define ace_yymore() ace_yymore_used_but_not_detected
-#define YY_MORE_ADJ 0
+#define ACE_YY_MORE_ADJ 0
 char *ace_yytext;
 # line 1 "Svc_Conf.l"
 # line 2 "Svc_Conf.l"
@@ -480,8 +508,8 @@ int ace_yyerrno = 0;
  * section 1.
  */
 
-#ifdef YY_MALLOC_DECL
-YY_MALLOC_DECL
+#ifdef ACE_YY_MALLOC_DECL
+ACE_YY_MALLOC_DECL
 #else
 #if __STDC__
 #ifndef __cplusplus
@@ -496,8 +524,8 @@ YY_MALLOC_DECL
 #endif
 
 /* Amount of stuff to slurp up with each read. */
-#ifndef YY_READ_BUF_SIZE
-#define YY_READ_BUF_SIZE 8192
+#ifndef ACE_YY_READ_BUF_SIZE
+#define ACE_YY_READ_BUF_SIZE 8192
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -509,11 +537,11 @@ YY_MALLOC_DECL
 #define ACE_SVC_CONF_ECHO (void) fwrite( ace_yytext, ace_yyleng, 1, ace_yyout )
 #endif
 
-/* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
+/* Gets input and stuffs it into "buf".  number of characters read, or ACE_YY_NULL,
  * is returned in "result".
  */
-#ifndef YY_INPUT
-#define YY_INPUT(buf,result,max_size) \
+#ifndef ACE_YY_INPUT
+#define ACE_YY_INPUT(buf,result,max_size) \
 	if ( ace_yy_current_buffer->ace_yy_is_interactive ) \
 		{ \
 		int c = getc( ace_yyin ); \
@@ -522,7 +550,7 @@ YY_MALLOC_DECL
 		} \
 	else if ( ((result = fread( buf, 1, max_size, ace_yyin )) == 0) \
 		  && ferror( ace_yyin ) ) \
-		YY_FATAL_ERROR( "input in flex scanner failed" );
+		ACE_YY_FATAL_ERROR( "input in flex scanner failed" );
 #endif
 
 /* No semi-colon after return; correct usage is to write "ace_yyterminate();" -
@@ -530,39 +558,39 @@ YY_MALLOC_DECL
  * some compilers to complain about unreachable statements.
  */
 #ifndef ace_yyterminate
-#define ace_yyterminate() return YY_NULL
+#define ace_yyterminate() return ACE_YY_NULL
 #endif
 
 /* Number of entries by which start-condition stack grows. */
-#ifndef YY_START_STACK_INCR
-#define YY_START_STACK_INCR 25
+#ifndef ACE_YY_START_STACK_INCR
+#define ACE_YY_START_STACK_INCR 25
 #endif
 
 /* Report a fatal error. */
-#ifndef YY_FATAL_ERROR
-#define YY_FATAL_ERROR(msg) ace_yy_fatal_error( msg )
+#ifndef ACE_YY_FATAL_ERROR
+#define ACE_YY_FATAL_ERROR(msg) ace_yy_fatal_error( msg )
 #endif
 
 /* Default declaration of generated scanner - a define so the user can
  * easily add parameters.
  */
-#ifndef YY_DECL
-#define YY_DECL int ace_yylex YY_PROTO(( void ))
+#ifndef ACE_YY_DECL
+#define ACE_YY_DECL int ace_yylex ACE_YY_PROTO(( void ))
 #endif
 
 /* Code executed at the beginning of each rule, after ace_yytext and ace_yyleng
  * have been set up.
  */
-#ifndef YY_USER_ACTION
-#define YY_USER_ACTION
+#ifndef ACE_YY_USER_ACTION
+#define ACE_YY_USER_ACTION
 #endif
 
 /* Code executed at the end of each rule. */
-#ifndef YY_BREAK
-#define YY_BREAK break;
+#ifndef ACE_YY_BREAK
+#define ACE_YY_BREAK break;
 #endif
 
-YY_DECL
+ACE_YY_DECL
 	{
 	register ace_yy_state_type ace_yy_current_state;
 	register char *ace_yy_cp, *ace_yy_bp;
@@ -574,8 +602,8 @@ YY_DECL
 
 	if ( ace_yy_init )
 		{
-#ifdef YY_USER_INIT
-		YY_USER_INIT;
+#ifdef ACE_YY_USER_INIT
+		ACE_YY_USER_INIT;
 #endif
 
 		if ( ! ace_yy_start )
@@ -591,7 +619,7 @@ YY_DECL
 			ace_yy_init_buffer( ace_yy_current_buffer, ace_yyin );
 		else
 			ace_yy_current_buffer =
-				ace_yy_create_buffer( ace_yyin, YY_BUF_SIZE );
+				ace_yy_create_buffer( ace_yyin, ACE_YY_BUF_SIZE );
 
 		ace_yy_load_buffer_state();
 
@@ -616,7 +644,7 @@ YY_DECL
 ace_yy_match:
 		do
 			{
-			register YY_CHAR ace_yy_c = ace_yy_ec[YY_SC_TO_UI(*ace_yy_cp)];
+			register ACE_YY_CHAR ace_yy_c = ace_yy_ec[ACE_YY_SC_TO_UI(*ace_yy_cp)];
 			if ( ace_yy_accept[ace_yy_current_state] )
 				{
 				ace_yy_last_accepting_state = ace_yy_current_state;
@@ -625,18 +653,18 @@ ace_yy_match:
 			while ( ace_yy_chk[ace_yy_base[ace_yy_current_state] + ace_yy_c] != ace_yy_current_state )
 				{
 				ace_yy_current_state = (int) ace_yy_def[ace_yy_current_state];
-				if ( ace_yy_current_state >= 103 )
+				if ( ace_yy_current_state >= 104 )
 					ace_yy_c = ace_yy_meta[(unsigned int) ace_yy_c];
 				}
 			ace_yy_current_state = ace_yy_nxt[ace_yy_base[ace_yy_current_state] + (unsigned int) ace_yy_c];
 			++ace_yy_cp;
 			}
-		while ( ace_yy_base[ace_yy_current_state] != 313 );
+		while ( ace_yy_base[ace_yy_current_state] != 439 );
 
 ace_yy_find_action:
 		ace_yy_act = ace_yy_accept[ace_yy_current_state];
 
-		YY_DO_BEFORE_ACTION;
+		ACE_YY_DO_BEFORE_ACTION;
 
 
 do_action:	/* This label is used only to access EOF actions. */
@@ -645,7 +673,7 @@ do_action:	/* This label is used only to access EOF actions. */
 		switch ( ace_yy_act )
 	{ /* beginning of action switch */
 			case 0: /* must back up */
-			/* undo the effects of YY_DO_BEFORE_ACTION */
+			/* undo the effects of ACE_YY_DO_BEFORE_ACTION */
 			*ace_yy_cp = ace_yy_hold_char;
 			ace_yy_cp = ace_yy_last_accepting_cpos;
 			ace_yy_current_state = ace_yy_last_accepting_state;
@@ -654,157 +682,157 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 *ace_yy_cp = ace_yy_hold_char; /* undo effects of setting up ace_yytext */
 ace_yy_c_buf_p = ace_yy_cp -= 1;
-YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
-YY_USER_ACTION
+ACE_YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
+ACE_YY_USER_ACTION
 # line 34 "Svc_Conf.l"
 ; /* EMPTY */
-	YY_BREAK
+	ACE_YY_BREAK
 case 2:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 35 "Svc_Conf.l"
 { return token (ACE_DYNAMIC); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 3:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 36 "Svc_Conf.l"
 { return token (ACE_STATIC); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 4:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 37 "Svc_Conf.l"
 { return token (ACE_SUSPEND); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 5:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 38 "Svc_Conf.l"
 { return token (ACE_RESUME); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 6:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 39 "Svc_Conf.l"
 { return token (ACE_REMOVE); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 7:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 40 "Svc_Conf.l"
 { return token (ACE_USTREAM); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 8:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 41 "Svc_Conf.l"
 { return token (ACE_MODULE_T); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 9:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 42 "Svc_Conf.l"
 { return token (ACE_SVC_OBJ_T); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 10:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 43 "Svc_Conf.l"
 { return token (ACE_STREAM_T); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 11:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 44 "Svc_Conf.l"
 { return token (ACE_ACTIVE); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 12:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 45 "Svc_Conf.l"
 { return token (ACE_INACTIVE); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 13:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 46 "Svc_Conf.l"
 { return token (ACE_COLON); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 14:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 47 "Svc_Conf.l"
 { return token (ACE_STAR); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 15:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 48 "Svc_Conf.l"
 { return token (ACE_LPAREN); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 16:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 49 "Svc_Conf.l"
 { return token (ACE_RPAREN); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 17:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 50 "Svc_Conf.l"
 { return token (ACE_LBRACE); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 18:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 51 "Svc_Conf.l"
 { return token (ACE_RBRACE); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 19:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 52 "Svc_Conf.l"
 { // Eliminate the opening and closing double quotes
 		        *strrchr (ace_yytext, '"') = '\0';
 			ace_yyleng -= 1;
                         ace_yylval.ident_ = ace_obstack->copy (ace_yytext + 1, ace_yyleng);
 			return token (ACE_STRING); }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 20:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 57 "Svc_Conf.l"
 {
 		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng);
 			return token (ACE_IDENT);
 		      }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 21:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 61 "Svc_Conf.l"
 {
 		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng);
 			return token (ACE_PATHNAME);
 		      }
-	/* YY_BREAK */
+	/* ACE_YY_BREAK */
 case 22:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 65 "Svc_Conf.l"
 ; /* EMPTY */
-	YY_BREAK
+	ACE_YY_BREAK
 case 23:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 66 "Svc_Conf.l"
 { ace_yylineno++; }
-	YY_BREAK
+	ACE_YY_BREAK
 case 24:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 67 "Svc_Conf.l"
 { ACE_ERROR ((LM_ERROR, "unknown char = %d\n", *ace_yytext)); }
-	YY_BREAK
-case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(PARAMETERS):
-case YY_STATE_EOF(NORMAL):
+	ACE_YY_BREAK
+case ACE_YY_STATE_EOF(INITIAL):
+case ACE_YY_STATE_EOF(PARAMETERS):
+case ACE_YY_STATE_EOF(NORMAL):
 # line 68 "Svc_Conf.l"
-{ YY_NEW_FILE; ace_yyterminate(); }
-	/* YY_BREAK */
+{ ACE_YY_NEW_FILE; ace_yyterminate(); }
+	/* ACE_YY_BREAK */
 case 25:
-YY_USER_ACTION
+ACE_YY_USER_ACTION
 # line 69 "Svc_Conf.l"
 ACE_SVC_CONF_ECHO;
-	YY_BREAK
+	ACE_YY_BREAK
 
-	case YY_END_OF_BUFFER:
+	case ACE_YY_END_OF_BUFFER:
 		{
 		/* Amount of text matched not including the EOB char. */
 		int ace_yy_amount_of_matched_text = ace_yy_cp - ace_yytext_ptr - 1;
 
-		/* Undo the effects of YY_DO_BEFORE_ACTION. */
+		/* Undo the effects of ACE_YY_DO_BEFORE_ACTION. */
 		*ace_yy_cp = ace_yy_hold_char;
 
-		if ( ace_yy_current_buffer->ace_yy_buffer_status == YY_BUFFER_NEW )
+		if ( ace_yy_current_buffer->ace_yy_buffer_status == ACE_YY_BUFFER_NEW )
 			{
 			/* We're scanning a new file or input source.  It's
 			 * possible that this happened because the user
@@ -817,7 +845,7 @@ ACE_SVC_CONF_ECHO;
 			 */
 			ace_yy_n_chars = ace_yy_current_buffer->ace_yy_n_chars;
 			ace_yy_current_buffer->ace_yy_input_file = ace_yyin;
-			ace_yy_current_buffer->ace_yy_buffer_status = YY_BUFFER_NORMAL;
+			ace_yy_current_buffer->ace_yy_buffer_status = ACE_YY_BUFFER_NORMAL;
 			}
 
 		/* Note that here we test for ace_yy_c_buf_p "<=" to the position
@@ -846,7 +874,7 @@ ACE_SVC_CONF_ECHO;
 
 			ace_yy_next_state = ace_yy_try_NUL_trans( ace_yy_current_state );
 
-			ace_yy_bp = ace_yytext_ptr + YY_MORE_ADJ;
+			ace_yy_bp = ace_yytext_ptr + ACE_YY_MORE_ADJ;
 
 			if ( ace_yy_next_state )
 				{
@@ -877,19 +905,19 @@ ACE_SVC_CONF_ECHO;
 					 * ace_yy_c_buf_p so that if some total
 					 * hoser (like flex itself) wants to
 					 * call the scanner after we return the
-					 * YY_NULL, it'll still work - another
-					 * YY_NULL will get returned.
+					 * ACE_YY_NULL, it'll still work - another
+					 * ACE_YY_NULL will get returned.
 					 */
-					ace_yy_c_buf_p = ace_yytext_ptr + YY_MORE_ADJ;
+					ace_yy_c_buf_p = ace_yytext_ptr + ACE_YY_MORE_ADJ;
 
-					ace_yy_act = YY_STATE_EOF(YY_START);
+					ace_yy_act = ACE_YY_STATE_EOF(ACE_YY_START);
 					goto do_action;
 					}
 
 				else
 					{
 					if ( ! ace_yy_did_buffer_switch_on_eof )
-						YY_NEW_FILE;
+						ACE_YY_NEW_FILE;
 					}
 				break;
 				}
@@ -901,7 +929,7 @@ ACE_SVC_CONF_ECHO;
 				ace_yy_current_state = ace_yy_get_previous_state();
 
 				ace_yy_cp = ace_yy_c_buf_p;
-				ace_yy_bp = ace_yytext_ptr + YY_MORE_ADJ;
+				ace_yy_bp = ace_yytext_ptr + ACE_YY_MORE_ADJ;
 				goto ace_yy_match;
 
 			case EOB_ACT_LAST_MATCH:
@@ -911,14 +939,14 @@ ACE_SVC_CONF_ECHO;
 				ace_yy_current_state = ace_yy_get_previous_state();
 
 				ace_yy_cp = ace_yy_c_buf_p;
-				ace_yy_bp = ace_yytext_ptr + YY_MORE_ADJ;
+				ace_yy_bp = ace_yytext_ptr + ACE_YY_MORE_ADJ;
 				goto ace_yy_find_action;
 			}
 		break;
 		}
 
 	default:
-		YY_FATAL_ERROR(
+		ACE_YY_FATAL_ERROR(
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
@@ -941,12 +969,12 @@ static int ace_yy_get_next_buffer()
 	int ret_val;
 
 	if ( ace_yy_c_buf_p > &ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars + 1] )
-		YY_FATAL_ERROR(
+		ACE_YY_FATAL_ERROR(
 		"fatal flex scanner internal error--end of buffer missed" );
 
 	if ( ace_yy_current_buffer->ace_yy_fill_buffer == 0 )
 		{ /* Don't try to fill the buffer, so this is an EOF. */
-		if ( ace_yy_c_buf_p - ace_yytext_ptr - YY_MORE_ADJ == 1 )
+		if ( ace_yy_c_buf_p - ace_yytext_ptr - ACE_YY_MORE_ADJ == 1 )
 			{
 			/* We matched a singled characater, the EOB, so
 			 * treat this as a final EOF.
@@ -971,7 +999,7 @@ static int ace_yy_get_next_buffer()
 	for ( i = 0; i < number_to_move; ++i )
 		*(dest++) = *(source++);
 
-	if ( ace_yy_current_buffer->ace_yy_buffer_status == YY_BUFFER_EOF_PENDING )
+	if ( ace_yy_current_buffer->ace_yy_buffer_status == ACE_YY_BUFFER_EOF_PENDING )
 		/* don't do the read, it's not guaranteed to return an EOF,
 		 * just force an EOF
 		 */
@@ -984,13 +1012,13 @@ static int ace_yy_get_next_buffer()
 
 		while ( num_to_read <= 0 )
 			{ /* Not enough room in the buffer - grow it. */
-#ifdef YY_USES_REJECT
-			YY_FATAL_ERROR(
+#ifdef ACE_YY_USES_REJECT
+			ACE_YY_FATAL_ERROR(
 "input buffer overflow, can't enlarge buffer because scanner uses REJECT" );
 #else
 
 			/* just a shorter name for the current buffer */
-			YY_BUFFER_STATE b = ace_yy_current_buffer;
+			ACE_YY_BUFFER_STATE b = ace_yy_current_buffer;
 
 			int ace_yy_c_buf_p_offset = ace_yy_c_buf_p - b->ace_yy_ch_buf;
 
@@ -1000,7 +1028,7 @@ static int ace_yy_get_next_buffer()
 						 b->ace_yy_buf_size );
 
 			if ( ! b->ace_yy_ch_buf )
-				YY_FATAL_ERROR(
+				ACE_YY_FATAL_ERROR(
 				"fatal error - scanner input buffer overflow" );
 
 			ace_yy_c_buf_p = &b->ace_yy_ch_buf[ace_yy_c_buf_p_offset];
@@ -1010,17 +1038,17 @@ static int ace_yy_get_next_buffer()
 #endif
 			}
 
-		if ( num_to_read > YY_READ_BUF_SIZE )
-			num_to_read = YY_READ_BUF_SIZE;
+		if ( num_to_read > ACE_YY_READ_BUF_SIZE )
+			num_to_read = ACE_YY_READ_BUF_SIZE;
 
 		/* Read in more data. */
-		YY_INPUT( (&ace_yy_current_buffer->ace_yy_ch_buf[number_to_move]),
+		ACE_YY_INPUT( (&ace_yy_current_buffer->ace_yy_ch_buf[number_to_move]),
 			ace_yy_n_chars, num_to_read );
 		}
 
 	if ( ace_yy_n_chars == 0 )
 		{
-		if ( number_to_move - YY_MORE_ADJ == 1 )
+		if ( number_to_move - ACE_YY_MORE_ADJ == 1 )
 			{
 			ret_val = EOB_ACT_END_OF_FILE;
 			ace_yyrestart( ace_yyin );
@@ -1030,7 +1058,7 @@ static int ace_yy_get_next_buffer()
 			{
 			ret_val = EOB_ACT_LAST_MATCH;
 			ace_yy_current_buffer->ace_yy_buffer_status =
-				YY_BUFFER_EOF_PENDING;
+				ACE_YY_BUFFER_EOF_PENDING;
 			}
 		}
 
@@ -1038,8 +1066,8 @@ static int ace_yy_get_next_buffer()
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
 	ace_yy_n_chars += number_to_move;
-	ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars] = YY_END_OF_BUFFER_CHAR;
-	ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars + 1] = YY_END_OF_BUFFER_CHAR;
+	ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars] = ACE_YY_END_OF_BUFFER_CHAR;
+	ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars + 1] = ACE_YY_END_OF_BUFFER_CHAR;
 
 	/* ace_yytext begins at the second character in ace_yy_ch_buf; the first
 	 * character is the one which preceded it before reading in the latest
@@ -1066,9 +1094,9 @@ static ace_yy_state_type ace_yy_get_previous_state()
 	if ( ace_yy_bp[-1] == '\n' )
 		++ace_yy_current_state;
 
-	for ( ace_yy_cp = ace_yytext_ptr + YY_MORE_ADJ; ace_yy_cp < ace_yy_c_buf_p; ++ace_yy_cp )
+	for ( ace_yy_cp = ace_yytext_ptr + ACE_YY_MORE_ADJ; ace_yy_cp < ace_yy_c_buf_p; ++ace_yy_cp )
 		{
-		register YY_CHAR ace_yy_c = (*ace_yy_cp ? ace_yy_ec[YY_SC_TO_UI(*ace_yy_cp)] : 1);
+		register ACE_YY_CHAR ace_yy_c = (*ace_yy_cp ? ace_yy_ec[ACE_YY_SC_TO_UI(*ace_yy_cp)] : 1);
 		if ( ace_yy_accept[ace_yy_current_state] )
 			{
 			ace_yy_last_accepting_state = ace_yy_current_state;
@@ -1077,7 +1105,7 @@ static ace_yy_state_type ace_yy_get_previous_state()
 		while ( ace_yy_chk[ace_yy_base[ace_yy_current_state] + ace_yy_c] != ace_yy_current_state )
 			{
 			ace_yy_current_state = (int) ace_yy_def[ace_yy_current_state];
-			if ( ace_yy_current_state >= 103 )
+			if ( ace_yy_current_state >= 104 )
 				ace_yy_c = ace_yy_meta[(unsigned int) ace_yy_c];
 			}
 		ace_yy_current_state = ace_yy_nxt[ace_yy_base[ace_yy_current_state] + (unsigned int) ace_yy_c];
@@ -1093,7 +1121,7 @@ static ace_yy_state_type ace_yy_get_previous_state()
  *	next_state = ace_yy_try_NUL_trans( current_state );
  */
 
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 static ace_yy_state_type ace_yy_try_NUL_trans( ace_yy_state_type ace_yy_current_state )
 #else
 static ace_yy_state_type ace_yy_try_NUL_trans( ace_yy_current_state )
@@ -1103,7 +1131,7 @@ ace_yy_state_type ace_yy_current_state;
 	register int ace_yy_is_jam;
 	register char *ace_yy_cp = ace_yy_c_buf_p;
 
-	register YY_CHAR ace_yy_c = 1;
+	register ACE_YY_CHAR ace_yy_c = 1;
 	if ( ace_yy_accept[ace_yy_current_state] )
 		{
 		ace_yy_last_accepting_state = ace_yy_current_state;
@@ -1112,18 +1140,18 @@ ace_yy_state_type ace_yy_current_state;
 	while ( ace_yy_chk[ace_yy_base[ace_yy_current_state] + ace_yy_c] != ace_yy_current_state )
 		{
 		ace_yy_current_state = (int) ace_yy_def[ace_yy_current_state];
-		if ( ace_yy_current_state >= 103 )
+		if ( ace_yy_current_state >= 104 )
 			ace_yy_c = ace_yy_meta[(unsigned int) ace_yy_c];
 		}
 	ace_yy_current_state = ace_yy_nxt[ace_yy_base[ace_yy_current_state] + (unsigned int) ace_yy_c];
-	ace_yy_is_jam = (ace_yy_current_state == 102);
+	ace_yy_is_jam = (ace_yy_current_state == 103);
 
 	return ace_yy_is_jam ? 0 : ace_yy_current_state;
 	}
 
 
 #if 0
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 static void ace_yyunput( int c, register char *ace_yy_bp )
 #else
 static void ace_yyunput( c, ace_yy_bp )
@@ -1153,7 +1181,7 @@ register char *ace_yy_bp;
 		ace_yy_n_chars = ace_yy_current_buffer->ace_yy_buf_size;
 
 		if ( ace_yy_cp < ace_yy_current_buffer->ace_yy_ch_buf + 2 )
-			YY_FATAL_ERROR( "flex scanner push-back overflow" );
+			ACE_YY_FATAL_ERROR( "flex scanner push-back overflow" );
 		}
 
 	if ( ace_yy_cp > ace_yy_bp && ace_yy_cp[-1] == '\n' )
@@ -1165,7 +1193,7 @@ register char *ace_yy_bp;
 	/* Note: the formal parameter *must* be called "ace_yy_bp" for this
 	 * macro to now work correctly.
 	 */
-	YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
+	ACE_YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
 	}
 #endif /* 0 */
 
@@ -1179,7 +1207,7 @@ static int input()
 
 	*ace_yy_c_buf_p = ace_yy_hold_char;
 
-	if ( *ace_yy_c_buf_p == YY_END_OF_BUFFER_CHAR )
+	if ( *ace_yy_c_buf_p == ACE_YY_END_OF_BUFFER_CHAR )
 		{
 		/* ace_yy_c_buf_p now points to the character we want to return.
 		 * If this occurs *before* the EOB characters, then it's a
@@ -1201,11 +1229,11 @@ static int input()
 					if ( ace_yywrap() )
 						{
 						ace_yy_c_buf_p =
-						ace_yytext_ptr + YY_MORE_ADJ;
+						ace_yytext_ptr + ACE_YY_MORE_ADJ;
 						return EOF;
 						}
 
-					YY_NEW_FILE;
+					ACE_YY_NEW_FILE;
 #ifdef __cplusplus
 					return ace_yyinput();
 #else
@@ -1214,15 +1242,15 @@ static int input()
 					}
 
 				case EOB_ACT_CONTINUE_SCAN:
-					ace_yy_c_buf_p = ace_yytext_ptr + YY_MORE_ADJ;
+					ace_yy_c_buf_p = ace_yytext_ptr + ACE_YY_MORE_ADJ;
 					break;
 
 				case EOB_ACT_LAST_MATCH:
 #ifdef __cplusplus
-					YY_FATAL_ERROR(
+					ACE_YY_FATAL_ERROR(
 					"unexpected last match in ace_yyinput()" );
 #else
-					YY_FATAL_ERROR(
+					ACE_YY_FATAL_ERROR(
 					"unexpected last match in input()" );
 #endif
 				}
@@ -1237,7 +1265,7 @@ static int input()
 	}
 
 
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 void ace_yyrestart( FILE *input_file )
 #else
 void ace_yyrestart( input_file )
@@ -1245,18 +1273,18 @@ FILE *input_file;
 #endif
 	{
 	if ( ! ace_yy_current_buffer )
-		ace_yy_current_buffer = ace_yy_create_buffer( ace_yyin, YY_BUF_SIZE );
+		ace_yy_current_buffer = ace_yy_create_buffer( ace_yyin, ACE_YY_BUF_SIZE );
 
 	ace_yy_init_buffer( ace_yy_current_buffer, input_file );
 	ace_yy_load_buffer_state();
 	}
 
 
-#ifdef YY_USE_PROTOS
-void ace_yy_switch_to_buffer( YY_BUFFER_STATE new_buffer )
+#ifdef ACE_YY_USE_PROTOS
+void ace_yy_switch_to_buffer( ACE_YY_BUFFER_STATE new_buffer )
 #else
 void ace_yy_switch_to_buffer( new_buffer )
-YY_BUFFER_STATE new_buffer;
+ACE_YY_BUFFER_STATE new_buffer;
 #endif
 	{
 	if ( ace_yy_current_buffer == new_buffer )
@@ -1282,7 +1310,7 @@ YY_BUFFER_STATE new_buffer;
 	}
 
 
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 void ace_yy_load_buffer_state( void )
 #else
 void ace_yy_load_buffer_state()
@@ -1295,20 +1323,20 @@ void ace_yy_load_buffer_state()
 	}
 
 
-#ifdef YY_USE_PROTOS
-YY_BUFFER_STATE ace_yy_create_buffer( FILE *file, int size )
+#ifdef ACE_YY_USE_PROTOS
+ACE_YY_BUFFER_STATE ace_yy_create_buffer( FILE *file, int size )
 #else
-YY_BUFFER_STATE ace_yy_create_buffer( file, size )
+ACE_YY_BUFFER_STATE ace_yy_create_buffer( file, size )
 FILE *file;
 int size;
 #endif
 	{
-	YY_BUFFER_STATE b;
+	ACE_YY_BUFFER_STATE b;
 
-	b = (YY_BUFFER_STATE) ace_yy_flex_alloc( sizeof( struct ace_yy_buffer_state ) );
+	b = (ACE_YY_BUFFER_STATE) ace_yy_flex_alloc( sizeof( struct ace_yy_buffer_state ) );
 
 	if ( ! b )
-		YY_FATAL_ERROR( "out of dynamic memory in ace_yy_create_buffer()" );
+		ACE_YY_FATAL_ERROR( "out of dynamic memory in ace_yy_create_buffer()" );
 
 	b->ace_yy_buf_size = size;
 
@@ -1318,7 +1346,7 @@ int size;
 	b->ace_yy_ch_buf = (char *) ace_yy_flex_alloc( b->ace_yy_buf_size + 2 );
 
 	if ( ! b->ace_yy_ch_buf )
-		YY_FATAL_ERROR( "out of dynamic memory in ace_yy_create_buffer()" );
+		ACE_YY_FATAL_ERROR( "out of dynamic memory in ace_yy_create_buffer()" );
 
 	ace_yy_init_buffer( b, file );
 
@@ -1326,26 +1354,26 @@ int size;
 	}
 
 
-#ifdef YY_USE_PROTOS
-void ace_yy_delete_buffer( YY_BUFFER_STATE b )
+#ifdef ACE_YY_USE_PROTOS
+void ace_yy_delete_buffer( ACE_YY_BUFFER_STATE b )
 #else
 void ace_yy_delete_buffer( b )
-YY_BUFFER_STATE b;
+ACE_YY_BUFFER_STATE b;
 #endif
 	{
 	if ( b == ace_yy_current_buffer )
-		ace_yy_current_buffer = (YY_BUFFER_STATE) 0;
+		ace_yy_current_buffer = (ACE_YY_BUFFER_STATE) 0;
 
 	ace_yy_flex_free( (void *) b->ace_yy_ch_buf );
 	ace_yy_flex_free( (void *) b );
 	}
 
 
-#ifdef YY_USE_PROTOS
-void ace_yy_init_buffer( YY_BUFFER_STATE b, FILE *file )
+#ifdef ACE_YY_USE_PROTOS
+void ace_yy_init_buffer( ACE_YY_BUFFER_STATE b, FILE *file )
 #else
 void ace_yy_init_buffer( b, file )
-YY_BUFFER_STATE b;
+ACE_YY_BUFFER_STATE b;
 FILE *file;
 #endif
 	{
@@ -1362,8 +1390,8 @@ FILE *file;
 	 * a transition to the end-of-buffer state.  The second causes
 	 * a jam in that state.
 	 */
-	b->ace_yy_ch_buf[1] = YY_END_OF_BUFFER_CHAR;
-	b->ace_yy_ch_buf[2] = YY_END_OF_BUFFER_CHAR;
+	b->ace_yy_ch_buf[1] = ACE_YY_END_OF_BUFFER_CHAR;
+	b->ace_yy_ch_buf[2] = ACE_YY_END_OF_BUFFER_CHAR;
 
 	b->ace_yy_buf_pos = &b->ace_yy_ch_buf[1];
 
@@ -1371,12 +1399,12 @@ FILE *file;
 
 	b->ace_yy_fill_buffer = 1;
 
-	b->ace_yy_buffer_status = YY_BUFFER_NEW;
+	b->ace_yy_buffer_status = ACE_YY_BUFFER_NEW;
 	}
 
 
 #if 0
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 static void ace_yy_push_state( int new_state )
 #else
 static void ace_yy_push_state( new_state )
@@ -1387,7 +1415,7 @@ int new_state;
 		{
 		int new_size;
 
-		ace_yy_start_stack_depth += YY_START_STACK_INCR;
+		ace_yy_start_stack_depth += ACE_YY_START_STACK_INCR;
 		new_size = ace_yy_start_stack_depth * sizeof( int );
 
 		if ( ! ace_yy_start_stack )
@@ -1398,11 +1426,11 @@ int new_state;
 					(void *) ace_yy_start_stack, new_size );
 
 		if ( ! ace_yy_start_stack )
-			YY_FATAL_ERROR(
+			ACE_YY_FATAL_ERROR(
 			"out of memory expanding start-condition stack" );
 		}
 
-	ace_yy_start_stack[ace_yy_start_stack_ptr++] = YY_START;
+	ace_yy_start_stack[ace_yy_start_stack_ptr++] = ACE_YY_START;
 
 	BEGIN(new_state);
 	}
@@ -1411,7 +1439,7 @@ int new_state;
 static void ace_yy_pop_state()
 	{
 	if ( --ace_yy_start_stack_ptr < 0 )
-		YY_FATAL_ERROR( "start-condition stack underflow" );
+		ACE_YY_FATAL_ERROR( "start-condition stack underflow" );
 
 	BEGIN(ace_yy_start_stack[ace_yy_start_stack_ptr]);
 	}
@@ -1423,7 +1451,7 @@ static int ace_yy_top_state()
 	}
 #endif /* 0 */
 
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 static void ace_yy_fatal_error( const char msg[] )
 #else
 static void ace_yy_fatal_error( msg )
@@ -1444,7 +1472,7 @@ char msg[];
 		{ \
 		/* Undo effects of setting up ace_yytext. */ \
 		ace_yytext[ace_yyleng] = ace_yy_hold_char; \
-		ace_yy_c_buf_p = ace_yytext + n - YY_MORE_ADJ; \
+		ace_yy_c_buf_p = ace_yytext + n - ACE_YY_MORE_ADJ; \
 		ace_yy_hold_char = *ace_yy_c_buf_p; \
 		*ace_yy_c_buf_p = '\0'; \
 		ace_yyleng = n; \
@@ -1455,7 +1483,7 @@ char msg[];
 /* Internal utility routines. */
 
 #ifndef ace_yytext_ptr
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 static void ace_yy_flex_strncpy( char *s1, const char *s2, int n )
 #else
 static void ace_yy_flex_strncpy( s1, s2, n )
@@ -1471,7 +1499,7 @@ int n;
 #endif
 
 
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 static void *ace_yy_flex_alloc( unsigned int size )
 #else
 static void *ace_yy_flex_alloc( size )
@@ -1481,7 +1509,7 @@ unsigned int size;
 	return (void *) malloc( size );
 	}
 
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 static void *ace_yy_flex_realloc( void *ptr, unsigned int size )
 #else
 static void *ace_yy_flex_realloc( ptr, size )
@@ -1492,7 +1520,7 @@ unsigned int size;
 	return (void *) realloc( ACE_MALLOC_T (ptr), size );
 	}
 
-#ifdef YY_USE_PROTOS
+#ifdef ACE_YY_USE_PROTOS
 static void ace_yy_flex_free( void *ptr )
 #else
 static void ace_yy_flex_free( ptr )
@@ -1509,1507 +1537,5 @@ ace_yywrap (void)
   ::fflush (ace_yyin);
   ace_yytext[0] = '#';
   ace_yyleng = 0;
-  return 1;
-}
-/* A lexical scanner generated by flex */
-
-/* Scanner skeleton version:
- * $Header$
- */
-
-#define FLEX_SCANNER
-
-#include "ace/OS.h"
-
-
-/* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
-#ifdef c_plusplus
-#ifndef __cplusplus
-#define __cplusplus
-#endif
-#endif
-
-
-#ifdef __cplusplus
-
-#include /**/ <stdlib.h>
-#include "ace/OS.h"
-
-/* Use prototypes in function declarations. */
-#define YY_USE_PROTOS
-
-/* The "const" storage-class-modifier is valid. */
-#define YY_USE_CONST
-
-#else	/* ! __cplusplus */
-
-#ifdef __STDC__
-
-#define YY_USE_PROTOS
-#define YY_USE_CONST
-
-#endif	/* __STDC__ */
-#endif	/* ! __cplusplus */
-
-
-#ifdef __TURBOC__
-#define YY_USE_CONST
-#endif
-
-
-#ifndef YY_USE_CONST
-#ifndef const
-#define const
-#endif
-#endif
-
-
-#ifdef YY_USE_PROTOS
-#define YY_PROTO(proto) proto
-#else
-#define YY_PROTO(proto) ()
-#endif
-
-/* Returned upon end-of-file. */
-#define YY_NULL 0
-
-/* Promotes a possibly negative, possibly signed char to an unsigned
- * integer for use as an array index.  If the signed char is negative,
- * we want to instead treat it as an 8-bit unsigned char, hence the
- * double cast.
- */
-#define YY_SC_TO_UI(c) ((unsigned int) (unsigned char) c)
-
-/* Enter a start condition.  This macro really ought to take a parameter,
- * but we do it the disgusting crufty way forced on us by the ()-less
- * definition of BEGIN.
- */
-#define BEGIN ace_yy_start = 1 + 2 *
-
-/* Translate the current start state into a value that can be later handed
- * to BEGIN to return to the state.
- */
-#define YY_START ((ace_yy_start - 1) / 2)
-
-/* Action number for EOF rule of a given start state. */
-#define YY_STATE_EOF(state) (YY_END_OF_BUFFER + state + 1)
-
-/* Special action meaning "start processing a new file".  Now included
- * only for backward compatibility with previous versions of flex.
- */
-#define YY_NEW_FILE ace_yyrestart( ace_yyin )
-
-#define YY_END_OF_BUFFER_CHAR 0
-
-/* Size of default input buffer. */
-#define YY_BUF_SIZE 16384
-
-typedef struct ace_yy_buffer_state *YY_BUFFER_STATE;
-
-extern int ace_yyleng;
-extern FILE *ace_yyin, *ace_yyout;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-	extern int ace_yywrap YY_PROTO(( void ));
-#ifdef __cplusplus
-	}
-#endif
-
-#define EOB_ACT_CONTINUE_SCAN 0
-#define EOB_ACT_END_OF_FILE 1
-#define EOB_ACT_LAST_MATCH 2
-
-/* The funky do-while in the following #define is used to turn the definition
- * int a single C statement (which needs a semi-colon terminator).  This
- * avoids problems with code like:
- *
- * 	if ( condition_holds )
- *		ace_yyless( 5 );
- *	else
- *		do_something_else();
- *
- * Prior to using the do-while the compiler would get upset at the
- * "else" because it interpreted the "if" statement as being all
- * done when it reached the ';' after the ace_yyless() call.
- */
-
-/* Return all but the first 'n' matched characters back to the input stream. */
-
-#define ace_yyless(n) \
-	do \
-		{ \
-		/* Undo effects of setting up ace_yytext. */ \
-		*ace_yy_cp = ace_yy_hold_char; \
-		ace_yy_c_buf_p = ace_yy_cp = ace_yy_bp + n - YY_MORE_ADJ; \
-		YY_DO_BEFORE_ACTION; /* set up ace_yytext again */ \
-		} \
-	while ( 0 )
-
-#define unput(c) ace_yyunput( c, ace_yytext_ptr )
-
-
-struct ace_yy_buffer_state
-	{
-	FILE *ace_yy_input_file;
-
-	char *ace_yy_ch_buf;		/* input buffer */
-	char *ace_yy_buf_pos;		/* current position in input buffer */
-
-	/* Size of input buffer in bytes, not including room for EOB
-	 * characters.
-	 */
-	int ace_yy_buf_size;
-
-	/* Number of characters read into ace_yy_ch_buf, not including EOB
-	 * characters.
-	 */
-	int ace_yy_n_chars;
-
-	/* Whether this is an "interactive" input source; if so, and
-	 * if we're using stdio for input, then we want to use getc()
-	 * instead of fread(), to make sure we stop fetching input after
-	 * each newline.
-	 */
-	int ace_yy_is_interactive;
-
-	/* Whether to try to fill the input buffer when we reach the
-	 * end of it.
-	 */
-	int ace_yy_fill_buffer;
-
-	int ace_yy_buffer_status;
-#define YY_BUFFER_NEW 0
-#define YY_BUFFER_NORMAL 1
-	/* When an EOF's been seen but there's still some text to process
-	 * then we mark the buffer as YY_EOF_PENDING, to indicate that we
-	 * shouldn't try reading from the input source any more.  We might
-	 * still have a bunch of tokens to match, though, because of
-	 * possible backing-up.
-	 *
-	 * When we actually see the EOF, we change the status to "new"
-	 * (via ace_yyrestart()), so that the user can continue scanning by
-	 * just pointing ace_yyin at a new input file.
-	 */
-#define YY_BUFFER_EOF_PENDING 2
-	};
-
-static YY_BUFFER_STATE ace_yy_current_buffer = 0;
-
-/* We provide macros for accessing buffer states in case in the
- * future we want to put the buffer states in a more general
- * "scanner state".
- */
-#define YY_CURRENT_BUFFER ace_yy_current_buffer
-
-
-/* ace_yy_hold_char holds the character lost when ace_yytext is formed. */
-static char ace_yy_hold_char;
-
-static int ace_yy_n_chars;		/* number of characters read into ace_yy_ch_buf */
-
-
-int ace_yyleng;
-
-/* Points to current character in buffer. */
-static char *ace_yy_c_buf_p = (char *) 0;
-static int ace_yy_init = 1;		/* whether we need to initialize */
-static int ace_yy_start = 0;	/* start state number */
-
-/* Flag which is used to allow ace_yywrap()'s to do buffer switches
- * instead of setting up a fresh ace_yyin.  A bit of a hack ...
- */
-static int ace_yy_did_buffer_switch_on_eof;
-
-static void ace_yyunput YY_PROTO(( int c, char *buf_ptr ));
-void ace_yyrestart YY_PROTO(( FILE *input_file ));
-void ace_yy_switch_to_buffer YY_PROTO(( YY_BUFFER_STATE new_buffer ));
-void ace_yy_load_buffer_state YY_PROTO(( void ));
-YY_BUFFER_STATE ace_yy_create_buffer YY_PROTO(( FILE *file, int size ));
-void ace_yy_delete_buffer YY_PROTO(( YY_BUFFER_STATE b ));
-void ace_yy_init_buffer YY_PROTO(( YY_BUFFER_STATE b, FILE *file ));
-
-static int ace_yy_start_stack_ptr = 0;
-static int ace_yy_start_stack_depth = 0;
-static int *ace_yy_start_stack = 0;
-static void ace_yy_push_state YY_PROTO(( int new_state ));
-static void ace_yy_pop_state YY_PROTO(( void ));
-static int ace_yy_top_state YY_PROTO(( void ));
-
-static void *ace_yy_flex_alloc YY_PROTO(( unsigned int ));
-static void *ace_yy_flex_realloc YY_PROTO(( void *, unsigned int ));
-static void ace_yy_flex_free YY_PROTO(( void * ));
-
-#define ace_yy_new_buffer ace_yy_create_buffer
-
-#define INITIAL 0
-#define PARAMETERS 1
-#define NORMAL 2
-typedef unsigned char YY_CHAR;
-typedef int ace_yy_state_type;
-FILE *ace_yyin = (FILE *) 0, *ace_yyout = (FILE *) 0;
-extern char *ace_yytext;
-#define ace_yytext_ptr ace_yytext
-
-#ifndef ace_yytext_ptr
-static void ace_yy_flex_strncpy YY_PROTO(( char *, const char *, int ));
-#endif
-
-#ifdef __cplusplus
-static int ace_yyinput YY_PROTO(( void ));
-#else
-static int input YY_PROTO(( void ));
-#endif
-
-static ace_yy_state_type ace_yy_get_previous_state YY_PROTO(( void ));
-static ace_yy_state_type ace_yy_try_NUL_trans YY_PROTO(( ace_yy_state_type current_state ));
-static int ace_yy_get_next_buffer YY_PROTO(( void ));
-static void ace_yy_fatal_error YY_PROTO(( const char msg[] ));
-
-/* Done after the current pattern has been matched and before the
- * corresponding action - sets up ace_yytext.
- */
-#define YY_DO_BEFORE_ACTION \
-	ace_yytext_ptr = ace_yy_bp; \
-	ace_yyleng = ace_yy_cp - ace_yy_bp; \
-	ace_yy_hold_char = *ace_yy_cp; \
-	*ace_yy_cp = '\0'; \
-	ace_yy_c_buf_p = ace_yy_cp;
-
-#define YY_END_OF_BUFFER 26
-static const short int ace_yy_accept[103] =
-    {   0,
-        0,    0,    0,    0,    0,    0,   26,   24,   22,   23,
-       24,   15,   16,   14,   21,   13,   20,   20,   20,   20,
-       20,   20,   20,   20,   20,   17,   18,   24,   22,    0,
-       19,   21,   20,    0,   20,   20,   20,   20,   20,   20,
-       20,   20,   20,    0,    1,   20,   20,   20,   20,   20,
-       20,   20,   20,   20,   20,   20,   20,   20,   20,   20,
-       20,   20,   20,   20,   20,   20,   20,   20,   20,   20,
-       20,   20,   20,   20,   20,   20,   20,   20,    8,   10,
-       20,   11,   20,   20,    6,    5,    3,    7,   20,   20,
-        2,   20,    4,   20,   12,   20,   20,   20,   20,   20,
-
-        9,    0
-    } ;
-
-static const int ace_yy_ec[256] =
-    {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    4,    5,    6,    7,    5,    5,    5,    5,    8,
-        9,   10,    5,    5,   11,   11,   11,   12,   12,   12,
-       12,   12,   12,   12,   12,   12,   12,   13,    5,    5,
-        5,    5,    5,    5,   14,   15,   15,   15,   16,   15,
-       15,   15,   15,   15,   15,   15,   17,   15,   18,   15,
-       15,   19,   20,   21,   15,   15,   15,   15,   15,   15,
-        5,   11,    5,    5,   22,    5,   23,   24,   25,   26,
-
-       27,   15,   15,   15,   28,   29,   15,   30,   31,   32,
-       33,   34,   15,   35,   36,   37,   38,   39,   15,   15,
-       40,   15,   41,    5,   42,    5,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1
-    } ;
-
-static const int ace_yy_meta[43] =
-    {   0,
-        1,    1,    1,    2,    2,    2,    2,    2,    2,    2,
-        3,    3,    4,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        2,    2
-    } ;
-
-static const short int ace_yy_base[107] =
-    {   0,
-        0,  112,    0,  111,    0,  107,   97,  313,   41,  313,
-       85,  313,  313,  313,    0,  313,   33,   36,   37,   40,
-       41,   44,   48,   49,   52,  313,  313,   82,   66,   76,
-       72,    0,   60,    0,   61,   64,   68,   75,   81,   82,
-       85,   88,   89,   64,  313,   93,  104,   96,  111,  115,
-      116,   97,  121,  129,  133,  134,  137,  138,  142,  143,
-      150,  151,  158,  161,  162,  166,  167,  172,  185,  180,
-      173,  190,  193,  196,  197,  200,  201,  204,  209,  215,
-      216,  220,  224,  227,  228,  231,  234,  235,  239,  240,
-      243,  244,  247,  250,  256,  259,  262,  263,  267,  266,
-
-      271,  313,  302,   53,  304,  308
-    } ;
-
-static const short int ace_yy_def[107] =
-    {   0,
-      102,    1,    1,    1,    1,    1,  102,  102,  102,  102,
-      103,  102,  102,  102,  104,  102,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  102,  102,  106,  102,  103,
-      103,  104,  105,  104,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  106,  102,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
-      105,  105,  105,  105,  105,  105,  105,  105,  105,  105,
-
-      105,    0,  102,  102,  102,  102
-    } ;
-
-static const short int ace_yy_nxt[356] =
-    {   0,
-        8,    9,   10,    9,    8,   11,    8,   12,   13,   14,
-       15,   15,   16,   17,   17,   17,   18,   17,   17,   19,
-       17,   20,   21,   17,   17,   22,   17,   23,   17,   17,
-       17,   17,   17,   17,   24,   25,   17,   17,   17,   17,
-       26,   27,   29,   32,   29,   34,   32,   32,   34,   34,
-       32,   32,  102,   34,   32,   32,   34,   36,   32,   32,
-       34,   34,   32,   37,   34,   38,   45,   29,   35,   29,
-       32,   32,  102,  102,   32,   41,  102,   31,   32,   40,
-      102,   31,   47,   39,   45,   32,   46,  102,   42,   43,
-       31,   32,   32,  102,  102,   32,  102,  102,   32,   32,
-
-      102,  102,   48,   32,   51,  102,   32,   32,  102,  102,
-       54,   49,   50,   28,   32,   52,  102,   28,   28,   58,
-       53,   32,   55,  102,   56,   32,   32,  102,  102,   63,
-       57,   32,  102,  102,   59,  102,  102,   61,   60,   32,
-       62,  102,  102,   32,   32,  102,  102,   32,   32,  102,
-      102,   69,   32,   32,  102,  102,  102,  102,   64,   66,
-       32,   32,  102,  102,  102,   65,   68,   67,   32,   70,
-      102,   32,   32,  102,  102,  102,   32,   32,  102,  102,
-       72,   71,   32,   32,  102,  102,  102,   73,   77,   76,
-       32,   75,  102,   78,  102,   32,   74,  102,   79,   82,
-
-       32,   80,  102,   32,   81,  102,   32,   32,  102,  102,
-       32,   32,  102,  102,   32,  102,  102,   83,  102,   32,
-       84,  102,   85,   86,   87,   32,   32,  102,  102,  102,
-       32,   88,  102,  102,   32,   89,  102,   32,   32,  102,
-      102,   32,   90,  102,   32,   32,  102,  102,   91,   32,
-       32,  102,  102,   32,   32,  102,  102,   32,  102,  102,
-       32,   94,  102,  102,   93,   92,   32,   96,  102,   32,
-       95,  102,   32,   32,  102,  102,   32,   32,  102,  102,
-      102,   32,   97,  102,  102,  102,  102,  102,  102,   99,
-       98,  100,  102,  102,  102,  102,  102,  102,  102,  102,
-
-      102,  102,  101,   30,   30,   30,   33,   33,   44,   44,
-       44,   44,    7,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102
-    } ;
-
-static const short int ace_yy_chk[356] =
-    {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    9,   17,    9,   17,   18,   19,   18,   19,
-       20,   21,   20,   21,   22,  104,   22,   19,   23,   24,
-       23,   24,   25,   19,   25,   21,   44,   29,   18,   29,
-       33,   35,   33,   35,   36,   24,   36,   31,   37,   23,
-       37,   30,   36,   22,   28,   38,   35,   38,   25,   25,
-       11,   39,   40,   39,   40,   41,    7,   41,   42,   43,
-
-       42,   43,   37,   46,   40,   46,   48,   52,   48,   52,
-       42,   38,   39,    6,   47,   41,   47,    4,    2,   47,
-       41,   49,   42,   49,   43,   50,   51,   50,   51,   52,
-       46,   53,    0,   53,   48,    0,    0,   50,   49,   54,
-       51,   54,    0,   55,   56,   55,   56,   57,   58,   57,
-       58,   58,   59,   60,   59,   60,    0,    0,   53,   55,
-       61,   62,   61,   62,    0,   54,   57,   56,   63,   59,
-       63,   64,   65,   64,   65,    0,   66,   67,   66,   67,
-       61,   60,   68,   71,   68,   71,    0,   62,   66,   65,
-       70,   64,   70,   67,    0,   69,   63,   69,   68,   71,
-
-       72,   69,   72,   73,   70,   73,   74,   75,   74,   75,
-       76,   77,   76,   77,   78,    0,   78,   72,    0,   79,
-       73,   79,   74,   75,   76,   80,   81,   80,   81,    0,
-       82,   77,   82,    0,   83,   78,   83,   84,   85,   84,
-       85,   86,   81,   86,   87,   88,   87,   88,   83,   89,
-       90,   89,   90,   91,   92,   91,   92,   93,    0,   93,
-       94,   90,   94,    0,   89,   84,   95,   94,   95,   96,
-       92,   96,   97,   98,   97,   98,  100,   99,  100,   99,
-        0,  101,   96,  101,    0,    0,    0,    0,    0,   98,
-       97,   99,    0,    0,    0,    0,    0,    0,    0,    0,
-
-        0,    0,  100,  103,  103,  103,  105,  105,  106,  106,
-      106,  106,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102,  102,  102,  102,  102,  102,
-      102,  102,  102,  102,  102
-    } ;
-
-static ace_yy_state_type ace_yy_last_accepting_state;
-static char *ace_yy_last_accepting_cpos;
-
-/* The intent behind this definition is that it'll catch
- * any uses of REJECT which flex missed.
- */
-#define REJECT reject_used_but_not_detected
-#define ace_yymore() ace_yymore_used_but_not_detected
-#define YY_MORE_ADJ 0
-char *ace_yytext;
-# line 1 "Svc_Conf.l"
-# line 2 "Svc_Conf.l"
-// Sample lexical analysis for regular expression subset.  Must be
-// compiled with FLEX and an ANSI C++ compiler.
-
-// Lexical tokens values defined by YACC.
-#include "ace/Svc_Conf.h"
-#include "ace/Svc_Conf_Tokens.h"
-
-// Keeps track of the current line for debugging output. 
-int ace_yylineno = 1;
-
-// Keeps track of the number of errors encountered so far.
-int ace_yyerrno = 0;
-
-#define token(x)  x
-
-/* Macros after this point can all be overridden by user definitions in
- * section 1.
- */
-
-#ifdef YY_MALLOC_DECL
-YY_MALLOC_DECL
-#else
-#if __STDC__
-#ifndef __cplusplus
-#include /**/ <stdlib.h>
-#endif
-#else
-/* Just try to get by without declaring the routines.  This will fail
- * miserably on non-ANSI systems for which sizeof(size_t) != sizeof(int)
- * or sizeof(void*) != sizeof(int).
- */
-#endif
-#endif
-
-/* Amount of stuff to slurp up with each read. */
-#ifndef YY_READ_BUF_SIZE
-#define YY_READ_BUF_SIZE 8192
-#endif
-
-/* Copy whatever the last rule matched to the standard output. */
-
-#ifndef ACE_SVC_CONF_ECHO
-/* This used to be an fputs(), but since the string might contain NUL's,
- * we now use fwrite().
- */
-#define ACE_SVC_CONF_ECHO (void) fwrite( ace_yytext, ace_yyleng, 1, ace_yyout )
-#endif
-
-/* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
- * is returned in "result".
- */
-#ifndef YY_INPUT
-#define YY_INPUT(buf,result,max_size) \
-	if ( ace_yy_current_buffer->ace_yy_is_interactive ) \
-		{ \
-		int c = getc( ace_yyin ); \
-		result = c == EOF ? 0 : 1; \
-		buf[0] = (char) c; \
-		} \
-	else if ( ((result = fread( buf, 1, max_size, ace_yyin )) == 0) \
-		  && ferror( ace_yyin ) ) \
-		YY_FATAL_ERROR( "input in flex scanner failed" );
-#endif
-
-/* No semi-colon after return; correct usage is to write "ace_yyterminate();" -
- * we don't want an extra ';' after the "return" because that will cause
- * some compilers to complain about unreachable statements.
- */
-#ifndef ace_yyterminate
-#define ace_yyterminate() return YY_NULL
-#endif
-
-/* Number of entries by which start-condition stack grows. */
-#ifndef YY_START_STACK_INCR
-#define YY_START_STACK_INCR 25
-#endif
-
-/* Report a fatal error. */
-#ifndef YY_FATAL_ERROR
-#define YY_FATAL_ERROR(msg) ace_yy_fatal_error( msg )
-#endif
-
-/* Default declaration of generated scanner - a define so the user can
- * easily add parameters.
- */
-#ifndef YY_DECL
-#define YY_DECL int ace_yylex YY_PROTO(( void ))
-#endif
-
-/* Code executed at the beginning of each rule, after ace_yytext and ace_yyleng
- * have been set up.
- */
-#ifndef YY_USER_ACTION
-#define YY_USER_ACTION
-#endif
-
-/* Code executed at the end of each rule. */
-#ifndef YY_BREAK
-#define YY_BREAK break;
-#endif
-
-YY_DECL
-	{
-	register ace_yy_state_type ace_yy_current_state;
-	register char *ace_yy_cp, *ace_yy_bp;
-	register int ace_yy_act;
-
-# line 32 "Svc_Conf.l"
-
-
-
-	if ( ace_yy_init )
-		{
-#ifdef YY_USER_INIT
-		YY_USER_INIT;
-#endif
-
-		if ( ! ace_yy_start )
-			ace_yy_start = 1;	/* first start state */
-
-		if ( ! ace_yyin )
-			ace_yyin = stdin;
-
-		if ( ! ace_yyout )
-			ace_yyout = stdout;
-
-		if ( ace_yy_current_buffer )
-			ace_yy_init_buffer( ace_yy_current_buffer, ace_yyin );
-		else
-			ace_yy_current_buffer =
-				ace_yy_create_buffer( ace_yyin, YY_BUF_SIZE );
-
-		ace_yy_load_buffer_state();
-
-		ace_yy_init = 0;
-		}
-
-	while ( 1 )		/* loops until end-of-file is reached */
-		{
-		ace_yy_cp = ace_yy_c_buf_p;
-
-		/* Support of ace_yytext. */
-		*ace_yy_cp = ace_yy_hold_char;
-
-		/* ace_yy_bp points to the position in ace_yy_ch_buf of the start of
-		 * the current run.
-		 */
-		ace_yy_bp = ace_yy_cp;
-
-		ace_yy_current_state = ace_yy_start;
-		if ( ace_yy_bp[-1] == '\n' )
-			++ace_yy_current_state;
-ace_yy_match:
-		do
-			{
-			register YY_CHAR ace_yy_c = ace_yy_ec[YY_SC_TO_UI(*ace_yy_cp)];
-			if ( ace_yy_accept[ace_yy_current_state] )
-				{
-				ace_yy_last_accepting_state = ace_yy_current_state;
-				ace_yy_last_accepting_cpos = ace_yy_cp;
-				}
-			while ( ace_yy_chk[ace_yy_base[ace_yy_current_state] + ace_yy_c] != ace_yy_current_state )
-				{
-				ace_yy_current_state = (int) ace_yy_def[ace_yy_current_state];
-				if ( ace_yy_current_state >= 103 )
-					ace_yy_c = ace_yy_meta[(unsigned int) ace_yy_c];
-				}
-			ace_yy_current_state = ace_yy_nxt[ace_yy_base[ace_yy_current_state] + (unsigned int) ace_yy_c];
-			++ace_yy_cp;
-			}
-		while ( ace_yy_base[ace_yy_current_state] != 313 );
-
-ace_yy_find_action:
-		ace_yy_act = ace_yy_accept[ace_yy_current_state];
-
-		YY_DO_BEFORE_ACTION;
-
-
-do_action:	/* This label is used only to access EOF actions. */
-
-
-		switch ( ace_yy_act )
-	{ /* beginning of action switch */
-			case 0: /* must back up */
-			/* undo the effects of YY_DO_BEFORE_ACTION */
-			*ace_yy_cp = ace_yy_hold_char;
-			ace_yy_cp = ace_yy_last_accepting_cpos;
-			ace_yy_current_state = ace_yy_last_accepting_state;
-			goto ace_yy_find_action;
-
-case 1:
-*ace_yy_cp = ace_yy_hold_char; /* undo effects of setting up ace_yytext */
-ace_yy_c_buf_p = ace_yy_cp -= 1;
-YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
-YY_USER_ACTION
-# line 34 "Svc_Conf.l"
-; /* EMPTY */
-	YY_BREAK
-case 2:
-YY_USER_ACTION
-# line 35 "Svc_Conf.l"
-{ return token (ACE_DYNAMIC); }
-	YY_BREAK
-case 3:
-YY_USER_ACTION
-# line 36 "Svc_Conf.l"
-{ return token (ACE_STATIC); }
-	YY_BREAK
-case 4:
-YY_USER_ACTION
-# line 37 "Svc_Conf.l"
-{ return token (ACE_SUSPEND); }
-	YY_BREAK
-case 5:
-YY_USER_ACTION
-# line 38 "Svc_Conf.l"
-{ return token (ACE_RESUME); }
-	YY_BREAK
-case 6:
-YY_USER_ACTION
-# line 39 "Svc_Conf.l"
-{ return token (ACE_REMOVE); }
-	YY_BREAK
-case 7:
-YY_USER_ACTION
-# line 40 "Svc_Conf.l"
-{ return token (ACE_USTREAM); }
-	YY_BREAK
-case 8:
-YY_USER_ACTION
-# line 41 "Svc_Conf.l"
-{ return token (ACE_MODULE_T); }
-	YY_BREAK
-case 9:
-YY_USER_ACTION
-# line 42 "Svc_Conf.l"
-{ return token (ACE_SVC_OBJ_T); }
-	YY_BREAK
-case 10:
-YY_USER_ACTION
-# line 43 "Svc_Conf.l"
-{ return token (ACE_STREAM_T); }
-	YY_BREAK
-case 11:
-YY_USER_ACTION
-# line 44 "Svc_Conf.l"
-{ return token (ACE_ACTIVE); }
-	YY_BREAK
-case 12:
-YY_USER_ACTION
-# line 45 "Svc_Conf.l"
-{ return token (ACE_INACTIVE); }
-	YY_BREAK
-case 13:
-YY_USER_ACTION
-# line 46 "Svc_Conf.l"
-{ return token (ACE_COLON); }
-	YY_BREAK
-case 14:
-YY_USER_ACTION
-# line 47 "Svc_Conf.l"
-{ return token (ACE_STAR); }
-	YY_BREAK
-case 15:
-YY_USER_ACTION
-# line 48 "Svc_Conf.l"
-{ return token (ACE_LPAREN); }
-	YY_BREAK
-case 16:
-YY_USER_ACTION
-# line 49 "Svc_Conf.l"
-{ return token (ACE_RPAREN); }
-	YY_BREAK
-case 17:
-YY_USER_ACTION
-# line 50 "Svc_Conf.l"
-{ return token (ACE_LBRACE); }
-	YY_BREAK
-case 18:
-YY_USER_ACTION
-# line 51 "Svc_Conf.l"
-{ return token (ACE_RBRACE); }
-	YY_BREAK
-case 19:
-YY_USER_ACTION
-# line 52 "Svc_Conf.l"
-{ // Eliminate the opening and closing double quotes
-		        *strrchr (ace_yytext, '"') = '\0';
-			ace_yyleng -= 1;
-                        ace_yylval.ident_ = ace_obstack->copy (ace_yytext + 1, ace_yyleng); 
-			return token (ACE_STRING); }
-	YY_BREAK
-case 20:
-YY_USER_ACTION
-# line 57 "Svc_Conf.l"
-{ 
-		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng); 
-			return token (ACE_IDENT); 
-		      }
-	YY_BREAK
-case 21:
-YY_USER_ACTION
-# line 61 "Svc_Conf.l"
-{ 
-		        ace_yylval.ident_ = ace_obstack->copy (ace_yytext, ace_yyleng); 
-			return token (ACE_PATHNAME); 
-		      }
-	YY_BREAK
-case 22:
-YY_USER_ACTION
-# line 65 "Svc_Conf.l"
-; /* EMPTY */
-	YY_BREAK
-case 23:
-YY_USER_ACTION
-# line 66 "Svc_Conf.l"
-{ ace_yylineno++; }
-	YY_BREAK
-case 24:
-YY_USER_ACTION
-# line 67 "Svc_Conf.l"
-{ ACE_ERROR ((LM_ERROR, "unknown char = %d\n", *ace_yytext)); }
-	YY_BREAK
-case YY_STATE_EOF(INITIAL):
-case YY_STATE_EOF(PARAMETERS):
-case YY_STATE_EOF(NORMAL):
-# line 68 "Svc_Conf.l"
-{ YY_NEW_FILE; ace_yyterminate(); }
-	YY_BREAK
-case 25:
-YY_USER_ACTION
-# line 69 "Svc_Conf.l"
-ACE_SVC_CONF_ECHO;
-	YY_BREAK
-
-	case YY_END_OF_BUFFER:
-		{
-		/* Amount of text matched not including the EOB char. */
-		int ace_yy_amount_of_matched_text = ace_yy_cp - ace_yytext_ptr - 1;
-
-		/* Undo the effects of YY_DO_BEFORE_ACTION. */
-		*ace_yy_cp = ace_yy_hold_char;
-
-		if ( ace_yy_current_buffer->ace_yy_buffer_status == YY_BUFFER_NEW )
-			{
-			/* We're scanning a new file or input source.  It's
-			 * possible that this happened because the user
-			 * just pointed ace_yyin at a new source and called
-			 * ace_yylex().  If so, then we have to assure
-			 * consistency between ace_yy_current_buffer and our
-			 * globals.  Here is the right place to do so, because
-			 * this is the first action (other than possibly a
-			 * back-up) that will match for the new input source.
-			 */
-			ace_yy_n_chars = ace_yy_current_buffer->ace_yy_n_chars;
-			ace_yy_current_buffer->ace_yy_input_file = ace_yyin;
-			ace_yy_current_buffer->ace_yy_buffer_status = YY_BUFFER_NORMAL;
-			}
-
-		/* Note that here we test for ace_yy_c_buf_p "<=" to the position
-		 * of the first EOB in the buffer, since ace_yy_c_buf_p will
-		 * already have been incremented past the NUL character
-		 * (since all states make transitions on EOB to the
-		 * end-of-buffer state).  Contrast this with the test
-		 * in input().
-		 */
-		if ( ace_yy_c_buf_p <= &ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars] )
-			{ /* This was really a NUL. */
-			ace_yy_state_type ace_yy_next_state;
-
-			ace_yy_c_buf_p = ace_yytext_ptr + ace_yy_amount_of_matched_text;
-
-			ace_yy_current_state = ace_yy_get_previous_state();
-
-			/* Okay, we're now positioned to make the NUL
-			 * transition.  We couldn't have
-			 * ace_yy_get_previous_state() go ahead and do it
-			 * for us because it doesn't know how to deal
-			 * with the possibility of jamming (and we don't
-			 * want to build jamming into it because then it
-			 * will run more slowly).
-			 */
-
-			ace_yy_next_state = ace_yy_try_NUL_trans( ace_yy_current_state );
-
-			ace_yy_bp = ace_yytext_ptr + YY_MORE_ADJ;
-
-			if ( ace_yy_next_state )
-				{
-				/* Consume the NUL. */
-				ace_yy_cp = ++ace_yy_c_buf_p;
-				ace_yy_current_state = ace_yy_next_state;
-				goto ace_yy_match;
-				}
-
-			else
-				{
-							ace_yy_cp = ace_yy_c_buf_p;
-				goto ace_yy_find_action;
-				}
-			}
-
-		else switch ( ace_yy_get_next_buffer() )
-			{
-			case EOB_ACT_END_OF_FILE:
-				{
-				ace_yy_did_buffer_switch_on_eof = 0;
-
-				if ( ace_yywrap() )
-					{
-					/* Note: because we've taken care in
-					 * ace_yy_get_next_buffer() to have set up
-					 * ace_yytext, we can now set up
-					 * ace_yy_c_buf_p so that if some total
-					 * hoser (like flex itself) wants to
-					 * call the scanner after we return the
-					 * YY_NULL, it'll still work - another
-					 * YY_NULL will get returned.
-					 */
-					ace_yy_c_buf_p = ace_yytext_ptr + YY_MORE_ADJ;
-
-					ace_yy_act = YY_STATE_EOF(YY_START);
-					goto do_action;
-					}
-
-				else
-					{
-					if ( ! ace_yy_did_buffer_switch_on_eof )
-						YY_NEW_FILE;
-					}
-				break;
-				}
-
-			case EOB_ACT_CONTINUE_SCAN:
-				ace_yy_c_buf_p =
-					ace_yytext_ptr + ace_yy_amount_of_matched_text;
-
-				ace_yy_current_state = ace_yy_get_previous_state();
-
-				ace_yy_cp = ace_yy_c_buf_p;
-				ace_yy_bp = ace_yytext_ptr + YY_MORE_ADJ;
-				goto ace_yy_match;
-
-			case EOB_ACT_LAST_MATCH:
-				ace_yy_c_buf_p =
-				&ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars];
-
-				ace_yy_current_state = ace_yy_get_previous_state();
-
-				ace_yy_cp = ace_yy_c_buf_p;
-				ace_yy_bp = ace_yytext_ptr + YY_MORE_ADJ;
-				goto ace_yy_find_action;
-			}
-		break;
-		}
-
-	default:
-		YY_FATAL_ERROR(
-			"fatal flex scanner internal error--no action found" );
-	} /* end of action switch */
-		} /* end of scanning one token */
-	} /* end of ace_yylex */
-
-
-/* ace_yy_get_next_buffer - try to read in a new buffer
- *
- * Returns a code representing an action:
- *	EOB_ACT_LAST_MATCH -
- *	EOB_ACT_CONTINUE_SCAN - continue scanning from current position
- *	EOB_ACT_END_OF_FILE - end of file
- */
-
-static int ace_yy_get_next_buffer()
-	{
-	register char *dest = ace_yy_current_buffer->ace_yy_ch_buf;
-	register char *source = ace_yytext_ptr - 1; /* copy prev. char, too */
-	register int number_to_move, i;
-	int ret_val;
-
-	if ( ace_yy_c_buf_p > &ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars + 1] )
-		YY_FATAL_ERROR(
-		"fatal flex scanner internal error--end of buffer missed" );
-
-	if ( ace_yy_current_buffer->ace_yy_fill_buffer == 0 )
-		{ /* Don't try to fill the buffer, so this is an EOF. */
-		if ( ace_yy_c_buf_p - ace_yytext_ptr - YY_MORE_ADJ == 1 )
-			{
-			/* We matched a singled characater, the EOB, so
-			 * treat this as a final EOF.
-			 */
-			return EOB_ACT_END_OF_FILE;
-			}
-
-		else
-			{
-			/* We matched some text prior to the EOB, first
-			 * process it.
-			 */
-			return EOB_ACT_LAST_MATCH;
-			}
-		}
-
-	/* Try to read more data. */
-
-	/* First move last chars to start of buffer. */
-	number_to_move = ace_yy_c_buf_p - ace_yytext_ptr;
-
-	for ( i = 0; i < number_to_move; ++i )
-		*(dest++) = *(source++);
-
-	if ( ace_yy_current_buffer->ace_yy_buffer_status == YY_BUFFER_EOF_PENDING )
-		/* don't do the read, it's not guaranteed to return an EOF,
-		 * just force an EOF
-		 */
-		ace_yy_n_chars = 0;
-
-	else
-		{
-		int num_to_read =
-			ace_yy_current_buffer->ace_yy_buf_size - number_to_move - 1;
-
-		while ( num_to_read <= 0 )
-			{ /* Not enough room in the buffer - grow it. */
-#ifdef YY_USES_REJECT
-			YY_FATAL_ERROR(
-"input buffer overflow, can't enlarge buffer because scanner uses REJECT" );
-#else
-
-			/* just a shorter name for the current buffer */
-			YY_BUFFER_STATE b = ace_yy_current_buffer;
-
-			int ace_yy_c_buf_p_offset = ace_yy_c_buf_p - b->ace_yy_ch_buf;
-
-			b->ace_yy_buf_size *= 2;
-			b->ace_yy_ch_buf = (char *)
-				ace_yy_flex_realloc( (void *) b->ace_yy_ch_buf,
-						 b->ace_yy_buf_size );
-
-			if ( ! b->ace_yy_ch_buf )
-				YY_FATAL_ERROR(
-				"fatal error - scanner input buffer overflow" );
-
-			ace_yy_c_buf_p = &b->ace_yy_ch_buf[ace_yy_c_buf_p_offset];
-
-			num_to_read = ace_yy_current_buffer->ace_yy_buf_size -
-						number_to_move - 1;
-#endif
-			}
-
-		if ( num_to_read > YY_READ_BUF_SIZE )
-			num_to_read = YY_READ_BUF_SIZE;
-
-		/* Read in more data. */
-		YY_INPUT( (&ace_yy_current_buffer->ace_yy_ch_buf[number_to_move]),
-			ace_yy_n_chars, num_to_read );
-		}
-
-	if ( ace_yy_n_chars == 0 )
-		{
-		if ( number_to_move - YY_MORE_ADJ == 1 )
-			{
-			ret_val = EOB_ACT_END_OF_FILE;
-			ace_yyrestart( ace_yyin );
-			}
-
-		else
-			{
-			ret_val = EOB_ACT_LAST_MATCH;
-			ace_yy_current_buffer->ace_yy_buffer_status =
-				YY_BUFFER_EOF_PENDING;
-			}
-		}
-
-	else
-		ret_val = EOB_ACT_CONTINUE_SCAN;
-
-	ace_yy_n_chars += number_to_move;
-	ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars] = YY_END_OF_BUFFER_CHAR;
-	ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars + 1] = YY_END_OF_BUFFER_CHAR;
-
-	/* ace_yytext begins at the second character in ace_yy_ch_buf; the first
-	 * character is the one which preceded it before reading in the latest
-	 * buffer; it needs to be kept around in case it's a newline, so
-	 * ace_yy_get_previous_state() will have with '^' rules active.
-	 */
-
-	ace_yytext_ptr = &ace_yy_current_buffer->ace_yy_ch_buf[1];
-
-	return ret_val;
-	}
-
-
-/* ace_yy_get_previous_state - get the state just before the EOB char was reached */
-
-static ace_yy_state_type ace_yy_get_previous_state()
-	{
-	register ace_yy_state_type ace_yy_current_state;
-	register char *ace_yy_cp;
-
-	register char *ace_yy_bp = ace_yytext_ptr;
-
-	ace_yy_current_state = ace_yy_start;
-	if ( ace_yy_bp[-1] == '\n' )
-		++ace_yy_current_state;
-
-	for ( ace_yy_cp = ace_yytext_ptr + YY_MORE_ADJ; ace_yy_cp < ace_yy_c_buf_p; ++ace_yy_cp )
-		{
-		register YY_CHAR ace_yy_c = (*ace_yy_cp ? ace_yy_ec[YY_SC_TO_UI(*ace_yy_cp)] : 1);
-		if ( ace_yy_accept[ace_yy_current_state] )
-			{
-			ace_yy_last_accepting_state = ace_yy_current_state;
-			ace_yy_last_accepting_cpos = ace_yy_cp;
-			}
-		while ( ace_yy_chk[ace_yy_base[ace_yy_current_state] + ace_yy_c] != ace_yy_current_state )
-			{
-			ace_yy_current_state = (int) ace_yy_def[ace_yy_current_state];
-			if ( ace_yy_current_state >= 103 )
-				ace_yy_c = ace_yy_meta[(unsigned int) ace_yy_c];
-			}
-		ace_yy_current_state = ace_yy_nxt[ace_yy_base[ace_yy_current_state] + (unsigned int) ace_yy_c];
-		}
-
-	return ace_yy_current_state;
-	}
-
-
-/* ace_yy_try_NUL_trans - try to make a transition on the NUL character
- *
- * synopsis
- *	next_state = ace_yy_try_NUL_trans( current_state );
- */
-
-#ifdef YY_USE_PROTOS
-static ace_yy_state_type ace_yy_try_NUL_trans( ace_yy_state_type ace_yy_current_state )
-#else
-static ace_yy_state_type ace_yy_try_NUL_trans( ace_yy_current_state )
-ace_yy_state_type ace_yy_current_state;
-#endif
-	{
-	register int ace_yy_is_jam;
-	register char *ace_yy_cp = ace_yy_c_buf_p;
-
-	register YY_CHAR ace_yy_c = 1;
-	if ( ace_yy_accept[ace_yy_current_state] )
-		{
-		ace_yy_last_accepting_state = ace_yy_current_state;
-		ace_yy_last_accepting_cpos = ace_yy_cp;
-		}
-	while ( ace_yy_chk[ace_yy_base[ace_yy_current_state] + ace_yy_c] != ace_yy_current_state )
-		{
-		ace_yy_current_state = (int) ace_yy_def[ace_yy_current_state];
-		if ( ace_yy_current_state >= 103 )
-			ace_yy_c = ace_yy_meta[(unsigned int) ace_yy_c];
-		}
-	ace_yy_current_state = ace_yy_nxt[ace_yy_base[ace_yy_current_state] + (unsigned int) ace_yy_c];
-	ace_yy_is_jam = (ace_yy_current_state == 102);
-
-	return ace_yy_is_jam ? 0 : ace_yy_current_state;
-	}
-
-
-#ifdef YY_USE_PROTOS
-static void ace_yyunput( int c, register char *ace_yy_bp )
-#else
-static void ace_yyunput( c, ace_yy_bp )
-int c;
-register char *ace_yy_bp;
-#endif
-	{
-	register char *ace_yy_cp = ace_yy_c_buf_p;
-
-	/* undo effects of setting up ace_yytext */
-	*ace_yy_cp = ace_yy_hold_char;
-
-	if ( ace_yy_cp < ace_yy_current_buffer->ace_yy_ch_buf + 2 )
-		{ /* need to shift things up to make room */
-		/* +2 for EOB chars. */
-		register int number_to_move = ace_yy_n_chars + 2;
-		register char *dest = &ace_yy_current_buffer->ace_yy_ch_buf[
-					ace_yy_current_buffer->ace_yy_buf_size + 2];
-		register char *source =
-				&ace_yy_current_buffer->ace_yy_ch_buf[number_to_move];
-
-		while ( source > ace_yy_current_buffer->ace_yy_ch_buf )
-			*--dest = *--source;
-
-		ace_yy_cp += dest - source;
-		ace_yy_bp += dest - source;
-		ace_yy_n_chars = ace_yy_current_buffer->ace_yy_buf_size;
-
-		if ( ace_yy_cp < ace_yy_current_buffer->ace_yy_ch_buf + 2 )
-			YY_FATAL_ERROR( "flex scanner push-back overflow" );
-		}
-
-	if ( ace_yy_cp > ace_yy_bp && ace_yy_cp[-1] == '\n' )
-		ace_yy_cp[-2] = '\n';
-
-	*--ace_yy_cp = (char) c;
-
-
-	/* Note: the formal parameter *must* be called "ace_yy_bp" for this
-	 * macro to now work correctly.
-	 */
-	YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
-	}
-
-
-#ifdef __cplusplus
-static int ace_yyinput()
-#else
-static int input()
-#endif
-	{
-	int c;
-
-	*ace_yy_c_buf_p = ace_yy_hold_char;
-
-	if ( *ace_yy_c_buf_p == YY_END_OF_BUFFER_CHAR )
-		{
-		/* ace_yy_c_buf_p now points to the character we want to return.
-		 * If this occurs *before* the EOB characters, then it's a
-		 * valid NUL; if not, then we've hit the end of the buffer.
-		 */
-		if ( ace_yy_c_buf_p < &ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars] )
-			/* This was really a NUL. */
-			*ace_yy_c_buf_p = '\0';
-
-		else
-			{ /* need more input */
-			ace_yytext_ptr = ace_yy_c_buf_p;
-			++ace_yy_c_buf_p;
-
-			switch ( ace_yy_get_next_buffer() )
-				{
-				case EOB_ACT_END_OF_FILE:
-					{
-					if ( ace_yywrap() )
-						{
-						ace_yy_c_buf_p =
-						ace_yytext_ptr + YY_MORE_ADJ;
-						return EOF;
-						}
-
-					YY_NEW_FILE;
-#ifdef __cplusplus
-					return ace_yyinput();
-#else
-					return input();
-#endif
-					}
-
-				case EOB_ACT_CONTINUE_SCAN:
-					ace_yy_c_buf_p = ace_yytext_ptr + YY_MORE_ADJ;
-					break;
-
-				case EOB_ACT_LAST_MATCH:
-#ifdef __cplusplus
-					YY_FATAL_ERROR(
-					"unexpected last match in ace_yyinput()" );
-#else
-					YY_FATAL_ERROR(
-					"unexpected last match in input()" );
-#endif
-				}
-			}
-		}
-
-	c = *(unsigned char *) ace_yy_c_buf_p;	/* cast for 8-bit char's */
-	*ace_yy_c_buf_p = '\0';	/* preserve ace_yytext */
-	ace_yy_hold_char = *++ace_yy_c_buf_p;
-
-	return c;
-	}
-
-
-#ifdef YY_USE_PROTOS
-void ace_yyrestart( FILE *input_file )
-#else
-void ace_yyrestart( input_file )
-FILE *input_file;
-#endif
-	{
-	if ( ! ace_yy_current_buffer )
-		ace_yy_current_buffer = ace_yy_create_buffer( ace_yyin, YY_BUF_SIZE );
-
-	ace_yy_init_buffer( ace_yy_current_buffer, input_file );
-	ace_yy_load_buffer_state();
-	}
-
-
-#ifdef YY_USE_PROTOS
-void ace_yy_switch_to_buffer( YY_BUFFER_STATE new_buffer )
-#else
-void ace_yy_switch_to_buffer( new_buffer )
-YY_BUFFER_STATE new_buffer;
-#endif
-	{
-	if ( ace_yy_current_buffer == new_buffer )
-		return;
-
-	if ( ace_yy_current_buffer )
-		{
-		/* Flush out information for old buffer. */
-		*ace_yy_c_buf_p = ace_yy_hold_char;
-		ace_yy_current_buffer->ace_yy_buf_pos = ace_yy_c_buf_p;
-		ace_yy_current_buffer->ace_yy_n_chars = ace_yy_n_chars;
-		}
-
-	ace_yy_current_buffer = new_buffer;
-	ace_yy_load_buffer_state();
-
-	/* We don't actually know whether we did this switch during
-	 * EOF (ace_yywrap()) processing, but the only time this flag
-	 * is looked at is after ace_yywrap() is called, so it's safe
-	 * to go ahead and always set it.
-	 */
-	ace_yy_did_buffer_switch_on_eof = 1;
-	}
-
-
-#ifdef YY_USE_PROTOS
-void ace_yy_load_buffer_state( void )
-#else
-void ace_yy_load_buffer_state()
-#endif
-	{
-	ace_yy_n_chars = ace_yy_current_buffer->ace_yy_n_chars;
-	ace_yytext_ptr = ace_yy_c_buf_p = ace_yy_current_buffer->ace_yy_buf_pos;
-	ace_yyin = ace_yy_current_buffer->ace_yy_input_file;
-	ace_yy_hold_char = *ace_yy_c_buf_p;
-	}
-
-
-#ifdef YY_USE_PROTOS
-YY_BUFFER_STATE ace_yy_create_buffer( FILE *file, int size )
-#else
-YY_BUFFER_STATE ace_yy_create_buffer( file, size )
-FILE *file;
-int size;
-#endif
-	{
-	YY_BUFFER_STATE b;
-
-	b = (YY_BUFFER_STATE) ace_yy_flex_alloc( sizeof( struct ace_yy_buffer_state ) );
-
-	if ( ! b )
-		YY_FATAL_ERROR( "out of dynamic memory in ace_yy_create_buffer()" );
-
-	b->ace_yy_buf_size = size;
-
-	/* ace_yy_ch_buf has to be 2 characters longer than the size given because
-	 * we need to put in 2 end-of-buffer characters.
-	 */
-	b->ace_yy_ch_buf = (char *) ace_yy_flex_alloc( b->ace_yy_buf_size + 2 );
-
-	if ( ! b->ace_yy_ch_buf )
-		YY_FATAL_ERROR( "out of dynamic memory in ace_yy_create_buffer()" );
-
-	ace_yy_init_buffer( b, file );
-
-	return b;
-	}
-
-
-#ifdef YY_USE_PROTOS
-void ace_yy_delete_buffer( YY_BUFFER_STATE b )
-#else
-void ace_yy_delete_buffer( b )
-YY_BUFFER_STATE b;
-#endif
-	{
-	if ( b == ace_yy_current_buffer )
-		ace_yy_current_buffer = (YY_BUFFER_STATE) 0;
-
-	ace_yy_flex_free( (void *) b->ace_yy_ch_buf );
-	ace_yy_flex_free( (void *) b );
-	}
-
-
-#ifdef YY_USE_PROTOS
-void ace_yy_init_buffer( YY_BUFFER_STATE b, FILE *file )
-#else
-void ace_yy_init_buffer( b, file )
-YY_BUFFER_STATE b;
-FILE *file;
-#endif
-	{
-	b->ace_yy_input_file = file;
-
-	/* We put in the '\n' and start reading from [1] so that an
-	 * initial match-at-newline will be true.
-	 */
-
-	b->ace_yy_ch_buf[0] = '\n';
-	b->ace_yy_n_chars = 1;
-
-	/* We always need two end-of-buffer characters.  The first causes
-	 * a transition to the end-of-buffer state.  The second causes
-	 * a jam in that state.
-	 */
-	b->ace_yy_ch_buf[1] = YY_END_OF_BUFFER_CHAR;
-	b->ace_yy_ch_buf[2] = YY_END_OF_BUFFER_CHAR;
-
-	b->ace_yy_buf_pos = &b->ace_yy_ch_buf[1];
-
-	b->ace_yy_is_interactive = file ? isatty( fileno(file) ) : 0;
-
-	b->ace_yy_fill_buffer = 1;
-
-	b->ace_yy_buffer_status = YY_BUFFER_NEW;
-	}
-
-
-#ifdef YY_USE_PROTOS
-static void ace_yy_push_state( int new_state )
-#else
-static void ace_yy_push_state( new_state )
-int new_state;
-#endif
-	{
-	if ( ace_yy_start_stack_ptr >= ace_yy_start_stack_depth )
-		{
-		int new_size;
-
-		ace_yy_start_stack_depth += YY_START_STACK_INCR;
-		new_size = ace_yy_start_stack_depth * sizeof( int );
-
-		if ( ! ace_yy_start_stack )
-			ace_yy_start_stack = (int *) ace_yy_flex_alloc( new_size );
-
-		else
-			ace_yy_start_stack = (int *) ace_yy_flex_realloc(
-					(void *) ace_yy_start_stack, new_size );
-
-		if ( ! ace_yy_start_stack )
-			YY_FATAL_ERROR(
-			"out of memory expanding start-condition stack" );
-		}
-
-	ace_yy_start_stack[ace_yy_start_stack_ptr++] = YY_START;
-
-	BEGIN(new_state);
-	}
-
-
-static void ace_yy_pop_state()
-	{
-	if ( --ace_yy_start_stack_ptr < 0 )
-		YY_FATAL_ERROR( "start-condition stack underflow" );
-
-	BEGIN(ace_yy_start_stack[ace_yy_start_stack_ptr]);
-	}
-
-
-static int ace_yy_top_state()
-	{
-	return ace_yy_start_stack[ace_yy_start_stack_ptr - 1];
-	}
-
-
-#ifdef YY_USE_PROTOS
-static void ace_yy_fatal_error( const char msg[] )
-#else
-static void ace_yy_fatal_error( msg )
-char msg[];
-#endif
-	{
-	(void) fprintf( stderr, "%s\n", msg );
-	exit( 1 );
-	}
-
-
-
-/* Redefine ace_yyless() so it works in section 3 code. */
-
-#undef ace_yyless
-#define ace_yyless(n) \
-	do \
-		{ \
-		/* Undo effects of setting up ace_yytext. */ \
-		ace_yytext[ace_yyleng] = ace_yy_hold_char; \
-		ace_yy_c_buf_p = ace_yytext + n - YY_MORE_ADJ; \
-		ace_yy_hold_char = *ace_yy_c_buf_p; \
-		*ace_yy_c_buf_p = '\0'; \
-		ace_yyleng = n; \
-		} \
-	while ( 0 )
-
-
-/* Internal utility routines. */
-
-#ifndef ace_yytext_ptr
-#ifdef YY_USE_PROTOS
-static void ace_yy_flex_strncpy( char *s1, const char *s2, int n )
-#else
-static void ace_yy_flex_strncpy( s1, s2, n )
-char *s1;
-const char *s2;
-int n;
-#endif
-	{
-	register int i;
-	for ( i = 0; i < n; ++i )
-		s1[i] = s2[i];
-	}
-#endif
-
-
-#ifdef YY_USE_PROTOS
-static void *ace_yy_flex_alloc( unsigned int size )
-#else
-static void *ace_yy_flex_alloc( size )
-unsigned int size;
-#endif
-	{
-	return (void *) malloc( size );
-	}
-
-#ifdef YY_USE_PROTOS
-static void *ace_yy_flex_realloc( void *ptr, unsigned int size )
-#else
-static void *ace_yy_flex_realloc( ptr, size )
-void *ptr;
-unsigned int size;
-#endif
-	{
-	return (void *) realloc( ACE_MALLOC_T (ptr), size );
-	}
-
-#ifdef YY_USE_PROTOS
-static void ace_yy_flex_free( void *ptr )
-#else
-static void ace_yy_flex_free( ptr )
-void *ptr;
-#endif
-	{
-	free( ACE_MALLOC_T (ptr) );
-	}
-# line 69 "Svc_Conf.l"
-
-int
-ace_yywrap (void)
-{
-  ::fflush (ace_yyin);
-  ace_yytext[0] = '#';
-  ace_yyleng = 0;    
   return 1;
 }

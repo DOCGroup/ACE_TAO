@@ -13,9 +13,9 @@ char ace_yysccsid[] = "@(#)yaccpar	1.4 (Berkeley) 02/25/90 \n\
 static ACE_Module_Type *get_module (ACE_Static_Node *str_rec, ACE_Static_Node *svc_type);
 static ACE_Module_Type *get_module (ACE_Static_Node *str_rec, const char *svc_name);
 
-#define YYDEBUG_LEXER_TEXT (ace_yytext[ace_yyleng] = '\0', ace_yytext)
+#define ACE_YYDEBUG_LEXER_TEXT (ace_yytext[ace_yyleng] = '\0', ace_yytext)
 /* Force the pretty debugging code to compile.*/
-#define YYDEBUG 1
+#define ACE_YYDEBUG 1
 
 /* Efficient memory allocation technique.*/
 ACE_Obstack *ace_obstack;
@@ -41,7 +41,7 @@ ACE_Obstack *ace_obstack;
 #define ACE_RBRACE 274
 #define ACE_STAR 275
 #define ACE_COLON 276
-#define YYERRCODE 256
+#define ACE_YYERRCODE 256
 short ace_yylhs[] = {                                        -1,
     0,    0,    0,   14,   14,   14,   14,   14,   14,    5,
     6,    7,    8,    9,   11,   18,   11,   15,   15,   19,
@@ -91,7 +91,7 @@ short ace_yygindex[] = {                                      0,
     0,   31,    0,    0,   -8,   -6,   -1,    2,    3,    0,
     0,   18,    0,    0,    0,    0,    0,    0,    0,
 };
-#define YYTABLESIZE 308
+#define ACE_YYTABLESIZE 308
 short ace_yytable[] = {                                      23,
    34,   24,   16,    3,    4,    5,    6,    7,   18,    3,
     4,   26,   27,   28,   19,   39,   40,   48,   49,   33,
@@ -158,12 +158,12 @@ short ace_yycheck[] = {                                       8,
    -1,   -1,  273,  274,   -1,   -1,   -1,   -1,   -1,  273,
   274,  256,  257,  258,  259,  260,  261,  262,
 };
-#define YYFINAL 1
-#ifndef YYDEBUG
-#define YYDEBUG 0
+#define ACE_YYFINAL 1
+#ifndef ACE_YYDEBUG
+#define ACE_YYDEBUG 0
 #endif
-#define YYMAXTOKEN 276
-#if YYDEBUG
+#define ACE_YYMAXTOKEN 276
+#if ACE_YYDEBUG
 char *ace_yyname[] = {
 "end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -226,11 +226,11 @@ char *ace_yyrule[] = {
 #endif
 #define ace_yyclearin (ace_yychar=(-1))
 #define ace_yyerrok (ace_yyerrflag=0)
-#ifndef YYSTACKSIZE
-#ifdef YYMAXDEPTH
-#define YYSTACKSIZE YYMAXDEPTH
+#ifndef ACE_YYSTACKSIZE
+#ifdef ACE_YYMAXDEPTH
+#define ACE_YYSTACKSIZE ACE_YYMAXDEPTH
 #else
-#define YYSTACKSIZE 300
+#define ACE_YYSTACKSIZE 300
 #endif
 #endif
 int ace_yydebug;
@@ -238,12 +238,12 @@ int ace_yynerrs;
 int ace_yyerrflag;
 int ace_yychar;
 short *ace_yyssp;
-YYSTYPE *ace_yyvsp;
-YYSTYPE ace_yyval;
-YYSTYPE ace_yylval;
-#define ace_yystacksize YYSTACKSIZE
-short ace_yyss[YYSTACKSIZE];
-YYSTYPE ace_yyvs[YYSTACKSIZE];
+ACE_YYSTYPE *ace_yyvsp;
+ACE_YYSTYPE ace_yyval;
+ACE_YYSTYPE ace_yylval;
+#define ace_yystacksize ACE_YYSTACKSIZE
+short ace_yyss[ACE_YYSTACKSIZE];
+ACE_YYSTYPE ace_yyvs[ACE_YYSTACKSIZE];
 #line 275 "Svc_Conf.y"
 // Prints the error string to standard output.  Cleans up the error
 // messages.
@@ -368,7 +368,7 @@ main (int argc, char *argv[])
   ace_yyin = stdin;
   ace_obstack = new ACE_Obstack;
 
-  // Try to reopen any filename argument to use YYIN.
+  // Try to reopen any filename argument to use ACE_YYIN.
   if (argc > 1 && (ace_yyin = freopen (argv[1], "r", stdin)) == 0)
     (void) ::fprintf (stderr, "usage: %s [file]\n", argv[0]), exit (1);
 
@@ -376,36 +376,36 @@ main (int argc, char *argv[])
 }
 #endif /* DEBUGGING */
 #line 379 "Svc_Conf_y.cpp"
-#define YYABORT goto ace_yyabort
-#define YYACCEPT goto ace_yyaccept
-#define YYERROR goto ace_yyerrlab
-#ifdef YYDEBUG
-#ifndef YYDEBUG_LEXER_TEXT /* pointer to the text isolated by the lexer*/
-#define YYDEBUG_LEXER_TEXT "YYDEBUG_LEXER_TEXT not defined"
+#define ACE_YYABORT goto ace_yyabort
+#define ACE_YYACCEPT goto ace_yyaccept
+#define ACE_YYERROR goto ace_yyerrlab
+#ifdef ACE_YYDEBUG
+#ifndef ACE_YYDEBUG_LEXER_TEXT /* pointer to the text isolated by the lexer*/
+#define ACE_YYDEBUG_LEXER_TEXT "ACE_YYDEBUG_LEXER_TEXT not defined"
 #endif
-#ifndef YYDEBUG_INDENT_STRING
-#define YYDEBUG_INDENT_STRING  "|       "
+#ifndef ACE_YYDEBUG_INDENT_STRING
+#define ACE_YYDEBUG_INDENT_STRING  "|       "
 #endif
-#ifndef YYDEBUG_REDUCE_STRING
-#define YYDEBUG_REDUCE_STRING  "+-------"
+#ifndef ACE_YYDEBUG_REDUCE_STRING
+#define ACE_YYDEBUG_REDUCE_STRING  "+-------"
 #endif
-#ifndef YYDEBUG_INDENT
+#ifndef ACE_YYDEBUG_INDENT
 #ifdef __cplusplus
-void YYDEBUG_INDENT(int ace_yyindent)
+void ACE_YYDEBUG_INDENT(int ace_yyindent)
 #else
-YYDEBUG_INDENT(ace_yyindent)
+ACE_YYDEBUG_INDENT(ace_yyindent)
 int ace_yyindent;
 #endif
 {
     while(ace_yyindent-- > 0)
-        printf("%s", YYDEBUG_INDENT_STRING);
+        printf("%s", ACE_YYDEBUG_INDENT_STRING);
 }
-#endif /* YYDEBUG_INDENT */
-#ifndef YYDEBUG_REDUCE
+#endif /* ACE_YYDEBUG_INDENT */
+#ifndef ACE_YYDEBUG_REDUCE
 #ifdef __cplusplus
-void YYDEBUG_REDUCE(int /* ace_yynew_state */, int /* ace_yyrule_num */, char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
+void ACE_YYDEBUG_REDUCE(int /* ace_yynew_state */, int /* ace_yyrule_num */, char *ace_yyrule_string, int ace_yynew_indent, int ace_yyrhs_count)
 #else
-YYDEBUG_REDUCE(ace_yynew_state, ace_yyrule_num, ace_yyrule_string, ace_yynew_indent, ace_yyrhs_count)
+ACE_YYDEBUG_REDUCE(ace_yynew_state, ace_yyrule_num, ace_yyrule_string, ace_yynew_indent, ace_yyrhs_count)
 int ace_yynew_state;
 int ace_yyrule_num;
 char * ace_yyrule_string;
@@ -415,70 +415,70 @@ int ace_yyrhs_count;
 {
     if (1 < ace_yyrhs_count)
     {  /* draw the graphics for the reduction */
-        YYDEBUG_INDENT(ace_yynew_indent);
+        ACE_YYDEBUG_INDENT(ace_yynew_indent);
         while(1 < ace_yyrhs_count--)
-            printf("%s", YYDEBUG_REDUCE_STRING);
+            printf("%s", ACE_YYDEBUG_REDUCE_STRING);
         putchar('+'); /* left rotated L would look nice */
         putchar('\n');
-        YYDEBUG_INDENT(ace_yynew_indent);
+        ACE_YYDEBUG_INDENT(ace_yynew_indent);
         putchar('|'); /* down arrow would look nice */
         putchar('\n');
     }
-    YYDEBUG_INDENT(ace_yynew_indent);
+    ACE_YYDEBUG_INDENT(ace_yynew_indent);
     /* Only print the resulting token name */
     while (*ace_yyrule_string)
         putchar(*ace_yyrule_string++);
     putchar('\n');
 }
-#endif /* YYDEBUG_REDUCE */
-#ifndef YYDEBUG_SHIFT_LEXEME
+#endif /* ACE_YYDEBUG_REDUCE */
+#ifndef ACE_YYDEBUG_SHIFT_LEXEME
 #ifdef __cplusplus
-void YYDEBUG_SHIFT_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state */, char *ace_yytoken_string, int ace_yynew_indent)
+void ACE_YYDEBUG_SHIFT_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state */, char *ace_yytoken_string, int ace_yynew_indent)
 #else
-YYDEBUG_SHIFT_LEXEME(ace_yyold_state, ace_yynew_state, ace_yytoken_string, ace_yynew_indent)
+ACE_YYDEBUG_SHIFT_LEXEME(ace_yyold_state, ace_yynew_state, ace_yytoken_string, ace_yynew_indent)
 int ace_yyold_state;
 int ace_yynew_state;
 char * ace_yytoken_string;
 int ace_yynew_indent;
 #endif
 {
-    YYDEBUG_INDENT(ace_yynew_indent);
-    printf("%s <-- `%s'\n", ace_yytoken_string, YYDEBUG_LEXER_TEXT);
+    ACE_YYDEBUG_INDENT(ace_yynew_indent);
+    printf("%s <-- `%s'\n", ace_yytoken_string, ACE_YYDEBUG_LEXER_TEXT);
 }
-#endif /*  YYDEBUG_SHIFT_LEXEME */
-#ifndef YYDEBUG_LOOK_AHEAD
+#endif /*  ACE_YYDEBUG_SHIFT_LEXEME */
+#ifndef ACE_YYDEBUG_LOOK_AHEAD
 #ifdef __cplusplus
-void YYDEBUG_LOOK_AHEAD(int /* ace_yynew_state */, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
+void ACE_YYDEBUG_LOOK_AHEAD(int /* ace_yynew_state */, int ace_yytoken_num, char *ace_yytoken_string, int ace_yyindent)
 #else
-YYDEBUG_LOOK_AHEAD(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
+ACE_YYDEBUG_LOOK_AHEAD(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
 int ace_yytoken_num;
 char * ace_yytoken_string;
 int ace_yyindent;
 #endif
 {
-    YYDEBUG_INDENT(ace_yyindent);
+    ACE_YYDEBUG_INDENT(ace_yyindent);
     printf("          .... look ahead at %s   `%s'\n",
            ace_yytoken_string,
-           (0 == ace_yytoken_num)? "\0": YYDEBUG_LEXER_TEXT);
+           (0 == ace_yytoken_num)? "\0": ACE_YYDEBUG_LEXER_TEXT);
 }
-#endif /* YYDEBUG_LOOK_AHEAD */
-#ifndef YYDEBUG_DISCARD_STATE
+#endif /* ACE_YYDEBUG_LOOK_AHEAD */
+#ifndef ACE_YYDEBUG_DISCARD_STATE
 #ifdef __cplusplus
-void YYDEBUG_DISCARD_STATE(int /* ace_yynew_state */, int ace_yyindent)
+void ACE_YYDEBUG_DISCARD_STATE(int /* ace_yynew_state */, int ace_yyindent)
 #else
-YYDEBUG_DISCARD_STATE(ace_yynew_state, ace_yyindent)
+ACE_YYDEBUG_DISCARD_STATE(ace_yynew_state, ace_yyindent)
 int ace_yynew_state;
 int ace_yyindent;
 #endif
 {
     if (0 < ace_yyindent)
     {  /* draw the graphics for the reduction */
-        YYDEBUG_INDENT(ace_yyindent-1);
-        printf("%s", YYDEBUG_REDUCE_STRING);
+        ACE_YYDEBUG_INDENT(ace_yyindent-1);
+        printf("%s", ACE_YYDEBUG_REDUCE_STRING);
         putchar('+'); /* left rotated L would look nice */
         printf("  discarding state\n");
-        YYDEBUG_INDENT(ace_yyindent-1);
+        ACE_YYDEBUG_INDENT(ace_yyindent-1);
         putchar('|'); /* down arrow would look nice */
         putchar('\n');
     }
@@ -490,37 +490,37 @@ int ace_yyindent;
             printf("no more states to discard: parser will abort\n");
     }
 }
-#endif /* YYDEBUG_DISCARD_STATE */
-#ifndef YYDEBUG_DISCARD_TOKEN
+#endif /* ACE_YYDEBUG_DISCARD_STATE */
+#ifndef ACE_YYDEBUG_DISCARD_TOKEN
 #ifdef __cplusplus
-void YYDEBUG_DISCARD_TOKEN(int /* ace_yynew_state */, int /* ace_yytoken_num */, char *ace_yytoken_string, int ace_yyindent)
+void ACE_YYDEBUG_DISCARD_TOKEN(int /* ace_yynew_state */, int /* ace_yytoken_num */, char *ace_yytoken_string, int ace_yyindent)
 #else
-YYDEBUG_DISCARD_TOKEN(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
+ACE_YYDEBUG_DISCARD_TOKEN(ace_yynew_state, ace_yytoken_num, ace_yytoken_string, ace_yyindent)
 int ace_yynew_state;
 int ace_yytoken_num;
 char * ace_yytoken_string;
 int ace_yyindent;
 #endif
 {
-    YYDEBUG_INDENT(ace_yyindent);
+    ACE_YYDEBUG_INDENT(ace_yyindent);
     printf("discarding token %s\n", ace_yytoken_string);
 }
-#endif /* YYDEBUG_DISCARD_TOKEN */
-#ifndef YYDEBUG_SHIFT_ERROR_LEXEME
+#endif /* ACE_YYDEBUG_DISCARD_TOKEN */
+#ifndef ACE_YYDEBUG_SHIFT_ERROR_LEXEME
 #ifdef __cplusplus
-void YYDEBUG_SHIFT_ERROR_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state */, int ace_yyindent)
+void ACE_YYDEBUG_SHIFT_ERROR_LEXEME(int /* ace_yyold_state */, int /* ace_yynew_state */, int ace_yyindent)
 #else
-YYDEBUG_SHIFT_ERROR_LEXEME(ace_yyold_state, ace_yynew_state, ace_yyindent)
+ACE_YYDEBUG_SHIFT_ERROR_LEXEME(ace_yyold_state, ace_yynew_state, ace_yyindent)
 int ace_yyold_state;
 int ace_yynew_state;
 int ace_yyindent;
 #endif
 {
-    YYDEBUG_INDENT(ace_yyindent);
+    ACE_YYDEBUG_INDENT(ace_yyindent);
     printf("error\n");
 }
-#endif /* YYDEBUG_SHIFT_ERROR_LEXEME */
-#endif /* YYDEBUG */
+#endif /* ACE_YYDEBUG_SHIFT_ERROR_LEXEME */
+#endif /* ACE_YYDEBUG */
 #ifdef __cplusplus
 extern "C" { extern char *ace_foo(const char *); }
 #endif
@@ -528,13 +528,13 @@ int
 ace_yyparse()
 {
     register int ace_yym, ace_yyn, ace_yystate;
-#if YYDEBUG
+#if ACE_YYDEBUG
     register char *ace_yys;
 #ifndef __cplusplus
     extern char *ace_foo();
 #endif
 
-    if ((ace_yys = ACE_OS::getenv("YYDEBUG")))
+    if ((ace_yys = ACE_OS::getenv("ACE_YYDEBUG")))
     {
         ace_yyn = *ace_yys;
         if (ace_yyn >= '0' && ace_yyn <= '9')
@@ -555,30 +555,30 @@ ace_yyloop:
     if (ace_yychar < 0)
     {
         if ((ace_yychar = ace_yylex()) < 0) ace_yychar = 0;
-#if YYDEBUG
+#if ACE_YYDEBUG
         if (ace_yydebug)
         {
             ace_yys = 0;
-            if (ace_yychar <= YYMAXTOKEN) ace_yys = ace_yyname[ace_yychar];
+            if (ace_yychar <= ACE_YYMAXTOKEN) ace_yys = ace_yyname[ace_yychar];
             if (!ace_yys) ace_yys = "illegal-symbol";
             if (5 < ace_yydebug)
                 printf("ace_yydebug: state %d, reading %d (%s)\n", ace_yystate,
                         ace_yychar, ace_yys);
             else
-                YYDEBUG_LOOK_AHEAD(ace_yystate, ace_yychar, ace_yys, ace_yyssp-ace_yyss);
+                ACE_YYDEBUG_LOOK_AHEAD(ace_yystate, ace_yychar, ace_yys, ace_yyssp-ace_yyss);
         }
 #endif
     }
     if ((ace_yyn = ace_yysindex[ace_yystate]) && (ace_yyn += ace_yychar) >= 0 &&
-            ace_yyn <= YYTABLESIZE && ace_yycheck[ace_yyn] == ace_yychar)
+            ace_yyn <= ACE_YYTABLESIZE && ace_yycheck[ace_yyn] == ace_yychar)
     {
-#if YYDEBUG
+#if ACE_YYDEBUG
         if (ace_yydebug)
             if (5 < ace_yydebug)
                 printf("ace_yydebug: state %d, shifting to state %d\n",
                         ace_yystate, ace_yytable[ace_yyn]);
             else
-                YYDEBUG_SHIFT_LEXEME(ace_yystate, ace_yytable[ace_yyn], ace_yys, ace_yyssp-ace_yyss);
+                ACE_YYDEBUG_SHIFT_LEXEME(ace_yystate, ace_yytable[ace_yyn], ace_yys, ace_yyssp-ace_yyss);
 #endif
         if (ace_yyssp >= ace_yyss + ace_yystacksize - 1)
         {
@@ -591,7 +591,7 @@ ace_yyloop:
         goto ace_yyloop;
     }
     if ((ace_yyn = ace_yyrindex[ace_yystate]) && (ace_yyn += ace_yychar) >= 0 &&
-            ace_yyn <= YYTABLESIZE && ace_yycheck[ace_yyn] == ace_yychar)
+            ace_yyn <= ACE_YYTABLESIZE && ace_yycheck[ace_yyn] == ace_yychar)
     {
         ace_yyn = ace_yytable[ace_yyn];
         goto ace_yyreduce;
@@ -613,16 +613,16 @@ ace_yyinrecovery:
         ace_yyerrflag = 3;
         for (;;)
         {
-            if ((ace_yyn = ace_yysindex[*ace_yyssp]) && (ace_yyn += YYERRCODE) >= 0 &&
-                    ace_yyn <= YYTABLESIZE && ace_yycheck[ace_yyn] == YYERRCODE)
+            if ((ace_yyn = ace_yysindex[*ace_yyssp]) && (ace_yyn += ACE_YYERRCODE) >= 0 &&
+                    ace_yyn <= ACE_YYTABLESIZE && ace_yycheck[ace_yyn] == ACE_YYERRCODE)
             {
-#if YYDEBUG
+#if ACE_YYDEBUG
                 if (ace_yydebug)
                     if (5 < ace_yydebug)
                         printf("ace_yydebug: state %d, error recovery shifting\
  to state %d\n", *ace_yyssp, ace_yytable[ace_yyn]);
                     else
-                        YYDEBUG_SHIFT_ERROR_LEXEME(*ace_yyssp, ace_yytable[ace_yyn], ace_yyssp-ace_yyss);
+                        ACE_YYDEBUG_SHIFT_ERROR_LEXEME(*ace_yyssp, ace_yytable[ace_yyn], ace_yyssp-ace_yyss);
 #endif
                 if (ace_yyssp >= ace_yyss + ace_yystacksize - 1)
                 {
@@ -634,14 +634,14 @@ ace_yyinrecovery:
             }
             else
             {
-#if YYDEBUG
+#if ACE_YYDEBUG
                 if (ace_yydebug)
                     if (5 < ace_yydebug)
                         printf("ace_yydebug: error recovery discarding state %d\
 ",
                             *ace_yyssp);
                     else
-                        YYDEBUG_DISCARD_STATE(*ace_yyssp, ace_yyssp-ace_yyss-1);
+                        ACE_YYDEBUG_DISCARD_STATE(*ace_yyssp, ace_yyssp-ace_yyss-1);
 #endif
                 if (ace_yyssp <= ace_yyss) goto ace_yyabort;
                 --ace_yyssp;
@@ -652,17 +652,17 @@ ace_yyinrecovery:
     else
     {
         if (ace_yychar == 0) goto ace_yyabort;
-#if YYDEBUG
+#if ACE_YYDEBUG
         if (ace_yydebug)
         {
             ace_yys = 0;
-            if (ace_yychar <= YYMAXTOKEN) ace_yys = ace_yyname[ace_yychar];
+            if (ace_yychar <= ACE_YYMAXTOKEN) ace_yys = ace_yyname[ace_yychar];
             if (!ace_yys) ace_yys = "illegal-symbol";
             if (5 < ace_yydebug)
                 printf("ace_yydebug: state %d, error recovery discards token %d (%s)\n",
                     ace_yystate, ace_yychar, ace_yys);
             else 
-                YYDEBUG_DISCARD_TOKEN(ace_yystate, ace_yychar, ace_yys, ace_yyssp-ace_yyss);
+                ACE_YYDEBUG_DISCARD_TOKEN(ace_yystate, ace_yychar, ace_yys, ace_yyssp-ace_yyss);
         }
 #endif
         ace_yychar = (-1);
@@ -671,13 +671,13 @@ ace_yyinrecovery:
 ace_yyreduce:
     ace_yym = ace_yylen[ace_yyn];
     ace_yyval = ace_yyvsp[1-ace_yym];
-#if YYDEBUG
+#if ACE_YYDEBUG
     if (ace_yydebug)
         if (5 < ace_yydebug)
             printf("ace_yydebug: state %d, reducing by rule %d (%s)\n",
                     ace_yystate, ace_yyn, ace_yyrule[ace_yyn]);
         else
-            YYDEBUG_REDUCE(ace_yystate, ace_yyn, ace_yyrule[ace_yyn], ace_yyssp-ace_yyss-ace_yym, ace_yym);
+            ACE_YYDEBUG_REDUCE(ace_yystate, ace_yyn, ace_yyrule[ace_yyn], ace_yyssp-ace_yyss-ace_yym, ace_yym);
 #endif
     switch (ace_yyn)
     {
@@ -933,28 +933,28 @@ break;
     ace_yym = ace_yylhs[ace_yyn];
     if (ace_yystate == 0 && ace_yym == 0)
     {
-#ifdef YYDEBUG
+#ifdef ACE_YYDEBUG
         if (5 < ace_yydebug)
             printf("ace_yydebug: after reduction, shifting from state 0 to\
- state %d\n", YYFINAL);
+ state %d\n", ACE_YYFINAL);
 #endif
-        ace_yystate = YYFINAL;
-        *++ace_yyssp = YYFINAL;
+        ace_yystate = ACE_YYFINAL;
+        *++ace_yyssp = ACE_YYFINAL;
         *++ace_yyvsp = ace_yyval;
         if (ace_yychar < 0)
         {
             if ((ace_yychar = ace_yylex()) < 0) ace_yychar = 0;
-#if YYDEBUG
+#if ACE_YYDEBUG
             if (ace_yydebug)
             {
                 ace_yys = 0;
-                if (ace_yychar <= YYMAXTOKEN) ace_yys = ace_yyname[ace_yychar];
+                if (ace_yychar <= ACE_YYMAXTOKEN) ace_yys = ace_yyname[ace_yychar];
                 if (!ace_yys) ace_yys = "illegal-symbol";
                 if (5 < ace_yydebug)
                     printf("ace_yydebug: state %d, reading %d (%s)\n",
-                        YYFINAL, ace_yychar, ace_yys);
+                        ACE_YYFINAL, ace_yychar, ace_yys);
                 else
-                    YYDEBUG_LOOK_AHEAD(YYFINAL, ace_yychar, ace_yys, ace_yyssp-ace_yyss);
+                    ACE_YYDEBUG_LOOK_AHEAD(ACE_YYFINAL, ace_yychar, ace_yys, ace_yyssp-ace_yyss);
             }
 #endif
         }
@@ -962,11 +962,11 @@ break;
         goto ace_yyloop;
     }
     if ((ace_yyn = ace_yygindex[ace_yym]) && (ace_yyn += ace_yystate) >= 0 &&
-            ace_yyn <= YYTABLESIZE && ace_yycheck[ace_yyn] == ace_yystate)
+            ace_yyn <= ACE_YYTABLESIZE && ace_yycheck[ace_yyn] == ace_yystate)
         ace_yystate = ace_yytable[ace_yyn];
     else
         ace_yystate = ace_yydgoto[ace_yym];
-#ifdef YYDEBUG
+#ifdef ACE_YYDEBUG
     if (5 < ace_yydebug)
         printf("ace_yydebug: after reduction, shifting from state %d \
 to state %d\n", *ace_yyssp, ace_yystate);
