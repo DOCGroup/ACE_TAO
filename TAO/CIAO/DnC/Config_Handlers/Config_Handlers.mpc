@@ -6,8 +6,8 @@ project (Config_Handlers) : ciao_deployment_stub {
   sharedname = Config_Handlers
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
-  includes += $(XERCESCROOT)/include 
-  libpaths += $(XERCESCROOT)/lib
+  includes += /usr/include $(XERCESCROOT)/include 
+  libpaths += /usr/lib $(XERCESCROOT)/lib
   libs     += xerces-c CIAO_Server
 
   Source_Files {
