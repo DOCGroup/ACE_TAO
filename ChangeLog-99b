@@ -1,3 +1,9 @@
+Mon Oct 11 07:34:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Removed a stray '>' that was causing OS.h not to 
+	  compile.  Thanks to Marvin Allen Wolfthal <maw@ziplink.net>
+	  for reporting this.
+
 Fri Oct  8 07:47:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Removed the word "defined" since that was breaking
