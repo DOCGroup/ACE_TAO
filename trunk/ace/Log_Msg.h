@@ -49,40 +49,48 @@
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
-                ace___->msg_ostream (), ace___->msg_callback ()); \
-    ace___->log_hexdump X; \
-   } while (0)
+    if (ace___->log_priority_enabled X != 0) { \
+      ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
+                   ace___->msg_ostream (), ace___->msg_callback ()); \
+      ace___->log_hexdump X; \
+    } \
+  } while (0)
 #define ACE_RETURN(Y) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
-    ACE_Log_Msg::instance ()->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, Y, __ace_error); \
+    ACE_Log_Msg::instance ()->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error); \
     return Y; \
   } while (0)
 #define ACE_ERROR_RETURN(X, Y) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
-                 ace___->msg_ostream (), ace___->msg_callback ()); \
-    ace___->log X; \
+    if (ace___->log_priority_enabled X != 0) { \
+      ace___->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, Y, __ace_error, ace___->restart (), \
+                   ace___->msg_ostream (), ace___->msg_callback ()); \
+      ace___->log X; \
+    } \
     return Y; \
   } while (0)
 #define ACE_ERROR(X) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
-                 ace___->msg_ostream (), ace___->msg_callback ()); \
-    ace___->log X; \
+    if (ace___->log_priority_enabled X != 0) { \
+      ace___->set (ACE_TEXT_CHAR_TO_TCHAR (__FILE__), __LINE__, -1, __ace_error, ace___->restart (), \
+                   ace___->msg_ostream (), ace___->msg_callback ()); \
+      ace___->log X; \
+    } \
   } while (0)
 #define ACE_DEBUG(X) \
   do { \
     int __ace_error = ACE_OS::last_error (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
-    ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
-                 ace___->msg_ostream (), ace___->msg_callback ()); \
-    ace___->log X; \
+    if (ace___->log_priority_enabled X != 0) { \
+      ace___->set (ACE_TEXT_CHAR_TO_TCHAR(__FILE__), __LINE__, 0, __ace_error, ace___->restart (), \
+                   ace___->msg_ostream (), ace___->msg_callback ()); \
+      ace___->log X; \
+    } \
   } while (0)
 #define ACE_ERROR_INIT(VALUE, FLAGS) \
   do { \
