@@ -1,3 +1,52 @@
+Tue Apr 18 09:42:47 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/Options.html:
+	* docs/releasenotes/index.html:
+
+	  Removed descriptions of the deprecated "-ORBHost" and "-ORBPort"
+	  options, and updated the pluggable protocol release notes to
+	  reflect the changes.
+
+	* tao/ORB_Core.cpp:
+
+	  Removed inclusion of "ace/INET_Addr.h."  It was only needed to
+	  support "-ORBHost" and "-ORBPort."  Those options have been
+	  removed, as detailed below.
+
+	  (init):
+
+	  Removed support for the deprecated "-ORBHost" and "-ORBPort"
+	  options.  These options were superseded by "-ORBEndpoint" long
+	  ago.
+
+	  Removed support for the old style "-ORBPreconnect" syntax
+	  (i.e. "-ORBPreconnect hostname:port").  It too was deprecated
+	  long ago.
+
+	* tao/ORB_Core.h (TAO_ORB_Core):
+	* tao/ORB_Core.cpp (set_iiop_endpoint):
+
+	  Removed this method since it was only needed to support the
+	  deprecated "-ORBHost" and "-ORBPort" options.
+
+	* tao/Connector_Registry (make_mprofile):
+	* tao/Exception.cpp (_info):
+	* tao/ORB.cpp (url_ior_string_to_object):
+	* tao/IIOP_Profile.cpp (parse_string):
+	* tao/SHMIOP_Profile.cpp (parse_string):
+	* tao/UIOP_Profile.cpp (parse_string):
+	* tao/corbafwd.h (TAO_NULL_POINTER_MINOR_CODE):
+
+	  Removed all uses of TAO_NULL_POINTER_MINOR_CODE.  It was
+	  misused as an exception location code.  An EINVAL error code
+	  should instead be set in the exception being thrown.
+
+	  This also frees up a location minor code.
+
+	* tao/Makefile:
+
+	  Updated dependencies.
+
 Tue Apr 18 08:52:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h:
