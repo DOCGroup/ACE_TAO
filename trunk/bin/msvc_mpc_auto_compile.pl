@@ -23,6 +23,7 @@ else {
                   "$ACE_ROOT\\tests");
 
 @tao_core_dirs = ("$ACE_ROOT\\TAO\\tao",
+		  "$ACE_ROOT\\apps",
                   "$ACE_ROOT\\TAO\\TAO_IDL",
                   "$ACE_ROOT\\TAO\\tests");
 

@@ -1,3 +1,10 @@
+Wed Jan 21 13:37:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/msvc_mpc_auto_compile.pl:
+
+	  Added gperf to the list of workspaces that needs compilation
+	  upfront as part of core.
+
 Wed Jan 21 13:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux-common.h:
