@@ -21,21 +21,19 @@
 #ifndef _GOA_IDL_
 #define _GOA_IDL_
 
-#include <Policy_Forward.pidl>
 #include <OctetSeq.pidl>
-#include <tao/PortableServer/PS_Forward.pidl>
-#include <orb.idl> // Only neede for repository id, could we made something like orb_forward.pidl
+#include <tao/PortableServer/PortableServer.pidl>
+#include "tao/PortableServer/PS_Forward.pidl"
 
 #pragma prefix "omg.org"
 
 module PortableServer
 {
-# pragma version PortableServer 2.3
 
   exception NotAGroupObject {};
   typedef sequence <ObjectId> IDs;
 
-  interface GOA : PortableServer::POA {
+  local interface GOA : PortableServer::POA {
     PortableServer::ObjectId create_id_for_reference(in Object the_ref)
       raises (NotAGroupObject);
 

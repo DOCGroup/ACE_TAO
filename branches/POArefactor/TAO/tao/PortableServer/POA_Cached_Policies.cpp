@@ -11,8 +11,8 @@
 ACE_RCSID(tao, POA, "$Id$")
 
 
-TAO_POA_Cached_Policies::TAO_POA_Cached_Policies ()
-  : thread_ (PortableServer::ORB_CTRL_MODEL),
+TAO_POA_Cached_Policies::TAO_POA_Cached_Policies () :
+    thread_ (PortableServer::ORB_CTRL_MODEL),
     lifespan_ (PortableServer::TRANSIENT),
     id_uniqueness_ (PortableServer::UNIQUE_ID),
     id_assignment_ (PortableServer::SYSTEM_ID),

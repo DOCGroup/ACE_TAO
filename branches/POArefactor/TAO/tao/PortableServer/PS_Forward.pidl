@@ -16,6 +16,9 @@
  *          -Wb,post_include="ace/post.h" \
  *          PS_Forward.pidl
  *
+ * Apply patches using the following command:
+ *
+ *   patch < diffs/PS_Forward.diff
  */
 
 #ifndef _PORTABLESERVER_PS_FORWARD_IDL_

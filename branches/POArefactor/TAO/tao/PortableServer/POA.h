@@ -56,6 +56,10 @@
 // OctetSeq
 #include "tao/OctetSeqC.h"
 
+#include "GOAC.h"
+#include "ServantActivatorC.h"
+#include "AdapterActivatorC.h"
+
 #include "ORT_Adapter.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -156,6 +160,7 @@ namespace TAO
  */
 class TAO_PortableServer_Export TAO_POA
   : public virtual PortableServer::POA,
+    public virtual PortableServer::GOA,
     public virtual TAO_Local_RefCounted_Object
 {
 public:
@@ -169,13 +174,6 @@ public:
   friend class TAO_IORInfo;
 
   typedef ACE_CString String;
-
-  /**
-   * This method is used to downcast safely an instance of
-   * PortableServer::POA to an instance of TAO_POA when RTTI is not
-   * enabled.
-   */
-  virtual TAO_POA* _tao_poa_downcast (void);
 
   PortableServer::POA_ptr create_POA (
       const char *adapter_name,
@@ -395,7 +393,6 @@ public:
   CORBA::OctetSeq *id (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-#if (TAO_HAS_MINIMUM_POA == 0)
   // Methods added by the
   /// @name MIOP specification methods
   //@{
@@ -438,7 +435,6 @@ public:
       PortableServer::NotAGroupObject
     ));
   //@}
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   /// Accessor for POA policies.
   TAO_POA_Policy_Set &policies (void);
@@ -523,8 +519,12 @@ public:
                          ACE_ENV_ARG_DECL);
 
 
+#if (TAO_HAS_MINIMUM_POA == 0)
+
   /// Accessor for the current thread policy of this POA.
   PortableServer::ThreadPolicyValue thread_policy (void) const;
+
+#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   /// Accessor methods to POA state.
   /**

@@ -22,6 +22,7 @@
 
 #include "POA.h"
 
+// @johnny, this must move out!,
 
 /**
  * @class TAO_POA_PortableGroup_Hooks
@@ -37,7 +38,7 @@ public:
   /// Destructor.
   virtual ~TAO_POA_PortableGroup_Hooks (void);
 
-#if (TAO_HAS_MINIMUM_POA == 0)
+//#if (TAO_HAS_MINIMUM_POA == 0)
 
   virtual PortableServer::ObjectId * create_id_for_reference (
       TAO_POA &the_poa,
@@ -81,7 +82,7 @@ public:
       PortableServer::NotAGroupObject
     )) = 0;
 
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
+//#endif /* TAO_HAS_MINIMUM_POA == 0 */
 };
 
 

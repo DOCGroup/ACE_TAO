@@ -16,6 +16,9 @@
  *          -Wb,post_include="ace/post.h" \
  *          ServantLocator.pidl
  *
+ * Apply patches using the following command:
+ *
+ *   patch < diffs/PS_Forward.diff
  */
 
 #ifndef _PORTABLESERVER_SERVANTLOCATOR_IDL_

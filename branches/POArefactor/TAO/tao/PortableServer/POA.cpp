@@ -57,12 +57,6 @@ TAO_POA::objectkey_prefix [TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE] = {
   000
 };
 
-TAO_POA*
-TAO_POA::_tao_poa_downcast(void)
-{
-  return this;
-}
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ThreadPolicy_ptr
@@ -244,7 +238,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-#if (TAO_HAS_MINIMUM_POA == 1)
+#if (TAO_HAS_MINIMUM_POA == 0)
   // If this is the RootPOA, set the value of the ImplicitActivationPolicy
   // to IMPLICIT_ACTIVATION since it is impossible to pass the policy
   // as it is not compiled into the library.
@@ -259,7 +253,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
       this->cached_policies_.implicit_activation
         (PortableServer::IMPLICIT_ACTIVATION);
     }
-#endif /* TAO_HAS_MINIMUM_POA == 1 */
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Set the folded name of this POA.
   this->set_folded_name ();
@@ -480,8 +474,7 @@ TAO_POA::create_POA_i (const char *adapter_name,
     }
   else
     {
-      tao_poa_manager = ACE_dynamic_cast (TAO_POA_Manager *,
-                                          poa_manager);
+      tao_poa_manager = dynamic_cast <TAO_POA_Manager *>(poa_manager);
     }
 
   TAO_POA *poa = this->create_POA_i (adapter_name,
@@ -795,13 +788,17 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       if (this->server_object_)
         {
-          TAO_POA *tao_poa = 0;
-
           PortableServer::POA_var poa =
             this->server_object_->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
-          tao_poa = poa->_tao_poa_downcast ();
+          TAO_POA *tao_poa = dynamic_cast<TAO_POA*>(poa.in());
+
+          if (!tao_poa)
+            {
+              ACE_THROW (CORBA::OBJ_ADAPTER ());
+            }
+
           PortableServer::ObjectId_var id =
             tao_poa->servant_to_id_i (this->server_object_
                                       ACE_ENV_ARG_PARAMETER);
@@ -4199,8 +4196,6 @@ TAO_POA::server_protocol (void)
   return 0;
 }
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 PortableServer::ObjectId *
 TAO_POA::create_id_for_reference (CORBA::Object_ptr the_ref
                                   ACE_ENV_ARG_DECL)
@@ -4281,8 +4276,6 @@ TAO_POA::disassociate_reference_with_id (CORBA::Object_ptr ref,
   hooks->disassociate_reference_with_id (*this, ref, oid ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 void
 TAO_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id,

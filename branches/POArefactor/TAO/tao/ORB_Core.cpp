@@ -1509,7 +1509,6 @@ TAO_ORB_Core::service_context_list (
   ACE_CHECK;
 }
 
-
 TAO_Client_Strategy_Factory *
 TAO_ORB_Core::client_factory (void)
 {
@@ -1534,24 +1533,6 @@ TAO_ORB_Core::server_factory (void)
     }
 
   return this->server_factory_;
-}
-
-
-
-int
-TAO_ORB_Core::inherit_from_parent_thread (
-  TAO_ORB_Core_TSS_Resources *tss_resources)
-{
-  // Inherit properties/objects used in ORB_Core from the
-  // parent thread.  Stuff inherited here must already exist
-  // in the "parent" orbcore.
-  // This is used in the thread-per-connection concurrency model where
-  // each ORB spawned thread must use the resources of the spawning
-  // thread...
-
-  if (tss_resources == 0)
-    return -1;
-  return 0;
 }
 
 CORBA::Object_ptr

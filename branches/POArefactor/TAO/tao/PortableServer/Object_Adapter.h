@@ -43,6 +43,9 @@
 // Policy Set
 #include "POA_Policy_Set.h"
 
+#include "PS_CurrentC.h"
+#include "ServantLocatorC.h"
+
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
 #pragma warning(push)

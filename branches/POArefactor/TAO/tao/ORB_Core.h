@@ -358,11 +358,6 @@ public:
   /// optimization for the POA.
   TAO_Adapter *poa_adapter (void);
 
-  /// A spawned thread needs to inherit some properties/objects from
-  /// the spawning thread in order to serve requests.  Return 0 if
-  /// it successfully inherits from the parent, -1 otherwise.
-  int inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources);
-
   /**
    * @name Access to Factories
    *
