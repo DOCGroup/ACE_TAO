@@ -81,6 +81,22 @@ private:
   u_long total_pushes_;
   // Registers and counters for keeping track of latency statistics.
 
+  ACE_Time_Value min_to_ec_;
+  ACE_Time_Value max_to_ec_;
+  ACE_Time_Value sum_to_ec_;
+  // Statitics on time to get to the EC.
+
+  ACE_Time_Value min_in_ec_;
+  ACE_Time_Value max_in_ec_;
+  ACE_Time_Value sum_in_ec_;
+  // Statitics on time spent in the EC.
+
+  ACE_Time_Value min_from_ec_;
+  ACE_Time_Value max_from_ec_;
+  ACE_Time_Value sum_from_ec_;
+  // Statitics on time spent since the EC put the event on the wire
+  // and it gets here.
+
   ACE_CString entry_point_;
 };
 
