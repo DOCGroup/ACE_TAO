@@ -11,7 +11,8 @@ Mon Jun 21 08:40:14 1999  Steve Huston  <shuston@riverace.com>
           to CCFLAGS if no architecture specified.  Added -z to LDFLAGS
           to force SEGV on dereference 0 pointer. Added definition for
           CPP_LOCATION to not use aCC - it displays warnings for unrecognized
-          #pragmas and this dirties the TAO builds.
+          #pragmas and this dirties the TAO builds. Thanks to Brian Wallis
+          <Brian.Wallis@sr.com.au> for these ideas.
 
 Sat Jun 19 22:28:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
