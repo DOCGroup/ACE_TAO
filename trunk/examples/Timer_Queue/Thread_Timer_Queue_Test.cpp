@@ -226,7 +226,7 @@ Input_Task::dump (void)
   ACE_DEBUG ((LM_DEBUG,
               "begin dumping timer queue\n"));
 
-  for (Timer_Heap_Iterator i (this->queue_->timer_queue ());
+  for (Timer_Heap_Iterator i (*this->queue_->timer_queue ());
        i.item () != 0;
        i.next ())
     i.item ()->dump ();
