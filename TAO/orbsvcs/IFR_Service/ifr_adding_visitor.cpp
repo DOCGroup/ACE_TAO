@@ -3876,34 +3876,24 @@ ifr_adding_visitor::fill_abstract_base_values (CORBA::ValueDefSeq &result,
   // existing entries, if any,  from the repository.
   if (s_length > 0)
     {
-      CORBA::Contained_var holder;
       AST_Interface **list = node->inherits ();
       CORBA::ULong u_length = ACE_static_cast (CORBA::ULong,
                                                s_length);
       idl_bool first_abs = list[0]->is_abstract ();
       result.length (first_abs ? u_length : u_length - 1);
-      AST_ValueType *base_vt = 0;
 
       for (CORBA::ULong i = 0; i < u_length; ++i)
         {
-          if (i == 0 && ! list[i]->is_abstract ())
+          if (i == 0 && ! first_abs)
             {
               continue;
             }
 
-          holder = 
-            be_global->repository ()->lookup_id (
-                                          list[i]->repoID ()
-                                          ACE_ENV_ARG_PARAMETER
-                                        );
-          ACE_CHECK;
+          // Get list[i] into ir_current_.
+          (void) list[i]->ast_accept (this);
 
-          // @@@ (JP) Should probably throw some exception if the
-          // lookup returns 0. For now we are assuming that the
-          // abstract bases, whether from the same or another IDL
-          // file, have been added to the repository.
-          result[i] =
-            CORBA::ValueDef::_narrow (holder.in ()
+          result[first_abs ? i : i - 1] =
+            CORBA::ValueDef::_narrow (this->ir_current_.in ()
                                       ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
@@ -3916,12 +3906,9 @@ ifr_adding_visitor::fill_inherited_interfaces (CORBA::InterfaceDefSeq &result,
                                                ACE_ENV_ARG_DECL)
 {
   result.length (0);
-  CORBA::Long s_length = node->n_inherits ();
-  AST_Interface **list = node->inherits ();
-
   this->fill_interfaces (result,
-                         list,
-                         s_length
+                         node->inherits (),
+                         node->n_inherits ()
                          ACE_ENV_ARG_PARAMETER);
 }
 
@@ -3979,22 +3966,17 @@ ifr_adding_visitor::fill_interfaces (CORBA::InterfaceDefSeq &result,
   // existing entries, if any,  from the repository.
   if (length > 0)
     {
-      CORBA::Contained_var holder;
       CORBA::ULong u_length = ACE_static_cast (CORBA::ULong,
                                                length);
       result.length (u_length);
 
       for (CORBA::ULong i = 0; i < u_length; ++i)
         {
-          holder =
-            be_global->repository ()->lookup_id (
-                                          list[i]->repoID ()
-                                          ACE_ENV_ARG_PARAMETER
-                                        );
-          ACE_CHECK;
+          // Get list[i] into ir_current_.
+          (void) list[i]->ast_accept (this);
 
           result[i] =
-            CORBA::InterfaceDef::_narrow (holder.in ()
+            CORBA::InterfaceDef::_narrow (this->ir_current_.in ()
                                           ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
