@@ -26,12 +26,21 @@
 char infomessage[] = "\
 \n\
 \n\
-      Distributed real-time MPEG video audio Player v2.0\n\
- \n\
-	  Distributed Systems Research Group\n\
-      Department of Computer Science and Engineering\n\
-    Oregon Graduate Institute of Science and Technology\n\
-                       October, 1995\n\
+\n\
+TAO Audio/Video Streaming service\n\
+---------------------------------\n\
+\n\
+This is a distributed audio/video streaming application that uses\n\
+interfaces and interactions defined in the OMG \"Control and Management\n\
+of A/V streams\" spec. An implementation of the spec can be found in\n\
+the following directory.\n\
+\n\
+TAO/orbsvcs/orbsvcs/AV/\n\
+\n\
+The TAO application is a modified version of a streaming application\n\
+developed at the Oregon Graduate Institute.\n\
+\n\
+\n\
 \n\
 The player features common VCR functionalities like synchronized\n\
 video(MPEG) and audio(.au) play back, play speed set on the fly,\n\
@@ -41,6 +50,12 @@ The player is of server/client architecture. The server manages program\n\
 retrieval and distribution. The client decodes video frames, plays video\n\
 and audio streams, and provides a Motif style user interface.\n\
 \n\
+\n\
+The basic client/server used by the application originated from:\n\
+	  Distributed Systems Research Group\n\
+      Department of Computer Science and Engineering\n\
+    Oregon Graduate Institute of Science and Technology\n\
+                       October, 1995\n\
 The MPEG decoder used by the client is originated from U.C.Berkeley\n\
 MPEG decoder 2.0, by Lawrence A. Rowe, Ketan Patel, and Brian Smith,\n\
 of Computer Science Division-EECS, Univ. of Calif. at Berkeley.\n\
@@ -49,12 +64,16 @@ The Motif user interface is based on an implementation by Daeron Meyer\n\
 of The Geometry Center, University of Minnesota.\n\
 \n\
 This software is covered by copyrights. It contains code contributed\n\
-by the author and several other parties. Please see the beginning of\n\
+by the authors and several other parties. Please see the beginning of\n\
 source files and copyright file(s) in the root directory of the source\n\
 kit.\n\
 \n\
-Please forward your questions, comments and bug report to:\n\
+Sumedh Mungee <sumedh@cs.wustl.edu>\n\
+Nagarajan Surendran <naga@cs.wustl.edu>\n\
+Seth Widoff <sbw1@cs.wustl.edu>\n\
+Alexander Arulanthu <alex@cs.wustl.edu>\n\
+Distributed Object Computing Group\n\
+Washington University\n\
 \n\
-                      scen@cse.ogi.edu\n\
 \n\
 ";
