@@ -1,14 +1,19 @@
+Mon Feb 02 08:59:57 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/tao_util.cpp (init): added .in () to poa_object in call to
+         _narrow, so that it will compile with g++.
+
 Sat Jan 31 01:08:19 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/releasenotes/index.html: 
+	* docs/releasenotes/index.html:
 	  The IDL compiler has support for NT DLLs already, I moved the
 	  tiem from the "issues" to the "new features" list.
 
-	* docs/index.html: 
-	* docs/compiler.html: 
+	* docs/index.html:
+	* docs/compiler.html:
 	  Added documentation for TAO IDL compiler behavior and options.
 
-	* TAO_IDL/be/be_init.cpp: 
+	* TAO_IDL/be/be_init.cpp:
 	  Print a reasonable version for the compiler back-end, it is no
 	  longer the Sun example BE and the version is (around 0.1.0).
 
@@ -18,32 +23,32 @@ Fri Jan 30 16:27:47 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri Jan 30 15:35:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_args.cpp: 
-	* TAO_IDL/be/be_array.cpp: 
-	* TAO_IDL/be/be_codegen.cpp: 
-	* TAO_IDL/be/be_enum.cpp: 
-	* TAO_IDL/be/be_exception.cpp: 
-	* TAO_IDL/be/be_interface.cpp: 
-	* TAO_IDL/be/be_interface_fwd.cpp: 
-	* TAO_IDL/be/be_module.cpp: 
-	* TAO_IDL/be/be_sequence.cpp: 
-	* TAO_IDL/be/be_structure.cpp: 
-	* TAO_IDL/be/be_typedef.cpp: 
-	* TAO_IDL/be/be_union.cpp: 
-	* TAO_IDL/be/be_visitor_interface.cpp: 
-	* TAO_IDL/be/be_visitor_sequence.cpp: 
-	* TAO_IDL/include/idl_global.h: 
-	* TAO_IDL/util/utl_global.cpp: 
+	* TAO_IDL/be/be_args.cpp:
+	* TAO_IDL/be/be_array.cpp:
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_enum.cpp:
+	* TAO_IDL/be/be_exception.cpp:
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_interface_fwd.cpp:
+	* TAO_IDL/be/be_module.cpp:
+	* TAO_IDL/be/be_sequence.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_sequence.cpp:
+	* TAO_IDL/include/idl_global.h:
+	* TAO_IDL/util/utl_global.cpp:
 	  Added support for export macros and a user defined include file,
 	  this was needed to support DLL's in NT.
 
-	* tests/Cubit/TAO/IDL_Cubit/Makefile: 
+	* tests/Cubit/TAO/IDL_Cubit/Makefile:
 	  Removed a broken test target; thanks to Michael Kircher
 	  <mk1@cec.wustl.edu>
 
 Fri Jan 30 15:30:30 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/Scheduling_Service/DynSched.{cpp,h,i} : The Dynamic 
+	* orbsvcs/Scheduling_Service/DynSched.{cpp,h,i} : The Dynamic
           Scheduler Implementation (first cut - still a work in progress)
 
 	* orbsvcs/Scheduling_Service/Strategy_Scheduler.{cpp,h,i} : The
