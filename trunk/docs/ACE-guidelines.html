@@ -727,9 +727,9 @@ bgcolor="#ffffff">
 
   <li>Be <em>very</em> careful with <code>ACE_ASSERT</code>.  It
       must only be used to check values; it may never be used to
-      wrap a function call, or any other statement.  That's because
-      the statement will disappear when ACE_NDEBUG is enabled.  For
-      example, this code is BAD:
+      wrap a function call, or contain any other side effect.  That's
+      because the statement will disappear when ACE_NDEBUG is enabled.
+      For example, this code is BAD:
       <pre>
       ACE_ASSERT (this-&gt;next (retv) != 0);  // BAD CODE!
       </pre>
@@ -740,8 +740,19 @@ bgcolor="#ffffff">
       int result = this-&gt;next (retv);
       ACE_ASSERT (result != 0);
       ACE_UNUSED_ARG (result);
+      </pre><p>
+
+  <li>Never put side effects in <code>ACE_DEBUG</code> code:
+      <pre>
+      ACE_DEBUG ((LM_DEBUG, 
+                 "handling signal: %d iterations left\n", 
+                 --this-&gt;iterations_));        // BAD CODE!
       </pre>
-<p>
+
+      Note that this won't work correctly if <code>ACE_NDEBUG</code> is
+      defined, for the same reason that having side-effects in
+      <code>ACE_ASSERT</code>s won't work either, <em>i.e.</em>, because
+      the code is removed.<p>
 </ul>
 
 
