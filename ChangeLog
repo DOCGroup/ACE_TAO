@@ -1,6 +1,8 @@
 Sat Aug 23 12:55:04 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/DLL.cpp (ACE_DLL, open_i):
+	* ace/DLL_Manager.cpp (ACE_DLL_Manager, ~ACE_DLL_Manager, open):
+	  (close, symbol, get_handle, open_dll, unload_dll):
 
 	  Only print error messages if the ACE debugging flag is set,
 	  ACE::debug() returns a non-zero value.  Thanks to Carlos for
