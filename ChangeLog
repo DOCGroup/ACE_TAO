@@ -1,3 +1,9 @@
+Mon Dec 13 12:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Added q as usable format specifier to print out a int64 value. Not
+          usable when no native int64 is available.
+
 Mon Dec 13 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Basic_Types.h:
