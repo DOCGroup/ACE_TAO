@@ -1,0 +1,12 @@
+# 
+# Makefile for building the example executables
+#
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(ORBSVCS_CFLAGS)
+
+LIBFILES = $(ACE_LIB) $(TAO_LIB) $(ORBSVCS_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+

@@ -1,0 +1,7 @@
+
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+all:
+        cd $(ACE_ROOT)\apps\gperf\src
+        $(MAKE) -f Makefile.bor $(MAKE_FLAGS)
+
