@@ -74,7 +74,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec
 {
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::ConsumerAdmin_var admin =
-    ec->new_for_consumers (CosNotifyChannelAdmin::OR_OP,
+    ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP,
                            adminid
                            ACE_ENV_ARG_PARAMETER);
 

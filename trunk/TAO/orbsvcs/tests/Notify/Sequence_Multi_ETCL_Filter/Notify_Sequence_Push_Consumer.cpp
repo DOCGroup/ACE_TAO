@@ -40,14 +40,14 @@ Notify_Sequence_Push_Consumer::connect (
       proxysupplier.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CosNotification::QoSProperties properties (4);
-  properties.length (4);
+  CosNotification::QoSProperties properties (3); //(4);
+  properties.length (3); //(4);
   properties[0].name = CORBA::string_dup (CosNotification::MaximumBatchSize);
   properties[0].value <<= (CORBA::Long)5;
   properties[1].name = CORBA::string_dup (CosNotification::PacingInterval);
   properties[1].value <<= (TimeBase::TimeT)4;
-  properties[3].name = CORBA::string_dup (CosNotification::MaxEventsPerConsumer);
-  properties[3].value <<= (CORBA::Long)2;
+  //properties[3].name = CORBA::string_dup (CosNotification::MaxEventsPerConsumer);
+  //properties[3].value <<= (CORBA::Long)2;
 
   this->proxy_supplier_->set_qos (properties);
   this->proxy_supplier_->connect_sequence_push_consumer (objref.in ()
@@ -108,5 +108,3 @@ Notify_Sequence_Push_Consumer::push_structured_events (
       ACE_OS::sleep (1);
     }
 }
-
-
