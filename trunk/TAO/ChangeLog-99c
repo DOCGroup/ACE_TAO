@@ -1,3 +1,11 @@
+Fri Jul  9 01:55:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface): Fixed type mismatch warning on KCC.
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
+	  (visit_interface): Fixed unused argument warnings on egcs.
+
 Fri Jul 09 01:00:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/DynAnyC.cpp: Removed a duplicated template instantiation.
