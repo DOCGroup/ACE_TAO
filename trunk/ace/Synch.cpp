@@ -61,10 +61,10 @@ ACE_Process_Mutex::ACE_Process_Mutex (LPCTSTR name, void *arg)
   // For all platforms other than Win32, we are going to create a
   // machine wide unquie name if one is not provided by the user.  On
   // Win32, unnamed synchronization objects are acceptable.
-  TCHAR ace_name[100];
+  TCHAR ace_name[ACE_UNIQUE_NAME_LEN];
   if (name == 0)
     {
-      ACE::unique_name (this, ace_name, sizeof ace_name);
+      ACE::unique_name (this, ace_name, ACE_UNIQUE_NAME_LEN);
       name = ace_name;
     }
 #endif
