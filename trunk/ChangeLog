@@ -123,7 +123,6 @@ Mon Jul  9 11:10:44 2001  Jeff Parsons <parsons@cs.wustl.edu>
           Francois Bernier <fbernier@gel.ulaval.ca> for suggesting
           this enhancement.
 
->>>>>>> 4.2232
 Mon Jul 09 11:31:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/pre.h
