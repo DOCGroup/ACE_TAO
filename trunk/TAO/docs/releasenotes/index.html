@@ -1967,14 +1967,14 @@ Point of contact: <a href="mailto:bala@cs.wustl.edu">Balachandran Natarajan</a>
 <h4>Current Status:</h4>
 <p>TAO supports the ORB level requirements to achieve Fault Tolerance
 for CORBA Objects. The details of the ORB level support is described
-in the  <a href="http://cgi.omg.org/cgi-bin/doc?ptc/00-04-04"> FT spec
-</a>. Specifically TAO
-implements the sections 27.2.2, 27.2.3, 27.2.6 thru 27.2.8 of the
-document.
+in the FT chapter of the
+<a href="http://www.omg.org/cgi-bin/doc?formal/02-06-01">
+CORBA 3.0 specification</a>.  Specifically TAO implements the sections
+23.2.2, 23.2.3, 23.2.6 thru 23.2.8 of the document.
 
 <h4>Future Work:</h4>
 <ul>
-<li> Implement 27.2.9 of the document.</li>
+<li> Implement 23.2.9 of the document.</li>
 </ul>
 <hr>
 
@@ -2009,16 +2009,18 @@ three built-in load balancing strategies.  They are:
  <li><CODE>LeastLoaded</CODE> <FONT COLOR=BLUE>(adaptive)</FONT></li>
 </ol>
 
-TAO currently implements the <CODE>Random</CODE> and the
-<CODE>LeastLoaded</CODE> load balancing strategies.
+TAO currently implements the <CODE>Random</CODE> load balancing strategy.
 
 <h4>Known Issues:</h4>
 <ul>
-<li><CODE>RoundRobin</CODE> load balancing strategy is currently
-    unimplemented.</li>
+<li><CODE>RoundRobin</CODE> and <CODE>LeastLoaded</CODE> load
+    balancing strategies are currently unimplemented.</li>
 <li>New group members are not automatically created if possible and
     when necessary.  This is only a problem for the <I>infrastructure
     controlled</I> object group membership style.</li>
+<li><em>Adaptive</em> load balancing is currently not working.  In
+     particular, the load shedding mechanism needs work.
+</li>
 </ul>
 
 <h4>Recent Work:</h4>
@@ -2028,7 +2030,8 @@ TAO currently implements the <CODE>Random</CODE> and the
 
 <h4>Future Work:</h4>
 <ul>
-<li>Implement <CODE>RoundRobin</CODE> load balancing strategy</li>
+<li>Implement <CODE>RoundRobin</CODE> and <CODE>LeastLoaded</CODE>
+    load balancing strategies</li>
 <li>Implement cooperative (distributed) load balancing support</li>
 <li>Integrate multicast support</li>
 </ul>
