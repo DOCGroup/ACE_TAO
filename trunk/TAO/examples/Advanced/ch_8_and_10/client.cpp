@@ -88,7 +88,7 @@ operator<<(ostream & os, const CCS::Controller::EChange & ec)
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
-// #if 0   // This inserter may or may not be needed for your ORB.
+ #if 0   // This inserter may or may not be needed for your ORB.
 
 static ostream &
 operator<<(ostream & os, const CORBA::Exception & e)
@@ -105,7 +105,7 @@ operator<<(ostream & os, const CORBA::Exception & e)
     return os;
 }
 
-// #endif
+ #endif
 
 //----------------------------------------------------------------
 

@@ -58,6 +58,12 @@ main (int argc, char *argv[])
           throw 0;
         }
 
+       {
+       cout << "Validating connection"<<endl;
+       CORBA::PolicyList_var pols;
+       tm->_validate_connection (pols.out ());
+       cout << "Succesfull " <<endl;
+       }
       // Get time
       TimeOfDay tod = tm->get_gmt ();
       cout << "Time in Greenwich is "
@@ -65,8 +71,10 @@ main (int argc, char *argv[])
            << setw (2) << setfill ('0') << tod.minute << ":"
            << setw (2) << setfill ('0') << tod.second << endl;
     }
-  catch  (const CORBA::Exception &) 
+  catch  (const CORBA::Exception &x) 
     {
+      ACE_PRINT_EXCEPTION (x,
+                           "Who is the culprit \n");
       cerr << "Uncaught CORBA exception" << endl;
       return 1;
     }

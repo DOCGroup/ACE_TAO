@@ -1,3 +1,7 @@
+Tue Aug 22 10:01:49 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Makefiles in $TAO_ROOT/examples: Updated depenedncies.
+
 Mon Aug 21 16:40:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_enum/cdr_op_ci.cpp:
@@ -15,12 +19,12 @@ Mon Aug 21 16:40:21 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  In order to ensure that enum values are 32 bits,
 	  as required by the CORBA spec, the IDL
 	  compiler has been adding an extra value to generated
-	  enums with the value 0x7FFFFFF. It turns out that 
+	  enums with the value 0x7FFFFFF. It turns out that
 	  this is a problem when developers use a strict C++
 	  compiler, one which requires that all possible case
 	  values be handled in a switch statement. If there is
 	  a switch statement in application code that uses a
-	  generated enum value, developers must add a 
+	  generated enum value, developers must add a
 	  default case to their switch statement, and TAO's
 	  enforcement of the 32-bit requirement for enum
 	  values is not transparent. Since TAO no longer
@@ -40,16 +44,16 @@ Mon Aug 21 15:40:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  Messaging is disabled.
 
 	* tests/Portable_Interceptors/Benchmark/interceptors.cpp:
-	  Dynamically casted the request info object to be able to use 
+	  Dynamically casted the request info object to be able to use
 	  TAO specific exception methods.
-	
+
 Mon Aug 21 14:17:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.cpp:
 
 	  In the CDR insertion operator, added a check for a
 	  nil typecode pointer. If found, CORBA::MARSHAL is
-	  thrown. Thanks to Johnny Willemsen 
+	  thrown. Thanks to Johnny Willemsen
 	  <johnny.willemsen@meco.nl> for reporting this bug.
 
 Mon Aug 21 11:46:16 2000  Carlos O'Ryan  <coryan@uci.edu>
