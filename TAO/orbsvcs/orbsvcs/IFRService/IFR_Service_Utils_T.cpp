@@ -169,13 +169,17 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
 template<typename T_desc_seq>
 void 
 TAO_Port_Desc_Seq_Utils<T_desc_seq>::get_is_multiple (
-    T_desc_seq &,
-    ACE_Configuration *,
-    ACE_Configuration_Section_Key &,
-    CORBA::ULong
+    T_desc_seq &desc_seq,
+    ACE_Configuration *config,
+    ACE_Configuration_Section_Key &key,
+    CORBA::ULong index
   )
 {
   // All types except UsesDescription have no is_multiple member.
+  ACE_UNUSED_ARG (desc_seq);
+  ACE_UNUSED_ARG (config);
+  ACE_UNUSED_ARG (key);
+  ACE_UNUSED_ARG (index);
 }
 
 template<typename T_desc_seq>
