@@ -1,3 +1,15 @@
+Sun Jan 17 15:41:12 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * TAO/TAOACE_Static.dsw: Removed outdated project files.
+
+        * TAO/TAO_IDL/tao_idl.dsp:
+        * TAO/TAO_IDL/tao_idl_static.dsp:
+        * TAO/orbsvcs/orbsvcs/orbsvcs.dsp:
+        * TAO/orbsvcs/orbsvcs/orbsvcs_static.dsp:
+        * TAO/tao/TAO.dsp:
+        * TAO/tao/TAO_Static.dsp: Rearranged the intermediate directory
+	  for DLL/LIB build to avoid confusing the build utility in VC.
+
 Sun Jan 17 15:34:17 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp (wait_until_ready):
@@ -19,39 +31,39 @@ Sat Jan 16 22:54:14 1999  Ossama Othman  <othman@macarena.cs.wustl.edu>
 
 Sat Jan 16 11:49:45 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp (add_to_included_idl_files): 
+	* TAO_IDL/util/utl_global.cpp (add_to_included_idl_files):
 	  Change line 515 from: this->n_included_idl_files_ += INCREMENT;
-	  to: this->n_allocated_idl_files_ += INCREMENT; 
+	  to: this->n_allocated_idl_files_ += INCREMENT;
 	  so that tao_idl won't crash when including 64 or more files.
 	  Thanks to Tommy Andreasen <tommy.andreasen@radiometer.dk>
 	  for reporting this.
 
 Fri Jan 15 19:11:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time/Time_Client_i.cpp:	
+	* examples/Simple/time/Time_Client_i.cpp:
 	* examples/Simple/time/Time_Client_i.h:
 	Added permissions for these files.
 
 Fri Jan 15 18:43:02 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/time/Time_Client_i.cpp:	
+	* examples/Simple/time/Time_Client_i.cpp:
 	* examples/Simple/time/Time_Client_i.h:
-	New files added for implementing the Templates for 
+	New files added for implementing the Templates for
 	a single client/server model
 
 	* examples/Simple/time/Time_i.cpp:
 	* examples/Simple/time/Time_i.h:
 	* examples/Simple/time/server.cpp:
 	* examples/Simple/time/client.cpp:
-	Made  changes in a way such that server and client 
+	Made  changes in a way such that server and client
 	make instantiations of templates with their interface
-	objects. 
+	objects.
 
 	* examples/Simple/Simple_Util.h:
 	* examples/Simple/Simple_Util.cpp:
 	New files that have the template definitions and
 	implementation of those methods.
-	
+
 
 Fri Jan 15 17:24:36 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
