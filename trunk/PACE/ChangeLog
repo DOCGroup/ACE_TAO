@@ -1,3 +1,10 @@
+Wed Jul 19 19:50:54 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/utility.h:
+
+	  Added some sorely needed macros for adapting return values.
+	  Used extensively by ACE to emulate funcs on win32.
+
 Tue Jul 18 23:25:43 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
 	* pace/posix/signal.h
