@@ -2726,8 +2726,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i Offer_Exporter.h \
- TT_Info.h TTestS.h TTestC.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ Offer_Exporter.h TT_Info.h TTestS.h TTestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -3106,8 +3106,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i Offer_Importer.h \
- TT_Info.h TTestS.h TTestC.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ Offer_Importer.h TT_Info.h TTestS.h TTestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
@@ -3484,8 +3484,8 @@ endif # ! ACE_HAS_GNUG_PRE_2_8
  $(TAO_ROOT)/tao/Services.i \
  $(TAO_ROOT)/tao/CORBA_String.h \
  $(TAO_ROOT)/tao/CORBA_String.inl \
- $(TAO_ROOT)/tao/ORB.i Offer_Exporter.h \
- TT_Info.h TTestS.h TTestC.h \
+ $(TAO_ROOT)/tao/ORB.i \
+ Offer_Exporter.h TT_Info.h TTestS.h TTestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \

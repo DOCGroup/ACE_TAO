@@ -1131,7 +1131,8 @@ realclean: clean
  demux_test_macros.h
 
 .obj/demux_test_i.o .obj/demux_test_i.so .shobj/demux_test_i.o .shobj/demux_test_i.so: demux_test_i.cpp demux_test_i.h demux_testS.h \
- demux_testC.h $(TAO_ROOT)/tao/corba.h \
+ demux_testC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2542,7 +2543,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i demux_testC.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ demux_testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2867,7 +2869,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i demux_testC.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ demux_testC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
