@@ -1,3 +1,17 @@
+Wed Jun 21 13:25:41 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.i (rename): On ACE_HAS_WINNT4 systems (Win NT, 2000), the
+          rename is accomplished via MoveFileEx, which allows an existing
+          destination file to be replaced. This makes the behavior in this
+          case the same on NT/2000 as on *NIX systems (the file is replaced).
+
+Wed Jun 21 13:23:18 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h (rename): Added a 3rd argument (int flags) which defaults
+          to -1 (meaning to use ACE-default flags inside the function). The
+          flags are only useful on NT/2000 for supplying values to the
+          MoveFileEx function's flags argument.
+
 Wed Jun 21 03:02:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/OS.i (set_errno_to_last_error):
