@@ -255,28 +255,17 @@ DRV_pre_proc(char *myfile)
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (readfromstdin);
 
-  const char* tmpdir = getenv("TMP");
-  if (tmpdir != 0)
-    {
-      ACE_OS::strcpy (tmp_file, tmpdir);
-      ACE_OS::strcpy (tmp_ifile, tmpdir);
-    }
-  else
-    {
-      ACE_OS::strcpy (tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
-      ACE_OS::strcat (tmp_file, "tmp");
-      ACE_OS::strcpy (tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
-      ACE_OS::strcat (tmp_ifile, "tmp");
-    }
+  const char* tmpdir = idl_global->temp_dir ();
 
-  ACE_OS::strcat (tmp_file, ACE_DIRECTORY_SEPARATOR_STR_A);
+  ACE_OS::strcpy (tmp_file, tmpdir);
+  ACE_OS::strcpy (tmp_ifile, tmpdir);
+  
   ACE_OS::strcat (tmp_file, "idlf_XXXXXX");
-
-  ACE_OS::strcat (tmp_ifile, ACE_DIRECTORY_SEPARATOR_STR_A);
   ACE_OS::strcat (tmp_ifile, "idli_XXXXXX");
 
   (void) ACE_OS::mktemp (tmp_file); ACE_OS::strcat (tmp_file, ".cc");
   (void) ACE_OS::mktemp (tmp_ifile); ACE_OS::strcat (tmp_ifile, ".cc");
+
   if (strcmp(myfile, "standard input") == 0)
     {
       idl_global->set_filename((*DRV_FE_new_UTL_String)(tmp_ifile));
