@@ -93,10 +93,10 @@ TAO_Transient_Bindings_Map::total_size (void)
 
 int
 TAO_Transient_Bindings_Map::shared_bind (const char * id,
-                               const char * kind,
-                               CORBA::Object_ptr obj,
-                               CosNaming::BindingType type,
-                               int rebind)
+                                         const char * kind,
+                                         CORBA::Object_ptr obj,
+                                         CosNaming::BindingType type,
+                                         int rebind)
 {
   TAO_ExtId new_name (id, kind);
   TAO_IntId new_entry (obj, type);
@@ -129,37 +129,21 @@ TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context (void)
 }
 
 CosNaming::NamingContext_ptr
-TAO_Transient_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
+TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
+                                                const char *poa_id,
+                                                size_t context_size,
+                                                CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
-
-  // Check to make sure this object didn't have <destroy> method
-  // invoked on it.
-  if (this->destroyed_)
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
-                      CosNaming::NamingContext::_nil ());
-
-  // Store the stub we will return from the method here.
+  // Store the stub we will return here.
   CosNaming::NamingContext_var result;
-
-  // Generate a POA id for the new context.
-  char poa_id[BUFSIZ];
-  ACE_OS::sprintf (poa_id,
-                   "%s_%ld",
-                   this->poa_id_.c_str (),
-                   this->counter_++);
 
   // Put together a servant for the new Naming Context.
 
   TAO_Transient_Naming_Context *context_impl = 0;
   ACE_NEW_THROW_EX (context_impl,
-                    TAO_Transient_Naming_Context (poa_.in (),
+                    TAO_Transient_Naming_Context (poa,
                                                   poa_id,
-                                                  transient_context_->total_size ()),
+                                                  context_size),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (result._retn ());
 
@@ -176,28 +160,56 @@ TAO_Transient_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Change what we hold in auto pointer.
+  // Release auto pointer, and start using reference counting to
+  // control our servant.
   temp.release ();
-  ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp2 (context);
+  PortableServer::ServantBase_var s = context;
 
   // Register the new context with the POA.
   PortableServer::ObjectId_var id =
     PortableServer::string_to_ObjectId (poa_id);
 
-  this->poa_->activate_object_with_id (id.in (),
-                                       context,
-                                       ACE_TRY_ENV);
+  poa->activate_object_with_id (id.in (),
+                                context,
+                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (result._retn ());
 
   result = context->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
-  // Give POA the ownership of this servant.
-  context->_remove_ref (ACE_TRY_ENV);
+  return result._retn ();
+}
+
+CosNaming::NamingContext_ptr
+TAO_Transient_Naming_Context::new_context (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
+                      ace_mon,
+                      this->lock_,
+                      CORBA::INTERNAL ());
   ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
-  // Everything went without errors: release auto pointer and return.
-  temp2.release ();
+  // Check to make sure this object didn't have <destroy> method
+  // invoked on it.
+  if (this->destroyed_)
+    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                      CosNaming::NamingContext::_nil ());
+
+  // Generate a POA id for the new context.
+  char poa_id[BUFSIZ];
+  ACE_OS::sprintf (poa_id,
+                   "%s_%ld",
+                   this->poa_id_.c_str (),
+                   this->counter_++);
+
+  // Create a new context.
+  CosNaming::NamingContext_var result =
+    make_new_context (this->poa_.in (),
+                      poa_id,
+                      this->transient_context_->total_size (),
+                      ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
+
   return result._retn ();
 }
 
@@ -286,10 +298,15 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
                         ITER_SERVANT (this, hash_iter, this->poa_.in (), this->lock_),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from auto pointer and put <bind_iter> into
-      // one.
+      // Release <hash_iter> from auto pointer, and start using
+      // reference counting to control our servant.
       temp.release ();
-      ACE_Auto_Basic_Ptr<ITER_SERVANT> temp2 (bind_iter);
+      PortableServer::ServantBase_var iter = bind_iter;
+
+      // Increment reference count on this Naming Context, so it doesn't get
+      // deleted before the BindingIterator servant gets deleted.
+      interface_->_add_ref (ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Register with the POA.
       char poa_id[BUFSIZ];
@@ -307,18 +324,6 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
 
       bi = bind_iter->_this (ACE_TRY_ENV);
       ACE_CHECK;
-
-      // Give POA the ownership of this servant.
-      bind_iter->_remove_ref (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      // Increment reference count on this Naming Context, so it doesn't get
-      // deleted before the BindingIterator servant gets deleted.
-      interface_->_add_ref (ACE_TRY_ENV);
-      ACE_CHECK;
-
-      // Everything went without error, release the auto pointer.
-      temp2.release ();
     }
 }
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

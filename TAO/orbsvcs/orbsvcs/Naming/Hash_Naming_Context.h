@@ -207,9 +207,9 @@ protected:
   // Lock used to serialize access to the underlying data structure.
 
   int destroyed_;
-  // Flag indicating whether this Naming Context has had <destroy> method
-  // invoked on it.  This is necessary because immediate destruction
-  // may not be possible if there are pending requests on this servant
+  // Flag indicating whether this Naming Context is no longer valid.
+  // This flag is necessary because immediate destruction
+  // might not be possible if there are pending requests on this servant
   // in the POA.
 
   PortableServer::POA_var poa_;
