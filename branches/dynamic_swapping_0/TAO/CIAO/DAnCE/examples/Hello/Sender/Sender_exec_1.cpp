@@ -1,6 +1,7 @@
 //$Id$
 
 #include "Sender_exec_1.h"
+#include "Sender_exec.h"
 
 char*
 Sender_Impl::Message_Impl_1::get_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
@@ -133,9 +134,9 @@ Sender_Impl::Sender_exec_1_i::ccm_remove (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 extern "C" SENDER_EXEC_Export ::Components::EnterpriseComponent_ptr
-createSenderExec_Impl (SenderSwap_exec_i *p)
+createSenderExec_Impl (Sender_Impl::SenderSwap_exec_i *p)
 {
-  Sender_exec_1_i *tmp =
+  Sender_Impl::Sender_exec_1_i *tmp =
     new Sender_Impl::Sender_exec_1_i ();
 
   tmp->swap_exec (p);
