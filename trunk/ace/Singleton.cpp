@@ -31,7 +31,7 @@ ACE_Singleton<TYPE, LOCK>::instance_i (void)
 {
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
-  // G++...
+  // G++ and it's (mis-)handling of templates and statics...
   static ACE_Singleton<TYPE, LOCK> *singleton_ = 0;
 
   return singleton_;
@@ -59,7 +59,8 @@ ACE_Singleton<TYPE, LOCK>::instance (void)
 {
   ACE_TRACE ("ACE_Singleton<TYPE, LOCK>::instance");
 
-  ACE_Singleton<TYPE, LOCK> *&singleton = ACE_Singleton<TYPE, LOCK>::instance_i ();
+  ACE_Singleton<TYPE, LOCK> *&singleton = 
+    ACE_Singleton<TYPE, LOCK>::instance_i ();
 
   // Perform the Double-Check pattern...
   if (singleton == 0)

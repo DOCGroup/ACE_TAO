@@ -14,8 +14,12 @@
 #if !defined (ACE_TEST_CONFIG_H)
 #define ACE_TEST_CONFIG_H
 
+// This first #undef protects against command-line definitions.
 #undef ACE_NDEBUG
 #include "ace/OS.h"
+
+// The second #undef protects against being reset in a config.h file.
+#undef ACE_NDEBUG
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 # include /**/ <iostream.h>

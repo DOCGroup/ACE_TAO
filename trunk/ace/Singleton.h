@@ -12,7 +12,8 @@
 // = DESCRIPTION
 //
 // = AUTHOR
-//    Tim Harrison (harrison@cs.wustl.edu), Douglas C. Schmidt, Chris Lahey, and Rich Christy
+//    Tim Harrison (harrison@cs.wustl.edu), Douglas C. Schmidt, Chris
+//    Lahey, Rich Christy, and David Levine.
 // 
 // ============================================================================
 
@@ -24,27 +25,37 @@
 template <class TYPE, class LOCK>
 class ACE_Singleton : public ACE_Cleanup
   // = TITLE
-  //     A Singleton Adapter.
+  //     A Singleton Adapter the uses the Adapter pattern to turn
+  //     ordinary classes into Singletons optimized with the
+  //     Double-Checked Locking optimization pattern.  
   //   
   // = DESCRIPTION
-  //     Uses the Adapter pattern to turn ordinary classes into
-  //     Singletons optimized with the Double-Check pattern.
+  //     This implementation is a slight variation on the GoF
+  //     Singleton pattern.  In particular, a single
+  //     <ACE_Singleton<TYPE, LOCK> > instance is allocated here, not
+  //     a <TYPE> instance.  The reason for this is to allow
+  //     registration with the <ACE_Object_Manager>, so that the
+  //     Singleton can be cleaned up when the process exits.  For this
+  //     scheme to work, a (static) <cleanup> function must be
+  //     provided.  <ACE_Singleton> provides one so that TYPE doesn't
+  //     need to.
 {
 public:
   static TYPE *instance (void);
   // Global access point to the Singleton.
 
-  static TYPE *instance (TYPE*);
+  static TYPE *instance (TYPE *);
   // Set the Singleton instance.
 
   virtual void cleanup (void *param = 0);
-  // Cleanup method, used by ace_cleanup_destroyer to destroy the singleton.
+  // Cleanup method, used by <ace_cleanup_destroyer> to destroy the
+  // <ACE_Singleton>.
 
   static void dump (void);
   // Dump the state of the object.
 
 protected:
-  ACE_Singleton (void) : instance_ (new TYPE) {}
+  ACE_Singleton (void);
   // Default constructor.
 
   TYPE *instance_;
@@ -59,33 +70,43 @@ protected:
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   static ACE_Singleton<TYPE, LOCK> *&instance_i (void);
-  // Get pointer to the Singleton instance
+  // Get pointer to the Singleton instance.
 
   static LOCK &singleton_lock_i (void);
-  // Get reference to Singleton lock;
+  // Get reference to Singleton lock.
 };
 
 template <class TYPE, class LOCK>
 class ACE_TSS_Singleton : public ACE_Cleanup
   // = TITLE
-  //     A Thread Specific Storage Singleton Adapter.
+  //     A thread-specific storage Singleton Adapter the uses the
+  //     Adapter pattern to turn ordinary classes into Singletons
+  //     optimized with the Double-Checked Locking optimization
+  //     pattern.
   //   
   // = DESCRIPTION
-  //     Uses the Adapter pattern to turn ordinary classes into
-  //     Singletons optimized with the Double-Check pattern.
+  //     This implementation is another variation on the GoF Singleton
+  //     pattern.  In this case, a single <ACE_Singleton<TYPE, LOCK> >
+  //     instance is allocated here, not a <TYPE> instance.  The
+  //     reason for this is to allow registration with the
+  //     <ACE_Object_Manager>, so that the Singleton can be cleaned up
+  //     when the process exits.  For this scheme to work, a (static)
+  //     <cleanup> function must be provided.  <ACE_Singleton>
+  //     provides one so that TYPE doesn't need to.
 {
 public:
   static TYPE *instance (void);
   // Global access point to the Singleton.
 
   virtual void cleanup (void *param = 0);
-  // Cleanup method, used by ace_cleanup_destroyer to destroy the singleton.
+  // Cleanup method, used by <ace_cleanup_destroyer> to destroy the
+  // singleton.
 
   static void dump (void);
   // Dump the state of the object.
 
 protected:
-  ACE_TSS_Singleton (void) : instance_ (new ACE_TSS<TYPE>) {}
+  ACE_TSS_Singleton (void);
   // Default constructor.
 
   ACE_TSS<TYPE> *instance_;
