@@ -22,26 +22,29 @@ namespace TAO
                                          const char *type_id
                                          ACE_ENV_ARG_DECL)
   {
-    TAO_Stub *stub =
-      target->_stubobj ();
+    TAO_Stub *stub = target->_stubobj ();
 
     // Which collocation strategy should we use?
     if (stub != 0 &&
-        stub->servant_orb_var ()->orb_core ()
-        ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+        stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
+          == TAO_ORB_Core::THRU_POA)
       {
         TAO_Object_Adapter::Servant_Upcall servant_upcall (
           stub->servant_orb_var ()->orb_core ()
         );
 
       CORBA::Object_var forward_to;
-      servant_upcall.prepare_for_upcall (stub->profile_in_use ()->object_key (),
-                                         "_is_a",
-                                         forward_to.out ()
-                                         ACE_ENV_ARG_PARAMETER);
+      servant_upcall.prepare_for_upcall (
+          stub->profile_in_use ()->object_key (),
+          "_is_a",
+          forward_to.out ()
+          ACE_ENV_ARG_PARAMETER
+        );
       ACE_CHECK_RETURN (0);
 
-      servant_upcall.pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_PARAMETER);
+      servant_upcall.pre_invoke_collocated_request (
+          ACE_ENV_SINGLE_ARG_PARAMETER
+        );
       ACE_CHECK_RETURN (0);
 
       return servant_upcall.servant ()->_is_a (type_id
@@ -50,8 +53,10 @@ namespace TAO
 
     // Direct collocation strategy is used.
     if (target->_servant () != 0)
-      return target->_servant ()->_is_a (type_id
-                                         ACE_ENV_ARG_PARAMETER);
+      {
+        return target->_servant ()->_is_a (type_id
+                                           ACE_ENV_ARG_PARAMETER);
+      }
 
     return 0;
   }
@@ -87,10 +92,14 @@ namespace TAO
               );
             ACE_TRY_CHECK;
 
-            servant_upcall.pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_PARAMETER);
+            servant_upcall.pre_invoke_collocated_request (
+                ACE_ENV_SINGLE_ARG_PARAMETER
+              );
             ACE_TRY_CHECK;
 
-            servant_upcall.servant ()->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);
+            servant_upcall.servant ()->_non_existent (
+                                           ACE_ENV_SINGLE_ARG_PARAMETER
+                                         );
             ACE_TRY_CHECK;
           }
         // Direct collocation strategy is used.
@@ -133,21 +142,27 @@ namespace TAO
                 );
 
             CORBA::Object_var forward_to;
-            servant_upcall.prepare_for_upcall (stub->profile_in_use ()->object_key (),
-                                               "_component",
-                                               forward_to.out ()
-                                               ACE_ENV_ARG_PARAMETER);
+            servant_upcall.prepare_for_upcall (
+                stub->profile_in_use ()->object_key (),
+                "_component",
+                forward_to.out ()
+                ACE_ENV_ARG_PARAMETER
+              );
             ACE_TRY_CHECK;
 
             _tao_retval =
-              servant_upcall.servant ()->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+              servant_upcall.servant ()->_get_component (
+                                             ACE_ENV_SINGLE_ARG_PARAMETER
+                                           );
             ACE_TRY_CHECK;
           }
         // Direct collocation strategy is used.
         else if (target->_servant () != 0)
           {
             _tao_retval =
-              target->_servant ()->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+              target->_servant ()->_get_component (
+                                       ACE_ENV_SINGLE_ARG_PARAMETER
+                                     );
             ACE_TRY_CHECK;
           }
       }
@@ -178,8 +193,8 @@ namespace TAO
       {
         // Which collocation strategy should we use?
         if (stub != 0 &&
-            stub->servant_orb_var ()->orb_core ()
-              ->get_collocation_strategy () == TAO_ORB_Core::THRU_POA)
+            stub->servant_orb_var ()->orb_core ()->get_collocation_strategy ()
+              == TAO_ORB_Core::THRU_POA)
           {
             TAO_Object_Adapter::Servant_Upcall servant_upcall (
                 target->_stubobj ()->servant_orb_var ()->orb_core ()
@@ -187,24 +202,32 @@ namespace TAO
 
             CORBA::Object_var forward_to;
 
-            servant_upcall.prepare_for_upcall (target->_stubobj ()->object_key (),
-                                               "_interface",
-                                               forward_to.out ()
-                                               ACE_ENV_ARG_PARAMETER);
+            servant_upcall.prepare_for_upcall (
+                target->_stubobj ()->object_key (),
+                "_interface",
+                forward_to.out ()
+                ACE_ENV_ARG_PARAMETER
+              );
             ACE_TRY_CHECK;
 
-            servant_upcall.pre_invoke_collocated_request (ACE_ENV_SINGLE_ARG_PARAMETER);
+            servant_upcall.pre_invoke_collocated_request (
+                ACE_ENV_SINGLE_ARG_PARAMETER
+              );
             ACE_TRY_CHECK;
 
             _tao_retval =
-              servant_upcall.servant ()->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
+              servant_upcall.servant ()->_get_interface (
+                  ACE_ENV_SINGLE_ARG_PARAMETER
+                );
             ACE_TRY_CHECK;
           }
         // Direct collocation strategy is used.
         else if (target->_servant () != 0)
           {
             _tao_retval =
-              target->_servant ()->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
+              target->_servant ()->_get_interface (
+                  ACE_ENV_SINGLE_ARG_PARAMETER
+                );
             ACE_TRY_CHECK;
           }
       }
@@ -243,7 +266,7 @@ TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (
 }
 
 int
-_TAO_collocation_Object_Proxy_Broker_Factory_Initializer (size_t )
+_TAO_collocation_Object_Proxy_Broker_Factory_Initializer (size_t)
 {
   _TAO_Object_Proxy_Broker_Factory_function_pointer =
     _TAO_collocation_Object_Proxy_Broker_Factory;
@@ -253,5 +276,9 @@ _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (size_t )
 
 static int
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer_Scarecrow =
-_TAO_collocation_Object_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (size_t,
-                                                                                _TAO_collocation_Object_Proxy_Broker_Factory_Initializer));
+_TAO_collocation_Object_Proxy_Broker_Factory_Initializer (
+    ACE_reinterpret_cast (
+        size_t,
+        _TAO_collocation_Object_Proxy_Broker_Factory_Initializer
+      )
+  );

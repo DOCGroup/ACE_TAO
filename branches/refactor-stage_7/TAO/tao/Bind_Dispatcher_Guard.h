@@ -16,11 +16,12 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Basic_Types.h"
+#include "tao/TAO_Export.h"
 
 class TAO_Reply_Dispatcher;
 class TAO_Transport_Mux_Strategy;
 
-class TAO_Bind_Dispatcher_Guard
+class TAO_Export TAO_Bind_Dispatcher_Guard
 {
 public:
   TAO_Bind_Dispatcher_Guard (CORBA::ULong request_id,

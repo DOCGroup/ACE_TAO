@@ -19,6 +19,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Object_Proxy_Broker.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,7 +36,8 @@ namespace TAO
    * on remote objects.
    */
 
-  class TAO_Export Collocated_Object_Proxy_Broker : public Object_Proxy_Broker
+  class TAO_PortableServer_Export Collocated_Object_Proxy_Broker 
+    : public Object_Proxy_Broker
   {
   public:
     /// Please see the documentation in Object_Proxy_Broker.h for
