@@ -1,3 +1,27 @@
+Sat Jul 18 10:52:49 1998  Gonzalo Diethelm  <gonzo@tango.cs.wustl.edu>
+
+	* ace/Svc_Conf_l.cpp: 
+	* ace/Svc_Conf_y.cpp: 
+	Move the Id and added ACE_RCSID.
+	The #line commands changed their line numbers.
+
+	* ace/Svc_Conf_Tokens.h: 
+	Got rid of the Id (maintenance problem).
+
+	* ace/Svc_Conf.l: 
+	* ace/Svc_Conf.y: 
+	Added an ACE_RCSID, and erased a few white spaces at the end.
+
+	* etc/Svc_Conf_l.cpp.diff: 
+	* etc/Svc_Conf_y.cpp.diff: 
+	Got rid of a couple of RCS Ids that were being "replaced" by the
+	patches. These were probably a maintenance problem and didn't
+	really add much. I also cleaned up the patches: there were a
+	couple of useless replacements (lines with white spaces at the
+	ends, etc.), and some of the line offsets were wrong (but patch
+	could still catch them with its fuzz factors). Now the patches
+	apply cleanly.
+
 Sat Jul 18 9:00:00 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
 	* DCS: Born 36 years ago, at this moment.  Yow, I've now become
