@@ -65,7 +65,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /Gm /GX /Zi /Od /I "../../../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "DT_CREATOR_BUILD_DLL" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /Gm /GX /Zi /Od /I "../../../../" /I "../../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "FP_DT_CREATOR_BUILD_DLL" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -102,6 +102,10 @@ SOURCE=.\FP_SchedulingC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\Task_Stats.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\test.cpp
 # End Source File
 # Begin Source File
@@ -127,6 +131,14 @@ SOURCE=.\FP_Scheduler.h
 # Begin Source File
 
 SOURCE=.\FP_SchedulingC.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\Task_Stats.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\Task_Stats.inl
 # End Source File
 # Begin Source File
 

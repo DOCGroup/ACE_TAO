@@ -176,10 +176,10 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 		  guid->get_buffer (),
 		  guid->length ());
   
-  ACE_DEBUG ((LM_DEBUG,
-	      "The Guid is %d %d\n",
-	      id,
-	      server_guid_counter.value_i ()));
+ //  ACE_DEBUG ((LM_DEBUG,
+// 	      "The Guid is %d %d\n",
+// 	      id,
+// 	      server_guid_counter.value_i ()));
 
   guid_out.ptr () = guid;
   //***************************************

@@ -10,6 +10,7 @@
 #include "ace/Synch.h"
 #include "FP_DT_Creator.h"
 
+class Task_Stats;
 
 class DT_Test 
 {
@@ -28,8 +29,7 @@ class DT_Test
   void dt_creator (FP_DT_Creator* dt_creator);
 
   Fixed_Priority_Scheduler* scheduler (void);
-  
-  
+
  private:
   /// = Policies
   long thr_sched_policy_;
