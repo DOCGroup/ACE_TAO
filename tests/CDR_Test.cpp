@@ -12,7 +12,7 @@
 //    Checks the functionality of the ACE CDR streams.
 //
 // = AUTHORS
-//    Istvan Buki <istvan.buki@euronet.be> and 
+//    Istvan Buki <istvan.buki@euronet.be> and
 //    Jeff Parsons <parsons@cs.wustl.edu> and
 //    Carlos O'Ryan <coryan@cs.wustl.edu>
 //
@@ -41,7 +41,7 @@ struct CDR_Test_Types
   const CDR::Char *str;
   CDR::Double d;
 
-  enum 
+  enum
   {
     ARRAY_SIZE = 10
   };
@@ -95,10 +95,10 @@ test_put (ACE_OutputCDR &cdr,
                           1);
 
       if (cdr.write_string (test_types.str) == 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "write_string[%d] failed\n",
-			   i),
-			  1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "write_string[%d] failed\n",
+                           i),
+                          1);
 
     }
 
@@ -234,7 +234,7 @@ short_stream (void)
 
   u_long in_chunk, out_chunk;
 
-  for (i = 0; i < len; i++) 
+  for (i = 0; i < len; i++)
     {
       in_chunk = u_long (* (in_mb->rd_ptr () + i));
       out_chunk = u_long (* (out_mb->rd_ptr () + i));
@@ -254,7 +254,7 @@ short_stream (void)
   CDR::ULong ul1 = 0UL;
   CDR::Float f1 = 0.0f;
   CDR::Double d1 = 0.0;
-  
+
   // Arrays for input
   CDR::Short s_array1[3];
   CDR::Long l_array1[3];
@@ -358,12 +358,14 @@ short_stream (void)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Auto_Basic_Array_Ptr<CDR::Char>;
+// Not necessary here, because it's instantiated in ace/Memory_Pool.cpp.
+// template class ACE_Auto_Basic_Array_Ptr<CDR::Char>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Auto_Basic_Array_Ptr<CDR::Char>
+// Not necessary here, because it's instantiated in ace/Memory_Pool.cpp.
+// #pragma instantiate ACE_Auto_Basic_Array_Ptr<CDR::Char>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-int 
+int
 main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("CDR_Test"));
@@ -375,33 +377,33 @@ main (int argc, ASYS_TCHAR *argv[])
 
   ACE_Get_Opt get_opt (argc, argv, "dn:l:");
   int opt, debug = 0;
-      
+
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
-	{
-	  case 'd':
-	    debug++;
-	    break;
-	  case 'n':
-	    n = ACE_OS::atoi (get_opt.optarg);
-	    break;
-	  case 'l':
-	    nloops = ACE_OS::atoi (get_opt.optarg);
-	    break;
-	  case '?':
-	  default:
-	    ACE_DEBUG ((LM_DEBUG,
-	                "Usage: %s "
-			"-d debug"
-			"-n <num> "
-			"-l <loops> "
-			"\n",
-			argv[0]));
-	    return -1;
-	}
+        {
+          case 'd':
+            debug++;
+            break;
+          case 'n':
+            n = ACE_OS::atoi (get_opt.optarg);
+            break;
+          case 'l':
+            nloops = ACE_OS::atoi (get_opt.optarg);
+            break;
+          case '?':
+          default:
+            ACE_DEBUG ((LM_DEBUG,
+                        "Usage: %s "
+                        "-d debug"
+                        "-n <num> "
+                        "-l <loops> "
+                        "\n",
+                        argv[0]));
+            return -1;
+        }
     }
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "Testing ACE CDR functions - short stream\n\n"));
 
@@ -416,29 +418,29 @@ main (int argc, ASYS_TCHAR *argv[])
     {
       ACE_OutputCDR output;
       CDR_Test_Types test_types;
-	  
+
       if (test_put (output, test_types) != 0)
         return 1;
 
       ACE_InputCDR input (output);
       if (debug > 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
+        {
+          ACE_DEBUG ((LM_DEBUG,
                       "Output CDR: \n"));
-	  ACE_HEX_DUMP ((LM_DEBUG,
+          ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
-	  ACE_DEBUG ((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                       "Input CDR: \n"));
-	  ACE_HEX_DUMP ((LM_DEBUG,
+          ACE_HEX_DUMP ((LM_DEBUG,
                          input.rd_ptr(),
                          64));
-	}
+        }
 
       if (test_get (input, test_types) != 0)
         return 1;
     }
-      
+
   ACE_DEBUG ((LM_DEBUG,
               "Long stream - no errors\n\n"));
 
@@ -446,4 +448,3 @@ main (int argc, ASYS_TCHAR *argv[])
 
   return 0;
 }
-
