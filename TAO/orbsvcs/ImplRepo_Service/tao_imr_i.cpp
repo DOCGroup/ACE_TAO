@@ -10,6 +10,14 @@
 // How many servers should we get at once?
 const size_t IR_LIST_CHUNK = 10;
 
+// exception return codes
+const int NORMAL                  = 0;
+const int UNKNOWN                 = 1;
+const int NO_PERMISSION           = 2;
+const int ALREADY_REGISTERED      = 3;
+const int CANNOT_ACTIVATE         = 4;
+const int NOT_FOUND               = 5;
+
 // Constructor
 
 TAO_IMR_i::TAO_IMR_i (void)
@@ -33,7 +41,7 @@ TAO_IMR_i::run ()
   if (this->op_ == 0)
   {
     ACE_ERROR ((LM_ERROR, "Unknown operation"));
-    return -1;
+    return UNKNOWN;
   }
 
   return this->op_->run ();
@@ -619,22 +627,22 @@ TAO_IMR_Op_Activate::run (void)
       ACE_ERROR ((LM_ERROR, "Cannot activate server <%s>, reason: <%s>\n",
                             this->server_name_.c_str (),
                             ex.reason.in ()));
-      return -1;
+      return CANNOT_ACTIVATE;
     }
   ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
-      return -1;
+      return NOT_FOUND;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Activating Server");
-      return -1;
+      return UNKNOWN;
     }
   ACE_ENDTRY;
 
   // Success
-  return 0;
+  return NORMAL;
 }
 
 int
@@ -658,17 +666,22 @@ TAO_IMR_Op_Add::run (void)
   ACE_CATCH (ImplementationRepository::Administration::AlreadyRegistered, ex)
     {
       ACE_ERROR ((LM_ERROR, "Server <%s> already registered!\n", this->server_name_.c_str ()));
-      return -1;
+      return ALREADY_REGISTERED;
+    }
+  ACE_CATCH (CORBA::NO_PERMISSION, ex) 
+    {
+      ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
+      return NO_PERMISSION;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Adding server");
-      return -1;
+      return UNKNOWN;
     }
   ACE_ENDTRY;
 
   // Success
-  return 0;
+  return NORMAL;
 }
 
 int
@@ -720,10 +733,11 @@ TAO_IMR_Op_Autostart::run (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "autostart");
-      return -1;
+      return UNKNOWN;
     }
   ACE_ENDTRY;
-  return 0;
+
+  return NORMAL;
 }
 
 int
@@ -798,10 +812,11 @@ TAO_IMR_Op_IOR::run (void)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Ior");
-      return -1;
+      return UNKNOWN;
     }
   ACE_ENDTRY;
-  return 0;
+
+  return NORMAL;
 }
 
 int
@@ -857,15 +872,16 @@ TAO_IMR_Op_List::run (void)
   ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
-      return -1;
+      return NOT_FOUND;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "List");
-      return -1;
+      return UNKNOWN;
     }
   ACE_ENDTRY;
-  return 0;
+
+  return NORMAL;
 }
 
 int
@@ -882,17 +898,22 @@ TAO_IMR_Op_Remove::run (void)
   ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
-      return -1;
+      return NOT_FOUND;
+    }
+  ACE_CATCH (CORBA::NO_PERMISSION, ex) 
+    {
+      ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
+      return NO_PERMISSION;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Removing Server");
-      return -1;
+      return UNKNOWN;
     }
   ACE_ENDTRY;
 
   // Success
-  return 0;
+  return NORMAL;
 }
 
 int
@@ -909,17 +930,17 @@ TAO_IMR_Op_Shutdown::run (void)
   ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>!\n", this->server_name_.c_str ()));
-      return -1;
+      return NOT_FOUND;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Shutting Down Server");
-      return -1;
+      return UNKNOWN;
     }
   ACE_ENDTRY;
 
   // Success
-  return 0;
+  return NORMAL;
 }
 
 int
@@ -957,17 +978,22 @@ TAO_IMR_Op_Update::run (void)
   ACE_CATCH (ImplementationRepository::Administration::NotFound, ex)
     {
       ACE_ERROR ((LM_ERROR, "Could not find server <%s>\n", this->server_name_.c_str ()));
-      return -1;
+      return NOT_FOUND;
+    }
+  ACE_CATCH (CORBA::NO_PERMISSION, ex) 
+    {
+      ACE_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
+      return NO_PERMISSION;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Updating server");
-      return -1;
+      return UNKNOWN;
     }
   ACE_ENDTRY;
 
   // Success
-  return 0;
+  return NORMAL;
 }
 
 

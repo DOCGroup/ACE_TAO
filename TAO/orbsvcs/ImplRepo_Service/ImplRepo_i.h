@@ -80,8 +80,7 @@ public:
     ) ACE_THROW_SPEC ((CORBA::SystemException,
                        ImplementationRepository::Administration::NotFound));
 
-  /// Attempts to gracefully shut down the server, if that fails, will try
-  /// to do it ungracefully.
+  /// Attempts to gracefully shut down the server, 
   virtual void shutdown_server (
       const char *server, 
       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()

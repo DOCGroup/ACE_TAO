@@ -501,7 +501,12 @@ ImplRepo_i::register_server (const char *server,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::AlreadyRegistered))
 {
-  if (OPTIONS::instance()->debug () >= 2)
+  if (OPTIONS::instance ()->readonly ())
+    {
+      ACE_THROW (CORBA::NO_PERMISSION ());
+    }
+
+  if (OPTIONS::instance ()->debug () >= 2)
     {
       ACE_DEBUG ((LM_DEBUG, "Server: %s\n"
                             "Command Line: %s\n"
@@ -564,9 +569,14 @@ ImplRepo_i::register_server (const char *server,
 void
 ImplRepo_i::reregister_server (const char *server,
                                const ImplementationRepository::StartupOptions &options,
-                               CORBA::Environment &)
+                               CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (OPTIONS::instance ()->readonly ())
+    {
+      ACE_THROW (CORBA::NO_PERMISSION ());
+    }
+
   // Get current starting up value
   int starting_up = this->repository_.starting_up (server);
 
@@ -615,6 +625,11 @@ ImplRepo_i::remove_server (const char *server,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound))
 {
+  if (OPTIONS::instance ()->readonly ())
+    {
+      ACE_THROW (CORBA::NO_PERMISSION ());
+    }
+
   if (this->repository_.remove (server) == 0)
     {
       if (OPTIONS::instance()->debug () >= 1)
