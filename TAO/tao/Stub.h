@@ -80,6 +80,31 @@ struct TAO_Param_Data
   // compiler which generates the stub code.
 };
 
+// Function pointer returning a pointer to CORBA::Exception. This is used to
+// describe the allocator for user-defined exceptions that are used internally
+// by the interpreter.
+typedef CORBA::Exception* (*TAO_Exception_Alloc) (void);
+
+struct TAO_Exception_Data
+{
+  // = TITLE
+  //   TAO_Exception_Data
+  //
+  // = DESCRIPTION
+  //   Description of a single exception
+  //
+  //   The interpreter needs a way to allocate memory to hold the exception
+  //   that was raised by the stub. This data structure provides the typecode
+  //   for the exception as well as a static function pointer that does the job
+  //   of memory allocation.
+
+  CORBA::TypeCode_ptr tc;
+  // typecode describing the exception
+
+  TAO_Exception_Alloc alloc;
+  // the allocator for this exception
+};
+
 struct TAO_Call_Data
 {
   // = TITLE
@@ -122,7 +147,8 @@ struct TAO_Call_Data
   u_int except_count;
   // # exceptions.
 
-  CORBA::TypeCode_ptr *excepts;
+  //  CORBA::TypeCode_ptr *excepts;
+  TAO_Exception_Data *excepts;
   // Their descriptions.
 };
 

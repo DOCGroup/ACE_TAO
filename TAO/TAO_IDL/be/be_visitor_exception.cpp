@@ -488,6 +488,14 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "CORBA::TypeCode_ptr " << node->tc_name () << " = &_tc__tc_" <<
         node->flatname () << ";\n\n";
 
+      // generate the _alloc method
+      os->indent ();
+      *os << "static CORBA::Exception *" << node->flatname ()
+          << "_alloc (void)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "return new " << node->name () << ";" << be_uidt_nl;
+      *os << "}\n\n";
+
       node->cli_stub_gen (I_TRUE);
     }
 

@@ -345,7 +345,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
           if (node->exceptions ())
             {
               *os << node->exceptions ()->length ()
-                  << ", _tao_" << node->flatname () << "_exceptlist};\n\n";
+                  << ", _tao_" << node->flatname () << "_exceptiondata};\n\n";
             }
           else
             *os << "0, 0};\n\n";
@@ -3207,8 +3207,13 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
   if (node->exceptions ())
     {
       os->indent ();
-      *os << "CORBA::TypeCode_ptr " << "_tao_" << node->flatname ()
+#if 0
+      *os << "static CORBA::TypeCode_ptr " << "_tao_" << node->flatname ()
           << "_exceptlist [] = {" << be_idt_nl;
+#endif
+      *os << "static TAO_Exception_Data " << "_tao_" << node->flatname ()
+          << "_exceptiondata [] = " << be_nl;
+      *os << "{" << be_idt_nl;
       // initialize an iterator to iterate thru the exception list
       UTL_ExceptlistActiveIterator *ei;
       ACE_NEW_RETURN (ei,
@@ -3228,12 +3233,16 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
                                  "codegen for scope failed\n"), -1);
 
             }
-          os->indent ();
+          *os << "{";
           *os << excp->tc_name ();
-
+          *os << ", ";
+          *os << excp->flatname () << "_alloc}";
           ei->next ();
           if (!ei->is_done ())
-            *os << ",\n";
+            {
+              *os << ",\n";
+              os->indent ();
+            }
           // except the last one is processed?
 
         } // end of while loop
