@@ -1,3 +1,10 @@
+Tue May 25 21:38:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/UNIX_Addr.cpp:
+	  The default constructor was not setting the address family to
+	  AF_UNIX.  Now that we do so we can let the OS select a ephemeral 
+	  UNIX domain endpoint for us.
+
 Tue May 25 19:20:15 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/run_tests.(sh bat): Added SOCK_Send_Recv_Test.
