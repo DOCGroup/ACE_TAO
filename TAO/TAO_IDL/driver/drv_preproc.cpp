@@ -503,6 +503,8 @@ DRV_check_for_include (const char* buf)
   // we don't want to generate header includes for that.
   if (ACE_OS::strcmp (file_name, "orb.idl") == 0)
     {
+      // However, we do want to generate includes for the
+      // .pidl files that it contains.
       DRV_get_orb_idl_includes ();
     }
   else
@@ -518,24 +520,17 @@ DRV_get_orb_idl_includes (void)
   orb_idl_path += "/orb.idl";
   FILE *fd = ACE_OS::fopen (orb_idl_path.fast_rep (), "r");
   
-  static char buf[LINEBUF_SIZE + 1];
-  char *s = 0;
-  
-//  while ((s = fgets (buf, LINEBUF_SIZE, fd)) && !feof (fd))
   while (DRV_get_line (fd))
     {
-      // We really need to know whether this line is a "#include
-      // ...". If so, we would like to separate the "file name" and
-      // keep that in the idl_global. We need them to produce
-      // "#include's in the stubs and skeletons.
-//      DRV_check_for_include (buf);
+      // Find the included .pidl files and add them to
+      // the included IDL file list.
       DRV_check_for_include (drv_line);
     }
     
   ACE_OS::fclose (fd);
 }
 
-// Copy from stdin to a file
+// Copy to a file.
 static void
 DRV_copy_input (FILE *fin,
                 char *fn,
