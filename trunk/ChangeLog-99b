@@ -1,15 +1,20 @@
+Wed Feb 03 07:02:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/CDR_Test.cpp: commented out ACE_Auto_Basic_Array_Ptr<CDR:Char>
+          explicit instantiation, because it's in ace/Memory_Pool.cpp.
+
 Tue Feb  2 21:35:21 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/007/client_handler.h: 
-	* docs/tutorials/007/thread_pool.h: 
-	  A couple of syntax goofs.  I'm surprised it compiled for anyone!
-	
-	* docs/tutorials/007/thread_pool.h: 
-	  Changed ACE_Time_Value(0.25) to ACE_Time_Value(0,250000) 
+        * docs/tutorials/007/client_handler.h:
+        * docs/tutorials/007/thread_pool.h:
+          A couple of syntax goofs.  I'm surprised it compiled for anyone!
 
-	* docs/tutorials/*/Makefile:
-  	  Added '.depend' to the list of files removed by the CLEAN
-	  target.  I shoulda' done this the other day.
+        * docs/tutorials/007/thread_pool.h:
+          Changed ACE_Time_Value(0.25) to ACE_Time_Value(0,250000)
+
+        * docs/tutorials/*/Makefile:
+          Added '.depend' to the list of files removed by the CLEAN
+          target.  I shoulda' done this the other day.
 
 Tue Feb  2 20:02:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
