@@ -22,6 +22,11 @@
 
 #  include "ace/Synch.h"
 
+// @@ Can we use the ACE_SYNCH_MUTEX here rather than these typedefs?
+#  if !defined (ACE_HAS_THREADS)
+typedef ACE_Null_Mutex ACE_Thread_Mutex;
+#  endif /* ACE_HAS_THREADS */
+
 class ACE_Svc_Export TAO_Internal
 // = TITLE
 //    This class encapsulates some private behaviors and global data
