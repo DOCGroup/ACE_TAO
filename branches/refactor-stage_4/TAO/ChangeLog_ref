@@ -1,3 +1,31 @@
+Mon Jul 28 15:48:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/ORB_Core.cpp:
+
+          Added #include of ace/streams,
+
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.h:
+        * tao/Messaging/Messaging_Policy_i.cpp:
+        * tao/Messaging/Messaging_Policy_i.h:
+        * tao/Messaging/Messaging_RT_PolicyC.cpp:
+        * tao/Messaging/Messaging_RT_PolicyC.h:
+
+          Changed signature of the hook() method to use bool&
+          instead of int&, to interoperate with changes in the
+          ORB core.
+
+        * tao/Messaging/MessagingC.cpp:
+        * tao/Messaging/MessagingC.h:
+        * tao/Messaging/Messaging_No_ImplC.cpp:
+        * tao/Messaging/Messaging_No_ImplC.h:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.cpp:
+        * tao/Messaging/Messaging_SyncScope_PolicyC.h:
+        * tao/Messaging/TAO_ExtC.cpp:
+        * tao/Messaging/TAO_ExtC.h:
+
+          Removed tao_*_life and tao_*_cast.
+
 Mon Jul 28 15:16:03 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:

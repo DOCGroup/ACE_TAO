@@ -181,37 +181,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        RebindPolicy,
-        tao_RebindPolicy_life
+        RebindPolicy
       >
     RebindPolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        RebindPolicy,
-        tao_RebindPolicy_life
+        RebindPolicy
       >
     RebindPolicy_out;
-
-  struct TAO_Messaging_Export tao_RebindPolicy_life
-  {
-    static RebindPolicy_ptr tao_duplicate (RebindPolicy_ptr);
-    static void tao_release (RebindPolicy_ptr);
-    static RebindPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        RebindPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_RebindPolicy_cast
-  {
-    static RebindPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -332,37 +310,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        RequestPriorityPolicy,
-        tao_RequestPriorityPolicy_life
+        RequestPriorityPolicy
       >
     RequestPriorityPolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        RequestPriorityPolicy,
-        tao_RequestPriorityPolicy_life
+        RequestPriorityPolicy
       >
     RequestPriorityPolicy_out;
-
-  struct TAO_Messaging_Export tao_RequestPriorityPolicy_life
-  {
-    static RequestPriorityPolicy_ptr tao_duplicate (RequestPriorityPolicy_ptr);
-    static void tao_release (RequestPriorityPolicy_ptr);
-    static RequestPriorityPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        RequestPriorityPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_RequestPriorityPolicy_cast
-  {
-    static RequestPriorityPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -451,37 +407,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        ReplyPriorityPolicy,
-        tao_ReplyPriorityPolicy_life
+        ReplyPriorityPolicy
       >
     ReplyPriorityPolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        ReplyPriorityPolicy,
-        tao_ReplyPriorityPolicy_life
+        ReplyPriorityPolicy
       >
     ReplyPriorityPolicy_out;
-
-  struct TAO_Messaging_Export tao_ReplyPriorityPolicy_life
-  {
-    static ReplyPriorityPolicy_ptr tao_duplicate (ReplyPriorityPolicy_ptr);
-    static void tao_release (ReplyPriorityPolicy_ptr);
-    static ReplyPriorityPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ReplyPriorityPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_ReplyPriorityPolicy_cast
-  {
-    static ReplyPriorityPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -570,37 +504,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        RequestStartTimePolicy,
-        tao_RequestStartTimePolicy_life
+        RequestStartTimePolicy
       >
     RequestStartTimePolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        RequestStartTimePolicy,
-        tao_RequestStartTimePolicy_life
+        RequestStartTimePolicy
       >
     RequestStartTimePolicy_out;
-
-  struct TAO_Messaging_Export tao_RequestStartTimePolicy_life
-  {
-    static RequestStartTimePolicy_ptr tao_duplicate (RequestStartTimePolicy_ptr);
-    static void tao_release (RequestStartTimePolicy_ptr);
-    static RequestStartTimePolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        RequestStartTimePolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_RequestStartTimePolicy_cast
-  {
-    static RequestStartTimePolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -689,37 +601,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        RequestEndTimePolicy,
-        tao_RequestEndTimePolicy_life
+        RequestEndTimePolicy
       >
     RequestEndTimePolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        RequestEndTimePolicy,
-        tao_RequestEndTimePolicy_life
+        RequestEndTimePolicy
       >
     RequestEndTimePolicy_out;
-
-  struct TAO_Messaging_Export tao_RequestEndTimePolicy_life
-  {
-    static RequestEndTimePolicy_ptr tao_duplicate (RequestEndTimePolicy_ptr);
-    static void tao_release (RequestEndTimePolicy_ptr);
-    static RequestEndTimePolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        RequestEndTimePolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_RequestEndTimePolicy_cast
-  {
-    static RequestEndTimePolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -808,37 +698,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        ReplyStartTimePolicy,
-        tao_ReplyStartTimePolicy_life
+        ReplyStartTimePolicy
       >
     ReplyStartTimePolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        ReplyStartTimePolicy,
-        tao_ReplyStartTimePolicy_life
+        ReplyStartTimePolicy
       >
     ReplyStartTimePolicy_out;
-
-  struct TAO_Messaging_Export tao_ReplyStartTimePolicy_life
-  {
-    static ReplyStartTimePolicy_ptr tao_duplicate (ReplyStartTimePolicy_ptr);
-    static void tao_release (ReplyStartTimePolicy_ptr);
-    static ReplyStartTimePolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ReplyStartTimePolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_ReplyStartTimePolicy_cast
-  {
-    static ReplyStartTimePolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -927,37 +795,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        ReplyEndTimePolicy,
-        tao_ReplyEndTimePolicy_life
+        ReplyEndTimePolicy
       >
     ReplyEndTimePolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        ReplyEndTimePolicy,
-        tao_ReplyEndTimePolicy_life
+        ReplyEndTimePolicy
       >
     ReplyEndTimePolicy_out;
-
-  struct TAO_Messaging_Export tao_ReplyEndTimePolicy_life
-  {
-    static ReplyEndTimePolicy_ptr tao_duplicate (ReplyEndTimePolicy_ptr);
-    static void tao_release (ReplyEndTimePolicy_ptr);
-    static ReplyEndTimePolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        ReplyEndTimePolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_ReplyEndTimePolicy_cast
-  {
-    static ReplyEndTimePolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -1046,37 +892,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        RelativeRequestTimeoutPolicy,
-        tao_RelativeRequestTimeoutPolicy_life
+        RelativeRequestTimeoutPolicy
       >
     RelativeRequestTimeoutPolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        RelativeRequestTimeoutPolicy,
-        tao_RelativeRequestTimeoutPolicy_life
+        RelativeRequestTimeoutPolicy
       >
     RelativeRequestTimeoutPolicy_out;
-
-  struct TAO_Messaging_Export tao_RelativeRequestTimeoutPolicy_life
-  {
-    static RelativeRequestTimeoutPolicy_ptr tao_duplicate (RelativeRequestTimeoutPolicy_ptr);
-    static void tao_release (RelativeRequestTimeoutPolicy_ptr);
-    static RelativeRequestTimeoutPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        RelativeRequestTimeoutPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_RelativeRequestTimeoutPolicy_cast
-  {
-    static RelativeRequestTimeoutPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -1197,37 +1021,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        RoutingPolicy,
-        tao_RoutingPolicy_life
+        RoutingPolicy
       >
     RoutingPolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        RoutingPolicy,
-        tao_RoutingPolicy_life
+        RoutingPolicy
       >
     RoutingPolicy_out;
-
-  struct TAO_Messaging_Export tao_RoutingPolicy_life
-  {
-    static RoutingPolicy_ptr tao_duplicate (RoutingPolicy_ptr);
-    static void tao_release (RoutingPolicy_ptr);
-    static RoutingPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        RoutingPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_RoutingPolicy_cast
-  {
-    static RoutingPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -1316,37 +1118,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        MaxHopsPolicy,
-        tao_MaxHopsPolicy_life
+        MaxHopsPolicy
       >
     MaxHopsPolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        MaxHopsPolicy,
-        tao_MaxHopsPolicy_life
+        MaxHopsPolicy
       >
     MaxHopsPolicy_out;
-
-  struct TAO_Messaging_Export tao_MaxHopsPolicy_life
-  {
-    static MaxHopsPolicy_ptr tao_duplicate (MaxHopsPolicy_ptr);
-    static void tao_release (MaxHopsPolicy_ptr);
-    static MaxHopsPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        MaxHopsPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_MaxHopsPolicy_cast
-  {
-    static MaxHopsPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 
@@ -1435,37 +1215,15 @@ TAO_NAMESPACE  Messaging
 
   typedef
     TAO_Objref_Var_T<
-        QueueOrderPolicy,
-        tao_QueueOrderPolicy_life
+        QueueOrderPolicy
       >
     QueueOrderPolicy_var;
 
   typedef
     TAO_Objref_Out_T<
-        QueueOrderPolicy,
-        tao_QueueOrderPolicy_life
+        QueueOrderPolicy
       >
     QueueOrderPolicy_out;
-
-  struct TAO_Messaging_Export tao_QueueOrderPolicy_life
-  {
-    static QueueOrderPolicy_ptr tao_duplicate (QueueOrderPolicy_ptr);
-    static void tao_release (QueueOrderPolicy_ptr);
-    static QueueOrderPolicy_ptr tao_nil (void);
-    static CORBA::Boolean tao_marshal (
-        QueueOrderPolicy_ptr,
-        TAO_OutputCDR &
-      );
-  };
-
-  struct TAO_Messaging_Export tao_QueueOrderPolicy_cast
-  {
-    static QueueOrderPolicy_ptr tao_narrow (
-        CORBA::Object_ptr
-        ACE_ENV_ARG_DECL
-      );
-    static CORBA::Object_ptr tao_upcast (void *);
-  };
 
 #endif /* end #if !defined */
 

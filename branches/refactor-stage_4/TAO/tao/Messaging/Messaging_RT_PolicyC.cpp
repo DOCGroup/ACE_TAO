@@ -94,58 +94,6 @@ TAO_NAMESPACE_END
 
 int Messaging::RelativeRoundtripTimeoutPolicy::_tao_class_id = 0;
 
-Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::tao_RelativeRoundtripTimeoutPolicy_life::tao_duplicate (
-    Messaging::RelativeRoundtripTimeoutPolicy_ptr p
-  )
-{
-  return Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_RelativeRoundtripTimeoutPolicy_life::tao_release (
-    Messaging::RelativeRoundtripTimeoutPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::tao_RelativeRoundtripTimeoutPolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_RelativeRoundtripTimeoutPolicy_life::tao_marshal (
-    Messaging::RelativeRoundtripTimeoutPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::RelativeRoundtripTimeoutPolicy_ptr
-Messaging::tao_RelativeRoundtripTimeoutPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::RelativeRoundtripTimeoutPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_RelativeRoundtripTimeoutPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::RelativeRoundtripTimeoutPolicy **tmp =
-    ACE_static_cast (Messaging::RelativeRoundtripTimeoutPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<

@@ -204,58 +204,6 @@ TAO_NAMESPACE_END
 
 int Messaging::RebindPolicy::_tao_class_id = 0;
 
-Messaging::RebindPolicy_ptr
-Messaging::tao_RebindPolicy_life::tao_duplicate (
-    Messaging::RebindPolicy_ptr p
-  )
-{
-  return Messaging::RebindPolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_RebindPolicy_life::tao_release (
-    Messaging::RebindPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::RebindPolicy_ptr
-Messaging::tao_RebindPolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::RebindPolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_RebindPolicy_life::tao_marshal (
-    Messaging::RebindPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::RebindPolicy_ptr
-Messaging::tao_RebindPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::RebindPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_RebindPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::RebindPolicy **tmp =
-    ACE_static_cast (Messaging::RebindPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -546,58 +494,6 @@ template class
 
 int Messaging::RequestPriorityPolicy::_tao_class_id = 0;
 
-Messaging::RequestPriorityPolicy_ptr
-Messaging::tao_RequestPriorityPolicy_life::tao_duplicate (
-    Messaging::RequestPriorityPolicy_ptr p
-  )
-{
-  return Messaging::RequestPriorityPolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_RequestPriorityPolicy_life::tao_release (
-    Messaging::RequestPriorityPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::RequestPriorityPolicy_ptr
-Messaging::tao_RequestPriorityPolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::RequestPriorityPolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_RequestPriorityPolicy_life::tao_marshal (
-    Messaging::RequestPriorityPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::RequestPriorityPolicy_ptr
-Messaging::tao_RequestPriorityPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::RequestPriorityPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_RequestPriorityPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::RequestPriorityPolicy **tmp =
-    ACE_static_cast (Messaging::RequestPriorityPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -787,58 +683,6 @@ TAO_NAMESPACE_END
 
 int Messaging::ReplyPriorityPolicy::_tao_class_id = 0;
 
-Messaging::ReplyPriorityPolicy_ptr
-Messaging::tao_ReplyPriorityPolicy_life::tao_duplicate (
-    Messaging::ReplyPriorityPolicy_ptr p
-  )
-{
-  return Messaging::ReplyPriorityPolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_ReplyPriorityPolicy_life::tao_release (
-    Messaging::ReplyPriorityPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::ReplyPriorityPolicy_ptr
-Messaging::tao_ReplyPriorityPolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::ReplyPriorityPolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_ReplyPriorityPolicy_life::tao_marshal (
-    Messaging::ReplyPriorityPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::ReplyPriorityPolicy_ptr
-Messaging::tao_ReplyPriorityPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::ReplyPriorityPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_ReplyPriorityPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::ReplyPriorityPolicy **tmp =
-    ACE_static_cast (Messaging::ReplyPriorityPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -1026,58 +870,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int Messaging::RequestStartTimePolicy::_tao_class_id = 0;
-
-Messaging::RequestStartTimePolicy_ptr
-Messaging::tao_RequestStartTimePolicy_life::tao_duplicate (
-    Messaging::RequestStartTimePolicy_ptr p
-  )
-{
-  return Messaging::RequestStartTimePolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_RequestStartTimePolicy_life::tao_release (
-    Messaging::RequestStartTimePolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::RequestStartTimePolicy_ptr
-Messaging::tao_RequestStartTimePolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::RequestStartTimePolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_RequestStartTimePolicy_life::tao_marshal (
-    Messaging::RequestStartTimePolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::RequestStartTimePolicy_ptr
-Messaging::tao_RequestStartTimePolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::RequestStartTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_RequestStartTimePolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::RequestStartTimePolicy **tmp =
-    ACE_static_cast (Messaging::RequestStartTimePolicy **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -1269,58 +1061,6 @@ TAO_NAMESPACE_END
 
 int Messaging::RequestEndTimePolicy::_tao_class_id = 0;
 
-Messaging::RequestEndTimePolicy_ptr
-Messaging::tao_RequestEndTimePolicy_life::tao_duplicate (
-    Messaging::RequestEndTimePolicy_ptr p
-  )
-{
-  return Messaging::RequestEndTimePolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_RequestEndTimePolicy_life::tao_release (
-    Messaging::RequestEndTimePolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::RequestEndTimePolicy_ptr
-Messaging::tao_RequestEndTimePolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::RequestEndTimePolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_RequestEndTimePolicy_life::tao_marshal (
-    Messaging::RequestEndTimePolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::RequestEndTimePolicy_ptr
-Messaging::tao_RequestEndTimePolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::RequestEndTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_RequestEndTimePolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::RequestEndTimePolicy **tmp =
-    ACE_static_cast (Messaging::RequestEndTimePolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -1509,58 +1249,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int Messaging::ReplyStartTimePolicy::_tao_class_id = 0;
-
-Messaging::ReplyStartTimePolicy_ptr
-Messaging::tao_ReplyStartTimePolicy_life::tao_duplicate (
-    Messaging::ReplyStartTimePolicy_ptr p
-  )
-{
-  return Messaging::ReplyStartTimePolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_ReplyStartTimePolicy_life::tao_release (
-    Messaging::ReplyStartTimePolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::ReplyStartTimePolicy_ptr
-Messaging::tao_ReplyStartTimePolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::ReplyStartTimePolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_ReplyStartTimePolicy_life::tao_marshal (
-    Messaging::ReplyStartTimePolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::ReplyStartTimePolicy_ptr
-Messaging::tao_ReplyStartTimePolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::ReplyStartTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_ReplyStartTimePolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::ReplyStartTimePolicy **tmp =
-    ACE_static_cast (Messaging::ReplyStartTimePolicy **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -1751,58 +1439,6 @@ TAO_NAMESPACE_END
 
 int Messaging::ReplyEndTimePolicy::_tao_class_id = 0;
 
-Messaging::ReplyEndTimePolicy_ptr
-Messaging::tao_ReplyEndTimePolicy_life::tao_duplicate (
-    Messaging::ReplyEndTimePolicy_ptr p
-  )
-{
-  return Messaging::ReplyEndTimePolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_ReplyEndTimePolicy_life::tao_release (
-    Messaging::ReplyEndTimePolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::ReplyEndTimePolicy_ptr
-Messaging::tao_ReplyEndTimePolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::ReplyEndTimePolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_ReplyEndTimePolicy_life::tao_marshal (
-    Messaging::ReplyEndTimePolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::ReplyEndTimePolicy_ptr
-Messaging::tao_ReplyEndTimePolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::ReplyEndTimePolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_ReplyEndTimePolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::ReplyEndTimePolicy **tmp =
-    ACE_static_cast (Messaging::ReplyEndTimePolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -1990,58 +1626,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int Messaging::RelativeRequestTimeoutPolicy::_tao_class_id = 0;
-
-Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::tao_RelativeRequestTimeoutPolicy_life::tao_duplicate (
-    Messaging::RelativeRequestTimeoutPolicy_ptr p
-  )
-{
-  return Messaging::RelativeRequestTimeoutPolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_RelativeRequestTimeoutPolicy_life::tao_release (
-    Messaging::RelativeRequestTimeoutPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::tao_RelativeRequestTimeoutPolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::RelativeRequestTimeoutPolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_RelativeRequestTimeoutPolicy_life::tao_marshal (
-    Messaging::RelativeRequestTimeoutPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::RelativeRequestTimeoutPolicy_ptr
-Messaging::tao_RelativeRequestTimeoutPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::RelativeRequestTimeoutPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_RelativeRequestTimeoutPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::RelativeRequestTimeoutPolicy **tmp =
-    ACE_static_cast (Messaging::RelativeRequestTimeoutPolicy **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
@@ -2344,58 +1928,6 @@ template class
 
 int Messaging::RoutingPolicy::_tao_class_id = 0;
 
-Messaging::RoutingPolicy_ptr
-Messaging::tao_RoutingPolicy_life::tao_duplicate (
-    Messaging::RoutingPolicy_ptr p
-  )
-{
-  return Messaging::RoutingPolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_RoutingPolicy_life::tao_release (
-    Messaging::RoutingPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::RoutingPolicy_ptr
-Messaging::tao_RoutingPolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::RoutingPolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_RoutingPolicy_life::tao_marshal (
-    Messaging::RoutingPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::RoutingPolicy_ptr
-Messaging::tao_RoutingPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::RoutingPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_RoutingPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::RoutingPolicy **tmp =
-    ACE_static_cast (Messaging::RoutingPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -2581,58 +2113,6 @@ TAO_NAMESPACE_END
 
 int Messaging::MaxHopsPolicy::_tao_class_id = 0;
 
-Messaging::MaxHopsPolicy_ptr
-Messaging::tao_MaxHopsPolicy_life::tao_duplicate (
-    Messaging::MaxHopsPolicy_ptr p
-  )
-{
-  return Messaging::MaxHopsPolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_MaxHopsPolicy_life::tao_release (
-    Messaging::MaxHopsPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::MaxHopsPolicy_ptr
-Messaging::tao_MaxHopsPolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::MaxHopsPolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_MaxHopsPolicy_life::tao_marshal (
-    Messaging::MaxHopsPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::MaxHopsPolicy_ptr
-Messaging::tao_MaxHopsPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::MaxHopsPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_MaxHopsPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::MaxHopsPolicy **tmp =
-    ACE_static_cast (Messaging::MaxHopsPolicy **, src);
-  return *tmp;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
     TAO_Objref_Var_T<
@@ -2817,58 +2297,6 @@ TAO_NAMESPACE_END
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
 
 int Messaging::QueueOrderPolicy::_tao_class_id = 0;
-
-Messaging::QueueOrderPolicy_ptr
-Messaging::tao_QueueOrderPolicy_life::tao_duplicate (
-    Messaging::QueueOrderPolicy_ptr p
-  )
-{
-  return Messaging::QueueOrderPolicy::_duplicate (p);
-}
-
-void
-Messaging::tao_QueueOrderPolicy_life::tao_release (
-    Messaging::QueueOrderPolicy_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-Messaging::QueueOrderPolicy_ptr
-Messaging::tao_QueueOrderPolicy_life::tao_nil (
-    void
-  )
-{
-  return Messaging::QueueOrderPolicy::_nil ();
-}
-
-CORBA::Boolean
-Messaging::tao_QueueOrderPolicy_life::tao_marshal (
-    Messaging::QueueOrderPolicy_ptr p,
-    TAO_OutputCDR &cdr
-  )
-{
-  return p->marshal (cdr);
-}
-
-Messaging::QueueOrderPolicy_ptr
-Messaging::tao_QueueOrderPolicy_cast::tao_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return Messaging::QueueOrderPolicy::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-CORBA::Object *
-Messaging::tao_QueueOrderPolicy_cast::tao_upcast (
-    void *src
-  )
-{
-  Messaging::QueueOrderPolicy **tmp =
-    ACE_static_cast (Messaging::QueueOrderPolicy **, src);
-  return *tmp;
-}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
   template class
