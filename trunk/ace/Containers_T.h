@@ -677,7 +677,6 @@ protected:
   // Allocation Strategy of the queue.
 };
 
-#if !defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER)
 
 template <class T> class ACE_DLList;
 template <class T> class ACE_DLList_Iterator;
@@ -796,7 +795,6 @@ public:
 
 };
 
-#endif /* ! defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER) */
 
 template <class T>
 class ACE_Unbounded_Set_Iterator
