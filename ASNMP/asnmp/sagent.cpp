@@ -10,11 +10,11 @@
 //
 // = DESCRIPTION
 //   SNMP agent class definition. The sagent class provides an object oriented
-//   approach for creating SNMP Agents. The sagent class is an encapsulation 
-//   of SNMP sessions, gets, sets, etc. 
+//   approach for creating SNMP Agents. The sagent class is an encapsulation
+//   of SNMP sessions, gets, sets, etc.
 //
 // = AUTHOR
-//    Michael R. MacFaden 
+//    Michael R. MacFaden
 //
 // ============================================================================
 #include "ace/Reactor.h"
@@ -24,11 +24,11 @@
 #include "asnmp/vb.h"                 // snbmp++ vb class
 #include "asnmp/target.h"             // snmp++ target class
 #include "asnmp/pdu.h"                // snmp++ pdu class
-#include "asnmp/snmperrs.h"           // error macros and strings 
+#include "asnmp/snmperrs.h"           // error macros and strings
 #include "asnmp/address.h"            // snmp++ address class defs
-#include "asnmp/snmp.h"               // manager snmp interface 
+#include "asnmp/snmp.h"               // manager snmp interface
 #include "asnmp/sagent.h"             // agent interface
-#include "asnmp/transaction.h"	      // convert from wire to API
+#include "asnmp/transaction.h"        // convert from wire to API
 
 ACE_RCSID(asnmp, sagent, "$Id$")
 
@@ -95,4 +95,3 @@ int sagent::respond(Pdu& pdu,UdpTarget& tgt)
   tr.send();
   return 0;
 }
-
