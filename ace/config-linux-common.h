@@ -274,7 +274,8 @@
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
 
-#define ACE_LACKS_STRRECVFD
+//#define ACE_LACKS_STRRECVFD
+#define ACE_HAS_STRBUF_T
 
 //#define ACE_LACKS_MSYNC
 

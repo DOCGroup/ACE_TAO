@@ -20,7 +20,7 @@
 #include "ace/config-all.h"
 
 #if defined (ACE_HAS_VIRTUAL_TIME)
-#include /**/ <sys/times.h>
+#include "ace/os_include/sys/os_times.h"
 #endif /*ACE_HAS_VIRTUAL_TIME*/
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,85 +34,30 @@
 #include "ace/OS_TLI.h"
 #include "ace/OS_Errno.h"
 
+#include "ace/os_include/os_dlfcn.h"
+#include "ace/os_include/sys/os_mman.h"
+#include "ace/os_include/os_dirent.h"
+#include "ace/os_include/os_netdb.h"
+#include "ace/os_include/sys/os_socket.h"
+#include "ace/os_include/net/os_if.h"
+#include "ace/os_include/sys/os_sem.h"
+#include "ace/os_include/os_errno.h"
+
 #include "ace/Time_Value.h"
 
 class ACE_Timeout_Manager;
-
-#if !defined (_SC_AIO_MAX)
-#define _SC_AIO_MAX 1
-#endif /* _SC_AIO_MAX */
-
-// Do not change these values wantonly since GPERF depends on them..
-#define ACE_ASCII_SIZE 128
-#define ACE_EBCDIC_SIZE 256
-
-#if 'a' < 'A'
-#define ACE_HAS_EBCDIC
-#define ACE_STANDARD_CHARACTER_SET_SIZE 256
-#else
-#define ACE_HAS_ASCII
-#define ACE_STANDARD_CHARACTER_SET_SIZE 128
-#endif /* 'a' < 'A' */
-
-# if defined (ACE_PSOS_TM)
-typedef long long longlong_t;
-typedef long      id_t;
-# endif /* ACE_PSOS_TM */
 
 // Here are all ACE-specific default constants, needed throughout ACE
 // and its applications.  The values can be over written by user
 // specific values in config.h files.
 #include "ace/Default_Constants.h"
 
-# if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-    // Control message size to pass a file descriptor.
-#   define ACE_BSD_CONTROL_MSG_LEN sizeof (struct cmsghdr) + sizeof (ACE_HANDLE)
-#   if defined (ACE_LACKS_CMSG_DATA_MACRO)
-#     if defined (ACE_LACKS_CMSG_DATA_MEMBER)
-#       define CMSG_DATA(cmsg) ((unsigned char *) ((struct cmsghdr *) (cmsg) + 1))
-#     else
-#       define CMSG_DATA(cmsg) ((cmsg)->cmsg_data)
-#     endif /* ACE_LACKS_CMSG_DATA_MEMBER */
-#   endif /* ACE_LACKS_CMSG_DATA_MACRO */
-# endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
-
-
-// Default size of the ACE Reactor.
-# if defined (FD_SETSIZE)
-int const ACE_FD_SETSIZE = FD_SETSIZE;
-# else
-#   define ACE_FD_SETSIZE FD_SETSIZE
-# endif /* ACE_FD_SETSIZE */
-
-# if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
-#   define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
-# endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
-
-
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
 #include "ace/Global_Macros.h"
 
-#if !defined (ACE_WIN32) && !defined (INTEGRITY)
-#define ACE_MAX_USERID L_cuserid
-#endif /*!ACE_WIN32*/
-
 // include the ACE min()/max() functions.
 # include "ace/Min_Max.h"
-
-
-// These hooks enable ACE to have all dynamic memory management
-// automatically handled on a per-object basis.
-
-# if defined (ACE_LACKS_KEY_T)
-#   if defined (ACE_WIN32)
-   // Win32 doesn't use numeric values to name its semaphores, it uses
-   // strings!
-typedef char *key_t;
-#   else
-typedef int key_t;
-#   endif /* ACE_WIN32 */
-# endif /* ACE_LACKS_KEY_T */
 
 ///////////////////////////////////////////
 //                                       //
@@ -125,18 +70,12 @@ typedef int key_t;
 
 # if defined (ACE_PSOS)
 
-#   if defined (ACE_LACKS_ASSERT_MACRO)
-#     define assert(expr)
-#   endif
-
 #   if defined (ACE_PSOSIM)
 
 #     include /**/ "ace/sys_conf.h" /* system configuration file */
 #     include /**/ <psos.h>         /* pSOS+ system calls                */
 #     include /**/ <pna.h>          /* pNA+ TCP/IP Network Manager calls */
 
-    /* In the *simulator* environment, use unsigned int for size_t */
-#     define size_t  unsigned int
 
 
     /*   include <rpc.h>       pRPC+ Remote Procedure Call Library calls   */
@@ -150,53 +89,11 @@ typedef int key_t;
     /*                         use the wrappers under pSOSim               */
 
     /* put includes for necessary UNIX file system calls here */
-#     include /**/ <sys/stat.h>
-#     include /**/ <sys/ioctl.h>
-#     include /**/ <sys/sockio.h>
-#     include /**/ <netinet/tcp.h>
-
-#     define TCP_
-#     if ! defined (BUFSIZ)
-#       define BUFSIZ 1024
-#     endif  /* ! defined (BUFSIZ) */
-
+#     include "ace/os_include/sys/os_stat.h"
+#     include "ace/os_include/os_stropts.h" // instead of <sys/ioctl.h>
+#     include "ace/os_include/netinet/os_tcp.h"
 
 #   else
-
-#     if defined (ACE_PSOS_CANT_USE_SYS_TYPES)
-      // these are missing from the pSOS types.h file, and the compiler
-      // supplied types.h file collides with the pSOS version.
-#       if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
-      typedef unsigned char     u_char;
-      typedef unsigned short    u_short;
-#       endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
-      typedef unsigned int      u_int;
-#       if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
-      typedef unsigned long     u_long;
-#       endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
-
-      // These are defined in types.h included by (among others) pna.h
-#       if 0
-      typedef unsigned char     uchar_t;
-      typedef unsigned short    ushort_t;
-      typedef unsigned int      uint_t;
-      typedef unsigned long     ulong_t;
-#       endif /* 0 */
-      typedef char *            caddr_t;
-
-#       if defined (ACE_PSOS_DIAB_PPC)
-      // pid_t is defined in sys/types.h
-#         if 0
-      typedef unsigned long pid_t;
-#         endif /* 0 */
-#     define ACE_INVALID_PID ((pid_t) ~0)
-#       else /* !defined (ACE_PSOS_DIAB_PPC) */
-      typedef long pid_t;
-#     define ACE_INVALID_PID ((pid_t) -1)
-#       endif /* defined (ACE_PSOS_DIAB_PPC) */
-
-//      typedef unsigned char wchar_t;
-#     endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
 
 #     include /**/ "ace/sys_conf.h" /* system configuration file */
 #     include /**/ <configs.h>   /* includes all pSOS headers */
@@ -206,135 +103,14 @@ typedef int key_t;
 //    #include /**/ <prepccfg.h>     /* pREPC+ file system calls */
 #     if defined (ACE_PSOS_DIAB_MIPS)
 #       if defined (ACE_PSOS_USES_DIAB_SYS_CALLS)
-#         include /**/ <unistd.h>    /* Diab Data supplied file system calls */
+#         include "ace/os_include/os_unistd.h"    /* Diab Data supplied file system calls */
 #       else
 #         include /**/ <prepc.h>
 #       endif /* ACE_PSOS_USES_DIAB_SYS_CALLS */
-#       include /**/ <sys/wait.h>    /* Diab Data supplied header file */
+#       include "ace/os_include/sys/os_wait.h"    /* Diab Data supplied header file */
 #     endif /* ACE_PSOS_DIAB_MIPS */
 
-// This collides with phile.h
-//    #include /**/ <sys/stat.h>    /* Diab Data supplied header file */
-
-// Some versions have missing preprocessor definitions
-#     if !defined (AF_UNIX)
-#       define AF_UNIX 0x1
-#     endif /* AF_UNIX */
-#     define PF_UNIX AF_UNIX
-#     define PF_INET AF_INET
-#     if !defined (AF_MAX)
-#       define AF_MAX AF_INET
-#     endif /* AF_MAX */
-#     if !defined (IFF_LOOPBACK)
-#       define IFF_LOOPBACK IFF_EXTLOOPBACK
-#     endif /* IFF_LOOPBACK */
-
-  typedef long fd_mask;
-#     define IPPORT_RESERVED       1024
-#     define IPPORT_USERRESERVED   5000
-
-#     if !defined (howmany)
-#       define howmany(x, y) (((x)+((y)-1))/(y))
-#     endif /* howmany */
-
-  extern "C"
-  {
-    typedef void (* ACE_SignalHandler) (void);
-    typedef void (* ACE_SignalHandlerV) (void);
-  }
-
-#     if !defined(SIG_DFL)
-#       define SIG_DFL (ACE_SignalHandler) 0
-#     endif  /* philabs */
-
 #   endif /* defined (ACE_PSOSIM) */
-
-// Some versions of pSOS do not define error numbers, but newer
-// versions do. So, include errno.h and then see which ones are not
-// yet defined.
-#   include /**/ <errno.h>
-
-#   if !defined (EPERM)
-#     define EPERM        1        /* Not super-user                        */
-#   endif /* EPERM */
-#   if !defined (ENOENT)
-#     define ENOENT       2        /* No such file or directory             */
-#   endif /* ENOENT */
-#   if !defined (ESRCH)
-#     define ESRCH        3        /* No such process                       */
-#   endif /* ESRCH */
-#   if ! defined (EINTR)
-#     define EINTR        4        /* interrupted system call               */
-#   endif /* EINTR */
-#   if !defined (EBADF)
-#     define EBADF        9        /* Bad file number                       */
-#   endif /* EBADF */
-#   if !defined (EAGAIN)
-#     define EAGAIN       11       /* Resource temporarily unavailable      */
-#   endif /* EAGAIN */
-#   if !defined (EWOULDBLOCK)
-#     define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
-#   endif /* EWOULDBLOCK */
-#   if !defined (ENOMEM)
-#     define ENOMEM       12       /* Not enough core                       */
-#   endif /* ENOMEM */
-#   if !defined (EACCES)
-#     define EACCES      13       /* Permission denied                     */
-#   endif /* EACCES */
-#   if !defined (EFAULT)
-#     define EFAULT       14       /* Bad access                            */
-#   endif /* EFAULT */
-#   if !defined (EEXIST)
-#     define EEXIST       17       /* File exists                           */
-#   endif /* EEXIST */
-#   if !defined (ENOSPC)
-#     define ENOSPC       28       /* No space left on device               */
-#   endif /* ENOSPC */
-#   if !defined (EPIPE)
-#     define EPIPE        32       /* Broken pipe                           */
-#   endif /* EPIPE */
-#   if !defined (ETIME)
-#     define ETIME        62       /* timer expired                         */
-#   endif /* ETIME */
-#   if !defined (ENAMETOOLONG)
-#     define ENAMETOOLONG 78       /* path name is too long                 */
-#   endif /* ENAMETOOLONG */
-#   if !defined (ENOSYS)
-#     define ENOSYS       89       /* Unsupported file system operation     */
-#   endif /* ENOSYS */
-#   if !defined (EADDRINUSE)
-#     define EADDRINUSE   125      /* Address already in use                */
-#   endif /* EADDRINUSE */
-#   if !defined (ENETUNREACH)
-#     define ENETUNREACH  128      /* Network is unreachable                */
-#   endif /* ENETUNREACH */
-#   if !defined (EISCONN)
-#     define EISCONN      133      /* Socket is already connected           */
-#   endif /* EISCONN */
-#   if !defined (ESHUTDOWN)
-#     define ESHUTDOWN    143      /* Can't send after socket shutdown      */
-#   endif /* ESHUTDOWN */
-#   if !defined (ECONNREFUSED)
-#     define ECONNREFUSED 146      /* Connection refused                    */
-#   endif /* ECONNREFUSED */
-#   if !defined (EINPROGRESS)
-#     define EINPROGRESS  150      /* operation now in progress             */
-#   endif /* EINPROGRESS */
-#   if !defined (ERRMAX)
-#     define ERRMAX       151      /* Last error number                     */
-#   endif /* ERRMAX */
-
-#   if ! defined (NSIG)
-#     define NSIG 32
-#   endif /* NSIG */
-
-#   if ! defined (TCP_NODELAY)
-#     define TCP_NODELAY  1
-#   endif /* TCP_NODELAY */
-
-// For general purpose portability
-
-#   define ACE_BITS_PER_ULONG (8 * sizeof (u_long))
 
 typedef u_long ACE_idtype_t;
 typedef u_long ACE_id_t;
@@ -356,82 +132,7 @@ typedef struct
   char name_[4];
 } ACE_sema_t;
 
-// Used for dynamic linking.
-#   if !defined (ACE_DEFAULT_SVC_CONF)
-#     if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#       define ACE_DEFAULT_SVC_CONF "./svc.conf"
-#     else
-#       define ACE_DEFAULT_SVC_CONF "./svc.conf.xml"
-#     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
-#   endif /* ACE_DEFAULT_SVC_CONF */
-
-#   if !defined (ACE_DEFAULT_SEM_KEY)
-#     define ACE_DEFAULT_SEM_KEY 1234
-#   endif /* ACE_DEFAULT_SEM_KEY */
-
-#   define ACE_STDIN 0
-#   define ACE_STDOUT 1
-#   define ACE_STDERR 2
-
-#   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
-#   define ACE_PLATFORM_A "pSOS"
-#   define ACE_PLATFORM_EXE_SUFFIX_A ""
-
-#   if !defined (ACE_DLL_SUFFIX)
-#     define ACE_DLL_SUFFIX ACE_LIB_TEXT (".so")
-#   endif /* !ACE_DLL_SUFFIX */
-#   if !defined (ACE_DLL_PREFIX)
-#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
-#   endif /* !ACE_DLL_PREFIX */
-#   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
-#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (":")
-#   define ACE_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
-
-#   define ACE_MAX_DEFAULT_PORT 65535
-
-#   if ! defined(MAXPATHLEN)
-#     define MAXPATHLEN  1024
-#   endif /* MAXPATHLEN */
-
-#   if ! defined(MAXNAMLEN)
-#     define MAXNAMLEN   255
-#   endif /* MAXNAMLEN */
-
-#   if defined (ACE_LACKS_MMAP)
-#     define PROT_READ 0
-#     define PROT_WRITE 0
-#     define PROT_EXEC 0
-#     define PROT_NONE 0
-#     define PROT_RDWR 0
-#     define MAP_PRIVATE 0
-#     define MAP_SHARED 0
-#     define MAP_FIXED 0
-#   endif /* ACE_LACKS_MMAP */
-
 typedef int ACE_exitcode;
-
-typedef ACE_HANDLE ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE ACE_INVALID_HANDLE
-#   define ACE_DEFAULT_SHLIB_MODE 0
-
-#   define ACE_INVALID_SEM_KEY -1
-
-struct  hostent {
-  char    *h_name;        /* official name of host */
-  char    **h_aliases;    /* alias list */
-  int     h_addrtype;     /* host address type */
-  int     h_length;       /* address length */
-  char    **h_addr_list;  /* (first, only) address from name server */
-#   define h_addr h_addr_list[0]   /* the first address */
-};
-
-struct  servent {
-  char     *s_name;    /* official service name */
-  char    **s_aliases; /* alias list */
-  int       s_port;    /* port # */
-  char     *s_proto;   /* protocol to use */
-};
 
 #   define ACE_SEH_TRY if (1)
 #   define ACE_SEH_EXCEPT(X) while (0)
@@ -491,18 +192,6 @@ struct ACE_OVERLAPPED
   u_long OffsetHigh;
   ACE_HANDLE hEvent;
 };
-
-#   if !defined (USER_INCLUDE_SYS_TIME_TM)
-#     if defined (ACE_PSOS_DIAB_PPC)
-typedef struct timespec timespec_t;
-#     else /* ! defined (ACE_PSOS_DIAB_PPC) */
-typedef struct timespec
-{
-  time_t tv_sec; // Seconds
-  long tv_nsec; // Nanoseconds
-} timespec_t;
-#     endif /* defined (ACE_PSOS_DIAB_PPC) */
-#   endif /*  !defined (USER_INCLUDE_SYS_TIME_TM) */
 
 #if defined (ACE_PSOS_HAS_TIME)
 
@@ -564,58 +253,12 @@ private:
 } ;
 #endif /* ACE_PSOS_HAS_TIME */
 
-# endif /* defined (ACE_PSOS) */
-
-# if defined (ACE_HAS_CHARPTR_SPRINTF)
-#   define ACE_SPRINTF_ADAPTER(X) ::strlen (X)
-# else
-#   define ACE_SPRINTF_ADAPTER(X) X
-# endif /* ACE_HAS_CHARPTR_SPRINTF */
-
-// Default address for shared memory mapped files and SYSV shared memory
-// (defaults to 64 M).
-# if !defined (ACE_DEFAULT_BASE_ADDR)
-#   define ACE_DEFAULT_BASE_ADDR ((char *) (64 * 1024 * 1024))
-# endif /* ACE_DEFAULT_BASE_ADDR */
-
-// This fudge factor can be overriden for timers that need it, such as on
-// Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
-// header.
-#if !defined (ACE_TIMER_SKEW)
-#  define ACE_TIMER_SKEW 0
-#endif /* ACE_TIMER_SKEW */
+# endif /* defined (ACE_PSOS) **********************************************/
 
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
-extern "C" {
-#   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#     include /**/ <signal.h>
-#   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#   include /**/ <pthread.h>
-#   if defined (DIGITAL_UNIX)
-#     define pthread_self __pthread_self
-extern "C" pthread_t pthread_self (void);
-#   endif /* DIGITAL_UNIX */
-}
-#   if defined (HPUX_10)
-//    HP-UX 10 needs to see cma_sigwait, and since _CMA_NOWRAPPERS_ is defined,
-//    this header does not get included from pthreads.h.
-#     include /**/ <dce/cma_sigwait.h>
-#   endif /* HPUX_10 */
+#   include "ace/os_include/os_pthread.h"
 # endif /* ACE_HAS_PTHREADS */
-
-// There are a lot of threads-related macro definitions in the config files.
-// They came in at different times and from different places and platform
-// requirements as threads evolved.  They are probably not all needed - some
-// overlap or are otherwise confused.  This is an attempt to start
-// straightening them out.
-# if defined (ACE_HAS_PTHREADS_STD)    /* POSIX.1c threads (pthreads) */
-  // ... and 2-parameter asctime_r and ctime_r
-#   if !defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R) && \
-       !defined (ACE_HAS_STHREADS)
-#     define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-#   endif
-# endif /* ACE_HAS_PTHREADS_STD */
 
 // By default we perform no tracing on the OS layer, otherwise the
 // coupling between the OS layer and Log_Msg is too tight.  But the
@@ -635,17 +278,6 @@ using std::timezone;
 # endif
 using std::difftime;
 # endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
-
-# if !defined (ACE_HAS_CLOCK_GETTIME) && !(defined (_CLOCKID_T_) || defined (_CLOCKID_T))
-typedef int clockid_t;
-#   if !defined (CLOCK_REALTIME)
-#     define CLOCK_REALTIME 0
-#   endif /* CLOCK_REALTIME */
-# endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T_ */
-
-#if !defined (E2BIG)
-#  define E2BIG 7
-#endif /* E2BIG */
 
 /**
  * @class ACE_Countdown_Time
@@ -690,30 +322,6 @@ private:
   /// Keeps track of whether we've already been stopped.
   int stopped_;
 };
-
-# if defined (ACE_HAS_USING_KEYWORD)
-#   define ACE_USING using
-# else
-#   define ACE_USING
-# endif /* ACE_HAS_USING_KEYWORD */
-
-# if defined (ACE_HAS_TYPENAME_KEYWORD)
-#   define ACE_TYPENAME typename
-# else
-#   define ACE_TYPENAME
-# endif /* ACE_HAS_TYPENAME_KEYWORD */
-
-# if defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
-#   define ACE_TEMPLATE_SPECIALIZATION template<>
-# else
-#   define ACE_TEMPLATE_SPECIALIZATION
-# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
-
-# if defined (ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION)
-#   define ACE_TEMPLATE_METHOD_SPECIALIZATION template<>
-# else
-#   define ACE_TEMPLATE_METHOD_SPECIALIZATION
-# endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
@@ -910,227 +518,6 @@ private:
 #   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool, ACE_Pagefile_Memory_Pool_Options
 # endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
 
-// These two are only for backward compatibility. You should avoid
-// using them if not necessary.
-# define ACE_SYNCH_1 ACE_SYNCH_DECL
-# define ACE_SYNCH_2 ACE_SYNCH_USE
-
-// For Win32 compatibility...
-# if !defined (ACE_WSOCK_VERSION)
-#   define ACE_WSOCK_VERSION 0, 0
-# endif /* ACE_WSOCK_VERSION */
-
-# if defined (ACE_HAS_BROKEN_CTIME)
-#   undef ctime
-# endif /* ACE_HAS_BROKEN_CTIME */
-
-/// Service Objects, i.e., objects dynamically loaded via the service
-/// configurator, must provide a destructor function with the
-/// following prototype to perform object cleanup.
-typedef void (*ACE_Service_Object_Exterminator)(void *);
-
-/** @name Service Configurator macros
- *
- * The following macros are used to define helper objects used in
- * ACE's Service Configurator.  This is an implementation of the
- * Service Configurator pattern:
- *
- * http://www.cs.wustl.edu/~schmidt/PDF/SvcConf.pdf
- *
- * The intent of this pattern is to allow developers to dynamically
- * load and configure services into a system.  With a little help from
- * this macros statically linked services can also be dynamically
- * configured.
- *
- * More details about this component are available in the documentation
- * of the ACE_Service_Configurator class and also
- * ACE_Dynamic_Service.
- *
- * Notice that in all the macros the SERVICE_CLASS parameter must be
- * the name of a class derived from ACE_Service_Object.
- */
-//@{
-/// Declare a the data structure required to register a statically
-/// linked service into the service configurator.
-/**
- * The macro should be used in the header file where the service is
- * declared, its only argument is usually the name of the class that
- * implements the service.
- *
- * @param SERVICE_CLASS The name of the class implementing the
- *   service.
- */
-# define ACE_STATIC_SVC_DECLARE(SERVICE_CLASS) \
-extern ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS ;
-
-/// As ACE_STATIC_SVC_DECLARE, but using an export macro for NT
-/// compilers.
-/**
- * NT compilers require the use of explicit directives to export and
- * import symbols from a DLL.  If you need to define a service in a
- * dynamic library you should use this version instead.
- * Normally ACE uses a macro to inject the correct export/import
- * directives on NT.  Naturally it also the macro expands to a blank
- * on platforms that do not require such directives.
- * The first argument (EXPORT_NAME) is the prefix for this export
- * macro, the full name is formed by appending _Export.
- * ACE provides tools to generate header files that define the macro
- * correctly on all platforms, please see
- * $ACE_ROOT/bin/generate_export_file.pl
- *
- * @param EXPORT_NAME The export macro name prefix.
- * @param SERVICE_CLASS The name of the class implementing the service.
- */
-#define ACE_STATIC_SVC_DECLARE_EXPORT(EXPORT_NAME,SERVICE_CLASS) \
-extern EXPORT_NAME##_Export ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS;
-
-/// Define the data structure used to register a statically linked
-/// service into the Service Configurator.
-/**
- * The service configurator requires several arguments to build and
- * control an statically linked service, including its name, the
- * factory function used to construct the service, and some flags.
- * All those parameters are configured in a single structure, an
- * instance of this structure is statically initialized using the
- * following macro.
- *
- * @param SERVICE_CLASS The name of the class that implements the
- *    service, must be derived (directly or indirectly) from
- *    ACE_Service_Object.
- * @param NAME The name for this service, this name is used by the
- *    service configurator to match configuration options provided in
- *    the svc.conf file.
- * @param TYPE The type of object.  Objects can be streams or service
- *    objects.  Please read the ACE_Service_Configurator and ASX
- *    documentation for more details.
- * @param FN The name of the factory function, usually the
- *    ACE_SVC_NAME macro can be used to generate the name.  The
- *    factory function is often defined using ACE_FACTORY_DECLARE and
- *    ACE_FACTORY_DEFINE.
- * @param FLAGS Flags to control the ownership and lifecycle of the
- *    object. Please read the ACE_Service_Configurator documentation
- *    for more details.
- * @param ACTIVE If not zero then a thread will be dedicate to the
- *    service. Please read the ACE_Service_Configurator documentation
- *    for more details.
- */
-#define ACE_STATIC_SVC_DEFINE(SERVICE_CLASS, NAME, TYPE, FN, FLAGS, ACTIVE) \
-ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS = { NAME, TYPE, FN, FLAGS, ACTIVE };
-
-/// Automatically register a service with the service configurator
-/**
- * In some applications the services must be automatically registered
- * with the service configurator, before main() starts.
- * The ACE_STATIC_SVC_REQUIRE macro defines a class whose constructor
- * register the service, it also defines a static instance of that
- * class to ensure that the service is registered before main.
- *
- * On platforms that lack adequate support for static C++ objects the
- * macro ACE_STATIC_SVC_REGISTER can be used to explicitly register
- * the service.
- *
- * @todo One class per-Service_Object seems wasteful.  It should be
- *   possible to define a single class and re-use it for all the
- *   service objects, just by passing the Service_Descriptor as an
- *   argument to the constructor.
- */
-#if defined(ACE_LACKS_STATIC_CONSTRUCTORS)
-# define ACE_STATIC_SVC_REQUIRE(SERVICE_CLASS)\
-class ACE_Static_Svc_##SERVICE_CLASS {\
-public:\
-  ACE_Static_Svc_##SERVICE_CLASS() { \
-    ACE_Service_Config::static_svcs ()->insert (\
-         &ace_svc_desc_##SERVICE_CLASS); \
-  } \
-};
-#define ACE_STATIC_SVC_REGISTER(SERVICE_CLASS)\
-ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS
-
-#else /* !ACE_LACKS_STATIC_CONSTRUCTORS */
-
-# define ACE_STATIC_SVC_REQUIRE(SERVICE_CLASS)\
-class ACE_Static_Svc_##SERVICE_CLASS {\
-public:\
-  ACE_Static_Svc_##SERVICE_CLASS() { \
-    ACE_Service_Config::static_svcs ()->insert (\
-         &ace_svc_desc_##SERVICE_CLASS); \
-    } \
-};\
-static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
-#define ACE_STATIC_SVC_REGISTER(SERVICE_CLASS) do {} while (0)
-
-#endif /* !ACE_LACKS_STATIC_CONSTRUCTORS */
-
-/// Declare the factory method used to create dynamically loadable
-/// services.
-/**
- * Once the service implementation is dynamically loaded the Service
- * Configurator uses a factory method to create the object.
- * This macro declares such a factory function with the proper
- * interface and export macros.
- * Normally used in the header file that declares the service
- * implementation.
- *
- * @param CLS must match the prefix of the export macro used for this
- *        service.
- * @param SERVICE_CLASS must match the name of the class that
- *        implements the service.
- *
- */
-#define ACE_FACTORY_DECLARE(CLS,SERVICE_CLASS) \
-extern "C" CLS##_Export ACE_Service_Object *\
-_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *);
-
-/// Define the factory method (and destructor) for a dynamically
-/// loadable service.
-/**
- * Use with arguments matching ACE_FACTORY_DECLARE.
- * Normally used in the .cpp file that defines the service
- * implementation.
- *
- * This macro defines both the factory method and the function used to
- * cleanup the service object.
- *
- * If this macro is used to define a factory function that need not be
- * exported (for example, in a static service situation), CLS can be
- * specified as ACE_Local_Service.
- */
-# define ACE_Local_Service_Export
-
-# define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
-void _gobble_##SERVICE_CLASS (void *p) { \
-  ACE_Service_Object *_p = ACE_static_cast (ACE_Service_Object *, p); \
-  ACE_ASSERT (_p != 0); \
-  delete _p; } \
-extern "C" CLS##_Export ACE_Service_Object *\
-_make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
-{ \
-  ACE_TRACE (#SERVICE_CLASS); \
-  if (gobbler != 0) \
-    *gobbler = (ACE_Service_Object_Exterminator) _gobble_##SERVICE_CLASS; \
-  return new SERVICE_CLASS; \
-}
-
-/// The canonical name for a service factory method
-#define ACE_SVC_NAME(SERVICE_CLASS) _make_##SERVICE_CLASS
-
-/// The canonical way to invoke (i.e. construct) a service factory
-/// method.
-#define ACE_SVC_INVOKE(SERVICE_CLASS) _make_##SERVICE_CLASS (0)
-
-//@}
-
-/** @name Helper macros for services defined in the netsvcs library.
- *
- * The ACE services defined in netsvcs use this helper macros for
- * simplicity.
- *
- */
-//@{
-# define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
-# define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
-//@}
-
 # if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
 #   define ACE_TSS_TYPE(T) ACE_TSS< T >
 #   if defined (ACE_HAS_BROKEN_CONVERSIONS)
@@ -1143,217 +530,19 @@ _make_##SERVICE_CLASS (ACE_Service_Object_Exterminator *gobbler) \
 #   define ACE_TSS_GET(I, T) (I)
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATIOND) */
 
-# if defined (ACE_LACKS_MODE_MASKS)
-// MODE MASKS
-
-// the following macros are for POSIX conformance.
-
-#   if !defined (ACE_HAS_USER_MODE_MASKS)
-#     define S_IRWXU 00700         /* read, write, execute: owner. */
-#     define S_IRUSR 00400         /* read permission: owner. */
-#     define S_IWUSR 00200         /* write permission: owner. */
-#     define S_IXUSR 00100         /* execute permission: owner. */
-#   endif /* ACE_HAS_USER_MODE_MASKS */
-#   define S_IRWXG 00070           /* read, write, execute: group. */
-#   define S_IRGRP 00040           /* read permission: group. */
-#   define S_IWGRP 00020           /* write permission: group. */
-#   define S_IXGRP 00010           /* execute permission: group. */
-#   define S_IRWXO 00007           /* read, write, execute: other. */
-#   define S_IROTH 00004           /* read permission: other. */
-#   define S_IWOTH 00002           /* write permission: other. */
-#   define S_IXOTH 00001           /* execute permission: other. */
-
-// eVC doesn't define these bits, but MSVC does. The bit settings are copied
-// from the MSVC defs.
-#   if defined (ACE_HAS_WINCE)
-#     define S_IFDIR 0040000
-#     define S_IFREG 0100000
-#   endif /* ACE_HAS_WINCE */
-# endif /* ACE_LACKS_MODE_MASKS */
-
-# if defined (ACE_LACKS_SEMBUF_T)
-struct sembuf
-{
-  /// semaphore #
-  unsigned short sem_num;
-
-  /// semaphore operation
-  short sem_op;
-
-  /// operation flags
-  short sem_flg;
-};
-# endif /* ACE_LACKS_SEMBUF_T */
-
-# if defined (ACE_LACKS_MSGBUF_T)
-struct msgbuf {};
-# endif /* ACE_LACKS_MSGBUF_T */
-
-# if defined (ACE_LACKS_STRRECVFD)
-struct strrecvfd {};
-# endif /* ACE_LACKS_STRRECVFD */
-
 # if defined (ACE_HAS_PROC_FS)
 #   include /**/ <sys/procfs.h>
 # endif /* ACE_HAS_PROC_FS */
 
-# if defined(__rtems__)
-struct iovec {
-  /// Base address.
-  char *iov_base;
-  /// Length.
-  size_t iov_len;
-};
-# endif
-
-# if defined (ACE_HAS_BROKEN_WRITEV)
-typedef struct iovec ACE_WRITEV_TYPE;
-# else
-typedef const struct iovec ACE_WRITEV_TYPE;
-# endif /* ACE_HAS_BROKEN_WRITEV */
-
-# if defined (ACE_HAS_BROKEN_READV)
-typedef const struct iovec ACE_READV_TYPE;
-# else
-typedef struct iovec ACE_READV_TYPE;
-# endif /* ACE_HAS_BROKEN_READV */
-
-# if defined (ACE_HAS_BROKEN_SETRLIMIT)
-typedef struct rlimit ACE_SETRLIMIT_TYPE;
-# else
-typedef const struct rlimit ACE_SETRLIMIT_TYPE;
-# endif /* ACE_HAS_BROKEN_SETRLIMIT */
-
-# if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#   define ACE_MT(X) X
-#   if !defined (_REENTRANT)
-#     define _REENTRANT
-#   endif /* _REENTRANT */
-# else
-#   define ACE_MT(X)
-# endif /* ACE_MT_SAFE */
-
-# if !defined (ACE_DEFAULT_THREAD_PRIORITY)
-#   define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL - 1L)
-# endif /* ACE_DEFAULT_THREAD_PRIORITY */
-
 # if defined (ACE_HAS_POSIX_SEM)
-#   include /**/ <semaphore.h>
-#   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
-#     define SEM_FAILED ((sem_t *) -1)
-#   endif  /* !SEM_FAILED */
-
-typedef struct
-{
-  /// Pointer to semaphore handle.  This is allocated by ACE if we are
-  /// working with an unnamed POSIX semaphore or by the OS if we are
-  /// working with a named POSIX semaphore.
-  sem_t *sema_;
-
-  /// Name of the semaphore (if this is non-NULL then this is a named
-  /// POSIX semaphore, else its an unnamed POSIX semaphore).
-  char *name_;
-
-#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
-  /// this->sema_ doesn't always get created dynamically if a platform
-  /// doesn't support named posix semaphores.  We use this flag to
-  /// remember if we need to delete <sema_> or not.
-  int new_sema_;
-#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
-} ACE_sema_t;
+#   include "ace/os_include/os_semaphore.h"
 # endif /* ACE_HAS_POSIX_SEM */
 
-struct cancel_state
-{
-  /// e.g., PTHREAD_CANCEL_ENABLE, PTHREAD_CANCEL_DISABLE,
-  /// PTHREAD_CANCELED.
-  int cancelstate;
+#   include "ace/os_include/sys/os_types.h" // /**/ <types.h>
 
-  /// e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
-  int canceltype;
-};
-
-# if defined (ACE_HAS_WINCE)
-#   include /**/ <types.h>
-
-#   if (_WIN32_WCE < 400)
-typedef unsigned long  ptrdiff_t;    // evc3, PocketPC don't defined ptrdiff_t
-#   else
-#     include /**/ <stddef.h>        // WinCE .NET puts it in stddef.h
-#   endif
-
-//typedef DWORD  nlink_t;
-
-// CE's add-on for c-style fstat/stat functionalities.  This struct is
-// by no mean complete compared to what you usually find in UNIX
-// platforms.  Only members that have direct conversion using Win32's
-// BY_HANDLE_FILE_INFORMATION are defined so that users can discover
-// non-supported members at compile time.  Time values are of type
-// ACE_Time_Value for easy comparison.
-
-// Since CE does not have _stat by default as NT/2000 does, the 'stat'
-// struct defined here will be used.  Also note that CE file system
-// struct is only for the CE 3.0 or later.
-// Refer to the WCHAR.H from Visual C++ and WIBASE.H from eVC 3.0.
-
-typedef unsigned int dev_t;
-
-struct stat
-{
-    /// always 0 on Windows platforms
-    dev_t st_dev;
-
-    /// always 0 on Windows platforms
-    dev_t st_rdev;
-
-    /// file attribute
-    unsigned short st_mode;
-
-    /// number of hard links
-    short st_nlink;
-
-    /// time of last access
-    ACE_Time_Value st_atime;
-
-    /// time of last data modification
-    ACE_Time_Value st_mtime;
-
-    /// time of creation
-    ACE_Time_Value st_ctime;
-
-    /// file size, in bytes
-    off_t st_size;
-
-    // Following members do not have direct conversion in Window platforms.
-//    u_long st_blksize;        // optimal blocksize for I/O
-//    u_long st_flags;          // user defined flags for file
-};
-
-# else /* ! ACE_HAS_WINCE */
-#   if defined (ACE_LACKS_SYS_TYPES_H) \
-       || (defined (__GLIBC__) && !defined (_BSD_SOURCE))
-#     if ! defined (ACE_PSOS)
-  typedef unsigned char u_char;
-  typedef unsigned short u_short;
-  typedef unsigned int u_int;
-  typedef unsigned long u_long;
-
-  typedef unsigned char uchar_t;
-  typedef unsigned short ushort_t;
-  typedef unsigned int  uint_t;
-  typedef unsigned long ulong_t;
-#     endif /* ! defined (ACE_PSOS) */
-#   else
-#     include /**/ <sys/types.h>
-#   endif  /* ACE_LACKS_SYS_TYPES_H */
-
-#   if ! defined (ACE_PSOS)
-#     include /**/ <sys/stat.h>
-#   endif
-# endif /* ACE_HAS_WINCE */
-
+#     include "ace/os_include/os_stddef.h"        // WinCE .NET puts it in stddef.h
 #if !defined (ACE_LACKS_UNISTD_H)
-#  include /**/ <unistd.h>
+#  include "ace/os_include/os_unistd.h"
 #endif /* ACE_LACKS_UNISTD_H */
 
 #if defined (ACE_HAS_PRIOCNTL)
@@ -1389,341 +578,7 @@ struct stat
 #   endif /* ! ACE_HAS_PTHREADS */
 
 #   if defined (ACE_HAS_PTHREADS)
-#     define ACE_SCHED_OTHER SCHED_OTHER
-#     define ACE_SCHED_FIFO SCHED_FIFO
-#     define ACE_SCHED_RR SCHED_RR
-
-// Definitions for mapping POSIX pthreads draft 6 into 1003.1c names
-
-#     if defined (ACE_HAS_PTHREADS_DRAFT6)
-#       define PTHREAD_SCOPE_PROCESS           PTHREAD_SCOPE_LOCAL
-#       define PTHREAD_SCOPE_SYSTEM            PTHREAD_SCOPE_GLOBAL
-#       define PTHREAD_CREATE_UNDETACHED       0
-#       define PTHREAD_CREATE_DETACHED         1
-#       define PTHREAD_CREATE_JOINABLE         0
-#       define PTHREAD_EXPLICIT_SCHED          0
-#       define PTHREAD_MIN_PRIORITY            0
-#       define PTHREAD_MAX_PRIORITY            126
-#     endif /* ACE_HAS_PTHREADS_DRAFT6 */
-
-// Definitions for THREAD- and PROCESS-LEVEL priorities...some
-// implementations define these while others don't.  In order to
-// further complicate matters, we don't redefine the default (*_DEF)
-// values if they've already been defined, which allows individual
-// programs to have their own ACE-wide "default".
-
-// PROCESS-level values
-#     if defined (_POSIX_PRIORITY_SCHEDULING) && \
-         !defined(_UNICOS) && !defined(UNIXWARE_7_1)
-#       define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
-#       define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
-#       if defined (HPUX)
-          // HP-UX's other is the SCHED_HPUX class, which uses historical
-          // values that have reverse semantics from POSIX (low value is
-          // more important priority). To use these in pthreads calls,
-          // the values need to be converted. The other scheduling classes
-          // don't need this special treatment.
-#         define ACE_PROC_PRI_OTHER_MIN \
-                      (sched_get_priority_min(SCHED_OTHER))
-#       else
-#         define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
-#       endif /* HPUX */
-#     else /* UNICOS is missing a sched_get_priority_min() implementation,
-              SCO too */
-#       define ACE_PROC_PRI_FIFO_MIN  0
-#       define ACE_PROC_PRI_RR_MIN    0
-#       define ACE_PROC_PRI_OTHER_MIN 0
-#     endif
-
-#     if defined (_POSIX_PRIORITY_SCHEDULING) && !defined(UNIXWARE_7_1)
-#       define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
-#       define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
-#       if defined (HPUX)
-#         define ACE_PROC_PRI_OTHER_MAX \
-                      (sched_get_priority_max(SCHED_OTHER))
-#       else
-#         define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
-#       endif /* HPUX */
-#     else /* SCO missing sched_get_priority_max() implementation */
-#       define ACE_PROC_PRI_FIFO_MAX  59
-#       define ACE_PROC_PRI_RR_MAX    59
-#       define ACE_PROC_PRI_OTHER_MAX 59
-#     endif
-
-#     if !defined(ACE_PROC_PRI_FIFO_DEF)
-#       define ACE_PROC_PRI_FIFO_DEF (ACE_PROC_PRI_FIFO_MIN + (ACE_PROC_PRI_FIFO_MAX - ACE_PROC_PRI_FIFO_MIN)/2)
-#     endif
-#     if !defined(ACE_PROC_PRI_RR_DEF)
-#       define ACE_PROC_PRI_RR_DEF (ACE_PROC_PRI_RR_MIN + (ACE_PROC_PRI_RR_MAX - ACE_PROC_PRI_RR_MIN)/2)
-#     endif
-#     if !defined(ACE_PROC_PRI_OTHER_DEF)
-#       define ACE_PROC_PRI_OTHER_DEF (ACE_PROC_PRI_OTHER_MIN + (ACE_PROC_PRI_OTHER_MAX - ACE_PROC_PRI_OTHER_MIN)/2)
-#     endif
-
-// THREAD-level values
-#     if defined(PRI_FIFO_MIN) && defined(PRI_FIFO_MAX) && defined(PRI_RR_MIN) && defined(PRI_RR_MAX) && defined(PRI_OTHER_MIN) && defined(PRI_OTHER_MAX)
-#       if !defined (ACE_THR_PRI_FIFO_MIN)
-#         define ACE_THR_PRI_FIFO_MIN  (long) PRI_FIFO_MIN
-#       endif /* !ACE_THR_PRI_FIFO_MIN */
-#       if !defined (ACE_THR_PRI_FIFO_MAX)
-#         define ACE_THR_PRI_FIFO_MAX  (long) PRI_FIFO_MAX
-#       endif /* !ACE_THR_PRI_FIFO_MAX */
-#       if !defined (ACE_THR_PRI_RR_MIN)
-#         define ACE_THR_PRI_RR_MIN    (long) PRI_RR_MIN
-#       endif /* !ACE_THR_PRI_RR_MIN */
-#       if !defined (ACE_THR_PRI_RR_MAX)
-#         define ACE_THR_PRI_RR_MAX    (long) PRI_RR_MAX
-#       endif /* !ACE_THR_PRI_RR_MAX */
-#       if !defined (ACE_THR_PRI_OTHER_MIN)
-#         define ACE_THR_PRI_OTHER_MIN (long) PRI_OTHER_MIN
-#       endif /* !ACE_THR_PRI_OTHER_MIN */
-#       if !defined (ACE_THR_PRI_OTHER_MAX)
-#         define ACE_THR_PRI_OTHER_MAX (long) PRI_OTHER_MAX
-#       endif /* !ACE_THR_PRI_OTHER_MAX */
-#     elif defined (AIX)
-        // AIX's priority range is 1 (low) to 127 (high). There aren't
-        // any preprocessor macros I can find. PRIORITY_MIN is for
-        // process priorities, as far as I can see, and does not apply
-        // to thread priority. The 1 to 127 range is from the
-        // pthread_attr_setschedparam man page (Steve Huston, 18-May-2001).
-#       if !defined (ACE_THR_PRI_FIFO_MIN)
-#         define ACE_THR_PRI_FIFO_MIN  (long) 1
-#       endif /* !ACE_THR_PRI_FIFO_MIN */
-#       if !defined (ACE_THR_PRI_FIFO_MAX)
-#         define ACE_THR_PRI_FIFO_MAX  (long) 127
-#       endif /* !ACE_THR_PRI_FIFO_MAX */
-#       if !defined (ACE_THR_PRI_RR_MIN)
-#         define ACE_THR_PRI_RR_MIN    (long) 1
-#       endif /* !ACE_THR_PRI_RR_MIN */
-#       if !defined (ACE_THR_PRI_RR_MAX)
-#         define ACE_THR_PRI_RR_MAX    (long) 127
-#       endif /* !ACE_THR_PRI_RR_MAX */
-#       if !defined (ACE_THR_PRI_OTHER_MIN)
-#         define ACE_THR_PRI_OTHER_MIN (long) 1
-#       endif /* !ACE_THR_PRI_OTHER_MIN */
-#       if !defined (ACE_THR_PRI_OTHER_MAX)
-#         define ACE_THR_PRI_OTHER_MAX (long) 127
-#       endif /* !ACE_THR_PRI_OTHER_MAX */
-#     elif defined (sun)
-#       if !defined (ACE_THR_PRI_FIFO_MIN)
-#         define ACE_THR_PRI_FIFO_MIN  (long) 0
-#       endif /* !ACE_THR_PRI_FIFO_MIN */
-#       if !defined (ACE_THR_PRI_FIFO_MAX)
-#         define ACE_THR_PRI_FIFO_MAX  (long) 59
-#       endif /* !ACE_THR_PRI_FIFO_MAX */
-#       if !defined (ACE_THR_PRI_RR_MIN)
-#         define ACE_THR_PRI_RR_MIN    (long) 0
-#       endif /* !ACE_THR_PRI_RR_MIN */
-#       if !defined (ACE_THR_PRI_RR_MAX)
-#         define ACE_THR_PRI_RR_MAX    (long) 59
-#       endif /* !ACE_THR_PRI_RR_MAX */
-#       if !defined (ACE_THR_PRI_OTHER_MIN)
-#         define ACE_THR_PRI_OTHER_MIN (long) 0
-#       endif /* !ACE_THR_PRI_OTHER_MIN */
-#       if !defined (ACE_THR_PRI_OTHER_MAX)
-#         define ACE_THR_PRI_OTHER_MAX (long) 127
-#       endif /* !ACE_THR_PRI_OTHER_MAX */
-#     else
-#       if !defined (ACE_THR_PRI_FIFO_MIN)
-#         define ACE_THR_PRI_FIFO_MIN  (long) ACE_PROC_PRI_FIFO_MIN
-#       endif /* !ACE_THR_PRI_FIFO_MIN */
-#       if !defined (ACE_THR_PRI_FIFO_MAX)
-#         define ACE_THR_PRI_FIFO_MAX  (long) ACE_PROC_PRI_FIFO_MAX
-#       endif /* !ACE_THR_PRI_FIFO_MAX */
-#       if !defined (ACE_THR_PRI_RR_MIN)
-#         define ACE_THR_PRI_RR_MIN    (long) ACE_PROC_PRI_RR_MIN
-#       endif /* !ACE_THR_PRI_RR_MIN */
-#       if !defined (ACE_THR_PRI_RR_MAX)
-#         define ACE_THR_PRI_RR_MAX    (long) ACE_PROC_PRI_RR_MAX
-#       endif /* !ACE_THR_PRI_RR_MAX */
-#       if !defined (ACE_THR_PRI_OTHER_MIN)
-#         define ACE_THR_PRI_OTHER_MIN (long) ACE_PROC_PRI_OTHER_MIN
-#       endif /* !ACE_THR_PRI_OTHER_MIN */
-#       if !defined (ACE_THR_PRI_OTHER_MAX)
-#         define ACE_THR_PRI_OTHER_MAX (long) ACE_PROC_PRI_OTHER_MAX
-#       endif /* !ACE_THR_PRI_OTHER_MAX */
-#     endif
-#     if !defined(ACE_THR_PRI_FIFO_DEF)
-#       define ACE_THR_PRI_FIFO_DEF  ((ACE_THR_PRI_FIFO_MIN + ACE_THR_PRI_FIFO_MAX)/2)
-#     endif
-#     if !defined(ACE_THR_PRI_RR_DEF)
-#       define ACE_THR_PRI_RR_DEF ((ACE_THR_PRI_RR_MIN + ACE_THR_PRI_RR_MAX)/2)
-#     endif
-#     if !defined(ACE_THR_PRI_OTHER_DEF)
-#       define ACE_THR_PRI_OTHER_DEF ((ACE_THR_PRI_OTHER_MIN + ACE_THR_PRI_OTHER_MAX)/2)
-#     endif
-
-// Typedefs to help compatibility with Windows NT and Pthreads.
-typedef pthread_t ACE_hthread_t;
-typedef pthread_t ACE_thread_t;
-
-#     if defined (ACE_HAS_TSS_EMULATION)
-        typedef pthread_key_t ACE_OS_thread_key_t;
-        typedef u_long ACE_thread_key_t;
-#     else  /* ! ACE_HAS_TSS_EMULATION */
-        typedef pthread_key_t ACE_thread_key_t;
-#     endif /* ! ACE_HAS_TSS_EMULATION */
-
-#     if !defined (ACE_LACKS_COND_T)
-typedef pthread_mutex_t ACE_mutex_t;
-typedef pthread_cond_t ACE_cond_t;
-typedef pthread_condattr_t ACE_condattr_t;
-typedef pthread_mutexattr_t ACE_mutexattr_t;
-#     endif /* ! ACE_LACKS_COND_T */
-typedef pthread_mutex_t ACE_thread_mutex_t;
-
-#     if !defined (PTHREAD_CANCEL_DISABLE)
-#       define PTHREAD_CANCEL_DISABLE      0
-#     endif /* PTHREAD_CANCEL_DISABLE */
-
-#     if !defined (PTHREAD_CANCEL_ENABLE)
-#       define PTHREAD_CANCEL_ENABLE       0
-#     endif /* PTHREAD_CANCEL_ENABLE */
-
-#     if !defined (PTHREAD_CANCEL_DEFERRED)
-#       define PTHREAD_CANCEL_DEFERRED     0
-#     endif /* PTHREAD_CANCEL_DEFERRED */
-
-#     if !defined (PTHREAD_CANCEL_ASYNCHRONOUS)
-#       define PTHREAD_CANCEL_ASYNCHRONOUS 0
-#     endif /* PTHREAD_CANCEL_ASYNCHRONOUS */
-
-#     define THR_CANCEL_DISABLE      PTHREAD_CANCEL_DISABLE
-#     define THR_CANCEL_ENABLE       PTHREAD_CANCEL_ENABLE
-#     define THR_CANCEL_DEFERRED     PTHREAD_CANCEL_DEFERRED
-#     define THR_CANCEL_ASYNCHRONOUS PTHREAD_CANCEL_ASYNCHRONOUS
-
-#     if !defined (PTHREAD_CREATE_JOINABLE)
-#       if defined (PTHREAD_CREATE_UNDETACHED)
-#         define PTHREAD_CREATE_JOINABLE PTHREAD_CREATE_UNDETACHED
-#       else
-#         define PTHREAD_CREATE_JOINABLE 0
-#       endif /* PTHREAD_CREATE_UNDETACHED */
-#     endif /* PTHREAD_CREATE_JOINABLE */
-
-#     if !defined (PTHREAD_CREATE_DETACHED)
-#       define PTHREAD_CREATE_DETACHED 1
-#     endif /* PTHREAD_CREATE_DETACHED */
-
-#     if !defined (PTHREAD_PROCESS_PRIVATE) && !defined (ACE_HAS_PTHREAD_PROCESS_ENUM)
-#       if defined (PTHREAD_MUTEXTYPE_FAST)
-#         define PTHREAD_PROCESS_PRIVATE PTHREAD_MUTEXTYPE_FAST
-#       else
-#         define PTHREAD_PROCESS_PRIVATE 0
-#       endif /* PTHREAD_MUTEXTYPE_FAST */
-#     endif /* PTHREAD_PROCESS_PRIVATE */
-
-#     if !defined (PTHREAD_PROCESS_SHARED) && !defined (ACE_HAS_PTHREAD_PROCESS_ENUM)
-#       if defined (PTHREAD_MUTEXTYPE_FAST)
-#         define PTHREAD_PROCESS_SHARED PTHREAD_MUTEXTYPE_FAST
-#       else
-#         define PTHREAD_PROCESS_SHARED 1
-#       endif /* PTHREAD_MUTEXTYPE_FAST */
-#     endif /* PTHREAD_PROCESS_SHARED */
-
-#     if defined (ACE_HAS_PTHREADS_DRAFT4)
-#       if defined (PTHREAD_PROCESS_PRIVATE)
-#         if !defined (USYNC_THREAD)
-#         define USYNC_THREAD    PTHREAD_PROCESS_PRIVATE
-#         endif /* ! USYNC_THREAD */
-#       else
-#         if !defined (USYNC_THREAD)
-#         define USYNC_THREAD    MUTEX_NONRECURSIVE_NP
-#         endif /* ! USYNC_THREAD */
-#       endif /* PTHREAD_PROCESS_PRIVATE */
-
-#       if defined (PTHREAD_PROCESS_SHARED)
-#         if !defined (USYNC_PROCESS)
-#         define USYNC_PROCESS   PTHREAD_PROCESS_SHARED
-#         endif /* ! USYNC_PROCESS */
-#       else
-#         if !defined (USYNC_PROCESS)
-#         define USYNC_PROCESS   MUTEX_NONRECURSIVE_NP
-#         endif /* ! USYNC_PROCESS */
-#       endif /* PTHREAD_PROCESS_SHARED */
-#     elif !defined (ACE_HAS_STHREADS)
-#       if !defined (USYNC_THREAD)
-#       define USYNC_THREAD PTHREAD_PROCESS_PRIVATE
-#       endif /* ! USYNC_THREAD */
-#       if !defined (USYNC_PROCESS)
-#       define USYNC_PROCESS PTHREAD_PROCESS_SHARED
-#       endif /* ! USYNC_PROCESS */
-#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
-
-/* MM-Graz:  prevent warnings */
-#undef THR_BOUND
-#undef THR_NEW_LWP
-#undef THR_DETACHED
-#undef THR_SUSPENDED
-#undef THR_DAEMON
-
-#     define THR_BOUND               0x00000001
-#     if defined (CHORUS)
-#       define THR_NEW_LWP             0x00000000
-#     else
-#       define THR_NEW_LWP             0x00000002
-#     endif /* CHORUS */
-#     define THR_DETACHED            0x00000040
-#     define THR_SUSPENDED           0x00000080
-#     define THR_DAEMON              0x00000100
-#     define THR_JOINABLE            0x00010000
-#     define THR_SCHED_FIFO          0x00020000
-#     define THR_SCHED_RR            0x00040000
-#     define THR_SCHED_DEFAULT       0x00080000
-
-#     if defined (ACE_HAS_IRIX62_THREADS)
-#     define THR_SCOPE_SYSTEM        0x00100000
-#     else
-#     define THR_SCOPE_SYSTEM        THR_BOUND
-#endif /*ACE_HAS_IRIX62_THREADS*/
-
-#     define THR_SCOPE_PROCESS       0x00200000
-#     define THR_INHERIT_SCHED       0x00400000
-#     define THR_EXPLICIT_SCHED      0x00800000
-#     define THR_SCHED_IO            0x01000000
-
-#     if !defined (ACE_HAS_STHREADS)
-#       if !defined (ACE_HAS_POSIX_SEM)
-/**
- * @class ACE_sema_t
- *
- * @brief This is used to implement semaphores for platforms that support
- * POSIX pthreads, but do *not* support POSIX semaphores, i.e.,
- * it's a different type than the POSIX <sem_t>.
- */
-class ACE_OS_Export ACE_sema_t
-{
-friend class ACE_OS;
-protected:
-  /// Serialize access to internal state.
-  ACE_mutex_t lock_;
-
-  /// Block until there are no waiters.
-  ACE_cond_t count_nonzero_;
-
-  /// Count of the semaphore.
-  u_long count_;
-
-  /// Number of threads that have called <ACE_OS::sema_wait>.
-  u_long waiters_;
-};
-#       endif /* !ACE_HAS_POSIX_SEM */
-
-#       if defined (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD)
-        // If we are on Solaris we can just reuse the existing
-        // implementations of these synchronization types.
-#         if !defined (ACE_LACKS_RWLOCK_T)
-#           include /**/ <synch.h>
-typedef rwlock_t ACE_rwlock_t;
-#         endif /* !ACE_LACKS_RWLOCK_T */
-#         include /**/ <thread.h>
-#       endif /* (ACE_LACKS_PTHREAD_YIELD) && defined (ACE_HAS_THR_YIELD) */
-
-#     else
-#       if !defined (ACE_HAS_POSIX_SEM)
-typedef sema_t ACE_sema_t;
-#       endif /* !ACE_HAS_POSIX_SEM */
-#     endif /* !ACE_HAS_STHREADS */
+// moved to pthread.h
 #   elif defined (ACE_HAS_STHREADS)
 // Solaris threads, without PTHREADS.
 // Typedefs to help compatibility with Windows NT and Pthreads.
@@ -1829,6 +684,11 @@ typedef u_int ACE_thread_key_t;
 /* #define T_NOFPU         0x00000000   Not using FPU */
 /* #define T_FPU           0x00000002   Using FPU bit */
 
+
+
+
+
+
 #   elif defined (VXWORKS)
 // For mutex implementation using mutual-exclusion semaphores (which
 // can be taken recursively).
@@ -1851,7 +711,6 @@ struct sockaddr_un {
   char  sun_path[108]; // path name.
 };
 
-#     define MAXNAMLEN   255
 #     define NSIG (_NSIGS + 1)
 
 // task options:  the other options are either obsolete, internal, or for
@@ -1916,6 +775,13 @@ typedef u_int ACE_thread_key_t;
       // Marker for ACE_Thread_Manager to indicate that it allocated
       // an ACE_thread_t.  It is placed at the beginning of the ID.
 #     define ACE_THR_ID_ALLOCATED '\022'
+
+
+
+
+
+
+
 
 #   elif defined (ACE_HAS_WTHREADS)
 
@@ -1983,7 +849,7 @@ public:
 #     define THR_SCHED_DEFAULT       0
 #     define THR_SCOPE_PROCESS       0
 #     define THR_SCOPE_SYSTEM        0
-#   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS */
+#   endif /* ACE_HAS_PTHREADS / STHREADS / PSOS / VXWORKS / WTHREADS **********/
 
 // If we're using PACE then we don't want this class (since PACE
 // takes care of it) unless we're on Windows. Win32 mutexes, semaphores,
@@ -2091,8 +957,8 @@ protected:
   ACE_cond_t waiting_important_writer_;
   // condition for the upgrading reader
 };
-#   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
-typedef pthread_rwlock_t ACE_rwlock_t;
+//#   elif defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+//typedef pthread_rwlock_t ACE_rwlock_t;
 #   elif defined (ACE_HAS_STHREADS)
 #     include /**/ <synch.h>
 typedef rwlock_t ACE_rwlock_t;
@@ -2292,7 +1158,7 @@ typedef unsigned int ACE_thread_key_t;
 #     define ACE_THR_PRI_OTHER_DEF 0
 #   endif /* ! ACE_THR_PRI_OTHER_DEF */
 
-# endif /* ACE_HAS_THREADS */
+# endif /* ACE_HAS_THREADS ***********************************************/
 
 # if defined (ACE_PSOS)
 
@@ -2323,24 +1189,10 @@ protected:
 
 // Standard C Library includes
 // NOTE: stdarg.h must be #included before stdio.h on LynxOS.
-# include /**/ <stdarg.h>
+# include "ace/os_include/os_stdarg.h"
 # if !defined (ACE_HAS_WINCE)
-#   include /**/ <assert.h>
-#   include /**/ <stdio.h>
-// this is a nasty hack to get around problems with the
-// pSOS definition of BUFSIZ as the config table entry
-// (which is valued using the LC_BUFSIZ value anyway)
-#   if defined (ACE_PSOS)
-#     if defined (BUFSIZ)
-#       undef BUFSIZ
-#     endif /* defined (BUFSIZ) */
-#     define BUFSIZ LC_BUFSIZ
-#   endif /* defined (ACE_PSOS) */
-
-#if defined (ACE_PSOS_DIAB_MIPS)
-#undef size_t
-typedef unsigned int size_t;
-#endif
+#   include "ace/os_include/os_assert.h"
+#   include "ace/os_include/os_stdio.h"
 
 #   if !defined (ACE_LACKS_NEW_H)
 #     if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
@@ -2352,80 +1204,26 @@ typedef unsigned int size_t;
 
 #   if !defined (ACE_PSOS_DIAB_MIPS)  &&  !defined (VXWORKS)
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#     include /**/ <signal.h>
+#     include "ace/os_include/os_signal.h"
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 #   endif /* ! ACE_PSOS_DIAB_MIPS && ! VXWORKS */
 
 #   if ! defined (ACE_PSOS_DIAB_MIPS)
-#   include /**/ <fcntl.h>
+#   include "ace/os_include/os_fcntl.h"
 #   endif /* ! ACE_PSOS_DIAB_MIPS */
 # endif /* ACE_HAS_WINCE */
 
-# include /**/ <limits.h>
-# include /**/ <ctype.h>
+# include "ace/os_include/os_limits.h"
+# include "ace/os_include/os_ctype.h"
 # if ! defined (ACE_PSOS_DIAB_MIPS)
-# include /**/ <string.h>
-# include /**/ <stdlib.h>
+# include "ace/os_include/os_string.h"
+# include "ace/os_include/os_stdlib.h"
 # endif /* ! ACE_PSOS_DIAB_MIPS */
-# include /**/ <float.h>
-
-// This is defined by XOPEN to be a minimum of 16.  POSIX.1g
-// also defines this value.  platform-specific config.h can
-// override this if need be.
-# if !defined (IOV_MAX)
-#  define IOV_MAX 16
-# endif /* IOV_MAX */
-
-# if !defined (ACE_IOV_MAX)
-#define ACE_IOV_MAX IOV_MAX
-# endif /* ACE_IOV_MAX */
-
-# if defined (ACE_PSOS_SNARFS_HEADER_INFO)
-  // Header information snarfed from compiler provided header files
-  // that are not included because there is already an identically
-  // named file provided with pSOS, which does not have this info
-  // from compiler supplied stdio.h
-  extern FILE *fdopen(int, const char *);
-  extern int getopt(int, char *const *, const char *);
-  extern char *tempnam(const char *, const char *);
-  extern "C" int fileno(FILE *);
-
-//  #define fileno(stream) ((stream)->_file)
-
-  // from compiler supplied string.h
-  extern char *strdup (const char *);
-
-  // from compiler supplied stat.h
-  extern mode_t umask (mode_t);
-  extern int mkfifo (const char *, mode_t);
-  extern int mkdir (const char *, mode_t);
-
-  // from compiler supplied stdlib.h
-  extern int putenv (char *);
-
-  int isatty (int h);
-
-# endif /* ACE_PSOS_SNARFS_HEADER_INFO */
+# include "ace/os_include/os_float.h"
 
 # if defined (ACE_NEEDS_SCHED_H)
-#   include /**/ <sched.h>
+#   include "ace/os_include/os_sched.h"
 # endif /* ACE_NEEDS_SCHED_H */
-
-#if !defined (ACE_OSTREAM_TYPE)
-# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-#   define ACE_OSTREAM_TYPE FILE
-# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#   define ACE_OSTREAM_TYPE ostream
-# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#endif /* ! ACE_OSTREAM_TYPE */
-
-#if !defined (ACE_DEFAULT_LOG_STREAM)
-# if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-#   define ACE_DEFAULT_LOG_STREAM 0
-# else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#   define ACE_DEFAULT_LOG_STREAM (&cerr)
-# endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#endif /* ! ACE_DEFAULT_LOG_STREAM */
 
 // If the user wants minimum IOStream inclusion, we will just include
 // the forward declarations
@@ -2439,283 +1237,29 @@ typedef unsigned int size_t;
 
 # if !defined (ACE_HAS_WINCE)
 #   if ! defined (ACE_PSOS_DIAB_MIPS)
-#   include /**/ <fcntl.h>
+#   include "ace/os_include/os_fcntl.h"
 #   endif /* ! ACE_PSOS_DIAB_MIPS */
 # endif /* ACE_HAS_WINCE */
-
-// This must come after signal.h is #included.
-# if defined (SCO)
-#   define SIGIO SIGPOLL
-#   include /**/ <sys/regset.h>
-# endif /* SCO */
 
 # if defined ACE_HAS_BYTESEX_H
 #   include /**/ <bytesex.h>
 # endif /* ACE_HAS_BYTESEX_H */
 # include "ace/Basic_Types.h"
 
-/* This should work for linux, solaris 5.6 and above, IRIX, OSF */
-# if defined (ACE_HAS_LLSEEK) || defined (ACE_HAS_LSEEK64)
-#   if ACE_SIZEOF_LONG == 8
-      typedef off_t ACE_LOFF_T;
-#   elif defined (__sgi) || defined (AIX) || defined (HPUX) \
-    || defined (__QNX__)
-      typedef off64_t ACE_LOFF_T;
-#   elif defined (__sun)
-      typedef offset_t ACE_LOFF_T;
-#   elif defined (WIN32) //Add by Nick Lin -- for win32 llseek
-      typedef __int64  ACE_LOFF_T;  //Add by Nick Lin -- for win32 llseek
-#   else
-      typedef loff_t ACE_LOFF_T;
-#   endif
-# endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
-
 // Type-safe, and unsigned.
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 
-# if defined (ACE_HAS_SIG_MACROS)
-#   undef sigemptyset
-#   undef sigfillset
-#   undef sigaddset
-#   undef sigdelset
-#   undef sigismember
-# endif /* ACE_HAS_SIG_MACROS */
-
-// This must come after signal.h is #included.  It's to counteract
-// the sigemptyset and sigfillset #defines, which only happen
-// when __OPTIMIZE__ is #defined (really!) on Linux.
-# if defined (linux) && defined (__OPTIMIZE__)
-#   undef sigemptyset
-#   undef sigfillset
-# endif /* linux && __OPTIMIZE__ */
-
-// Prototypes should come after ace/Basic_Types.h since some types may
-// be used in the prototypes.
-
-#if defined (ACE_LACKS_GETPGID_PROTOTYPE) && \
-    !defined (_XOPEN_SOURCE) && !defined (_XOPEN_SOURCE_EXTENDED)
-extern "C" pid_t getpgid (pid_t pid);
-#endif  /* ACE_LACKS_GETPGID_PROTOTYPE &&
-           !_XOPEN_SOURCE && !_XOPEN_SOURCE_EXTENDED */
-
-#if defined (ACE_LACKS_STRPTIME_PROTOTYPE) && !defined (_XOPEN_SOURCE)
-extern "C" char *strptime (const char *s, const char *fmt, struct tm *tp);
-#endif  /* ACE_LACKS_STRPTIME_PROTOTYPE */
-
-#if defined (ACE_LACKS_STRTOK_R_PROTOTYPE) && !defined (_POSIX_SOURCE)
-extern "C" char *strtok_r (char *s, const char *delim, char **save_ptr);
-#endif  /* ACE_LACKS_STRTOK_R_PROTOTYPE */
-
-#if !defined (_LARGEFILE64_SOURCE)
-# if defined (ACE_LACKS_LSEEK64_PROTOTYPE) && \
-     defined (ACE_LACKS_LLSEEK_PROTOTYPE)
-#   error Define either ACE_LACKS_LSEEK64_PROTOTYPE or ACE_LACKS_LLSEEK_PROTOTYPE, not both!
-# elif defined (ACE_LACKS_LSEEK64_PROTOTYPE)
-extern "C" ACE_LOFF_T lseek64 (int fd, ACE_LOFF_T offset, int whence);
-# elif defined (ACE_LACKS_LLSEEK_PROTOTYPE)
-extern "C" ACE_LOFF_T llseek (int fd, ACE_LOFF_T offset, int whence);
-# endif
-#endif  /* _LARGEFILE64_SOURCE */
-
-#if defined (ACE_LACKS_PREAD_PROTOTYPE) && (_XOPEN_SOURCE - 0) < 500
-// _XOPEN_SOURCE == 500    Single Unix conformance
-// It seems that _XOPEN_SOURCE == 500 means that the prototypes are
-// already defined in the system headers.
-extern "C" ssize_t pread (int fd,
-                          void *buf,
-                          size_t nbytes,
-                          off_t offset);
-
-extern "C" ssize_t pwrite (int fd,
-                           const void *buf,
-                           size_t n,
-                           off_t offset);
-#endif  /* ACE_LACKS_PREAD_PROTOTYPE && (_XOPEN_SOURCE - 0) < 500 */
-
-# if defined (ACE_LACKS_UALARM_PROTOTYPE)
-extern "C" u_int ualarm (u_int usecs, u_int interval);
-# endif /* ACE_LACKS_UALARM_PROTOTYPE */
-
-# if defined (ACE_HAS_BROKEN_SENDMSG)
-typedef struct msghdr ACE_SENDMSG_TYPE;
-# else
-typedef const struct msghdr ACE_SENDMSG_TYPE;
-# endif /* ACE_HAS_BROKEN_SENDMSG */
-
-# if defined (ACE_HAS_BROKEN_RANDR)
-// The SunOS 5.4.X version of rand_r is inconsistent with the header
-// files...
-typedef u_int ACE_RANDR_TYPE;
-extern "C" int rand_r (ACE_RANDR_TYPE seed);
-# else
-#   if defined (HPUX_10)
-// HP-UX 10.x's stdlib.h (long *) doesn't match that man page (u_int *)
-typedef long ACE_RANDR_TYPE;
-#   else
-typedef unsigned int ACE_RANDR_TYPE;
-#   endif /* HPUX_10 */
-# endif /* ACE_HAS_BROKEN_RANDR */
-
 # if defined (ACE_HAS_UTIME)
-#   include /**/ <utime.h>
+#   include "ace/os_include/os_utime.h"
 # endif /* ACE_HAS_UTIME */
 
-# if !defined (ACE_HAS_MSG) && !defined (SCO)
-struct msghdr {};
-# endif /* ACE_HAS_MSG */
-
-# if defined (ACE_HAS_MSG) && defined (ACE_LACKS_MSG_ACCRIGHTS)
-#   if !defined (msg_accrights)
-#     undef msg_control
-#     define msg_accrights msg_control
-#   endif /* ! msg_accrights */
-
-#   if !defined (msg_accrightslen)
-#     undef msg_controllen
-#     define msg_accrightslen msg_controllen
-#   endif /* ! msg_accrightslen */
-# endif /* ACE_HAS_MSG && ACE_LACKS_MSG_ACCRIGHTS */
-
-# if !defined (ACE_HAS_SIG_ATOMIC_T)
-typedef int sig_atomic_t;
-# endif /* !ACE_HAS_SIG_ATOMIC_T */
-
-# if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
-// Prototypes for both signal() and struct sigaction are consistent..
-#   if defined (ACE_HAS_SIG_C_FUNC)
-extern "C" {
-#   endif /* ACE_HAS_SIG_C_FUNC */
-#   if !defined (ACE_PSOS)
-typedef void (*ACE_SignalHandler)(int);
-typedef void (*ACE_SignalHandlerV)(int);
-#   endif /* !defined (ACE_PSOS) */
-#   if defined (ACE_HAS_SIG_C_FUNC)
-}
-#   endif /* ACE_HAS_SIG_C_FUNC */
-# elif defined (ACE_HAS_LYNXOS_SIGNALS)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (ACE_HAS_TANDEM_SIGNALS)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (ACE_HAS_IRIX_53_SIGNALS)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (ACE_HAS_SPARCWORKS_401_SIGNALS)
-typedef void (*ACE_SignalHandler)(int, ...);
-typedef void (*ACE_SignalHandlerV)(int,...);
-# elif defined (ACE_HAS_SUNOS4_SIGNAL_T)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (ACE_HAS_SVR4_SIGNAL_T)
-// SVR4 Signals are inconsistent (e.g., see struct sigaction)..
-typedef void (*ACE_SignalHandler)(int);
-#   if !defined (m88k)     /*  with SVR4_SIGNAL_T */
-typedef void (*ACE_SignalHandlerV)(void);
-#   else
-typedef void (*ACE_SignalHandlerV)(int);
-#   endif  /*  m88k */       /*  with SVR4_SIGNAL_T */
-# elif defined (ACE_WIN32)
-typedef void (__cdecl *ACE_SignalHandler)(int);
-typedef void (__cdecl *ACE_SignalHandlerV)(int);
-# elif defined (ACE_HAS_UNIXWARE_SVR4_SIGNAL_T)
-typedef void (*ACE_SignalHandler)(int);
-typedef void (*ACE_SignalHandlerV)(...);
-# elif defined (INTEGRITY)
-typedef void (*ACE_SignalHandler)();
-typedef void (*ACE_SignalHandlerV)(int);
-# else /* This is necessary for some older broken version of cfront */
-#   if defined (SIG_PF)
-#     define ACE_SignalHandler SIG_PF
-#   else
-typedef void (*ACE_SignalHandler)(int);
-#   endif /* SIG_PF */
-typedef void (*ACE_SignalHandlerV)(...);
-# endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
-
-# if defined (BUFSIZ)
-#   define ACE_STREAMBUF_SIZE BUFSIZ
-# else
-#   define ACE_STREAMBUF_SIZE 1024
-# endif /* BUFSIZ */
-
 # if defined (ACE_WIN32)
-// Turn off warnings for /W4
-// To resume any of these warning: #pragma warning(default: 4xxx)
-// which should be placed after these defines
-
-#   if !defined (ALL_WARNINGS) && defined(_MSC_VER) && !defined(ghs) && !defined(__MINGW32__)
-// #pragma warning(disable: 4101)  // unreferenced local variable
-#     pragma warning(disable: 4127)  /* constant expression for TRACE/ASSERT */
-#     pragma warning(disable: 4134)  /* message map member fxn casts */
-#     pragma warning(disable: 4511)  /* private copy constructors are good to have */
-#     pragma warning(disable: 4512)  /* private operator= are good to have */
-#     pragma warning(disable: 4514)  /* unreferenced inlines are common */
-#     pragma warning(disable: 4710)  /* private constructors are disallowed */
-#     pragma warning(disable: 4705)  /* statement has no effect in optimized code */
-// #pragma warning(disable: 4701)  // local variable *may* be used without init
-// #pragma warning(disable: 4702)  // unreachable code caused by optimizations
-#     pragma warning(disable: 4791)  /* loss of debugging info in retail version */
-// #pragma warning(disable: 4204)  // non-constant aggregate initializer
-#     pragma warning(disable: 4275)  /* deriving exported class from non-exported */
-#     pragma warning(disable: 4251)  /* using non-exported as public in exported */
-#     pragma warning(disable: 4786)  /* identifier was truncated to '255' characters in the browser information */
-#     pragma warning(disable: 4097)  /* typedef-name used as synonym for class-name */
-#   endif /* !ALL_WARNINGS && _MSV_VER && !ghs && !__MINGW32__ */
-
-// STRICT type checking in WINDOWS.H enhances type safety for Windows
-// programs by using distinct types to represent all the different
-// HANDLES in Windows. So for example, STRICT prevents you from
-// mistakenly passing an HPEN to a routine expecting an HBITMAP.
-// Note that we only use this if we
-#   if defined (ACE_HAS_STRICT) && (ACE_HAS_STRICT != 0)
-#     if !defined (STRICT)   /* may already be defined */
-#       define STRICT
-#     endif /* !STRICT */
-#   endif /* ACE_HAS_STRICT */
 
 #   if !defined (ACE_HAS_WINCE)
-#     include /**/ <sys/timeb.h>
+#     include "ace/os_include/sys/os_timeb.h"
 #   endif /* ACE_HAS_WINCE */
-
-// Need to work around odd glitches with NT.
-#   if !defined (ACE_MAX_DEFAULT_PORT)
-#     define ACE_MAX_DEFAULT_PORT 65535
-#   endif /* ACE_MAX_DEFAULT_PORT */
-
-// We're on WinNT or Win95
-#   define ACE_PLATFORM_A "Win32"
-#   define ACE_PLATFORM_EXE_SUFFIX_A ".exe"
-
-// Used for dynamic linking
-#   if !defined (ACE_DEFAULT_SVC_CONF)
-#     if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf")
-#     else
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT (".\\svc.conf.xml")
-#     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
-#   endif /* ACE_DEFAULT_SVC_CONF */
-
-// The following are #defines and #includes that are specific to
-// WIN32.
-#   if defined (ACE_HAS_WINCE)
-#     define ACE_STDIN  _fileno (stdin)
-#     define ACE_STDOUT _fileno (stdout)
-#     define ACE_STDERR _fileno (stderr)
-#   else
-#   define ACE_STDIN GetStdHandle (STD_INPUT_HANDLE)
-#   define ACE_STDOUT GetStdHandle (STD_OUTPUT_HANDLE)
-#   define ACE_STDERR GetStdHandle (STD_ERROR_HANDLE)
-#   endif  // ACE_HAS_WINCE
-
-// Default semaphore key and mutex name
-#   if !defined (ACE_DEFAULT_SEM_KEY)
-#     define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
-#   endif /* ACE_DEFAULT_SEM_KEY */
-
-#   define ACE_INVALID_SEM_KEY 0
 
 #   if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 #     define ACE_SEH_TRY if (1)
@@ -2744,146 +1288,23 @@ typedef void (*ACE_SignalHandlerV)(...);
 // The "null" device on Win32.
 #   define ACE_DEV_NULL "nul"
 
-// Define the pathname separator characters for Win32 (ugh).
-#   define ACE_DIRECTORY_SEPARATOR_STR_A "\\"
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '\\'
-#   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("PATH")
-#   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (";")
-#   if !defined (ACE_DLL_SUFFIX)
-#     define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
-#   endif /* !ACE_DLL_SUFFIX */
-#   if !defined (ACE_DLL_PREFIX)
-#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
-#   endif /* !ACE_DLL_PREFIX */
-
-// This will help until we figure out everything:
-#   define NFDBITS 32 /* only used in unused functions... */
-// These two may be used for internal flags soon:
-#   define MAP_PRIVATE 1
-#   define MAP_SHARED  2
-#   define MAP_FIXED   4
-
-#   define RUSAGE_SELF 1
-
-struct shmaddr { };
-struct msqid_ds {};
-
-/// Fake the UNIX rusage structure.  Perhaps we can add more to this
-/// later on?
-struct rusage
-{
-  FILETIME ru_utime;
-  FILETIME ru_stime;
-};
-
-// MMAP flags
-#   define PROT_READ PAGE_READONLY
-#   define PROT_WRITE PAGE_READWRITE
-#   define PROT_RDWR PAGE_READWRITE
-/* If we can find suitable use for these flags, here they are:
-PAGE_WRITECOPY
-PAGE_EXECUTE
-PAGE_EXECUTE_READ
-PAGE_EXECUTE_READWRITE
-PAGE_EXECUTE_WRITECOPY
-PAGE_GUARD
-PAGE_NOACCESS
-PAGE_NOCACHE  */
-
 #   if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-#     include /**/ <ws2tcpip.h>
+#     include "ace/os_include/netinet/os_in.h"  // <ws2tcpip.h>
 #   endif /* ACE_HAS_WINSOCK2 */
 
-// error code mapping
-#   define ETIME                   ERROR_SEM_TIMEOUT
-#   define EWOULDBLOCK             WSAEWOULDBLOCK
-#   define EINPROGRESS             WSAEINPROGRESS
-#   define EALREADY                WSAEALREADY
-#   define ENOTSOCK                WSAENOTSOCK
-#   define EDESTADDRREQ            WSAEDESTADDRREQ
-#   define EMSGSIZE                WSAEMSGSIZE
-#   define EPROTOTYPE              WSAEPROTOTYPE
-#   define ENOPROTOOPT             WSAENOPROTOOPT
-#   define EPROTONOSUPPORT         WSAEPROTONOSUPPORT
-#   define ESOCKTNOSUPPORT         WSAESOCKTNOSUPPORT
-#   define EOPNOTSUPP              WSAEOPNOTSUPP
-#   define EPFNOSUPPORT            WSAEPFNOSUPPORT
-#   define EAFNOSUPPORT            WSAEAFNOSUPPORT
-#   define EADDRINUSE              WSAEADDRINUSE
-#   define EADDRNOTAVAIL           WSAEADDRNOTAVAIL
-#   define ENETDOWN                WSAENETDOWN
-#   define ENETUNREACH             WSAENETUNREACH
-#   define ENETRESET               WSAENETRESET
-#   define ECONNABORTED            WSAECONNABORTED
-#   define ECONNRESET              WSAECONNRESET
-#   define ENOBUFS                 WSAENOBUFS
-#   define EISCONN                 WSAEISCONN
-#   define ENOTCONN                WSAENOTCONN
-#   define ESHUTDOWN               WSAESHUTDOWN
-#   define ETOOMANYREFS            WSAETOOMANYREFS
-#   define ETIMEDOUT               WSAETIMEDOUT
-#   define ECONNREFUSED            WSAECONNREFUSED
-#   define ELOOP                   WSAELOOP
-#   define EHOSTDOWN               WSAEHOSTDOWN
-#   define EHOSTUNREACH            WSAEHOSTUNREACH
-#   define EPROCLIM                WSAEPROCLIM
-#   define EUSERS                  WSAEUSERS
-#   define EDQUOT                  WSAEDQUOT
-#   define ESTALE                  WSAESTALE
-#   define EREMOTE                 WSAEREMOTE
-// Grrr! ENAMETOOLONG and ENOTEMPTY are already defined by the horrible
-// 'standard' library.
-// #define ENAMETOOLONG            WSAENAMETOOLONG
-
-#   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
-#     define ENOTEMPTY               WSAENOTEMPTY
-#   endif /* __BORLANDC__  && __BORLANDC__ <= 0x540*/
 
 
 #   if !defined (ACE_HAS_WINCE)
-#     include /**/ <time.h>
-#     include /**/ <direct.h>
-#     include /**/ <process.h>
-#     include /**/ <io.h>
+#     include "ace/os_include/os_time.h"
+#     include "ace/os_include/sys/os_stat.h"  // <direct.h>
+#     include "ace/os_include/os_unistd.h"  // <process.h>
 #   endif /* ACE_HAS_WINCE */
 
-#   if defined (__BORLANDC__)
-#     include /**/ <fcntl.h>
-#     define _chdir chdir
-#     define _ftime ftime
-#     undef _access
-#     define _access access
-#     if (__BORLANDC__ <= 0x540)
-#       define _getcwd getcwd
-#       define _stat stat
-#     endif
-#     define _isatty isatty
-#     define _umask umask
-#     define _fstat fstat
-#     define _stricmp stricmp
-#     define _strnicmp strnicmp
-
-#     define _timeb timeb
-
-#     define _O_CREAT O_CREAT
-#     define _O_EXCL  O_EXCL
-#     define _O_TRUNC O_TRUNC
-      // 0x0800 is used for O_APPEND.  0x08 looks free.
-#     define _O_TEMPORARY 0x08 /* see fcntl.h */
-#     define _O_RDWR   O_RDWR
-#     define _O_WRONLY O_WRONLY
-#     define _O_RDONLY O_RDONLY
-#     define _O_APPEND O_APPEND
-#     define _O_BINARY O_BINARY
-#     define _O_TEXT   O_TEXT
-#   endif /* __BORLANDC__ */
+#     include "ace/os_include/os_fcntl.h"
 
 typedef OVERLAPPED ACE_OVERLAPPED;
 
 typedef DWORD ACE_thread_t;
-#   if !defined(__MINGW32__)
-typedef long pid_t;
-#   endif /* __MINGW32__ */
 typedef HANDLE ACE_hthread_t;
 
 #define ACE_INVALID_PID ((pid_t) -1)
@@ -2921,16 +1342,6 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #     endif
 #   endif /* ACE_HAS_WINCE */
 
-#   if !defined (__BORLANDC__)
-typedef DWORD nlink_t;
-#       if !defined(__MINGW32__)
-typedef u_short mode_t;
-#       endif /* !__MINGW32__ */
-typedef long uid_t;
-typedef long gid_t;
-#   endif /* __BORLANDC__ */
-typedef char *caddr_t;
-
 typedef DWORD ACE_exitcode;
 #   define ACE_SYSCALL_FAILED 0xFFFFFFFF
 
@@ -2940,118 +1351,21 @@ typedef DWORD ACE_exitcode;
 
 // Reliance on CRT - I don't really like this.
 
-#   define O_NDELAY    1
-#   if !defined (MAXPATHLEN)
-#     define MAXPATHLEN  _MAX_PATH
-#   endif /* !MAXPATHLEN */
-#   define MAXNAMLEN   _MAX_FNAME
-#   define EADDRINUSE WSAEADDRINUSE
-
-/// The ordering of the fields in this struct is important.  It has to
-/// match those in WSABUF.
-struct iovec
-{
-  /// byte count to read/write
-  u_long iov_len;
-  /// data to be read/written
-  char *iov_base;
-
-  // WSABUF is a Winsock2-only type.
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  operator WSABUF &(void) { return *((WSABUF *) this); }
-#endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
-};
-
-struct msghdr
-{
-  /// Optional address
-  sockaddr * msg_name;
-
-  /// Size of address
-  int msg_namelen;
-
-  /// Scatter/gather array
-  iovec *msg_iov;
-
-  /// # elements in msg_iov
-  int msg_iovlen;
-
-  /// Access rights sent/received
-  caddr_t msg_accrights;
-
-  int msg_accrightslen;
-};
 
 typedef int ACE_idtype_t;
 typedef DWORD ACE_id_t;
 #   define ACE_SELF (0)
 typedef int ACE_pri_t;
 
-// Dynamic loading-related types - used for dlopen and family.
-typedef HINSTANCE ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE 0
-
 # elif defined (ACE_PSOS)
 
 typedef ACE_UINT64 ACE_hrtime_t;
-
-#   if defined (ACE_SIGINFO_IS_SIGINFO_T)
-  typedef struct siginfo siginfo_t;
-#   endif /* ACE_LACKS_SIGINFO_H */
 
 # else /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
 #   if defined (m88k)
 #     define RUSAGE_SELF 1
 #   endif  /*  m88k */
-
-// Default port is MAX_SHORT.
-#   define ACE_MAX_DEFAULT_PORT 65535
-
-// Default semaphore key
-#   if !defined (ACE_DEFAULT_SEM_KEY)
-#     define ACE_DEFAULT_SEM_KEY 1234
-#   endif /* ACE_DEFAULT_SEM_KEY */
-
-#   define ACE_INVALID_SEM_KEY -1
-
-// Define the pathname separator characters for UNIX.
-#   define ACE_DIRECTORY_SEPARATOR_STR_A "/"
-#   define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
-
-// We're some kind of UNIX...
-#   define ACE_PLATFORM_A "UNIX"
-#   define ACE_PLATFORM_EXE_SUFFIX_A ""
-
-#   if !defined (ACE_LD_SEARCH_PATH)
-#     define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
-#   endif /* ACE_LD_SEARCH_PATH */
-#   if !defined (ACE_LD_SEARCH_PATH_SEPARATOR_STR)
-#     define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
-#   endif /* ACE_LD_SEARCH_PATH_SEPARATOR_STR */
-
-#   if !defined (ACE_DLL_SUFFIX)
-#     define ACE_DLL_SUFFIX ".so"
-#   endif /* ACE_DLL_SUFFIX */
-#   if !defined (ACE_DLL_PREFIX)
-#     define ACE_DLL_PREFIX "lib"
-#   endif /* ACE_DLL_PREFIX */
-
-// Used for dynamic linking.
-#   if !defined (ACE_DEFAULT_SVC_CONF)
-#     if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf")
-#     else
-#       define ACE_DEFAULT_SVC_CONF ACE_LIB_TEXT ("./svc.conf.xml")
-#     endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
-#   endif /* ACE_DEFAULT_SVC_CONF */
-
-// The following are #defines and #includes that are specific to UNIX.
-
-#   define ACE_STDIN 0
-#   define ACE_STDOUT 1
-#   define ACE_STDERR 2
 
 // Be consistent with Winsock naming
 typedef int ACE_exitcode;
@@ -3151,58 +1465,6 @@ struct ACE_OVERLAPPED
 #     define PIPE_TYPE_MESSAGE 0
 #   endif /* !defined PIPE_TYPE_MESSAGE */
 
-#   if defined (ACE_HAS_BROKEN_IF_HEADER)
-struct ifafilt;
-#   endif /* ACE_HAS_BROKEN_IF_HEADER */
-
-#   if defined (ACE_HAS_AIX_BROKEN_SOCKET_HEADER)
-#     undef __cplusplus
-#     include /**/ <sys/socket.h>
-#     define __cplusplus
-#   else
-#     include /**/ <sys/socket.h>
-#   endif /* ACE_HAS_AIX_BROKEN_SOCKET_HEADER */
-
-extern "C"
-{
-#   if defined (VXWORKS)
-  struct  hostent {
-    char    *h_name;        /* official name of host */
-    char    **h_aliases;    /* aliases:  not used on VxWorks */
-    int     h_addrtype;     /* host address type */
-    int     h_length;       /* address length */
-    char    **h_addr_list;  /* (first, only) address from name server */
-#     define h_addr h_addr_list[0]   /* the first address */
-  };
-#   else
-#     if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#       define queue _Queue_
-#     endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#     include /**/ <netdb.h>
-#     if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#       undef queue
-#     endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#   endif /* VXWORKS */
-
-
-// This part if to avoid STL name conflict with the map structure
-// in net/if.h.
-#   if defined (ACE_HAS_STL_MAP_CONFLICT)
-#     define map _Resource_Allocation_Map_
-#   endif /* ACE_HAS_STL_MAP_CONFLICT */
-#   include /**/ <net/if.h>
-#   if defined (ACE_HAS_STL_MAP_CONFLICT)
-#     undef map
-#   endif /* ACE_HAS_STL_MAP_CONFLICT */
-
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     define queue _Queue_
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#   include /**/ <netinet/in.h>
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     undef queue
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-
 #   if defined (ACE_VXWORKS) && ACE_VXWORKS <= 0x540
       // Work around a lack of ANSI prototypes for these functions on VxWorks.
       unsigned long  inet_addr (const char *);
@@ -3210,9 +1472,9 @@ extern "C"
       struct in_addr inet_makeaddr (const int, const int);
       unsigned long  inet_network (const char *);
 #   else  /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
-#     include /**/ <arpa/inet.h>
+#     include "ace/os_include/arpa/os_inet.h"
 #   endif /* ! (ACE_VXWORKS) && ACE_VXWORKS <= 0x540 */
-}
+
 #   if !defined (ACE_LACKS_TCP_H)
 #     if defined(ACE_HAS_CONFLICTING_XTI_MACROS)
 #       if defined(TCP_NODELAY)
@@ -3222,30 +1484,24 @@ extern "C"
 #         undef TCP_MAXSEG
 #       endif
 #     endif
-#     include /**/ <netinet/tcp.h>
+#     include "ace/os_include/netinet/os_tcp.h"
 #   endif /* ACE_LACKS_TCP_H */
-
-#   if defined (__Lynx__) || defined (UNIXWARE_7_1)
-#     ifndef howmany
-#       define howmany(x, y)   (((x)+((y)-1))/(y))
-#     endif /* howmany */
-#   endif /* __Lynx__ || UNIXWARE_7_1 */
 
 #   if defined (CHORUS)
 #     include /**/ <chorus.h>
 #     if !defined(CHORUS_4)
 #       include /**/ <cx/select.h>
 #     else
-#       include /**/ <stdio.h>
+#       include "ace/os_include/os_stdio.h"
 #     endif
-#     include /**/ <sys/uio.h>
-#     include /**/ <time.h>
+#     include "ace/os_include/sys/os_uio.h"
+#     include "ace/os_include/os_time.h"
 #     include /**/ <stdfileio.h>
 #     include /**/ <am/afexec.h>
-#     include /**/ <sys/types.h>
-#     include /**/ <sys/signal.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <pwd.h>
+#     include "ace/os_include/sys/os_types.h"
+#     include "ace/os_include/os_signal.h"  // <sys/signal.h>
+#     include "ace/os_include/sys/os_wait.h"
+#     include "ace/os_include/os_pwd.h"
 #     include /**/ <timer/chBench.h>
 extern_C int      getgid          __((void));
 extern_C int      getuid          __((void));
@@ -3253,49 +1509,37 @@ extern_C char*    getcwd          __((char* buf, size_t size));
 extern_C int      pipe            __((int* fildes));
 extern_C int      gethostname     __((char*, size_t));
 
-// This must come after limits.h is included
-#     define MAXPATHLEN _POSIX_PATH_MAX
-
 #     if  !defined(CHORUS_4)
-typedef cx_fd_mask fd_mask;
 typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     endif
-#     ifndef howmany
-#       define howmany(x, y)   (((x)+((y)-1))/(y))
-#     endif /* howmany */
 #   elif defined (CYGWIN32)
-#     include /**/ <sys/uio.h>
-#     include /**/ <sys/file.h>
-#     include /**/ <sys/time.h>
-#     include /**/ <sys/resource.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <pwd.h>
+#     include "ace/os_include/sys/os_uio.h"
+#     include "ace/os_include/os_fcntl.h"  // <sys/file.h>
+#     include "ace/os_include/sys/os_time.h"
+#     include "ace/os_include/sys/os_resource.h"
+#     include "ace/os_include/sys/os_wait.h"
+#     include "ace/os_include/os_pwd.h"
 #   elif defined (__QNX__)
-#     include /**/ <sys/uio.h>
-#     include /**/ <sys/ipc.h>
-#     include /**/ <sys/sem.h>
-#     include /**/ <sys/time.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <sys/resource.h>
-#     include /**/ <pwd.h>
+#     include "ace/os_include/sys/os_uio.h"
+#     include "ace/os_include/sys/os_ipc.h"
+#     include "ace/os_include:sys/os_time.h"
+#     include "ace/os_include/sys/os_wait.h"
+#     include "ace/os_include/sys/os_resource.h"
+#     include "ace/os_include/os_pwd.h"
       // sets O_NDELAY
 #     include /**/ <unix.h>
-#     include /**/ <sys/param.h> /* for NBBY */
-      typedef long fd_mask;
+#     include "ace/os_include/os_limits.h"  // <sys/param.h> /* for NBBY */
 #     if !defined (NFDBITS)
 #       define NFDBITS (sizeof(fd_mask) * NBBY)        /* bits per mask */
 #     endif /* ! NFDBITS */
-#     if !defined (howmany)
-#       define howmany(x, y)   (((x)+((y)-1))/(y))
-#     endif /* ! howmany */
 #   elif defined(__rtems__)
-#     include /**/ <sys/file.h>
-#     include /**/ <sys/resource.h>
-#     include /**/ <sys/fcntl.h>
-#     include /**/ <sys/time.h>
-#     include /**/ <sys/utsname.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <pwd.h>
+#     include "ace/os_include/os_fcntl.h"  // <sys/file.h>
+#     include "ace/os_include/sys/os_resource.h"
+#     include "ace/os_include/sys/os_fcntl.h"
+#     include "ace/os_include/sys/os_time.h"
+#     include "ace/os_include/sys/os_utsname.h"
+#     include "ace/os_include/sys/os_wait.h"
+#     include "ace/os_include/os_pwd.h"
 
 extern "C"
 {
@@ -3303,20 +1547,19 @@ extern "C"
               fd_set *exceptfds, const struct timeval *timeout);
 };
 #   elif ! defined (VXWORKS) && ! defined (INTEGRITY)
-#     include /**/ <sys/uio.h>
-#     include /**/ <sys/ipc.h>
+#     include "ace/os_include/sys/os_uio.h"
+#     include "ace/os_include/sys/os_ipc.h"
 #     if !defined(ACE_LACKS_SYSV_SHMEM)
 // No reason to #include this if the platform lacks support for SHMEM
-#       include /**/ <sys/shm.h>
+#       include "ace/os_include/sys/os_shm.h"
 #     endif /* ACE_LACKS_SYSV_SHMEM */
-#     include /**/ <sys/sem.h>
-#     include /**/ <sys/file.h>
-#     include /**/ <sys/time.h>
-#     include /**/ <sys/resource.h>
-#     include /**/ <sys/wait.h>
-#     include /**/ <pwd.h>
+#     include "ace/os_include/os_fcntl.h"  // <sys/file.h>
+#     include "ace/os_include/sys/os_time.h"
+#     include "ace/os_include/sys/os_resource.h"
+#     include "ace/os_include/sys/os_wait.h"
+#     include "ace/os_include/os_pwd.h"
 #   endif /* ! VXWORKS */
-#   include /**/ <sys/ioctl.h>
+#   include "ace/os_include/os_stropts.h" // <sys/ioctl.h>
 
 // IRIX5 defines bzero() in this odd file...
 #   if defined (ACE_HAS_BSTRING)
@@ -3325,14 +1568,14 @@ extern "C"
 
 // AIX defines bzero() in this odd file...
 #   if defined (ACE_HAS_STRINGS)
-#     include /**/ <strings.h>
+#     include "ace/os_include/os_strings.h"
 #   endif /* ACE_HAS_STRINGS */
 
 #   if defined (ACE_HAS_TERM_IOCTLS)
 #     if defined (__QNX__)
-#       include /**/ <termios.h>
+#       include "ace/os_include/os_termios.h"
 #     else  /* ! __QNX__ */
-#       include /**/ <sys/termios.h>
+#       include "ace/os_include/os_termios.h"  // <sys/termios.h>
 #     endif /* ! __QNX__ */
 #     if defined (HPUX)
 #       include /**/ <sys/modem.h>
@@ -3352,12 +1595,10 @@ extern "C"
 #endif /* VTIME */
 
 #   if defined (ACE_HAS_AIO_CALLS)
-#     include /**/ <aio.h>
+#     include "ace/os_include/os_aio.h"
 #   endif /* ACE_HAS_AIO_CALLS */
 
-#   if !defined (ACE_LACKS_PARAM_H)
-#     include /**/ <sys/param.h>
-#   endif /* ACE_LACKS_PARAM_H */
+#     include "ace/os_include/os_limits.h"  // <sys/param.h>
 
 // This is here for ACE_OS::num_processors_online(). On HP-UX, it
 // needs sys/param.h (above) and sys/pstat.h. The implementation of the
@@ -3368,26 +1609,11 @@ extern "C"
 #   endif /* __hpux **/
 
 #   if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS) && !defined (VXWORKS)
-#     include /**/ <sys/un.h>
+#     include "ace/os_include/sys/os_un.h"
 #   endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
-#   if defined (ACE_HAS_SIGINFO_T)
-#     if !defined (ACE_LACKS_SIGINFO_H)
-#       if defined (__QNX__) || defined (__OpenBSD__)
-#         include /**/ <sys/siginfo.h>
-#       elif defined(__rtems__)
-#         include /**/ <signal.h>
-#       else  /* __QNX__ || __OpenBSD__ */
-#         include /**/ <siginfo.h>
-#       endif /* __QNX__ || __OpenBSD__ */
-#     endif /* ACE_LACKS_SIGINFO_H */
-#     if !defined (ACE_LACKS_UCONTEXT_H)
-#       include /**/ <ucontext.h>
-#     endif /* ACE_LACKS_UCONTEXT_H */
-#   endif /* ACE_HAS_SIGINFO_T */
-
 #   if defined (ACE_HAS_POLL)
-#     include /**/ <poll.h>
+#     include "ace/os_include/os_poll.h"
 #   endif /* ACE_HAS_POLL */
 
 #   if defined (ACE_HAS_STREAMS)
@@ -3395,10 +1621,10 @@ extern "C"
 #       if !defined (_XOPEN_EXTENDED_SOURCE)
 #         define _XOPEN_EXTENDED_SOURCE
 #       endif /* !_XOPEN_EXTENDED_SOURCE */
-#       include /**/ <stropts.h>
+#       include "ace/os_include/os_stropts.h"
 #       undef _XOPEN_EXTENDED_SOURCE
 #     else
-#       include /**/ <stropts.h>
+#       include "ace/os_include/os_stropts.h"
 #     endif /* AIX */
 #   endif /* ACE_HAS_STREAMS */
 
@@ -3427,63 +1653,8 @@ extern "C"
 #   endif /* ! DIGITAL_UNIX && ! ACE_HAS_SIGWAIT */
 
 #   if defined (ACE_HAS_SELECT_H)
-#     include /**/ <sys/select.h>
+#     include "ace/os_include/sys/os_select.h"
 #   endif /* ACE_HAS_SELECT_H */
-
-#   if defined (ACE_HAS_ALLOCA_H)
-#     include /**/ <alloca.h>
-#   endif /* ACE_HAS_ALLOCA_H */
-
-/* Set the proper handle type for dynamically-loaded libraries. */
-/* Also define a default 'mode' for loading a library - the names and values */
-/* differ between OSes, so if you write code that uses the mode, be careful */
-/* of the platform differences. */
-#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-#    if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
-extern "C" {
-#     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
-#     include /**/ <dlfcn.h>
-#     if defined (ACE_HAS_DLFCN_H_BROKEN_EXTERN_C)
-}
-#     endif /* ACE_HAS_DLFCN_H_BROKEN_EXTERN_C */
-  typedef void *ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   if defined (__KCC) && defined(RTLD_GROUP) && defined(RTLD_NODELETE)
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY | RTLD_GROUP | RTLD_NODELETE
-#   else
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
-#   endif /* KCC */
-#   elif defined (__hpux)
-#     if defined(__GNUC__) || __cplusplus >= 199707L
-#       include /**/ <dl.h>
-#     else
-#       include /**/ <cxxdl.h>
-#     endif /* (g++ || HP aC++) vs. HP C++ */
-  typedef shl_t ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE BIND_DEFERRED
-#   else
-  typedef void *ACE_SHLIB_HANDLE;
-#   define ACE_SHLIB_INVALID_HANDLE 0
-#   define ACE_DEFAULT_SHLIB_MODE RTLD_LAZY
-
-#   endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
-
-#if !defined (RTLD_LAZY)
-#define RTLD_LAZY 1
-#endif /* !RTLD_LAZY */
-
-#if !defined (RTLD_NOW)
-#define RTLD_NOW 2
-#endif /* !RTLD_NOW */
-
-#if !defined (RTLD_GLOBAL)
-#define RTLD_GLOBAL 3
-#endif /* !RTLD_GLOBAL */
-
-#   if defined (ACE_HAS_SOCKIO_H)
-#     include /**/ <sys/sockio.h>
-#   endif /* ACE_HAS_SOCKIO_ */
 
 // There must be a better way to do this...
 #   if !defined (RLIMIT_NOFILE)
@@ -3496,47 +1667,7 @@ extern "C" {
 #     endif /* defined (linux) || defined (AIX) || defined (SCO) */
 #   endif /* RLIMIT_NOFILE */
 
-#   if defined (ACE_LACKS_MMAP)
-#     define PROT_READ 0
-#     define PROT_WRITE 0
-#     define PROT_EXEC 0
-#     define PROT_NONE 0
-#     define PROT_RDWR 0
-#     define MAP_PRIVATE 0
-#     define MAP_SHARED 0
-#     define MAP_FIXED 0
-#   endif /* ACE_LACKS_MMAP */
-
-// Fixes a problem with HP/UX.
-#   if defined (ACE_HAS_BROKEN_MMAP_H)
-extern "C"
-{
-#     include /**/ <sys/mman.h>
-}
-#   elif !defined (ACE_LACKS_MMAP)
-#     include /**/ <sys/mman.h>
-#   endif /* ACE_HAS_BROKEN_MMAP_H */
-
-// OSF1 has problems with sys/msg.h and C++...
-#   if defined (ACE_HAS_BROKEN_MSG_H)
-#     define _KERNEL
-#   endif /* ACE_HAS_BROKEN_MSG_H */
-#   if !defined (ACE_LACKS_SYSV_MSG_H)
-#     include /**/ <sys/msg.h>
-#   endif /* ACE_LACKS_SYSV_MSG_H */
-#   if defined (ACE_HAS_BROKEN_MSG_H)
-#     undef _KERNEL
-#   endif /* ACE_HAS_BROKEN_MSG_H */
-
-#   if defined (ACE_LACKS_SYSV_MSQ_PROTOS)
-extern "C"
-{
-  int msgget (key_t, int);
-  int msgrcv (int, void *, size_t, long, int);
-  int msgsnd (int, const void *, size_t, int);
-  int msgctl (int, int, struct msqid_ds *);
-}
-#   endif /* ACE_LACKS_SYSV_MSQ_PROTOS */
+#     include "ace/os_include/sys/os_msg.h"
 
 #   if defined (ACE_HAS_PRIOCNTL)
 #     include /**/ <sys/priocntl.h>
@@ -3570,70 +1701,6 @@ extern "C"
 
 # endif /* !defined (ACE_WIN32) && !defined (ACE_PSOS) */
 
-// Define the Wide character and normal versions of some of the string macros
-#   if defined (ACE_HAS_WCHAR)
-#     define ACE_DIRECTORY_SEPARATOR_STR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_STR_A)
-#     define ACE_DIRECTORY_SEPARATOR_CHAR_W ACE_TEXT_WIDE(ACE_DIRECTORY_SEPARATOR_CHAR_A)
-#     define ACE_PLATFORM_W ACE_TEXT_WIDE(ACE_PLATFORM_A)
-#     define ACE_PLATFORM_EXE_SUFFIX_W ACE_TEXT_WIDE(ACE_PLATFORM_EXE_SUFFIX_A)
-#   endif /* ACE_HAS_WCHAR */
-
-#   define ACE_DIRECTORY_SEPARATOR_STR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_STR_A)
-#   define ACE_DIRECTORY_SEPARATOR_CHAR ACE_LIB_TEXT (ACE_DIRECTORY_SEPARATOR_CHAR_A)
-#   define ACE_PLATFORM ACE_LIB_TEXT (ACE_PLATFORM_A)
-#   define ACE_PLATFORM_EXE_SUFFIX ACE_LIB_TEXT (ACE_PLATFORM_EXE_SUFFIX_A)
-
-// Theses defines are used by the ACE Name Server.
-#   if !defined (ACE_DEFAULT_LOCALNAME_A)
-#     define ACE_DEFAULT_LOCALNAME_A "localnames"
-#   endif /* ACE_DEFAULT_LOCALNAME_A */
-#   if !defined (ACE_DEFAULT_GLOBALNAME_A)
-#     define ACE_DEFAULT_GLOBALNAME_A "globalnames"
-#   endif /* ACE_DEFAULT_GLOBALNAME_A */
-
-// ACE_DEFAULT_NAMESPACE_DIR is for legacy mode apps.  A better
-// way of doing this is something like ACE_Lib_Find::get_temp_dir, since
-// this directory may not exist
-#   if defined (ACE_LEGACY_MODE)
-#     if defined (ACE_WIN32)
-#       define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
-#     else /* ACE_WIN32 */
-#       define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
-#     endif /* ACE_WIN32 */
-#     if defined (ACE_HAS_WCHAR)
-#       define ACE_DEFAULT_NAMESPACE_DIR_W ACE_TEXT_WIDE(ACE_DEFAULT_NAMESPACE_DIR_A)
-#     endif /* ACE_HAS_WCHAR */
-#     define ACE_DEFAULT_NAMESPACE_DIR ACE_LIB_TEXT(ACE_DEFAULT_NAMESPACE_DIR_A)
-#   endif /* ACE_LEGACY_MODE */
-
-#   if defined (ACE_HAS_WCHAR)
-#     define ACE_DEFAULT_LOCALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_LOCALNAME_A)
-#     define ACE_DEFAULT_GLOBALNAME_W ACE_TEXT_WIDE(ACE_DEFAULT_GLOBALNAME_A)
-#   endif /* ACE_HAS_WCHAR */
-
-#   define ACE_DEFAULT_LOCALNAME ACE_LIB_TEXT (ACE_DEFAULT_LOCALNAME_A)
-#   define ACE_DEFAULT_GLOBALNAME ACE_LIB_TEXT (ACE_DEFAULT_GLOBALNAME_A)
-
-// defined Win32 specific macros for UNIX platforms
-# if !defined (O_BINARY)
-#   define O_BINARY 0
-# endif /* O_BINARY */
-# if !defined (_O_BINARY)
-#   define _O_BINARY O_BINARY
-# endif /* _O_BINARY */
-# if !defined (O_TEXT)
-#   define O_TEXT 0
-# endif /* O_TEXT */
-# if !defined (_O_TEXT)
-#   define _O_TEXT O_TEXT
-# endif /* _O_TEXT */
-# if !defined (O_RAW)
-#   define O_RAW 0
-# endif /* O_RAW */
-# if !defined (_O_RAW)
-#   define _O_RAW O_RAW
-# endif /* _O_RAW */
-
 # if !defined (ACE_DEFAULT_SYNCH_TYPE)
 #   define ACE_DEFAULT_SYNCH_TYPE USYNC_THREAD
 # endif /* ! ACE_DEFAULT_SYNCH_TYPE */
@@ -3666,162 +1733,10 @@ struct ACE_utsname
   ACE_TCHAR machine[_SYS_NMLN];
 };
 # else
-#   include /**/ <sys/utsname.h>
+#   include "ace/os_include/sys/os_utsname.h"
 typedef struct utsname ACE_utsname;
 # endif /* ACE_LACKS_UTSNAME_T */
 
-// Increase the range of "address families".  Please note that this
-// must appear _after_ the include of sys/socket.h, for the AF_FILE
-// definition on Linux/glibc2.
-#if !defined (AF_ANY)
-# define AF_ANY (-1)
-#endif /* AF_ANY */
-
-# define AF_SPIPE (AF_MAX + 1)
-# if !defined (AF_FILE)
-#   define AF_FILE (AF_MAX + 2)
-# endif /* ! AF_FILE */
-# define AF_DEV (AF_MAX + 3)
-# define AF_UPIPE (AF_SPIPE)
-
-# if defined (ACE_SELECT_USES_INT)
-typedef int ACE_FD_SET_TYPE;
-# else
-typedef fd_set ACE_FD_SET_TYPE;
-# endif /* ACE_SELECT_USES_INT */
-
-# if !defined (MAXNAMELEN)
-#   if defined (FILENAME_MAX)
-#     define MAXNAMELEN FILENAME_MAX
-#   else
-#     define MAXNAMELEN 256
-#   endif /* FILENAME_MAX */
-# endif /* MAXNAMELEN */
-
-# if !defined(MAXHOSTNAMELEN)
-#   define MAXHOSTNAMELEN  256
-# endif /* MAXHOSTNAMELEN */
-
-// Define INET loopback address constant if it hasn't been defined
-// Dotted Decimal 127.0.0.1 == Hexidecimal 0x7f000001
-# if !defined (INADDR_LOOPBACK)
-#   define INADDR_LOOPBACK ((ACE_UINT32) 0x7f000001)
-# endif /* INADDR_LOOPBACK */
-
-// The INADDR_NONE address is generally 255.255.255.255.
-# if !defined (INADDR_NONE)
-#   define INADDR_NONE ((ACE_UINT32) 0xffffffff)
-# endif /* INADDR_NONE */
-
-// Define INET string length constants if they haven't been defined
-//
-// for IPv4 dotted-decimal
-# if !defined (INET_ADDRSTRLEN)
-#   define INET_ADDRSTRLEN 16
-# endif /* INET_ADDRSTRLEN */
-//
-// for IPv6 hex string
-# if !defined (INET6_ADDRSTRLEN)
-#   define INET6_ADDRSTRLEN 46
-# endif /* INET6_ADDRSTRLEN */
-
-#if defined (ACE_HAS_IPV6)
-
-#  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-#    define ACE_ADDRESS_FAMILY_INET  AF_UNSPEC
-#    define ACE_PROTOCOL_FAMILY_INET PF_UNSPEC
-#  else
-#    define ACE_ADDRESS_FAMILY_INET AF_INET6
-#    define ACE_PROTOCOL_FAMILY_INET PF_INET6
-#  endif /* ACE_USES_IPV4_IPV6_MIGRATION */
-
-#else
-#  define ACE_ADDRESS_FAMILY_INET AF_INET
-#  define ACE_PROTOCOL_FAMILY_INET PF_INET
-#endif
-
-# if defined (ACE_LACKS_SIGSET)
-#    if !defined(__MINGW32__)
-typedef u_int sigset_t;
-#    endif /* !__MINGW32__*/
-# endif /* ACE_LACKS_SIGSET */
-
-# if defined (ACE_LACKS_SIGACTION)
-struct sigaction
-{
-  int sa_flags;
-  ACE_SignalHandlerV sa_handler;
-  sigset_t sa_mask;
-};
-# endif /* ACE_LACKS_SIGACTION */
-
-# if !defined (SIGHUP)
-#   define SIGHUP 0
-# endif /* SIGHUP */
-
-# if !defined (SIGINT)
-#   define SIGINT 0
-# endif /* SIGINT */
-
-# if !defined (SIGSEGV)
-#   define SIGSEGV 0
-# endif /* SIGSEGV */
-
-# if !defined (SIGIO)
-#   define SIGIO 0
-# endif /* SIGSEGV */
-
-# if !defined (SIGUSR1)
-#   define SIGUSR1 0
-# endif /* SIGUSR1 */
-
-# if !defined (SIGUSR2)
-#   define SIGUSR2 0
-# endif /* SIGUSR2 */
-
-# if !defined (SIGCHLD)
-#   define SIGCHLD 0
-# endif /* SIGCHLD */
-
-# if !defined (SIGCLD)
-#   define SIGCLD SIGCHLD
-# endif /* SIGCLD */
-
-# if !defined (SIGQUIT)
-#   define SIGQUIT 0
-# endif /* SIGQUIT */
-
-# if !defined (SIGPIPE)
-#   define SIGPIPE 0
-# endif /* SIGPIPE */
-
-# if !defined (SIGALRM)
-#   define SIGALRM 0
-# endif /* SIGALRM */
-
-# if !defined (SIG_DFL)
-#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
-#     define SIG_DFL ((void *) 0)
-#   else
-#     define SIG_DFL ((__sighandler_t) 0)
-#   endif
-# endif /* SIG_DFL */
-
-# if !defined (SIG_IGN)
-#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
-#     define SIG_IGN ((void *) 1)     /* ignore signal */
-#   else
-#     define SIG_IGN ((__sighandler_t) 1)     /* ignore signal */
-#   endif
-# endif /* SIG_IGN */
-
-# if !defined (SIG_ERR)
-#   if defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
-#     define SIG_ERR ((void *) -1)    /* error return from signal */
-#   else
-#     define SIG_ERR ((__sighandler_t) -1)    /* error return from signal */
-#   endif
-# endif /* SIG_ERR */
 
 # if !defined (O_NONBLOCK)
 #   define O_NONBLOCK  1
@@ -3838,22 +1753,6 @@ struct sigaction
 # if !defined (SIG_SETMASK)
 #   define SIG_SETMASK 3
 # endif /* SIG_SETMASK */
-
-# if !defined (IPC_CREAT)
-#   define IPC_CREAT 0
-# endif /* IPC_CREAT */
-
-# if !defined (IPC_NOWAIT)
-#   define IPC_NOWAIT 0
-# endif /* IPC_NOWAIT */
-
-# if !defined (IPC_RMID)
-#   define IPC_RMID 0
-# endif /* IPC_RMID */
-
-# if !defined (IPC_EXCL)
-#   define IPC_EXCL 0
-# endif /* IPC_EXCL */
 
 # if !defined (IP_DROP_MEMBERSHIP)
 #   define IP_DROP_MEMBERSHIP 0
@@ -3891,14 +1790,6 @@ struct sigaction
 # if !defined (SIOCGIFADDR)
 #   define SIOCGIFADDR 0
 # endif /* SIOCGIFADDR */
-
-# if !defined (IPC_PRIVATE)
-#   define IPC_PRIVATE ACE_INVALID_SEM_KEY
-# endif /* IPC_PRIVATE */
-
-# if !defined (IPC_STAT)
-#   define IPC_STAT 0
-# endif /* IPC_STAT */
 
 # if !defined (GETVAL)
 #   define GETVAL 0
@@ -3988,25 +1879,6 @@ struct sigaction
 #   define PIPE_BUF 5120
 # endif /* PIPE_BUF */
 
-# if !defined (PROT_RDWR)
-#   define PROT_RDWR (PROT_READ|PROT_WRITE)
-# endif /* PROT_RDWR */
-
-# if defined (ACE_HAS_POSIX_NONBLOCK)
-#   define ACE_NONBLOCK O_NONBLOCK
-# else
-#   define ACE_NONBLOCK O_NDELAY
-# endif /* ACE_HAS_POSIX_NONBLOCK */
-
-// These are used by the <ACE_IPC_SAP::enable> and
-// <ACE_IPC_SAP::disable> methods.  They must be unique and cannot
-// conflict with the value of <ACE_NONBLOCK>.  We make the numbers
-// negative here so they won't conflict with other values like SIGIO,
-// etc.
-# define ACE_SIGIO -1
-# define ACE_SIGURG -2
-# define ACE_CLOEXEC -3
-
 # define LOCALNAME 0
 # define REMOTENAME 1
 
@@ -4032,36 +1904,7 @@ struct sigaction
 #   define ACE_DEFAULT_TIMERS _SC_TIMER_MAX
 # endif /* ACE_DEFAULT_TIMERS */
 
-# if defined (ACE_HAS_STRUCT_NETDB_DATA)
-typedef char ACE_HOSTENT_DATA[sizeof(struct hostent_data)];
-typedef char ACE_SERVENT_DATA[sizeof(struct servent_data)];
-typedef char ACE_PROTOENT_DATA[sizeof(struct protoent_data)];
-# else
-#   if !defined ACE_HOSTENT_DATA_SIZE
-#     define ACE_HOSTENT_DATA_SIZE (4*1024)
-#   endif /*ACE_HOSTENT_DATA_SIZE */
-#   if !defined ACE_SERVENT_DATA_SIZE
-#     define ACE_SERVENT_DATA_SIZE (4*1024)
-#   endif /*ACE_SERVENT_DATA_SIZE */
-#   if !defined ACE_PROTOENT_DATA_SIZE
-#     define ACE_PROTOENT_DATA_SIZE (2*1024)
-#   endif /*ACE_PROTOENT_DATA_SIZE */
-typedef char ACE_HOSTENT_DATA[ACE_HOSTENT_DATA_SIZE];
-typedef char ACE_SERVENT_DATA[ACE_SERVENT_DATA_SIZE];
-typedef char ACE_PROTOENT_DATA[ACE_PROTOENT_DATA_SIZE];
-# endif /* ACE_HAS_STRUCT_NETDB_DATA */
 
-# if !defined (ACE_HAS_SEMUN) || (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED))
-union semun
-{
-  /// value for SETVAL
-  int val;
-  /// buffer for IPC_STAT & IPC_SET
-  struct semid_ds *buf;
-  /// array for GETALL & SETALL
-  u_short *array;
-};
-# endif /* !ACE_HAS_SEMUN || (defined (__GLIBC__) && defined (_SEM_SEMUN_UNDEFINED)) */
 
 
 // Create some useful typedefs.
@@ -4113,18 +1956,6 @@ typedef int ucontext_t;
 # if !defined (SA_RESTART)
 #   define SA_RESTART 0
 # endif /* SA_RESTART */
-
-# if defined (ACE_HAS_TIMOD_H)
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     define queue _Queue_
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-#   include /**/ <sys/timod.h>
-#   if defined (ACE_HAS_STL_QUEUE_CONFLICT)
-#     undef queue
-#   endif /* ACE_HAS_STL_QUEUE_CONFLICT */
-# elif defined (ACE_HAS_OSF_TIMOD_H)
-#   include /**/ <tli/timod.h>
-# endif /* ACE_HAS_TIMOD_H */
 
 /**
  * @class ACE_Thread_ID
@@ -4370,12 +2201,8 @@ typedef double ACE_timer_t;
 # endif /* ACE_HAS_PRUSAGE_T */
 
 # if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG)
-# include /**/ <syslog.h>
+# include "ace/os_include/os_syslog.h"
 # endif /* !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SYSLOG) */
-
-# if defined (ACE_HAS_SYS_FILIO_H)
-# include /**/ <sys/filio.h>
-# endif /* ACE_HAS_SYS_FILIO_H */
 
 # if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
       typedef struct _stat ACE_stat;

@@ -53,36 +53,23 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Pull in definitions
-# include /**/ <limits.h>   // Integer limits
-# include /**/ <float.h>    // Floating point limits
-# include /**/ <stdlib.h>   // Other types
-# include /**/ <stddef.h>   // Get ptrdiff_t - see further comments below
+# include "ace/os_include/os_limits.h"   // Integer limits
+# include "ace/os_include/os_float.h"    // Floating point limits
+# include "ace/os_include/os_stdlib.h"   // Other types
+# include "ace/os_include/os_stddef.h"   // Get ptrdiff_t - see further comments below
 
 # if defined(ACE_LACKS_LONGLONG_T)
-#   include /**/ <stdarg.h> // LynxOS requires this before stdio.h
-#   include /**/ <stdio.h>  // For long long emulation
+#   include "ace/os_include/os_stdarg.h" // LynxOS requires this before stdio.h
+#   include "ace/os_include/os_stdio.h"  // For long long emulation
 # endif  /* ACE_LACKS_LONGLONG_T */
 
-# if !defined (ACE_LACKS_SYS_TYPES_H)
-#   include /**/ <sys/types.h>
-# endif  /* ACE_LACKS_SYS_TYPES_H */
+# include "ace/os_include/sys/os_types.h"
 
 # if !defined (ACE_LACKS_PARAM_H)
 #  include /**/ <sys/param.h>
 # endif /* ACE_LACKS_PARAM_H */
 
 # include "ace/ACE_export.h"
-
-// Pick up MAXPATHLEN without need of OS.h.
-#if !defined (MAXPATHLEN)
-#  if defined (ACE_WIN32)
-#    define MAXPATHLEN  _MAX_PATH
-#  elif defined (_POSIX_PATH_MAX)
-#     define MAXPATHLEN _POSIX_PATH_MAX
-#  else
-#     define MAXPATHLEN 1024
-#  endif /* ACE_WIN32 */
-#endif /* MAXPATHLEN */
 
 // A char always has 1 byte, by definition.
 # define ACE_SIZEOF_CHAR 1

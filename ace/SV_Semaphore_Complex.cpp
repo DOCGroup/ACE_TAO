@@ -3,6 +3,7 @@
 
 #include "ace/SV_Semaphore_Complex.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/sys/os_sem.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Semaphore_Complex.i"
@@ -73,7 +74,7 @@ ACE_SV_Semaphore_Complex::open (key_t k,
 
   // Must include a count for the 2 additional semaphores we use
   // internally.
-  this->sem_number_ = nsems + 2; 
+  this->sem_number_ = nsems + 2;
 
   if (create == ACE_SV_Semaphore_Complex::ACE_CREATE)
     {
@@ -82,8 +83,8 @@ ACE_SV_Semaphore_Complex::open (key_t k,
       do
 	{
 	  this->internal_id_ = ACE_OS::semget
-	    (this->key_,
-             (u_short) 2 + nsems, 
+            (this->key_,
+             (u_short) 2 + nsems,
              perms | ACE_SV_Semaphore_Complex::ACE_CREATE);
 
 	  if (this->internal_id_ == -1)

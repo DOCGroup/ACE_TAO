@@ -17,7 +17,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #if (__FreeBSD_version < 220000)
-#if defined (ACE_HAS_THREADS) 
+#if defined (ACE_HAS_THREADS)
 #error Threads are not supported.
 #endif /* ACE_HAS_THREADS */
 #endif /* __FreeBSD_version < 220000 */
@@ -231,7 +231,7 @@ extern "C" { char * cuserid (char *s); }
 
 // Note, on FreeBSD 5, POSIX aio is now an optional kernel module which
 // must be loaded.
-// Read the aio(4) man page for what to do, otherwise any aio_* call 
+// Read the aio(4) man page for what to do, otherwise any aio_* call
 // will coredump.
 
 // By default use Proactor which does not use POSIX Real-time Signals
@@ -244,6 +244,8 @@ extern "C" { char * cuserid (char *s); }
 /* FreeBSD does not define sigval_t */
 #include <sys/signal.h>
 typedef union sigval sigval_t;
+
+#define ACE_LACKS_STROPTS_H
 
 #include "ace/post.h"
 

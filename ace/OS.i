@@ -237,7 +237,7 @@ ACE_OS::mkfifo (const ACE_TCHAR *file, mode_t mode)
 # else
 #   if defined (ACE_LACKS_MEMORY_H)
 #     if !defined (ACE_PSOS_DIAB_MIPS)
-#       include /**/ <string.h>
+#       include "ace/os_include/os_string.h"
 #     endif /* ACE_PSOS_DIAB_MIPS */
 #   else
 #     include /**/ <memory.h>
@@ -847,7 +847,7 @@ ACE_OS::tempnam (const ACE_TCHAR *dir, const ACE_TCHAR *pfx)
 }
 
 #if defined (ACE_HAS_SHM_OPEN) && defined(INTEGRITY)
-#include /**/ <sys/mman.h>
+#include "ace/os_include/sys/os_mman.h"
 #endif
 
 ACE_INLINE ACE_HANDLE
