@@ -268,8 +268,18 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
 
   et.real_time = (__int64) delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
 
+#  if defined (ACE_HAS_GETRUSAGE)
+  ACE_Time_Value atv = ACE_Time_Value (this->end_usage_.ru_utime)
+                       - ACE_Time_Value (this->begin_usage_.ru_utime);
+  et.user_time = atv.sec () + ((double) atv.usec ()) / ACE_ONE_SECOND_IN_USECS;
+
+  atv = ACE_Time_Value (this->end_usage_.ru_stime)
+        - ACE_Time_Value (this->begin_usage_.ru_stime);
+  et.system_time = atv.sec () + ((double) atv.usec ()) / ACE_ONE_SECOND_IN_USECS;
+#  else /* ACE_HAS_GETRUSAGE */
   et.user_time = 0;
   et.system_time = 0;
+#  endif /* ACE_HAS_GETRUSAGE */
 
   return 0;
 }
