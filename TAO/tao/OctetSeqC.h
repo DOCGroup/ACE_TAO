@@ -147,6 +147,18 @@ namespace TAO
 {
 }
 
+// Workaround for a Visual Studio .NET bug where this class is not
+// properly imported by an application if typedef'd or subclassed,
+// resulting in 'multiply defined' link errors. The export macro
+// here forces an explicit import by the application. Please see
+// http://support.microsoft.com/default.aspx?scid=kb;en-us;309801
+// The problem stems from use of the type below in PortableServer,
+// but we put the instantiation here because the application will
+// need to see it in *C.h to avoid the error.
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+  template class TAO_Export TAO_Unbounded_Sequence<CORBA::OctetSeq>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
 // TAO_IDL - Generated from
 // be\be_visitor_sequence/any_op_ch.cpp:52
 
