@@ -1,3 +1,15 @@
+Wed Dec 29 15:42:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: added null definition of ACE_ENDLESS_LOOP,
+          if not already #defined.
+
+        * ace/config-cxx-common.h: added definition of ACE_ENDLESS_LOOP
+          to avoid compiler warning about unreachable statement following
+          the loop.
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp (main):
+          inserted ACE_ENDLESS_LOOP.
+
 Wed Dec 29 13:21:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_linux_cxx.GNU: added
