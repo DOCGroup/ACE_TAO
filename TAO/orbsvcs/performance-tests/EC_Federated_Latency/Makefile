@@ -22,7 +22,7 @@ server_OBJS=$(addsuffix .o,server Coordinator ControlC ControlS)
 client_OBJS=$(addsuffix .o,client Consumer Supplier Loopback_Consumer Loopback_Supplier Loopback Peer ControlC ControlS)
 SRC = $(server_OBJS:.o=.cpp) $(client_OBJS:.o=.cpp)
 
-TAO_IDLFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -Ge 1
+TAO_IDLFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -31,9 +31,14 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
 ifeq ($(corba_messaging),1)
-BIN=$(BIN_UNCHECKED)
+    BIN = $(BIN_UNCHECKED)
 endif # corba_messaging
+endif # RTEvent
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
