@@ -162,6 +162,7 @@ public:
     TAO_OPERATION_SH,
     TAO_OPERATION_SI,
     TAO_OPERATION_SS,
+    TAO_OPERATION_RESULT_SS,
 
     // emitting code for arguments of an operation. No distinction between
     // headers, inclines, stubs.
@@ -171,6 +172,7 @@ public:
     TAO_ARGUMENT_SH,
     TAO_ARGUMENT_SI,
     TAO_ARGUMENT_SS,
+    TAO_ARGUMENT_VARDECL_SS,
 
     // emitting code for attributes
     TAO_ATTRIBUTE_CH,
@@ -267,6 +269,9 @@ public:
 
   be_decl *node (void);
   // retrieve passed info
+
+  const char *upcase (const char *str);
+  // convert input string to all upcase
 
 private:
   TAO_OutStream *client_header_;
