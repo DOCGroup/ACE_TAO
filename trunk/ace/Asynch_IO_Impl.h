@@ -51,7 +51,7 @@ class ACE_Export ACE_Asynch_Result_Impl
   // = DESCRIPTION
   //
 public:
-  virtual ~ACE_Asynch_Result_Impl (void) {}
+  virtual ~ACE_Asynch_Result_Impl (void);
 
   virtual u_long bytes_transferred (void) const = 0;
   // Number of bytes transferred by the operation.
@@ -148,7 +148,7 @@ class ACE_Export ACE_Asynch_Read_Stream_Impl : public virtual ACE_Asynch_Operati
   // = DESCRIPTION
   //
 public:
-  virtual ~ACE_Asynch_Read_Stream_Impl (void) {}
+  virtual ~ACE_Asynch_Read_Stream_Impl (void);
 
   virtual int read (ACE_Message_Block &message_block,
                     u_long bytes_to_read,
@@ -202,7 +202,7 @@ class ACE_Export ACE_Asynch_Write_Stream_Impl : public virtual ACE_Asynch_Operat
   // = DESCRIPTION
   //
 public:
-  virtual ~ACE_Asynch_Write_Stream_Impl (void) {}
+  virtual ~ACE_Asynch_Write_Stream_Impl (void);
 
   virtual int write (ACE_Message_Block &message_block,
                      u_long bytes_to_write,
@@ -314,7 +314,7 @@ class ACE_Export ACE_Asynch_Write_File_Impl : public virtual ACE_Asynch_Write_St
   // = DESCRIPTION
   //
 public:
-  virtual ~ACE_Asynch_Write_File_Impl (void) {}
+  virtual ~ACE_Asynch_Write_File_Impl (void);
 
   virtual int write (ACE_Message_Block &message_block,
                      u_long bytes_to_write,
@@ -373,7 +373,7 @@ class ACE_Export ACE_Asynch_Accept_Impl : public virtual ACE_Asynch_Operation_Im
   // = DESCRIPTION
   //
 public:
-  virtual ~ACE_Asynch_Accept_Impl (void) {}
+  virtual ~ACE_Asynch_Accept_Impl (void);
 
   virtual int accept (ACE_Message_Block &message_block,
                       u_long bytes_to_read,
