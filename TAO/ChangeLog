@@ -1,3 +1,79 @@
+Wed Jul 17 23:54:44 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.inl:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+
+	  Implementation of the CosLoadBalancing "LeastLoaded" built-in
+	  load balancing strategy.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.inl:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert.cpp:
+
+	  Default CosLoadBalancing::LoadAlert implementation.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertInfo.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertInfo.cpp:
+
+	  Structure that contains information specific to given LoadAlert
+	  object.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertMap.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlertMap.cpp:
+
+	  Table that maps ObjectGroupId (lower 32 bits) to LoadAlertInfo
+	  structure.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadListMap.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadListMap.cpp:
+
+	  Table that maps location to a LoadList.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+
+	  Implementation of the CosLoadBalancing::LoadManager interface.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMap.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadMap.cpp:
+
+	  Table that maps location to a single Load.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MemberLocator.cpp:
+
+	  PortableServer::ServantLocator responsible for forwarding client
+	  requests to the appropriate object group member.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MonitorMap.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_MonitorMap.cpp:
+
+	  Table that maps location to LoadMonitor.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.cpp:
+
+	  Event handler that is fired periodically to retrieve
+	  (i.e. "pull") loads from LoadMonitors registered with the
+	  LoadManager.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_Random.cpp:
+
+	  Implementation of the CosLoadBalancing "Random" built-in
+	  load balancing strategy.	  
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.h:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_RoundRobin.cpp:
+
+  	  Implementation of the CosLoadBalancing "RoundRobin" built-in
+	  load balancing strategy.	  
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_conf.h:
+
+	  TAO load balancer specific configuration constants.
+
 Wed Jul 17 01:00:26 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_MemberInfo.h (operator==):
