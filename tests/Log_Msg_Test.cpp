@@ -36,7 +36,7 @@ static void
 cleanup (void)
 {
   ACE_DEBUG ((LM_INFO,
-              ASYS_TEXT ("leaving (%P)!\n")));
+              ASYS_TEXT ("cleanup hook (%P)!\n")));
 }
 
 static void
@@ -262,7 +262,7 @@ test_log_msg_features (const char *program)
 
   if (ACE_OS::open (badname,
                     O_RDONLY) == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR,
+    ACE_DEBUG ((LM_DEBUG,
                 "%n: (%x), %p%r\n",
                 10000,
                 badname,
