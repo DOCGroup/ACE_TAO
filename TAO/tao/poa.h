@@ -619,13 +619,15 @@ protected:
                                    void *context,
                                    CORBA::Environment &env);
 
-  virtual void pre_invoke (TAO_POA_Current &upcall_context,
-                           TAO_POA_Current *&previous_context,
+  virtual void pre_invoke (const TAO_ObjectKey &key,
+                           const PortableServer::ObjectId &id,
+                           PortableServer::Servant servant,
+                           TAO_POA_Current *poa_current,
                            CORBA::Environment &env);
 
   virtual void post_invoke (PortableServer::Servant servant,
                             const char *operation,
-                            TAO_POA_Current *previous_context,
+                            TAO_POA_Current *poa_current,
                             CORBA::Environment &env);
 
   virtual CORBA::Boolean persistent (void);

@@ -8,39 +8,39 @@ REM
 REM Author: Nanbor Wang <nanbor@cs.wustl.edu>
 REM
 
-if "%1%" == "" goto emptyexport
+if "%1" == "" goto emptyexport
 Echo // Definition for Win32 Export directives.
 Echo // This file is generated automatically by
 Echo // ${TAO_ROOT}/TAO_IDL/GenExportH.BAT
 Echo // ------------------------------
-Echo #if !defined (%1%_EXPORT_H)
-Echo #define %1%_EXPORT_H
+Echo #if !defined (%1_EXPORT_H)
+Echo #define %1_EXPORT_H
 Echo.
 Echo #include "ace/OS.h"
 Echo.
-Echo #if defined (%1%_HAS_DLL) 
-Echo #  if (%1%_HAS_DLL == 1)
-Echo #    if defined (%1%_BUILD_DLL)
-Echo #      define %1%_Export ACE_Proper_Export_Flag
-Echo #      define %1%_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
-Echo #      define %1%_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
+Echo #if defined (%1_HAS_DLL) 
+Echo #  if (%1_HAS_DLL == 1)
+Echo #    if defined (%1_BUILD_DLL)
+Echo #      define %1_Export ACE_Proper_Export_Flag
+Echo #      define %1_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+Echo #      define %1_SINGLETON_INSTANTIATION(T) ACE_PROPER_SINGLETON_INSTANTIATION (T)
 Echo #    else
-Echo #      define %1%_Export ACE_Proper_Import_Flag
-Echo #      define %1%_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
-Echo #      define %1%_SINGLETON_INSTANTIATION(T)
-Echo #    endif /* %1%_BUILD_DLL */
+Echo #      define %1_Export ACE_Proper_Import_Flag
+Echo #      define %1_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+Echo #      define %1_SINGLETON_INSTANTIATION(T)
+Echo #    endif /* %1_BUILD_DLL */
 Echo #  else 
-Echo #    define %1%_Export
-Echo #    define %1%_SINGLETON_DECLARATION(T)
-Echo #    define %1%_SINGLETON_INSTANTIATION(T)
-Echo #  endif   /* ! %1%_HAS_DLL == 1 */
+Echo #    define %1_Export
+Echo #    define %1_SINGLETON_DECLARATION(T)
+Echo #    define %1_SINGLETON_INSTANTIATION(T)
+Echo #  endif   /* ! %1_HAS_DLL == 1 */
 Echo #else
-Echo #  define %1%_Export
-Echo #  define %1%_SINGLETON_DECLARATION(T)
-Echo #  define %1%_SINGLETON_INSTANTIATION(T)
-Echo #endif     /* %1%_HAS_DLL */
+Echo #  define %1_Export
+Echo #  define %1_SINGLETON_DECLARATION(T)
+Echo #  define %1_SINGLETON_INSTANTIATION(T)
+Echo #endif     /* %1_HAS_DLL */
 Echo.
-Echo #endif     /* %1%_EXPORT_H */
+Echo #endif     /* %1_EXPORT_H */
 Echo            // End of auto generated file.
 goto endrun
 :emptyexport

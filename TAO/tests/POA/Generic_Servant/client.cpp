@@ -49,7 +49,7 @@ parse_args (int argc, char **argv)
 
   if (IOR == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant"), -1);
+                       "Please specify the IOR for the servant\n"), -1);
 
   // Indicates successful parsing of command line.
   return 0;
@@ -100,7 +100,9 @@ main (int argc, char **argv)
     }
 
   // Initialize options based on command-line arguments.
-  parse_args (argc, argv);
+  int parse_args_result = parse_args (argc, argv);
+  if (parse_args_result != 0)
+    return parse_args_result;
 
   // Get an object reference from the argument string.
   CORBA::Object_var object = orb->string_to_object (IOR, env);
