@@ -15,7 +15,7 @@
 typedef ACE_TSS_Singleton<TAO_ORB_Core, ACE_SYNCH_MUTEX>
         TAO_ORB_CORE;
 
-TAO_COLTBL_Lock::TAO_COLTBL_Lock (void)
+TAO_Collocation_Table_Lock::TAO_Collocation_Table_Lock (void)
 {
     this->lock_ =TAO_ORB_Core_instance ()->server_factory ()->create_coltbl_lock ();
   // We don't need to worry about the race condition here because this
@@ -23,7 +23,7 @@ TAO_COLTBL_Lock::TAO_COLTBL_Lock (void)
   // placed inside a ACE_Singleton.
 }
 
-TAO_COLTBL_Lock::~TAO_COLTBL_Lock (void)
+TAO_Collocation_Table_Lock::~TAO_Collocation_Table_Lock (void)
 {
   delete this->lock_;
   this->lock_ = 0;
@@ -848,7 +848,7 @@ TAO_ORB_Core::add_to_collocation_table (void)
 {
   if (this->using_collocation ())
     {
-      TAO_GLOBAL_COLTBL *coltbl = this->resource_factory ()->get_global_collocation_table ();
+      TAO_GLOBAL_Collocation_Table *coltbl = this->resource_factory ()->get_global_collocation_table ();
       if (coltbl != 0)
         return coltbl->bind (this->orb_params ()->addr (), this->root_poa ());
     }
@@ -860,7 +860,7 @@ TAO_ORB_Core::get_collocated_poa (ACE_INET_Addr &addr)
 {
   if (this->using_collocation ())
     {
-      TAO_GLOBAL_COLTBL *coltbl = this->resource_factory ()->get_global_collocation_table ();
+      TAO_GLOBAL_Collocation_Table *coltbl = this->resource_factory ()->get_global_collocation_table ();
       if (coltbl != 0)
         {
           TAO_POA *poa;
@@ -1112,10 +1112,10 @@ TAO_Resource_Factory::get_allocator (void)
   return 0;
 }
 
-TAO_GLOBAL_COLTBL *
+TAO_GLOBAL_Collocation_Table *
 TAO_Resource_Factory::get_global_collocation_table (void)
 {
-  return (coltbl_source_ == TAO_GLOBAL ? GLOBAL_COLTBL::instance () : 0);
+  return (coltbl_source_ == TAO_GLOBAL ? GLOBAL_Collocation_Table::instance () : 0);
 }
 
 // This function exists because of Win32's proclivity for expanding
@@ -1172,18 +1172,18 @@ template class ACE_TSS<TAO_Resource_Factory::Pre_Allocated>;
 template class ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>;
 template class ACE_TSS<TAO_Resource_Factory::App_Allocated>;
-template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
+template class ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>;
 template class ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *>;
-template class ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
-template class ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
-template class ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>;
-template class ACE_Guard<TAO_COLTBL_Lock>;
-template class ACE_Read_Guard<TAO_COLTBL_Lock>;
-template class ACE_Write_Guard<TAO_COLTBL_Lock>;
+template class ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>;
+template class ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>;
+template class ACE_Guard<TAO_Collocation_Table_Lock>;
+template class ACE_Read_Guard<TAO_Collocation_Table_Lock>;
+template class ACE_Write_Guard<TAO_Collocation_Table_Lock>;
 template class ACE_Guard<ACE_SYNCH_MUTEX>;
 template class ACE_Read_Guard<ACE_SYNCH_MUTEX>;
 template class ACE_Write_Guard<ACE_SYNCH_MUTEX>;
-template class ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>;
+template class ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Env_Value<int>
@@ -1214,18 +1214,18 @@ template class ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS_Singleton<TAO_Resource_Factory::App_Allocated, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_TSS<TAO_Resource_Factory::App_Allocated>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
+#pragma instantiate ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *>
-#pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
-#pragma instantiate ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
-#pragma instantiate ACE_Guard<TAO_COLTBL_Lock>
-#pragma instantiate ACE_Read_Guard<TAO_COLTBL_Lock>
-#pragma instantiate ACE_Write_Guard<TAO_COLTBL_Lock>
+#pragma instantiate ACE_Hash_Map_Iterator_Base<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Guard<TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Read_Guard<TAO_Collocation_Table_Lock>
+#pragma instantiate ACE_Write_Guard<TAO_Collocation_Table_Lock>
 #pragma instantiate ACE_Guard<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Read_Guard<ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Write_Guard<ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 ACE_FACTORY_DEFINE (TAO, TAO_Resource_Factory)

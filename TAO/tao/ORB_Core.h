@@ -34,18 +34,18 @@ typedef ACE_NOOP_Concurrency_Strategy<TAO_Client_Connection_Handler>
         TAO_NULL_ACTIVATION_STRATEGY;
 
 
-class TAO_COLTBL_Lock : public ACE_Adaptive_Lock
+class TAO_Collocation_Table_Lock : public ACE_Adaptive_Lock
 {
   // TITLE
   //   This lock class determines the type underlying lock
   //   when it gets constructed.
 public:
-  TAO_COLTBL_Lock (void);
-  ~TAO_COLTBL_Lock (void);
+  TAO_Collocation_Table_Lock (void);
+  ~TAO_Collocation_Table_Lock (void);
 };
 
-typedef ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_COLTBL_Lock>
-        TAO_GLOBAL_COLTBL;
+typedef ACE_Hash_Map_Manager<ACE_Hash_Addr<ACE_INET_Addr>, TAO_POA *, TAO_Collocation_Table_Lock>
+        TAO_GLOBAL_Collocation_Table;
 
 // Forward decl.
 class TAO_Resource_Factory;
@@ -353,7 +353,7 @@ public:
   // Return a pointer to an ACE_Allocator used for allocating memory
   // within the ORB.
 
-  TAO_GLOBAL_COLTBL *get_global_collocation_table (void);
+  TAO_GLOBAL_Collocation_Table *get_global_collocation_table (void);
   // Get the global collocation table.  Return the pointer to the
   // global collocation table if we are using one, otherwise, return
   // 0.
@@ -461,8 +461,8 @@ private:
           GLOBAL_APP_ALLOCATED;
   typedef ACE_TSS_Singleton<App_Allocated, ACE_SYNCH_MUTEX>
           TSS_APP_ALLOCATED;
-  typedef ACE_Singleton<TAO_GLOBAL_COLTBL, ACE_SYNCH_MUTEX>
-          GLOBAL_COLTBL;
+  typedef ACE_Singleton<TAO_GLOBAL_Collocation_Table, ACE_SYNCH_MUTEX>
+          GLOBAL_Collocation_Table;
 };
 
 #if defined (__ACE_INLINE__)
