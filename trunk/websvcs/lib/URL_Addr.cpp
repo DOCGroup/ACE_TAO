@@ -1,9 +1,9 @@
 // $Id$
-
+#define ACE_WEBSVCS_BUILD_DLL
 #include "URL_Addr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/URL_Addr.i"
+#include "URL_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, URL_Addr, "$Id$")
