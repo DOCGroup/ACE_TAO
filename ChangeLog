@@ -1,3 +1,66 @@
+Sun Jul  1 11:49:13 2001  Alexander Libman <alexander.libman@baltimore.com>
+
+        * ace: Enhanced the POSIX and Sun Proactor implementations as
+	  follows:   
+  
+          . POSIX_SIG_Proactor is now based on POSIX_AIOCB_Proactor
+
+	  . All classes ACE_POSIX_SIG_Asynch_XXXX are removed.
+	    POSIX_SIG_Proactor uses the ACE_POSIX_AIOCB_Asynch_XXXX
+ 	    classes now.
+
+	  . ACE_POSIX_AIOCB_Proactor::register_and_start_aio (...)
+	    now calls a new virtual method: int
+ 	    ACE_POSIX_AIOCB_Proactor::allocate_aio_slot
+ 	    (ACE_POSIX_Asynch_Result *result).
+	
+          . The strategy of free slot allocation in SIG_Proactor is
+	    a bit different from AIOCB and SUN Proactors.  The
+ 	    allocate_aio_slot() method is responsible for setting
+ 	    notification information for aio request
+ 	    (SIGEV_NONE/SIGEV_SIGNAL).  For SIG_Proactor, the field
+ 	    aio_sigevent.sigev_value.sival_int now contains index of aiocb
+ 	    in the aiocb_list_, not a pointer.
+
+	  . The ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
+                                              int &return_status, size_t
+					      &index, size_t &count)
+            parameter index defines initial slot to scan and the new
+ 	    parameter count tells us maximum number slots to scan.  On
+ 	    return: index contains value to start scan next time, count
+ 	    contains remained number of slots.  Scanning is performed in
+ 	    "wheel" style to allow all requests be handled with equal
+ 	    priorities.
+
+	  . ACE_POSIX_AIOCB_Proactor::check_max_aio_num () checks for
+	    max_number_files to open and tries to setup max_number_files
+ 	    equal to aiocb_max_size_. if we failed than cut off
+ 	    aiocb_max_size_ value to existing max_number_files.
+
+	  . POSIX_Proactor added member int os_id_ and constructor sets up
+	    os_id_ (compilation time + run_time function) to know
+ 	    OS(Sun/HP/Linux/...) and version.  We need such info for
+ 	    POSIX_SIG_Proactors to take into account the behavior of
+ 	    different OS.
+	
+          . Delivery of simulated/"post_completed" Asynch_Results
+	    (Timers, AsynchAccept,Wakeup ...).  As both Proactors have no
+ 	    reliable mechanizm for delivery "post_completed" results, so
+ 	    the reliable queue of "post_completed" results was
+ 	    implemented.  The new member of AIOCB Proactor
+ 	    ACE_Unbounded_Queue<ACE_POSIX_Asynch_Result *> result_queue_
+ 	    has been added.  Also added protected methods to the
+ 	    ACE_POSIX_AIOCB_Proactor.
+
+          . We had an error in all previous versions (from major ACE 5.1):
+	    post_completion (int how_many) does not guarantee that all
+ 	    completions will be delivered to the different threads running
+ 	    event_loop (sometimes several completions could be delivered
+ 	    to the one thread, in another thread performs during long time
+ 	    application_spesific_code ()).  Moreover, you can run now
+ 	    Proactor event_loop in any number of threads (more than
+ 	    SIGQUEMAX).
+
 Sun Jul  1 11:49:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* examples/Reactor/Proactor: Integrated a test that exercises the
