@@ -163,3 +163,29 @@ TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
     next_ (0)
 {
 }
+
+
+/*static*/ void
+TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
+{
+  size_t newsize =
+    ACE_CDR::total_length (&mb, 0) + ACE_CDR::MAX_ALIGNMENT;
+
+  ACE_Data_Block *db =
+    mb.data_block ()->clone_nocopy ();
+
+  if (db->size (newsize) == -1)
+    return;
+
+  ACE_Message_Block tmp (db);
+  ACE_CDR::mb_align (&tmp);
+
+  tmp.copy (mb.rd_ptr (), mb.length());
+  mb.data_block (tmp.data_block ()->duplicate ());
+
+  mb.rd_ptr (tmp.rd_ptr ());
+  mb.wr_ptr (tmp.wr_ptr ());
+
+  // Remove the DONT_DELETE flags from mb
+  mb.clr_self_flags (ACE_Message_Block::DONT_DELETE);
+}
