@@ -70,7 +70,7 @@ ImplRepo_i::ImplRepo_i (void)
   // Nothing
 }
 
-int 
+int
 ImplRepo_i::find_ior (const ACE_CString &object_name, ACE_CString &ior)
 {
   ACE_TString endpoint;
@@ -80,7 +80,7 @@ ImplRepo_i::find_ior (const ACE_CString &object_name, ACE_CString &ior)
   // is foo.
 
   int pos = object_name.find ('/');
-  
+
   if (pos == object_name.npos)
     pos = object_name.length ();
 
@@ -102,10 +102,10 @@ ImplRepo_i::find_ior (const ACE_CString &object_name, ACE_CString &ior)
 
   // Have to do this so it is null terminated
   ACE_TString object_name2 (object_name.fast_rep (), object_name.length ());
-  
+
   ior = endpoint;
   ior += object_name2;
-  
+
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "find_ior: new ior is <%s>\n", endpoint.c_str ()));
 
@@ -129,7 +129,7 @@ ImplRepo_i::activate_server (const char *server,
 }
 
 
-ACE_TString 
+ACE_TString
 ImplRepo_i::activate_server_i (const char *server,
                                const int check_startup,
                                CORBA::Environment &ACE_TRY_ENV)
@@ -439,7 +439,7 @@ ImplRepo_i::server_is_running (const char *server,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound))
 {
-  char *new_location = "";
+  char *new_location = 0;
 
   if (OPTIONS::instance()->debug () >= 1)
     ACE_DEBUG ((LM_DEBUG, "Server <%s> is running \n", server));
@@ -489,7 +489,7 @@ ImplRepo_i::server_is_running (const char *server,
   if (pos)
     *(pos + 1) = 0;  // Crop the string
   else
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "Could not parse my own IOR, bailing out.\n"),
                        0);
 
@@ -557,7 +557,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       policies.length (2);
 
       // Id Assignment policy
-      policies[0] = 
+      policies[0] =
         this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
                                                       ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -598,10 +598,10 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 
       PortableServer::ObjectId_var forwarder_id =
         this->root_poa_->activate_object (this->forwarder_impl_, ACE_TRY_ENV);
-      
+
       ACE_TRY_CHECK;
 
-      PortableServer::ObjectId_var imr_id = 
+      PortableServer::ObjectId_var imr_id =
         PortableServer::string_to_ObjectId ("ImplRepoService");
 
       this->imr_poa_->activate_object_with_id (imr_id.in (),
@@ -672,7 +672,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
           // Check environment var. for multicast port.
           const char *port_number = ACE_OS::getenv ("ImplRepoServicePort");
 
-          if (port_number != 0) 
+          if (port_number != 0)
             port = ACE_OS::atoi (port_number);
         }
 
@@ -769,8 +769,8 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
         {
           if (OPTIONS::instance()->debug () >= 2)
             {
-              ACE_DEBUG ((LM_DEBUG, 
-                         "AUTO_START: Could not activate <%s>\n", 
+              ACE_DEBUG ((LM_DEBUG,
+                         "AUTO_START: Could not activate <%s>\n",
                          server_entry->ext_id_.c_str ()));
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "AUTO_START");
             }
@@ -778,7 +778,7 @@ ImplRepo_i::run (CORBA::Environment &ACE_TRY_ENV)
         }
       ACE_ENDTRY;
     }
-  
+
 
   int status = this->orb_->run (0, ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
@@ -1152,13 +1152,13 @@ IMR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
   ACE_CHECK;
 
   // Add the key
-  
+
   char *key_str = 0;
   TAO_POA::encode_sequence_to_string (key_str, poa_current_impl->object_key ());
 
   ior += key_str;
   CORBA::string_free (key_str);
-  
+
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", ior.c_str ()));
 

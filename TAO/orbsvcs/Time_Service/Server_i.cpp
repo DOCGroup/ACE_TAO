@@ -72,7 +72,7 @@ Server_i::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
                                          "child_poa",
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       PortableServer::POA_ptr child_poa
         = this->orb_manager_.child_poa ();
 
@@ -90,7 +90,7 @@ Server_i::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "(%P|%t) Exception from init_naming_service ()\n");
-      
+
       return -1;
     }
   ACE_ENDTRY;
@@ -322,27 +322,16 @@ Server_i::init (int argc,
 }
 
 
-// Initialize the IR Helper and run the event loop for ORB.
+// Run the event loop for ORB.
 
 int
 Server_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY
-    {
-      if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
-                          -1);
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
-      return -1;
-    }
-  ACE_ENDTRY;
-
+  if (this->orb_manager_.run (ACE_TRY_ENV) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
+                      -1);
+  ACE_CHECK_RETURN (0);
   return 0;
 }
-
-
 
