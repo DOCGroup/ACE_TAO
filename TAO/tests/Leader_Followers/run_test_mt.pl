@@ -5,5 +5,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-system 'perl run_test.pl -i dii ' . join ' ', @ARGV;
+system 'perl run_test.pl -m ' . join ' ', @ARGV;
+
 
