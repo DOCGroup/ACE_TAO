@@ -424,8 +424,18 @@ public:
     ACE_THR_JOINING = 0x10000000
   };
 
-  // = Initialization and termination methods.
-  ACE_Thread_Manager (size_t preaolloc = 0,
+  /**
+   * @breif Initialization and termination methods.
+   *
+   * Internally, ACE_Thread_Manager keeps a freelist for caching
+   * resources it uses to keep track of managed threads (not the
+   * threads themselves.)  @a prealloc, @a lwm, @a inc, @hwm
+   * determine the initial size, the low water mark, increment step,
+   * and high water mark of the freelist.
+   *
+   * @sa ACE_Free_List
+   */
+  ACE_Thread_Manager (size_t preaolloc = ACE_DEFAULT_THREAD_MANAGER_PREALLOC,
                       size_t lwm = ACE_DEFAULT_THREAD_MANAGER_LWM,
                       size_t inc = ACE_DEFAULT_THREAD_MANAGER_INC,
                       size_t hwm = ACE_DEFAULT_THREAD_MANAGER_HWM);
