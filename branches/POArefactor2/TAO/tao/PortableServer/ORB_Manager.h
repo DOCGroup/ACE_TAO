@@ -14,7 +14,7 @@
 #define TAO_ORB_MANAGER_H
 #include /**/ "ace/pre.h"
 
-#include "PortableServer.h"
+#include "tao/PortableServer/PortableServer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,20 +56,24 @@ public:
                    PortableServer::POA_ptr poa = 0,
                    PortableServer::POAManager_ptr poa_manager = 0);
 
-  /** Initialize the ORB/root POA, using the supplied command line
-   *  arguments or the default ORB components.
+  /**
+   * Initialize the ORB/root POA, using the supplied command line
+   * arguments or the default ORB components.
    *
-   *  @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int init (int &argc,
             char *argv[]
             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /** Initialize the ORB/root POA, using the supplied command line
-    * arguments or the default ORB components.
-    *
-    * @return -1 on failure, 0 on success
-    */
+  /**
+   * Initialize the ORB/root POA, using the supplied command line
+   * arguments or the default ORB components.
+   *
+   * @retval -1 Failure
+   * @retval 0 Success
+   */
   int init (int &argc,
             char *argv[],
             const char *orb_name
@@ -80,7 +84,8 @@ public:
    * USER_ID policies.  Call this if you want a @c child_poa with the
    * above policies, otherwise call init.
    *
-   * @return -1 on failure, 0 on success
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int init_child_poa (int &argc,
                       char *argv[],
@@ -90,7 +95,10 @@ public:
   /**
    * Creates a child poa under the root poa with PERSISTENT and
    * USER_ID policies.  Call this if you want a @a child_poa with the
-   * above policies, otherwise call init.  Returns -1 on failure.
+   * above policies, otherwise call init.
+   *
+   * @retval -1 Failure
+   * @retval 0 Success
    */
   int init_child_poa (int &argc,
                       char *argv[],
@@ -98,7 +106,8 @@ public:
                       const char *orb_name
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /** Shut down.  Invoke the destroy() methods on the orb and poa.
+  /**
+   * Shut down.  Invoke the destroy() methods on the orb and poa.
    *
    * @retval -1 Failure
    * @retval 0 Success
@@ -135,7 +144,7 @@ public:
 
   /** Deactivate object in RootPOA.
    *
-   *  @param id  a string representation of the Object ID
+   *  @param id  A string representation of the Object ID
    *             of the servant to deactivate in the POA
    */
   void deactivate (const char *id
@@ -159,10 +168,11 @@ public:
                                   PortableServer::Servant servant
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  /** Deactivate object in child POA.
+  /**
+   * Deactivate object in child POA.
    *
-   *  @param id  string representation of the object ID, which represents
-   *             the object to deactivate in the POA
+   * @param id  string representation of the object ID, which represents
+   *            the object to deactivate in the POA
    */
   void deactivate_under_child_poa (const char *id
                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
