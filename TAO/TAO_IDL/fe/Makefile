@@ -79,6 +79,19 @@ lex.yy.cpp: idl.ll y.tab.h
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 .obj/fe_declarator.o .shobj/fe_declarator.so: fe_declarator.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -107,10 +120,23 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/fe_private.h ../include/fe_interface_header.h \
  ../include/fe_declarator.h
-.obj/fe_private.o .shobj/fe_private.so: fe_private.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/fe_private.o .shobj/fe_private.so: fe_private.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -136,10 +162,23 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/fe_private.h ../include/fe_interface_header.h \
  ../include/fe_declarator.h
-.obj/fe_init.o .shobj/fe_init.so: fe_init.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/fe_init.o .shobj/fe_init.so: fe_init.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -165,10 +204,23 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/fe_private.h ../include/fe_interface_header.h \
  ../include/fe_declarator.h
-.obj/fe_extern.o .shobj/fe_extern.so: fe_extern.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/fe_extern.o .shobj/fe_extern.so: fe_extern.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -195,6 +247,19 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/fe_private.h ../include/fe_interface_header.h \
  ../include/fe_declarator.h
 .obj/fe_interface_header.o .shobj/fe_interface_header.so: fe_interface_header.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -223,10 +288,23 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/fe_private.h ../include/fe_interface_header.h \
  ../include/fe_declarator.h
-.obj/y.tab.o .shobj/y.tab.so: y.tab.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/y.tab.o .shobj/y.tab.so: y.tab.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
@@ -252,10 +330,23 @@ lex.yy.cpp: idl.ll y.tab.h
  ../include/nr_extern.h ../include/global_extern.h \
  ../include/fe_private.h ../include/fe_interface_header.h \
  ../include/fe_declarator.h
-.obj/lex.yy.o .shobj/lex.yy.so: lex.yy.cpp ../include/idl.h ../include/intlmacros.h \
- ../include/idl_narrow.h ../include/idl_defines.h ../include/idl_fwd.h \
- ../include/idl_bool.h ../include/utl_string.h \
- ../include/utl_identifier.h ../include/ast.h \
+.obj/lex.yy.o .shobj/lex.yy.so: lex.yy.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/streams.h \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
  ../include/utl_scoped_name.h ../include/ast_decl.h \
  ../include/ast_expression.h ../include/utl_scope.h \
  ../include/ast_type.h ../include/ast_concrete_type.h \
