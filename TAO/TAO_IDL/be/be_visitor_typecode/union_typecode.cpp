@@ -13,10 +13,6 @@
 //=============================================================================
 
 
-#include <string>
-#include <iostream>
-
-
 TAO::be_visitor_union_typecode::be_visitor_union_typecode (
   be_visitor_context * ctx)
   : be_visitor_typecode_defn (ctx)
