@@ -95,7 +95,7 @@ NS_NamingContext::bind (const CosNaming::Name& n,
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
   _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
   int result = 0;
   _env.clear ();
@@ -160,7 +160,7 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
   _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
   int result = 0;
   _env.clear ();
@@ -219,7 +219,7 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
   _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
   int result = 0;
   _env.clear ();
@@ -280,7 +280,7 @@ NS_NamingContext::rebind_context (const CosNaming::Name &n,
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
   _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
   _env.clear ();
 
@@ -409,7 +409,7 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
   _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
   _env.clear ();
 
@@ -456,13 +456,19 @@ NS_NamingContext::new_context (CORBA::Environment &_env)
 {
   NS_NamingContext * c = 0;
 
-  // if allocation fails, the environment must be set to indicate error.
+  // If allocation fails, the environment must be set to indicate
+  // error.
   _env.clear ();
   _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-  ACE_NEW_RETURN (c, NS_NamingContext, CosNaming::NamingContext::_nil ());
+  ACE_NEW_RETURN (c,
+                  NS_NamingContext,
+                  CosNaming::NamingContext::_nil ());
 
-  // clear the environment.
+  // Clear the environment.
   _env.clear ();
+
+  if (c->init () == -1)
+    return CosNaming::NamingContext::_nil ();
 
   // (1) do we have to duplicate () the object reference????
   // (2) Also, how about memory leaks?
@@ -473,17 +479,25 @@ CosNaming::NamingContext_ptr
 NS_NamingContext::bind_new_context (const CosNaming::Name& n,
                                     CORBA::Environment &_env)
 {
-  NS_NamingContext * c = 0;
+  NS_NamingContext *c = 0;
 
   // if allocation fails, the environment must be set to indicate error.
   _env.clear ();
   _env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
-  ACE_NEW_RETURN (c, NS_NamingContext, CosNaming::NamingContext::_nil ());
+
+  ACE_NEW_RETURN (c,
+                  NS_NamingContext,
+                  CosNaming::NamingContext::_nil ());
 
   // clear the environment.
   _env.clear ();
 
-  bind_context (n, c->_this (_env), _env);
+  if (c->init () == -1)
+    return CosNaming::NamingContext::_nil ();
+
+  this->bind_context (n,
+                      c->_this (_env),
+                      _env);
 
   // Release object if exception occurs.
   if (_env.exception () != 0)
@@ -501,7 +515,7 @@ NS_NamingContext::destroy (CORBA::Environment &_env)
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
   _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
   _env.clear ();
 
@@ -522,7 +536,7 @@ NS_NamingContext::list (CORBA::ULong how_many,
   // if Guard fails to get the lock, the environment must be set.
   _env.clear ();
   _env.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
-  ACE_GUARD(ACE_Lock, ace_mon, *this->lock_);
+  ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
   _env.clear ();
 
