@@ -2,7 +2,8 @@ Tue Feb 01 16:12:43 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:
 
-	  A typo that created problems during tar ball creation.
+	  A typo that created problems during tar ball creation. Removed
+	  updates to the *version.mpb's too.
 
 Tue Feb  1 19:44:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
