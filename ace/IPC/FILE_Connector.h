@@ -14,8 +14,11 @@
 #define ACE_FILE_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/FILE_IO.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/FILE_IO.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -103,7 +106,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FILE_Connector.i"
+#include "ace/IPC/FILE_Connector.i"
 #endif
 
 #include "ace/post.h"

@@ -3,15 +3,18 @@
 // Defines the member functions for the base class of the ACE_TLI
 // abstraction.
 
-#include "ace/TLI.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/TLI.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 ACE_RCSID(ace, TLI, "$Id$")
 
 #if defined (ACE_HAS_TLI)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/TLI.i"
+#include "ace/IPC/TLI.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI)

@@ -16,16 +16,16 @@
 #define ACE_UPIPE_STREAM_H
 #include "ace/pre.h"
 
-#include "ace/Stream.h"
+#include "ace/Streams/Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
-#include "ace/SPIPE.h"
-#include "ace/Message_Queue.h"
-#include "ace/UPIPE_Addr.h"
+#include "ace/Threads/Synch.h"
+#include "ace/IPC/SPIPE.h"
+#include "ace/Streams/Message_Queue.h"
+#include "ace/IPC/UPIPE_Addr.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -129,7 +129,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/UPIPE_Stream.i"
+#include "ace/IPC/UPIPE_Stream.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */

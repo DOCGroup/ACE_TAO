@@ -16,15 +16,15 @@
 #define ACE_UPIPE_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "ace/UPIPE_Stream.h"
+#include "ace/IPC/UPIPE_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
-#include "ace/SPIPE_Acceptor.h"
-#include "ace/Thread_Manager.h"
+#include "ace/Threads/Synch.h"
+#include "ace/IPC/SPIPE_Acceptor.h"
+#include "ace/Threads/Thread_Manager.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -86,7 +86,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/UPIPE_Acceptor.i"
+#include "ace/IPC/UPIPE_Acceptor.i"
 #endif
 
 #endif /* ACE_HAS_THREADS */

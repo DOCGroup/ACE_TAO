@@ -1,10 +1,10 @@
 // UNIX_Addr.cpp
 // $Id$
 
-#include "ace/UNIX_Addr.h"
+#include "ace/IPC/UNIX_Addr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/UNIX_Addr.i"
+#include "ace/IPC/UNIX_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, UNIX_Addr, "$Id$")

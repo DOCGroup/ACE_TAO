@@ -4,10 +4,10 @@
 /* Defines the member functions for the base class of the ACE_IO_SAP
    ACE_FILE abstraction. */
 
-#include "ace/FILE.h"
+#include "ace/IPC/FILE.h"
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/FILE.i"
+#include "ace/IPC/FILE.i"
 #endif
 
 ACE_RCSID(ace, FILE, "$Id$")

@@ -3,7 +3,7 @@
 
 // SPIPE_Addr.i
 
-#include "ace/SString.h"
+#include "ace/Utils/SString.h"
 
 // Transform the current address into string format.
 

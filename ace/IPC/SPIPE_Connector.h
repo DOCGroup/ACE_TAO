@@ -14,7 +14,7 @@
 #define ACE_SPIPE_CONNECTOR_H
 #include "ace/pre.h"
 
-#include "ace/SPIPE_Stream.h"
+#include "ace/IPC/SPIPE_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -98,7 +98,7 @@ public:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SPIPE_Connector.i"
+#include "ace/IPC/SPIPE_Connector.i"
 #endif
 
 #include "ace/post.h"

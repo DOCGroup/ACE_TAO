@@ -3,7 +3,7 @@
 
 // SV_Message_Queue.i
 
-#include "ace/SV_Message_Queue.h"
+#include "ace/IPC/SV_Message_Queue.h"
 
 // Open a message queue using the <external_id>.
 

@@ -1,14 +1,14 @@
 // XTI_ATM_Mcast.cpp
 // $Id$
 
-#include "ace/XTI_ATM_Mcast.h"
+#include "ace/IPC/XTI_ATM_Mcast.h"
 
 ACE_RCSID(ace, XTI_ATM_Mcast, "$Id$")
 
 #if defined (ACE_HAS_XTI_ATM)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/XTI_ATM_Mcast.i"
+#include "ace/IPC/XTI_ATM_Mcast.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_XTI_ATM_Mcast)

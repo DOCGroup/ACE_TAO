@@ -13,15 +13,15 @@
 #ifndef ACE_TTY_IO_H
 #define ACE_TTY_IO_H
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/DEV_Addr.h"
-#include "ace/DEV_Connector.h"
-#include "ace/DEV_IO.h"
+#include "ace/IPC/DEV_Addr.h"
+#include "ace/IPC/DEV_Connector.h"
+#include "ace/IPC/DEV_IO.h"
 
 /**
  * @class ACE_TTY_IO

@@ -15,13 +15,13 @@
 #define ACE_TLI_STREAM_H
 #include "ace/pre.h"
 
-#include "ace/TLI.h"
+#include "ace/IPC/TLI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/INET_Addr.h"
+#include "ace/IPC/INET_Addr.h"
 
 #if defined (ACE_HAS_TLI)
 
@@ -121,7 +121,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/TLI_Stream.i"
+#include "ace/IPC/TLI_Stream.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */

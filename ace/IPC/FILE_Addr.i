@@ -7,7 +7,7 @@
 
 // Transform the current address into string format.
 
-#include "ace/SString.h"
+#include "ace/Utils/SString.h"
 
 // Return the address.
 

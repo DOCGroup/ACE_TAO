@@ -1,11 +1,14 @@
 // SPIPE_Connector.cpp
 // $Id$
 
-#include "ace/SPIPE_Connector.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/SPIPE_Connector.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SPIPE_Connector.i"
+#include "ace/IPC/SPIPE_Connector.i"
 #endif
 
 ACE_RCSID(ace, SPIPE_Connector, "$Id$")

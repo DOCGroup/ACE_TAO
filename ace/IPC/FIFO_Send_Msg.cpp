@@ -1,8 +1,11 @@
 // FIFO_Send_Msg.cpp
 // $Id$
 
-#include "ace/FIFO_Send_Msg.h"
+#include "ace/IPC/FIFO_Send_Msg.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FIFO_Send_Msg.i"
@@ -65,6 +68,11 @@ ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (const ACE_TCHAR *fifo_name,
                                       LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg");
+
+#ifdef ACE_SUBSET_0
   if (this->ACE_FIFO_Send_Msg::open (fifo_name, flags, perms, sa) == -1)
     ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_FIFO_Send_Msg")));
+#else
+  this->ACE_FIFO_Send_Msg::open (fifo_name, flags, perms, sa);
+#endif
 }

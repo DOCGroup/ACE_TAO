@@ -1,14 +1,14 @@
 // UPIPE_Stream.cpp
 // $Id$
 
-#include "ace/UPIPE_Stream.h"
+#include "ace/IPC/UPIPE_Stream.h"
 
 ACE_RCSID(ace, UPIPE_Stream, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__) 
-#include "ace/UPIPE_Stream.i"
+#include "ace/IPC/UPIPE_Stream.i"
 #endif /* __ACE_INLINE__ */
 
 

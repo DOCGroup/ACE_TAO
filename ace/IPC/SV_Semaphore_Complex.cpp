@@ -1,11 +1,14 @@
 // SV_Semaphore_Complex.cpp
 // $Id$
 
-#include "ace/SV_Semaphore_Complex.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/SV_Semaphore_Complex.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SV_Semaphore_Complex.i"
+#include "ace/IPCIPC//SV_Semaphore_Complex.i"
 #endif
 
 ACE_RCSID(ace, SV_Semaphore_Complex, "$Id$")
@@ -215,8 +218,12 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (key_t k,
 						    int perms)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex");
+#ifdef ACE_SUBSET_0
   if (this->open (k, flags, initial_value, nsems, perms) == -1)
     ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_SV_Semaphore_Complex")));
+#else
+  this->open (k, flags, initial_value, nsems, perms);
+#endif
 }
 
 ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
@@ -234,8 +241,12 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
   else
     key = this->name_2_key (name);
 
+#ifdef ACE_SUBSET_0
   if (this->open (key, flags, initial_value, nsems, perms) == -1)
     ACE_ERROR ((LM_ERROR,  ACE_LIB_TEXT ("%p\n"),  ACE_LIB_TEXT ("ACE_SV_Semaphore_Complex")));
+#else
+  this->open (key, flags, initial_value, nsems, perms);
+#endif
 }
 
 ACE_SV_Semaphore_Complex::~ACE_SV_Semaphore_Complex (void)

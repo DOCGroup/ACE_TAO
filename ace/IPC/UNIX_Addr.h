@@ -15,8 +15,12 @@
 #define ACE_UNIX_ADDR_H
 #include "ace/pre.h"
 
-#include "ace/Addr.h"
-#include "ace/Log_Msg.h"
+#include "ace/IPC/Addr.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -91,7 +95,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/UNIX_Addr.i"
+#include "ace/IPC/UNIX_Addr.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

@@ -1,14 +1,14 @@
 // UPIPE_Acceptor.cpp
 // $Id$
 
-#include "ace/UPIPE_Acceptor.h"
+#include "ace/IPC/UPIPE_Acceptor.h"
 
 ACE_RCSID(ace, UPIPE_Acceptor, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/UPIPE_Acceptor.i"
+#include "ace/IPC/UPIPE_Acceptor.i"
 #endif
 
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Acceptor)

@@ -15,13 +15,13 @@
 #define ACE_TLI_H
 #include "ace/pre.h"
 
-#include "ace/IPC_SAP.h"
+#include "ace/Sockets/IPC_SAP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Addr.h"
+#include "ace/IPC/Addr.h"
 
 #if defined (ACE_HAS_TLI)
 
@@ -99,7 +99,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/TLI.i"
+#include "ace/IPC/TLI.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */

@@ -15,7 +15,7 @@
 #define ACE_FIFO_H
 #include "ace/pre.h"
 
-#include "ace/IPC_SAP.h"
+#include "ace/Sockets/IPC_SAP.h"
 #include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -72,7 +72,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/FIFO.i"
+#include "ace/IPC/FIFO.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

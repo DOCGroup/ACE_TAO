@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/SString.h"
+#include "ace/Utils/SString.h"
 
 ACE_INLINE void
 ACE_DEV_Addr::set (const ACE_TCHAR *devname)

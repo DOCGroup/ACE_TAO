@@ -1,13 +1,17 @@
 // $Id$
 
-#include "ace/Synch_T.h"
-#include "ace/Signal.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Msg.h"
-#include "ace/Containers.h"
+#include "ace/Threads/Synch_T.h"
+#include "ace/IPC/Signal.h"
+#include "ace/Utils/Object_Manager.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
+
+#include "ace/Utils/Containers.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Signal.i"
+#include "ace/IPC/Signal.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Signal, "$Id$")
