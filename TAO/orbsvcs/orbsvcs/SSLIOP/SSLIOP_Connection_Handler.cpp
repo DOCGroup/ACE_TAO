@@ -222,14 +222,13 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
-    this->handle_close_i ();
-
+    this->handle_close_i (handle);
 
   return 0;
 }
 
 void
-TAO_SSLIOP_Connection_Handler::handle_close_i (void)
+TAO_SSLIOP_Connection_Handler::handle_close_i (ACE_HANDLE handle)
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
@@ -250,7 +249,7 @@ TAO_SSLIOP_Connection_Handler::handle_close_i (void)
     }
 
   // Close the handle..
-  if (this->get_handle () != ACE_INVALID_HANDLE)
+  if (handle != ACE_INVALID_HANDLE)
     {
       // Remove the entry as it is invalid
       this->transport ()->purge_entry ();
@@ -273,10 +272,10 @@ TAO_SSLIOP_Connection_Handler::resume_handler (void)
 }
 
 int
-TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE)
+TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  TAO_Resume_Handle  resume_handle (this->orb_core (),
-                                    this->get_handle ());
+  TAO_Resume_Handle resume_handle (this->orb_core (),
+                                   handle);
 
   int result = this->transport ()->handle_output ();
 
@@ -417,12 +416,12 @@ TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE handle)
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
     {
-      this->handle_close_i ();
+      this->handle_close_i (handle);
 
-      // As we have already performed the handle closing we dont want
-      // to return a  -1. Doing so would make the reactor call
-      // handle_close () which could be harmful.
-      retval = 0;
+      // As we have already performed the handle closing we don't want
+      // to return a -1. Doing so would make the reactor call
+      // handle_close() which could be harmful.
+      return 0;
     }
 
   // Force this event handler to be called before waiting for
