@@ -46,11 +46,11 @@ MTL=mktyplib.exe
 # PROP BASE Target_Dir "netsvcs"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "netsvcs\Release"
-# PROP Intermediate_Dir "netsvcs\Release"
+# PROP Output_Dir ""
+# PROP Intermediate_Dir ".\Release"
 # PROP Target_Dir "netsvcs"
-OUTDIR=.\netsvcs\Release
-INTDIR=.\netsvcs\Release
+OUTDIR=.
+INTDIR=.\Release
 
 ALL : "$(OUTDIR)\netsvcs.dll" "..\..\ace\netsvcs.dll"
 
@@ -67,14 +67,14 @@ CLEAN :
 	-@erase "$(OUTDIR)\netsvcs.lib"
 	-@erase "..\..\ace\netsvcs.dll"
 
-"$(OUTDIR)" :
-    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-CPP_PROJ=/nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS"\
+# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
+CPP_PROJ=/nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS"\
  /Fp"$(INTDIR)/netsvcs.pch" /YX /Fo"$(INTDIR)/" /c 
-CPP_OBJS=.\netsvcs\Release/
+CPP_OBJS=.\.\Release/
 CPP_SBRS=.\.
 # ADD BASE MTL /nologo /D "NDEBUG" /win32
 # ADD MTL /nologo /D "NDEBUG" /win32
@@ -110,7 +110,7 @@ LINK32_OBJS= \
 <<
 
 # Begin Custom Build
-InputPath=.\netsvcs\Release\netsvcs.dll
+InputPath=.\netsvcs.dll
 SOURCE=$(InputPath)
 
 "..\..\ace\netsvcs.dll" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -127,10 +127,10 @@ SOURCE=$(InputPath)
 # PROP BASE Target_Dir "netsvcs"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "."
+# PROP Output_Dir ""
 # PROP Intermediate_Dir "debug"
 # PROP Target_Dir "netsvcs"
-OUTDIR=.\.
+OUTDIR=.
 INTDIR=.\debug
 
 ALL : "$(OUTDIR)\netsvcs.dll" "..\..\ace\netsvcs.dll"
@@ -151,9 +151,6 @@ CLEAN :
 	-@erase "$(OUTDIR)\netsvcs.lib"
 	-@erase "$(OUTDIR)\netsvcs.pdb"
 	-@erase "..\..\ace\netsvcs.dll"
-
-"$(OUTDIR)" :
-    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
@@ -177,12 +174,12 @@ BSC32_SBRS= \
 	
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 wsock32.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-LINK32_FLAGS=wsock32.lib ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib\
- comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib\
- odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /incremental:yes\
- /pdb:"$(OUTDIR)/netsvcs.pdb" /debug /machine:I386 /out:"$(OUTDIR)/netsvcs.dll"\
- /implib:"$(OUTDIR)/netsvcs.lib" 
+# ADD LINK32 wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
+LINK32_FLAGS=wsock32.lib aced.lib kernel32.lib user32.lib gdi32.lib\
+ winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib\
+ uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll\
+ /incremental:yes /pdb:"$(OUTDIR)/netsvcs.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/netsvcs.dll" /implib:"$(OUTDIR)/netsvcs.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\Client_Logging_Handler.obj" \
 	"$(INTDIR)\Logging_Strategy.obj" \
@@ -243,6 +240,7 @@ SOURCE=$(InputPath)
 
 SOURCE=.\Token_Handler.cpp
 DEP_CPP_TOKEN=\
+	"..\..\ace\config-win32.h"\
 	".\Token_Handler.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
@@ -253,6 +251,7 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -307,6 +306,8 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -398,6 +399,7 @@ DEP_CPP_TOKEN=\
 
 SOURCE=.\TS_Clerk_Handler.cpp
 DEP_CPP_TS_CL=\
+	"..\..\ace\config-win32.h"\
 	".\TS_Clerk_Handler.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
@@ -405,6 +407,7 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -462,6 +465,8 @@ DEP_CPP_TS_CL=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -550,6 +555,7 @@ DEP_CPP_TS_CL=\
 
 SOURCE=.\TS_Server_Handler.cpp
 DEP_CPP_TS_SE=\
+	"..\..\ace\config-win32.h"\
 	".\TS_Server_Handler.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
@@ -560,6 +566,7 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -614,6 +621,8 @@ DEP_CPP_TS_SE=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -702,6 +711,7 @@ DEP_CPP_TS_SE=\
 
 SOURCE=.\Server_Logging_Handler.cpp
 DEP_CPP_SERVE=\
+	"..\..\ace\config-win32.h"\
 	".\Base_Optimizer.h"\
 	".\Log_Message_Receiver.cpp"\
 	".\Log_Message_Receiver.h"\
@@ -717,6 +727,7 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -771,6 +782,8 @@ DEP_CPP_SERVE=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -864,6 +877,7 @@ DEP_CPP_SERVE=\
 
 SOURCE=.\Name_Handler.cpp
 DEP_CPP_NAME_=\
+	"..\..\ace\config-win32.h"\
 	".\Name_Handler.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
 	{$(INCLUDE)}"\ace\Acceptor.h"\
@@ -874,6 +888,7 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -932,6 +947,8 @@ DEP_CPP_NAME_=\
 	{$(INCLUDE)}"\ace\Name_Request_Reply.h"\
 	{$(INCLUDE)}"\ace\Name_Space.h"\
 	{$(INCLUDE)}"\ace\Naming_Context.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -1021,6 +1038,7 @@ DEP_CPP_NAME_=\
 
 SOURCE=.\Client_Logging_Handler.cpp
 DEP_CPP_CLIEN=\
+	"..\..\ace\config-win32.h"\
 	".\Client_Logging_Handler.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
@@ -1028,6 +1046,7 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Addr.i"\
 	{$(INCLUDE)}"\ace\Asynch_IO.h"\
 	{$(INCLUDE)}"\ace\Asynch_IO.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -1091,6 +1110,8 @@ DEP_CPP_CLIEN=\
 	{$(INCLUDE)}"\ace\Module.cpp"\
 	{$(INCLUDE)}"\ace\Module.h"\
 	{$(INCLUDE)}"\ace\Module.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Pipe.h"\
@@ -1178,6 +1199,7 @@ DEP_CPP_CLIEN=\
 
 SOURCE=.\Logging_Strategy.cpp
 DEP_CPP_LOGGI=\
+	"..\..\ace\config-win32.h"\
 	".\Logging_Strategy.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
@@ -1194,6 +1216,8 @@ DEP_CPP_LOGGI=\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
