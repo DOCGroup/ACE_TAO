@@ -139,8 +139,9 @@ CIAO::AssemblyFactory_Impl::destroy (Components::Cookie * c
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->poa_->deactivate_object (oid
+  this->poa_->deactivate_object (oid.in ()
                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 
