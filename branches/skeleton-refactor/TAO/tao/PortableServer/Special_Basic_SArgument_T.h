@@ -132,6 +132,12 @@ namespace TAO
     typedef Inout_Special_Basic_SArgument_T<T,to_T,from_T>  inout_arg_val;
     typedef Out_Special_Basic_SArgument_T<T,to_T,from_T>    out_arg_val;
     typedef Ret_Special_Basic_SArgument_T<T,to_T,from_T>    ret_val;
+
+    typedef Const_Argument_T<T const &>                     in_arg_base;
+    typedef Mutable_Argument_T<inout_type>                  inout_arg_base;
+    typedef Mutable_Argument_T<out_type>                    out_arg_base;
+    typedef Mutable_Argument_T<out_type>                    ret_base;
+
   };
 };
 

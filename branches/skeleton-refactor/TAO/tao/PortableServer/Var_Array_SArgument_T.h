@@ -138,6 +138,12 @@ namespace TAO
     typedef Ret_Var_Array_SArgument_T<T_slice,
                                       T_var,
                                       T_forany>         ret_val;
+
+    typedef Const_Argument_T<T_slice const *>           in_arg_base;
+    typedef Mutable_Argument_T<ret_type>                inout_arg_base;
+    typedef Mutable_Argument_T<ret_type &>              out_arg_base;
+    typedef Mutable_Argument_T<ret_type &>              ret_base;
+
   };
 };
 

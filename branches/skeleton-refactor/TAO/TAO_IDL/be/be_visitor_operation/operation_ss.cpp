@@ -183,7 +183,8 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest & server_request," << be_nl
-      << "void * servant_upcall" << be_nl
+      << "void * servant_upcall," << be_nl
+      << "void * servant" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
 
@@ -245,10 +246,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   // Get the right object implementation.
   *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
       << "static_cast<" << be_idt_nl
-      << intf->full_skel_name () << " *> (" << be_idt_nl
-      << "static_cast<TAO_Object_Adapter::Servant_Upcall *> (" << be_idt_nl
-      << "servant_upcall)->servant ()" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl << be_nl;
+      << intf->full_skel_name () << " *> (servant);" << be_uidt << be_uidt_nl;
 
   // Upcall_Command instantiation.
   *os << be_nl
@@ -257,11 +255,11 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   if (!node->void_return_type () || node->argument_count () > 0)
     {
-      // server_request.operations_details () will be non-zero in the
+      // server_request.operation_details () will be non-zero in the
       // thru-POA collocation case.  Use them if available.
       *os << "," << be_nl
-          << "server_request.operations_details ()" << be_nl
-          << "? server_request.operations_details ()->args ()" << be_nl
+          << "server_request.operation_details ()" << be_nl
+          << "? server_request.operation_details ()->args ()" << be_nl
           << ": args";
     }
 

@@ -160,11 +160,6 @@ namespace TAO
                                        T_forany,
                                        T_tag>           ret_val;
 
-    typedef Const_Argument_T<T_slice const *>           in_arg_base;
-    typedef Mutable_Argument_T<ret_type>                inout_arg_base;
-    typedef Mutable_Argument_T<ret_type &>              out_arg_base;
-    typedef Mutable_Argument_T<ret_type &>              ret_base;
-
     typedef Fixed_Array_Tag                             idl_tag;
   };
 }

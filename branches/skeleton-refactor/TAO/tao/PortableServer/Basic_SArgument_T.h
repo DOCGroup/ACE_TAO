@@ -40,7 +40,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S arg (void) const;
+    virtual S arg (void) const;
 
   private:
     S x_;
@@ -63,7 +63,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    virtual S & arg (void);
 
   private:
     S x_;
@@ -85,7 +85,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_param (Dynamic::Parameter &);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    virtual S & arg (void);
 
   private:
     S x_;
@@ -107,7 +107,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_result (CORBA::Any *);
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    virtual S & arg (void);
 
   private:
     S x_;
@@ -131,6 +131,12 @@ namespace TAO
     typedef Inout_Basic_SArgument_T<T>  inout_arg_val;
     typedef Out_Basic_SArgument_T<T>    out_arg_val;
     typedef Ret_Basic_SArgument_T<T>    ret_val;
+
+    typedef Const_Argument_T<in_type>         in_arg_base;
+    typedef Mutable_Argument_T<inout_type>    inout_arg_base;
+    typedef Mutable_Argument_T<out_type>      out_arg_base;
+    typedef Mutable_Argument_T<out_type>      ret_base;
+
   };
 };
 

@@ -172,6 +172,12 @@ namespace TAO
                                       to_T,
                                       from_T,
                                       BOUND>      ret_val;
+
+    typedef Const_Argument_T<in_type>             in_arg_base;
+    typedef Mutable_Argument_T<inout_type>        inout_arg_base;
+    typedef Mutable_Argument_T<inout_type>        out_arg_base;
+    typedef Mutable_Argument_T<inout_type>        ret_base;
+
   };
 
   /**

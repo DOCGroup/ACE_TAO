@@ -1630,6 +1630,8 @@ TAO_CodeGen::gen_skel_src_includes (void)
   this->gen_standard_include (this->server_skeletons_,
                               "tao/CDR.h");
   this->gen_standard_include (this->server_skeletons_,
+                              "tao/operation_details.h");
+  this->gen_standard_include (this->server_skeletons_,
                               "tao/PortableInterceptor.h");
 
   if (be_global->gen_thru_poa_collocation ()
@@ -1857,14 +1859,20 @@ TAO_CodeGen::gen_skel_arg_file_includes (TAO_OutStream * stream)
       stream
     );
 
+  // Always needed for CORBA::Object handling in _component() skeleton
+  // code when an unconstrained (non-local) IDL interface is defined.
   this->gen_cond_file_include (
-      idl_global->object_arg_seen_,
+      idl_global->non_local_iface_seen_
+      || idl_global->object_arg_seen_,
       "tao/PortableServer/Object_SArgument_T.h",
       stream
     );
 
+  // Always needed for CORBA::Boolean handling in _is_a() skeleton
+  // code when an unconstrained (non-local) IDL interface is defined.
   this->gen_cond_file_include (
-      idl_global->special_basic_arg_seen_,
+      idl_global->non_local_iface_seen_
+      || idl_global->special_basic_arg_seen_,
       "tao/PortableServer/Special_Basic_SArguments.h",
       stream
     );

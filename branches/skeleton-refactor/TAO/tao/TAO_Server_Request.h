@@ -211,6 +211,7 @@ public:
   /// Set the member.
   void dsi_nvlist_align (ptrdiff_t alignment);
 
+  // Get the operation details for the current request.
   TAO_Operation_Details const * operation_details (void) const;
 
   /// Get/Set operations for the argument_flag

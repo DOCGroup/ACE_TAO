@@ -143,12 +143,6 @@ namespace TAO
     typedef Out_Fixed_Size_Argument_T<T>      out_arg_val;
     typedef Ret_Fixed_Size_Argument_T<T>      ret_val;
 
-    typedef Const_Argument_T<in_type>         in_arg_base;
-    typedef Mutable_Argument_T<inout_type>    inout_arg_base;
-    typedef Mutable_Argument_T<out_type>      out_arg_base;
-    typedef Mutable_Argument_T<ret_type>      ret_base;
-
-
     typedef Fixed_Size_Tag                    idl_tag;
   };
 }
