@@ -330,10 +330,6 @@ public:
     // = in, out, out, and _retn operations.
     // ORBOS/97-05-15, Appendix C.2
 
-  private:
-    char *ptr_;
-    // instance.
-
     const char *in (void) const;
     // for in parameter
 
@@ -348,7 +344,7 @@ public:
 
   private:
     char *ptr_;
-    // instance
+    // instance.
   };
 
   // ORBOS/97-05-15, Appendix C.2 defines a String_out class

@@ -1,6 +1,7 @@
-Tue Sep 30 19:36:07 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+Tue Sep 30 19:42:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* TAO version 0.0.9, released Tue Sep 30 19:36:07 1997.
+        * Makefile: Removed "docs" from DIRS so we don't try to run
+	make in this directory.
 
 Tue Sep 30 17:27:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
