@@ -20,8 +20,8 @@
 // ============================================================================
 
 #ifndef TAO_GIOP_MESSAGE_BASE_H
-#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_BASE_H
+#include "ace/pre.h"
 
 #include "tao/GIOP_Message_State.h"
 

@@ -21,8 +21,8 @@
 // ============================================================================
 
 #ifndef TAO_RTCORBAFWD_H
-#include "ace/pre.h"
 #define TAO_RTCORBAFWD_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

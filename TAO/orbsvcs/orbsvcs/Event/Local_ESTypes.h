@@ -21,8 +21,8 @@
 // ============================================================================
 
 #ifndef ACE_LOCAL_ESTYPES_H
-#include "ace/pre.h"
 #define ACE_LOCAL_ESTYPES_H
+#include "ace/pre.h"
 
 #include "tao/corba.h"
 

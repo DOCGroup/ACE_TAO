@@ -21,8 +21,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_EVENT_MANIP_H
-#include "ace/pre.h"
 #define TAO_EC_EVENT_MANIP_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventCommC.h"
 #include "event_export.h"

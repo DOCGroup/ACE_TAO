@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_BUSY_LOCK_H
-#include "ace/pre.h"
 #define TAO_EC_BUSY_LOCK_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

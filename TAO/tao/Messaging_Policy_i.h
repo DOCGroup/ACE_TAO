@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_MESSAGING_POLICY_I_H
-#include "ace/pre.h"
 #define TAO_MESSAGING_POLICY_I_H
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 

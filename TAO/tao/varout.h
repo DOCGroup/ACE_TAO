@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_VAROUT_H
-#include "ace/pre.h"
 #define TAO_VAROUT_H
+#include "ace/pre.h"
 
 #include "tao/Object.h"
 

@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef TAO_POA_MACROS_H
-#include "ace/pre.h"
 #define TAO_POA_MACROS_H
+#include "ace/pre.h"
 
 #include "tao/try_macros.h"
 

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_UIOP_CONNECT_H
-#include "ace/pre.h"
 #define TAO_UIOP_CONNECT_H
+#include "ace/pre.h"
 
 #include "tao/UIOP_Transport.h"
 

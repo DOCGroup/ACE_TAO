@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_PER_SUPPLIER_FILTER_H
-#include "ace/pre.h"
 #define TAO_EC_PER_SUPPLIER_FILTER_H
+#include "ace/pre.h"
 
 #include "EC_Supplier_Filter.h"
 #include "EC_Supplier_Filter_Builder.h"

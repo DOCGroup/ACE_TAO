@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef SCHEDENTRY_H
-#include "ace/pre.h"
 #define SCHEDENTRY_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"

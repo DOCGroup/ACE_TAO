@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_CONNECTOR_REGISTRY_H
-#include "ace/pre.h"
 #define TAO_CONNECTOR_REGISTRY_H
+#include "ace/pre.h"
 
 #include "tao/Pluggable.h"
 

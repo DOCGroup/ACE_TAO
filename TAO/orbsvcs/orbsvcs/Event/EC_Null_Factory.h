@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_NULL_FACTORY_H
-#include "ace/pre.h"
 #define TAO_EC_NULL_FACTORY_H
+#include "ace/pre.h"
 
 #include "EC_Factory.h"
 

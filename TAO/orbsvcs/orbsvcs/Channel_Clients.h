@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_CHANNEL_CLIENTS_H
-#include "ace/pre.h"
 #define ACE_CHANNEL_CLIENTS_H
+#include "ace/pre.h"
 
 #include "orbsvcs/Channel_Clients_T.h"
 

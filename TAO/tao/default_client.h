@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_DEFAULT_CLIENT_H
-#include "ace/pre.h"
 #define TAO_DEFAULT_CLIENT_H
+#include "ace/pre.h"
 
 #include "tao/Client_Strategy_Factory.h"
 

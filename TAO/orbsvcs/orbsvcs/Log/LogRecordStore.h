@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef LOG_RECORD_STORE_H
-#include "ace/pre.h"
 #define LOG_RECORD_STORE_H
+#include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/DsLogAdminC.h"

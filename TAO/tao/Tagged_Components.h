@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_TAGGED_COMPONENTS_H
-#include "ace/pre.h"
 #define TAO_TAGGED_COMPONENTS_H
+#include "ace/pre.h"
 
 #include "tao/IOPC.h"
 

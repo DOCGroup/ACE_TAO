@@ -27,8 +27,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_SUPPLIER_FILTER_H
-#include "ace/pre.h"
 #define TAO_EC_SUPPLIER_FILTER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventCommC.h"
 #include "EC_Worker.h"

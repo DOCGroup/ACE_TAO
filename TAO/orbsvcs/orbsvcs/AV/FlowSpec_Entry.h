@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_FLOWSPEC_ENTRY_H
-#include "ace/pre.h"
 #define TAO_AV_FLOWSPEC_ENTRY_H
+#include "ace/pre.h"
 
 #include "orbsvcs/AV/AV_export.h"
 #include "AV_Core.h"

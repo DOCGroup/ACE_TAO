@@ -41,8 +41,8 @@
 // ============================================================================
 
 #ifndef TAO_TRY_MACROS_H
-#include "ace/pre.h"
 #define TAO_TRY_MACROS_H
+#include "ace/pre.h"
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef ACE_RT_TASK_H
-#include "ace/pre.h"
 #define ACE_RT_TASK_H
+#include "ace/pre.h"
 
 #include "ace/Task.h"
 

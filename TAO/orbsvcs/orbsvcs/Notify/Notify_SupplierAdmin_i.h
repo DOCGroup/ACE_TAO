@@ -17,8 +17,8 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_SUPPLIERADMIN_I_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_SUPPLIERADMIN_I_H
+#include "ace/pre.h"
 
 #include "Notify_ID_Pool_T.h"
 #include "Notify_QoSAdmin_i.h"

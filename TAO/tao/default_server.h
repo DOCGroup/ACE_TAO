@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_DEFAULT_SERVER_FACTORY_H
-#include "ace/pre.h"
 #define TAO_DEFAULT_SERVER_FACTORY_H
+#include "ace/pre.h"
 
 #include "tao/Server_Strategy_Factory.h"
 

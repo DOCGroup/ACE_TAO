@@ -30,8 +30,8 @@
 // should be no such name clashes.
 
 #ifndef _TAO_IDL_GIOPC_H_
-#include "ace/pre.h"
 #define _TAO_IDL_GIOPC_H_
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/IOPC.h"

@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_IDL_POAC_H
-#include "ace/pre.h"
 #define TAO_IDL_POAC_H
+#include "ace/pre.h"
 
 #include "tao/PolicyC.h"
 

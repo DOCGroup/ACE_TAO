@@ -1,8 +1,8 @@
 // $Id$
 
 #ifndef CONSTRAINT_TOKEN_H
-#include "ace/pre.h"
 #define CONSTRAINT_TOKEN_H
+#include "ace/pre.h"
 
 # define TAO_GT 257
 # define TAO_GE 258

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_IOR_MANIPULATION_H
-#include "ace/pre.h"
 #define TAO_IOR_MANIPULATION_H
+#include "ace/pre.h"
 
 #include "tao/Object.h"
 

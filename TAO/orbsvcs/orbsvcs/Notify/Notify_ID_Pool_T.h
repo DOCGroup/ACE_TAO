@@ -16,8 +16,8 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_ID_POOL_T_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_ID_POOL_T_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "ace/Containers_T.h"

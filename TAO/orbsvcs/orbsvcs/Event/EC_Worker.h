@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_WORKER_H
-#include "ace/pre.h"
 #define TAO_EC_WORKER_H
+#include "ace/pre.h"
 
 #include "tao/corba.h"
 

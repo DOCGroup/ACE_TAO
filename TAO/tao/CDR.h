@@ -45,8 +45,8 @@
 // ============================================================================
 
 #ifndef TAO_CDR_H
-#include "ace/pre.h"
 #define TAO_CDR_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

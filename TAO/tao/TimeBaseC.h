@@ -19,8 +19,8 @@
 // ================================================================
 
 #ifndef TAO_IDL_TIMEBASEC_H
-#include "ace/pre.h"
 #define TAO_IDL_TIMEBASEC_H
+#include "ace/pre.h"
 
 #include "tao/Any.h"
 #include "tao/CDR.h"

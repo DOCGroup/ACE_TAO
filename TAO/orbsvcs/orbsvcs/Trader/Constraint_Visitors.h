@@ -15,8 +15,8 @@
 // ========================================================================
 
 #ifndef TAO_CONSTRAINT_VISITOR_H
-#include "ace/pre.h"
 #define TAO_CONSTRAINT_VISITOR_H
+#include "ace/pre.h"
 
 #include "orbsvcs/Trader/Interpreter_Utils.h"
 #include "orbsvcs/Trader/trading_export.h"

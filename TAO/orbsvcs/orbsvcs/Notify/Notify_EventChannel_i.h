@@ -16,8 +16,8 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_EVENTCHANNEL_I_H_
-#include "ace/pre.h"
 #define TAO_NOTIFY_EVENTCHANNEL_I_H_
+#include "ace/pre.h"
 
 #include "Notify_ID_Pool_T.h"
 #include "Notify_QoSAdmin_i.h"

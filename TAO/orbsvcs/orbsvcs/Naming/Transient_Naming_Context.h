@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_TRANSIENT_NAMING_CONTEXT_H
-#include "ace/pre.h"
 #define TAO_TRANSIENT_NAMING_CONTEXT_H
+#include "ace/pre.h"
 
 #include "Hash_Naming_Context.h"
 #include "Entries.h"

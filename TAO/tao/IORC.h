@@ -10,8 +10,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_IORC_H_
-#include "ace/pre.h"
 #define _TAO_IDL_IORC_H_
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 #include "tao/corbafwd.h"

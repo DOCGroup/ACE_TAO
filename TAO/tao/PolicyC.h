@@ -9,8 +9,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef TAO_IDL_POLICYC_H
-#include "ace/pre.h"
 #define TAO_IDL_POLICYC_H
+#include "ace/pre.h"
 
 #include "tao/CurrentC.h"
 

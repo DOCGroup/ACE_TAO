@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_MARSHAL_H
-#include "ace/pre.h"
 #define TAO_MARSHAL_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

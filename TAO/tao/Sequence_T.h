@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_SEQUENCE_T_H
-#include "ace/pre.h"
 #define TAO_SEQUENCE_T_H
+#include "ace/pre.h"
 
 #include "tao/Sequence.h"
 

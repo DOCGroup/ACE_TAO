@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_SCHEDULER_UTILITIES_H
-#include "ace/pre.h"
 #define ACE_SCHEDULER_UTILITIES_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"
 

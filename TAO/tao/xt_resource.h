@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_XT_RESOURCE_H
-#include "ace/pre.h"
 #define TAO_XT_RESOURCE_H
+#include "ace/pre.h"
 
 #include "tao/default_resource.h"
 

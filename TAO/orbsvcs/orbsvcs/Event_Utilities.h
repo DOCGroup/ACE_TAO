@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_EVENT_UTILITIES_H
-#include "ace/pre.h"
 #define ACE_EVENT_UTILITIES_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"

@@ -22,8 +22,8 @@
 // ============================================================================
 
 #ifndef ACE_CHANNEL_CLIENTS_T_H
-#include "ace/pre.h"
 #define ACE_CHANNEL_CLIENTS_T_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecEventCommS.h"
 

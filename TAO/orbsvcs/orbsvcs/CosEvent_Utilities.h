@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_COSEVENT_UTILITIES_H
-#include "ace/pre.h"
 #define TAO_COSEVENT_UTILITIES_H
+#include "ace/pre.h"
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"

@@ -16,8 +16,8 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_PROXYCONSUMER_T_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_PROXYCONSUMER_T_H
+#include "ace/pre.h"
 
 #include "Notify_Proxy_T.h"
 class TAO_Notify_SupplierAdmin_i;

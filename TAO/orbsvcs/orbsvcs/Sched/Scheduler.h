@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef SCHEDULER_H
-#include "ace/pre.h"
 #define SCHEDULER_H
+#include "ace/pre.h"
 
 #include "ace/ACE.h"
 

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_CONNECTOR_H
-#include "ace/pre.h"
 #define TAO_IIOP_CONNECTOR_H
+#include "ace/pre.h"
 
 #include "ace/Connector.h"
 

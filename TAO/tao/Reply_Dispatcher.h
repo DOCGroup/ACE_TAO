@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef TAO_REPLY_DISPATCHER_H
-#include "ace/pre.h"
 #define TAO_REPLY_DISPATCHER_H
+#include "ace/pre.h"
 
 #include "tao/Request.h"
 

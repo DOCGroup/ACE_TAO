@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_SFP_H
-#include "ace/pre.h"
 #define TAO_AV_SFP_H
+#include "ace/pre.h"
 
 #include "orbsvcs/AV/AV_export.h"
 #include "orbsvcs/sfpC.h"

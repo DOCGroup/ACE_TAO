@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_SERVANT_BASE_H
-#include "ace/pre.h"
 #define TAO_SERVANT_BASE_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

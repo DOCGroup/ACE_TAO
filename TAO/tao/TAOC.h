@@ -8,8 +8,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_TAOC_H_
-#include "ace/pre.h"
 #define _TAO_IDL_TAOC_H_
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 #include "tao/varout.h"

@@ -25,8 +25,8 @@
 // ============================================================================
 
 #ifndef TAO_CORBAFWD_H
-#include "ace/pre.h"
 #define TAO_CORBAFWD_H
+#include "ace/pre.h"
 
 // @@ TODO take the portion that we need of ace/CDR_Stream.h into
 // ace/CDR_Types.h

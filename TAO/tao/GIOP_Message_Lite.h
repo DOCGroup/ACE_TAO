@@ -17,8 +17,8 @@
 //
 // ============================================================================
 #ifndef TAO_GIOP_MESSAGE_LITE_H
-#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_LITE_H
+#include "ace/pre.h"
 
 #include "tao/GIOP_Server_Request.h"
 #include "tao/GIOP_Message_Headers.h"

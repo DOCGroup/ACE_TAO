@@ -2,8 +2,8 @@
 // $Id$
 //
 #ifndef FAST_REACTOR_H
-#include "ace/pre.h"
 #define FAST_REACTOR_H
+#include "ace/pre.h"
 
 #if defined (ACE_OLD_STYLE_REACTOR)
 # if defined (ACE_WIN32)

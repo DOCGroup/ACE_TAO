@@ -13,8 +13,8 @@
 // ============================================================================
 
 #ifndef TAO_OPERATION_DETAILS_H
-#include "ace/pre.h"
 #define TAO_OPERATION_DETAILS_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 #include "tao/IOPC.h"

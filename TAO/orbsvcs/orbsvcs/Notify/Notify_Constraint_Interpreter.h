@@ -17,8 +17,8 @@
 // ==========================================================================
 
 #ifndef TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/Trader/Constraint_Nodes.h"
 #include "orbsvcs/Trader/Constraint_Visitors.h"

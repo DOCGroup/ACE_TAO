@@ -9,8 +9,8 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #ifndef _TAO_IDL_IORS_H_
-#include "ace/pre.h"
 #define _TAO_IDL_IORS_H_
+#include "ace/pre.h"
 
 #include "tao/IORC.h"
 #include "tao/Servant_Base.h"

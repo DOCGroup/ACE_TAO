@@ -1,7 +1,7 @@
 // $Id$
 #ifndef TAO_NOTIFY_PUSHSUPPLIER_H
-#include "ace/pre.h"
 #define TAO_NOTIFY_PUSHSUPPLIER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 

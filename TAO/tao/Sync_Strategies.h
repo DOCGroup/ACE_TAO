@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_SYNC_STRATEGIES_H
-#include "ace/pre.h"
 #define TAO_SYNC_STRATEGIES_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

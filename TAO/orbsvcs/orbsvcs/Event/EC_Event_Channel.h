@@ -24,8 +24,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_EVENT_CHANNEL_H
-#include "ace/pre.h"
 #define TAO_EC_EVENT_CHANNEL_H
+#include "ace/pre.h"
 
 #include "EC_Factory.h"
 

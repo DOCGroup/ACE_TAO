@@ -15,8 +15,8 @@
 // ========================================================================
 
 #ifndef TAO_LOG_CONSTRAINT_INTERPRETER_H
-#include "ace/pre.h"
 #define TAO_LOG_CONSTRAINT_INTERPRETER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/orbsvcs/Trader/Constraint_Nodes.h"
 #include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"

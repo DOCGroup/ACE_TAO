@@ -18,8 +18,8 @@
 // ============================================================================
 //
 #ifndef TAO_PLUGGABLE_MESSAGING_H
-#include "ace/pre.h"
 #define TAO_PLUGGABLE_MESSAGING_H
+#include "ace/pre.h"
 
 #include "tao/Pluggable_Messaging_Utils.h"
 

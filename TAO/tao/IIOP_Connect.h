@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_IIOP_CONNECT_H
-#include "ace/pre.h"
 #define TAO_IIOP_CONNECT_H
+#include "ace/pre.h"
 
 #include "ace/Reactor.h"
 

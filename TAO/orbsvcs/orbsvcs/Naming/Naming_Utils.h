@@ -19,8 +19,8 @@
 // ============================================================================
 
 #ifndef TAO_NAMING_UTILS_H
-#include "ace/pre.h"
 #define TAO_NAMING_UTILS_H
+#include "ace/pre.h"
 
 #include "tao/corba.h"
 #include "orbsvcs/CosNamingC.h"

@@ -15,8 +15,8 @@
 //
 // ==========================================================================
 #ifndef TAO_NOTIFY_RESOURCE_MANAGER
-#include "ace/pre.h"
 #define TAO_NOTIFY_RESOURCE_MANAGER
+#include "ace/pre.h"
 
 #include "Notify_ID_Pool_T.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"

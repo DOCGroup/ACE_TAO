@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_NAMING_CONTEXT_INTERFACE_H
-#include "ace/pre.h"
 #define TAO_NAMING_CONTEXT_INTERFACE_H
+#include "ace/pre.h"
 
 #include "orbsvcs/CosNamingS.h"
 #include "naming_export.h"

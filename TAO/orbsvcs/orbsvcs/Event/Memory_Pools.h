@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef ACE_MEMORY_POOLS_H
-#include "ace/pre.h"
 #define ACE_MEMORY_POOLS_H
+#include "ace/pre.h"
 
 #include "ace/Synch.h"
 

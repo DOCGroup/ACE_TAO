@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_TYPECODE_H
-#include "ace/pre.h"
 #define TAO_TYPECODE_H
+#include "ace/pre.h"
 
 #include "ace/Synch.h"
 

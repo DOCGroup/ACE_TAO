@@ -14,8 +14,8 @@
 // ============================================================================
 
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_H
-#include "ace/pre.h"
 #define TAO_PERSISTENT_NAMING_CONTEXT_H
+#include "ace/pre.h"
 
 #include "Hash_Naming_Context.h"
 #include "Persistent_Entries.h"

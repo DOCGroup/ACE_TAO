@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_GIOP_MESSAGE_HEADERS_H
-#include "ace/pre.h"
 #define TAO_GIOP_MESSAGE_HEADERS_H
+#include "ace/pre.h"
 #include "tao/GIOPC.h"
 
 class TAO_GIOP_Locate_Request_Header

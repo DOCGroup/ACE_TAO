@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_VALUEBASE_H
-#include "ace/pre.h"
 #define TAO_VALUEBASE_H
+#include "ace/pre.h"
 
 #include "ace/OS.h"           /* for ptr_arith_t */
 

@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_OBJECT_ADAPTER_H
-#include "ace/pre.h"
 #define TAO_OBJECT_ADAPTER_H
+#include "ace/pre.h"
 
 #include "tao/Key_Adapters.h"
 #include "tao/Server_Strategy_Factory.h"

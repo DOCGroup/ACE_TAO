@@ -16,8 +16,8 @@
 // ============================================================================
 
 #ifndef TAO_ACCEPTOR_IMPL_H
-#include "ace/pre.h"
 #define TAO_ACCEPTOR_IMPL_H
+#include "ace/pre.h"
 
 #include "ace/Acceptor.h"
 

@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_REACTIVE_SUPPLIERCONTROL_H
-#include "ace/pre.h"
 #define TAO_CEC_REACTIVE_SUPPLIERCONTROL_H
+#include "ace/pre.h"
 
 #include "CEC_SupplierControl.h"
 #include "orbsvcs/Event/EC_Worker.h"

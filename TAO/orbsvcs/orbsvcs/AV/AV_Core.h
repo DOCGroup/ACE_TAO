@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_AV_CORE_H
-#include "ace/pre.h"
 #define TAO_AV_CORE_H
+#include "ace/pre.h"
 
 #include "tao/TAO.h"
 #include "orbsvcs/AVStreamsC.h"

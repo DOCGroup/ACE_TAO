@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_PLUGGABLE_H
-#include "ace/pre.h"
 #define TAO_PLUGGABLE_H
+#include "ace/pre.h"
 
 #include "tao/corbafwd.h"
 

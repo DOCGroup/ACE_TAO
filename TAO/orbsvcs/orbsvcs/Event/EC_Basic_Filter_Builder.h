@@ -23,8 +23,8 @@
 // ============================================================================
 
 #ifndef TAO_EC_BASIC_FILTER_BUILDER_H
-#include "ace/pre.h"
 #define TAO_EC_BASIC_FILTER_BUILDER_H
+#include "ace/pre.h"
 
 #include "EC_Filter_Builder.h"
 #include "event_export.h"

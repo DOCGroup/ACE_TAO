@@ -18,8 +18,8 @@
 // ============================================================================
 
 #ifndef TAO_BUFFERING_CONSTRAINT_POLICY_H
-#include "ace/pre.h"
 #define TAO_BUFFERING_CONSTRAINT_POLICY_H
+#include "ace/pre.h"
 
 #include "tao/orbconf.h"
 

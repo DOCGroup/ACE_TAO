@@ -21,8 +21,8 @@
 // ============================================================================
 
 #ifndef TAO_SINGLETONS_H
-#include "ace/pre.h"
 #define TAO_SINGLETONS_H
+#include "ace/pre.h"
 
 #include "ace/Singleton.h"
 

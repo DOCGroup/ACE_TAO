@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_PROXYPUSHSUPPLIER_H
-#include "ace/pre.h"
 #define TAO_CEC_PROXYPUSHSUPPLIER_H
+#include "ace/pre.h"
 
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "event_export.h"

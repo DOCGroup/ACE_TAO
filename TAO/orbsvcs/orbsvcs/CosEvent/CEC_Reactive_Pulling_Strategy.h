@@ -17,8 +17,8 @@
 // ============================================================================
 
 #ifndef TAO_CEC_REACTIVE_PULLING_STRATEGY_H
-#include "ace/pre.h"
 #define TAO_CEC_REACTIVE_PULLING_STRATEGY_H
+#include "ace/pre.h"
 
 #include "CEC_Pulling_Strategy.h"
 

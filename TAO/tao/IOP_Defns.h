@@ -16,8 +16,8 @@
 //    Taken from the old GIOP.h file. Not sure of the author
 // ============================================================================
 #ifndef _TAO_IOP_DEFN_H_
-#include "ace/pre.h"
 #define _TAO_IOP_DEFN_H_
+#include "ace/pre.h"
 
 // These were all in the GIOP.h file. They shouldn't be combined with
 // GIOP as they are not specific to GIOP. They are part of the CORBA

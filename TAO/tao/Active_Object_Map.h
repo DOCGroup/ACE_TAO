@@ -15,8 +15,8 @@
 // ============================================================================
 
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
-#include "ace/pre.h"
 #define TAO_ACTIVE_OBJECT_MAP_H
+#include "ace/pre.h"
 
 #include "tao/Key_Adapters.h"
 #include "tao/Server_Strategy_Factory.h"
