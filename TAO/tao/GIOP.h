@@ -306,15 +306,18 @@ public:
   // Close a connection, first sending GIOP::CloseConnection.
 
   static CORBA::Boolean start_message (TAO_GIOP::Message_Type t,
-                                       TAO_OutputCDR &msg);
+                                       TAO_OutputCDR &msg,
+				       TAO_ORB_Core* orb_core);
   // Build the header for a message of type <t> into stream <msg>.
 
   static CORBA::Boolean send_request (TAO_SVC_HANDLER *handler,
-                                      TAO_OutputCDR &stream);
+                                      TAO_OutputCDR &stream,
+				      TAO_ORB_Core* orb_core);
   // Send message, returns TRUE if success, else FALSE.
 
   static TAO_GIOP::Message_Type recv_request (TAO_SVC_HANDLER *&handler,
-					      TAO_InputCDR &msg);
+					      TAO_InputCDR &msg,
+					      TAO_ORB_Core *orb_core);
   // Reads message, returns message type from header.
 
   static void make_error (TAO_OutputCDR &msg, ...);
@@ -340,6 +343,33 @@ public:
 
   static TAO_GIOP_ReplyStatusType convert_CORBA_to_GIOP_exception (CORBA::ExceptionType corba_type);
   // Convert the exception type from CORBA to GIOP 
+
+
+private:
+  static CORBA::Boolean start_message_lite (TAO_GIOP::Message_Type t,
+					    TAO_OutputCDR &msg);
+  // Build the lightweight header for a message of type <t> into
+  // stream <msg>.
+
+  static CORBA::Boolean start_message_std (TAO_GIOP::Message_Type t,
+					   TAO_OutputCDR &msg);
+  // Build the standard header for a message of type <t> into
+  // stream <msg>.
+
+  static int parse_header_std (TAO_InputCDR &cdr,
+			       int& do_byte_swap,
+			       TAO_GIOP::Message_Type& message_type,
+			       CORBA::ULong& message_size);
+  static int parse_header_lite (TAO_InputCDR &cdr,
+				int& do_byte_swap,
+				TAO_GIOP::Message_Type& message_type,
+				CORBA::ULong& message_size);
+  static int parse_header (TAO_InputCDR &cdr,
+			   int& do_byte_swap,
+			   TAO_GIOP::Message_Type& message_type,
+			   CORBA::ULong& message_size,
+			   TAO_ORB_Core *orb_core);
+  // Parse the header, extracting all the relevant info.
 };
 
 #if defined (__ACE_INLINE__)

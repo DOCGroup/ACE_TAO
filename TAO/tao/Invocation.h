@@ -77,6 +77,35 @@ protected:
                                              CORBA_Environment &_env = CORBA_Environment::default_environment ());
   // do the location forwarding, which means exchanging the profile
 
+
+private:
+
+  CORBA::Boolean 
+  write_request_header (const TAO_GIOP_ServiceContextList& svc_ctx,
+			CORBA::ULong request_id,
+			CORBA::Boolean is_roundtrip,
+			const TAO_opaque* key,
+			const char* opname,
+			CORBA::Principal_ptr principal);
+  CORBA::Boolean 
+  write_request_header_std (const TAO_GIOP_ServiceContextList& svc_ctx,
+			    CORBA::ULong request_id,
+			    CORBA::Boolean is_roundtrip,
+			    const TAO_opaque* key,
+			    const char* opname,
+			    CORBA::Principal_ptr principal);
+  CORBA::Boolean 
+  write_request_header_lite (const TAO_GIOP_ServiceContextList& svc_ctx,
+			     CORBA::ULong request_id,
+			     CORBA::Boolean is_roundtrip,
+			     const TAO_opaque* key,
+			     const char* opname,
+			     CORBA::Principal_ptr principal);
+  // Encode the header for the Request, assuming that the GIOP header
+  // is already there.
+  // TAO support either the standard IIOP request header or a lighter
+  // weight version.
+
 protected:
   IIOP_Object *data_;
   // The object on which this invocation is going.

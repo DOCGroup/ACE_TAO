@@ -1,3 +1,40 @@
+Sat Aug 29 20:58:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Connect.h: 
+	* tao/Connect.i: 
+	* tao/Connect.cpp: 
+	* tao/GIOP.h: 
+	* tao/GIOP.cpp: 
+	* tao/Invocation.h: 
+	* tao/Invocation.cpp: 
+	* tao/Server_Request.h: 
+	* tao/Server_Request.i: 
+	* tao/Server_Request.cpp: 
+	* tao/params.h: 
+	* tao/params.i: 
+	* tao/params.cpp: 
+	  Added support for a modified version of IIOP that tries to
+	  minimize overhead in the case of a totally homogeneous system,
+	  for instance:
+	  + It removes the GIOP magic number
+	  + It does not include a protocol version on the header.
+	  + It does not include a byte order on the header.
+	  + It does not include a Service Context or a Principal on the
+	    Requests.
+	  This protocol can be activated by using the -ORBiioplite
+	  option.
+	  Another round trying to minimize calls to the
+	  ORB_Core_instance() function; in general we try to keep the
+	  pointer during the upcalls and downcalls.
+
+	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: 
+	  Run the onewau test at the end, otherwise it fills up the pipe
+	  to the server, and the next test gives bad results.
+
+	* orbsvcs/Dump_Schedule/Dump_Schedule.cpp: 
+	  Added option to let the user pick the scheduler. Thanks to Dave
+	  Meyer <dmeyer@std.saic.com> for giving us this patch.
+
 Sat Aug 29 20:29:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (TAO_Resource_Factory): Changed
