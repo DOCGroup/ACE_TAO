@@ -206,10 +206,10 @@ public:
   // Constructor used typically by the server side.
 
   // = COM stuff
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID type_id,
-				    void **ppv);
+  ULONG  AddRef (void);
+  ULONG  Release (void);
+  TAO_HRESULT  QueryInterface (REFIID type_id,
+                               void **ppv);
 
   virtual const char *_get_name (CORBA::Environment &env);
   // Get the underlying object key, which is stored as a

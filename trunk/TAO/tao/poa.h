@@ -26,7 +26,7 @@ class TAO_GIOP_RequestHeader;
 // @@ Why does this inherit from IUnknown?  This inherits from
 // IUnknown because it's foolish.  There's no good reason to get rid
 // of it, though, until we remove this useless COM stuff.
-class TAO_Export CORBA_POA : public IUnknown
+class TAO_Export CORBA_POA : public TAO_IUnknown
   // = TITLE
   //    The <{TAO}> Basic Object Adapter.
 {
@@ -196,9 +196,9 @@ public:
   // Returns pointer to the ORB with which this OA is associated.
 
   // = COM IUnknown Support
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID riid, void** ppv);
+  ULONG AddRef (void);
+  ULONG Release (void);
+  TAO_HRESULT QueryInterface (REFIID riid, void** ppv);
 
 private:
   TAO_Object_Table *objtable_;

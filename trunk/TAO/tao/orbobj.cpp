@@ -77,7 +77,7 @@ CORBA_ORB::open (void)
   return 0;
 }
 
-ULONG __stdcall
+ULONG
 CORBA_ORB::Release (void)
 {
   {

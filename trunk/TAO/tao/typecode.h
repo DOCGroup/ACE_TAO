@@ -63,7 +63,7 @@ public:
 
 class TC_Private_State;
 
-class TAO_Export CORBA_TypeCode : public IUnknown
+class TAO_Export CORBA_TypeCode : public TAO_IUnknown
   // = TITLE
   //   The CORBA TypeCode class. It maintains the in-memory
   //   representation of any OMG CORBA IDL data type.
@@ -241,10 +241,10 @@ public:
   // IIOP marshaling engine.
 
   // Stuff required for COM IUnknown support
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID riid,
-                                    void **ppv);
+  ULONG  AddRef (void);
+  ULONG  Release (void);
+  TAO_HRESULT  QueryInterface (REFIID riid,
+                               void **ppv);
   // private:
   //
   // = The guts of the typecode implementation class

@@ -10,7 +10,7 @@
 DEFINE_GUID (IID_CORBA_Request,
 0x77420085, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-ULONG __stdcall
+ULONG
 CORBA_Request::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
@@ -18,7 +18,7 @@ CORBA_Request::AddRef (void)
   return refcount_++;
 }
  
-ULONG __stdcall
+ULONG
 CORBA_Request::Release (void)
 {
   {
@@ -34,20 +34,20 @@ CORBA_Request::Release (void)
   return 0;
 }
  
-HRESULT __stdcall
+TAO_HRESULT
 CORBA_Request::QueryInterface (REFIID riid,
 			       void **ppv)
 {
   *ppv = 0;
  
-  if (IID_CORBA_Request == riid || IID_IUnknown == riid)
+  if (IID_CORBA_Request == riid || IID_TAO_IUnknown == riid)
     *ppv = this;
  
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
  
   (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }
 
 // Reference counting for DII Request object
@@ -118,7 +118,7 @@ CORBA_Request::invoke (void)
   STUB_Object *stub;
 
   if (target_->QueryInterface (IID_STUB_Object,
-			       (void **) &stub) != NOERROR) 
+			       (void **) &stub) != TAO_NOERROR) 
     {
       env_.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return;
@@ -140,7 +140,7 @@ CORBA_Request::send_oneway (void)
   STUB_Object *stub;
 
   if (target_->QueryInterface (IID_STUB_Object,
-			       (void **) &stub) != NOERROR) 
+			       (void **) &stub) != TAO_NOERROR) 
     {
       env_.exception (new CORBA::DATA_CONVERSION (CORBA::COMPLETED_NO));
       return;

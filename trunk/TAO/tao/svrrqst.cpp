@@ -40,7 +40,7 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
     delete exception_;
 }
 
-ULONG __stdcall
+ULONG
 IIOP_ServerRequest::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
@@ -49,7 +49,7 @@ IIOP_ServerRequest::AddRef (void)
   return refcount_++;
 }
 
-ULONG __stdcall
+ULONG 
 IIOP_ServerRequest::Release (void)
 {
   {
@@ -65,7 +65,7 @@ IIOP_ServerRequest::Release (void)
   return 0;
 }
 
-HRESULT __stdcall
+TAO_HRESULT 
 IIOP_ServerRequest::QueryInterface (REFIID riid,
 				    void **ppv)
 {
@@ -74,20 +74,20 @@ IIOP_ServerRequest::QueryInterface (REFIID riid,
 
   if (IID_IIOP_ServerRequest == riid
       || IID_CORBA_ServerRequest == riid
-      || IID_IUnknown == riid)
+      || IID_TAO_IUnknown == riid)
     *ppv = this;
 
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
 
  (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }
 
 // Unmarshal in/inout params, and set up to marshal the appropriate
 // inout/out/return values later on.
 
-void __stdcall
+void 
 IIOP_ServerRequest::params (CORBA::NVList_ptr list,
 			    CORBA::Environment &env)
 {
@@ -158,7 +158,7 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
 // but not both of them.  Results (and exceptions) can be reported
 // only after the parameter list has been provided (maybe empty).
 
-void __stdcall
+void 
 IIOP_ServerRequest::result (CORBA::Any_ptr value,
 			    CORBA::Environment &env)
 {
@@ -174,7 +174,7 @@ IIOP_ServerRequest::result (CORBA::Any_ptr value,
 
 // Store the exception value.
 
-void __stdcall
+void 
 IIOP_ServerRequest::exception (CORBA::ExceptionType type,
 			       CORBA::Any_ptr value,
 			       CORBA::Environment &env)
@@ -193,33 +193,33 @@ IIOP_ServerRequest::exception (CORBA::ExceptionType type,
 
 // Invocation attributes.
 
-CORBA::String __stdcall
+CORBA::String 
 IIOP_ServerRequest::op_name (void)
 {
   return opname_;
 }
 
-CORBA::Object_ptr __stdcall
+CORBA::Object_ptr 
 IIOP_ServerRequest::target (void)
 {
   // XXX implement me!!  Code from TCP_OA exists ...
   return 0;
 }
 
-CORBA::Principal_ptr __stdcall
+CORBA::Principal_ptr 
 IIOP_ServerRequest::caller (void)
 {
   // XXX ... return client's principal
   return 0;
 }
 
-CORBA::ORB_ptr __stdcall
+CORBA::ORB_ptr 
 IIOP_ServerRequest::orb (void)
 {
   return orb_;
 }
 
-CORBA::POA_ptr __stdcall
+CORBA::POA_ptr 
 IIOP_ServerRequest::oa (void)
 {
   return poa_;

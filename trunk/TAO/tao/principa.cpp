@@ -38,7 +38,7 @@ DEFINE_GUID (IID_CORBA_Principal,
 0xa201e4c0, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 
-ULONG __stdcall
+ULONG
 CORBA_Principal::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->lock_, 0));
@@ -46,7 +46,7 @@ CORBA_Principal::AddRef (void)
   return ++refcount_;
 }
 
-ULONG __stdcall
+ULONG
 CORBA_Principal::Release (void)
 {
   {
@@ -60,18 +60,18 @@ CORBA_Principal::Release (void)
   return 0;
 }
 
-HRESULT __stdcall
+TAO_HRESULT
 CORBA_Principal::QueryInterface (REFIID riid,
 				 void **ppv)
 {
   *ppv = 0;
 
-  if (IID_CORBA_Principal == riid || IID_IUnknown == riid)
+  if (IID_CORBA_Principal == riid || IID_TAO_IUnknown == riid)
     *ppv = this;
 
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
 
   (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }

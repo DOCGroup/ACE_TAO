@@ -14,7 +14,7 @@
 DEFINE_GUID (IID_CORBA_NamedValue, 
 0x77420087, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-ULONG __stdcall
+ULONG
 CORBA_NamedValue::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
@@ -22,7 +22,7 @@ CORBA_NamedValue::AddRef (void)
   return refcount_++;
 }
  
-ULONG __stdcall
+ULONG
 CORBA_NamedValue::Release (void)
 {
   {
@@ -38,20 +38,20 @@ CORBA_NamedValue::Release (void)
   return 0;
 }
  
-HRESULT __stdcall
+TAO_HRESULT
 CORBA_NamedValue::QueryInterface (REFIID riid,
                                   void **ppv)
 {
   *ppv = 0;
  
-  if (IID_CORBA_NamedValue == riid || IID_IUnknown == riid)
+  if (IID_CORBA_NamedValue == riid || IID_TAO_IUnknown == riid)
     *ppv = this;
  
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
  
  (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }
 
 // Reference counting for DII Request object
@@ -81,7 +81,7 @@ CORBA_NamedValue::~CORBA_NamedValue (void)
 DEFINE_GUID (IID_CORBA_NVList,
 0x77420088, 0xf276, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-ULONG __stdcall
+ULONG
 CORBA_NVList::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
@@ -89,7 +89,7 @@ CORBA_NVList::AddRef (void)
   return refcount_++;
 }
  
-ULONG __stdcall
+ULONG
 CORBA_NVList::Release (void)
 {
   {
@@ -105,20 +105,20 @@ CORBA_NVList::Release (void)
   return 0;
 }
  
-HRESULT __stdcall
+TAO_HRESULT
 CORBA_NVList::QueryInterface (REFIID riid,
                               void **ppv)
 {
   *ppv = 0;
  
-  if (IID_CORBA_NVList == riid || IID_IUnknown == riid)
+  if (IID_CORBA_NVList == riid || IID_TAO_IUnknown == riid)
     *ppv = this;
  
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
  
  (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }
 
 // Reference counting for DII Request object

@@ -23,7 +23,7 @@
 
 // @@ Please comment everything in this file.
 
-class TAO_Export CORBA_Request : public IUnknown
+class TAO_Export CORBA_Request : public TAO_IUnknown
 {
 public:
   // @@ These inlines should be moved into a *.i file.
@@ -39,10 +39,10 @@ public:
 
   // Stuff required for COM IUnknown support
 
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID riid,
-				    void **ppv);
+  ULONG AddRef (void);
+  ULONG Release (void);
+  TAO_HRESULT QueryInterface (REFIID riid,
+                              void **ppv);
 
 private:
   friend class CORBA_Object;

@@ -1028,7 +1028,7 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                   &obj, 0,
                                   env) != CORBA::TypeCode::TRAVERSE_CONTINUE
 	    || obj->QueryInterface (IID_IIOP_Object,
-                                    (void **) &obj2) != NOERROR)
+                                    (void **) &obj2) != TAO_NOERROR)
 	  {
 	    dexc (env, "invoke, location forward");
 	    send_error (this->handler_);

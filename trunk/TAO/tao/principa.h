@@ -19,7 +19,7 @@
 #if !defined (TAO_PRINCIPAL_H)
 #  define TAO_PRINCIPAL_H
 
-class TAO_Export CORBA_Principal : public IUnknown
+class TAO_Export CORBA_Principal : public TAO_IUnknown
   // = TITLE
   //    A "Principal" identifies an authenticated entity in the
   //    network administration framework.  Identities are used to
@@ -36,10 +36,10 @@ public:
 
   // Stuff required for COM IUnknown support
 
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID riid,
-				    void **ppv);
+  ULONG AddRef (void);
+  ULONG Release (void);
+  TAO_HRESULT QueryInterface (REFIID riid,
+                              void **ppv);
 
   CORBA_Principal (void);
 

@@ -45,8 +45,8 @@ public:
                                   CORBA::Environment &env);
   // Convert an object reference to an IOR stringified form
 
-  HRESULT __stdcall QueryInterface (REFIID riid, 
-				    void **ppv);
+  TAO_HRESULT QueryInterface (REFIID riid, 
+                              void **ppv);
   // COM stuff - get the underlying IUnknown object based on the riid
 
   // = ACCESSORS

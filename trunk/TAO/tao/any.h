@@ -21,7 +21,7 @@
 #if !defined (TAO_ANY_H)
 #define TAO_ANY_H
 
-class TAO_Export CORBA_Any : public IUnknown
+class TAO_Export CORBA_Any : public TAO_IUnknown
   // = TITLE
   //   Class "Any" can wrap values of any type, with the assistance
   //   of a TypeCode to describe that type.
@@ -208,20 +208,20 @@ public:
 
   // = Methods required for COM <IUnknown> support.
 
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID riid,
+  ULONG  AddRef (void);
+  ULONG  Release (void);
+  TAO_HRESULT  QueryInterface (REFIID riid,
 				    void **ppv);
 
   // = Conversion to/from COM Variant types: 
 
-  CORBA_Any (const VARIANT &src);
+  CORBA_Any (const TAO_VARIANT &src);
   // copy constructor,
 
-  CORBA_Any &operator = (const VARIANT &src);
+  CORBA_Any &operator = (const TAO_VARIANT &src);
   // assignment operator
 
-  operator VARIANT (void);
+  operator TAO_VARIANT (void);
   // cast operator.
 
 private:

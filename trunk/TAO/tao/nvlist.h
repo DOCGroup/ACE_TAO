@@ -38,10 +38,10 @@ public:
 
   // = Methods required for COM IUnknown support.
 
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID riid,
-				    void **ppv);
+  ULONG AddRef (void);
+  ULONG Release (void);
+  TAO_HRESULT QueryInterface (REFIID riid,
+                              void **ppv);
 
 private:
   u_int refcount_;
@@ -87,10 +87,10 @@ public:
 
   // = Methods required for COM IUnknown support
 
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID riid,
-				    void **ppv);
+  ULONG AddRef (void);
+  ULONG Release (void);
+  TAO_HRESULT QueryInterface (REFIID riid,
+                              void **ppv);
 
 private:
   // @@ Do we really need to keep these _FAR macros?
