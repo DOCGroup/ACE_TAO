@@ -1,3 +1,8 @@
+Sat Jun 19 12:48:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_String.h:
+          Removed commented out code
+
 Sat Jun 19 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
