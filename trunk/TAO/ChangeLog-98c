@@ -1,5 +1,8 @@
 Wed Jun 24 15:55:33 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* tao/ORB.cpp (resolve_root_poa): Changed resolve_poa() to
+ 	  resolve_root_poa().
+
 	* tao/ORB.cpp (resolve_poa): Rearranged this method so that the
  	  user can specify the name, POA Manager, policies, and active
  	  object map of a root poa.  Use this method instead of

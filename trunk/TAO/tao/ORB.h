@@ -855,10 +855,10 @@ public:
 
   // = TAO-specific Extensions
 
-  CORBA_Object_ptr resolve_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
-                                TAO_POA_Manager *poa_manager = 0,
-                                const TAO_POA_Policies *policies = 0,
-                                TAO_Object_Table *active_object_map = 0);
+  CORBA_Object_ptr resolve_root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+                                     TAO_POA_Manager *poa_manager = 0,
+                                     const TAO_POA_Policies *policies = 0,
+                                     TAO_Object_Table *active_object_map = 0);
   // Resolve the POA.
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,

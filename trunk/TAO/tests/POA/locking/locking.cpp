@@ -39,9 +39,9 @@ main (int argc, char **argv)
   root_poa_policies.lifespan (PortableServer::PERSISTENT);
   root_poa_policies.TAO_POA_locking (PortableServer::USE_NULL_LOCK);
 
-  CORBA::Object_var obj = orb->resolve_poa ("RootPOA",
-                                            0, 
-                                            &root_poa_policies);
+  CORBA::Object_var obj = orb->resolve_root_poa ("RootPOA",
+                                                 0, 
+                                                 &root_poa_policies);
 
   // _narrow () the Object to get the POA object, i.e., the root_poa.
   PortableServer::POA_var root_poa =
