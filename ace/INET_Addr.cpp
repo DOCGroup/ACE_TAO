@@ -331,13 +331,11 @@ ACE_INET_Addr::set (const ASYS_TCHAR port_name[],
 
 
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
-                              const ASYS_TCHAR host_name[],
-                              const ASYS_TCHAR protocol[])
+                              const ASYS_TCHAR host_name[])
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   if (this->set (port_number,
-                 host_name,
-                 protocol) == -1)
+                 host_name) == -1)
 #if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
     ACE_ERROR ((LM_ERROR,
                 (char *) "ACE_INET_Addr::ACE_INET_Addr: %p\n",
