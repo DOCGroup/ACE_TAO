@@ -763,7 +763,7 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     adapter_activator_ (),
     servant_activator_ (),
     servant_locator_ (),
-    default_servant_ (0),
+    default_servant_ (),
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -1276,9 +1276,19 @@ TAO_POA::get_servant_i (CORBA::Environment &ACE_TRY_ENV)
 
   // This operation returns the default servant associated with the
   // POA.
-  if (this->default_servant_ != 0)
+  PortableServer::Servant result = this->default_servant_.in ();
+  if (result != 0)
     {
-      return this->default_servant_;
+      // The POA invokes _add_ref once on the Servant before returning
+      // it. If the application uses reference counting, the caller of
+      // get_servant is responsible for invoking _remove_ref once on
+      // the returned Servant when it is finished with it. A
+      // conforming caller need not invoke _remove_ref on the returned
+      // Servant if the type of the Servant uses the default reference
+      // counting inherited from ServantBase.
+      result->_add_ref ();
+
+      return result;
     }
   else
     // If no servant has been associated with the POA, the NoServant
@@ -1304,6 +1314,15 @@ TAO_POA::set_servant_i (PortableServer::Servant servant,
   // the default servant. This servant will be used for all requests
   // for which no servant is found in the Active Object Map.
   this->default_servant_ = servant;
+
+  // The implementation of set_servant will invoke _add_ref at least
+  // once on the Servant argument before returning. When the POA no
+  // longer needs the Servant, it will invoke _remove_ref on it the
+  // same number of times.
+  if (servant != 0)
+    {
+      servant->_add_ref ();
+    }
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -1342,7 +1361,16 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
                         0);
     }
 
+  //
   // Everything is finally ok
+  //
+
+  // The implementation of activate_object will invoke _add_ref at
+  // least once on the Servant argument before returning. When the POA
+  // no longer needs the Servant, it will invoke _remove_ref on it the
+  // same number of times.
+  servant->_add_ref ();
+
   return user_id._retn ();
 }
 
@@ -1398,7 +1426,15 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
       ACE_THROW (CORBA::OBJ_ADAPTER ());
     }
 
+  //
   // Everything is finally ok
+  //
+
+  // The implementation of activate_object_with_id will invoke
+  // _add_ref at least once on the Servant argument before
+  // returning. When the POA no longer needs the Servant, it will
+  // invoke _remove_ref on it the same number of times.
+  servant->_add_ref ();
 }
 
 void
@@ -1591,7 +1627,16 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
                             0);
         }
 
+      //
       // Everything is finally ok
+      //
+
+      // If this operation causes the object to be activated, _add_ref
+      // is invoked at least once on the Servant argument before
+      // returning. Otherwise, the POA does not increment or decrement
+      // the reference count of the Servant passed to this function.
+      servant->_add_ref ();
+
       return user_id._retn ();
     }
 
@@ -1645,7 +1690,16 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
                             0);
         }
 
+      //
       // Everything is finally ok
+      //
+
+      // If this operation causes the object to be activated, _add_ref
+      // is invoked at least once on the Servant argument before
+      // returning. Otherwise, the POA does not increment or decrement
+      // the reference count of the Servant passed to this function.
+      servant->_add_ref ();
+
       return system_id._retn ();
     }
 
@@ -1740,6 +1794,16 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
                                                                                servant,
                                                                                user_id) != -1)
         {
+          // The POA invokes _add_ref once on the Servant before
+          // returning it. If the application uses reference counting,
+          // the caller of reference_to_servant is responsible for
+          // invoking _remove_ref once on the returned Servant when it
+          // is finished with it.  A conforming caller need not invoke
+          // _remove_ref on the returned Servant if the type of the
+          // Servant uses the default reference counting inherited
+          // from ServantBase.
+          servant->_add_ref ();
+
           return servant;
         }
       else
@@ -1760,9 +1824,20 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
-      if (this->default_servant_ != 0)
+      PortableServer::Servant result = this->default_servant_.in ();
+      if (result != 0)
         {
-          return this->default_servant_;
+          // The POA invokes _add_ref once on the Servant before
+          // returning it. If the application uses reference counting,
+          // the caller of reference_to_servant is responsible for
+          // invoking _remove_ref once on the returned Servant when it
+          // is finished with it.  A conforming caller need not invoke
+          // _remove_ref on the returned Servant if the type of the
+          // Servant uses the default reference counting inherited
+          // from ServantBase.
+          result->_add_ref ();
+
+          return result;
         }
       else
         // Otherwise, the ObjectNotActive exception is raised.
@@ -1855,6 +1930,15 @@ TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id,
   if (this->active_object_map ().find_servant_using_user_id (id,
                                                              servant) != -1)
     {
+      // The POA invokes _add_ref once on the Servant before returning
+      // it. If the application uses reference counting, the caller of
+      // id_to_servant is responsible for invoking _remove_ref once on
+      // the returned Servant when it is finished with it. A
+      // conforming caller need not invoke _remove_ref on the returned
+      // Servant if the type of the Servant uses the default reference
+      // counting inherited from ServantBase.
+      servant->_add_ref ();
+
       return servant;
     }
   else
@@ -1973,7 +2057,7 @@ TAO_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
   // the POA, return TAO_POA::NOT_FOUND.
   if (this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
     {
-      if (this->default_servant_ == 0)
+      if (this->default_servant_.in () == 0)
         return TAO_POA::NOT_FOUND;
       else
         // Success
@@ -2042,7 +2126,8 @@ TAO_POA::locate_servant_i (const char *operation,
   // exception.
   if (this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT)
     {
-      if (this->default_servant_ == 0)
+      PortableServer::Servant result = this->default_servant_.in ();
+      if (result == 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
@@ -2050,7 +2135,7 @@ TAO_POA::locate_servant_i (const char *operation,
       else
         {
           // Success
-          return this->default_servant_;
+          return result;
         }
     }
 
