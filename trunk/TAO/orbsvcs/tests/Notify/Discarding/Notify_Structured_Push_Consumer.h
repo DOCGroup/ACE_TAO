@@ -27,7 +27,7 @@ public:
   Notify_Structured_Push_Consumer (
                         const char* name,
                         CORBA::Short policy,
-                        unsigned int expected,
+                        CORBA::Long expected,
                         CORBA::Long max_events_per_consumer,
                         CORBA::Boolean& done);
 
@@ -42,9 +42,9 @@ protected:
 
   ACE_CString name_;
   CORBA::Short discard_policy_;
-  unsigned int expected_;
+  CORBA::Long expected_;
   CORBA::Long max_events_per_consumer_;
-  unsigned int count_;
+  CORBA::Long count_;
   CORBA::Boolean& done_;
 };
 

@@ -2,10 +2,6 @@
 
 #include "CosNotify_Initializer.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "CosNotify_Initializer.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Notify, TAO_NS_CosNotify_Initializer, "$id$")
 
 #include "Notify_Service.h"

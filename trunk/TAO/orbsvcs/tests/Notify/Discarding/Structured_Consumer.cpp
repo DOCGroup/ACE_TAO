@@ -19,7 +19,7 @@
 
 static const char* ior = "file://supplier.ior";
 static CORBA::Short discard_policy = CosNotification::FifoOrder;
-static unsigned int expected = 13;
+static CORBA::Long expected = 13;
 CORBA::Long max_events_per_consumer = 10;
 
 // ******************************************************************
