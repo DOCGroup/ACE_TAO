@@ -287,7 +287,7 @@ public:
   void parse_policies (const CORBA::PolicyList &policies,
                        CORBA_Environment &ACE_TRY_ENV);
 
-  CORBA::PolicyList &client_exposed_fixed_policies (void);
+  const CORBA::PolicyList &client_exposed_fixed_policies (void) const;
 
 protected:
 
