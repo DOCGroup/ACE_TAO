@@ -108,10 +108,6 @@
 
 #define ACE_NEEDS_DEV_IO_CONVERSION
 
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_SIZEOF_FLOAT 4
 #define ACE_SIZEOF_DOUBLE 8
 #define ACE_SIZEOF_LONG_DOUBLE 16

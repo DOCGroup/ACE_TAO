@@ -143,10 +143,6 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 // By default, don't include RCS Id strings in object code.
 #if !defined (ACE_USE_RCSID)
 # define ACE_USE_RCSID 0

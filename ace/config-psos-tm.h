@@ -177,10 +177,6 @@
 
 #define ACE_PAGE_SIZE 4096
 
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_PSOS_TM
 #define ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM
 #define USER_INCLUDE_SYS_TIME_TM

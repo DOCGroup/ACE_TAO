@@ -34,11 +34,6 @@
 #define MAXPATHLEN 1023
 #endif /* _UNICOS */
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_DEFAULT_CLOSE_ALL_HANDLES 0
 
 // Defines the page size of the system.

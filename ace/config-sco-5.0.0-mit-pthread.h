@@ -118,11 +118,6 @@
 
 #define ACE_HAS_GNU_CSTRING_H
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_UCONTEXT_T
 

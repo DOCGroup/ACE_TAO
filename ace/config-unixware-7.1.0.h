@@ -360,9 +360,6 @@
 /* <time.h> doesn't automatically #include <sys/time.h> */
 #define ACE_LACKS_SYSTIME_H 1
 
-/* Turns off the tracing feature. */
-#define ACE_NTRACE 1
-
 /*********************************************************************/
 /* Compiler's template mechanim must see source code (i.e., .cpp files).  This
    is used for GNU G++. */

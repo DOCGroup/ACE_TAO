@@ -142,9 +142,5 @@
 #define ACE_HAS_SIGTIMEDWAIT
 #define ACE_HAS_SIGSUSPEND
 
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

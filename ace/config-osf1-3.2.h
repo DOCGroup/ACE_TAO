@@ -174,11 +174,6 @@ extern "C" pid_t getpgid (pid_t);
 
 #define ACE_NEEDS_DEV_IO_CONVERSION
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 // Defines the page size of the system.
 #define ACE_PAGE_SIZE 8192
 #define ACE_HAS_GETPAGESIZE

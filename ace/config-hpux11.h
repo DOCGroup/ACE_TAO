@@ -242,9 +242,4 @@
 
 #define ACE_HAS_POSIX_SEM
 
-// Turns off the tracing feature.
-// To build with tracing enabled, make sure ACE_NTRACE is not defined
-#if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
 #include /**/ "ace/post.h"
-#endif /* ACE_NTRACE */

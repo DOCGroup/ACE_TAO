@@ -104,10 +104,5 @@
 // Platform doesn't have get<blah>by... char *arg defined as const
 //#define ACE_GET_BLAH_BY_NO_CONST
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

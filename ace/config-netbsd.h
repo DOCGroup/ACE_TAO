@@ -170,11 +170,6 @@ ange */
 #define ACE_HAS_SUNOS4_GETTIMEOFDAY
 // #define ACE_HAS_TIMEZONE_GETTIMEOFDAY
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-#define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_HAS_MSG
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 

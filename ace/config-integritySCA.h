@@ -73,10 +73,6 @@
 #define ACE_HAS_PTHREADS_STD
 /***** End Threading Defines *****/
 
-/***** ACE Specific Features *****/
-#define ACE_NTRACE 1
-/***** end ACE Specific Features *****/
-
 /***** Hardware Defines *****/
 #define ACE_PAGE_SIZE 4096
 /***** End Hardware Defines *****/

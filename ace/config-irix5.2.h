@@ -63,10 +63,5 @@
 #define ACE_HAS_SEMUN
 #define ACE_NEEDS_DEV_IO_CONVERSION
 
-// Turns off the tracing feature.
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_H */

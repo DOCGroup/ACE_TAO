@@ -227,10 +227,6 @@
 
 #define ACE_PAGE_SIZE 4096
 
-#if !defined (ACE_NTRACE)
-# define ACE_NTRACE 1
-#endif /* ACE_NTRACE */
-
 #define ACE_PSOS_CANT_USE_SYS_TYPES
 
 // #define ACE_PSOS_SNARFS_HEADER_INFO
