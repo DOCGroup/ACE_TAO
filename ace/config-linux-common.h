@@ -263,10 +263,6 @@
 # define ACE_SIZE_T_FORMAT_SPECIFIER ACE_LIB_TEXT ("%lu")
 #endif /* __ia64 */
 
-#if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW CLK_TCK
-#endif /* ACE_TIMER_SKEW */
-
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 # define ACE_NTRACE 1

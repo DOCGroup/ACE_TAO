@@ -1,3 +1,10 @@
+Thu Aug 30 17:54:40 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/config-linux-common.h:
+
+          This file was checked in inadvertently when checking in fixes
+          for ACE_NEEDS_HUGE_THREAD_STACKSIZE.
+
 Thu Aug 30 13:04:38 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/run_test.lst: Added Bound_Ptr_Test.
@@ -53,7 +60,7 @@ Thu Aug 30 00:27:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ChangeLog:
 
-          Removed bogus files from the pervious entries. I should not play
+          Removed bogus files from the previous entry. I should not play
           around with a lot of tasks at once.
 
 Wed Aug 29 19:57:29 2001  Krishnakumar B  <kitty@cs.wustl.edu>
