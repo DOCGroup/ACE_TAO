@@ -30,6 +30,7 @@
 #include "tao/CORBA_methods.h"
 #include "tao/orbconf.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/default_environment.h"
 
 class TAO_ORB_Core;
 

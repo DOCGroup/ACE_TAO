@@ -5,7 +5,6 @@
 ///
 /// ImplRepo related.
 ///
-#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 #include "tao/PortableServer/ImplRepo_i.h"
 
@@ -36,4 +35,3 @@ ServerObject_i::_default_POA (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */

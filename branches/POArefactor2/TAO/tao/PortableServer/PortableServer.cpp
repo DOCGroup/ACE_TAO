@@ -141,11 +141,11 @@ TAO_POA_Initializer::init (void)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyValueNonRetain
     );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyValueRetain
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Policy Values
 
@@ -203,11 +203,11 @@ TAO_POA_Initializer::init (void)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyValueExplicit
     );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyValueImplicit
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
@@ -225,9 +225,11 @@ TAO_POA_Initializer::init (void)
       TAO::Portable_Server::ace_svc_desc_ThreadStrategyFactoryImpl
     );
 
+#if (TAO_HAS_MINIMUM_POA == 0)
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ThreadStrategySingleFactoryImpl
     );
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_LifespanStrategyFactoryImpl

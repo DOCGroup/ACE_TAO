@@ -19,9 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-
 #include "tao/PortableServer/AdapterActivatorC.h"
+
+#if (TAO_HAS_MINIMUM_POA == 0)
 
 namespace PortableServer
 {

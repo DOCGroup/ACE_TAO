@@ -19,8 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
 #include "tao/PortableServer/ServerObjectS.h"
 
 /**
@@ -60,8 +58,6 @@ protected:
   /// POA that we are registered with.
   PortableServer::POA_var poa_;
 };
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include /**/ "ace/post.h"
 
