@@ -109,7 +109,7 @@ document</a>.</p><p>
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. Besides the standard DOC group platforms
         we also support Borland C++ Builder 6, CBuilderX 1.0, MinGW,
-        Cygwin, VxWorks 5.5, OpenVMS 7.3-2, Linux 64bit Alpha, Tru64,
+        Cygwin, VxWorks 5.5.1, OpenVMS 7.3-2, Linux 64bit Alpha, Tru64,
         HPUX 11i 32/64 bit on PA-RISC, and HPUX 11i v2 on Itanium.
     </td>
     <td>Remedy IT <a href="http://www.theaceorb.nl/">web site</a> and
@@ -194,7 +194,7 @@ global.features</a> file.
       We've also added some support for
       <a href="#mingw">GNU g++ with MinGW</a>,
       <a href="#cygwin">GNU g++ with Cygwin</a>
-      <a href="#borland">Borland C++ 5.5, Borland C++ Builder 4.0/5.0/6.0
+      <a href="#borland">Borland C++ 5.5, Borland C++ Builder 6.0
       and Borland C++ BuilderX</a>, and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
@@ -2845,26 +2845,26 @@ show_uninit        Lists all uninitialized in object files built for
 
 </p><hr><p>
 </p><h3><a name="power">Building from anonymous CVS</a></h3>
-If users are building from our <a href="http://cvs.doc.wustl.edu/anoncvs.html"> anon cvs </a> the
+If users are building from our <a href="http://cvs.doc.wustl.edu/anoncvs.html">anon cvs</a> the
 GNUmakefiles, and project files for building on various platforms will
 not be available. Users from anon cvs are expected to generate them
-using <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/MPC/README">MPC </a> before building ACE, TAO or
+using <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/MPC/README">MPC</a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
 <ul>
-  <li> Please see <a href="#MPC"> instructions </a> above to  download
+  <li> Please see <a href="#MPC"> instructions</a> above to  download
   MPC from anon cvs repository <p>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
   perl</a> installed, preferably perl
   5.8 or higher. Users on Win32 based platforms are recommended to use
   <a href="http://www.activestate.com/Products/ActivePerl/"> Active
-  State Perl </a>. We use active state perl without problems. We have
+  State Perl</a>. We use active state perl without problems. We have
   ran into problems trying to use the cygwin version of perl on Win32
   based platforms. <p>
   </p></li><li>If you just want to build ACE and associated tests, examples,
   and associated utility libraries, we recommend that you do <p>
-  <code> $ACE_ROOT/bin/mwc.pl ACE.mwc </code> </p><p>
+  <code> $ACE_ROOT/bin/mwc.pl ACE.mwc</code> </p><p>
 
   from <code> $ACE_ROOT </code> to generate GNUmakefiles. Please use
 
@@ -2874,7 +2874,8 @@ quickly.
   vc71</code> to generate VC71 project and solution files.
 
   </p></li><li>If you want to build TAO+CIAO and its associated libraries
-  please see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html"> TAO-INSTALL </a><a> and </a><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/CIAO/CIAO-INSTALL.html"> CIAO-INSTALL </a> for details.
+  please see <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/TAO-INSTALL.html">TAO-INSTALL</a><a> and 
+  </a><a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/TAO/CIAO/CIAO-INSTALL.html">CIAO-INSTALL</a> for details.
 </li></ul>
 
 <hr><p>
