@@ -1,3 +1,33 @@
+Tue Jul 20 22:37:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Driver.i:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.h:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	  Use the ACE_Throughput_Stats class to keep track of latency and
+	  throughput.  This should eliminate the problems with VxWorks
+	  which does not support 64-bit longs.
+
+	* tao/ObjectIDList.h:
+	* tao/ObjectIDList.i:
+	* tao/ObjectIDList.cpp:
+	  Moved CDR operators to the .cpp file, they are not
+	  time-critical, all CDR operators for sequences are defined in
+	  the .cpp file and they were generating duplicate symbols.
+
+	* tests/InterOp-Naming/Makefile:
+	  Updated dependencies and fixed SRC list
+
+	* tests/Param_Test/run_test.pl:
+	  Increate the startup time for the server, it was timing out on
+	  loaded systems
+
 Tue Jul 20 20:51:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:

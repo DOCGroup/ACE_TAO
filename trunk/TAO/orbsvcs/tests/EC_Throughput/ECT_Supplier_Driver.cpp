@@ -258,16 +258,18 @@ ECT_Supplier_Driver::disconnect_suppliers (CORBA::Environment &ACE_TRY_ENV)
 void
 ECT_Supplier_Driver::dump_results (void)
 {
-  ECT_Driver::Throughput_Stats throughput;
+  ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
+
+  ACE_Throughput_Stats throughput;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "supplier_%02.2d", i);
 
-      this->suppliers_[i]->dump_results (buf);
+      this->suppliers_[i]->dump_results (buf, gsf);
       this->suppliers_[i]->accumulate (throughput);
     }
-  throughput.dump_results ("ECT_Supplier", "accumulated");
+  throughput.dump_results ("ECT_Supplier/totals", gsf);
 }
 
 int

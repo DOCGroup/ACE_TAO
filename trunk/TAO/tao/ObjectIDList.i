@@ -197,37 +197,3 @@ CORBA_ORB_ObjectIdList_out::operator[] (CORBA::ULong slot)
 
 
 #endif /* end #if !defined */
-
-CORBA::Boolean TAO_Export
-operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA_ORB_ObjectIdList &_tao_sequence
-  )
-{
-  if (strm << _tao_sequence.length ())
-  {
-    // encode all elements
-    CORBA::Boolean _tao_marshal_flag = 1;
-    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
-      _tao_marshal_flag = (strm << _tao_sequence[i].in ());
-    return _tao_marshal_flag;
-  }
-  return 0; // error
-}
-
-CORBA::Boolean TAO_Export
-operator>> (TAO_InputCDR &strm, CORBA_ORB_ObjectIdList &_tao_sequence)
-{
-  CORBA::ULong _tao_seq_len;
-  if (strm >> _tao_seq_len)
-  {
-    // set the length of the sequence
-    _tao_sequence.length (_tao_seq_len);
-    // retrieve all the elements
-    CORBA::Boolean _tao_marshal_flag = 1;
-    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
-      _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
-    return _tao_marshal_flag;
-  }
-  return 0; // error
-}

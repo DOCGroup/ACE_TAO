@@ -101,22 +101,16 @@ Test_Consumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Test_Consumer::dump_results (const char* name)
+Test_Consumer::dump_results (const char* name,
+                             ACE_UINT32 gsf)
 {
-  this->throughput_.dump_results ("ECT_Consumers", name);
-  this->latency_.dump_results ("ECT_Consumers", name);
+  this->throughput_.dump_results (name, gsf);
 }
 
 void
-Test_Consumer::accumulate (ECT_Driver::Throughput_Stats& stats) const
+Test_Consumer::accumulate (ACE_Throughput_Stats& stats) const
 {
   stats.accumulate (this->throughput_);
-}
-
-void
-Test_Consumer::accumulate (ECT_Driver::Latency_Stats& stats) const
-{
-  stats.accumulate (this->latency_);
 }
 
 void
@@ -135,9 +129,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
 
   // We start the timer as soon as we receive the first event...
   if (this->recv_count_ == 0)
-    this->throughput_.start ();
-
-  this->throughput_.sample ();
+    this->first_event_ = ACE_OS::gethrtime ();
 
   this->recv_count_ += events.length ();
 
@@ -162,7 +154,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
             {
               // We stop the timer as soon as we realize it is time to
               // do so.
-              this->throughput_.stop ();
               this->driver_->shutdown_consumer (this->cookie_, ACE_TRY_ENV);
               ACE_CHECK;
             }
@@ -174,8 +165,8 @@ Test_Consumer::push (const RtecEventComm::EventSet& events,
                                          e.header.creation_time);
 
           const ACE_hrtime_t now = ACE_OS::gethrtime ();
-          const ACE_hrtime_t elapsed = now - creation;
-          this->latency_.sample (elapsed);
+          this->throughput_.sample (now - this->first_event_,
+                                    now - creation);
         }
     }
 }
