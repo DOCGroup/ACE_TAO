@@ -74,7 +74,7 @@ DEEP_FREE (CORBA::TypeCode_ptr  param,
 
       // @@ It's likely that other types will need their top-level
       // memory freed as well. --- Carlos (and Seth). 
-      delete source;
+      // delete source;
       break;
     case CORBA::tk_union:
       retval = TAO_Marshal_Union::deep_free (param, source, dest, env);
