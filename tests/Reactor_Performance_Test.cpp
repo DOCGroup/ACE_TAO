@@ -313,7 +313,7 @@ main (int argc, char *argv[])
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor)
-    impl = ACE_Reactor::instance ()->implementation ();
+    impl = auto_ptr<ACE_Reactor_Impl> (ACE_Reactor::instance ()->implementation ());
 
   Read_Handler::set_countdown (opt_nconnections);
 
