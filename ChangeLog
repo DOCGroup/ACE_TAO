@@ -1,3 +1,8 @@
+Thu Jun 26 21:34:43 2003  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* ace/QtReactor.cpp: Removed precompiled header include residue
+	  from OCI version.
+
 Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
 
         * Kokyu/Kokyu.mpc:
@@ -48,32 +53,32 @@ Thu Jun 26 01:47:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Jun 25 17:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 
-    * Kokyu/Kokyu.mpc:
-    * bin/MakeProjectCreator/config/ciao_client.mpb:
-    * bin/MakeProjectCreator/config/ciao_component.mpb:
-    * bin/MakeProjectCreator/config/idl_compiler.mpt:
-    * bin/MakeProjectCreator/config/idl_compiler_win32.mpt:
-    * bin/MakeProjectCreator/config/iorinterceptor.mpb:
-    * bin/MakeProjectCreator/config/messaging_only.mpb:
-    * bin/MakeProjectCreator/config/objreftemplate.mpb:
-    * bin/MakeProjectCreator/config/portableserver.mpb:
-    * bin/MakeProjectCreator/config/tao_output.mpb:
-    * bin/MakeProjectCreator/config/valuetype.mpb:
-    * bin/MakeProjectCreator/templates/em3vcp.mpd:
-    * bin/MakeProjectCreator/templates/nmake.mpd:
-    * bin/MakeProjectCreator/templates/vc6dsp.mpd:
-    * bin/MakeProjectCreator/templates/vc7.mpd:
+        * Kokyu/Kokyu.mpc:
+        * bin/MakeProjectCreator/config/ciao_client.mpb:
+        * bin/MakeProjectCreator/config/ciao_component.mpb:
+        * bin/MakeProjectCreator/config/idl_compiler.mpt:
+        * bin/MakeProjectCreator/config/idl_compiler_win32.mpt:
+        * bin/MakeProjectCreator/config/iorinterceptor.mpb:
+        * bin/MakeProjectCreator/config/messaging_only.mpb:
+        * bin/MakeProjectCreator/config/objreftemplate.mpb:
+        * bin/MakeProjectCreator/config/portableserver.mpb:
+        * bin/MakeProjectCreator/config/tao_output.mpb:
+        * bin/MakeProjectCreator/config/valuetype.mpb:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
 
-      Fixes for various mpc generation problems. 
+          Fixes for various mpc generation problems. 
 
 Wed Jun 25 13:14:00 2003  Justin Michel  <michel_j@ociweb.com>
 
-    * bin/MakeProjectCreator/templates/em3vcp.mpd:
-    * bin/MakeProjectCreator/templates/nmake.mpd:
-    * bin/MakeProjectCreator/templates/vc6dsp.mpd:
-    * bin/MakeProjectCreator/templates/vc7.mpd:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
 
-      Forgot to rename the dllflag keyword.
+          Forgot to rename the dllflag keyword.
 
 Wed Jun 25 12:45:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
