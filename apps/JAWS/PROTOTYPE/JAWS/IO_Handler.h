@@ -28,11 +28,7 @@ class JAWS_IO;
 class JAWS_Synch_IO;
 class JAWS_Asynch_IO;
 class JAWS_IO_Handler;
-class JAWS_Synch_IO_Handler;
-class JAWS_Asynch_IO_Handler;
 class JAWS_IO_Handler_Factory;
-class JAWS_Synch_IO_Handler_Factory;
-class JAWS_Asynch_IO_Handler_Factory;
 class JAWS_Data_Block;
 class JAWS_Pipeline_Handler;
 
@@ -121,8 +117,45 @@ public:
 
 };
 
+#if defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS)
+class JAWS_Export JAWS_Asynch_Handler : public ACE_Handler
+{
+public:
+  JAWS_Asynch_Handler (JAWS_IO_Handler *);
+  virtual ~JAWS_Asynch_Handler (void);
+
+  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
+                                   &result);
+  // This method will be called when an asynchronous read completes on
+  // a stream.
+
+  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
+                                    &result);
+  // This method will be called when an asynchronous write completes
+  // on a stream.
+
+  virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result
+                                     &result);
+  // This method will be called when an asynchronous transmit file
+  // completes.
+
+  virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
+  // This method will be called when an asynchronous accept completes.
+
+  virtual void handler (JAWS_IO_Handler *ioh);
+  virtual JAWS_IO_Handler * handler (void);
+
+  virtual void dispatch_handler (void);
+
+private:
+  JAWS_IO_Handler *ioh_;
+};
+#endif /* defined(ACE_WIN32) || defined(ACE_HAS_AIO_CALLS) */
+
+
 class JAWS_Export JAWS_IO_Handler : public JAWS_Abstract_IO_Handler
 {
+  // Provide implementations for the common functions.
 public:
   JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory);
   virtual ~JAWS_IO_Handler (void);
@@ -161,6 +194,10 @@ public:
          RECEIVE_OK, RECEIVE_ERROR };
   // The different states of the handler
 
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+  virtual ACE_Handler *handler (void);
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
+
 protected:
   int status_;
   // The state of the handler.
@@ -177,6 +214,10 @@ protected:
 
   JAWS_IO_Handler_Factory *factory_;
   // The reference to the handler's factory.
+
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+  JAWS_Asynch_Handler handler_;
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 };
 
 class JAWS_Export JAWS_IO_Handler_Factory
@@ -188,112 +229,23 @@ public:
   virtual ~JAWS_IO_Handler_Factory (void);
   // Destructor
 
-  virtual JAWS_IO_Handler *create_io_handler (void) = 0;
-  // This creates a new HTTP_Handler
+  virtual JAWS_IO_Handler *create_io_handler (void);
+  // This creates a new JAWS_IO_Handler
 
-  virtual void destroy_io_handler (JAWS_IO_Handler *handler) = 0;
-  // The HTTP handler will call this method from HTTP_Handler::done to
-  // tell the factory to reap up the handler as it is now done with
-  // the protocol
+  virtual void destroy_io_handler (JAWS_IO_Handler *handler);
+  // This deletes a JAWS_IO_Handler
 };
 
-class JAWS_Export JAWS_Synch_IO_Handler : protected JAWS_IO_Handler
-{
-friend class JAWS_Synch_IO;
-friend class JAWS_Synch_IO_Handler_Factory;
-
-public:
-  JAWS_Synch_IO_Handler (JAWS_IO_Handler_Factory *factory);
-  virtual ~JAWS_Synch_IO_Handler (void);
-
-};
-
-class JAWS_Export JAWS_Synch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
-{
-public:
-  JAWS_IO_Handler *create_io_handler (void);
-  // This creates a new HTTP_Handler
-
-  void destroy_io_handler (JAWS_IO_Handler *handler);
-  // The HTTP handler will call this method from HTTP_Handler::done to
-  // tell the factory to reap up the handler as it is now done with
-  // the protocol
-};
+typedef JAWS_IO_Handler JAWS_Synch_IO_Handler;
+typedef JAWS_IO_Handler_Factory JAWS_Synch_IO_Handler_Factory;
 
 typedef ACE_Singleton<JAWS_Synch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
         JAWS_Synch_IO_Handler_Factory_Singleton;
 
-// This only works on Win32
-#if defined (ACE_WIN32)
-
-class JAWS_Export JAWS_Asynch_Handler : public ACE_Handler
-{
-public:
-  JAWS_Asynch_Handler (JAWS_IO_Handler *);
-  virtual ~JAWS_Asynch_Handler (void);
-
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
-                                   &result);
-  // This method will be called when an asynchronous read completes on
-  // a stream.
-
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
-                                    &result);
-  // This method will be called when an asynchronous write completes
-  // on a stream.
-
-  virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result
-                                     &result);
-  // This method will be called when an asynchronous transmit file
-  // completes.
-
-  virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
-  // This method will be called when an asynchronous accept completes.
-
-  virtual void handler (JAWS_IO_Handler *ioh);
-  virtual JAWS_IO_Handler * handler (void);
-
-  virtual void dispatch_handler (void);
-
-private:
-  JAWS_IO_Handler *ioh_;
-};
-
-class JAWS_Export JAWS_Asynch_IO_Handler : protected JAWS_IO_Handler
-{
-friend class JAWS_Asynch_IO;
-friend class JAWS_Asynch_IO_Handler_Factory;
-
-public:
-  JAWS_Asynch_IO_Handler (JAWS_IO_Handler_Factory *factory);
-  virtual ~JAWS_Asynch_IO_Handler (void);
-
-  virtual void accept_complete (ACE_HANDLE handle);
-
-  virtual ACE_Handler *handler (void);
-
-  virtual void accept_called_already (int called);
-  virtual int accept_called_already (void);
-
-private:
-  JAWS_Asynch_Handler handler_;
-  int accept_called_already_;
-};
-
-class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
-{
-public:
-  JAWS_IO_Handler *create_io_handler (void);
-  // This creates a new HTTP_Handler
-
-  void destroy_io_handler (JAWS_IO_Handler *handler);
-  // The HTTP handler will call this method from HTTP_Handler::done to
-  // tell the factory to reap up the handler as it is now done with
-  // the protocol
-};
+typedef JAWS_IO_Handler JAWS_Asynch_IO_Handler;
+typedef JAWS_IO_Handler_Factory JAWS_Asynch_IO_Handler_Factory;
 
 typedef ACE_Singleton<JAWS_Asynch_IO_Handler_Factory, ACE_SYNCH_MUTEX>
         JAWS_Asynch_IO_Handler_Factory_Singleton;
 
-#endif /* ACE_WIN32 */
 #endif /* JAWS_IO_HANDLER_H */
