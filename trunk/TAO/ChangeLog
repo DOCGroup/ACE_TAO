@@ -1,21 +1,130 @@
+Thu Aug 29 14:48:51 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/corbafwd.h:
+
+	  Removed unused, unnecessary and redundant preprocessor
+	  constants.
+
+	  Converted most preprocessor constants to compile-time constants
+	  to improve type-safety.
+
+	  Fixed documentation for compile-time constants.
+
+	  Replaced TAO_OMG_VMCID preprocessor constant with
+	  "CORBA::OMGVMCID" compile-time constant.  The latter is required
+	  by the CORBA specification.
+
+	* tao/CORBALOC_Parser.cpp:
+	* tao/CORBANAME_Parser.cpp:
+	* tao/ClientRequestInfo.inl:
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/DomainC.cpp:
+	* tao/Exception.cpp:
+	* tao/Invocation_Endpoint_Selectors.cpp:
+	* tao/LocalObject.cpp:
+	* tao/ORB.cpp:
+	* tao/ORB_Core.i:
+	* tao/Object_Ref_Table.cpp:
+	* tao/PICurrent.cpp:
+	* tao/PolicyC.cpp:
+	* tao/PolicyFactory_Registry.cpp:
+	* tao/DynamicInterface/Server_Request.cpp:
+	* tao/IFR_Client/IFR_BaseC.cpp:
+	* tao/IFR_Client/IFR_BasicC.cpp:
+	* tao/IFR_Client/IFR_ComponentsC.cpp:
+	* tao/IFR_Client/IFR_ExtendedC.cpp:
+	* tao/Messaging/Messaging_ORBInitializer.cpp:
+	* tao/PortableServer/IORInfo.cpp:
+	* tao/PortableServer/ImplRepoC.cpp:
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/PortableServer_ORBInitializer.cpp:
+	* tao/PortableServer/ServerRequestInfo.cpp:
+	* tao/RTCORBA/RT_Invocation_Endpoint_Selectors.cpp:
+
+	  Updated all uses of "TAO_OMG_VMCID" with "CORBA::OMGVMCID".
+
+	* TAO_IDL/be/be_visitor_operation/operation.cpp
+	  (gen_marshal_and_invoke):
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp
+	  (visit_operation):
+
+	  Catch non-CORBA C++ native exceptions and convert them to
+	  CORBA::UNKNOWN when native exception handling is enabled and
+	  the ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS preprocessor macro is
+	  defined.  This is necessary for platforms that do not correctly
+	  handle unexpected exceptions, i.e. do not call the unexpected
+	  exception handler.  Note that this does not handle the case
+	  where the application explicitly overrides the ORB's unexpected
+	  exception handler.  Application developers are on their own in
+	  that case.
+
+	  Updated all uses of "TAO_OMG_VMCID" in generated code with
+	  "CORBA::OMGVMCID".
+
+	* tao/IIOP_Acceptor.cpp (TAO_IIOP_Acceptor):
+	  (create_shared_profile):
+	* tao/IIOP_Connector.cpp (TAO_IIOP_Connector, remote_endpoint):
+	* tao/IIOP_Endpoint.cpp (TAO_IIOP_Endpoint):
+	* tao/IIOP_Factory.cpp (TAO_IIOP_Protocol_Factory):
+	* tao/IIOP_Lite_Factory.cpp (TAO_IIOP_Protocol_Factory):
+	* tao/IIOP_Profile.cpp (TAO_IIOP_Profile):
+	* tao/IIOP_Transport.cpp (TAO_IIOP_Transport):
+	  (set_bidir_context_info):
+	* tao/RTCORBA/RT_Policy_i.cpp (hook):
+
+	  Use the proper IOP::TAG_INTERNET_IOP ProfileId instead of the
+	  redundant and now non-existent TAO_TAG_IIOP_PROFILE macro.
+
+	* tao/IOP_Defns.h:
+
+	  Removed this completely unused header.  It defined redundant and
+	  useless classes and types.
+
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp (init_hooks):
+
+	  Fixed broken emulated exception macros yet again.  RTM people!
+
+	  (update_client_protocol_properties):
+	  (update_server_protocol_properties): 
+
+	  Use the proper IOP::TAG_INTERNET_IOP ProfileId instead of the
+	  redundant and now non-existent TAO_TAG_IIOP_PROFILE macro.
+
+	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp:
+
+	  Use the proper IOP::TAG_INTERNET_IOP ProfileId instead of the
+	  redundant and now non-existent TAO_TAG_IIOP_PROFILE macro.
+
+	  Corrected all CORBA::DATA_CONVERSION exception throw sites to
+	  use the correct system exception minor code of 2 logically ORed
+	  with CORBA::OMGVMCID.
+
+	* orbsvcs/orbsvcs/PortableGroup/POA_Hooks.cpp
+	  (find_group_component_in_profile):
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp
+	  (update_cached_group_component, extract_group_component):
+
+	  Use the proper IOP::TAG_GROUP ComponentId instead of the
+	  redundant and now non-existent TAO_TAG_GROUP macro.
+
 Thu Aug 29 16:07:42 2002  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\POA\Default_Servant\Default_Servant.cpp (main): Make sure
+	* tests/POA/Default_Servant/Default_Servant.cpp (main): Make sure
 	  to destroy the ORB before the end of main(). Otherwise during
 	  POA cleanup, it will try to access the deleted servant which was
 	  on the stack.
 
 Thu Aug 29 12:30:33 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTCORBA/RT_Protocols_Hooks.h: 
-	* tao/RTCORBA/RT_Protocols_Hooks.h: 
+	* tao/RTCORBA/RT_Protocols_Hooks.h:
+	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
 
 	  Moved the resolving of the RT_Current object from the
 	  RT_Protocols_Hooks::get_dscp_codepoint method to the
 	  RT_Protocols_Hooks::init_hooks method so it gets resolved only
 	  once. Initially it was resolved every time the the
 	  RT_Protocols_Hooks::get_dscp_codepoint method was invoked.
-	
+
 Thu Aug 29 10:23:57 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/FT_ORB.dsp:
