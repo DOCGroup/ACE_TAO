@@ -13,31 +13,32 @@ ifndef TAO_ROOT
 endif
 
 LIBNAME = libTime_Date
-LIB   	= $(LIBNAME).a
-SHLIB	= $(LIBNAME).$(SOEXT)
+LIB     = $(LIBNAME).a
+SHLIB   = $(LIBNAME).$(SOEXT)
 
-FILES   = Time_Date
-LSRC	= $(addsuffix .cpp,$(FILES))
+FILES   = Time_Date Time_Date_i Time_DateS Time_DateC
+LSRC    = $(addsuffix .cpp,$(FILES))
 
-LDLIBS = -lorbsvcs -lTAO
+LDLIBS  = -lorbsvcs -lTAO
+LIBS    = $(LDLIBS)
 
 IDL_SRC = Time_DateC.cpp Time_DateS.cpp
 
 PROG_SRCS = client.cpp \
-	    server.cpp \
-	    Time_Date_i.cpp \
-	    Time_Date_Client_i.cpp \
-	    ../Simple_util.cpp
+            server.cpp \
+            Time_Date_i.cpp \
+            Time_Date_Client_i.cpp \
+            ../Simple_util.cpp
 
 SRC = $(IDL_SRC) $(PROG_SRCS)
 
 SIMPLE_CLT_OBJS = Time_DateC.o \
-		  Time_DateS.o \
-		  client.o \
-		  ../Simple_util.o \
-		  Time_Date_Client_i.o
+                  Time_DateS.o \
+                  client.o \
+                  ../Simple_util.o \
+                  Time_Date_Client_i.o
 SIMPLE_SVR_OBJS = Time_DateC.o \
-		  Time_DateS.o \
+                  Time_DateS.o \
                   Time_Date_i.o \
                   server.o \
                   ../Simple_util.o
