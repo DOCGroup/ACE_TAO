@@ -21,6 +21,14 @@ public RTScheduling::Current,
   TAO_Scheduler_Current (void);
   
   
+  virtual RTCORBA::Priority the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void the_priority (RTCORBA::Priority the_priority
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  
   virtual void begin_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
@@ -84,6 +92,9 @@ public RTScheduling::Current,
 class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 {
  public:
+
+  TAO_RTScheduler_Current_i (void);
+
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
 	   CORBA::ULong stack_size,

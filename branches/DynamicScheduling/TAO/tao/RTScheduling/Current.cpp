@@ -140,19 +140,12 @@ TAO_RTScheduler_Current::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DE
   return impl->current_scheduling_segment_names (ACE_ENV_ARG_PARAMETER);
 }
 
-TAO_RTScheduler_Current_i*
-TAO_RTScheduler_Current::implementation (void)
-{
-  TAO_RTScheduler_Current_i* impl = ACE_static_cast (TAO_RTScheduler_Current_i *,
-						     TAO_TSS_RESOURCES::instance ()->rtscheduler_current_impl_);
-  if (impl == 0)
-    ACE_NEW_RETURN (impl,
-		    TAO_RTScheduler_Current_i,
-		    0);
-  
-  return impl;
-}
+virtual RTCORBA::Priority the_priority (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual void the_priority (RTCORBA::Priority the_priority
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 TAO_RTScheduler_Current_i*
 TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
@@ -167,10 +160,10 @@ TAO_RTScheduler_Current::implementation (TAO_RTScheduler_Current_i* new_current)
   return old;
 }
 
-void
 TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (void)
 {
-  ACE_DEBUG (("TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
+  ACE_DEBUG ((LM_DEBUG,
+			  "TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i\n"));
 }
 
 void
