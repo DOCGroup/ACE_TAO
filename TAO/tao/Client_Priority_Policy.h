@@ -48,7 +48,10 @@ class TAO_Export TAO_Client_Priority_Policy : public PortableServer::RefCountSer
 public:
   TAO_Client_Priority_Policy (PortableServer::POA_ptr poa,
                               const TAO::PrioritySpecification &priority_spec);
-  // Constructor
+  // Constructor.
+
+  TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs);
+  // Copy constructor.
 
   static CORBA::Policy_ptr create (
       PortableServer::POA_ptr poa,

@@ -50,6 +50,9 @@ public:
                                    PortableServer::POA_ptr poa);
   // Constructor.
 
+  TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs);
+  // Copy constructor.
+
   static CORBA::Policy_ptr create (PortableServer::POA_ptr poa,
                                    const CORBA::Any& val,
                                    CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
