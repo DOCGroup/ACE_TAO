@@ -184,11 +184,11 @@ copied instead of appended to the CDR stream.</TD></TR>
             notation for addresses.</TD></TR>
 <TR>
 <TD><CODE>-ORBInitRef</CODE> <EM>ObjectId=IOR</EM></TD>
-<TD><A name="-ORBInitRef"></a> Allows specification of an arbitrary object reference for an initial service. The IOR could be in the one of the following formats : OMG IOR, URL, iiopname or the iioploc form. The iiopname and iioploc are multiple end-point IORs understood by the string_to_object () and used as a boot-strapping mechanism by the resolve_initial_references (). The mappings specified through this argument override the orb-install-time defaults.</TD></TR>
+<TD><A name="-ORBInitRef"></a> Allows specification of an arbitrary object reference for an initial service. The IOR could be in the one of the following formats : OMG IOR, URL or iioploc form. iioploc is a multiple end-point IORs understood by the string_to_object () and used as a boot-strapping mechanism by the resolve_initial_references (). The mappings specified through this argument override the orb-install-time defaults.</TD></TR>
 
 <TR>
 <TD><CODE>-ORBDefaultInitRef</CODE> <EM>IOR prefix</EM></TD>
-<TD><A name="-ORBDefaultInitRef"></a> This argument allows resolution of initial references not explicitly specified with -ORBInitRef. It requires a URL prefix that, after appending a slash '/' and a stringified object key, forms a new URL to identify an initial object reference. The URL prefix formats currently supported are iiopname and iioploc.</TD></TR>
+<TD><A name="-ORBDefaultInitRef"></a> This argument allows resolution of initial references not explicitly specified with -ORBInitRef. It requires a URL prefix that, after appending a slash '/' and a simple object key, forms a new URL to identify an initial object reference. The URL prefix format currently supported is iioploc.</TD></TR>
 
 </TABLE>
 </P>
