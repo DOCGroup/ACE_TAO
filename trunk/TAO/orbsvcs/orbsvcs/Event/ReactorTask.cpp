@@ -1,6 +1,5 @@
-//
 // $Id$
-//
+
 #include "ace/High_Res_Timer.h"
 #include "tao/Timeprobe.h"
 #include "orbsvcs/Scheduler_Factory.h"
@@ -35,9 +34,10 @@ ACE_ES_Reactor_Task::svc_hook(RtecScheduler::OS_Priority)
 int
 ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period &period)
 {
-  // Create a name for ourself using the priority.
+  // Create a name for ourselves using the period.  The period is
+  // in 100 ns units; first convert to usec by dividing by 10.
   char temp[64];
-  ACE_OS::sprintf (temp, "Reactor_Task-%u", period);
+  ACE_OS::sprintf (temp, "Reactor_Task-%u.us", period / 10);
 
   // Open the task.  This will query the scheduler for our qos
   // structure.
@@ -54,23 +54,23 @@ ACE_ES_Reactor_Task::open_reactor (RtecScheduler::Period &period)
     case 0:
       // @@ TODO handle exceptions
       {
-	TAO_TRY
-	  {
-	    ACE_Scheduler_Factory::server()->set(rt_info_,
-						 ORBSVCS_Time::zero,
-						 ORBSVCS_Time::zero,
-						 ORBSVCS_Time::zero,
-						 period,
-						 RtecScheduler::VERY_LOW,
-						 ORBSVCS_Time::zero,
-						 1, TAO_TRY_ENV);
-	    TAO_CHECK_ENV;
-	  }
-	TAO_CATCHANY
-	  {
-	    ACE_ERROR_RETURN ((LM_ERROR, "set failed\n"), -1);
-	  }
-	TAO_ENDTRY;
+        TAO_TRY
+          {
+            ACE_Scheduler_Factory::server()->set(rt_info_,
+                                                 ORBSVCS_Time::zero,
+                                                 ORBSVCS_Time::zero,
+                                                 ORBSVCS_Time::zero,
+                                                 period,
+                                                 RtecScheduler::VERY_LOW,
+                                                 ORBSVCS_Time::zero,
+                                                 1, TAO_TRY_ENV);
+            TAO_CHECK_ENV;
+          }
+        TAO_CATCHANY
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, "set failed\n"), -1);
+          }
+        TAO_ENDTRY;
       }
       break;
 
@@ -106,7 +106,7 @@ void ACE_ES_Reactor_Task::shutdown_task()
   reactor_.notify();
 }
 
-ACE_ES_Reactor_Task::Reactor& 
+ACE_ES_Reactor_Task::Reactor&
 ACE_ES_Reactor_Task::get_reactor()
 {
   return reactor_;
