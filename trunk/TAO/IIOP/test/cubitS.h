@@ -19,8 +19,6 @@ class _skel_Cubit;
 typedef _skel_Cubit *_skel_Cubit_ptr;
 typedef _skel_Cubit_ptr _skel_Cubit_ref;
 
-class TAO_Active_Operation_Table;
-
 class _skel_Cubit : public Cubit
 {
 public:

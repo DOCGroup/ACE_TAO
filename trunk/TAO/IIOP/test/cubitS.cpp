@@ -8,8 +8,8 @@
 #include	"cubitS.h"
 #include	"cubitC.cpp"
 
-#include <connect.h>
-#include <params.h>
+#include "connect.h"
+#include "params.h"
 
 #include "corba/debug.h"    // ... and debugging
 #include "corba/optable.h"  // TAO Dynamic Operation Table

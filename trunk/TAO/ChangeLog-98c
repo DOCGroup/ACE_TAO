@@ -1,7 +1,30 @@
+Tue May 20 14:47:46 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/test/cubitS.h: Removed forward decl of
+ 	TAO_Active_Operation_Table.
+
+	* IIOP/test/{cubitC,cubitS}.*: Changed include quoting characters
+ 	from [<>] to double-quotes.
+
+	* IIOP/test/Makefile: Removed cubit.o from clnt and svr target
+ 	(this has been subsumed by cubit[CS]).
+
+	* IIOP/lib/optable.h: Changed ACE_RW_Mutex to ACE_SYNCH_RW_MUTEX.
+
+	* IIOP/lib/optable.cpp: Inserted explicit template instantiations.
+
+	* IIOP/lib/Makefile: Added optable to the Makefile.
+
+	* IIOP/lib/optable.cpp: Moved ~TAO_Operation_Table() into here.
+
+	* IIOP/lib/object.i: Moved find() and bind() into the cpp file.
+  	Moved ~TAO_Operation_Table() into optable.cpp.
+
 Tue May 20 14:39:00 1997  Brian Mendel  <bmendel@mdc.com>
 
 	* IIOP/test/*: Commited changes to Cubit Example as a current snapshot
           of required changes.
+	
         * IIOP/lib/*: Changes required for header file includes.  Added 
           conditionals around _IIOP_BUILD_
 
