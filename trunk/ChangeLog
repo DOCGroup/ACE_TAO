@@ -1,3 +1,10 @@
+Tue Apr 29 11:02:27 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+
+          Change the workspace name from 'Makefile' to the the workspace
+          name plus .mak.
+
 Tue Apr 29 09:24:07 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
