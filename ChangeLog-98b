@@ -1,8 +1,14 @@
+Tue Dec 15 14:45:49 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * *.h: removed () from #pragma implementation argument.
+          Thanks to Christian v. Mueffling <cvm@aiss.de> for reporting
+          this.
+
 Tue Dec 15 14:43:47 1998  Ossama Othman  <ossama@debian.org>
 
-	* ace/OS.{h,i},README: added lstat() and readlink() methods.
-	  Use ACE_LACKS_LSTAT and ACE_LACKS_READLINK if lstat() and readlink()
-	  aren't supported.
+        * ace/OS.{h,i},README: added lstat() and readlink() methods.
+          Use ACE_LACKS_LSTAT and ACE_LACKS_READLINK if lstat() and readlink()
+          aren't supported.
 
 Tue Dec 15 11:55:51 1998  Steve Huston  <shuston@riverace.com>
 
