@@ -1,9 +1,39 @@
+Tue Apr  5 11:34:32 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
+
+	* Basic_Deployment_Data.cpp
+	* Basic_Deployment_Data.hpp
+	* Deployment.cpp
+	* Deployment.hpp
+	* ccd.cpp
+	* ccd.hpp
+	* cdd.cpp
+	* cdd.hpp
+	* cdp.cpp
+	* cdp.hpp
+	* cid.cpp
+	* cid.hpp
+	* cpd.cpp
+	* cpd.hpp
+	* iad.cpp
+	* iad.hpp
+	* pcd.cpp
+	* pcd.hpp
+	* toplevel.cpp
+	* toplevel.hpp
+	* XMLSchema/Types.hpp
+	
+	New version of the generated XSC handlers fixing the following problems:
+	  - Use ACE_TCHAR instead of char as the character type
+	  - Export macros for the generated classes.
+	  - Borland 6 support
+	  - Misc VC6 warnings.
+	  
 Sun Apr  3 23:52:50 CDT 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* examples/BasicSP/descriptors/flattern_deploymentplan.cdp
 
-	Fixed a mistake in the descriptor.
-	
+	Fixed a mistake in the descriptor.	
+
 Sun Apr  3 18:08:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Container_Base.h:
