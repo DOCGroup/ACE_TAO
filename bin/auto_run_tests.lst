@@ -42,6 +42,7 @@ TAO/tests/Multiple_Inheritance/run_test.pl
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: !ST !Linux
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: !ST !Linux
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl
+TAO/tests/RTCORBA/Destroy_Thread_Pool/run_test.pl: !ST 
 TAO/tests/RTCORBA/Explicit_Binding/run_test.pl
 TAO/tests/RTCORBA/Linear_Priority/run_test.pl: !ST !Linux
 TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: !ST !Linux
