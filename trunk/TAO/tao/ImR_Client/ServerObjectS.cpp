@@ -498,17 +498,12 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
   
   private:
     
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
-  
-  private:
-    
     POA_ImplementationRepository::ServerObject * const servant_;
   };
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -581,17 +576,12 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
   
   private:
     
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
-  
-  private:
-    
     POA_ImplementationRepository::ServerObject * const servant_;
   };
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -679,12 +669,7 @@ void POA_ImplementationRepository::ServerObject::_is_a_skel (
         
       ACE_CHECK;
     }
-  
-  private:
     
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
-  
   private:
     
     POA_ImplementationRepository::ServerObject * const servant_;
@@ -694,7 +679,7 @@ void POA_ImplementationRepository::ServerObject::_is_a_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -779,11 +764,6 @@ void POA_ImplementationRepository::ServerObject::_non_existent_skel (
   
   private:
     
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
-  
-  private:
-    
     POA_ImplementationRepository::ServerObject * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
@@ -791,7 +771,7 @@ void POA_ImplementationRepository::ServerObject::_non_existent_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
@@ -923,11 +903,6 @@ void POA_ImplementationRepository::ServerObject::_component_skel (
   
   private:
     
-    Upcall_Command (Upcall_Command const &);
-    void operator= (Upcall_Command const &);
-  
-  private:
-    
     POA_ImplementationRepository::ServerObject * const servant_;
     TAO_Operation_Details const * const operation_details_;
     TAO::Argument * const * const args_;
@@ -935,7 +910,7 @@ void POA_ImplementationRepository::ServerObject::_component_skel (
   
   
 #if TAO_HAS_INTERCEPTORS == 1
-  static CORBA::TypeCode_ptr const exceptions[] = {};
+  static CORBA::TypeCode_ptr const * const exceptions = 0;
   static size_t const nexceptions = 0;
 #endif /* TAO_HAS_INTERCEPTORS */
   
