@@ -103,8 +103,8 @@ namespace TAO_Notify
     /// The destructor.
     virtual ~Topology_Object ();
 
-    /// set this objects parent and initialize _Object
-    void set_parent(Topology_Parent * topology_parent ACE_ENV_ARG_DECL);
+    /// Init this object with data from <rhs>.
+    virtual void initialize (Topology_Parent * topology_parent ACE_ENV_ARG_DECL);
 
     /// \brief Create a child of the appropriate type and return it.
     ///
