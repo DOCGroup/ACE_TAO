@@ -15,7 +15,6 @@ module CORBA
   typedef unsigned long Flags;
   typedef string Identifier;
   typedef string RepositoryId;
-  typedef string ObjectId;
 };
 
 #endif /* TAO_ORB_TYPES_IDL */
