@@ -2,6 +2,20 @@
 
 /* -*- C++ -*- */
 
+template <class TYPE> ACE_INLINE
+ACE_Timer_Node_Dispatch_Info_T<TYPE>::ACE_Timer_Node_Dispatch_Info_T (void)
+  : type_ (),
+    act_ (0)
+{
+
+}
+
+template <class TYPE> ACE_INLINE
+ACE_Timer_Node_Dispatch_Info_T<TYPE>::~ACE_Timer_Node_Dispatch_Info_T (void)
+{
+
+}
+
 template <class TYPE> ACE_INLINE void
 ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
                              const void *a,
@@ -120,6 +134,14 @@ ACE_Timer_Node_T<TYPE>::set_timer_id (long timer_id)
   this->timer_id_ = timer_id;
 }
 
+template <class TYPE> ACE_INLINE void
+ACE_Timer_Node_T<TYPE>::get_dispatch_info (DISPATCH_INFO &info)
+{
+  // Yes, do a copy
+  info.type_ = this->type_;
+  info.act_  = this->act_;
+}
+
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::timer_skew (const ACE_Time_Value &skew)
 {
@@ -141,10 +163,20 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (void)
     return 0;
 }
 
+template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dispatch_info (const ACE_Time_Value &cur_time,
+                                                           ACE_Timer_Node_Dispatch_Info_T<TYPE> &info)
+{
+  ACE_TRACE ("ACE_Timer_Queue_T::dispatch_info");
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, 0));
+
+  return this->dispatch_info_i (cur_time, info);
+}
+
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall (TYPE &type,
-						const void *act,
-						const ACE_Time_Value &cur_time)
+                                                const void *act,
+                                                const ACE_Time_Value &cur_time)
 {
   this->upcall_functor ().timeout (*this, type, act, cur_time);
 }
@@ -168,4 +200,3 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall_functor (void)
 {
   return *this->upcall_functor_;
 }
-

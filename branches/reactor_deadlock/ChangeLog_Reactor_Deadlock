@@ -1,3 +1,25 @@
+Fri Aug 24 11:34:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Timer_Queue_T.h:
+	* ace/Timer_Queue_T.cpp:
+	* ace/Timer_Queue_T.i: Added a new class
+	  ACE_Timer_Node_Dispatch_Info_T that has the dispatch information
+	  needed to make the upcall. Added methods, dispatch_info () and
+	  dispatch_info_i () in ACE_Timer_Queue_T. These methods return
+	  the dispatch information if there is a node in the queue whose
+	  timer value <= current time. Changed the expire () method to use
+	  this method to get dispatch information.
+
+	* ace/Timer_Queue.h: Added a template specialisation for 
+	  ACE_Timer_Node_Dispatch_Info_T. 
+
+	* ace/Timer_Queue.cpp: Added template instantiations for the
+	  specialisation. 
+	  
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp: Added a new method handle_timer_events ()
+	  that would handles timer events.
+
 Thu Aug 23 11:50:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Reactor_Impl.h: Added two new methods notify_handle () and

@@ -4,6 +4,7 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Reactor.h"
 #include "ace/Thread.h"
+//#include "ace/Thread.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/TP_Reactor.i"
@@ -143,38 +144,47 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
                                    guard);
     }
 
-#if 0
-  // If there are no signals and if we had received a proper
-  // event_count then first look at dispatching timeouts. We need to
-  // handle timers early since they may have higher latency
-  // constraints than I/O handlers.  Ideally, the order of
-  // dispatching should be a strategy...
-  this->dispatch_timers ();
-#endif /*if 0 */
-
-
-  // Next dispatch the notification handlers (if there are any to
-  // dispatch).  These are required to handle multiple-threads that
-  // are trying to update the <Reactor>.
   if (event_count > 0)
     {
+      // If there are no signals and if we had received a proper
+      // event_count then first look at dispatching timeouts. We need to
+      // handle timers early since they may have higher latency
+      // constraints than I/O handlers.  Ideally, the order of
+      // dispatching should be a strategy...
+      int retval = this->handle_timer_events (event_count,
+                                              guard);
+
+      if (retval > 0)
+         return retval;
+
+       // Else just fall through for further handling
+
+     }
+
+
+  if (event_count > 0)
+    {
+      // Next dispatch the notification handlers (if there are any to
+      // dispatch).  These are required to handle multiple-threads that
+      // are trying to update the <Reactor>.
       int retval = this->handle_notify_events (event_count,
                                                guard);
 
-      if (retval > 0)
-        return retval;
+       if (retval > 0)
+         return retval;
 
-      // Else just fall through for further handling
+       // Else just fall through for further handling
     }
 
-  // Handle socket events
-  if (event_count > 0)
-    {
-      return this->handle_socket_events (event_count,
-                                         guard);
-    }
 
-  return 0;
+   if (event_count > 0)
+     {
+       // Handle socket events
+       return this->handle_socket_events (event_count,
+                                          guard);
+     }
+
+   return 0;
 }
 
 int
@@ -197,7 +207,7 @@ ACE_TP_Reactor::mask_ops (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_TP_Reactor::mask_ops");
   ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token,
-          ace_mon, this->token_, -1));
+                            ace_mon, this->token_, -1));
 
   int result = 0;
 
@@ -249,7 +259,6 @@ ACE_TP_Reactor::owner (ACE_thread_t *t_id)
   *t_id = ACE_Thread::self ();
 
   return 0;
-
 }
 
 
@@ -311,7 +320,7 @@ ACE_TP_Reactor::handle_signals (int & /*event_count*/,
       // result of signals they should be dispatched since
       // they may be time critical...
       active_handle_count = this->any_ready (dispatch_set);
-#else
+ #else
       // active_handle_count = 0;
 #endif
 
@@ -321,8 +330,43 @@ ACE_TP_Reactor::handle_signals (int & /*event_count*/,
       return 1;
     }
 
-
   return -1;
+}
+
+
+int
+ACE_TP_Reactor::handle_timer_events (int &event_count,
+                                     ACE_TP_Token_Guard &guard)
+{
+  // Get the current time
+  ACE_Time_Value cur_time (this->timer_queue_->gettimeofday () +
+                           this->timer_queue_->timer_skew ());
+
+  // Look for a node in the timer queue whose timer <= the present
+  // time.
+  ACE_Timer_Node_Dispatch_Info info;
+
+  int result = this->timer_queue_->dispatch_info (cur_time,
+                                                  info);
+
+  if (result)
+    {
+      // Decrement the number of events that needs handling yet.
+      event_count--;
+
+      // Release the token before dispatching notifies...
+      guard.release_token ();
+
+      // call the functor
+      this->timer_queue_->upcall (info.type_,
+                                  info.act_,
+                                  cur_time);
+
+      // We have dispatched a timer
+      return 1;
+    }
+
+  return 0;
 }
 
 
