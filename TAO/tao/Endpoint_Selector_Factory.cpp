@@ -12,7 +12,6 @@ TAO_Endpoint_Selector_Factory::TAO_Endpoint_Selector_Factory (void)
 
 }
 
-ACE_INLINE
 TAO_Endpoint_Selector_Factory::~TAO_Endpoint_Selector_Factory (void)
 {
   delete this->default_endpoint_selector_;

@@ -1,7 +1,13 @@
+Thu Apr  5 12:15:40 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/RT_Endpoint_Selector_Factory.cpp:
+	* tao/Endpoint_Selector_Factory.cpp:
+	  Fixed fuzz errors.
+
 Thu Apr  5 11:30:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/PluggableUDP/DIOP/DIOP_Transport.cpp: Fixed a nagging
-	  warning.  
+	  warning.
 
 Thu Apr  5 11:04:52 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 

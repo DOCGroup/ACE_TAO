@@ -30,7 +30,6 @@ RT_Endpoint_Selector_Factory::RT_Endpoint_Selector_Factory (void)
            TAO_Client_Priority_Policy_Selector);
 }
 
-ACE_INLINE
 RT_Endpoint_Selector_Factory::~RT_Endpoint_Selector_Factory (void)
 {
   delete this->priority_endpoint_selector_;
