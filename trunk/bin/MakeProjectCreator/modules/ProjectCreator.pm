@@ -215,12 +215,7 @@ sub parse_line {
           $self->generate_defaults();
 
           ## Fill in type specific assignments
-          my($tsa) = $self->{'type_specific_assign'}->{$self->{'pctype'}};
-          if (defined $tsa) {
-            foreach my $key (keys %$tsa) {
-              $self->process_assignment_add($key, $$tsa{$key});
-            }
-          }
+          $self->process_type_specific_assignments();
 
           ## Perform any additions, subtractions
           ## or overrides for the project values.
@@ -248,9 +243,14 @@ sub parse_line {
           if ($status) {
             ## Now add in the features that have been defined
             $self->{$typecheck} = 0;
+            $self->{'type_specific_assign'} = {};
             ($status, $errorString) = $self->process_features();
 
             if ($status) {
+              ## If the feature added any type specific assignments
+              ## then we need to processs them before we write the project
+              $self->process_type_specific_assignments();
+
               ## End of project; Write out the file.
               ($status, $errorString) = $self->write_project();
             }
@@ -734,6 +734,18 @@ sub process_features {
     }
   }
   return $status, $error;
+}
+
+
+sub process_type_specific_assignments {
+  my($self) = shift;
+  my($tsa)  = $self->{'type_specific_assign'}->{$self->{'pctype'}};
+
+  if (defined $tsa) {
+    foreach my $key (keys %$tsa) {
+      $self->process_assignment_add($key, $$tsa{$key});
+    }
+  }
 }
 
 
