@@ -3,7 +3,6 @@
 #define LOGGER_I_H
 
 #include "orbsvcs/LoggerS.h"
-#include "ace/streams.h"
 
 class Logger_Factory_i : public virtual POA_Logger_Factory
 {
@@ -12,7 +11,7 @@ public:
   // constructor.
 
   virtual Logger_ptr make_logger (const char *name,
-				  CORBA::Environment &_env);
+                                  CORBA::Environment &_env);
   // This function creates and returns a logger with the given name.
 };
 
@@ -25,8 +24,8 @@ public:
   virtual ~Logger_i (void);
   // destructor
 
-  virtual void log (const char *message, 
-		    CORBA::Environment &_env);
+  virtual void log (const char *message,
+                    CORBA::Environment &_env);
 
 private:
   char *name_;
