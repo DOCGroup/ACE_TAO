@@ -10,6 +10,19 @@
 
 ACE_RCSID(tao, Environment, "$Id$")
 
+void
+CORBA::release (CORBA::Environment_ptr env)
+{
+  if (env)
+    env->_decr_refcnt ();
+}
+
+CORBA::Boolean
+CORBA::is_nil (CORBA::Environment_ptr env)
+{
+  return env == 0;
+}
+
 #if 0
 CORBA_Environment::CORBA_Environment (void)
   : exception_ (0),

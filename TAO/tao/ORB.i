@@ -290,25 +290,12 @@ CORBA_ORB::_duplicate (CORBA::ORB_ptr obj)
   return obj;
 }
 
-ACE_INLINE void
-CORBA::release (CORBA::ORB_ptr obj)
-{
-  if (obj)
-    obj->_decr_refcnt ();
-}
-
 // Null pointers represent nil objects.
 
 ACE_INLINE CORBA::ORB_ptr
 CORBA_ORB::_nil (void)
 {
   return 0;
-}
-
-ACE_INLINE CORBA::Boolean
-CORBA::is_nil (CORBA::ORB_ptr obj)
-{
-  return obj == 0;
 }
 
 ACE_INLINE CORBA::Boolean
