@@ -1,4 +1,4 @@
-Fri Jun  4 23:50:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+Fri Jun  4 23:52:19 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/CDR_Stream.h:
 	* ace/CDR_Stream.i:
@@ -12,6 +12,9 @@ Fri Jun  4 23:50:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* ace/Codeset_IBM1047.cpp:
 	  A pair of codeset translators between IBM1047 (aka EBCDIC) and
 	  ISO8859-1 (aka ISO-Latin-1)
+
+	* ace/config-mvs.h:
+	  Define an ACE_MVS macro
 
 Fri Jun  4 15:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
