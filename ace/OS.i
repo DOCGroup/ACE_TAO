@@ -2601,7 +2601,7 @@ ACE_INLINE char *
 ACE_OS::strdup (const char *s)
 {
   // ACE_TRACE ("ACE_OS::strdup");
-#if defined (VXWORKS)
+#if defined (VXWORKS) || defined (CHORUS)
   char *t = (char *) ::malloc (::strlen (s) + 1);
   if (t == 0)
     return 0;
@@ -6240,9 +6240,11 @@ ACE_OS::getpid (void)
   // ACE_TRACE ("ACE_OS::getpid");
 #if defined (ACE_WIN32)
   return ::GetCurrentProcessId ();
-#elif defined (VXWORKS) || defined (CHORUS)
+#elif defined (VXWORKS)
   // getpid() is not supported:  just one process anyways
   return 0;
+#elif defined (CHORUS)
+  return (pid_t) (::agetId ());
 #else
   ACE_OSCALL_RETURN (::getpid (), int, -1);
 #endif /* ACE_WIN32 */
