@@ -1,3 +1,60 @@
+Mon Dec 20 21:14:41 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+
+	  Disabled maintainer mode check that prevented users from running
+	  the configure script.
+
+	  Added experimental libtool C++ support.
+
+	  Replaced CVS directory check with top-level source directory
+	  check to prevent stock ACE makefiles from being overwritten
+	  during configuration.
+
+	* ltcf-c.sh:
+	* ltcf-cxx.sh:
+
+	  Adding these files to the CVS repository.  They will soon be
+	  merged into the upstream libtool package.  Local copies will no
+	  longer be necessary.
+
+	* m4/acinclude.m4:
+
+	  Alot of M4 quoting fixes/improvements.
+
+	  Reduced size ACE_CONVERT_WARNINGS_TO_ERRORS Autoconf macro.  It
+	  still needs to be refined a bit (e.g. AC_REQUIREing compiler
+	  flag setups).
+
+	  (ACE_CHECK_SETRLIMIT_ENUM, ACE_CHECK_GETRUSAGE_ENUM):
+
+	  Added regex for one or more spaces before function name to
+	  prevent functions such as "__getrusage" from matching the
+	  regex.  This fixes a problem on platforms that have both
+	  "getrusage," and "__getrusage," for example.
+
+	  (ACE_CHECK_TOP_SRCDIR):
+
+	  Added this autoconf macro.  It prevents ACE from being
+	  configured in the top-level source directory.  Configuring ACE
+	  in the top-level source directory would cause the stock ACE
+	  makefiles to be overwritten.  Since autoconf support in ACE is
+	  still in the testing stages, we need to make sure that users can
+	  fall back on the stock ACE build procedure.  This "feature" can
+	  be overridden by using the "--enable-maintainer-mode" configure
+	  script option.
+
+	* m4/compiler.m4:
+
+	  Set variable "WERROR" that contains the compiler to convert
+	  warnings to errors.  Eventually, this support should be moved to
+	  its own macro that is AC_REQUIREd by
+	  ACE_CONVERT_WARNINGS_TO_ERRORS.
+
+	* m4/features.m4 (ACE_CHECK_ASYNCH_IO):
+
+	  Minor M4 quoting fixes/improvements.
+
 Sun Dec 19 09:34:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/g++dep: set TAO_ROOT to $ACE_ROOT/TAO if it was
