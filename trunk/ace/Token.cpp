@@ -120,9 +120,9 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 
   ACE_thread_t thr_id = ACE_Thread::self ();
 
-  ACE_Token_Queue *queue = (op_type == ACE_Token::READ_TOKEN ?
-                            &this->readers_ :
-                            &this->writers_);
+  ACE_Token_Queue *queue = (op_type == ACE_Token::READ_TOKEN 
+                            ? &this->readers_ 
+                            : &this->writers_);
 
 #if defined (DEBUGGING)
   cerr << '(' << ACE_Thread::self () << ')'
