@@ -142,7 +142,7 @@ to Graham for providing the OSE tools!<p>
           {
             ACE_ASSERT (spawn () == 0);
           }
-        </pre>
+        </pre><p>
 
         Similarly, <strong><code>if</code></strong> statements should have
         a space after the ``<strong>if</strong>'', and no spaces just after
@@ -181,6 +181,18 @@ to Graham for providing the OSE tools!<p>
         Therefore, the inline functions in the .i file should be arranged
         properly.  Some compilers, such as <code>g++</code> with the
         <code>-Wall</code> option, will issue warnings for violations.<p>
+
+    <li>Mutators and accessors should be of this form:<p>
+
+        <pre>
+        void object_addr (const ACE_INET_Addr &);
+        // Sets &lt;object_addr_&gt; cache from &lt;host&gt; and &lt;port&gt;.
+
+        ACE_INET_Addr &object_addr (void);
+        // Returns the &lt;ACE_INET_Addr&gt; for this profile.
+        </pre><p>
+
+        instead of the ``set_'' and ``get_'' form.<p>
 
     <li>Never use <strong><code>delete</code></strong> to deallocate
         memory that was allocated with <strong><code>malloc</code></strong>.
