@@ -29,7 +29,7 @@ ACEXML_Print_Handler::characters (const ACEXML_Char *cdata,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event characters () ** start: %d  end: %d ***************\n%s\n- End event characters () ---------------\n"),
+              ACE_TEXT ("* Event characters () ** start: %d  end: %d ***************\n%s\n- End event characters () ---------------\n"),
               start, end, cdata));
 }
 
@@ -40,7 +40,7 @@ ACEXML_Print_Handler::endDocument (ACEXML_Env &xmlenv)
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event endDocument () ***************\n")));
+              ACE_TEXT ("* Event endDocument () ***************\n")));
 }
 
 void
@@ -53,7 +53,7 @@ ACEXML_Print_Handler::endElement (const ACEXML_Char *uri,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event endElement (%s, %s, %s) ***************\n"),
+              ACE_TEXT ("* Event endElement (%s, %s, %s) ***************\n"),
               uri, name, qName));
 }
 
@@ -65,7 +65,7 @@ ACEXML_Print_Handler::endPrefixMapping (const ACEXML_Char *prefix,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
+              ACE_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
               prefix));
 }
 
@@ -79,7 +79,7 @@ ACEXML_Print_Handler::ignorableWhitespace (const ACEXML_Char *,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event ignorableWhitespace () ***************\n")));
+              ACE_TEXT ("* Event ignorableWhitespace () ***************\n")));
 }
 
 void
@@ -91,7 +91,7 @@ ACEXML_Print_Handler::processingInstruction (const ACEXML_Char *target,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event processingInstruction (%s, %s) ***************\n"),
+              ACE_TEXT ("* Event processingInstruction (%s, %s) ***************\n"),
               target, data));
 }
 
@@ -102,7 +102,7 @@ ACEXML_Print_Handler::setDocumentLocator (ACEXML_Locator * locator,
   ACE_UNUSED_ARG (xmlenv);
   this->locator_ = locator;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event setDocumentLocator () ***************\n")));
+              ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
 
 void
@@ -113,7 +113,7 @@ ACEXML_Print_Handler::skippedEntity (const ACEXML_Char *name,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event skippedEntity (%s) ***************\n"),
+              ACE_TEXT ("* Event skippedEntity (%s) ***************\n"),
               name));
 }
 
@@ -124,7 +124,7 @@ ACEXML_Print_Handler::startDocument (ACEXML_Env &xmlenv)
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event startDocument () ***************\n")));
+              ACE_TEXT ("* Event startDocument () ***************\n")));
 }
 
 void
@@ -138,14 +138,14 @@ ACEXML_Print_Handler::startElement (const ACEXML_Char *uri,
   ACE_UNUSED_ARG (xmlenv);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event startElement (%s, %s, %s) ***************\n"),
+              ACE_TEXT ("* Event startElement (%s, %s, %s) ***************\n"),
               uri, name, qName));
 
   if (alist != 0)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("    %s = \"%s\"\n"),
+                    ACE_TEXT ("    %s = \"%s\"\n"),
                     alist->getQName (i), alist->getValue (i)));
       }
 }
@@ -157,9 +157,9 @@ ACEXML_Print_Handler::startPrefixMapping (const ACEXML_Char * prefix,
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event startPrefixMapping () ***************\n")));
+              ACE_TEXT ("* Event startPrefixMapping () ***************\n")));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
+              ACE_TEXT ("Prefix = %s, URI = %s\n"), prefix, uri));
 }
 
 // *** Methods inherit from ACEXML_DTDHandler.
@@ -172,20 +172,20 @@ ACEXML_Print_Handler::notationDecl (const ACEXML_Char *name,
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Event notationDecl: (%s) "),
+              ACE_TEXT ("* Event notationDecl: (%s) "),
               name));
 
   if (publicID == 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("SYSTEM %s\n"),
+                ACE_TEXT ("SYSTEM %s\n"),
                 systemID));
   else if (systemID == 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("PUBLIC %s\n"),
+                ACE_TEXT ("PUBLIC %s\n"),
                 publicID));
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("PUBLIC %s %s\n"),
+                ACE_TEXT ("PUBLIC %s %s\n"),
                 publicID, systemID));
 }
 
@@ -198,20 +198,20 @@ ACEXML_Print_Handler::unparsedEntityDecl (const ACEXML_Char *name,
   //    ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT ("* Unparsed Entity: %s"),
+              ACE_TEXT ("* Unparsed Entity: %s"),
               name));
 
   if (publicID == 0)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT (" SYSTEM %s"),
+                ACE_TEXT (" SYSTEM %s"),
                 systemID));
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT (" PUBLIC %s %s"),
+                ACE_TEXT (" PUBLIC %s %s"),
                 publicID, systemID));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_LIB_TEXT (" NDATA %s\n"),
+              ACE_TEXT (" NDATA %s\n"),
               notationName));
 }
 

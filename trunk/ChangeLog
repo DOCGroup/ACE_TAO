@@ -1,3 +1,33 @@
+Wed Aug 21 20:40:20 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/OS.h:
+        * ace/OS.i:
+
+          Added wrappers for fgetc, fgetwc, ferror, clearerr, feof,
+          ungetc, ungetwc. All these are guaranteed to not be macros.
+
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/apps/svcconf/Svcconf_Handler.h:
+
+          Fixed compilation errors.
+
+        * ACEXML/common/FileCharStream.cpp:
+        * ACEXML/common/HttpCharStream.cpp:
+        * ACEXML/common/XMLFilterImpl.cpp:
+        * ACEXML/examples/SAXPrint/Print_Handler.cpp:
+        * ACEXML/examples/SAXPrint/SAXPrint_Handler.cpp:
+        * ACEXML/examples/SAXPrint/main.cpp:
+        * ACEXML/examples/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * ACEXML/parser/debug_validator/Debug_DTD_Manager.cpp:
+        * ACEXML/parser/debug_validator/Debug_Element_Builder.cpp:
+        * ACEXML/parser/debug_validator/Element_Tree.cpp:
+        * ACEXML/parser/parser/Parser.cpp:
+
+          Use ACE_TEXT instead of ACE_LIB_TEXT. It results in reducing
+          vertical space and the wchar.txt document also encourages it.
+
+
 Wed Aug 21 17:02:44 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS_String.cpp: Changed to enabled wchar version of

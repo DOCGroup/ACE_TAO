@@ -4,7 +4,6 @@
 #include "ACEXML/common/HttpCharStream.h"
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/parser/parser/Parser.h"
-#include "ACEXML/parser/parser/Parser.h"
 #include "Print_Handler.h"
 #include "SAXPrint_Handler.h"
 #include "ace/Get_Opt.h"
@@ -27,15 +26,15 @@ usage (const ACE_TCHAR* program)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TCHAR *filename = 0;
+  ACEXML_Char* filename = 0;
   int sax = 0;                  // Use SAXPrint handler or not.
   int str = 0;
   ACEXML_Char* url = 0;
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("sf:lu:"));
-  char c;
+  ACEXML_Char c;
 
-  while ((c = get_opt ()) != EOF)
+  while ((c = (ACEXML_Char)get_opt ()) != (ACEXML_Char)-1)
     {
       switch (c)
         {
