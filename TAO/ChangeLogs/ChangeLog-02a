@@ -1,3 +1,10 @@
+Thu Jan 24 20:15:01 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/AMH_Single_Threaded_Latency.dsw:
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/client.dsp: 
+	* TAO/performance-tests/AMH_Single_Threaded_Latency/server.dsp:
+	  Workspace and projects for the AMH performance test.
+	
 Thu Jan 24 18:51:21 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
 	* TAO/performance-tests/AMH_Single_Threaded_Latency:
