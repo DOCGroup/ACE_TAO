@@ -185,12 +185,6 @@ Logger_i::logv (const Logger::Log_Record &log_rec,
   // verbosity
 }
 
-Logger::Verbosity_Level
-Logger_i::verbosity (void) const
-{
-  return verbosity_level_;
-}
-
 void
 Logger_i::verbosity (Logger::Verbosity_Level level,
                      CORBA::Environment &)
