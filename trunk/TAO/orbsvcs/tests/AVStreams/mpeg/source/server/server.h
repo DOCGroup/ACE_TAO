@@ -184,16 +184,16 @@ private:
   TAO_Naming_Server naming_server_;
   // the TAO naming server
 
-  TAO_ORB_Manager *orb_manager_;
+  TAO_ORB_Manager orb_manager_;
   // the TAO ORB manager.
 
-  Video_Control_i *video_control_;
+  Video_Control_i video_control_;
   // The Video_Control implementation object.
 
   AV_Acceptor acceptor_;
   // the acceptor
 
-  AV_Server_Sig_Handler *signal_handler_;
+  AV_Server_Sig_Handler signal_handler_;
   // Signal handler for SIGCHLD,SIGINT,SIGTERM,SIGBUS
 
   ACE_INET_Addr server_control_addr_;

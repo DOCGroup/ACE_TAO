@@ -50,7 +50,7 @@ AV_Svc_Handler::open (void *)
       // I am the child. i should handle this connection close down
       // the "listen-mode" socket
       //    ACE_Reactor::instance ()->remove_handler
-      TAO_ORB_Core_instance ()-> reactor ()->remove_handler
+      TAO_ORB_Core_instance ()->reactor ()->remove_handler
         (this->acceptor_->get_handle (),
          ACCEPT_MASK);
       
@@ -600,6 +600,16 @@ AV_Server::run (CORBA::Environment& env)
 
 AV_Server::~AV_Server (void)
 {
+
+  TAO_ORB_Core_instance ()->reactor ()->remove_handler 
+    (this->acceptor_.get_handle (),
+     ACE_Event_Handler::ACCEPT_MASK);
+
+  TAO_ORB_Core_instance ()->reactor ()->remove_handler
+    (this->signal_handler_.get_handle (),
+     ACE_Event_Handler::NULL_MASK);
+
+
   //  if (this->signal_handler_ != 0)
   //    delete this->signal_handler_;
 
