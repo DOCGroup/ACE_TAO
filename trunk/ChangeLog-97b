@@ -1,8 +1,15 @@
 Tue Nov  4 11:14:35 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/Containers.cpp: Fixed some stylistic ambiguities.
+        * ace/Containers.cpp: Fixed some stylistic ambiguities.
 
 Tue Nov 04 10:12:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_hpux.GNU: added +a1 to CFLAGS
+          to select ANSI C, instead of the default K+R C.  This is
+          required with the current ace/Object_Manager.cpp, because
+          it initialized autos using aggregates (via the
+          ACE_STATIC_SVC_DEFINE macro).  Thanks to Neil B. Cohen
+          <nbc@metsci.com> for helping to sort this out.
 
         * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: changed
           another lock () to mutex ().
@@ -2219,8 +2226,8 @@ Tue Oct 14 03:13:38 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 Tue Oct 14 03:10:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * ace/Service_Types.cpp (fini): Backed out the following change
- 	  until we figure out how to keep existing Svc_Handler code from
- 	  dying...  Thanks to Nanbor for reporting this.
+          until we figure out how to keep existing Svc_Handler code from
+          dying...  Thanks to Nanbor for reporting this.
 
         * ace/Service_Types.cpp: Changed the implementation so that we
           bypass the default cleanup originally done in
