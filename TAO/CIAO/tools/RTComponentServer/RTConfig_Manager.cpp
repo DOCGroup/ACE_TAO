@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RTConfig_Manager.h"
+#include "ciao/CIAO_common.h"
 #include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
@@ -151,7 +152,8 @@ CIAO::RTPolicy_Set_Manager::init (const CIAO::RTConfiguration::Policy_Sets &sets
                                   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "RTPolicy_Set_Manager::init\n"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "RTPolicy_Set_Manager::init\n"));
 
   for (CORBA::ULong i = 0; i < sets.length (); ++i)
     {
@@ -228,7 +230,8 @@ CIAO::RTPolicy_Set_Manager::create_single_policy
  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, "RTPolicy_Set_Manager::create_single_policy\n"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "RTPolicy_Set_Manager::create_single_policy\n"));
 
   CORBA::Policy_var retv;
 

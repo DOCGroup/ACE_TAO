@@ -30,6 +30,7 @@
 #include "../XML_Helpers/Assembly_Spec.h"
 #include "Deployment_Configuration.h"
 #include "Assembly_Visitors.h"
+#include "ciao/CIAO_common.h"
 
 namespace CIAO
 {

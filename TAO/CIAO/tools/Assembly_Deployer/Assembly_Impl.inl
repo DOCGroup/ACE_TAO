@@ -22,7 +22,8 @@ CIAO::Assembly_Impl::Assembly_Impl (CORBA::ORB_ptr o,
     deployment_config_ (config),
     assembly_spec_ (spec)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "CIAO::Assembly_Impl::Assembly_Impl %d\n",
-              this->serial_number_));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG,
+                "CIAO::Assembly_Impl::Assembly_Impl %d\n",
+                this->serial_number_));
 }
