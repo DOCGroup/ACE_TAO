@@ -1,14 +1,17 @@
+Fri Jan  2 17:39:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Peer/Options.cpp (Options): Rearranged the order of
+ 	  the parameters in the base/member initialization section to make
+ 	  GCC happy.  Thanks to David Levine for getting on me about this.
+
+	* apps/Gateway/Gateway/Options.h: Changed DEFAULT_TIMEOUT
+	  to MAX_TIMEOUT to be consistent.  Thanks to David
+	  Levine for reporting this.
+
 Fri Jan  2 17:25:05 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* tests/Map_Manager_Test.cpp: Added codes to test STL-styled
 	  functions in ACE_Map_Manager.
-
-Fri Jan  2 17:02:36 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
-
-	* tests/run_tests.sh: Added Env_Value_Test to the list of tests to
- 	  run.
-
-Fri Jan  2 16:35:34 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Proxy_Handler.cpp:
 	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp:
@@ -30,54 +33,15 @@ Fri Jan  2 16:35:34 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 	* apps/Gateway/Gateway/Proxy_Handler_Connector.cpp: Added some
 	  more explicit template instantiations.
 
-Fri Jan  2 15:39:16 1998  Nanbor Wang  <nw1@cs.wustl.edu>
-
 	* ace/Map_Manager.{h,cpp}:  Added back comparison operators for
 	  ACE_Map_Iterator and ACE_Map_Reverse_Iterator.
-
-Fri Jan  2 14:51:28 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
-
-	* tests/Env_Value_Test.cpp (main): Fixed wrong test for negative
- 	  values with unsigned longs.  Thanks to David Levine and
- 	  Linux/Alpha for finding this.
-
-Fri Jan 02 13:47:46 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* ace/Token_Invariants.cpp:
 	* ace/Token_Collection.cpp:
 	* ace/Token_Manager.cpp: Added missing ACE_Map_Reverse_Iterator.
 
-Fri Jan  2 12:39:45 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
-
-	* ace/Map_Manager.h:
-	  Another declaration removed from ACE_Map_Reverse_Iterator,
-	  operator* is defined in the base class.
-
-	* tests/Conn_Test.cpp:
-	* tests/Priority_Reactor_Test.cpp:
-	* tests/Reactor_Performance_Test.cpp:
-	  The instantiation of ACE_Map_Manager *requires* instantiating
-	  ACE_Map_Reverse_Iterator.
-
-	* ace/OS.i:
-	  Cannot use ACE_ASSERT in OS.i, at least it make SGI compiler
-	  unhappy.
-
-Fri Jan 02 11:55:59 1998  Nanbor Wang  <nw1@cs.wustl.edu>
-
 	* ace/Map_Manager.h: Remove unnecessary method declarations from
  	  ACE_Map_Iterator adn ACE_Map_Reverse_Iterator.
-
-Fri Jan  2 10:56:38 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
-
-	* ace/Map_Manager.cpp:
-	  Several methods for ACE_Map_Manager were not given their fully
-	  qualified name.
-
-	* ace/OS.i:
-	  The error code should be stored in errno, not in "error".
-
-Fri Jan 02 08:47:00 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 
 	* examples/Connection/non_blocking/test_tli_connector.cpp:
 	* examples/Connection/non_blocking/test_sock_connector.cpp:
@@ -106,7 +70,42 @@ Fri Jan 02 08:47:00 1998  Nanbor Wang  <nw1@cs.wustl.edu>
 	* ace/Local_Name_Space.cpp: Added explicit template instantiation
  	  for ACE_Map_Iterator_Base.
 
-Fri Jan  2 10:23:05 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+	* ace/Map_Manager.{h,cpp}: Added a new class ACE_Map_Iterator_Base
+ 	  to abstract out most common functionalities from
+	  ACE_Map_Iterator and ACE_Map_Reverse_Iterator.  Added some
+	  missing functions to both iterator classes.
+
+Fri Jan  2 12:39:45 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
+
+	* ace/Map_Manager.h:
+	  Another declaration removed from ACE_Map_Reverse_Iterator,
+	  operator* is defined in the base class.
+
+	* tests/Conn_Test.cpp:
+	* tests/Priority_Reactor_Test.cpp:
+	* tests/Reactor_Performance_Test.cpp:
+	  The instantiation of ACE_Map_Manager *requires* instantiating
+	  ACE_Map_Reverse_Iterator.
+
+	* ace/OS.i:
+	  Cannot use ACE_ASSERT in OS.i, at least it make SGI compiler
+	  unhappy.
+
+	* ace/Map_Manager.cpp:
+	  Several methods for ACE_Map_Manager were not given their fully
+	  qualified name.
+
+	* ace/OS.i:
+	  The error code should be stored in errno, not in "error".
+
+Fri Jan  2 17:02:36 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tests/run_tests.sh: Added Env_Value_Test to the list of tests to
+ 	  run.
+
+	* tests/Env_Value_Test.cpp (main): Fixed wrong test for negative
+ 	  values with unsigned longs.  Thanks to David Levine and
+ 	  Linux/Alpha for finding this.
 
 	* tests/Env_Value_Test.cpp (main): Changed the definition of the
  	  TEST_THIS macro to be all on one line.  While ugly, this helps in
@@ -122,19 +121,6 @@ Fri Jan 02 10:12:28 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-hpux-10.x-g++.h: Added #define HPUX_10 to catch OS
 	  version-dependent code correctly.
-
-Fri Jan 02 08:47:00 1998  Nanbor Wang  <nw1@cs.wustl.edu>
-
-	* ace/Map_Manager.{h,cpp}: Added a new class ACE_Map_Iterator_Base
- 	  to abstract out most common functionalities from
-	  ACE_Map_Iterator and ACE_Map_Reverse_Iterator.  Added some
-	  missing functions to both iterator classes.
-
-Fri Jan  2 08:51:06 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* apps/Gateway/Gateway/Options.h: Changed DEFAULT_TIMEOUT
-	  to MAX_TIMEOUT to be consistent.  Thanks to David
-	  Levine for reporting this.
 
 Fri Jan 02 07:06:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
