@@ -2,6 +2,7 @@
 
 /* Our datagram server will, of course, need to create a datagram.
    We'll also need an address object so that we know where to listen.  */
+#include "ace/Log_Msg.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 

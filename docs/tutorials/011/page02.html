@@ -62,8 +62,6 @@ run_test (int iterations,
       <font color=#008888>ACE_OS::sprintf</font> (message->wr_ptr (), "<font color=green>This is message %d.</font>", i);
       message->wr_ptr (strlen (message->rd_ptr ()));
 
-      *(message->wr_ptr ()) = 0;  <font color=red>// Null-terminate the string we just wrote</font>
-
       message->wr_ptr (1);        <font color=red>// Move beyond the NULL</font>
 
       <font color=red>/* To copy arbitrary data into a message block, we use the

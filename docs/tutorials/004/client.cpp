@@ -2,6 +2,7 @@
 
 /* We need the connector object & we also bring in a simple string
   class.  */
+#include "ace/Log_Msg.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SString.h"
 
