@@ -23,7 +23,7 @@ LIBFILES = \
 	$(ACE_LIB) \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
-	$(BINDIR)\Collocation_Test_Stubs$(LIB_DECORATOR).lib
+	$(CORE_BINDIR)\Collocation_Test_Stubs$(LIB_DECORATOR).lib
 
 IDLFILES = \
         $(IDLDIR)\Diamond.idl
