@@ -20,8 +20,8 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-#if !defined (_STRINGSEQ_CI_)
-#define _STRINGSEQ_CI_
+#if !defined (TAO_STRINGSEQ_CI)
+#define TAO_STRINGSEQ_CI
 
 // *************************************************************
 // Inline operations for class CORBA_StringSeq_var
@@ -215,8 +215,8 @@ CORBA_StringSeq_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 
-#if !defined (_WSTRINGSEQ_CI_)
-#define _WSTRINGSEQ_CI_
+#if !defined (TAO_WSTRINGSEQ_CI)
+#define TAO_WSTRINGSEQ_CI
 
 // *************************************************************
 // Inline operations for class CORBA_WStringSeq_var
@@ -410,8 +410,8 @@ CORBA_WStringSeq_out::operator[] (CORBA::ULong index)
 #endif /* end #if !defined */
 
 
-#if !defined _TAO_CDR_OP_CORBA_StringSeq_I_
-#define _TAO_CDR_OP_CORBA_StringSeq_I_
+#if !defined TAO_TAO_CDR_OP_CORBA_StringSeq_I
+#define TAO_TAO_CDR_OP_CORBA_StringSeq_I
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
@@ -422,11 +422,11 @@ CORBA::Boolean TAO_Export operator>> (
     CORBA_StringSeq &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_StringSeq_I_ */
+#endif /* TAO_TAO_CDR_OP_CORBA_StringSeq_I */
 
 
-#if !defined _TAO_CDR_OP_CORBA_WStringSeq_I_
-#define _TAO_CDR_OP_CORBA_WStringSeq_I_
+#if !defined TAO_TAO_CDR_OP_CORBA_WStringSeq_I
+#define TAO_TAO_CDR_OP_CORBA_WStringSeq_I
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
@@ -437,5 +437,5 @@ CORBA::Boolean TAO_Export operator>> (
     CORBA_WStringSeq &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_WStringSeq_I_ */
+#endif /* TAO_TAO_CDR_OP_CORBA_WStringSeq_I */
 

@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_STRINGSEQC_H_
-#define _TAO_IDL_STRINGSEQC_H_
+#ifndef TAO_IDL_STRINGSEQC_H
+#define TAO_IDL_STRINGSEQC_H
 
 #include "ace/pre.h"
 
@@ -51,9 +51,13 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+#if defined (__BORLANDC__)
+#pragma option push -w-rvl -w-rch -w-ccc -w-inl
+#endif /* __BORLANDC__ */
 
-#if !defined (_STRINGSEQ_CH_)
-#define _STRINGSEQ_CH_
+
+#if !defined (TAO_STRINGSEQ_CH)
+#define TAO_STRINGSEQ_CH
 
 class CORBA_StringSeq;
 class CORBA_StringSeq_var;
@@ -91,8 +95,8 @@ public:
 #endif /* end #if !defined */
 
 
-#if !defined (_STRINGSEQ___VAR_CH_)
-#define _STRINGSEQ___VAR_CH_
+#if !defined (TAO_STRINGSEQ___VAR_CH)
+#define TAO_STRINGSEQ___VAR_CH
 
 // *************************************************************
 // class CORBA_StringSeq_var
@@ -133,8 +137,8 @@ private:
 #endif /* end #if !defined */
 
 
-#if !defined (_STRINGSEQ___OUT_CH_)
-#define _STRINGSEQ___OUT_CH_
+#if !defined (TAO_STRINGSEQ___OUT_CH)
+#define TAO_STRINGSEQ___OUT_CH
 
 class TAO_Export CORBA_StringSeq_out
 {
@@ -161,8 +165,8 @@ private:
 extern TAO_Export CORBA::TypeCode_ptr  _tc_CORBA_StringSeq;
 
 
-#if !defined (_WSTRINGSEQ_CH_)
-#define _WSTRINGSEQ_CH_
+#if !defined (TAO_WSTRINGSEQ_CH)
+#define TAO_WSTRINGSEQ_CH
 
 class CORBA_WStringSeq;
 class CORBA_WStringSeq_var;
@@ -200,8 +204,8 @@ public:
 #endif /* end #if !defined */
 
 
-#if !defined (_WSTRINGSEQ___VAR_CH_)
-#define _WSTRINGSEQ___VAR_CH_
+#if !defined (TAO_WSTRINGSEQ___VAR_CH)
+#define TAO_WSTRINGSEQ___VAR_CH
 
 // *************************************************************
 // class CORBA_WStringSeq_var
@@ -242,8 +246,8 @@ private:
 #endif /* end #if !defined */
 
 
-#if !defined (_WSTRINGSEQ___OUT_CH_)
-#define _WSTRINGSEQ___OUT_CH_
+#if !defined (TAO_WSTRINGSEQ___OUT_CH)
+#define TAO_WSTRINGSEQ___OUT_CH
 
 class TAO_Export CORBA_WStringSeq_out
 {
@@ -281,8 +285,8 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA_WStringSe
 #ifndef __ACE_INLINE__
 
 
-#if !defined _TAO_CDR_OP_CORBA_StringSeq_H_
-#define _TAO_CDR_OP_CORBA_StringSeq_H_
+#if !defined TAO_TAO_CDR_OP_CORBA_StringSeq_H
+#define TAO_TAO_CDR_OP_CORBA_StringSeq_H
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -293,11 +297,11 @@ TAO_Export CORBA::Boolean operator>> (
     CORBA_StringSeq &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_StringSeq_H_ */
+#endif /* TAO_TAO_CDR_OP_CORBA_StringSeq_H */
 
 
-#if !defined _TAO_CDR_OP_CORBA_WStringSeq_H_
-#define _TAO_CDR_OP_CORBA_WStringSeq_H_
+#if !defined TAO_TAO_CDR_OP_CORBA_WStringSeq_H
+#define TAO_TAO_CDR_OP_CORBA_WStringSeq_H
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -308,7 +312,7 @@ TAO_Export CORBA::Boolean operator>> (
     CORBA_WStringSeq &
   );
 
-#endif /* _TAO_CDR_OP_CORBA_WStringSeq_H_ */
+#endif /* TAO_TAO_CDR_OP_CORBA_WStringSeq_H */
 
 
 #endif /* __ACE_INLINE__ */
@@ -321,6 +325,10 @@ TAO_Export CORBA::Boolean operator>> (
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
 #endif /* _MSC_VER */
+
+#if defined (__BORLANDC__)
+#pragma option pop
+#endif /* __BORLANDC__ */
 
 #include "ace/post.h"
 #endif /* ifndef */
