@@ -18,11 +18,14 @@ ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria 
 				  ACE_URL_Offer_Seq *offer)
 {
   ACE_URL_Record *item = 0;
-  ACE_NEW_RETURN (offer, ACE_URL_Offer_Seq (how_many),
-		  ACE_URL_Locator::NOMEM);
+
+  // Nanbor, do you really want to return NOMEM, or -1 (since errno
+  // will already be set to ENOMEM by the ACE_NEW_RETURN macro).
+  ACE_NEW_RETURN (offer, ACE_URL_Offer_Seq (how_many), ACE_URL_Locator::NOMEM);
   
   for (ACE_Unbounded_Stack_Iterator<ACE_URL_Record> iter (this->repository_);
-       iter.next (item) != 0; iter.advance ())
+       iter.next (item) != 0;
+       iter.advance ())
     {
       switch (how)
 	{
@@ -47,6 +50,10 @@ ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria 
 	break;
     }
 
+  // Nanbor, I recommend just returning 0 for success and -1 for
+  // failure.  That is more consistent with the rest of ACE.  In
+  // general, it's a better idea to use errno to indicate *which*
+  // error occurred, and -1 to indicate to the caller to check errno.
   return ACE_URL_Locator::OK;
 }
 
@@ -56,17 +63,22 @@ ACE_URL_Local_Locator::export_offer (ACE_URL_Offer *offer,
 {
   ACE_URL_Record *item = 0;
 
-  // First check if we have registered this url already.
+  // First check if we have registered this URL already.
   for (ACE_Unbounded_Stack_Iterator<ACE_URL_Record> iter (this->repository_);
-       iter.next (item) != 0; iter.advance ())
+       iter.next (item) != 0; 
+       iter.advance ())
     if (*item->offer_->url () == *offer->url ())
+      // Nanbor, here's a good example of where it might make more
+      // sense to set errno to EEXIST and return -1.
       return ACE_URL_Locator::OFFER_EXIST;
   
   ACE_URL_Record *new_offer;
 
   ACE_NEW_RETURN (new_offer, ACE_URL_Record (offer),
 		  ACE_URL_Locator::NOMEM);
+
   this->repository_.push (*new_offer);
+
   offer_id = *new_offer->id_;
   return ACE_URL_Locator::OK;
 }
@@ -76,8 +88,10 @@ ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
 {
   ACE_URL_Record *item = 0;
   
+  // Nanbor, please make sure that you comment code like this.
   for (ACE_Unbounded_Stack_Iterator<ACE_URL_Record> iter (this->repository_);
-       iter.next (item) != 0; iter.advance ())
+       iter.next (item) != 0;
+       iter.advance ())
       if (offer_id == *item->id_)
 	{
 	  if (this->repository_.remove (*item) == 0)
@@ -85,6 +99,7 @@ ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
 	  else
 	    return ACE_URL_Locator::UNKNOWN;
 	}
+
   return ACE_URL_Locator::NO_SUCH_OFFER;
 }
 
@@ -94,14 +109,17 @@ ACE_URL_Local_Locator::describe_offer (const ACE_WString &offer_id,
 {
   ACE_URL_Record *item = 0;
   
+  // Nanbor, please make sure that you comment this code.
   for (ACE_Unbounded_Stack_Iterator<ACE_URL_Record> iter (this->repository_);
-       iter.next (item) != 0; iter.advance ())
+       iter.next (item) != 0;
+       iter.advance ())
     if (offer_id == *item->id_)
       {
 	ACE_NEW_RETURN (offer, ACE_URL_Offer (*item->offer_),
 			ACE_URL_Locator::NOMEM);
 	return ACE_URL_Locator::OK;
       }
+
   return ACE_URL_Locator::NO_SUCH_OFFER;
 }
 

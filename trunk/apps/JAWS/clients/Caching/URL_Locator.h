@@ -27,8 +27,13 @@ class ACE_Export ACE_URL_Locator
   //
   // = DESCRIPTION
   //     This class defines the basic URL_Locator APIs.
+// Nanbor, please make sure that you explain more about what a URL
+// Locator is in the description here.
 {
 public:
+
+  // = Specify how to select offers.
+  // Nanbor, please add comments to each of these enumerals.
   enum ACE_Selection_Criteria
   { 
     NONE,
@@ -36,9 +41,11 @@ public:
     ALL,
     INVALID_SELECTION
   };
-  // Specify how to select offers.
 
   enum ACE_URL_Locator_Error
+    // Nanbor, I don't think that you need to use this enum.  I
+    // recommend that you return -1 from methods that fail and set
+    // errno accordingly.
   {
     OK = 0,			// everything's OK so far.
     OFFER_EXIST,		// trying to register an offer.
@@ -84,7 +91,9 @@ public:
 
   virtual char *error_status (void);
   // Provide a human readable error status.
-
+  // Nanbor, please make sure that you explain who is responsible for
+  // the memory returned from this method.  Also, I recommend that you
+  // make this return a *const* char *.
 };
 
 #if defined (__ACE_INLINE__)

@@ -28,16 +28,13 @@ ACE_URL_Record::~ACE_URL_Record (void)
 ACE_INLINE int 
 ACE_URL_Record::operator== (const ACE_URL_Record &rhs) const
 {
-  if (this == &rhs || *this->id_ == *rhs.id_)
-    return 1;
-  else
-    return 0;
+  return this == &rhs || *this->id_ == *rhs.id_;
 }
 
 ACE_INLINE int
 ACE_URL_Record::operator!= (const ACE_URL_Record &rhs) const
 {
-  return ! (*this == rhs);
+  return !(*this == rhs);
 }
 
 ACE_INLINE

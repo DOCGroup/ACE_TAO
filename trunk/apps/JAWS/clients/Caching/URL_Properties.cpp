@@ -23,6 +23,7 @@ ACE_WString_Helper::encode (void *buf, ACE_WString *wstr)
 
   for (i= 0; i <= wstr->length (); i++)
     wptr[i] = htons ((*wstr)[i]);
+
   return i * sizeof (ACE_USHORT16);
 }
 
@@ -34,6 +35,7 @@ ACE_WString_Helper::decode (void *buf)
   
   for (i = 0; wptr[i] != 0; i++)
     wptr[i] = ntohs (wptr[i]);
+
   return (i + 1) * sizeof (ACE_USHORT16);
 }
 
@@ -68,20 +70,19 @@ void
 ACE_URL_Property::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
   if (this->name_->length () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "\n    name_:  \"%s\"\n", 
-		  ACE_Auto_Basic_Array_Ptr<char> (this->name_->char_rep ()).get ()));
-    }
+    ACE_DEBUG ((LM_DEBUG, "\n    name_:  \"%s\"\n", 
+		ACE_Auto_Basic_Array_Ptr<char> (this->name_->char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "\n   name_:  \"\"\n"));
+
   if (this->value_->length () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "   value_:  \"%s\"\n",
-		  ACE_Auto_Basic_Array_Ptr<char> (this->value_->char_rep ()).get ()));
-    }
+    ACE_DEBUG ((LM_DEBUG, "   value_:  \"%s\"\n",
+		ACE_Auto_Basic_Array_Ptr<char> (this->value_->char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "   value_:  \"\"\n"));
+
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
@@ -117,7 +118,7 @@ size_t
 ACE_URL_Offer::decode (void *buf)
 {
   size_t len = sizeof (ACE_UINT32);
-  size_t a_size = (size_t) ntohl (* (ACE_UINT32 *) buf);
+  size_t a_size = (size_t) ntohl (*(ACE_UINT32 *) buf);
   len += ACE_WString_Helper::decode ((void *) ((char *) buf + len));
   this->url ((ACE_USHORT16 *) ((char *) buf + len));
   
@@ -133,15 +134,16 @@ void
 ACE_URL_Offer::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
   if (this->url_->length () > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "\n url_:  \"%s\"\n", 
-		  ACE_Auto_Basic_Array_Ptr<char> (this->url_->char_rep ()).get ()));
-    }
+    ACE_DEBUG ((LM_DEBUG, "\n url_:  \"%s\"\n", 
+		ACE_Auto_Basic_Array_Ptr<char> (this->url_->char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "\n url_:  \"\"\n"));
+
   for (size_t i = 0; i < this->prop_.size (); i++)
     this->prop_[i].dump ();
+
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

@@ -23,6 +23,9 @@
 #define ACE_OFFER_ID_LENGTH 21
 
 class ACE_Export ACE_ID_Generator
+// Nanbor, please make sure you use the official ACE "= TITLE" syntax
+// here.  Also, what is "beckry's algorithm?"  Do you mean "Berkeley's
+// algorithm?"
 // Generate an offer ID according to current time and
 // avoid duplicate ID.  Using a similar method like 
 // beckry's algorithm.
@@ -30,11 +33,12 @@ class ACE_Export ACE_ID_Generator
 public:
   static char *get_new_id (char *id);
   // allocate a new ID string and point <id> to it.
+
 private:
   static void get_serial_id (time_t &t, size_t &s);
   // Atomically get info required to generate an offer ID.
 
-  ACE_MT (static ACE_SYNCH_MUTEX *get_lock ();)
+  static ACE_SYNCH_MUTEX *get_lock (void);
   // Get the lock instance.
   
   static time_t last_time_;
@@ -44,12 +48,8 @@ private:
   // Record serial number of last offer ID with same 
   // generation time.
 
-  ACE_MT (static ACE_SYNCH_MUTEX *lock_;)
+  static ACE_SYNCH_MUTEX *lock_;
   // mutex to access private member.
 };
-
-// #if defined (__ACE_INLINE__)
-// #include "ID_Generator.i"
-// #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_ID_GENERATOR_H */
