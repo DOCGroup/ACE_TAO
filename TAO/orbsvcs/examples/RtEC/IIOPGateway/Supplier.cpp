@@ -120,7 +120,7 @@ Supplier::run (int argc, char* argv[])
            event[j].header.type = MY_EVENT_TYPE;
         }
 
-      for (int i = 1; i != 2000; ++i)
+      for (int i = 1; i != 4000; ++i)
         {
           if (i % 100 == 0)
             {
