@@ -175,43 +175,6 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_RepositoryId;
 }
 
-// TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
-/*
-static const CORBA::Long _oc_CORBA_ObjectId[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  31,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f4f62),
-  ACE_NTOHL (0x6a656374),
-  ACE_NTOHL (0x49643a31),
-  ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/ObjectId:1.0
-    9,
-  ACE_NTOHL (0x4f626a65),
-  ACE_NTOHL (0x63744964),
-  ACE_NTOHL (0x0),  // name = ObjectId
-    CORBA::tk_string,
-  0U, // string length
-};
-
-static CORBA::TypeCode _tc_TAO_tc_CORBA_ObjectId (
-    CORBA::tk_alias,
-    sizeof (_oc_CORBA_ObjectId),
-    (char *) &_oc_CORBA_ObjectId,
-    0,
-    sizeof (CORBA::ObjectId)
-  );
-
-namespace CORBA
-{
-  ::CORBA::TypeCode_ptr _tc_ObjectId =
-    &_tc_TAO_tc_CORBA_ObjectId;
-} */
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

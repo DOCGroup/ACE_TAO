@@ -1,3 +1,15 @@
+Fri Jan  7 14:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/orb.idl:
+        * tao/orb_types.pidl:
+        * tao/orb_typesA.cpp:
+        * tao/orb_typesC.h:
+          Checked the CORBA spec, that ObjectId and ObjectIdList are not in the
+          CORBA module but are in CORBA::ORB. Both where defined in orb.idl
+          but shouldn't be there. So, removed ObjectId from orb_types and
+          ObjectIdList from orb_types. This way there is also no conflict
+          with the PortableServer::ObjectId
+
 Fri Jan  7 12:23:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
