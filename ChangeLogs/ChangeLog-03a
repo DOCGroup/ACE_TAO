@@ -1,3 +1,14 @@
+Tue Sep 24 20:17:50 UTC 2002  Don Hinton  <dhinton@objectsciences.com>
+
+        * tests/Process_Manager_Test.cpp:  Removed the ACE_HAS_THREADS
+          requirement and the unneeded call to
+          ACE_Reactor::instance ()->owner () so that it would run cleanly
+          on single threaded builds.  Thanks to Steve Huston for this
+          suggestion.
+
+        * tests/run_test.lst:  Added !STATIC to Framework_Component_Test since
+          it must load a shared library as part of the test.
+
 Tue Sep 24 16:07:21 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Logging_Client.cpp:
