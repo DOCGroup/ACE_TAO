@@ -1,4 +1,5 @@
 // $Id$
+// FUZZ: disable check_for_tchar
 
 // ************************************************
 // ** This file is NOT to be used for framework. **
