@@ -28,7 +28,7 @@ GPERF = ../src/gperf
 PROG_SRCS = \
 	test.cpp \
 	cinset.cpp \
-	c++inset.cpp \
+	cppinset.cpp \
 	iinset.cpp \
 	iinset2.cpp \
 	tinset.cpp \
@@ -47,7 +47,7 @@ AOUT_OBJS = test.o \
 	    adainset.o
 
 CPPOUT_OBJS = test.o \
-	      c++inset.o
+	      cppinset.o
 
 PREOUT_OBJS = test.o \
 	      preinset.o
@@ -72,7 +72,7 @@ TAOOUT_OBJS = test.o \
 
 BIN  =  cout \
 	aout \
-	c++out \
+	cppout \
 	preout \
 	m3out \
 	pout \
@@ -103,7 +103,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 all: cout \
 	aout \
-	c++out \
+	cppout \
 	preout \
 	m3out \
 	pout \
@@ -118,8 +118,8 @@ cinset.cpp: $(srcdir)/c.gperf $(GPERF)
 adainset.cpp: $(srcdir)/ada.gperf $(GPERF)
 	$(GPERF)  -a -k1,4,'$$' $(srcdir)/ada.gperf > $@
 
-c++inset.cpp: $(srcdir)/c++.gperf $(GPERF)
-	$(GPERF) -a -D $(srcdir)/c++.gperf > $@
+cppinset.cpp: $(srcdir)/cpp.gperf $(GPERF)
+	$(GPERF) -a -D $(srcdir)/cpp.gperf > $@
 
 preinset.cpp: $(srcdir)/adadefs.gperf $(GPERF)
 	$(GPERF)  -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > $@
@@ -151,7 +151,7 @@ cout:$(addprefix $(VDIR),$(COUT_OBJS))
 aout:$(addprefix $(VDIR),$(AOUT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-c++out:$(addprefix $(VDIR),$(CPPOUT_OBJS))
+cppout:$(addprefix $(VDIR),$(CPPOUT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 preout:$(addprefix $(VDIR),$(PREOUT_OBJS))
@@ -175,7 +175,7 @@ tout:$(addprefix $(VDIR),$(TOUT_OBJS))
 taoout:$(addprefix $(VDIR),$(TAOOUT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-runtests: cout aout c++out preout m3out pout iout iout2 tout taoout
+runtests: cout aout cppout preout m3out pout iout iout2 tout taoout
 	 @echo "performing some tests of the perfect hash generator"
 	 # test cout
 	 ./cout -v < $(srcdir)/c.gperf > c.out
@@ -183,9 +183,9 @@ runtests: cout aout c++out preout m3out pout iout iout2 tout taoout
 	 # test aout
 	 ./aout -v < $(srcdir)/ada.gperf > ada-res.out
 	 -diff -b $(srcdir)/ada-res.exp ada-res.out
-	 # test c++out
-	 ./c++out -v < $(srcdir)/c++.gperf > c++-res.out
-	 -diff -b $(srcdir)/c++-res.exp c++-res.out
+	 # test cppout
+	 ./cppout -v < $(srcdir)/cpp.gperf > cpp-res.out
+	 -diff -b $(srcdir)/cpp-res.exp cpp-res.out
 	 # test preout
 	 ./preout -v < $(srcdir)/adadefs.gperf > ada-pred.out
 	 -diff -b $(srcdir)/ada-pred.exp ada-pred.out
@@ -225,9 +225,9 @@ runtests: cout aout c++out preout m3out pout iout iout2 tout taoout
 	 -diff -b $(srcdir)/test-7.exp test-7.out
 
 realclean:
-	$(RM) -rf *.out cinset.cpp c++inset.cpp iinset.cpp iinset2.cpp \
+	$(RM) -rf *.out cinset.cpp cppinset.cpp iinset.cpp iinset2.cpp \
 	tinset.cpp taoinset.cpp pinset.cpp m3inset.cpp adainset.cpp preinset.cpp
-	$(RM) -rf c.out aout preout m3out pout cout c++out iout iout2 tout taoout
+	$(RM) -rf c.out aout preout m3out pout cout cppout iout iout2 tout taoout
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

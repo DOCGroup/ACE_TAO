@@ -33,13 +33,13 @@
 AUTOMAKE_OPTIONS = 1.4
 
 
-noinst_PROGRAMS = cout aout c++out preout m3out pout iout iout2 tout
+noinst_PROGRAMS = cout aout cppout preout m3out pout iout iout2 tout
 
 cout_SOURCES = cinset.cpp test.cpp
 
 aout_SOURCES = adainset.cpp test.cpp
 
-c++out_SOURCES = c++inset.cpp test.cpp
+cppout_SOURCES = cppinset.cpp test.cpp
 
 preout_SOURCES = preinset.cpp test.cpp
 
@@ -56,7 +56,7 @@ tout_SOURCES = tinset.cpp test.cpp
 BUILT_SOURCES = \
         cinset.cpp \
         adainset.cpp \
-        c++inset.cpp \
+        cppinset.cpp \
         preinset.cpp \
         m3inset.cpp \
         pinset.cpp \
@@ -72,7 +72,7 @@ EXTRA_DIST = \
         modula2.gperf \
         ada-pred.exp \
         ada-res.exp \
-        c++-res.exp \
+        cpp-res.exp \
         c.exp \
         corba.exp \
         idl.exp \
@@ -92,8 +92,8 @@ cinset.cpp: c.gperf
 adainset.cpp: ada.gperf
         $(GPERF) -a -k1,4,'$$' $(srcdir)/ada.gperf > adainset.cpp
 
-c++inset.cpp: c++.gperf
-        $(GPERF) -a -D $(srcdir)/c++.gperf > c++inset.cpp
+cppinset.cpp: cpp.gperf
+        $(GPERF) -a -D $(srcdir)/cpp.gperf > cppinset.cpp
 
 preinset.cpp: adadefs.gperf
         $(GPERF) -a -p -D -k1,'$$' -s 2 -o $(srcdir)/adadefs.gperf > preinset.cpp
