@@ -35,7 +35,13 @@ $MODULE='ACE_wrappers';
 
 # This are the sub-directories (in the module) we really compile.
 
-@BUILD_LIST=('ace', 'tests');
+@BUILD_LIST=
+    ('ace',
+     'tests',
+     'TAO/tao',
+     'TAO/TAO_IDL',
+     'TAO/tests/Cubit/TAO',
+     'TAO/orbsvcs');
 
 # This are the pairs "sub-directory,script" we run.
 
@@ -151,7 +157,7 @@ foreach $i (@BUILD_LIST) {
 	|| mydie "cannot start make for $i";
     $make_errors = 0;
     while (<MAKE>) {
-	if (m/^make: \*\*\*/) {
+	if (m/^make: \*\*\*/ || m/^make\[[0-9]+\]: \*\*\*) {
 	    $make_errors = 1;
 	}
 	print LOG $_;
