@@ -1,3 +1,24 @@
+Tue Oct 12 16:32:16 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MProfile_Forwarding/Servant_Locator.cpp :
+	* tests/MProfile_Forwarding/Servant_Locator.h:
+	* tests/MProfile_Forwarding/Manager.cpp:
+	* tests/MProfile_Forwarding/Manager.h:
+	* tests/MProfile_Forwarding/test.idl:
+	* tests/MProfile_Forwarding/test_i.cpp:
+	* tests/MProfile_Forwarding/test_i.h:
+	* tests/MProfile_Forwarding/test_i.i:
+	* tests/MProfile_Forwarding/server.cpp:
+	* tests/MProfile_Forwarding/client.cpp:
+	* tests/MProfile_Forwarding/README:
+	* tests/MProfile_Forwarding/Makefile: Added a test case to
+	  replicate the problem that Shalini Yajnik
+	  <shalini@research.bell-labs.com> has reported and that was fixed
+	  by Fred Kuhns. {Tue Oct 12 15:46:41 1999  Fred Kuhns
+	  <fredk@cs.wustl.edu>}This could serve as a test that would help us
+	  verify this feature again. This test is basically an extension
+	  of tests/MProfile. For more details, please refer to the README.
+
 Tue Oct 12 15:46:41 1999  Fred Kuhns  <fredk@cs.wustl.edu>
 
         * tao/Stub.cpp fixed a bug with location forwarding which caused
