@@ -8,7 +8,7 @@ project(Repository_Manager): ciao_deployment_svnt, ciao_deployment_stub, taoexe 
   macros   += XML_USE_PTHREADS
   includes += /usr/include $(XERCESCROOT)/include
   libpaths += /usr/lib $(XERCESCROOT)/lib
-  libs     += xerces-c Config_Handlers CIAO_Server
+  libs     += xerces-c Config_Handlers NodeDaemon_stub ExecutionManager_stub
   after    += Config_Handlers
 
   IDL_Files {
@@ -20,7 +20,5 @@ project(Repository_Manager): ciao_deployment_svnt, ciao_deployment_stub, taoexe 
     RepositoryManagerS.cpp
     Repository_Manager.cpp
     RepositoryManager_Impl.cpp
-    ../NodeManager/NodeDaemonC.cpp
-    ../ExecutionManager/ExecutionManagerC.cpp
   }
 }

@@ -1,3 +1,22 @@
+Wed Jun 16 16:33:13 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Updated mpc file to link to the ExecutionManager and NodeDaemon
+          stubs as operations on these entities are used within the
+          executor.
+
+        * DnC/NodeManager/NodeDaemon.mpc:
+        * DnC/NodeManager/NodeDaemon_stub_export.h:
+        * DnC/NodeManager/Node_Daemon.cpp:
+
+          Added stub macros to generate stub libraries
+
+        * DnC/ExecutionManager/ExecutionManager.mpc:
+        * DnC/ExecutionManager/ExecutionManager_stub_export.h:
+
+          Stub exports for ExecutionManager.
+
 Wed Jun 16 15:18:21 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/RepositoryManager.mpc:
