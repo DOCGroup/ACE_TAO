@@ -225,7 +225,10 @@ int
 Acceptor::make_svc_handler (Connection_Handler *&sh)
 {
   if (sh == 0)
-    ACE_NEW_RETURN (sh, Connection_Handler (this->w_, this->box_), -1);
+    {
+      ACE_NEW_RETURN (sh, Connection_Handler (this->w_, this->box_), -1);
+      sh->reactor (this->reactor());
+    }
   return 0;
 }
 
