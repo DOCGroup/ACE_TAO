@@ -1,3 +1,7 @@
+Fri Mar  5 18:11:04 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsp: Added the new EC files.
+
 Fri Mar  5 16:43:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp: 
