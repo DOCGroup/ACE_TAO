@@ -1,9 +1,9 @@
 #
-# Makefile for building	the TAO	FaultTolerance library
+# Makefile for building the TAO FT_ORB library
 #
 
 !ifndef MINIMUM_CORBA
-NAME = TAO_FaultTolerance
+NAME = TAO_FTORB
 !else
 !undef NAME
 !endif
@@ -11,14 +11,23 @@ NAME = TAO_FaultTolerance
 TAO_IDL	= $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
 	-I..\..	-I.. -Ge 1 -Wb,export_macro=TAO_FT_Export \
 	-Wb,export_include=FaultTolerance/fault_tol_export.h \
+        -Wb,skel_export_include=tao/PortableServer/PolicyS.h \
 	-Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
 
 IDLFILES = \
-	$(IDLDIR)\FT_CORBA.idl
+        $(IDLDIR)\FT_CORBA_ORB.idl
 
 OBJFILES = \
-	$(OBJDIR)\FT_CORBAC.obj	\
-        $(OBJDIR)\FT_CORBAS.obj
+        $(OBJDIR)\FT_CORBA_ORBC.obj \
+        $(OBJDIR)\FT_CORBA_ORBS.obj \
+	$(OBJDIR)\FT_IOGR_Property.obj \
+	$(OBJDIR)\FT_Policy_i.obj \
+	$(OBJDIR)\FT_Endpoint_Selector_Factory.obj \
+	$(OBJDIR)\FT_Invocation_Endpoint_Selectors.obj \
+        $(OBJDIR)\FT_PolicyFactory.obj \
+	$(OBJDIR)\FT_Service_Activate.obj \
+        $(OBJDIR)\FT_Service_Callbacks.obj \
+        $(OBJDIR)\FT_ORBInitializer.obj
 
 RESOURCE = $(OBJDIR)\FaultTolerance.res
 
@@ -31,7 +40,6 @@ CFLAGS = \
 	$(TAO_NAMING_CFLAGS) \
 	$(TAO_EVENT_CFLAGS) \
 	$(TAO_NOTIFY_CFLAGS) \
-	$(TAO_FT_CFLAGS) \
         $(TAO_FTORB_CFLAGS) \
 	-DTAO_FT_BUILD_DLL
 
@@ -50,7 +58,6 @@ LIBFILES = \
 	$(TAO_SVC_UTILS_LIB) \
 	$(TAO_NAMING_LIB) \
 	$(TAO_EVENT_LIB) \
-        $(TAO_FTORB_LIB) \
 	$(TAO_NOTIFY_LIB)
 
 all: idl_src_files
@@ -64,5 +71,5 @@ all: idl_src_files
 
 idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
 
-$(IDLDIR)\FT_CORBAC.cpp	$(IDLDIR)\FT_CORBAS.cpp: $(IDLDIR)\FT_CORBA.idl
+$(IDLDIR)\FT_CORBA_ORBC.cpp $(IDLDIR)\FT_CORBA_ORBS.cpp: $(IDLDIR)\FT_CORBA_ORB.idl
 	$(TAO_IDL) $**

@@ -3,11 +3,20 @@ Mon Jan 14 09:52:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
         * tao/Makefile.bor:
           Added Request_Dispatcher
 
-        * tao/orbsvcs/tests/Makefile.bor:
+        * orbsvcs/tests/Makefile.bor:
           Added new Miop directory
 
-        * tao/orbsvcs/tests/Miop/Makefile.bor:
+        * orbsvcs/tests/Miop/Makefile.bor:
           Added new BCB makefile
+
+        * orbsvcs/orbsvcs/FT_ORB.bor:
+          Added new BCB makefile for this library
+
+        * orbsvcs/orbsvcs/FaultTolerance.bor:
+          Updated makefile to use the new FT_ORB library
+
+        * orbsvcs/orbsvcs/Makefile.bor:
+          Added new FT_ORB.bor makefile
 
 Sun Jan 13 21:50:22 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
