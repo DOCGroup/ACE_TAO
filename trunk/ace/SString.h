@@ -57,7 +57,7 @@ public:
   // Constructor that copies <s> into dynamically allocated memory.
   // If <release> is non-0 then the <ACE_allocator> is responsible for
   // freeing this memory. Memory is _not_ allocated/freed if <release>
-  // is 0. 
+  // is 0.
 
   ACE_CString (const char *s,
                size_t len,
@@ -66,7 +66,7 @@ public:
   // Constructor that copies <len> chars of <s> into dynamically
   // allocated memory (will NUL terminate the result).  If <release>
   // is non-0 then the <ACE_allocator> is responsible for freeing this
-  // memory. Memory is _not_ allocated/freed if <release> is 0. 
+  // memory. Memory is _not_ allocated/freed if <release> is 0.
 
   ACE_CString (const ACE_CString &);
   // Copy constructor.
@@ -196,9 +196,9 @@ ACE_Export ostream &operator << (ostream &, const ACE_CString &);
 class ACE_Export ACE_WString
 {
   // = TITLE
-  //   This class provides a wrapper facade for C wide strings. 
+  //   This class provides a wrapper facade for C wide strings.
   //
-  // = DESCRIPTION 
+  // = DESCRIPTION
   //     This class uses an <ACE_Allocator> to allocate memory.  The
   //     user can make this a persistant class by providing an
   //     <ACE_Allocator> with a persistable memory pool.  This is a
@@ -488,7 +488,7 @@ private:
 ACE_Export ostream &operator << (ostream &, const ACE_SString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-// This allows one to use W or C String based on the Unicode 
+// This allows one to use W or C String based on the Unicode
 // setting
 #if defined (UNICODE)
 typedef ACE_WString ACE_TString;
@@ -615,7 +615,7 @@ class ACE_Export ACE_Auto_String_Free
   //   The class plays the same role as auto_ptr<>
   //
 public:
-  /* explicit */ ACE_Auto_String_Free (char* p = 0);
+  ACE_EXPLICIT ACE_Auto_String_Free (char* p = 0);
   ACE_Auto_String_Free (ACE_Auto_String_Free &rhs);
   ACE_Auto_String_Free& operator= (ACE_Auto_String_Free &rhs);
   ~ACE_Auto_String_Free (void);
