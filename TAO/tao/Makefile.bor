@@ -119,6 +119,7 @@ OBJFILES = \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
 	$(OBJDIR)\MCAST_Parser.obj \
+	$(OBJDIR)\Messaging.obj \
 	$(OBJDIR)\MessagingC.obj \
 	$(OBJDIR)\Messaging_ORBInitializer.obj \
 	$(OBJDIR)\Messaging_PolicyFactory.obj \

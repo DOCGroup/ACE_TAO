@@ -1,3 +1,48 @@
+Mon Jan 28 16:11:36 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Add generation of the AMH_*ExceptionHolder valuetype.
+
+	* TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+	  The IDL compiler simply calls the shared code in
+	  TAO_Messaging_Helper::exception_holder_raise().
+	  Using a shared function for the raise methods in the
+	  ExceptionHolders reduced the line count from 59Kloc to 56Kloc,
+	  more importantly it saved 10% in the text segment for
+	  param_testC.o.
+
+	* TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+	  Cleanup indentation.
+	  Generate throw specs for valuetype operations.
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+	  Remove obsolete @@ comment.
+
+	* tao/Messaging.h:
+	* tao/Messaging.cpp:
+	  Add new Messaging.cpp, it should contain helper code used in the
+	  implementation of CORBA Messaging.
+
+	* tao/Makefile:
+	* tao/Makefile.am:
+	* tao/Makefile.bor:
+	  Add new Messaging.cpp file and update deps.
+
+	* tao/BiDir_GIOP/Makefile:
+	* tao/Domain/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/DynamicInterface/Makefile:
+	* tao/IFR_Client/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile:
+	* tao/RTCORBA/Makefile:
+	* tao/RTPortableServer/Makefile:
+	* tao/SmartProxies/Makefile:
+	* tao/Strategies/Makefile:
+	* tao/TypeCodeFactory/Makefile:
+	  Update deps.
+
 Mon Jan 28 13:40:38 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:

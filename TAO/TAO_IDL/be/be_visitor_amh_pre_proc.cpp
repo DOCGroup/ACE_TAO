@@ -80,6 +80,18 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
                        "visit_interface - module is null\n"),
                       -1);
 
+  // Create the exception holder, it needs to go before the response
+  // handler, because the response handler uses an exception holder as
+  // argument for some of its operations....
+  be_valuetype *excep_holder =
+    this->create_exception_holder (node);
+  excep_holder->set_defined_in (node->defined_in ());
+  excep_holder->original_interface (node);
+  module->be_add_interface (excep_holder, node);
+  module->set_has_nested_valuetype ();
+
+  // Remember from whom we were cloned
+
   // Create the ResponseHandler class
   be_interface *response_handler = this->create_response_handler (node);
   if (response_handler == 0)
@@ -97,6 +109,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 
   // Remember from whom we were cloned
   response_handler->original_interface (node);
+
 
   return 0;
 }
@@ -457,7 +470,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   this->generate_name (excep_holder_local_name,
                        "AMH_",
                        node->name ()->last_component ()->get_string(),
-                       "");
+                       "ExceptionHolder");
 
   UTL_ScopedName *excep_holder_name =
     ACE_static_cast (UTL_ScopedName *, node->name ()->copy ());
@@ -478,54 +491,49 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.
 
-  if (node->nmembers () > 0)
+  // initialize an iterator to iterate thru our scope
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      // initialize an iterator to iterate thru our scope
-      for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-           !si.is_done ();
-           si.next ())
+      AST_Decl *d = si.item ();
+
+      if (d == 0)
         {
-          AST_Decl *d = si.item ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_amh_pre_proc::"
+                             "visit_interface - "
+                             "bad node in this scope\n"),
+                            0);
+        }
 
-          if (d == 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_amh_pre_proc::"
-                                 "visit_interface - "
-                                 "bad node in this scope\n"),
-                                0);
+      be_decl *op = be_decl::narrow_from_decl (d);
 
-            }
+      if (d->node_type () == AST_Decl::NT_attr)
+        {
+          AST_Attribute *attribute = AST_Attribute::narrow_from_decl (d);
 
-          be_decl *op = be_decl::narrow_from_decl (d);
+          if (!attribute)
+            return 0;
 
-          if (d->node_type () == AST_Decl::NT_attr)
-            {
-              AST_Attribute *attribute = AST_Attribute::narrow_from_decl (d);
+          this->create_raise_operation (op,
+                                        excep_holder,
+                                        GET_OPERATION);
 
-              if (!attribute)
-                return 0;
-
-              this->create_raise_operation (op,
-                                            excep_holder,
-                                            GET_OPERATION);
-
-              if (!attribute->readonly ())
-                {
-                  this->create_raise_operation (op,
-                                                excep_holder,
-                                                SET_OPERATION);
-                }
-
-            }
-          else
+          if (!attribute->readonly ())
             {
               this->create_raise_operation (op,
                                             excep_holder,
-                                            NORMAL);
+                                            SET_OPERATION);
             }
-        } // end of while loop
-    } // end of if
+        }
+      else
+        {
+          this->create_raise_operation (op,
+                                        excep_holder,
+                                        NORMAL);
+        }
+    }
 
   return excep_holder;
 }
@@ -558,7 +566,7 @@ be_visitor_amh_pre_proc::create_raise_operation (be_decl *node,
 
   // Name the operation properly
   UTL_ScopedName *op_name = ACE_static_cast (UTL_ScopedName *,
-                                             excep_holder->name ()-> copy ());
+                                             excep_holder->name ()->copy ());
 
   ACE_CString new_local_name ("raise_");
 

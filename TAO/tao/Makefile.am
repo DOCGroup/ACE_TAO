@@ -164,6 +164,7 @@ ORB_CORE_FILES = \
   Tagged_Components.cpp \
   Services.cpp \
   NVList.cpp \
+  Messaging.cpp \
   MessagingC.cpp \
   Policy_Manager.cpp \
   Messaging_Policy_i.cpp \
