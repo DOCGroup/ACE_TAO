@@ -28,7 +28,7 @@ TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
   return len + asso_values[(int) str[1]] + asso_values[(int) str[0]] + asso_values[(int) str[len - 1]];
 }
 
-const struct TAO_IDL_CPP_Keyword_Entry *
+const TAO_IDL_CPP_Keyword_Entry *
 TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
 {
   enum
@@ -42,7 +42,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
       DUPLICATES = 0
     };
 
-  static const struct TAO_IDL_CPP_Keyword_Entry wordlist[] =
+  static const TAO_IDL_CPP_Keyword_Entry wordlist[] =
     {
       {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"delete",  "_cxx_delete"},
