@@ -508,6 +508,12 @@ public:
   // all thread spawned by this thread_manager no matter the detached
   // flags are set or not unless it is called with
   // <abandon_detached_threads> flag set.
+  // NOTE that if this function is called while the ACE_Object_Manager
+  // is shutting down (as a result of program rundown via ACE::fini),
+  // it will not wait for any threads to complete. If you must wait for
+  // threads spawned by this thread manager to complete and you are in a
+  // ACE rundown situation (such as your object is being destroyed by the
+  // ACE_Object_Manager) you can use wait_grp instead.
 
   int join (ACE_thread_t tid, void **status = 0);
   // Join a thread specified by <tid>.  Do not wait on a detached thread.
