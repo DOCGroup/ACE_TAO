@@ -1,8 +1,15 @@
+Mon Jan 03 10:46:31 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp (next_n):
+          modified look index so that its comparison is > 0, not
+          >= 0.  Now that it's unsigned, it was causing a compiler
+          warning.
+
 Sun Jan 02 10:48:59 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
-	  Fixed a MSVC warning, complaining about an array
-	  operator.
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators.cpp:
+          Fixed a MSVC warning, complaining about an array
+          operator.
 
 Sat Jan 01 09:18:59 2000  David L. Levine  <levine@cs.wustl.edu>
 
