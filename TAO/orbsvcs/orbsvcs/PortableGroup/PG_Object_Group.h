@@ -18,8 +18,9 @@
 
 #ifndef TAO_PG_OBJECT_GROUP_H_
 #define TAO_PG_OBJECT_GROUP_H_
-#include /**/ <ace/pre.h>
-#include <ace/ACE.h>
+#include /**/ "ace/pre.h"
+
+#include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -37,9 +38,9 @@ namespace TAO
 
 /////////////////////////////////
 // Includes needed by this header
-#include <orbsvcs/orbsvcs/PortableGroupC.h>
-#include <tao/PortableServer/PortableServer.h>
-#include <ace/Hash_Map_Manager_T.h>
+#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "tao/PortableServer/PortableServer.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "PG_Location_Hash.h"
 #include "PG_Location_Equal_To.h"
 #include "PG_Object_Group_Manipulator.h"

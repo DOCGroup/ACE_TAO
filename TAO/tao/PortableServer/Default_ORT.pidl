@@ -38,7 +38,7 @@
 #ifndef TAO_DEFAULT_ORT_PIDL
 #define TAO_DEFAULT_ORT_PIDL
 
-#include <tao/ObjRefTemplate/ObjectReferenceTemplate.pidl>
+#include "tao/ObjRefTemplate/ObjectReferenceTemplate.pidl"
 
 module TAO_Default_ORT
 {

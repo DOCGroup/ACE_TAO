@@ -17,7 +17,7 @@
 #include "orbsvcs/orbsvcs/FT_FaultDetectorFactoryC.h"
 #include "orbsvcs/orbsvcs/FT_ReplicationManagerC.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
-#include <tao/debug.h>
+#include "tao/debug.h"
 
 ACE_RCSID (FT_DefaultFaultAnalyzer,
            FT_DefaultFaultAnalyzer,

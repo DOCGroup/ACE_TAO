@@ -19,7 +19,7 @@
 #include "orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.h"
 #include "orbsvcs/orbsvcs/PortableGroup/PG_Operators.h"
 #include "orbsvcs/orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include <tao/debug.h>
+#include "tao/debug.h"
 #include <iostream>
 
 ACE_RCSID (FT_ReplicationManagerFaultAnalyzer,

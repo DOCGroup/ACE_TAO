@@ -7,6 +7,7 @@
 #ifndef TAO_ORB_IDL
 #define TAO_ORB_IDL
 
+///FUZZ: disable check_for_include/
 #include <tao/OctetSeq.pidl>
 #include <tao/StringSeq.pidl>
 

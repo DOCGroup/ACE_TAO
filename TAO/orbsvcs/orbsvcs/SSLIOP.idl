@@ -9,8 +9,8 @@
 #ifndef _SSLIOP_IDL
 #define _SSLIOP_IDL
 
-#include <tao/IOP.pidl>
-#include <Security.idl>
+#include "tao/IOP.pidl"
+#include "Security.idl"
 // #include <Firewall.idl>
 
 #pragma prefix "omg.org"

@@ -3,10 +3,10 @@
 // $Id$
 
 #include "StubFaultNotifier.h"
-#include <ace/Get_Opt.h>
-#include <ace/OS_NS_stdio.h>
-#include <tao/PortableServer/ORB_Manager.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h>
+#include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
+#include "tao/PortableServer/ORB_Manager.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 

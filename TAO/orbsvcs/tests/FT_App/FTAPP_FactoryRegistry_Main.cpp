@@ -12,8 +12,8 @@
  */
 //=============================================================================
 
-#include <tao/Utils/Server_Main.h>
-#include <orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h>
+#include "tao/Utils/Server_Main.h"
+#include "orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
