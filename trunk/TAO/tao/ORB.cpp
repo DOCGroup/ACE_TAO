@@ -1185,7 +1185,7 @@ void CORBA_ORB::_tao_unexpected_exception (void)
 
 // ****************************************************************
 
-// ORB initialisation, per OMG document 94-9-46.
+// ORB initialisation, per OMG document 98-12-01.
 //
 
 CORBA::ORB_ptr
@@ -1206,11 +1206,12 @@ CORBA::ORB_init (int &argc,
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
   // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                            *ACE_Static_Object_Lock::instance (), 0));
+                            *ACE_Static_Object_Lock::instance (),
+                            CORBA::ORB::_nil ()));
 
   // Make sure initialization of TAO globals only occurs once.
   CORBA_ORB::init_orb_globals (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   if (orbid == 0 || ACE_OS::strcmp (orbid, "") == 0)
     {
@@ -1263,21 +1264,22 @@ CORBA::ORB_init (int &argc,
   // Initialize the ORB Core instance.
   int result = oc->init (argc, argv);
 
+  // Check for errors and return 0 if error.
+  if (result == -1)
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::ORB::_nil ());
+    }
+
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO (%P|%t) created new ORB <%s>\n",
                 orbid));
 
-  // Check for errors and return 0 if error.
-  if (result == -1)
-    {
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
-    }
-
   // Before returning remember to store the ORB into the table...
   if (TAO_ORB_Table::instance ()->bind (orbid, oc) != 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                       CORBA::COMPLETED_NO), 0);
+                                       CORBA::COMPLETED_NO),
+                      CORBA::ORB::_nil ());
 
   return oc->orb ();
 }
@@ -1569,10 +1571,12 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
+  TAO_Stub_Auto_Ptr safe_data (data);
+
   // Figure out if the servant is collocated.
   TAO_ServantBase *servant = 0;
   TAO_SERVANT_LOCATION servant_location =
-    this->_get_collocated_servant (data,
+    this->_get_collocated_servant (safe_data.get (),
                                    servant);
 
   int collocated = 0;
@@ -1589,6 +1593,9 @@ CORBA_ORB::url_ior_string_to_object (const char* str,
                                   (CORBA::Boolean) collocated),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  // All is well, so release the stub object from its auto_ptr.
+  data = safe_data.release ();
 
   return obj;
 }

@@ -77,7 +77,12 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     to_unicode_ (0),
     use_tss_resources_ (0),
     leader_follower_ (this),
-    has_shutdown_ (0),
+    has_shutdown_ (1),
+    // Start the ORB in a  "shutdown" state.  The only way to
+    // (re)start the ORB is to call CORBA::ORB_init(), which calls
+    // TAO_ORB_Core::init().  For that reason, only
+    // TAO_ORB_Core::init() should change the ORB shutdown state to
+    // has_shutdown_ = 0, i.e. not shutdown.
     thread_per_connection_use_timeout_ (1),
     open_called_ (0)
 {
@@ -900,14 +905,14 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     }
 
   // Inititalize the "ORB" pseudo-object now.
-  ACE_NEW_RETURN (this->orb_, CORBA_ORB (this), 0);
+  ACE_NEW_RETURN (this->orb_, CORBA_ORB (this), -1);
 
   // This should probably move into the ORB Core someday rather then
   // being done at this level.
   this->orb_->_use_omg_ior_format (use_ior);
 
   // @@ Michael: I don't know if this is the best spot,
-  // we might have to discuss that.
+  //    we might have to discuss that.
   //this->leader_follower_lock_ptr_ =  this->client_factory ()
   //                                       ->create_leader_follower_lock ();
 
@@ -970,18 +975,18 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // Now that we have a complete list of available protocols and their
   // related factory objects, initial;ize the registries!
 
-  // Init the connector registry and create a connector for each
+  // Initialize the connector registry and create a connector for each
   // configured protocol.
   if (this->connector_registry ()->open (this) != 0)
     return -1;
 
-  // Have registry parse the preconnects
+  // Have the connector registry parse the preconnects.
   if (this->orb_params ()->preconnects ().is_empty () == 0)
     this->connector_registry ()->preconnect (this,
                                              this->orb_params ()->preconnects ());
 
-  // When reinitializing an ORB that has been shutdown, make sure that
-  // it is no longer flagged as being shutdown.
+  // The ORB has been initialized, meaning that the ORB is no longer
+  // in the shutdown state.
   this->has_shutdown_ = 0;
 
   return 0;
@@ -1446,8 +1451,11 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      (void) this->open (ACE_TRY_ENV);
+      int ret = this->open (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      if (ret == -1)
+        return -1;
     }
   ACE_CATCHANY
     {
@@ -1597,10 +1605,13 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
   TAO_Acceptor_Registry *ar = this->acceptor_registry ();
   // get a reference to the acceptor_registry!
 
-  (void) ar->open (this, ACE_TRY_ENV);
+  int ret = ar->open (this, ACE_TRY_ENV);
   // Need to return an error somehow!!  Maybe set do_exit?
 
   ACE_CHECK_RETURN (-1);
+
+  if (ret == -1)
+    return -1;
 
   this->open_called_ = 1;
 
