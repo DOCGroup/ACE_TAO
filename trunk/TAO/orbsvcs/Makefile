@@ -8,7 +8,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = \
+DIRS  = orbsvcs \
         Naming_Service \
         Scheduling_Service \
         Event_Service \
