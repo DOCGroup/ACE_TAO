@@ -1,3 +1,30 @@
+Thu Jun 26 09:49:38 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
+
+	* Added a full range of optimizations to the TAO IIOP interpretive
+	marshaling engine. The static methods encoder and decoder have
+	been removed from the CDR class. Instead, separate classes for
+	marshaling have been created for each individual data type. The
+	CDR stream maintains a factory that returns an appropriate
+	marshaling object depending on the data type to be
+	marshaled. Files added include marshal.h, marshal.i, encode.cpp,
+	decode.cpp, deep_free.cpp, and deep_copy.cpp. The marshal.h file
+	defines classes for an abstract MarshalObject. The factory is
+	responsible to return a concrete specialized instance of the
+	MarshalObject. 
+
+	* Updated the CORBA_TypeCode class so that it now provides all the
+	CORBA_2.0 compliant operations. These include length(),
+	content_type(), member_type(), member_label(),
+	discriminant_type(), id(), default_index(). The equal() operations
+	is still not implemented. In addition, precomputation
+	optimizations are applied to the TypeCode class. This includes
+	precomputing various parameters (if any) of a TypeCode. For
+	example, a struct TypeCode keeps track of the member count and
+	member types. As a result, it is not necessary to interpret the
+	CDR encapsulated stream to retrieve these parameters.
+
+	* At this time, there are some problems getting the Unions to work.
+
 Thu Jun 12 15:45:49 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/lib/objtable.cpp: Added explicit template instantiations
