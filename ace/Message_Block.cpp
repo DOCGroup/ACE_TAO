@@ -199,18 +199,6 @@ ACE_Message_Block::size (size_t length)
   if (this->data_block ()->size (length) == -1)
     return -1;
 
-  // Reset the read and write pointers if we've changed the underlying
-  // memory buffer.
-  else if (this->data_block ()->base () != old_base)
-    {
-      // Compute the old deltas...
-      int r_delta = this->rd_ptr_ - old_base;
-      int w_delta = this->wr_ptr_ - old_base;
-
-      // ... and use them to initialize the new deltas.
-      this->rd_ptr_ = this->data_block ()->base () + r_delta;
-      this->wr_ptr_ = this->data_block ()->base () + w_delta;
-    }
   return 0;
 }
 
@@ -711,8 +699,8 @@ ACE_Message_Block::duplicate (void) const
   // same relative offset as in the existing <Message_Block>.  Note
   // that we are assuming that the data_block()->base() pointer
   // doesn't change when it's duplicated.
-  nb->rd_ptr (this->rd_ptr_ - this->data_block ()->base ());
-  nb->wr_ptr (this->wr_ptr_ - this->data_block ()->base ());
+  nb->rd_ptr (this->rd_ptr_);
+  nb->wr_ptr (this->wr_ptr_);
 
   // Increment the reference counts of all the continuation messages.
   if (this->cont_)
@@ -807,8 +795,8 @@ ACE_Message_Block::clone (Message_Flags mask) const
 
   // Set the read and write pointers in the new <Message_Block> to the
   // same relative offset as in the existing <Message_Block>.
-  nb->rd_ptr (this->rd_ptr_ - this->data_block ()->base ());
-  nb->wr_ptr (this->wr_ptr_ - this->data_block ()->base ());
+  nb->rd_ptr (this->rd_ptr_);
+  nb->wr_ptr (this->wr_ptr_);
 
   // Clone all the continuation messages if necessary.
   if (this->cont () != 0
