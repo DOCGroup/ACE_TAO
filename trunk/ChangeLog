@@ -7,11 +7,28 @@ Mon May  7 07:14:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* bin/auto_run_tests.lst: Commented out OctetSeq test from running
 	  in static configurations. 
 
+Mon May  7 06:40:44 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Shared_Memory/test_SV.cpp: Cast SHM_KEY to (key_t) to
+	  make BCB happy.  Thanks to Johnny Willemsen for this.
+
+Sat May  5 15:30:40 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* THANKS: Just added the 1,200th contributor to the ACE+TAO.
+	  Thanks to Alexandre Cervieri <alexandre.cervieri@terra.com.br>
+ 	  for helping us hit a new milestone!
+
 Sat May  5 08:51:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Just commented the HP_UX
 	  builds. OCI seems to be having problems with their HP
 	  machine. We will get it online once the builds start running. 
+
+Sat May  5 08:01:30 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* tests/Thread_Mutex_Test.cpp: Added a series of tests that exercise
+	  the new functionality of the ACE_Guard.  Thanks to Christopher
+ 	  Kohlhoff <chris@kohlhoff.com> for providing the enhancements.
 
 Fri May  4 15:42:20 2001  Craig Rodrigues <crodrigu@bbn.com>
 
@@ -19,6 +36,12 @@ Fri May  4 15:42:20 2001  Craig Rodrigues <crodrigu@bbn.com>
           Changed ACE_SERVICETYPE_CONTROLLEDLOAD from 2 to 1
           This is necessary to work with RAPI.
 
+Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.h: Changed the typedefs of uid_t, gid_t, and mode_t to
+	  match those in standard POSIX.  Thanks to Gonzalo Diethelm
+ 	  <Gonzalo.Diethelm@sonda.com> for reporting this.
+  
 Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
