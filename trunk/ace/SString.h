@@ -35,6 +35,11 @@ ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_CString 
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_WString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class ACE_Export ACE_String_Base<char>;
+template class ACE_Export ACE_String_Base<ACE_WSTRING_TYPE>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
 /**
  * @brief This class retain the backward compatibility for
  *  Naming_Conext and related classes.  The only addition to

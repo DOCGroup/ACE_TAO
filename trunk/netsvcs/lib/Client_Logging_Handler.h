@@ -37,6 +37,10 @@
 #define LOGGING_ADDR ACE_INET_Addr
 #endif /* ACE_HAS_STREAM_PIPES */
 
+#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
+template class ACE_Svc_Export ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>;
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
+
 class ACE_Svc_Export ACE_Client_Logging_Handler : public ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>
 {
   // = TITLE

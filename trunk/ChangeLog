@@ -1,3 +1,35 @@
+Mon Feb 18 19:28:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/README:
+        * ace/Proactor.cpp:
+        * ace/SString.h:
+        * ace/Task_T.h:
+        * ace/Timer_Queue_Adapters.h:
+        * ace/config-win32-msvc-7.h:
+        * netsvcs/lib/Client_Logging_Handler.h:
+        * netsvcs/lib/Name_Handler.h:
+        * netsvcs/lib/TS_Clerk_Handler.h:
+        * netsvcs/lib/TS_Server_Handler.h:
+
+          Made ACE compiling with the Microsoft Visual C++ 7 compiler.
+          Template classes cannot be exported when doing a dynamic build, so
+          removed some export macro's from template definitions. When a class
+          is derived from a class template then the class template must be
+          explicit instantiated and be exported. To make sure that we only do
+          this when a compiler supports this we introduced the new define
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT. Also vc++ 7 generates
+          now a warning when a class is exported is derived from a class that
+          is not exported.
+
+          The following info was given by Microsoft on this:
+          The reason that a template can't be exported anymore is that it is
+          unlikely that anyone wants to export all specializations of a
+          class template. When B is a template and D is a class, the
+          construction 'class ACE_Export D : public B<D>' should
+          give no problems, but unfornately there is a bug in the vc++ compiler.
+
+          That's why we now explicit export the template instantations in ace.
+
 Mon Feb 18 11:00:17 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* html/index.html: Added an entry for ACEXML document.

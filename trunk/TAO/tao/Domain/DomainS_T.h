@@ -35,7 +35,7 @@ TAO_NAMESPACE  POA_CORBA
 {
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class TAO_Export DomainManager_tie : public DomainManager
+  class DomainManager_tie : public DomainManager
   {
   public:
     DomainManager_tie (T &t);
@@ -48,7 +48,7 @@ TAO_NAMESPACE  POA_CORBA
     // ctor with T*, ownership flag and a POA
     ~DomainManager_tie (void);
     // dtor
-    
+
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -60,7 +60,7 @@ TAO_NAMESPACE  POA_CORBA
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-    
+
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -72,12 +72,12 @@ TAO_NAMESPACE  POA_CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
       private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-    
+
     // copy and assignment are not allowed
     DomainManager_tie (const DomainManager_tie &);
     void operator= (const DomainManager_tie &);
@@ -85,7 +85,7 @@ TAO_NAMESPACE  POA_CORBA
 
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
-  class TAO_Export ConstructionPolicy_tie : public ConstructionPolicy
+  class ConstructionPolicy_tie : public ConstructionPolicy
   {
   public:
     ConstructionPolicy_tie (T &t);
@@ -98,7 +98,7 @@ TAO_NAMESPACE  POA_CORBA
     // ctor with T*, ownership flag and a POA
     ~ConstructionPolicy_tie (void);
     // dtor
-    
+
     // TIE specific functions
     T *_tied_object (void);
     // return the underlying object
@@ -110,7 +110,7 @@ TAO_NAMESPACE  POA_CORBA
     // do we own it
     void _is_owner (CORBA::Boolean b);
     // set the ownership
-    
+
     // overridden ServantBase operations
     PortableServer::POA_ptr _default_POA (
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
@@ -123,36 +123,36 @@ TAO_NAMESPACE  POA_CORBA
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
         CORBA::PolicyType policy_type (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
         ::CORBA::Policy_ptr copy (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
         void destroy (
-        
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
       private:
     T *ptr_;
     PortableServer::POA_var poa_;
     CORBA::Boolean rel_;
-    
+
     // copy and assignment are not allowed
     ConstructionPolicy_tie (const ConstructionPolicy_tie &);
     void operator= (const ConstructionPolicy_tie &);
