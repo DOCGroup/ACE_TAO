@@ -43,13 +43,21 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::reconnected (PROXY *proxy,
                                            CORBA::Environment &)
 {
   int r = this->impl_.rebind (proxy, 1);
-  if (r != 0)
+  if (r == 0)
+    return;
+
+  if (r == 1)
     {
       // Reference count is incremented by the callers to [re]connected.
       // @@ Find out if the protocol could be simplified, and decoupling
       //    increased.
       proxy->_decr_refcnt ();
       return;
+    }
+
+  if (r == -1)
+    {
+      proxy->_decr_refcnt ();
     }
 }
 
