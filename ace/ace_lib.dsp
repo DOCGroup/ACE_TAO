@@ -786,6 +786,33 @@ SOURCE=.\CDR_Stream.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Configuration.cpp
+
+!IF  "$(CFG)" == "ACE LIB - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Debug"
+
+!ELSEIF  "$(CFG)" == "ACE LIB - Win32 PharLap ETS Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Containers.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Debug"
@@ -4995,6 +5022,10 @@ SOURCE=.\config.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Configuration.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector.h
 # End Source File
 # Begin Source File
@@ -5876,6 +5907,10 @@ SOURCE=.\CDR_Stream.i
 # Begin Source File
 
 SOURCE=.\Cleanup_Strategies_T.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Configuration.i
 # End Source File
 # Begin Source File
 
