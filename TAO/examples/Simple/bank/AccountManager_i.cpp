@@ -45,48 +45,47 @@ Bank::Account_ptr
 AccountManager_i::open (const char *name,
                         CORBA::Float initial_balance,
                         CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Account_i *result = 0;
 
   // If name is already in the map, <find> will assign <result> to the
   // appropriate value.
 
+  if (hash_map_.find (name, result) != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "[SERVER] Process/Thread Id : (%P/%t) Opening Account (%s,%8.2f)\n",
+                  name,
+                  initial_balance));
 
-      if (hash_map_.find (name, result) != 0)
+      ACE_NEW_THROW_EX (result,
+                        Account_i (name,
+                                   initial_balance),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (Bank::Account::_nil ());
+
+      // Enter the new Account in the hash map. If the <bind> fails
+      // throw an UNKNOWN exception. <result> may be valid but since
+      // it is not properly bound, it's behaviour may be off, so
+      // delete it to be safe.
+
+      if (hash_map_.bind (name, result) == -1)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "[SERVER] Process/Thread Id : (%P/%t) Opening Account (%s,%8.2f)\n",
-                      name,
-                      initial_balance));
-
-          ACE_NEW_THROW_EX (result,
-                            Account_i (name,
-                                       initial_balance),
-                            CORBA::NO_MEMORY ());
-          ACE_CHECK_RETURN (Bank::Account::_nil ());
-
-          // Enter the new Account in the hash map. If the <bind>
-          // fails throw an UNKNOWN exception. <result> may be valid
-          // but since it is not properly bound, it's behaviour may be
-          // off, so delete it to be safe.
-
-          if (hash_map_.bind (name, result) == -1)
-            {
-              delete result;
-              TAO_THROW_RETURN (CORBA::UNKNOWN (),
-                                Bank::Account::_nil ());
-            }
+          delete result;
+          TAO_THROW_RETURN (CORBA::UNKNOWN (),
+                            Bank::Account::_nil ());
         }
-      else
-        if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "[SERVER] Process/Thread Id : (%P/%t) Account already exists for %s\n",
-                      name));
-      // Generate an IOR for the result object and register it with
-      // the POA.  In case the object already exists then the
-      // previously generated IOR is returned.
+    }
+  else if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "[SERVER] Process/Thread Id : (%P/%t) Account already exists for %s\n",
+                name));
+  // Generate an IOR for the result object and register it with the
+  // POA.  In case the object already exists then the previously
+  // generated IOR is returned.
 
- return result->_this ();
+  return result->_this ();
 }
 
 // Shutdown.
@@ -94,6 +93,7 @@ AccountManager_i::open (const char *name,
 void
 AccountManager_i::close (Bank::Account_ptr account,
                          CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
@@ -123,6 +123,7 @@ AccountManager_i::close (Bank::Account_ptr account,
 
 void
 AccountManager_i::shutdown (CORBA::Environment &)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n[SERVER] Process/Thread Id : (%P/%t) %s\n",

@@ -1,13 +1,15 @@
+Thu Jun 17 21:45:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Simple/bank: Added all the ACE_THROW specs.
+
+	* ChangeLog: Split the ChangeLog to make a ChangeLog-99a since we
+ 	  were already up to 700k of ChangeLog entries for '99!
+
 Thu Jun 17 21:47:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* be/be_visitor_interface/collocated_sh.cpp:
 	* be/be_visitor_interface/collocated_ss.cpp: Added code for
 	  generating collocated _is_a and _non_existent methods.
-
-Thu Jun 17 21:45:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* ChangeLog: Split the ChangeLog to make a ChangeLog-99a since we
- 	  were already up to 700k of ChangeLog entries for '99!
 
 Thu Jun 17 19:38:57 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
