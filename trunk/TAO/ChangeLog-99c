@@ -1,3 +1,8 @@
+Fri Apr  2 13:25:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/POA/Default_Servant/File_i.cpp: 
+	  Fixed some more warnings.
+
 Fri Apr  2 12:33:45 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/Default_Servant/File_i.cpp: 
