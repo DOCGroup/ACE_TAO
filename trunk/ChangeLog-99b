@@ -1,3 +1,9 @@
+Mon Aug 16 11:59:18 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): Constructed and passed a
+	  complete sockaddr_in to the ACE_OS::join_leaf () call. This was
+	  just being passed sockaddr_in.sin_addr.s_addr.
+
 Sat Aug 14 18:01:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/run_tests.pl:
