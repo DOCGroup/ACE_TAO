@@ -1,3 +1,11 @@
+Tue Jul 20 16:13:46 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp (connect): 
+	* tao/IIOP_Connector.cpp (connect): 
+
+	  Since the <cached_connect_strategy> is a member we no longer
+	  need any kind of dynamic casting to obtain it.
+
 Mon Jul 19 18:06:00 1999 Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	Connection Caching Feature
