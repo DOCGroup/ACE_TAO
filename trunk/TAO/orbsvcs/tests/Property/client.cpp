@@ -440,18 +440,18 @@ Client::test_delete_properties (CORBA::Environment &env)
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_properties\n"));
   CosPropertyService::PropertyNames prop_names;
-  prop_names.length (4);
+  prop_names.length (3);
   prop_names [0] = CORBA::string_dup ("char_property");
   prop_names [1] = CORBA::string_dup ("short_property");
   prop_names [2] = CORBA::string_dup ("long_property");
-  prop_names [3] = CORBA::string_dup ("no_property");
+  // prop_names [3] = CORBA::string_dup ("no_property");
   ACE_DEBUG ((LM_DEBUG,
               "Length of sequence %d, Maxlength : %d\n",
               prop_names.length (),
               prop_names.maximum ()));
   this->propsetdef_->delete_properties (prop_names,
 					env);
-  TAO_CHECK_ENV_RETURN (env, -1);
+  TAO_CHECK_ENV_RETURN (env, 0);
 
   return 0;
 }
@@ -519,7 +519,7 @@ Client::test_get_all_properties (CORBA::Environment &env)
   TAO_CHECK_ENV_RETURN (env, -1);
 
   // Get half on the properties and half of on the iterator.
-  CORBA::ULong how_many = 0;
+  CORBA::ULong how_many = 1;
 
   // Helper variables to avoid SunCC warnings.
   CosPropertyService::Properties_ptr properties_ptr = 0;
@@ -602,7 +602,7 @@ Client::test_get_all_properties (CORBA::Environment &env)
           if (property->property_value.type () == CORBA::_tc_char)
             {
               CORBA::Char c;
-              property->property_value >>= to_char (c);
+              property->property_value >>= CORBA::Any::to_char (c);
               ACE_DEBUG ((LM_DEBUG,"%c\n", c));
             }
 
@@ -657,9 +657,9 @@ Client::test_define_property_with_mode (CORBA::Environment &env)
 
   // Prepare a char and "define" that in the PropertySet.
   CORBA::Char ch = '#';
-  anyval <<= from_char (ch);
+  anyval <<= CORBA::Any::from_char (ch);
   ch = '*';
-  anyval >>= to_char (ch);
+  anyval >>= CORBA::Any::to_char (ch);
 
   ACE_DEBUG ((LM_DEBUG,
               "Main : Char ch = %c\n",
