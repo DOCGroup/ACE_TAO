@@ -5629,6 +5629,13 @@ ACE_OS::gethrtime (void)
   // ACE_TRACE ("ACE_OS::gethrtime");
 #if defined (ACE_HAS_HI_RES_TIMER)
   ACE_OSCALL_RETURN (::gethrtime (), int, -1);
+#elif defined (ACE_HAS_AIX_HIRES_TIMER)
+  timebasestruct_t tb;
+
+  ::read_real_time(&tb, TIMEBASE_SZ);
+  ::time_base_to_time(&tb, TIMEBASE_SZ);
+
+  return tb.tb_high * 1000000000L + tb.tb_low;
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_HI_RES_TIMER */
