@@ -473,7 +473,7 @@ run_client (void)
   else
     ACE_Thread_Manager::instance ()->wait ();
 #else
-  (*OPTIONS::instance ()->thr_func) ();
+  *(OPTIONS::instance ()->thr_func) ();
 #endif /* ACE_HAS_THREADS */
   return 0;
 }
