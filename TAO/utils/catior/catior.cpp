@@ -536,7 +536,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     have_some_input = 1;
                   }
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
-                if (have_some_input == 0)
+                if (have_some_input == 0 || !aString.length())
                   break;
                 ACE_DEBUG ((LM_DEBUG,
                             "\nhere is the IOR\n%s\n\n",
