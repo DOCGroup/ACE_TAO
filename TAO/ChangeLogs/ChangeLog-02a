@@ -1,3 +1,9 @@
+Mon Apr 24 11:46:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.cpp:
+          Fixed memory management problems with the RB Tree based proxy
+          collections.
+
 Mon Apr 24 13:16:23 2000  Shawn Hannan  <hannan@tango.cs.wustl.edu>
 
 	* orbsvcs/examples/RtEC/Simple/Supplier.h: 
