@@ -265,33 +265,15 @@ TAO_ClientRequestInfo::add_request_service_context (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  IOP::ServiceContextList &service_context_list =
-    this->invocation_->service_info ();
+  // Get the service context from the list
+  TAO_Service_Context &service_context_list =
+    this->invocation_->request_service_context ();
 
-  // Copy the service context into the list.
-  CORBA::ULong len = service_context_list.length ();
-
-  // First check if a service context with the same ID exists.
-  for (CORBA::ULong i = 0; i < len; ++i)
+  if (service_context_list.set_context (service_context,replace) == 0)
     {
-      if (service_context_list[i].context_id ==
-          service_context.context_id)
-        {
-          if (replace)
-            {
-              service_context_list[i] = service_context;
-              return;
-            }
-          else
-            ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 11,
-                                             CORBA::COMPLETED_NO));
-        }
+      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 11,
+                                       CORBA::COMPLETED_NO));
     }
-
-  // No service context with the given ID exists so add one.
-  service_context_list.length (len + 1);
-
-  service_context_list[len] = service_context;
 }
 
 CORBA::ULong
@@ -432,34 +414,15 @@ TAO_ClientRequestInfo::get_request_service_context (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  IOP::ServiceContextList &service_context_list =
-    this->invocation_->service_info ();
-  CORBA::ULong len = service_context_list.length ();
+  // Get the service context from the list
+  TAO_Service_Context &service_context_list =
+    this->invocation_->request_service_context ();
 
-  for (CORBA::ULong i = 0; i < len; ++i)
-    if (service_context_list[i].context_id == id)
-      {
-        IOP::ServiceContext *service_context = 0;
-        ACE_NEW_THROW_EX (service_context,
-                          IOP::ServiceContext,
-                          CORBA::NO_MEMORY (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
-                              ENOMEM),
-                            CORBA::COMPLETED_NO));
-        ACE_CHECK_RETURN (0);
-
-        IOP::ServiceContext_var safe_service_context = service_context;
-
-        (*service_context) = service_context_list[i];
-
-        return safe_service_context._retn ();
-      }
-
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 23,
-                                      CORBA::COMPLETED_NO),
-                    0);
+  return this->get_service_context_i (service_context_list,
+                                      id,
+                                      ACE_TRY_ENV);
 }
+
 
 IOP::ServiceContext *
 TAO_ClientRequestInfo::get_reply_service_context (
@@ -467,33 +430,49 @@ TAO_ClientRequestInfo::get_reply_service_context (
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  IOP::ServiceContextList &service_context_list =
-    this->invocation_->service_info ();
-  CORBA::ULong len = service_context_list.length ();
+  // Get the service context from the list
+  TAO_Service_Context &service_context_list =
+    this->invocation_->reply_service_context ();
 
-  for (CORBA::ULong i = 0; i < len; ++i)
-    if (service_context_list[i].context_id == id)
-      {
-        IOP::ServiceContext *service_context = 0;
-        ACE_NEW_THROW_EX (service_context,
-                          IOP::ServiceContext,
-                          CORBA::NO_MEMORY (
-                            CORBA::SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
-                              ENOMEM),
-                            CORBA::COMPLETED_NO));
-        ACE_CHECK_RETURN (0);
+  return this->get_service_context_i (service_context_list,
+                                      id,
+                                      ACE_TRY_ENV);
+}
 
-        IOP::ServiceContext_var safe_service_context = service_context;
+IOP::ServiceContext *
+TAO_ClientRequestInfo::get_service_context_i (
+    TAO_Service_Context &service_context_list,
+    IOP::ServiceId id,
+    CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Create a new service context to be returned.  Assume
+  // success.
+  IOP::ServiceContext *service_context = 0;
+  ACE_NEW_THROW_EX (service_context,
+                    IOP::ServiceContext,
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (0);
 
-        (*service_context) = service_context_list[i];
+  IOP::ServiceContext_var safe_service_context = service_context;
 
-        return safe_service_context._retn ();
-      }
-
-  ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 23,
-                                      CORBA::COMPLETED_NO),
-                    0);
+  service_context->context_id = id;
+  if (service_context_list.get_context (*service_context) != 0)
+    {
+      // Found.
+      return safe_service_context._retn ();
+    }
+  else
+    {
+      // Not found.
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 23,
+                                          CORBA::COMPLETED_NO),
+                        0);
+    }
 }
 
 void

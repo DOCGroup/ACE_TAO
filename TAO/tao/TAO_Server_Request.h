@@ -126,15 +126,16 @@ public:
   TAO_ObjectKey &object_key (void);
 
   /**
-   * @todo These two methods should go away.
+   * @todo This two methods should go away.
    */
   //@{
-  IOP::ServiceContextList &service_info (void);
-  void service_info (IOP::ServiceContextList &service_info);
+  IOP::ServiceContextList &request_service_info (void);
+  IOP::ServiceContextList &reply_service_info (void);
   //@}
 
   /// Return the TAO_Service_Context
-  TAO_Service_Context &service_context (void);
+  TAO_Service_Context &request_service_context (void);
+  TAO_Service_Context &reply_service_context (void);
 
   /// Return the underlying transport
   TAO_Transport *transport ();
@@ -239,11 +240,9 @@ private:
   /// created.
   TAO_ORB_Core *orb_core_;
 
-  /// The service context for the request (CORBA Reference?).
-  // IOP::ServiceContextList service_info_;
-
   /// Service Context info
-  TAO_Service_Context service_context_;
+  TAO_Service_Context request_service_context_;
+  TAO_Service_Context reply_service_context_;
 
   /// Unique identifier for a request.
   CORBA::ULong request_id_;

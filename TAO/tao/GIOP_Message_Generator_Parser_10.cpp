@@ -29,7 +29,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
     TAO_OutputCDR &msg)
 {
   // Write the service context list
-  msg << opdetails.service_info ();
+  msg << opdetails.request_service_info ();
 
   // The request ID
   msg << opdetails.request_id ();
@@ -296,7 +296,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   TAO_InputCDR& input = request.incoming ();
 
   IOP::ServiceContextList &service_info =
-    request.service_info ();
+    request.request_service_info ();
 
   input >> service_info;
 

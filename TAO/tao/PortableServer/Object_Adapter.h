@@ -40,6 +40,7 @@
 
 // RTCORBA
 #include "tao/RTCORBAC.h"
+#include "tao/Service_Context.h"
 
 // Local Object
 #include "tao/LocalObject.h"
@@ -733,7 +734,8 @@ public:
     // <post_invoke> method hasn't been called.  Unlike <post_invoke>,
     // this method cannot propagate exceptions to the user.
 
-    void pre_invoke (IOP::ServiceContextList &service_context_list,
+    void pre_invoke (TAO_Service_Context &request_service_context,
+                     TAO_Service_Context &reply_service_context,
                      CORBA::Environment &ACE_TRY_ENV);
     // Checks if target POA supports RTCORBA::CLIENT_PROPAGATED
     // PriorityModel.  If so, stores the original priority of the
