@@ -1,11 +1,13 @@
 // $Id$
 
-#include "ace/Service_Types.h"
 #include "ace/Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Object.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Service_Types.h"
+#include "ace/DLL.h"
 
 ACE_RCSID(ace, Service_Object, "$Id$")
 
@@ -20,11 +22,11 @@ ACE_Service_Type::dump (void) const
 
 ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
-                                    const ACE_SHLIB_HANDLE h,
+                                    ACE_DLL *dll,
                                     int active)
   : name_ (0),
     type_ (t),
-    handle_ (h),
+    dll_ (dll),
     active_ (active),
     fini_already_called_ (0)
 {
@@ -38,8 +40,7 @@ ACE_Service_Type::~ACE_Service_Type (void)
 
   this->fini ();
 
-  if (this->handle_ != 0)
-    ACE_OS::dlclose ((ACE_SHLIB_HANDLE) this->handle_);
+  delete dll_;
 
   delete [] (ACE_TCHAR *) this->name_;
 }

@@ -329,21 +329,34 @@ ACE_Location_Node::dump (void) const
 
 ACE_Location_Node::ACE_Location_Node (void)
   : pathname_ (0),
+    delete_dll_ (0),
+    dll_ (0),
     symbol_ (0)
 {
   ACE_TRACE ("ACE_Location_Node::ACE_Location_Node");
+  ACE_NEW (dll_, ACE_DLL);
 }
 
 ACE_Location_Node::~ACE_Location_Node (void)
 {
   ACE_TRACE ("ACE_Location_Node::~ACE_Location_Node");
+  if (this->delete_dll_)
+    delete dll_;
+}
+
+ACE_DLL *
+ACE_Location_Node::dll (void)
+{
+  // Now caller owns dll.
+  this->delete_dll_ = 0;
+  return this->dll_; 
 }
 
 ACE_SHLIB_HANDLE
 ACE_Location_Node::handle (void)
 {
   ACE_TRACE ("ACE_Location_Node::handle");
-  return this->dll_.get_handle (1);         // Caller now owns the handle
+  return this->dll_->get_handle (0);         // Caller does not own the handle
 }
 
 const ACE_TCHAR *
@@ -379,11 +392,11 @@ ACE_Location_Node::open_dll (void)
 {
   ACE_TRACE ("ACE_Location_Node::open_dll");
 
-  if (-1 == this->dll_.open (this->pathname ()))
+  if (-1 == this->dll_->open (this->pathname ()))
     {
       ace_yyerrno++;
 
-      ACE_TCHAR *errmsg = this->dll_.error ();
+      ACE_TCHAR *errmsg = this->dll_->error ();
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("ACE_DLL::open failed for %s: %s\n"),
                   this->pathname (),
@@ -420,12 +433,12 @@ ACE_Object_Node::symbol (ACE_Service_Object_Exterminator *)
     {
       ACE_TCHAR *object_name = ACE_const_cast (ACE_TCHAR *, this->object_name_);
 
-      this->symbol_ = this->dll_.symbol (object_name);
+      this->symbol_ = this->dll_->symbol (object_name);
       if (this->symbol_ == 0)
         {
           ace_yyerrno++;
 
-          ACE_TCHAR *errmsg = this->dll_.error ();
+          ACE_TCHAR *errmsg = this->dll_->error ();
           ACE_ERROR ((LM_ERROR,
                       ACE_LIB_TEXT ("ACE_DLL::symbol failed for object %s: %s\n"),
                       object_name,
@@ -489,7 +502,7 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       // close to (or, at least claim to conform with) the standard
       // did not complain about this as an illegal pointer conversion.
       long temp_ptr =
-        ACE_reinterpret_cast(long, this->dll_.symbol (function_name));
+        ACE_reinterpret_cast(long, this->dll_->symbol (function_name));
       func = ACE_reinterpret_cast(void *(*)(ACE_Service_Object_Exterminator *),
                                   temp_ptr);
 
@@ -501,7 +514,7 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
             {
               ace_yyerrno++;
 
-              ACE_TCHAR *errmsg = this->dll_.error ();
+              ACE_TCHAR *errmsg = this->dll_->error ();
               ACE_ERROR ((LM_ERROR,
                           ACE_LIB_TEXT ("ACE_DLL::symbol failed for function %s: %s\n"),
                           function_name,

@@ -22,7 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Event_Handler.h"
-
+#include "ace/DLL.h"
 #define ACE_Component ACE_Service_Object
 /**
  * @class ACE_Service_Object
@@ -54,6 +54,7 @@ public:
 
 // Forward decl.
 class ACE_Service_Type_Impl;
+class ACE_DLL;
 
 /**
  * @class ACE_Service_Type
@@ -86,7 +87,7 @@ public:
   // = Initialization and termination methods.
   ACE_Service_Type (const ACE_TCHAR *n,
                     ACE_Service_Type_Impl *o,
-                    const ACE_SHLIB_HANDLE handle,
+                    ACE_DLL *dll,
                     int active);
   ~ACE_Service_Type (void);
 
@@ -97,8 +98,8 @@ public:
   void type (const ACE_Service_Type_Impl *,
              int active = 1);
 
-  ACE_SHLIB_HANDLE handle (void) const;
-  void handle (const ACE_SHLIB_HANDLE);
+  //ACE_SHLIB_HANDLE handle (void) const;
+  //void handle (const ACE_SHLIB_HANDLE);
 
   void suspend (void) const;
   void resume (void) const;
@@ -124,8 +125,8 @@ private:
   /// Pointer to C++ object that implements the svc.
   const ACE_Service_Type_Impl *type_;
 
-  /// Handle to shared object file (non-zero if dynamically linked).
-  ACE_SHLIB_HANDLE handle_;
+  /// ACE_DLL representing the shared object file (non-zero if dynamically linked).
+  ACE_DLL *dll_;
 
   /// 1 if svc is currently active, otherwise 0.
   int active_;
