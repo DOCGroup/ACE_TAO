@@ -1,24 +1,31 @@
+Tue Feb 10 08:45:10 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Fixed a bug in the template where no binary targets would be built
+          if there are no libraries linked in.
+
 Tue Feb 10 07:29:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/OS_NS_wchar.h:
+        * ace/OS_NS_wchar.h:
 
-	  #included ace/os_include/os_errno.h. Needed for builds where
-	  ACE_HAS_SIGNAL_SAFE_OS_CALLS is defined. Thanks to Kobi
-	  Cohen-Arazi for the patch.
+          #included ace/os_include/os_errno.h. Needed for builds where
+          ACE_HAS_SIGNAL_SAFE_OS_CALLS is defined. Thanks to Kobi
+          Cohen-Arazi for the patch.
 
 Mon Feb  9 18:21:41 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Naming/Name_Binding.h: The Name_Binding destructor
-	  should use ACE_OS::free(), not delete[], to release type_. It
-	  was allocated using ACE_OS::strdup().
+        * examples/APG/Naming/Name_Binding.h: The Name_Binding destructor
+          should use ACE_OS::free(), not delete[], to release type_. It
+          was allocated using ACE_OS::strdup().
 
 Mon Feb  9 16:10:07 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/Memory_Pool.cpp: ACE_Shared_Memory_Pool::commit_backing_store_name()
-	  and ACE_Shared_Memory_Pool::handle_signal() ACE_ERROR_RETURN
- 	  macros were returning the wrong value (0 instead of -1).  Thanks
- 	  to Kobi Cohen-Arazi <kobi-co@barak-online.net> for reporting
- 	  this problem.
+        * ace/Memory_Pool.cpp: ACE_Shared_Memory_Pool::commit_backing_store_name()
+          and ACE_Shared_Memory_Pool::handle_signal() ACE_ERROR_RETURN
+          macros were returning the wrong value (0 instead of -1).  Thanks
+          to Kobi Cohen-Arazi <kobi-co@barak-online.net> for reporting
+          this problem.
 
 Mon Feb  9 13:58:30 2004  Chad Elliott  <elliott_c@ociweb.com>
 
