@@ -50,11 +50,11 @@
 #define ACE_SIZEOF_CHAR 1
 
 // Unfortunately, there isn't a portable way to determine the size of a wchar.
-#if defined (VXWORKS) && defined (ghs)
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
 # define ACE_SIZEOF_WCHAR 1
 #else
 # define ACE_SIZEOF_WCHAR sizeof (wchar_t)
-#endif /* VXWORKS && ghs */
+#endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
 // The number of bytes in a short.
 #if !defined (ACE_SIZEOF_SHORT)
@@ -105,7 +105,9 @@
 #  if defined (ACE_WIN32)
 #    define ACE_SIZEOF_LONG_LONG 8
      typedef unsigned __int64 ACE_UINT64;
-#  elif !defined (ACE_LACKS_LONGLONG_T)
+#  elif defined (ACE_LACKS_LONGLONG_T)
+#    define ACE_SIZEOF_LONG_LONG 8
+#  else
      // Some compilers use ULLONG_MAX and others (e.g. Irix) use ULONGLONG_MAX
 #    if defined (ULLONG_MAX) && !defined (__GNUG__)
 #      if (ULLONG_MAX) == 18446744073709551615ULL
@@ -162,6 +164,8 @@
 #   define ACE_UINT64_DEFINED
 # endif  /* ACE_SIZEOF_LONG_LONG == 8 */
 #endif /* defined (ACE_SIZEOF_LONG_LONG) */
+
+# define ACE_SIZEOF_LONG_LONG 8
 
 // If the platform lacks a long long, define one.
 #if defined (ACE_LACKS_LONGLONG_T)
@@ -228,35 +232,30 @@
     ACE_UINT32 lo_;
   };
 
-# define ACE_USES_ACE_U_LONGLONG
-# define ACE_SIZEOF_LONG_LONG 8
-
 #elif !defined (ACE_SIZEOF_LONG_LONG)
-  // If ACE_SIZEOF_LONG_LONG is not yet known, but the platform doesn't
+  // ACE_SIZEOF_LONG_LONG is not yet known, but the platform doesn't
   // claim ACE_LACKS_LONGLONG_T, so assume it has 8-byte long longs.
-
-# define ACE_SIZEOF_LONG_LONG 8
 # if !defined (ACE_UINT64_DEFINED)
+#   define ACE_UINT64_DEFINED
 #   if defined (sun)
       // sun #defines u_longlong_t, maybe other platforms do also.
       // Use it, at least with g++, so that its -pedantic doesn't
       // complain about no ANSI C++ long long.
       typedef u_longlong_t ACE_UINT64;
-#     define ACE_UINT64_DEFINED
 #   else
       // LynxOS 2.5.0 and Linux don't have u_longlong_t.
       typedef unsigned long long ACE_UINT64;
-#     define ACE_UINT64_DEFINED
 #   endif /* sun */
 # endif /* !defined ACE_UINT64_DEFINED */
 #endif /* !defined ACE_SIZEOF_LONG_LONG */
 
 #if !defined (ACE_UINT64_DEFINED)
-# if defined (ACE_USES_ACE_U_LONGLONG)
+# define ACE_UINT64_DEFINED
+# if defined (ACE_LACKS_LONGLONG_T)
     typedef ACE_U_LongLong ACE_UINT64;
 # else
 #   error Have to add to the ACE_UINT64 type setting
-# endif /* ACE_USES_ACE_U_LONGLONG */
+# endif /* ACE_LACKS_LONGLONG_T */
 #endif /* ACE_UINT64_DEFINED */
 
 // The number of bytes in a void *.
