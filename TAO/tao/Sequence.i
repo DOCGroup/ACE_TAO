@@ -268,6 +268,58 @@ TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (void) const
   return ACE_reinterpret_cast(const CORBA::Octet * ACE_CAST_CONST, this->buffer_);
 }
 
+// This function is a little too big to be inlined, but some compilers
+// (Sun/CC 4.1?) die if it isn't :-(
+ACE_INLINE CORBA::Octet *
+TAO_Unbounded_Sequence<CORBA::Octet>::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA::Octet *result = 0;
+  if (orphan == CORBA::B_FALSE)
+    {
+      // We retain ownership.
+
+      if (this->buffer_ == 0)
+        {
+          // The buffer was not allocated, we must allocate it now.
+          result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
+          this->buffer_ = result;
+        }
+      else
+        {
+          result =
+            ACE_reinterpret_cast (CORBA::Octet*,this->buffer_);
+        }
+    }
+  else if (this->mb_ != 0) // (orphan == CORBA::B_TRUE)
+    {
+      // We must create a copy anyway:
+      //   the user is supposed to call freebuf() to release the
+      //   buffer, but the buffer is inside a Message_Block...
+      //   We thought about storing the pointer to the Message_Block
+      //   somewhere at the beginning of the buffer (before the actual
+      //   data), but that will not work in 64 bit machines when the
+      //   buffer comes from a CDR stream.
+      //
+      result = TAO_Unbounded_Sequence<CORBA::Octet>::allocbuf (this->length_);
+      ACE_OS::memcpy (result, this->buffer_, this->length_);
+    }
+  else if (this->release_ != CORBA::B_FALSE)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA::Octet*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = CORBA::B_FALSE;
+    }
+  /* else
+     // Oops, it's not our buffer to relinquish...
+     return 0;
+  */
+  return result;
+}
+
 ACE_INLINE CORBA::Octet &
 TAO_Unbounded_Sequence<CORBA::Octet>::operator[] (CORBA::ULong i)
 {
