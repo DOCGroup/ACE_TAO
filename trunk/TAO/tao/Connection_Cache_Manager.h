@@ -126,11 +126,11 @@ public:
   int purge (void);
   // Remove entries from the cache depending upon the strategy.
 
+  int purge_entry (HASH_MAP_ENTRY *&);
+  // Purge the entry from the Cache Map
+
   int make_idle (HASH_MAP_ENTRY *&entry);
   // Make the entry idle and ready for use.
-
-  int mark_closed (HASH_MAP_ENTRY *&entry);
-  // Mark the entry as closed
 
   int close (ACE_Handle_Set &handle_set);
   // Close the underlying hash map manager and return the handle set
@@ -178,11 +178,11 @@ private:
   int make_idle_i (HASH_MAP_ENTRY *&entry);
   // Non-locking version and actual implementation of make_idle ().
 
-  int mark_closed_i (HASH_MAP_ENTRY *&entry);
-  // Non-locking version and actual implementation of mark_closed ()
-
   int close_i (ACE_Handle_Set &handle_set);
   // Non-locking version and actual implementation of close ()
+
+  int purge_entry_i (HASH_MAP_ENTRY *&entry);
+  // Purge the entry from the Cache Map
 
 private:
 
@@ -200,6 +200,7 @@ private:
   // Tries to find if the <int_id_> in entry is idle for use. If it is
   // idle it is immediately markes as busy and returns a value of
   // 1, else it returns a value of 0
+
 
 private:
 

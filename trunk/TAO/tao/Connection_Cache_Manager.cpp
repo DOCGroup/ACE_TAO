@@ -57,7 +57,7 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
 
   // When it comes for bind we know the handler is going to be busy
   // and is marked for a partcular thread. So, mark it busy
-  int_id.recycle_state (ACE_RECYCLABLE_BUSY);
+  ext_id.recycle_state (ACE_RECYCLABLE_BUSY);
 
   int retval = this->cache_map_.bind (ext_id,
                                       int_id,
@@ -200,7 +200,7 @@ TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
   if (retval == 0)
     {
 
-      new_entry->int_id_.
+      new_entry->ext_id_.
         recycle_state (ACE_RECYCLABLE_IDLE_AND_PURGABLE);
 
       entry = new_entry;
@@ -215,50 +215,42 @@ TAO_Connection_Cache_Manager::make_idle_i (HASH_MAP_ENTRY *&entry)
   return retval;
 }
 
-int
-TAO_Connection_Cache_Manager::mark_closed_i (HASH_MAP_ENTRY *&entry)
-{
-  // First get the entry again (if at all things had changed in the
-  // cache map in the mean time)
-  HASH_MAP_ENTRY *new_entry = 0;
-
-  int retval = this->cache_map_.find (entry->ext_id_,
-                                      new_entry);
-  if (retval == 0)
-    {
-
-      new_entry->int_id_.
-        recycle_state (ACE_RECYCLABLE_CLOSED);
-
-      entry = new_entry;
-    }
-    else if (TAO_debug_level > 0 && retval != 0)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::make_idle_i")
-                  ACE_TEXT ("unable to locate the entry to mark it as closed \n")));
-    }
-
-  return retval;
-}
 
 int
 TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
 {
 
+  // We will loop twice
+
+  // First we look through whether we have entries that have already
+  // been closed. If so we will just purge them from the map
+
   for (HASH_MAP_ITER iter = this->cache_map_.begin ();
        iter != this->cache_map_.end ();
        ++iter)
     {
+      if ((*iter).ext_id_.recycle_state () == ACE_RECYCLABLE_CLOSED)
+        {
+          HASH_MAP_ENTRY *entry = 0;
+          this->cache_map_.find ((*iter).ext_id_,
+                                 entry);
 
-      // Should I look for IDLE & PURGABLE ones to remove? That would
-      // sound odd as we would be called at ORB destruction time. So,
-      // we should just go ahead and remove the entries from the map
+          // Call the implementation directly.
+          this->purge_entry_i (entry);
 
+        }
+    }
+
+  // In the second step do the management of the rest
+  for (HASH_MAP_ITER iter = this->cache_map_.begin ();
+       iter != this->cache_map_.end ();
+       ++iter)
+    {
       // As a first step, check whether the handler has been
       // registered with the reactor. If registered, then get the
       // handle and set that in the <handle_set> so that the ORB_Core
       // would deregister them from the reactor before shutdown.
+
       if ((*iter).int_id_.handler ()->is_registered ())
         {
           handle_set.set_bit ((*iter).int_id_.handler ()->fetch_handle ());
@@ -273,6 +265,14 @@ TAO_Connection_Cache_Manager::close_i (ACE_Handle_Set &handle_set)
 
   return 0;
 }
+
+int
+TAO_Connection_Cache_Manager::purge_entry_i (HASH_MAP_ENTRY *&entry)
+{
+  // Remove the enrty from the Map
+  return this->cache_map_.unbind (entry);
+}
+
 
 int
 TAO_Connection_Cache_Manager::
@@ -306,14 +306,14 @@ int
 TAO_Connection_Cache_Manager::
     is_entry_idle (HASH_MAP_ENTRY *&entry)
 {
-  if (entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
-      entry->int_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
+  if (entry->ext_id_.recycle_state () == ACE_RECYCLABLE_IDLE_AND_PURGABLE ||
+      entry->ext_id_.recycle_state () == ACE_RECYCLABLE_IDLE_BUT_NOT_PURGABLE)
     {
       // Save that in the handler
       entry->int_id_.handler ()->cache_map_entry (entry);
 
       // Mark the connection as busy
-      entry->int_id_.recycle_state (ACE_RECYCLABLE_BUSY);
+      entry->ext_id_.recycle_state (ACE_RECYCLABLE_BUSY);
 
       return 1;
     }
