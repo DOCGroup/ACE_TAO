@@ -54,6 +54,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
 
   // Init the return type variable.
   bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -111,7 +112,8 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
   if (this->gen_throw_spec (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%N:%l) be_visitor_operation_ami_exception_holder_operation_cs::")
+                         ACE_TEXT ("(%N:%l) be_visitor_operation_ami_")
+                         ACE_TEXT ("exception_holder_operation_cs::")
                          ACE_TEXT ("::visit_operation - ")
                          ACE_TEXT ("Failed to generate throw spec\n")),
                         -1);
@@ -121,51 +123,39 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
 
   *os << this->gen_environment_var () << be_nl;
 
-
+  // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      os->indent ();
-      *os << "static TAO_Exception_Data "
-          << "exceptions_data [] = " << be_nl;
+      *os << "static TAO_Exception_Data " << "exceptions_data [] = " << be_nl;
       *os << "{" << be_idt_nl;
-      // initialize an iterator to iterate thru the exception list
-      UTL_ExceptlistActiveIterator *ei;
-      ACE_NEW_RETURN (ei,
-                      UTL_ExceptlistActiveIterator (node->exceptions ()),
-                      -1);
+
+      // Initialize an iterator to iterate thru the exception list.
+      UTL_ExceptlistActiveIterator ei (node->exceptions ());
       int excep_count = 0;
-      // continue until each element is visited
-      while (!ei->is_done ())
+
+      AST_Decl *d = 0;
+
+      // Continue until each element is visited.
+      while (!ei.is_done ())
         {
-          be_exception *excp = be_exception::narrow_from_decl (ei->item ());
+          d = ei.item ();
 
-          if (excp == 0)
-            {
-              delete ei;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_operation_exceptlist_cs"
-                                 "visit_operation - "
-                                 "codegen for scope failed\n"), -1);
+          *os << "{" << be_idt_nl
+              << "\"" << d->repoID () << "\"," << be_nl;
+          // Allocator method.
+          *os << d->name () << "::_alloc" << be_uidt_nl
+              << "}";
 
-            }
-          *os << "{";
-          // the typecode name
-          *os << excp->tc_name ();
-          *os << ", ";
-          // allocator method
-          *os << excp->name () << "::_alloc}";
           excep_count++;
+          ei.next ();
 
-          ei->next ();
-          if (!ei->is_done ())
+          if (!ei.is_done ())
             {
-              *os << ",\n";
-              os->indent ();
+              *os << "," << be_nl;
             }
-          // except the last one is processed?
 
-        } // end of while loop
-      delete ei;
+        }
+
       *os << be_uidt_nl << "};\n\n";
 
       os->indent ();
@@ -207,6 +197,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "CORBA::ULong completion = 0;" << be_nl
       << "if ((_tao_in >> minor) == 0 ||" << be_nl
       << "  (_tao_in >> completion) == 0)" << be_idt_nl;
+
   if (be_global->use_raw_throw ())
     {
       *os << "    throw CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE," << be_idt_nl;
@@ -243,7 +234,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
       << "return;" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl;
 
-  if (node->exceptions())
+  if (node->exceptions ())
     {
       *os << be_idt_nl
           << "else  // it must be user exception" << be_idt_nl
@@ -255,13 +246,9 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
           << "for (CORBA::ULong i = 0;" << be_nl
           << "     i < exceptions_count;" << be_nl
           << "     i++)" << be_idt_nl
-          << "{" << be_idt_nl
-          << "CORBA::TypeCode_ptr tcp = exceptions_data[i].tc;" << be_nl;
+          << "{" << be_idt_nl;
 
-      *os << "const char *except_id = tcp->id (ACE_TRY_ENV);" << be_nl
-          << "ACE_CHECK;" << be_nl
-
-          << "if (ACE_OS::strcmp (type_id.in (), except_id) != 0)" << be_idt_nl
+      *os << "if (ACE_OS::strcmp (type_id.in (), exceptions_data[i].id) != 0)" << be_idt_nl
           << "continue;" << be_uidt_nl << be_nl
 
           << "// match" << be_nl
