@@ -23,7 +23,9 @@
 #include "Driver.h"
 #include "Async_Timer_Queue_Test.h"
 
-typedef Timer_Queue_Test_Driver<Async_Timer_Queue*, Async_Timer_Queue> 
+typedef Timer_Queue_Test_Driver<Async_Timer_Queue*,
+	                        Async_Timer_Queue, 
+				Async_Timer_Queue::ACTION>
         ASYNC_TIMER_QUEUE_TEST_DRIVER;
 
 int
