@@ -43,34 +43,40 @@ be_visitor_operation_ss::~be_visitor_operation_ss (void)
   delete[] this->operation_name_;
 }
 
-// processing to be done after every element in the scope is processed
+// Processing to be done after every element in the scope is processed.
 int
 be_visitor_operation_ss::post_process (be_decl *bd)
 {
-  // all we do here is to insert a comma and a newline
+  // All we do here is to insert a comma and a newline.
   TAO_OutStream *os = this->ctx_->stream ();
+
   if (!this->last_node (bd))
-    *os << ",\n";
+    {
+      *os << ",\n";
+    }
+
   return 0;
 }
 
 int
 be_visitor_operation_ss::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;       // type node for return type
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = 0;
 
-  os = this->ctx_->stream (); // grab the o/p stream
-  this->ctx_->node (node); // save the node for future use
+  this->ctx_->node (node);
 
-  os->indent (); // start with the current indentation level
+  os->indent ();
 
-  // if there is an argument of type "native", return immediately
+  // If there is an argument of type "native", return immediately.
   if (node->has_native ())
-    return 0;
+    {
+      return 0;
+    }
 
-  // retrieve the operation return type
+  // Retrieve the operation return type.
   bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -97,17 +103,22 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // generate the signature of the static skeleton
+  // Generate the signature of the static skeleton.
   os->indent ();
   *os << "void " << intf->full_skel_name () << "::";
-  // check if we are an attribute node in disguise
+
+  // Check if we are an attribute node in disguise.
   if (this->ctx_->attribute ())
     {
-      // now check if we are a "get" or "set" operation
-      if (node->nmembers () == 1) // set
-        *os << "_set_";
+      // Now check if we are a "get" or "set" operation.
+      if (node->nmembers () == 1)
+        {
+          *os << "_set_";
+        }
       else
-        *os << "_get_";
+        {
+          *os << "_get_";
+        }
     }
   *os << node->local_name ()
       << "_skel (" << be_idt << be_idt_nl
@@ -117,12 +128,12 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
       << ")" << be_uidt_nl;
 
-  // generate the actual code for the skeleton. However, if any of the argument
+  // Generate the actual code for the skeleton. However, if any of the argument
   // types is "native", we do not generate any skeleton
-  // last argument - is always CORBA::Environment
+  // last argument - is always CORBA::Environment.
   *os << "{\n" << be_idt;
 
-  // generate all the tables and other pre-skel info
+  // Generate all the tables and other pre-skel info.
   if (this->gen_pre_skel_info (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -133,14 +144,15 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   os->indent ();
-  // get the right object implementation.
+  // Get the right object implementation.
   *os << intf->full_skel_name () << " *_tao_impl = ("
       << intf->full_skel_name () << " *)_tao_object_reference;\n\n";
 
-  // declare a return type variable
+  // Declare a return type variable.
   be_visitor_context ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor || (bt->accept (visitor) == -1))
     {
       delete visitor;
@@ -151,10 +163,11 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                         -1);
     }
 
-  // declare variables for arguments
+  // Declare variables for arguments.
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS);
   visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor || (node->accept (visitor) == -1))
     {
       delete visitor;
@@ -184,10 +197,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << ");" << be_uidt_nl
       << "ACE_CHECK;" << be_nl;
 
-/*
-  *os << "// @@ CORBA::Object_var _tao_objref;\n" << be_nl;
-*/
-
   // Obtain the scope.
   if (node->is_nested ())
     {
@@ -216,12 +225,16 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                             -1);
         }
 
-      // grab the right visitor to generate the return type if its not
+      // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
-        *os <<"_get";
+        {
+          *os << "_get";
+        }
       else
-        *os <<"_set";
+        {
+          *os << "_set";
+        }
     }
 
   *os << " ri (" << be_idt << be_idt_nl
@@ -246,14 +259,6 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   delete visitor;
   *os << be_uidt_nl << ");" << be_uidt_nl << be_nl;
-
-/*
-  *os << "if (_tao_vfr.valid ())" << be_idt_nl
-      << "{" << be_idt_nl
-      << "// @@ _tao_objref = "
-      << "_tao_server_request.objref (ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK;" << be_uidt_nl << "}\n" << be_uidt_nl;
-*/
 
   *os << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl;
@@ -419,7 +424,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       return 0;
     }
 
-  // Marshal outgoing parameters
+  // Marshal outgoing parameters.
   if (this->gen_marshal_params (node, bt) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -437,13 +442,14 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 int
 be_visitor_operation_ss::visit_argument (be_argument *node)
 {
-  // this method is used to generate the ParamData table entry
+  // This method is used to generate the ParamData table entry.
 
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt; // argument type
 
-  // retrieve the type for this argument
+  // Retrieve the type for this argument.
   bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -477,12 +483,12 @@ be_visitor_operation_ss::gen_pre_skel_info (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  // now make sure that we have some in and inout parameters. Otherwise, there
-  // is nothing to be marshaled in
+  // Now make sure that we have some in and inout parameters. Otherwise, there
+  // is nothing to be marshaled in.
   if (this->has_param_type (node, AST_Argument::dir_IN) ||
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
-      // instantiate a TAO_InputCDR variable
+      // Instantiate a TAO_InputCDR variable.
       os->indent ();
       *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();\n";
     }
@@ -498,8 +504,8 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
   be_visitor *visitor;
   be_visitor_context ctx;
 
-  // now make sure that we have some in and inout parameters. Otherwise, there
-  // is nothing to be marshaled in
+  // Now make sure that we have some in and inout parameters. Otherwise, there
+  // is nothing to be marshaled in.
   if (this->has_param_type (node, AST_Argument::dir_IN) ||
       this->has_param_type (node, AST_Argument::dir_INOUT))
     {
@@ -508,11 +514,12 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
       // demarshal the in and inout arguments
       *os << "if (!(\n" << be_idt;
 
-      // marshal each in and inout argument
+      // Marshal each in and inout argument.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
       visitor = tao_cg->make_visitor (&ctx);
+
       if (!visitor || (node->accept (visitor) == -1))
         {
           delete visitor;
@@ -522,9 +529,10 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
                              "codegen for demarshal failed\n"),
                             -1);
         }
+
       *os << be_uidt_nl << "))\n" << be_idt;
 
-      // if marshaling fails, raise exception
+      // If marshaling fails, raise exception.
       if (this->gen_raise_exception (bt, "CORBA::MARSHAL",
                                      "",
                                      "ACE_TRY_ENV") == -1)
@@ -535,6 +543,7 @@ be_visitor_operation_ss::gen_demarshal_params (be_operation *node,
                              "codegen for return var failed\n"),
                             -1);
         }
+
       *os << be_uidt << "\n";
 
     };
@@ -550,9 +559,9 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
   be_visitor *visitor;
   be_visitor_context ctx;
 
-  // setup parameters for marshaling and marshal them into the
-  // outgoing stream
-  // the code below this is for 2way operations only
+  // Setup parameters for marshaling and marshal them into the
+  // outgoing stream.
+  // The code below this is for 2way operations only.
 
   // We will be here only if we are 2way
   // first initialize a reply message
@@ -561,7 +570,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
       << "ACE_CHECK;";
 
   // We still need the following check because we maybe 2way and yet have no
-  // parameters and a void return type
+  // parameters and a void return type.
   if (this->void_return_type (bt) &&
       !this->has_param_type (node, AST_Argument::dir_INOUT) &&
       !this->has_param_type (node, AST_Argument::dir_OUT))
@@ -574,13 +583,18 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
       *os << be_nl;
     }
 
-  // Create temporary variables for the out and return parameters..
+  // Create temporary variables for the out and return parameters.
   if (!this->void_return_type (bt))
     {
       ctx = *this->ctx_;
-      be_visitor_context *new_ctx =
-        new be_visitor_context (ctx);
+
+      be_visitor_context *new_ctx = 0;
+      ACE_NEW_RETURN (new_ctx,
+                      be_visitor_context (ctx),
+                      0);
+
       be_visitor_operation_rettype_post_upcall_ss visitor (new_ctx);
+
       if (bt->accept (&visitor) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -591,9 +605,10 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
         }
     }
 
-  // Generate any temporary variables to demarshal the arguments
+  // Generate any temporary variables to demarshal the arguments.
   ctx = *this->ctx_;
   be_visitor_args_post_upcall_ss vis1 (new be_visitor_context (ctx));
+
   if (node->accept (&vis1) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -608,11 +623,12 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
 
   if (!this->void_return_type (bt))
     {
-      // demarshal the return val and each inout and out argument
+      // Demarshal the return val and each inout and out argument.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_MARSHAL_SS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       visitor = tao_cg->make_visitor (&ctx);
+
       if (!visitor || (node->accept (visitor) == -1))
         {
           delete visitor;
@@ -629,14 +645,17 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
     {
 
       if (!this->void_return_type (bt))
-        // we have already printed the return val. SO put a &&
-        *os << " &&\n";
+        {
+          // We have already printed the return val. SO put a &&.
+          *os << " &&\n";
+        }
 
-      // marshal each in and inout argument
+      // Marshal each in and inout argument.
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS);
       ctx.sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
       visitor = tao_cg->make_visitor (&ctx);
+
       if (!visitor || (node->accept (visitor) == -1))
         {
           delete visitor;
@@ -660,6 +679,7 @@ be_visitor_operation_ss::gen_marshal_params (be_operation *node,
                          "codegen for raising exception failed\n"),
                         -1);
     }
+
   *os << be_uidt << be_uidt << "\n";
 
   return 0;
@@ -676,16 +696,24 @@ be_visitor_operation_ss::gen_raise_exception (be_type *,
   os->indent ();
 
   if (be_global->use_raw_throw ())
-    *os << "throw ";
+    {
+      *os << "throw ";
+    }
   else
-    *os << "ACE_THROW (";
+    {
+      *os << "ACE_THROW (";
+    }
 
   *os << excep << "(" << completion_status << ")";
 
   if (be_global->use_raw_throw ())
-    *os << ";\n";
+    {
+      *os << ";\n";
+    }
   else
-    *os << ");\n";
+    {
+      *os << ");\n";
+    }
 
   return 0;
 }
@@ -697,7 +725,8 @@ be_visitor_operation_ss::gen_check_exception (be_type *,
   TAO_OutStream *os = this->ctx_->stream ();
 
   os->indent ();
-  // check if there is an exception
+
+  // Check if there is an exception.
   *os << "ACE_CHECK;\n";
 
   return 0;
@@ -709,7 +738,8 @@ be_visitor_operation_ss::gen_check_interceptor_exception (be_type *, const char 
   TAO_OutStream *os = this->ctx_->stream ();
 
   os->indent ();
-  // check if there is an exception
+
+  // Check if there is an exception.
   *os << "TAO_INTERCEPTOR_CHECK;\n";
 
   return 0;
@@ -720,9 +750,12 @@ be_visitor_operation_ss::compute_operation_name (be_operation *node)
 {
   if (this->operation_name_ == 0)
     {
-      size_t len = 3;           // the null termination char.
+      size_t len = 3;           // The null termination char.
+
       if (this->ctx_->attribute ())
-        len += 5;               // "Added length for "_set_" or "_get_".
+        {
+          len += 5;               // "Added length for "_set_" or "_get_".
+        }
 
       len += ACE_OS::strlen (node->local_name ()->get_string ());
 
@@ -731,16 +764,23 @@ be_visitor_operation_ss::compute_operation_name (be_operation *node)
                       0);
 
       ACE_OS::strcpy (this->operation_name_, "\"");
+
       if (this->ctx_->attribute ())
         {
           if (node->nmembers () == 1)
-            ACE_OS::strcat (this->operation_name_, "_set_");
+            {
+              ACE_OS::strcat (this->operation_name_, "_set_");
+            }
           else
-            ACE_OS::strcat (this->operation_name_, "_get_");
+            {
+              ACE_OS::strcat (this->operation_name_, "_get_");
+            }
         }
+
       ACE_OS::strcat (this->operation_name_,
                       node->local_name ()->get_string ());
       ACE_OS::strcat (this->operation_name_, "\"");
     }
+
   return this->operation_name_;
 }
