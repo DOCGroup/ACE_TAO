@@ -195,7 +195,7 @@ ACE::ldfind (const char filename[],
   if (s != 0)
     {
       // Check whether this matches the appropriate platform-specific suffix.
-      if (ACE_OS::strcmp (s + 1, ACE_DLL_SUFFIX) == 0)
+      if (ACE_OS::strcmp (s, ACE_DLL_SUFFIX) == 0)
 	got_suffix = 1;
       else
 	ACE_ERROR ((LM_WARNING, 
