@@ -5,7 +5,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
 
-## Makefile.CosLoadManager.am 
+## Makefile.LoadManager.am 
 
 if BUILD_AMI
 if BUILD_INTERCEPTORS
@@ -28,16 +28,15 @@ LoadManager_SOURCES = \
 
 LoadManager_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
   $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -45,7 +44,7 @@ endif !BUILD_MINIMUM_CORBA
 endif BUILD_INTERCEPTORS
 endif BUILD_AMI
 
-## Makefile.CosLoadMonitor.am 
+## Makefile.LoadMonitor.am 
 
 if BUILD_AMI
 if BUILD_INTERCEPTORS
@@ -72,16 +71,14 @@ LoadMonitor_SOURCES = \
 
 LoadMonitor_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLoadBalancing.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
   $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
+  $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
+  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 

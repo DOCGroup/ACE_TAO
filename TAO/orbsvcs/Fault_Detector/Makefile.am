@@ -18,7 +18,8 @@ Fault_Detector_CPPFLAGS = \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
   -I$(TAO_ROOT)/orbsvcs \
-  -I$(TAO_BUILDDIR)/orbsvcs
+  -I$(TAO_BUILDDIR)/orbsvcs \
+  -DTAO_HAS_TYPED_EVENT_CHANNEL
 
 Fault_Detector_SOURCES = \
   FT_FaultDetectorFactory_i.cpp \
@@ -34,17 +35,12 @@ Fault_Detector_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
-  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNotification.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosEvent.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 

@@ -30,17 +30,14 @@ LifeCycle_Service_SOURCES = \
   LifeCycle_Service_i.h
 
 LifeCycle_Service_LDADD = \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
-  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLifeCycle.la \
-  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Serv.la \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_Svc_Utils.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
+  $(TAO_BUILDDIR)/tao/libTAO_DynamicAny.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading_Skel.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosTrading.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosLifeCycle.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORInterceptor.la \
-  $(TAO_BUILDDIR)/tao/libTAO_ObjRefTemplate.la \
-  $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
+  $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
