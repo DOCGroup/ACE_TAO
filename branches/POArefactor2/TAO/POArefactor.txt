@@ -1,3 +1,8 @@
+Fri Oct 29 09:34:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        All PolicyFactory are now loaded on demand with the correct
+        service name
+
 Thu Oct 28 13:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         Changes ServantRetentionPolicyFactory and
