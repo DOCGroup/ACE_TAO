@@ -52,7 +52,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   be_type *bt = 0;
   be_visitor_context ctx (*this->ctx_);
   be_visitor  *visitor = tao_cg->make_visitor (&ctx);
-  
+
   // Save the node.
   this->ctx_->node (node);
 
@@ -88,7 +88,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -121,7 +121,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -135,11 +135,11 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
     }
 
   *os << " (const char *_tao_operation," << be_nl
-      << "IOP::ServiceContextList &_tao_service_context_list";             
-  
+      << "IOP::ServiceContextList &_tao_service_context_list";
+
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
-  
+
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -156,15 +156,15 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
   delete visitor;
 
-  os->indent (); 
+  os->indent ();
   *os << ")" << be_nl;
 
-  // Generate the member list and set each member but before that, 
+  // Generate the member list and set each member but before that,
   // its necessary to pass on some args to the base class.
-  os->indent (); 
+  os->indent ();
   *os << "  : TAO_ServerRequest_Info (_tao_operation, "
       << "_tao_service_context_list)";
-  
+
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARG_INFO_SS);
   visitor = tao_cg->make_visitor (&ctx);
@@ -181,9 +181,9 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
   delete visitor;
 
-  os->decr_indent (); 
+  os->decr_indent ();
   *os << be_nl << "{}\n\n";
-  
+
   *os << "Dynamic::ParameterList *" << be_nl;
 
   if (node->is_nested ())
@@ -193,8 +193,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
       *os << "POA_" << parent->full_name () << "::";
     }
-  
-  *os << "TAO_ServerRequest_Info_"<<node->flat_name (); 
+
+  *os << "TAO_ServerRequest_Info_"<<node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -213,7 +213,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -241,7 +241,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
   *os << ")" << be_idt_nl;
   *os << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
-      << "{" << be_idt_nl 
+      << "{" << be_idt_nl
       << "// Generate the arg list on demand" << be_nl;
 
   if (node->argument_count () == 0 ||
@@ -308,7 +308,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -363,8 +363,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
       delete visitor;
 
-      *os << be_nl 
-          << "return &this->exception_list_;" << be_uidt_nl 
+      *os << be_nl
+          << "return &this->exception_list_;" << be_uidt_nl
           << "}\n\n";
     }
 
@@ -398,7 +398,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
                              "Bad return type\n"),
                             -1);
         }
-      
+
       // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
@@ -431,8 +431,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
   bt = be_type::narrow_from_decl (node->return_type ());
 
-  if (this->void_return_type (bt)) 
-    {      
+  if (this->void_return_type (bt))
+    {
       *os << "CORBA::TypeCode tc (CORBA::tk_void);" << be_nl
           << "this->result_val_.type (&tc);" << be_nl;
     }
@@ -455,8 +455,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
       delete visitor;
     }
-  *os << be_nl 
-      << "return &this->result_val_;" << be_uidt_nl 
+  *os << be_nl
+      << "return &this->result_val_;" << be_uidt_nl
       << "}\n\n";
 
   os->decr_indent ();
@@ -488,7 +488,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
           *os << "POA_"<< parent->full_name () << "::";
         }
 
-      *os << "TAO_ServerRequest_Info_"<<node->flat_name (); 
+      *os << "TAO_ServerRequest_Info_"<<node->flat_name ();
       // We need the interface node in which this operation was defined. However,
       // if this operation node was an attribute node in disguise, we get this
       // information from the context and add a "_get"/"_set" to the flat
@@ -506,7 +506,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
                                  "Bad return type\n"),
                                 -1);
             }
-      
+
           // Grab the right visitor to generate the return type if its not
           // void it means it is not the accessor.
           if (!this->void_return_type (bt))
@@ -537,12 +537,12 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
         }
 
       os->indent ();
-      *os << "  result)" << be_uidt << be_uidt << be_uidt_nl
-          << "  {" << be_idt_nl
+      *os << " result)" << be_uidt << be_uidt << be_uidt_nl
+          << "{" << be_idt_nl
           << "// update the result " << be_nl
           << " this->result_ = result;" << be_uidt_nl
-          << "  }\n\n";
+          << "}\n\n";
     }
- 
-  return 0;    
+
+  return 0;
 }
