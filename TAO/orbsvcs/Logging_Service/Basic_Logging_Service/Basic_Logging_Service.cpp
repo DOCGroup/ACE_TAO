@@ -1,22 +1,21 @@
-// $Id$
-
+/* -*- C++ -*- $Id$ */
+#include "Basic_Logging_Service.h"
 #include "ace/Get_Opt.h"
-#include "Logging_Service.h"
 #include "orbsvcs/Log/BasicLogFactory_i.h"
 
-Logging_Service::Logging_Service (void)
+Basic_Logging_Service::Basic_Logging_Service (void)
   : basic_log_factory_name_ ("BasicLogFactory")
 {
   // No-Op.
 }
 
-Logging_Service::~Logging_Service (void)
+Basic_Logging_Service::~Basic_Logging_Service (void)
 {
   // No-Op.
 }
 
 void
-Logging_Service::init_ORB  (int& argc, char *argv []
+Basic_Logging_Service::init_ORB  (int& argc, char *argv []
                              ACE_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
@@ -43,8 +42,8 @@ Logging_Service::init_ORB  (int& argc, char *argv []
   ACE_CHECK;
 }
 
-void
-Logging_Service::startup (int argc, char *argv[]
+int
+Basic_Logging_Service::startup (int argc, char *argv[]
                           ACE_ENV_ARG_DECL)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -74,7 +73,7 @@ Logging_Service::startup (int argc, char *argv[]
   ACE_DEBUG ((LM_DEBUG,
               "The Basic Log Factory IOR is <%s>\n", str.in ()));
 
-  // Register the Basic Log Factory
+  // Register the Basic Log Factory.
   ACE_ASSERT(!CORBA::is_nil (this->naming_.in ()));
 
   CosNaming::Name name (1);
@@ -89,10 +88,11 @@ Logging_Service::startup (int argc, char *argv[]
   ACE_DEBUG ((LM_DEBUG,
               "Registered with the naming service as: %s\n",
               this->basic_log_factory_name_));
+  return 0;
 }
 
 void
-Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
+Basic_Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService"
@@ -110,7 +110,7 @@ Logging_Service::resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 int
-Logging_Service::run (void)
+Basic_Logging_Service::run (void)
 {
   ACE_DEBUG ((LM_DEBUG, "%s: Running the Telecom Log Service\n", __FILE__));
 
@@ -130,7 +130,7 @@ Logging_Service::run (void)
 }
 
 void
-Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Basic_Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 {
   // Deactivate.
   PortableServer::ObjectId_var oid =
@@ -138,7 +138,7 @@ Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
                                ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  // deactivate from the poa.
+  // Deactivate from the poa.
   this->poa_->deactivate_object (oid.in ()
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
@@ -151,7 +151,7 @@ Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   this->naming_->unbind (name
                          ACE_ENV_ARG_PARAMETER);
 
-  // shutdown the ORB.
+  // Shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
     this->orb_->shutdown ();
 }
@@ -159,15 +159,15 @@ Logging_Service::shutdown (ACE_ENV_SINGLE_ARG_DECL)
 int
 main (int argc, char *argv[])
 {
-  Logging_Service service;
+  Basic_Logging_Service service;
+
+  if (service.startup (argc, argv ACE_ENV_ARG_PARAMETER) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Failed to start the Basic Logging Service.\n"),
+                      1);
 
   ACE_TRY_NEW_ENV
     {
-      service.startup (argc,
-                       argv
-                       ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       if (service.run () == -1)
         {
           service.shutdown ();
@@ -188,3 +188,4 @@ main (int argc, char *argv[])
 
   return 0;
 }
+

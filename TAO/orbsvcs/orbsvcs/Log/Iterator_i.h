@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
-
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -13,7 +13,8 @@
 //   Implementation of the DsLogAdmin::Iterator interface.
 //
 // = AUTHOR
-//    Matthew Braun (mjb2@cs.wustl.edu) and Pradeep Gore <pradeep@cs.wustl.edu>
+//   Matthew Braun <mjb2@cs.wustl.edu>
+//   Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -57,7 +58,7 @@ public:
   //Destructor
 
   DsLogAdmin::RecordList* get (CORBA::ULong position,
-                               CORBA::ULong how_many
+                               CORBA::ULong how_many//,
                                ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      DsLogAdmin::InvalidParam));

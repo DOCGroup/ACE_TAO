@@ -168,6 +168,15 @@ endif
 ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
   MKLIST += Makefile.DsLogAdmin
 endif
+ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.DsEventLogAdmin
+endif
+ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.DsNotifyLogAdmin
+endif
+ifneq (,$(findstring  Log, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.RTEventLogAdmin
+endif
 ifneq (,$(findstring  Security, $(TAO_ORBSVCS)))
   MKLIST += Makefile.Security
 endif

@@ -3,37 +3,38 @@
 // ============================================================================
 //
 // = FILENAME
-//   Logging_Service.h
+//   Event_Logging_Service.h
 //
 // = AUTHOR
-//   Pradeep Gore <pradeep@cs.wustl.edu>
+//   D A Hanvey <d.hanvey@qub.ac.uk>
 //
 // = DESCRIPTION
-//   Telecom Log Service front end.
+//   Telecom EventLog Service front end.
 //
 // ============================================================================
 
-#ifndef LOGGING_SERVICE_H
-#define LOGGING_SERVICE_H
+#ifndef EVENT_LOGGING_SERVICE_H
+#define EVENT_LOGGING_SERVICE_H
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/DsLogAdminC.h"
-#include "orbsvcs/Log/BasicLogFactory_i.h"
+#include "orbsvcs/DsEventLogAdminC.h"
+#include "orbsvcs/Log/EventLogFactory_i.h"
 
-class Logging_Service
+class Event_Logging_Service
 {
   // = TITLE
-  //   Logging_Service
+  //   Event_Logging_Service
   //
   // = DESCRIPTION
-  //   Implementation of the Telecom Log Service
+  //   Implementation of the Telecom EventLog Service
 
  public:
   // = Initialization and termination methods.
-  Logging_Service (void);
+  Event_Logging_Service (void);
   // Constructor.
 
-  virtual ~Logging_Service (void);
+  virtual ~Event_Logging_Service (void);
   // Destructor.
 
   int parse_args (int argc, char *argv []);
@@ -41,14 +42,14 @@ class Logging_Service
 
   void startup (int argc, char *argv[]
                ACE_ENV_ARG_DECL);
-  // Initializes the Telecom Log Service.
+  // Initializes the Telecom EventLog Service.
   // Returns 0 on success, -1 on error.
 
   int run (void);
-  // run the Telecom Log Service.
+  // run the Telecom EventLog Service.
   // Returns 0 on success, -1 on error.
 
-  void shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void shutdown (ACE_ENV_SINGLE_ARG_DECL);
   // Shutdown the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
@@ -61,11 +62,11 @@ protected:
   // Resolve the naming service.
 
   // = Data members
-  const char* basic_log_factory_name_;
+  const char* event_log_factory_name_;
   // The Log Factory name.
 
-  BasicLogFactory_i basic_log_factory_;
-  // The Basic Log Factory.
+  EventLogFactory_i event_log_factory_;
+  // The Event Log Factory.
 
   CORBA::ORB_var orb_;
   // The ORB that we use.
@@ -76,4 +77,4 @@ protected:
   CosNaming::NamingContext_var naming_;
   // A naming context.
 };
-#endif /* LOGGING_SERVICE_H */
+#endif /* EVENT_LOGGING_SERVICE_H */
