@@ -19,18 +19,6 @@ ifr_adding_visitor_exception::~ifr_adding_visitor_exception (void)
 int
 ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
 {
-  // If one of the struct's members is a referenced interface,
-  // there's no need to do anything here. The forward declaration
-  // (if any) will create a repository entry, and the full
-  // definition will take care of the interface's scope. Trying 
-  // to take care of the interface's scope at this point could
-  // cause problems, if the types of all its members have not yet
-  // been declared.
-  if (node->scope_node_type () == AST_Decl::NT_interface)
-    {
-      return 0;
-    }
-
   // If the exception has members that are scopes but not exceptions,
   // the regular visit_scope method should be called instead.
   if (node->scope_node_type () != AST_Decl::NT_except)
