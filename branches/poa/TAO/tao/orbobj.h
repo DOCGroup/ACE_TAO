@@ -38,10 +38,12 @@ class TAO_Export CORBA_ORB : public TAO_IUnknown
   // ORB pseudo-objref.
 {
 public:
-  CORBA::POA_ptr POA_init (int &argc, 
-                           char **argv, 
-                           const char *poa_identifier = 0);
+  /*
+  TAO_POA *POA_init (int &argc, 
+                     char **argv, 
+                     const char *poa_identifier = 0);
   // Initialize the Portable Object Adapter (POA).
+  */
 
   static CORBA::ORB_ptr _duplicate (CORBA::ORB_ptr orb);
   // Return a duplicate of <{orb}>.  When work with this duplicate is

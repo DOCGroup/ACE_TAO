@@ -69,7 +69,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\\" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /Zi /Od /I "..\..\\" /I "..\\" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_BUILD_DLL" /YX /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -208,11 +208,23 @@ SOURCE=.\poa.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\POAC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\POAS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\principa.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\request.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\servant_base.cpp
 # End Source File
 # Begin Source File
 

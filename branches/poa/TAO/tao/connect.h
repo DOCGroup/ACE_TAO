@@ -24,6 +24,7 @@
 
 // Forward Decls
 class TAO_OA_Parameters;
+class TAO_GIOP_RequestHeader;
 
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SVC_HANDLER;
@@ -93,7 +94,7 @@ public:
   // errors, -1 is returned and additional information carried in
   // <env>.
 
-  virtual void handle_request (TAO_GIOP_RequestHeader hdr,
+  virtual void handle_request (const TAO_GIOP_RequestHeader &hdr,
                                CDR &request_body,
                                CDR &response,
                                TAO_Dispatch_Context *some_info,

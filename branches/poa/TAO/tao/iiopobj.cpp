@@ -214,6 +214,23 @@ IIOP_Object::hash (CORBA::ULong max,
   return hashval % max;
 }
 
+int
+operator== (const TAO::ObjectKey &l,
+	    const TAO::ObjectKey &r)
+{
+  if (l.length () != r.length ())
+    return 0;
+
+  for (CORBA::ULong i = 0;
+       i < l.length ();
+       ++i)
+    {
+      if (l[i] != r[i])
+	return 0;
+    }
+  return 1;
+}
+
 // Expensive comparison of objref data, to see if two objrefs
 // certainly point at the same object. (It's quite OK for this to
 // return FALSE, and yet have the two objrefs really point to the same
