@@ -1,39 +1,47 @@
+Fri Jul 14 08:17:59 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * pace/{aio.h,assert.h,ctype.h,dirent.h,fcntl.h,grp.h,locale.h,
+          math.h,mqueue.h,pthread.h,pwd.h,sched.h,semaphore.h,setjmp.h,
+          stdio.h,stdlib.h,string.h,termios.h,time.h,unistd.h,utime.h}:
+          move closing } for extern "C" to near end of file, after
+          .inl #includes.
+
 Fri Jul 14 00:30:38 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ../ace/OS.i
-	  Minor updates. Currently only LynxOS has a dirty build
-	  of libACE, although libACE still can't be linked against
-	  correctly.
+        * ../ace/OS.i
+          Minor updates. Currently only LynxOS has a dirty build
+          of libACE, although libACE still can't be linked against
+          correctly.
 
-	* pace/signal.h
-	* pace/posix/signal.*
-	* pace/stdlib.h
-	* pace/posix/stdlib.*
-	* pace/pthread.h
-	* pace/posix/pthread.*
+        * pace/signal.h
+        * pace/posix/signal.*
+        * pace/stdlib.h
+        * pace/posix/stdlib.*
+        * pace/pthread.h
+        * pace/posix/pthread.*
 
-	  Added typedef of pointers to functions which forced
-	  functions which take pointers to functions to accept
-	  arguments of c++ linkage... I think.
+          Added typedef of pointers to functions which forced
+          functions which take pointers to functions to accept
+          arguments of c++ linkage... I think.
 
 Thu Jul 13 16:37:33 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* ../include/makeinclude/wrapper_macros.GNU
+        * ../include/makeinclude/wrapper_macros.GNU
 
-	  Added 'pace' flag to support compilation with PACE.
-	  'make pace=1' and behold the power of pace!
+          Added 'pace' flag to support compilation with PACE.
+          'make pace=1' and behold the power of pace!
 
-	* include/makeinclude/rules.common.GNU
+        * include/makeinclude/rules.common.GNU
 
-	  Removed netinet, arpa, and common form the VPATH
+          Removed netinet, arpa, and common form the VPATH
 
-	* pace/1/
-	* pace/arpa/
-	* pace/netinet/
-	* pace/common/
+        * pace/1/
+        * pace/arpa/
+        * pace/netinet/
+        * pace/common/
 
-	  Removed. <Update: this didn't work, will have
-	  to wait unil a later date>
+          Removed. <Update: this didn't work, will have
+          to wait unil a later date>
 
 Thu Jul 13 14:57:53 2000  David L. Levine <levine@cs.wustl.edu>
 

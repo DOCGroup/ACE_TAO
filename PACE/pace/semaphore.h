@@ -94,10 +94,6 @@ extern "C" {
    */
   PACE_INLINE int pace_sem_wait (pace_sem_t * sem);
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/semaphore.inl"
@@ -107,5 +103,9 @@ extern "C" {
 #    include "pace/win32/semaphore.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_SEMAPHORE_H */

@@ -53,10 +53,6 @@ extern "C" {
   # define pace_open open
   /* int open (const char *path, int oflag, *//* pace_mode_t mode *//* ... );*/
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/fcntl.inl"
@@ -66,5 +62,9 @@ extern "C" {
 #    include "pace/win32/fcntl.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_FCNTL_H_INDIRECT */

@@ -91,10 +91,6 @@ extern "C" {
    */
   PACE_INLINE int pace_sched_yield ();
 
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
 #if defined (PACE_HAS_INLINE)
 #  if (PACE_HAS_POSIX)
 #    include "pace/posix/sched.inl"
@@ -104,5 +100,9 @@ extern "C" {
 #    include "pace/win32/sched.inl"
 #  endif
 #endif /* PACE_HAS_INLINE */
+
+#if defined (PACE_HAS_CPLUSPLUS)
+}
+#endif /* PACE_HAS_CPLUSPLUS */
 
 #endif /* PACE_SCHED_H */
