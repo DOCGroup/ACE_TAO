@@ -88,6 +88,14 @@ $build = $ARGV[0];
 $build =~ s%^build/%%;        #### remove leading "build/", if any
 $build = "build/$build";
 
+if (-e '/usr/bin/find') {
+  $find = '/usr/bin/find';
+} elsif (-e '/bin/find') {
+  $find = '/bin/find';
+} else {
+  $find = '/find';
+}
+
 ####
 #### check that we're in an ACE "top level" directory
 ####
@@ -103,7 +111,7 @@ $build = "build/$build";
 ####
 #### Get all ACE plain file and directory names.
 ####
-@files = ( `/usr/bin/find . -name CVS -prune \\\
+@files = ( `$find . -name CVS -prune \\\
         -o -name build -prune -o \\\
     -name '.*obj' -prune -o -name Templates.DB -prune -o \\\
     \\( ! -type l ! -name core ! -name '*.state' ! -name '*.so' \\\
@@ -147,7 +155,7 @@ foreach $file ( @files ) {
 ####
 #### Find all the symlinks in the build directory
 ####
-open (LINKS, "find $build -type l |") ||
+open (LINKS, "$find $build -type l |") ||
     die "$0 cannot find symlinks in $build\n";
 
 while (<LINKS>) {
