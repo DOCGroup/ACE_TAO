@@ -633,7 +633,7 @@ GIOP::Invocation::start (CORBA::Environment &env)
   // Get a reference to the client connector
   //  TAO_Client_Factory::CONNECTOR* con = 0;
   TAO_Client_Strategy_Factory::CONNECTOR* con = 0;
-  con = (orb->client_factory ()).connector ();
+  con = (orb->client_factory ())->connector ();
 
   // Determine the object key and the address to which we'll need a connection
   ACE_INET_Addr server_addr;
