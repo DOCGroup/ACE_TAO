@@ -6,9 +6,8 @@ Tue Apr 16 14:20:52 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  it should invoke a make_connection () on the concrete
 	  connectors. This works for all protocols but SSLIOP. SSLIOP
 	  tends to validate some policies in every invocation after which
-	  it sets up a different code flow path. Making the connect ()
-	  virtual helps to retain the existing code path by paying the
-	  cost of a virtual call :-)
+	  it sets up a different code flow path. Making it virtual helps
+	  to maintain the code flow path.
 
 Tue Apr 16 11:57:28 2002  Ossama Othman  <ossama@uci.edu>
 
