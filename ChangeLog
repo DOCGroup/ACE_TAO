@@ -1,3 +1,13 @@
+Thu Oct  7 11:21:37 2004  john_c  <john_c@ociweb.com>
+
+        * ace/SPIPE.cpp
+        * ace/SPIPE.h
+        * ace/SPIPE_Acceptor.cpp
+          When closing stream pipes, only one end was being closed.
+	  This led to file descriptors being leaked each time an 
+          SPIPE_Acceptor is opened. Now both the file
+          descriptors are being closed in close method.
+
 Thu Oct  7 11:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           Reverted my change below, broke the LynxOS build
