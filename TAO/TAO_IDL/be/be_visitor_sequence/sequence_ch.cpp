@@ -208,7 +208,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                 << "CORBA::ULong length," << be_nl
                 << "const ACE_Message_Block* mb" << be_uidt_nl
                 << ")" << be_uidt_nl
-                << "  : CORBA::OctetSeq"
+                << "  : TAO_Unbounded_Sequence<CORBA::Octet>"
                 << " (length, mb) {}" << "\n"
                 << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
     }
