@@ -169,7 +169,7 @@ TAO_POA_Manager::remove_poa (TAO_POA *poa,
   if (!this->closing_down_)
     {
       // Lock access to the POAManager for the duration of this transaction
-      TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+      TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
 
       this->remove_poa_i (poa,
                           ACE_TRY_ENV);

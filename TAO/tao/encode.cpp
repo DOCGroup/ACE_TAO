@@ -1126,7 +1126,7 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
       case CORBA::tk_alias:
       case CORBA::tk_except:
       case CORBA::tk_wstring:
-        retval = stream->encode (tc2, value, 0, env);
+        retval = stream->encode (tc2, data, 0, env);
         break;
       default:
         // anything else is an error
