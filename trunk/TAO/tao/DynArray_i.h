@@ -18,7 +18,7 @@
 
 #include "ace/Containers.h"
 
-class TAO_DynArray_i : public POA_CORBA::DynArray
+class TAO_Export TAO_DynArray_i : public POA_CORBA::DynArray
 {
 public:
                         TAO_DynArray_i      (const CORBA_Any& any);

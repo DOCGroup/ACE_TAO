@@ -18,7 +18,7 @@
 
 #include "tao/DynUnion_i_T.h"
 
-class TAO_DynUnion_i : public POA_CORBA::DynUnion
+class TAO_Export TAO_DynUnion_i : public POA_CORBA::DynUnion
 {
 public:
                         TAO_DynUnion_i      (const CORBA_Any& any);

@@ -18,7 +18,7 @@
 
 #include "ace/Containers.h"
 
-class TAO_DynSequence_i : public POA_CORBA::DynSequence
+class TAO_Export TAO_DynSequence_i : public POA_CORBA::DynSequence
 {
 public:
                         TAO_DynSequence_i   (const CORBA_Any& any);

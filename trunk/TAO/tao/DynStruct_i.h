@@ -18,7 +18,7 @@
 
 #include "ace/Containers.h"
 
-class TAO_DynStruct_i : public POA_CORBA::DynStruct
+class TAO_Export TAO_DynStruct_i : public POA_CORBA::DynStruct
 {
 public:
                         TAO_DynStruct_i     (const CORBA_Any& any);
