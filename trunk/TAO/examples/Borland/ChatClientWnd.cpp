@@ -61,7 +61,7 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
   catch (CORBA::Exception &e)
     {
       ShowMessage ("CORBA Exception in TChatClientWindow constructor: " 
-                   + String (e._id ()));
+                   + String (e._rep_id ()));
       throw;
     }
 }
@@ -94,7 +94,7 @@ void __fastcall TChatClientWindow::FormClose (TObject *Sender,
     }
   catch (CORBA::Exception &e)
     {
-      ShowMessage ("CORBA Exception in FormClose: " + String (e._id ()));
+      ShowMessage ("CORBA Exception in FormClose: " + String (e._rep_id ()));
     }
 }
 //---------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void __fastcall TChatClientWindow::InputMemoKeyPress (TObject *Sender, char &Key
         }
       catch (CORBA::Exception &e)
         {
-          ShowMessage ("CORBA Exception in InputMemoKeyPress: " + String (e._id ()));
+          ShowMessage ("CORBA Exception in InputMemoKeyPress: " + String (e._rep_id ()));
         }
 
       Key = 0;

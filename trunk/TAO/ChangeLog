@@ -1,3 +1,15 @@
+Mon Dec  2 18:42:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Borland/ChatClient.cpp:
+        * examples/Borland/ChatClientWnd.cpp:
+        * examples/Borland/ORBThread.cpp:
+          Made these files compiling with latest version of TAO
+
+        * examples/Borland/README:
+          Added more info about what to do if someone wants to compile
+          this example. Thanks to Tim Smith <timsmith_s@hotmail.com>
+          for reporting that this example doesn't compile anymore.
+
 Mon Dec  2 13:25:20 2002  Craig Rodrigues <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/Makefile.av (ACE_SHLIBS): Add -lTAO_IORTable to
@@ -30,14 +42,14 @@ Fri Nov 29 19:42:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
 	* tao/Strategies/UIOP_Connection_Handler.cpp: Replicated the changes
-	  in IIOP to the above protocols. Need to refactor this code. 
+	  in IIOP to the above protocols. Need to refactor this code.
 
 Fri Nov 29 19:30:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connect_Strategy.h:
 	* tao/Connect_Strategy.cpp: Added a new method post_failed_connect
 	  () which could be used to do cleanup if the connect () call
-	  fails. 
+	  fails.
 
 	* tao/Blocked_Connect_Strategy.h:
 	* tao/Blocked_Connect_Strategy.cpp: Implemented the
@@ -48,7 +60,7 @@ Fri Nov 29 19:30:20 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  take care of cleanup. This fixes a memory leak.
 
 	* tao/IIOP_Connector.cpp: Call post_failed_connect () if the
-	  connect () call fails. 
+	  connect () call fails.
 
 Fri Nov 29 19:25:59 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
