@@ -1,3 +1,11 @@
+Sat Jul 14 18:59:48 2001  Balachandran Natarajan <bala@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.dsp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Server.dsp:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Client.dsp:
+          These dsp files needed the strategies library. Added them to fix
+	  Win32 builds.
+
 Sat Jul 14 17:44:28 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
 	* tests/Param_Test/anyop.dsp (RSC): Looks like this has been
