@@ -361,7 +361,7 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords
 
   ACE_DEBUG ((LM_ERROR,"The number of records in log is %d\n", ACE_U64_TO_U32(nrecords)));
 
-  ACE_RETURN(nrecords);
+  ACE_RETURN(static_cast<int> (nrecords));
 }
 
 int
