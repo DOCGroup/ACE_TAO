@@ -77,12 +77,12 @@ query (const char *type,
     this->trader_.service_type_map ();
   
   TAO_Policies policies (this->trader_, in_policies, env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
 
   // If the importer has specified a starting trader, foward the
   // query.
   CosTrading::TraderName* trader_name = policies.starting_trader (env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
 
   if (trader_name != 0)
     {
@@ -113,7 +113,7 @@ query (const char *type,
     support_attrs.type_repos ();
   CosTradingRepos::ServiceTypeRepository_ptr rep = 
     CosTradingRepos::ServiceTypeRepository::_narrow (type_repos, env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   
   // If type is not found, there is nothing to consider - return.
   // Else we found the service type....proceed with lookup.
@@ -130,7 +130,7 @@ query (const char *type,
 			ordered_offers,
 			returned_limits_applied,
 			env);      
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   
   // Fill the return sequence and iterator with the bountiful results.
   CORBA::ULong offers_returned = 
@@ -141,7 +141,7 @@ query (const char *type,
 			    returned_offers,
 			    returned_offer_iterator,
 			    env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   
   // Determine if we should perform a federated query, and if so
   // construct a sequence of links to follow.
@@ -152,7 +152,7 @@ query (const char *type,
 			  offers_returned,
 			  CosTrading::LinkNameSeq_out (links),
 			  env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   
   if (should_follow)
     {
@@ -169,7 +169,7 @@ query (const char *type,
 			     returned_limits_applied,
 			     env);
     }
-  TAO_CHECK_ENV_RETURN (env,);  
+  TAO_CHECK_ENV_RETURN_VOID (env);  
 }
 
 template <class TRADER> void
@@ -200,16 +200,16 @@ perform_lookup (const char* type,
   // TAO_Preference_Interpreter -- parses the preference string and
   // orders offers according to those constraints.
   CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct (rep->fully_describe_type (type, env));
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   TAO_Offer_Filter offer_filter (type_struct.ptr (), policies, env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   TAO_Constraint_Validator validator (type_struct.ptr ());
   TAO_Constraint_Interpreter constr_inter (validator, constraint, env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   TAO_Preference_Interpreter pref_inter (validator, preferences, env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   CORBA::ULong return_card = policies.return_card (env);
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
   
   // Try to find the map of offers of desired service type.
   this->lookup_one_type (type,
@@ -226,7 +226,7 @@ perform_lookup (const char* type,
   // type inheritence.
   if (! policies.exact_type_match (env))
     {
-      TAO_CHECK_ENV_RETURN (env,);
+      TAO_CHECK_ENV_RETURN_VOID (env);
       this->lookup_all_subtypes (type,
 				 type_struct->incarnation,
 				 service_type_map,
@@ -235,7 +235,7 @@ perform_lookup (const char* type,
 				 pref_inter,
 				 offer_filter);
     }
-  TAO_CHECK_ENV_RETURN (env,);
+  TAO_CHECK_ENV_RETURN_VOID (env);
 
   // Pull the matched offers out of the pref_inter in order, and stick 
   // them in a queue. The offers in the queue will be emptied into
@@ -777,7 +777,7 @@ TAO_Lookup<TRADER>
 				offer_itr,
 				limits_applied,
 				_env);
-      TAO_CHECK_ENV_RETURN (_env,);
+      TAO_CHECK_ENV_RETURN_VOID (_env);
     }
   TAO_CATCHANY
     {

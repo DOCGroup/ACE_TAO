@@ -86,7 +86,7 @@ add_link (const char *name,
   link_info.target_reg = target->register_if (_env);
   link_info.def_pass_on_follow_rule = def_pass_on_follow_rule;
   link_info.limiting_follow_rule = limiting_follow_rule;
-  TAO_CHECK_ENV_RETURN (_env,);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 
   // Insert this link into the collection of links.
   this->links_.insert (link_name, link_info);

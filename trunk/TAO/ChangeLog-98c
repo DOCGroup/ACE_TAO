@@ -1,3 +1,9 @@
+Tue May 12 16:48:46 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* tao/corba.h:
+	  Added a new macro TAO_CHECK_ENV_RETURN_VOID -- same as
+	  TAO_CHECK_ENV_RETURN, but for methods with no return value.
+
 Tue May 12 15:22:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Param_Test/driver.cpp: 

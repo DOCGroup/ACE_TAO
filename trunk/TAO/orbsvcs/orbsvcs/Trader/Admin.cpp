@@ -292,7 +292,7 @@ TAO_Admin<TRADER>::list_offers (CORBA::ULong how_many,
 
   CosTrading::OfferIdIterator_ptr oi =
     type_map.retrieve_all_offer_ids ()->_this (_env);
-  TAO_CHECK_ENV_RETURN (_env,);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
       
   id_itr = CosTrading::OfferIdIterator::_nil ();
   if (how_many > 0)
