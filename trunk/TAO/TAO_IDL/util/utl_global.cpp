@@ -1035,13 +1035,14 @@ IDL_GlobalData::stripped_preproc_include (const char *name)
 
   ssize_t cursor = this->idl_flags_.find ("-I", 0);
   ACE_CString c_name (name, 0, 0);
-  size_t start = 0;
-  size_t end = 0;
+  ssize_t start = 0;
+  ssize_t end = 0;
+  char *candidate = 0;
 
   while (cursor != ACE_SString::npos)
     {
       // Skip over the "-I".
-      start = (size_t)cursor + 2;
+      start = cursor + 2;
 
       // If the "-I" is followed by a space. skip that too.
       if (this->idl_flags_[start] == ' ')
@@ -1060,23 +1061,41 @@ IDL_GlobalData::stripped_preproc_include (const char *name)
 
       // Set the cursor for the next iteration, if any.
       cursor = this->idl_flags_.find ("-I", end);
-
       // If this prefix is found at the beginning of the name, strip it
       // and return it.
       if (c_name.find (this->idl_flags_.substr (start, end - start)) == 0)
         {
           // If the prefix ends in / or \, we don't need to strip the one
-          // that *would* have been added for concatenation.
+          // that *would* have been added for concatenation...
           char prefix_cap = this->idl_flags_[end - 1];
           size_t skip_slash = (prefix_cap != '\\' && prefix_cap != '/');
-          char *retval = c_name.substr (end - start + skip_slash).rep ();
+          char *rep = c_name.substr (end - start + skip_slash).rep ();
 
-          // The Sun preprocessor adds a concatenating slash no matter what.
-          return retval + (retval[0] == '/');
+          // ...unless it's the SunCC preprocessor, which adds a / for
+          // concatentation no matter what, so we check for it.
+          if (rep[0] == '/')
+            {
+              ++rep;
+            }
+
+          // If there's more than one match in the list, we want the 
+          // longest one.
+          if (candidate == 0
+              || ACE_OS::strlen (rep) < ACE_OS::strlen (candidate))
+            {
+              candidate = rep;
+            }
         }
     }
 
   // If no prefix matches, just return the name unchanged.
-  return (char *)name;
+  if (candidate != 0)
+    {
+      return candidate;
+    }
+  else
+    {
+      return (char *)name;
+    }
 }
 
