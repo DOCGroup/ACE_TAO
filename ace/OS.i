@@ -3529,7 +3529,13 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
   ACE_TRACE ("ACE_OS::rw_tryrdlock");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_tryrdlock (rw),
+                                       ace_result_),
+                     int, -1);
+#  else /* Solaris */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_tryrdlock (rw), ace_result_), int, -1);
+#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   int result = -1;
 
@@ -3565,7 +3571,13 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
   ACE_TRACE ("ACE_OS::rw_trywrlock");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_trywrlock (rw),
+                                       ace_result_),
+                     int, -1);
+#  else /* Solaris */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_trywrlock (rw), ace_result_), int, -1);
+#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   int result = -1;
 
@@ -3601,7 +3613,13 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
   ACE_TRACE ("ACE_OS::rw_rdlock");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_rdlock (rw),
+                                       ace_result_),
+                     int, -1);
+#  else /* Solaris */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_rdlock (rw), ace_result_), int, -1);
+#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
 #   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
@@ -3644,7 +3662,13 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
   ACE_TRACE ("ACE_OS::rw_wrlock");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_wrlock (rw),
+                                       ace_result_),
+                     int, -1);
+#  else /* Solaris */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_wrlock (rw), ace_result_), int, -1);
+#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
 #   if defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
@@ -3689,7 +3713,13 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   ACE_TRACE ("ACE_OS::rw_unlock");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_unlock (rw),
+                                       ace_result_),
+                     int, -1);
+#  else /* Solaris */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_unlock (rw), ace_result_), int, -1);
+#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
     return -1;
@@ -3745,7 +3775,7 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   ACE_TRACE ("ACE_OS::rw_wrlock");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
-  // Some native rwlocks, such as those on Solaris, don't
+  // Some native rwlocks, such as those on Solaris and HP-UX 11, don't
   // support the upgrade feature . . .
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
@@ -3814,9 +3844,26 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      void *arg)
 {
   // ACE_TRACE ("ACE_OS::rwlock_init");
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  ACE_UNUSED_ARG (name);
+  ACE_UNUSED_ARG (arg);
+
+  int status;
+  pthread_rwlockattr_t attr;
+  pthread_rwlockattr_init (&attr);
+  pthread_rwlockattr_setpshared (&attr, (type == USYNC_THREAD ?
+                                         PTHREAD_PROCESS_PRIVATE :
+                                         PTHREAD_PROCESS_SHARED));
+  status = ACE_ADAPT_RETVAL (pthread_rwlock_init (rw, &attr), status);
+  pthread_rwlockattr_destroy (&attr);
+
+  return status;
+
+#  else
   type = type;
   name = name;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_init (rw, type, arg), ace_result_), int, -1);
+#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 }
 #endif /* ACE_HAS THREADS && !defined (ACE_LACKS_RWLOCK_T) */
 
@@ -3826,7 +3873,13 @@ ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
   ACE_TRACE ("ACE_OS::rwlock_destroy");
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_LACKS_RWLOCK_T)
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_destroy (rw),
+                                       ace_result_),
+                     int, -1);
+#  else /* Solaris */
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_destroy (rw), ace_result_), int, -1);
+#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   ACE_OS::mutex_destroy (&rw->lock_);
   ACE_OS::cond_destroy (&rw->waiting_readers_);
@@ -6139,8 +6192,14 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_continue (target_thread), ace_result_), int, -1);
 # elif defined (ACE_HAS_PTHREADS)
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_continue (target_thread),
+                                       ace_result_),
+                     int, -1);
+#  else
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
+#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # elif defined (ACE_HAS_WTHREADS)
   DWORD result = ::ResumeThread (target_thread);
   if (result == ACE_SYSCALL_FAILED)
@@ -7018,8 +7077,14 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 # if defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_suspend (target_thread), ace_result_), int, -1);
 # elif defined (ACE_HAS_PTHREADS)
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_suspend (target_thread),
+                                       ace_result_),
+                     int, -1);
+#  else
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
+#  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # elif defined (ACE_HAS_WTHREADS)
   if (::SuspendThread (target_thread) != ACE_SYSCALL_FAILED)
     return 0;
