@@ -395,7 +395,14 @@
     when using SHMIOP with <a href="INS.html">Interoperable Naming
     Service</a> as you would with IIOP.  This is because SHMIOP uses
     the hostname to determine the validity of an endpoint.  That is,
-    it will not try to connect to a remote SHMIOP endpoint locally.<p>
+    it will not try to connect to a remote SHMIOP endpoint locally.
+    For examples:<p>
+    <BLOCKQUOTE>
+      <P>
+        <CODE>
+          -ORBInitRef MyService=shmiop://1.1@hostname:port/service_name
+        </CODE>
+    </BLOCKQUOTE>
 
     <hr>
 
@@ -528,7 +535,7 @@
     <address><a href="mailto:ossama@uci.edu">Ossama Othman</a></address>
 <!-- Created: Thu May 18 08:37:25 PDT 2000 -->
 <!-- hhmts start -->
-Last modified: Sat Mar 22 16:47:36 Central Standard Time 2003
+Last modified: Sat Mar 22 16:58:29 Central Standard Time 2003
 <!-- hhmts end -->
   </body>
 </html>
