@@ -100,7 +100,7 @@ class ACE_Export ACE_Service_Config
   //     static <ACE_Service_Config> objects, there might be
   //     initialization order problems.  They can be minimized, but
   //     not eliminated, by _not_ #defining
-  //     ACE_HAS_NONSTATIC_OBJECT_MANAGER.
+  //     <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
 public:
   enum
   {
@@ -116,37 +116,51 @@ public:
 
   ACE_Service_Config (const ASYS_TCHAR program_name[],
                       LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY);
-  // Performs an open without parsing command-line arguments.
+  // Performs an open without parsing command-line arguments.  The
+  // <logger_key> indicates where to write the logging output, which
+  // is typically either a STREAM pipe or a socket address.
 
   static int open_i (const ASYS_TCHAR program_name[],
                      LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
-                     int ignore_default_svc_conf_file = 0);
-  // Performs an open without parsing command-line arguments.  If
+                     int ignore_default_svc_conf_file = 0,
+                     int ignore_debug_flag = 0);
+  // Performs an open without parsing command-line arguments.  The
+  // <logger_key> indicates where to write the logging output, which
+  // is typically either a STREAM pipe or a socket address.  If
   // <ignore_default_svc_conf_file> is non-0 then the "svc.conf" file
-  // will be ignored.  Returns number of errors that occurred on
-  // failure and 0 otherwise.
+  // will be ignored.  If <ignore_debug_flag> is non-0 then the
+  // application is responsible for setting the
+  // <ACE_Log_Msg::priority_mask> appropriately.  Returns number of
+  // errors that occurred on failure and 0 otherwise.
 
   static int open (const ASYS_TCHAR program_name[],
                    LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
                    int ignore_static_svcs = 1,
-                   int ignore_default_svc_conf_file = 0);
-  // Performs an open without parsing command-line arguments.  If
-  // <ignore_default_svc_conf_file> is non-0 then the <svc.conf>
-  // configuration file will be ignored.  Returns zero upon success,
-  // -1 if the file is not found or cannot be opened (errno is set
-  // accordingly), otherwise returns the number of errors encountered
-  // loading the services in the specified svc.conf configuration
-  // file.
+                   int ignore_default_svc_conf_file = 0,
+                   int ignore_debug_flag = 0);
+  // Performs an open without parsing command-line arguments.  The
+  // <logger_key> indicates where to write the logging output, which
+  // is typically either a STREAM pipe or a socket address.  If
+  // <ignore_static_svcs> is 1 then static services are not loaded,
+  // otherwise, they are loaded.  If <ignore_default_svc_conf_file> is
+  // non-0 then the <svc.conf> configuration file will be ignored.
+  // Returns zero upon success, -1 if the file is not found or cannot
+  // be opened (errno is set accordingly), otherwise returns the
+  // number of errors encountered loading the services in the
+  // specified svc.conf configuration file.  If <ignore_debug_flag> is
+  // non-0 then the application is responsible for setting the
+  // <ACE_Log_Msg::priority_mask> appropriately.
 
   static int open (int argc,
                    ASYS_TCHAR *argv[],
                    LPCTSTR logger_key = ACE_DEFAULT_LOGGER_KEY,
                    int ignore_static_svcs = 1,
-                   int ignore_default_svc_conf = 0);
+                   int ignore_default_svc_conf = 0,
+                   int ignore_debug_flag = 0);
   // This is the primary entry point into the ACE_Service_Config (the
   // constructor just handles simple initializations).  It parses
-  // arguments passed in from the command-line.  The arguments that
-  // are valid in a call to this method include:
+  // arguments passed in from <argc> and <argv> parameters.  The
+  // arguments that are valid in a call to this method include:
   //
   // '-b' - Option to indicate that we should be a daemon
   // '-d' - Turn on debugging mode
@@ -165,6 +179,18 @@ public:
   //
   // Returns number of errors that occurred on failure and 0
   // otherwise.
+  //
+  // The <logger_key> indicates where to write the logging output,
+  // which is typically either a STREAM pipe or a socket address.  If
+  // <ignore_static_svcs> is 1 then static services are not loaded,
+  // otherwise, they are loaded.  If <ignore_default_svc_conf_file> is
+  // non-0 then the <svc.conf> configuration file will be ignored.
+  // Returns zero upon success, -1 if the file is not found or cannot
+  // be opened (errno is set accordingly), otherwise returns the
+  // number of errors encountered loading the services in the
+  // specified svc.conf configuration file.  If <ignore_debug_flag> is
+  // non-0 then the application is responsible for setting the
+  // <ACE_Log_Msg::priority_mask> appropriately.
 
   virtual ~ACE_Service_Config (void);
   // Perform user-specified close activities and remove dynamic
@@ -373,7 +399,8 @@ protected:
 
 private:
   static LPCTSTR logger_key_;
-  // Where to write the logging output.
+  // Indicates where to write the logging output.  This is typically
+  // either a STREAM pipe or a socket address.
 
   static ACE_STATIC_SVCS *static_svcs_;
   // Singleton repository of statically linked services.
