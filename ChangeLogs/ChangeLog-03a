@@ -1,3 +1,10 @@
+Tue Dec 10 17:19:06 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/OS_Test.cpp (ACE_TMAIN): Integrated the latest tests from
+	  Alain for string_strsncpy_test (). The test is more robust and
+	  tests things better. It also has comments on what it is testing
+	  :-).
+
 Tue Dec 10 16:53:29 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/OS_Test.cpp: Add missing '=' signs to fix compile error on
