@@ -25,6 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Service_Config.h"
 #include "tao/ORB.h"
 
 /**
