@@ -144,11 +144,11 @@ public:
   // Return the 4-byte IP address, converting it into host byte
   // order.
 
-  virtual int operator == (const ACE_Addr &SAP) const;
+  int operator == (const ACE_INET_Addr &SAP) const;
   // Compare two addresses for equality.  The addresses are considered
   // equal if they contain the same IP address and port number.
 
-  virtual int operator != (const ACE_Addr &SAP) const;
+  int operator != (const ACE_INET_Addr &SAP) const;
   // Compare two addresses for inequality.
 
   void dump (void) const;

@@ -35,18 +35,17 @@ ACE_UNIX_Addr::addr_to_string (char s[], size_t len) const
 // Compare two addresses for equality.
 
 ACE_INLINE int
-ACE_UNIX_Addr::operator == (const ACE_Addr &sap) const
+ACE_UNIX_Addr::operator == (const ACE_UNIX_Addr &sap) const
 {
-  return this->ACE_Addr::operator == (sap)
-    && ACE_OS::strncmp (this->unix_addr_.sun_path,
-                        ((const ACE_UNIX_Addr &) sap).unix_addr_.sun_path,
-                        sizeof this->unix_addr_.sun_path) == 0;
+  return ACE_OS::strncmp (this->unix_addr_.sun_path,
+			  sap.unix_addr_.sun_path,
+			  sizeof this->unix_addr_.sun_path) == 0;
 }
 
 // Compare two addresses for inequality.
 
 ACE_INLINE int
-ACE_UNIX_Addr::operator != (const ACE_Addr &sap) const
+ACE_UNIX_Addr::operator != (const ACE_UNIX_Addr &sap) const
 {
   return !((*this) == sap);	// This is lazy, of course... ;-)
 }

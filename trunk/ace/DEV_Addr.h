@@ -53,10 +53,10 @@ public:
   virtual int addr_to_string (char *addr, size_t) const;
   // Transform the current address into string format. 
 
-  virtual int operator == (const ACE_Addr &SAP) const;
+  int operator == (const ACE_DEV_Addr &SAP) const;
   // Compare two addresses for equality. 
 
-  virtual int operator != (const ACE_Addr &SAP) const;
+  int operator != (const ACE_DEV_Addr &SAP) const;
   // Compare two addresses for inequality. 
 
   LPCTSTR get_path_name (void) const; 

@@ -36,17 +36,16 @@ ACE_SPIPE_Addr::get_addr (void) const
 // Compare two addresses for equality.
 
 ACE_INLINE int
-ACE_SPIPE_Addr::operator == (const ACE_Addr &sap) const
+ACE_SPIPE_Addr::operator == (const ACE_SPIPE_Addr &sap) const
 {
-  return this->ACE_Addr::operator == (sap)
-    && ACE_OS::strcmp (this->SPIPE_addr_.rendezvous_,
-                       ((ACE_SPIPE_Addr &) sap).SPIPE_addr_.rendezvous_) == 0;
+  return ACE_OS::strcmp (this->SPIPE_addr_.rendezvous_,
+                         sap.SPIPE_addr_.rendezvous_    ) == 0;
 }
 
 // Compare two addresses for inequality.
 
 ACE_INLINE int
-ACE_SPIPE_Addr::operator != (const ACE_Addr &sap) const
+ACE_SPIPE_Addr::operator != (const ACE_SPIPE_Addr &sap) const
 {
   return !((*this) == sap);	// This is lazy, of course... ;-)
 }

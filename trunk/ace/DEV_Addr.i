@@ -50,19 +50,17 @@ ACE_DEV_Addr::get_addr (void) const
 // Compare two addresses for equality.
 
 ACE_INLINE int
-ACE_DEV_Addr::operator == (const ACE_Addr &sap) const
+ACE_DEV_Addr::operator == (const ACE_DEV_Addr &sap) const
 {
   ACE_TRACE ("ACE_DEV_Addr::operator=");
 
-  return this->ACE_Addr::operator== (sap)
-    && ACE_OS::strcmp (this->devname_,
-                       ((ACE_DEV_Addr &) sap).devname_) == 0;
+  return ACE_OS::strcmp (this->devname_, sap.devname_) == 0;
 }
 
 // Compare two addresses for inequality.
 
 ACE_INLINE int
-ACE_DEV_Addr::operator != (const ACE_Addr &sap) const
+ACE_DEV_Addr::operator != (const ACE_DEV_Addr &sap) const
 {
   ACE_TRACE ("ACE_DEV_Addr::operator!=");
 

@@ -59,10 +59,10 @@ public:
   // Transform the string into the current addressing format.
 
   // = Equality/inequality tests
-  virtual int operator == (const ACE_Addr &SAP) const;
+  int operator == (const ACE_SPIPE_Addr &SAP) const;
   // Check for equality.
 
-  virtual int operator != (const ACE_Addr &SAP) const;
+  int operator != (const ACE_SPIPE_Addr &SAP) const;
   // Check for inequality
 
   // = SPIPE-specific address operations
