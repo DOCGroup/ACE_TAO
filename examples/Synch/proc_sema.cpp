@@ -1,8 +1,9 @@
-/// $Id$
+// $Id$
 
 #include "ace/Process_Semaphore.h"
 #include "ace/Synch_T.h"
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 
 int producer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
               int iter)
