@@ -6588,7 +6588,7 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 # endif /* ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
-# if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_HAS_WINCE) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
+# if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
 
 #   if !defined (ACE_HAS_MINIMAL_ACE_OS)
 #     include "ace/Object_Manager.h"
@@ -6663,8 +6663,6 @@ ace_main_i
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 # if defined (ACE_HAS_WINCE)
-#   include "ace/Object_Manager.h"
-
 class ACE_Export ACE_CE_Bridge
 {
   // = TITLE
