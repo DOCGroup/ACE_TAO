@@ -152,9 +152,6 @@ IPC_Server<SH, PR_AC_2>::svc (void)
 	{ 
 	  if (errno == EWOULDBLOCK && this->reactor ())
 	    this->reactor ()->handle_events ();
-	  else if (errno == ETIMEDOUT)
-	    ACE_ERROR ((LM_ERROR, "accept timed out on handle %d\n", 
-			this->acceptor ().get_handle ()));
 	  else
 	    ACE_ERROR ((LM_ERROR, "%p on handle %d\n", 
 			"accept", this->acceptor ().get_handle ()));

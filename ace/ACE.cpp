@@ -1228,17 +1228,116 @@ ACE::is_prime (const u_long n,
   if (n > 3)
     {
       for (u_long factor = min_factor; factor <= max_factor; ++factor)
-        {
-          if (n / factor * factor == n)
-            {
-              return factor;
-            }
-        }
+	if (n / factor * factor == n)
+	  return factor;
 
       return 0;
     }
   else
-    {
-      return 0;
-    }
+    return 0;
 }
+
+const char *
+ACE::sock_error (int error)
+{
+#if defined (ACE_WIN32)
+  switch (error)
+    {
+    case WSAVERNOTSUPPORTED:
+      return "version of WinSock not supported";
+      /* NOTREACHED */
+    case WSASYSNOTREADY:
+      return "WinSock not present or not responding";
+      /* NOTREACHED */
+    case WSAEINVAL:
+      return "app version not supported by DLL";
+      /* NOTREACHED */
+    case WSAHOST_NOT_FOUND:
+      return "Authoritive: Host not found";
+      /* NOTREACHED */
+    case WSATRY_AGAIN:
+      return "Non-authoritive: host not found or server failure";
+      /* NOTREACHED */
+    case WSANO_RECOVERY:
+      return "Non-recoverable: refused or not implemented";
+      /* NOTREACHED */
+    case WSANO_DATA:
+      return "Valid name, no data record for type";
+      /* NOTREACHED */
+      /*
+	case WSANO_ADDRESS:
+	return "Valid name, no MX record";
+	/* NOTREACHED */
+	*/
+    case WSANOTINITIALISED:
+      return "WSA Startup not initialized";
+      /* NOTREACHED */
+    case WSAENETDOWN:
+      return "Network subsystem failed";
+      /* NOTREACHED */
+    case WSAEINPROGRESS:
+      return "Blocking operation in progress";
+      /* NOTREACHED */
+    case WSAEINTR:
+      return "Blocking call cancelled";
+      /* NOTREACHED */
+    case WSAEAFNOSUPPORT:
+      return "address family not supported";
+      /* NOTREACHED */
+    case WSAEMFILE:
+      return "no file descriptors available";
+      /* NOTREACHED */
+    case WSAENOBUFS:
+      return "no buffer space available";
+      /* NOTREACHED */
+    case WSAEPROTONOSUPPORT:
+      return "specified protocol not supported";
+      /* NOTREACHED */
+    case WSAEPROTOTYPE:
+      return "protocol wrong type for this socket";
+      /* NOTREACHED */
+    case WSAESOCKTNOSUPPORT:
+      return "socket type not supported for address family";
+      /* NOTREACHED */
+    case WSAENOTSOCK:
+      return "descriptor is not a socket";
+      /* NOTREACHED */
+    case WSAEWOULDBLOCK:
+      return "socket marked as non-blocking and SO_LINGER set not 0";
+      /* NOTREACHED */
+    case WSAEADDRINUSE:
+      return "address already in use";
+      /* NOTREACHED */
+    case WSAECONNABORTED:
+      return "connection aborted";
+      /* NOTREACHED */
+    case WSAECONNRESET:
+      return "connection reset";
+      /* NOTREACHED */
+    case WSAENOTCONN:
+      return "not connected";
+      /* NOTREACHED */
+    case WSAETIMEDOUT:
+      return "connection timed out";
+      /* NOTREACHED */
+    case WSAECONNREFUSED:
+      return "connection refused";
+      /* NOTREACHED */
+    case WSAEHOSTDOWN:
+      return "host down";
+      /* NOTREACHED */
+    case WSAEHOSTUNREACH:
+      return "host unreachable";
+      /* NOTREACHED */
+    case WSAEADDRNOTAVAIL:
+      return "address not available";
+      /* NOTREACHED */
+    default:
+      return "unknown error";
+      /* NOTREACHED */
+    }
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_WIN32 */
+}
+

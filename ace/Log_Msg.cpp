@@ -511,7 +511,7 @@ ACE_Log_Msg::log (const char *format_str,
 		    else
 		      {
 #if defined (ACE_WIN32)			
-			LPVOID lpMsgBuf;
+			LPTSTR lpMsgBuf;
  
 			::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 					 NULL,
@@ -521,11 +521,25 @@ ACE_Log_Msg::log (const char *format_str,
 					 0,
 					 NULL);
 
-			ACE_OS::sprintf (bp, "%s: %s", 
-					 va_arg (argp, char *), lpMsgBuf);
-
-			// Free the buffer.
-			LocalFree (lpMsgBuf);
+			// If we don't get a valid response from
+			// <FormatMessage>, we'll assume this is a
+			// WinSock error and so we'll try to convert
+			// it into a string.  If this doesn't work it
+			// returns "unknown error" which is fine for
+			// our purposes.
+			if (lpMsgBuf == 0)
+			  {
+			    lpMsgBuf = ACE::sock_error (errno);
+			    ACE_OS::sprintf (bp, "%s: %s", 
+					     va_arg (argp, char *), lpMsgBuf);
+			  }
+			else
+			  {
+			    ACE_OS::sprintf (bp, "%s: %s", 
+					     va_arg (argp, char *), lpMsgBuf);
+			    // Free the buffer.
+			    ::LocalFree (lpMsgBuf);
+			  }
 #else
 			ACE_OS::sprintf (bp, "%s: <unknown error> = %d",
 					 va_arg (argp, char *), errno);
