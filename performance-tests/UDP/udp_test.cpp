@@ -33,9 +33,6 @@ static const int DEFWINDOWSZ = 10; // 10 microsecond.
 static char SendBuf[MAXPKTSZ];
 static char RxBuf[MAXPKTSZ];
 static char **cmd;
-static char *target;
-static char targethost[MAXHOSTNAMELEN];
-static char targetip[MAXHOSTNAMELEN];
 static char datafile[MAXHOSTNAMELEN];
 
 static ACE_UINT32 nsamples = DEFITERATIONS;
