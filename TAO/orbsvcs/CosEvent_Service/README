@@ -1,0 +1,25 @@
+The CosEvent_Service is a COS compilant Event Service.
+
+The service is registered with the naming service with the name "CosEventService"
+It exposes the <EventChannel> interface which can be used by suppliers and consumers to
+connect and send events.
+  As of now, the channel supports the <ACE_ES_EVENT_ANY> type events.
+
+To run the Event Channel:
+1. you must have a running Naming Service.
+   if not, start one at $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service
+
+2. you must have a running Real Time Event Channel.
+   if not, start one at $TAO_ROOT/orbsvcs/Event_Service/Event_Service
+
+3. execute the CosEvent_Service. It takes the following parameters :
+
+      -n <COS Event Service name>
+        specifies the name with which to register the Event Service.
+
+      -r <Real Time Event Service name>
+        specifies the name with which to *look* for the RtEC.
+
+If a Rtec is not running, then the CosEvent_Service starts its own Rtec.
+
+- Pradeep <pradeep@cs.wustl.edu>
