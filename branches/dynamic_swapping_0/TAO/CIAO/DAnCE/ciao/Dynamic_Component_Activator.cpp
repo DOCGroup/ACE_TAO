@@ -57,11 +57,17 @@ namespace CIAO
   }
 
   void Dynamic_Component_Activator::delete_servant_map 
-    (PortableServer::ObjectId &oid,
-     Dynamic_Component_Servant_Base* servant
+    (PortableServer::ObjectId &oid
      ACE_ENV_ARG_DECL)
   {
-    this->servant_map_.bind (oid, servant);
+    Dynamic_Component_Servant_Base* servant = 0;
+    if (this->servant_map_.unbind (oid, servant) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Invalid object reference\n"));
+        return;
+      }
+
+    return;
   }
 
 }
