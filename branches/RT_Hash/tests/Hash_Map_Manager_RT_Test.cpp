@@ -14,16 +14,20 @@
 #include "ace/Malloc_T.h"
 #include "ace/Synch.h"
 
-ACE_RCSID(tests, Hash_Map_Manager_Test, "$Id$")
+ACE_RCSID(tests, Hash_Map_Manager_RT_Test, "$Id$")
 
 static const size_t STRING_TABLE_ENTRIES = 18;
 static const size_t MAX_HASH =  18;
 
 typedef ACE_Hash_Map_RT_Table<const ACE_TCHAR *,
                               const ACE_TCHAR *,
+                              const ACE_TCHAR *,
+                              const ACE_TCHAR *,
                               const ACE_TCHAR *> HASH_STRING_TABLE;
 
 typedef ACE_Hash_Map_RT_Bucket<const ACE_TCHAR *,
+                               const ACE_TCHAR *,
+                               const ACE_TCHAR *,
                                const ACE_TCHAR *,
                                const ACE_TCHAR *> HASH_STRING_BUCKET;
 
@@ -198,7 +202,7 @@ static String_Table string_table[] =
   {
     ACE_TEXT ("thirfour"),
     ACE_TEXT ("343434")
-  },  
+  },
   {
     ACE_TEXT ("thirfive"),
     ACE_TEXT ("353535")
@@ -263,7 +267,7 @@ static String_Table string_table[] =
     ACE_TEXT ("goodbye "),
     ACE_TEXT ("auf wiedersehen")
   },
-	{
+        {
     0,
     0
   }
@@ -323,7 +327,7 @@ run_test (void)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n")));
-  
+
   // remove the first element
   hash.unbind (string_table[0].key_);
   ACE_DEBUG ((LM_DEBUG,
@@ -358,7 +362,7 @@ run_test (void)
                        ACE_TEXT ("%p failed for %s \n"),
                        ACE_TEXT ("bind"),
                        string_table[5].key_), -1);
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("putting five back \n\n")));
 
@@ -386,7 +390,7 @@ run_test (void)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Hash_Map_Manager_Test"));
+  ACE_START_TEST (ACE_TEXT ("Hash_Map_Manager_RT_Test"));
 
   run_test ();
 
