@@ -48,9 +48,15 @@ int
 be_visitor_operation_rettype_pre_docall_cs::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  be_type *bt; // return type
+
+  if (this->ctx_->alias ()) // a typedefed return type
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
 
   os->indent ();
-  *os << "ACE_ALLOCATOR_RETURN (_tao_retval, " << node->name ()
+  *os << "ACE_ALLOCATOR_RETURN (_tao_retval, " << bt->name ()
       << "_alloc (), _tao_retval);\n";
   return 0;
 }
@@ -97,9 +103,15 @@ int
 be_visitor_operation_rettype_pre_docall_cs::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  be_type *bt; // return type
+
+  if (this->ctx_->alias ()) // a typedefed return type
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
 
   os->indent ();
-  *os << "ACE_NEW_RETURN (_tao_retval, " << node->name () << ", _tao_retval);\n";
+  *os << "ACE_NEW_RETURN (_tao_retval, " << bt->name () << ", _tao_retval);\n";
   return 0;
 }
 
@@ -107,12 +119,18 @@ int
 be_visitor_operation_rettype_pre_docall_cs::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  be_type *bt; // return type
+
+  if (this->ctx_->alias ()) // a typedefed return type
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
 
   // check if the union is variable
   if (node->size_type () == be_type::VARIABLE)
     {
       os->indent ();
-      *os << "ACE_NEW_RETURN (_tao_retval, " << node->name () << ", _tao_retval);\n";
+      *os << "ACE_NEW_RETURN (_tao_retval, " << bt->name () << ", _tao_retval);\n";
     }
   return 0;
 }
@@ -137,12 +155,18 @@ int
 be_visitor_operation_rettype_pre_docall_cs::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // grab the out stream
+  be_type *bt; // return type
+
+  if (this->ctx_->alias ()) // a typedefed return type
+    bt = this->ctx_->alias ();
+  else
+    bt = node;
 
   // check if the union is variable
   if (node->size_type () == be_type::VARIABLE)
     {
       os->indent ();
-      *os << "ACE_NEW_RETURN (_tao_retval, " << node->name () << ", _tao_retval);\n";
+      *os << "ACE_NEW_RETURN (_tao_retval, " << bt->name () << ", _tao_retval);\n";
     }
   return 0;
 }
