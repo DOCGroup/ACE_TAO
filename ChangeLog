@@ -1,3 +1,9 @@
+Tue May  1 07:13:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst : Sun CC 5.1 cannot work with
+	  Simple_Naming test. Made sure that this test does not run with
+	  Sun CC 5.1.
+
 Tue May  1 06:15:26 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.h (class ACE_Hash_Map_Manager_Ex): Fixed
