@@ -30,7 +30,7 @@ USA.  */
 // Sorts the key set alphabetically to speed up subsequent operation
 // Uses insertion sort since the set is probably quite small.
 
-inline void 
+inline void
 List_Node::set_sort (char *base, int len)
 {
   int i, j;
@@ -38,7 +38,7 @@ List_Node::set_sort (char *base, int len)
   for (i = 0, j = len - 1; i < j; i++)
     {
       char curr, tmp;
-      
+
       for (curr = i + 1, tmp = base[curr];
            curr > 0 && tmp < base[curr-1];
            curr--)
@@ -63,33 +63,33 @@ List_Node::set_sort (char *base, int len)
 // useful value.
 
 List_Node::List_Node (char *k, int len)
-  : key (k), 
-    next (0), 
-    index (0),
-    length (len), 
-    link (0), 
-    rest (option[TYPE] ? k + len + 1 : "")
+  : link (0),
+    next (0),
+    key (k),
+    rest (option[TYPE] ? k + len + 1 : ""),
+    length (len),
+    index (0)
 {
   char *ptr = new char[(option[ALLCHARS] ? len : option.get_max_keysig_size ()) + 1];
   char_set  = ptr;
   k[len] = '\0';             // Null terminate KEY to separate it from REST.
-  
+
   // Lower case if STRCASECMP option is enabled.
   if (option[STRCASECMP])
     for (char *p = k; *p; p++)
       if (isupper (*p))
-	*p = tolower (*p);
+        *p = tolower (*p);
 
   if (option[ALLCHARS])         // Use all the character position in the KEY.
     for (; *k; k++, ptr++)
       ++Vectors::occurrences[*ptr = *k];
   else                          // Only use those character positions specified by the user.
-    {                           
+    {
       int i;
-      
+
       // Iterate thru the list of key_positions, initializing
       // occurrences table and char_set (via char * pointer ptr).
-      
+
       for (option.reset (); (i = option.get ()) != EOS; )
         {
           if (i == WORD_END)            // Special notation for last KEY position, i.e. '$'.
@@ -100,7 +100,7 @@ List_Node::List_Node (char *k, int len)
             continue;
           ++Vectors::occurrences[*ptr++];
         }
-      
+
       // Didn't get any hits and user doesn't want to consider the
       // keylength, so there are essentially no usable hash positions!
       if (ptr == char_set && option[NOLENGTH])
