@@ -48,11 +48,10 @@ Quoter_Stock_i::set_price (CORBA::Double new_price)
 
   // Initialize the header
   const char *symbol = this->data_.symbol;
-  e.header.type =
-    ((int(symbol[0]) << 24)
-     | (int(symbol[1]) << 16)
-     | (int(symbol[2]) << 8)
-     | int(symbol[3]));
+  e.header.type = int(symbol[0]) << 24;
+  e.header.type |= int(symbol[1]) << 16;
+  e.header.type |= int(symbol[2]) << 8;
+  e.header.type |= int(symbol[3]);
   e.header.source = 1;
 
   // Initialize the payload
@@ -80,11 +79,11 @@ Quoter_Stock_i::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin
     this->supplier_personality_._this ();
 
    const char *symbol = this->data_.symbol;
-   CORBA::ULong type =
-      ((int(symbol[0]) << 24)
-       | (int(symbol[1]) << 16)
-       | (int(symbol[2]) << 8)
-       | int(symbol[3]));
+   CORBA::ULong type = int(symbol[0]) << 24;
+   type |= int(symbol[1]) << 16;
+   type |= int(symbol[2]) << 8;
+   type |= int(symbol[3]);
+
    CORBA::ULong source = 1;
    ACE_SupplierQOS_Factory publications;
    publications.insert (source, type, 0, 1);
