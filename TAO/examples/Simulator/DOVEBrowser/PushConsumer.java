@@ -71,11 +71,11 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 
           for (int i = 0; i < events.length; ++i)
             {
-              if(events[i].type_ == ACE_ES_EVENT_NOTIFICATION)
+              if(events[i].header.type == ACE_ES_EVENT_NOTIFICATION)
                 {
                   try
                     {
-                      dataHandler_.update (events[i].data_.any_value);
+                      dataHandler_.update (events[i].data.any_value);
                     }
                   catch(org.omg.CORBA.SystemException e)
                     {
@@ -117,17 +117,20 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 
         byte payload[] = new byte[1];
         payload[0] = 0;
-        RtecEventComm.Event notification_event_ =
-          new RtecEventComm.Event (ACE_ES_EVENT_NOTIFICATION,  0,
-                                   1,        // ttl
-                                   0,
-                                   0,
-                                   0,
-                                   new RtecEventComm.EventData (
-                                     0, 0, 0.0, 0, payload, orb_.create_any())
-                                    );
+        RtecEventComm.Event notification_event_ = new RtecEventComm.Event ();
 
-
+        notification_event_.header.type = ACE_ES_EVENT_NOTIFICATION;
+        notification_event_.header.source = 0;
+        notification_event_.header.ttl = 1;
+        notification_event_.header.creation_time = 0;
+        notification_event_.header.ec_recv_time = 0;
+        notification_event_.header.ec_send_time = 0;
+        notification_event_.data.x = 0;
+        notification_event_.data.y = 0; 
+        notification_event_.data.pad0 = 0.0;
+        notification_event_.data.pad1 = 0;
+        notification_event_.data.payload = payload;
+        notification_event_.data.any_value = orb_.create_any();
 
         RtecEventChannelAdmin.Dependency dependencies_[] = new RtecEventChannelAdmin.Dependency[1];
         dependencies_[0] = new RtecEventChannelAdmin.Dependency (notification_event_, rt_info_.value);
