@@ -1,31 +1,43 @@
+Tue Jul 28 16:22:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h:
+          removed ACE_Scheduler_Factory::use_runtime () call, so that
+          this header can be included by EC_Multiple.cpp even for
+          local (config) runs.
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: added
+          ACE_Scheduler_Factory::use_runtime () calls, when in
+          runtime mode only.  Also, added printouts just before
+          registering each supplier and consumer, to help debugging.
+
 Tue Jul 28 15:07:32 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/Hardpack/IDL_Cubit/cubit.idl: 
-		Added cube_oneway and cube_void operations.
-	* tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.{h,cpp}:
-	* tests/Cubit/Hardpack/IDL_Cubit/client_i.{h,cpp}:
-		Added implementation code for cube_oneway and cube_void.
+        * tests/Cubit/Hardpack/IDL_Cubit/cubit.idl:
+                Added cube_oneway and cube_void operations.
+        * tests/Cubit/Hardpack/IDL_Cubit/cubit_impl.{h,cpp}:
+        * tests/Cubit/Hardpack/IDL_Cubit/client_i.{h,cpp}:
+                Added implementation code for cube_oneway and cube_void.
 
 Tue Jul 28 13:49:01 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/NestedUpcall/Makefile: 
-	  Added MT_Client_Test.
+        * tests/NestedUpcall/Makefile:
+          Added MT_Client_Test.
 
-	* tests/NestedUpcall/MT_Client_Test/Makefile: 
-	  Updated dependencies.
+        * tests/NestedUpcall/MT_Client_Test/Makefile:
+          Updated dependencies.
 
 Tue Jul 28 11:09:35 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp : 
-		Removed unnecessary commented code.
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-		Added argument processing code for option "-r" which 
-		enables the thread-per-rate test.
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:
-		Added code so that the main thread waits on a condition
-		variable after activating the CB_20_HZ_CONSUMER thread so
-		that it finishes the argument processing.
-	
+        * tests/Cubit/TAO/MT_Cubit/server.cpp :
+                Removed unnecessary commented code.
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+                Added argument processing code for option "-r" which
+                enables the thread-per-rate test.
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+                Added code so that the main thread waits on a condition
+                variable after activating the CB_20_HZ_CONSUMER thread so
+                that it finishes the argument processing.
+
 Tue Jul 28 10:17:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
          * orbsvcs/tests/EC_Multiple/Scheduler_Runtime_Dynamic.h:
@@ -35,8 +47,8 @@ Tue Jul 28 10:17:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Jul 28 10:08:33 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/LifeCycle_service/Factory_Trader.cpp:
-	  Addressed one cxx and one g++ error.
+        * orbsvcs/LifeCycle_service/Factory_Trader.cpp:
+          Addressed one cxx and one g++ error.
 
 Mon Jul 27 15:23:33 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
