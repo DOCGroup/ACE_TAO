@@ -1,3 +1,15 @@
+Tue May 25 12:54:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Messaging_Policy_i.h:
+	  Fixed syntax error only IRIX catched this one.
+
+	* tao/ORB.h:
+	  The throw specs need complete types in IRIX/MIPSPro, added
+	  include for PolicyC.h
+
+	* tao/ORB.cpp:
+	  Fixed problems in resolve_initial_references.
+
 Tue May 25 12:39:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Environment.cpp,Exception.{h,cpp},Invocation.cpp,corbafwd.h:
