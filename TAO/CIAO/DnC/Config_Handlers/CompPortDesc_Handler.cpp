@@ -107,7 +107,7 @@ namespace CIAO
 	        else
             {
               // ??? How did we get here ???
-              ACE_THROW (CORBA::INTERNAL());
+              return;
             }
         }
       return;
