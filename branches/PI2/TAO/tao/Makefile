@@ -159,8 +159,9 @@ ORB_CORE_FILES = \
   Object_KeyC \
   Invocation \
   operation_details \
-  Interceptor \
-  InterceptorC \
+  PortableInterceptor \
+  PortableInterceptorC \
+  DynamicC \
   Smart_Proxies \
   Asynch_Invocation \
   ORB_Core \
@@ -344,10 +345,12 @@ include $(TAO_ROOT)/taoconfig.mk
 # $(MANAGED_PIDL).target:
 # 	......
 interceptor.target:
-	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export Interceptor.pidl; \
-	$(RM) -f InterceptorS.* InterceptorS_T.*; \
-	patch < diffs/InterceptorC.h.diff; \
-	patch < diffs/InterceptorC.cpp.diff
+        $(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb, export_macro=TAO_Export Dynamic.idl; \
+        $(RM) -f DynamicS.* DynamicS_T.*; \
+	$(TAO_ROOT)/TAO_IDL/tao_idl -Ge 1 -Wb,export_macro=TAO_Export PortableInterceptor.idl; \
+	$(RM) -f PortableInterceptorS.* PortableInterceptorS_T.*; \
+	patch < diffs/PortableInterceptorC.h.diff; \
+	patch < diffs/PortableInterceptorC.cpp.diff
 .PHONY interceptor.target:
 
 ifeq ($(fakesvcconf),1)
@@ -417,6 +420,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -488,6 +493,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -564,11 +570,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -590,12 +591,21 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  ORB_Core.h \
  Policy_Manager.h \
@@ -646,6 +656,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -717,6 +729,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -782,11 +795,12 @@ realclean:
  POAC.i \
  Key_Adapters.i
 
-.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
+.obj/POA.o .obj/POA.so .shobj/POA.o .shobj/POA.so: POA.cpp $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -891,6 +905,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -942,11 +957,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -968,12 +978,21 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -1029,8 +1048,7 @@ realclean:
  Acceptor_Registry.i \
  Forwarding_Servant.h
 
-.obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp \
- POAC.h \
+.obj/POAC.o .obj/POAC.so .shobj/POAC.o .shobj/POAC.so: POAC.cpp POAC.h \
  $(ACE_ROOT)/ace/pre.h \
  PolicyC.h \
  CurrentC.h \
@@ -1040,6 +1058,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1111,6 +1131,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -1139,11 +1160,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  POA.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -1202,6 +1218,8 @@ realclean:
  rtcorbafwd.h \
  rtcorbafwd.i \
  POA.i \
+ Typecode.h \
+ Typecode.i \
  Invocation.h \
  ORB_Core.h \
  ORB.h \
@@ -1213,12 +1231,19 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -1258,18 +1283,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -1296,8 +1309,7 @@ realclean:
  MProfile.i \
  Stub.i
 
-.obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp \
- POAS.h \
+.obj/POAS.o .obj/POAS.so .shobj/POAS.o .shobj/POAS.so: POAS.cpp POAS.h \
  $(ACE_ROOT)/ace/pre.h \
  POAC.h \
  PolicyC.h \
@@ -1308,6 +1320,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1379,6 +1393,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -1406,11 +1421,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Server_Request.h \
  IOPC.h \
@@ -1454,10 +1464,19 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -1508,6 +1527,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1579,6 +1600,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -1606,11 +1628,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  poa_macros.h \
  POAManager.i \
@@ -1678,6 +1695,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1749,6 +1768,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
@@ -1829,6 +1849,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -1900,6 +1922,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  POAC.h \
  PolicyC.h \
@@ -1961,26 +1984,30 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -2064,6 +2091,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2139,6 +2168,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  POAC.h \
  PolicyC.h \
@@ -2196,15 +2226,26 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
+ MessagingC.h \
  Any.h \
  Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
  Server_Request.h \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -2218,6 +2259,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2289,6 +2332,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  Managed_Types.h \
@@ -2307,8 +2351,7 @@ realclean:
  Any.h \
  Any.i \
  Typecode.h \
- Typecode.i \
- ImplRepoC.i \
+ Typecode.i ImplRepoC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -2385,24 +2428,29 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  NVList.h \
  NVList.i \
+ Interceptor.h \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -2419,18 +2467,6 @@ realclean:
  Request.h \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -2450,14 +2486,15 @@ realclean:
  Invocation.i
 
 .obj/ImplRepoS.o .obj/ImplRepoS.so .shobj/ImplRepoS.o .shobj/ImplRepoS.so: ImplRepoS.cpp ImplRepoS.h \
- $(ACE_ROOT)/ace/pre.h \
- ImplRepoC.h \
+ $(ACE_ROOT)/ace/pre.h ImplRepoC.h \
  Object.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2529,6 +2566,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  Managed_Types.h \
@@ -2547,8 +2585,7 @@ realclean:
  Any.h \
  Any.i \
  Typecode.h \
- Typecode.i \
- ImplRepoC.i \
+ Typecode.i ImplRepoC.i \
  POAC.h \
  PolicyC.h \
  CurrentC.h \
@@ -2617,9 +2654,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -2665,6 +2699,7 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
+ PortableInterceptor.h \
  ORB.i \
  Stub.i \
  GIOP_Server_Request.h \
@@ -2708,6 +2743,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -2779,6 +2816,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -2872,24 +2910,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -2916,18 +2958,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  Reply_Dispatcher.i \
  debug.h \
@@ -2944,6 +2974,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -3015,6 +3047,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Tagged_Components.h \
  IOPC.h \
@@ -3043,6 +3076,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -3114,6 +3149,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -3172,26 +3208,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -3245,6 +3285,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -3316,6 +3358,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -3410,22 +3453,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -3449,6 +3496,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -3568,6 +3617,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -3596,6 +3646,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -3715,6 +3767,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -3807,22 +3860,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -3871,6 +3928,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -3990,6 +4049,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -4082,22 +4142,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -4149,6 +4213,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -4220,6 +4286,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Tagged_Components.h \
  IOPC.h \
@@ -4291,10 +4358,23 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -4356,8 +4436,6 @@ realclean:
  Wait_Strategy.h \
  IIOP_Transport.h \
  Pluggable.h \
- Typecode.h \
- Typecode.i \
  Pluggable.i \
  operation_details.h \
  target_specification.h \
@@ -4368,15 +4446,8 @@ realclean:
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -4428,6 +4499,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -4499,6 +4572,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -4638,10 +4712,21 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  IIOP_Profile.i \
  Timeprobe.h \
@@ -4649,10 +4734,6 @@ realclean:
  Transport_Mux_Strategy.h \
  Sync_Strategies.h \
  TAOC.h \
- TimeBaseC.h \
- Any.h \
- Any.i \
- TimeBaseC.i \
  TAOC.i \
  Sync_Strategies.i \
  Stub.h \
@@ -4662,13 +4743,8 @@ realclean:
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -4699,6 +4775,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -4851,6 +4929,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -4938,25 +5017,29 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  IIOP_Profile.i \
  debug.h \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -4977,6 +5060,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -5048,6 +5133,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -5185,22 +5271,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5238,6 +5328,8 @@ realclean:
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -5388,6 +5480,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Wait_Strategy.h \
  IIOP_Transport.h \
@@ -5447,22 +5540,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -5475,18 +5572,6 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  Messaging_Policy_i.h \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Messaging_Policy_i.i \
  GIOP_Message_Lite.h \
  GIOP_Utils.h \
@@ -5513,6 +5598,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -5632,6 +5719,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -5725,22 +5813,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -5790,6 +5882,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -5909,6 +6003,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -6002,22 +6097,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -6068,6 +6167,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -6139,6 +6240,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Tagged_Components.h \
  IOPC.h \
@@ -6282,23 +6384,27 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -6350,6 +6456,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -6421,6 +6529,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -6578,22 +6687,24 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -6624,6 +6735,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -6695,6 +6808,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -6871,22 +6985,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -6906,6 +7024,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -6977,6 +7097,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -7115,22 +7236,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7169,6 +7294,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -7240,6 +7367,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -7374,22 +7502,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -7404,18 +7536,6 @@ realclean:
  Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
  Messaging_Policy_i.h \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Messaging_Policy_i.i \
  GIOP_Message_Acceptors.h \
  GIOP_Message_Base.h \
@@ -7444,6 +7564,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -7515,6 +7637,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Protocol_Factory.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -7659,22 +7782,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  params.h \
@@ -7725,6 +7852,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -7796,6 +7925,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Profile.h \
  Tagged_Components.h \
@@ -7862,10 +7992,23 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -7943,23 +8086,14 @@ realclean:
  Wait_Strategy.h \
  SHMIOP_Transport.h \
  Pluggable.h \
- Typecode.h \
- Typecode.i \
  Pluggable.i \
  SHMIOP_Transport.i \
  SHMIOP_Connect.i \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8010,6 +8144,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -8081,6 +8217,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -8225,10 +8362,21 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -8238,10 +8386,6 @@ realclean:
  Transport_Mux_Strategy.h \
  Sync_Strategies.h \
  TAOC.h \
- TimeBaseC.h \
- Any.h \
- Any.i \
- TimeBaseC.i \
  TAOC.i \
  Sync_Strategies.i \
  Stub.h \
@@ -8251,13 +8395,8 @@ realclean:
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8287,6 +8426,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -8358,6 +8499,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Connector.h \
  $(ACE_ROOT)/ace/Service_Config.h \
@@ -8533,10 +8675,21 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
@@ -8545,15 +8698,8 @@ realclean:
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -8573,6 +8719,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -8644,6 +8792,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -8786,22 +8935,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -8839,6 +8992,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -8910,6 +9065,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
@@ -9051,22 +9207,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9078,6 +9238,8 @@ realclean:
  ORB_Core.i \
  $(ACE_ROOT)/ace/Dynamic_Service.h \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
+ Messaging_Policy_i.h \
+ Messaging_Policy_i.i \
  GIOP_Message_Acceptors.h \
  GIOP_Message_Base.h \
  GIOP_Message_Base.i \
@@ -9097,10 +9259,11 @@ realclean:
  GIOP_Utils.i \
  GIOP_Message_Lite.i
 
-.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp \
- IORC.h \
+.obj/IORC.o .obj/IORC.so .shobj/IORC.o .shobj/IORC.so: IORC.cpp IORC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -9176,6 +9339,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Environment.h \
  Environment.i \
@@ -9269,25 +9433,29 @@ realclean:
  Services.h \
  Services.i \
  IORManipulation.h \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -9305,18 +9473,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -9335,11 +9491,12 @@ realclean:
  operation_details.i \
  Invocation.i
 
-.obj/IORS.o .obj/IORS.so .shobj/IORS.o .shobj/IORS.so: IORS.cpp \
- IORS.h \
+.obj/IORS.o .obj/IORS.so .shobj/IORS.o .shobj/IORS.so: IORS.cpp IORS.h \
  $(ACE_ROOT)/ace/pre.h \
  IORC.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -9415,6 +9572,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Environment.h \
  Environment.i \
@@ -9451,6 +9609,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -9522,6 +9682,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  IORS.h \
@@ -9614,10 +9775,21 @@ realclean:
  IOR_LookupTable.h \
  Services.h \
  Services.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
@@ -9632,6 +9804,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -9708,6 +9882,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Config.i \
@@ -9764,26 +9939,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -9836,6 +10015,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -9907,6 +10088,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -9967,26 +10149,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -10030,6 +10216,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10128,6 +10316,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -10192,22 +10381,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -10272,6 +10465,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10370,6 +10565,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -10420,6 +10616,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10518,6 +10716,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -10567,6 +10766,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10638,6 +10839,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Typecode.h \
  Exception.h \
@@ -10702,12 +10904,21 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Marshal.i \
  debug.h
@@ -10720,6 +10931,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10791,6 +11004,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Typecode.h \
  Exception.h \
@@ -10855,23 +11069,33 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Marshal.i
 
-.obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp \
- Marshal.h \
+.obj/skip.o .obj/skip.so .shobj/skip.o .shobj/skip.so: skip.cpp Marshal.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -10943,6 +11167,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Typecode.h \
  Exception.h \
@@ -11007,12 +11232,21 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Marshal.i \
  debug.h
@@ -11025,6 +11259,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -11096,6 +11332,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Managed_Types.i \
  ORB.h \
@@ -11153,12 +11390,25 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i
 
 .obj/Operation_Table.o .obj/Operation_Table.so .shobj/Operation_Table.o .shobj/Operation_Table.so: Operation_Table.cpp \
@@ -11166,6 +11416,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -11265,6 +11517,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Timeprobe.h \
  $(ACE_ROOT)/ace/Timeprobe.h \
@@ -11300,16 +11553,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i
 
-.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp \
- Any.h \
+.obj/Any.o .obj/Any.so .shobj/Any.o .shobj/Any.so: Any.cpp Any.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
  corbafwd.h \
@@ -11317,6 +11582,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -11388,6 +11655,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -11451,24 +11719,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Marshal.i \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -11514,6 +11786,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -11585,6 +11859,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -11677,22 +11952,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- Stub.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
  Any.h \
  Any.i \
- POA_CORBA.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
  DynAnyC.h \
  DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ Stub.i \
+ POA_CORBA.h \
  DomainC.h \
- DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ DomainC.i
 
 .obj/CurrentS.o .obj/CurrentS.so .shobj/CurrentS.o .shobj/CurrentS.so: CurrentS.cpp \
  CurrentC.h \
@@ -11703,6 +11982,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -11774,6 +12055,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -11829,21 +12111,20 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Server_Request.h \
  IOPC.h \
  IOPC.i \
  Object_KeyC.h \
  Object_KeyC.i \
- Server_Request.i
+ Server_Request.i \
+ Typecode.h \
+ Typecode.i
 
 .obj/Exception.o .obj/Exception.so .shobj/Exception.o .shobj/Exception.so: Exception.cpp \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -11920,6 +12201,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Exception.i \
  Typecode.h \
@@ -11938,6 +12220,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -12012,6 +12296,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Exception.h \
  Exception.i \
@@ -12028,6 +12313,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -12099,6 +12386,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Environment.i \
  ORB_Core.h \
@@ -12157,26 +12445,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -12220,6 +12512,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -12291,6 +12585,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  Object_Adapter.h \
@@ -12368,11 +12663,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -12400,6 +12690,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  IOPC.h \
  IOPC.i \
  Pluggable.i \
@@ -12420,10 +12712,17 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  Request.h \
@@ -12431,18 +12730,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  ORB_Core.h \
  Policy_Manager.h \
@@ -12484,6 +12771,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -12555,6 +12844,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.h \
  Object.i \
@@ -12634,11 +12924,6 @@ realclean:
  DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  POAS.i \
  Active_Object_Map.h \
  Active_Object_Map.i \
@@ -12666,6 +12951,8 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
+ Typecode.h \
+ Typecode.i \
  IOPC.h \
  IOPC.i \
  Pluggable.i \
@@ -12686,10 +12973,17 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  Request.h \
@@ -12697,18 +12991,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  ORB_Core.h \
  Policy_Manager.h \
@@ -12753,6 +13035,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -12824,6 +13108,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -12885,24 +13170,34 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
+ MessagingC.h \
  Any.h \
- Any.i
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i
 
-.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp \
- ORB.h \
+.obj/ORB.o .obj/ORB.so .shobj/ORB.o .shobj/ORB.so: ORB.cpp ORB.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -12974,6 +13269,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Exception.h \
  Exception.i \
@@ -13031,12 +13327,25 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Acceptor_Registry.h \
  Pluggable.h \
@@ -13061,8 +13370,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  Pluggable.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -13100,8 +13407,6 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(ACE_ROOT)/ace/Arg_Shifter.h \
  NVList.h \
- Any.h \
- Any.i \
  NVList.i \
  Stub.h \
  MProfile.h \
@@ -13115,13 +13420,8 @@ realclean:
  Stub.i \
  DynAny_i.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  ORB_Core.h \
  Policy_Manager.h \
  Policy_Manager.i \
@@ -13165,18 +13465,6 @@ realclean:
  Request.h \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  Object_Loader.h \
  Object_Loader.i \
@@ -13198,6 +13486,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -13269,6 +13559,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i
 
 .obj/PolicyC.o .obj/PolicyC.so .shobj/PolicyC.o .shobj/PolicyC.so: PolicyC.cpp \
@@ -13281,6 +13572,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -13352,6 +13645,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -13443,22 +13737,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
@@ -13479,18 +13777,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -13519,6 +13805,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -13590,6 +13878,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -13650,11 +13939,8 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
  Typecode.h \
  Typecode.i \
- InterfaceC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -13664,10 +13950,17 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i
 
 .obj/DomainC.o .obj/DomainC.so .shobj/DomainC.o .shobj/DomainC.so: DomainC.cpp \
@@ -13678,6 +13971,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -13749,6 +14044,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -13846,21 +14142,25 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -13878,18 +14178,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -13915,6 +14203,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -13986,6 +14276,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -14049,11 +14340,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  ORB.h \
  IOR_LookupTable.h \
  Services.h \
@@ -14063,10 +14349,19 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i
 
 .obj/TimeBaseC.o .obj/TimeBaseC.so .shobj/TimeBaseC.o .shobj/TimeBaseC.so: TimeBaseC.cpp \
@@ -14079,6 +14374,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14150,6 +14447,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -14179,6 +14477,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14250,6 +14550,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -14271,6 +14572,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14342,6 +14645,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -14362,6 +14666,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14433,6 +14739,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Managed_Types.h \
  Managed_Types.i \
@@ -14449,6 +14756,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14520,6 +14829,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  IOPC.h \
  CDR.h \
@@ -14590,22 +14900,26 @@ realclean:
  Servant_Base.h \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -14651,6 +14965,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14722,6 +15038,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Profile.h \
  Tagged_Components.h \
@@ -14796,8 +15113,7 @@ realclean:
  Environment.h \
  Environment.i
 
-.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp \
- Stub.h \
+.obj/Stub.o .obj/Stub.so .shobj/Stub.o .shobj/Stub.so: Stub.cpp Stub.h \
  $(ACE_ROOT)/ace/pre.h \
  Pluggable.h \
  corbafwd.h \
@@ -14805,6 +15121,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -14876,6 +15194,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -14968,27 +15287,31 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  NVList.h \
- Any.h \
- Any.i \
  NVList.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -15004,18 +15327,6 @@ realclean:
  Request.h \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -15055,6 +15366,8 @@ realclean:
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15129,6 +15442,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Exception.i \
  Typecode.i \
@@ -15192,12 +15506,21 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Marshal.i \
  debug.h
@@ -15210,6 +15533,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15281,6 +15606,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  ORB.h \
@@ -15338,27 +15664,31 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -15404,6 +15734,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15475,6 +15807,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ValueFactory.i
 
@@ -15483,6 +15816,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15582,6 +15917,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ValueFactory_Map.i \
  ValueFactory.h \
@@ -15618,17 +15954,31 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i
 
-.obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp \
- Timeprobe.h \
+.obj/CDR.o .obj/CDR.so .shobj/CDR.o .shobj/CDR.so: CDR.cpp Timeprobe.h \
  $(ACE_ROOT)/ace/pre.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15707,6 +16057,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  ORB_Core.h \
@@ -15765,26 +16116,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -15827,6 +16182,8 @@ realclean:
  $(ACE_ROOT)/ace/Shared_Object.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15903,16 +16260,18 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i
 
-.obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp \
- debug.h \
+.obj/debug.o .obj/debug.so .shobj/debug.o .shobj/debug.so: debug.cpp debug.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -15984,6 +16343,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i
 
 .obj/Object_KeyC.o .obj/Object_KeyC.so .shobj/Object_KeyC.o .shobj/Object_KeyC.so: Object_KeyC.cpp \
@@ -15994,6 +16354,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16065,6 +16427,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -16088,6 +16451,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16159,6 +16524,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  ORB_Core.h \
@@ -16217,26 +16583,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16277,18 +16647,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -16340,6 +16698,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16411,6 +16771,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  IOPC.h \
  CDR.h \
@@ -16429,13 +16790,15 @@ realclean:
  target_specification.i \
  operation_details.i
 
-.obj/Interceptor.o .obj/Interceptor.so .shobj/Interceptor.o .shobj/Interceptor.so: Interceptor.cpp \
+.obj/PortableInterceptor.o .obj/PortableInterceptor.so .shobj/PortableInterceptor.o .shobj/PortableInterceptor.so: PortableInterceptor.cpp \
  corbafwd.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16507,9 +16870,10 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  CDR.h \
  CDR.i \
@@ -16527,13 +16891,71 @@ realclean:
  Exception.i \
  Environment.h \
  Environment.i \
- InterceptorC.i \
- Interceptor.i
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ PolicyC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ ORB.h \
+ IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Services.h \
+ Services.i \
+ IORManipulation.h \
+ IORS.h \
+ IORC.h \
+ IORC.i \
+ Servant_Base.h \
+ POAC.h \
+ POAC.i \
+ Servant_Base.i \
+ IORS.i \
+ ORB.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i
 
-.obj/InterceptorC.o .obj/InterceptorC.so .shobj/InterceptorC.o .shobj/InterceptorC.so: InterceptorC.cpp InterceptorC.h \
+.obj/PortableInterceptorC.o .obj/PortableInterceptorC.so .shobj/PortableInterceptorC.o .shobj/PortableInterceptorC.so: PortableInterceptorC.cpp \
+ PortableInterceptorC.h $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
- $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16610,6 +17032,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -16626,7 +17049,225 @@ realclean:
  Exception.i \
  Environment.h \
  Environment.i \
- InterceptorC.i
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ PolicyC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ ORB.h \
+ IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Services.h \
+ Services.i \
+ IORManipulation.h \
+ IORS.h \
+ IORC.h \
+ IORC.i \
+ Servant_Base.h \
+ POAC.h \
+ POAC.i \
+ Servant_Base.i \
+ IORS.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ PortableInterceptor.i \
+ ORB.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i
+
+.obj/DynamicC.o .obj/DynamicC.so .shobj/DynamicC.o .shobj/DynamicC.so: DynamicC.cpp DynamicC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ ORB.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Stream.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.h \
+ $(ACE_ROOT)/ace/Based_Pointer_T.i \
+ $(ACE_ROOT)/ace/Based_Pointer_T.cpp \
+ $(ACE_ROOT)/ace/Based_Pointer_Repository.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers_T.h \
+ $(ACE_ROOT)/ace/Containers_T.i \
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/CDR_Stream.i \
+ try_macros.h \
+ orbconf.h \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
+ corbafwd.i \
+ Exception.h \
+ Exception.i \
+ IOR_LookupTable.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Functor.h \
+ $(ACE_ROOT)/ace/Functor.i \
+ $(ACE_ROOT)/ace/Functor_T.h \
+ $(ACE_ROOT)/ace/Functor_T.i \
+ $(ACE_ROOT)/ace/Functor_T.cpp \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Service_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
+ Services.h \
+ Sequence.h \
+ Managed_Types.h \
+ Managed_Types.i \
+ Sequence.i \
+ Sequence_T.h \
+ Sequence_T.i \
+ Sequence_T.cpp \
+ Services.i \
+ IORManipulation.h \
+ Object.h \
+ Object.i \
+ IORS.h \
+ IORC.h \
+ Environment.h \
+ Environment.i \
+ CDR.h \
+ CDR.i \
+ IORC.i \
+ Servant_Base.h \
+ POAC.h \
+ PolicyC.h \
+ CurrentC.h \
+ CurrentC.i \
+ PolicyC.i \
+ POAC.i \
+ Servant_Base.i \
+ IORS.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ IOPC.h \
+ IOPC.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i DynamicC.i
 
 .obj/Smart_Proxies.o .obj/Smart_Proxies.so .shobj/Smart_Proxies.o .shobj/Smart_Proxies.so: Smart_Proxies.cpp \
  Smart_Proxies.h \
@@ -16637,6 +17278,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16708,6 +17351,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  Smart_Proxies.i
@@ -16722,6 +17366,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -16793,6 +17439,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  ORB_Core.h \
@@ -16851,26 +17498,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -16911,18 +17562,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -16966,6 +17605,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17037,6 +17678,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -17095,26 +17737,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17218,8 +17864,6 @@ realclean:
  Priority_Mapping.i \
  Sync_Strategies.h \
  TAOC.h \
- TimeBaseC.h \
- TimeBaseC.i \
  TAOC.i \
  Sync_Strategies.i
 
@@ -17232,6 +17876,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17303,6 +17949,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -17361,26 +18008,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17425,6 +18076,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17496,6 +18149,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Reactor_Registry.i
 
@@ -17508,6 +18162,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17579,6 +18235,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Reactor_Registry.i \
  Single_Reactor.i \
@@ -17640,26 +18297,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17706,6 +18367,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17777,6 +18440,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Reactor_Registry.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -17841,26 +18505,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -17904,6 +18572,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -17975,6 +18645,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  IOR_LookupTable.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -18009,6 +18680,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -18118,6 +18791,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -18175,22 +18849,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  params.h \
  params.i \
@@ -18208,6 +18886,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -18279,6 +18959,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -18293,6 +18974,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -18364,6 +19047,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -18467,22 +19151,24 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -18503,6 +19189,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -18574,6 +19262,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -18658,6 +19347,8 @@ realclean:
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -18732,6 +19423,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Exception.i \
  Typecode.i \
@@ -18790,19 +19482,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Object_KeyC.h \
  Object_KeyC.i \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  InconsistentTypeCodeC.h \
  DomainC.h \
  DomainC.i \
@@ -18810,9 +19509,7 @@ realclean:
  NVList.h \
  NVList.i \
  BoundsC.h \
- BoundsC.i \
- PollableC.h \
- PollableC.i
+ BoundsC.i
 
 .obj/IOR_LookupTable.o .obj/IOR_LookupTable.so .shobj/IOR_LookupTable.o .shobj/IOR_LookupTable.so: IOR_LookupTable.cpp \
  IOR_LookupTable.h \
@@ -18821,6 +19518,8 @@ realclean:
  $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -18918,6 +19617,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ObjectIDList.h \
  Sequence.h \
@@ -18934,14 +19634,15 @@ realclean:
  Environment.i \
  debug.h
 
-.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp \
- TAO.h \
+.obj/TAO.o .obj/TAO.so .shobj/TAO.o .shobj/TAO.so: TAO.cpp TAO.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -19013,6 +19714,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  POAC.h \
  PolicyC.h \
@@ -19071,12 +19773,25 @@ realclean:
  Servant_Base.h \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i
 
 .obj/Wait_Strategy.o .obj/Wait_Strategy.so .shobj/Wait_Strategy.o .shobj/Wait_Strategy.so: Wait_Strategy.cpp \
@@ -19087,6 +19802,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -19158,6 +19875,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -19244,22 +19962,26 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -19288,6 +20010,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -19359,6 +20083,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -19422,29 +20147,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- NVList.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
  Any.h \
  Any.i \
- NVList.i \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ NVList.h \
+ NVList.i \
+ Context.h \
+ Context.i \
  Request.i \
  Reply_Dispatcher.i \
  debug.h \
@@ -19470,8 +20194,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  Pluggable.i
 
 .obj/Reply_Dispatcher.o .obj/Reply_Dispatcher.so .shobj/Reply_Dispatcher.o .shobj/Reply_Dispatcher.so: Reply_Dispatcher.cpp \
@@ -19480,6 +20202,8 @@ realclean:
  Request.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -19554,6 +20278,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -19612,31 +20337,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- NVList.h \
+ MessagingC.h \
  Any.h \
  Any.i \
- NVList.i \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ NVList.h \
+ NVList.i \
+ Context.h \
+ Context.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -19648,15 +20372,8 @@ realclean:
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -19695,8 +20412,7 @@ realclean:
  Leader_Follower.i \
  debug.h
 
-.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp \
- IOPC.h \
+.obj/IOPC.o .obj/IOPC.so .shobj/IOPC.o .shobj/IOPC.so: IOPC.cpp IOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  CDR.h \
  corbafwd.h \
@@ -19704,6 +20420,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -19775,6 +20493,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -19796,8 +20515,7 @@ realclean:
  Exception.i \
  Typecode.i
 
-.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp \
- IOPS.h \
+.obj/IOPS.o .obj/IOPS.so .shobj/IOPS.o .shobj/IOPS.so: IOPS.cpp IOPS.h \
  $(ACE_ROOT)/ace/pre.h \
  IOPC.h \
  CDR.h \
@@ -19806,6 +20524,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -19877,6 +20597,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -19899,6 +20620,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -19970,165 +20693,8 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- corbafwd.i \
- Object.h \
- Object.i \
- Exception.h \
- Exception.i \
- CDR.h \
- CDR.i \
- PollableC.i \
- POA_CORBA.h \
- CurrentC.h \
- CurrentC.i \
- PolicyC.h \
- Environment.h \
- Environment.i \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- PolicyC.i \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
- DomainC.h \
- DomainC.i \
- Servant_Base.h \
- POAC.h \
- POAC.i \
- Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
- Stub.h \
- Pluggable.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/Message_Queue_T.h \
- $(ACE_ROOT)/ace/Message_Queue_T.i \
- $(ACE_ROOT)/ace/Message_Queue_T.cpp \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Synch_Options.i \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- $(ACE_ROOT)/ace/Strategies_T.i \
- $(ACE_ROOT)/ace/Strategies_T.cpp \
- $(ACE_ROOT)/ace/Service_Repository.h \
- $(ACE_ROOT)/ace/Service_Types.h \
- $(ACE_ROOT)/ace/Service_Types.i \
- $(ACE_ROOT)/ace/Service_Repository.i \
- $(ACE_ROOT)/ace/WFMO_Reactor.h \
- $(ACE_ROOT)/ace/WFMO_Reactor.i \
- $(ACE_ROOT)/ace/Strategies.i \
- $(ACE_ROOT)/ace/Message_Queue.i \
- IOPC.h \
- IOPC.i \
- Pluggable.i \
- MProfile.h \
- Profile.h \
- Tagged_Components.h \
- CONV_FRAMEC.h \
- CONV_FRAMEC.i \
- Tagged_Components.i \
- Profile.i \
- MProfile.i \
- ORB.h \
- IOR_LookupTable.h \
- Services.h \
- Services.i \
- IORManipulation.h \
- IORS.h \
- IORC.h \
- IORC.i \
- IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- Stub.i \
- Invocation.h \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Manager.i \
- Resource_Factory.h \
- Protocol_Factory.h \
- params.h \
- params.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- ORB_Core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(ACE_ROOT)/ace/Dynamic_Service.cpp \
- Reply_Dispatcher.h \
- Request.h \
- NVList.h \
- NVList.i \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
- Request.i \
- GIOP_Message_State.h \
- Pluggable_Messaging.h \
- Pluggable_Messaging_Utils.h \
- Pluggable_Messaging_Utils.i \
- Pluggable_Messaging.i \
- GIOP_Message_State.i \
- Reply_Dispatcher.i \
- TAOC.h \
- TAOC.i \
- operation_details.h \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i
+ varbase.h \
+ corbafwd.i
 
 .obj/PollableS.o .obj/PollableS.so .shobj/PollableS.o .shobj/PollableS.so: PollableS.cpp PollableS.h PollableC.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -20137,6 +20703,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20208,14 +20776,9 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- corbafwd.i \
- Object.h \
- Object.i \
- Exception.h \
- Exception.i \
- CDR.h \
- CDR.i \
- PollableC.i PollableS_T.h PollableS_T.i PollableS_T.cpp PollableS.i
+ varbase.h \
+ corbafwd.i PollableS_T.h \
+ PollableS_T.i PollableS_T.cpp PollableS.i
 
 .obj/CONV_FRAMEC.o .obj/CONV_FRAMEC.so .shobj/CONV_FRAMEC.o .shobj/CONV_FRAMEC.so: CONV_FRAMEC.cpp \
  CONV_FRAMEC.h \
@@ -20226,6 +20789,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20297,6 +20862,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -20328,6 +20894,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20399,6 +20967,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -20424,6 +20993,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20495,6 +21066,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -20509,14 +21081,15 @@ realclean:
  CONV_FRAMEC.i \
  Tagged_Components.i
 
-.obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp \
- GIOPC.h \
+.obj/GIOPC.o .obj/GIOPC.so .shobj/GIOPC.o .shobj/GIOPC.so: GIOPC.cpp GIOPC.h \
  $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20588,6 +21161,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  IOPC.h \
  CDR.h \
@@ -20622,6 +21196,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20693,6 +21269,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Exception.h \
  Exception.i \
@@ -20708,13 +21285,14 @@ realclean:
  Typecode.h \
  Typecode.i
 
-.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h \
- $(ACE_ROOT)/ace/pre.h \
+.obj/TAOC.o .obj/TAOC.so .shobj/TAOC.o .shobj/TAOC.so: TAOC.cpp TAOC.h $(ACE_ROOT)/ace/pre.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20786,6 +21364,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -20809,8 +21388,7 @@ realclean:
  TimeBaseC.h \
  Any.h \
  Any.i \
- TimeBaseC.i \
- TAOC.i \
+ TimeBaseC.i TAOC.i \
  TAOS.h \
  TAOS_T.h \
  TAOS_T.i \
@@ -20826,6 +21404,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20897,8 +21477,9 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
- corbafwd.i \
- TAOS_T.h TAOS_T.i TAOS_T.cpp TAOS.i
+ varbase.h \
+ corbafwd.i TAOS_T.h \
+ TAOS_T.i TAOS_T.cpp TAOS.i
 
 .obj/Object_Loader.o .obj/Object_Loader.so .shobj/Object_Loader.o .shobj/Object_Loader.so: Object_Loader.cpp \
  Object_Loader.h \
@@ -20908,6 +21489,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -20979,6 +21562,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -21012,6 +21596,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -21083,6 +21669,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Context.i \
  Typecode.h \
@@ -21148,12 +21735,21 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i
 
 .obj/Request.o .obj/Request.so .shobj/Request.o .shobj/Request.so: Request.cpp \
@@ -21161,6 +21757,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -21235,6 +21833,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -21293,31 +21892,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- NVList.h \
+ MessagingC.h \
  Any.h \
  Any.i \
- NVList.i \
- Context.h \
- Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  TimeBaseC.h \
  TimeBaseC.i \
  PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ NVList.h \
+ NVList.i \
+ Context.h \
+ Context.i \
  Request.i \
  Stub.h \
  Pluggable.h \
@@ -21342,8 +21940,6 @@ realclean:
  $(ACE_ROOT)/ace/WFMO_Reactor.i \
  $(ACE_ROOT)/ace/Strategies.i \
  $(ACE_ROOT)/ace/Message_Queue.i \
- Typecode.h \
- Typecode.i \
  Pluggable.i \
  MProfile.h \
  Profile.h \
@@ -21366,6 +21962,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -21437,6 +22035,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Managed_Types.h \
  Managed_Types.i \
@@ -21463,6 +22062,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -21539,6 +22140,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -21598,18 +22200,27 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  BoundsC.h \
  BoundsC.i \
  debug.h \
- Typecode.h \
- Typecode.i \
  Marshal.h \
  Principal.h \
  Principal.i \
@@ -21622,6 +22233,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -21636,7 +22249,6 @@ realclean:
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- ValueBase.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -21697,10 +22309,8 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  Any.h \
  CDR.h \
  CDR.i \
@@ -21726,11 +22336,7 @@ realclean:
  PolicyC.i \
  IOPC.h \
  IOPC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
+ PollableC.h MessagingC.i \
  MessagingS.h \
  TimeBaseS.h \
  TimeBaseS_T.h \
@@ -21814,23 +22420,22 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -21870,6 +22475,8 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -21883,8 +22490,8 @@ realclean:
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i \
- MessagingS.h orbconf.h TimeBaseS.h \
+ $(ACE_ROOT)/ace/Log_Record.i MessagingS.h \
+ orbconf.h TimeBaseS.h \
  TimeBaseC.h \
  Any.h \
  CDR.h \
@@ -21948,6 +22555,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Environment.h \
@@ -21959,12 +22567,7 @@ realclean:
  TimeBaseS_T.h \
  TimeBaseS_T.i \
  TimeBaseS_T.cpp \
- TimeBaseS.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
+ TimeBaseS.i MessagingC.h \
  PolicyC.h \
  CurrentC.h \
  CurrentC.i \
@@ -21980,14 +22583,9 @@ realclean:
  PolicyC.i \
  IOPC.h \
  IOPC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i POAC.h \
- POAC.i \
- Servant_Base.h \
- POAC.h \
+ PollableC.h MessagingC.i \
+ POAC.h POAC.i \
+ Servant_Base.h POAC.h \
  Servant_Base.i \
  MessagingS_T.h MessagingS_T.i MessagingS_T.cpp MessagingS.i \
  Operation_Table.h \
@@ -22019,8 +22617,7 @@ realclean:
  Server_Request.h \
  Object_KeyC.h \
  Object_KeyC.i \
- Server_Request.i \
- Stub.h \
+ Server_Request.i Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
  $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
@@ -22064,22 +22661,21 @@ realclean:
  IORC.i \
  Servant_Base.h \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
- ORB.i \
- Stub.i \
- ORB_Core.h \
- Policy_Manager.h \
- POA_CORBA.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ DynamicC.h \
  DynAnyC.h \
  DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
+ ORB.i \
+ Stub.i ORB_Core.h \
+ Policy_Manager.h \
+ POA_CORBA.h \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -22120,6 +22716,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -22197,6 +22795,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Object.i \
  CurrentC.i \
@@ -22225,11 +22824,6 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  ORB_Core.h \
  ORB.h \
@@ -22266,12 +22860,21 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -22308,21 +22911,9 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.cpp \
  Buffering_Constraint_Policy.h \
  TAOC.h \
- TimeBaseC.h \
- TimeBaseC.i \
  TAOC.i \
  Buffering_Constraint_Policy.i \
  Messaging_Policy_i.h \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Messaging_Policy_i.i \
  Client_Priority_Policy.h \
  Client_Priority_Policy.i
@@ -22332,6 +22923,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -22347,7 +22940,6 @@ realclean:
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  MessagingC.h \
- ValueBase.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Stream.h \
  $(ACE_ROOT)/ace/Message_Block.h \
@@ -22408,10 +23000,8 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
  Any.h \
  CDR.h \
  CDR.i \
@@ -22438,9 +23028,6 @@ realclean:
  IOPC.h \
  IOPC.i \
  PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
  MessagingC.i \
  Messaging_Policy_i.i \
  debug.h
@@ -22450,6 +23037,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -22525,6 +23114,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -22557,6 +23147,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -22632,6 +23224,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  PolicyC.h \
  CurrentC.h \
@@ -22667,6 +23260,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -22738,6 +23333,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  rtcorbafwd.i
 
@@ -22745,6 +23341,8 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -22821,6 +23419,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  rtcorbafwd.i \
  Priority_Mapping.i
@@ -22829,6 +23428,8 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -22906,6 +23507,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  rtcorbafwd.i \
  Priority_Mapping.i \
@@ -22918,6 +23520,8 @@ realclean:
  orbconf.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -22995,6 +23599,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  rtcorbafwd.i \
  Priority_Mapping.i \
@@ -23012,6 +23617,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23083,6 +23690,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  rtcorbafwd.i \
  Exception.h \
@@ -23179,24 +23787,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -23219,6 +23831,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23290,6 +23904,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ORB.h \
  Exception.h \
@@ -23348,12 +23963,25 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Thread_Manager.h \
@@ -23390,17 +24018,8 @@ realclean:
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -23429,6 +24048,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23503,6 +24124,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Any.h \
  CDR.h \
@@ -23600,24 +24222,30 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  POA_CORBA.h \
  DomainC.h \
- DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- InterfaceC.i
+ DomainC.i
 
 .obj/DynAnyS.o .obj/DynAnyS.so .shobj/DynAnyS.o .shobj/DynAnyS.so: DynAnyS.cpp \
  DynAnyC.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23692,6 +24320,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Any.h \
  CDR.h \
@@ -23722,17 +24351,16 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
  Typecode.h \
- Typecode.i \
- InterfaceC.i
+ Typecode.i
 
 .obj/DynAny_i.o .obj/DynAny_i.so .shobj/DynAny_i.o .shobj/DynAny_i.so: DynAny_i.cpp \
  DynAny_i.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23807,6 +24435,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  POA_CORBA.h \
  CurrentC.h \
@@ -23838,11 +24467,8 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
  Typecode.h \
  Typecode.i \
- InterfaceC.i \
  DynStruct_i.h \
  DynSequence_i.h \
  DynEnum_i.h \
@@ -23860,6 +24486,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -23934,6 +24562,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  POA_CORBA.h \
  CurrentC.h \
@@ -23965,11 +24594,8 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
  Typecode.h \
  Typecode.i \
- InterfaceC.i \
  DynArray_i.h \
  InconsistentTypeCodeC.h \
  Marshal.h \
@@ -24009,12 +24635,19 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Marshal.i
 
@@ -24023,6 +24656,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24097,6 +24732,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  POA_CORBA.h \
  CurrentC.h \
@@ -24128,11 +24764,8 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
  Typecode.h \
  Typecode.i \
- InterfaceC.i \
  DynEnum_i.h \
  InconsistentTypeCodeC.h
 
@@ -24141,6 +24774,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24215,6 +24850,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  POA_CORBA.h \
  CurrentC.h \
@@ -24246,11 +24882,8 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
  Typecode.h \
  Typecode.i \
- InterfaceC.i \
  DynSequence_i.h \
  InconsistentTypeCodeC.h \
  Marshal.h \
@@ -24290,12 +24923,19 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Marshal.i
 
@@ -24304,6 +24944,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24378,6 +25020,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  POA_CORBA.h \
  CurrentC.h \
@@ -24409,11 +25052,8 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
  Typecode.h \
  Typecode.i \
- InterfaceC.i \
  DynStruct_i.h \
  InconsistentTypeCodeC.h \
  ORB.h \
@@ -24450,12 +25090,19 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Marshal.h \
  Principal.h \
@@ -24467,6 +25114,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24541,6 +25190,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  POA_CORBA.h \
  CurrentC.h \
@@ -24572,11 +25222,8 @@ realclean:
  POAC.h \
  POAC.i \
  Servant_Base.i \
- InterfaceC.h \
- ifrfwd.h \
  Typecode.h \
  Typecode.i \
- InterfaceC.i \
  DynUnion_i.h \
  DynUnion_i_T.h \
  DynUnion_i_T.cpp \
@@ -24618,12 +25265,19 @@ realclean:
  IORC.h \
  IORC.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Marshal.i
 
@@ -24632,6 +25286,8 @@ realclean:
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24707,6 +25363,7 @@ realclean:
  $(ACE_ROOT)/ace/CDR_Stream.i \
  try_macros.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Exception.i \
  ORB.h \
@@ -24764,12 +25421,25 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
  IOPC.h \
  IOPC.i \
- InterceptorC.i \
- Interceptor.i \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i
 
 .obj/InterfaceC.o .obj/InterfaceC.so .shobj/InterfaceC.o .shobj/InterfaceC.so: InterfaceC.cpp InterfaceC.h \
@@ -24778,6 +25448,8 @@ realclean:
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -24850,6 +25522,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  ifrfwd.h \
  Any.h \
@@ -24871,7 +25544,6 @@ realclean:
  Exception.h \
  Exception.i \
  Typecode.i \
- InterfaceC.i \
  Stub.h \
  Pluggable.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
@@ -24948,21 +25620,27 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Stub.i \
  Invocation.h \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
  Policy_Manager.i \
  Resource_Factory.h \
  Protocol_Factory.h \
@@ -24980,18 +25658,6 @@ realclean:
  NVList.i \
  Context.h \
  Context.i \
- MessagingC.h \
- ValueBase.h \
- ValueBase.i \
- ValueFactory.h \
- ValueFactory.i \
- TimeBaseC.h \
- TimeBaseC.i \
- PollableC.h \
- PollableC.i \
- Smart_Proxies.h \
- Smart_Proxies.i \
- MessagingC.i \
  Request.i \
  GIOP_Message_State.h \
  Pluggable_Messaging.h \
@@ -25021,6 +25687,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -25092,6 +25760,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -25168,6 +25837,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -25239,6 +25910,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -25264,6 +25936,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -25335,6 +26009,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -25427,6 +26102,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -25498,6 +26175,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -25557,6 +26235,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -25628,6 +26308,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -25701,24 +26382,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -25805,6 +26490,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -25876,6 +26563,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -25945,10 +26633,23 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Principal.h \
  Principal.i \
@@ -25964,8 +26665,6 @@ realclean:
  GIOP_Utils.h \
  GIOP_Utils.i \
  NVList.h \
- Any.h \
- Any.i \
  NVList.i
 
 .obj/GIOP_Utils.o .obj/GIOP_Utils.so .shobj/GIOP_Utils.o .shobj/GIOP_Utils.so: GIOP_Utils.cpp \
@@ -25976,6 +26675,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -26047,6 +26748,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  GIOP_Utils.h \
  Pluggable_Messaging.h \
@@ -26114,24 +26816,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -26178,6 +26884,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -26249,6 +26957,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -26275,6 +26984,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -26346,6 +27057,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Sequence.h \
  Managed_Types.h \
@@ -26369,6 +27081,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -26440,6 +27154,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  Server_Request.h \
  IOPC.h \
@@ -26504,10 +27219,23 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Principal.h \
  Principal.i \
@@ -26525,21 +27253,12 @@ realclean:
  Tagged_Profile.i \
  GIOP_Server_Request.i \
  NVList.h \
- Any.h \
- Any.i \
  NVList.i \
  ORB_Core.h \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -26591,6 +27310,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -26662,6 +27383,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  GIOP_Utils.h \
@@ -26730,24 +27452,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -26785,8 +27511,6 @@ realclean:
  GIOP_Message_Lite.i \
  debug.h \
  TAOC.h \
- TimeBaseC.h \
- TimeBaseC.i \
  TAOC.i \
  POA.h \
  Object_Adapter.h \
@@ -26850,6 +27574,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -26921,6 +27647,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -26985,24 +27712,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
@@ -27048,6 +27779,8 @@ realclean:
  $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -27119,6 +27852,7 @@ realclean:
  try_macros.h \
  orbconf.h \
  $(ACE_ROOT)/ace/CORBA_macros.h \
+ varbase.h \
  corbafwd.i \
  CDR.i \
  Sequence.h \
@@ -27183,24 +27917,28 @@ realclean:
  POAC.i \
  Servant_Base.i \
  IORS.i \
- Interceptor.h \
- InterceptorC.h \
- InterceptorC.i \
- Interceptor.i \
+ PortableInterceptor.h \
+ PortableInterceptorC.h \
+ MessagingC.h \
+ Any.h \
+ Any.i \
+ TimeBaseC.h \
+ TimeBaseC.i \
+ PollableC.h \
+ MessagingC.i \
+ DynamicC.h \
+ DynAnyC.h \
+ DynAnyC.i \
+ Typecode.h \
+ Typecode.i \
+ DynamicC.i \
+ PortableInterceptorC.i \
+ PortableInterceptor.i \
  ORB.i \
  Policy_Manager.h \
  POA_CORBA.h \
- DynAnyC.h \
- Any.h \
- Any.i \
- DynAnyC.i \
  DomainC.h \
  DomainC.i \
- InterfaceC.h \
- ifrfwd.h \
- Typecode.h \
- Typecode.i \
- InterfaceC.i \
  Policy_Manager.i \
  Resource_Factory.h \
  Pluggable.h \
