@@ -99,7 +99,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
                  ACE_SHLIB_HANDLE handle)
 {
   ACE_TRACE ("ACE_DLL::open_i");
-  
+
   this->error_ = 0;
 
   if (!dll_filename)
@@ -123,7 +123,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
   this->open_mode_ = open_mode;
   this->close_on_destruction_ = close_on_destruction;
 
-  this->dll_handle_ = ACE_DLL_Manager::instance()->open_dll (this->dll_name_, 
+  this->dll_handle_ = ACE_DLL_Manager::instance()->open_dll (this->dll_name_,
                                                              this->open_mode_,
                                                              handle);
 
@@ -165,7 +165,7 @@ ACE_DLL::close (void)
 
   // Even if close_dll() failed, go ahead and cleanup.
   this->dll_handle_ = 0;
-  delete this->dll_name_;
+  delete[] this->dll_name_;
   this->dll_name_ = 0;
   this->close_on_destruction_ = 0;
 
@@ -179,10 +179,10 @@ ACE_DLL::error (void) const
 {
   ACE_TRACE ("ACE_DLL::error");
   if (this->error_)
-    return ACE_const_cast (ACE_TCHAR *, 
+    return ACE_const_cast (ACE_TCHAR *,
                            ACE_LIB_TEXT ("Error:  check log for details."));
 
-  return 0; 
+  return 0;
 }
 
 // Return the handle to the user either temporarily or forever, thus
@@ -199,7 +199,7 @@ ACE_DLL::get_handle (int become_owner) const
   if (this->dll_handle_)
     handle = this->dll_handle_->get_handle (become_owner);
 
-  return handle;  
+  return handle;
 }
 
 // Set the handle for the DLL. By default, the object will be closed
@@ -218,4 +218,3 @@ ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
 
   return this->open_i (temp, 1, close_on_destruction, handle);
 }
-

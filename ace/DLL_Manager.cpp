@@ -29,7 +29,7 @@ ACE_DLL_Handle::~ACE_DLL_Handle (void)
 {
   ACE_TRACE ("ACE_DLL_Handle::~ACE_DLL_Handle");
   this->close (1);
-  delete this->dll_name_;
+  delete[] this->dll_name_;
 }
 
 const ACE_TCHAR  *
@@ -108,7 +108,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("ACE_DLL_Manager_Ex::open: Invalid handle: %s\n"), 
+                                 ACE_LIB_TEXT ("ACE_DLL_Manager_Ex::open: Invalid handle: %s\n"),
                                  this->error ()->c_str ()),
                                 -1);
             }
@@ -209,7 +209,7 @@ ACE_DLL_Handle::get_handle (int become_owner)
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT ("ACE_DLL_Handle::get_handle: ")
               ACE_LIB_TEXT ("handle %s, refcount %d\n"),
-              this->handle_ == ACE_SHLIB_INVALID_HANDLE ? 
+              this->handle_ == ACE_SHLIB_INVALID_HANDLE ?
                 ACE_LIB_TEXT ("invalid") : ACE_LIB_TEXT ("valid"),
               this->refcount_));
 
@@ -359,8 +359,8 @@ ACE_DLL_Manager::unload_policy (u_long unload_policy)
   u_long old_policy = this->unload_policy_;
   this->unload_policy_ = unload_policy;
 
-  // If going from LAZY to EAGER or from PER_DLL to PER_PROCESS|EAGER, 
-  // call close(1) on all the ACE_DLL_Handle objects with refcount == 0 
+  // If going from LAZY to EAGER or from PER_DLL to PER_PROCESS|EAGER,
+  // call close(1) on all the ACE_DLL_Handle objects with refcount == 0
   // which will force those that are still loaded to be unloaded.
   if (this->handle_vector_)
     if (( ACE_BIT_ENABLED (old_policy, ACE_DLL_UNLOAD_POLICY_LAZY) &&
@@ -450,10 +450,10 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
       if (unload == 0)
         {
           // apply strategy
-          if (ACE_BIT_DISABLED (this->unload_policy_, 
+          if (ACE_BIT_DISABLED (this->unload_policy_,
                                 ACE_DLL_UNLOAD_POLICY_PER_DLL))
             {
-              unload = ACE_BIT_DISABLED (this->unload_policy_, 
+              unload = ACE_BIT_DISABLED (this->unload_policy_,
                                          ACE_DLL_UNLOAD_POLICY_LAZY);
             }
           else
@@ -468,10 +468,10 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
               long tmp = ACE_reinterpret_cast (long, foo);
               dll_unload_policy the_policy = ACE_reinterpret_cast (dll_unload_policy, tmp);
               if (the_policy != 0)
-                unload = ACE_BIT_DISABLED (the_policy (), 
+                unload = ACE_BIT_DISABLED (the_policy (),
                                            ACE_DLL_UNLOAD_POLICY_LAZY);
               else
-                unload = ACE_BIT_DISABLED (this->unload_policy_, 
+                unload = ACE_BIT_DISABLED (this->unload_policy_,
                                            ACE_DLL_UNLOAD_POLICY_LAZY);
             }
         }
@@ -489,4 +489,3 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
 
   return 0;
 }
-
