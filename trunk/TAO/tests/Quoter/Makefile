@@ -43,7 +43,7 @@ LDFLAGS += -L$(STL_ROOT)/lib
 endif # trader
 # end of the trading service stuff
 
-BIN = client server Factory_Finder Generic_Factory Life_Cycle_Service
+BIN = client server Factory_Finder Generic_Factory 
 
 # The following lines tell the souce code that the trading
 # service is available.
@@ -72,23 +72,16 @@ FACTORY_FINDER_SRCS = \
 GENERIC_FACTORY_SRCS = \
 	Generic_Factory.cpp Generic_Factory_Impl.cpp 
 
-LIFE_CYCLE_SERVICE_SRCS = \
-	Life_Cycle_Service.cpp Life_Cycle_Service_Impl.cpp \
-	Factory_Trader.cpp Criteria_Evaluator.cpp
-
 
 LSRC= \
 	$(IDL_SRC) $(CLIENT_SRCS) $(SERVER_SRCS) \
-	$(FACTORY_FINDER_SRCS) $(GENERIC_FACTORY_SRCS)\
-	$(LIFE_CYCLE_SERVICE_SRCS)
+	$(FACTORY_FINDER_SRCS) $(GENERIC_FACTORY_SRCS)
 
 COMMON_OBJS = QuoterC.o QuoterS.o 
 CLIENT_OBJS = $(COMMON_OBJS) client.o 
 SERVER_OBJS = $(COMMON_OBJS) server.o Quoter_Impl.o 
 FACTORY_FINDER_OBJS = $(COMMON_OBJS) Factory_Finder.o Factory_Finder_Impl.o 
 GENERIC_FACTORY_OBJS = $(COMMON_OBJS) Generic_Factory.o Generic_Factory_Impl.o 
-LIFE_CYCLE_SERVICE_OBJS = $(COMMON_OBJS) Life_Cycle_Service.o Life_Cycle_Service_Impl.o \
-		Factory_Trader.o Criteria_Evaluator.o
 
 ifdef trader
 
@@ -136,9 +129,6 @@ Factory_Finder: $(addprefix $(VDIR),$(FACTORY_FINDER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 Generic_Factory: $(addprefix $(VDIR),$(GENERIC_FACTORY_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-Life_Cycle_Service: $(addprefix $(VDIR),$(LIFE_CYCLE_SERVICE_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 
