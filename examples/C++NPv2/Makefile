@@ -13,6 +13,7 @@ EXAMPLES = Reactor_Logging_Server \
            Select_Reactor_Logging_Server \
            TP_Reactor_Logging_Server \
            Configurable_Logging_Server \
+           SLD \
            display_logfile
 
 all:
