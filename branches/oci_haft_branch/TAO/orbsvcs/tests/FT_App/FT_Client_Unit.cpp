@@ -47,7 +47,6 @@ private:
   int argc_;
   char ** argv_;
   const char * inFileName_;
-  const char * inRepMgrIor_;
   std::ifstream inFile_;
   std::istream *commandIn_;
   CORBA::ORB_var orb_;
@@ -174,7 +173,7 @@ FTClientUnitMain::parse_args (int argc, char *argv[])
         break;
 
      case 'r':
-        inRepMgrIor_ = get_opts.opt_arg ();
+        // ignore: process by FT_UnitTests
         break;
 
       default:
@@ -193,8 +192,9 @@ FTClientUnitMain::parse_args (int argc, char *argv[])
 
 void FTClientUnitMain::usage(ostream & out)const
 {
-  out << "usage"
+  out << "Usage:"
       << " -c <command file>"
+      << " -f <rep-factory-ior>,<rep-factory-ior>, ..."
       << " -r <ior of ReplicationManager>"
       << " -d (debug)"
       << std::endl;

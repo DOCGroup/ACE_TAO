@@ -68,27 +68,41 @@ namespace TAO
 
   public:
 
-    /**
-    * Initialize the replication manager, publish it's IOR,
-    * and otherwise start things rolling.
-    * @param orbManager our ORB -- we keep var to it.
-    * @return zero for success; nonzero is process return code for failure.
-    */
-    int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  /**
+   * Parse command line arguments.
+   * @param argc traditional C argc
+   * @param argv traditional C argv
+   * @return zero for success; nonzero is process return code for failure.
+   */
+  int parse_args (int argc, char * argv[]);
 
-    /**
-    * Parse command line arguments.
-    * @param argc traditional C argc
-    * @param argv traditional C argv
-    * @return zero for success; nonzero is process return code for failure.
-    */
-    int parse_args (int argc, char * argv[]);
+  /**
+   * Initialize this object.
+   * @param orbManager our ORB -- we keep var to it.
+   * @return zero for success; nonzero is process return code for failure.
+   */
+  int init (TAO_ORB_Manager & orbManager ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    /**
-    * Identify this replication manager.
-    * @return a string to identify this object for logging/console message purposes.
-    */
-    const char * identity () const;
+  /**
+   * Prepare to exit.
+   * @return zero for success; nonzero is process return code for failure.
+   */
+  int fini (ACE_ENV_SINGLE_ARG_DECL);
+
+  /**
+   * Idle-time activity.  
+   *
+   * @param result is set to process return code if return value is non-zero.
+   * @return zero to continue; nonzero to exit
+   */
+  int idle(int & result);
+
+
+  /**
+   * Identify this fault detector factory.
+   * @return a string to identify this object for logging/console message purposes.
+   */
+  const char * identity () const;
 
     /////////////////////////
     // Implementation methods
@@ -96,7 +110,7 @@ namespace TAO
     /**
     * Write this factory's IOR to a file
     */
-    int write_IOR (void);
+    int write_ior (void);
 
     /**
     * Extract the value of the InitialNumberReplicas property from
@@ -409,7 +423,7 @@ namespace TAO
 
 
     /// A name to be used to register the factory with the name service.
-    const char * nsName_;
+    const char * ns_name_;
     CosNaming::NamingContext_var naming_context_;
     CosNaming::Name this_name_;
 

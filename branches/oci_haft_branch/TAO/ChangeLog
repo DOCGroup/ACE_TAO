@@ -1,3 +1,15 @@
+Thu Oct  2 11:23:02 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp
+        * TAO/orbsvcs/tests/FT_App/FT_Client_Unit.cpp
+        * TAO/orbsvcs/tests/FT_App/FT_UnitTests.cpp
+        * TAO/orbsvcs/tests/FT_App/FT_UnitTests.h
+        Minor style and name changes to make the code following the ACE guidelines.
+
+        These changes were made in the oci_haft branch.
+
 Wed Oct  1 08:12:32 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
@@ -26,6 +38,8 @@ Tue Sep 30 16:31:12 2003  Curt Hibbs  <hibbs_c@ociweb.com>
         * orbsvcs/tests/FT_App/FT_UnitTests.cpp:
           Minor changes to correct the way properties were being constructed
           and extracted.
+
+        These changes were made in the oci_haft branch.
 
 Tue Sep 30 15:58:42 2003  Dale Wilson  <wilson_d@ociweb.com>
 
@@ -143,6 +157,8 @@ Mon Sep 29 16:15:55 2003  Curt Hibbs  <hibbs_c@ociweb.com>
           The Replication Manager's unit tests were removed from the FT test
           App and moved into its own module.
 
+        These changes were made in the oci_haft branch.
+
 Mon Sep 29 07:22:35 2003  Curt Hibbs  <hibbs_c@ociweb.com>
 
         * CIAO/CIDLC/cidlc.vcproj:
@@ -150,6 +166,8 @@ Mon Sep 29 07:22:35 2003  Curt Hibbs  <hibbs_c@ociweb.com>
         * CIAO/CIDLC/parser_examples/cidl/idl2.vcproj:
         * CIAO/CIDLC/parser_examples/cidl/idl3.vcproj:
           Removed generated files that should not have been checked in.
+
+        These changes were made in the oci_haft branch.
 
 Fri Sep 26 19:31:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -220,6 +238,8 @@ Wed Sep 24 17:05:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
         * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
           Explicitly cast to ULong to eliminate compiler warning on VC++ 7.
 
+        These changes were made in the oci_haft branch.
+
 Wed Sep 24 11:41:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
   * orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp:
@@ -263,6 +283,8 @@ Tue Sep 23 21:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
         * orbsvcs/tests/FT_App/FT_UnitTests.cpp:
         * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.cpp:
           Changed to eliminate compile errors due to merging changes.
+
+        These changes were made in the oci_haft branch.
 
 Tue Sep 23 17:19:48 2003  Steve Totten  <totten_s@ociweb.com>
 

@@ -498,21 +498,18 @@ int FT_UnitTests::test_004 (int run_test,
         ACE_ERROR((LM_ERROR,
           "Error cannot allocate properties.\n"
           ));
-          result = 1;
+          return 1;
       }
-      else
-      {
-        encoder.encode(props_in);
 
-        PortableGroup::GenericFactory::FactoryCreationId_var fcid;
-        CORBA::Object_var my_object_group =
-        rm_->create_object (type_id,
-                            props_in,
-                            fcid.out()
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_TRY_CHECK;
+      encoder.encode(props_in);
 
-      }
+      PortableGroup::GenericFactory::FactoryCreationId_var fcid;
+      CORBA::Object_var my_object_group =
+      rm_->create_object (type_id,
+                          props_in,
+                          fcid.out()
+                          ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   }
   ACE_CATCHANY
@@ -740,7 +737,7 @@ int FT_UnitTests::parse_args (int argc, char * argv[])
   int result = 0;
   char * rm_ior = 0;
 
-  ACE_Get_Opt get_opts (argc, argv, "r:");
+  ACE_Get_Opt get_opts (argc, argv, "f:r:");
   int c;
   while ((c = get_opts ()) != -1)
   {
@@ -765,6 +762,53 @@ int FT_UnitTests::parse_args (int argc, char * argv[])
           std::cerr << "Can't read file " << rm_ior << std::endl;
           result = -1;
         }
+        break;
+      }
+      case 'f':
+      {
+        // use this list of iors to construct a list of 
+        // FactoryInfos for the unit tests
+        char * file_list = get_opts.opt_arg ();
+        char * delim;
+        char * ior_file;
+        int count = 0;
+        int i;
+        do
+        {
+          delim = ACE_OS::strchr (file_list, ';');
+          ior_file = file_list;
+          if (delim != 0)
+          {
+            *delim = '\0';
+            file_list = delim + 1;
+          }
+          std::cout << "Using factory ior-file: '" << ior_file << "'" << std::endl;
+
+          CORBA::String_var ior;
+          if (!readIORFile(ior_file, ior))
+          {
+            std::cerr << "Can't read file " << ior_file << std::endl;
+            result = -1;
+            break;
+          }
+
+          CORBA::Object_var obj = orb_->string_to_object(ior);
+          FT::GenericFactory_var factory = factory.in();
+          if (CORBA::is_nil(factory))
+          {
+            std::cerr << "Can't resolve GenericFactory IOR in " << ior_file << std::endl;
+            result = -1;
+            break;
+          }
+
+          // create a dummy FactoryInfo for testing.
+          i = count++;
+          factories_[i].the_factory = FT::GenericFactory::_narrow(obj);
+          factories_.length(count);
+          factories_[i].the_location.length (1);
+          factories_[i].the_location[0].id = ior_file;  // use filename as location
+          factories_[i].the_criteria = 0;
+        } while (delim != 0);
         break;
       }
     }

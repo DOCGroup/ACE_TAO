@@ -95,6 +95,8 @@ private:
   // an iogr for use in the unit tests
   CORBA::Object_var test_iogr_;
 
+  // A list of FactoryInfos ofr the unit tests
+  FT::FactoryInfos factories_;
 };
 
 
