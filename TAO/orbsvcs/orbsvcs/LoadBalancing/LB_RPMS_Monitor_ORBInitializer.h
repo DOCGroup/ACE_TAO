@@ -34,12 +34,23 @@
 #endif /* _MSC_VER */
 
 
-/// Server side ORB initializer.
-class TAO_LB_RPMS_Monitor_OrbInitializer :
+class TAO_LB_RPMS_Monitor_Interceptor;
+
+/**
+ * @class TAO_LB_RPMS_Monitor_ORBInitializer
+ *
+ * @brief ORBInitializer that registers the RPMS_Monitor interceptor
+ *        with the ORB.
+ */
+class TAO_LB_RPMS_Monitor_ORBInitializer :
   public virtual PortableInterceptor::ORBInitializer,
   public virtual TAO_Local_RefCounted_Object
 {
 public:
+
+  /// Constructor.
+  TAO_LB_RPMS_Monitor_ORBInitializer (
+    PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
 
   /**
    * @name The PortableInterceptor::ORBInitializer methods.
@@ -55,6 +66,11 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   //@}
+
+private:
+
+  /// Reference to the RPMS_Monitor interceptor.
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor_;
 
 };
 

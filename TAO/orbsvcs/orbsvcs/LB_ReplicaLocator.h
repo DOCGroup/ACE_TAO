@@ -41,7 +41,8 @@ class TAO_LB_ReplicaLocator
 public:
 
   /// Constructor
-  TAO_LB_ReplicaLocator (TAO_LB_LoadBalancer *load_balancer);
+  TAO_LB_ReplicaLocator (
+    TAO_LoadBalancing_ReplicationManager_i *load_balancer);
 
   /**
    * @name The PortableServer::ServantLocator methods.

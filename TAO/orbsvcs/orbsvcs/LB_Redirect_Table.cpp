@@ -34,10 +34,10 @@ TAO_LB_Redirect_Table::register_redirect (
 {
   // The RepositoryId should never be zero since it is not possible to
   // send a NULL string as an "in" argument.
-  if (ACE_OS_String::strlen (id) == 0)
+  if (ACE_OS_String::strlen (type_id) == 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (redirect_to))
     ACE_THROW (CORBA::BAD_PARAM ());
 
   int result = this->bind (type_id, redirect_to);
@@ -99,7 +99,7 @@ TAO_LB_Redirect_Table::find_redirect (
       // redirects.
       CORBA::Boolean matched =
         ri->target_is_a ((*i).ext_id_, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK;
 
       if (matched)
         ACE_THROW (PortableInterceptor::ForwardRequest (
@@ -108,7 +108,7 @@ TAO_LB_Redirect_Table::find_redirect (
     }
 }
 
-int
+void
 TAO_LB_Redirect_Table::remove_redirect (const char *type_id,
                                         CORBA::Environment &ACE_TRY_ENV)
 {
@@ -127,12 +127,12 @@ TAO_LB_Redirect_Table::remove_redirect (const char *type_id,
       result = this->table_.unbind (entry);
 
       if (result != 0)
-        return result;
+        ACE_THROW (CORBA::INTERNAL ());  // @@ FIXME!  NEED BETTER EXCEPTION!
 
       CORBA::release (redirect);
     }
-
-  return result;
+  else
+    ACE_THROW (CORBA::INTERNAL ());  // @@ FIXME!  NEED BETTER EXCEPTION!
 }
 
 void

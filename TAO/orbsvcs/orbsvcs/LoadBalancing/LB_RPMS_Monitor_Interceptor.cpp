@@ -12,8 +12,7 @@ ACE_RCSID (LoadBalancing,
 #endif /* __ACE_INLINE__ */
 
 
-TAO_LB_RPMS_Monitor_Interceptor::TAO_LB_RPMS_Monitor_Interceptor (
-  CORBA::Object_ptr object_group)
+TAO_LB_RPMS_Monitor_Interceptor::TAO_LB_RPMS_Monitor_Interceptor (void)
   : lock_ (),
     request_count_ (0),
     interval_start_ (ACE_OS::gettimeofday ()),

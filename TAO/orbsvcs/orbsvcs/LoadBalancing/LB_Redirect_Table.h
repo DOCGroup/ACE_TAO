@@ -26,6 +26,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Functor.h"
 
+#include "tao/PortableInterceptorC.h"
 
 /**
  * @class TAO_LB_Redirect_Table

@@ -75,6 +75,9 @@ public:
 
   //@}
 
+  /// Initialize the RPMS_Monitor.
+  void init (CORBA::Environment &ACE_TRY_ENV);
+
 private:
 
   /// Interceptor responsible for keeping track of the number of

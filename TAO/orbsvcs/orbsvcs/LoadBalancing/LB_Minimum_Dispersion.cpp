@@ -35,26 +35,26 @@ TAO_LB_Minimum_Dispersion_Strategy::replica (
         ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
                           CORBA::Object::_nil ());
 
-      TAO_LB_ReplicaInfoSetIterator begin = entry->replica_infos.begin ();
-      TAO_LB_ReplicaInfoSetIterator end = entry->replica_infos.end ();
+      TAO_LB_ReplicaInfo_Set_Iterator begin = entry->replica_infos.begin ();
+      TAO_LB_ReplicaInfo_Set_Iterator end = entry->replica_infos.end ();
 
-      TAO_LB_ReplicaInfoSetIterator i = begin;
+      TAO_LB_ReplicaInfo_Set_Iterator i = begin;
       TAO_LB_ReplicaInfo *replica_info = (*i);
 
-      LoadBalancing::Load_var d =
-        (*i)->load_monitor->current_load (ACE_TRY_ENV);
+      LoadBalancing::LoadList_var d =
+        replica_info->load_monitor->current_load (ACE_TRY_ENV);
 
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
       for (++i ; i != end; ++i)
         {
-          LoadBalancing::Load_var load =
+          LoadBalancing::LoadList_var load =
             (*i)->load_monitor->current_load (ACE_TRY_ENV);
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
           // @@ Hardcode one load and don't bother checking the
           // LoadId, for now.  (just to get things going)
-          if (d[0].value > load[0].value)
+          if (d[CORBA::Long (0)].value > load[CORBA::Long (0)].value)
             {
               replica_info = *i;
               d = (*i)->load_monitor->current_load (ACE_TRY_ENV);
