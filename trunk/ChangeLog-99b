@@ -8,7 +8,8 @@ Wed Jun 23 00:03:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (accept): Added a new workaround for platforms
 	  like VxWorks that can't handle NULL addrs to accept().  Thanks
- 	  to James Hu <jhx@entera.com> for this fix.
+ 	  to James Hu <jhx@entera.com> and John Weald
+ 	  <John.Weald@sylantro.com> for this fix.
 
 	* ace/config-vxworks5.x.h: Added a new macro
  	  ACE_HAS_BROKEN_ACCEPT_ADDR to work around VxWorks problems
