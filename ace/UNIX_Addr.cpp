@@ -34,13 +34,13 @@ ACE_UNIX_Addr::dump (void) const
 // Do nothing constructor. 
 
 ACE_UNIX_Addr::ACE_UNIX_Addr (void)
+  : ACE_Addr (AF_UNIX, sizeof this->unix_addr_)
 {
   (void) ACE_OS::memset ((void *) &this->unix_addr_,
                          0,
                          sizeof this->unix_addr_);
 
   this->unix_addr_.sun_family = AF_UNIX;
-  this->base_set (AF_UNIX, sizeof this->unix_addr_);
 }
 
 int
