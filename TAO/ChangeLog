@@ -4,6 +4,10 @@ Tue Oct 15 11:43:40 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
           Fixed an incorrect environment macro.
 
+        * tests/Abstract_Interface/Makefile:
+
+          Updated dependencies.
+
 Tue Oct 15 11:16:37 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
