@@ -1,3 +1,8 @@
+Mon Mar  9 14:59:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/platform_irix6.x-sgic++.GNU: 
+	  Added the definition for MATHLIB.
+
 Mon Mar 09 01:23:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/ace_ce.dsw:

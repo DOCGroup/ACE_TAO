@@ -50,3 +50,6 @@ RANLIB		= echo
 SOFLAGS		= -shared $(CCFLAGS) $(CPPFLAGS) -all
 SOBUILD		= /bin/rm -f $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
 		  /bin/ln $(VSHDIR)$*.o $@
+
+# The math library
+MATHLIB=-lm
