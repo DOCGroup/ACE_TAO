@@ -1,86 +1,95 @@
+Sun Apr 25 21:35:37 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/ACE.{h,cpp},OS.{h,cpp},Object_Manager.{h,cpp} (init,fini):
+          moved init_fini_count_ from ACE Object_Managers to ACE, so that
+          it is only used via ACE::init () and ACE::fini ().  Thanks
+          to Steve Huston for pointing out that the old way didin't work
+          if an Object_Manager was created prior to starting main (),
+          and there were ACE::init ()/ACE::fini () calls in main ().
+
 Sun Apr 25 16:59:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* include/makeinclude/platform_sunos5_kcc.GNU: Fixed incorrect
-	  compiler flags.
+        * include/makeinclude/platform_sunos5_kcc.GNU: Fixed incorrect
+          compiler flags.
 
-	* ace/config-sunos5.7.h: Added definition of uint64_t on KAI.
+        * ace/config-sunos5.7.h: Added definition of uint64_t on KAI.
 
-	* ace/config-kcc-common.h: Changed to use non-static object
-	  manager.
-	  Defined ACE_SIZEOF_LONGLONG.  KAI compiler has type long long.
+        * ace/config-kcc-common.h: Changed to use non-static object
+          manager.
+          Defined ACE_SIZEOF_LONGLONG.  KAI compiler has type long long.
 
-	* ace/OS.h: ACE_NOTREACHED should expand to nothing on KAI
-	  compiler.
+        * ace/OS.h: ACE_NOTREACHED should expand to nothing on KAI
+          compiler.
 
-	* ace/CDR_Stream.h (ACE_CDR): KAI compiler doesn't have
-	  longlong_t.
+        * ace/CDR_Stream.h (ACE_CDR): KAI compiler doesn't have
+          longlong_t.
 
-	* ace/Basic_Types.h: KAI compiler should define ACE_UINT64 as
-	  unsigned long long.
+        * ace/Basic_Types.h: KAI compiler should define ACE_UINT64 as
+          unsigned long long.
 
 Sun Apr 25 14:52:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* COPYING,
-	  TAO/COPYING: Updated the ACE+TAO COPYING information to
- 	  emphasize the relationship to open source.  Thanks to Malcolm
- 	  Spence <spence_m@ociweb.com> for suggesting the wording.
+        * COPYING,
+          TAO/COPYING: Updated the ACE+TAO COPYING information to
+          emphasize the relationship to open source.  Thanks to Malcolm
+          Spence <spence_m@ociweb.com> for suggesting the wording.
 
 Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ACE_wrappers/ace/POSIX_Asynch_IO.cpp
-	* ACE_wrappers/ace/POSIX_Asynch_IO.h
-	* ACE_wrappers/ace/POSIX_Proactor.cpp
-	* ACE_wrappers/ace/POSIX_Proactor.h
-	* ACE_wrappers/ace/Proactor.cpp
-	* ACE_wrappers/ace/Proactor.h
-	* ACE_wrappers/ace/Proactor_Impl.h
+        * ACE_wrappers/ace/POSIX_Asynch_IO.cpp
+        * ACE_wrappers/ace/POSIX_Asynch_IO.h
+        * ACE_wrappers/ace/POSIX_Proactor.cpp
+        * ACE_wrappers/ace/POSIX_Proactor.h
+        * ACE_wrappers/ace/Proactor.cpp
+        * ACE_wrappers/ace/Proactor.h
+        * ACE_wrappers/ace/Proactor_Impl.h
 
- 	* ACE_wrappers/examples/Reactor/Proactor/Makefile
- 	* ACE_wrappers/examples/Reactor/Proactor/README
- 	* ACE_wrappers/examples/Reactor/Proactor/test_aiocb.cpp
- 	* ACE_wrappers/examples/Reactor/Proactor/test_aiosig.cpp
- 	* ACE_wrappers/examples/Reactor/Proactor/test_aiosig_ace.cpp
- 	* ACE_wrappers/examples/Reactor/Proactor/test_proactor.cpp
- 	* ACE_wrappers/examples/Reactor/Proactor/test_timeout.cpp
+        * ACE_wrappers/examples/Reactor/Proactor/Makefile
+        * ACE_wrappers/examples/Reactor/Proactor/README
+        * ACE_wrappers/examples/Reactor/Proactor/test_aiocb.cpp
+        * ACE_wrappers/examples/Reactor/Proactor/test_aiosig.cpp
+        * ACE_wrappers/examples/Reactor/Proactor/test_aiosig_ace.cpp
+        * ACE_wrappers/examples/Reactor/Proactor/test_proactor.cpp
+        * ACE_wrappers/examples/Reactor/Proactor/test_timeout.cpp
 
-	- Completed Multithreading of POSIX_SIG_Proactor.
+        - Completed Multithreading of POSIX_SIG_Proactor.
 
-	- Introduced another constructor for ACE_POSIX_SIG_Proactor for taking
-	  signal mask to be used with the Proactor.
+        - Introduced another constructor for ACE_POSIX_SIG_Proactor for taking
+          signal mask to be used with the Proactor.
 
-	- Thanks to Dave Butenhof <butenhof@zko.dec.com> for helping a lot to
-	  understand the various things in the POSIX4 standard.
+        - Thanks to Dave Butenhof <butenhof@zko.dec.com> for helping a lot to
+          understand the various things in the POSIX4 standard.
 
-	- Thanks to Dave suggestion of keeping null_handler for the sigaction
-	  to real-time signals. With this and a couple of other correct POSIX
-	  things SIG proactor is now working with in Solaris 2.7.
+        - Thanks to Dave suggestion of keeping null_handler for the sigaction
+          to real-time signals. With this and a couple of other correct POSIX
+          things SIG proactor is now working with in Solaris 2.7.
 
-	- Lynx OS doesnt support <pthread_sigmask>, so it couldnt be
-	  multithreaded. Enabled AIOCB_Proactor for this platform.
+        - Lynx OS doesnt support <pthread_sigmask>, so it couldnt be
+          multithreaded. Enabled AIOCB_Proactor for this platform.
 
-	- Added an example to make use of the real-time signal numbers for the
-	   asynchronous I/O calls.
+        - Added an example to make use of the real-time signal numbers for the
+           asynchronous I/O calls.
 
-	* examples/Reactor/Proactor/test_posix_sig_proactor.cpp: This
- 	  program demonstrates how to post fake completions to The
- 	  Proactor. It also shows the how to specify the particular
- 	  real-time signals to post completions.
+        * examples/Reactor/Proactor/test_posix_sig_proactor.cpp: This
+          program demonstrates how to post fake completions to The
+          Proactor. It also shows the how to specify the particular
+          real-time signals to post completions.
 
-	* ace/config-lynxos.h: Enabled ACE_POSIX_AIOCB_PROACTOR for this
- 	  platform, since <pthread_sigmask> was not available. Without
- 	  <pthread_sigmask>, SIG_Proactor can not work correctly.
+        * ace/config-lynxos.h: Enabled ACE_POSIX_AIOCB_PROACTOR for this
+          platform, since <pthread_sigmask> was not available. Without
+          <pthread_sigmask>, SIG_Proactor can not work correctly.
 
-	* ace/config-linux-lxpthreads.h: Removed ACE_HAS_AIO_CALLS. Even
- 	  simple aio calls test is hanging.
+        * ace/config-linux-lxpthreads.h: Removed ACE_HAS_AIO_CALLS. Even
+          simple aio calls test is hanging.
 
 Sat Apr 24 13:09:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Containers_T.h: Added allocator support to ACE_Array.
-  	  Thakns to Paul Francis <pfrancis@dkl.com> for contributing this.
+        * ace/Containers_T.h: Added allocator support to ACE_Array.
+          Thakns to Paul Francis <pfrancis@dkl.com> for contributing this.
 
-	* ace/Future.h (class ACE_Future): Make sure to mention that
- 	  get()'s ACE_Time_Value must be in absolute, not relative, time.
-  	  Thanks to Ian MacDonald <ianmacd@bg.com> for reporting this.
+        * ace/Future.h (class ACE_Future): Make sure to mention that
+          get()'s ACE_Time_Value must be in absolute, not relative, time.
+          Thanks to Ian MacDonald <ianmacd@bg.com> for reporting this.
 
 Sat Apr 24 07:24:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
