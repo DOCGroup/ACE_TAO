@@ -90,16 +90,20 @@ using std::size_t;
 
 #if defined (ACE_USES_WCHAR)
 typedef wchar_t ACE_TCHAR;
+typedef char ACE_ANTI_TCHAR;
 # define ACE_LIB_TEXT(STRING) ACE_TEXT_WIDE (STRING)
 # define ACE_TEXT_ALWAYS_CHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
 # define ACE_TEXT_WCHAR_TO_TCHAR(STRING) STRING
+# define ACE_TEXT_ANTI_TO_TCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
 #else /* ACE_USES_WCHAR */
 typedef char ACE_TCHAR;
+typedef wchar_t ACE_ANTI_TCHAR;
 # define ACE_LIB_TEXT(STRING) STRING
 # define ACE_TEXT_ALWAYS_CHAR(STRING) STRING
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) STRING
 # define ACE_TEXT_WCHAR_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
+# define ACE_TEXT_ANTI_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 #endif /* ACE_USES_WCHAR */
 
 #if defined (ACE_LEGACY_MODE)

@@ -368,6 +368,7 @@ ACE_Process_Options::ACE_Process_Options (int ie,
 #endif /* !ACE_HAS_WINCE */
     command_line_argv_calculated_ (0),
     command_line_buf_ (0),
+    command_line_buf_len_ (cobl),
     process_group_ (ACE_INVALID_PID)
 {
   ACE_NEW (command_line_buf_,
@@ -668,6 +669,40 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
 
   return 0;
 }
+
+#if defined (ACE_HAS_WCHAR) && !defined (ACE_HAS_WINCE)
+/**
+ * @note Not available on Windows CE because it doesn't have a char version of
+ * vsprintf.
+ */
+int
+ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
+{
+  ACE_ANTI_TCHAR *anti_clb;
+  ACE_NEW_RETURN (anti_clb, 
+                  ACE_ANTI_TCHAR[this->command_line_buf_len_], 
+                  -1);
+
+  // Store all ... args in argp.
+  va_list argp;
+  va_start (argp, format);
+
+  // sprintf the format and args into command_line_buf_.
+  ACE_OS::vsprintf (anti_clb,
+                    format,
+                    argp);
+
+  // Useless macro.
+  va_end (argp);
+
+  ACE_OS::strcpy (this->command_line_buf_, 
+                  ACE_TEXT_ANTI_TO_TCHAR (anti_clb));
+
+  delete [] anti_clb;
+
+  return 0;
+}
+#endif /* ACE_HAS_WCHAR && !ACE_HAS_WINCE */
 
 ACE_TCHAR *
 ACE_Process_Options::env_buf (void)
