@@ -1,5 +1,12 @@
-Wed Jan 23 09:33:31 2002  Ossama Othman  <ossama@uci.edu>
+Wed Jan 23 09:55:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
 
+	* TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+
+	  Changed code to generate the right signatures for 
+	  constructors and destructors, similar to the way it is done 
+	  in be_visitor_operation/amh_rh_ss.cpp.
+
+Wed Jan 23 09:33:31 2002  Ossama Othman  <ossama@uci.edu>
 	* tests/ORT/ORT_test_IORInterceptor.cpp
 	  (establish_components, components_established):
 
@@ -215,6 +222,35 @@ Mon Jan 21 17:37:47 2002  Jeff Parsons  <parsons@cs.wustl.edu>
           parameters) that CORBA 2.6 says must cause BAD_PARAM
           minor code 31 to be thrown.
 
+Mon Jan 21 18:03:11 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+	* tao/TAO_AMH_Response_Handler.cpp
+	* tao/TAO_AMH_Response_Handler.h
+	* tao/PortableServer/AMH_Response_Handler.cpp
+	* tao/PortableServer/AMH_Response_Handler.h
+	  
+	  Removed TAO_AMH_Response_Handler.* files from ORB_CORE and added them
+	  to tao/PortableServer, also renaming them to AMH_Response_Handler. 
+	  This was doen to reduce tao orb_core foot-print.
+	  Other changes to the AMH_Response_Handler:
+	    - The RH methods are now thread-safe.
+	    - Documentation of class, methods and members
+	    - The 'once-only' semantics is now made more explicit by using an
+	      enum to hold the various ststes. 
+	    - init_reply and send_reply method names changed with _tao_rh_ 
+	      prefix to reduce possibility of user defining similar methods in 
+	      IDL and creating a conflict.
+	  Thanks to Carlos for all the '@@' comments regarding the above :-)
+	
+	* TAO_IDL/be/be_visitor_operation/amh_rh_sh.cpp
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp
+
+	  Changed code-generation to generate _tao_rh_init_reply () and
+	  _tao_init_send_reply () as per changes above.
+	
+	* TAO_IDL/be/be_codegen.cpp (start_server_header): 
+	  Changed code generation to include the (tao) ResponseHandler classes
+	  from the tao/PortableServer/ rather than from tao/
+	
 Mon Jan 21 17:15:18 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/include/utl_scope.h:
