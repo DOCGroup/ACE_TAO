@@ -133,7 +133,7 @@ namespace TAO
   struct UB_String_Arg_Traits_T
   {
     typedef T *                                         ret_type;
-    typedef const T *                                   in_type;
+    typedef T const *                                   in_type;
     typedef T *&                                        inout_type;
     typedef T_out                                       out_type;
 
@@ -141,6 +141,12 @@ namespace TAO
     typedef Inout_UB_String_Argument_T<T>               inout_arg_val;
     typedef Out_UB_String_Argument_T<T,T_out>           out_arg_val;
     typedef Ret_UB_String_Argument_T<T,T_var>           ret_val;
+
+    typedef Const_Argument_T<in_type>                   in_arg_base;
+    typedef Mutable_Argument_T<inout_type>              inout_arg_base;
+    typedef Mutable_Argument_T<inout_type>              out_arg_base;
+    typedef Mutable_Argument_T<inout_type>              ret_base;
+
 
     typedef UB_String_Tag                               idl_tag;
   };

@@ -141,7 +141,7 @@ namespace TAO
   struct TAO_Export BD_String_Tag {};
 
   /**
-   * @struct Basic_Arg_Traits_T
+   * @struct BD_String_Arg_Traits_T
    *
    * @brief Template class for stub argument traits of bounded (w)strings.
    *
@@ -155,7 +155,7 @@ namespace TAO
   struct BD_String_Arg_Traits_T
   {
     typedef T *                                   ret_type;
-    typedef const T *                             in_type;
+    typedef T const *                             in_type;
     typedef T *&                                  inout_type;
     typedef T_out                                 out_type;
 
@@ -177,6 +177,12 @@ namespace TAO
                                      to_T,
                                      from_T,
                                      BOUND>       ret_val;
+
+
+    typedef Const_Argument_T<in_type>             in_arg_base;
+    typedef Mutable_Argument_T<inout_type>        inout_arg_base;
+    typedef Mutable_Argument_T<inout_type>        out_arg_base;
+    typedef Mutable_Argument_T<inout_type>        ret_base;
 
     typedef BD_String_Tag                         idl_tag;
   };

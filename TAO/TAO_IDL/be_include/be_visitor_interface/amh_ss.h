@@ -1,3 +1,5 @@
+// -*- C++ -*-
+
 //=============================================================================
 /**
  *  @file   amh_ss.h
@@ -33,8 +35,8 @@ protected:
 
   virtual int generate_amh_classes (be_interface *node);
   virtual int generate_proxy_classes (be_interface *node);
-  virtual int generate_downcast_implementation (be_interface *node,
-                                                TAO_OutStream *os);
+//   virtual int generate_downcast_implementation (be_interface *node,
+//                                                 TAO_OutStream *os);
   virtual int generate_copy_ctor (be_interface *node,
                                   TAO_OutStream *os);
   virtual ACE_CString generate_flat_name (be_interface *node);

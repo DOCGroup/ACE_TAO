@@ -234,11 +234,11 @@ public:
   // Helper method passed to the template method that generates code for the
   // is_a method.
 
-  static int downcast_helper (be_interface *,
-                              be_interface *,
-                              TAO_OutStream *os);
-  // Helper method passed to the template method that generates code for the
-  // downcast.
+//   static int downcast_helper (be_interface *,
+//                               be_interface *,
+//                               TAO_OutStream *os);
+//   // Helper method passed to the template method that generates code for the
+//   // downcast.
 
   static int ami_handler_gen_optable_helper (be_interface *,
                                              be_interface *,

@@ -141,7 +141,7 @@ namespace TAO
   struct Fixed_Array_Arg_Traits_T
   {
     typedef T_slice *                                   ret_type;
-    typedef const T                                     in_type;
+    typedef T const                                     in_type;
     typedef T                                           inout_type;
     typedef T                                           out_type;
 
@@ -159,6 +159,11 @@ namespace TAO
                                        T_var,
                                        T_forany,
                                        T_tag>           ret_val;
+
+    typedef Const_Argument_T<T_slice const *>           in_arg_base;
+    typedef Mutable_Argument_T<ret_type>                inout_arg_base;
+    typedef Mutable_Argument_T<ret_type &>              out_arg_base;
+    typedef Mutable_Argument_T<ret_type &>              ret_base;
 
     typedef Fixed_Array_Tag                             idl_tag;
   };

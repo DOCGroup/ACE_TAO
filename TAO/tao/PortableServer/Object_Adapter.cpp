@@ -827,10 +827,10 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
   // zero.
   CORBA::Object_ptr x;
   ACE_NEW_RETURN (x,
-      CORBA::Object (stub,
-          1,
-          sb),
-      CORBA::Object::_nil ());
+                  CORBA::Object (stub,
+                                 1,
+                                 sb),
+                  CORBA::Object::_nil ());
 
   // Here we set the strategized Proxy Broker.
   x->_proxy_broker (the_tao_collocated_object_proxy_broker ());
