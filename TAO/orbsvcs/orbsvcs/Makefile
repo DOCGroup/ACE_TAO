@@ -29,13 +29,17 @@ ifndef TAO_ORBSVCS
   TAO_ORBSVCS = Naming \
                 Time \
                 Property \
-		RTEvent \
+                Sched
+
+  ifeq ($(corba_messaging),1)
+  TAO_ORBSVCS += RTEvent \
 		NativeCosEvent \
                 CosEvent \
-                Sched \
-                RTOLDEvent \
-		RTSchedEvent \
-                Concurrency \
+		RTOLDEvent \
+		RTSchedEvent
+  endif #corba_messaging
+
+  TAO_ORBSVCS += Concurrency \
 		Trader \
 		Log \
 		AV
@@ -53,7 +57,6 @@ ifndef TAO_ORBSVCS
     # Trader uses DynAny which is disabled when compiling with minimum
     # CORBA support.  LifeCycle, Log, AV and Notify depend on Trader
     # so don't build them either, with minimum CORBA.
-    TAO_ORBSVCS +=
 
     TAO_ORBSVCS += LifeCycle
 

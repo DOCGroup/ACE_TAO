@@ -1,3 +1,8 @@
+Wed Sep 11 04:49:09 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/Makefile:
+	  Do not build certain orbsvcs unless corba_messaging=1.
+
 Tue Sep 10 14:02:04 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadManager_Static.dsp:
