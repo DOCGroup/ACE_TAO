@@ -1,3 +1,10 @@
+Sun Dec 28 17:09:04 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+
+	  This should not be built if minimum_corba=1. Looks like I have
+	  fixed this before!
+
 Sun Dec 28 11:39:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
