@@ -148,6 +148,14 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
       << "}";
 }
 
+void
+be_visitor_amh_interface_ss::generate_send_reply (TAO_OutStream * os)
+{
+  *os << be_nl << be_nl 
+      << "_tao_server_request.tao_send_reply ();";
+}
+
+
 int
 be_visitor_amh_interface_ss::generate_amh_classes (be_interface *)
 {

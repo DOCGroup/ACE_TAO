@@ -1,3 +1,25 @@
+Thu Dec 11 14:03:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/amh_ss.h:
+        * TAO_IDL/be_include/be_visitor_interface/interface_ss.h:
+
+          Added virtual method to the be_visitor_interface_ss visitor called
+          genrerate_send_reply, which is a no-op, but when overridden
+          in the be_visitor_amh_interface_ss visitor, generates an explicit
+          send_reply call on _tao_server_request. This new method is then 
+          used in the generation of the _is_a_skel, _nonexistent_skel,
+          _interface_skel, and _component_skel methods, and the explicit
+          send_reply call gets generated for the AMH version of the
+          interface. This addition was needed because the above generated
+          methods need a reply to be sent right away, and this is not
+          handled under the hood in asynchronous_upcall_dispatch() as it
+          is in synchronous_upcall_dispatch(). This fix closes
+          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1670. Thanks
+          to Carlos O'Ryan <coryan@atdesk.com> for pointing out the
+          problem and suggesting the fix.
+
 Thu Dec 11 14:01:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/tutorials/Quoter/Simple/ImprovedServer/Quoter_Simple_ImprovedServer.mpc:
