@@ -1,3 +1,8 @@
+Fri Apr 26 14:45:28 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/Proactor_Test.cpp: Replace CALLBACK with CB. Apparantly,
+          CALLBACK is a macro with MSVC.
+
 Fri Apr 26 14:39:37 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Proactor_Test.cpp: Use default proactor type for platform
