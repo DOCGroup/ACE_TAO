@@ -1,3 +1,9 @@
+Tue apr 01 08:03:03 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IOP_Codec.pidl:
+        * tao/IOP_IOR.pidl:
+          Fixed fuzz doxygen errors.
+
 Mon Mar 31 19:27:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTCORBA/RTCORBAC.cpp:
