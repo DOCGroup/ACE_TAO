@@ -123,7 +123,8 @@ public:
                      u_long priority = 0,
                      const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
                      const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
-                     ACE_Allocator *data_block_allocator = 0);
+                     ACE_Allocator *data_block_allocator = 0,
+                     ACE_Allocator *message_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -137,6 +138,13 @@ public:
   // The <data_block_allocator> is use to allocate the data blocks
   // while the <allocator_strategy> is used to allocate the buffers
   // contained by those.
+  // The <message_block_allocator> is used to allocate new
+  // <Message_Block> objects when a duplicate method is called.  If
+  // a <message_block_allocator> is given, this <Message_Block> and
+  // future <Message_Block> objects created by duplicate will be free'ed
+  // into this allocator when they are released.  Note: if you use this
+  // allocator, the <Message_Block> you created should have been created
+  // using this allocator because it will be released to the same allocator.
 
   int init (const char *data,
             size_t size = 0);
@@ -154,7 +162,8 @@ public:
             u_long priority = 0,
             const ACE_Time_Value & execution_time = ACE_Time_Value::zero,
             const ACE_Time_Value & deadline_time = ACE_Time_Value::max_time,
-            ACE_Allocator *data_block_allocator = 0);
+            ACE_Allocator *data_block_allocator = 0,
+            ACE_Allocator *message_block_allocator = 0);
   // Create an initialized message of type <type> containing <size>
   // bytes.  The <cont> argument initializes the continuation field in
   // the <Message_Block>.  If <data> == 0 then we create and own the
@@ -359,7 +368,8 @@ protected:
                      const ACE_Time_Value & execution_time,
                      const ACE_Time_Value & deadline_time,
                      ACE_Data_Block *db,
-                     ACE_Allocator *data_block_allocator);
+                     ACE_Allocator *data_block_allocator,
+                     ACE_Allocator *message_block_allocator);
   // Perform the actual initialization.
 
   int release_i (ACE_Lock *lock);
@@ -377,7 +387,8 @@ protected:
               const ACE_Time_Value & execution_time,
               const ACE_Time_Value & deadline_time,
               ACE_Data_Block *db,
-              ACE_Allocator *data_block_allocator);
+              ACE_Allocator *data_block_allocator,
+              ACE_Allocator *message_block_allocator);
   // Perform the actual initialization.
 
   size_t rd_ptr_;
@@ -408,6 +419,10 @@ protected:
   ACE_Data_Block *data_block_;
   // Pointer to the reference counted data structure that contains the
   // actual memory buffer.
+
+  ACE_Allocator *message_block_allocator_;
+  // The allocator used to destroy ourselves when release is called
+  // and create new message blocks on duplicate.
 
 private:
   // = Disallow these operations for now (use <clone> instead).

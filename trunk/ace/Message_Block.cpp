@@ -283,7 +283,8 @@ ACE_Message_Block::ACE_Message_Block (const char *data,
                     ACE_Time_Value::zero,     // execution time
                     ACE_Time_Value::max_time, // absolute time of deadline
                     0,  // data block
-                    0) == -1) // data_block allocator
+                    0,  // data_block allocator
+                    0) == -1) // message_block allocator
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -304,7 +305,8 @@ ACE_Message_Block::ACE_Message_Block (void)
                     ACE_Time_Value::zero,     // execution time
                     ACE_Time_Value::max_time, // absolute time of deadline
                     0, // data block
-                    0) == -1) // data_block allocator
+                    0, // data_block allocator
+                    0) == -1) // message_block allocator
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -318,7 +320,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       u_long priority,
                                       const ACE_Time_Value & execution_time,
                                       const ACE_Time_Value & deadline_time,
-                                      ACE_Allocator *data_block_allocator)
+                                      ACE_Allocator *data_block_allocator,
+                                      ACE_Allocator *message_block_allocator)
   : data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
@@ -334,7 +337,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     execution_time,
                     deadline_time,
                     0, // data block
-                    data_block_allocator) == -1)
+                    data_block_allocator,
+                    message_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -349,7 +353,8 @@ ACE_Message_Block::init (size_t size,
                          u_long priority,
                          const ACE_Time_Value & execution_time,
                          const ACE_Time_Value & deadline_time,
-                         ACE_Allocator *data_block_allocator)
+                         ACE_Allocator *data_block_allocator,
+                         ACE_Allocator *message_block_allocator)
 {
   ACE_TRACE ("ACE_Message_Block::init");
 
@@ -364,7 +369,8 @@ ACE_Message_Block::init (size_t size,
                        execution_time,
                        deadline_time,
                        0,  // data block
-                       data_block_allocator);
+                       data_block_allocator,
+                       message_block_allocator);
 }
 
 int
@@ -385,7 +391,8 @@ ACE_Message_Block::init (const char *data,
                        ACE_Time_Value::zero,     // execution time
                        ACE_Time_Value::max_time, // absolute time of deadline
                        0,  // data block
-                       0);
+                       0,  // data_block allocator
+                       0); // message_block allocator
 }
 
 ACE_Message_Block::ACE_Message_Block (size_t size,
@@ -399,7 +406,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       const ACE_Time_Value & execution_time,
                                       const ACE_Time_Value & deadline_time,
                                       ACE_Data_Block *db,
-                                      ACE_Allocator *data_block_allocator)
+                                      ACE_Allocator *data_block_allocator,
+                                      ACE_Allocator *message_block_allocator)
   : data_block_ (0)
 {
   ACE_TRACE ("ACE_Message_Block::ACE_Message_Block");
@@ -415,7 +423,8 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                     execution_time,
                     deadline_time,
                     db,
-                    data_block_allocator) == -1)
+                    data_block_allocator,
+                    message_block_allocator) == -1)
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -435,8 +444,9 @@ ACE_Message_Block::ACE_Message_Block (ACE_Data_Block *data_block)
                     0,         // priority
                     ACE_Time_Value::zero,     // execution time
                     ACE_Time_Value::max_time, // absolute time of deadline
-                    data_block,
-                    data_block->data_block_allocator ()) == -1) // data block
+                    data_block, // data block
+                    data_block->data_block_allocator (),
+                    0) == -1) // message_block allocator
     ACE_ERROR ((LM_ERROR,
                 ASYS_TEXT ("ACE_Message_Block")));
 }
@@ -453,7 +463,8 @@ ACE_Message_Block::init_i (size_t size,
                            const ACE_Time_Value & execution_time,
                            const ACE_Time_Value & deadline_time,
                            ACE_Data_Block *db,
-                           ACE_Allocator *data_block_allocator)
+                           ACE_Allocator *data_block_allocator,
+                           ACE_Allocator *message_block_allocator)
 {
   ACE_TRACE ("ACE_Message_Block::init_i");
   ACE_FUNCTION_TIMEPROBE (ACE_MESSAGE_BLOCK_INIT_I_ENTER);
@@ -466,6 +477,8 @@ ACE_Message_Block::init_i (size_t size,
   this->cont_ = msg_cont;
   this->next_ = 0;
   this->prev_ = 0;
+
+  this->message_block_allocator_ = message_block_allocator;
 
   if (this->data_block_ != 0)
     {
@@ -683,8 +696,11 @@ ACE_Message_Block::release_i (ACE_Lock *lock)
     }
 
   // We will now commit suicide: this object *must* have come from the
-  // heap.
-  delete this;
+  // allocator given.
+  if(this->message_block_allocator_ == 0)
+    delete this;
+  else
+    ACE_DES_FREE(this,message_block_allocator_->free,ACE_Message_Block);
 
   return result;
 }
@@ -740,24 +756,50 @@ ACE_Message_Block::duplicate (void) const
   // Create a new <ACE_Message_Block> that contains unique copies of
   // the message block fields, but a reference counted duplicate of
   // the <ACE_Data_Block>.
-  ACE_NEW_RETURN (nb,
-                  ACE_Message_Block (0, // size
-                                     ACE_Message_Type (0), // type
-                                     0, // cont
-                                     0, // data
-                                     0, // allocator
-                                     0, // locking strategy
-                                     0, // flags
-                                     this->priority_, // priority
-                                     this->execution_time_, // execution time
-                                     this->deadline_time_, // absolute time to deadline
-                                     // Get a pointer to a
-                                     // "duplicated" <ACE_Data_Block>
-                                     // (will simply increment the
-                                     // reference count).
-                                     this->data_block ()->duplicate  (),
-                                     this->data_block ()->data_block_allocator ()),
+
+  // If there is no allocator, use the standard new and delete calls.
+  if (this->message_block_allocator_ == 0)
+    ACE_NEW_RETURN (nb,
+                    ACE_Message_Block (0, // size
+                                       ACE_Message_Type (0), // type
+                                       0, // cont
+                                       0, // data
+                                       0, // allocator
+                                       0, // locking strategy
+                                       0, // flags
+                                       this->priority_, // priority
+                                       this->execution_time_, // execution time
+                                       this->deadline_time_, // absolute time to deadline
+                                       // Get a pointer to a
+                                       // "duplicated" <ACE_Data_Block>
+                                       // (will simply increment the
+                                       // reference count).
+                                       this->data_block ()->duplicate  (),
+                                       this->data_block ()->data_block_allocator (),
+                                       this->message_block_allocator_),
                   0);
+  else // Otherwise, use the message_block_allocator passed in.
+    ACE_NEW_MALLOC_RETURN (nb,
+			   ACE_reinterpret_cast(ACE_Message_Block*,
+						message_block_allocator_->malloc (sizeof (ACE_Message_Block))),
+			   ACE_Message_Block (0, // size
+					      ACE_Message_Type (0), // type
+					      0, // cont
+					      0, // data
+					      0, // allocator
+					      0, // locking strategy
+					      0, // flags
+					      this->priority_, // priority
+					      this->execution_time_, // execution time
+					      this->deadline_time_, // absolute time to deadline
+					      // Get a pointer to a
+					      // "duplicated" <ACE_Data_Block>
+					      // (will simply increment the
+					      // reference count).
+					      this->data_block ()->duplicate  (),
+					      this->data_block ()->data_block_allocator (),
+					      this->message_block_allocator_),
+			   0);
 
   // Set the read and write pointers in the new <Message_Block> to the
   // same relative offset as in the existing <Message_Block>.  Note
@@ -839,19 +881,52 @@ ACE_Message_Block::clone (Message_Flags mask) const
   if (db == 0)
     return 0;
 
-  ACE_Message_Block *nb =
-    new ACE_Message_Block (0, // size
-                           ACE_Message_Type (0), // type
-                           0, // cont
-                           0, // data
-                           0, // allocator
-                           0, // locking strategy
-                           0, // flags
-                           this->priority_, // priority
-                           this->execution_time_, // execution time
-                           this->deadline_time_, // absolute time to deadline
-                           db,  // data_block
-                           db->data_block_allocator ());
+  ACE_Message_Block *nb;
+
+  if(message_block_allocator_ == 0)
+    {
+      nb = new ACE_Message_Block (0, // size
+                                  ACE_Message_Type (0), // type
+                                  0, // cont
+                                  0, // data
+                                  0, // allocator
+                                  0, // locking strategy
+                                  0, // flags
+                                  this->priority_, // priority
+                                  this->execution_time_, // execution time
+                                  this->deadline_time_, // absolute time to deadline
+				// Get a pointer to a
+				// "duplicated" <ACE_Data_Block>
+				// (will simply increment the
+				// reference count).
+				db,
+				db->data_block_allocator (),
+				this->message_block_allocator_);
+    }
+  else
+    {
+      // This is the ACE_NEW_MALLOC macro with the return check removed.
+      // We need to do it this way because if it fails we need to release
+      // the cloned data block that was created above.  If we used
+      // ACE_NEW_MALLOC_RETURN, there would be a memory leak because the
+      // above db pointer would be left dangling.
+      nb = ACE_static_cast(ACE_Message_Block*,message_block_allocator_->malloc (sizeof (ACE_Message_Block)));
+      if(nb != 0)
+        new (nb) ACE_Message_Block (0, // size
+                                    ACE_Message_Type (0), // type
+                                    0, // cont
+                                    0, // data
+                                    0, // allocator
+                                    0, // locking strategy
+                                    0, // flags
+                                    this->priority_, // priority
+                                    this->execution_time_, // execution time
+                                    this->deadline_time_, // absolute time to deadline
+                                    db,
+                                    db->data_block_allocator(),
+                                    this->message_block_allocator_);
+    }
+
   if (nb == 0)
     {
       db->release ();
