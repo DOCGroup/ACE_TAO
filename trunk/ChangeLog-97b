@@ -1,3 +1,18 @@
+Fri Oct 17 22:51:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Timer_Queue_Adapters.h: 
+	* ace/Timer_Queue_Adapters.i: 
+	* ace/Timer_Queue_Adapters.cpp: 
+	* ace/Timer_Queue_T.h: 
+	* ace/Timer_Queue_T.i: 
+	* ace/Timer_Queue_T.cpp: 
+	* ace/Timer_List_T.cpp: 
+	* ace/Timer_Wheel_T.cpp: 
+	* ace/Timer_Hash_T.cpp: 
+	  Changed the accessor name for the lock_ field from mutex() to
+	  lock(), we know this can cause trouble on HP-UX, but only if the
+	  function is inline; so it was moved to the .cpp file.
+
 Fri Oct 17 21:58:04 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* ace/Timer_Queue_Adapters.h: 

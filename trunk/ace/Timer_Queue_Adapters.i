@@ -11,12 +11,6 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::ACE_Thread_Timer_Queue_Adapter (void)
   this->active_ = 1;
 }
 
-template<class TQ> ACE_INLINE ACE_SYNCH_MUTEX &
-ACE_Thread_Timer_Queue_Adapter<TQ>::mutex (void)
-{
-  return this->lock_;
-}
-
 template<class TQ> ACE_INLINE TQ &
 ACE_Thread_Timer_Queue_Adapter<TQ>::timer_queue (void)
 {

@@ -224,7 +224,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::schedule (const TYPE &type,
 						  const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::schedule");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
 
   ACE_Timer_Node_T<TYPE> *tempnode = this->alloc_node ();
 
@@ -261,7 +261,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (const TYPE &type,
 						int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
 
   int number_of_cancellations = 0;
   size_t i;
@@ -331,7 +331,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::cancel (long timer_id,
 						int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::cancel");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
 
   // Make sure we are getting a valid <timer_id>, not an error
   // returned by schedule ()
@@ -508,7 +508,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK> int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_time)
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::expire");
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1));
 
   int number_of_timers_expired = 0;
   size_t i; 

@@ -139,6 +139,12 @@ ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
     }
 }
 
+template<class TQ> ACE_SYNCH_MUTEX &
+ACE_Thread_Timer_Queue_Adapter<TQ>::lock (void)
+{
+  return this->lock_;
+}
+
 template<class TQ> long 
 ACE_Thread_Timer_Queue_Adapter<TQ>::schedule
     (ACE_Event_Handler* handler,
