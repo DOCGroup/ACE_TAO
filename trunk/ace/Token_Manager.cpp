@@ -3,6 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Token_Manager.h"
+#include "ace/Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Token_Manager.i"
@@ -47,11 +48,42 @@ ACE_Token_Manager::instance (void)
       ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, ACE_Token_Manager::creation_lock_, 0);
 
       if (token_manager_ == 0)
-	ACE_NEW_RETURN (token_manager_, ACE_Token_Manager, 0);
+        {
+	  ACE_NEW_RETURN (token_manager_, ACE_Token_Manager, 0);
+
+          // Register for destruction with ACE_Object_Manager.
+#if defined ACE_HAS_SIG_C_FUNC
+          ACE_Object_Manager::at_exit (token_manager_,
+                                       ACE_Token_Manager_cleanup,
+                                       0);
+#else
+          ACE_Object_Manager::at_exit (token_manager_,
+                                       ACE_Token_Manager::cleanup,
+                                       0);
+#endif /* ACE_HAS_SIG_C_FUNC */
+        }
     }
 
   return token_manager_;
 }
+
+#if defined (ACE_HAS_SIG_C_FUNC)
+extern "C" void
+ACE_Token_Manager_cleanup (void *instance, void *)
+{
+  ACE_TRACE ("ACE_Token_Manager_cleanup");
+
+  delete (ACE_Token_Manager *) instance;
+}
+#else
+void
+ACE_Token_Manager::cleanup (void *instance, void *)
+{
+  ACE_TRACE ("ACE_Token_Manager::cleanup");
+
+  delete (ACE_Token_Manager *) instance;
+}
+#endif /* ACE_HAS_SIG_C_FUNC */
 
 void
 ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
