@@ -1,3 +1,12 @@
+Tue Sep 15 16:23:31 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+	
+	* tests/Cubit/TAO/MT_Cubit/client.cpp(~Client_i) :
+	  Used delete [] instead of delete for this->low_priority_client_.
+		
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (~Task_State):
+          Used delete [] for this->iors_ in place of the wrong delete.
+	  Thanks to David and Sergio for reporting this.
+	
 Tue Sep 15 15:35:31 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Replaced "\"s with
