@@ -104,6 +104,13 @@ ACE_Message_Block::size (void) const
   return this->data_block ()->size ();
 }
 
+ACE_INLINE size_t
+ACE_Message_Block::space (void) const
+{
+  ACE_TRACE ("ACE_Message_Block::space");
+  return this->size () - this->length ();
+}
+
 ACE_INLINE ACE_Message_Block::ACE_Message_Type
 ACE_Data_Block::msg_type (void) const
 {

@@ -292,6 +292,9 @@ public:
   // original offsets into the buffer, even if it is reallocated.
   // Returns 0 if successful, else -1.
 
+  size_t space (void) const;
+  // Get the amount of space remaining in the message.
+
   // = <ACE_Data_Block> methods.
   ACE_Data_Block *data_block (void) const;
   // Get the data block.
