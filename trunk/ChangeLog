@@ -1,3 +1,11 @@
+Tue Sep  2 16:43:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* m4/ace.m4: Added AM_CONDITIONAL for BUILD_EXCEPTIONS, BUILD_THREADS,
+	  BUILD_ACE_CODECS, BUILD_ACE_FILECACHE, BUILD_ACE_OTHER,
+	  BUILD_ACE_TOKEN, BUILD_ACE_UUID, BUILD_RWHO, BUILD_WFMO, and
+	  BUILD_WINREGISTRY so the MPC 'requires' feature can properly weed
+	  things out without configure- and build-time errors.
+
 Thu Sep  2 12:51:00 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Process_Manager_Test.cpp:
