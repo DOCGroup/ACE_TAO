@@ -3,7 +3,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Thread_Manager.h"
-#include "ace/streams.h"
 #include "Dump_Restore.h"
 
 ACE_RCSID(Dump_Restore, Dump_Restore, "$Id$")
@@ -113,7 +112,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
       quit ();
       break;
     default :
-      cout << "Unrecognized command." << endl;
+      ACE_DEBUG ((LM_DEBUG, "Unrecognized command.\n"));
     }
 
   display_menu ();
@@ -123,36 +122,38 @@ Dump_Restore::handle_input (ACE_HANDLE)
 void
 Dump_Restore::display_menu (void)
 {
-  cout << endl;
-  cout << "         Name Service Main Menu" << endl;
-  cout << "         ----------------------" << endl;
-
+  ACE_DEBUG ((LM_DEBUG, "\n"));
+  ACE_DEBUG ((LM_DEBUG, "Name Service Main Menu\n"));
+  ACE_DEBUG ((LM_DEBUG, "----------------------\n"));
+  
   // Check if using local name space or remote name space
   if (ACE_OS::strcmp (this->name_options_->nameserver_host (), "localhost") == 0)
     {
       if (this->ns_scope_ == ACE_Naming_Context::PROC_LOCAL)
-        cout << "  *** Using Process Local Database ***" << endl << endl;
+        ACE_DEBUG ((LM_DEBUG, "  *** Using Process Local Database ***\n\n"));
       else
-        cout << "  *** Using Node Local Database ***" << endl << endl;
+        ACE_DEBUG ((LM_DEBUG, "  *** Using Node Local Database ***\n\n"));
     }
   else
     {
-      cout << "  Hostname: " << this->hostname_;
-      cout << "  Port Number: " << this->port_ << endl << endl;
+      ACE_DEBUG ((LM_DEBUG, "  Hostname: %s\n", this->hostname_));
+      ACE_DEBUG ((LM_DEBUG, "  Port Number: %d\n", this->port_));
     }
+
   if (this->infile_)
-    cout << "Input File: " << filename_ << endl << endl;
+    ACE_DEBUG ((LM_DEBUG, "Input File: %s\n", this->filename_));
   else
-    cout << "** No Input File Specified **" << endl;
-  cout << "<P> Use Process Local Database" << endl;
-  cout << "<N> Use Node Local Database" << endl;
-  cout << "<H> Set Remote Name server <host> and <port>" << endl;
-  cout << "<F> Set Input File <file name>" << endl << endl;
-  cout << "<B> Bind" << endl;
-  cout << "<U> Unbind" << endl;
-  cout << "<R> Rebind" << endl;
-  cout << "<D> Dump <file name>" << endl;
-  cout << "<Q> or ^C (exit) " << endl;
+    ACE_DEBUG ((LM_DEBUG, "** No Input File Specified **\n"));
+
+  ACE_DEBUG ((LM_DEBUG, "<P> Use Process Local Database\n"));
+  ACE_DEBUG ((LM_DEBUG, "<N> Use Node Local Database\n"));
+  ACE_DEBUG ((LM_DEBUG, "<H> Set Remote Name server <host> and <port>\n"));
+  ACE_DEBUG ((LM_DEBUG, "<F> Set Input File <file name>\n"));
+  ACE_DEBUG ((LM_DEBUG, "<B> Bind\n"));
+  ACE_DEBUG ((LM_DEBUG, "<U> Unbind\n"));
+  ACE_DEBUG ((LM_DEBUG, "<R> Rebind\n"));
+  ACE_DEBUG ((LM_DEBUG, "<D> Dump <file name>\n"));
+  ACE_DEBUG ((LM_DEBUG, "<Q> or ^C (exit) \n"));
 }
 
 
