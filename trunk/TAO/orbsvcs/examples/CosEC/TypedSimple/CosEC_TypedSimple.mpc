@@ -3,10 +3,16 @@ project(*Consumer) : event, taoserver {
     Consumer.cpp
     Country_i.cpp
   }
+
+  includes += $(TAO_ROOT)/orbsvcs
+  idlflags +=  -I$(TAO_ROOT)/orbsvcs
 }
 
 project(*Supplier) : event, taoserver {
   source_files {
     Supplier.cpp
   }
+
+  includes += $(TAO_ROOT)/orbsvcs
+  idlflags +=  -I$(TAO_ROOT)/orbsvcs
 }

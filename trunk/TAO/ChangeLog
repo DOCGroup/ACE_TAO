@@ -1,3 +1,9 @@
+Fri Aug 29 11:07:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/examples/CosEC/TypedSimple/CosEC_TypedSimple.mpc:
+
+          Added necessary lines for includes and idlflags.
+
 Fri Aug 29 10:58:57 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:
