@@ -74,7 +74,8 @@ DIRS  = CDR \
 	Big_Request_Muxing \
 	Oneways_Invoking_Twoways \
 	AMI_Buffering \
-	DLL_ORB
+	DLL_ORB \
+	Two_Objects 
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
