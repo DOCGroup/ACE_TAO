@@ -1,3 +1,11 @@
+Thu Apr 12 09:00:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+    * examples/PluggableUDP/tests/SimplePerformance/client.cpp:
+    * examples/PluggableUDP/tests/SimplePerformance/server.cpp:
+    * examples/PluggableUDP/tests/SimplePerformance/test_i.cpp:
+
+      Fixed some minor compiler warnings. 
+
 Thu Apr 12 08:33:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
     * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
