@@ -492,6 +492,7 @@ NAME="multiorb-tpool"></A> (Not yet implemented.)
 	  ORB-per-thread unless it is really required.
 	</P>
       </LI>
+
       <LI><B>Collocation tables</B>
 	Why could the application what a non-global collocation table?
 	If objects are to serve requests only at a well known priority
@@ -500,6 +501,41 @@ NAME="multiorb-tpool"></A> (Not yet implemented.)
 	corresponding to the desired priority.
 	But using a global table would subert the priority assignment
 	(because calls would run at the priority of the client).
+	<P></P>
+      </LI>
+
+      <LI><B>Special settings for homogenous systems</B>
+	Many real-time applications run on homogenous environments,
+	TAO can take advantage of this fact by simplifying the server
+	side demarshaling;
+	to enable this feature you have to edit the
+	<CODE>$TAO_ROOT/tao/orbconf.h</CODE> file and enable the macro
+	<CODE>TAO_DISABLE_SWAP_ON_READ</CODE>.
+	<P>In this systems it is also common that server and the
+	  client startup and shutdown simultaneously,
+	  in those circumstances there is no need to check the
+	  timestamps in the POA,
+	  another macro (<CODE>POA_NO_TIMESTAMP</CODE> can be used for
+	  this purpose.
+	</P>
+	<P>Users running in embebbed systems may also need to modify
+	  the default options for TAO,
+	  the macros <CODE>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</CODE>,
+	  <CODE>TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS</CODE>
+	  and <CODE>TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS</CODE>
+	  can be used for those purposes.
+	  If the footprint size is an issue users may consider writing
+	  custom strategy factories that only create the right
+	  strategies (thus eliminating the option parsing code).
+	</P>
+	<P>If the only ORB running is TAO and there is no need to be
+	  IIOP interoperable the option <CODE>-ORBiioplite</CODE> can
+	  be used to reduce the message size and the processing time.
+	</P>
+	<P>Please remember that the greatest benefits are obtained
+	  from using the right concurrency and locking strategy for
+	  your application.
+	</P>
       </LI>
     </UL>
 
