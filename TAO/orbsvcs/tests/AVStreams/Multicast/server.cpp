@@ -2,6 +2,8 @@
 
 #include "server.h"
 
+int done = 0;
+
 FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_StreamEndPoint::FTP_Server_StreamEndPoint\n"));
@@ -23,7 +25,7 @@ FTP_Server_Callback::handle_stop (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop\n"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
-  TAO_AV_CORE::instance ()->orb ()->shutdown ();
+  done = 1;
   return 0;
 }
 
@@ -50,8 +52,7 @@ int
 FTP_Server_Callback::handle_end_stream (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::end_stream\n"));
-  CORBA::ORB_var orb = TAO_AV_CORE::instance ()->orb ();
-  orb->shutdown ();
+  done = 1; 
   return 0;
 }
 
@@ -129,10 +130,19 @@ Server::init (int argc,
 int
 Server::run (void)
 {
+  CORBA::ORB_ptr orb = TAO_AV_CORE::instance ()->orb();
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_AV_CORE::instance ()->orb ()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+      while( !done )
+      {
+         if ( orb->work_pending( ACE_ENV_SINGLE_ARG_PARAMETER ) )
+	 {
+              orb->perform_work( ACE_ENV_SINGLE_ARG_PARAMETER );
+	      ACE_TRY_CHECK;
+	 }
+      }
       ACE_TRY_CHECK;
     }
     ACE_CATCHANY
@@ -141,6 +151,10 @@ Server::run (void)
       return -1;
     }
   ACE_ENDTRY;
+
+  orb->shutdown( 1 ACE_ENV_ARG_PARAMETER );
+  ACE_TRY_CHECK;
+
   ACE_CHECK_RETURN (-1);
   return 0;
 }
