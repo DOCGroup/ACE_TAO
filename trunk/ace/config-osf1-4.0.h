@@ -83,10 +83,10 @@
 #     pragma message disable intconlosbit
 #   endif /* __DECCXX_VER >= 60190029 */
 
-#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX == 0x500
+#   if defined (DIGITAL_UNIX)  &&  DIGITAL_UNIX >= 0x40F
       // variable "PTHREAD_THIS_CATCH_NP" was declared but never referenced
 #     pragma message disable declbutnotref
-#   endif /* DIGITAL_UNIX 5 */
+#   endif /* DIGITAL_UNIX >= 4.0f */
 
 #   if defined (ACE_HAS_EXCEPTIONS)
 #     pragma message disable unrfunprm
