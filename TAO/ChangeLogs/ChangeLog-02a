@@ -1,3 +1,8 @@
+Sat Jan 19 23:57:13 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+        * tests/OBV/Any/Makefile: 
+          Regenerated dependencies.  
+
 Sat Jan 19 23:30:42 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
         * TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp: 
