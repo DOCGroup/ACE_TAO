@@ -19,7 +19,7 @@
 
 #include "tao/PollableC.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && defined (TAO_HAS_AMI_POLLER)
+#if (TAO_HAS_CORBA_MESSAGING == 1) && (TAO_HAS_AMI_POLLER == 1)
 
 #include "tao/POA_CORBA.h"
 #include "tao/Stub.h"
@@ -76,7 +76,7 @@ CORBA_Pollable_ptr CORBA_Pollable::_narrow (
 
 CORBA_Pollable_ptr CORBA_Pollable::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment & /*env*/
   )
 {
   if (CORBA::is_nil (obj))
@@ -260,7 +260,7 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/DIIPollable:1.0");
   if (servant == 0)
     {
-      CORBA::DIIPollable_ptr rval = CORBA_Pollable::_nil ();
+      CORBA::DIIPollable_ptr rval = CORBA::DIIPollable::_nil ();
 
       ACE_NEW_RETURN (rval,
                       CORBA::DIIPollable (stub),
@@ -286,7 +286,7 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_narrow (
 
 CORBA::DIIPollable_ptr CORBA::DIIPollable::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment & /*env*/
   )
 {
   if (CORBA::is_nil (obj))
@@ -298,7 +298,7 @@ CORBA::DIIPollable_ptr CORBA::DIIPollable::_unchecked_narrow (
     servant = obj->_servant()->_downcast ("IDL:omg.org/CORBA/DIIPollable:1.0");
   if (servant == 0)
     {
-      CORBA::DIIPollable_ptr rval = CORBA_Pollable::_nil ();
+      CORBA::DIIPollable_ptr rval = CORBA::DIIPollable::_nil ();
 
       ACE_NEW_RETURN (rval,
                       CORBA::DIIPollable (stub),
@@ -382,7 +382,7 @@ CORBA_PollableSet_ptr CORBA_PollableSet::_narrow (
 
 CORBA_PollableSet_ptr CORBA_PollableSet::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &env
+    CORBA::Environment & /*env*/
   )
 {
   if (CORBA::is_nil (obj))
@@ -466,7 +466,7 @@ CORBA::Exception *CORBA_PollableSet::NoPossiblePollable::_alloc (void)
   CORBA::Exception *retval = 0;
 
   ACE_NEW_RETURN (retval,
-                  CORBA_PollableSet::NoPossiblePollable
+                  CORBA_PollableSet::NoPossiblePollable,
                   0);
 
   return retval;
@@ -530,7 +530,7 @@ CORBA::Exception *CORBA_PollableSet::UnknownPollable::_alloc (void)
   CORBA::Exception *retval = 0;
 
   ACE_NEW_RETURN (retval,
-                  CORBA_PollableSet::UnknownPollable
+                  CORBA_PollableSet::UnknownPollable,
                   0);
 
   return retval;
@@ -1274,4 +1274,4 @@ operator>> (
   return 0;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_AMI_POLLER */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 && TAO_HAS_AMI_POLLER == 1 */

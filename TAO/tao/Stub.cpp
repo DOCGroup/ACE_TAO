@@ -1,5 +1,6 @@
 // $Id$
 
+
 // @ (#)iiopobj.cpp     1.9 95/11/04
 // Copyright 1995 by Sun Microsystems Inc.
 // All Rights Reserved
@@ -33,6 +34,7 @@
 #include "tao/Timeprobe.h"
 
 ACE_RCSID(tao, TAO_Stub, "$Id$")
+
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
@@ -81,17 +83,17 @@ TAO_Stub::TAO_Stub (char *repository_id,
     orb_core_ (orb_core),
     orb_ (),
     servant_orb_ ()
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
     , policies_ (0)
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 {
   if (this->orb_core_ == 0)
     {
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO: (%P|%t) TAO_Stub created with default "
-                      "ORB core\n"));
+                      ASYS_TEXT ("TAO: (%P|%t) TAO_Stub created with default ")
+                      ASYS_TEXT ("ORB core\n")));
         }
       this->orb_core_ = TAO_ORB_Core_instance ();
     }
@@ -108,7 +110,7 @@ TAO_Stub::TAO_Stub (char *repository_id,
 
 TAO_Stub::~TAO_Stub (void)
 {
-  assert (this->refcount_ == 0);
+  ACE_ASSERT (this->refcount_ == 0);
 
   if (this->forward_profiles_)
     reset_profiles ();
@@ -132,9 +134,9 @@ TAO_Stub::~TAO_Stub (void)
 
   delete this->profile_lock_ptr_;
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
   delete this->policies_;
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 }
 
 void
@@ -181,7 +183,7 @@ TAO_Stub::hash (CORBA::ULong max,
   // we rely on the profile object that its address info
   if (profile_in_use_)
     return profile_in_use_->hash (max, ACE_TRY_ENV);
-  ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) hash called on a null profile!\n"), 0);
+  ACE_ERROR_RETURN((LM_ERROR, ASYS_TEXT ("(%P|%t) hash called on a null profile!\n")), 0);
 }
 
 // Expensive comparison of objref data, to see if two objrefs
@@ -801,7 +803,7 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
 
 // ****************************************************************
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
 TAO_Stub::get_policy (
@@ -866,10 +868,10 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
   return result._retn ();
 }
 
-TAO_RelativeRoundtripTimeoutPolicy_i *
+TAO_RelativeRoundtripTimeoutPolicy *
 TAO_Stub::relative_roundtrip_timeout (void)
 {
-  TAO_RelativeRoundtripTimeoutPolicy_i *result = 0;
+  TAO_RelativeRoundtripTimeoutPolicy *result = 0;
 
   // No need to lock, the stub only changes its policies at
   // construction time...
@@ -1132,13 +1134,13 @@ TAO_Stub::validate_connection (CORBA::PolicyList_out inconsistent_policies,
   return 1;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 TAO_Sync_Strategy &
 TAO_Stub::sync_strategy (void)
 {
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
   POA_Messaging::SyncScopePolicy *policy =
     this->sync_scope ();
@@ -1154,24 +1156,25 @@ TAO_Stub::sync_strategy (void)
 
       if (scope == Messaging::SYNC_NONE)
         return this->orb_core_->none_sync_strategy ();
-
-      if (scope == Messaging::SYNC_FLUSH)
-        return this->orb_core_->flush_sync_strategy ();
     }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   return this->orb_core_->transport_sync_strategy ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 template class auto_ptr<TAO_Policy_Manager_Impl>;
 template class ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>;
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 #pragma instantiate auto_ptr<TAO_Policy_Manager_Impl>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Policy_Manager_Impl>
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

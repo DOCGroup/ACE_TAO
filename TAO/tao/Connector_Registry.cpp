@@ -1,29 +1,41 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+
 #include "tao/ORB_Core.h"
 #include "tao/Connector_Registry.h"
-#include "tao/Stub.h"
+#include "tao/Profile.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
 
+#if !defined(__ACE_INLINE__)
+#include "tao/Connector_Registry.i"
+#endif /* __ACE_INLINE__ */
+
+ACE_RCSID(tao, Connector_Registry, "$Id$")
+
 TAO_Connector_Registry::TAO_Connector_Registry (void)
-  : connectors_ ()
+  : connectors_ (0),
+    size_ (0)
 {
 }
 
 TAO_Connector_Registry::~TAO_Connector_Registry (void)
 {
   this->close_all ();
+
+  delete [] this->connectors_;
+  this->connectors_ = 0;
+  this->size_ = 0;
 }
 
 TAO_Connector *
 TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 {
-  TAO_ConnectorSetItor end =
-    this->connectors_.end ();
-  TAO_ConnectorSetItor connector =
-    this->connectors_.begin ();
+  TAO_ConnectorSetIterator end =
+    this->end ();
+  TAO_ConnectorSetIterator connector =
+    this->begin ();
 
   for (;
        connector != end ;
@@ -39,13 +51,20 @@ TAO_Connector_Registry::get_connector (CORBA::ULong tag)
 int
 TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 {
+  TAO_ProtocolFactorySet *pfs = orb_core->protocol_factories ();
+
   // Open one connector for each loaded protocol!
-  TAO_ProtocolFactorySetItor end =
-    orb_core->protocol_factories ()->end ();
-  TAO_ProtocolFactorySetItor factory =
-    orb_core->protocol_factories ()->begin ();
+  TAO_ProtocolFactorySetItor end = pfs->end ();
+  TAO_ProtocolFactorySetItor factory = pfs->begin ();
 
   TAO_Connector *connector = 0;
+
+  // The array containing the TAO_Connectors will never contain more
+  // than the number of loaded protocols in the ORB core.
+  if (this->connectors_ == 0)
+    ACE_NEW_RETURN (this->connectors_,
+                    TAO_Connector *[pfs->size ()],
+                    -1);
 
   for ( ;
        factory != end;
@@ -60,22 +79,13 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
               delete connector;
 
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "TAO (%P|%t) unable to open connector for "
-                                 "<%s>.\n",
+                                 ASYS_TEXT ("TAO (%P|%t) unable to open connector for ")
+                                 ASYS_TEXT ("<%s>.\n"),
                                  (*factory)->protocol_name ().c_str ()),
                                 -1);
             }
 
-          if (connectors_.insert (connector) == -1)
-            {
-              delete connector;
-
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "TAO (%P|%t) unable to add a <%s> connector "
-                                 "to the connector registry.\n",
-                                 (*factory)->protocol_name ().c_str ()),
-                                -1);
-            }
+          this->connectors_[this->size_++] = connector;
         }
       else
         return -1;
@@ -87,10 +97,9 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 int
 TAO_Connector_Registry::close_all (void)
 {
-  TAO_ConnectorSetItor end =
-    this->connectors_.end ();
+  TAO_ConnectorSetIterator end = this->end ();
 
-  for (TAO_ConnectorSetItor i = this->connectors_.begin ();
+  for (TAO_ConnectorSetIterator i = this->begin ();
        i != end;
        ++i)
     {
@@ -102,13 +111,14 @@ TAO_Connector_Registry::close_all (void)
       delete *i;
     }
 
-  this->connectors_.reset ();
+  this->size_ = 0;
+
   return 0;
 }
 
 int
 TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
-                                    TAO_PreconnectSet &preconnections)
+                                    TAO_EndpointSet &preconnections)
 {
   // Put the preconnects in a form that makes it simple for protocol
   // implementers to parse.
@@ -116,23 +126,21 @@ TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) Unable to preprocess the preconnections.\n"));
+                    ASYS_TEXT ("TAO (%P|%t) Unable to preprocess the preconnections.\n")));
 
       return -1;
     }
 
-  TAO_PreconnectSetIterator preconnects = preconnections.begin ();
+  TAO_EndpointSetIterator preconnects = preconnections.begin ();
 
   for (ACE_CString *i = 0;
        preconnects.next (i) != 0;
        preconnects.advance ())
     {
-      TAO_ConnectorSetItor first_connector =
-        this->connectors_.begin ();
-      TAO_ConnectorSetItor last_connector =
-        this->connectors_.end ();
+      TAO_ConnectorSetIterator first_connector = this->begin ();
+      TAO_ConnectorSetIterator last_connector = this->end ();
 
-      for (TAO_ConnectorSetItor connector = first_connector;
+      for (TAO_ConnectorSetIterator connector = first_connector;
            connector != last_connector;
            ++connector)
         if (*connector)
@@ -144,7 +152,7 @@ TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
 
 int
 TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
-                                                TAO_PreconnectSet &preconnects)
+                                                TAO_EndpointSet &preconnects)
 {
   // Organize all matching protocol endpoints and addrs into a single
   // endpoint for the given protocol.
@@ -195,7 +203,7 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
       (*tmp) =
         ACE_CString ((*factory)->factory ()->prefix ()) + ACE_CString ("://");
 
-      TAO_PreconnectSetIterator p = preconnects.begin ();
+      TAO_EndpointSetIterator p = preconnects.begin ();
 
       for (ACE_CString *i = 0;
            p.next (i) != 0;
@@ -278,12 +286,10 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
       CORBA::COMPLETED_NO),
       -1);
 
-  TAO_ConnectorSetItor first_connector =
-    this->connectors_.begin ();
-  TAO_ConnectorSetItor last_connector =
-    this->connectors_.end ();
+  TAO_ConnectorSetIterator first_connector = this->begin ();
+  TAO_ConnectorSetIterator last_connector = this->end ();
 
-  for (TAO_ConnectorSetItor connector = first_connector;
+  for (TAO_ConnectorSetIterator connector = first_connector;
        connector != last_connector;
        ++connector)
     {
@@ -335,7 +341,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) unknown profile tag %d\n",
+                      ASYS_TEXT ("TAO (%P|%t) unknown profile tag %d\n"),
                       tag));
         }
 
@@ -379,12 +385,10 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
   if (!ior)
     return 0; // Failure: Null IOR string pointer
 
-  TAO_ConnectorSetItor first_connector =
-    this->connectors_.begin ();
-  TAO_ConnectorSetItor last_connector =
-    this->connectors_.end ();
+  TAO_ConnectorSetIterator first_connector = this->begin ();
+  TAO_ConnectorSetIterator last_connector =  this->end ();
 
-  for (TAO_ConnectorSetItor connector = first_connector;
+  for (TAO_ConnectorSetIterator connector = first_connector;
        connector != last_connector;
        ++connector)
     {
@@ -404,11 +408,8 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
 int
 TAO_Connector_Registry::purge_connections (void)
 {
-  TAO_ConnectorSetItor end =
-    this->connectors_.end ();
-
-  TAO_ConnectorSetItor iterator =
-    this->connectors_.begin ();
+  TAO_ConnectorSetIterator end = this->end ();
+  TAO_ConnectorSetIterator iterator = this->begin ();
 
   for (;
        iterator != end ;
@@ -424,14 +425,6 @@ TAO_Connector_Registry::purge_connections (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class ACE_Node<TAO_Connector*>;
-template class ACE_Unbounded_Set<TAO_Connector*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Connector*>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<TAO_Connector*>
-#pragma instantiate ACE_Unbounded_Set<TAO_Connector*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Connector*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

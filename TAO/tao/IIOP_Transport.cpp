@@ -1,5 +1,5 @@
+// This may look like C, but it's really -*- C++ -*-
 // $Id$
-
 
 #include "tao/IIOP_Transport.h"
 #include "tao/IIOP_Connect.h"
@@ -58,12 +58,17 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler,
 
 TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
 {
-  // Cannot deal with errors, and therefore they are ignored.
-  this->send_buffered_messages ();
-
-  // Note that it also doesn't matter how much of the data was
-  // actually sent.
-  this->dequeue_all ();
+  // If the socket has not already been closed.
+  if (this->handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->dequeue_all ();
+    }
 }
 
 TAO_IIOP_Handler_Base *&
@@ -197,7 +202,7 @@ TAO_IIOP_Client_Transport::start_locate (TAO_ORB_Core */*orb_core*/,
   TAO_Pluggable_Connector_Params params;
   params.request_id = request_id;
   if (this->client_mesg_factory_->write_message_header (params,
-                                                        TAO_LOCATE_REQUEST_HEADER,  
+                                                        TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER,   
                                                         spec,
                                                         output) == 0)
     ACE_THROW (CORBA::MARSHAL ());
@@ -217,7 +222,8 @@ TAO_IIOP_Client_Transport::send_request (TAO_Stub *stub,
   if (this->client_mesg_factory_->send_message (this,
                                                 stream,
                                                 max_wait_time,
-                                                stub) == -1)
+                                                stub,
+                                                two_way) == -1)
     return -1;
 
   return this->idle_after_send ();
@@ -243,8 +249,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) IIOP_Transport::handle_client_input -"
-                    " nil message state\n"));
+                    ASYS_TEXT ("TAO (%P|%t) IIOP_Transport::handle_client_input -")
+                    ASYS_TEXT (" nil message state\n")));
       return -1;
     }
 
@@ -256,8 +262,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - %p\n",
-                    "IIOP_Transport::handle_client_input, handle_input"));
+                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
+                    ASYS_TEXT ("IIOP_Transport::handle_client_input, handle_input")));
       return -1;
     }
   if (result == 0)
@@ -275,8 +281,8 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - %p\n",
-                    "IIOP_Transport::handle_client_input, parse reply"));
+                    ASYS_TEXT ("TAO (%P|%t) - %p\n"),
+                    ASYS_TEXT ("IIOP_Transport::handle_client_input, parse reply")));
       message_state->reset ();
       return -1;
     }
@@ -292,9 +298,9 @@ TAO_IIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) : IIOP_Client_Transport::"
-                    "handle_client_input - "
-                    "dispatch reply failed\n"));
+                    ASYS_TEXT ("TAO (%P|%t) : IIOP_Client_Transport::")
+                    ASYS_TEXT ("handle_client_input - ")
+                    ASYS_TEXT ("dispatch reply failed\n")));
       message_state->reset ();
       return -1;
     }
@@ -347,10 +353,10 @@ TAO_IIOP_Client_Transport::send_request_header (const IOP::ServiceContextList & 
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
     CORBA::Boolean retval = 
-    this->client_mesg_factory_->write_message_header (params,
-                                                      TAO_REQUEST_HEADER,
-                                                      spec,
-                                                      msg);
+      this->client_mesg_factory_->write_message_header (params,
+                                                        TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER,  
+                                                        spec,
+                                                        msg);
   
   return retval;
 }
@@ -360,10 +366,11 @@ TAO_IIOP_Client_Transport::send_request_header (const IOP::ServiceContextList & 
 
 ssize_t
 TAO_IIOP_Transport::send (TAO_Stub *stub,
+                          int two_way,
                           const ACE_Message_Block *message_block,
                           const ACE_Time_Value *max_wait_time)
 {
-  if (stub == 0)
+  if (stub == 0 || two_way)
     {
       return this->send (message_block,
                          max_wait_time);
@@ -408,7 +415,6 @@ TAO_IIOP_Transport::recv (char *buf,
                           const ACE_Time_Value *max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_TRANSPORT_RECEIVE_START);
-
 
   return this->handler_->peer ().recv_n (buf,
                                          len,

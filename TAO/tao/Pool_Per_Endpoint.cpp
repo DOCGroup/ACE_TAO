@@ -37,12 +37,12 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
   TAO_Acceptor_Registry *ac =
     this->orb_->orb_core ()->acceptor_registry ();
 
-  for (TAO_AcceptorSetItor i = ac->begin (); i != ac->end (); ++i)
+  for (TAO_AcceptorSetIterator i = ac->begin (); i != ac->end (); ++i)
     {
       int priority =
         ACE_Sched_Params::priority_min (this->policy_);
 
-#if defined (TAO_HAS_RT_CORBA)
+#if (TAO_HAS_RT_CORBA == 1)
       RTCORBA::PriorityMapping *pm =
         this->orb_->orb_core ()->priority_mapping ();
       const CORBA::Short corba_priority = (*i)->priority ();
@@ -52,9 +52,9 @@ TAO_Pool_Per_Endpoint::run (CORBA::Environment &ACE_TRY_ENV)
 
       if (TAO_debug_level > 3)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - creating thread at priority %d:%d\n",
+                    ASYS_TEXT ("TAO (%P|%t) - creating thread at priority %d:%d\n"),
                     priority, corba_priority));
-#endif /* TAO_HAS_RT_CORBA */
+#endif /* TAO_HAS_RT_CORBA == 1 */
       if (this->activate (this->flags_,
                           this->poolsize_, /* number of threads */
                           1, /* force active */
@@ -71,16 +71,16 @@ TAO_Pool_Per_Endpoint::svc (void)
 {
   if (TAO_debug_level > 3)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - TAO_Pool_Per_Endpoint::svc: "
-                " using reactor <%x> in this thread\n",
+                ASYS_TEXT ("TAO (%P|%t) - TAO_Pool_Per_Endpoint::svc: ")
+                ASYS_TEXT (" using reactor <%x> in this thread\n"),
                 this->orb_->orb_core ()->reactor ()));
 
   this->orb_->run ();
 
   if (TAO_debug_level > 3)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - TAO_Pool_Per_Endpoint::svc: "
-                " ORB::run() finished\n"));
+                ASYS_TEXT ("TAO (%P|%t) - TAO_Pool_Per_Endpoint::svc: ")
+                ASYS_TEXT (" ORB::run() finished\n")));
  return 0;
 }
 

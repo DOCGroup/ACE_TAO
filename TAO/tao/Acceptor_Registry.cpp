@@ -2,7 +2,7 @@
 // $Id$
 
 #include "tao/Acceptor_Registry.h"
-#include "tao/Stub.h"
+#include "tao/Profile.h"
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
 #include "tao/params.h"
@@ -18,22 +18,27 @@
 ACE_RCSID(tao, Acceptor_Registry, "$Id$")
 
 TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
-  : acceptors_ ()
+  : acceptors_ (0),
+    size_ (0)
 {
 }
 
 TAO_Acceptor_Registry::~TAO_Acceptor_Registry (void)
 {
   this->close_all ();
+
+  delete [] this->acceptors_;
+  this->acceptors_ = 0;
+  this->size_ = 0;
 }
 
 size_t
 TAO_Acceptor_Registry::endpoint_count (void)
 {
   int count = 0;
-  TAO_AcceptorSetItor end = this->end ();
+  TAO_AcceptorSetIterator end = this->end ();
 
-  for (TAO_AcceptorSetItor i = this->begin (); i != end; ++i)
+  for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     count += (*i)->endpoint_count ();
 
   return count;
@@ -43,9 +48,9 @@ int
 TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
                                       TAO_MProfile &mprofile)
 {
-  TAO_AcceptorSetItor end = this->end ();
+  TAO_AcceptorSetIterator end = this->end ();
 
-  for (TAO_AcceptorSetItor i = this->begin (); i != end; ++i)
+  for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     if ((*i)->create_mprofile (object_key,
                                mprofile) == -1)
       return -1;
@@ -56,9 +61,9 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
 int
 TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 {
-  TAO_AcceptorSetItor end = this->end ();
+  TAO_AcceptorSetIterator end = this->end ();
 
-  for (TAO_AcceptorSetItor i = this->begin (); i != end; ++i)
+  for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     {
       for (TAO_PHandle j = 0;
            j != mprofile.profile_count ();
@@ -84,13 +89,11 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   // protocol_factories is in the following form
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
 
-  TAO_EndpointSetIterator first_endpoint =
-    orb_core->orb_params ()->endpoints ().begin ();
+  TAO_EndpointSet endpoint_set = orb_core->orb_params ()->endpoints ();
 
-  TAO_EndpointSetIterator last_endpoint =
-    orb_core->orb_params ()->endpoints ().end ();
+  TAO_EndpointSetIterator endpoints = endpoint_set.begin ();
 
-  if (first_endpoint == last_endpoint)
+  if (endpoint_set.is_empty ())
     {
       // No endpoints were specified, we let each protocol pick its
       // own default.
@@ -101,11 +104,21 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
     }
 
+  // The array containing the TAO_Acceptors will never contain more
+  // than the number of endpoints stored in TAO_ORB_Parameters.
+  if (this->acceptors_ == 0)
+    {
+      ACE_NEW_THROW_EX (this->acceptors_,
+                        TAO_Acceptor *[endpoint_set.size ()],
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (-1);
+    }
+
   ACE_Auto_Basic_Array_Ptr <char> addr_str;
 
-  for (TAO_EndpointSetIterator endpoint = first_endpoint;
-       endpoint != last_endpoint;
-       ++endpoint)
+  for (ACE_CString *endpoint = 0;
+       endpoints.next (endpoint) != 0;
+       endpoints.advance ())
     {
       ACE_CString iop = (*endpoint);
 
@@ -117,8 +130,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         {
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) Invalid endpoint specification: "
-                        "<%s>.\n",
+                        ASYS_TEXT ("(%P|%t) Invalid endpoint specification: ")
+                        ASYS_TEXT ("<%s>.\n"),
                         iop.c_str ()));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
@@ -227,33 +240,22 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
                           if (TAO_debug_level > 0)
                             ACE_ERROR ((LM_ERROR,
-                                        "TAO (%P|%t) unable to open acceptor "
-                                        "for <%s>%p\n",
+                                        ASYS_TEXT ("TAO (%P|%t) unable to open acceptor ")
+                                        ASYS_TEXT ("for <%s>%p\n"),
                                         iop.c_str (),""));
 
                           ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
                         }
 
-                      // add acceptor to list.
-                      if (this->acceptors_.insert (acceptor) == -1)
-                        {
-                          delete acceptor;
-
-                          if (TAO_debug_level > 0)
-                            ACE_ERROR ((LM_ERROR,
-                                        "TAO (%P|%t) unable to add <%s> "
-                                        "to acceptor registry.\n",
-                                        address.c_str ()));
-
-                          ACE_THROW_RETURN (CORBA::INTERNAL (), -1);
-                        }
+                      // add acceptor to list
+                      this->acceptors_[this->size_++] = acceptor;
                     }
                   else
                     {
                       if (TAO_debug_level > 0)
                         ACE_ERROR ((LM_ERROR,
-                                    "TAO (%P|%t) unable to create "
-                                    "an acceptor for <%s>.\n",
+                                    ASYS_TEXT ("TAO (%P|%t) unable to create ")
+                                    ASYS_TEXT ("an acceptor for <%s>.\n"),
                                     iop.c_str ()));
 
                       ACE_THROW_RETURN (CORBA::NO_MEMORY (), -1);
@@ -267,8 +269,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       if (found == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "TAO (%P|%t) no usable transport protocol "
-                      "was found.\n"));
+                      ASYS_TEXT ("TAO (%P|%t) no usable transport protocol ")
+                      ASYS_TEXT ("was found.\n")));
           ACE_THROW_RETURN (CORBA::BAD_PARAM (), -1);
         }
     }
@@ -281,12 +283,21 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                                          const char *options)
 {
-  TAO_ProtocolFactorySetItor end =
-    orb_core->protocol_factories ()->end ();
+  TAO_ProtocolFactorySet *pfs = orb_core->protocol_factories ();
+
+  // If the TAO_Acceptor array is zero by the time we get here then no
+  // endpoints were specified by the user, meaning that the number of
+  // acceptors will never be more than the number of loaded protocols
+  // in the ORB core.
+  if (this->acceptors_ == 0)
+    ACE_NEW_RETURN (this->acceptors_,
+                    TAO_Acceptor *[pfs->size ()],
+                    -1);
+
+  TAO_ProtocolFactorySetItor end = pfs->end ();
 
   // loop through all the loaded protocols...
-  for (TAO_ProtocolFactorySetItor i =
-         orb_core->protocol_factories ()->begin ();
+  for (TAO_ProtocolFactorySetItor i = pfs->begin ();
        i != end;
        ++i)
     {
@@ -323,8 +334,8 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) unable to create "
-                    "an acceptor for <%s>\n",
+                    ASYS_TEXT ("TAO (%P|%t) unable to create ")
+                    ASYS_TEXT ("an acceptor for <%s>\n"),
                     (*factory)->protocol_name ().c_str ()));
 
       return -1;
@@ -337,25 +348,14 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) unable to open "
-                    "default acceptor for <%s>%p\n",
+                    ASYS_TEXT ("TAO (%P|%t) unable to open ")
+                    ASYS_TEXT ("default acceptor for <%s>%p\n"),
                     (*factory)->protocol_name ().c_str (), ""));
 
       return -1;
     }
 
-  if (this->acceptors_.insert (acceptor) == -1)
-    {
-      delete acceptor;
-
-      if (TAO_debug_level > 0)
-        ACE_ERROR ((LM_ERROR,
-                           "TAO (%P|%t) unable to add <%s> default_acceptor "
-                           "to acceptor registry.\n",
-                           (*factory)->protocol_name ().c_str ()));
-
-      return -1;
-    }
+  this->acceptors_[this->size_++] = acceptor;
 
   return 0;
 }
@@ -363,10 +363,9 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 int
 TAO_Acceptor_Registry::close_all (void)
 {
-  TAO_AcceptorSetItor end =
-                this->acceptors_.end ();
+  TAO_AcceptorSetIterator end = this->end ();
 
-  for (TAO_AcceptorSetItor i = this->acceptors_.begin ();
+  for (TAO_AcceptorSetIterator i = this->begin ();
        i != end;
        ++i)
     {
@@ -378,17 +377,13 @@ TAO_Acceptor_Registry::close_all (void)
       delete *i;
     }
 
-  this->acceptors_.reset ();
+  this->size_ = 0;
 
   return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Node<TAO_Acceptor*>;
-template class ACE_Unbounded_Set<TAO_Acceptor*>;
-template class ACE_Unbounded_Set_Iterator<TAO_Acceptor*>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Node<TAO_Acceptor*>
-#pragma instantiate ACE_Unbounded_Set<TAO_Acceptor*>
-#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_Acceptor*>
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

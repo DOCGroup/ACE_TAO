@@ -2,7 +2,7 @@
 
 #include "tao/Policy_Manager.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
+#if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #include "tao/Environment.h"
 #include "tao/ORB_Core.h"
@@ -161,8 +161,8 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
             if (tmp == 0)
               ACE_THROW (CORBA::INTERNAL ());
 
-            TAO_RelativeRoundtripTimeoutPolicy_i *policy =
-              ACE_dynamic_cast (TAO_RelativeRoundtripTimeoutPolicy_i *, tmp);
+            TAO_RelativeRoundtripTimeoutPolicy *policy =
+              ACE_dynamic_cast (TAO_RelativeRoundtripTimeoutPolicy *, tmp);
 
             if (policy == 0)
               ACE_THROW (CORBA::INTERNAL ());
@@ -516,4 +516,4 @@ TAO_Policy_Current::implementation (void) const
   return *TAO_TSS_RESOURCES::instance ()->policy_current_;
 }
 
-#endif /* TAO_HAS_CORBA_MESSAGING */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */

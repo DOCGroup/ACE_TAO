@@ -24,8 +24,10 @@ TAO_GIOP_Message_Base::
   write_protocol_header (TAO_Pluggable_Message_Type t,
                          TAO_OutputCDR &msg)
 {
+  // Reset the message type
+  msg.reset ();
   
-  TAO_GIOP_Message_Type type;
+  TAO_GIOP_Message_Type type = TAO_GIOP_MESSAGERROR;
   
   // First convert the Pluggable type to the GIOP specific type. 
   switch (t)
@@ -105,7 +107,7 @@ TAO_GIOP_Message_Base::
                                   params.operation_name,
                                   cdr);
       break;
-    case TAO_PLUUGABLE_MESSAGE_LOCATE_REQUEST_HEADER:
+    case TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER:
       this->write_locate_request_header (params.request_id,
                                          spec,
                                          cdr);
@@ -126,7 +128,8 @@ int
 TAO_GIOP_Message_Base::send_message (TAO_Transport *transport,
                                      TAO_OutputCDR &stream,
                                      ACE_Time_Value *max_wait_time,
-                                     TAO_Stub *stub)
+                                     TAO_Stub *stub,
+                                     int two_way)
 {
   // Get the header length
   const size_t header_len = this->header_len ();
@@ -172,6 +175,7 @@ TAO_GIOP_Message_Base::send_message (TAO_Transport *transport,
 
   // This guarantees to send all data (bytes) or return an error.
   ssize_t n = transport->send (stub,
+                               two_way,
                                stream.begin (),
                                max_wait_time);
  
