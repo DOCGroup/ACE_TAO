@@ -113,7 +113,7 @@ protected:
   size_t size_;
   // Keeps track of the size of the list.
 
-  LOCK mutex_; 
+  ACE_LOCK mutex_; 
   // Synchronization variable for <ACE_Timer_Queue>.
 
 private:
