@@ -112,6 +112,16 @@ Identifier::compare (Identifier *o)
   return (ACE_OS::strcmp (pv_string, o->get_string ()) == 0) ? I_TRUE : I_FALSE;
 }
 
+// Report the appropriate error if the two identifiers differ only in case.
+long
+Identifier::case_compare (Identifier *o)
+{
+  UTL_String member (this->pv_string);
+  UTL_String other (o->get_string ());
+
+  return member.compare (&other);
+}
+
 // Dumping
 
 void
