@@ -1,3 +1,20 @@
+Wed Aug  6 03:29:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        Additional includes required by recent subsetting.
+
+        * Kokyu/Dispatcher_Task.h: Lock_Adapter_T.h.
+        * apps/JAWS2/HTTPU/http_headers.h: Null_Mutex.h.
+        * apps/JAWS2/HTTPU/http_status.h: Synch_Traits.h.
+        * apps/JAWS2/JAWS/Cache_Manager_T.cpp: streams.h.
+        * apps/JAWS2/JAWS/IO.h: Synch_Traits.h.
+        * apps/JAWS2/JAWS/IO_Handler.h: RW_Thread_Mutex.h
+        * apps/JAWS2/JAWS/JAWS.h: Trace.h.
+        * apps/JAWS2/JAWS/Parse_Headers.h: Synch_Traits.h.
+        * apps/soreduce/Library.h: streams.h.
+
+        * apps/JAWS2/JAWS/Server.cpp: 
+          Added #ifdef around ACE_Trace calls to turn on/off tracing.
+
 Wed Aug  6 02:27:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/platform_g++_common.GNU:

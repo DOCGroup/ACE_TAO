@@ -10,6 +10,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "HTTPU/http_export.h"
+#include "ace/Synch_Traits.h"
 
 class HTTP_SCode_Base;
 
