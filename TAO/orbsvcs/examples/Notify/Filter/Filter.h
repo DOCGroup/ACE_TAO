@@ -16,12 +16,12 @@
 #ifndef NOTIFY_FILTER_CLIENT_H
 #define NOTIFY_FILTER_CLIENT_H
 
-#include "orbsvcs/CosNotifyChannelAdminC.h"
+#include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
 
-class TAO_Notify_StructuredPushConsumer;
-class TAO_Notify_StructuredPushSupplier;
+class Filter_StructuredPushConsumer;
+class Filter_StructuredPushSupplier;
 
 class FilterClient
 {
@@ -34,7 +34,10 @@ class FilterClient
  public:
   // = Initialization and Termination
   FilterClient (void);
+  // Constructor
+
   ~FilterClient ();
+  // Destructor
 
   void init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV);
   // Init the Client.
@@ -101,16 +104,146 @@ class FilterClient
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
   // The supplier admin used by suppliers.
 
-  TAO_Notify_StructuredPushConsumer* consumer_1;
+  Filter_StructuredPushConsumer* consumer_1;
   // Consumer #1
 
-  TAO_Notify_StructuredPushConsumer* consumer_2;
+  Filter_StructuredPushConsumer* consumer_2;
   // Consumer #2
 
-  TAO_Notify_StructuredPushSupplier* supplier_1;
+  Filter_StructuredPushSupplier* supplier_1;
   // Supplier #1
 
-  TAO_Notify_StructuredPushSupplier* supplier_2;
+  Filter_StructuredPushSupplier* supplier_2;
   // Supplier #2
 };
+
+/*****************************************************************/
+class Filter_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+{
+  // = TITLE
+  //   Filter_StructuredPushConsumer
+  //
+  // = DESCRIPTION
+  //   Consumer for the Filter example.
+  //
+
+ public:
+  // = Initialization and Termination code
+  Filter_StructuredPushConsumer (const char *my_name);
+  // Constructor.
+
+  void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment &ACE_TRY_ENV);
+  // Connect the Consumer to the EventChannel.
+  // Creates a new proxy supplier and connects to it.
+
+  virtual void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  // Disconnect from the supplier.
+
+protected:
+  // = Data members
+  ACE_CString my_name_;
+  // The name of this consumer.
+
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
+  // The proxy that we are connected to.
+
+  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
+  // The proxy_supplier id.
+
+  // = Methods
+  virtual ~Filter_StructuredPushConsumer (void);
+  // Destructor
+
+  // = NotifyPublish method
+    virtual void offer_change (
+        const CosNotification::EventTypeSeq & added,
+        const CosNotification::EventTypeSeq & removed,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType
+      ));
+
+  // = StructuredPushSupplier methods
+  virtual void push_structured_event (
+        const CosNotification::StructuredEvent & notification,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosEventComm::Disconnected
+       ));
+
+  virtual void disconnect_structured_push_consumer (
+        CORBA::Environment &ACE_TRY_ENV
+        )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+};
+
+/*****************************************************************/
+
+class Filter_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
+{
+  // = TITLE
+  //   Filter_StructuredPushSupplier
+  //
+  // = DESCRIPTION
+  //   Supplier for the filter example.
+  //
+ public:
+  // = Initialization and Termination code
+  Filter_StructuredPushSupplier (const char* my_name);
+  // Constructor.
+
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
+                CORBA::Environment &ACE_TRY_ENV);
+  // Connect the Supplier to the EventChannel.
+  // Creates a new proxy supplier and connects to it.
+
+  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  // Disconnect from the supplier.
+
+  virtual void send_event (const CosNotification::StructuredEvent& event,
+                           CORBA::Environment &ACE_TRY_ENV);
+  // Send one event.
+
+protected:
+  // = Data members
+  ACE_CString my_name_;
+  // The name of this consumer.
+
+  CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_;
+  // The proxy that we are connected to.
+
+  CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
+  // This supplier's id.
+
+  // = Protected Methods
+  virtual ~Filter_StructuredPushSupplier ();
+  // Destructor
+
+  // = NotifySubscribe
+  virtual void subscription_change (
+        const CosNotification::EventTypeSeq & added,
+        const CosNotification::EventTypeSeq & removed,
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType
+      ));
+
+  // = StructuredPushSupplier method
+    virtual void disconnect_structured_push_supplier (
+        CORBA::Environment &ACE_TRY_ENV
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+};
+
+/*****************************************************************/
 #endif /* NOTIFY_FILTER_CLIENT_H */

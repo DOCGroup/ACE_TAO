@@ -1,76 +1,14 @@
 /* -*- C++ -*- $Id$ */
-#include "orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h"
-#include "orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h"
+
 #include "Filter.h"
 
-// @@ Pradeep: local #includes should go first.
+ACE_RCSID(Filter, Filter, "$Id$")
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 #define CA_FILTER "threshold < 20"
 #define SA_FILTER "threshold > 10"
-// @@ Pradeep: it is 'GRAMMAR' not 'GRAMMER'
-#define TCL_GRAMMER "TCL"
-
-// @@ Pradeep: please don't put classes in the .cpp file...
-
-class PushConsumer : public TAO_Notify_StructuredPushConsumer
-{
-private:
-  ACE_CString myname_;
-
-public:
-  PushConsumer (const char* myname)
-  {
-    myname_ = myname;
-  }
-
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification,
-        CORBA::Environment &/*ACE_TRY_ENV*/
-        )
-    ACE_THROW_SPEC ((
-                     CORBA::SystemException,
-                     CosEventComm::Disconnected
-                     ))
-  {
-    CORBA::Long val;
-
-    notification.remainder_of_body >>= val;
-
-    // @@ Pradeep: for your tests try to make sure that you count the
-    // number of expected and sent events to verify that things work
-    // correctly in an automatic way...
-
-    ACE_DEBUG ((LM_DEBUG,
-                "%s received event %d\n", myname_.fast_rep (),
-                val));
-  }
-};
-
-class PushSupplier : public TAO_Notify_StructuredPushSupplier
-{
-private:
-  ACE_CString myname_;
-
-public:
-  PushSupplier (const char* myname)
-  {
-    myname_ = myname;
-  }
-
-virtual void send_event (const CosNotification::StructuredEvent& event,
-                           CORBA::Environment &ACE_TRY_ENV)
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                "%s is sending an event \n", myname_.fast_rep ()));
-    // add you own constraints here.
-    TAO_Notify_StructuredPushSupplier::send_event (event,
-                                                   ACE_TRY_ENV);
-    ACE_CHECK;
-  }
-};
-
+#define TCL_GRAMMAR "TCL"
 
 FilterClient::FilterClient (void)
 {
@@ -88,18 +26,25 @@ FilterClient::init (int argc, char *argv [], CORBA::Environment &ACE_TRY_ENV)
 {
   init_ORB (argc, argv, ACE_TRY_ENV);
   ACE_CHECK;
+
   resolve_naming_service (ACE_TRY_ENV);
   ACE_CHECK;
+
   resolve_Notify_factory (ACE_TRY_ENV);
   ACE_CHECK;
+
   create_EC (ACE_TRY_ENV);
   ACE_CHECK;
+
   create_supplieradmin (ACE_TRY_ENV);
   ACE_CHECK;
+
   create_consumeradmin (ACE_TRY_ENV);
   ACE_CHECK;
+
   create_consumers (ACE_TRY_ENV);
   ACE_CHECK;
+
   create_suppliers (ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -212,7 +157,7 @@ FilterClient::create_supplieradmin (CORBA::Environment &ACE_TRY_ENV)
 
   // setup a filter at the consumer admin
   CosNotifyFilter::Filter_var sa_filter =
-    ffact->create_filter (TCL_GRAMMER, ACE_TRY_ENV);
+    ffact->create_filter (TCL_GRAMMAR, ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (sa_filter.in ()));
@@ -247,7 +192,7 @@ FilterClient:: create_consumeradmin (CORBA::Environment &ACE_TRY_ENV)
 
   // setup a filter at the consumer admin
   CosNotifyFilter::Filter_var ca_filter =
-    ffact->create_filter (TCL_GRAMMER, ACE_TRY_ENV);
+    ffact->create_filter (TCL_GRAMMAR, ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ca_filter.in ()));
@@ -275,22 +220,16 @@ FilterClient::create_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
   // startup the first consumer.
   ACE_NEW_THROW_EX (consumer_1,
-                    PushConsumer ("consumer1"),
+                    Filter_StructuredPushConsumer ("consumer1"),
                     CORBA::NO_MEMORY ());
-
-  consumer_1->init (this->root_poa_.in (), ACE_TRY_ENV);
-  ACE_CHECK;
 
   consumer_1->connect (consumer_admin_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
   // startup the second consumer.
   ACE_NEW_THROW_EX (consumer_2,
-                    PushConsumer ("consumer1"),
+                    Filter_StructuredPushConsumer ("consumer1"),
                     CORBA::NO_MEMORY ());
-
-  consumer_2->init (this->root_poa_.in (), ACE_TRY_ENV);
-  ACE_CHECK;
 
   consumer_2->connect (consumer_admin_.in (), ACE_TRY_ENV);
   ACE_CHECK;
@@ -301,22 +240,16 @@ FilterClient::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
 {
   // startup the first supplier
   ACE_NEW_THROW_EX (supplier_1,
-                    PushSupplier ("supplier1"),
+                    Filter_StructuredPushSupplier ("supplier1"),
                     CORBA::NO_MEMORY ());
-
-  supplier_1->init (this->root_poa_.in (), ACE_TRY_ENV);
-  ACE_CHECK;
 
   supplier_1->connect (supplier_admin_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
   // startup the second supplier
   ACE_NEW_THROW_EX (supplier_2,
-                    PushSupplier ("supplier2"),
+                    Filter_StructuredPushSupplier ("supplier2"),
                     CORBA::NO_MEMORY ());
-
-  supplier_2->init (this->root_poa_.in (), ACE_TRY_ENV);
-  ACE_CHECK;
 
   supplier_2->connect (supplier_admin_.in (), ACE_TRY_ENV);
   ACE_CHECK;
@@ -370,3 +303,167 @@ FilterClient::send_events (CORBA::Environment &ACE_TRY_ENV)
       ACE_CHECK;
     }
 }
+
+
+  Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (const char* my_name)
+    :my_name_ (my_name)
+{
+}
+
+Filter_StructuredPushConsumer::~Filter_StructuredPushConsumer (void)
+{
+}
+
+void
+Filter_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment &ACE_TRY_ENV)
+{
+  // Activate the consumer with the default_POA_
+  CosNotifyComm::StructuredPushConsumer_var objref =
+    this->_this (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
+    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_supplier_id_, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
+
+  // narrow
+  this->proxy_supplier_ =
+    CosNotifyChannelAdmin::StructuredProxyPushSupplier::
+    _narrow (proxysupplier.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
+
+  proxy_supplier_->connect_structured_push_consumer (objref.in (),
+                                                     ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+Filter_StructuredPushConsumer::disconnect (CORBA::Environment &ACE_TRY_ENV)
+{
+  this->proxy_supplier_->
+    disconnect_structured_push_supplier(ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+Filter_StructuredPushConsumer::offer_change (const CosNotification::EventTypeSeq & /*added*/, const CosNotification::EventTypeSeq & /*removed*/, CORBA::Environment & //ACE_TRY_ENV
+)
+      ACE_THROW_SPEC ((
+        CORBA::SystemException,
+        CosNotifyComm::InvalidEventType
+      ))
+{
+  // No-Op.
+}
+
+void
+Filter_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & notification, CORBA::Environment &/*ACE_TRY_ENV*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosEventComm::Disconnected
+                   ))
+{
+    CORBA::Long val;
+
+    notification.remainder_of_body >>= val;
+
+    // @@ Pradeep: for your tests try to make sure that you count the
+    // number of expected and sent events to verify that things work
+    // correctly in an automatic way...
+
+    ACE_DEBUG ((LM_DEBUG,
+                "%s received event %d\n", my_name_.fast_rep (),
+                val));
+}
+
+void
+Filter_StructuredPushConsumer::disconnect_structured_push_consumer (CORBA::Environment &/*ACE_TRY_ENV*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+  // No-Op.
+}
+
+
+/*****************************************************************/
+
+Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  (const char* my_name)
+    :my_name_ (my_name)
+{
+}
+
+Filter_StructuredPushSupplier::~Filter_StructuredPushSupplier ()
+{
+}
+
+void
+Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin, CORBA::Environment &ACE_TRY_ENV)
+{
+  CosNotifyComm::StructuredPushSupplier_var objref =
+    this->_this (ACE_TRY_ENV);
+  ACE_CHECK;
+
+  CosNotifyChannelAdmin::ProxyConsumer_var proxyconsumer =
+    supplier_admin->obtain_notification_push_consumer (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_consumer_id_, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_ASSERT (!CORBA::is_nil (proxyconsumer.in ()));
+
+  // narrow
+  this->proxy_consumer_ =
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxyconsumer.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_ASSERT (!CORBA::is_nil (proxy_consumer_.in ()));
+
+  proxy_consumer_->connect_structured_push_supplier (objref.in (),
+                                                     ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+Filter_StructuredPushSupplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
+
+  this->proxy_consumer_->disconnect_structured_push_consumer(ACE_TRY_ENV);
+}
+
+void
+Filter_StructuredPushSupplier::subscription_change (const CosNotification::EventTypeSeq & /*added*/, const CosNotification::EventTypeSeq & /*removed */, CORBA::Environment & /*ACE_TRY_ENV*/
+      )
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType
+                   ))
+{
+  //No-Op.
+}
+
+void
+Filter_StructuredPushSupplier::send_event (const CosNotification::StructuredEvent& event, CORBA::Environment &ACE_TRY_ENV)
+{
+  ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
+
+  ACE_DEBUG ((LM_DEBUG,
+              "%s is sending an event \n", my_name_.fast_rep ()));
+
+  proxy_consumer_->push_structured_event (event, ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+void
+Filter_StructuredPushSupplier::disconnect_structured_push_supplier (CORBA::Environment &/*ACE_TRY_ENV*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException
+                   ))
+{
+  // No-Op.
+}
+
+/*****************************************************************/
