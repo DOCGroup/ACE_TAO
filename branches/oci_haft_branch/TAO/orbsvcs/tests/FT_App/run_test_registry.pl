@@ -52,7 +52,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 #       FT_Client asks TR2 to shut down.
 #       FT_Client shuts down.
 #       FR2 notices TR2 is gone and honors it's quit-on-idle option.  It unregisters from FR.
-#				All factories have unregistered from FR.  FR honors its quit-on-idle option.
+#       All factories have unregistered from FR.  FR honors its quit-on-idle option.
 #   Phase 7: housekeeping
 #       Wait for all processes to terminate.
 #       Check termination status.
