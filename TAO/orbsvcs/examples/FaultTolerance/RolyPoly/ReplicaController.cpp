@@ -211,7 +211,6 @@ resolve_poa (PortableInterceptor::AdapterName const&)
 }
 
 
-static
 ACE_THR_FUNC_RETURN ReplicaController::
 listener_thunk (void* p)
 {
@@ -355,7 +354,7 @@ ReplicaController::send_reply (
       {
         CORBA::Any_var tmp = target->get_state ();
 
-        if (tmp.in () != 0) state = tmp._retn ();
+        if (tmp.ptr () != 0) state = tmp._retn ();
       }
     }
 

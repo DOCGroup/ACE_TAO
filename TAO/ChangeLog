@@ -1,3 +1,10 @@
+Wed Feb 18 13:58:52 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+  	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+
+	  Fixed remaining compilation errors on Borland. Thanks to Johnny
+	  for pointing this out.
+
 Wed Feb 18 18:12:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Latency/Collocation/Collocated_Test.cpp:
@@ -16,6 +23,7 @@ Wed Feb 18 10:51:03 MST 2004  Scott Harris  <harris_s@ociweb.com>
           is mixed case.
 
 Wed Feb 18 10:55:36 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+	
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/AMI_Primary_Replication_Strategy.h:
           Removed unused init() member function which causes warning on borland build.
