@@ -887,6 +887,7 @@ void POA_CORBA_Policy::_get_policy_type_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  ACE_UNUSED_ARG (_tao_upcall);
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -969,6 +970,8 @@ void POA_CORBA_Policy::copy_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  ACE_UNUSED_ARG (_tao_upcall);
+
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -1040,6 +1043,8 @@ void POA_CORBA_Policy::destroy_skel (
 #endif /* TAO_HAS_INTERCEPTORS */
 
   _tao_server_request.init_reply ();
+
+  ACE_UNUSED_ARG (_tao_upcall);
 
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
