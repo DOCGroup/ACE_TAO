@@ -7,6 +7,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_errno.h"
 
 #include "tao/Strategies/advanced_resource.h"
 
