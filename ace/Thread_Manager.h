@@ -87,29 +87,29 @@ class ACE_Export ACE_At_Thread_Exit
   friend class ACE_Thread_Descriptor;
   friend class ACE_Thread_Manager;
 public:
-  // Default constructor
+  /// Default constructor
   ACE_At_Thread_Exit (void);
 
-  // The destructor
+  /// The destructor
   virtual ~ACE_At_Thread_Exit (void);
 
-  // <At_Thread_Exit> has the ownership?
+  /// <At_Thread_Exit> has the ownership?
   int is_owner (void) const;
 
-  // Set the ownership of the <At_Thread_Exit>.
+  /// Set the ownership of the <At_Thread_Exit>.
   int is_owner (int owner);
 
-  // This <At_Thread_Exit> was applied?
+  /// This <At_Thread_Exit> was applied?
   int was_applied (void) const;
 
-  // Set applied state of <At_Thread_Exit>.
+  /// Set applied state of <At_Thread_Exit>.
   int was_applied (int applied);
 
 protected:
   /// The next <At_Thread_Exit> hook in the list.
   ACE_At_Thread_Exit *next_;
 
-  // Do the apply if necessary
+  /// Do the apply if necessary
   void do_apply (void);
 
   /// The apply method.
@@ -128,7 +128,7 @@ protected:
 class ACE_Export ACE_At_Thread_Exit_Func : public ACE_At_Thread_Exit
 {
 public:
-   // Constructor
+   /// Constructor
    ACE_At_Thread_Exit_Func (void *object,
                             ACE_CLEANUP_FUNC func,
                             void *param = 0);
@@ -145,7 +145,7 @@ protected:
    /// A param if required
    void *param_;
 
-   // The apply method
+   /// The apply method
    void apply (void);
 };
 
