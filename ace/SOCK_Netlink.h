@@ -28,9 +28,10 @@
  * @brief Defines the member functions for the ACE_SOCK Netlink 
  * abstraction.
  
- * Netlink sockets are used in Linux to communicate kernel to user 
- * and user to kernel It was created so one could use ACE reactor 
- * as a gateway to a linux driver.
+ * Netlink sockets are used in Linux as a communication facilty of kernel to user 
+ * and user to kernel.
+ * This code was created so one could use ACE reactor 
+ * as a gateway to a linux kernel.
  *
  */
 class ACE_Export ACE_SOCK_Netlink : public ACE_SOCK

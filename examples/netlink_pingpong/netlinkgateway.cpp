@@ -1,10 +1,11 @@
 // $Id$
-/*! \file netlinkgateway.h
-\brief netlinkgateway gateway code . 
-handles the io coming from the driver and dispatches it.
 
-IO coming from the driver is always at the size of msg+pagesize.
-i should this when i would use shared memeory.
+/*! \file netlinkgateway.h
+     \brief netlinkgateway gateway code . 
+
+     handles the io coming from the driver and dispatches it.
+
+     IO coming from the driver is always at the size of msg+pagesize.
 */
 
 #include "netlinkgateway.h"
