@@ -53,6 +53,8 @@
 #define IDL_SCOPE_DELIMITOR 308
 #define IDL_LEFT_SHIFT 309
 #define IDL_RIGHT_SHIFT 310
+#define IDL_WCHAR_LITERAL 311
+#define IDL_WSTRING_LITERAL 312
 typedef union {
   AST_Decl		*dcval;		/* Decl value		*/
   UTL_StrList		*slval;		/* String list		*/
@@ -76,6 +78,7 @@ typedef union {
   double		dval;		/* Double value		*/
   float			fval;		/* Float value		*/
   char			cval;		/* Char value		*/
+  ACE_CDR::WChar	wcval;		/* WChar value		*/
 
   UTL_String		*sval;		/* String value		*/
   char			*strval;	/* char * value		*/
