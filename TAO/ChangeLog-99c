@@ -1,3 +1,8 @@
+Mon Aug  2 17:13:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	  Updated the notes about the IDL compiler and some other details.
+
 Mon Aug  2 12:23:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_module.cpp:
