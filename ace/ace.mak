@@ -4,8 +4,8 @@
 # TARGTYPE "Win32 (x86) Dynamic-Link Library" 0x0102
 
 !IF "$(CFG)" == ""
-CFG=ace - Win32 Unicode Debug
-!MESSAGE No configuration specified.  Defaulting to ace - Win32 Unicode Debug.
+CFG=ace - Win32 Debug
+!MESSAGE No configuration specified.  Defaulting to ace - Win32 Debug.
 !ENDIF 
 
 !IF "$(CFG)" != "ace - Win32 Release" && "$(CFG)" != "ace - Win32 Debug" &&\
