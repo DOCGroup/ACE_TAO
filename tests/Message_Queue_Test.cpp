@@ -26,70 +26,70 @@ typedef ACE_Message_Queue_Iterator <ACE_NULL_SYNCH> ITERATOR;
 typedef ACE_Message_Queue_Reverse_Iterator <ACE_NULL_SYNCH> REVERSE_ITERATOR;
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Message_Queue_Test");
+  ACE_START_TEST (ASYS_TEXT ("Message_Queue_Test"));
 
   const int ITERATIONS = 5;
-  char buffer[ITERATIONS][BUFSIZ];
+  ASYS_TCHAR buffer[ITERATIONS][BUFSIZ];
   QUEUE queue (32 * 1024);
   int i;
 
   for (i = 0; i < ITERATIONS; i++)
     {
-      ACE_OS::sprintf (buffer[i], "%d", i+1);
+      ACE_OS::sprintf (buffer[i], ASYS_TEXT ("%d"), i+1);
 
       ACE_Message_Block *entry;
-      ACE_NEW_RETURN (entry, ACE_Message_Block (buffer[i], sizeof buffer[i]), -1);
+      ACE_NEW_RETURN (entry, ACE_Message_Block ((char *) buffer[i], sizeof buffer[i]), -1);
 
       if (queue.is_full ())
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "QUEUE:: the message queue is full on iteration %u!\n",
+                           ASYS_TEXT ("QUEUE:: the message queue is full on iteration %u!\n"),
                            i+1),
                           -1);
 
       if (queue.enqueue (entry) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue\n"), -1);
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("QUEUE::enqueue\n")), -1);
     }
 
-  ACE_DEBUG ((LM_DEBUG, "\nForward Iterations\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nForward Iterations\n")));
   {
     ITERATOR iterator (queue);
 
     for (ACE_Message_Block *entry = 0;
          iterator.next (entry) != 0;
          iterator.advance ())
-      ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%s\n"), entry->base ()));
   }
 
-  ACE_DEBUG ((LM_DEBUG, "\nReverse Iterations\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nReverse Iterations\n")));
   {
     REVERSE_ITERATOR iterator (queue);
 
     for (ACE_Message_Block *entry = 0;
          iterator.next (entry) != 0;
          iterator.advance ())
-      ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%s\n"), entry->base ()));
   }
 
-  ACE_DEBUG ((LM_DEBUG, "\nForward Iterations\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nForward Iterations\n")));
   {
     QUEUE::ITERATOR iterator (queue);
 
     for (ACE_Message_Block *entry = 0;
          iterator.next (entry) != 0;
          iterator.advance ())
-      ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%s\n"), entry->base ()));
   }
 
-  ACE_DEBUG ((LM_DEBUG, "\nReverse Iterations\n"));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nReverse Iterations\n")));
   {
     QUEUE::REVERSE_ITERATOR iterator (queue);
 
     for (ACE_Message_Block *entry = 0;
          iterator.next (entry) != 0;
          iterator.advance ())
-      ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%s\n"), entry->base ()));
   }
 
   ACE_END_TEST;

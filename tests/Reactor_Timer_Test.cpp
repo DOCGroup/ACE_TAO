@@ -36,7 +36,7 @@ public:
       long current_count = long (arg);
       ACE_ASSERT (current_count == count);
 
-      ACE_DEBUG ((LM_DEBUG, "%d: Timer #%d timed out at %d!\n",
+      ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d: Timer #%d timed out at %d!\n"),
                   count, current_count, tv.sec ()));
 
       count += (1 + odd);
@@ -49,9 +49,9 @@ public:
 };
 
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST ("Reactor_Timer_Test");
+  ACE_START_TEST (ASYS_TEXT ("Reactor_Timer_Test"));
 
   ACE_Reactor reactor;
 
