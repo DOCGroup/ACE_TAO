@@ -19,7 +19,8 @@ Config_Factory::~Config_Factory (void)
 
 Default_Config_Factory::Default_Config_Factory (void)
   : Config_Factory (),
-    test_config_(0) //default to ECConfig
+    test_config_(0), //default to ECConfig
+    sched_type_(RMS) //default to RMS scheduling
 {
 }
 
@@ -68,10 +69,12 @@ Default_Config_Factory::init (int argc, ACE_TCHAR* argv[])
                               "Default_Config_Factory: Scheduling type is MUF\n"));
                 }
               else
-                ACE_ERROR ((LM_ERROR,
-                            "Default_Config_Factory - "
-                            "unsupported scheduling type <%s>\n",
-                            opt));
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              "Default_Config_Factory - "
+                              "unsupported scheduling type <%s>\n",
+                              opt));
+                }
               arg_shifter.consume_arg ();
             }
         }
