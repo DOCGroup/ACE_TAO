@@ -19,15 +19,13 @@ project (ExecutionManager_stub): ciao_deployment_stub {
 project(Execution_Manager): ciao_deployment_svnt, ciao_deployment_stub, iortable, naming {
   requires += dnc
   exename = Execution_Manager
-  after += DomainApplicationManager
-  libs += DomainApplicationManager
+  after += DomainApplicationManager ExecutionManager_stub
+  libs += DomainApplicationManager ExecutionManager_stub
 
   IDL_Files {
-    ExecutionManager.idl
   }
 
   Source_Files {
-    ExecutionManagerC.cpp
     ExecutionManagerS.cpp
     Execution_Manager.cpp
     ExecutionManager_Impl.cpp
