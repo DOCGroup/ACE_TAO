@@ -4,9 +4,8 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 
 # $Id$
 #
-# Summarizes results from a series of runs of the CPP-inclient and
-# CPP-inserver-fancy test, with  different numbers of clients.
-# Example usage: 
+# Summarizes results from a series of runs of run_test, with
+# different numbers of clients.  Example usage:
 #
 # $ for i in 1 2 5 10 15 20 25 30 35 40 45 50; do ./run_test $i; done
 # $ ./summarize
@@ -24,9 +23,7 @@ foreach $file (@files) {
   push @total_threads, $i;
 }
 
-print "                          Round-trip, usec\n";
-print "Low-priority      High-priority         Low-priority\n";
-print "   threads      Latency    Jitter    Latency    Jitter\n";
+print "No.of threads\t\tAverage Latency\n\n";
 
 foreach $total_threads (sort {$a <=> $b} @total_threads) {
   undef $high_latency;
@@ -34,8 +31,8 @@ foreach $total_threads (sort {$a <=> $b} @total_threads) {
   $high_latency = 0;
   open (FILE, "client-${total_threads}.log")  ||
     die "$0: unable to open \"client-${total_threads}.log\"\n";
-  while (<FILE>) {
-    if (/.*usec.*([\d\.]+)/) 
+  while ($line = <FILE>) {
+    if ($line =~ /.*usec-per-message = ([\d\.]+)/) 
     {
         $high_latency  += $1 ;
 	$number++;
@@ -43,6 +40,6 @@ foreach $total_threads (sort {$a <=> $b} @total_threads) {
   }
   close FILE;
 
-  printf "    %3d      %8f   \n",
+  printf "%3d\t\t\t%8f\n",
     $total_threads, $high_latency/$number;
 }
