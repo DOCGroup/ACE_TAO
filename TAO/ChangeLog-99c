@@ -1,9 +1,16 @@
+Mon Aug 09 17:52:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_root/root_ih.cpp (init):
+	* TAO_IDL/be/be_visitor_root/root_sh.cpp (init):
+	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_instance):
+	(gen_gperf_lookup_methods): Fixed incorrect usages of %p flag.
+
 Mon Aug  9 17:25:14 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynArray_i.cpp:
 	  Change to get_arr_length(), which was broken. Maybe
 	  some code got cut out by mistake with some previous
-	  change. Thanks to Mitsuhiko Hara 
+	  change. Thanks to Mitsuhiko Hara
 	  <Mitsuhiko.Hara@gemsa.med.ge.com> for pointing out
 	  the problem.
 
