@@ -5,6 +5,7 @@
 
 #if defined (ACE_WIN32)
 
+#include "ace/Log_Msg.h"
 #include "stdafx.h"
 #include "Log_Msg_MFCDlg.h"
 
@@ -13,8 +14,6 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
-
-#include <ace/ACE.h>
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About

@@ -19,7 +19,6 @@
 #include "resource.h"		// main symbols
 
 // Add some includes here for our Logger
-#include <ace/Log_Msg.h>
 #include "MFC_Log.h"
 
 /////////////////////////////////////////////////////////////////////////////

@@ -1,3 +1,14 @@
+Fri May 21 16:44:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc: Removed the pch
+	  specs from this and replaced with a normal exe-producing set of
+	  specs and files. There were no pch directives in the files, and this
+	  drove MSVC nuts at compile time, complaining of a missing #endif
+	  where there clearly was none.
+
+	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.{cpp h}: Moved #include
+	  "ace/Log_Msg.h" from .h to .cpp, as nothing in the .h file needs it.
+
 Fri May 21 15:28:31 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Makefile.am: Removed OS_Export.h and Sock_Connect.i as they're
