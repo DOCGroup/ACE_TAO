@@ -7,6 +7,7 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(Time_Service, Clerk_i, "$Id$")
 

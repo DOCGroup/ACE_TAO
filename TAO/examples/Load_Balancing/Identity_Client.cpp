@@ -19,6 +19,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_string.h"
 
 Identity_Client::Identity_Client (void)
   : group_factory_ior_ (0),

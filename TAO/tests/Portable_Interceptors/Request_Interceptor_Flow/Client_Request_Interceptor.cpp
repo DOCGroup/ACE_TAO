@@ -5,6 +5,7 @@
 
 #include "tao/DynamicC.h"
 #include "tao/Typecode.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID (Request_Interceptor_Flow,
            Client_Request_Interceptor,

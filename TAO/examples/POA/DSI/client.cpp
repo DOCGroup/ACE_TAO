@@ -20,6 +20,7 @@
 #include "DatabaseC.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(DSI, client, "$Id$")
 

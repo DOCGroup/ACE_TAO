@@ -9,6 +9,7 @@
 #include "Server_Interceptor.h"
 #include "Shared_Interceptor.h"
 #include "tao/OctetSeqC.h"
+#include "ace/OS_NS_string.h"
 
 
 ACE_RCSID (AMI,

@@ -10,6 +10,7 @@ ACE_RCSID (Request_Interceptor_Flow,
 
 #include "tao/DynamicC.h"
 #include "tao/Typecode.h"
+#include "ace/OS_NS_string.h"
 
 Server_Request_Interceptor::Server_Request_Interceptor (const char *name)
   : Request_Interceptor (name),
