@@ -1,3 +1,9 @@
+Tue May 25 16:24:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (set_endpoint): Seveal "reason" strings for
+	  "%p" directive were missing.  Thanks to Christopher Kohlhoff
+	  <chris@kohlhoff.com> for pointing this out.
+
 Tue May 25 12:54:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Messaging_Policy_i.h:
