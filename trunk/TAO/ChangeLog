@@ -1,3 +1,10 @@
+Tue Sep  2 07:20:13 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * TAO_IDL/tao_idl.mpc:
+
+          Remove the use of the base project taoversion in order to have a
+          consistent versioning of the TAO_IDL projects.
+
 Sun Aug 31 15:43:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * performance-tests/Sequence_Latency/Thread_Per_Connection/Client_Task.cpp:
@@ -73,14 +80,14 @@ Fri Aug 29 10:58:57 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Fri Aug 29 09:49:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Codec/client.cpp: Cosmetic fix. Removed the word "warning"
-	  from a debug statement. The data structure that is used for
-	  encoding and decoding is always aligned on an 8 byte
-	  boundary. There was a time when we used a data structure that
-	  was aligned on a 4 byte boundary and after encoding we used to
-	  have data aligned on a 8 byte boundary. This problem was fixed
-	  long back, but the warning word was not removed. This checkin
-	  fixes that.
+        * tests/Codec/client.cpp: Cosmetic fix. Removed the word "warning"
+          from a debug statement. The data structure that is used for
+          encoding and decoding is always aligned on an 8 byte
+          boundary. There was a time when we used a data structure that
+          was aligned on a 4 byte boundary and after encoding we used to
+          have data aligned on a 8 byte boundary. This problem was fixed
+          long back, but the warning word was not removed. This checkin
+          fixes that.
 
 Fri Aug 29 08:24:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -99,18 +106,18 @@ Fri Aug 29 07:45:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Aug 28 22:04:40 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/IOP_IORC.h:
+        * tao/IOP_IORC.h:
 
-	  Made #undef of "IOR" (for HPUX) match the original one found in
-	  corbafwd.h.  It is more generic.
+          Made #undef of "IOR" (for HPUX) match the original one found in
+          corbafwd.h.  It is more generic.
 
-	* tao/Object.h:
-	* tao/Stub.h:
-	* tao/corbafwd.h:
+        * tao/Object.h:
+        * tao/Stub.h:
+        * tao/corbafwd.h:
 
-	  #undef "IOR" (for HPUX) after all headers have been included to
-	  make sure it isn't indirectly redefined by other headers.
-	  Addresses TAO HPUX build failures.
+          #undef "IOR" (for HPUX) after all headers have been included to
+          make sure it isn't indirectly redefined by other headers.
+          Addresses TAO HPUX build failures.
 
 Thu Aug 28 19:15:44 2003  George Edwards <g.edwards@vanderbilt.edu>
 
@@ -122,35 +129,35 @@ Thu Aug 28 19:15:44 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Thu Aug 28 18:35:44 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Impl.cpp:
 
-	  Include "tao/debug.h" for TAO_debug_level global variable.
+          Include "tao/debug.h" for TAO_debug_level global variable.
 
-	* tao/Any_Impl_T.cpp:
-	* tao/Any_Basic_Impl_T.cpp:
-	* tao/Any_Special_Impl_T.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.cpp:
 
-	  Include "tao/Environment.h" for CORBA::Environment class.
+          Include "tao/Environment.h" for CORBA::Environment class.
 
-	* tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
 
-	  Include "tao/CDR.h" for TAO_{Input,Output}CDR types.
+          Include "tao/CDR.h" for TAO_{Input,Output}CDR types.
 
 Thu Aug 28 17:34:51 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.cpp
-	  (~Auto_Functor):
-	* orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl
-	  (ORB_Shutdown):
+        * orbsvcs/performance-tests/RTEvent/lib/Auto_Functor.cpp
+          (~Auto_Functor):
+        * orbsvcs/performance-tests/RTEvent/lib/ORB_Shutdown.inl
+          (ORB_Shutdown):
 
-	  Fixed emulated exception macro.  "ACE_ENV_ARG_PARAMETER", not
-	  "ACE_ENV_SINGLE_ARG_PARAMETER" (in this case).
+          Fixed emulated exception macro.  "ACE_ENV_ARG_PARAMETER", not
+          "ACE_ENV_SINGLE_ARG_PARAMETER" (in this case).
 
 Thu Aug 28 23:39:28 UTC 2003  Scott Harris <harris_s@ociweb.com>
 
-	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp
 
-	  Fixed include error. "ace/Stream.h" -> "ace/streams.h"
+          Fixed include error. "ace/Stream.h" -> "ace/streams.h"
           Thanks Don Hinton.
 
 Thu Aug 28 18:10:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -167,42 +174,42 @@ Thu Aug 28 18:10:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Aug 28 22:24:51 UTC 2003  Scott Harris <harris_s@ociweb.com>
 
-	* tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp
 
-	  Fixed include error. "ace/Streams.h" -> "ace/Stream.h"
+          Fixed include error. "ace/Streams.h" -> "ace/Stream.h"
 
 Thu Aug 28 08:43:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/NVList.h:
-	* tao/NVList.cpp:
+        * tao/NVList.h:
+        * tao/NVList.cpp:
 
-	  Moved "Environment.h" include to the header file.  Some code in
-	  NVList.i requires the CORBA::Environment class declaration.
-	  Fixes builds where emulated exceptions are used.
+          Moved "Environment.h" include to the header file.  Some code in
+          NVList.i requires the CORBA::Environment class declaration.
+          Fixes builds where emulated exceptions are used.
 
 Thu Aug 28 08:21:24 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.h:
-	* tao/ObjectKey_Table.cpp:
+        * tao/ObjectKey_Table.h:
+        * tao/ObjectKey_Table.cpp:
 
-	  Moved "Object_KeyC.h" include to ObjectKey_Table.h.  The
-	  ObjectKey table's ACE_RB_Tree template declaration/typedef
-	  requires a complete type.  Fixes MSVC++ 6 builds.
+          Moved "Object_KeyC.h" include to ObjectKey_Table.h.  The
+          ObjectKey table's ACE_RB_Tree template declaration/typedef
+          requires a complete type.  Fixes MSVC++ 6 builds.
 
 Thu Aug 28 07:41:58 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/DynamicInterface/Context.cpp:
-	* tao/DynamicInterface/Unknown_User_Exception.cpp:
+        * tao/DynamicInterface/Context.cpp:
+        * tao/DynamicInterface/Unknown_User_Exception.cpp:
 
-	  Include "tao/Environment.h" for CORBA::Environment type.
+          Include "tao/Environment.h" for CORBA::Environment type.
 
-	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
+        * tao/Messaging/Connection_Timeout_Policy_i.cpp:
 
-	  Include "tao/debug.h" for TAO_debug_level global variable.
+          Include "tao/debug.h" for TAO_debug_level global variable.
 
-	* tao/Strategies/uiop_endpoints.h:
+        * tao/Strategies/uiop_endpoints.h:
 
-	  Include "tao/CDR.h" for TAO_{Input,Output}CDR types.
+          Include "tao/CDR.h" for TAO_{Input,Output}CDR types.
 
 Thu Aug 28 12:37:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -212,11 +219,11 @@ Thu Aug 28 12:37:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Aug 27 21:45:59 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/Big_Oneways/Session.h:
-	* tests/Big_Twoways/Session.h:
+        * tests/Big_Oneways/Session.h:
+        * tests/Big_Twoways/Session.h:
 
-	  Include "ace/Null_Barrier.h" in the single-threaded case to pull
-	  in ACE_Null_Barrier class declaration.
+          Include "ace/Null_Barrier.h" in the single-threaded case to pull
+          in ACE_Null_Barrier class declaration.
 
 Thu Aug 28 04:24:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -232,132 +239,132 @@ Thu Aug 28 04:24:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Aug 27 21:13:21 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/IFRService/Options.cpp:
+        * orbsvcs/orbsvcs/IFRService/Options.cpp:
 
-	  Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
-	  declaration.
+          Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
+          declaration.
 
 Wed Aug 27 21:00:41 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/Adapter.h:
+        * tao/Adapter.h:
 
-	  Removed unnecessary "tao/Object.h" include.  Forward declaring
-	  CORBA::Object_{ptr,out} (via corbafwd.h) and "TAO::ObjectKey" is
-	  enough.
+          Removed unnecessary "tao/Object.h" include.  Forward declaring
+          CORBA::Object_{ptr,out} (via corbafwd.h) and "TAO::ObjectKey" is
+          enough.
 
-	* tao/Adapter.cpp:
+        * tao/Adapter.cpp:
 
-	  Include "Object.h" to pull in complete CORBA::Object_out type.
+          Include "Object.h" to pull in complete CORBA::Object_out type.
 
-	* tao/Any.h:
+        * tao/Any.h:
 
-	  Removed unnecessary "tao/Object.h" include.
+          Removed unnecessary "tao/Object.h" include.
 
-	* tao/Any_Dual_Impl_T.cpp:
-	* tao/Any_SystemException.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_SystemException.cpp:
 
-	  Include "tao/Environment.h" to pull in CORBA::Environment
-	  declaration.
+          Include "tao/Environment.h" to pull in CORBA::Environment
+          declaration.
 
-	* tao/Acceptor_Filter.h:
-	* tao/LocalObject.h:
+        * tao/Acceptor_Filter.h:
+        * tao/LocalObject.h:
 
           Removed unnecessary "tao/Object_KeyC.h" include.  A
           "TAO::ObjectKey" forward declaration is enough.
 
-	* tao/CDR_Encaps_Codec.h:
+        * tao/CDR_Encaps_Codec.h:
 
-	  Include "IOP_CodecC.h" instead of "IOPC.h".  The former is
-	  lighter weight.
+          Include "IOP_CodecC.h" instead of "IOPC.h".  The former is
+          lighter weight.
 
-	* tao/Connector_Registry.h:
+        * tao/Connector_Registry.h:
 
-	  No longer any need to include "tao/Endpoint.h".
+          No longer any need to include "tao/Endpoint.h".
 
-	  (get_connector):
-	* tao/Connector_Registry.i (get_connector):
+          (get_connector):
+        * tao/Connector_Registry.i (get_connector):
 
-	  Removed version of this method that accepts a TAO_Endpoint.  It
-	  is redundant.  Just use the version that accepts an endpoint tag
-	  value.  Allows removal of "tao/Endpoint.h" include.
+          Removed version of this method that accepts a TAO_Endpoint.  It
+          is redundant.  Just use the version that accepts an endpoint tag
+          value.  Allows removal of "tao/Endpoint.h" include.
 
-	* tao/Invocation.cpp (perform_call):
+        * tao/Invocation.cpp (perform_call):
 
-	  Use version of TAO_Connector_Registry::get_connector() that
-	  accepts an endpoint tag value instead of a pointer to an
-	  endpoint.  The latter is redundant and has been removed.
+          Use version of TAO_Connector_Registry::get_connector() that
+          accepts an endpoint tag value instead of a pointer to an
+          endpoint.  The latter is redundant and has been removed.
 
-	* tao/MProfile.h:
-	* tao/Message_PolicyValueC.h:
-	* tao/PolicyFactory_Registry.h:
+        * tao/MProfile.h:
+        * tao/Message_PolicyValueC.h:
+        * tao/PolicyFactory_Registry.h:
 
-	  Include "tao/Policy_ForwardC.h" instead of "tao/PolicyC.h".  The
-	  former is much lighter weight than the latter.  This helps
-	  improve compile times.
+          Include "tao/Policy_ForwardC.h" instead of "tao/PolicyC.h".  The
+          former is much lighter weight than the latter.  This helps
+          improve compile times.
 
-	* tao/MProfile.i (create_policy_list):
-	* tao/MProfile.cpp (create_policy_list):
+        * tao/MProfile.i (create_policy_list):
+        * tao/MProfile.cpp (create_policy_list):
 
-	  Uninlined this method.  Inlining it didn't buy us much.
+          Uninlined this method.  Inlining it didn't buy us much.
 
-	* tao/Muxed_TMS.h:
-	* tao/Typecode.h:
+        * tao/Muxed_TMS.h:
+        * tao/Typecode.h:
 
-	  Include "Hash_Map_Manager_T.h" instead of "Hash_Map_Manager.h".
-	  We save one level of header indirection in doing so since the
-	  latter includes the former.
+          Include "Hash_Map_Manager_T.h" instead of "Hash_Map_Manager.h".
+          We save one level of header indirection in doing so since the
+          latter includes the former.
 
-	* tao/NVList.h:
+        * tao/NVList.h:
 
-	  Forward declare TAO_ORB_Core class.
+          Forward declare TAO_ORB_Core class.
 
-	* tao/Object.h:
-	* tao/corbafwd.h:
+        * tao/Object.h:
+        * tao/corbafwd.h:
 
-	  Moved the CORBA::Object_{var,out} typedefs to corbafwd.h.
-	  Allows reduction of inter-header dependencies for headers that
-	  only require forward declarations, not the complete types.
+          Moved the CORBA::Object_{var,out} typedefs to corbafwd.h.
+          Allows reduction of inter-header dependencies for headers that
+          only require forward declarations, not the complete types.
 
-	* tao/PolicyFactory_Registry.h (create_policy, _create_policy):
-	* tao/PolicyFactory_Registry.cpp (create_policy, _create_policy):
+        * tao/PolicyFactory_Registry.h (create_policy, _create_policy):
+        * tao/PolicyFactory_Registry.cpp (create_policy, _create_policy):
 
-	  Removed exception specifications.  They aren't strictly needed,
-	  and forced a dependency on PolicyC.h due to CORBA::PolicyError
-	  being placed in them.
+          Removed exception specifications.  They aren't strictly needed,
+          and forced a dependency on PolicyC.h due to CORBA::PolicyError
+          being placed in them.
 
-	* tao/Any_Impl_T.cpp:
-	* tao/DynamicC.h:
-	* tao/TimeBaseC.h:
+        * tao/Any_Impl_T.cpp:
+        * tao/DynamicC.h:
+        * tao/TimeBaseC.h:
 
-	  Include "tao/CDR.h" for TAO_{Input,Output}CDR types.
+          Include "tao/CDR.h" for TAO_{Input,Output}CDR types.
 
-	* tao/Transport.h:
+        * tao/Transport.h:
 
-	  No need to include "tao/Exceptions.h" and
-	  "tao/Transport_Descriptor_Interface.h".
+          No need to include "tao/Exceptions.h" and
+          "tao/Transport_Descriptor_Interface.h".
 
-	* tao/Transport_Mux_Strategy.h:
+        * tao/Transport_Mux_Strategy.h:
 
-	  No need to include "IOPC.h".  Include "corbafwd.h" instead.
+          No need to include "IOPC.h".  Include "corbafwd.h" instead.
 
-	* tao/Transport_Mux_Strategy.cpp:
+        * tao/Transport_Mux_Strategy.cpp:
 
-	  No need to include "Reply_Dispatcher.h".
+          No need to include "Reply_Dispatcher.h".
 
-	* tao/TypeCodeFactory_Adapter.h:
+        * tao/TypeCodeFactory_Adapter.h:
 
-	  Do not use default CORBA::Environment parameter values for
-	  TAO-specific/internal code.  Removed the default parameter
-	  values.
+          Do not use default CORBA::Environment parameter values for
+          TAO-specific/internal code.  Removed the default parameter
+          values.
 
-	* tao/target_specification.h:
+        * tao/target_specification.h:
 
-	  No need to include "tao/Object_KeyC.h" and "tao/IOPC.h".
-	  Suitable forward declarations in the IOP and TAO and namespaces
-	  are enough.
+          No need to include "tao/Object_KeyC.h" and "tao/IOPC.h".
+          Suitable forward declarations in the IOP and TAO and namespaces
+          are enough.
 
-	  Include "tao/corbafwd.h" to pull in primitive types in CORBA
-	  namespace.
+          Include "tao/corbafwd.h" to pull in primitive types in CORBA
+          namespace.
 
 Thu Aug 28 03:46:28 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -386,69 +393,69 @@ Wed Aug 27 17:37:44 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 Wed Aug 27 15:13:45 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tests/ORB_init/Portspan/simpleI.cpp (test):
+        * tests/ORB_init/Portspan/simpleI.cpp (test):
 
-	  Fixed unused argument warning.
+          Fixed unused argument warning.
 
 Wed Aug 27 15:10:28 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/IOR_MCast/server_i.cpp (enable_multicast):
+        * orbsvcs/tests/IOR_MCast/server_i.cpp (enable_multicast):
 
-	  Fixed emulated exception macro usage.
+          Fixed emulated exception macro usage.
 
 Wed Aug 27 14:57:06 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* TAO_IDL/fe/y.tab.cpp (tao_yydestruct):
+        * TAO_IDL/fe/y.tab.cpp (tao_yydestruct):
 
-	  Silence an "unused variable" warning.
+          Silence an "unused variable" warning.
 
 Wed Aug 27 14:48:17 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* tao/ClientRequestInfo_i.h:
+        * tao/ClientRequestInfo_i.h:
 
-	  No need to included "tao/StringSeqC.h".
+          No need to included "tao/StringSeqC.h".
 
-	* tao/DLL_ORB.h:
+        * tao/DLL_ORB.h:
 
-	  Updated documentation to explicitly mark the TAO_DLL_ORB class
-	  as deprecated in the Doxygen generated documentation.
+          Updated documentation to explicitly mark the TAO_DLL_ORB class
+          as deprecated in the Doxygen generated documentation.
 
-	* tao/ORBInitInfo.h:
+        * tao/ORBInitInfo.h:
 
-	  No need to include "tao/StringSeqC.h".  A forward declaration is
-	  enough.
+          No need to include "tao/StringSeqC.h".  A forward declaration is
+          enough.
 
-	  (TAO_ORBInitInfo):
-	* tao/ORBInitInfo.cpp (TAO_ORBInitInfo):
+          (TAO_ORBInitInfo):
+        * tao/ORBInitInfo.cpp (TAO_ORBInitInfo):
 
-	  Updated to use TAO_Objref_{var,out} templates instead of
-	  defining custom _var and _out types.
+          Updated to use TAO_Objref_{var,out} templates instead of
+          defining custom _var and _out types.
 
-	* tao/corba.h:
+        * tao/corba.h:
 
-	  No need to include "tao/varbase.h".
+          No need to include "tao/varbase.h".
 
-	* tao/Objref_VarOut.h:
+        * tao/Objref_VarOut.h:
 
-	  Corrected documentation.
+          Corrected documentation.
 
-	* orbsvcs/orbsvcs/AV/UDP.cpp (connect):
+        * orbsvcs/orbsvcs/AV/UDP.cpp (connect):
 
-	  Fixed warning about potential use of an uninitialized variable.
+          Fixed warning about potential use of an uninitialized variable.
 
 Wed Aug 27 14:11:35 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/RTSched.dsp:
-	* orbsvcs/orbsvcs/RTSched.mpc:
-	* orbsvcs/orbsvcs/Makefile.RTSched: Removed RtecBaseC.cpp and
-	  RtecBaseS.cpp from the list of source files.
+        * orbsvcs/orbsvcs/RTSched.dsp:
+        * orbsvcs/orbsvcs/RTSched.mpc:
+        * orbsvcs/orbsvcs/Makefile.RTSched: Removed RtecBaseC.cpp and
+          RtecBaseS.cpp from the list of source files.
 
 Wed Aug 27 13:14:24 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp: Added explicit
-	  template instantiations to fix link errors in
-	  RH71_Explicit_Templates build.
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler.cpp: Added explicit
+          template instantiations to fix link errors in
+          RH71_Explicit_Templates build.
 
 Wed Aug 27 16:58:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
