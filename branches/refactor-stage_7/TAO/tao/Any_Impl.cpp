@@ -31,6 +31,12 @@ TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
   return this->marshal_value (cdr);
 }
 
+const void *
+TAO::Any_Impl::value (void) const
+{
+  return 0;
+}
+
 void
 TAO::Any_Impl::free_value (void)
 {

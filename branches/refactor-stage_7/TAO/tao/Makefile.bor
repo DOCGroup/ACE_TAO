@@ -30,6 +30,7 @@ OBJFILES = \
 	$(OBJDIR)\Acceptor_Registry.obj \
 	$(OBJDIR)\Adapter.obj \
 	$(OBJDIR)\Any.obj \
+	$(OBJDIR)\Any_Basic_Impl.obj \
 	$(OBJDIR)\Any_Impl.obj \
 	$(OBJDIR)\Any_Unknown_IDL_Type.obj \
 	$(OBJDIR)\Any_SystemException.obj \

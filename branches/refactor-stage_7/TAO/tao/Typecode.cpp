@@ -3620,6 +3620,36 @@ CORBA::TypeCode::parameter (const CORBA::Long /* slot */
                     0);
 }
 
+// =========================================================
+// Traits specializations for CORBA::TypeCode.
+namespace TAO
+{
+  CORBA::TypeCode_ptr
+  Objref_Traits<CORBA::TypeCode>::tao_duplicate (CORBA::TypeCode_ptr p)
+  {
+    return CORBA::TypeCode::_duplicate (p);
+  }
+
+  void
+  Objref_Traits<CORBA::TypeCode>::tao_release (CORBA::TypeCode_ptr p)
+  {
+    CORBA::release (p);
+  }
+
+  CORBA::TypeCode_ptr
+  Objref_Traits<CORBA::TypeCode>::tao_nil (void)
+  {
+    return CORBA::TypeCode::_nil ();
+  }
+
+  CORBA::Boolean
+  Objref_Traits<CORBA::TypeCode>::tao_marshal (CORBA::TypeCode_ptr p,
+                                               TAO_OutputCDR & cdr)
+  {
+    return cdr << p;
+  }
+}
+
 // ****************************************************************
 
 CORBA::Boolean
@@ -3772,6 +3802,7 @@ template class ACE_Hash_Map_Iterator_Ex<const char *,
 template class TAO_Pseudo_Var_T<CORBA::TypeCode>;
 template class TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>;
 
+template class TAO::Objref_Traits<CORBA::TypeCode>;
 template class TAO::Arg_Traits<CORBA::TypeCode>;
 template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
                                         CORBA::TypeCode_var,
@@ -3812,6 +3843,7 @@ template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
 #pragma instantiate TAO_Pseudo_Var_T<CORBA::TypeCode>
 #pragma instantiate TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>
 
+#pragma instantiate TAO::Objref_Traits<CORBA::TypeCode>
 #pragma instantiate TAO::Arg_Traits<CORBA::TypeCode>
 #pragma instantiate TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr, \
                                              CORBA::TypeCode_var, \

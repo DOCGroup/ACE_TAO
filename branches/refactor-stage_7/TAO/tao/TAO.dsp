@@ -180,6 +180,10 @@ SOURCE=.\Any.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Any_Basic_Impl.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Any_Impl.cpp
 # End Source File
 # Begin Source File
@@ -1104,6 +1108,10 @@ SOURCE=.\any.h
 # Begin Source File
 
 SOURCE=.\Any_Array_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Basic_Impl.h
 # End Source File
 # Begin Source File
 
@@ -2183,10 +2191,6 @@ SOURCE=.\Any_Impl_T.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_Special_Basic_Impl_T.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\Any_Special_Impl_T.inl
 # End Source File
 # Begin Source File
@@ -2872,11 +2876,6 @@ SOURCE=.\Any_Dual_Impl_T.cpp
 # Begin Source File
 
 SOURCE=.\Any_Impl_T.cpp
-# PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\Any_Special_Basic_Impl_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
