@@ -327,7 +327,7 @@ object, hiding the transport- and strategy-specific details of the acceptor.
 
 <P>
 TAO's <TT>Acceptor</TT> interface, shown below, is declared in the  file
-<TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+<TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
 All <TT>Acceptor</TT> implementations must inherit from the <TT>TAO_Acceptor</TT>
 abstract base class.
 
@@ -519,11 +519,10 @@ private:
 <BR>
  
 };
-
-<P>
  
 &nbsp;</DD>
-</DL>A description of each of the methods that must be implemented follows:
+</DL>
+A description of each of the methods that must be implemented follows:
 
 <P>
  
@@ -597,17 +596,19 @@ command line option:
 <DL COMPACT>
 <DT>
 <DD>-ORBEndpoint&nbsp;iiop://1.1@foo.xyz.com,1.0@bar.abc.com</DD>
-</DL>will cause the following <TT>open</TT> method invocations to occur: 
+</DL>
+<P>
+will cause the following <TT>open</TT> method invocations to occur: 
 
 <P>
 
 <DL COMPACT>
 <DT>
-<DD>open&nbsp;(orb_core,&nbsp;1,&nbsp;1,&nbsp;``foo.xyz.com'',&nbsp;0)
-
-<P>
+<DD>open&nbsp;(orb_core,&nbsp;1,&nbsp;1,&nbsp;``foo.xyz.com'',&nbsp;0)<BR>
 open&nbsp;(orb_core,&nbsp;1,&nbsp;0,&nbsp;``bar.abc.com'',&nbsp;0)</DD>
-</DL>Extracting individual addresses from an <TT>-ORBEndpoint</TT> option is handled
+</DL>
+<P>
+Extracting individual addresses from an <TT>-ORBEndpoint</TT> option is handled
 by TAO's pluggable protocols framework. It is up to the pluggable protocol to
 handle the address passed to this method.
 
@@ -625,7 +626,8 @@ options such as the following are used:
 <DL COMPACT>
 <DT>
 <DD>-ORBEndpoint&nbsp;iiop://</DD>
-</DL>In this case, an IIOP endpoint will be created on the local host. The port will
+</DL>
+<P>In this case, an IIOP endpoint will be created on the local host. The port will
 be chosen by the IIOP pluggable protocol. <TT>open_default</TT> will invoked
 in the following manner:
 
@@ -633,13 +635,15 @@ in the following manner:
 
 <DL COMPACT>
 <DT>
-<DD>open_default&nbsp;(orbcore,&nbsp;0)</DD>
+<DD><TT>open_default&nbsp;(orbcore,&nbsp;0)</TT></DD>
 </DL></DD>
+<P>
 <DT><STRONG><TT>close</TT>.</STRONG></DT>
 <DD>The <TT>close</TT> method is self-explanatory. It simply shuts
 down any open endpoints, and recovers resources as necessary. This method is
 automatically invoked by the pluggable protocols framework when the ORB associated
 with that endpoint is shut down.</DD>
+<P>
 <DT><STRONG><TT>create_mprofile</TT>.</STRONG></DT>
 <DD>The <TT>create_mprofile</TT> method creates a protocol-specific
 <TT>Profile</TT> object and gives ownership of that profile to the <TT>TAO_MProfile</TT>
@@ -737,7 +741,9 @@ TAO_MProfile&nbsp;&amp;mprofile)&nbsp;
 <P>
  
 }</DD>
-</DL>Most of the code that is common to all pluggable protocols will be factored
+</DL>
+<P>
+Most of the code that is common to all pluggable protocols will be factored
 out of this method in the near future.
 
 <P>
@@ -772,6 +778,7 @@ TAO_IIOP_Acceptor::is_collocated&nbsp;(const&nbsp;TAO_Profile&nbsp;*pfile)&nbsp;
 <BR>
 }</DD>
 </DL></DD>
+<P>
 <DT><STRONG><TT>endpoint_count</TT>.</STRONG></DT>
 <DD><TT>endpoint_count</TT> returns the number of endpoints
 the <TT>Acceptor</TT> is listening on. This is used for determining how many
@@ -911,7 +918,7 @@ object and to the <TT>Transport</TT> objects that were created.
 </H3>
 
 <P>
-TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+TAO's <TT>Connector</TT> interface, shown below, is declared in the file <TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
 All <TT>Connector</TT> implementations must inherit from the <TT>TAO_Connector</TT>
 abstract base class.
 
@@ -1084,6 +1091,7 @@ constructor:
 <BR>
 }</DD>
 </DL></DD>
+<P>
 <DT><STRONG><TT>open</TT>.</STRONG></DT>
 <DD>The <TT>open</TT> method simply opens the underlying connector.
 This is typically an <TT>ACE_Strategy_Connector</TT> template instance. For
@@ -1105,6 +1113,7 @@ also register the <TT>Connection Handler</TT> with an <TT>ACE_Reactor</TT>.
 <DT><STRONG><TT>close</TT>.</STRONG></DT>
 <DD><TT>close</TT> simply closes the underlying <TT>Connector</TT>
 bridge and the concrete <TT>Connector</TT>.</DD>
+<P>
 <DT><STRONG><TT>connect</TT>.</STRONG></DT>
 <DD>The <TT>connect</TT> method actively establishes a connection
 to the endpoint encoded within the IOR in use. It should first verify that the
@@ -1131,7 +1140,9 @@ to be made to the specified host and port:
 <DL COMPACT>
 <DT>
 <DD>-ORBPreconnect&nbsp;iiop://foo.bar.com:1234,foo.bar.com:1234</DD>
-</DL>Much of the preconnect parsing code in TAO's current <TT>preconnect</TT> implementations
+</DL>
+<P>
+Much of the preconnect parsing code in TAO's current <TT>preconnect</TT> implementations
 will be factored out into a common method. Pluggable protocols will still be
 responsible for parsing addresses, just like the <TT>open</TT> method in <TT>Acceptor</TT>s
 (not <TT>Connector</TT>s).
@@ -1201,7 +1212,9 @@ TAO_IIOP_Connector::check_prefix&nbsp;(const&nbsp;char&nbsp;*endpoint)&nbsp;
 &nbsp;&nbsp;//&nbsp;DO&nbsp;NOT&nbsp;throw&nbsp;an&nbsp;exception&nbsp;here.&nbsp;
 <BR>
 }</DD>
-</DL>It checks that the protocol prefix in a URL style IOR (e.g. <TT>iioploc://foo.bar.com:1234/...</TT>)
+</DL>
+<P>
+It checks that the protocol prefix in a URL style IOR (e.g. <TT>iioploc://foo.bar.com:1234/...</TT>)
 or preconnect endpoint matches the one(s) supported by the IIOP pluggable protocol,
 in this case ``<TT>iiop</TT>'' and ``<TT>iioploc</TT>.'' If no match occurs
 then return an error condition (<TT>-1</TT>). Note that the protocol prefix
@@ -1224,7 +1237,9 @@ in the following IIOP URL style IOR:
 <DL COMPACT>
 <DT>
 <DD>iioploc://1.1@foo.bar.com:1234/some_object_key</DD>
-</DL>the object key delimiter is `<TT>/</TT>.' However, this character is not suitable
+</DL>
+<P>
+the object key delimiter is `<TT>/</TT>.' However, this character is not suitable
 for all pluggable protocols, such as TAO's UIOP pluggable protocol, because
 addresses within a URL style IOR may contain that very same character. A typical
 TAO UIOP URL style IOR may look something like:
@@ -1234,7 +1249,9 @@ TAO UIOP URL style IOR may look something like:
 <DL COMPACT>
 <DT>
 <DD>uioploc:///tmp/foobar|some_other_object_key</DD>
-</DL>In this case, the object key delimiter is a vertical bar `<TT>|</TT>' because
+</DL>
+<P>
+In this case, the object key delimiter is a vertical bar `<TT>|</TT>' because
 using the same object key delimiter that IIOP uses `<TT>/</TT>' would cause
 the point where the UIOP rendezvous point ``<TT>/tmp/foobar</TT>'' ends and
 where the object key ``<TT>some_other_object_key</TT>'' begins to be ambiguous.
@@ -1246,7 +1263,9 @@ as follows:
 <DL COMPACT>
 <DT>
 <DD>uioploc:///tmp/foobar/some_other_object_key</DD>
-</DL>it then becomes impossible to tell if the rendezous point is ``<TT>/tmp</TT>''
+</DL>
+<P>
+it then becomes impossible to tell if the rendezous point is ``<TT>/tmp</TT>''
 or ``<TT>/tmp/foobar</TT>,'' and similarly for the object key, hence the need
 for an object key delimiter other than `<TT>/</TT>.'
 
@@ -1260,6 +1279,7 @@ that contains the object key delimiter appropriate for the given pluggable proto
 <DD>This method creates and initializes a profile using
 the provided CDR stream. Most of this code is also ``boilerblate.'' As such,
 it may be factored out in future TAO releases.</DD>
+<P>
 <DT><STRONG><TT>make_profile</TT>.</STRONG></DT>
 <DD><TT>make_profile</TT> is another method that can essentially
 be ``cut and pasted'' from existing TAO pluggable protocols. It is simply
@@ -1271,14 +1291,16 @@ an object reference of the form:
 <DL COMPACT>
 <DT>
 <DD>N.n@address/object_key</DD>
-</DL>or
-
+</DL>
 <P>
-
+or
+<P>
 <DL COMPACT>
 <DT>
 <DD>address/object_key</DD>
-</DL>where ``<TT>N.n</TT>'' are the major and minor protocol versions, respectively,
+</DL>
+<P>
+where ``<TT>N.n</TT>'' are the major and minor protocol versions, respectively,
 and the `<TT>/</TT>' is the protocol-specific object key delimiter.
 
 <P></DD>
@@ -1300,7 +1322,7 @@ definitions.
 All protocol-specific <TT>Profile</TT> implementations should inherit from the
 <TT>TAO_Profile</TT> abstract base class. The <TT>TAO_Profile</TT> interface
 is declared in the file
-<TT>&lt;<A HREF="../../tao/Profile.h">tao/Profile.h&gt;</A></TT>.
+<TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Profile.h">tao/Profile.h&gt;</A></TT>.
 Its interface follows. Only the methods that must be implemented are shown:
 
 
@@ -1440,7 +1462,9 @@ The static string for the IIOP pluggable protocol is:
 <DL COMPACT>
 <DT>
 <DD>static&nbsp;const&nbsp;char&nbsp;prefix_[]&nbsp;=&nbsp;&#34;iiop&#34;;</DD>
-</DL>The IIOP <TT>prefix</TT> method is:
+</DL>
+<P>
+The IIOP <TT>prefix</TT> method is:
 
 <P>
 
@@ -1477,6 +1501,7 @@ existing TAO pluggable protocols, it is generally a good idea to do so. All
 of the constructors should initialize the <TT>TAO_Profile</TT> abstract base
 class with the tag associated with the pluggable protocol. The object key should
 also be set during <TT>Profile</TT> construction.</DD>
+<P>
 <DT><STRONG><TT>parse_string</TT>.</STRONG></DT>
 <DD><TT>parse_string</TT> initialize a <TT>Profile</TT>
 object using the provided string. The string passed to this method has the format:
@@ -1583,12 +1608,14 @@ TAO_IIOP_Profile::_key&nbsp;(void)&nbsp;const&nbsp;
 <BR>
 }</DD>
 </DL></DD>
+<P>
 <DT><STRONG><TT>is_equivalent</TT>.</STRONG></DT>
 <DD>The <TT>is_equivalent</TT> method implements the
 CORBA specified method of the same name. It should return true if this profile
 is equivalent to the profile to which it is being compared. Two profiles are
 equivalent <I>if and only if</I> their tag, version, address and object key
 are the same.</DD>
+<P>
 <DT><STRONG><TT>hash</TT>.</STRONG></DT>
 <DD>The <TT>hash</TT> method implements the CORBA specified method
 of the same name. It is expected to return 32 bit <TT>unsigned integer</TT>
@@ -1608,6 +1635,7 @@ hash algorithms.
 of the address. It should return <TT>-1</TT> if the supplied buffer is too small.
 The stringified address should have the same form that the address in the URL
 style IOR has. This method should be reentrant.</DD>
+<P>
 <DT><STRONG><TT>reset_hint</TT>.</STRONG></DT>
 <DD>The <TT>reset_hint</TT> method resets the pointer to
 a successfully used <TT>Connection Handler</TT>. If no pointer to such a <TT>Connection
@@ -1635,7 +1663,7 @@ an <TT>Acceptor</TT> on the server-side, and a <TT>Connector</TT> on the client-
 <P>
 All <TT>Protocol_Factory</TT> implementations should be derived from the <TT>TAO_Protocol_Factory</TT>
 abstract base class defined in
-<TT>&lt;<A HREF="../../tao/Protocol_Factory.h">tao/Protocol_Factory.h</A>&gt;</TT>.
+<TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Protocol_Factory.h">tao/Protocol_Factory.h</A>&gt;</TT>.
 The <TT>TAO_Protocol_Factory</TT> interface is shown below:
 
 <P>
@@ -1735,7 +1763,9 @@ dynamically, and passes arguments to the <TT>init</TT> method would look like:
 <DL COMPACT>
 <DT>
 <DD>dynamic&nbsp;IIOP_Factory&nbsp;Service_Object&nbsp;*&nbsp;TAO:_make_TAO_IIOP_Protocol_Factory()&nbsp;&#34;-Foo&nbsp;Bar&#34;</DD>
-</DL>In the above example, the arguments ``<TT>-Foo</TT>'' and ``<TT>Bar</TT>''
+</DL>
+<P>
+In the above example, the arguments ``<TT>-Foo</TT>'' and ``<TT>Bar</TT>''
 would be passed as <TT>argv[0]</TT> and <TT>argv[1]</TT>, respectively,
 to the <TT>Protocol_Factory init</TT> method.
 
@@ -1766,9 +1796,11 @@ TAO_IIOP_Protocol_Factory::match_prefix&nbsp;(const&nbsp;ACE_CString&nbsp;&amp;p
 <BR>
 }</DD>
 </DL></DD>
+<P>
 <DT><STRONG><TT>prefix</TT>.</STRONG></DT>
 <DD>The <TT>prefix</TT> method simply returns a pointer to the
 static string containing the protocol prefix used by the pluggable protocol.</DD>
+<P>
 <DT><STRONG><TT>options_delimiter</TT>.</STRONG></DT>
 <DD>The <TT>options_delimiter</TT> method is similar
 to the <TT>object_key_delimiter</TT> method found in the <TT>Connector</TT>.
@@ -1781,7 +1813,9 @@ priority:
 <DL COMPACT>
 <DT>
 <DD>-ORBEndpoint&nbsp;iiop://1.1@foo.bar.com/priority=25</DD>
-</DL>To get around ambiguities in endpoints that can have a `<TT>/</TT>' character
+</DL>
+<P>
+To get around ambiguities in endpoints that can have a `<TT>/</TT>' character
 in them, the <TT>options_delimiter</TT> method can be used to determine what
 character to be used. For example, TAO's UIOP pluggable protocol implementation
 defines the following:
@@ -1799,14 +1833,18 @@ TAO_UIOP_Protocol_Factory::options_delimiter&nbsp;(void)&nbsp;const&nbsp;
 &nbsp;&nbsp;return&nbsp;'|';&nbsp;
 <BR>
 }</DD>
-</DL>An endpoint option for the UIOP pluggable protocol can look like the following:
+</DL>
+<P>
+An endpoint option for the UIOP pluggable protocol can look like the following:
 
 <P>
 
 <DL COMPACT>
 <DT>
 <DD>-ORBEndpoint&nbsp;uiop://1.1@/tmp/foo|priority=25</DD>
-</DL>Notice that the `<TT>|</TT>' character is used to mark where the rendezvous
+</DL>
+<P>
+Notice that the `<TT>|</TT>' character is used to mark where the rendezvous
 point ends and where the endpoint-specific options begin.
 
 <P>
@@ -1848,6 +1886,7 @@ TAO_UIOP_Protocol_Factory::make_acceptor&nbsp;(void)&nbsp;
 <BR>
 }</DD>
 </DL></DD>
+<P>
 <DT><STRONG><TT>make_connector</TT>.</STRONG></DT>
 <DD>The <TT>make_connector</TT> method is a factory
 method that returns a pointer to a dynamically allocated <TT>Connector</TT>
@@ -1881,9 +1920,10 @@ TAO_UIOP_Protocol_Factory::make_connector&nbsp;(void)&nbsp;
 <BR>
 }</DD>
 </DL></DD>
+<P>
 <DT><STRONG><TT>requires_explicit_endpoint</TT>.</STRONG></DT>
 <DD>Some protocols should not create a default
-endpoint unless the user specifies a -ORBEndpoint option. For example, local
+endpoint unless the user specifies a <TT>-ORBEndpoint</TT> option. For example, local
 IPC (aka UNIX domain sockets) is unable to remove the rendesvouz point if the
 server crashes. For those protocols, it is better to create the endpoint only
 if the user requests one. This method is queried by TAO before creating a default
@@ -2088,7 +2128,7 @@ creates and initializes these objects.
 
 <P>
 All TAO pluggable protocol <TT>Transport</TT> classes must inherit from the
-<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="../../tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
+<TT>TAO_Transport</TT> abstract base class defined in <TT>&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">tao/Pluggable.h</A>&gt;</TT>.
 The <TT>TAO_Transport</TT> interface is shown below. Again, only the methods
 that should be implemented for a given pluggable protocol are shown:
 
@@ -2297,17 +2337,22 @@ public:&nbsp;
 described so far, the constructor for the concrete <TT>Transport</TT> object
 should also initialize the <TT>TAO_Transport</TT> base class with the tag corresponding
 to the pluggable protocol.</DD>
+<P>
 <DT><STRONG><TT>close_connection</TT>.</STRONG></DT>
 <DD>The underlying <TT>Connection Handler</TT>'s <TT>close</TT>
 method is invoked my this method.</DD>
+<P>
 <DT><STRONG><TT>idle</TT>.</STRONG></DT>
 <DD>This method idles the underlying <TT>Connection Handler</TT>.</DD>
+<P>
 <DT><STRONG><TT>handle</TT>.</STRONG></DT>
 <DD>This method returns the underlying file handle used by the
 <TT>Reactor</TT>.</DD>
+<P>
 <DT><STRONG><TT>event_handler</TT>.</STRONG></DT>
 <DD>This method returns the underlying <TT>Event Handler</TT>
 used by the <TT>Reactor</TT>.</DD>
+<P>
 <DT><STRONG><TT>send</TT>.</STRONG></DT>
 <DD>The <TT>send</TT> writes data to the connection established
 in the underlying transport, such as a TCP connection in the IIOP pluggable
@@ -2322,14 +2367,14 @@ no further processing of the data being sent is necessary. However, other protoc
 may process perform additional operations on the data being sent, in which case
 the <TT>send</TT> operation provided by the underlying protocol implementation
 should be used instead of the raw operating system <TT>send</TT> call.
-
+</DD>
 <P>
- </DD>
 <DT><STRONG><TT>recv</TT>.</STRONG></DT>
 <DD>The <TT>recv</TT> operation reads a given number of bytes into
 a supplied buffer. Unlike the <TT>send</TT> method, there is only one version
 of the <TT>recv</TT> operation. The same caveat of ensuring that the appropriate
 <TT>recv</TT> or <TT>read</TT> operation is used also applies to this method.</DD>
+<P>
 <DT><STRONG><TT>start_request</TT>.</STRONG></DT>
 <DD>This method creates the appropriate header to make
 a request and write it into the provided output CDR stream. This method is closely
@@ -2337,6 +2382,7 @@ tied to TAO's GIOP implementation. <TT>start_request</TT> implementations should
 essentially be the same in all pluggable protocol implementations. The only
 thing that should differ is the type of <TT>Profile</TT> being used. Note that
 this method is only useful for clients.</DD>
+<P>
 <DT><STRONG><TT>start_locate</TT>.</STRONG></DT>
 <DD>This method creates the appropriate header to make
 a <I>locate</I> request and write it into the provided output CDR stream. This
@@ -2345,6 +2391,7 @@ implementations should essentially be the same in all pluggable protocol impleme
 The only thing that should differ is the type of <TT>Profile</TT> being used.
 Note that this method is only useful for clients. Note that this method is only
 useful for clients.</DD>
+<P>
 <DT><STRONG><TT>send_request</TT>.</STRONG></DT>
 <DD>Depending on the concurrency strategy used by the transport
 it may be required to setup state to receive a reply before the request is sent.
@@ -2354,12 +2401,14 @@ implementation. <TT>send_request</TT> implementations should essentially be
 the same in all pluggable protocol implementations. The only thing that should
 differ is the type of <TT>Profile</TT> being used. Note that this method is
 only useful for clients.</DD>
+<P>
 <DT><STRONG><TT>handle_client_input</TT>.</STRONG></DT>
 <DD><TT>handle_client_input</TT> reads and handles
 the reply from the server. It returns zero when there is <TT>Short Read</TT>
 on the connection, returns <TT>1</TT> when the full reply is read and handled,
 and returns <TT>-1</TT> on errors. Note that this method is only useful for
 clients.</DD>
+<P>
 <DT><STRONG><TT>register_handler</TT>.</STRONG></DT>
 <DD>This method registers the <TT>Connection Handler</TT>
 with the <TT>Reactor</TT>. It will be called by the <TT>Wait Strategy</TT> if
@@ -2546,14 +2595,14 @@ See (TBD) ftp site for this Rose diagram.
 The new classes created were.
 <BR>
 <BLOCKQUOTE>
-TAO_SCRAMNet_Profile  (Derived from TAO_Profile in <A HREF="../../tao/Profile.h">Profile.h</A>)<BR>
-TAO_SCRAMNet_Acceptor (Derived from TAO_Acceptor in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>) <BR>
-TAO_SCRAMNet_Connector  (Derived from TAO_Connector in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)<BR>
-TAO_SCRAMNet_Transport  (Derived from TAO_Transport in <A HREF="../../tao/Pluggable.h">Pluggable.h</A>)
+TAO_SCRAMNet_Profile  (Derived from TAO_Profile in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Profile.h">Profile.h</A>)<BR>
+TAO_SCRAMNet_Acceptor (Derived from TAO_Acceptor in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">Pluggable.h</A>) <BR>
+TAO_SCRAMNet_Connector  (Derived from TAO_Connector in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">Pluggable.h</A>)<BR>
+TAO_SCRAMNet_Transport  (Derived from TAO_Transport in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Pluggable.h">Pluggable.h</A>)
 	<BLOCKQUOTE>TAO_SCRAMNet_Server_Transport<BR>
 	TAO_SCRAMNet_Client_Transport</BLOCKQUOTE>
-TAO_SCRAMNet_Protocol_Factory (Derived from TAO_Protocol Factory in <A HREF="../../tao/Protocol_Factory.h">Protocol_Factory.h</A>)<BR>
-TAO_SCRAMNet_Handler_Base (as in <A HREF="../../tao/IIOP_Connect.h">IIOP_Connect.h</A>)
+TAO_SCRAMNet_Protocol_Factory (Derived from TAO_Protocol Factory in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/Protocol_Factory.h">Protocol_Factory.h</A>)<BR>
+TAO_SCRAMNet_Handler_Base (as in <A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/IIOP_Connect.h">IIOP_Connect.h</A>)
 	<BLOCKQUOTE>TAO_SCRAMNet_Client_Connection_Handler<BR>
 	TAO_SCRAMNet_Server_Connection_Handler</BLOCKQUOTE></BLOCKQUOTE>
 <BLOCKQUOTE>ACE_SCRAMNet_Addr<BR>
@@ -3095,7 +3144,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Thu Dec 16 21:18:46 CST 1999
+Last modified: Fri Dec 17 09:41:49 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
