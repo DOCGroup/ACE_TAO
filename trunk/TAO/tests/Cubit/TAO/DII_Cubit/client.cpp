@@ -107,10 +107,6 @@ DII_Cubit_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  // Parse command line and verify parameters.
-    if (this->parse_args () == -1)
-      return -1;
-
   // Exits gracefully when no IOR is provided and 
   // use_naming_service_ is toggled off.
   if (!ACE_OS::strcmp (this->factory_IOR_,
@@ -132,6 +128,10 @@ DII_Cubit_Client::init (int argc, char **argv)
                                         "internet",
                                         TAO_TRY_ENV);
       TAO_CHECK_ENV;
+
+      // Parse command line and verify parameters.
+      if (this->parse_args () == -1)
+        return -1;
 
       if (this->use_naming_service_)
         {
@@ -845,14 +845,19 @@ DII_Cubit_Client::run (void)
 
   TAO_TRY
     {
+      // Shut down server via a DII request.
       if (this->shutdown_)
         {
-          Cubit_var specific = Cubit::_narrow (this->obj_var_.in (),
-                                               TAO_TRY_ENV);
+          CORBA::Request_ptr req;
+
+          req = this->obj_var_->_request ("shutdown",
+                                          TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          specific->shutdown (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          // Cubit::shutdown () is a oneway operation.
+          req->send_oneway ();
+
+          CORBA::release (req);
 
           ACE_DEBUG ((LM_DEBUG,
                       "\n \t Shutting down IDL_Cubit server \n\n"));
