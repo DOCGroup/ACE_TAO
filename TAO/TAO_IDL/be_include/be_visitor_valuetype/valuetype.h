@@ -131,6 +131,9 @@ protected:
   // recurse down the inheritance tree to determine
   // if valuetype has at least one operation/attribute.
 
+	static idl_bool have_supported_op (be_valuetype* node);
+  // check if VT supports an interface with at least 1 operation
+
   static idl_bool obv_need_ref_counter(be_valuetype* node);
   // check is VT needs a RefCounter mix-in in OBV_ class
   // suppose that we are deciding for this node

@@ -99,7 +99,12 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // (2) We have VT with concerete factory and inheretence from
       //     another (not abstract or empty abstract <would like to
       //     know how to go there>) then its OBV_ already has mix-in
-      // (3) The rest. Don't need to bother about anything, just inherit
+      //
+			// (3) We have VT that supports an abstract interface. In this case,
+			//     we will add implementations of _add_ref and _remove_ref that
+      //     call this->DefaultValueRefCountBase and so it must be mixed in
+      //
+      // (4) The rest. Don't need to bother about anything, just inherit
       //     whatever there is.
       //
 
