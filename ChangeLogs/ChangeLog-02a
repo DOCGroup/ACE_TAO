@@ -1,3 +1,8 @@
+Fri Jul 27 21:52:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Added the IDL_Cubut test with GIOP Lite
+	  script, to our daily builds.
+
 Fri Jul 27 16:50:49 2001  Steve Huston  <shuston@riverace.com>
 
         * tests/Log_Msg_Test.cpp: Silence a compile warning in g++.
