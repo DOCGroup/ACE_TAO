@@ -1,3 +1,21 @@
+Fri Nov 07 21:23:35 1997    <coryan@MILONGA>
+
+	* tao/orb_core.h: 
+	* tao/marshal.h: 
+	* tao/corbacom.h: 
+	  Added ACE_Svc_Export to some classes.
+
+	* tao/any.cpp: 
+	  Removed delete after DEEP_FREE call, it crashes on NT and it
+	  should be unneeded.
+
+	* TAO_IDL/be/be_state.cpp (gen_code): 
+	  When generating arguments for the server header don't use nested
+	  types. The fully qualified type name is needed, even on NT.
+
+	* TAO_IDL/be/be_exception.cpp: 
+	  Added code to generate a default constructor.
+
 Fri Nov 07 17:26:49 1997    <nw1@CHA-CHA>
 
 	* tao/TAO.dsp:

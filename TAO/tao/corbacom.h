@@ -276,7 +276,7 @@ public:
   static String string_dup (const Char *);
   static void string_free (Char *);
 
-  class String_var
+  class ACE_Svc_Export String_var
     // = TITLE
     //   String var class. Provides automatic deallocation of storage
     //   for the string once it goes out of scope.

@@ -1,3 +1,7 @@
+//
+// $Id$
+//
+
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
@@ -68,10 +72,31 @@ be_exception::gen_client_header (void)
       TAO_OutStream *ch = cg->client_header (); // output stream
       TAO_NL  nl;        // end line
 
-      ACE_UNUSED_ARG (nl);
 
       cg->outstream (ch);
       ch->indent (); // start from whatever indentation level we were at
+
+      ch->gen_ifdef_macro (this->flatname (), "_ptr");
+
+      ch->indent ();
+      *ch << "class " << this->local_name () << ";" << nl;
+      // generate the _ptr declaration
+      *ch << "typedef " << this->local_name () << " *"
+	  << this->local_name () << "_ptr;" << nl;
+      ch->gen_endif ();
+
+      ch->gen_ifdef_macro (this->flatname ());
+
+      ch->indent ();
+      *ch << "class " << this->local_name ()
+	  << " : public virtual CORBA::UserException" << nl;
+      *ch << "{" << nl
+	  << "public:" << nl;
+      ch->incr_indent ();
+      *ch << this->local_name () << " (void);\n";
+      ch->decr_indent ();
+      *ch << "};" << nl << nl;
+      ch->gen_endif ();
 
       *ch << "static CORBA::TypeCode_ptr " << this->tc_name
 	()->last_component () << ";\n\n";
@@ -85,6 +110,32 @@ be_exception::gen_client_header (void)
 int
 be_exception::gen_client_inline (void)
 {
+  if (!this->cli_inline_gen_)
+    {
+      TAO_NL  nl;        // end line
+
+      TAO_CodeGen *cg = TAO_CODEGEN::instance ();
+      TAO_OutStream *ci = cg->client_inline ();
+
+      *ci << "// *************************************************************"
+          << nl;
+      *ci << "// Inline operations for exception " << this->name () << nl;
+      *ci << "// *************************************************************\n\n";
+
+      ci->indent ();
+      *ci << "// default constructor" << nl;
+      *ci << "ACE_INLINE" << nl;
+      *ci << this->name () << "::" << this->local_name () << " (void)" << nl;
+      ci->incr_indent ();
+      *ci << ": CORBA_UserException (_tc_"
+	  << this->local_name ()
+	  << ")\n";
+      ci->decr_indent ();
+      *ci << "{" << nl;
+      *ci << "}" << nl << nl;
+
+      this->cli_inline_gen_ = I_TRUE;
+    }
   return 0;
 }
 
