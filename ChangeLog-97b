@@ -1,14 +1,19 @@
 Sat Oct 25 10:26:04 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.cpp (ace_sysconf_dump): Made a minor change to OS.cpp
-	  to fix some typos.  Thanks to Wei Chiang <chiang@tele.nokia.fi>
-	  for reporting this.
+        * ace/OS.cpp (ace_sysconf_dump): Made a minor change to OS.cpp
+          to fix some typos.  Thanks to Wei Chiang <chiang@tele.nokia.fi>
+          for reporting this.
 
 Sat Oct 25 10:13:56 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Singleton.h: added comment about best ACE_LOCK types to use.
 
         * Makefile (TIMESTAMP): replace tab with spaces in ChangeLog entry.
+
+        * tests/Conn_Test.cpp (main): fixed typo, spawn_threads instead of
+          spawn_thread.  Also, protected definitions of spawn_processes ()
+          and spawn_threads () to avoid compiler warnings about unused static
+          functions.
 
 Sat Oct 25 01:02:34 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
