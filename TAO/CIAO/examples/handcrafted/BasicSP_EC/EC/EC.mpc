@@ -1,8 +1,8 @@
 // $Id$
 // This file is generated with "generate_component_mpc.pl -l .. -p BasicSP -i -c EC"
 
-project(EC_stub): ciao_client {
-  after += BasicSP_stub
+project(BasicSP_EC_EC_stub): ciao_client {
+  after += BasicSP_EC_stub
   sharedname = EC_stub
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
   idlflags += -Wb,stub_export_macro=EC_STUB_Export -Wb,stub_export_include=EC_stub_export.h -Wb,skel_export_macro=EC_SVNT_Export -Wb,skel_export_include=EC_svnt_export.h
@@ -18,8 +18,8 @@ project(EC_stub): ciao_client {
   }
 }
 
-project(EC_svnt) : ciao_servant {
-  after += BasicSP_svnt EC_stub
+project(BasicSP_EC_EC_svnt) : ciao_servant {
+  after += BasicSP_EC_svnt BasicSP_EC_EC_stub
   sharedname  = EC_svnt
   libs    += EC_stub BasicSP_stub BasicSP_svnt TAO_RTEvent
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
@@ -42,8 +42,8 @@ project(EC_svnt) : ciao_servant {
 }
 
 
-project(EC_exec) : ciao_component {
-  after += EC_svnt
+project(BasicSP_EC_EC_exec) : ciao_component {
+  after += BasicSP_EC_svnt
   sharedname = EC_exec
   libs      += EC_stub BasicSP_stub EC_svnt TAO_RTEvent
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
@@ -62,9 +62,9 @@ project(EC_exec) : ciao_component {
 
 
 
-project (EC_client) : ciao_client, valuetype {
+project (BasicSP_EC_EC_client) : ciao_client, valuetype {
   exename = client
-  after += EC_stub
+  after += BasicSP_EC_EC_stub
   libs += EC_stub BasicSP_stub TAO_RTEvent
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
 

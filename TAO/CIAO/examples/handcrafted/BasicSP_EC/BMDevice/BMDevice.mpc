@@ -1,7 +1,7 @@
 // $Id$
 
-project(BMDevice_stub): ciao_client {
-  after += BasicSP_stub
+project(BasicSP_EC_BMDevice_stub): ciao_client {
+  after += BasicSP_EC_stub
   sharedname = BMDevice_stub
 
   idlflags += -Wb,stub_export_macro=BMDEVICE_STUB_Export -Wb,stub_export_include=BMDevice_stub_export.h -Wb,skel_export_macro=BMDEVICE_SVNT_Export -Wb,skel_export_include=BMDevice_svnt_export.h
@@ -18,8 +18,8 @@ project(BMDevice_stub): ciao_client {
   }
 }
 
-project(BMDevice_svnt) : ciao_servant {
-  after += BMDevice_stub BasicSP_stub
+project(BasicSP_EC_BMDevice_svnt) : ciao_servant {
+  after += BasicSP_EC_BMDevice_stub BasicSP_EC_stub
   sharedname  = BMDevice_svnt
   libs    += BMDevice_stub BasicSP_stub BasicSP_svnt TAO_RTEvent
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
@@ -42,8 +42,8 @@ project(BMDevice_svnt) : ciao_servant {
 }
 
 
-project(BMDevice_exec) : ciao_component {
-  after += BMDevice_svnt
+project(BasicSP_EC_BMDevice_exec) : ciao_component {
+  after += BasicSP_EC_BMDevice_svnt
   sharedname = BMDevice_exec
   libs      += BMDevice_stub BMDevice_svnt BasicSP_stub BasicSP_svnt TAO_RTEvent
   libpaths += ..,..\..\..\..\..\..\lib,..\..\..\..\..\tao\IFR_Client,..\..\..\..\..\tao\Valuetype,..\..\..\..\..\tao,..\..\..\..\..\..\ace,..\..\..\..\..\orbsvcs\orbsvcs,..\..\..\..\..\tao\PortableServer,..\..\..\..\..\tao\IORInterceptor,..\..\..\..\..\tao\ObjRefTemplate,..\..\..\..\..\..\ACEXML\parser\parser,..\..\..\..\..\..\ACEXML\common,..\..\..\..\..\tao\IORTable
