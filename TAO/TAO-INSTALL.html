@@ -19,14 +19,14 @@
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 2.5, 2.6, and 7, Windows NT (MSVC 5.0 and 6.0),
+    <td>Solaris 2.5, 2.6, and 7, Windows NT/2000 (MSVC 5.0 and 6.0),
         Linux/Intel, Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0
         and 5.0, IRIX 6.x, and QNX Neutrino 2.0
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
    <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-   <td>Windows 95, HP/UX 10.x and 11.x, AIX 4.x
+   <td>Windows 9x/ME, HP/UX 10.x and 11.x, AIX 4.x
    </td>
   </tr>
   <tr valign=top>
@@ -167,7 +167,7 @@ $ echo 'TAO_IDLFLAGS := -g gperf' \
 </PRE>
     if the tools are in your path.
     </P>
-    
+
     <P>Obviously you must first build the tools for the host platform,
       typically you would do this as follows:
 <PRE>
@@ -226,7 +226,7 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
       It assumes that the ACE+TAO distribution has been
       unpacked, with TAO below ACE_wrappers.  It uses the
       ACE_wrappers/bin/create_ace_build script to create a shadow
-      build 
+      build
       tree:
 <ol>
   <li><code>cd ACE_wrappers</code>
@@ -257,7 +257,7 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
       and
       <a href="../ACE-INSTALL.html#VxWorks/NT">Building ACE on
 	Tornado/NT hosts for VxWorks targets</a>
-    </P> 
+    </P>
 
     <P>Please note that dynamic loading of libraries is not supported
       by TAO for any cross-compiled target.  Therefore, dynamic
@@ -273,7 +273,7 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
     </P>
 
     <H4>Which one is right for me?</H4>
-    
+
     <P>Using links to cross-compile TAO may appear simpler at first
       glance.  However, storing the location in the
       <CODE>platform_macros.GNU</CODE> is more amenable for
@@ -283,7 +283,7 @@ $ echo 'include $(ACE_ROOT)/include/makeinclude/platform_TARGET.GNU' \
     </P>
 
 <HR><P>
-<H3>On Windows NT</H3>
+<H3>On Windows NT and Windows 2000</H3>
 
 <P><CODE>TAO_IDL</CODE> does not contain its own preprocessor, so it
 needs to use an external preprocessor.  Depending on which compiler was
@@ -346,7 +346,7 @@ files in the correct place.</P>
 
 <P>TAOACE.dsw is a Visual C++ 5.0/6.0 workspace that loads the projects
 ACE, TAO, TAO_IDL (the compiler), gperf, the orb services libraries, and
-the standalone executables (such as Naming Service, etc.).  It can be 
+the standalone executables (such as Naming Service, etc.).  It can be
 used to build all the files needed to build/run TAO applications.</P>
 
 <H4>Borland C++ Builder</H4> <P>
@@ -374,10 +374,10 @@ C/C++ settings under Input.</P>
 <P>TAO, orbsvcs, TAO_IDL, and the Simple Test all have extra project files
 for static library builds.  TAOACE_static.dsw contains some of these projects,
 and is set up much like <A HREF="#taoace">TAOACE.dsw</A>, except that there
-are not as many static projects as their are dynamic projects and their 
+are not as many static projects as their are dynamic projects and their
 isn't the same dependencies set up.</P>
 
-<P> To use the static libraries in a project, make sure to the following 
+<P> To use the static libraries in a project, make sure to the following
 settings are used in the Project Settings.</P>
 
 <UL>
