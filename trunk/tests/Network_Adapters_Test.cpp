@@ -31,7 +31,7 @@
 #include "ace/Sched_Params.h"
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
-
+#include "ace/OS_NS_string.h"
 
 #include "Network_Adapters_Test.h"
 

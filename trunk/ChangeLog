@@ -1,3 +1,14 @@
+Wed Jan 26 12:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ICMP_Socket.{h,cpp}:
+        * ace/Ping_Socket.{h,cpp}:
+        * tests/Network_Adapters_Test.cpp:
+          Added missing includes. Thanks to Peter Falsh
+          <webangel at list dot ru> for reporting this.
+
+        * tests/run_test.lst:
+          Added Network_Adapters_Test
+
 Tue Jan 25 21:05:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Reactor_Registration_Test.cpp:
