@@ -17,13 +17,15 @@
 #ifndef QOSEVENT_H
 #define QOSEVENT_H
 
+
+#define TRUE  1
+#define FALSE 0
+
+/*
 #if !(defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
 
 #define XP1_QOS_SUPPORTED        0x00002000
 #define XP1_SUPPORT_MULTIPOINT   0x00000400
-
-#define TRUE  1
-#define FALSE 0
 
 #define WSABASEERR              10000
 #define WSAENOBUFS              (WSABASEERR+55)
@@ -49,7 +51,8 @@
 #define SIO_MULTICAST_SCOPE      (0x08000000 | 10)
 #define SIO_SET_QOS			     (0x08000000 | 11)
 
-#endif /* ACE_HAS_WINSOCK2 */
+#endif ACE_HAS_WINSOCK2 
+*/
 
 #define MY_DEFPORT 5001
 
