@@ -35,9 +35,9 @@ ACE_RCSID (tests,
 #include "ace/High_Res_Timer.h"
 #include "ace/Asynch_IO.h"
 
-static int done = 0;
-static int count = 0;
-static int odd = 0;
+static int    done = 0;
+static size_t count = 0;
+static int    odd = 0;
 
 class Time_Handler : public ACE_Handler
 {
@@ -66,36 +66,30 @@ Time_Handler::Time_Handler (void)
 }
 
 void
-Time_Handler::handle_time_out (const ACE_Time_Value &tv, const void *arg)
+Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
 {
-  long current_count = ACE_reinterpret_cast (long, arg);
-  if (current_count >= 0)
-    ACE_ASSERT (current_count == count);
+  size_t current_count = *(ACE_reinterpret_cast (const size_t *, arg));
+  if (current_count != count)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Expected timer %d, not %d\n"),
+                count,
+                current_count));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%x] Timer id %d with count #%d|%d timed out at %d!\n"),
+              ACE_TEXT ("[%@] Timer id %d with count #%d|%d expired.\n"),
               this,
               this->timer_id (),
               count,
-              current_count,
-              tv.sec ()));
+              current_count));
 
-  if (current_count == long (ACE_MAX_TIMERS - 1))
+  if (current_count == (ACE_MAX_TIMERS - 1))
     done = 1;
   else if (count == ACE_MAX_TIMERS - 1)
     {
       done = 1;
       return;
     }
-  else if (current_count == -1)
-    {
-      int result = ACE_Proactor::instance ()->cancel_timer (this->timer_id ());
-      result = ACE_Proactor::instance ()->schedule_timer(*this,
-                                                         (const void *) -1,
-                                                         ACE_Time_Value(count + 1));
-      ACE_ASSERT (result != -1);
-      this->timer_id(result);
-    }
+
   count += (1 + odd);
   return;
 }
@@ -119,15 +113,18 @@ test_registering_all_handlers (void)
                __LINE__, 
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
-  int t_id[ACE_MAX_TIMERS];
-
-  for (int i = 0; i < int (ACE_MAX_TIMERS); i++)
+  long t_id[ACE_MAX_TIMERS];
+  size_t which[ACE_MAX_TIMERS];
+  long secs = 0;
+  size_t i = 0;
+  for ( ; i < ACE_MAX_TIMERS; i++, secs++)
     {
+      which[i] = i;
       t_id[i] =
-        ACE_Proactor::instance ()->schedule_timer (rt[i], 
-                                                  (const void *) i, 
-                                                  ACE_Time_Value (2 * i + 1));
-      ACE_ASSERT (t_id[i] != -1);
+        ACE_Proactor::instance ()->schedule_timer
+            (rt[i], &which[i], ACE_Time_Value (2 * secs + 1));
+      if (t_id[i] == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
       rt[i].timer_id (t_id[i]);
     }
 
@@ -142,18 +139,21 @@ test_registering_one_handler (void)
                __LINE__, 
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
-  int t_id[ACE_MAX_TIMERS];
+  long t_id[ACE_MAX_TIMERS];
+  size_t which[ACE_MAX_TIMERS];
 
   done = 0;
   count = 0;
-
-  for (int i = 0; (u_long)i < ACE_MAX_TIMERS; i++)
+  long secs = 0;
+  size_t i = 0;
+  for ( ; i < ACE_MAX_TIMERS; i++, secs++)
     {
+      which[i] = i;
       t_id[i] =
-        ACE_Proactor::instance ()->schedule_timer (rt[0],
-                                                  (const void *) i,
-                                                  ACE_Time_Value (2 * i + 1));
-      ACE_ASSERT (t_id[i] != -1);
+        ACE_Proactor::instance ()->schedule_timer
+          (rt[0], &which[i], ACE_Time_Value (2 * secs + 1));
+      if (t_id[i] == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
     }
 
   while (!done)
@@ -167,28 +167,30 @@ test_canceling_odd_timers (void)
                __LINE__, 
                ACE_TEXT_CHAR_TO_TCHAR (__FILE__));
   Time_Handler rt[ACE_MAX_TIMERS];
-  int t_id[ACE_MAX_TIMERS];
+  long t_id[ACE_MAX_TIMERS];
+  size_t which[ACE_MAX_TIMERS];
 
   done = 0;
   count = 1;
   odd = 1;
-
-  for (int i = 0; (u_long)i < ACE_MAX_TIMERS; i++)
+  size_t i = 0;
+  long secs = 0;
+  for ( ; i < ACE_MAX_TIMERS; i++, secs++)
     {
-      t_id[i] = ACE_Proactor::instance ()->schedule_timer (rt[i],
-                                                          (const void *) i,
-                                                          ACE_Time_Value (2 * i + 1));
-      ACE_ASSERT (t_id[i] != -1);
+      which[i] = i;
+      t_id[i] = ACE_Proactor::instance ()->schedule_timer
+        (rt[i], &which[i], ACE_Time_Value (2 * secs + 1));
+      if (t_id[i] == -1)
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
       rt[i].timer_id (t_id[i]);
     }
 
-  for (size_t j = 0; (u_long) j < ACE_MAX_TIMERS; j++)
+  for (i = 0; i < ACE_MAX_TIMERS; i++)
     // Cancel handlers with odd numbered timer ids.
-    if (ACE_ODD (rt[j].timer_id ()))
+    if (ACE_ODD (rt[i].timer_id ()))
       {
-        int result = 
-          ACE_Proactor::instance ()->cancel_timer (rt[j].timer_id ());
-        ACE_ASSERT (result != -1);
+        if (ACE_Proactor::instance ()->cancel_timer (rt[i].timer_id ()) == -1)
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_timer")));
       }
 
   while (!done)
