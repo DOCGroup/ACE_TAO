@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author  Irfan Pyarali
+ *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_SERVANT_BASE_H
 #define TAO_SERVANT_BASE_H
@@ -169,6 +168,12 @@ public:
    * in order to destroy the servant.
    */
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+  /** 
+   * Returns the current reference count value.  This method is
+   * non-standard and is only here to simplify debugging.
+   */
+  virtual long _ref_count (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) const;
 
 protected:
 
