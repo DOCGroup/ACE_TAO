@@ -5,10 +5,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
-#if !defined (__ACE_INLINE__)
-# include "Key_Adapters.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (PortableServer,
            Key_Adapters,
            "$Id$")

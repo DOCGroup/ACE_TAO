@@ -117,10 +117,6 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined (__ACE_INLINE__)
-# include "Key_Adapters.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_KEY_ADAPTERS_H */
