@@ -1,11 +1,62 @@
+Fri Jun 18 14:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Impl.cpp:
+        * tao/Acceptor_Registry.cpp:
+        * tao/Adapter.cpp:
+        * tao/Codeset_Manager.cpp:
+        * tao/Condition.cpp:
+        * tao/Connector_Registry.cpp:
+        * tao/DLL_ORB.cpp:
+        * tao/Exception.cpp:
+        * tao/FILE_Parser.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_State.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/IIOP_Lite_Factory.cpp:
+        * tao/IOP_CodecC.cpp:
+        * tao/ORB.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/Object.cpp:
+        * tao/Object_Ref_Table.cpp:
+        * tao/Policy_Validator.cpp:
+        * tao/Reactive_Connect_Strategy.cpp:
+        * tao/Synch_Invocation.cpp:
+        * tao/TAO_Internal.cpp:
+        * tao/Thread_Per_Connection_Handler.cpp:
+        * tao/Transport.cpp:
+        * tao/WrongTransactionC.cpp:
+        * tao/default_client.cpp:
+        * tao/default_resource.cpp:
+        * tao/default_server.cpp:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/RTCORBA/RTCORBAC.cpp:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+        * tao/RTScheduling/RTSchedulerC.cpp:
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Lite_Factory.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+        * tao/Strategies/SHMIOP_Factory.cpp:
+        * tao/Strategies/UIOP_Connector.cpp:
+        * tao/Strategies/advanced_resource.cpp:
+          Replaced ACE_LIB_TEXT, with ACE_TEXT, the first is only
+          for within the ACE library
+
 Fri Jun 18 08:42:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
         * orbsvcs/IFR_Service/tao_ifr.cpp:
-        
+
           Updated files to reflect recent changes to IDL compiler front
           end in
-          
+
           Thu Jun 17 12:51:40 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Jun 18 09:48:12 2004  UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>

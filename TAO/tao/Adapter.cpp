@@ -87,7 +87,7 @@ TAO_Adapter_Registry::check_close (int wait_for_completion
       if (TAO_debug_level > 3)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("(%P|%t) Exception in TAO_Adapter_Registry::check_close () \n")));
+                      ACE_TEXT ("(%P|%t) Exception in TAO_Adapter_Registry::check_close () \n")));
         }
       return;
     }

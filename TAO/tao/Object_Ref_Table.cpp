@@ -46,9 +46,9 @@ TAO_Object_Ref_Table::register_initial_reference (
       if (TAO_debug_level > 1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("(%P|%t) Object_Ref_Table::register_initial_reference:")
-                      ACE_LIB_TEXT ("  Could not register duplicate object <%s> ")
-                      ACE_LIB_TEXT ("with the ORB\n"),
+                      ACE_TEXT ("(%P|%t) Object_Ref_Table::register_initial_reference:")
+                      ACE_TEXT ("  Could not register duplicate object <%s> ")
+                      ACE_TEXT ("with the ORB\n"),
                       ACE_TEXT_CHAR_TO_TCHAR (id)));
         }
 
@@ -59,9 +59,9 @@ TAO_Object_Ref_Table::register_initial_reference (
     {
       if (TAO_debug_level > 1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("(%P|%t) Object_Ref_Table::register_initial_reference:")
-                    ACE_LIB_TEXT ("  Could not register object <%s> with ")
-                    ACE_LIB_TEXT ("the ORB\n"),
+                    ACE_TEXT ("(%P|%t) Object_Ref_Table::register_initial_reference:")
+                    ACE_TEXT ("  Could not register object <%s> with ")
+                    ACE_TEXT ("the ORB\n"),
                     ACE_TEXT_CHAR_TO_TCHAR (id)));
 
       ACE_THROW (CORBA::INTERNAL ());

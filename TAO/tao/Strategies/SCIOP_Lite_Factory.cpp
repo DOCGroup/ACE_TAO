@@ -84,7 +84,7 @@ TAO_SCIOP_Lite_Protocol_Factory::requires_explicit_endpoint (void) const
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_SCIOP_Lite_Protocol_Factory,
-                       ACE_LIB_TEXT ("SCIOP_Lite_Factory"),
+                       ACE_TEXT ("SCIOP_Lite_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_SCIOP_Lite_Protocol_Factory),
                        ACE_Service_Type::DELETE_THIS |
