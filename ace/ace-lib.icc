@@ -99,6 +99,7 @@ option
                  source type(cpp) "Obstack.cpp"
                  source type(cpp) "OS.cpp"
                  source type(cpp) "OS_Dirent.cpp"
+                 source type(cpp) "OS_Errno.cpp"
                  source type(cpp) "OS_Memory.cpp"
                  source type(cpp) "OS_String.cpp"
                  source type(cpp) "OS_TLI.cpp"
