@@ -195,7 +195,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
           << "this->_reset (this->disc_, 1);" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
-      *os << "void "
+      *os << "void ::"
           << node->name () << "::_tao_any_destructor (void *x)" << be_nl
           << "{" << be_idt_nl
           << node->name () << " *tmp = ACE_static_cast ("

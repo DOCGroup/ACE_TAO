@@ -62,7 +62,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // first generate the code for the static methods
 
-  *os << "void "
+  *os << "void ::"
       << node->name () << "::_tao_any_destructor (void *x)" << be_nl
       << "{" << be_idt_nl
       << node->name () << " *tmp = ACE_static_cast ("
