@@ -1,3 +1,9 @@
+Sun Jul 11 06:33:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/msvc_static_order.lst:
+          Added some projects that we must buld first in a static build before
+          doing a full build
+
 Sat Jul 10 10:18:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/SSL/SSL_SOCK_Stream.h:
