@@ -1,3 +1,12 @@
+Wed Oct 27 14:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+          We seem to have several more mismatches with the spec, just added
+          some todo's. When the methods in the POA are moved to the
+          strategies, we should check all the methods related to servant
+          activation, deactivation, retrieval with the spec to see if the
+          correct exceptions with the correct minor codes are given
+
 Wed Oct 27 04:34:29 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/PortableServer/Activation_Strategy.h:
