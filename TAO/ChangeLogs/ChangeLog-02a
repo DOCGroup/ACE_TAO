@@ -1,3 +1,11 @@
+Tue Jun 27 14:35:54 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * tao/Buffering_Constraint_Policy.h:
+        * tao/Buffering_Constraint_Policy.cpp:
+        * tao/Client_Priority_Policy.h:
+        * tao/Client_Priority_Policy.cpp: More local interface
+          implementation changes.
+
 Tue Jun 27 12:50:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/ast/ast_interface.cpp:
@@ -7,7 +15,7 @@ Tue Jun 27 12:50:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  module, the IDL compiler may, in some cases,
 	  consider the two module instances to be different
 	  scopes (for example, if one of them is included from
-	  another IDL file). In a case like this, the 
+	  another IDL file). In a case like this, the
 	  AST_Interface::redefine() method, called by
 	  AST_Interface::forward_redefinition_helper(), was not
 	  updating the 'defined_in' member, leading to lookup
@@ -93,7 +101,7 @@ Mon Jun 26 16:50:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	* tao/diffs/PolicyC.h.diff:
 
 	  Because of the recently added cast operator for
-	  TAO_Object_Manager, there were some inline 
+	  TAO_Object_Manager, there were some inline
 	  problems with these generated files. To fix it,
 	  some _var constructors were inlined in the .h
 	  file and removed from the .i file. The diff files
@@ -101,7 +109,7 @@ Mon Jun 26 16:50:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/diffs/InterceptorC.i.diff:
 	* tao/diffs/PolicyC.i.diff:
-	   
+
 	  New diff files added.
 
 Mon Jun 26 16:45:49 2000  David L. Levine  <levine@cs.wustl.edu>
