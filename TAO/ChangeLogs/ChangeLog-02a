@@ -1,20 +1,25 @@
+Mon Apr  9 09:22:12 2001  Johnny Willemsen <jwillemsen@remedy>
+
+        * orbsvcs/tests/property/*.bor
+          Added BCB makefiles
+
 Sun Apr  8 20:55:38 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/POA/Loader/Server_Manager.cpp: Fixed a typo.
 
 2001-04-08  Yamuna Krishnamurthy  <yamuna@macumbo.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h: 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.h: 
-	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp: 	
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.h: 
-	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp: 	
-	* orbsvcs/tests/AVStreams/Component_Switching/distributor.h: 
-	* orbsvcs/tests/AVStreams/Component_Switching/distributor.cpp: 	
-	* orbsvcs/tests/AVStreams/Component_Switching/README: 		
+	* orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributor.h:
+	* orbsvcs/tests/AVStreams/Component_Switching/distributor.cpp:
+	* orbsvcs/tests/AVStreams/Component_Switching/README:
 
 	  Added the sender switching capability.
-	
+
 Sun Apr  8 08:27:05 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* examples/POA/Forwarding/server.cpp,
