@@ -2,10 +2,6 @@
 
 #include "Task_Client.h"
 
-#if defined (VXWORKS)
-#include "my_time.h"
-#endif /* defined (VXWORKS) */
-
 int stats(int data[], int n)
 {
     int i, j, key, sum, mean;
@@ -137,12 +133,12 @@ Client::Client (Task_State *ts)
 }
 
 void
-Client::put_ave_latency (int ave_latency, u_int thread_id) 
+Client::put_ave_latency (int ave_latency, u_int thread_id)
 {
 #if defined (ACE_HAS_THREADS)
   ts_->lock_.acquire ();
 #endif /* ACE_HAS_THREADS */
-  
+
   ts_->ave_latency_[thread_id] = ave_latency;
 
 #if defined (ACE_HAS_THREADS)
@@ -442,7 +438,7 @@ Client::svc (void)
 
   ts_->barrier_->wait ();
   ACE_DEBUG ((LM_DEBUG, "(%t) Everyone's done, here I go!!\n"));
-  
+
   if (ts_->oneway_ == 1)
     ACE_DEBUG ((LM_DEBUG, "(%t) **** USING ONEWAY CALLS ****\n"));
 
@@ -459,7 +455,7 @@ Client::svc (void)
 	  env.print_exception ("shutdown() call failed.\n");
 	}
     }
-  
+
   return 0;
 }
 
@@ -483,14 +479,11 @@ Client::run_tests (Cubit_ptr cb,
 
   for (i = 0; i < loop_count; i++)
     {
-#if defined (VXWORKS)
-      TimeStamp(&start[i]);
-#else
       ACE_Profile_Timer timer;
       ACE_Time_Value tv (0, (long int) (sleep_time - delta));
       ACE_OS::sleep (tv);
       timer.start ();
-#endif /* defined (VXWORKS) */
+
       if (ts_->oneway_ == 0)
 	{
 	  switch (datatype)
@@ -617,29 +610,16 @@ Client::run_tests (Cubit_ptr cb,
 	    }
 	}
 
-#if defined (VXWORKS)
-      TimeStamp(&stop[i]);
-      elapsed_time[i] = DeltaTime(start[i], stop[i]);
-      delta = ( (0.4 * fabs (elapsed_time[i])) + (0.6 * delta) ); // pow(10,6)
-      latency += (double)elapsed_time[i];
-#else
       timer.stop();
       ACE_Profile_Timer::ACE_Elapsed_Time et;
       timer.elapsed_time (et);
       delta = ((0.4 * fabs (et.real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
       latency += et.real_time;
       my_jitter_array [i] = et.real_time * 1000;
-#endif /* defined (VXWORKS) */
     }
-
-#if defined (VXWORKS)
-  int ave_latency = stats(elapsed_time, loop_count);
-  put_ave_latency(ave_latency, thread_id);
-#endif
 
   if (call_count > 0)
     {
-#if !defined (VXWORKS)
       if (error_count == 0)
         {
 
@@ -654,7 +634,6 @@ Client::run_tests (Cubit_ptr cb,
               this->put_latency (my_jitter_array, latency * 1000, thread_id);
             }
         }
-#endif /* !defined (VXWORKS) */
       ACE_DEBUG ((LM_DEBUG, "%d calls, %d errors\n", call_count, error_count));
     }
 
