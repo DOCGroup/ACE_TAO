@@ -3,7 +3,9 @@ Mon Sep 27 17:12:51 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 	* ace/OS.i: 
 	* ace/OS.h:
 	  Added an overloaded ioctl () that is used when the io control
-	  code is one of SIO_SET_QOS or SIO_GET_QOS.
+ 	  code is one of SIO_SET_QOS or SIO_GET_QOS.  Thanks to Vidya
+ 	  Narayanan <CVN065@lmpsil02.comm.mot.com> for help with this
+ 	  feature.
 
 	* ACE_wrappers/examples/QOS/server.cpp:
 	* ACE_wrappers/examples/QOS/client.cpp:
