@@ -822,42 +822,49 @@ UTL_Scope::look_in_inherited(UTL_ScopedName *e, idl_bool treat_as_ref)
  * Look up a String * in local scope only
  */
 AST_Decl *
-UTL_Scope::lookup_by_name_local(Identifier *e, 
+UTL_Scope::lookup_by_name_local (Identifier *e, 
                                 idl_bool,
                                 long index)
 {
-  UTL_ScopeActiveIterator *i = new UTL_ScopeActiveIterator(this,
-                                                           UTL_Scope::IK_both);
+  UTL_ScopeActiveIterator *i = 
+    new UTL_ScopeActiveIterator (this,
+                                 UTL_Scope::IK_both);
   AST_Decl                *d;
   AST_InterfaceFwd        *fwd;
 
   /*
    * Iterate over this scope
    */
-  while (!(i->is_done())) {
-    d = i->item();
-    if (d->local_name() != NULL && d->local_name()->compare(e)) {
-      if (index == 0) {
-        delete i;
-        /*
-        * Special case for forward declared interfaces. Look through the
-        * forward declaration and retrieve the full definition
-        */
-        if (d->node_type() == AST_Decl::NT_interface_fwd) {
-          fwd = AST_InterfaceFwd::narrow_from_decl(d);
-          if (fwd == NULL)
-            d = NULL;
-          else
-            d = fwd->full_definition();
+  while (!(i->is_done ())) 
+    {
+      d = i->item ();
+      if (d->local_name () != NULL && d->local_name ()->case_compare (e)) 
+        {
+          if (index == 0) 
+            {
+              delete i;
+              /*
+              * Special case for forward declared interfaces. 
+              * Look through the forward declaration and retrieve 
+              * the full definition.
+              */
+              if (d->node_type () == AST_Decl::NT_interface_fwd) 
+                {
+                  fwd = AST_InterfaceFwd::narrow_from_decl (d);
+                  if (fwd == NULL)
+                    d = NULL;
+                  else
+                    d = fwd->full_definition ();
+                }
+              return d;
+            }
+          else 
+            {
+              index--;
+            }
         }
-        return d;
-      }
-      else {
-        index--;
-      }
+      i->next ();
     }
-    i->next();
-  }
   delete i;
   /*
    * OK, not found, return NULL
