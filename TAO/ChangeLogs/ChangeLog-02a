@@ -1,3 +1,10 @@
+Tue Nov 21 17:52:47 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+    
+	* tests/Nested_Event_Loop/server.dsp: 
+	* tests/Nested_Event_Loop/client.dsp: 
+	   
+	  Updated settings to link TAO_Strategies.
+
 Tue Nov 21 17:37:28 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/Nested_Event_Loop/Makefile: 
