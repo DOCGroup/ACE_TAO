@@ -47,14 +47,18 @@ Sat Jun 19 12:59:28 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* NestedUpcall/Triangle_Test/initiator.dsp:
 	* NestedUpcall/Triangle_Test/server_A.dsp:
 	* NestedUpcall/Triangle_Test/server_B.dsp:
-	* Native_Exceptions/client.dsp:
-	* Native_Exceptions/server.dsp:
 	* Param_Test/client.dsp:
 	* Param_Test/server.dsp:
 	* OctetSeq/OctetSeq.dsp:
 	* orbsvcs/orbsvcs/orbsvcs.dsp:
 	* orbsvcs/orbsvcs/orbsvcs_static.dsp: Changed the tao_idl
-	  invocation parameter in all these NT related project files. 
+	  invocation parameter in all these NT related project files.  The
+	  command line parameter is set to '-Ge 1'.
+
+	* Native_Exceptions/client.dsp:
+	* Native_Exceptions/server.dsp: Here the command line parameters
+	  where changed from '-Ge' to '-Ge 0'.
+
 	
 Fri Jun 18 21:00:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
