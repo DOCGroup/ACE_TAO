@@ -1,3 +1,17 @@
+Thu Feb  8 19:22:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_visitor_root/root.cpp:
+
+          Added #ifndef guards agains including the skeleton
+          source file more than once, similar to the generated
+          header files and skeleton template source file. When
+          the _tie classes (which are templates) are used in a
+          service or application, the SunCC compiler tries to
+          compile the skeleton source file twice, even though
+          it contains no template code.
+
 Thu Feb 08 18:15:59 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tests/Exposed_Policies/server.conf:
