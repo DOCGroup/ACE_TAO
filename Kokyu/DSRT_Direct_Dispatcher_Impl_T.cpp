@@ -47,12 +47,12 @@ DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
    sched_queue_modified_cond_ (sched_queue_modified_cond_lock_)
 {
   //Run scheduler thread at highest priority
-  if (this->activate (rt_thr_flags_, 1, 0, executive_prio_) == -1)
+  if (this->activate (this->rt_thr_flags_, 1, 0, this->executive_prio_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%t|%T) cannot activate scheduler thread in RT mode."
                   "Trying in non RT mode\n"));
-      if (this->activate (non_rt_thr_flags_) == -1)
+      if (this->activate (this->non_rt_thr_flags_) == -1)
         ACE_ERROR ((LM_ERROR,
                     "(%t|%T) cannot activate scheduler thread\n"));
     }
@@ -107,7 +107,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
       ACE_GUARD_RETURN (cond_lock_t,
                         mon, sched_queue_modified_cond_lock_, 0);
 
-      if (shutdown_flagged_)
+      if (this->shutdown_flagged_)
         break;
 
       while (!sched_queue_modified_)
@@ -125,53 +125,55 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc (void)
 
       sched_queue_modified_ = 0;
 
-      ACE_Guard<ACE_SYNCH_RECURSIVE_MUTEX> synch_lock_mon(synch_lock_);
-      if (ready_queue_.current_size () <= 0)
+      ACE_Guard<ACE_SYNCH_RECURSIVE_MUTEX> synch_lock_mon(this->synch_lock_);
+      if (this->ready_queue_.current_size () <= 0)
         continue;
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):Sched Queue contents===>\n"));
-      ready_queue_.dump ();
+      this->ready_queue_.dump ();
 #endif
       DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> item_var;
-      ready_queue_.most_eligible (item_var);
+      this->ready_queue_.most_eligible (item_var);
 
       ACE_hthread_t most_eligible_thr_handle = item_var->thread_handle ();
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, 
                   "(%t|%T):curr scheduled thr handle = %d\n", 
-                  curr_scheduled_thr_handle_)); 
+                  this->curr_scheduled_thr_handle_)); 
       ACE_DEBUG ((LM_DEBUG, 
                   "(%t|%T):most eligible thr handle = %d \n",
                   most_eligible_thr_handle)); 
 #endif
 
-      if (curr_scheduled_thr_handle_ != most_eligible_thr_handle)
+      if (this->curr_scheduled_thr_handle_ != most_eligible_thr_handle)
         {
-          if (curr_scheduled_thr_handle_ != 0)
+          if (this->curr_scheduled_thr_handle_ != 0)
             {
-              if (ACE_OS::thr_setprio (curr_scheduled_thr_handle_,
-                                       inactive_prio_, sched_policy_) == -1)
+              if (ACE_OS::thr_setprio (this->curr_scheduled_thr_handle_,
+                                       this->inactive_prio_, 
+                                       this->sched_policy_) == -1)
                 {
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("%p\n"),
                               ACE_TEXT ("thr_setprio on curr_scheduled_thr_handle_ failed.")));
                   ACE_DEBUG ((LM_DEBUG, "thr_handle = %d, prio = %d\n",
-                              curr_scheduled_thr_handle_, inactive_prio_));
+                              this->curr_scheduled_thr_handle_, 
+                              this->inactive_prio_));
                 }
             }
 
           if (ACE_OS::thr_setprio (most_eligible_thr_handle, 
-                                   active_prio_, sched_policy_) == -1)
+                                   this->active_prio_, this->sched_policy_) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("thr_setprio on most_eligible_thr_handle failed")));
             }
 
-          curr_scheduled_thr_handle_ = most_eligible_thr_handle;
-          curr_scheduled_guid_ = item_var->guid ();
+          this->curr_scheduled_thr_handle_ = most_eligible_thr_handle;
+          this->curr_scheduled_guid_ = item_var->guid ();
         }
     }
 
@@ -202,7 +204,7 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
                   -1);
   item->thread_handle (thr_handle);
 
-  if (ready_queue_.insert (item) == -1)
+  if (this->ready_queue_.insert (item) == -1)
     return -1;
 
 #ifdef KOKYU_DSRT_LOGGING
@@ -210,7 +212,9 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
               "(%t|%T):schedule_i after ready_q.insert\n")); 
 #endif
   
-  if (ACE_OS::thr_setprio (thr_handle, blocked_prio_, sched_policy_) == -1)
+  if (ACE_OS::thr_setprio (thr_handle, 
+                           this->blocked_prio_, 
+                           this->sched_policy_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
@@ -227,15 +231,15 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
   //@@ Perhaps the lock could be moved further down just before
   //setting the condition variable?
   ACE_GUARD_RETURN (cond_lock_t,
-                    mon, sched_queue_modified_cond_lock_, 0);
+                    mon, this->sched_queue_modified_cond_lock_, 0);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, 
               "(%t|%T):schedule_i after acquiring cond lock\n")); 
 #endif
 
-  sched_queue_modified_ = 1;
-  sched_queue_modified_cond_.signal ();
+  this->sched_queue_modified_ = 1;
+  this->sched_queue_modified_cond_.signal ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, 
@@ -256,7 +260,7 @@ template <class DSRT_Scheduler_Traits>
 int DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 update_schedule_i (Guid_t guid, Block_Flag_t flag)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, synch_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t): update schedule for block entered\n"));
@@ -273,7 +277,9 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
   if (found == 0 && flag == BLOCK)
     {
       thr_handle = dispatch_item->thread_handle ();
-      if (ACE_OS::thr_setprio (thr_handle, blocked_prio_, sched_policy_) == -1)
+      if (ACE_OS::thr_setprio (thr_handle, 
+                               this->blocked_prio_, 
+                               this->sched_policy_) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
@@ -306,28 +312,28 @@ template <class DSRT_Scheduler_Traits> int
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 cancel_schedule_i (Guid_t guid)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, synch_lock_, -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t): about to remove guid\n"));
 #endif
 
-  ready_queue_.remove (guid);
+  this->ready_queue_.remove (guid);
 
 #ifdef KOKYU_DSRT_LOGGING
-  ready_queue_.dump ();
+  this->ready_queue_.dump ();
 #endif
 
-  if (curr_scheduled_guid_ == guid)
+  if (this->curr_scheduled_guid_ == guid)
     {
-      curr_scheduled_guid_ = 0;
-      curr_scheduled_thr_handle_ = 0;
+      this->curr_scheduled_guid_ = 0;
+      this->curr_scheduled_thr_handle_ = 0;
     }
 
   ACE_GUARD_RETURN (cond_lock_t,
-                    mon, sched_queue_modified_cond_lock_, 0);
-  sched_queue_modified_ = 1;
-  sched_queue_modified_cond_.signal ();
+                    mon, this->sched_queue_modified_cond_lock_, 0);
+  this->sched_queue_modified_ = 1;
+  this->sched_queue_modified_cond_.signal ();
   return 0;
 }
 
@@ -335,11 +341,11 @@ template <class DSRT_Scheduler_Traits> int
 DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 shutdown_i ()
 {
-  shutdown_flagged_ = 1;
+  this->shutdown_flagged_ = 1;
 
-  ACE_Guard<cond_lock_t> mon(sched_queue_modified_cond_lock_);
-  sched_queue_modified_ = 1;
-  sched_queue_modified_cond_.signal ();
+  ACE_Guard<cond_lock_t> mon(this->sched_queue_modified_cond_lock_);
+  this->sched_queue_modified_ = 1;
+  this->sched_queue_modified_cond_.signal ();
   // We have to wait until the scheduler executive thread shuts
   // down. But we have acquired the lock and if we wait without
   // releasing it, the scheduler thread will try to acquire it after
