@@ -19,6 +19,6 @@
   </instance>
   <instance xmi:id="EC_Instance">
     <name>EC_Instance</name>
-    <node>EC</node>
+    <node>BMClosedED</node>
   </instance>
 </Deployment:DeploymentPlan>

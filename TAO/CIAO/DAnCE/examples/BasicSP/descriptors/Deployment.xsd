@@ -761,6 +761,15 @@
       <xsd:enumeration value="EventEmitter"/>
       <xsd:enumeration value="EventPublisher"/>
       <xsd:enumeration value="EventConsumer"/>
+      <xsd:enumeration value="cosEventEmitter"/>
+      <xsd:enumeration value="cosEventPublisher"/>
+      <xsd:enumeration value="cosEventConsumer"/>
+      <xsd:enumeration value="rtecEventEmitter"/>
+      <xsd:enumeration value="rtecEventPublisher"/>
+      <xsd:enumeration value="rtecEventConsumer"/>
+      <xsd:enumeration value="nsEventEmitter"/>
+      <xsd:enumeration value="nsEventPublisher"/>
+      <xsd:enumeration value="nsEventConsumer"/>
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="SatisfierPropertyKind">
