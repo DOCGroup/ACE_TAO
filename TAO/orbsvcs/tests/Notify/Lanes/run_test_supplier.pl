@@ -8,8 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../../bin";
 use PerlACE::Run_Test;
 
-$experiment_timeout = 60;
-$startup_timeout = 60;
+$experiment_timeout = 600;
+$startup_timeout = 600;
 $notify_ior = PerlACE::LocalFile ("notify.ior");
 $naming_ior = PerlACE::LocalFile ("naming.ior");
 $supplier_ior = PerlACE::LocalFile ("supplier.ior");
@@ -19,8 +19,8 @@ $status = 0;
 
 $Supplier = new PerlACE::Process ("../Driver/Notify_Tests_Driver");
 
-$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf";
-#$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf -ORBDebugLevel 1";
+#$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf";
+$Supplier_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $supplier_ior -ORBSvcConf $supplier_conf -ORBDebugLevel 1";
 
 if (PerlACE::waitforfile_timed ($notify_ior, $startup_timeout) == -1) {
   print STDERR "ERROR: waiting for the notify service to start\n";

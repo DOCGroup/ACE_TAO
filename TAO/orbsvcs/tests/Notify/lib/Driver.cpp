@@ -215,7 +215,11 @@ TAO_NS_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
   // Become an active object.
-  if (this->worker_.activate (flags) == -1)
+  int priority = ACE_Sched_Params::priority_min (this->orb_->orb_core ()->orb_params ()->sched_policy ()
+                                                 , this->orb_->orb_core ()->orb_params ()->scope_policy ());
+
+  // Become an active object.
+  if (this->worker_.activate (flags, 1, 0, priority) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
         ACE_ERROR ((LM_ERROR,
@@ -229,16 +233,8 @@ TAO_NS_Driver::run (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     }
 
 
-  this->orb_->run (0);
-
-  ACE_DEBUG ((LM_ERROR, "Waiting for worker thread to end\n"));
-
-  // Wait till we're done.
-  this->worker_.thr_mgr ()->wait ();
-  return;
-
   // Activate the ORB run worker.
-  if (this->orb_run_worker_.activate (flags) == -1)
+  if (this->orb_run_worker_.activate (flags, 1, 0, priority) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
         ACE_ERROR ((LM_ERROR,

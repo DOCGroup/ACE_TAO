@@ -97,19 +97,17 @@ TAO_NS_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq
                ACE_OS::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
         {
           prop_seq[i].value >>= this->max_count_;
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P, %t) Setting Maxcount = %d\n",
-                        this->max_count_));
         }
       else if (ACE_OS::strcmp (prop_seq[i].name.in (), "Load") == 0)
         {
           prop_seq[i].value >>= this->load_;
-
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%P, %t) Setting Load = %d\n",
-                        this->load_));
         }
+    }
+
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P, %t) Maxcount = %d, Load = %d\n",
+                  this->max_count_, this->load_));
     }
 }
 
@@ -246,7 +244,10 @@ TAO_NS_Periodic_Consumer::push_structured_event (const CosNotification::Structur
 
       if (this->client_)
         this->client_->done (this);
-        }
+
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s done \n", this->name_.c_str ()));
+    }
 }
 
 void

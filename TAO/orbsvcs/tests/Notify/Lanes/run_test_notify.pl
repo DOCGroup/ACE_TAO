@@ -8,8 +8,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../../bin";
 use PerlACE::Run_Test;
 
-$experiment_timeout = 60;
-$startup_timeout = 60;
+$experiment_timeout = 600;
+$startup_timeout = 600;
 $notify_conf = PerlACE::LocalFile ("notify.conf");
 $notify_ior = PerlACE::LocalFile ("notify.ior");
 $naming_ior = PerlACE::LocalFile ("naming.ior");
@@ -20,8 +20,8 @@ $Naming = new PerlACE::Process ("../../../Naming_Service/Naming_Service",
 
 $Notification = new PerlACE::Process ("../../../Notify_Service/Notify_Service");
 
-$Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_ior -ORBSvcConf $notify_conf";
-#$Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_ior -ORBSvcConf $notify_conf -ORBDebugLevel 1";
+#$Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_ior -ORBSvcConf $notify_conf";
+$Notify_Args = "-ORBInitRef NameService=file://$naming_ior -IORoutput $notify_ior -ORBSvcConf $notify_conf -ORBDebugLevel 1";
 
 unlink $naming_ior;
 $Naming->Spawn ();
