@@ -5,11 +5,14 @@
 #ifndef XSCRT_PARSER_HPP
 #define XSCRT_PARSER_HPP
 
-#include <stack>
 #include <string>
 
 #include <xercesc/dom/DOM.hpp>
 #include <xercesc/util/XMLString.hpp>
+
+//@@ tmp
+#include <iostream>
+
 
 //@@ VC6
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
@@ -101,6 +104,43 @@ namespace XSCRT
       return r;
     }
 
+    class XStr
+    {
+    public :
+      template <typename C>
+      XStr (std::basic_string<C> const& s)
+          : s_ (XSCRT::XML::transcode<C> (s))
+      {
+      }
+
+      template <typename C>
+      XStr (C const* s)
+          : s_ (XSCRT::XML::transcode<C> (s))
+      {
+      }
+
+      ~XStr ()
+      {
+        delete[] s_;
+      }
+
+      XMLCh const*
+      c_str () const
+      {
+        return s_;
+      }
+
+    private :
+      XMLCh* s_;
+    };
+
+    template <typename C>
+    class Element;
+
+    template <typename C>
+    std::basic_string<C>
+    ns_prefix (std::basic_string<C> const& ns, Element<C> const& e);
+
     template <typename C>
     class Element
     {
@@ -108,12 +148,59 @@ namespace XSCRT
 
     public:
       Element (xercesc::DOMElement const* e)
-          : e_ (e),
+          : e_ (0),
+            ce_ (e),
             name_ (transcode<C> (e->getLocalName (), 0)),
             namespace__ (transcode<C> (e->getNamespaceURI (), 0))
       {
       }
 
+      Element (xercesc::DOMElement* e)
+          : e_ (e),
+            ce_ (e),
+            name_ (transcode<C> (e->getLocalName (), 0)),
+            namespace__ (transcode<C> (e->getNamespaceURI (), 0))
+      {
+      }
+
+      Element (string_ const& name, Element& parent)
+          : e_ (0),
+            ce_ (0),
+            name_ (name)
+      {
+        xercesc::DOMDocument* doc (
+          parent.dom_element ()->getOwnerDocument ());
+
+        e_ = doc->createElement (XStr (name).c_str ());
+
+        parent.dom_element ()->appendChild (e_);
+
+        ce_ = e_;
+      }
+
+      Element (string_ const& name, string_ const& ns, Element& parent)
+          : e_ (0),
+            ce_ (0),
+            name_ (name),
+            namespace__ (ns)
+      {
+        string_ prefix (ns_prefix (ns, parent));
+
+        xercesc::DOMDocument* doc (
+          parent.dom_element ()->getOwnerDocument ());
+
+        e_ = doc->createElementNS (
+          XStr (ns).c_str (),
+          XStr (prefix.empty ()
+                ? name
+                : prefix + string_ (1, ':') + name).c_str ());
+
+        parent.dom_element ()->appendChild (e_);
+
+        ce_ = e_;
+      }
+
+    public:
       string_
       name () const
       {
@@ -130,7 +217,7 @@ namespace XSCRT
       Element<C>
       parent () const
       {
-        return dynamic_cast<xercesc::DOMElement const*>(e_->getParentNode ());
+        return dynamic_cast<xercesc::DOMElement const*>(ce_->getParentNode ());
       }
 
     public:
@@ -140,13 +227,23 @@ namespace XSCRT
         return XML::transcode<C> (dom_element ()->getTextContent (), 0);
       }
 
+      void
+      value (string_ const& v)
+      {
+        xercesc::DOMText* text (
+          dom_element ()->getOwnerDocument ()->createTextNode(
+            XStr (v).c_str ()));
+        
+        dom_element ()->appendChild (text);
+      }
+
     public:
       string_
       operator[] (string_ const& s) const
       {
         //@@ VC6
         XMLCh* name = transcode (s);
-        XMLCh const* value = e_->getAttribute (name);
+        XMLCh const* value = ce_->getAttribute (name);
         delete[] name;
 
         return transcode<C> (value, 0);
@@ -156,13 +253,18 @@ namespace XSCRT
       xercesc::DOMElement const*
       dom_element () const
       {
+        return ce_;
+      }
+
+      xercesc::DOMElement*
+      dom_element ()
+      {
         return e_;
       }
 
     private:
-
-    private:
-      xercesc::DOMElement const* e_;
+      xercesc::DOMElement* e_;
+      xercesc::DOMElement const* ce_;
 
       string_ name_;
       string_ namespace__;
@@ -176,10 +278,66 @@ namespace XSCRT
 
     public:
       Attribute (xercesc::DOMAttr const* a)
-          : a_ (a),
+          : a_ (0),
+            ca_ (a),
             name_ (transcode<C> (a->getLocalName (), 0)),
             value_ (transcode<C> (a->getValue (), 0))
       {
+      }
+
+      Attribute (xercesc::DOMAttr* a)
+          : a_ (a),
+            ca_ (a),
+            name_ (transcode<C> (a->getLocalName (), 0)),
+            value_ (transcode<C> (a->getValue (), 0))
+      {
+      }
+
+      Attribute (string_ const& name,
+                 string_ const& v,
+                 Element<C>& parent)
+          : a_ (0),
+            ca_ (0),
+            name_ (name),
+            value_ ()
+      {
+        xercesc::DOMDocument* doc (
+          parent.dom_element ()->getOwnerDocument ());
+
+        a_ = doc->createAttribute (XStr (name).c_str ());
+
+        value (v);
+
+        parent.dom_element ()->setAttributeNode (a_);
+
+        ca_ = a_;
+      }
+
+      Attribute (string_ const& name,
+                 string_ const& ns,
+                 string_ const& v,
+                 Element<C>& parent)
+          : a_ (0),
+            ca_ (0),
+            name_ (name),
+            value_ ()
+      {
+        string_ prefix (ns_prefix (ns, parent));
+
+        xercesc::DOMDocument* doc (
+          parent.dom_element ()->getOwnerDocument ());
+
+        a_ = doc->createAttributeNS (
+          XStr (ns).c_str (),
+          XStr (prefix.empty ()
+                ? name
+                : prefix + string_ (1, ':') + name).c_str ());
+
+        value (v);
+
+        parent.dom_element ()->setAttributeNodeNS (a_);
+
+        ca_ = a_;
       }
 
       string_
@@ -194,9 +352,22 @@ namespace XSCRT
         return value_;
       }
 
+      void
+      value (string_ const& v)
+      {
+        value_ = v;
+        a_->setValue (XStr (v).c_str ());
+      }
+
     public:
       xercesc::DOMAttr const*
       dom_attribute () const
+      {
+        return ca_;
+      }
+
+      xercesc::DOMAttr*
+      dom_attribute ()
       {
         return a_;
       }
@@ -204,7 +375,8 @@ namespace XSCRT
     private:
 
     private:
-      xercesc::DOMAttr const* a_;
+      xercesc::DOMAttr* a_;
+      xercesc::DOMAttr const* ca_;
 
       string_ name_;
       string_ value_;
@@ -262,6 +434,34 @@ namespace XSCRT
 
       return ns.empty () ? un : (ns + C ('#') + un);
     }
+
+    class no_prefix {};
+
+    template <typename C>
+    std::basic_string<C>
+    ns_prefix (std::basic_string<C> const& ns, Element<C> const& e)
+    {
+      XStr xns (ns);
+
+      XMLCh const* p (
+        e.dom_element ()->lookupNamespacePrefix (xns.c_str (), false));
+
+      if (p == 0)
+      {
+        bool r (e.dom_element ()->isDefaultNamespace (xns.c_str ()));
+
+        if (r)
+        {
+          return std::basic_string<C> ();
+        }
+        else
+        {
+          throw no_prefix ();
+        }
+      }
+
+      return transcode<C> (p, 0);
+    }
   }
 
   template <typename C>
@@ -315,7 +515,7 @@ namespace XSCRT
   };
 }
 
-#include "XSCRT/Parser.ipp"
-#include "XSCRT/Parser.tpp"
+#include <XSCRT/Parser.ipp>
+#include <XSCRT/Parser.tpp>
 
 #endif  // XSCRT_PARSER_HPP

@@ -1,6 +1,0 @@
-//$Id$
-
-interface Synch
-{
-  oneway void go (in long  base_time);
-};

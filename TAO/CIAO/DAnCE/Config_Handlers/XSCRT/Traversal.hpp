@@ -9,7 +9,11 @@
 #include <set>
 #include <vector>
 
-#include "XSCRT/ExtendedTypeInfo.hpp"
+// #include <iostream>
+// using std::wcerr;
+// using std::endl;
+
+#include <XSCRT/ExtendedTypeInfo.hpp>
 
 namespace XSCRT
 {
@@ -29,6 +33,9 @@ namespace XSCRT
     public:
       virtual void
       trampoline (B& n) = 0;
+
+      virtual void
+      trampoline (B const& n) = 0;
 
       /*@@ VC6
       template <typename X>
@@ -50,9 +57,15 @@ namespace XSCRT
       virtual void
       dispatch (B& n);
 
+      virtual void
+      dispatch (B const& n);
+
       void
       map (TypeId id, TraverserBase<B>& t)
       {
+        //wcerr << "map for " << id.name () << " to " << &t
+	//      << " in " << &traversal_map_ << endl;
+
         //@@ VC6
         Traversers& traversers = traversal_map_[id];
         traversers.push_back (&t);
@@ -122,8 +135,13 @@ namespace XSCRT
     class Dispatcher : public virtual DispatcherBase<B>
     {
     public:
+      Dispatcher ()
+          : merge_ (true)
+      {
+      }
+
       void
-      traverser (Dispatcher& d)
+      traverser (DispatcherBase<B>& d)
       {
         for (typename DispatcherBase<B>::Iterator
                i (d.begin ()), end (d.end ());
@@ -138,24 +156,65 @@ namespace XSCRT
         }
       }
 
-    protected:
-      DispatcherBase<B>&
-      traverser ()
+    public:
+      virtual void
+      dispatch (B& n)
       {
-        return dispatcher_;
+        merge ();
+        dispatcher_.dispatch (n);
       }
 
-      template <typename I>
-      void
-      iterate_and_dispatch (I begin, I end)
+      virtual void
+      dispatch (B const& n)
       {
-        for (; begin != end; ++begin)
+        merge ();
+        dispatcher_.dispatch (n);
+      }
+
+      using DispatcherBase<B>::begin;
+      using DispatcherBase<B>::end;
+
+    private:
+      void
+      merge ()
+      {
+        if (merge_)
         {
-          traverser ().dispatch (*begin);
+          for (typename DispatcherBase<B>::Iterator
+                 i (begin ()), e (end ()); i != e; ++i)
+          {
+            for (typename DispatcherBase<B>::Traversers::const_iterator
+                   t (i->second.begin ()), e (i->second.end ()); t != e; ++t)
+            {
+              dispatcher_.map (i->first, **t);
+            }
+          }
+
+          merge_ = false;
+        }
+      }
+
+    protected:
+      // DispatcherBase<B>&
+      // traverser ()
+      // {
+      //   return dispatcher_;
+      // }
+
+      template <typename X, typename A, typename I>
+      void
+      iterate_and_dispatch (I begin, I end, X& x, void (X::*next)(A&), A& a)
+      {
+        for (; begin != end;)
+        {
+          dispatch (*begin);
+
+          if (++begin != end) (x.*next) (a);
         }
       }
 
     private:
+      bool merge_;
       DispatcherBase<B> dispatcher_;
     };
 
@@ -177,22 +236,40 @@ namespace XSCRT
       }
 
       virtual void
-      traverse (Type&) = 0;
+      traverse (Type&)
+      {
+        abort ();
+      }
+
+      virtual void
+      traverse (Type const&)
+      {
+        abort ();
+      }
 
     protected:
       virtual void
       trampoline (B& n)
       {
-        //cerr << "trampoline for " << &n << " to type "
-        //     << typeid (Type).name () << endl;
+        //wcerr << "trampoline for " << &n << " to type "
+        //      << typeid (Type).name () << endl;
 
         traverse (dynamic_cast<Type&> (n));
+      }
+
+      virtual void
+      trampoline (B const& n)
+      {
+        //wcerr << "trampoline for " << &n << " to type "
+        //      << typeid (Type).name () << endl;
+
+        traverse (dynamic_cast<Type const&> (n));
       }
     };
   }
 }
 
-#include "XSCRT/Traversal.ipp"
-#include "XSCRT/Traversal.tpp"
+#include <XSCRT/Traversal.ipp>
+#include <XSCRT/Traversal.tpp>
 
 #endif  // XSCRT_TRAVERSAL_HPP

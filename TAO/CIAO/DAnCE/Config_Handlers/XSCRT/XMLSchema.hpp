@@ -8,7 +8,7 @@
 #include <string>
 // #include <iostream> //@@ tmp
 
-#include "XSCRT/Elements.hpp"
+#include <XSCRT/Elements.hpp>
 
 namespace XMLSchema
 {
@@ -85,6 +85,11 @@ namespace XMLSchema
     {
     }
 
+    string (C const* x)
+        : Base__ (x)
+    {
+    }
+
     string&
     operator= (Base__ const& x)
     {
@@ -116,6 +121,11 @@ namespace XMLSchema
     }
 
     normalizedString (Base__ const& x)
+        : string<C> (x)
+    {
+    }
+
+    normalizedString (C const* x)
         : string<C> (x)
     {
     }
@@ -155,6 +165,11 @@ namespace XMLSchema
     {
     }
 
+    token (C const* x)
+        : normalizedString<C> (x)
+    {
+    }
+
     token&
     operator= (Base__ const& x)
     {
@@ -186,6 +201,11 @@ namespace XMLSchema
     }
 
     NMTOKEN (Base__ const& x)
+        : token<C> (x)
+    {
+    }
+
+    NMTOKEN (C const* x)
         : token<C> (x)
     {
     }
@@ -224,6 +244,11 @@ namespace XMLSchema
     {
     }
 
+    Name (C const* x)
+        : token<C> (x)
+    {
+    }
+
     Name&
     operator= (Base__ const& x)
     {
@@ -255,6 +280,11 @@ namespace XMLSchema
     }
 
     NCName(Base__ const& x)
+        : Name<C> (x)
+    {
+    }
+
+    NCName (C const* x)
         : Name<C> (x)
     {
     }
@@ -329,6 +359,11 @@ namespace XMLSchema
     {
     }
 
+    ID (C const* x)
+        : NCName<C> (x), id_provider_ (*this)
+    {
+    }
+
     ID&
     operator= (Base__ const& x)
     {
@@ -400,8 +435,11 @@ namespace XMLSchema
 
   struct IDREF_Base : public XSCRT::Type
   {
-    virtual XSCRT::Type*
+    virtual XSCRT::Type const*
     get () const = 0;
+
+    virtual XSCRT::Type*
+    get () = 0;
   };
 
   template <typename C>
@@ -433,6 +471,11 @@ namespace XMLSchema
     {
     }
 
+    IDREF (C const* id)
+        : id_ (id), id_provider_ (id_)
+    {
+    }
+
     IDREF&
     operator= (IDREF const& x)
     {
@@ -448,20 +491,52 @@ namespace XMLSchema
     }
 
   public:
-    XSCRT::Type*
+    NCName<C>
+    id () const
+    {
+      return id_;
+    }
+
+  public:
+    XSCRT::Type const*
     operator-> () const
     {
       return get ();
     }
 
-    XSCRT::Type&
+    XSCRT::Type*
+    operator-> ()
+    {
+      return get ();
+    }
+
+    XSCRT::Type const&
     operator* () const
     {
       return *(get ());
     }
 
-    virtual XSCRT::Type*
+    XSCRT::Type&
+    operator* ()
+    {
+      return *(get ());
+    }
+
+    virtual XSCRT::Type const*
     get () const
+    {
+      if (!id_.empty () && container () != this)
+      {
+        return root ()->lookup_id (id_provider_);
+      }
+      else
+      {
+        return 0;
+      }
+    }
+
+    virtual XSCRT::Type*
+    get ()
     {
       if (!id_.empty () && container () != this)
       {
@@ -475,11 +550,16 @@ namespace XMLSchema
 
     // conversion to bool
     //
-    typedef XSCRT::Type* (IDREF::*bool_convertable)() const;
+    typedef void (IDREF::*bool_convertable)();
 
     operator bool_convertable () const
     {
-      return get () ? &IDREF::operator-> : 0;
+      return get () ? &IDREF::true_ : 0;
+    }
+
+  private:
+    void true_ ()
+    {
     }
 
   private:
@@ -492,25 +572,34 @@ namespace XMLSchema
 //
 //
 
-#include "XSCRT/Traversal.hpp"
+#include <XSCRT/Traversal.hpp>
 
 namespace XMLSchema
 {
   namespace Traversal
   {
-    template <typename T>
-    struct Traverser : XSCRT::Traversal::Traverser<T, XSCRT::Type>,
-                       XSCRT::Traversal::Traverser<IDREF_Base, XSCRT::Type>
+    // Automatic traversal of IDREFs.
+    //
+    struct IDREF :
+      XSCRT::Traversal::Traverser<XMLSchema::IDREF_Base, XSCRT::Type>
     {
-      typedef
-      T
-      Type;
-
       virtual void
       traverse (XMLSchema::IDREF_Base& r)
       {
         if (r.get ()) dispatch (*(r.get ()));
       }
+
+      virtual void
+      traverse (XMLSchema::IDREF_Base const& r)
+      {
+        if (r.get ()) dispatch (*(r.get ()));
+      }
+    };
+
+
+    template <typename T>
+    struct Traverser : XSCRT::Traversal::Traverser<T, XSCRT::Type>
+    {
     };
 
     typedef Traverser<byte> byte;
@@ -546,8 +635,7 @@ namespace XMLSchema
 // ExtendedTypeInfo for XML Schema types
 //
 //
-
-#include "XSCRT/ExtendedTypeInfo.hpp"
+#include <XSCRT/ExtendedTypeInfo.hpp>
 
 namespace XMLSchema
 {
@@ -558,7 +646,95 @@ namespace XMLSchema
   };
 }
 
-#include "XSCRT/XMLSchema.ipp"
-#include "XSCRT/XMLSchema.tpp"
+// Writer
+//
+//
+#if !defined (_MSC_VER) || (_MSC_VER >= 1300)
+
+#include <XSCRT/Writer.hpp>
+
+namespace XMLSchema
+{
+  namespace Writer
+  {
+    template <typename T, typename C>
+    struct FundamentalType : Traversal::Traverser<T>,
+                             virtual XSCRT::Writer<C>
+    {
+      FundamentalType (XSCRT::XML::Element<C>& e)
+          : XSCRT::Writer<C> (e)
+      {
+      }
+
+      using XSCRT::Writer<C>::top_;
+      using XSCRT::Writer<C>::attr_;
+
+      virtual void
+      traverse (T const& o)
+      {
+        using namespace XSCRT::XML;
+
+        std::basic_ostringstream<C> os;
+
+        os << o;
+
+        if (Attribute<C>* a = attr_ ())
+        {
+          a->value (os.str ());
+        }
+        else
+        {
+          top_().value (os.str ());
+        }
+      }
+
+    protected:
+      FundamentalType ()
+      {
+      }
+    };
+
+
+    template <typename C>
+    struct IDREF : Traversal::Traverser<XMLSchema::IDREF<C> >,
+                   virtual XSCRT::Writer<C>
+    {
+      IDREF (XSCRT::XML::Element<C>& e)
+          : XSCRT::Writer<C> (e)
+      {
+      }
+
+      using XSCRT::Writer<C>::top_;
+      using XSCRT::Writer<C>::attr_;
+
+      virtual void
+      traverse (
+        typename Traversal::Traverser<XMLSchema::IDREF<C> >::Type const& o)
+      {
+        using namespace XSCRT::XML;
+
+        if (Attribute<C>* a = attr_ ())
+        {
+          a->value (o.id ());
+        }
+        else
+        {
+          top_().value (o.id ());
+        }
+      }
+
+    protected:
+      IDREF ()
+      {
+      }
+    };
+  }
+}
+
+#endif
+
+
+#include <XSCRT/XMLSchema.ipp>
+#include <XSCRT/XMLSchema.tpp>
 
 #endif  // XSCRT_XMLSCHEMA_HPP
