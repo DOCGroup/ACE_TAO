@@ -40,7 +40,7 @@ Trading_Service::Trading_Service (void)
     ior_output_file_ (0),
     bootstrapper_ (0)
 {
-  char *trader_name = 
+  char *trader_name =
     CORBA::string_alloc (MAXHOSTNAMELEN + 10);
 
   if (trader_name != 0)
@@ -331,10 +331,14 @@ Trading_Service::shutdown (void)
 
           ACE_DEBUG ((LM_DEBUG,
                       "*** Unlinking from federated traders.\n"));
-          for (CORBA::ULong i = link_name_seq->length () - 1;
-               i > 0;
-               i--)
+
+          for (CORBA::ULong j = 0;
+               j != link_name_seq->length ();
+               ++j)
             {
+              CORBA::ULong i =
+                link_name_seq->length () - j - 1;
+
               ACE_DEBUG ((LM_DEBUG,
                           "*** Describing the next link.\n"));
               CosTrading::Link::LinkInfo_var link_info =

@@ -30,18 +30,18 @@ main (int argc, char** argv)
       CORBA::Object_var trading_obj = (ior == 0) ?
         orb->resolve_initial_references ("TradingService") :
         orb->string_to_object (ior);
-      
+
       if (CORBA::is_nil (trading_obj.in ()))
-      	ACE_ERROR_RETURN ((LM_ERROR,
-      			   " (%P|%t) Unable to bootstrap to the Trading Service.\n"),
-			   -1);
-      
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to bootstrap to the Trading Service.\n"),
+                           -1);
+
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "*** Narrowing the lookup interface.\n"));
-      CosTrading::Lookup_var lookup_if = 
-      	CosTrading::Lookup::_narrow (trading_obj.in (), ACE_TRY_ENV);
+      CosTrading::Lookup_var lookup_if =
+        CosTrading::Lookup::_narrow (trading_obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-            
+
       // Run the Service Type Exporter tests
       ACE_DEBUG ((LM_DEBUG, "*** Running the Service Type Exporter tests.\n"));
       TAO_Service_Type_Exporter type_exporter (lookup_if.in (),
@@ -51,13 +51,13 @@ main (int argc, char** argv)
 
       type_exporter.remove_all_types (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       type_exporter.add_all_types (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       type_exporter.remove_all_types (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       type_exporter.add_all_types (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -66,13 +66,13 @@ main (int argc, char** argv)
           type_exporter.add_all_types_to_all (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      
+
       type_exporter.list_all_types (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       type_exporter.describe_all_types (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       type_exporter.fully_describe_all_types (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -84,7 +84,7 @@ main (int argc, char** argv)
       ACE_TRY_CHECK;
 
       // = Test series.
-      
+
       offer_exporter.withdraw_offers (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -104,25 +104,30 @@ main (int argc, char** argv)
       ACE_TRY_CHECK;
 
       offer_exporter.describe_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;      
+      ACE_TRY_CHECK;
 
       offer_exporter.withdraw_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;      
+      ACE_TRY_CHECK;
 
       offer_exporter.export_offers (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (parse_args.federated ())
         {
           offer_exporter.export_offers_to_all (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
-      
+
       offer_exporter.describe_offers (ACE_TRY_ENV);
-      ACE_TRY_CHECK;      
+      ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "*** Offer Exporter tests complete.\n"));
       ACE_DEBUG ((LM_DEBUG, "*** Now serving dynamic properties.\n"));
+
+      FILE *ready_file =
+        ACE_OS::fopen ("export_test_ready", "w");
+      ACE_OS::fprintf (ready_file, "The export test is ready\n");
+      ACE_OS::fclose (ready_file);
 
       orb_manager.run (ACE_TRY_ENV);
       ACE_TRY_CHECK;

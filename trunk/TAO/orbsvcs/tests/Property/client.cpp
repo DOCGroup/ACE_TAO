@@ -327,7 +327,38 @@ Client::test_get_properties (CORBA::Environment &ACE_TRY_ENV)
                           (const char *) properties [pi].property_name.in ()));
 
               // Print the value.
-              CORBA::Any::dump (properties [pi].property_value);
+              CORBA::Char    char_val;
+              CORBA::Long    long_val;
+              CORBA::ULong  ulong_val;
+              CORBA::Float  float_val;
+              CORBA::Double double_val;
+              char *        string_val;
+
+              if (properties [pi].property_value >>=
+                  CORBA::Any::to_char (char_val))
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%c\n", char_val));
+                }
+              else if (properties [pi].property_value >>= long_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%d\n", long_val));
+                }
+              else if (properties [pi].property_value >>= ulong_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%ld\n", ulong_val));
+                }
+              else if (properties [pi].property_value >>= float_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%f\n", long_val));
+                }
+              else if (properties [pi].property_value >>= double_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%f\n", double_val));
+                }
+              else if (properties [pi].property_value >>= string_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%s\n", string_val));
+                }
             }
         }
     }

@@ -206,7 +206,61 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
               ACE_DEBUG ((LM_DEBUG, "\n"));
             }
           else
-            CORBA::Any::dump (*value);
+            {
+              // @@ Print the any value...
+              CORBA::Char       char_val;
+              CORBA::Octet     octet_val;
+              CORBA::Boolean boolean_val;
+              CORBA::Short     short_val;
+              CORBA::UShort   ushort_val;
+              CORBA::Long       long_val;
+              CORBA::ULong     ulong_val;
+              CORBA::Float     float_val;
+              CORBA::Double   double_val;
+              char *          string_val;
+
+              if ((*value) >>= CORBA::Any::to_char (char_val))
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%c\n", char_val));
+                }
+              else if ((*value) >>= CORBA::Any::to_octet (octet_val))
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%c\n", octet_val));
+                }
+              else if ((*value) >>= CORBA::Any::to_boolean (boolean_val))
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%s\n",
+                              boolean_val?"TRUE":"FALSE"));
+                }
+              else if ((*value) >>= short_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%d\n", short_val));
+                }
+              else if ((*value) >>= ushort_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%ld\n", ushort_val));
+                }
+              else if ((*value) >>= long_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%d\n", long_val));
+                }
+              else if ((*value) >>= ulong_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%ld\n", ulong_val));
+                }
+              else if ((*value) >>= float_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%f\n", long_val));
+                }
+              else if ((*value) >>= double_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%f\n", double_val));
+                }
+              else if ((*value) >>= string_val)
+                {
+                  ACE_DEBUG ((LM_DEBUG, "%s\n", string_val));
+                }
+            }
         }
     }
 }
@@ -221,7 +275,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
   while (arg_shifter.is_anything_left ())
     {
       char *current_arg = arg_shifter.get_current ();
-      
+
       if (ACE_OS::strcmp (current_arg, "-f") == 0 ||
           ACE_OS::strcmp (current_arg, "-federate") == 0)
         {
@@ -239,16 +293,16 @@ TT_Parse_Args::TT_Parse_Args (int& argc, char** argv)
         {
           arg_shifter.consume_arg ();
           FILE* ior_file = 0;
-          
+
           if (arg_shifter.is_parameter_next ())
-            {              
+            {
               char* file_name = arg_shifter.get_current ();
               ior_file = ACE_OS::fopen (file_name, "r");
 
               if (ior_file == 0)
                 ACE_ERROR ((LM_ERROR,
                             "Unable to open %s for reading: %p\n",
-                            file_name));              
+                            file_name));
 
               arg_shifter.consume_arg ();
             }
@@ -292,4 +346,3 @@ TT_Parse_Args::ior () const
 {
   return this->ior_;
 }
-
