@@ -30,7 +30,7 @@ Secure_Vault_i::authenticate (const char * user,
 }
 
 CORBA::Long
-Secure_Vault_i::update_records (CORBA::Long id,
+Secure_Vault_i::update_records (CORBA::Long,
                 const Test_Interceptors::Secure_Vault::Record &,
                 CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
