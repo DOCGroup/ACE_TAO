@@ -17,15 +17,13 @@
 
 
 TAO::be_visitor_value_typecode::be_visitor_value_typecode (
-  be_visitor_context * ctx,
-  bool is_exception)
-  : be_visitor_typecode_defn (ctx),
-    is_exception_ (is_exception)
+  be_visitor_context * ctx)
+  : be_visitor_typecode_defn (ctx)
 {
 }
 
 int
-TAO::be_visitor_value_typecode::visit_structure (be_valuetype * node)
+TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
