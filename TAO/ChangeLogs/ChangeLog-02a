@@ -1,3 +1,11 @@
+Wed May 31 10:04:18 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/tests/Trading/TradingLib.dsp:
+
+          The configurations were missing a space after the dash, which
+          wasn't a problem in DevStudio, but the msvc_auto_compile script
+          had problems with it.
+
 Wed May 31 09:50:34 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
