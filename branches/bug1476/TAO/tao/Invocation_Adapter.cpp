@@ -1,4 +1,5 @@
 //$Id$
+
 #include "Invocation_Adapter.h"
 #include "Profile_Transport_Resolver.h"
 #include "operation_details.h"
@@ -235,7 +236,7 @@ namespace TAO
     Profile_Transport_Resolver resolver (
       effective_target,
       stub,
-      (details.response_flags () == Messaging::SYNC_NONE));
+      (details.response_flags () != Messaging::SYNC_NONE));
 
     resolver.resolve (max_wait_time
                       ACE_ENV_ARG_PARAMETER);

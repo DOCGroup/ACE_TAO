@@ -250,7 +250,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
 
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Transport_Connector::connect, ",
+                "TAO (%P|%t) - Transport_Connector::connect, "
                 "got an existing %s Transport[%d]\n",
                 base_transport->is_connected() ? "connected" : "unconnected",
                 base_transport->id ()));
