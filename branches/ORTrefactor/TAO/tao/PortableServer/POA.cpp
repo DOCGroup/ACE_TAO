@@ -743,7 +743,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
         }
     }
 
-  PortableInterceptor::ObjectReferenceTemplateSeq seq_obj_ref_template;
+  TAO_ObjectReferenceTemplate_Array array_obj_ref_template;
 
   CORBA::ULong i = 0;
 
@@ -758,17 +758,17 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
       PortableInterceptor::ObjectReferenceTemplate *child_at =
         child_poa->get_adapter_template ();
 
-      CORBA::add_ref (child_at);
+      //CORBA::add_ref (child_at);
 
       // Add it to the sequence of object reference templates that
       // will be destroyed.
-      seq_obj_ref_template.length (i + 1);
+      array_obj_ref_template.size (i + 1);
 
-      seq_obj_ref_template[i] = child_at;
+      array_obj_ref_template[i] = child_at;
 
       child_poa->adapter_state_ = PortableInterceptor::INACTIVE;
 
-      child_poa->adapter_state_changed (seq_obj_ref_template,
+      child_poa->adapter_state_changed (array_obj_ref_template,
                                         child_poa->adapter_state_
                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -850,14 +850,14 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
 
       this->adapter_state_ = PortableInterceptor::NON_EXISTENT;
 
-      this->adapter_state_changed (seq_obj_ref_template,
+      this->adapter_state_changed (array_obj_ref_template,
                                    this->adapter_state_
                                    ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Break all ties between the ObjectReferenceTemplate and this
       // POA.
-      if (this->ort_adapter_ == 0)
+      if (this->ort_adapter_ != 0)
         this->ort_adapter_->poa (0);
     }
   else
@@ -1030,7 +1030,7 @@ TAO_POA::add_ior_component_to_profile (
 
 void
 TAO_POA::adapter_state_changed (
-   const PortableInterceptor::ObjectReferenceTemplateSeq &seq_obj_ref_template,
+   const TAO_ObjectReferenceTemplate_Array &array_obj_ref_template,
    PortableInterceptor::AdapterState state
    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -1042,21 +1042,10 @@ TAO_POA::adapter_state_changed (
   if (interceptor_list == 0)
     return;
 
-  TAO_IORInterceptor_List::TYPE & interceptors =
-    interceptor_list->interceptors ();
-
-  const size_t interceptor_count = interceptors.size ();
-
-  if (interceptor_count == 0)
-    return;
-
-  for (size_t i = 0; i < interceptor_count; ++i)
-    {
-      interceptors[i]->adapter_state_changed (seq_obj_ref_template,
-                                              state
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
+  interceptor_list->adapter_state_changed (array_obj_ref_template,
+                                           state
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)

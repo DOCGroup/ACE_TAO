@@ -36,6 +36,7 @@ namespace PortableInterceptor
 {
   class ObjectReferenceTemplate;
   class ObjectReferenceFactory;
+
 }
 
 /**
