@@ -2,7 +2,7 @@
 
 #include "mpeg_server/Video_Server.h"
 #include "vs.h"
-
+ 
 int
 Video_Child_Process::init (int argc,
                            char **argv)

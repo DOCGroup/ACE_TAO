@@ -81,6 +81,44 @@ private:
   Command_Handler *command_handler_;
 };
 
+class Audio_Client_StreamEndPoint
+  :public virtual TAO_Client_StreamEndPoint
+{
+public:
+  Audio_Client_StreamEndPoint (void);
+
+  Audio_Client_StreamEndPoint (Command_Handler *command_handler);
+  // constructor
+
+  virtual int handle_open (void);
+  // called when streamendpoint is instantiated
+
+  virtual int handle_close (void);
+  // called when streamendpoint is being destructed
+
+  virtual CORBA::Boolean handle_preconnect (AVStreams::flowSpec &the_spec);
+  // called before connecting
+
+  virtual CORBA::Boolean handle_postconnect (AVStreams::flowSpec &the_spec);
+  // called after connecting
+  
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
+                             CORBA::Environment &env) ;
+
+  virtual int handle_stop (const AVStreams::flowSpec &the_spec,
+                            CORBA::Environment &env) ;
+  
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
+                               CORBA::Environment &env);
+  
+  virtual ACE_HANDLE get_handle (void);
+  // gets the underlying socket descriptor from the SOCK_Dgram
+
+private:
+  ACE_SOCK_Dgram dgram_;
+  // The datagram used for streaming.
+  Command_Handler *command_handler_;
+};
 
 
 class Video_Client_VDev
@@ -97,6 +135,26 @@ protected:
 private:
   Video_Control_ptr video_control_;
   // The video controller
+
+  Command_Handler *command_handler_;
+  // pointer to the command handler object
+};
+
+
+class Audio_Client_VDev
+  : public virtual TAO_VDev
+{
+public:
+  Audio_Client_VDev (void);
+  Audio_Client_VDev (Command_Handler *command_handler);
+
+protected:
+  CORBA::Boolean set_media_ctrl (CORBA::Object_ptr media_ctrl,
+                                 CORBA::Environment& env);
+
+private:
+  Audio_Control_ptr audio_control_;
+  // The Audio controller
 
   Command_Handler *command_handler_;
   // pointer to the command handler object
@@ -150,6 +208,24 @@ private:
   // pointer to command handler object
 
 };
+
+class Audio_Endpoint_Reactive_Strategy_A 
+  : public TAO_AV_Endpoint_Reactive_Strategy_A<Audio_Client_StreamEndPoint,Audio_Client_VDev,AV_Null_MediaCtrl> 
+{
+public:
+  Audio_Endpoint_Reactive_Strategy_A (TAO_ORB_Manager *orb_manager,
+                                      Command_Handler *command_handler);
+  // constructor . The orb manager is needed for the TAO_AV_Endpoint_Reactive_Strategy_A.
+
+  virtual int make_vdev (Audio_Client_VDev *&vdev);
+  // hook to make our Vdev with the pointer to command handler.
+  virtual int make_stream_endpoint (Audio_Client_StreamEndPoint *& endpoint);
+  // hook to make our streamendpoint taking a command handler pointer
+private:
+  Command_Handler *command_handler_;
+  // pointer to command handler object
+
+};
   
 class Command_Handler 
   : public virtual ACE_Event_Handler
@@ -180,6 +256,13 @@ public:
 
   void set_video_control (Video_Control_ptr video_control);
   // called to set the video control object pointer of the comand handler.
+
+  void set_audio_data_handle (ACE_HANDLE data_fd);
+  // sets the data handle (UDP) of the command handler
+
+  void set_audio_control (Audio_Control_ptr video_control);
+  // called to set the video control object pointer of the comand handler.
+
   int get_video_control (void);
   // Gets the video control reference thru the property service from
   // the video server virtual device
@@ -270,7 +353,7 @@ private:
   AVStreams::MMDevice_var video_server_mmdevice_;
   // The video server multimedia device
 
-  Video_Endpoint_Reactive_Strategy_A reactive_strategy_;
+  Video_Endpoint_Reactive_Strategy_A video_reactive_strategy_;
   // Strategy for creating stream endpoints
 
   TAO_MMDevice video_client_mmdevice_;
@@ -279,8 +362,20 @@ private:
   TAO_StreamCtrl video_streamctrl_;
   // Video stream controller 
 
-  Audio_Control_var audio_control_;
-  // audio control corba object
+  Audio_Control_ptr audio_control_;
+  // Audio Control CORBA object
+
+  AVStreams::MMDevice_var audio_server_mmdevice_;
+  // The audio server multimedia device
+
+  Audio_Endpoint_Reactive_Strategy_A audio_reactive_strategy_;
+  // Strategy for creating stream endpoints
+
+  TAO_MMDevice audio_client_mmdevice_;
+  // The audio client multimedia device
+
+  TAO_StreamCtrl audio_streamctrl_;
+  // audio stream controller
 };
 
 

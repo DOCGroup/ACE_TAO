@@ -151,4 +151,35 @@ private:
 //   // The data socket.
 };
 
+// The stream endpoint
+class Audio_Server_StreamEndPoint :
+  public virtual TAO_Server_StreamEndPoint
+{
+public:
+  virtual int handle_open (void) ;
+  // called when streamendpoint is instantiated
+
+  virtual int handle_close (void) ;
+  // called when streamendpoint is being destructed
+
+  virtual int handle_stop (const AVStreams::flowSpec &the_spec,
+                            CORBA::Environment &env) ;
+  // Application needs to define this
+  
+  virtual int handle_start (const AVStreams::flowSpec &the_spec,  
+                             CORBA::Environment &env) ;
+  // Application needs to define this
+
+  
+  virtual int handle_destroy (const AVStreams::flowSpec &the_spec,  
+                               CORBA::Environment &env) ;
+  // Application needs to define this
+
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,  
+                                                      CORBA::Environment &env) ;
+
+private:
+  ACE_SOCK_CODgram dgram_;
+};
+
 #endif /*_AUDIO_SERVER_H */

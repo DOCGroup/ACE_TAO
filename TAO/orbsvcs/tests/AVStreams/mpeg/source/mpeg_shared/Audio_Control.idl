@@ -68,7 +68,7 @@ interface Audio_Control
 
   oneway void close ();
 
-  unsigned short set_peer (in string peer);
+  boolean set_peer (inout string peer);
   // Initializes the server to communicate to the <peer>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it
