@@ -3445,6 +3445,7 @@ public:
   // Forks and exec's a process in a manner that works on Solaris and
   // NT.  argv[0] must be the full path name to the executable.
 
+  static int getpagesize (void);
   static gid_t getgid (void);
   static pid_t getpid (void);
   static pid_t getpgid (pid_t pid);

@@ -403,6 +403,29 @@ SOURCE=.\Asynch_IO.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Types.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Connector.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
@@ -3571,6 +3594,10 @@ SOURCE=.\Auto_Ptr.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Basic_Types.h
+# End Source File
+# Begin Source File
+
 SOURCE=".\config-win32-common.h"
 # End Source File
 # Begin Source File
@@ -4252,6 +4279,10 @@ SOURCE=.\Atomic_Op.i
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Basic_Types.i
 # End Source File
 # Begin Source File
 

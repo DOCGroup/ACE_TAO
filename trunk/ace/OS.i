@@ -7034,6 +7034,24 @@ ACE_OS::fork (void)
 #endif /* ACE_WIN32 */
 }
 
+ACE_INLINE int
+ACE_OS::getpagesize (void)
+{
+  // ACE_TRACE ("ACE_OS::getpid");
+#if defined (ACE_WIN32)
+  SYSTEM_INFO sys_info;
+  ::GetSystemInfo (&sys_info);
+  return (int) sys_info.dwPageSize;
+#elif defined (_SC_PAGESIZE)
+  return (int) ::sysconf (_SC_PAGESIZE);
+#elif defined (ACE_HAS_GETPAGESIZE)
+  return ::getpagesize ();
+#else
+  // Use the default set in config.h
+  return ACE_PAGE_SIZE;
+#endif /* ACE_WIN32 */
+}
+
 ACE_INLINE pid_t
 ACE_OS::getpid (void)
 {
