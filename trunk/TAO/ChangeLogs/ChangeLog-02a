@@ -1,3 +1,20 @@
+Mon Jul 16 22:03:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp: Fixed,
+ 	  what looked like a subtle race condition. If a thread that calls
+	  handle_input () gets a -1 on read, we return -1 to the
+	  reactor. This makes the reactor close the handler and remove
+	  that from its internal map. If we resume the handler for such
+	  cases, before returning from handle_input (), looked like one
+	  more thread was woken up by the reactor to read from the
+	  handle. When this occurs on another thread, the first thread
+	  went about doing its task of closing the handle and removing the
+	  handler from its internal map. Bad things started happening.
+
 Mon Jul 16 17:23:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IORManipulation/TAO_IORManip.dsp:
@@ -18,12 +35,12 @@ Mon Jul 16 11:44:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Big_Reply/server.cpp: The reply sent was too huge. The bug
 	  #957 started showing up. Reduced the size of the reply to
 	  approximately 4 MB.
-	
+
 Mon Jul 16 11:36:00 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/Strategies/DIOP_Factory.cpp (requires_explicit_endpoint):
-          
-          Make DIOP require an explicit endpoint to prevent a DIOP 
+
+          Make DIOP require an explicit endpoint to prevent a DIOP
           endpoint from being automatically created when the Strategies
           library is linked.
 
@@ -35,7 +52,7 @@ Mon Jul 16 11:20:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * orbsvcs/orbsvcs/LoadBalancing.dsp:
         * orbsvcs/orbsvcs/CosNotification.dsp:
 
-          Fixed MFC settings for these projects. Thanks to 
+          Fixed MFC settings for these projects. Thanks to
           truename <shi_bing@netease.com> for reporting the
           problems.
 
