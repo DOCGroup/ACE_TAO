@@ -105,5 +105,8 @@ TAO_EC_ProxyPushConsumer::disconnect_push_consumer (
   this->supplier_filtering_->unbind (this);
   this->supplier_filtering_ = 0;
 
+  // Notify the event channel...
+  this->event_channel_->disconnected (this, ACE_TRY_ENV);
+
   this->event_channel_->destroy_proxy_push_consumer (this);
 }

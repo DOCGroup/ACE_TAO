@@ -77,7 +77,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
                   "  burst count = <%d>\n"
                   "  burst size = <%d>\n"
                   "  event size = <%d>\n"
-                  "  burst size = <%d>\n"
+                  "  burst pause = <%d>\n"
                   "  type start = <%d>\n"
                   "  type count = <%d>\n"
                   "  pid file name = <%s>\n",
@@ -320,7 +320,7 @@ ECT_Supplier_Driver::parse_args (int argc, char *argv [])
                       "-u <burst count> "
                       "-n <burst size> "
                       "-b <event payload size> "
-                      "-T <burst pause (usecs)> "
+                      "-t <burst pause (usecs)> "
                       "-h <type_start,type_count> "
                       "-p <pid file name> "
                       "\n",

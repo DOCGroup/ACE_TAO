@@ -11,14 +11,16 @@
 #include "orbsvcs/Event/Module_Factory.h"
 #include "orbsvcs/Event/Event_Channel.h"
 
-#include "orbsvcs/Event/EC_Null_Factory.h"
-#include "orbsvcs/Event/EC_Basic_Factory.h"
+#include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 
 ACE_RCSID(Event_Service, Event_Service, "$Id$")
 
 int main (int argc, char *argv[])
 {
+  ACE_Service_Config::static_svcs ()->
+    insert (&ace_svc_desc_TAO_EC_Default_Factory);
+
   Event_Service event_service;
   return event_service.run (argc, argv);
 }
@@ -27,7 +29,6 @@ int main (int argc, char *argv[])
 
 Event_Service::Event_Service (void)
   : module_factory_ (0),
-    factory_ (0),
     sched_impl_ (0),
     ec_impl_ (0),
     service_name_ (0),
@@ -44,8 +45,6 @@ Event_Service::~Event_Service (void)
   this->ec_impl_ = 0;
   delete this->sched_impl_;
   this->sched_impl_ = 0;
-  delete this->factory_;
-  this->factory_ = 0;
   delete this->module_factory_;
   this->module_factory_ = 0;
 }
@@ -130,31 +129,15 @@ Event_Service::run (int argc, char* argv[])
 
       switch (this->event_service_type_)
         {
-        case ES_NULL_FILTERING:
+        case ES_NEW:
           {
-            ACE_NEW_RETURN (this->factory_,
-                            TAO_EC_Null_Factory (root_poa.in ()),
-                            1);
             TAO_EC_Event_Channel* ec;
             ACE_NEW_RETURN (ec,
-                            TAO_EC_Event_Channel (this->factory_),
+                            TAO_EC_Event_Channel (),
                             1);
             this->ec_impl_ = ec;
-            ec->activate (ACE_TRY_ENV);
-            ACE_TRY_CHECK;
-          }
-          break;
-
-        case ES_REACTIVE:
-          {
-            ACE_NEW_RETURN (this->factory_,
-                            TAO_EC_Basic_Factory (root_poa.in ()),
-                            1);
-            TAO_EC_Event_Channel* ec;
-            ACE_NEW_RETURN (ec,
-                            TAO_EC_Event_Channel (this->factory_),
-                            1);
-            this->ec_impl_ = ec;
+            ec->supplier_poa (root_poa.in ());
+            ec->consumer_poa (root_poa.in ());
             ec->activate (ACE_TRY_ENV);
             ACE_TRY_CHECK;
           }
@@ -277,13 +260,9 @@ Event_Service::parse_args (int argc, char *argv [])
           break;
 
         case 't':
-          if (ACE_OS::strcasecmp (get_opt.optarg, "NULL_FILTERING") == 0)
+          if (ACE_OS::strcasecmp (get_opt.optarg, "NEW") == 0)
             {
-              this->event_service_type_ = ES_NULL_FILTERING;
-            }
-          else if (ACE_OS::strcasecmp (get_opt.optarg, "REACTIVE") == 0)
-            {
-              this->event_service_type_ = ES_REACTIVE;
+              this->event_service_type_ = ES_NEW;
             }
           else if (ACE_OS::strcasecmp (get_opt.optarg, "OLD_REACTIVE") == 0)
             {
@@ -299,7 +278,7 @@ Event_Service::parse_args (int argc, char *argv [])
                           "Unknown event service type <%s> "
                           "defaulting to REACTIVE\n",
                           get_opt.optarg));
-              this->event_service_type_ = ES_REACTIVE;
+              this->event_service_type_ = ES_NEW;
             }
           break;
 
@@ -309,7 +288,7 @@ Event_Service::parse_args (int argc, char *argv [])
                       "Usage: %s "
                       "-n service_name "
                       "-s <global|local> "
-                      "-t <null_filtering|reactive|old_reactive|old_mt> "
+                      "-t <new|old_reactive|old_mt> "
                       "\n",
                       argv[0]));
           return -1;

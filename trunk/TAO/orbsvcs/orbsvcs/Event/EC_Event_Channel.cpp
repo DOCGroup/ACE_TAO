@@ -1,7 +1,7 @@
 // $Id$
 
 #include "EC_Event_Channel.h"
-#include "EC_Factory.h"
+#include "EC_Default_Factory.h"
 #include "EC_Dispatching.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
@@ -14,10 +14,24 @@
 
 ACE_RCSID(Event, EC_Event_Channel, "$Id$")
 
-TAO_EC_Event_Channel::TAO_EC_Event_Channel (TAO_EC_Factory* factory)
-  : factory_ (factory)
+TAO_EC_Event_Channel::TAO_EC_Event_Channel (TAO_EC_Factory* factory,
+                                            int own_factory)
+  : factory_ (factory),
+    own_factory_ (own_factory)
 {
-  ACE_ASSERT (this->factory_ != 0);
+  if (this->factory_ == 0)
+    {
+      this->factory_ =
+        ACE_Dynamic_Service<TAO_EC_Factory>::instance ("EC_Factory");
+      this->own_factory_ = 0;
+
+      if (this->factory_ == 0)
+        {
+          ACE_NEW (this->factory_,
+                   TAO_EC_Default_Factory);
+          this->own_factory_ = 1;
+        }
+    }
 
   this->dispatching_ =
     this->factory_->create_dispatching (this);
@@ -47,6 +61,9 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
   this->timeout_generator_ = 0;
   this->factory_->destroy_observer_strategy (this->observer_strategy_);
   this->observer_strategy_ = 0;
+
+  if (this->own_factory_)
+    delete this->factory_;
 }
 
 void

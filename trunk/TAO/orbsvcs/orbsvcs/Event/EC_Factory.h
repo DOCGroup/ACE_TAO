@@ -7,7 +7,7 @@
 //   ORBSVCS Real-time Event Channel
 //
 // = FILENAME
-//   EC_Filter
+//   EC_Factory
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
@@ -32,6 +32,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corba.h"
+#include "ace/Service_Object.h"
 
 class ACE_Lock;
 
@@ -47,7 +48,7 @@ class TAO_EC_ObserverStrategy;
 class TAO_EC_ProxyPushSupplier_Set;
 class TAO_EC_Timeout_Generator;
 
-class TAO_ORBSVCS_Export TAO_EC_Factory
+class TAO_ORBSVCS_Export TAO_EC_Factory : public ACE_Service_Object
 {
   // = TITLE
   //   Abstract base class for the Event Channel components.
@@ -125,6 +126,10 @@ public:
        supplier_poa (CORBA::Environment& env) = 0;
   // The Event Channel uses this methods to control the activation of
   // the run-time servants.
+
+  virtual int consumer_poa (PortableServer::POA_ptr);
+  virtual int supplier_poa (PortableServer::POA_ptr);
+  // Modifier, return -1 on failure.
 
   virtual ACE_Lock* create_consumer_lock (void) = 0;
   virtual void destroy_consumer_lock (ACE_Lock*) = 0;
