@@ -521,7 +521,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
       // Register with the POA.
       char poa_id[BUFSIZ];
       ACE_OS::sprintf (poa_id,
-                       "%s_%ld",
+                       "%s_%d",
                        this->poa_id_.c_str (),
                        (*this->counter_)++);
       PortableServer::ObjectId_var id =
