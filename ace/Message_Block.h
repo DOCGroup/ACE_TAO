@@ -571,10 +571,10 @@ protected:
   u_long priority_;
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
-  /// execution time associated with the message
+  /// Execution time associated with the message.
   ACE_Time_Value execution_time_;
 
-  /// absolute deadline time for message
+  /// Absolute deadline time for message.
   ACE_Time_Value deadline_time_;
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 

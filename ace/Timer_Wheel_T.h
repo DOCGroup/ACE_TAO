@@ -1,4 +1,3 @@
-
 /* -*- C++ -*- */
 
 //=============================================================================
@@ -10,7 +9,6 @@
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_TIMER_WHEEL_T_H
 #define ACE_TIMER_WHEEL_T_H
@@ -72,12 +70,12 @@ protected:
 /**
  * @class ACE_Timer_Wheel_T
  *
- * @brief Provides a Timing Wheel version of Timer Queue
+ * @brief Provides a Timing Wheel version of Timer Queue.
  *
  * This implementation uses a hash table of ordered doubly-
- * linked lists of absolute times.  The other enhancements
- * to Timer List include using the pointer to the node as the
- * timer id (to speed up removing), adding a free list and
+ * linked lists of absolute times.  The enhancements to the
+ * <ACE_Timer_List> include using the pointer to the node as the
+ * timer id (to speed up removing), adding a free list, and
  * the ability to preallocate nodes.  Timer Wheel is based on
  * the timing wheel implementation used in Adam M. Costello and
  * George Varghese's paper "Redesigning the BSD Callout and
