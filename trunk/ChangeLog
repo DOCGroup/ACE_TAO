@@ -1,3 +1,11 @@
+Tue Jan 11 18:14:22 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_signal.inl: Added "namespace ACE_OS" to this as some other
+	  .inl files have done. This helped get HP aC++ around its confusion
+	  of ACE_OS::sigaction() vs. sigaction(). Added "::" to the sigaction
+	  type specifiers in the signature to resolve the confusion between
+	  the sigaction type and ACE_OS::sigaction.
+	  
 Mon Jan 10 12:41:23 2005  Steve Huston  <shuston@riverace.com>
 
 	* tests/Test_Output.cpp (close): If the output_file_ pointer is
