@@ -1,5 +1,9 @@
 Wed Jun 24 10:02:14 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/ASX/Event_Server/Transceiver/transceiver.cpp
+ 	  (parse_args): Fixed a warning about control reaching the end of
+ 	  a method.  Thanks to David Levine for reporting this.
+
 	* .cvsignore: Added "build" to make CVS happy.  Thanks to 
 	  David for this info.
 
