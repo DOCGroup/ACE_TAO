@@ -39,7 +39,12 @@ bgcolor="#ffffff">
 	<LI><A HREF="#reactive">Single-threaded, reactive model.</A>
 	<LI><A HREF="#tpc">Multiple threads, thread-per-connection model.</A>
 	<LI><A HREF="#multiorb">Multiple threads, orb-per-thread model.</A>
-	<LI><A HREF="#multiorb-tpc">Multiple threads, orb-per-thread, thread-per-connection.</A>
+	<LI><A HREF="#multiorb-tpc">Multiple threads, orb-per-thread,
+            thread-per-connection model.</A>
+        <li><a href="#tpool">Multiple threads, thread-pool model.</a>
+            (Not yet implemented.)
+        <li><a href="#multiorb-tpool">Multiple threads,
+            orb-per-thread, thread-pool model.</a> (Not yet implemented.)
       </UL>
 
       <p>Each configuration has the following information:</p>
@@ -188,7 +193,72 @@ bgcolor="#ffffff">
       </table>
       </p>
 
-      <H3>Multiple threads, orb-per-thread, thread-per-connection.<A NAME="multiorb-tpc"></A></H3>
+      <H3>Multiple threads, orb-per-thread, thread-per-connection
+      model.<A NAME="multiorb-tpc"></A></H3>
+
+      <p>
+      <table border=2 width="90%" cellspacing="2" cellpadding="0">
+	<tr>
+	  <th>Typical Use</th>
+	  <td>A brief description of the scenario and its typical use.</td>
+	</tr>
+
+	<tr>
+	  <th>Number Threads</th>
+	  <td>The number of threads used by ORB-related activities.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread Creator</th>
+	  <td>Identifies the creator of the threads discussed above.</td>
+	</tr>
+
+	<tr>
+	  <th>Resource Location</th>
+	  <td>Where information on various resources is stored.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread task</th>
+	  <td>Describes what task is undertaken for each thread.</td>
+	</tr>
+      </table>
+      </p>
+
+      <H3><A NAME="tpool">Multiple threads, thread-pool model.</A>
+      (Not yet implemented.)</H3>
+
+      <p>
+      <table border=2 width="90%" cellspacing="2" cellpadding="0">
+	<tr>
+	  <th>Typical Use</th>
+	  <td>A brief description of the scenario and its typical use.</td>
+	</tr>
+
+	<tr>
+	  <th>Number Threads</th>
+	  <td>The number of threads used by ORB-related activities.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread Creator</th>
+	  <td>Identifies the creator of the threads discussed above.</td>
+	</tr>
+
+	<tr>
+	  <th>Resource Location</th>
+	  <td>Where information on various resources is stored.</td>
+	</tr>
+
+	<tr>
+	  <th>Thread task</th>
+	  <td>Describes what task is undertaken for each thread.</td>
+	</tr>
+      </table>
+      </p>
+
+      <H3>Multiple threads, orb-per-thread, thread-pool model.<A
+      NAME="multiorb-tpool"></A> (Not yet implemented.)</H3>
 
       <p>
       <table border=2 width="90%" cellspacing="2" cellpadding="0">
