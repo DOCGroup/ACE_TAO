@@ -30,6 +30,8 @@ int CB::handle_timeout (const ACE_Time_Value &,
       ACE_Time_Value interval (0L, 1000L); 
       ACE_ASSERT (Timer::instance ()->reset_interval
                     (timerID_, interval) != -1);
+
+      ACE_UNUSED_ARG (interval);
     }
 
   if (count_++ == 10)

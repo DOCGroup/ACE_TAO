@@ -31,6 +31,8 @@ int PCB::handleEvent (const void *arg)
       ACE_Time_Value interval (0L, 1000L); 
       ACE_ASSERT (PTimer::instance ()->reset_interval
                     (timerID_, interval) != -1);
+
+      ACE_UNUSED_ARG (interval);
     }
 
   if (count_++ == 10)
