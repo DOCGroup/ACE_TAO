@@ -122,16 +122,23 @@ public:
   //   Object scope, then at the Current scope, then at the ORB scope,
   //   and, finally, ORB default values are checked.
 
+#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
   CORBA::Policy_ptr relative_roundtrip_timeout (void);
 
+#endif  /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+
+#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
+
   CORBA::Policy_ptr sync_scope (void);
+
+#endif  /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   CORBA::Policy_ptr buffering_constraint (void);
 
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
+#endif  /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   /// Return the sync strategy to be used in by the transport.
   /// Selection will be based on the SyncScope policies.

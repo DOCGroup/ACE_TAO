@@ -48,8 +48,9 @@
 
 #include "Policy.pidl"
 #include "TimeBase.pidl"
+#include "Messaging_SyncScope.pidl"
 
-#pragma prefix ""
+#pragma prefix "tao"
 
 module TAO
 {
@@ -79,24 +80,10 @@ module TAO
       readonly attribute BufferingConstraint buffering_constraint;
     };
 
-  // @@ I (coryan) found the following comment on the generated code:
-  //
-  //       It seems easier to have copies of these here than to use
-  //       #if (TAO_HAS_CORBA_MESSAGING == 1) everywhere or to define
-  //       a new class TAO_GIOP_Reliable_Oneway_Invocation
-  //
-  // I don't agree, but this is not the time to fix this stuff,
-  // instead I added the code to the .pidl file so at least it is
-  // automatically generated.
-  //
-  typedef short SyncScope;
-  const SyncScope SYNC_NONE           = 0;
-  const SyncScope SYNC_WITH_TRANSPORT = 1;
-  const SyncScope SYNC_WITH_SERVER    = 2;
-  const SyncScope SYNC_WITH_TARGET    = 3;
   // = TAO specific.
-  const SyncScope SYNC_EAGER_BUFFERING   = SYNC_NONE;
-  const SyncScope SYNC_DELAYED_BUFFERING = -2;
+  const Messaging::SyncScope SYNC_EAGER_BUFFERING   = SYNC_NONE;
+  const Messaging::SyncScope SYNC_DELAYED_BUFFERING = -2;
+
 };
 
 #pragma prefix ""
