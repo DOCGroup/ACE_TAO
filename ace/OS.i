@@ -4629,9 +4629,11 @@ ACE_OS::event_reset (ACE_event_t *event)
     else \
       { \
         TYPE ace_result_; \
-        ACE_OSCALL(OP,TYPE,FAILVALUE,ace_result_); \
+        ACE_OSCALL (OP, TYPE, FAILVALUE, ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ::memcpy (TARGET, ace_result_, SIZE); \
+          ::memcpy (TARGET, \
+                    ace_result_, \
+                    SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         ACE_OS::netdb_release (); \
         return ace_result_; \
       } \
@@ -4643,7 +4645,9 @@ ACE_OS::event_reset (ACE_event_t *event)
         TYPE ace_result_; \
         ACE_OSCALL(OP,TYPE,FAILVALUE,ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ::memcpy (TARGET, ace_result_, SIZE); \
+          ::memcpy (TARGET, \
+                    ace_result_, \
+                    SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         return ace_result_; \
   } while(0)
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
