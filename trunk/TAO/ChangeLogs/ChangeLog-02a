@@ -1,3 +1,11 @@
+Wed Jan 16 11:23:04 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/ior_corbaloc/README (ftp): 
+	  Updated the README.
+
+	  Thanks to Gerhard Voss <Gerhard_Voss@t-online.de> for 
+	  reporting that it is outdated.
+	
 Wed Jan 16 08:37:55 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* utils/nslist/nsdel.cpp: 
