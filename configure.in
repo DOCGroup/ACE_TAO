@@ -195,6 +195,9 @@ dnl
 dnl SECTION 2: Configure script command line options
 dnl
 
+dnl Added maintainer mode option to the option list
+AM_MAINTAINER_MODE
+
 dnl Determine which subsets to build
 dnl This is done using the autoconf "--enable-foobar" mechanism.
 ACE_CHECK_SUBSETS
