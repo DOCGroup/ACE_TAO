@@ -1,3 +1,40 @@
+Wed Apr 14 02:34:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	Added additional parameter <int signal_number> to all the Asynchronos
+	Operation method so that we can specify which real-time signal should 
+	be used for each of  the Asynchronous Operation. This only makes sense
+	in the ACE_SIG_Proactor configuration.
+
+	* ace/Asynch_IO_Impl.h: 
+	* ace/Asynch_IO.h: 
+	* ace/Asynch_IO.cpp: 
+	* ace/POSIX_Asynch_IO.h:
+	* ace/POSIX_Asynch_IO.cpp: 
+	* ace/POSIX_Proactor.h: 
+
+	- For each asynchronous call issued, the real-time signal is
+	  registered with the Proactor so that it can wait for the completions
+	  using that signal. Previously, the signal number for all the
+	  operations was the same signal and it was hard coded.
+	
+	- <register_aio_with_proactor> method which earlier existed only for
+	  <AIOCB_Proactor> has been added to <SIG_Proactor>
+	  also. <SIG_Proactor> just takes the <signal_number> from the result
+	  object and registers the signal number. Registering involves,
+	  masking the signal, setting the signal delivery for that RT signal
+	  etc.
+	
+	- Allowing to specify signal number for each operation can be useful,
+	  since the order in which the completions are delivered from the
+	  completion queue, is based on the signal numbers in addition to the 
+	  priority. Applications might want to leverage this.
+
+	* ace/OS.h: 
+	OS.h has been defined with ACE_SIGRTMIN and ACE_SIGRTMAX, which are
+	defined to SIGRTMIN and SIGRTMAX respectively, for POSIX4
+	platforms. For others, they are 0. 
+
+
 Tue Apr 13 15:29:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.cpp: moved ACE_Service_Config signal
