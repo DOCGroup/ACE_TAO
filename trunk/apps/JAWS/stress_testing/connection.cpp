@@ -2,6 +2,7 @@
 
 #include "connection.h"
 
+ACE_RCSID(stress_testing, connection, "$Id$")
 
 // Make the connection to the WEB server
 

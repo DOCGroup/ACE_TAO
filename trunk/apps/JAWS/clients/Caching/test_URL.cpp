@@ -3,6 +3,8 @@
 #include "ace/streams.h"
 #include "Locator_Request_Reply.h"
 
+ACE_RCSID(Caching, test_URL, "$Id$")
+
 int main (int argc, char *argv[])
 {
   ACE_UNUSED_ARG (argc);

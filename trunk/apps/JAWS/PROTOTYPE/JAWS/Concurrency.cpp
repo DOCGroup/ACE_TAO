@@ -1,7 +1,6 @@
 // $Id$
 
 #include "JAWS/JAWS.h"
-
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Pipeline.h"
@@ -10,6 +9,8 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Waiter.h"
 #include "JAWS/Reaper.h"
+
+ACE_RCSID(JAWS, Concurrency, "$Id$")
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
   : ACE_Task<ACE_MT_SYNCH> (new ACE_Thread_Manager),

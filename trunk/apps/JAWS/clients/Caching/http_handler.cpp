@@ -13,8 +13,10 @@
 //
 // ============================================================================
 
-#include "http_handler.h"
 #include "ace/Filecache.h"
+#include "http_handler.h"
+
+ACE_RCSID(Caching, http_handler, "$Id$")
 
 HTTP_Handler::HTTP_Handler (void)
 {

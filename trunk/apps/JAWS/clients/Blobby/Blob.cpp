@@ -3,6 +3,8 @@
 #include "Blob.h"
 #include "Blob_Handler.h"
 
+ACE_RCSID(Blobby, Blob, "$Id$")
+
 ACE_Blob::ACE_Blob (void)
 {
 }

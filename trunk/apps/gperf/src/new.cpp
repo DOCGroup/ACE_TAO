@@ -26,6 +26,8 @@ USA.  */
 #include "ace/OS.h"
 #include "Options.h"
 
+ACE_RCSID(src, new, "$Id$")
+
 #if defined (ACE_HAS_GPERF)
 
 // Determine default alignment.  If your C++ compiler does not like

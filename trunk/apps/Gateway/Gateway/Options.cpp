@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
@@ -6,6 +5,8 @@
 #include "ace/Get_Opt.h"
 #include "Event.h"
 #include "Options.h"
+
+ACE_RCSID(Gateway, Options, "$Id$")
 
 // Static initialization.
 Options *Options::instance_ = 0;

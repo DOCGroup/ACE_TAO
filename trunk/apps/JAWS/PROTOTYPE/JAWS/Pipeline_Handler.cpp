@@ -5,6 +5,8 @@
 
 #include "JAWS/Pipeline_Handler.h"
 
+ACE_RCSID(JAWS, Pipeline_Handler, "$Id$")
+
 template <class TYPE>
 JAWS_Pipeline_Abstract_Handler<TYPE>::JAWS_Pipeline_Abstract_Handler (void)
 {

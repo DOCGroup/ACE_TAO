@@ -1,8 +1,8 @@
-
 // $Id$
 
 #include "Event_Comm.hh"
 
+ACE_RCSID(libsrc, Event_CommS, "$Id$")
 
 #define Event_Comm_Notification_Receiver_dispatch_impl
 

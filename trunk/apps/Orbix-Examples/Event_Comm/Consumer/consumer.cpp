@@ -1,11 +1,11 @@
-/* -*- C++ -*- */
 // $Id$
 
 // Consumer driver for the Orbix Notification example.
 
-
 #include "Notification_Receiver_Handler.h"
 #include "Input_Handler.h"
+
+ACE_RCSID(Consumer, consumer, "$Id$")
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 

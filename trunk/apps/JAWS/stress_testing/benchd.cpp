@@ -10,6 +10,8 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 
+ACE_RCSID(stress_testing, benchd, "$Id$")
+
 #if defined (ACE_HAS_IP_MULTICAST)
 // network interface to subscribe to
 //   this is hardware specific.

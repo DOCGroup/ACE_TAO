@@ -19,6 +19,8 @@
 
 #include "http_handler.h"
 
+ACE_RCSID(Caching, http_client, "$Id$")
+
 int
 main (int, char *[])
 {

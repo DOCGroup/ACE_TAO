@@ -1,6 +1,8 @@
-#include "Notifier_Handler.h"
 // $Id$
 
+#include "Notifier_Handler.h"
+
+ACE_RCSID(Supplier, Notifier_Handler, "$Id$")
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 

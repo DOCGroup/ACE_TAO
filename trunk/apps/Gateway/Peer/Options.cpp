@@ -1,8 +1,11 @@
 // $Id$
+
 #define ACE_BUILD_SVC_DLL
 
 #include "ace/Get_Opt.h"
 #include "Options.h"
+
+ACE_RCSID(Peer, Options, "$Id$")
 
 // Static initialization.
 Options *Options::instance_ = 0;

@@ -1,6 +1,4 @@
-// server.C
 // $Id$
-
 
 // The server for the logger example.
 // This uses the TRY,CATCHANY,ENDTRY macros for error testing.
@@ -10,6 +8,8 @@
 
 #include <iostream.h>
 #include "logger_i.h"
+
+ACE_RCSID(Logger, server, "$Id$")
 
 int
 main (int, char *[]) 

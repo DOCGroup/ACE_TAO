@@ -1,5 +1,6 @@
-/* Fast lookup table abstraction implemented as an Iteration Number Array
 // $Id$
+
+/* Fast lookup table abstraction implemented as an Iteration Number Array
 
    Copyright (C) 1989 Free Software Foundation, Inc.
    written by Douglas C. Schmidt (schmidt@ics.uci.edu)
@@ -23,6 +24,8 @@ Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111, USA.  */
 
 
 #include "Bool_Array.h"
+
+ACE_RCSID(src, Bool_Array, "$Id$")
 
 #if defined (ACE_HAS_GPERF)
 

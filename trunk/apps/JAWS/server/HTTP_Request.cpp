@@ -5,6 +5,8 @@
 #include "HTTP_Helpers.h"
 #include "HTTP_Config.h"
 
+ACE_RCSID(server, HTTP_Request, "$Id$")
+
 const char *const
 HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS] =
 {

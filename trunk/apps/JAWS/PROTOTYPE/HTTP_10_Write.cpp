@@ -1,13 +1,13 @@
 // $Id$
 
-#include "HTTP_10.h"
-
 #include "JAWS/JAWS.h"
-
 #include "JAWS/IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
+#include "HTTP_10.h"
+
+ACE_RCSID(PROTOTYPE, HTTP_10_Write, "$Id$")
 
 // --------------- WRITE TASK ----------------------
 

@@ -1,8 +1,9 @@
-
 // $Id$
 
 #include "ace/Service_Config.h"
 #include "Notification_Receiver_i.h"
+
+ACE_RCSID(libsrc, Notification_Receiver_i, "$Id$")
 
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 

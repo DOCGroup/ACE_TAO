@@ -22,6 +22,8 @@ USA.  */
 
 #include "Key_List.h"
 
+ACE_RCSID(src, Key_List, "$Id$")
+
 #if defined (ACE_HAS_GPERF)
 
 #include "ace/Read_Buffer.h"

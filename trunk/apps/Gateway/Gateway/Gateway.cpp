@@ -1,11 +1,13 @@
-/* -*- C++ -*- */
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
-#include "Config_Files.h"
+
 #include "ace/Service_Config.h"
+#include "Config_Files.h"
 #include "Event_Channel.h"
 #include "Gateway.h"
+
+ACE_RCSID(Gateway, Gateway, "$Id$")
 
 class ACE_Svc_Export Gateway : public ACE_Service_Object
   // = TITLE

@@ -1,7 +1,10 @@
-#include <iostream.h>
 // $Id$
 
+#include <iostream.h>
+
 #include "Logger.h"
+
+ACE_RCSID(Logger, Logger, "$Id$")
 
 Logger::~Logger (void)
 {

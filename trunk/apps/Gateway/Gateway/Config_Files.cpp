@@ -5,6 +5,8 @@
 #include "Config_Files.h"
 #include "Options.h"
 
+ACE_RCSID(Gateway, Config_Files, "$Id$")
+
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).
 typedef FP::Return_Type FP_RETURN_TYPE;

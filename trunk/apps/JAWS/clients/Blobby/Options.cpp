@@ -1,10 +1,12 @@
 // $Id$
 
-#include "Blob.h"
-#include "Blob_Handler.h"
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
+#include "Blob.h"
+#include "Blob_Handler.h"
 #include "Options.h"
+
+ACE_RCSID(Blobby, Options, "$Id$")
 
 Options *Options::instance_ = 0;
 

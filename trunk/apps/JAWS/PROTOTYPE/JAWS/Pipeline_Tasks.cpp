@@ -1,11 +1,12 @@
 // $Id$
 
 #include "JAWS/JAWS.h"
-
 #include "JAWS/Pipeline_Tasks.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
+
+ACE_RCSID(JAWS, Pipeline_Tasks, "$Id$")
 
 JAWS_Pipeline_Handler::~JAWS_Pipeline_Handler (void)
 {

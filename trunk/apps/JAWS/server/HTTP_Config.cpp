@@ -1,8 +1,11 @@
-// HTTP_Config.cpp
 // $Id$
+
+// HTTP_Config.cpp
 
 #include "ace/OS.h"
 #include "HTTP_Config.h"
+
+ACE_RCSID(server, HTTP_Config, "$Id$")
 
 // static HTTP_Config_Info config_info;
 

@@ -2,6 +2,8 @@
 
 #include "Notification_Receiver_Handler.h"
 
+ACE_RCSID(Consumer, Notification_Receiver_Handler, "$Id$")
+
 #if defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)
 
 #if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)

@@ -1,8 +1,8 @@
-
 // $Id$
 
 #include "logger.hh"
 
+ACE_RCSID(Logger, loggerS, "$Id$")
 
 #define logger_dispatch_impl
 

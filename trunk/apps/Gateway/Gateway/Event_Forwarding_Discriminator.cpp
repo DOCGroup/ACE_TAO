@@ -1,10 +1,11 @@
-/* -*- C++ -*- */
 // $Id$
 
 #if !defined (_CONSUMER_MAP_C)
 #define _CONSUMER_MAP_C
 
 #include "Event_Forwarding_Discriminator.h"
+
+ACE_RCSID(Gateway, Event_Forwarding_Discriminator, "$Id$")
 
 // Bind the Event_Key to the INT_ID.
 
