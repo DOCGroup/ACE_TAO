@@ -29,6 +29,8 @@ public:
   PrintVisitor (const char *file_name);
   ~PrintVisitor ();
 
+  void close ();
+
   void visitStructNode (StructNode *structNode);
   void visitDoubleNode (DoubleNode *doubleNode);
   void visitLongNode (LongNode *longNode);

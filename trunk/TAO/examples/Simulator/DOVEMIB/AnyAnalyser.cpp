@@ -22,11 +22,13 @@ AnyAnalyser::AnyAnalyser (const char *file_name)
   : printVisitor_ptr_(new PrintVisitor (file_name)) {
 }
 
-AnyAnalyser::~AnyAnalyser () { }
+AnyAnalyser::~AnyAnalyser () {
+  delete printVisitor_ptr_;
+}
 
 void
 AnyAnalyser::close () { 
-  delete printVisitor_ptr_;
+  printVisitor_ptr_->close();
 }
 
 void 

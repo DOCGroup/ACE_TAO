@@ -43,6 +43,7 @@ static const char usage [] =
 static int events_received_ = 0;
 static char *input_file_name = 0;
 static int events_to_receive_ = 100;
+RtecEventChannelAdmin::EventChannel_var ec;
 
 // ************************************************************
 
@@ -193,6 +194,8 @@ MIB_Consumer::shutdown (void)
       ACE_DEBUG ((LM_DEBUG, "@@ we should shutdown here!!!\n"));
       TAO_CHECK_ENV;
 
+      ec = 0;
+
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
       TAO_CHECK_ENV;
     }
@@ -325,7 +328,7 @@ main (int argc, char *argv [])
                                  TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      RtecEventChannelAdmin::EventChannel_var ec =
+      ec =
         RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in(), TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -359,7 +362,7 @@ main (int argc, char *argv [])
                           -1);
       TAO_CHECK_ENV;
 
-      delete mIB_Consumer;
+      ec = 0;
 
       root_poa->destroy (CORBA::B_TRUE,
                          CORBA::B_TRUE,
