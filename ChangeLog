@@ -1,3 +1,19 @@
+Thu Apr 10 06:52:41 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Renamed GNU to GNUACE to indicate that the projects will only work
+          within ACE.
+
+        * bin/MakeProjectCreator/modules/GNUProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GNUWorkspaceCreator.pm:
+
+          Removed these files in the rename.
+
 Thu Apr 10 13:02:42 CEST 2003  Oliver Kellogg  <oliver.kellogg@sysde.eads.net>
 
 	* tests/tests.{dsw,icp}: Added Unbounded_Set_Test_Ex.

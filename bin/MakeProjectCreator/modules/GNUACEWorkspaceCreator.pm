@@ -1,7 +1,7 @@
-package GNUWorkspaceCreator;
+package GNUACEWorkspaceCreator;
 
 # ************************************************************
-# Description   : A GNU Workspace (Makefile) creator
+# Description   : A GNU Workspace (Makefile) creator for ACE
 # Author        : Chad Elliott
 # Create Date   : 5/13/2002
 # ************************************************************

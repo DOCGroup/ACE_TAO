@@ -1,7 +1,7 @@
-package GNUProjectCreator;
+package GNUACEProjectCreator;
 
 # ************************************************************
-# Description   : A GNU Project Creator
+# Description   : A GNU Project Creator for ACE
 # Author        : Chad Elliott
 # Create Date   : 3/13/2002
 # ************************************************************

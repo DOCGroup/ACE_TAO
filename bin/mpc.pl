@@ -25,7 +25,7 @@ require Driver;
 # Data Section
 # ************************************************************
 
-my(@creators) = ('GNUProjectCreator',
+my(@creators) = ('GNUACEProjectCreator',
                  'NMakeProjectCreator',
                  'VC6ProjectCreator',
                  'VC7ProjectCreator',
