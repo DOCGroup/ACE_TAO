@@ -21,7 +21,7 @@ ACE_Process_Mutex::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+#if defined (_ACE_USE_SV_SEM)
 const ACE_TCHAR *
 ACE_Process_Mutex::unique_name (void)
 {
@@ -31,31 +31,31 @@ ACE_Process_Mutex::unique_name (void)
   ACE::unique_name (this, this->name_, ACE_UNIQUE_NAME_LEN);
   return this->name_;
 }
-#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
+#endif /* _ACE_USE_SV_SEM */
 
 ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg)
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
-  : lock_ (USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
-#else
+#if defined (_ACE_USE_SV_SEM)
   : lock_ (name ? ACE_TEXT_CHAR_TO_TCHAR (name) : ACE_Process_Mutex::unique_name ())
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#else
+  : lock_ (USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
+#endif /* _ACE_USE_SV_SEM */
 {
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+#if defined (_ACE_USE_SV_SEM)
   ACE_UNUSED_ARG (arg);
-#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
+#endif /* !_ACE_USE_SV_SEM */
 }
 
 #if defined (ACE_HAS_WCHAR)
 ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name, void *arg)
-#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
-  : lock_ (USYNC_PROCESS, ACE_TEXT_WCHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
-#else
+#if defined (_ACE_USE_SV_SEM)
   : lock_ (name ? ACE_TEXT_WCHAR_TO_TCHAR (name): ACE_Process_Mutex::unique_name ())
-#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+#else
+  : lock_ (USYNC_PROCESS, ACE_TEXT_WCHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
+#endif /* _ACE_USE_SV_SEM */
 {
-#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+#if defined (_ACE_USE_SV_SEM)
   ACE_UNUSED_ARG (arg);
-#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
+#endif /* _ACE_USE_SV_SEM */
 }
 #endif /* ACE_HAS_WCHAR */
 ACE_Process_Mutex::~ACE_Process_Mutex (void)
