@@ -1,3 +1,9 @@
+Wed Jun 30 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Redundant_Naming/README:
+          Fixed minor error, -R should be -r, this matches the run_test.pl
+          script in the same directory.
+
 Wed Jun 30 08:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * utils/catior/catior.cpp:
