@@ -128,6 +128,24 @@ TAO_UIOP_Server_Connection_Handler::open (void*)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
+  // Construct an  UIOP_Endpoint object
+  TAO_UIOP_Endpoint endpoint (addr,
+                              0);
+
+  // Construct a property object
+  TAO_Base_Connection_Property prop (&endpoint);
+
+  // Add the handler to Cache
+  if (this->orb_core ()->connection_cache ().cache_handler (&prop,
+                                                            this) == -1)
+    {
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) unable to cache the handle \n")));
+        }
+    }
+
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) UIOP connection from client ")
@@ -183,16 +201,15 @@ TAO_UIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
   --this->refcount_;
   if (this->refcount_ == 0)
     {
-      // Remove the handle from the ORB Core's handle set so that it
-      // isn't included in the set that is passed to the reactor upon
-      // ORB destruction.
-      TAO_Server_Strategy_Factory *f =
-        this->orb_core ()->server_factory ();
+      // Set the flag to indicate that it is no longer registered with
+      // the reactor, so that it isn't included in the set that is
+      // passed to the reactor on ORB destruction.
+      this->is_registered (0);
 
-      /*if (f->activate_server_connections () == 0)
-        (void) this->orb_core ()->remove_handle (handle);*/
+      // Decrement the reference count
+      this->decr_ref_count ();
 
-      return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
+      //return TAO_UIOP_SVC_HANDLER::handle_close (handle, rm);
     }
 
   return 0;
@@ -238,7 +255,8 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
     {
       --this->refcount_;
       if (this->refcount_ == 0)
-        this->TAO_UIOP_SVC_HANDLER::handle_close ();
+        this->decr_ref_count ();
+        // this->TAO_UIOP_SVC_HANDLER::handle_close ();
       return result;
     }
 
@@ -276,7 +294,8 @@ TAO_UIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    this->TAO_UIOP_SVC_HANDLER::handle_close ();
+    this->decr_ref_count ();
+  // this->TAO_UIOP_SVC_HANDLER::handle_close ();
 
   return result;
 }
@@ -286,6 +305,8 @@ TAO_UIOP_Server_Connection_Handler::fetch_handle (void)
 {
   return this->get_handle ();
 }
+
+
 // ****************************************************************
 
 TAO_UIOP_Client_Connection_Handler::
@@ -314,7 +335,17 @@ TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
 
 TAO_UIOP_Client_Connection_Handler::~TAO_UIOP_Client_Connection_Handler (void)
 {
-  //no-op
+  // If the socket has not already been closed.
+  if (this->transport_.handle () != ACE_INVALID_HANDLE)
+    {
+      // Cannot deal with errors, and therefore they are ignored.
+      this->transport_.send_buffered_messages ();
+    }
+  else
+    {
+      // Dequeue messages and delete message blocks.
+      this->transport_.dequeue_all ();
+    }
 }
 
 // @@ Should I do something here to enable non-blocking?? (Alex).
@@ -384,9 +415,9 @@ TAO_UIOP_Client_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 
   TAO_Stub *stub = 0;
   int has_timeout;
-  this->orb_core_->call_timeout_hook (stub,
-                                      has_timeout,
-                                      *max_wait_time);
+  this->orb_core ()->call_timeout_hook (stub,
+                                        has_timeout,
+                                        *max_wait_time);
 
   // Cannot deal with errors, and therefore they are ignored.
   this->transport ()->send_buffered_messages (max_wait_time);
@@ -442,11 +473,17 @@ TAO_UIOP_Client_Connection_Handler::handle_close_i (ACE_HANDLE handle,
 int
 TAO_UIOP_Client_Connection_Handler::handle_cleanup (void)
 {
-  // Call the implementation.
-  /*this->handle_cleanup_i (this->reactor (),
-    this);*/
+    // Call the implementation.
+  if (this->reactor ())
+    {
+      // Make sure there are no timers.
+      this->reactor ()->cancel_timer (this);
+    }
+
   this->peer ().close ();
 
+  // Now do the decerment of the ref count
+  this->decr_ref_count ();
   return 0;
 }
 
@@ -461,8 +498,12 @@ TAO_UIOP_Client_Connection_Handler::fetch_handle (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-#endif /* TAO_HAS_UIOP == 1 */
+#endif /*TAO_HAS_UIOP == 1*/

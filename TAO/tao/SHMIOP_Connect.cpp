@@ -13,6 +13,7 @@
 #include "tao/GIOP_Message_Acceptors.h"
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/SHMIOP_Endpoint.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/SHMIOP_Connect.i"
@@ -132,6 +133,24 @@ TAO_SHMIOP_Server_Connection_Handler::open (void*)
 
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
+
+    // Construct an  SHMIOP_Endpoint object
+  TAO_SHMIOP_Endpoint endpoint (addr,
+                                0);
+
+  // Construct a property object
+  TAO_Base_Connection_Property prop (&endpoint);
+
+  // Add the handler to Cache
+  if (this->orb_core ()->connection_cache ().cache_handler (&prop,
+                                                            this) == -1)
+    {
+      if (TAO_debug_level > 4)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) unable to cache the handle \n")));
+        }
+    }
 
   if (TAO_debug_level > 0)
     {

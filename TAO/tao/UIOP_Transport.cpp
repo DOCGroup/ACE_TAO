@@ -66,17 +66,6 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_ORB_Core *orb_core)
 
 TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
 {
-  // If the socket has not already been closed.
-  if (this->handle () != ACE_INVALID_HANDLE)
-    {
-      // Cannot deal with errors, and therefore they are ignored.
-      this->send_buffered_messages ();
-    }
-  else
-    {
-      // Dequeue messages and delete message blocks.
-      this->dequeue_all ();
-    }
 }
 
 void
@@ -158,11 +147,6 @@ TAO_UIOP_Client_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_UIOP_CLIENT_TRANSPORT_START_REQUEST_START);
 
-  /*const TAO_UIOP_Profile* profile =
-    ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);*/
-
-  // @@ This should be implemented in the transport object, which
-  //    would query the profile to obtain the version...
   if (this->client_mesg_factory_->write_protocol_header
       (TAO_PLUGGABLE_MESSAGE_REQUEST,
        output) == 0)
@@ -177,14 +161,6 @@ TAO_UIOP_Client_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
                                          CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  //const TAO_UIOP_Profile* profile =
-  //  ACE_dynamic_cast(const TAO_UIOP_Profile*, pfile);
-
-  // Obtain object key.
-  //const TAO_ObjectKey& key = profile->object_key ();
-
-  // @@ This should be implemented in the transport object, which
-  //    would query the profile to obtain the version...
   if (this->client_mesg_factory_->write_protocol_header
       (TAO_PLUGGABLE_MESSAGE_LOCATEREQUEST,
        output) == 0)
@@ -318,7 +294,14 @@ TAO_UIOP_Client_Transport::register_handler (void)
   if (r == this->service_handler ()->reactor ())
     return 0;
 
-  return r->register_handler (this->service_handler (),
+  // About to be registered with the reactor, so bump the ref
+  // count
+  this->handler_->incr_ref_count ();
+
+  // Set the flag in the Connection Handler
+  this->handler_->is_registered (1);
+
+  return r->register_handler (this->handler_,
                               ACE_Event_Handler::READ_MASK);
 }
 

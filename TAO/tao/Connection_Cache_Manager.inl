@@ -35,6 +35,7 @@ TAO_Connection_Cache_Manager::
   return retval;
 }
 
+
 ACE_INLINE int
 TAO_Connection_Cache_Manager::bind (TAO_Cache_ExtId &ext_id,
                                     TAO_Cache_IntId &int_id)

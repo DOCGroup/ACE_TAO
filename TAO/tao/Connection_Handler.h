@@ -58,8 +58,7 @@ class TAO_Connection_Handler
   //     details. It is just to be safe so that, we can reuse this
   //     class for any messaging protocol underneath. This way we need
   //     not touch the Cache setup even when  using other protocols (I
-  //     mean messaging). BUT, I doubt whether this abstraction will
-  //     satisfy the needs of other messaging protocols. (will not?).
+  //     mean messaging).
 
 public:
 
@@ -114,17 +113,7 @@ protected:
 
   virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
                               ACE_Time_Value *max_wait_time = 0) = 0;
-  // Need to be implemented by the underlying protocol
-
-  ACE_Time_Value *handle_timeout_i (const ACE_Time_Value &,
-                                    const void *);
-  // Implementation of the method handle_timout () which would be
-  // called when the buffering timer expires.
-
-  int handle_cleanup_i (ACE_Reactor *reactor,
-                        ACE_Event_Handler *handler);
-  // Implementation of the call  handle_cleanup () in
-  // Service_Handler.
+  // Need to be implemented by the underlying protocol objects
 
 private:
 

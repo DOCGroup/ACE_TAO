@@ -34,8 +34,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Cache_ExtId;
-class TAO_Cache_IntId;
+class TAO_ORB_Core;
 
 class TAO_Export TAO_Connection_Cache_Manager
 {
@@ -49,6 +48,11 @@ class TAO_Export TAO_Connection_Cache_Manager
   //     connections. This class protects the entries with a lock. The
   //     map can be updated only by holding the lock.
 
+  //     General Note: This class at present has an interface that may
+  //     not be needed. But, the interface has just been copied from
+  //     the ACE Hash Map Manager classes. The interface wold be
+  //     pruned once I get the purging stuff also in. Till then let
+  //     the interface be there as it is.
 public:
 
   // Some useful typedef's
@@ -85,9 +89,9 @@ public:
   // Check the Connection Cache to check whether the connection exists
   // in the Cache and return the connection
 
-  int open (size_t size = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
-  // Initialize a <HASH_MAP> with <size> elements.
+  int open (TAO_ORB_Core *orb_core,
+            size_t size = ACE_DEFAULT_MAP_SIZE);
+  // Initialize the lock and the <HASH_MAP> with <size> elements.
 
   int bind (TAO_Cache_ExtId &ext_id,
             TAO_Cache_IntId &int_id);

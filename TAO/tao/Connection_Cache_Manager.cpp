@@ -1,7 +1,8 @@
 #include "tao/Connection_Cache_Manager.h"
 #include "tao/Connection_Handler.h"
 #include "tao/debug.h"
-
+#include "tao/ORB_core.h"
+#include "tao/Resource_Factory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Connection_Cache_Manager.inl"
@@ -13,10 +14,10 @@ ACE_RCSID(tao, Connection_Cache_Hash_Manager, "$Id$")
 
 TAO_Connection_Cache_Manager::
     TAO_Connection_Cache_Manager (void)
-      : cache_map_ ()
+      : cache_map_ (),
+        cache_lock_ (0)
 {
-  ACE_NEW (this->cache_lock_,
-           ACE_Lock_Adapter<ACE_SYNCH_MUTEX>);
+
 }
 
 TAO_Connection_Cache_Manager::~TAO_Connection_Cache_Manager (void)
@@ -25,7 +26,25 @@ TAO_Connection_Cache_Manager::~TAO_Connection_Cache_Manager (void)
   delete this->cache_lock_;
 }
 
+int
+TAO_Connection_Cache_Manager::open (TAO_ORB_Core *orb_core,
+                                    size_t size)
+{
+  // Create the cache_lock
+  this->cache_lock_ =
+    orb_core->resource_factory ()->create_cached_connection_lock ();
 
+  if (this->cache_lock_ == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) ERROR TAO_Connection_Cache_Manager::open "),
+                         ACE_TEXT ("Lock creation error \n")),
+                        -1);
+    }
+
+  // Now open the cache map
+  return this->cache_map_.open (size);
+}
 
 int
 TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,

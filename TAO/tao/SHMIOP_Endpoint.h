@@ -64,6 +64,11 @@ public:
                        int use_dotted_decimal_addresses);
   // Constructor.
 
+  TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
+                       int use_dotted_decimal_addresses);
+  // Constructor. -- More of a extension of the previous one. One of
+  // them need to go. We will decide about that as time goes by.
+
   TAO_SHMIOP_Endpoint (const char *host,
                        CORBA::UShort port,
                        CORBA::Short priority);

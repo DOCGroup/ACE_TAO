@@ -15,8 +15,7 @@
 ACE_RCSID(tao, default_client, "$Id$")
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
-  : profile_lock_type_ (TAO_THREAD_LOCK),
-    cached_connector_lock_type_ (TAO_THREAD_LOCK)
+  : profile_lock_type_ (TAO_THREAD_LOCK)
 {
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
@@ -125,22 +124,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
             }
         }
 
-      else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-ORBConnectorLock") == 0)
-        {
-          curarg++;
-          if (curarg < argc)
-            {
-              char *name = argv[curarg];
 
-              if (ACE_OS::strcasecmp (name,
-                                      "thread") == 0)
-                this->cached_connector_lock_type_ = TAO_THREAD_LOCK;
-              else if (ACE_OS::strcasecmp (name,
-                                           "null") == 0)
-                this->cached_connector_lock_type_ = TAO_NULL_LOCK;
-            }
-        }
     }
   return 0;
 }
@@ -209,23 +193,6 @@ TAO_Default_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *transp
     }
 
   return ws;
-}
-
-ACE_Lock *
-TAO_Default_Client_Strategy_Factory::create_cached_connector_lock (void)
-{
-  ACE_Lock *the_lock = 0;
-
-  if (this->cached_connector_lock_type_ == TAO_NULL_LOCK)
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>,
-                    0);
-  else
-    ACE_NEW_RETURN (the_lock,
-                    ACE_Lock_Adapter<ACE_SYNCH_MUTEX>,
-                    0);
-
-  return the_lock;
 }
 
 ACE_Lock *
