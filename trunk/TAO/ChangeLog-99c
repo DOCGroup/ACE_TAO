@@ -1,3 +1,13 @@
+Sat Mar 13 23:35:01 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+	* orbsvcs/tests/CosEC_Basic/CosECConsumer.cpp:
+	* orbsvcs/tests/CosEC_Multiple/CosEC_Multiple.cpp:
+	* orbsvcs/tests/CosEC_Multiple/CosECConsumer.cpp:
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+	  fixed minor compile warnings regarding "statements not reached",
+	  "unused parameters", and using .in ().
+
 Sat Mar 13 23:33:14 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Object.cpp: removed trailing semicolons from instantiation
