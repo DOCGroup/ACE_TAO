@@ -1,3 +1,7 @@
+Sat Oct 17 00:35:21 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.59 released.
+
 Sat Oct 17 00:29:37 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config.cpp (process_directives): Only warn about a
