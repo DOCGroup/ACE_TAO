@@ -6053,6 +6053,24 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #endif /* ACE_WIN32 */
 }
 
+ACE_INLINE int
+ACE_OS::nanosleep (const struct timespec *requested,
+                   struct timespec *remaining)
+{
+  // ACE_TRACE ("ACE_OS::nanosleep");
+#if defined (ACE_HAS_CLOCK_GETTIME)
+  // ::nanosleep () is POSIX 1003.1b.  So is ::clock_gettime ().
+  // So, if ACE_HAS_CLOCK_GETTIME is defined, then ::nanosleep ()
+  // should be available on the platform.  On Solaris 2.x, both
+  // functions require linking with -lposix4.
+  return ::nanosleep (requested, remaining);
+#else
+  ACE_UNUSED_ARG (requested);
+  ACE_UNUSED_ARG (remaining);
+  ACE_NOTSUP_RETURN (-1);
+#endif (ACE_HAS_CLOCK_GETTIME)
+}
+
 ACE_INLINE int 
 ACE_OS::mkdir (const char *path, mode_t mode)
 {
