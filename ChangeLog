@@ -1,3 +1,9 @@
+Sun Aug 26 20:50:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/SSL/SSL_SOCK_Stream.i: Fixed a warning (hopefully) in
+	  Borland builds. The warning was because a temporary variable was
+	  created. 
+	
 Sun Aug 26 20:45:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/MEM_Stream_Test.cpp: Fixed a unused variable warning in
