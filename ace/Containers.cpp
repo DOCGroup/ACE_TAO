@@ -1358,31 +1358,6 @@ ACE_Node<T>::ACE_Node (const ACE_Node<T> &s)
 // ACE_TRACE ("ACE_Node<T>::ACE_Node");
 }
 
-#if 0
-template <class T>
-ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
-  : item_ (i), next_ (n), prev_ (p)
-{
-}
-
-template <class T>
-ACE_DNode<T>::ACE_DNode (const ACE_DNode<T> &i)
-  : item_ (i.item_), next_ (i.next_), prev_ (i.prev_)
-{
-}
-
-template <class T> T*
-ACE_DNode<T>::item (void)
-{
-  return &this->item_;
-}
-
-template <class T>
-ACE_DNode<T>::~ACE_DNode (void)
-{
-}
-#endif /* 0 */
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set)
 
 template <class T> int
