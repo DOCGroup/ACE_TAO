@@ -1,3 +1,7 @@
+Sun Sep 16 11:19:01 2001  Balachandran  <bala@cs.wustl.edu>
+
+        * ACE version 5.1.20 released.
+
 Sat Sep 15 16:58:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/High_Res_Timer_Test.cpp: Fixed compile problem with Sun CC
