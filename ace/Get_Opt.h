@@ -280,6 +280,9 @@ public:
   /// @c operator() or 0 if none was found.
   const ACE_TCHAR *long_option (void) const;
 
+  /// The number of arguments in the internal @c argv_.
+  int argc (void) const;
+
   /// Accessor for the internal @c argv_ pointer.
   ACE_TCHAR **argv (void) const;
 
@@ -301,7 +304,8 @@ public:
   /**
    * @deprecated This is public for backwards compatibility only.
    * It will be made private in a release of ACE past 5.3.  Do not
-   * write code that relies on this member being public.
+   * write code that relies on this member being public; use the
+   * @c argc() accessor method instead.
    */
   int argc_;
 
