@@ -1,3 +1,8 @@
+Sun Dec 12 14:44:53 2004  Marek Brudka  <mbrudka@aster.pl>
+
+	* TAOACE.mwc (Module):
+	Temporarily disabled some projects as MPC is now buggy.
+
 Sun Dec 12 01:14:03 2004  Marek Brudka  <mbrudka@aster.pl>
 
         * tao/tao_xtreactor.mpc (Module):
