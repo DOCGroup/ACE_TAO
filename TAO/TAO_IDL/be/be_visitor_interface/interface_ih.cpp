@@ -63,8 +63,18 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       << " " << be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " : ";
 
-  // Inherit from the base skeleton file.
-  *os <<"public virtual "<< node->full_skel_name ();
+  // Inherit from the base skeleton name, unless the interface
+  // is local.
+  *os <<"public virtual ";
+  
+  if (node->is_local ())
+    {
+      *os << node->full_name ();
+    }
+  else
+    {
+      *os << node->full_skel_name ();
+    }
 
   *os << be_nl
       << "{" << be_nl

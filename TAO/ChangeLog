@@ -1,3 +1,12 @@
+Fri Aug 23 10:33:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+
+          Changed implementation class declaration to inherit
+          from the stub class, if the interface is local. Thanks
+          to Roy Sharon <roysharon@hotmail.com> for reporting
+          the bug. This closes [BUGID:1188].
+
 Fri Aug 23 10:10:17 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_operation.cpp (fe_add_argument):
