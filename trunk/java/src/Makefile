@@ -64,7 +64,8 @@ pkg_concurrency = \
 	Mutex \
 	RWMutex \
 	Semaphore \
-	ThreadManager
+	ThreadManager \
+	Token
 
 concurrency:	$(addsuffix .java,$(pkg_concurrency)) asx_timestuff os
 	$(COMPILE.java)
@@ -94,7 +95,8 @@ misc:	$(addsuffix .java,$(pkg_misc))
 	$(COMPILE.java)
 
 pkg_reactor = \
-	EventHandler
+	EventHandler \
+	TimerQueue
 
 reactor:	asx_timestuff $(addsuffix .java,$(pkg_reactor))
 	$(COMPILE.java)
