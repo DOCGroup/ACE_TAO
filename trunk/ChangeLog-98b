@@ -1,8 +1,8 @@
 Sat Oct 10 12:45:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc_T.h: Added a documentation entry for class
- 	  ACE_Cached_Allocator.  Thanks to Erik Margraf
- 	  <erik@asgard.gud.siemens.co.at> for reporting this.
+ 	  ACE_Cached_Allocator.  Thanks to Erik Koerber
+	  <erik.koerber@siemens.at> for reporting this.
 
 Sat Oct 10 00:40:05 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
