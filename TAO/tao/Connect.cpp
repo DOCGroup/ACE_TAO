@@ -984,15 +984,14 @@ TAO_Client_Connection_Handler::close (u_long flags)
 }
 
 #define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_Client_Connection_Handler>
-#define TAO_HASH_ADDR ACE_Hash_Addr<ACE_INET_Addr>
-#define TAO_RECYCLABLE_ADDR ACE_Recyclable<TAO_HASH_ADDR>
-#define TAO_HASH_RECYCLABLE_ADDR ACE_Hash_Recyclable<TAO_HASH_ADDR>
+#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
+#define HASH_ADDR CACHED_CONNECT_STRATEGY::HASH_ADDRESS
+#define REFCOUNTED_HASH_RECYCLABLE_ADDR CACHED_CONNECT_STRATEGY::REFCOUNTED_HASH_RECYCLABLE_ADDRESS
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>;
-template class TAO_HASH_ADDR;
-template class TAO_RECYCLABLE_ADDR;
-template class TAO_HASH_RECYCLABLE_ADDR;
+template class HASH_ADDR;
+template class REFCOUNTED_HASH_RECYCLABLE_ADDR;
 template class TAO_SVC_TUPLE;
 template class ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator_Base<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>;
@@ -1001,8 +1000,8 @@ template class ACE_Map_Reverse_Iterator<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>
 template class ACE_Map_Entry<int, TAO_SVC_TUPLE*>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Svc_Handler<TAO_SOCK_STREAM, ACE_NULL_SYNCH>
-#pragma instantiate TAO_HASH_ADDR
-#pragma instantiate TAO_RECYCLABLE_ADDR
+#pragma instantiate HASH_ADDR
+#pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
 #pragma instantiate TAO_HASH_RECYCLABLE_ADDR
 #pragma instantiate TAO_SVC_TUPLE
 #pragma instantiate ACE_Map_Manager<int, TAO_SVC_TUPLE*, ACE_SYNCH_RW_MUTEX>

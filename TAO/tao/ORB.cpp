@@ -865,7 +865,7 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
 
 // ****************************************************************
 
-#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
+#define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, TAO_SOCK_CONNECTOR, TAO_Cached_Connector_Lock>
 #define HASH_ADDR CACHED_CONNECT_STRATEGY::HASH_ADDRESS
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR CACHED_CONNECT_STRATEGY::REFCOUNTED_HASH_RECYCLABLE_ADDRESS
 
@@ -901,7 +901,6 @@ template class ACE_Hash_Map_Reverse_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDR, TA
 #pragma instantiate CACHED_CONNECT_STRATEGY
 #pragma instantiate ACE_Guard<TAO_Cached_Connector_Lock>
 #pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int>
-//#pragma instantiate REFCOUNTED_HASH_RECYCLABLE_ADDR
 #pragma instantiate ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *>
 #pragma instantiate ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Base<REFCOUNTED_HASH_RECYCLABLE_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_MUTEX>
