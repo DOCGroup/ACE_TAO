@@ -1,3 +1,10 @@
+Sat Mar 17 10:47:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/Makefile:
+	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+	* orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* orbsvcs/IFR_Service/Makefile.tao_ifr: Updated dependencies 
+
 Sat Mar 17 10:26:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/BiDirectional_NestedUpcall/test_i.cpp (test_method):
