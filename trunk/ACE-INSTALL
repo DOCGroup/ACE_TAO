@@ -355,6 +355,18 @@
        then add the line
        #define ACE_HAS_STANDARD_CPP_LIBRARY 1
        before the #include statement in ACE_ROOT\ace\config.h.
+       The default project files which build ACE library have various
+       configurations to build dynamic/static, with or without Unicode
+       support. Although we recommend using the dynamic library, if, for
+       some reasons, you would rather work with static library, you'll
+       need to add the line
+       #define ACE_HAS_DLL 0
+       before the #include statement in ACE_ROOT\ace\config.h. Optionally
+       but highly recommended, you can also add the line
+       #define __ACE_INLINE__ 0
+       before the #include statement in ACE_ROOT\ace\config.h to disable
+       inline function and reduce the size of static libraries (and your
+       executables.)
        
    ACE TESTS
    
