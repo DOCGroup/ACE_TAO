@@ -128,8 +128,7 @@ public:
 
   // = Initialization and termination.
   /// Create an empty message.
-  ACE_Message_Block (ACE_Allocator *message_block_allocator = 0,
-                     const ACE_Object_Counter::object_id* = 0);
+  ACE_Message_Block (ACE_Allocator *message_block_allocator = 0);
 
   /**
    * Create an <ACE_Message_Block> that owns the <ACE_Data_Block>
@@ -140,8 +139,7 @@ public:
    */
   ACE_Message_Block (ACE_Data_Block *,
                      Message_Flags flags = 0,
-                     ACE_Allocator *message_block_allocator = 0,
-                     const ACE_Object_Counter::object_id* = 0);
+                     ACE_Allocator *message_block_allocator = 0);
 
   /**
    * Create a Message Block that assumes ownership of <data> without
@@ -151,8 +149,7 @@ public:
    */
   ACE_Message_Block (const char *data,
                      size_t size = 0,
-                     unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY);
-
+                     unsigned long priority = ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY); 
   /**
    * Create an initialized message of type <type> containing <size>
    * bytes.  The <cont> argument initializes the continuation field in
@@ -581,6 +578,10 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  void set_ID (const ACE_Object_Counter::object_id id);
+
+  const ACE_Object_Counter::object_id& get_ID (void);
+
 protected:
   // = Internal initialization methods.
   /// Perform the actual initialization.
@@ -655,12 +656,13 @@ protected:
   /// and create new message blocks on duplicate.
   ACE_Allocator *message_block_allocator_;
 
+  ACE_Object_Counter::object_id oid_;
+
 private:
   // = Disallow these operations for now (use <clone> instead).
   ACE_Message_Block &operator= (const ACE_Message_Block &);
   ACE_Message_Block (const ACE_Message_Block &);
 
-  const ACE_Object_Counter::object_id* oid_;
 };
 
 /**
