@@ -1,3 +1,8 @@
+Tue Oct 10 17:59:09 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/RMCast/RMCast.dsp:
+          Update the project file
+
 Tue Oct 10 17:25:32 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Finally the Send_File example works correctly.  In my tests four
