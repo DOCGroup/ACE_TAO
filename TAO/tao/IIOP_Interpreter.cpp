@@ -94,51 +94,51 @@ TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 // make sure that alignment of IDL-defined data types is consistent
 // (one byte).
 
-  enum TCKIND
-  {
-    tk_null               = 0,
-    tk_void               = 1,
-    tk_short              = 2,
-    tk_long               = 3,
-    tk_ushort             = 4,
-    tk_ulong              = 5,
-    tk_float              = 6,
-    tk_double             = 7,
-    tk_boolean            = 8,
-    tk_char               = 9,
-    tk_octet              = 10,
-    tk_any                = 11,
-    tk_TypeCode           = 12,
-    tk_Principal          = 13,
-    tk_objref             = 14,
-    tk_struct             = 15,
-    tk_union              = 16,
-    tk_enum               = 17,
-    tk_string             = 18,
-    tk_sequence           = 19,
-    tk_array              = 20,
-    tk_alias              = 21,           // 94-11-7
-    tk_except             = 22,           // 94-11-7
+enum TCKIND
+{
+  tk_null               = 0,
+  tk_void               = 1,
+  tk_short              = 2,
+  tk_long               = 3,
+  tk_ushort             = 4,
+  tk_ulong              = 5,
+  tk_float              = 6,
+  tk_double             = 7,
+  tk_boolean            = 8,
+  tk_char               = 9,
+  tk_octet              = 10,
+  tk_any                = 11,
+  tk_TypeCode           = 12,
+  tk_Principal          = 13,
+  tk_objref             = 14,
+  tk_struct             = 15,
+  tk_union              = 16,
+  tk_enum               = 17,
+  tk_string             = 18,
+  tk_sequence           = 19,
+  tk_array              = 20,
+  tk_alias              = 21,           // 94-11-7
+  tk_except             = 22,           // 94-11-7
 
-    // these five are OMG-IDL data type extensions
-    tk_longlong           = 23,           // 94-9-32 Appendix A (+ 2)
-    tk_ulonglong          = 24,           // 94-9-32 Appendix A (+ 2)
-    tk_longdouble         = 25,           // 94-9-32 Appendix A (+ 2)
-    tk_wchar              = 26,           // 94-9-32 Appendix A (+ 2)
-    tk_wstring            = 27,           // 94-9-32 Appendix A (+ 2)
+  // these five are OMG-IDL data type extensions
+  tk_longlong           = 23,           // 94-9-32 Appendix A (+ 2)
+  tk_ulonglong          = 24,           // 94-9-32 Appendix A (+ 2)
+  tk_longdouble         = 25,           // 94-9-32 Appendix A (+ 2)
+  tk_wchar              = 26,           // 94-9-32 Appendix A (+ 2)
+  tk_wstring            = 27,           // 94-9-32 Appendix A (+ 2)
 
-    // This symbol is not defined by CORBA 2.0.  It's used to speed up
-    // dispatch based on TCKind values, and lets many important ones
-    // just be table lookups.  It must always be the last enum value!!
+  // This symbol is not defined by CORBA 2.0.  It's used to speed up
+  // dispatch based on TCKind values, and lets many important ones
+  // just be table lookups.  It must always be the last enum value!!
 
-    TC_KIND_COUNT
-  };
+  TC_KIND_COUNT
+};
 
 #if defined (TAO_HAS_FIXED_BYTE_ALIGNMENT)
-  // Have a bogus one
-  #define declare_entry(x,t) struct align_struct_ ## t { }
+// Have a bogus one
+#define declare_entry(x,t) struct align_struct_ ## t { }
 
-  #define setup_entry(x,t) \
+#define setup_entry(x,t) \
     { \
       TAO_IIOP_Interpreter::table_ [t].size_ = sizeof (x); \
       TAO_IIOP_Interpreter::table_ [t].alignment_ = 1; \
@@ -270,10 +270,10 @@ TAO_IIOP_Interpreter::skip_long (TAO_InputCDR *stream)
 
 size_t
 TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
-                                       TAO_InputCDR* stream,
-                                       CORBA::TCKind kind,
-                                       size_t &alignment,
-                                       CORBA::Environment &env)
+                                                        TAO_InputCDR *stream,
+                                                        CORBA::TCKind kind,
+                                                        size_t &alignment,
+                                                        CORBA::Environment &env)
 {
   CORBA::ULong temp;
   // Just a temporary to retrieve CORBA::TCKind variables as ULong's

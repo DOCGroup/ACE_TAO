@@ -36,19 +36,20 @@ class TAO_Export TAO_IIOP_Connector : public TAO_Connector
   // = DESCRIPTION
   //   IIOP Specific Connector bridge for pluggable protocols.
 public:
-
+  // = Initialization and termination methods.
   TAO_IIOP_Connector (void);
-  // Constructor.  Do we want to pass in the tag here or should it be
-  // statically defined?
-
-  int preconnect (char *preconnections);
-  // Initial set of connections to be established.
+  // Constructor. 
+  // @@ Do we want to pass in the tag here or should it be statically
+  // defined?
 
   int open (TAO_Resource_Factory *trf, ACE_Reactor *reactor);
   //  Initialize object and register with reactor. 
 
   int close (void);
   // Shutdown Connector bridge and concreate Connector.
+
+  int preconnect (char *preconnections);
+  // Initial set of connections to be established.
 
   CORBA::ULong tag (void);
   // The tag identifying the specific ORB transport layer protocol.
@@ -57,8 +58,7 @@ public:
   // profile0} {tag1, profole1} ...}  GIOP.h defines typedef
   // CORBA::ULong TAO_IOP_Profile_ID;
 
-
-  TAO_Transport* connect (TAO_Profile *profile,
+  TAO_Transport *connect (TAO_Profile *profile,
                           CORBA::Environment &env);
   // Connect will be called from TAO_GIOP_Invocation::start
 
