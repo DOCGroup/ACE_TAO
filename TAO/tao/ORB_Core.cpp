@@ -98,7 +98,7 @@ TAO_Default_Reactor::~TAO_Default_Reactor (void)
 #define quote(x) #x
 
 int
-TAO_ORB_Core::init (int& argc, char** argv)
+TAO_ORB_Core::init (int &argc, char *argv[])
 {
   // Right now, this code expects to begin parsing in argv[1] rather
   // than argv[0].  I don't think that's wise.  I think we need to
@@ -417,9 +417,11 @@ TAO_ORB_Core::init (int& argc, char** argv)
   if (ACE_OS::strlen (host) == 0)
     {
       char buffer[MAXHOSTNAMELEN + 1];
-      if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
+      if (rendezvous.get_host_name (buffer,
+                                    sizeof (buffer)) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) TAO_ORB_Core::init failed to resolve local host %p.\n"), -1);
+                           "(%P|%t) TAO_ORB_Core::init failed to resolve local host %p.\n"),
+                          -1);
 
       host = CORBA::string_dup (buffer);
     }
@@ -573,7 +575,7 @@ TAO_ORB_Core::preconnect (const char* the_preconnections)
               *sep = '\0';
               tport = sep + 1;
 
-              dest.set (atoi(tport), thost);
+              dest.set (ACE_OS::atoi (tport), thost);
 
               // Try to establish the connection
               handler = 0;
@@ -583,17 +585,15 @@ TAO_ORB_Core::preconnect (const char* the_preconnections)
                   handlers.push (handler);
                 }
               else
-                {
-                  ACE_ERROR ((LM_ERROR,
-                              "(%P|%t) Unable to preconnect to host '%s', port %d.\n",
-                              dest.get_host_name (), dest.get_port_number ()));
-                }
+                ACE_ERROR ((LM_ERROR,
+                            "(%P|%t) Unable to preconnect to host '%s', port %d.\n",
+                            dest.get_host_name (),
+                            dest.get_port_number ()));
             }
           else
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n", where));
-            }
+            ACE_ERROR ((LM_ERROR,
+                        "(%P|%t) Yow!  Couldn't find a ':' separator in '%s' spec.\n",
+                        where));
         }
 
       // Walk the stack of handlers and mark each one as idle now.
