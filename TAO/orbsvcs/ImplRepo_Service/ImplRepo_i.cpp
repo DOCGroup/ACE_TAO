@@ -3,6 +3,7 @@
 #include "ImplRepo_i.h"
 #include "Options.h"
 #include "tao/PortableServer/Object_Adapter.h"
+#include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
@@ -261,6 +262,7 @@ void
 ImplRepo_i::start_server_i (const char *server,
                             CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
+                     ImplementationRepository::Administration::NotFound,
                      ImplementationRepository::Administration::CannotActivate))
 {
   int spawned_pid = 0;
@@ -277,8 +279,7 @@ ImplRepo_i::start_server_i (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find startup info for server <%s>\n",
                   server));
-      // @@ Darrell: this is not listed in the throw spec, it is bound
-      // to give trouble.
+
       ACE_THROW (ImplementationRepository::Administration::NotFound ());
       ACE_CHECK;
     }
@@ -291,8 +292,7 @@ ImplRepo_i::start_server_i (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find startup info for server <%s>\n",
                   server));
-      // @@ Darrell: this is not listed in the throw spec, it is bound
-      // to give trouble.
+
       ACE_THROW (ImplementationRepository::Administration::NotFound ());
       ACE_CHECK;
     }
@@ -379,56 +379,90 @@ ImplRepo_i::start_server_i (const char *server,
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find startup info for server <%s>\n",
                   server));
-      // @@ Darrell: this is not listed in the throw spec, it is bound
-      // to give trouble.
+
       ACE_THROW (ImplementationRepository::Administration::NotFound ());
       ACE_CHECK;
     }
 
-  // Now check to see if it is responding yet:
+  // Now check to see if it is responding yet.
 
+  int ready_error = this->ready_check (server);
+  if (ready_error < 0) 
+    {
+      // We got an error in ready_check, so shutdown the server and
+      // throw an exception
+
+      this->process_mgr_.terminate (spawned_pid);
+
+      if (ready_error == -1)
+        {
+          ACE_THROW (ImplementationRepository::Administration::CannotActivate
+            (CORBA::string_dup ("Timeout while pinging for readiness")));
+        }
+      else 
+        {
+          ACE_THROW (ImplementationRepository::Administration::CannotActivate
+            (CORBA::string_dup ("Unknown error")));
+          
+        }
+    }
+}
+
+
+// ready_check will continuously ping a server and either return when it 
+// responds to the ping or return -1 if it times out.
+
+int 
+ImplRepo_i::ready_check (const char *server)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     ImplementationRepository::Administration::NotFound))
+{
+  ACE_TString ping_object_ior, location;
+  ImplementationRepository::ServerObject_var ping_object;
+  
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  // <end> is the end of the window where we can get a response before
+  // timing out
   ACE_Time_Value end = ACE_OS::gettimeofday ()
                        + OPTIONS::instance ()->startup_timeout ();
 
-  ACE_TString server_object_ior, location;
+  // Get the ior for the "ping" object for the server
 
-  // Find out if it is already running
-  if (this->repository_.get_running_info (server, location, server_object_ior) != 0)
+  if (this->repository_.get_running_info (server, location, ping_object_ior) != 0)
     {
-      // If we had problems getting the server_object_ior, probably meant that
-      // there is no <server> registered
+      // If get_running_info fails, something weird must have happened 
+      // (maybe it was removed after we started it up, but before we got here....)
       ACE_ERROR ((LM_ERROR,
                   "Error: Cannot find ServerObject IOR for server <%s>\n",
                   server));
-      // @@ Darrell: this is not listed in the throw spec, it is bound
-      // to give trouble.
+
       ACE_THROW (ImplementationRepository::Administration::NotFound ());
     }
 
-  ImplementationRepository::ServerObject_var server_ping_object;
+  // Narrow the ping object
 
   ACE_TRY_EX (ping1)
     {
       CORBA::Object_var object =
-      this->orb_->string_to_object (server_object_ior.c_str (),
-                                      ACE_TRY_ENV);
+        this->orb_->string_to_object (ping_object_ior.c_str (), ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (ping1);
 
-      server_ping_object =
+      ping_object =
         ImplementationRepository::ServerObject::_narrow (object.in (),
                                                          ACE_TRY_ENV);
       ACE_TRY_CHECK_EX (ping1);
 
-      if (CORBA::is_nil (server_ping_object.in ()))
+      if (CORBA::is_nil (ping_object.in ()))
         {
           ACE_ERROR ((LM_ERROR,
                       "Error: Invalid ServerObject IOR: <%s>\n",
-                      server_object_ior.c_str ()));
-      // @@ Darrell: this is not listed in the throw spec, it is bound
-      // to give trouble.
+                      ping_object_ior.c_str ()));
+
           ACE_THROW (ImplementationRepository::Administration::NotFound ());
         }
-    }
+
+  }
   ACE_CATCHANY
     {
       ACE_ERROR ((LM_ERROR,
@@ -436,60 +470,47 @@ ImplRepo_i::start_server_i (const char *server,
                  "terminating it (Server Ping Object failed).\n",
                   server));
 
-      // Kill the server
-      this->process_mgr_.terminate (spawned_pid);
-
-      ACE_THROW (ImplementationRepository::Administration::CannotActivate
-        (CORBA::string_dup ("Server Ping Object failed")));
+      return -2;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
 
-  while (ACE_OS::gettimeofday () > end)
+  // Now ping it until we get a response.
+
+  while (ACE_OS::gettimeofday () < end)
     {
       ACE_TRY_EX (ping2);
         {
           // Check to see if we can ping it
-          server_ping_object->ping (ACE_TRY_ENV);
+
+          if (OPTIONS::instance()->debug () >= 2)
+            ACE_DEBUG ((LM_DEBUG, "Pinging Server...\n"));
+
+          ping_object->ping (ACE_TRY_ENV);
           ACE_TRY_CHECK_EX (ping2);
-        }
-      ACE_CATCH (CORBA::TRANSIENT, transient)
-        {
-          if (ACE_OS::gettimeofday () > end)
-            {
-              ACE_ERROR ((LM_ERROR,
-                         "Error: Timeout while activating server <%s>, "
-                         "terminating it.\n",
-                          server));
 
-              // Kill the server
-              this->process_mgr_.terminate (spawned_pid);
+          if (OPTIONS::instance()->debug () >= 2)
+            ACE_DEBUG ((LM_DEBUG, "Pinged Server OK\n"));
 
-              ACE_THROW (ImplementationRepository::Administration::CannotActivate
-                          (CORBA::string_dup ("Timeout")));
-            }
-
-          // Sleep between sending ping.
-          ACE_OS::sleep (OPTIONS::instance ()->ping_interval ());
+          // If we got here, we successfully pinged, therefore we
+          // can exit the function.  
+          return 0;
         }
       ACE_CATCHANY
         {
-          ACE_ERROR ((LM_ERROR,
-                     "Error: Cannot activate server <%s>, "
-                     "terminating it (ping timed out).\n",
-                      server));
-
-          // Kill the server
-          this->process_mgr_.terminate (spawned_pid);
-
-          ACE_THROW (ImplementationRepository::Administration::CannotActivate
-                       (CORBA::string_dup ("Ping timed out")));
+          // Ignore the exception
+          if (OPTIONS::instance()->debug () >= 2)
+             ACE_DEBUG ((LM_DEBUG, "Server not ready (Exception)\n"));
         }
       ACE_ENDTRY;
-      ACE_CHECK;
-    }
-}
 
+      // Sleep between sending pings.
+      ACE_OS::sleep (OPTIONS::instance ()->ping_interval ());
+    } 
+
+  // If we fall out here, that means we didn't get a response before timing
+  // out, so return an error.
+  return -1;
+}
 
 
 // Adds an entry to the Repository about this <server>
@@ -675,11 +696,9 @@ ImplRepo_i::server_is_running (const char *server,
 
   // Use a default acceptor filter, all the profiles in the ImR are valid, no
   // matter what the server has.
-  TAO_Acceptor_Filter *filter = 0;
-  TAO_Default_Acceptor_Filter default_filter;
-  filter = &default_filter;
+  TAO_Default_Acceptor_Filter filter;
 
-  registry->make_mprofile (objkey, mp, filter);
+  registry->make_mprofile (objkey, mp, &filter);
 
   // @@ (brunsch) Only look at current profile for now.
   TAO_Profile *profile = mp.get_current_profile ();
