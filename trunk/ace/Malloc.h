@@ -78,12 +78,6 @@ struct ACE_Export ACE_Malloc_Stats
 #define ACE_MALLOC_PADDING 1
 #endif /* ACE_MALLOC_PADDING */
 
-// The following is only for backwards compatibility.
-#if defined (ACE_MALLOC_ALIGN)
-#undef ACE_MALLOC_PADDING
-#define ACE_MALLOC_PADDING ACE_MALLOC_ALIGN
-#endif /* ACE_MALLOC_ALIGN */
-
 class ACE_Export ACE_Malloc_Header
 {
   // = TITLE

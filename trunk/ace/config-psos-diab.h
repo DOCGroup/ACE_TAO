@@ -226,6 +226,8 @@
 #define ACE_PSOS
 #endif /* ACE_PSOS */
 
+#define ACE_MALLOC_ALIGN 8
+
 #if !defined (ACE_PSOS_DIAB)
 #define ACE_PSOS_DIAB
 #endif /* ACE_PSOS_DIAB */
