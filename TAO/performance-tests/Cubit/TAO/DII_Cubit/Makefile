@@ -39,9 +39,11 @@ BUILD += ../IDL_Cubit/server
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
-ifeq ($(minimum_corba),0)
+ifeq ($(corba_messaging),1)
+  ifeq ($(minimum_corba),0)
   BIN=$(BIN_UNCHECKED)
-endif # minimum_corba
+  endif # minimum_corba
+endif # corba_messaging
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
