@@ -192,7 +192,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ds_control ds_cntrl ("DT_Oneway", "dt_oneway_enable.dsui");
+  ds_control ds_cntrl ("DT_Oneway_Client", "dt_oneway_enable.dsui");
   ACE_High_Res_Timer non_dsui_timer;
   non_dsui_timer.calibrate ();
   non_dsui_timer.start();

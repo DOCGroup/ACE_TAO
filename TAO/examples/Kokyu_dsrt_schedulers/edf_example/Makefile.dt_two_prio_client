@@ -27,7 +27,8 @@ IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext
 FILES = \
   cpuload \
   test1C \
-  dt_two_prio_client
+  dt_two_prio_client \
+  dt_oneway_dsui_vars
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

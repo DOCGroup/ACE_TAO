@@ -29,7 +29,8 @@ FILES = \
   test1C \
   test1S \
   test1_i \
-  dt_two_prio_server
+  dt_two_prio_server \
+  dt_oneway_dsui_vars
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
