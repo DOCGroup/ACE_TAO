@@ -1,3 +1,22 @@
+Fri Sep 26 12:13:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
+	  Changed to deploy Test-IOR.cad instead of
+	  Test-Name-Service.cad.
+
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_stub_export.h:
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_svnt_export.h:
+	  Fixed some extra line-breaks that were causing compilation errors.
+
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+	  Fixed a compilation error.
+
+	* performance-tests/Benchmark/RoundTripServer/RoundTripServer.mpc:
+	  Removed a redundant comma.
+
+	* tools/ComponentServer/ComponentServer.cpp:
+	  Fixed execution error in "debug mode."
+
 Wed Sep 24 20:59:09 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP_EC2/EC/EC.mpc: Fixed problems that

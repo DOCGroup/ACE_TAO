@@ -2,7 +2,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$ 
+# $Id$
 # -*- perl -*-
 
 #
@@ -28,7 +28,7 @@ $daemon_args = "-ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Insta
 
 $assembly_manager_args = "-o $am_ior -c test.dat";
 
-$ad_args = " -k file://$am_ior -a Test-Name-Service.cad";
+$ad_args = " -k file://$am_ior -a Test-IOR.cad";
 
 # CIAO daemon process definition
 $DS = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",

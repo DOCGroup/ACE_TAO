@@ -1,7 +1,7 @@
 // $Id$
 project (RoundTripServer) : taoserver, strategies {
   Source_Files {
-    server.cpp,
+    server.cpp
     LatencyTest.cpp
   }
 }
