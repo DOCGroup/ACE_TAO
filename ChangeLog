@@ -1,3 +1,10 @@
+Thu Apr 22 06:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/QoS/qos.mpc:
+          With Visual C++ 8 also define ACE_HAS_WINSOCK2_GQOS. Visual C++
+          8 is at this moment Microsoft Visual Studio .NET 2005 March
+          2004 Preview.
+
 Wed Apr 21 13:36:41 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/os_include/os_time.h: Reverted this change:
