@@ -96,7 +96,7 @@ main (int, char *[])
   ACE_START_TEST ("SPIPE_Test");
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)
-#if !defined (ACE_LACKS_EXEC)
+#if !defined (ACE_LACKS_FORK)
   switch (ACE_OS::fork ())
     {
     case -1:
