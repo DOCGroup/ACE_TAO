@@ -531,6 +531,7 @@ ACEXML_Parser::parse_ignoresect (ACEXML_ENV_SINGLE_ARG_DECL)
 {
   ACEXML_Char nextch = this->skip_whitespace();
   int count = 0;
+  int done = 0;
   do {
     switch (nextch)
       {
@@ -552,7 +553,12 @@ ACEXML_Parser::parse_ignoresect (ACEXML_ENV_SINGLE_ARG_DECL)
               if (this->peek() == '>')
                 {
                   this->get();
-                  --count;
+                  if (count)
+                    {
+                      --count;
+                      break;
+                    }
+                  done = 1;
                 }
             }
           break;
@@ -567,8 +573,12 @@ ACEXML_Parser::parse_ignoresect (ACEXML_ENV_SINGLE_ARG_DECL)
         default:
           break;
       }
+    if (done)
+      break;
     nextch = this->get();
   } while (1);
+
+  return 0;
 }
 
 int
