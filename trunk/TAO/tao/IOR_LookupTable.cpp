@@ -40,12 +40,12 @@ TAO_IOR_LookupTable::add_ior (ACE_CString object_name,
                          "Unable to bind in IOR_LookupTable::add_ior ()"),
                         -1);
     }
-  
+
   ACE_DEBUG ((LM_DEBUG,
               "\n%s:%s Added to the table\n",
 	      object_name.c_str (),
 	      ior.c_str ()));
- 
+
   return 0;
 }
 
@@ -58,7 +58,7 @@ TAO_IOR_LookupTable::find_ior (ACE_CString object_name,
   //        -1 on failure.
 
   return this->hash_map_.find (object_name, ior);
-  
+
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

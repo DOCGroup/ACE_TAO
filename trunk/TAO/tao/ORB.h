@@ -22,7 +22,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Exception.h"
-
+#include "tao/IOR_LookupTable.h"
 
 typedef enum
 {
@@ -231,31 +231,24 @@ public:
   // Returns a pointer to a nil ORB, i.e., an non-existent ORB.  This
   // can be used for initialization or in comparisons.
 
-  virtual CORBA::Object_ptr string_to_object (const char *str,
-                                              CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+  virtual CORBA::Object_ptr string_to_object (
+         const char *str,
+         CORBA_Environment &ACE_TRY_ENV =
+               CORBA::default_environment ());
   // Turn a string-ified object reference back into an object pointer.
-  // Each type of ORB, e.g. an IIOP ORB, must implement this.
-  // Typically these strings are created using <object_to_string()>.
-  virtual CORBA::String object_to_string (CORBA::Object_ptr obj,
-                                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+  // Typically these strings are created using <object_to_string()>,
+  // but not necessarily locally.
+
+  virtual CORBA::String object_to_string (
+         CORBA::Object_ptr obj,
+         CORBA_Environment &ACE_TRY_ENV =
+               CORBA::default_environment ());
   // Turn an object reference into a string.  Each type of ORB,
   // e.g. an IIOP ORB, must implement this.  This can be used by
   // servers to publish their whereabouts to clients.  The output of
   // this is typically eventually given to <string_to_object()> as an
   // argument.
 
-  virtual TAO_ServantBase *_get_collocated_servant (TAO_Stub *p) = 0;
-  // Return the object pointer of an collocated object it there is
-  // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
-  // must implement this and determine what is a collocated object
-  // based on information provided in the TAO_Stub.
-
-  virtual int _tao_add_to_IOR_table (ACE_CString object_id, CORBA::Object_ptr obj) = 0;
-  // Add a mapping ObjectID->IOR to the table.
-  
-  virtual int _tao_find_in_IOR_table (ACE_CString object_id, CORBA::Object_ptr &obj) = 0;
-  // Find the given ObjectID in the table.
-  
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   void create_list (CORBA::Long count,
@@ -280,6 +273,38 @@ public:
   // It is platform-specific how the application and ORB arrange to
   // use compatible threading primitives.
 
+  // Forward declaration and typedefs for the exception thrown by
+  // the ORB Dynamic Any factory functions.
+  class CORBA_ORB_InconsistentTypeCode;
+  typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
+  typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
+
+  // Typecode for the above exception.
+  static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
+
+  // Dynamic Any factory functions.
+  // @@EXC@@ Add the ACE_THROW_SPEC for these functions...
+
+  CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
+                                               CORBA::Environment &TAO_IN_ENV);
+
+  CORBA_DynAny_ptr       create_basic_dyn_any (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &TAO_IN_ENV);
+
+  CORBA_DynStruct_ptr    create_dyn_struct    (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &TAO_IN_ENV);
+
+  CORBA_DynSequence_ptr  create_dyn_sequence  (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &TAO_IN_ENV);
+
+  CORBA_DynArray_ptr     create_dyn_array     (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &TAO_IN_ENV);
+
+  CORBA_DynUnion_ptr     create_dyn_union     (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &TAO_IN_ENV);
+
+  CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &TAO_IN_ENV);
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   int run (void);
@@ -303,6 +328,8 @@ public:
   // has completed.  <[NOTE]> <wait_for_completion>=TRUE is not
   // currently supported.
 
+  // @@EXC@@ Add the ACE_THROW_SPEC for these two functions
+
   CORBA_Object_ptr resolve_initial_references (CORBA::String name,
                                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
 
@@ -323,6 +350,20 @@ public:
   // <resolve_initial_references> specification.
 
   // = TAO-specific extensions to the CORBA specification.
+
+  virtual TAO_ServantBase *_get_collocated_servant (TAO_Stub *p);
+  // Return the object pointer of an collocated object it there is
+  // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
+  // must implement this and determine what is a collocated object
+  // based on information provided in the TAO_Stub.
+
+  virtual int _tao_add_to_IOR_table (ACE_CString object_id,
+                                     CORBA::Object_ptr obj);
+  // Add a mapping ObjectID->IOR to the table.
+
+  virtual int _tao_find_in_IOR_table (ACE_CString object_id,
+                                      CORBA::Object_ptr &obj);
+  // Find the given ObjectID in the table.
 
   CORBA_Object_ptr resolve_root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                      TAO_POA_Manager *poa_manager = 0,
@@ -382,45 +423,19 @@ public:
   int should_shutdown (void);
   // Get the shutdown flag value
 
+  void _use_omg_ior_format (CORBA::Boolean ior);
+  // Set the IOR flag.
+  CORBA::Boolean _use_omg_ior_format (void);
+  // Get the IOR flag.
 
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-
-  // Forward declaration and typedefs for the exception thrown by
-  // the ORB Dynamic Any factory functions.
-  class CORBA_ORB_InconsistentTypeCode;
-  typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
-  typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
-
-  // Typecode for the above exception.
-  static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
-
-  // Dynamic Any factory functions.
-
-  CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
-                                               CORBA::Environment &TAO_IN_ENV);
-
-  CORBA_DynAny_ptr       create_basic_dyn_any (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &TAO_IN_ENV);
-
-  CORBA_DynStruct_ptr    create_dyn_struct    (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &TAO_IN_ENV);
-
-  CORBA_DynSequence_ptr  create_dyn_sequence  (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &TAO_IN_ENV);
-
-  CORBA_DynArray_ptr     create_dyn_array     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &TAO_IN_ENV);
-
-  CORBA_DynUnion_ptr     create_dyn_union     (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &TAO_IN_ENV);
-
-  CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
-                                               CORBA::Environment &TAO_IN_ENV);
-#endif /* TAO_HAS_MINIMUM_CORBA */
+  void _optimize_collocation_objects (CORBA::Boolean opt);
+  // Set collocation optimization status.
+  CORBA::Boolean _optimize_collocation_objects (void);
+  // Get collocation optimization status.
 
 protected:
   // We must be created via the <ORB_init> call.
-  CORBA_ORB (void);
+  CORBA_ORB (TAO_ORB_Core* orb_core);
   virtual ~CORBA_ORB (void);
 
   CORBA_Object_ptr resolve_poa_current (void);
@@ -431,7 +446,6 @@ protected:
   // Implements the run routine
 
 private:
-
   CORBA_Object_ptr resolve_commandline_ref (const char *& init_ref);
   // Resolve the Initial reference according to the commandline
   // option -ORBInitRef <ObjectID>:<IOR>
@@ -439,23 +453,44 @@ private:
   CORBA_Object_ptr resolve_service (CORBA::String service_name,
 				    ACE_Time_Value *timeout);
   // Resolve the service name.
-  
+
   CORBA_Object_ptr resolve_trading_service (ACE_Time_Value *timeout);
   // Resolve the trading object reference.
-  
+
   int multicast_query (char *buf,
 		       const char *service_name,
 		       u_short port,
 		       ACE_Time_Value *timeout);
-  
+
   // returns and IOR string, the client is responsible for freeing
   // memory!
-  
+
   CORBA_Object_ptr multicast_to_service (const char *service_name,
                                          u_short port,
                                          ACE_Time_Value *timeout);
   // Resolve the refernce of a service of type <name>.
-  
+
+  CORBA::Object_ptr file_string_to_object (const char* filename,
+                                           CORBA::Environment& env);
+  // Read an IOR from a file and then parse it, returning the object
+  // reference.
+
+  CORBA::Object_ptr iiop_string_to_object (const char* url,
+                                           CORBA::Environment& env);
+  // Read an IOR from a file and then parse it, returning the object
+  // reference.
+
+  CORBA::Object_ptr ior_string_to_object (const char* ior,
+                                          CORBA::Environment& env);
+  // Read an IOR from a file and then parse it, returning the object
+  // reference.
+
+  CORBA::Object_ptr iioploc_string_to_object (const char* string,
+                                              CORBA::Environment& env);
+  // Read an IOR from a file and then parse it, returning the object
+  // reference.
+
+private:
   ACE_SYNCH_MUTEX lock_;
   // lock required for mutual exclusion between multiple threads.
 
@@ -501,6 +536,21 @@ private:
 
   TAO_Leader_Follower_Info  leader_follower_info_;
   // Information about the leader follower model
+
+  TAO_ORB_Core* orb_core_;
+  // The ORB_Core that created us....
+
+  ACE_Unbounded_Set<ACE_INET_Addr> collocation_record_;
+  // The collocation table...
+
+  TAO_IOR_LookupTable lookup_table_;
+  // Table of ObjectID->IOR mappings.
+
+  CORBA::Boolean use_omg_ior_format_;
+  // Decides whether to use the URL notation or to use IOR notation.
+
+  CORBA::Boolean optimize_collocation_objects_;
+  // Decides whether to use the URL notation or to use IOR notation.
 
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);
@@ -560,12 +610,3 @@ private:
 #endif /* _MSV_VER */
 
 #endif /* TAO_ORB_H */
-
-
-
-
-
-
-
-
-
