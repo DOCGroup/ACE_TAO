@@ -7,6 +7,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "ace/Dynamic_Service.h"
+#include "debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Adapter.i"

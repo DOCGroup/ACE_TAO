@@ -1,3 +1,12 @@
+Sat Aug 31 14:54:01 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tao/Adapter.cpp: #included debug.h
+	* tao/Messaging/Makefile: Do not compile if corba_messaging=0. 
+	 
+	  Thanks to Cemal Yilmaz <cyilmaz@cs.umd.edu> and the 'skoll'
+	  experiment for finding and reporting it. Apparently the error in
+	  tao/Adapter.cpp is being signalled by our scoreboard too. 
+
 Sat Aug 31 15:59:07 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tests/RTCORBA/Server_Protocol/server.cpp:

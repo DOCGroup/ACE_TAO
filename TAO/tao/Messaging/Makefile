@@ -9,8 +9,8 @@ endif # ! TAO_ROOT
 
 MAKEFILE = Makefile
 LIBNAME  = libTAO_Messaging
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
+LIB_UNCHECKED      = $(LIBNAME).a
+SHLIB_UNCHECKED    = $(LIBNAME).$(SOEXT)
 
 ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
 
@@ -38,6 +38,12 @@ LSRC  = $(addsuffix .cpp,$(FILES))
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+
+ifeq ($(corba_messaging),1)
+LIB=$(LIB_UNCHECKED)
+SHLIB=$(SHLIB_UNCHECKED)
+endif # corba_messaging
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
