@@ -1,3 +1,13 @@
+Wed Sep 15 10:50:21 1999  James Hu <jxh@entera.com>
+
+        * ace/TP_Reactor.{cpp,h,i} (mask_ops): Fixed a problem where
+          cancel_wakeup would fail.  Since an event handler is suspended
+          for the duration of the up-call, the wait_mask_ was being
+          over-written by the suspend_mask_ when the event handler was
+          resumed.  This fixes the problem by extending TP_Reactor with
+          its own implementations of mask_ops that operate on both
+          wait_mask_ and suspend_mask_.
+
 Wed Sep 15 10:14:21 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/exceptions.html:
