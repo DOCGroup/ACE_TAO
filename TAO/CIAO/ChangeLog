@@ -1,3 +1,8 @@
+Mon Sep 20 11:37:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE/ciao/StandardConfigurator_Impl.h:
+          Removed not needed qualifier, and fixed incorrect Id tag
+
 Sun Sep 19 19:12:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/ciao/Deployment.idl:
@@ -7,7 +12,7 @@ Sun Sep 19 19:12:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri Sep 17 16:46:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/CIDLC.sln:
-        
+
           Added the 5 projects from CCF.sln so the CIDL compiler can be
           built from scratch in a single MSVC 7.1 Solution.
 
