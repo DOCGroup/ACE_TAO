@@ -834,7 +834,6 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
 
-  ctx.sub_state (TAO_CodeGen::TAO_USE_FULL_NAME);
   ctx.state (TAO_CodeGen::TAO_FIELD_CH);
 
   be_visitor_field_ch visitor (&ctx);
