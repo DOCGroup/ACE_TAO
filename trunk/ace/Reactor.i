@@ -53,6 +53,12 @@ ACE_Reactor::close (void)
 }
 
 ACE_INLINE int 
+ACE_Reactor::work_pending (const ACE_Time_Value &max_wait_time)
+{
+  return this->implementation ()->work_pending (max_wait_time);
+}
+
+ACE_INLINE int 
 ACE_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 {
   return this->implementation ()->handle_events (max_wait_time);

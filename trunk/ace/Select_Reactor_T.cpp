@@ -856,6 +856,26 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
   return this->handler_rep_.unbind (handle, mask);
 }
 
+template <class ACE_SELECT_REACTOR_TOKEN> int
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending (const ACE_Time_Value &timeout)
+{
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1);
+
+  if (ACE_OS::thr_equal (ACE_Thread::self (),
+                         this->owner_) == 0)
+    return -1;
+#endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
+
+  u_long width = (u_long) this->handler_rep_.max_handlep1 ();
+
+  return ACE_OS::select (int (width),
+                         this->wait_set_.rd_mask_,
+                         this->wait_set_.wr_mask_,
+                         this->wait_set_.ex_mask_,
+                         timeout);
+}
+
 // Must be called with lock held.
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
@@ -871,7 +891,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
   int number_of_active_handles = this->any_ready (dispatch_set);
 
   // If there are any bits enabled in the <ready_set_> then we'll
-  // handle those first, otherwise we'll block in select().
+  // handle those first, otherwise we'll block in <select>.
 
   if (number_of_active_handles == 0)
     {
@@ -1144,7 +1164,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1);
 
-  if (ACE_OS::thr_equal (ACE_Thread::self (), this->owner_) == 0)
+  if (ACE_OS::thr_equal (ACE_Thread::self (),
+                         this->owner_) == 0)
     return -1;
 
   // Update the countdown to reflect time waiting for the mutex.
