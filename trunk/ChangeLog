@@ -1,3 +1,19 @@
+Fri Nov 29 12:23:14 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.h (ACE_Thread_Manager): Changed all the
+	  accessors to the Thread_Descriptor to be protected.
+
+	* ace/Thread_Manager.i: Removed assertion test for null
+	  Thread_Descriptor pointer.  This can happen when calling
+	  thread_desc_self() from a thread not spawned by the
+	  Thread_Manager, e.g., the main thread.
+
+	  Added checks in all ACE_Thread_Manager::at_exit for null
+	  thread_desc_self to avoid crash.
+
+	  Thanks to Mathias Waack <mathias.waack@schlund.de> for reporting
+	  the bug.
+
 Thu Nov 28 06:36:04 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* apps/soreduce/Makefile: Changed INSBIN from $ACE_ROOT/bin/soreduce/
@@ -6,7 +22,7 @@ Thu Nov 28 06:36:04 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Thu Nov 28 07:54:28 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* docs/tutorials/022/Acceptor_Service.h: Add include of svc_export.h 
+	* docs/tutorials/022/Acceptor_Service.h: Add include of svc_export.h
           to fix compilation errors.  Thanks to Viktor Ransmayr
 	  <viktor.ransmayr@t-online.de> for reporting the problem. Not
 	  sure whether this example would still compile fine.

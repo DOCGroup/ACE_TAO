@@ -218,7 +218,7 @@ ACE_Thread_Manager::thread_desc_self (void)
   ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
 
 #if 1
-  ACE_ASSERT (desc != 0);
+  //  ACE_ASSERT (desc != 0);
   // Thread descriptor should always get cached.
 #else
   if (desc == 0)
@@ -270,13 +270,21 @@ ACE_Thread_Manager::open (size_t)
 ACE_INLINE int
 ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit* at)
 {
-  return this->thread_desc_self ()->at_exit (at);
+  ACE_Thread_Descriptor *td = this->thread_desc_self ();
+  if (td == 0)
+    return -1;
+  else
+    return td->at_exit (at);
 }
 
 ACE_INLINE int
 ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit& at)
 {
-  return this->thread_desc_self ()->at_exit (at);
+  ACE_Thread_Descriptor *td = this->thread_desc_self ();
+  if (td == 0)
+    return -1;
+  else
+    return td->at_exit (at);
 }
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 
@@ -285,9 +293,13 @@ ACE_Thread_Manager::at_exit (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
                              void *param)
 {
-  return this->thread_desc_self ()->at_exit (object,
-                                             cleanup_hook,
-                                             param);
+  ACE_Thread_Descriptor *td = this->thread_desc_self ();
+  if (td == 0)
+    return -1;
+  else
+    return td->at_exit (object,
+                        cleanup_hook,
+                        param);
 }
 
 ACE_INLINE void
