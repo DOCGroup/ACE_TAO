@@ -13,6 +13,10 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
+#define CHECK_NO_THROW(statement) \
+try { statement; } catch(...) { \
+  BOOST_ERROR("unexpected exception raised"); }
+
 using namespace TAO::details;
 
 using namespace boost::unit_test_framework;
@@ -31,11 +35,11 @@ struct Tester
     expected_calls c(aspect::allocbuf_calls);
 
     aspect::allocbuf_calls.failure_countdown(2);
-    value_type * s;
-    BOOST_CHECK_NO_THROW(s = aspect::allocbuf(4));
+    value_type * s = 0;
+    CHECK_NO_THROW(s = aspect::allocbuf(4));
     aspect::freebuf(s);
     BOOST_CHECK_THROW(s = aspect::allocbuf(4), testing_exception);
-    BOOST_CHECK_NO_THROW(s = aspect::allocbuf(4));
+    CHECK_NO_THROW(s = aspect::allocbuf(4));
     aspect::freebuf(s);
 
     BOOST_CHECK_MESSAGE(c.expect(3), c);
@@ -48,12 +52,12 @@ struct Tester
 
     aspect::freebuf_calls.failure_countdown(2);
     value_type * s = aspect::allocbuf(4);
-    BOOST_CHECK_NO_THROW(aspect::freebuf(s));
+    CHECK_NO_THROW(aspect::freebuf(s));
     s = aspect::allocbuf(4);
     BOOST_CHECK_THROW(aspect::freebuf(s), testing_exception);
     aspect::freebuf(s);
     s = aspect::allocbuf(4);
-    BOOST_CHECK_NO_THROW(aspect::freebuf(s));
+    CHECK_NO_THROW(aspect::freebuf(s));
 
     BOOST_CHECK_MESSAGE(c.expect(4), c);
   }
@@ -82,13 +86,13 @@ struct Tester
     expected_calls c(aspect::default_buffer_allocation_calls);
 
     aspect::default_buffer_allocation_calls.failure_countdown(2);
-    value_type * s;
-    BOOST_CHECK_NO_THROW(
+    value_type * s = 0;
+    CHECK_NO_THROW(
         s = aspect::default_buffer_allocation());
     aspect::freebuf(s);
     BOOST_CHECK_THROW(
         s = aspect::default_buffer_allocation(), testing_exception);
-    BOOST_CHECK_NO_THROW(
+    CHECK_NO_THROW(
         s = aspect::default_buffer_allocation());
     aspect::freebuf(s);
 
@@ -127,27 +131,29 @@ struct Tester
 
   void add_all(test_suite * ts)
   {
+    boost::shared_ptr<Tester> shared_this(self_);
+
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_default_buffer_allocation_value,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_default_buffer_allocation_unbounded,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_default_buffer_allocation_bounded,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_allocbuf_unbounded,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_allocbuf_bounded,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_freebuf_unbounded,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_freebuf_bounded,
-                shared_from_this()));
+                shared_this));
   }
 
   static boost::shared_ptr<Tester> allocate()
@@ -160,11 +166,6 @@ struct Tester
 
 private:
   Tester() {}
-
-  boost::shared_ptr<Tester> shared_from_this()
-  {
-    return boost::shared_ptr<Tester>(self_);
-  }
 
   boost::weak_ptr<Tester> self_;
 };

@@ -358,63 +358,66 @@ struct Tester
 
   void add_all(test_suite * ts)
   {
+    boost::shared_ptr<Tester> shared_this(self_);
+
     ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_ulong_constructor, shared_from_this()));
+                &Tester::test_ulong_constructor,
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_copy_constructor_from_ulong,
-                shared_from_this()));
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_assignment_from_ulong,
-                shared_from_this()));
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_exception_in_ulong_constructor,
-                shared_from_this()));
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_less_than_maximum,
-                shared_from_this()));
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_more_than_maximum,
-                shared_from_this()));
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_exception_in_set_length,
-                shared_from_this()));
+                shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_buffer_constructor_default,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_buffer_constructor_false,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_buffer_constructor_true,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_replace_default,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_replace_false,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_replace_true,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_get_buffer_const,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_get_buffer_false,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_get_buffer_true_with_release_false,
-                shared_from_this()));
+                shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_get_buffer_true_with_release_true,
-                shared_from_this()));
+                shared_this));
 
   }
 
@@ -428,11 +431,6 @@ struct Tester
 
 private:
   Tester() {}
-
-  boost::shared_ptr<Tester> shared_from_this()
-  {
-    return boost::shared_ptr<Tester>(self_);
-  }
 
   boost::weak_ptr<Tester> self_;
 };
