@@ -671,9 +671,9 @@ ACE::ldfind (const ASYS_TCHAR filename[],
                            ASYS_TEXT ("%s%s%s"),
                            searchpathname,
                            searchfilename,
-                           got_suffix ? ACE_static_cast (char *, 
-                                                         ASYS_TEXT ("")) 
-                                      : ACE_static_cast (char *, 
+                           got_suffix ? ACE_static_cast (char *,
+                                                         ASYS_TEXT (""))
+                                      : ACE_static_cast (char *,
                                                          dll_suffix));
 #else /* ! defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
           ACE_OS::sprintf (pathname,
@@ -2918,7 +2918,7 @@ ACE::get_ip_interfaces (size_t &count,
   ACE_UNUSED_ARG (count);
   ACE_UNUSED_ARG (addrs);
   ACE_NOTSUP_RETURN (-1);;                      // no implementation
-#endif /* ACE_WIN32 */}
+#endif /* ACE_WIN32 */
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && (defined (__unix) || defined (__Lynx__))
