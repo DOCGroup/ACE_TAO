@@ -1,3 +1,10 @@
+Thu May 13 09:39:17 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Makefile: added Tokens_Test to BIN2 if Tokens component
+          is not configured in.  This ensures that Tokens_Test gets
+          cleaned up, even if the ace directory was realcleaned first
+          (and ACE_BUILD_COMPONENTS is therefore empty).
+
 Thu May 13 07:24:41 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/POSIX_Proactor.cpp (handle_events): replaced
