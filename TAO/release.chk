@@ -39,30 +39,33 @@ Legend:
 [1100  ] 	POA/On_Demand_Activation runs
 [1101  ] POA/Explicit_Activation compiles
 [0100  ] 	POA/Explicit_Activation runs
-[x1xxx ] POA/Default_Servant compiles
-[x0xxx ] 	POA/Default_Servant runs
+[x1x1x ] POA/Default_Servant compiles
+[x0x0x ] 	POA/Default_Servant runs
 
 [1111x ] Param_Test compiles
-[111xx ] 	SII short
-[111xx ] 	SII ubstring
-[111xx ] 	SII fixed_struct
-[10xxx ] 	SII strseq
-[000xx ] 	SII var_struct
-[000xx ] 	SII nested_struct
-[000xx ] 	SII struct_seq
-[000xx ] 	SII objref
+[1111x ] 	SII short
+[1111x ] 	SII ubstring
+[1111x ] 	SII fixed_struct
+[10x0x ] 	SII strseq
+[0000x ] 	SII var_struct
+[0000x ] 	SII nested_struct
+[0000x ] 	SII struct_seq
+[0000x ] 	SII objref
 
-[11xxx ] 	DII short
-[11xxx ] 	DII ubstring
-[11xxx ] 	DII fixed_struct
-[00xxx ] 	DII strseq
-[00xxx ] 	DII var_struct
-[00xxx ] 	DII nested_struct
-[00xxx ] 	DII struct_seq
-[00xxx ] 	DII objref
+  
+[11x1x ] 	DII short
+[11x1x ] 	DII ubstring
+[11x1x ] 	DII fixed_struct
+[00x0x ] 	DII strseq
+[00x0x ] 	DII var_struct
+[00x0x ] 	DII nested_struct
+[00x0x ] 	DII struct_seq
+[00x0x ] 	DII objref
 
+  
 [0x0x0 ] Thruput/TAO compiles
 
+  
 [1111x ] liborbsvcs compiles
 [1111x ] Naming_Service compiles
 [1111x ] Simple_Naming compiles
@@ -113,6 +116,8 @@ NOTES
 ** MT_Cubit does not compile
    An extra library (-lposix4) is only present in Solaris; IMHO that
    should go into the platform file for Solaris/CC
+** Param_Test does not connect on the first attempt, even for simple
+   types like <short>
 
 * Linux/g++
 ** IDL Cubit clnt works, but generates a SEGV on shutdown
