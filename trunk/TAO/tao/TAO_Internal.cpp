@@ -1,21 +1,24 @@
 // $Id$
 
-#include "tao/TAO_Internal.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "ace/Object_Manager.h"
-#include "tao/default_server.h"
-#include "tao/default_client.h"
-#include "tao/default_resource.h"
+#include "ace/ARGV.h"
+#include "ace/Arg_Shifter.h"
 
-#include "tao/IIOP_Factory.h"
+#include "TAO_Internal.h"
+#include "default_server.h"
+#include "default_client.h"
+#include "default_resource.h"
 
-#include "tao/CORBANAME_Parser.h"
-#include "tao/CORBALOC_Parser.h"
-#include "tao/FILE_Parser.h"
-#include "tao/DLL_Parser.h"
+#include "IIOP_Factory.h"
 
-#include "tao/Object_Loader.h"
+#include "CORBANAME_Parser.h"
+#include "CORBALOC_Parser.h"
+#include "FILE_Parser.h"
+#include "DLL_Parser.h"
+
+#include "Object_Loader.h"
 
 ACE_RCSID(tao, TAO_Internal, "$Id$")
 
@@ -30,6 +33,95 @@ const char *TAO_Internal::server_strategy_args_ = 0;
 const char *TAO_Internal::client_strategy_args_ = 0;
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
 
+
+
+int
+TAO_Internal::open_services (int &argc, char **argv)
+{
+  // Construct an argument vector specific to the Service
+  // Configurator.
+  ACE_ARGV svc_config_argv;
+
+  // Be certain to copy the program name so that service configurator
+  // has something to skip!
+  const char *argv0 = "";
+  if (argc > 0 && argv != 0)
+    argv0 = argv[0];
+
+  svc_config_argv.add (argv0);
+
+  // Should we skip the <ACE_Service_Config::open> method, e.g., if we
+  // already being configured by the ACE Service Configurator.
+  int skip_service_config_open = 0;
+
+  // Extract the Service Configurator ORB options from the argument
+  // vector.
+  ACE_Arg_Shifter arg_shifter (argc, argv);
+
+  while (arg_shifter.is_anything_left ())
+    {
+      char *current_arg = 0;
+
+      // Start with the parameterless flags.
+      if (arg_shifter.cur_arg_strncasecmp
+          ("-ORBSkipServiceConfigOpen") == 0)
+        {
+          skip_service_config_open = 1;
+
+          arg_shifter.consume_arg ();
+        }
+
+      else if (arg_shifter.cur_arg_strncasecmp ("-ORBDaemon") == 0)
+        {
+          // Be a daemon
+          svc_config_argv.add ("-b");
+
+          arg_shifter.consume_arg ();
+        }
+
+
+      // Continue with flags that accept parameters.
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBSvcConfDirective")))
+        {
+          // This is used to pass arguments to the Service
+          // Configurator using the "command line" to provide
+          // configuration information rather than using a svc.conf
+          // file.  Pass the "-S" to the service configurator.
+          svc_config_argv.add ("-S");
+
+          svc_config_argv.add (current_arg);
+
+          arg_shifter.consume_arg ();
+        }
+
+      else if ((current_arg =
+                arg_shifter.get_the_parameter ("-ORBSvcConf")))
+        {
+          // Specify the name of the svc.conf file to be used.
+          svc_config_argv.add ("-f");
+
+          svc_config_argv.add (current_arg);
+
+          arg_shifter.consume_arg();
+        }
+
+      // Can't interpret this argument.  Move on to the next
+      // argument.
+      else
+        // Any arguments that don't match are ignored so that the
+        // caller can still use them.
+        arg_shifter.ignore_arg ();
+    }
+
+  int svc_config_argc = svc_config_argv.argc ();
+  return TAO_Internal::open_services_i (svc_config_argc,
+                                        svc_config_argv.argv (),
+                                        0,  // @@ What about this argument?
+                                        skip_service_config_open);
+}
+
+
 void
 TAO_Internal::default_svc_conf_entries (const char *resource_factory_args,
                                         const char *server_strategy_args,
@@ -42,12 +134,15 @@ TAO_Internal::default_svc_conf_entries (const char *resource_factory_args,
 }
 
 int
-TAO_Internal::open_services (int &argc,
-                             char **argv,
-                             int ignore_default_svc_conf_file,
-                             int skip_service_config_open)
+TAO_Internal::open_services_i (int &argc,
+                               char **argv,
+                               int ignore_default_svc_conf_file,
+                               int skip_service_config_open)
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, *ACE_Static_Object_Lock::instance (), -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                            guard, *ACE_Static_Object_Lock::instance (),
+                            -1));
+
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
   ignore_default_svc_conf_file = 1;
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */

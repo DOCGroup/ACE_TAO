@@ -381,7 +381,7 @@ public:
 
   /// Sets the value of TAO_ORB_Core::resource_factory_
   static void set_resource_factory (const char *resource_factory_name);
-  
+
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
   int is_collocated (const TAO_MProfile& mprofile);
@@ -471,7 +471,7 @@ public:
    * for Messaging this feature does not take effect
    * \param has_timeout returns 0 if there is no timeout policy set.
    * \param time_value returns the timeout value in effect for the object,
-   * hread and current ORB.
+   * thread and current ORB.
    */
   void call_timeout_hook (TAO_Stub *stub,
                           int &has_timeout,
@@ -695,7 +695,7 @@ public:
   int remove_handle (ACE_HANDLE handle);
 
 
-  /** 
+  /**
    * @name ORB Core Service Hooks
    *
    * These methods would represent the hooks in the ORB Core. These
@@ -1122,13 +1122,6 @@ protected:
 
   /// This strategy will sync with the transport.
   TAO_Transport_Sync_Strategy *transport_sync_strategy_;
-
-  /// The number of arguments in the service configurator argument
-  /// vector.
-  int svc_config_argc_;
-
-  /// The argument vector for the service configurator.
-  char **svc_config_argv_;
 
   /// Number of outstanding references to this object.
   CORBA::ULong refcount_;
