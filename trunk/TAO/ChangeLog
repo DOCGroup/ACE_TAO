@@ -1,3 +1,18 @@
+Wed Jun 25 17:54:00 2003  Justin Michel  <michel_j@ociweb.com>
+
+        * orbsvcs/examples/Notify/Lanes/Lanes.mpc:
+        * orbsvcs/orbsvcs/RT_Notification.mpc:
+        * orbsvcs/tests/Event/Mcast/Complex/Complex.mpc:
+        * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
+        * orbsvcs/tests/Event/Mcast/Two_Way/Two_Way.mpc:
+        * orbsvcs/tests/Notify/RT_lib/RT_Notify_lib.mpc:
+        * performance-tests/Cubit/TAO/DII_Cubit/DII_Cubit.mpc:
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+        * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+        * tao/IORInterceptor/IORInterceptor.mpc:
+
+          More mpc file cleanups to push stuff up to base projects.
+
 Wed Jun 25 17:06:18 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/tests/Notify/performance-tests/scripts/Max_Throughput/Colocated_RTCORBA/run_test.pl: 
