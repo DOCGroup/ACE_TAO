@@ -3264,6 +3264,7 @@ Receiver_i::push_mmdevice (CORBA::Object_ptr audio_mmdevice,
                                  CORBA::Object_ptr video_mmdevice,
                                  const char *video_file,
                                  CORBA::Environment&)
+                          ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t)Receiver_i::push_audio_mmdevice"));
   this->command_handler_->set_mmdevice (audio_mmdevice,audio_file,video_mmdevice,video_file);
