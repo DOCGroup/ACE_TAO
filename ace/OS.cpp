@@ -666,6 +666,65 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 // The following *printf functions aren't inline because
 // they use varargs.
 #if !defined (ACE_HAS_WINCE)
+
+#if defined (ACE_WIN32)
+FILE *
+ACE_OS::fopen (const char *filename, const char *mode)
+{
+  // ACE_TRACE ("ACE_OS::fopen");
+  int hmode = _O_TEXT;
+
+  for (const char *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
+    ACE_OS::fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
+
+  ACE_HANDLE handle = ACE_OS::open (filename, hmode);
+  if (handle != ACE_INVALID_HANDLE)
+    {
+      hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
+      int fd = _open_osfhandle ((long) handle, hmode);
+      if (fd != -1)
+        {
+          FILE *fp = _fdopen (fd, mode);
+          if (fp != NULL)
+            return fp;
+          _close (fd);
+        }
+      ACE_OS::close (handle);
+    }
+  return NULL;
+}
+
+FILE *
+ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
+{
+  // ACE_TRACE ("ACE_OS::fopen");
+  int hmode = _O_TEXT;
+
+  for (const wchar_t *mode_ptr = mode; *mode_ptr != 0; mode_ptr++)
+    ACE_OS::fopen_mode_to_open_mode_converter ((char) *mode_ptr, hmode);
+
+  ACE_HANDLE handle = ACE_OS::open (filename, hmode);
+#   if defined (ACE_HAS_WINCE)
+  return handle;
+#   else
+  if (handle != ACE_INVALID_HANDLE)
+    {
+      hmode &= _O_TEXT | _O_RDONLY | _O_APPEND;
+      int fd = _open_osfhandle ((long) handle, hmode);
+      if (fd != -1)
+        {
+          FILE *fp = _wfdopen (fd, mode);
+          if (fp != NULL)
+            return fp;
+          _close (fd);
+        }
+      ACE_OS::close (handle);
+    }
+  return NULL;
+#   endif /* !ACE_HAS_WINCE */
+}
+# endif /* ACE_WIN32 */
+
 int
 ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
