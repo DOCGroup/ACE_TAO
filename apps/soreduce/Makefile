@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 BIN     = soreduce
-INSBIN  = $(ACE_ROOT)/bin/soreduce
+INSBIN  = $(ACE_ROOT)/bin/
 
 FILES   = Signature \
           Sig_List \
