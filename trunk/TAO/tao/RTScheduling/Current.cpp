@@ -561,7 +561,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
                              stack_size) == -1)
     {
       ACE_ERROR((LM_ERROR,
-                 "Error in Spawning\n"));
+                 "Unable to activate DistributableThread\n"));
 
       RTScheduling::DistributableThread::_nil ();
     }
