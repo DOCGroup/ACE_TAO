@@ -2194,6 +2194,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 #if defined(TAO_POLLER)
   template class TAO_Object_Field_T<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
   template class TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>;
+  template class TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>;
+  template class TAO_Object_Manager<Messaging::Poller,Messaging::Poller_var>;
 #endif /* TAO_POLLER */
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -2203,6 +2205,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 #if defined(TAO_POLLER)
 #  pragma instantiate TAO_Object_Field_T<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
 #  pragma instantiate TAO_Object_Field_T<Messaging::Poller,Messaging::Poller_var>
+#  pragma instantiate TAO_Object_Manager<Messaging::ReplyHandler,Messaging::ReplyHandler_var>
+#  pragma instantiate TAO_Object_Manager<Messaging::Poller,Messaging::Poller_var>
 #endif /* TAO_POLLER */
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

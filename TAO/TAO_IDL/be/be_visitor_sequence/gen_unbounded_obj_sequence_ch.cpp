@@ -101,8 +101,23 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   *os << class_name << " &operator= (const " << class_name << " &rhs);" << be_nl;
 
   // operator[]
-  *os << "TAO_Object_Manager<"
-      << pt->name () << ","
+  be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
+  int is_pseudo_object =
+    pt->node_type () == AST_Decl::NT_pre_defined
+    && prim && prim->pt () == AST_PredefinedType::PT_pseudo
+    && ACE_OS::strcmp (prim->local_name ()->get_string (),
+                       "Object") != 0;
+
+  if (is_pseudo_object)
+    {
+      *os << "TAO_Pseudo_Object_Manager<";
+    }
+  else
+    {
+      *os << "TAO_Object_Manager<";
+    }
+
+  *os << pt->name () << ","
       << pt->name () << "_var>"
       << " operator[] (CORBA::ULong index) const;" << be_nl;
 
@@ -135,10 +150,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   // shrink_buffer
   *os << "virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);" << be_nl;
 
-  be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
-  if ((pt->node_type () != AST_Decl::NT_pre_defined) ||
-      (prim && (prim->pt () == AST_PredefinedType::PT_pseudo) &&
-       (!ACE_OS::strcmp (prim->local_name ()->get_string (), "Object"))))
+  if (!is_pseudo_object)
     {
       // Pseudo objects do not require this methods.
       *os << "virtual void _downcast (" << be_idt << be_idt_nl

@@ -69,14 +69,6 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     " (void) // destructor" << be_nl;
   *os << "{}\n\n";
 
-  // _nil method
-  *os << "ACE_INLINE "
-      << node->name () << "_ptr" << be_nl
-      << node->name () << "::_nil (void)" << be_nl
-      << "{" << be_idt_nl
-      << "return (" << node->name () << "_ptr)0;" << be_uidt_nl
-      << "}" << be_nl << be_nl;
-
   // generate the ifdefined macro for  the _var type
   os->gen_ifdef_macro (node->flatname (), "_var");
   if (node->gen_var_impl () == -1)
@@ -115,10 +107,10 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
     {
       // Set the context.
       be_visitor_context ctx (*this->ctx_);
-      
+
       // Set the state.
       ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_FWD_CI);
-      
+
       // Create the visitor.
       be_visitor *visitor = tao_cg->make_visitor (&ctx);
       if (!visitor)
@@ -129,7 +121,7 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
                              "Bad visitor\n"),
                             -1);
         }
-      
+
       // Call the visitor on this interface.
       if (node->accept (visitor) == -1)
         {

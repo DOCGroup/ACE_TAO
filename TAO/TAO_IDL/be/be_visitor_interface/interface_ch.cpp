@@ -51,15 +51,15 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       // Generate the AMI Reply Handler's forward declaration code, if
       // the option is enabled, for this interface.
-      
+
       if (idl_global->ami_call_back () == I_TRUE)
         {
           // Set the context.
           be_visitor_context ctx (*this->ctx_);
-          
+
           // Set the state.
           ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_FWD_CH);
-          
+
           // Create the visitor.
           be_visitor *visitor = tao_cg->make_visitor (&ctx);
           if (!visitor)
@@ -70,7 +70,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                                  "Bad visitor\n"),
                                 -1);
             }
-          
+
           // call the visitor on this interface.
           if (node->accept (visitor) == -1)
             {
@@ -83,12 +83,12 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
             }
           delete visitor;
         }
-      
+
       // Grab the stream.
       os = this->ctx_->stream ();
-      
+
       // == STEP 1:  generate the class name and class names we inherit ==
-      
+
       // generate the ifdefined macro for  the _ptr type
       os->gen_ifdef_macro (node->flatname (), "_ptr");
 
@@ -205,8 +205,14 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 	        << "CORBA::Environment &env = " << be_idt_nl
 	        << "TAO_default_environment ()"
 	        << be_uidt << be_uidt_nl
-	        << ");" << be_uidt_nl
-          << "static " << node->local_name () << "_ptr " << "_nil (void);\n\n";
+	        << ");" << be_uidt_nl;
+      // This method is defined in the header file to workaround old
+      // g++ problems
+      *os << "static " << node->local_name () << "_ptr _nil (void)"
+          << be_idt_nl << "{" << be_idt_nl
+          << "return (" << node->name () << "_ptr)0;" << be_uidt_nl
+          << "}" << be_uidt << "\n\n";
+
 
       // generate code for the interface definition by traversing thru the
       // elements of its scope. We depend on the front-end to have made sure
@@ -267,16 +273,16 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                              "TypeCode declaration failed\n"
                              ), -1);
         }
-      
-      // Generate the Skeleton code for the AMI Reply Handler. 
+
+      // Generate the Skeleton code for the AMI Reply Handler.
       if (idl_global->ami_call_back () == I_TRUE)
         {
           // Set the context.
           be_visitor_context ctx (*this->ctx_);
-          
+
           // Set the state.
           ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_CH);
-          
+
           // Create the visitor.
           be_visitor *visitor = tao_cg->make_visitor (&ctx);
           if (!visitor)
@@ -287,7 +293,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                                  "Bad visitor\n"),
                                 -1);
             }
-          
+
           // call the visitor on this interface.
           if (node->accept (visitor) == -1)
             {

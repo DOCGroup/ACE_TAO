@@ -233,8 +233,23 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       << be_nl;
 
   // operator[]
-  *os << "ACE_INLINE TAO_Object_Manager<"
-      << pt->name () << ","
+  be_predefined_type *prim = be_predefined_type::narrow_from_decl (pt);
+  int is_pseudo_object =
+    pt->node_type () == AST_Decl::NT_pre_defined
+    && prim && prim->pt () == AST_PredefinedType::PT_pseudo
+    && ACE_OS::strcmp (prim->local_name ()->get_string (),
+                       "Object") != 0;
+
+  if (is_pseudo_object)
+    {
+      *os << "ACE_INLINE TAO_Pseudo_Object_Manager<";
+    }
+  else
+    {
+      *os << "ACE_INLINE TAO_Object_Manager<";
+    }
+
+  *os << pt->name () << ","
       << pt->name () << "_var>" << be_nl
       << full_class_name << "::operator[] (CORBA::ULong index) const" << be_nl
       << "// read-write accessor" << be_nl
@@ -243,9 +258,17 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
   pt->accept(visitor);
   *os <<" ** const tmp = ACE_reinterpret_cast (";
   pt->accept (visitor);
-  *os << " ** ACE_CAST_CONST, this->buffer_);" << be_nl
-      << "return TAO_Object_Manager<"
-      << pt->name () << ","
+  *os << " ** ACE_CAST_CONST, this->buffer_);" << be_nl;
+  if (is_pseudo_object)
+    {
+      *os << "return TAO_Pseudo_Object_Manager<";
+    }
+  else
+    {
+      *os << "return TAO_Object_Manager<";
+    }
+
+  *os << pt->name () << ","
       << pt->name () << "_var>"
       << " (tmp + index, this->release_);" << be_uidt_nl
       << "}" << be_nl
