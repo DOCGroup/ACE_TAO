@@ -1,3 +1,8 @@
+Mon Feb 16 16:32:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CCF/CCF/CCF.mwc:
+          Fixed typo in this file, this fixes the problems out VC71 build has
+
 Fri Feb 13 11:51:17 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CIDLC/ExecutorMappingGenerator.cpp:
