@@ -21,6 +21,8 @@ TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushConsumer *consumer,
       CORBA::Environment &ACE_TRY_ENV)
 {
+  ACE_DEBUG ((LM_DEBUG, "add_proxy_supplier_dependencies - %x %x\n",
+              supplier, consumer));
   const RtecEventChannelAdmin::SupplierQOS& qos =
     consumer->publications ();
   for (CORBA::ULong i = 0; i < qos.publications.length (); ++i)

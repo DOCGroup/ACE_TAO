@@ -5,6 +5,7 @@
 #include "EC_Event_Channel.h"
 #include "EC_QOS_Info.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/RtecSchedulerC.h"
 #include "ace/Sched_Params.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -36,8 +37,38 @@ TAO_EC_Priority_Dispatching::activate (void)
      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
+  ACE_DECLARE_NEW_CORBA_ENV;
   for (int i = 0; i < this->ntasks_; ++i)
     {
+      ACE_TRY
+        {
+          RtecScheduler::Period_t period = ACE_Scheduler_Rates[i];
+          char buf[128];
+          ACE_OS::sprintf (buf, "Dispatching_Task-%d.us", period);
+
+          RtecScheduler::handle_t rt_info =
+            this->scheduler_->create (buf, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          
+          this->scheduler_->set (rt_info,
+                                 RtecScheduler::VERY_LOW_CRITICALITY,
+                                 0, // worst_cast_execution_time
+                                 0, // typical_cast_execution_time
+                                 0, // cached_cast_execution_time
+                                 period,
+                                 RtecScheduler::VERY_LOW_IMPORTANCE,
+                                 0, // quantum
+                                 1, // threads
+                                 RtecScheduler::OPERATION,
+                                 ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCHANY
+        {
+          // Ignore exceptions..
+        }
+      ACE_ENDTRY;
+
       ACE_NEW (this->tasks_[i],
                TAO_EC_Dispatching_Task (&this->thread_manager_));
 

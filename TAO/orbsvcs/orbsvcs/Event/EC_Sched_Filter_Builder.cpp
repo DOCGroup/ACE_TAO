@@ -28,36 +28,42 @@ TAO_EC_Sched_Filter_Builder::build (
   CORBA::ULong pos = 0;
   RtecScheduler::Scheduler_var scheduler =
     this->event_channel_->scheduler ();
+
+  // @@ How do we figure out which parent???
+  RtecScheduler::handle_t parent_info =
+    scheduler->lookup ("Dispatching_Task-250000.us", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   return this->recursive_build (supplier, qos, pos,
-                                scheduler.in (), 0,
+                                scheduler.in (),
+                                parent_info,
                                 ACE_TRY_ENV);
 }
 
 TAO_EC_Filter*
-TAO_EC_Sched_Filter_Builder:: recursive_build (
+TAO_EC_Sched_Filter_Builder::recursive_build (
     TAO_EC_ProxyPushSupplier *supplier,
     RtecEventChannelAdmin::ConsumerQOS& qos,
     CORBA::ULong& pos,
     RtecScheduler::Scheduler_ptr scheduler,
-    const char* base_name,
+    RtecScheduler::handle_t parent_info,
     CORBA::Environment& ACE_TRY_ENV) const
 {
   const RtecEventComm::Event& e = qos.dependencies[pos].event;
-  ACE_CString name;
-  RtecScheduler::handle_t body_info = qos.dependencies[pos].rt_info;
-  if (base_name == 0)
-    {
-      RtecScheduler::RT_Info_var info =
-        scheduler->get (body_info, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (0);
-
-      name = info->entry_point.in ();
-    }
-  else
-    name = base_name;
 
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
     {
+      CORBA::ULong npos = pos;
+      ACE_CString name;
+      this->recursive_name (qos, npos,
+                            scheduler, name,
+                            ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      RtecScheduler::handle_t rt_info =
+        scheduler->create (name.c_str (), ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
       pos++; // Consume the designator
       CORBA::ULong n = this->count_children (qos, pos);
 
@@ -65,26 +71,44 @@ TAO_EC_Sched_Filter_Builder:: recursive_build (
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
-          ACE_CString child_name = name;
-          char buf[16];
-          ACE_OS::sprintf (buf, "/%04.4x", i);
-          child_name += buf;
           children[i] = this->recursive_build (supplier, qos, pos,
                                                scheduler,
-                                               child_name.c_str (),
+                                               rt_info,
                                                ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
         }
-      return new TAO_EC_Sched_Filter (name.c_str (),
-                                      scheduler,
-                                      new TAO_EC_Conjunction_Filter(children,
-                                                                    n),
-                                      body_info,
-                                      RtecScheduler::CONJUNCTION);
+
+      TAO_EC_Sched_Filter *filter;
+      ACE_NEW_RETURN (filter,
+                      TAO_EC_Sched_Filter (name.c_str (),
+                                           rt_info,
+                                           scheduler,
+                                           new TAO_EC_Conjunction_Filter(children,
+                                                                         n),
+                                           rt_info,
+                                           parent_info,
+                                           RtecScheduler::CONJUNCTION),
+                      0);
+      TAO_EC_QOS_Info qos_info;
+      filter->get_qos_info (qos_info, ACE_TRY_ENV);
+      // @@
+      ACE_CHECK_RETURN (0);
+      return filter;
     }
 
   else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
     {
+      CORBA::ULong npos = pos;
+      ACE_CString name;
+      this->recursive_name (qos, npos,
+                            scheduler, name,
+                            ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      RtecScheduler::handle_t rt_info =
+        scheduler->create (name.c_str (), ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
       pos++; // Consume the designator
       CORBA::ULong n = this->count_children (qos, pos);
 
@@ -92,23 +116,29 @@ TAO_EC_Sched_Filter_Builder:: recursive_build (
       ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
       for (CORBA::ULong i = 0; i != n; ++i)
         {
-          ACE_CString child_name = name;
-          char buf[16];
-          ACE_OS::sprintf (buf, "/%04.4x", i);
-          child_name += buf;
-
           children[i] = this->recursive_build (supplier, qos, pos,
                                                scheduler,
-                                               child_name.c_str (),
+                                               rt_info,
                                                ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
         }
-      return new TAO_EC_Sched_Filter (name.c_str (),
-                                      scheduler,
-                                      new TAO_EC_Disjunction_Filter (children,
-                                                                     n),
-                                      body_info,
-                                      RtecScheduler::DISJUNCTION);
+      TAO_EC_Sched_Filter *filter;
+      ACE_NEW_RETURN (filter,
+                      TAO_EC_Sched_Filter (name.c_str (),
+                                           rt_info,
+                                           scheduler,
+                                           new TAO_EC_Disjunction_Filter (children,
+                                                                          n),
+                                           rt_info,
+                                           parent_info,
+                                           RtecScheduler::DISJUNCTION),
+                      0);
+
+      TAO_EC_QOS_Info qos_info;
+      filter->get_qos_info (qos_info, ACE_TRY_ENV);
+      // @@
+      ACE_CHECK_RETURN (0);
+      return filter;
     }
 
   else if (e.header.type == ACE_ES_EVENT_TIMEOUT
@@ -116,8 +146,14 @@ TAO_EC_Sched_Filter_Builder:: recursive_build (
            || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
     {
       pos++;
-      TAO_EC_QOS_Info qos_info;
 
+      // @@ We need a unique name for each timeout, assigned by the
+      //    application?
+      char buf[64];
+      ACE_OS::sprintf (buf, "TIMEOUT:%ul", e.header.creation_time);
+      ACE_CString name = buf;
+
+      TAO_EC_QOS_Info qos_info;
       qos_info.rt_info =
         scheduler->create (name.c_str (), ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
@@ -140,6 +176,13 @@ TAO_EC_Sched_Filter_Builder:: recursive_build (
                       ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
 
+      scheduler->add_dependency (qos_info.rt_info,
+                                 parent_info,
+                                 1,
+                                 RtecScheduler::TWO_WAY_CALL,
+                                 ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
       return new TAO_EC_Timeout_Filter (this->event_channel_,
                                         supplier,
                                         qos_info,
@@ -147,12 +190,120 @@ TAO_EC_Sched_Filter_Builder:: recursive_build (
                                         e.header.creation_time);
     }
 
+  RtecScheduler::handle_t body_info = qos.dependencies[pos].rt_info;
+
+  RtecScheduler::RT_Info_var info =
+    scheduler->get (body_info, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  ACE_CString name = info->entry_point.in ();
+  name += "#rep";
+
+  RtecScheduler::handle_t rt_info =
+    scheduler->create (name.c_str (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
   pos++;
-  return new TAO_EC_Sched_Filter (name.c_str (),
-                                  scheduler,
-                                  new TAO_EC_Type_Filter (e.header),
-                                  body_info,
-                                  RtecScheduler::OPERATION);
+  TAO_EC_Sched_Filter *filter;
+  ACE_NEW_RETURN (filter,
+                  TAO_EC_Sched_Filter (name.c_str (),
+                                       rt_info,
+                                       scheduler,
+                                       new TAO_EC_Type_Filter (e.header),
+                                       body_info,
+                                       parent_info,
+                                       RtecScheduler::OPERATION),
+                  0);
+
+  TAO_EC_QOS_Info qos_info;
+  filter->get_qos_info (qos_info, ACE_TRY_ENV);
+  // @@
+  ACE_CHECK_RETURN (0);
+  return filter;
+}
+
+void
+TAO_EC_Sched_Filter_Builder:: recursive_name (
+    RtecEventChannelAdmin::ConsumerQOS& qos,
+    CORBA::ULong& pos,
+    RtecScheduler::Scheduler_ptr scheduler,
+    ACE_CString& name,
+    CORBA::Environment& ACE_TRY_ENV) const
+{
+  const RtecEventComm::Event& e = qos.dependencies[pos].event;
+
+  if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
+    {
+      pos++; // Consume the designator
+      CORBA::ULong n = this->count_children (qos, pos);
+
+      for (CORBA::ULong i = 0; i != n; ++i)
+        {
+          ACE_CString child_name;
+          this->recursive_name (qos, pos,
+                                scheduler,
+                                child_name,
+                                ACE_TRY_ENV);
+          ACE_CHECK;
+
+          if (i == 0)
+            name += "(";
+          else
+            name += "&&";
+          name += child_name;
+        }
+      name += ")";
+      return;
+    }
+
+  else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
+    {
+      pos++; // Consume the designator
+      CORBA::ULong n = this->count_children (qos, pos);
+
+      for (CORBA::ULong i = 0; i != n; ++i)
+        {
+          ACE_CString child_name;
+
+          this->recursive_name (qos, pos,
+                                scheduler,
+                                child_name,
+                                ACE_TRY_ENV);
+          ACE_CHECK;
+
+          if (i == 0)
+            name += "(";
+          else
+            name += "||";
+          name += child_name;
+        }
+      name += ")";
+      return;
+    }
+
+  else if (e.header.type == ACE_ES_EVENT_TIMEOUT
+           || e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
+           || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
+    {
+      pos++;
+
+      char buf[64];
+      ACE_OS::sprintf (buf, "TIMEOUT:%ul", e.header.creation_time);
+      name = buf;
+
+      return;
+    }
+
+  RtecScheduler::handle_t body_info = qos.dependencies[pos].rt_info;
+
+  RtecScheduler::RT_Info_var info =
+    scheduler->get (body_info, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  name = info->entry_point.in ();
+  name += "#rep";
+
+  pos++;
 }
 
 CORBA::ULong

@@ -1,3 +1,26 @@
+Fri Aug  6 20:51:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/examples/RtEC/Schedule/Schedule.h:
+	* orbsvcs/examples/RtEC/Schedule/Service.cpp:
+	* orbsvcs/examples/RtEC/Schedule/svc.conf:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Priority_Scheduling.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.h:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.h:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter_Builder.cpp:
+	  Fixed numerous problems with the propagation of scheduling
+	  information, this was the first breakthrough in the solution of
+	  [BUGID:30]
+
+	* tao/GIOP.cpp:
+	  For some reason now read() was returning with 0 and errno ==
+	  EWOULDBLOCK when the connection was closed, this fixes the
+	  recent time outs on the server shutdown for both the Latency and 
+	  the MT_Server test.
+
 Fri Aug  6 19:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* docs/releasenotes/trader.html: changed code snippets in

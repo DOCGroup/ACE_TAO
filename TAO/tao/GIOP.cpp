@@ -690,7 +690,7 @@ TAO_GIOP::read_header (TAO_Transport *transport,
       n = transport->recv (buf, t, max_wait_time);
       if (n == -1)
         return -1;
-      else if (n == 0 && errno != EWOULDBLOCK)
+      else if (n == 0) // @@ TODO && errno != EWOULDBLOCK)
         return -1;
       buf += n;
     }
