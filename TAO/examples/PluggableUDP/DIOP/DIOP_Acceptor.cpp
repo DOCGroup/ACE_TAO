@@ -25,7 +25,8 @@ TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (CORBA::Boolean flag)
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     orb_core_ (0),
-    lite_flag_ (flag)
+    lite_flag_ (flag),
+    connection_handler_ (0)
 {
 }
 
@@ -207,6 +208,7 @@ int
 TAO_DIOP_Acceptor::close (void)
 {
   delete this->connection_handler_;
+  this->connection_handler_ = 0;
   return 0;
 }
 
@@ -384,10 +386,8 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr)
   this->connection_handler_->local_addr (addr);
   this->connection_handler_->open_server ();
 
-  
   this->orb_core_->reactor ()->register_handler (this->connection_handler_,
                                                  ACE_Event_Handler::READ_MASK);
-  
   // ------------------------------------
 
 

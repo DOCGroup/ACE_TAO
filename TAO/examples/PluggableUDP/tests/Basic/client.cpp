@@ -30,7 +30,7 @@ ACE_RCSID(AMI, client, "$Id$")
 
 const char *ior = "file://test.ior";
 unsigned int msec = 500;
-unsigned int iterations = 10;
+unsigned int iterations = 1;
 
 int
 parse_args (int argc, char *argv[])
@@ -152,6 +152,7 @@ main (int argc, char *argv[])
       orb->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      client->wait ();
       // it is save to delete the client, because the client was actually
       // the one calling orb->shutdown () triggering the end of the ORB
       // event loop.
