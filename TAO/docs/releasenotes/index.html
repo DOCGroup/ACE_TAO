@@ -64,7 +64,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <a href="#logging">TAO's Logging Service</a></li>
 
 <li>
-<a href="#apps">Test &amp; Performance Tests</a></li>
+<a href="#apps">Test &amp;  Tests</a></li>
 
 <li>
 <a href="#ace">ORB-related ACE Changes</a></li>
@@ -878,6 +878,20 @@ Study the impacts of scheduling &amp; concurrency strategies on performance.</li
 <li>
 Evolve into a testbed for discovering sources of performance non-determinism
 &amp; priority inversion.</li>
+</ul>
+
+<p>Pluggable:
+<p>Current status:
+<p>The TAO Pluggable test utilizes ACE Timeprobes to time the latency at
+various points in the ORB, especially that incurred by the Pluggable Protocols
+implementation. Comparisons can be made not only between different layers of the
+ORB, but also between different protocols as they  become available.
+<p>Future work:
+<ul>
+<li>
+Add options to redirect the output to a file.</li>
+<li>
+Script or otherwise automate the piping of the output to a spreadsheet.</li>
 </ul>
 
 <hr>

@@ -1,3 +1,8 @@
+Mon Mar  8 20:09:07 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/docs/releasenotes/index.html:
+	  Added an entry about the Pluggable test.
+
 Mon Mar  8 19:02:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
