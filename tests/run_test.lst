@@ -78,6 +78,7 @@ Message_Queue_Test_Ex: !chorus
 Multicast_Test: !ST
 Multihomed_INET_Addr_Test
 Naming_Test: !chorus !LynxOS !Unicos !VxWorks
+Network_Adapters_Test
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
 Notify_Performance_Test

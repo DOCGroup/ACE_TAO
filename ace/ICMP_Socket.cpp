@@ -7,6 +7,7 @@
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_netdb.h"
+#include "ace/OS_NS_sys_socket.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/ICMP_Socket.inl"
