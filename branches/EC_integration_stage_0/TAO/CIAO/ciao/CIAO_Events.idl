@@ -25,25 +25,23 @@ module CIAO
     RTNOTIFY
   };
 
-  interface Consumer_Config
+  interface Supplier_Config
   {
 
     attribute CONNECTION_ID supplier_id;
+    
+    readonly attribute EventServiceType service_type;
+
+    void destroy ();
+
+  };
+
+  interface Consumer_Config : Supplier_Config
+  {
 
     attribute CONNECTION_ID consumer_id;
 
     attribute Components::EventConsumerBase consumer;
-
-    readonly attribute EventServiceType service_type;
-
-  };
-
-  interface Supplier_Config
-  {
-    
-    attribute CONNECTION_ID supplier_id;
-    
-    readonly attribute EventServiceType service_type;
 
   };
 

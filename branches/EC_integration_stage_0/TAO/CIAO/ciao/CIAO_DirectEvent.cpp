@@ -42,8 +42,10 @@ namespace CIAO
       consumer_config->consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
 
-    this->consumer_array_.set (consumer._retn (),
-                               this->consumer_array_.size ());
+    this->consumer_array_.size (this->consumer_array_.size () + 1);
+
+    this->consumer_array_.set (Components::EventConsumerBase::_duplicate (consumer.in ()),
+                               this->consumer_array_.size () - 1);
 
   }
 
@@ -67,7 +69,6 @@ namespace CIAO
       Components::InvalidConnection))
   {
   }
-
 
   void
   DirectEventService::push_event (
@@ -94,9 +95,15 @@ namespace CIAO
       }
   }
 
-  Direct_Consumer_Config_impl::Direct_Consumer_Config_impl () :
-    service_type_ (DIRECT)
+  Direct_Consumer_Config_impl::Direct_Consumer_Config_impl (PortableServer::POA_ptr poa) :
+    service_type_ (DIRECT),
+    poa_ (PortableServer::POA::_duplicate (poa))
   {
+  }
+
+  Direct_Consumer_Config_impl::~Direct_Consumer_Config_impl (void)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Direct_Consumer_Config_impl::~Direct_Consumer_Config_impl\n"));
   }
 
   void
@@ -126,7 +133,7 @@ namespace CIAO
     ACE_THROW_SPEC ((
       CORBA::SystemException))
   {
-    this->consumer_ = consumer;
+    this->consumer_ = Components::EventConsumerBase::_duplicate (consumer);
   }
 
   CONNECTION_ID
@@ -165,9 +172,26 @@ namespace CIAO
     return Components::EventConsumerBase::_duplicate (this->consumer_.in ());
   }
 
-  Direct_Supplier_Config_impl::Direct_Supplier_Config_impl (void)
-    : service_type_ (DIRECT)
+  void
+  Direct_Consumer_Config_impl::destroy (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
   {
+    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+    this->poa_->deactivate_object (oid);
+    this->_remove_ref ();
+  }
+
+  Direct_Supplier_Config_impl::Direct_Supplier_Config_impl (PortableServer::POA_ptr poa)
+    : service_type_ (DIRECT),
+      poa_ (PortableServer::POA::_duplicate (poa))
+  {
+  }
+
+  Direct_Supplier_Config_impl::~Direct_Supplier_Config_impl (void)
+  {
+    ACE_DEBUG ((LM_DEBUG, "Direct_Supplier_Config_impl::~Direct_Supplier_Config_impl\n"));
   }
 
   void
@@ -196,6 +220,17 @@ namespace CIAO
       CORBA::SystemException))
   {
     return this->service_type_;
+  }
+
+  void
+  Direct_Supplier_Config_impl::destroy (
+      ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException))
+  {
+    PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
+    this->poa_->deactivate_object (oid);
+    this->_remove_ref ();
   }
 
 }

@@ -196,12 +196,12 @@ CIAO::Container::push_event (
   ACE_DEBUG ((LM_DEBUG, "CIAO::Container::push_event\n"));
 
   CIAO::EventServiceBase * event_service;
+  // ACE_DEBUG ((LM_DEBUG, "Pushing from supplier id: %s\n", connection_id));
   if (this->event_service_map_.find (connection_id, event_service) != 0)
     {
       ACE_THROW (
       Components::InvalidConnection ());
     }
-
   event_service->push_event (ev ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 

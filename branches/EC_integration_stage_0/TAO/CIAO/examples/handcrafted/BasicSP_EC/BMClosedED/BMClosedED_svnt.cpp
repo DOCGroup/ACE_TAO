@@ -252,7 +252,7 @@ namespace CIAO_GLUE_BasicSP
 
     ACE_CString my_uuid = this->servant_->component_UUID (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
-    my_uuid += "_data_available_publisher";
+    my_uuid += "_out_avail_publisher";
 
     this->container_->push_event (ev,
                                   my_uuid.c_str ()
