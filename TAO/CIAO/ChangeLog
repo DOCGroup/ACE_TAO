@@ -1,7 +1,18 @@
+Wed May 12 15:52:29 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/Utils.h:
+        * DnC/Config_Handlers/Utils.cpp:
+
+          Added two utility methods create_document () and parse_href_tag
+          () that will allow creation of an iterator pointing to top of
+          the document as specified in the <href = "..."> tag. Now all
+          handlers that need to handle <href> definitions can make use of
+          this utility.
+
 Wed May 12 15:08:14 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Hello_Base/Hello_Base.mpc:
-        
+
           Copied export macro settings from stub project to servant
           project. The servant project had only one export macro
           defined for both *C.h and *S.h files, and so was
