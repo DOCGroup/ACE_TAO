@@ -104,11 +104,14 @@
         </componentinstantiation>
       </homeplacement>
       
+    <processcollocation>      
       <homeplacement id="c_UCAVHome">
         <componentfileref idref="com-UCAV"/>
           <componentinstantiation id="c_UCAV">
         </componentinstantiation>
       </homeplacement>            
+     <destination>UCAVGSHost</destination>
+    </processcollocation>      
   <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
 
   </partitioning>
