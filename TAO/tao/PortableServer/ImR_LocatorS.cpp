@@ -116,7 +116,7 @@ TAO_ImplementationRepository_Locator_Perfect_Hash_OpTable::hash (const char *str
      56, 56, 56, 56, 56, 56, 56, 56,
 #endif /* ACE_MVS */
     };
-  return len + asso_values[str[len - 1]] + asso_values[str[0]];
+  return len + asso_values[(int) str[len - 1]] + asso_values[(int) str[0]];
 }
 
 const class TAO_operation_db_entry *
