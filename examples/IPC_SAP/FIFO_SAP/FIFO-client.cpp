@@ -5,16 +5,16 @@
 
 ACE_RCSID(FIFO_SAP, FIFO_client, "$Id$")
 
-int 
-main (int, char *[])
+int
+main (int, ACE_TCHAR *[])
 {
   ACE_FIFO_Send client (ACE_DEFAULT_RENDEZVOUS);
-  char	    buf[BUFSIZ];
+  ACE_TCHAR     buf[BUFSIZ];
 
   while (ACE_OS::fgets (buf, sizeof buf, stdin) != 0)
     {
       ssize_t n = ACE_OS::strlen (buf);
-      
+
       if (client.send (buf, n) != n)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 1);
     }
