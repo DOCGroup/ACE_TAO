@@ -177,7 +177,7 @@ ACE_Time_Value::set (const timeval &tv)
 
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (const timeval &tv)
-  : tv_ ()
+  // : tv_ ()
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
@@ -185,7 +185,7 @@ ACE_Time_Value::ACE_Time_Value (const timeval &tv)
 
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (void)
-  : tv_ ()
+  // : tv_ ()
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (0, 0);
@@ -195,7 +195,6 @@ ACE_Time_Value::ACE_Time_Value (void)
 
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (long sec, long usec)
-  : tv_ ()
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (sec, usec);
@@ -257,7 +256,7 @@ ACE_Time_Value::operator timespec_t () const
 
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (const timespec_t &tv)
-  : tv_ ()
+  // : tv_ ()
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
