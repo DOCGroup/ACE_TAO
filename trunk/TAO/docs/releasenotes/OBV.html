@@ -14,7 +14,7 @@
         <a href="mailto: bosk@ipmce.ru">Boris Kolpackov</a>
         <a href="mailto:g.edwards@vanderbilt.edu">George Edwards</a>
 
-        <p>Last Update: 2003/06/30 </p>
+        <p>Last Update: 2004/08/24 </p>
       </center>
 
       <p>Objects-by-Value (OBV) describes the new type, <CODE>valuetype</CODE>, introduced in CORBA 2.3
@@ -49,14 +49,12 @@
 
       <ul>
         <li><p>The IDL compiler understands <CODE>valuetype</CODE>. 
-        Relevant options of TAO's IDL compiler are: <P>
+        Relevant option of TAO's IDL compiler is: <P>
             <UL>
-            <LI>-Gv Enable OBV support (default)
-            <LI>-Sv Disable OBV support
             <LI>-Wb,obv_opt_accessor Make accessor and modifier functions inline.
-            Overriding them is not allowed in this mode.
-            </UL>
-          <p><CODE>libTAO</CODE> must be compiled with <CODE>TAO_HAS_VALUETYPE</CODE>.</p>
+            Overriding them is not allowed in this mode.</LI>
+            </UL></P>
+	    <p></p>
         </li>
         <li><p><CODE>Valuetype</CODE>s can be used as arguments in CORBA invocations.
             There is an example in

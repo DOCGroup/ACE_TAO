@@ -1,3 +1,10 @@
+Tue Aug 24 16:09:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * docs/releasenotes/OBV.html:
+        * docs/releasenotes/index.html:
+
+          Updated documentation of valuetype support. See [Bug 1908].
+
 Tue Aug 24 08:53:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
 
         * docs/compiler.html:
