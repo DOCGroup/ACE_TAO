@@ -131,13 +131,6 @@ int
 TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile)
 {
-  // If RT_CORBA is enabled, only one UIOP profile is created per
-  // <mprofile>, and all UIOP endpoints are added into that profile.
-  // If RT_CORBA is not enabled, we create a separate profile for each
-  // endpoint.
-
-  return create_profile (object_key, mprofile);
-
 #if (TAO_HAS_RT_CORBA == 1)
 
   // @@ RTCORBA_SUBSETTING
@@ -146,6 +139,13 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   // This method should not be called anymore
   return -1;
 
+#else
+  // If RT_CORBA is enabled, only one UIOP profile is created per
+  // <mprofile>, and all UIOP endpoints are added into that profile.
+  // If RT_CORBA is not enabled, we create a separate profile for each
+  // endpoint.
+
+  return create_profile (object_key, mprofile);
 #endif  /* TAO_HAS_RT_CORBA == 1 */
 
 }
