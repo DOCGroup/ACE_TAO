@@ -300,6 +300,15 @@ public:
   static const char  *be_get_server_skeleton_fname ();
   static const char  *be_get_server_inline_fname ();
 
+  // Helper functions: obtain the names of each generated file given
+  // the IDL file name. 
+  static const char *be_get_client_hdr (String *idl_file_name);
+  static const char *be_get_client_stub (String *idl_file_name);
+  static const char *be_get_client_inline (String *idl_file_name);
+  static const char *be_get_server_hdr (String *idl_file_name);
+  static const char *be_get_server_skeleton (String *idl_file_name);
+  static const char *be_get_server_inline (String *idl_file_name);
+
 private:
   // Data
   UTL_ScopeStack		*pd_scopes;		// Store scopes stack

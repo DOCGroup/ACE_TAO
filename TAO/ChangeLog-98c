@@ -1,3 +1,17 @@
+Sat Nov 15 11:23:46 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO_IDL/include/idl_global.h: 
+	* TAO_IDL/util/utl_global.cpp: 
+	  Added routines to obtain the generated names of any IDL file,
+	  not only the one we are processing.
+
+	* TAO_IDL/be/be_codegen.cpp: 
+	  The compiler now generate all the required include directives
+	  when the IDL file contains some.
+
+	* tao/params.cpp: 
+	  Initialize name_service_port_ to zero in the constructor.
+
 Sat Nov 15 01:33:08 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.30, released Sat Nov 15 01:33:08 1997.

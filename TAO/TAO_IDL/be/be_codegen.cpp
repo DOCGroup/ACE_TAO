@@ -169,7 +169,24 @@ TAO_CodeGen::client_header (const char *fname)
 
           this->client_header_->print ("#if !defined (%s)\n", macro_name);
           this->client_header_->print ("#define %s\n\n", macro_name);
-          *this->client_header_ << "#include \"tao/corba.h\"\n\n";
+          *this->client_header_ << "#include \"tao/corba.h\"\n";
+
+	  // We must include all the skeleton headers corresponding to
+	  // IDL files included by the current IDL file.
+	  for (int j = 0;
+	       j < idl_global->n_include_file_names ();
+	       ++j)
+	    {
+	      String* idl_name =
+		idl_global->include_file_names()[j];
+	      
+	      const char* client_hdr = 
+		IDL_GlobalData::be_get_client_hdr (idl_name);
+
+	      this->client_header_->print ("#include \"%s\"\n",
+					   client_hdr);
+	    }
+	  *this->client_header_ << "\n";
           return 0;
         }
     }
@@ -286,6 +303,21 @@ TAO_CodeGen::server_header (const char *fname)
           this->server_header_->print ("#if !defined (%s)\n", macro_name);
           this->server_header_->print ("#define %s\n\n", macro_name);
 
+	  // We must include all the skeleton headers corresponding to
+	  // IDL files included by the current IDL file.
+	  for (int j = 0;
+	       j < idl_global->n_include_file_names ();
+	       ++j)
+	    {
+	      String* idl_name =
+		idl_global->include_file_names()[j];
+	      
+	      const char* server_hdr = 
+		IDL_GlobalData::be_get_server_hdr (idl_name);
+
+	      this->server_header_->print ("#include \"%s\"\n",
+					   server_hdr);
+	    }
           // the server header should include the client header
           *this->server_header_ << "#include \"" <<
             idl_global->be_get_client_hdr_fname () << "\"\n\n";
