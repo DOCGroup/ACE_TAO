@@ -379,8 +379,7 @@ public:
   // Send message, returns TRUE if success, else FALSE.
 
   static TAO_GIOP::Message_Type recv_request (TAO_SVC_HANDLER *&handler,
-					      TAO_InputCDR &msg,
-					      CORBA::Environment &env);
+					      TAO_InputCDR &msg);
   // Reads message, returns message type from header.
 
   static void make_error (TAO_OutputCDR &msg, ...);
