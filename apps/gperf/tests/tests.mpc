@@ -11,6 +11,8 @@ project(cinset): gperf_test {
     "	@echo "Testing cout"
     "	./cout -v < c.gperf > cout.out
     "	-diff -b c.exp cout.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
@@ -33,6 +35,8 @@ project(adainset): gperf_test {
     "	@echo "Testing aout"
     "	./aout -v < ada.gperf > aout.out
     "	-diff -b ada-res.exp aout.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
@@ -55,6 +59,8 @@ project(cppinset): gperf_test {
     "	@echo "Testing cppout"
     "	./cppout -v < cpp.gperf > cppout.out
     "	-diff -b cpp-res.exp cppout.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
@@ -77,6 +83,8 @@ project(preinset): gperf_test {
     "	@echo "Testing preout"
     "	./preout -v < adadefs.gperf > preout.out
     "	-diff -b ada-pred.exp preout.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
@@ -99,6 +107,8 @@ project(m3inset): gperf_test {
     "	@echo "Testing m3out"
     "	./m3out -v < modula3.gperf > m3out.out
     "	-diff -b modula.exp m3out.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
@@ -121,6 +131,8 @@ project(pinset): gperf_test {
     "	@echo "Testing pout"
     "	./pout -v < pascal.gperf > pout.out
     "	-diff -b pascal.exp pout.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
@@ -143,6 +155,8 @@ project(iinset): gperf_test {
     "	@echo "Testing iout"
     "	./iout -v < idl.gperf > iout.out
     "	-diff -b idl.exp iout.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
@@ -166,6 +180,8 @@ project(iinset2): gperf_test {
     "	@echo "Testing iout2"
     "	./iout2 -v < idl.gperf > iout2.out
     "	-diff -b idl.exp iout2.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
@@ -188,6 +204,8 @@ project(tinset): gperf_test {
     "	@echo "Testing tout"
     "	./tout -v < corba.gperf > tout.out
     "	-diff -b corba.exp tout.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
@@ -210,6 +228,8 @@ project(taoinset): gperf_test {
     "	@echo "Testing taoout"
     "	./taoout -v < tao.gperf > taoout.out
     "	-diff -b tao.exp taoout.out"
+
+    endif # CROSS-COMPILE
   }
 
   GPERF_Files {
