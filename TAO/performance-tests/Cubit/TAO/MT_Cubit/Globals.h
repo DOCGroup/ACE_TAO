@@ -117,7 +117,15 @@ public:
   // parse the arguments.
 
   static int sched_fifo_init (void);
-  // enables fifo scheduling eg.RT scheduling class on solaris.
+  // Enables fifo scheduling eg., RT scheduling class on solaris.
+  // Returns 0 on success, 1 if insufficient permission, or -1
+  // for other failure.  As a side effect, sets thr_create_flags
+  // appropriately.
+
+  long thr_create_flags;
+  // Thread creation flags.  Must call sched_fifo_init () before
+  // accessing.
+
   char hostname[BUFSIZ];
   // hostname to be used for ORB_init.
 
