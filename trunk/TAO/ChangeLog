@@ -1,3 +1,16 @@
+Wed Sep 17 13:29:31 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tao/extra_core.mpb:
+
+          Split out some of the ORB_Core related files into a feature base
+          project.  These are triggered by minimum_corba and corba_messaging
+          feature names.
+
+        * tao/tao.mpc:
+
+          Inherit from extra_core feature base project and remove some
+          source files from the listing.
+
 Wed Sep 17 13:01:15 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
