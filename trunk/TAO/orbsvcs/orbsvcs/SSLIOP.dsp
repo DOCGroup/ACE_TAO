@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ACE_SSL.lib ace.lib TAO.lib TAO_Security.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_SSLIOP.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\SSL"
+# ADD LINK32 ACE_SSL.lib ace.lib TAO.lib TAO_Security.lib TAO_PortableServer.lib ssleay32.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_SSLIOP.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace" /libpath:"..\..\..\ace\SSL"
 
 !ELSEIF  "$(CFG)" == "SSLIOP - Win32 Debug"
 
