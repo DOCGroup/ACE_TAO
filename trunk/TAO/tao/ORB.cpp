@@ -1523,29 +1523,37 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // Now hexify the encapsulated CDR data into a string, and
       // return that string.
 
-      CORBA::String cp;
-      size_t len = cdr.length ();
+      size_t total_len = cdr.total_length ();
 
-      CORBA::String string;
-      ACE_ALLOCATOR_RETURN (string,
-                            CORBA::string_alloc (sizeof ior_prefix + 2 * len),
+      char *cp;
+      ACE_ALLOCATOR_RETURN (cp,
+                            CORBA::string_alloc (sizeof ior_prefix
+                                                 + 2 * total_len),
                             0);
 
-      ACE_OS::strcpy ((char *) string,
-                      ior_prefix);
+      CORBA::String_var string = cp;
 
-      const char *bytes = cdr.buffer ();
+      ACE_OS::strcpy (cp, ior_prefix);
+      cp += sizeof (ior_prefix) - 1;
 
-      for (cp = (CORBA::String) ACE_OS::strchr ((char *) string, ':') + 1;
-           len--;
-           bytes++)
+      for (const ACE_Message_Block *i = cdr.begin ();
+           i != 0;
+           i = i->cont ())
         {
-          *cp++ = ACE::nibble2hex ((*bytes) >> 4);
-          *cp++ = ACE::nibble2hex (*bytes);
-        }
+          const char *bytes = i->rd_ptr ();
+          size_t len = i->length ();
 
+          while (len--)
+            {
+              *cp++ = ACE::nibble2hex ((*bytes) >> 4);
+              *cp++ = ACE::nibble2hex (*bytes);
+              bytes++;
+            }
+        }
+      // Null terminate the string..
       *cp = 0;
-      return string;
+
+      return string._retn ();
     }
   else
     {
