@@ -1,3 +1,8 @@
+Sat Jun 26 08:40:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Proactor.cpp: fixed template instantiation pragmas
+          (to match explicit template instantiation directives).
+
 Sat Jun 26 08:21:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Signal.h: reordered #includes to avoid warning about
