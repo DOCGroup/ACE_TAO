@@ -51,7 +51,7 @@ protected:
   virtual void *forward ();
 
   // Send the buffered log records using a gather-write operation.
-  virtual int send (iovec *iov, int iov_len);
+  virtual int send (ACE_Message_Block *blocks[], size_t count);
 
   // Entry point into forwarder thread of control.
   static void *run_svc (void *arg);
@@ -149,9 +149,9 @@ void *CLD_Handler::run_svc (void *arg) {
 
 
 void *CLD_Handler::forward () {
-  iovec iov[ACE_IOV_MAX];
+  ACE_Message_Block *blocks[ACE_IOV_MAX];
   ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
-  int message_index = 0;
+  size_t message_index = 0;
   ACE_Sig_Action no_sigpipe ((ACE_SignalHandler) SIG_IGN);
   ACE_Sig_Action original_action;
   no_sigpipe.register_action (SIGPIPE, &original_action);
@@ -167,38 +167,40 @@ void *CLD_Handler::forward () {
       if (mblk->size () == 0 
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
         { mblk->release (); break; }
-      iov[message_index].iov_base = mblk->rd_ptr ();
-      iov[message_index].iov_len = mblk->length ();
+      blocks[message_index] = mblk;
       ++message_index;
-      mblk->set_flags (ACE_Message_Block::DONT_DELETE);
-      mblk->release ();
     }
     if (message_index >= ACE_IOV_MAX ||
         (ACE_OS::gettimeofday () - time_of_last_send
          >= FLUSH_TIMEOUT)) {
-      if (send (iov, message_index) == -1) break;
+      if (send (blocks, message_index) == -1) break;
       time_of_last_send = ACE_OS::gettimeofday ();
       message_index = 0;
     }
   }
 
-  if (message_index > 0) send (iov, message_index);
+  if (message_index > 0) send (blocks, message_index);
   msg_queue_.close ();
   no_sigpipe.restore_action (SIGPIPE, original_action);
   return 0;
 }
 
 
-int CLD_Handler::send (iovec *iov, int iov_size) {
+int CLD_Handler::send (ACE_Message_Block *blocks[], size_t count) {
+  iovec iov[ACE_IOV_MAX];
+  size_t iov_size;
   int result = 0;
-
+  for (iov_size = 0; iov_size < count; ++iov_size) {
+    iov[iov_size].iov_base = blocks[iov_size]->rd_ptr ();
+    iov[iov_size].iov_len = blocks[iov_size]->length ();
+  }
   while (peer ().sendv_n (iov, iov_size) == -1)
     if (connector_->reconnect () == -1) {
       result = -1;
       break;
     }
 
-  while (--iov_size >= 0) delete [] iov[iov_size].iov_base;
+  while (iov_size > 0) blocks[--iov_size]->release ();
   return result;
 }
 
@@ -318,9 +320,11 @@ protected:
 
 
 int Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
-  ACE_INET_Addr cld_addr (ACE_DEFAULT_SERVICE_PORT);
-  ACE_INET_Addr sld_addr (ACE_DEFAULT_LOGGING_SERVER_PORT,
-                          DEFAULT_LOGGING_SERVER_HOST);
+  u_short cld_port = ACE_DEFAULT_SERVICE_PORT;
+  u_short sld_port = ACE_DEFAULT_LOGGING_SERVER_PORT;
+  ACE_TCHAR sld_host[MAXHOSTNAMELEN];
+  ACE_OS::strcpy (sld_host, ACE_LOCALHOST);
+
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:r:s:"), 0);
   get_opt.long_option (ACE_TEXT ("client_port"), 'p',
                        ACE_Get_Opt::ARG_REQUIRED);
@@ -332,15 +336,21 @@ int Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
   for (int c; (c = get_opt ()) != -1;)
     switch (c) {
     case 'p': // Client logging daemon acceptor port number.
-      cld_addr.set_port_number (atoi (get_opt.opt_arg ()));
+      cld_port = ACE_static_cast
+        (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 'r': // Server logging daemon acceptor port number.
-      sld_addr.set_port_number (atoi (get_opt.opt_arg ()));
+      sld_port = ACE_static_cast
+        (u_short, ACE_OS::atoi (get_opt.opt_arg ()));
       break;
     case 's': // Server logging daemon hostname.
-      sld_addr.set_hostname (get_opt.opt_arg ());
+      ACE_OS_String::strsncpy
+        (sld_host, get_opt.opt_arg (), MAXHOSTNAMELEN);
       break;
     }
+
+  ACE_INET_Addr cld_addr (cld_port);
+  ACE_INET_Addr sld_addr (sld_port, sld_host);
 
   if (acceptor_.open (&handler_, cld_addr) == -1)
     return -1;
