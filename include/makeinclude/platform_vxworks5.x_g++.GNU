@@ -58,7 +58,7 @@ CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvo
 CCFLAGS         += $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS         += -g
 INCLDIRS        += -I$(WIND_BASE)/target/h
-LD              = $(ACE_ROOT)/etc/ace_ld -c "$(COMPILE.c) -traditional" \
+LD              = $(ACE_ROOT)/bin/ace_ld -c "$(COMPILE.c) -traditional" \
                   -m "munch" -n "nm$(TOOLENV)" ld$(TOOLENV)
 LDFLAGS         += -X -r
 #### WindRiver only recommends -O, not -O2, with some CPUs, including
