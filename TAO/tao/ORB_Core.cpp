@@ -74,7 +74,8 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     from_unicode_ (0),
     to_unicode_ (0),
     use_tss_resources_ (0),
-    leader_follower_ (this)
+    leader_follower_ (this),
+    has_shutdown_ (0)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
@@ -876,9 +877,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // being done at this level.
   this->orb_->_use_omg_ior_format (use_ior);
 
-  // Set the <shutdown_lock_> for the ORB.
-  this->orb_->shutdown_lock_ = ssf->create_event_loop_lock ();
-
   // @@ Michael: I don't know if this is the best spot,
   // we might have to discuss that.
   //this->leader_follower_lock_ptr_ =  this->client_factory ()
@@ -1371,8 +1369,14 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
   int result = 1;
   // 1 to detect that nothing went wrong
 
-  // Loop "forever" handling client requests.
-  while (this->orb ()->should_shutdown () == 0)
+  // Loop handling client requests until the ORB is shutdown.
+
+  // @@ We could use the leader-follower lock to check for the state
+  //    of this variable or use the lock <create_event_loop_lock> in
+  //    the server strategy factory.
+  //    We don't need to do this because we use the Reactor
+  //    mechanisms to shutdown in a thread-safe way.
+  while (this->has_shutdown () == 0)
     {
       if (TAO_debug_level >= 3)
         ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - blocking on handle events\n"));
@@ -1414,6 +1418,64 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int break_on_timeouts)
     ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - end of run %d\n", result));
 
   return result;
+}
+
+void
+TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
+                        CORBA::Environment &ACE_TRY_ENV)
+{
+  // Is the <wait_for_completion> semantics for this thread correct?
+  TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
+                                                 ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // If the ORB::shutdown operation is called, it makes a call on
+  // deactivate with a TRUE etherealize_objects parameter for each POA
+  // manager known in the process; the wait_for_completion parameter
+  // to deactivate will be the same as the similarly named parameter
+  // of ORB::shutdown.
+  this->object_adapter ()->deactivate (wait_for_completion,
+                                                  ACE_TRY_ENV);
+  ACE_CHECK;
+
+  // Set the shutdown flag
+  {
+    TAO_Leader_Follower &leader_follower =
+      this->leader_follower ();
+
+    ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX,
+                        ace_mon,
+                        leader_follower.lock (),
+                        CORBA::INTERNAL ());
+    ACE_CHECK;
+    this->has_shutdown_ = 1;
+
+    // Wakeup all the threads waiting blocked in the event loop, this
+    // does not guarantee that they will all go away, but reduces the
+    // load on the POA....
+    this->reactor ()->wakeup_all_threads ();
+
+    // If there are some client threads running we have to wait until
+    // they finish, when the last one does it will shutdown the
+    // reactor for us.  Meanwhile no new requests will be accepted
+    // because the POA will not process them.
+
+    if (!leader_follower.has_clients ())
+      {
+        // Wake up all waiting threads in the reactor.
+        this->reactor ()->end_reactor_event_loop ();
+      }
+  }                        
+  
+  // Grab the thread manager
+  ACE_Thread_Manager *tm = this->thr_mgr ();
+
+  // Try to cancel all the threads in the ORB.
+  tm->cancel_all ();
+
+  // If <wait_for_completion> is set, wait for all threads to exit.
+  if (wait_for_completion != 0)
+    tm->wait ();
 }
 
 // ****************************************************************

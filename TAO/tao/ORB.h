@@ -608,12 +608,6 @@ public:
   virtual CORBA::ULong _incr_refcnt (void);
   virtual CORBA::ULong _decr_refcnt (void);
 
-  void should_shutdown (int value);
-  // Set the shutdown flag to <value>.
-
-  int should_shutdown (void);
-  // Get the shutdown flag value
-
   void _use_omg_ior_format (CORBA::Boolean ior);
   // Set the IOR flag.
   CORBA::Boolean _use_omg_ior_format (void);
@@ -714,13 +708,6 @@ private:
 
   ACE_SYNCH_MUTEX open_lock_;
   // Mutual exclusion for calling open.
-
-  ACE_Lock *shutdown_lock_;
-  // Pointer to our shutdown lock.
-
-  int should_shutdown_;
-  // Flag which denotes that the ORB should shut down and <run> should
-  // return.
 
   CORBA_Object_ptr name_service_;
   // If this is non-_nil(), then this is the object reference to our

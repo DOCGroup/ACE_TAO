@@ -147,8 +147,6 @@ CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
 CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
   : refcount_ (1),
     open_called_ (0),
-    shutdown_lock_ (0),
-    should_shutdown_ (0),
     name_service_ (CORBA_Object::_nil ()),
     schedule_service_ (CORBA_Object::_nil ()),
     event_service_ (CORBA_Object::_nil ()),
@@ -190,9 +188,6 @@ CORBA_ORB::~CORBA_ORB (void)
       TAO_TypeCodes::fini ();
     }
 
-  delete this->shutdown_lock_;
-  this->shutdown_lock_ = 0;
-
 # ifdef TAO_HAS_VALUETYPE
   // delete valuetype_factory_map_;
   // not really, its a singleton
@@ -232,37 +227,8 @@ void
 CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion,
                      CORBA::Environment &ACE_TRY_ENV)
 {
-  // Is the <wait_for_completion> semantics for this thread correct?
-  TAO_POA::check_for_valid_wait_for_completions (wait_for_completion,
-                                                 ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // If the ORB::shutdown operation is called, it makes a call on
-  // deactivate with a TRUE etherealize_objects parameter for each POA
-  // manager known in the process; the wait_for_completion parameter
-  // to deactivate will be the same as the similarly named parameter
-  // of ORB::shutdown.
-  this->orb_core_->object_adapter ()->deactivate (wait_for_completion,
-                                                  ACE_TRY_ENV);
-  ACE_CHECK;
-
-  // Set the shutdown flag
-  this->should_shutdown (1);
-
-  // Grab the thread manager
-  ACE_Thread_Manager *tm = this->orb_core_->thr_mgr ();
-
-  // Try to cancel all the threads in the ORB.
-  tm->cancel_all ();
-
-  // Wake up all waiting threads in the reactor.
-  this->orb_core_->reactor ()->end_reactor_event_loop ();
-
-  // If <wait_for_completion> is set, wait for all threads to exit.
-  if (wait_for_completion != 0)
-    tm->wait ();
-
-  return;
+  this->orb_core ()->shutdown (wait_for_completion,
+                               ACE_TRY_ENV);
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
