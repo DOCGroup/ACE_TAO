@@ -1,4 +1,11 @@
-Mon Mar 04 13:04:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+Sun Mar 04 13:04:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* ciao/Container_Base.cpp
+
+	  Fixed compilation errors by replacing ACE_NEW_RETURN 
+	  to ACE_NEW.
+
+Fri Mar 04 13:04:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* Config_Handlers/Config_Handlers.mpc
 	* Config_Handlers/Deployment.hpp
@@ -24,7 +31,7 @@ Thu Mar  3 13:15:02 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	Checked these files into the xsc_handler_1 branch, with a few changes.
 	
-Mon Mar 03 01:45:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+Thu Mar 03 01:45:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* examples/BasicSP/BMDisplay/BMDisplay.idl
 	* examples/BasicSP/descriptors/HUDisplay.cid
