@@ -140,7 +140,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::~NavDisplay_Servant (void)
 // EventConsumer Glue Code implementation
 // Inherit from ::Compopnents::EventBConsumerBase
 void
-CIAO_GLUE_HUDisplay::NavDisplay_Servant::tickConsumer_Refresh_Servant::push_event (::Components::EventBase_ptr ev
+CIAO_GLUE_HUDisplay::NavDisplay_Servant::tickConsumer_Refresh_Servant::push_event (::Components::EventBase *ev
                                                                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::BadEventType))
@@ -237,7 +237,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::same_component (CORBA::Object_ptr objec
 }
 
 // Operations for Receptacles interface
-::Components::Cookie_ptr
+::Components::Cookie *
 CIAO_GLUE_HUDisplay::NavDisplay_Servant::connect (const char * name,
                                                   CORBA::Object_ptr connection
                                                   ACE_ENV_ARG_DECL)
@@ -271,7 +271,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::connect (const char * name,
 
 CORBA::Object_ptr
 CIAO_GLUE_HUDisplay::NavDisplay_Servant::disconnect (const char * name,
-                                                     Components::Cookie_ptr ck
+                                                     Components::Cookie *ck
                                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
@@ -385,7 +385,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::get_consumer (const char * sink_name
   ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
-::Components::Cookie_ptr
+::Components::Cookie *
 CIAO_GLUE_HUDisplay::NavDisplay_Servant::subscribe (const char * ,
                                                     Components::EventConsumerBase_ptr
                                                     ACE_ENV_ARG_DECL)
@@ -399,7 +399,7 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::subscribe (const char * ,
 
 ::Components::EventConsumerBase_ptr
 CIAO_GLUE_HUDisplay::NavDisplay_Servant::unsubscribe (const char * ,
-                                                      Components::Cookie_ptr
+                                                      Components::Cookie *
                                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,

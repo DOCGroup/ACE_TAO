@@ -106,14 +106,14 @@ namespace CIAO_GLUE_HUDisplay
     // Operations for emits interfaces.
 
     // Operations for publishes interfaces.
-    ::Components::Cookie_ptr
+    ::Components::Cookie *
     subscribe_Ready (HUDisplay::tickConsumer_ptr c
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceededConnectionLimit));
 
     HUDisplay::tickConsumer_ptr
-    unsubscribe_Ready (::Components::Cookie_ptr ck
+    unsubscribe_Ready (::Components::Cookie *ck
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
@@ -174,7 +174,7 @@ namespace CIAO_GLUE_HUDisplay
         ACE_THROW_SPEC ((CORBA::SystemException));
 
       // Inherit from ::Compopnents::EventBConsumerBase
-      virtual void push_event (Components::EventBase_ptr ev
+      virtual void push_event (Components::EventBase *ev
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
         ACE_THROW_SPEC ((CORBA::SystemException,
                          ::Components::BadEventType));
@@ -199,14 +199,14 @@ namespace CIAO_GLUE_HUDisplay
     // Operations for emits interfaces.
 
     // Operations for publishes interfaces.
-    virtual ::Components::Cookie_ptr
+    virtual ::Components::Cookie *
     subscribe_Ready (HUDisplay::tickConsumer_ptr c
                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::ExceededConnectionLimit));
 
     virtual HUDisplay::tickConsumer_ptr
-    unsubscribe_Ready (::Components::Cookie_ptr ck
+    unsubscribe_Ready (::Components::Cookie *ck
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Components::InvalidConnection));
@@ -232,7 +232,7 @@ namespace CIAO_GLUE_HUDisplay
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations for Receptacles interface
-    virtual ::Components::Cookie_ptr connect (const char * name,
+    virtual ::Components::Cookie *connect (const char * name,
                                             CORBA::Object_ptr connection
                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -242,7 +242,7 @@ namespace CIAO_GLUE_HUDisplay
                        Components::ExceededConnectionLimit));
 
     virtual CORBA::Object_ptr disconnect (const char * name,
-                                          Components::Cookie_ptr ck
+                                          Components::Cookie *ck
                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,
@@ -273,7 +273,7 @@ namespace CIAO_GLUE_HUDisplay
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName));
 
-    virtual ::Components::Cookie_ptr
+    virtual ::Components::Cookie *
     subscribe (const char * publisher_name,
                Components::EventConsumerBase_ptr subscriber
                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -284,7 +284,7 @@ namespace CIAO_GLUE_HUDisplay
 
     virtual ::Components::EventConsumerBase_ptr
     unsubscribe (const char * publisher_name,
-                 Components::Cookie_ptr ck
+                 Components::Cookie *ck
                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::InvalidName,

@@ -123,7 +123,7 @@ void
 
 // Operations for publishes interfaces.
 ##foreach [publish name] with [eventtype] in (list of all publishers) generate:
-::Components::Cookie_ptr
+::Components::Cookie *
 [ciao module name]::[component name]_Context::subscribe_[publish name] ([eventtype]Consumer_ptr c
                                                                         ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -146,7 +146,7 @@ void
 }
 
 [eventtype]Consumer_ptr
-[ciao module name]::[component name]_Context::unsubscribe_[publish name] (::Components::Cookie_ptr ck
+[ciao module name]::[component name]_Context::unsubscribe_[publish name] (::Components::Cookie *ck
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))
@@ -209,7 +209,7 @@ void
 
 ##  else ([receptacle name] is a multiplex ('uses multiple') receptacle)
 // Multiplex [receptacle name] connection management operations
-::Components::Cookie_ptr
+::Components::Cookie *
 [ciao module name]::[component name]_Context::connect_[receptacle name] ([uses type]_ptr c
                                                                          ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
@@ -233,7 +233,7 @@ void
 }
 
 [uses type]_ptr
-[ciao module name]::[component name]_Context::disconnect_[receptacle name] (::Components::Cookie_ptr ck
+[ciao module name]::[component name]_Context::disconnect_[receptacle name] (::Components::Cookie *ck
                                                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::InvalidConnection))
@@ -526,7 +526,7 @@ CORBA::Boolean
 }
 
 // Operations for Receptacles interface
-::Components::Cookie_ptr
+::Components::Cookie *
 [ciao module name]::[component name]_Servant::connect (const char * name,
                                                        CORBA::Object_ptr connection
                                                        ACE_ENV_ARG_DECL)
@@ -575,7 +575,7 @@ CORBA::Boolean
 
 CORBA::Object_ptr
 [ciao module name]::[component name]_Servant::disconnect (const char * name,
-                                                          Components::Cookie_ptr ck
+                                                          Components::Cookie *ck
                                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
@@ -714,7 +714,7 @@ CORBA::Object_ptr
   ACE_THROW_RETURN (Components::InvalidName (), 0);
 }
 
-::Components::Cookie_ptr
+::Components::Cookie *
 [ciao module name]::[component name]_Servant::subscribe (const char * publisher_name,
                                                          Components::EventConsumerBase_ptr subscriber
                                                          ACE_ENV_ARG_DECL)
@@ -748,7 +748,7 @@ CORBA::Object_ptr
 
 ::Components::EventConsumerBase_ptr
 [ciao module name]::[component name]_Servant::unsubscribe (const char * publisher_name,
-                                                           Components::Cookie_ptr ck
+                                                           Components::Cookie *ck
                                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidName,
