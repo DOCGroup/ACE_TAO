@@ -25,13 +25,19 @@ static int concurrent_threads = 1;
 static int number_of_handles = ACE_ReactorEx::DEFAULT_SIZE;
 static int number_of_handles_to_signal = 1;
 static int interval = 2;
+static int iterations = 10;
 
 // Explain usage and exit.
 static void 
 print_usage_and_die (void)
 {
   ACE_DEBUG ((LM_DEBUG, 
-	      "usage: %n [-t (# of threads)] [-h (# of handlers)] [-i (# time interval between signals)] [-s (# of handles to signal)] \n"));
+	      "usage: \n\t"
+	      "[-t (# of threads - default 1)] \n\t"
+	      "[-h (# of handlers) - default 62] \n\t"
+              "[-i (# time interval between signals) - default 2] \n\t"
+              "[-s (# of handles to signal) - default 1] \n\t"
+              "[-e (# of iterations) - default 10] \n\t"));
   ACE_OS::exit (1);
 }
 
@@ -39,7 +45,7 @@ print_usage_and_die (void)
 static void
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, "t:h:s:i:");
+  ACE_Get_Opt get_opt (argc, argv, "t:h:s:i:e:");
   int c; 
   
   while ((c = get_opt ()) != -1)
@@ -47,6 +53,9 @@ parse_args (int argc, char **argv)
       {
       case 't':
 	concurrent_threads = atoi (get_opt.optarg);
+	break;
+      case 'e':
+	iterations = atoi (get_opt.optarg);
 	break;
       case 'h':
 	number_of_handles = atoi (get_opt.optarg);
@@ -73,8 +82,16 @@ public:
   ~Task_Handler (void);
   // Destructor.
 
+  virtual int handle_close (ACE_HANDLE handle,
+			    ACE_Reactor_Mask close_mask);
+  // Called when object is removed from the ACE_Reactor
+
   int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Handle events being signaled by the main thread.
+
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+			      const void *arg = 0);
+  // Called when timer expires.
 
   int svc (void);
   // Task event loop.
@@ -90,10 +107,10 @@ private:
 int
 Task_Handler::svc (void)
 {
+  // Try to become the owner
+  ACE_Service_Config::reactorEx ()->owner (ACE_Thread::self ());
   // Run the event loop.
-  for (;;)
-    if (ACE_Service_Config::reactorEx ()->handle_events () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "handle_events"), 0);	
+  return ACE_Service_Config::run_reactorEx_event_loop ();
 }
 
 Task_Handler::Task_Handler (size_t number_of_handles,
@@ -129,7 +146,8 @@ Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_signal() called: handle value = %d\n", 
 	      siginfo->si_handle_));
 
-  if (ACE_Service_Config::reactorEx ()->remove_handler (siginfo->si_handle_) == -1)
+  if (ACE_Service_Config::reactorEx ()->remove_handler (siginfo->si_handle_,
+							ACE_Event_Handler::DONT_CALL) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
 		       "(%t) %p\tTask cannot be unregistered from ReactorEx: handle value = %d\n", 
 		       "Task_Handler::handle_signal",
@@ -141,6 +159,24 @@ Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 		       "(%t) %p\tTask cannot be registered with ReactorEx: handle value = %d\n",  
 		       "Task_Handler::handle_signal",
 		       siginfo->si_handle_), -1);
+  return 0;
+}
+
+int 
+Task_Handler::handle_close (ACE_HANDLE handle,
+			    ACE_Reactor_Mask close_mask)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) handle_close() called: handle value = %d\n", 
+	      handle));
+  return 0;
+}
+
+int 
+Task_Handler::handle_timeout (const ACE_Time_Value &tv,
+			      const void *arg)
+{
+  ACE_DEBUG ((LM_DEBUG, "(%t) handle_timeout() called: iteration value = %d\n", 
+	      int (arg)));
   return 0;
 }
 
@@ -159,21 +195,38 @@ main (int argc, char **argv)
   
   ACE_OS::srand (ACE_OS::time (0L));
 
-  for (;;)
+  for (int i = 1; i <= iterations; i++)
     {
       // Sleep for a while
       ACE_OS::sleep (interval);
 
       // Randomly generate events
-      ACE_DEBUG ((LM_DEBUG, "***************************************\n"));		
-      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events\n", 
-		  number_of_handles_to_signal));		
-      ACE_DEBUG ((LM_DEBUG, "***************************************\n"));		
+      ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));		
+      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events : iteration = %d\n", 
+		  number_of_handles_to_signal,
+		  i));		
+      ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));		
+
+      // Setup a timer for the task
+      ACE_Service_Config::reactorEx ()->schedule_timer (&task,
+							(void *) i,
+							0);  
 
       for (int i = 0; i < number_of_handles_to_signal; i++)
-	// Randomly select a handle to signal.
-	task.signal (ACE_OS::rand() % number_of_handles);	  
+	{
+	  // Randomly select a handle to signal.
+	  task.signal (ACE_OS::rand() % number_of_handles);	  
+	}
     }
+
+  // Sleep for a while
+  ACE_OS::sleep (interval);
+  // Close ReactorEx
+  ACE_Service_Config::reactorEx ()->close ();
+  // Wait for all threads to exit 
+  ACE_Service_Config::thr_mgr ()->wait ();
+  // Delete dynamic resources
+  ACE_Service_Config::close_singletons ();
 
   return 0;
 }
