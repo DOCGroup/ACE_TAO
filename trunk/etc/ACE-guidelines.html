@@ -220,6 +220,16 @@ to Graham for providing the OSE tools!<p>
         of <strong>NULL</strong> is implementation dependent, so it is
         difficult to use portably without casting.<p>
 
+    <li>Never cast a pointer to or from an <strong><code>int</code></strong>.
+        On all currently supported ACE platforms, it is safe to cast
+        a pointer to or from a <strong><code>long</code></strong>.<p>
+
+    <li>Be very careful when selecting an integer type that must be a
+        certain size, <em>e.g.</em>, 4 bytes.  <strong>long</strong> is
+        not 4 bytes on all platforms; it is 8 bytes on many 64-bit
+        machines.  ACE_UINT32 is always 4 bytes, and ACE_UINT64 is
+        always 8 bytes.<p>
+
     <li>If a class has any virtual functions, and its destructor is
         declared explicitly in the class, then the destructor should
         <strong>always</strong> be virtual as well.  And to support
@@ -229,12 +239,6 @@ to Graham for providing the OSE tools!<p>
         virtual function could be made non-inline for this purpose.  But,
         for convenience, if its performance is not critical, it is usually
         easiest just to make the virtual destructor non-inline.)<p>
-
-    <li>Be very careful when selecting an integer type that must be a
-        certain size, <em>e.g.</em>, 4 bytes.  <strong>long</strong> is
-        not 4 bytes on all platforms; it is 8 bytes on many 64-bit
-        machines.  ACE_UINT32 is always 4 bytes, and ACE_hrtime_t is
-        always 8 bytes.  (We should/may/will add an ACE_UINT64, soon.)<p>
 
     <li>Constructor initializers must appear in the same order as
         the data members are declared in the class header.  This avoids
@@ -315,8 +319,8 @@ to Graham for providing the OSE tools!<p>
 
         <pre>
         // = Disallow copying...
-        ACE_UNIMPLEMENTED_FUNC (ACE_TSS (const ACE_TSS<TYPE> &))
-        ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS<TYPE> &))
+        ACE_UNIMPLEMENTED_FUNC (ACE_TSS (const ACE_TSS&lt;TYPE&gt; &))
+        ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS&lt;TYPE&gt; &))
         </pre><p>
 
         <code>ACE_UNIMPLEMENTED_FUNC</code> can be used with non-template
@@ -401,7 +405,7 @@ to Graham for providing the OSE tools!<p>
 <dl>
   <dt><strong>Initialization on first use is preferred over using static
       initializations, especially when creating OO class
-      libraries.</strong>  <i>I.e.</i>, use Double Check Locking.
+      libraries.</strong>  <em>I.e.</em>, use Double Check Locking.
   <dd>This is a well known problem among OO C++ class designers.  See
       <em>Designing and Coding Reusable C++</em> by Caroll and Ellis,
       for example.<p>
@@ -441,7 +445,7 @@ to Graham for providing the OSE tools!<p>
   <dt>Don't use the inline keyword directly..<p>
 
   <dt>Separate inline code into their own implementation files.
-      <i>I.e.</i> do not write code in header files..<p>
+      <em>I.e.</em> do not write code in header files..<p>
 
   <dt>(Internationalization) Do not use the char type directly.
       Abstract it for wide characters.  Thus, do not assume your
@@ -474,7 +478,7 @@ to Graham for providing the OSE tools!<p>
   <p>
 
 
-  <dt>Qualify references to base class methods and data.  <i>I.e.</i>,
+  <dt>Qualify references to base class methods and data.  <em>I.e.</em>,
       anything outside the scope of the class.
 
   <p>
@@ -500,7 +504,7 @@ to Graham for providing the OSE tools!<p>
 
   <p>
 
-  <dt>Guarantee singleton destruction.  <i>E.g.</i>, provide
+  <dt>Guarantee singleton destruction.  <em>E.g.</em>, provide
       hooks that allow singletons to be deleted before the process
       exits.
 
@@ -526,7 +530,7 @@ to Graham for providing the OSE tools!<p>
 
   <dt>Define wrappers around clusters of functionality that are
       semantically the same but may have accidental
-      incompatibilities.  <i>E.g.</i>, semaphores, readers/writer
+      incompatibilities.  <em>E.g.</em>, semaphores, readers/writer
       locks, mutex + condition variables, which can be used by
       threads, processes, that may or may not reside on the same
       machine.
@@ -538,7 +542,7 @@ to Graham for providing the OSE tools!<p>
 
   <p>
 
-  <dt>Separate creation from use.  <i>E.g.</i>, acceptor/connector and
+  <dt>Separate creation from use.  <em>E.g.</em>, acceptor/connector and
       service handler.
 
   <p>
@@ -561,16 +565,18 @@ to Graham for providing the OSE tools!<p>
 
 <h3>Software Engineering Guidelines</h3>
 <ul>
-  <li>Advise:  keep other developers informed of problems and progress.<p>
+  <li><strong>Advise</strong>:  keep other developers informed of problems
+      and progress.<p>
 
-  <li>Authorize:  we have contractual obligations to not unilaterally
-      change interfaces.  If you need to change or remove an interface,
-      get an OK.<p>
+  <li><strong>Authorize</strong>:  we have contractual obligations to not
+      unilaterally change interfaces.  If you need to change or remove an
+      interface, get an OK.<p>
 
-  <li>Minimize risk:  Test all changes.  Solicit review of changes.<p>
+  <li><strong>Minimize</strong> risk:  Test all changes.  Solicit review of
+      changes.<p>
 
-  <li>Revise only when necessary:  every change has risk, so avoid making
-      changes unless there is a good reason for the change.<p>
+  <li><strong>Revise</strong> only when necessary:  every change has risk,
+      so avoid making any change unless there is a good reason for it.<p>
 </ul><p>
 
 
