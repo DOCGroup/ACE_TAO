@@ -1,0 +1,20 @@
+#!/bin/sh
+# usage: run_server <num objs> <num methods> <num iters>
+run_server 500 100 1
+run_server 500 10  1
+run_server 500 1   1
+run_server 400 100 1
+run_server 400 10  1
+run_server 400 1   1
+run_server 300 100 1
+run_server 300 10  1
+run_server 300 1   1
+run_server 200 100 1
+run_server 200 10  1
+run_server 200 1   1
+run_server 100 100 1
+run_server 100 10  1
+run_server 100 1   1
+run_server 1   100 1
+run_server 1   10  10
+run_server 1   1   100 
