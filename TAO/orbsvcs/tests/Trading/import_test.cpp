@@ -45,13 +45,13 @@ main (int argc, char** argv)
       
       // Narrow the lookup interface.
       ACE_DEBUG ((LM_DEBUG, "Narrowing the lookup interface.\n"));
-      CosTrading::Lookup_var lookup_if = 
+      CosTrading::Lookup_ptr lookup_if = 
 	CosTrading::Lookup::_narrow (trading_obj.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       // Run the Offer Importer tests
       ACE_DEBUG ((LM_DEBUG, "Running the Offer Importer tests.\n"));
-      TAO_Offer_Importer offer_importer (lookup_if.in ());
+      TAO_Offer_Importer offer_importer (lookup_if);
       
       offer_importer.perform_queries (TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -65,6 +65,7 @@ main (int argc, char** argv)
   TAO_CATCHANY
     {
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Trader Import Tests Failed."), -1);
+      TAO_TRY_ENV.print_exception ("main");
     }
   TAO_ENDTRY;
 

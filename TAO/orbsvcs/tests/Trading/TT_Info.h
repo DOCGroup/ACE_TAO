@@ -10,7 +10,8 @@ class TT_Info
 {
 public:
 
-  static void dump_properties (const CosTrading::PropertySeq& prop_seq);
+  static void dump_properties (const CosTrading::PropertySeq& prop_seq,
+			       CORBA::Boolean print_dynamic = CORBA::B_TRUE);
   // Dump the contents of this property sequence.
 
   static void serialize_offer (const CosTrading::Offer& offer);

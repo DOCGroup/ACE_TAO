@@ -134,7 +134,8 @@ const char* TT_Info::QUERIES[][3] =
 };
 
 void
-TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
+TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq, 
+			  CORBA::Boolean print_dynamic)
 {
   CORBA::Environment env;
   TAO_Property_Evaluator prop_eval (prop_seq);
@@ -146,10 +147,20 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq)
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
       TAO_TRY
 	{
-	  value = prop_eval.property_value(k, env);
+	  CORBA::Boolean is_dynamic = prop_eval.is_dynamic_property (k);
 	  TAO_CHECK_ENV;
+	  
+	  if (print_dynamic || ! is_dynamic)
+	    {
+	      value = prop_eval.property_value(k, env);
+	      TAO_CHECK_ENV;
 
-	  tc = value->type ();
+	      tc = value->type ();
+	    }
+	  else
+	    {
+	      ACE_DEBUG ((LM_DEBUG, "Dynamic Property\n"));
+	    }
 	}
       TAO_CATCHANY
 	{
