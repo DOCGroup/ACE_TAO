@@ -1,0 +1,9 @@
+# $Id$
+
+Simply run the server and the client, as follows:
+
+$ server -o foo.ior
+$ client -k file://foo.ior
+
+	The test only does something useful if the FL toolkit was
+enabled.
