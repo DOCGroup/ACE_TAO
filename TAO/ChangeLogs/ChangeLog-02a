@@ -1,3 +1,11 @@
+Sun Mar 31 21:37:15 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.h:
+
+	  Include "tao/Exception.h" to pull in CORBA::SystemException
+	  class declaration.  A complete type is necessary when used
+	  within an exception specification.
+
 Sat Mar 30 20:49:46 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp:
