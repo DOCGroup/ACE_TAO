@@ -20,6 +20,8 @@ TAO_Connection_Handler::transport (void)
   return this->transport_;
 }
 
+#if 0
+// NOTE: Not used
 ACE_INLINE int
 TAO_Connection_Handler::is_connect_complete (void) const
 {
@@ -30,4 +32,11 @@ ACE_INLINE int
 TAO_Connection_Handler::is_connect_successful (void) const
 {
   return (this->error_detected () == 0);
+}
+#endif /*if 0*/
+
+ACE_INLINE int
+TAO_Connection_Handler::is_finalized (void)
+{
+  return this->is_state_final ();
 }
