@@ -125,7 +125,16 @@ main (int argc, char *argv[])
   name_options->parse_args (argc, argv);
   name_options->database (ACE::basename (name_options->process_name (),
 					 ACE_DIRECTORY_SEPARATOR_CHAR));
-  ns_context->open (ACE_Naming_Context::PROC_LOCAL);
+  
+  // Remove the temporary file (if it exists)
+  char temp_file [BUFSIZ];
+  ACE_OS::strcpy (temp_file, name_options->namespace_dir ());
+  ACE_OS::strcat (temp_file, ACE_DIRECTORY_SEPARATOR_STR);
+  ACE_OS::strcat (temp_file, name_options->database ());
+  ACE_OS::unlink (temp_file);  // No need to check return value here
+
+  if (ns_context->open (ACE_Naming_Context::PROC_LOCAL) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Open failed\n"), -1);
 
   // Add some bindings to the database
   bind (ns_context, 0);
