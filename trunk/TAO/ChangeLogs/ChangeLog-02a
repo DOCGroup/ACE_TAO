@@ -1,3 +1,9 @@
+Thu Apr  5 09:40:11 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * examples/TypeCode_Creation/makefile.bor
+
+          Changed makefile so that this example is correctly build
+
 Wed Apr  4 16:11:46 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
@@ -6,7 +12,7 @@ Wed Apr  4 16:11:46 2001  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/ImplRepo_Service/Options.h:
 
           Added a -l option to the ImplRepo_Service that
-          specifies that the service is "locked" and the 
+          specifies that the service is "locked" and the
           startup/service info cannot be changed. [Bug 666]
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
@@ -25,7 +31,7 @@ Wed Apr  4 16:11:46 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * utils/NamingViewer/NamingViewer.dsp:
 
-          Since it isn't really possible to compile this 
+          Since it isn't really possible to compile this
           example with UNICODE defined, I hid it from the
           auto builds by changing the configuration names.
 
