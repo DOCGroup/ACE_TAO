@@ -1,3 +1,8 @@
+Wed Apr 09 07:47:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/server.dsp: Added -GC to the release
+	  configuration. 
+
 Wed Apr  9 14:34:52 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1482_Regression/client.bor:
