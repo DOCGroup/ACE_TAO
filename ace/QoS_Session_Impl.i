@@ -40,6 +40,22 @@ ACE_RAPI_Session::session_id (const int session_id)
   this->session_id_ = session_id;
 }
 
+// Get the RAPI file desciptor for RSVP events.
+ACE_INLINE ACE_HANDLE
+ACE_RAPI_Session::rsvp_events_handle (void)
+{
+  int rapi_fd = rapi_getfd (this->session_id ());
+  if (rapi_fd == -1)
+    {
+      this->close ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in rapi_getfd ()\n"),
+                        -1);
+    }
+
+  return rapi_fd;
+}
+
 // Get the End Point Type (Sender/Receiver/Both).
 ACE_INLINE ACE_End_Point_Type 
 ACE_RAPI_Session::flags (void) const
@@ -67,6 +83,20 @@ ACE_INLINE void
 ACE_RAPI_Session::dest_addr (const ACE_INET_Addr &dest_addr)
 {
   this->dest_addr_ = dest_addr;
+}
+
+// Get the source port for this RAPI session.
+ACE_INLINE u_short 
+ACE_RAPI_Session::source_port (void) const
+{
+  return this->source_port_;
+}
+
+// Set the source port for this RAPI session.
+ACE_INLINE void 
+ACE_RAPI_Session::source_port (const u_short &source_port)
+{
+  this->source_port_ = source_port;
 }
 
 // RAPI version. Returned value = 100 * major-version + minor-version.
@@ -113,6 +143,15 @@ ACE_GQoS_Session::session_id (const int session_id)
   this->session_id_ = session_id;
 }
 
+// Get the underlying file desciptor for RSVP events.
+// Currently returns 0 because GQoS does not have a special
+// descriptor for QoS events.
+ACE_INLINE ACE_HANDLE
+ACE_GQoS_Session::rsvp_events_handle (void)
+{
+  return 0;
+}
+
 // Get the End Point Type (Sender/Receiver/Both).
 ACE_INLINE ACE_QoS_Session::ACE_End_Point_Type 
 ACE_GQoS_Session::flags (void) const
@@ -139,6 +178,20 @@ ACE_INLINE void
 ACE_GQoS_Session::dest_addr (const ACE_INET_Addr &dest_addr)
 {
   this->dest_addr_ = dest_addr;
+}
+
+// Get the source port for this RAPI session.
+ACE_INLINE u_short 
+ACE_GQoS_Session::source_port (void) const
+{
+  return this->source_port_;
+}
+
+// Set the source port for this RAPI session.
+ACE_INLINE void 
+ACE_GQoS_Session::source_port (const u_short &source_port)
+{
+  this->source_port_ = source_port;
 }
 
 // GQoS version.

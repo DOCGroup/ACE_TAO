@@ -28,6 +28,8 @@
 #if defined (ACE_HAS_RAPI)
 #include "rapi_lib.h"
 
+#define DEFAULT_SOURCE_SENDER_PORT 10001
+
 class ACE_Export ACE_RAPI_Session : public ACE_QoS_Session
 {
   // = TITLE
@@ -83,12 +85,21 @@ public:
   virtual void session_id (const int session_id);
   // Set the RAPI session id.
 
+  virtual ACE_HANDLE rsvp_events_handle (void);
+  // Get the RAPI file descriptor for RSVP events.
+
   virtual ACE_INET_Addr dest_addr (void) const;
   // Get the destination address for this RAPI session.
 
   virtual void dest_addr (const ACE_INET_Addr &dest_addr);
   // Set the destination address for this RAPI session.
 
+  virtual u_short source_port (void) const;
+  // Get the source port for this session.
+  
+  virtual void source_port (const u_short &source_port);
+  // Set the source port for this session.
+  
   virtual int version ();
   // RAPI version. Returned value = 100 * major-version + minor-version.
 
@@ -175,11 +186,20 @@ public:
   virtual void dest_addr (const ACE_INET_Addr &dest_addr);
   // Set the destination address for this GQoS session.
 
+  virtual u_short source_port (void) const;
+  // Get the source port for this session.
+  
+  virtual void source_port (const u_short &source_port);
+  // Set the source port for this session.
+  
   virtual int session_id (void) const;
   // Get the GQoS session id.
   
   virtual void session_id (const int session_id);
   // Set the GQoS session id.
+
+  virtual ACE_HANDLE rsvp_events_handle (void);
+  // Get the file descriptor of the underlying socket.
 
   virtual int version ();
   // GQoS version.

@@ -19,9 +19,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_QoS_Session_Impl)
 
 int ACE_RAPI_Session::rsvp_error = 0;
 
-// Call back function used by RAPI to report RSVP events. This function translates 
-// the RAPI QoS parameters into the more generic ACE_QoS parameters for the 
-// underlying RAPI session.
+// Call back function used by RAPI to report RSVP events. This
+// function translates the RAPI QoS parameters into the more generic
+// ACE_QoS parameters for the underlying RAPI session.
 int 
 rsvp_callback (rapi_sid_t sid,
                rapi_eventinfo_t eventype,
@@ -39,43 +39,49 @@ rsvp_callback (rapi_sid_t sid,
                void *args
                )
 {
-
-  ACE_QoS_Session * qos_session = (ACE_QoS_Session *) args;
+  
+  if (args == 0)
+    ACE_DEBUG ((LM_DEBUG,
+                "Argument in the call back function is null\n\n"));
+  
+  ACE_QoS_Session *qos_session = (ACE_QoS_Session *) args;
 
   // Extended Legacy format.
   qos_flowspecx_t *csxp = &flow_spec_list->specbody_qosx;
-  
-  ACE_Flow_Spec sending_fs (csxp->xspec_r,
-                            csxp->xspec_b,
-                            csxp->xspec_p,
-                            0,
-                            0,
-                            0,
-                            csxp->xspec_M,
-                            csxp->xspec_m,
-                            25,
-                            0);
 
+  ACE_QoS ace_qos = qos_session->qos ();
+  ACE_Flow_Spec receiving_flow = ace_qos.receiving_flowspec ();
+  
   switch(eventype)
     {
     case RAPI_PATH_EVENT:
-      ACE_DEBUG ((LM_DEBUG,
-                  "RSVP PATH Event received\n"));
-      
-      ACE_DEBUG ((LM_DEBUG,
-                  "No. of TSpecs received : %d\n",
-                  flow_spec_no));
-      
-      // Set the sending flowspec QoS of the given session. 
-      qos_session->qos ().sending_flowspec (sending_fs);
-      
-      break;
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "RSVP PATH Event received\n"
+                    "No. of TSpecs received : %d\n",
+                    flow_spec_no));
+        
+        ACE_Flow_Spec sending_fs (csxp->xspec_r,
+                                  csxp->xspec_b,
+                                  csxp->xspec_p,
+                                  0,
+                                  0,
+                                  0,
+                                  csxp->xspec_M,
+                                  csxp->xspec_m,
+                                  25,
+                                  0);
+        
+        // Set the sending flowspec QoS of the given session. 
+        ace_qos.sending_flowspec (sending_fs);
+        
+      }
+    
+    break;
       
     case RAPI_RESV_EVENT:
       ACE_DEBUG ((LM_DEBUG,
-                  "RSVP RESV Event received\n"));
-      
-      ACE_DEBUG ((LM_DEBUG,
+                  "RSVP RESV Event received\n"
                   "No. of FlowSpecs received : %d\n",
                   flow_spec_no));
       
@@ -84,25 +90,25 @@ rsvp_callback (rapi_sid_t sid,
         {
         case QOS_GUARANTEEDX:
           // Slack term in MICROSECONDS
-          qos_session->qos ().receiving_flowspec ().delay_variation (csxp->xspec_S);
-          
+          receiving_flow.delay_variation (csxp->xspec_S);
+
           // @@How does the guaranteed rate parameter map to the ACE_Flow_Spec.
           // Note there is no break !!
           
         case QOS_CNTR_LOAD:
-
+          
           // qos_service_type.
-          qos_session->qos ().receiving_flowspec ().service_type (csxp->spec_type); 
+          receiving_flow.service_type (csxp->spec_type); 
           // Token Bucket Average Rate (B/s)
-          qos_session->qos ().receiving_flowspec ().token_rate (csxp->xspec_r);
+          receiving_flow.token_rate (csxp->xspec_r);
           // Token Bucket Rate (B)
-          qos_session->qos ().receiving_flowspec ().token_bucket_size (csxp->xspec_b);
+          receiving_flow.token_bucket_size (csxp->xspec_b);
           // Peak Data Rate (B/s)
-          qos_session->qos ().receiving_flowspec ().peak_bandwidth (csxp->xspec_p);
+          receiving_flow.peak_bandwidth (csxp->xspec_p);
           // Minimum Policed Unit (B)
-          qos_session->qos ().receiving_flowspec ().minimum_policed_size (csxp->xspec_m);
+          receiving_flow.minimum_policed_size (csxp->xspec_m);
           // Max Packet Size (B)
-          qos_session->qos ().receiving_flowspec ().max_sdu_size (csxp->xspec_M);
+          receiving_flow.max_sdu_size (csxp->xspec_M);
 
           break;
           
@@ -112,6 +118,8 @@ rsvp_callback (rapi_sid_t sid,
                             0);
         };
       
+      ace_qos.receiving_flowspec (receiving_flow);
+
       break;
 
     case RAPI_PATH_ERROR:
@@ -138,14 +146,23 @@ rsvp_callback (rapi_sid_t sid,
                   "RESV CONFIRM Event received\n"));
       break;
       
+    default:
+      ACE_DEBUG ((LM_DEBUG,
+                  "Unknown RSVP Event Received\n"));
+      break;
+      
     }
-  
+
+  // Set the updated ACE_QoS for the RSVP callback argument(QoS session).
+  qos_session->qos (ace_qos);
+        
 } 
 
 // Constructor.
 ACE_RAPI_Session::ACE_RAPI_Session (void)
 {
   ACE_TRACE ("ACE_RAPI_Session::ACE_RAPI_Session");
+  this->source_port (DEFAULT_SOURCE_SENDER_PORT);
 }
 
 // Open a RAPI QoS session [dest IP, dest port, Protocol ID].
@@ -156,8 +173,6 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
   this->dest_addr_ = dest_addr;
   this->protocol_id_ = protocol_id;
   
-  rapi_eventinfo_t RSVP_arg;      /*RSVP callback argument*/
-
   // Open a RAPI session. Note "this" is being passed as an argument to 
   // the callback function. The callback function uses this argument to 
   // update the QoS of this session based on the RSVP event it receives.
@@ -166,15 +181,14 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
                                         protocol_id,
                                         0, 
                                         rsvp_callback, 
-                                        //(void *) this, 
-                                        (void *) &RSVP_arg,
+                                        (void *) this, 
                                         &rsvp_error)) == NULL_SID)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "rapi_session () call fails. Error\n"),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
-                "rapi_session () call succeeds\n"
+                "rapi_session () call succeeds. "
                 "Session ID = %d\n",
                 this->session_id_));
   
@@ -203,7 +217,6 @@ ACE_RAPI_Session::qos (ACE_SOCK *socket,
                        const ACE_QoS &ace_qos)
 {
   ACE_UNUSED_ARG (socket);
-  ACE_UNUSED_ARG (qos_manager);
   
   // If sender : call sending_qos ()
   // If receiver : call receiving_qos ()
@@ -251,7 +264,7 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
               "\t Peak = %f\n"
               "\t MPU = %d\n"
               "\t MDU = %d\n"
-              "\t\t TTL = %d\n",
+              "\t TTL = %d\n",
               t_spec->tspecbody_qosx.spec_type,
               t_spec->tspecbody_qosx.xtspec_r,
               t_spec->tspecbody_qosx.xtspec_b,
@@ -260,8 +273,8 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
               t_spec->tspecbody_qosx.xtspec_M,
               sending_flowspec.ttl ()));
   
-  // @@Hardcoded port. This should be changed later.
-  ACE_INET_Addr sender_addr (9090); 
+  // This the source sender port.
+  ACE_INET_Addr sender_addr (this->source_port ()); 
 
   ACE_DEBUG ((LM_DEBUG,
               "Making the rapi_sender () call\n"));
@@ -288,16 +301,16 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 int 
 ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
 {
-
+  
   ACE_Flow_Spec receiving_flowspec = ace_qos.receiving_flowspec ();
   rapi_flowspec_t *flow_spec = init_flowspec_simplified (receiving_flowspec);
-
+  
   if (flow_spec == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in translating from ACE Flow Spec to"
                        " RAPI FlowSpec\n"),
                       -1);
-
+  
   char buffer[BUFSIZ];
 
   // This formats the flow_spec in a visually intuitive char * that can
@@ -306,7 +319,7 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
   ACE_DEBUG ((LM_DEBUG,
               "\nReceiver FlowSpec : %s\n",
               buffer));
-
+  
   // Print out all the fields separately.
   ACE_DEBUG ((LM_DEBUG,
               "\nFlowSpec :\n"
@@ -322,11 +335,6 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
               flow_spec->specbody_qosx.xspec_p,
               flow_spec->specbody_qosx.xspec_m,
               flow_spec->specbody_qosx.xspec_M));
-
-  // @@Hardcoded port. This should be changed later.
-  //  ACE_INET_Addr receiver_addr (8002); 
-
-  //  ACE_INET_Addr receiver_addr; 
 
   sockaddr_in Receiver_host;
 
@@ -365,6 +373,7 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
 int 
 ACE_RAPI_Session::update_qos (void)
 {
+  // Update the session QoS Parameters based on the RSVP Event Received.
   if ((rsvp_error = rapi_dispatch ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in rapi_dispatch () : %s\n",
@@ -423,6 +432,7 @@ ACE_RAPI_Session::init_flowspec_simplified(const ACE_Flow_Spec &flow_spec)
   qos_flowspecx_t *csxp = &flowsp->specbody_qosx;
 
   // Choose based on the service type : [QOS_GUARANTEEDX/QOS_CNTR_LOAD].
+
   switch (flow_spec.service_type ()) 
     {
     case QOS_GUARANTEEDX:
@@ -434,14 +444,12 @@ ACE_RAPI_Session::init_flowspec_simplified(const ACE_Flow_Spec &flow_spec)
       // Note there is no break !!
 
     case QOS_CNTR_LOAD:
-      ACE_DEBUG ((LM_DEBUG,
-                  "QOS_CONTROLLED_LOAD\n"));
       csxp->spec_type = flow_spec.service_type ();        // qos_service_type
       csxp->xspec_r = flow_spec.token_rate ();            // Token Bucket Average Rate (B/s)
       csxp->xspec_b = flow_spec.token_bucket_size ();     // Token Bucket Rate (B)
       csxp->xspec_p = flow_spec.peak_bandwidth ();        // Peak Data Rate (B/s)
       csxp->xspec_m = flow_spec.minimum_policed_size ();  // Minimum Policed Unit (B)
-
+      
       // @@Hardcoded Max. Pkt. size.
       csxp->xspec_M = 65535;                              // Max Packet Size (B)
 
@@ -499,11 +507,6 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
   
   // Confirm if the current session is one of the QoS sessions
   // subscribed to by the given socket.
-
-  //if (socket->qos_session_set ().find (this) == -1)
-
-  // @@Vishal : Need to relate the below to the socket (as above)
-  // instead of the QoS Manager.
 
   if (qos_manager->qos_session_set ().find (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

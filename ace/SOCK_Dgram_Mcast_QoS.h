@@ -19,6 +19,7 @@
 #include "ace/pre.h"
 
 #include "ace/SOCK_Dgram_Mcast.h"
+#include "ace/QoS_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,7 +32,7 @@ class ACE_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
   //     wrapper for UDP/IP multicast.
 
 public:
-  // = Initialization routine.
+  // = Initialization routines.
   ACE_SOCK_Dgram_Mcast_QoS (void);
 
   // Note that there is no public <open> method.  Therefore, this
@@ -52,7 +53,6 @@ public:
                  ACE_Protocol_Info *protocolinfo = 0,
                  ACE_SOCK_GROUP g = 0,
                  u_long flags = 0,
-                 ACE_QoS_Manager *qos_manager = 0,
                  ACE_QoS_Session *qos_session = 0);
   // This is a QoS-enabled method for joining a multicast group, which
   // passes <qos_params> via <ACE_OS::join_leaf>.  The network
@@ -94,6 +94,9 @@ public:
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
   // Send an <n> byte <buf> to the datagram socket (uses <WSASentTo>).
 
+  ACE_QoS_Manager qos_manager (void);
+  // Returns the QoS manager for this socket.
+
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
@@ -118,6 +121,9 @@ private:
                      int reuse_addr,
                      ACE_Protocol_Info *protocolinfo);
   // Subscribe to the multicast interface using QoS-enabled semantics.
+
+  ACE_QoS_Manager qos_manager_;
+  // Manages the QoS sessions that this socket subscribes to.
 
 };
 
