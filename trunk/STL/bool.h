@@ -1,5 +1,28 @@
 
-/*
+
+#if !defined (ACE_BOOL_H)
+#define ACE_BOOL_H
+
+// Define bool out of the std namespace.
+#if defined (WIN32)
+#include <yvals.h>
+#else
+#if !defined (bool)
+#define bool int
+#endif /* bool */
+
+#if !defined (true)
+#define true 1
+#endif /* true */
+
+#if !defined (false)
+#define false 0
+#endif /* false */
+
+#endif /* WIN32 */
+
+
+ /*
  *Added by d:\\convert.pl --begin--
  */
 namespace std {
@@ -23,18 +46,6 @@ namespace std {
  *
  */
 
-#if !defined (bool)
-#define bool int
-#endif /* bool */
-
-#if !defined (true)
-#define true 1
-#endif /* true */
-
-#if !defined (false)
-#define false 0
-#endif /* false */
-
 /*
  *Added by d:\\convert.pl --begin--
  */
@@ -43,3 +54,4 @@ namespace std {
  *Added by d:\\convert.pl --end--
  */
 
+#endif /* ACE_BOOL_H */
