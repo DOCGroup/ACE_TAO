@@ -78,6 +78,7 @@ namespace CIAO
 
     return me->_is_equivalent (the_other.in ()
                                ACE_ENV_ARG_PARAMETER);
+
   }
 
   template <typename BASE_SKEL,
