@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, rtevent, event, event_skel {
+project : orbsvcsexe, rtevent, event, event_skel, naming {
   after += CosEC_RtEC_Based_lib
   includes += ../lib
   libs += CosEC_RtEC_Based

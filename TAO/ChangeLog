@@ -1,3 +1,20 @@
+Fri Sep 10 12:28:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Trading/Trading.mpc:
+
+	  Changed colocated_test project to inherit from trading_serv.
+
+	  Changed import_test and export_test projects to inherit from
+	  portableserver.
+
+	* orbsvcs/tests/Notify/Test_Filter/Test_Filter.mpc:
+
+	  Changed project to inherit from notification_skel.
+
+	* orbsvcs/examples/CosEC/RtEC_Based/bin/CosEC_RtEC_Based_bin.mpc:
+
+	  Changed project to inherit from naming.
+
 Fri Sep 10 09:06:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/ec_typed_events_serv.mpb:

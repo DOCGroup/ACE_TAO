@@ -23,7 +23,7 @@ project(*Test Lib): orbsvcslib, trading_serv, naming, svc_utils, iortable, dynam
   }
 }
 
-project(*export test): namingexe, trading, dynamicany {
+project(*export test): namingexe, trading, dynamicany, portableserver {
   after   += Trading_Test_Lib
   libs    += TTest
 
@@ -35,7 +35,7 @@ project(*export test): namingexe, trading, dynamicany {
   }
 }
 
-project(*import test): namingexe, trading, dynamicany {
+project(*import test): namingexe, trading, dynamicany, portableserver {
   after   += Trading_Test_Lib
   libs    += TTest
 
@@ -47,7 +47,7 @@ project(*import test): namingexe, trading, dynamicany {
   }
 }
 
-project(*colocated test): namingexe, trading, dynamicany {
+project(*colocated test): namingexe, trading_serv, dynamicany {
   after   += Trading_Test_Lib
   libs    += TTest
 
