@@ -1,3 +1,8 @@
+Wed Apr  7 01:10:55 1999  Darrell Brunsch  <brunsch@cs.wustl.edu
+
+	* examples/Quoter/Makefile: Now cleans up all IDL generated files
+          with realclean.
+
 1999-04-07  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h
