@@ -1,3 +1,46 @@
+Sat Nov  1 23:45:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/ACE_export.h:
+          Added ACE_NAMESPACE_INLINE_FUNCTION and ACE_NAMESPACE_STORAGE_CLASS
+          macros to help control exporting of symbols from namespaces on
+          Windows.
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_arpa_inet.{h,inl}:
+        * ace/OS_NS_ctype.h:
+        * ace/OS_NS_dirent.h:
+        * ace/OS_NS_dlfcn.h:
+        * ace/OS_NS_errno.h:
+        * ace/OS_NS_fcntl.h:
+        * ace/OS_NS_math.h:
+        * ace/OS_NS_netdb.h:
+        * ace/OS_NS_poll.h:
+        * ace/OS_NS_pwd.h:
+        * ace/OS_NS_regex.h:
+        * ace/OS_NS_signal.h:
+        * ace/OS_NS_stdio.h:
+        * ace/OS_NS_stdlib.h:
+        * ace/OS_NS_string.h:
+        * ace/OS_NS_strings.h:
+        * ace/OS_NS_stropts.h:
+        * ace/OS_NS_sys_mman.h:
+        * ace/OS_NS_sys_msg.h:
+        * ace/OS_NS_sys_resource.h:
+        * ace/OS_NS_sys_select.h:
+        * ace/OS_NS_sys_shm.h:
+        * ace/OS_NS_sys_socket.h:
+        * ace/OS_NS_sys_stat.h:
+        * ace/OS_NS_sys_time.h:
+        * ace/OS_NS_sys_uio.h:
+        * ace/OS_NS_sys_utsname.h:
+        * ace/OS_NS_sys_wait.h:
+        * ace/OS_NS_time.h:
+        * ace/OS_NS_unistd.h:
+        * ace/OS_NS_wchar.h:
+        * ace/OS_TLI.h:
+          Added extern ACE_Export to non-inlined method prototypes and
+          ACE_NAMESPACE_INLINE_FUNCTION to inlined ones.
+
 Sat Nov  1 18:18:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-mingw.h:

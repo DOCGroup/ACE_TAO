@@ -25,13 +25,23 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
+
 namespace ACE_OS {
 
   // non=standard..
   //@{ @name A set of wrappers for regular expressions.
+  ACE_NAMESPACE_INLINE_FUNCTION
   char *compile (const char *instring,
                  char *expbuf,
                  char *endbuf);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int step (const char *str,
             char *expbuf);
   //@}

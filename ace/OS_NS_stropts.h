@@ -25,9 +25,14 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Export.h"
 #include "ace/os_include/os_stropts.h"
 #include "ace/os_include/os_stdio.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 typedef WSAPROTOCOL_INFO ACE_Protocol_Info;
@@ -61,7 +66,7 @@ typedef unsigned long ACE_SOCK_GROUP;
  *
  * @brief Simple wrapper for STREAM pipes strbuf.
  */
-class ACE_OS_Export ACE_Str_Buf : public strbuf
+class ACE_Export ACE_Str_Buf : public strbuf
 {
 public:
   // = Initialization method
@@ -76,10 +81,13 @@ class ACE_QoS;
 
 namespace ACE_OS {
 
+  extern ACE_Export 
   int getmsg (ACE_HANDLE handle,
               struct strbuf *ctl,
               struct strbuf
               *data, int *flags);
+
+  extern ACE_Export 
   int getpmsg (ACE_HANDLE handle,
                struct strbuf *ctl,
                struct strbuf
@@ -87,17 +95,22 @@ namespace ACE_OS {
                int *band,
                int *flags);
 
+  extern ACE_Export 
   int fattach (int handle,
                const char *path);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int fdetach (const char *file);
 
   /// UNIX-style <ioctl>.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int ioctl (ACE_HANDLE handle,
              int cmd,
              void * = 0);
 
 #if !defined (ACE_HAS_WINCE)
   /// QoS-enabled <ioctl>.
+  extern ACE_Export 
   int ioctl (ACE_HANDLE socket,
              unsigned long io_control_code,
              void *in_buffer_p,
@@ -110,6 +123,7 @@ namespace ACE_OS {
 
   /// QoS-enabled <ioctl> when the I/O control code is either
   /// SIO_SET_QOS or SIO_GET_QOS.
+  extern ACE_Export 
   int ioctl (ACE_HANDLE socket,
              unsigned long io_control_code,
              ACE_QoS &ace_qos,
@@ -120,12 +134,16 @@ namespace ACE_OS {
              ACE_OVERLAPPED_COMPLETION_FUNC func = 0);
 #endif  // ACE_HAS_WINCE
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int isastream (ACE_HANDLE handle);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int putmsg (ACE_HANDLE handle,
               const struct strbuf *ctl,
               const struct strbuf *data,
               int flags);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int putpmsg (ACE_HANDLE handle,
                const struct strbuf *ctl,
                const struct strbuf *data,

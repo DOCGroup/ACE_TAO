@@ -26,16 +26,25 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_resource.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 namespace ACE_OS {
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int getrlimit (int resource,
                  struct rlimit *rl);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int getrusage (int who,
                  struct rusage *rusage);
 
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   int setrlimit (int resource,
                  ACE_SETRLIMIT_TYPE *rl);
 

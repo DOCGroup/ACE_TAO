@@ -26,6 +26,12 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_pwd.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 # if defined (ACE_HAS_BROKEN_R_ROUTINES)
 #   undef getpwnam_r
@@ -38,16 +44,21 @@ namespace ACE_OS {
 
   //@{ @name A set of wrappers for password routines.
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   void endpwent (void);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct passwd *getpwent (void);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct passwd *getpwnam (const char *user);
 
+  ACE_NAMESPACE_INLINE_FUNCTION
   struct passwd *getpwnam_r (const char *name,
                              struct passwd *pwent,
                              char *buffer,
                              int buflen);
+  ACE_NAMESPACE_INLINE_FUNCTION
   void setpwent (void);
   //@}
 

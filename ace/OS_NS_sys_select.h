@@ -26,17 +26,26 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/sys/os_select.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 class ACE_Time_Value;
 
 namespace ACE_OS {
 
   // Should be moved to cpp or inl.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int select (int width,
               fd_set *rfds,
               fd_set *wfds = 0,
               fd_set *efds = 0,
               const ACE_Time_Value *tv = 0);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int select (int width,
               fd_set *rfds,
               fd_set *wfds,

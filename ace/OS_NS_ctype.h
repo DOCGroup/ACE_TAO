@@ -25,6 +25,13 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
+
 namespace ACE_OS {
 
   // these are non-standard names...
@@ -44,16 +51,20 @@ namespace ACE_OS {
   //@{
 
   /// Returns true if the character is a printable character.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isprint (const ACE_TCHAR c);
 
   /// Returns true if the character is a space character.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isspace (const ACE_TCHAR c);
 
   /// Converts a character to lower case (char version).
+  ACE_NAMESPACE_INLINE_FUNCTION
   int to_lower (int c);
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_TOWLOWER)
   /// Converts a character to lower case (wchar_t version).
+  ACE_NAMESPACE_INLINE_FUNCTION
   wint_t to_lower (wint_t c);
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_TOWLOWER */
 

@@ -16,13 +16,18 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
-#include "ace/OS_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS_Errno.h"
+#include "ace/ACE_export.h"
+
+#if defined (ACE_EXPORT_MACRO)
+#  undef ACE_EXPORT_MACRO
+#endif
+#define ACE_EXPORT_MACRO ACE_Export
 
 # if !defined (ACE_HAS_TLI)
 // Dummies to help compilation.
@@ -128,61 +133,109 @@ extern "C" int _xti_error(char *);
 namespace ACE_OS
 {
   // = A set of wrappers for TLI.
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_accept (ACE_HANDLE fildes,
-                       ACE_HANDLE resfd,
-                       struct t_call
-                       *call);
+                ACE_HANDLE resfd,
+                struct t_call
+                *call);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   char *t_alloc (ACE_HANDLE fildes,
-                        int struct_type,
-                        int
-                        fields);
+                 int struct_type,
+                 int
+                 fields);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_bind (ACE_HANDLE fildes,
-                     struct t_bind *req,
-                     struct
-                     t_bind *ret);
+              struct t_bind *req,
+              struct
+              t_bind *ret);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_close (ACE_HANDLE fildes);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_connect (ACE_HANDLE fildes,
-                        struct t_call *sndcall,
-                        struct t_call *rcvcall);
+                 struct t_call *sndcall,
+                 struct t_call *rcvcall);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   void t_error (const char *errmsg);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_free (char *ptr,
-                     int struct_type);
+              int struct_type);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_getinfo (ACE_HANDLE fildes,
-                        struct t_info *info);
+                 struct t_info *info);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_getname (ACE_HANDLE fildes,
-                        struct netbuf *namep,
-                        int type);
+                 struct netbuf *namep,
+                 int type);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_getstate (ACE_HANDLE fildes);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_listen (ACE_HANDLE fildes,
-                        struct t_call *call);
+                struct t_call *call);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_look (ACE_HANDLE fildes);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE t_open (char *path,
-                            int oflag,
-                            struct t_info *info);
+                     int oflag,
+                     struct t_info *info);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_optmgmt (ACE_HANDLE fildes,
-                        struct t_optmgmt *req,
-                        struct t_optmgmt *ret);
+                 struct t_optmgmt *req,
+                 struct t_optmgmt *ret);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_rcv (ACE_HANDLE fildes,
-                    char *buf,
-                    unsigned int nbytes,
-                    int *flags);
+             char *buf,
+             unsigned int nbytes,
+             int *flags);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_rcvdis (ACE_HANDLE fildes,
-                       struct t_discon *discon);
+                struct t_discon *discon);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_rcvrel (ACE_HANDLE fildes);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_rcvudata (ACE_HANDLE fildes,
-                         struct t_unitdata *unitdata,
-                         int *flags);
+                  struct t_unitdata *unitdata,
+                  int *flags);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_rcvuderr (ACE_HANDLE fildes,
-                         struct t_uderr *uderr);
+                  struct t_uderr *uderr);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_snd (ACE_HANDLE fildes,
-                    const char *buf,
-                    unsigned int nbytes,
-                    int flags);
+             const char *buf,
+             unsigned int nbytes,
+             int flags);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_snddis (ACE_HANDLE fildes,
-                       struct t_call *call);
+                struct t_call *call);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_sndrel (ACE_HANDLE fildes);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_sync (ACE_HANDLE fildes);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
   int t_unbind (ACE_HANDLE fildes);
+
 }; /* namespace ACE_OS */
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
