@@ -13,7 +13,7 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Invocation.h"
 #include "tao/Thread_Lane_Resources.h"
-
+#include "tao/Blocked_Connect_Strategy.h"
 #include "ace/Strategies_T.h"
 
 ACE_RCSID (TAO_SSLIOP,
@@ -73,6 +73,14 @@ int
 TAO_IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 {
   this->orb_core (orb_core);
+
+  // Not sure whether we should have blocked connect strategy
+  // here. Ossama mentions that non-blocking may not work
+  // properly. Keeping it as blocked till someone decides to fall in
+  // line with protocols like IIOP.
+  ACE_NEW_RETURN (this->active_connection_strategy_,
+                  TAO_Blocked_Connect_Strategy (orb_core),
+                  -1);
 
   if (this->init_tcp_properties () != 0)
     return -1;
@@ -161,17 +169,11 @@ TAO_IIOP_SSL_Connector::make_connection (
                   ACE_TEXT ("TAO (%P|%t) Connector::connect - ")
                   ACE_TEXT ("looking for IIOP connection.\n")));
 
-  ACE_Time_Value *max_wait_time = invocation->max_wait_time ();
+
 
   TAO_IIOP_Endpoint *iiop_endpoint =
     ACE_dynamic_cast (TAO_IIOP_Endpoint *,
                       desc->endpoint ());
-
-  if (iiop_endpoint == 0)
-    return -1;
-
-  int result = 0;
-  TAO_IIOP_SSL_Connection_Handler *svc_handler = 0;
 
   if (TAO_debug_level > 4)
     ACE_DEBUG ((LM_DEBUG,
@@ -181,32 +183,35 @@ TAO_IIOP_SSL_Connector::make_connection (
   const ACE_INET_Addr &remote_address =
     iiop_endpoint->object_addr ();
 
-  // Purge connections (if necessary)
-  this->orb_core ()->lane_resources ().transport_cache ().purge ();
+  // Get the right synch options
+  ACE_Synch_Options synch_options;
 
-  // @@ This needs to change in the next round when we implement a
-  // policy that will not allow new connections when a connection
-  // is busy.
-  if (max_wait_time != 0)
-    {
-      ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                       *max_wait_time);
+  ACE_Time_Value *max_wait_time =
+    invocation->max_wait_time ();
 
-      // We obtain the transport in the <svc_handler> variable. As
-      // we know now that the connection is not available in Cache
-      // we can make a new connection
-      result = this->base_connector_.connect (svc_handler,
-                                              remote_address,
-                                              synch_options);
-    }
-  else
-    {
-      // We obtain the transport in the <svc_handler> variable. As
-      // we know now that the connection is not available in Cache
-      // we can make a new connection
-      result = this->base_connector_.connect (svc_handler,
-                                              remote_address);
-    }
+  this->active_connect_strategy_->synch_options (max_wait_time,
+                                                 synch_options);
+
+  TAO_IIOP_Connection_Handler *svc_handler = 0;
+
+   // Active connect
+   int result = this->base_connector_.connect (svc_handler,
+                                               remote_address,
+                                               synch_options);
+
+
+   if (result == -1 && errno == EWOULDBLOCK)
+     {
+       result =
+         this->active_connect_strategy_->wait (svc_handler,
+                                               max_wait_time);
+     }
+
+   // Reduce the refcount to the svc_handler that we have. The
+   // increment to the handler is done in make_svc_handler (). Now
+   // that we dont need the reference to it anymore we can decrement
+   // the refcount whether the connection is successful ot not.
+   svc_handler->decr_refcount ();
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,

@@ -491,29 +491,39 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
       svc_handler = safe_handler.release ();
 
-      // @@ This needs to change in the next round when we implement
-      //    a policy that will not allow new connections when a
-      //    connection is busy.
-      if (max_wait_time != 0)
-        {
-          ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
-                                           *max_wait_time);
 
-          // We obtain the transport in the <svc_handler> variable.
-          // As we know now that the connection is not available in
-          // Cache we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address,
-                                                  synch_options);
-        }
-      else
+      // Get the right synch options
+      ACE_Synch_Options synch_options;
+
+      ACE_Time_Value *max_wait_time =
+        invocation->max_wait_time ();
+
+      this->active_connect_strategy_->synch_options (max_wait_time,
+                                                     synch_options);
+
+
+      // We obtain the transport in the <svc_handler> variable.
+      // As we know now that the connection is not available in
+      // Cache we can make a new connection
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address,
+                                              synch_options);
+
+
+      // We dont have to wait since we only use a blocked connect
+      // strategy.
+      if (result == -1 && errno == EWOULDBLOCK)
         {
-          // We obtain the transport in the <svc_handler> variable.
-          // As we know now that the connection is not available in
-          // Cache we can make a new connection
-          result = this->base_connector_.connect (svc_handler,
-                                                  remote_address);
+          result =
+            this->active_connect_strategy_->wait (svc_handler,
+                                                  max_wait_time);
         }
+
+      // Reduce the refcount to the svc_handler that we have. The
+      // increment to the handler is done in make_svc_handler (). Now
+      // that we dont need the reference to it anymore we can decrement
+      // the refcount whether the connection is successful ot not.
+      svc_handler->decr_refcount ();
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
