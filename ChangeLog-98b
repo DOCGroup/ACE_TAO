@@ -1,24 +1,24 @@
 Mon May 11 15:43:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/WinCE/ce_tests.dsw:
-	* tests/WinCE/Atomic_Op_Test.dsp:
-	* tests/WinCE/Barrier_Test.dsp:
-	* tests/WinCE/Basic_Types_Test.dsp:
-	* tests/WinCE/Map_Manager_Test.dsp: Added/Updated project files.
+        * tests/WinCE/ce_tests.dsw:
+        * tests/WinCE/Atomic_Op_Test.dsp:
+        * tests/WinCE/Barrier_Test.dsp:
+        * tests/WinCE/Basic_Types_Test.dsp:
+        * tests/WinCE/Map_Manager_Test.dsp: Added/Updated project files.
 
-	* tests/Atomic_Op_Test.cpp:
-	* tests/Barrier_Test.cpp:
-	* tests/Basic_Types_Test.cpp: Made them CE friendly.
-	
-	* ace/config-WinCE.h: Only define ACE_LACKS_INLINE_FUNCTIONS when
-	  building debug version of ACE for SH series CPU.
+        * tests/Atomic_Op_Test.cpp:
+        * tests/Barrier_Test.cpp:
+        * tests/Basic_Types_Test.cpp: Made them CE friendly.
 
-	* WindozeCE/WindozeCEDlg.cpp: Updated the initial message after the
-	  display window but before ACE console progrm started.
-	  
+        * ace/config-WinCE.h: Only define ACE_LACKS_INLINE_FUNCTIONS when
+          building debug version of ACE for SH series CPU.
+
+        * WindozeCE/WindozeCEDlg.cpp: Updated the initial message after the
+          display window but before ACE console progrm started.
+
 Mon May 11 17:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* ace/ace_dll.dsp
+        * ace/ace_dll.dsp
           orbsvcs/orbsvcs/RtecScheduler.idl
           orbsvcs/orbsvcs/orbsvcs.dsp
           orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp,h}
@@ -27,38 +27,38 @@ Mon May 11 17:00:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
           orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp,h}
 
           Integrated strategized scheduler with off-line scheduling
-	  interface in Config_Scheduler.{cpp,h}.  To use the
-	  strategized scheduler, define the following symbols
-	  in ace/config.h (you can substitute RMS, etc for MUF,
-	  and can choose a different value for the minimum critical
-	  priority - more on this in the release notes, once the
-	  dynamic portion is integrated):
+          interface in Config_Scheduler.{cpp,h}.  To use the
+          strategized scheduler, define the following symbols
+          in ace/config.h (you can substitute RMS, etc for MUF,
+          and can choose a different value for the minimum critical
+          priority - more on this in the release notes, once the
+          dynamic portion is integrated):
 
           #define TAO_USES_STRATEGY_SCHEDULER
           #define TAO_USES_MUF_SCHEDULING
           #define TAO_MIN_CRITICAL_PRIORITY 0
 
-	
+
 Mon May 11 15:43:01 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.{i,cpp}: Moved CE's impelmentation of ACE_OS::fprintf to
-	  cpp file.
+        * ace/OS.{i,cpp}: Moved CE's impelmentation of ACE_OS::fprintf to
+          cpp file.
 
 Mon May 11 15:15:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Thread_Manager.h: 
-	  Removed bogus ACE_INLINE macros in class declaration, they were
-	  making the SGI compiler *very* unhappy.
+        * ace/Thread_Manager.h:
+          Removed bogus ACE_INLINE macros in class declaration, they were
+          making the SGI compiler *very* unhappy.
 
 Mon May 11 15:11:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (ctime_r): Renamed the fmtstr to
- 	  ACE_OS_CTIME_R_FMTSTR for we may need to use similar scheme to
- 	  fix other bugs in the future.
+        * ace/OS.cpp (ctime_r): Renamed the fmtstr to
+          ACE_OS_CTIME_R_FMTSTR for we may need to use similar scheme to
+          fix other bugs in the future.
 
 Mon May 11 14:50:47 CDT 1998  Everett Anderson  <eea1@cs.wustl.edu>
 
-	* ace/Name_Proxy.cpp: Changed one last recv to recv_n.
+        * ace/Name_Proxy.cpp: Changed one last recv to recv_n.
 
 Mon May 11 13:14:22 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -97,6 +97,10 @@ Mon May 11 12:27:05 1998  David L. Levine  <levine@cs.wustl.edu>
           use GNU ar386.
 
         * ace/gethrtime.cpp: added some comments about GHS asm support.
+
+        * java/netsvcs/{Logger,Time}/Makefile,
+          java/tests/netsvcs/Logger/Makefile:
+          replaced WRAPPER_ROOT with ACE_ROOT.
 
 Mon May 11 05:14:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 

@@ -1,18 +1,18 @@
 Mon May 11 18:11:03 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/README: 
-	* tests/Param_Test/driver.cpp: 
-	* tests/Param_Test/options.cpp: 
-	* tests/Param_Test/options.h: 
-	* tests/Param_Test/param_test.idl: 
-	* tests/Param_Test/param_test_i.cpp: 
-	* tests/Param_Test/param_test_i.h: 
-	* tests/Param_Test/tests.cpp: 
-	* tests/Param_Test/tests.h: 
-	  Added many tests including bounded sequences of different types,
-	  sequences of Any, Typecode and others. We know that some of this
-	  tests still do not work. Thanks to Rob E. Thornton
-	  <ret1@cec.wustl.edu> for his collaboration on this.
+        * tests/Param_Test/README:
+        * tests/Param_Test/driver.cpp:
+        * tests/Param_Test/options.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/param_test.idl:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/param_test_i.h:
+        * tests/Param_Test/tests.cpp:
+        * tests/Param_Test/tests.h:
+          Added many tests including bounded sequences of different types,
+          sequences of Any, Typecode and others. We know that some of this
+          tests still do not work. Thanks to Rob E. Thornton
+          <ret1@cec.wustl.edu> for his collaboration on this.
 
 Mon May 11 07:57:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -27,6 +27,11 @@ Mon May 11 07:57:47 1998  David L. Levine  <levine@cs.wustl.edu>
           tests/Cubit/TAO/{DII,MT}_Cubit/Makefile,
           tests/POA/Generic_Servant/Makefile, tests/Param_Test/Makefile,
           tests/Thruput/CORBAplus/Makefile: removed Log from clean target.
+
+        * TAO/tests/Cubit/CORBAplus/MT_Cubit/client/Makefile,
+          TAO/tests/Demux_Test/CodeGen/Makefile,
+          TAO/tests/Thruput/COOL/Makefile:
+          replaced WRAPPER_ROOT with ACE_ROOT.
 
 Sat May 09 12:01:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
