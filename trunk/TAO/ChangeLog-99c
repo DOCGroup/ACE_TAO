@@ -1,7 +1,7 @@
 Thu Apr 15 15:40:53 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * all orbscvs/tests/AVStreams Makefiles: added BIN2, LIB2,
-          and SHLIB2 support for make realclean.
+          and SHLIB2 support, for make realclean.
 
         * orbsvcs/tests/AVStreams/server_discovery/Makefile:
           added Video_Discovery.idl to make realclean target.
