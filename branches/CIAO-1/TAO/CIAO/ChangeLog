@@ -1,3 +1,19 @@
+Sun Dec 22 23:12:49 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Display/RateGen/RateGen.idl:
+	* examples/handcrafted/Display/GPS/GPS.idl:
+	* examples/handcrafted/Display/NavDisplay/NavDisplay.idl:
+	* examples/handcrafted/Display/HUDisplay.idl:
+	* examples/handcrafted/Display/Display.mpc: Added more files for
+	  this multi-component example.
+
+	The followings should go to the ChangeLog under $(ACE_ROOT)
+
+	* bin/MakeProjectCreator/configs/ciao_client.mpc:
+	* bin/MakeProjectCreator/configs/ciao_component.mpc:
+	* bin/MakeProjectCreator/configs/ciao_server.mpc: Added libpaths
+	  defintions.
+
 Sat Dec 21 15:09:55 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/Simple_Component_Server/Simple_Component_Server.dsp:
