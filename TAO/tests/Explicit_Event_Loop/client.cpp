@@ -33,53 +33,72 @@ main (int argc, char *argv[])
   ACE_TRY 
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                            argv,
+                                            "",
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      // Check arguments
+      // Check arguments.
       if  (argc != 2) 
         {
-          cerr << "Usage: client IOR_string" << endl;
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Usage: client IOR_string\n"),
+                            1);
         }
 
-      // Destringify argv[1]
-      CORBA::Object_var obj = orb->string_to_object (argv[1]);
+      // Destringify argv[1].
+      CORBA::Object_var obj = orb->string_to_object (argv[1],
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if  (CORBA::is_nil (obj.in ())) 
         {
-          cerr << "Nil Time reference" << endl;
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Nil Time reference\n"),
+                            1);
         }
 
-      // Narrow
-      Time_var tm = Time::_narrow (obj.in ());
+      // Narrow.
+      Time_var tm = Time::_narrow (obj.in (),
+                                   ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if  (CORBA::is_nil (tm.in ())) 
         {
-          cerr << "Argument is not a Time reference" << endl;
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Argument is not a Time reference\n"),
+                            1);
         }
 
-      // Get time
+      // Get time.
       TimeOfDay tod = tm->get_gmt (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      cout << "Time in Greenwich is "
-           << setw (2) << setfill ('0') << tod.hour << ":"
-           << setw (2) << setfill ('0') << tod.minute << ":"
-           << setw (2) << setfill ('0') << tod.second << endl;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s%s%d:%s%d:%d\n",
+                  "Time in Greenwich is ",
+                  tod.hour < 10 ? "0" : "",
+                  tod.hour,
+                  tod.minute < 10 ? "0" : "",
+                  tod.minute,
+                  tod.second));
     }
 
   ACE_CATCHANY 
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "A CORBA exception occured");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+                           "client: a CORBA exception occured");
       return 1;
     }
   ACE_CATCHALL 
     {
-      cerr << "An unknown exception was caught" << endl;
-      return 1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "client: an unknown exception was caught\n"),
+                        1);
     }
   ACE_ENDTRY;  
   
-  ACE_CHECK_RETURN(-1);
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
