@@ -1,3 +1,7 @@
+Fri Oct 1 08:23:36 1999  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* ace/ATM_Connector.{h,i}: Added add_leaf method and functionality.
+
 Thu Sep 30 16:55:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Task_Test.cpp (main): Added a short example illustrating
