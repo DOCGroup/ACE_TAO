@@ -19,6 +19,9 @@ IDLFILES = \
 	$(IDLDIR)\LB_ORT.idl
 
 OBJFILES = \
+	$(OBJDIR)\CosLoadBalancingC.obj \
+	$(OBJDIR)\CosLoadBalancingS.obj \
+	$(OBJDIR)\LB_ORTC.obj \
 	$(OBJDIR)\LB_LeastLoaded.obj \
 	$(OBJDIR)\LB_LoadAlert.obj \
 	$(OBJDIR)\LB_LoadAlertInfo.obj \
@@ -38,10 +41,7 @@ OBJFILES = \
 	$(OBJDIR)\LB_ObjectReferenceFactory.obj \
 	$(OBJDIR)\LB_ORBInitializer.obj \
 	$(OBJDIR)\LB_Component.obj \
-	$(OBJDIR)\LB_CPU_Monitor.obj \
-	$(OBJDIR)\CosLoadBalancingC.obj \
-	$(OBJDIR)\CosLoadBalancingS.obj \
-	$(OBJDIR)\LB_ORTC.obj
+	$(OBJDIR)\LB_CPU_Monitor.obj
 
 RESOURCE = $(OBJDIR)\LoadBalancing.res
 
