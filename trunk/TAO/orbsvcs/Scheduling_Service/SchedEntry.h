@@ -18,6 +18,24 @@
 //
 // ============================================================================
 
+#if ! defined (SCHEDENTRY_H)
+#define SCHEDENTRY_H
+
+#include "orbsvcs/RtecSchedulerC.h"
+#include "orbsvcs/Event_Service_Constants.h"
+
+
+//////////////////////
+// Helper Functions //
+//////////////////////
+
+// TBD - move this to the ACE class
+// Euclid's greatest common divisor algorithm
+u_long gcd (u_long x, u_long y);
+
+// TBD - move this to the ACE class
+// calculate the minimum frame size
+u_long minimum_frame_size (u_long period1, u_long period2);
 
 // forward declaration of classes
 class Task_Entry;
@@ -31,6 +49,18 @@ class Dispatch_Proxy_Iterator;
 class Task_Entry
 {
 public:
+
+  typedef RtecScheduler::handle_t handle_t;
+  typedef RtecScheduler::Dependency_Info Dependency_Info;
+  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
+  typedef RtecScheduler::OS_Priority OS_Priority;
+  typedef RtecScheduler::Sub_Priority Sub_Priority;
+  typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Time Time;
+  typedef RtecScheduler::Period Period;
+  typedef RtecScheduler::Info_Type Info_Type;
+  typedef RtecScheduler::Dependency_Type Dependency_Type;
+
   // info for DFS traversal, topological sort of call graph
   enum DFS_Status {NOT_VISITED, VISITED, FINISHED};
 
@@ -46,27 +76,30 @@ public:
   int merge_dispatches (
     ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries);
 
-  // get pointer to underlying RT_Info
-  RT_Info *rt_info ();
+  // get, set pointer to underlying RT_Info
+  RT_Info *rt_info () const;
+  void rt_info (RT_Info *info);
+
 
   // get effective period for the task entry
-  Period effective_period ();
+  Period effective_period () const;
+  void effective_period (Period p);
 
   // set/get time when node was discovered in DFS traversal
   void discovered (long l);
-  long discovered ();
+  long discovered () const;
 
   // set/get time when node was finished in DFS traversal
   void finished (long l);
-  long finished ();
+  long finished () const;
  
   // set/get DFS traversal status of node
   void dfs_status (DFS_Status ds);
-  DFS_Status dfs_status ();
+  DFS_Status dfs_status () const;
 
   // set/get flag indicating whether node is a thread delineator
   void is_thread_delineator (int i);
-  int is_thread_delineator ();
+  int is_thread_delineator () const;
 
   // get set of links to Task Entries which this entry calls
   ACE_Unbounded_Set <Task_Entry_Link *> & calls ();
@@ -74,11 +107,14 @@ public:
   // get set of links to Task Entries which call this entry
   ACE_Unbounded_Set <Task_Entry_Link *> & callers ();
 
+  // get set of arrivals in the effective period
+  ACE_Ordered_MultiSet<Dispatch_Entry_Link> &dispatches ();
+      
   // get the type of Info the entry wraps
-  Info_Type info_type ();
+  Info_Type info_type () const;
 
   // effective execution time for the task entry
-  u_long effective_execution_time ();
+  u_long effective_execution_time () const;
 
 private:
 
@@ -116,7 +152,9 @@ private:
   // in each successive sub-frame.  Returns 1 if the set was reframed
   // to a new period, 0 if the set was not changed (the new period
   // was not a multiple of the old one), or -1 if an error occurred.
-  static int reframe (ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
+  static int reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+                      Task_Entry &owner, 
+                      ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
                       u_long &set_period, u_long new_period);
 
   // this static method is used to merge an existing dispatch set,
@@ -125,7 +163,9 @@ private:
   // given "into" set, without affecting the "from set". Returns 1 if
   // the source set was correctly merged into the destination set,
   // 0 if nothing happened, and -1 if an error occurred.
-  static int merge_frames (ACE_Ordered_MultiSet <Dispatch_Entry_Link> &dest,
+  static int merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
+                           Task_Entry &owner, 
+                           ACE_Ordered_MultiSet <Dispatch_Entry_Link> &dest,
                            ACE_Ordered_MultiSet <Dispatch_Entry_Link> &src,
                            u_long &dest_period,
                            u_long src_period,
@@ -136,9 +176,9 @@ private:
   RT_Info *rt_info_;
 
   // effective period for the task entry
-  Period effective_period_;
+  u_long effective_period_;
 
-  // queue of arrivals in the effective period
+  // set of arrivals in the effective period
   ACE_Ordered_MultiSet<Dispatch_Entry_Link> dispatches_;
       
   // count of the arrivals in the effective period
@@ -163,6 +203,17 @@ class Task_Entry_Link
 {
 public:
 
+  typedef RtecScheduler::handle_t handle_t;
+  typedef RtecScheduler::Dependency_Info Dependency_Info;
+  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
+  typedef RtecScheduler::OS_Priority OS_Priority;
+  typedef RtecScheduler::Sub_Priority Sub_Priority;
+  typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Time Time;
+  typedef RtecScheduler::Period Period;
+  typedef RtecScheduler::Info_Type Info_Type;
+  typedef RtecScheduler::Dependency_Type Dependency_Type;
+
   // ctor
   Task_Entry_Link (Task_Entry &caller,
                    Task_Entry &called,
@@ -170,16 +221,16 @@ public:
                    Dependency_Type dependency_type);
 
   // accessor: number of calls
-CORBA::Long number_of_calls () const;
+  CORBA::Long number_of_calls () const;
 
   // accessor: dependency type
-Dependency_Type dependency_type () const;
+  Dependency_Type dependency_type () const;
 
-// accessor: calling task entry
+  // accessor: calling task entry
   Task_Entry &caller () const;
   
-// accessor: called task entry
-Task_Entry &called () const;
+  // accessor: called task entry
+  Task_Entry &called () const;
 
 private:
 
@@ -192,8 +243,8 @@ private:
   // the called operation
   Task_Entry &called_;
 
-// the type of call dependency
-Dependency_Type dependency_type_;
+  // the type of call dependency
+  Dependency_Type dependency_type_;
 };
 
 
@@ -207,7 +258,18 @@ class Dispatch_Entry
 //
 public:
 
-typedef u_long Dispatch_Id;
+  typedef RtecScheduler::handle_t handle_t;
+  typedef RtecScheduler::Dependency_Info Dependency_Info;
+  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
+  typedef RtecScheduler::OS_Priority OS_Priority;
+  typedef RtecScheduler::Sub_Priority Sub_Priority;
+  typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Time Time;
+  typedef RtecScheduler::Period Period;
+  typedef RtecScheduler::Info_Type Info_Type;
+  typedef RtecScheduler::Dependency_Type Dependency_Type;
+
+  typedef u_long Dispatch_Id;
 
   // ctor
   Dispatch_Entry (Time arrival,
@@ -219,34 +281,34 @@ typedef u_long Dispatch_Id;
   Dispatch_Entry (const Dispatch_Entry &d);
 
   // id accessor
-  Dispatch_Id dispatch_id ();
+  Dispatch_Id dispatch_id () const;
 
   // arrival accessor
-  Time arrival ();
+  Time arrival () const;
 
   // deadline accessor
-  Time deadline ();
+  Time deadline () const;
 
   // scheduler priority accessor and mutator
-  Preemption_Priority priority ();
+  Preemption_Priority priority () const;
   void priority (Preemption_Priority p);
 
   // scheduler priority accessor and mutator
-  OS_Priority Dispatch_Entry::OS_priority ();
+  OS_Priority Dispatch_Entry::OS_priority () const;
   void Dispatch_Entry::OS_priority (OS_Priority p);
 
   // dynamic subpriority accessor and mutator
-  Sub_Priority dynamic_subpriority ();
+  Sub_Priority dynamic_subpriority () const;
   void dynamic_subpriority (Sub_Priority p);
 
   // static subpriority accessor and mutator
-  Sub_Priority static_subpriority ();
+  Sub_Priority static_subpriority () const;
   void static_subpriority (Sub_Priority p);
 
   // task entry accessor
-  Task_Entry &task_entry ();
+  Task_Entry &task_entry () const;
 
-  // GT comparator
+  // LT comparator
   //  TBD - make this a global comparison operator
   //  instead of a class member function
   int operator < (const Dispatch_Entry &d) const;
@@ -294,6 +356,19 @@ class Dispatch_Entry_Link
 //    Light-weight sortable "smart pointer" to a dispatch entry.
 //
 {
+public:
+
+  typedef RtecScheduler::handle_t handle_t;
+  typedef RtecScheduler::Dependency_Info Dependency_Info;
+  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
+  typedef RtecScheduler::OS_Priority OS_Priority;
+  typedef RtecScheduler::Sub_Priority Sub_Priority;
+  typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Time Time;
+  typedef RtecScheduler::Period Period;
+  typedef RtecScheduler::Info_Type Info_Type;
+  typedef RtecScheduler::Dependency_Type Dependency_Type;
+
   Dispatch_Entry_Link (Dispatch_Entry &d);
     // ctor
 
@@ -303,20 +378,17 @@ class Dispatch_Entry_Link
   ~Dispatch_Entry_Link ();
     // dtor
 
-  void operator = (const Dispatch_Entry_Link &d);
-    // assignment operator
-
   // TBD - make this a global comparison operator
   // instead of a class member function
   int operator < (const Dispatch_Entry_Link &d) const;
-    // GT comparator
+    // LT comparator
 
   Dispatch_Entry &dispatch_entry () const;
     // accessor for reference to dispatch entry
 
-  private:
+private:
 
-    Dispatch_Entry &dispatch_entry_;
+  Dispatch_Entry &dispatch_entry_;
 };
 
 class Dispatch_Proxy_Iterator
@@ -332,6 +404,17 @@ class Dispatch_Proxy_Iterator
 {
 public:
 
+  typedef RtecScheduler::handle_t handle_t;
+  typedef RtecScheduler::Dependency_Info Dependency_Info;
+  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
+  typedef RtecScheduler::OS_Priority OS_Priority;
+  typedef RtecScheduler::Sub_Priority Sub_Priority;
+  typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Time Time;
+  typedef RtecScheduler::Period Period;
+  typedef RtecScheduler::Info_Type Info_Type;
+  typedef RtecScheduler::Dependency_Type Dependency_Type;
+
   Dispatch_Proxy_Iterator (ACE_Ordered_MultiSet <Dispatch_Entry_Link> set,
                            u_long actual_frame_size,
                            u_long virtual_frame_size,
@@ -343,7 +426,7 @@ public:
   // iterator interface //
   ////////////////////////
 
-  int done ();
+  int done () const;
     // returns 0 if there are more entries to see, 1 if not
 
   int first (u_int sub_frame = 0);
@@ -351,7 +434,7 @@ public:
     // sub-frame, returns 1 if it could position the iterator
     // correctly, 0 if not, and -1 if an error occurred.
 
-  in last ();
+  int last ();
     // positions the iterator at the last entry of the total
     // frame, returns 1 if it could position the iterator
     // correctly, 0 if not, and -1 if an error occurred.
@@ -370,13 +453,13 @@ public:
   // proxy interface //
   /////////////////////
 
-  u_long arrival ();
+  u_long arrival () const;
     // returns the adjusted arrival time of the virtual entry
 
-  u_long deadline ();
+  u_long deadline () const;
     // returns the adjusted deadline time of the virtual entry
 
-  Preemption_Priority priority ();
+  Preemption_Priority priority () const;
     // returns the scheduler priority of the virtual entry
                  
 
@@ -407,38 +490,90 @@ class TimeLine_Entry
 {
 public:
 
-    // time slice constructor 
-    TimeLine_Entry (Dispatch_Entry &dispatch_entry,
-                    u_long start,
-                    u_long stop,
-                    TimeLine_Entry *next = 0,
-                    TimeLine_Entry *prev = 0);
+  typedef RtecScheduler::handle_t handle_t;
+  typedef RtecScheduler::Dependency_Info Dependency_Info;
+  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
+  typedef RtecScheduler::OS_Priority OS_Priority;
+  typedef RtecScheduler::Sub_Priority Sub_Priority;
+  typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Time Time;
+  typedef RtecScheduler::Period Period;
+  typedef RtecScheduler::Info_Type Info_Type;
+  typedef RtecScheduler::Dependency_Type Dependency_Type;
 
-    // dispatch entry accessor
-    Dispatch_Entry &dispatch_entry ();
+  // time slice constructor 
+  TimeLine_Entry (Dispatch_Entry &dispatch_entry,
+                  u_long start,
+                  u_long stop,
+                  TimeLine_Entry *next = 0,
+                  TimeLine_Entry *prev = 0);
 
-    // accessors for time slice start and stop times (100 nanoseconds)
-    u_long start ();  
-    u_long stop (); 
+  // dispatch entry accessor
+  Dispatch_Entry &dispatch_entry () const;
 
-    // accessor and mutator for next and prev slices for this dispatch
-    TimeLine_Entry *next (void);
-    void next (TimeLine_Entry *);
-    TimeLine_Entry *prev (void);
-    void prev (TimeLine_Entry *);
+  // accessors for time slice start and stop times (100 nanoseconds)
+  u_long start () const;  
+  u_long stop () const; 
+
+  // accessor and mutator for next and prev slices for this dispatch
+  TimeLine_Entry *next (void) const;
+  void next (TimeLine_Entry *);
+  TimeLine_Entry *prev (void) const;
+  void prev (TimeLine_Entry *);
+
+  int operator < (const TimeLine_Entry&) const;
 
 private:
 
-    // the dispatch entry to which the time slice corresponds
-    Dispatch_Entry &dispatch_entry_;
+  // the dispatch entry to which the time slice corresponds
+  Dispatch_Entry &dispatch_entry_;
 
-    // priority time slice start and stop times (100 nanoseconds)
-    u_long start_;  
-    u_long stop_; 
+  // priority time slice start and stop times (100 nanoseconds)
+  u_long start_;  
+  u_long stop_; 
 
-    // next and previous priority time slices for this dispatch entry
-    TimeLine_Entry *next_;
-    TimeLine_Entry *prev_;
+  // next and previous priority time slices for this dispatch entry
+  TimeLine_Entry *next_;
+  TimeLine_Entry *prev_;
 
 };
 
+class TimeLine_Entry_Link
+{
+public:
+
+  typedef RtecScheduler::handle_t handle_t;
+  typedef RtecScheduler::Dependency_Info Dependency_Info;
+  typedef RtecScheduler::Preemption_Priority Preemption_Priority;
+  typedef RtecScheduler::OS_Priority OS_Priority;
+  typedef RtecScheduler::Sub_Priority Sub_Priority;
+  typedef RtecScheduler::RT_Info RT_Info;
+  typedef RtecScheduler::Time Time;
+  typedef RtecScheduler::Period Period;
+  typedef RtecScheduler::Info_Type Info_Type;
+  typedef RtecScheduler::Dependency_Type Dependency_Type;
+
+  TimeLine_Entry_Link  (TimeLine_Entry &t);
+  // ctor
+
+  TimeLine_Entry &entry () const;
+  // accessor for the underlying entry
+ 
+  int operator < (const TimeLine_Entry_Link&) const;
+  // comparison operator
+
+private:
+
+  TimeLine_Entry &entry_;
+  // the underlying entry
+
+};
+
+
+#if defined (__ACE_INLINE__)
+#include "SchedEntry.i"
+#endif /* __ACE_INLINE__ */
+
+#endif /* SCHEDENTRY_H */
+
+// EOF

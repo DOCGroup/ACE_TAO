@@ -22,7 +22,7 @@
 // Class ACE_Scheduler //
 /////////////////////////
 
-ACE_INLINE Preemption_Priority
+ACE_INLINE ACE_Scheduler::Preemption_Priority
 ACE_Scheduler::minimum_priority_queue () const 
 { 
   return minimum_priority_queue_;

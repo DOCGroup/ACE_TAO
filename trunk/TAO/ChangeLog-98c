@@ -1,3 +1,13 @@
+Mon Feb  9 20:00:55 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/Scheduling_Service/SchedEntry.{cpp,h,i}
+	  orbsvcs/Scheduling_Service/DynSched.{cpp,h,i}
+	  orbsvcs/Scheduling_Service/Strategy_Scheduler.{cpp,h} :
+
+          finished timeline coding, got a clean source compile
+          (third cut - still a work in progress)
+
+
 Mon Feb  9 12:59:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/RtecEventComm.idl: 

@@ -24,16 +24,30 @@
 
 // return a pointer to the underlying RT_Info
 ACE_INLINE Task_Entry::RT_Info *
-Task_Entry::rt_info ()
+Task_Entry::rt_info () const
 {
   return rt_info_;
 }
 
-// effective period for the task entry
+// set the underlying RT_Info pointer
+ACE_INLINE void
+Task_Entry::rt_info (Task_Entry::RT_Info *info)
+{
+  rt_info_ = info;
+}
+
+// get effective period for the task entry
 ACE_INLINE Task_Entry::Period
-Task_Entry::effective_period ()
+Task_Entry::effective_period () const
 {
   return effective_period_;
+}
+
+// set effective period for the task entry
+ACE_INLINE void
+Task_Entry::effective_period (Task_Entry::Period p)
+{
+  effective_period_ = p;
 }
 
 ACE_INLINE void 
@@ -44,7 +58,7 @@ Task_Entry::discovered (long l)
 }
 
 ACE_INLINE long 
-Task_Entry::discovered ()
+Task_Entry::discovered () const
 {
   return discovered_;
 }
@@ -57,13 +71,13 @@ Task_Entry::finished (long l)
 }
 
 ACE_INLINE long 
-Task_Entry::finished ()
+Task_Entry::finished () const
 {
   return finished_;
 }
 
 ACE_INLINE Task_Entry::DFS_Status 
-Task_Entry::dfs_status ()
+Task_Entry::dfs_status () const
 {
   return dfs_status_;
 }
@@ -81,33 +95,41 @@ Task_Entry::is_thread_delineator (int i)
 }
 
 ACE_INLINE int
-Task_Entry::is_thread_delineator ()
+Task_Entry::is_thread_delineator () const
 {
   return is_thread_delineator_;
 }
 
 // access set of Task Entries on which this entry depends
-ACE_INLINE LINK_SET & 
+ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> & 
 Task_Entry::calls ()
 {
   return calls_;
 }
 
 // access set of Task Entries which depend on this entry
-ACE_INLINE LINK_SET & 
+ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> & 
 Task_Entry::callers ()
 {
   return callers_;
 }
 
+// get set of arrivals in the effective period
+ACE_Ordered_MultiSet<Dispatch_Entry_Link> &
+Task_Entry::dispatches ()
+{
+  return dispatches_;
+}
+      
+
 ACE_INLINE Task_Entry::Info_Type
-Task_Entry::info_type ()
+Task_Entry::info_type () const
 {
   return rt_info_->info_type;
 }
 
 ACE_INLINE u_long
-Task_Entry::effective_execution_time ()
+Task_Entry::effective_execution_time () const
 {
   return (rt_info_->info_type == RtecScheduler::OPERATION)
          ? rt_info_->worst_case_execution_time * arrival_count_
@@ -152,13 +174,13 @@ Task_Entry_Link::called () const
 //////////////////////////
 
 ACE_INLINE u_long
-Dispatch_Entry::dispatch_id ()
+Dispatch_Entry::dispatch_id () const
 {
   return dispatch_id_;
 }
 
 ACE_INLINE Dispatch_Entry::Preemption_Priority
-Dispatch_Entry::priority ()
+Dispatch_Entry::priority () const
 {
   return priority_;
 }
@@ -170,7 +192,7 @@ Dispatch_Entry::priority (Dispatch_Entry::Preemption_Priority p)
 }
 
 ACE_INLINE Dispatch_Entry::OS_Priority
-Dispatch_Entry::OS_priority ()
+Dispatch_Entry::OS_priority () const
 {
   return OS_priority_;
 }
@@ -182,7 +204,7 @@ Dispatch_Entry::OS_priority (Dispatch_Entry::OS_Priority p)
 }
 
 ACE_INLINE Dispatch_Entry::Sub_Priority
-Dispatch_Entry::dynamic_subpriority ()
+Dispatch_Entry::dynamic_subpriority () const
 {
   return dynamic_subpriority_;
 }
@@ -194,7 +216,7 @@ Dispatch_Entry::dynamic_subpriority (Dispatch_Entry::Sub_Priority p)
 }
 
 ACE_INLINE Dispatch_Entry::Sub_Priority
-Dispatch_Entry::static_subpriority ()
+Dispatch_Entry::static_subpriority () const
 {
   return static_subpriority_;
 }
@@ -207,25 +229,19 @@ Dispatch_Entry::static_subpriority (Dispatch_Entry::Sub_Priority p)
 
 
 ACE_INLINE Dispatch_Entry::Time 
-Dispatch_Entry::arrival ()
+Dispatch_Entry::arrival () const
 {
   return arrival_;
 }
 
 ACE_INLINE Dispatch_Entry::Time 
-Dispatch_Entry::deadline ()
+Dispatch_Entry::deadline () const
 {
   return deadline_;
 }
 
-ACE_INLINE Dispatch_Entry::Time 
-Dispatch_Entry::execution_time ()
-{
-  return execution_time_;
-}
-
 ACE_INLINE Task_Entry &
-Dispatch_Entry::task_entry ()
+Dispatch_Entry::task_entry () const
 {
   return task_entry_;
 }
@@ -243,16 +259,10 @@ Dispatch_Entry_Link::~Dispatch_Entry_Link ()
 
 Dispatch_Entry_Link::operator < (const Dispatch_Entry_Link &d) const
 {
-  return (this->dispatch_entry_ < d.dispatch_entry_)
+  return (this->dispatch_entry_ < d.dispatch_entry_);
 }
   // GT comparator
 
-ACE_INLINE void 
-Dispatch_Entry_Link::operator = (const Dispatch_Entry_Link &d)
-{
-  dispatch_entry_ = d.dispatch_entry_;
-}
-  // assignment operator
 
 ACE_INLINE Dispatch_Entry &
 Dispatch_Entry_Link::dispatch_entry () const
@@ -267,9 +277,9 @@ Dispatch_Entry_Link::dispatch_entry () const
 ///////////////////////////////////
 
 ACE_INLINE int
-Dispatch_Proxy_Iterator::done ()
+Dispatch_Proxy_Iterator::done () const
 {
-  return iter.done ();
+  return iter_.done ();
 }
   // returns 0 if there are more entries to see, 1 if not
 
@@ -280,7 +290,7 @@ Dispatch_Proxy_Iterator::done ()
 
     // dispatch entry accessor
 ACE_INLINE Dispatch_Entry &
-TimeLine_Entry::dispatch_entry ()
+TimeLine_Entry::dispatch_entry () const
 {
   return dispatch_entry_;
 }
@@ -288,21 +298,21 @@ TimeLine_Entry::dispatch_entry ()
 
 // accessor for time slice start time (100 nanoseconds)
 ACE_INLINE u_long 
-TimeLine_Entry::start ()
+TimeLine_Entry::start () const
 {
   return start_;
 }
 
 // accessor for time slice stop time (100 nanoseconds)
 ACE_INLINE u_long 
-TimeLine_Entry::stop ()
+TimeLine_Entry::stop () const
 {
   return stop_;
 }
 
 // accessor for next slice for this dispatch
 ACE_INLINE TimeLine_Entry *
-TimeLine_Entry::next (void)
+TimeLine_Entry::next (void) const
 {
   return next_;
 }
@@ -316,7 +326,7 @@ TimeLine_Entry::next (TimeLine_Entry *t)
 
 // accessor for previous slice for this dispatch
 ACE_INLINE TimeLine_Entry *
-TimeLine_Entry::prev (void)
+TimeLine_Entry::prev (void) const
 {
   return prev_;
 }
@@ -327,3 +337,38 @@ TimeLine_Entry::prev (TimeLine_Entry *t)
 {
   prev_ = t;
 }
+
+
+ACE_INLINE int 
+TimeLine_Entry::operator < (const TimeLine_Entry &t) const
+{
+  return (start_ < t.start_) ? 1 : 0;
+}
+  // comparison operator
+
+
+///////////////////////////////
+// Class TimeLine_Entry_Link //
+///////////////////////////////
+
+
+ACE_INLINE TimeLine_Entry_Link::TimeLine_Entry_Link  (TimeLine_Entry &t)
+  : entry_ (t)
+{
+}
+  // ctor
+
+ACE_INLINE TimeLine_Entry &
+TimeLine_Entry_Link::entry () const
+{
+  return entry_;
+}
+  // accessor for the underlying entry
+ 
+ACE_INLINE int 
+TimeLine_Entry_Link::operator < (const TimeLine_Entry_Link &l) const
+{
+  return (entry_ < l.entry_) ? 1 : 0;
+}
+  // comparison operator
+
