@@ -1,3 +1,20 @@
+Sun Sep 27 00:02:57 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Table and POA: 
+
+	  - Added no-op destructors to all class. g++ was having problems.
+	  
+	  - Moved the Hash_Map_Manager template specialization to the .i
+ 	    file.  Hopefully, the DU compiler will pick it up.
+
+	  - There was a bug in TAO_POA::encode_sequence_to_string where
+ 	    the order of encoding higher order bits vs the lower order
+	    bits was reversed relative to the decoding routine.
+
+	  - Changed the object id in the SYSTEM_ID case so that it now
+ 	    contains the binary values for the index and the generation
+ 	    count.  This should make the parsing of the id faster.
+
 Sat Sep 26 20:25:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
