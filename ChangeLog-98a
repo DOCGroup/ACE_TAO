@@ -1,3 +1,9 @@
+Wed Jan 28 11:59:41 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (isatty): Added conversion from a Win32 HANDLE to a C
+ 	  file handle. It works correctly now.  Thanks to Chuck R. Gehr
+ 	  <GehrCR@louisville.stortek.com> for noticing the problem.
+
 Tue Jan 27 20:32:07 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Message_Block: Added an accessor to retrieve the reference
