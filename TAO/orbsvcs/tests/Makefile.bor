@@ -19,6 +19,7 @@ DIRS = \
         Miop \
         Notify \
 	Property \
+        Security \
         Simple_Naming \
         Time \
 	Trading \

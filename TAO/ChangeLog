@@ -1,3 +1,17 @@
+Thu Nov  7 06:44:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Makefile.bor:
+          Added Security directory
+
+        * orbsvcs/tests/Security/Makefile.bor:
+          Added new BCB makefle to build subdirectories
+
+        * orbsvcs/tests/Security/Secure_Invocation/Makefile.bor:
+        * orbsvcs/tests/Security/Secure_Invocation/client.bor:
+        * orbsvcs/tests/Security/Secure_Invocation/server.bor:
+          Added these new BCB makefiles. Thanks to Oleg Kraynov <mustafa@gema.ru>
+          for creating these.
+
 Wed Nov  6 11:43:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: Fixed an error
@@ -7,7 +21,7 @@ Wed Nov  6 11:43:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 Wed Nov  6 11:35:01 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1020_Basic_Regression/Server_Task.h: Fixed fuzz
-	  errors.  
+	  errors.
 
 Wed Nov  6 11:32:58 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -27,9 +41,9 @@ Tue Nov 05 17:32:22 2002  Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/FilterAdmin.cpp:
 	* orbsvcs/orbsvcs/Notify/Proxy_T.cpp:
 	* orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
-	
+
 	  Corrected the way IDSequences are populated. Thanks to Yamuna
-	  for helping to debug this. 
+	  for helping to debug this.
 
 Tue Nov 05 12:01:25 2002  Pradeep Gore  <pradeep@oomworks.com>
 
@@ -45,7 +59,7 @@ Tue Nov  5 08:28:23 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Mon Nov  4 19:03:12 CST 2002 Pradeep Gore  <pradeep@oomworks.com>
 
-	* (Removed previous bogus ChangeLog entry).	
+	* (Removed previous bogus ChangeLog entry).
 	* orbsvcs/orbsvcs/CosNotification.bor:
           Thanks to Christopher Kohlhoff <chris@kohlhoff.com>, Johnny
           Willemsen <jwillemsen@remedy.nl>, Irfan, Nanbor and Bala for help in
