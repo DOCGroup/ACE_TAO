@@ -808,6 +808,10 @@ be_union::compute_default_value (void)
       if (total_case_members == ACE_OCTET_MAX+1)
         this->default_value_.computed_ = 0;
       break;
+    case AST_Expression::EV_wchar:
+      if (total_case_members == ACE_WCHAR_MAX+1)
+        this->default_value_.computed_ = 0;
+      break;
     case AST_Expression::EV_bool:
       if (total_case_members == 2)
         this->default_value_.computed_ = 0;
@@ -894,6 +898,9 @@ be_union::compute_default_value (void)
       break;
     case AST_Expression::EV_char:
       this->default_value_.u.char_val = 0;
+      break;
+    case AST_Expression::EV_wchar:
+      this->default_value_.u.wchar_val = 0;
       break;
     case AST_Expression::EV_bool:
       this->default_value_.u.bool_val = 0;

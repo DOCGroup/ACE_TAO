@@ -82,6 +82,7 @@ public:
     union PermittedTypes
     {
       char char_val;
+      ACE_CDR::WChar wchar_val;
       unsigned long bool_val;
       ACE_INT16 short_val;
       ACE_UINT16 ushort_val;
