@@ -1,3 +1,9 @@
+Fri Jun 22 10:27:01 2001  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * html/index.html:
+
+          Add missing directories for Doxygen docs.
+
 Fri Jun 22 00:26:34 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* examples/Log_Msg/test_ostream.cpp (main):
