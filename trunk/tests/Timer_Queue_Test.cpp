@@ -202,9 +202,9 @@ test_performance (ACE_Timer_Queue *tq,
   for (i = max_iterations - 1; i >= 0; i--)
     tq->cancel (timer_ids[i]);
 
-  ACE_ASSERT (tq->is_empty ());
-
   timer.stop ();
+
+  ACE_ASSERT (tq->is_empty ());
 
   timer.elapsed_time (et);
 
@@ -235,6 +235,14 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.stop ();
 
+  if (!tq->is_empty ())
+  {
+    ACE_OS::sleep (ACE_Time_Value (1));
+    tq->expire ();
+  }
+
+  ACE_ASSERT (tq->is_empty ());
+
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG, 
@@ -264,6 +272,12 @@ test_performance (ACE_Timer_Queue *tq,
 
   for (i = max_iterations - 1; i >= 0; i--)
     tq->cancel (timer_ids[i]);
+
+  if (!tq->is_empty ())
+  {
+    ACE_OS::sleep (ACE_Time_Value (1));
+    tq->expire ();
+  }
 
   ACE_ASSERT (tq->is_empty ());
 
@@ -298,9 +312,9 @@ test_performance (ACE_Timer_Queue *tq,
       ACE_ASSERT (timer_ids[i] != -1);
     }
 
-  ACE_ASSERT (tq->is_empty () == 0);
-
   timer.stop ();
+
+  ACE_ASSERT (tq->is_empty () == 0);
 
   timer.elapsed_time (et);
 
@@ -316,11 +330,15 @@ test_performance (ACE_Timer_Queue *tq,
 
   // Test the amount of time required to cancel all the timers.
 
-  // Make sure everything is ready to be expired
-
   timer.start ();
 
   tq->expire ();
+
+  if (!tq->is_empty ())
+  {
+    ACE_OS::sleep (ACE_Time_Value (1));
+    tq->expire ();
+  }
 
   ACE_ASSERT (tq->is_empty ());
 
@@ -435,8 +453,6 @@ main (int argc, char *argv[])
                                     "ACE_Timer_Heap (preallocated)",
                                     tq_list),
                   -1);
-  
-  
   
   // Create the Timer ID array
 
