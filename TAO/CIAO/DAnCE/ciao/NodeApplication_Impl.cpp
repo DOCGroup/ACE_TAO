@@ -2,6 +2,7 @@
 
 #include "NodeApplication_Impl.h"
 #include "ace/SString.h"
+#include "Container_Impl.h"
 
 #if !defined (__ACE_INLINE__)
 # include "NodeApplication_Impl.inl"
@@ -9,7 +10,35 @@
 
 CIAO::NodeApplication_Impl::~NodeApplication_Impl (void)
 {
-  delete this->container_;
+}
+
+CORBA::Long
+CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  //@@TODO initialize this NodeApplication properties
+  return 0;
+}
+
+CORBA::Long
+CIAO::NodeApplication_Impl::create_all_containers (
+  const ::Deployment::NodeImplementationInfo & node_impl_info
+  ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  // Create all the containers here based on the input node_impl_info.
+  const CORBA::ULong len = node_impl_info.length ();
+  for (CORBA::ULong i = 0; i < len; ++i)
+  {
+    // The factory method <create_container> will intialize the container
+    // servant with properties, so we don't need to call <init> on the
+    // container object reference.
+    // Also, the factory method will add the container object reference
+    // to the set for us.
+    ::Deployment::Container_var cref =
+      this->create_container (node_impl_info[i].container_config);
+  }
+  return 0;
 }
 
 void
@@ -42,16 +71,10 @@ CIAO::NodeApplication_Impl::finishLaunch (
           switch (providedReference[i].kind)
             {
             case Deployment::SimplexReceptacle:
+            case Deployment::MultiplexReceptacle:
               comp->connect (providedReference[i].portName.in (),
                              providedReference[i].endpoint.in ()
                              ACE_ENV_ARG_PARAMETER);
-              ACE_TRY_CHECK;
-              break;
-
-            case Deployment::MultiplexReceptacle:
-              comp->connect(providedReference[i].portName.in (),
-                            providedReference[i].endpoint.in ()
-                            ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               break;
 
@@ -66,9 +89,9 @@ CIAO::NodeApplication_Impl::finishLaunch (
                   ACE_THROW (Deployment::InvalidConnection ());
                 }
 
-              comp->connect_consumer(providedReference[i].portName.in (),
-                                     consumer.in ()
-                                     ACE_ENV_ARG_PARAMETER);
+              comp->connect_consumer (providedReference[i].portName.in (),
+                                      consumer.in ()
+                                      ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
               break;
 
@@ -95,6 +118,8 @@ CIAO::NodeApplication_Impl::finishLaunch (
           this->start (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+
+      ACE_DEBUG ((LM_DEBUG, "Launching NodeApplication finished successfully.\n\n"));
     }
   ACE_CATCHANY
     {
@@ -127,39 +152,23 @@ CIAO::NodeApplication_Impl::start (ACE_ENV_SINGLE_ARG_DECL)
 
 void
 CIAO::NodeApplication_Impl::start_i (Funct_Ptr functor
-         ACE_ENV_ARG_DECL)
+                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::StartError))
 {
-  const Component_Iterator end (this->component_map_.end ());
+  Component_Iterator end = this->component_map_.end ();
   for (Component_Iterator iter (this->component_map_.begin ());
        iter != end;
        ++iter)
   {
-    //@@ I don't know what if Components::InvalidConfiguration
-    //   is thrown from here, so it's ignored for now.  --Tao
     (((*iter).int_id_)->*functor) (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK;
   }
 }
 
-Deployment::Properties *
-CIAO::NodeApplication_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  Deployment::Properties * tmp;
-
-  ACE_NEW_THROW_EX (tmp,
-                    Deployment::Properties (this->properties_),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
-
-  return tmp;
-}
-
 Deployment::ComponentInfos *
 CIAO::NodeApplication_Impl::install (
-    const ::Deployment::ImplementationInfos & impl_infos
+    const ::Deployment::NodeImplementationInfo & node_impl_info
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Deployment::UnknownImplId,
@@ -169,373 +178,186 @@ CIAO::NodeApplication_Impl::install (
 {
   Deployment::ComponentInfos_var retv;
   ACE_TRY
-   {
-     Deployment::ComponentInfos * tmp;
-     ACE_NEW_THROW_EX (tmp,
-                       Deployment::ComponentInfos,
-                       CORBA::NO_MEMORY ());
-     ACE_TRY_CHECK;
+    {
+      ACE_NEW_THROW_EX (retv,
+                        Deployment::ComponentInfos,
+                        CORBA::NO_MEMORY ());
+      ACE_TRY_CHECK;
 
-     retv = tmp;
+      retv->length (0);
 
-     const CORBA::ULong len = impl_infos.length ();
+      // Call create_all_containers to create all the necessary containers..
+      this->create_all_containers (node_impl_info);
 
-     retv->length (len);
-
-     // @@ (OO) There is no need to declare these variables outside of
-     //         the loop.  Some folks doing so is an optimization but
-     //         doing so generally defeats some compiler optimizations.
-     //         Please move these declaration within the loop.
-     Components::CCMHome_var home;
-     Components::CCMObject_var comp;
-
-     for (CORBA::ULong i = 0; i < len; ++i)
-       {
-         home = this->install_home (impl_infos[i]
-                                    ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
-
-         Components::KeylessCCMHome_var kh =
-           Components::KeylessCCMHome::_narrow (home.in ()
-                                                ACE_ENV_ARG_PARAMETER);
-         ACE_TRY_CHECK;
-
-         if (CORBA::is_nil (kh.in ()))
-           ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
-
-         // @@ Note, here we are missing the CreateFailure.
-         // Sometime I will come back to add exception rethrow.
-         comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-         ACE_TRY_CHECK;
-
-         if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
-                                        Components::CCMObject::_duplicate (comp.in ())))
-           ACE_TRY_THROW (Deployment::InstallationFailure ());
-
-         // Set the return value.
-         (*retv)[i].component_instance_name
-           = impl_infos[i].component_instance_name.in ();
-
-         (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
-
-         // Deal with Component instance related Properties.
-         // Now I am only concerning about the COMPOENTIOR and here is only
-         // the hardcoded version of the configuration. Hopefully we will
-         // reach an agreement after the RTWS about how the configuration
-         // should be done.
-
-         const CORBA::ULong clen = impl_infos[i].component_config.length ();
-         for (CORBA::ULong prop_len = 0; prop_len < clen; ++prop_len)
-           {
-             if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
-                                 "ComponentIOR") == 0)
-               {
-                 if (CIAO::debug_level () > 1)
-                   ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
-                 const char * path;
-                 impl_infos[i].component_config[prop_len].value >>= path;
-
-                 CORBA::String_var ior =
-                   this->orb_->object_to_string (comp.in ()
+      // For each container, invoke <install> operation, this will return
+      // the ComponentInfo for components installed in each container.
+      // Merge all the returned ComponentInfo, which will be used
+      // as the return value of this method.
+      const CORBA::ULong num_containers = node_impl_info.length ();
+      for (CORBA::ULong i = 0; i < num_containers; ++i)
+        {
+          Deployment::ComponentInfos_var comp_infos =
+            this->container_set_.at(i)->install (node_impl_info[i]
                                                  ACE_ENV_ARG_PARAMETER);
-                 ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
 
-                 if (write_IOR (path, ior.in ()) != 0)
-                   {
-                     if (CIAO::debug_level () > 1)
-                       ACE_DEBUG ((LM_DEBUG, "Failed to write the IOR.\n"));
+          // Append the return sequence to the *big* return sequence
+          CORBA::ULong curr_len = retv->length ();
+          retv->length (curr_len + comp_infos->length ());
 
-                     ACE_TRY_THROW (CORBA::INTERNAL ());
-                   }
+          for (CORBA::ULong j = curr_len; j < retv->length (); j++)
+            retv[j] = comp_infos[j-curr_len];
+        }
 
-               }
-           }
-       }
-   }
+      // @@ Maybe we can optimize this. We can come up with a decision later.
+      // Cache a copy of the component object references for all the components
+      // installed on this NodeApplication. I know we can delegates these to the
+      // undelying containers, but in that case, we should loop all the containers
+      // to find the component object reference. - Gan
+      const CORBA::ULong comp_len = retv->length ();
+      for (CORBA::ULong len = 0;
+          len < comp_len;
+          ++len)
+      {
+        //Since we know the type ahead of time...narrow is omitted here.
+        if (this->component_map_.
+            bind (retv[len].component_instance_name.in(),
+                  Components::CCMObject::_duplicate (retv[len].component_ref.in())))
+          ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+      }
+    }
   ACE_CATCHANY
-   {
-     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                          "CIAO_NodeApplication::install error\t\n");
-     ACE_RE_THROW;
-   }
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "CIAO_NodeApplication::install error\t\n");
+      ACE_RE_THROW;
+    }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
 
   return retv._retn ();
 }
 
-// @@ (OO) Method definitions should never use "_WITH_DEFAULTS"
-//         versions of emulated exception parameters.  Please remove
-//         the "_WITH_DEFAULTS"
-Components::CCMHome_ptr
-CIAO::NodeApplication_Impl::install_home (
-    const ::Deployment::ImplementationInfo & impl_info
-    ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Deployment::UnknownImplId,
-                   Deployment::ImplEntryPointNotFound,
-                   Deployment::InstallationFailure,
-                   Components::InvalidConfiguration))
-{
-  Components::CCMHome_var newhome =
-    this->container_->ciao_install_home
-    (impl_info.executor_dll.in (),
-     impl_info.executor_entrypt.in (),
-     impl_info.servant_dll.in (),
-     impl_info.servant_entrypt.in ()
-     ACE_ENV_ARG_PARAMETER);
-
-  ACE_CHECK_RETURN (Components::CCMHome::_nil ());
-  // We don't have to do _narrow since the generated code makes sure of
-  // the object type for us
-
-  // Bind the home in the map.
-  if (this->home_map_.bind (impl_info.component_instance_name.in (),
-                            Components::CCMHome::_duplicate (newhome.in ())))
-    ACE_THROW_RETURN (Deployment::InstallationFailure (),
-                      Components::CCMHome::_nil ());
-
-  //Note: If the return value will be discarded, it must be kept in a var or
-  //      release () will have to be called explicitly.
-  return newhome._retn ();
-}
-
 void
 CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::RemoveFailure))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Remove all components first.
-  remove_components ();
-
-  ACE_CHECK;
-
-  // Even if above op failed we should still remove homes.
-  const Home_Iterator end (this->home_map_.end ());
-  for (Home_Iterator iter (this->home_map_.begin ());
-       iter != end;
-       ++iter)
+  // For each container, invoke <remove> operation to remove home and components.
+  const CORBA::ULong set_size = this->container_set_.size ();
+  for (CORBA::ULong i = 0; i < set_size; ++i)
     {
-      this->container_->ciao_uninstall_home ( (*iter).int_id_
-                                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-
-      CORBA::release ( (*iter).int_id_);
+      this->container_set_.at(i)->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
 
-  this->home_map_.unbind_all ();
+  // Remove all containers
+  // Maybe we should also deactivate container object reference.
+  this->container_set_.remove_all ();
 
   if (CIAO::debug_level () > 1)
-    ACE_DEBUG ((LM_DEBUG, "Shutting down this NodeApplication!\n"));
+    ACE_DEBUG ((LM_DEBUG, "Removed all containers from this NodeApplication!\n"));
 
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
 
-void
-CIAO::NodeApplication_Impl::remove_home (const char * comp_ins_name
-                                         ACE_ENV_ARG_DECL)
+
+// Create a container interface, which will be hosted in this NodeApplication.
+::Deployment::Container_ptr
+CIAO::NodeApplication_Impl::create_container (const ::Deployment::Properties &properties
+                                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::RemoveFailure))
+                  ::Components::CreateFailure,
+                  ::Components::InvalidConfiguration))
 {
-  Components::CCMHome_ptr home;
-  ACE_CString str (comp_ins_name);
+  ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::create_container()\n"));
 
-  if (this->home_map_.find (str, home) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
+  CIAO::Container_Impl *container_servant = 0;
 
-  // We should remove all components created by this home as well.
-  // This is not implemented yet.
-
-  this->container_->ciao_uninstall_home (home
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // If the previous calls failed, what should we do here??
-  CORBA::release (home);
-
-  // @@ Still need to remove the home if the previous operation fails?
-  if (this->home_map_.unbind (str) == -1)
-    ACE_THROW (::Components::RemoveFailure ());
-}
-
-Components::CCMHomes *
-CIAO::NodeApplication_Impl::get_homes (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  Components::CCMHomes * tmp;
-  ACE_NEW_THROW_EX (tmp,
-                    Components::CCMHomes (),
+  ACE_NEW_THROW_EX (container_servant,
+                    CIAO::Container_Impl (this->orb_.in (),
+                                          this->poa_.in (),
+                                          this->get_objref ()),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
-  Components::CCMHomes_var retval (tmp);
+  PortableServer::ServantBase_var safe_servant (container_servant);
 
-  // @@ (OO) Please declare len as "const".
-  CORBA::ULong len = this->home_map_.current_size ();
-  retval->length (len);
+  // @TODO: Need to decide a "component_installation" equivalent data
+  // structure  to pass to the container, which will be used to
+  // suggest how to install the components.  Each such data stucture
+  // should be correspond to one <process_collocation> tag  in the XML
+  // file to describe the deployment plan.
+  container_servant->init (properties
+                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
+  PortableServer::ObjectId_var oid
+    = this->poa_->activate_object (container_servant
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
-  CORBA::ULong i = 0;
-  const Home_Iterator end = this->home_map_.end ();
-  for (Home_Iterator iter (this->home_map_.begin ());
-       iter != end;
-       ++iter, ++i)
+  CORBA::Object_var obj
+    = this->poa_->id_to_reference (oid.in ()
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  ::Deployment::Container_var ci
+    = ::Deployment::Container::_narrow (obj.in ()
+                                        ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  // Cached the objref in its servant.
+  container_servant->set_objref (ci.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   {
-    retval[i] = Components::CCMHome::_duplicate ( (*iter).int_id_);
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+
+    this->container_set_.add (ci.in ());
   }
 
-  return retval._retn ();
+  ACE_DEBUG ((LM_DEBUG,
+              "LEAVING: NodeApplication_Impl::create_container()\n"));
+  return ci._retn ();
 }
 
-CORBA::Long
-CIAO::NodeApplication_Impl::init (ACE_ENV_SINGLE_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_NEW_THROW_EX (this->container_,
-                    CIAO::Session_Container (this->orb_.in (),
-                                             0,
-                                             0),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (-1);
-
-  return this->container_->init (0,
-                                 0
-                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (-1);
-
-  return 0;
-}
-
-CORBA::Object_ptr
-CIAO::NodeApplication_Impl::get_node_application_manager (
-    ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  return ::CORBA::Object::_duplicate (this->node_app_manager_.in ());
-}
-
-
-PortableServer::POA_ptr
-CIAO::NodeApplication_Impl::_default_POA (void)
-{
-  return PortableServer::POA::_duplicate (this->poa_.in ());
-}
-
+// Remove a container interface.
 void
-CIAO::NodeApplication_Impl::remove_components (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::RemoveFailure))
-{
-  //Remove all the components in the NodeApplication/Container
-  // Release all component servant object.
-  const Component_Iterator end (this->component_map_.end ());
-  for (Component_Iterator iter (this->component_map_.begin ());
-       iter != end;
-       ++iter)
-  {
-    Components::CCMHome_ptr home;
-    if (this->home_map_.find ( (*iter).ext_id_, home) != 0)
-      ACE_THROW (CORBA::BAD_PARAM ());
-
-    // This will call ccm_passivate on the component executor.
-    home->remove_component ((*iter).int_id_);
-    ACE_CHECK;
-
-    CORBA::release ((*iter).int_id_);
-  }
-
-  this->component_map_.unbind_all ();
-  // To this point the servant should have been destroyed. However,
-  // if someone is still making calls on the servant, terrible thing
-  // will happen.
-}
-
-void
-CIAO::NodeApplication_Impl::remove_component (const char * comp_ins_name
+CIAO::NodeApplication_Impl::remove_container (::Deployment::Container_ptr cref
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::RemoveFailure))
+                  ::Components::RemoveFailure))
 {
-  Components::CCMObject_ptr comp;
-  Components::CCMHome_ptr home;
+  ACE_DEBUG ((LM_DEBUG, "ENTERING: NodeApplication_Impl::remove_container()\n"));
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  ACE_CString str (comp_ins_name);
+  if (this->container_set_.object_in_set (cref) == 0)
+    ACE_THROW (Components::RemoveFailure());
 
-  /* Before we do remove component we have to inform the homeservant so
-   * Component::ccm_passivate ()
-   * constainer::ninstall_component () ->deactivate_object () will be called.
-   *
-   * ccm_remove will be called when the poa destroys the servant.
-   */
-
-  if (this->component_map_.find (str, comp) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
-
-  if (this->home_map_.find (str, home) != 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
-
-  // This will call ccm_passivate on the component executor.
-  home->remove_component (comp);
+  cref->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  // If the previous calls failed, what should we do here??
-  CORBA::release (comp);
+  // @@ Deactivate object.
+  PortableServer::ObjectId_var oid
+    = this->poa_->reference_to_id (cref
+                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  // @@ Still need to remove the home if the previous operation fails?
-  if (this->component_map_.unbind (str) == -1)
+  this->poa_->deactivate_object (oid.in ()
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Should we remove the server still, even if the previous call failed.
+
+  if (this->container_set_.remove (cref) == -1)
     ACE_THROW (::Components::RemoveFailure ());
+  ACE_DEBUG ((LM_DEBUG, "LEAVING: NodeApplication_Impl::remove_container()\n"));
 }
 
-// The code below is obsolete now. However I want to keep it arround as a
-// start point for configurations.
-/*
-void
-CIAO::NodeApplication_Impl::
-parse_config_values (const ::Deployment::Properties & properties,
-  struct home_installation_info &component_install_info
-  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-    Deployment::UnknownImplId,
-    Deployment::ImplEntryPointNotFound,
-    Components::InvalidConfiguration))
+// Get containers
+::Deployment::Containers *
+CIAO::NodeApplication_Impl::get_containers (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
-  for (CORBA::ULong i = 0; i < properties.length(); ++i)
-  {
-    // Place holder for string values
-    const char * str = 0;
-    const char * name = properties[i].name.in();
-
-    // I assume the property will be given in the following format! --Tao
-    if (ACE_OS::strcmp (name, "CIAO-servant-location"))
-    {
-      properties[i].value >>= str;
-      component_install_info.servant_dll_= str;  //deep copy happens here.
-    }
-    else if (ACE_OS::strcmp (name, "CIAO-servant-entryPoint"))
-    {
-      properties[i].value >>= str;
-      component_install_info.servant_entrypt_= str;  //deep copy happens here.
-    }
-    else if (ACE_OS::strcmp (name, "CIAO-executor-location"))
-    {
-      properties[i].value >>= str;
-      component_install_info.executor_dll_= str;  //deep copy happens here.
-    }
-    else if (ACE_OS::strcmp (name, "CIAO-executor-entryPoint"))
-    {
-      properties[i].value >>= str;
-      component_install_info.executor_entrypt_= str;  //deep copy happens here.
-    }
-    else
-    {
-      ACE_DEBUG ((LM_DEBUG, "Found unrecognized property: %s\n",name));
-      //I should put the name of the configuration inside of the exception. --Tao
-      ACE_THROW (Components::InvalidConfiguration ());
-    }
-  }
-
-  // We don't need to worry about the case when some info is missing since
-  // the modeling tool will ensure the complete info to presented in the properties.
+  return 0;
 }
-*/

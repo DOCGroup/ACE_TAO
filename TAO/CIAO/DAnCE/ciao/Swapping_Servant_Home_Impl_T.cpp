@@ -1,10 +1,10 @@
 // $Id$
 
-#ifndef CIAO_HOME_SERVANT_IMPL_T_C
-#define CIAO_HOME_SERVANT_IMPL_T_C
+#ifndef CIAO_SWAPPING_SERVANT_IMPL_T_C
+#define CIAO_SWAPPING_SERVANT_IMPL_T_C
 
-#include "Home_Servant_Impl_T.h"
-
+#include "Swapping_Servant_Home_Impl_T.h"
+#include "Dynamic_Component_Servant_T.h"
 
 namespace CIAO
 {
@@ -16,19 +16,18 @@ namespace CIAO
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  Home_Servant_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
                     COMP_VAR,
                     COMP_EXEC,
                     COMP_EXEC_VAR,
-                    COMP_SVNT>::Home_Servant_Impl (
+                    COMP_SVNT>::Swapping_Home_Servant_Impl (
       EXEC * exe,
-      Session_Container * c
-    )
+      Session_Container * c, const char* obj_id, const char* repo_id)
     : Home_Servant_Impl_Base (c),
-      executor_ (EXEC::_duplicate (exe))
+      executor_ (EXEC::_duplicate (exe)), obj_id_ (obj_id), repo_id_ (repo_id)
   {
   }
 
@@ -40,23 +39,28 @@ namespace CIAO
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  Home_Servant_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
                     COMP_VAR,
                     COMP_EXEC,
                     COMP_EXEC_VAR,
-                    COMP_SVNT>::~Home_Servant_Impl (void)
+                    COMP_SVNT>::~Swapping_Home_Servant_Impl (void)
   {
-    const OBJ_ITERATOR end =
-      this->objref_map_.end ();
+    const DYNAMIC_SERVANT_MAP_ITERATOR end = 
+      this->dynamic_servant_map_.end ();
 
-    for (OBJ_ITERATOR iter =
-           this->objref_map_.begin ();
+    PortableServer::ObjectId_var oid =
+      PortableServer::string_to_ObjectId (this->obj_id_);
+
+    this->container_->delete_servant_map (oid);
+
+    for (DYNAMIC_SERVANT_MAP_ITERATOR iter = 
+           this->dynamic_servant_map_.begin ();
          iter != end; ++iter)
       {
-        this->remove_component ((*iter).int_id_);
+        (*iter).int_id_->destroy (oid);
       }
   }
 
@@ -71,7 +75,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
-  Home_Servant_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -79,64 +83,20 @@ namespace CIAO
                     COMP_EXEC,
                     COMP_EXEC_VAR,
                     COMP_SVNT>::remove_component (
-      ::Components::CCMObject_ptr comp
+      ::Components::CCMObject_ptr 
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
     PortableServer::ObjectId_var oid =
-      this->container_->the_POA ()->reference_to_id (comp
-                                                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+      PortableServer::string_to_ObjectId (this->obj_id_);
 
-    Components::CCMObject_ptr ccm_obj_ptr;
-    if (objref_map_.find (oid.in (), ccm_obj_ptr) != 0)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
-        return;
-      }
-
-    COMP_VAR _ciao_comp =
-      COMP::_narrow (ccm_obj_ptr
-                     ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
-
-    if (CORBA::is_nil (_ciao_comp.in ()))
-      {
-        ACE_THROW (Components::RemoveFailure ());
-      }
-
-    _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-  }
-
-  template <typename BASE_SKEL,
-            typename EXEC,
-            typename EXEC_VAR,
-            typename COMP,
-            typename COMP_VAR,
-            typename COMP_EXEC,
-            typename COMP_EXEC_VAR,
-            typename COMP_SVNT>
-  void
-  Home_Servant_Impl<BASE_SKEL,
-                    EXEC,
-                    EXEC_VAR,
-                    COMP,
-                    COMP_VAR,
-                    COMP_EXEC,
-                    COMP_EXEC_VAR,
-                    COMP_SVNT>::update_component_map (
-      PortableServer::ObjectId &oid)
-  {
-    Components::CCMObject_var ccm_obj_ptr;
-    if (objref_map_.unbind (oid, ccm_obj_ptr) != 0)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Invalid component object reference\n"));
-        return;
-      }
-    return;
+    Dynamic_Component_Servant_Base *servant;
+    if (this->dynamic_servant_map_.find (oid, servant) == 0)
+    {
+      servant->destroy (oid);
+    }
   }
 
   // Operations for keyless home interface.
@@ -150,7 +110,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   Components::CCMObject_ptr
-  Home_Servant_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -177,7 +137,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   COMP *
-  Home_Servant_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -196,16 +156,12 @@ namespace CIAO
                         COMP::_nil ());
     }
 
+
     ::Components::EnterpriseComponent_var _ciao_ec =
       this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    COMP_EXEC_VAR _ciao_comp =
-      COMP_EXEC::_narrow (_ciao_ec.in ()
-                          ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
-
-    return this->_ciao_activate_component (_ciao_comp.in ()
+    return this->_ciao_activate_component (_ciao_ec.in ()
                                            ACE_ENV_ARG_PARAMETER);
   }
 
@@ -220,7 +176,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   COMP *
-  Home_Servant_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -228,13 +184,13 @@ namespace CIAO
                     COMP_EXEC,
                     COMP_EXEC_VAR,
                     COMP_SVNT>::_ciao_activate_component (
-      COMP_EXEC *exe
+      ::Components::EnterpriseComponent_ptr ec
       ACE_ENV_ARG_DECL
     )
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     CORBA::Object_var hobj =
-      this->container_->get_objref (this
+      this->container_->get_home_objref (this
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
@@ -243,35 +199,31 @@ namespace CIAO
                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    COMP_SVNT *svt = 0;
-    ACE_NEW_RETURN (svt,
-                    COMP_SVNT (exe,
-                               home.in (),
-                               this,
-                               this->container_),
-                    COMP::_nil ());
-
-    PortableServer::ServantBase_var safe (svt);
-    PortableServer::ObjectId_var oid;
+    PortableServer::ObjectId_var oid =
+      PortableServer::string_to_ObjectId (this->obj_id_);
 
     CORBA::Object_var objref =
-      this->container_->install_component (svt,
-                                           oid.out ()
-                                           ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (COMP::_nil ());
+      this->container_->generate_reference (
+        this->obj_id_,
+        this->repo_id_,
+        Container::Component
+        ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+    Dynamic_Component_Servant_Base *svt =
+      new Dynamic_Component_Servant
+       <COMP_SVNT, COMP_EXEC, COMP_EXEC_VAR, EXEC, EXEC_VAR, COMP>
+          (ec, home, this, this->container_);
+
+    this->container_->add_servant_map (oid, svt);
+
+    this->dynamic_servant_map_.bind (oid, svt);
 
     COMP_VAR ho = COMP::_narrow (objref.in ()
                                  ACE_ENV_ARG_PARAMETER);
+
     ACE_CHECK_RETURN (COMP::_nil ());
 
-    Components::CCMObject_var ccmobjref =
-      Components::CCMObject::_narrow (objref.in ()
-                                      ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (Components::CCMObject::_nil ());
-
-    this->objref_map_.bind (oid.in (),
-      Components::CCMObject::_duplicate (ccmobjref.in ()));
-    
     return ho._retn ();
   }
 
@@ -284,7 +236,35 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
-  Home_Servant_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
+                    EXEC,
+                    EXEC_VAR,
+                    COMP,
+                    COMP_VAR,
+                    COMP_EXEC,
+                    COMP_EXEC_VAR,
+                    COMP_SVNT>::update_component_map (
+    PortableServer::ObjectId &oid)
+  {
+    Dynamic_Component_Servant_Base *servant;
+    if (this->dynamic_servant_map_.find (oid, servant) == 0)
+    {
+      servant->update_destroy_count ();
+      this->dynamic_servant_map_.unbind (oid);
+    }
+    return;
+  }
+
+  template <typename BASE_SKEL,
+            typename EXEC,
+            typename EXEC_VAR,
+            typename COMP,
+            typename COMP_VAR,
+            typename COMP_EXEC,
+            typename COMP_EXEC_VAR,
+            typename COMP_SVNT>
+  void
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -298,11 +278,23 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     PortableServer::ObjectId_var oid;
+
     this->container_->uninstall_component (comp,
                                            oid.out ()
                                            ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
+
+    COMP_SVNT *servant = 0;
+
+    if (this->component_map_.find (oid.in (), servant) == 0)
+    {
+      PortableServer::ServantBase_var safe (servant);
+
+      servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+      this->component_map_.unbind (oid.in ());
+    }
   }
 }
 
-#endif /* CIAO_HOME_SERVANT_IMPL_T_C */
+#endif /* CIAO_SWAPPING_SERVANT_IMPL_T_C */

@@ -36,6 +36,33 @@ namespace CIAO
     }
   }
 
+  bool
+  Servant_Activator::update_port_activator (
+    const PortableServer::ObjectId &oid
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    CORBA::String_var str =
+      PortableServer::ObjectId_to_string (oid);
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                        guard,
+                        this->mutex_,
+                        0);
+      const unsigned int sz = this->slot_index_;
+      for (unsigned int t = 0; t != sz; ++t)
+        {
+          Port_Activator *&tmp = this->pa_[t];
+          if (ACE_OS::strcmp (tmp->name (), str.in ()) == 0)
+          {
+            delete tmp;
+            --this->slot_index_;
+          }
+        }
+    }
+    return true;
+  }
+
   PortableServer::Servant
   Servant_Activator::incarnate (const PortableServer::ObjectId &oid,
                                 PortableServer::POA_ptr
@@ -78,11 +105,13 @@ namespace CIAO
             }
           if (ACE_OS::strcmp (tmp->name (),
                               str.in ()) == 0)
-            // We should try avoiding making outbound calls with the
-            // lock held. Oh well, let us get some sense of sanity in
-            // CIAO to do think about these.
-            return this->pa_[t]->activate (oid
-                                           ACE_ENV_ARG_PARAMETER);
+            {
+              // We should try avoiding making outbound calls with the
+              // lock held. Oh well, let us get some sense of sanity in
+              // CIAO to do think about these.
+              return this->pa_[t]->activate (oid
+                                             ACE_ENV_ARG_PARAMETER);
+            }
         }
     }
     ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),

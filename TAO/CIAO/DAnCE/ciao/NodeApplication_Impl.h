@@ -6,7 +6,8 @@
  * @Brief  This file contains the implementation of
  *         the NodeApplication interface.
  *
- * @auther Tao Lu <lu@dre.vanderbilt.edu>
+ * @author Tao Lu <lu@dre.vanderbilt.edu>
+ * @author Gan Deng <dengg@dre.vanderbilt.edu>
  *========================================================*/
 
 #ifndef NODEAPPLICATION_IMPL_H
@@ -27,6 +28,7 @@
 #include "Deployment_CoreS.h"
 #include "Server_init.h"
 #include "CIAO_common.h"
+#include "Object_Set_T.h"
 
 using CIAO::Utility::write_IOR;
 
@@ -43,25 +45,28 @@ using CIAO::Utility::write_IOR;
  * @@TODO add configuration capabilities. Threading is one of them.
  *
  * @@Assumptions:
- * 1. There is only 1 container for all components/homes associating
- *    with 1 NodeApplication
- * 2. Now the implementation is not thread safe.
+ * 1. Now the implementation is not thread safe.
+ * // @@Gan, the above assumption is _really_ bad. Could you please
+ * use the lock in the imeplementation to do some simple
+ * prootections.
  **/
 
 namespace CIAO
 {
+  // @@ Gan, as we discussed before can you please wrap this
+  // implementation in a namespace Node_Application or whatever to
+  // signify that it belongs to another software piece of CIAO?
   class CIAO_SERVER_Export NodeApplication_Impl
-    : public virtual POA_Deployment::NodeApplication
+    : public virtual POA_Deployment::NodeApplication,
+      public virtual PortableServer::RefCountServantBase
   {
   public:
-
-    // Default constructor.
+    /// Default constructor.
     NodeApplication_Impl (CORBA::ORB_ptr o,
                           PortableServer::POA_ptr p);
 
-    // Default destructor.
+    /// Default destructor.
     virtual ~NodeApplication_Impl (void);
-
 
     /**
      * @method finishLaunch
@@ -74,7 +79,6 @@ namespace CIAO
      * The connection containes the object ref of the provided object
      * reference (facet/event consumer) of components from other NodeApplications.
      * However the name field stores the name of the port on the local component.
-     *
      */
     virtual void
     finishLaunch (const Deployment::Connections & providedReference,
@@ -92,120 +96,96 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
-    /*-------------  CIAO specific helper operations (idl)--------
+    /*-------------  CIAO specific IDL operations (idl)----------
      *
      *-----------------------------------------------------------*/
 
-    // Initialize the NodeApplication
+    /// Initialize the NodeApplication
     virtual CORBA::Long init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // Start install homes and components.
+    /// Start install homes and components.
     virtual ::Deployment::ComponentInfos *
-      install (const ::Deployment::ImplementationInfos & impl_infos
-             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      install (const ::Deployment::NodeImplementationInfo & node_impl_info
+               ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        ::Deployment::UnknownImplId,
                        ::Deployment::ImplEntryPointNotFound,
                        ::Deployment::InstallationFailure,
                        ::Components::InvalidConfiguration));
 
-    // Access the readonly attribute.
+    /// Get the object reference of the NodeApplicationManager.
+    /// This might come in handy later.
+    virtual ::CORBA::Object_ptr
+    get_node_application_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    /// Access the readonly attribute.
     virtual ::Deployment::Properties *
     properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual ::Components::CCMHome_ptr
-      install_home (const ::Deployment::ImplementationInfo & impl_info
-                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::UnknownImplId,
-                       Deployment::ImplEntryPointNotFound,
-                       Deployment::InstallationFailure,
-                       Components::InvalidConfiguration));
-
-    /**
-     * @@Note: I don't know how to remove a home right now.
-     *         I assume that user will only call remove instead.
-     *         This is true at least for DnC run time.
-     *
-     * Right now, in this implementation I assumpe that there will be
-     * same number of homes as the components even if the components
-     * are of the same type. I don't think that we have the modeling
-     * side support of this either. So bear me if you think I avoid
-     * the real thinking for easiness.
-     */
-    virtual void remove_home (const char * comp_ins_name
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
-
-    // Remove everything inside including all components and homes.
-    // User must be sure that no connection is active before calling this!!
+    /// Remove everything inside including all components and homes.
     virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
-    // Return all homes.
-    virtual ::Components::CCMHomes *
-    get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    /// Create a container interface, which will be hosted in this NodeApplication.
+    virtual ::Deployment::Container_ptr
+      create_container (const ::Deployment::Properties &properties
+                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::CreateFailure,
+                       ::Components::InvalidConfiguration));
+
+    /// Remove a container interface.
+    virtual void remove_container (::Deployment::Container_ptr cref
+                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException,
+                       ::Components::RemoveFailure));
+
+    /// Get all container object refs
+    virtual ::Deployment::Containers * get_containers (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     /*-------------  CIAO specific helper functions (C++)---------
      *
      *-----------------------------------------------------------*/
 
-    // Get the containing POA.  This operation does *not*
-    // increase the reference count of the POA.
+    /// Get the containing POA.  This operation does *not*
+    /// increase the reference count of the POA.
     virtual PortableServer::POA_ptr _default_POA (void);
 
-    // Get the object reference of the NodeApplicationManager.
-    // This might comes in handy later.
-    virtual ::CORBA::Object_ptr
-    get_node_application_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    /// Return the cached object reference of this NodeApplication object.
+    /// This operation does *NOT* increase the reference count.
+    ::Deployment::NodeApplication_ptr
+    get_objref (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
+  protected:
+    /// Create and initialize all the containers
+    virtual CORBA::Long create_all_containers (
+        const ::Deployment::NodeImplementationInfo & node_impl_info
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    protected:
 
-    // @@ (OO) Methods internal to the class, e.g. protected and not
-    //         defined in IDL should not be using default arguments.
-    //         Please drop the "_WITH_DEFAULTS" in all of the below
-    //         protected methods.
-
-    // This is a helper method to clean up components
-    // should only be called when we are sure that there is no
-    // active connection on this component.
-    virtual void remove_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
-
-    virtual void remove_component (const char * comp_ins_name
-                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Components::RemoveFailure));
-
-    // This function is a helper for start call. Bala's
-    // Idea of adding those pre/post activate calls doesn't work
-    // with the new sepc.
-    //@@ TODO.   Come up with new ways of synchronized initialization process.
+    /// This function is a helper for start call. Bala's
+    /// Idea of adding those pre/post activate calls doesn't work
+    /// with the new sepc.
+    ///@@ TODO.   Come up with new ways of synchronized initialization process.
     typedef void (Components::CCMObject::*Funct_Ptr)
-      (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+      (ACE_ENV_SINGLE_ARG_DECL);
 
     virtual void start_i (Funct_Ptr functor
                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Deployment::StartError));
 
-    // To store all created CCMHome object
-    typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                    Components::CCMHome_ptr,
-                                    ACE_Hash<ACE_CString>,
-                                    ACE_Equal_To<ACE_CString>,
-                                    ACE_Null_Mutex> CCMHome_Map;
-    typedef CCMHome_Map::iterator Home_Iterator;
-    CCMHome_Map home_map_;
-
-    // To sotre all created Component object.
+    /// To store all created Component object.
+    // @@Gan/Jai, as we discussed before this is simply a BAD
+    //idea. These need to moved into the container.
+    // @@ Jai/Gan, how about using CCMObject_var instead of
+    //CCMObject_ptr's?
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                     Components::CCMObject_ptr,
                                     ACE_Hash<ACE_CString>,
@@ -214,35 +194,28 @@ namespace CIAO
     typedef CCMComponent_Map::iterator Component_Iterator;
     CCMComponent_Map component_map_;
 
-    // Keep a pointer to the managing ORB serving this servant.
+    /// Synchronize access to the object set.
+    TAO_SYNCH_MUTEX lock_;
+
+    /// Keep a list of managed Container objects.
+    Object_Set<Deployment::Container, Deployment::Container_var> container_set_;
+    /// Keep a pointer to the managing ORB serving this servant.
     CORBA::ORB_var orb_;
 
-    // Keep a pointer to the managing POA.
+    /// Keep a pointer to the managing POA.
+    // @@Gan/Jai, which POA is this? Same as the component POA or a
+    // different one. My sense is that its different. Could you please
+    //document it?
     PortableServer::POA_var poa_;
 
-    // Internal container implementation.
-    CIAO::Container *container_;
-
-    // Cached properties
+    /// Cached properties
     Deployment::Properties properties_;
 
-    // And a reference to the NodeApplicationManager that created us.
+    /// And a reference to the NodeApplicationManager that created us.
     ::CORBA::Object_var node_app_manager_;
 
-    // Synchronize access to the object set.
-    // This will be needed in the case when component/home run in different thread
-    // TAO_SYNCH_MUTEX lock_;
-
-    //@@ As I have stated in the idl we are not going to use properties for now.
-    // parse The Properties
-    /*void parse_config_values (const ::Deployment::Properties & properties,
-                              struct home_installation_info &component_install_info
-                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       Deployment::UnknownImplId,
-                       Deployment::ImplEntryPointNotFound,
-                       Components::InvalidConfiguration));
-    */
+    /// Cache the object reference (of ourselves).
+    ::Deployment::NodeApplication_var objref_;
   };
 }
 

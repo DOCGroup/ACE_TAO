@@ -2,29 +2,35 @@
 
 //=============================================================================
 /**
- *  @file    Servant_Activator.h
+ *  @file    Dynamic_Component_Activator.h
  *
  *  $Id$
  *
- *  @authors Balachandran Natarajan <bala@dre.vanderbilt.edu>
+ *  @authors Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
+ *           Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
 
-#ifndef CIAO_SERVANT_ACTIVATOR_H
-#define CIAO_SERVANT_ACTIVATOR_H
+#ifndef CIAO_DYNAMIC_SWAPPING_ACTIVATOR_H
+#define CIAO_DYNAMIC_SWAPPING_ACTIVATOR_H
 #include /**/ "ace/pre.h"
 
 #include "ace/Array_Base.h"
 #include "ciao/CIAO_Server_Export.h"
+#include "ciao/CCM_ContainerC.h"
+#include "ciao/Deployment_CoreC.h"
+
+#include "tao/PortableServer/Key_Adapters.h"
+#include "ace/Hash_Map_Manager_T.h"
+#include "Dynamic_Component_Servant_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/ServantActivatorC.h"
-#include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/LocalObject.h"
+#include "tao/PortableServer/ServantActivatorC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -33,33 +39,23 @@
 
 namespace CIAO
 {
-  class Port_Activator;
 
+  class Dynamic_Component_Servant_Base;
   /**
-   * @class Servant_Activator
+   * @class Dynamic_Component_Activator
    *
    * @brief Activator that is registered with the POA for facet and
    * consumer servants.
    *
-   * This class acts like a factory in some sense. This factory is
-   * registered with the POA with RETAIN policy. When the factory gets
-   * a call back as part of the upcall, this factory looks at the
-   * list of port activators registered, uses the OID to pick the
-   * right one (yes a linear algorithm is used), calls activate () on
-   * it which returns the servant for *that* port.
    */
-  class CIAO_SERVER_Export Servant_Activator
+  class CIAO_SERVER_Export Dynamic_Component_Activator
     : public virtual PortableServer::ServantActivator
     , public virtual TAO_Local_RefCounted_Object
   {
   public:
-    Servant_Activator (CORBA::ORB_ptr o);
+    Dynamic_Component_Activator (CORBA::ORB_ptr o);
 
-    virtual ~Servant_Activator (void);
-
-    bool update_port_activator (const PortableServer::ObjectId &oid
-      ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    virtual ~Dynamic_Component_Activator (void);
 
     /// Template methods overridden to get callbacks.
     /**
@@ -82,25 +78,29 @@ namespace CIAO
                       ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Local helper methods
-    bool register_port_activator (Port_Activator *pa);
+    void add_servant_map (PortableServer::ObjectId &oid,
+                          Dynamic_Component_Servant_Base* servant
+                          ACE_ENV_ARG_DECL);
+
+    void delete_servant_map (PortableServer::ObjectId &oid
+                             ACE_ENV_ARG_DECL);
 
   private:
     /// Pointer to our ORB
     CORBA::ORB_var orb_;
 
-    /// @@ This should be changed at some point of time so that we
-    /// don't  land up with a linear algorithm
-    typedef ACE_Array_Base<Port_Activator *> Port_Activators;
-
-    /// Array of port activators
-    Port_Activators pa_;
-
-    /// Running index of the slot that has been just filled in.
-    size_t slot_index_;
-
+    // @@ Jai, why are there two mutexes here?Can you get one of them
+    //out of the way?
     /// Mutex that synchronizes access to the array.
     ACE_SYNCH_MUTEX  mutex_;
+
+    ACE_Hash_Map_Manager_Ex<PortableServer::ObjectId,
+                            Dynamic_Component_Servant_Base *,
+                            TAO_ObjectId_Hash,
+                            ACE_Equal_To<PortableServer::ObjectId>,
+                            ACE_SYNCH_MUTEX>
+      servant_map_;
+
   };
 }
 
@@ -109,4 +109,4 @@ namespace CIAO
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
-#endif /*CIAO_SERVANT_ACTIVATOR_H*/
+#endif /*CIAO_DYNAMIC_SWAPPING_ACTIVATOR_H*/
