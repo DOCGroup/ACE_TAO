@@ -148,8 +148,10 @@ interop_WChar_Passer_i::wstructseq_from_server (CORBA::Short key
 
   for (CORBA::ULong i = 0; i < wsListI->length(); i++)
     {
-      wsListI[i].st_char = this->wchar_from_server(key);
-      wsListI[i].st_string = this->wstring_from_server(key);
+      wsListI[i].st_char = this->wchar_from_server(key ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (interop::wstructseq->nil());
+      wsListI[i].st_string = this->wstring_from_server(key ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (interop::wstructseq->nil());
       ref_.assign_warray (key, wsListI[i].st_array);
       wsListI[i].st_any <<= CORBA::wstring_dup(L"");
     }
