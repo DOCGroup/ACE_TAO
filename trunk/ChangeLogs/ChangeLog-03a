@@ -1,3 +1,38 @@
+Sat Feb 19 17:32:28 2000  Ossama Othman  <ossama@uci.edu>
+
+	* Makefile (RELEASE_TAG_FILES):
+
+	  Added this new variable.  It contains a list of files that
+	  should be tagged at release time, but shouldn't be listed in any
+	  of the release/controlled file lists.  This is necessary to
+	  prevent multiple instances of the same file from being passed to
+	  the `.zip' file creation command line.  For example,
+	  ACE_wrappers/man, ACE_wrappers/man/man3/Makefile.am and
+	  ACE_wrappers/man/html/Makefile.am were all being passed to the
+	  `.zip' file creation command line, resulting in duplicate file
+	  names on that command line.  Thanks to David for pointing this
+	  out.
+
+	  The `bin/make_release' script will use this new list of files
+	  when tagging a release.
+
+	  (show_release_tag_files):
+
+	  Makefile target that lists files that should be tagged at
+	  release time.
+
+	* bin/make_release:
+
+	  Invoke "$make show_release_tag_files" to determine if there are
+	  any additional files to tag at release time.
+
+	  (tag):
+
+	  Added "$release_tag_files" to list of files to be tagged by CVS
+	  at release time.  This fixes a problem where the man page
+	  Makefile.am files were not being tagged, which also prevented
+	  them from being distributed with the ACE distribution. [Bug 408]
+
 Sat Feb 19 15:33:05 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 5.0.14 released.
