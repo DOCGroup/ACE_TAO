@@ -1,3 +1,8 @@
+Tue Jun 01 10:00:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: updated Sun C++ and DU versions in fully
+          supported platforms list.
+
 Mon May 31 22:45:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: added ACE_HAS_GPERF.
