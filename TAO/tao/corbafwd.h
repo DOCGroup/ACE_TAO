@@ -670,6 +670,9 @@ const CORBA::ULong TAO_TAG_UDP_PROFILE = 0x54414f04U;
 /// Unreliable IP Multicast
 const CORBA::ULong TAO_TAG_UIPMC_PROFILE = 0x54414f0CU;
 
+/// SCIOP (SCTP)
+const CORBA::ULong TAO_TAG_SCIOP_PROFILE = 0x54414f0EU;
+
 /// Boeing Custom Protocol
 const CORBA::ULong TAO_TAG_BIOP_PROFILE = 0x54414f0FU;
 //@}

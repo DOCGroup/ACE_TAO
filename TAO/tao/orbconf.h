@@ -328,6 +328,20 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #    define TAO_HAS_DIOP 1
 #endif  /* !TAO_HAS_DIOP */
 
+// SCIOP is disabled by default (i.e. TAO_HAS_SCIOP is undef)
+// to enable SCIOP, make with sctp=openss7 option on command line.
+// See $ACE_ROOT/performance-tests/SCTP/README for more info.
+
+// Default SCIOP Settings
+#if !defined (TAO_HAS_SCIOP)
+#  if defined (ACE_HAS_SCTP)
+#    define TAO_HAS_SCIOP 1
+#    define TAO_DEF_SCIOP_MAJOR 1
+#    define TAO_DEF_SCIOP_MINOR 0
+#  else
+#    define TAO_HAS_SCIOP 0
+#  endif  /* ACE_HAS_SCTP */
+#endif  /* !TAO_HAS_SCIOP */
 
 // UIOP support is enabled by default if the platform supports UNIX
 // domain sockets, and TAO is not configured for minimum CORBA.
