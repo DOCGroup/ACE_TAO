@@ -221,6 +221,9 @@ documenation_outputext  This is a comma separated list of possible
                         documentation file output extensions.  If the
                         command does not produce documenation files, then
                         this can be omitted.
+generic_outputext   If the command does not generate any of the other output
+                    types listed above, then the extensions should be listed
+                    under this.
 
 For custom file types, there are two keywords that can be used within the
 custom file type input lists: commandflags and gendir.  The commandflags can
