@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/TLI_Acceptor.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, TLI_Acceptor, "$Id$")
 
