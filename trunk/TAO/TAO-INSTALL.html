@@ -7,22 +7,21 @@
 <HR>
 <H3>Building and Installing TAO</H3>
 
-TAO has been ported and tested Windows NT, Solaris, VxWorks, and
-Linux.  I expect that major portions of the release will port easily
-to other platforms that ACE has been ported to.  If you can help port
-TAO to other platforms we'd appreciate it. <P>
+<!--#include virtual="/~schmidt/TAO-versions-i.html" --> If you can
+help port TAO to other platforms we'd appreciate it. <P>
 
-TAO can be obtained <A 
+TAO can be obtained <A
 HREF="http://www.cs.wustl.edu/~schmidt/TAO-obtain.html">electronically</A>
-via the WWW and ftp.  Bundled with the TAO release is <A 
-HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A>.  You will
-need the most recent version of ACE because TAO tends to track changes
-to ACE rather closely. <P>
+via the WWW and ftp.  <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE.html">ACE</A> is bundled
+with the TAO release.  You'll always need the most recent version of
+ACE because TAO tracks changes to ACE very closely. <P>
 
-A quick build note for users who have used ACE with other ORBs:
-linking TAO with a version of ACE that is also linked against another
-ORB vendor's library, <EM>e.g.</EM>, liborbix.so, will produce
-undefined and most likely unpredictable and erroneous results. <P>
+<strong><blink><font color="#ff0000">WARNING:</font></blink></strong>
+For users who have used ACE with other ORBs, linking TAO with a
+version of ACE that is also linked against another ORB vendor's
+library, <EM>e.g.</EM>, liborbix.so, will produce undefined and most
+likely unpredictable and erroneous results. <P>
 
 
 <HR><P>
@@ -74,7 +73,7 @@ GNU Make can be obtained from various places in source form.<P>
 
 If you are building TAO for a VxWorks target, please see the detailed
 instructions for building and installing ACE and TAO in <a
-href="../ACE-INSTALL.html#vxworks">../ACE-INSTALL.html</a>.<p>
+href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.<p>
 
 Cross-compiling TAO is not much different than building it for
 self-host.  The one major difference is that TAO's IDL compiler must
