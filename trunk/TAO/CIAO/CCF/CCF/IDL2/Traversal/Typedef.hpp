@@ -14,17 +14,10 @@ namespace CCF
   {
     namespace Traversal
     {
-      //
-      //
-      //
-      template <typename T>
-      struct TypedefDecl : Traverser
+      struct TypedefDeclBase : Traverser
       {
-        typedef
-        SyntaxTree::TypedefDeclPtr
-        NodePtr;
-
-        TypedefDecl ()
+      protected:
+        TypedefDeclBase ()
         {
           map (typeid (SyntaxTree::TypedefDecl), this);
         }
@@ -32,20 +25,51 @@ namespace CCF
         virtual bool
         traverse (SyntaxTree::NodePtr const& n)
         {
-          //@@ gcc bug
-          if (n->template is_a<T> ())
-          {
-            traverse (n);
-            return true;
-          }
-          else
-          {
-            return false;
-          }
+          traverse (n->dynamic_type<SyntaxTree::TypedefDecl> ());
+          return true;
         }
 
         virtual void
-        traverse (NodePtr const& n)
+        traverse (SyntaxTree::TypedefDeclPtr const& n)
+        {
+          typedef_decl = n;
+
+          SyntaxTree::NodePtr vt (n->virtual_type ());
+
+          disp_.dispatch (vt);
+        }
+
+      protected:
+        Dispatcher disp_;
+        SyntaxTree::TypedefDeclPtr typedef_decl;
+      };
+
+
+      //
+      //
+      //
+      template <typename T>
+      struct TypedefDecl : virtual TypedefDeclBase, Traverser
+      {
+        typedef
+        SyntaxTree::StrictPtr<T>
+        NodePtr;
+
+        TypedefDecl ()
+        {
+          disp_.map (typeid (T), this);
+        }
+
+        virtual bool
+        traverse (SyntaxTree::NodePtr const& n)
+        {
+          //@@ gcc bug
+          traverse (typedef_decl, n->template dynamic_type<T> ());
+          return true;
+        }
+
+        virtual void
+        traverse (SyntaxTree::TypedefDeclPtr const& td, NodePtr const& n)
         {
           delegate (n);
         }
