@@ -289,10 +289,16 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
       ACE_INET_Addr addr (listen_point.port,
                           listen_point.host.in ());
 
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Listening port [%d] on [%s]\n",
+                      listen_point.port, listen_point.host.in ()));
+        }
 
       // Construct an  IIOP_Endpoint object
       TAO_IIOP_Endpoint endpoint (addr,
-                                  0);
+                                  this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
       // Construct a property object
       TAO_Base_Transport_Property prop (&endpoint);
