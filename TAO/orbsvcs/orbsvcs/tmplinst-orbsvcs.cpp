@@ -13,7 +13,7 @@ ACE_RCSID(orbsvcs, tmplinst_orbsvcs, "$Id$")
 template class TAO_Object_Manager<CORBA_Object>;
 template class TAO_Object_Manager<CORBA_TypeCode>;
 template class TAO_Unbounded_Object_Sequence<CORBA_Object>;
-template class TAO_Unbounded_Object_Sequence<CORBA_TypeCode>;
+template class TAO_Unbounded_Pseudo_Sequence<CORBA_TypeCode>;
 template class TAO_Unbounded_Sequence<CosLifeCycle::NVP>;
 template class TAO_Unbounded_Sequence<CosNaming::NameComponent>;
 template class TAO_Unbounded_Sequence<CosNaming::Binding>;
@@ -30,7 +30,7 @@ template class TAO_Unbounded_Sequence<RtecScheduler::RT_Info>;
 #pragma instantiate TAO_Object_Manager<CORBA_Object>
 #pragma instantiate TAO_Object_Manager<CORBA_TypeCode>
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Object>
-#pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_TypeCode>
+#pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA_TypeCode>
 #pragma instantiate TAO_Unbounded_Sequence<CosLifeCycle::NVP>
 #pragma instantiate TAO_Unbounded_Sequence<CosNaming::NameComponent>
 #pragma instantiate TAO_Unbounded_Sequence<CosNaming::Binding>
