@@ -8637,8 +8637,8 @@ ACE_OS::sendv (ACE_HANDLE handle,
   DWORD bytes_sent = 0;
   int result = 0;
 
-  // Winsock 2 has WSASend and can do this directly, but Winsock 1 needs
-  // to do the sends one-by-one.
+  // Winsock 2 has WSASend and can do this directly, but Winsock 1
+  // needs to do the sends one-by-one.
 # if (ACE_HAS_WINSOCK2 != 0)
   result = ::WSASend ((SOCKET) handle,
                       (WSABUF *) buffers,
