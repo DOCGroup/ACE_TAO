@@ -18,10 +18,10 @@
 //
 //  TAO_Trader_Factory
 //  TAO_Trader_Base
-//  TAO_Support_Attributes_Impl
-//  TAO_Trading_Components_Impl
-//  TAO_Link_Attributes_Impl
-//  TAO_Import_Attributes_Impl
+//  TAO_Support_Attributes_i
+//  TAO_Trading_Components_i
+//  TAO_Link_Attributes_i
+//  TAO_Import_Attributes_i
 //  TAO_Sequence_Extracter_Base
 //
 // ============================================================================
@@ -126,7 +126,7 @@ public:
 };
 
 
-class TAO_ORBSVCS_Export TAO_Support_Attributes_Impl
+class TAO_ORBSVCS_Export TAO_Support_Attributes_i
   // = TITLE
   //     This class stores, allows access to and modification of
   //     trader's support attributes.
@@ -137,8 +137,8 @@ class TAO_ORBSVCS_Export TAO_Support_Attributes_Impl
 {
 public:
   // = Initialization and termination methods.
-  TAO_Support_Attributes_Impl (TAO_Lockable &locker);
-  ~TAO_Support_Attributes_Impl ();
+  TAO_Support_Attributes_i (TAO_Lockable &locker);
+  ~TAO_Support_Attributes_i ();
 
   // = Accessor methods.
   CORBA::Boolean supports_modifiable_properties (void) const;
@@ -176,7 +176,7 @@ private:
   // Already narrowed reference to the ServiceTypeRepository.
 };
 
-class TAO_ORBSVCS_Export TAO_Link_Attributes_Impl
+class TAO_ORBSVCS_Export TAO_Link_Attributes_i
   // = TITLE
   //     This class stores, allows access to and modification of
   //     trader's link attributes.
@@ -188,8 +188,8 @@ class TAO_ORBSVCS_Export TAO_Link_Attributes_Impl
 public:
   // = Initialization and termination methods.
 
-  TAO_Link_Attributes_Impl (TAO_Lockable &locker);
-  ~TAO_Link_Attributes_Impl ();
+  TAO_Link_Attributes_i (TAO_Lockable &locker);
+  ~TAO_Link_Attributes_i ();
 
   // = Accessor methods.
 
@@ -205,7 +205,7 @@ private:
   //
 };
 
-class TAO_ORBSVCS_Export TAO_Import_Attributes_Impl
+class TAO_ORBSVCS_Export TAO_Import_Attributes_i
   // = TITLE
   //     This class stores, allows access to and modification of
   //     trader's import attributes.
@@ -217,9 +217,9 @@ class TAO_ORBSVCS_Export TAO_Import_Attributes_Impl
 public:
   // = Initialization and termination methods.
 
-  TAO_Import_Attributes_Impl (TAO_Lockable &locker);
+  TAO_Import_Attributes_i (TAO_Lockable &locker);
 
-  ~TAO_Import_Attributes_Impl (void);
+  ~TAO_Import_Attributes_i (void);
 
   // = Accessor methods.
 
@@ -299,7 +299,7 @@ private:
   // overrides both link and importer policies.
 };
 
-class TAO_ORBSVCS_Export TAO_Trading_Components_Impl
+class TAO_ORBSVCS_Export TAO_Trading_Components_i
   //
   // = TITLE
   //     Set/get methods for references to various
@@ -314,8 +314,8 @@ class TAO_ORBSVCS_Export TAO_Trading_Components_Impl
 public:
 
   // = Initialization and termination methods.
-  TAO_Trading_Components_Impl (TAO_Lockable &locker);
-  ~TAO_Trading_Components_Impl (void);
+  TAO_Trading_Components_i (TAO_Lockable &locker);
+  ~TAO_Trading_Components_i (void);
 
   // = CosTrading::TraderComponents methods.
 
@@ -399,21 +399,21 @@ public:
 
   // = Accessors for objects that manage trader's configuration.
 
-  TAO_Trading_Components_Impl &trading_components (void);
+  TAO_Trading_Components_i &trading_components (void);
 
-  const TAO_Trading_Components_Impl &trading_components (void) const;
+  const TAO_Trading_Components_i &trading_components (void) const;
 
-  TAO_Import_Attributes_Impl &import_attributes (void);
+  TAO_Import_Attributes_i &import_attributes (void);
 
-  const TAO_Import_Attributes_Impl &import_attributes (void) const;
+  const TAO_Import_Attributes_i &import_attributes (void) const;
 
-  TAO_Support_Attributes_Impl &support_attributes (void);
+  TAO_Support_Attributes_i &support_attributes (void);
 
-  const TAO_Support_Attributes_Impl &support_attributes (void) const;
+  const TAO_Support_Attributes_i &support_attributes (void) const;
 
-  TAO_Link_Attributes_Impl &link_attributes (void);
+  TAO_Link_Attributes_i &link_attributes (void);
 
-  const TAO_Link_Attributes_Impl &link_attributes (void) const;
+  const TAO_Link_Attributes_i &link_attributes (void) const;
 
   // = Accessor for trader's lock.
 
@@ -425,16 +425,16 @@ public:
 protected:
   // = Objects determining current configuration of a trader.
 
-  TAO_Trading_Components_Impl trading_components_;
+  TAO_Trading_Components_i trading_components_;
   // Stores and allows lookup of trader's components.
 
-  TAO_Import_Attributes_Impl import_attributes_;
+  TAO_Import_Attributes_i import_attributes_;
   // Stores and allows access/modification of trader's import attributes.
 
-  TAO_Support_Attributes_Impl support_attributes_;
+  TAO_Support_Attributes_i support_attributes_;
   // Stores and allows access/modification of trader's support attributes.
 
-  TAO_Link_Attributes_Impl link_attributes_;
+  TAO_Link_Attributes_i link_attributes_;
   // Stores and allows access/modification of trader's link attributes.
 
  protected:

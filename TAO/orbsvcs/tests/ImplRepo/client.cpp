@@ -9,7 +9,7 @@ ACE_RCSID(ImplRepo, client, "$Id$")
 int
 main (int argc, char **argv)
 {
-  Client_Impl client;
+  Client_i client;
 
   ACE_DEBUG ((LM_DEBUG,
               "\n\tSimple_Client\n\n"));

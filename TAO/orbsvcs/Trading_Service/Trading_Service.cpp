@@ -72,8 +72,8 @@ Trading_Service::init (int argc, char* argv[])
       // Create a Trader Object and set its Service Type Repository.
       this->trader_ = 
 	auto_ptr<TAO_Trader_Factory::TAO_TRADER> (TAO_Trader_Factory::create_trader (argc, argv));
-      TAO_Support_Attributes_Impl& sup_attr = this->trader_->support_attributes ();
-      TAO_Trading_Components_Impl& trd_comp = this->trader_->trading_components ();
+      TAO_Support_Attributes_i& sup_attr = this->trader_->support_attributes ();
+      TAO_Trading_Components_i& trd_comp = this->trader_->trading_components ();
       sup_attr.type_repos (this->type_repos_._this (TAO_TRY_ENV));
       TAO_CHECK_ENV;
 
@@ -196,7 +196,7 @@ Trading_Service::bootstrap_to_federation (void)
       CosTrading::Link_var link_if =  lookup_if->link_if (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      TAO_Trading_Components_Impl& trd_comp =
+      TAO_Trading_Components_i& trd_comp =
         this->trader_->trading_components ();
       CosTrading::Lookup_ptr our_lookup = trd_comp.lookup_if ();
       CosTrading::Link_ptr our_link = trd_comp.link_if ();
@@ -285,7 +285,7 @@ Trading_Service::shutdown (void)
 
   if (this->trader_.get () != 0)
     {  
-      TAO_Trading_Components_Impl& trd_comp
+      TAO_Trading_Components_i& trd_comp
         = this->trader_->trading_components (); 
       CosTrading::Link_ptr our_link = trd_comp.link_if ();
       

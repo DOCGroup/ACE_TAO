@@ -7,7 +7,7 @@
 ACE_RCSID(ImplRepo, client_impl, "$Id$")
 
 // Constructor.
-Client_Impl::Client_Impl (void)
+Client_i::Client_i (void)
   : server_key_ (ACE_OS::strdup ("key0")),
     loop_count_ (10),
     shutdown_ (0),
@@ -18,7 +18,7 @@ Client_Impl::Client_Impl (void)
 // Reads the Server factory ior from a file
 
 int
-Client_Impl::read_ior (char *filename)
+Client_i::read_ior (char *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle_ = ACE_OS::open (filename, 0);
@@ -43,7 +43,7 @@ Client_Impl::read_ior (char *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-Client_Impl::parse_args (void)
+Client_i::parse_args (void)
 {
   ACE_Get_Opt get_opts (argc_, argv_, "dn:f:x");
   int c;
@@ -89,7 +89,7 @@ Client_Impl::parse_args (void)
 // calculate the cube from a long
 
 void
-Client_Impl::cube_long (int i)
+Client_i::cube_long (int i)
 {
   // Cube a long.
   CORBA::Long ret_long;
@@ -121,7 +121,7 @@ Client_Impl::cube_long (int i)
 // Execute client example code.
 
 int
-Client_Impl::run ()
+Client_i::run ()
 {
   u_int i;
 
@@ -134,7 +134,7 @@ Client_Impl::run ()
   return 0;
 }
 
-Client_Impl::~Client_Impl (void)
+Client_i::~Client_i (void)
 {
   // Free resources
   // Close the ior files
@@ -146,7 +146,7 @@ Client_Impl::~Client_Impl (void)
 
 
 int
-Client_Impl::init (int argc, char **argv)
+Client_i::init (int argc, char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -186,7 +186,7 @@ Client_Impl::init (int argc, char **argv)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Client_Impl::init");
+      TAO_TRY_ENV.print_exception ("Client_i::init");
       return -1;
     }
   TAO_ENDTRY;

@@ -20,7 +20,7 @@
 #include "Simple_ObjectC.h"
 #include "tao/corba.h"
 
-class Client_Impl
+class Client_i
 {
   // = TITLE
   //     Simple Client Implementation
@@ -30,8 +30,8 @@ class Client_Impl
   //     several calls to the server before optionally shutting it down.
 public:
   // = Constructor and destructor.
-  Client_Impl (void);
-  ~Client_Impl (void);
+  Client_i (void);
+  ~Client_i (void);
 
   int run ();
   // Execute client example code.
