@@ -8,10 +8,9 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 MAKEFILE = Makefile
-LIBNAME  = libTAO_Utils
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
-
+LIBNAME_UNCHECKED  = libTAO_Utils
+SHLIB  = $(LIBNAME).$(SHARED_EXT)
+LIB    = $(LIBNAME).a
 ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
 
 CPP_SRCS += \
@@ -33,8 +32,12 @@ LSRC  = $(addsuffix .cpp,$(FILES))
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+ifeq ($(exceptions),1)
+LIBNAME=$(LIBNAME_UNCHECKED)
+SHARED_EXT=$(SOEXT)
+endif # exceptions
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
