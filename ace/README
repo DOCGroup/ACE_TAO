@@ -29,7 +29,6 @@ ACE_HAS_WRITEV_TIMEDWAIT
 ACE_HAS_4_4BSD_SENDMSG_RECVMSG		Platform has BSD 4.4 sendmsg()/recvmsg() APIs.
 ACE_HAS_P_READ_WRITE			Platform has pread() and pwrite() support
 ACE_HAS_64BIT_LONGS			Platform has 64bit longs and 32bit ints...
-ACE_HAS_BROKEN_ATEXIT			Platform doesn't handle atexit call properly. (DEC CXX, HP/UX, and AIX.)
 ACE_HAS_AIX_BROKEN_SOCKET_HEADER	Platform, such as AIX4, needs to wrap #include of sys/socket.h with #undef/#define of __cplusplus.
 ACE_HAS_AIX_HI_RES_TIMER		Platform has AIX4 ::read_real_time ()
 ACE_HAS_ALLOCA				Compiler/platform supports alloca()
