@@ -1,3 +1,10 @@
+Sun Nov  9 08:18:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+	  Fixed a unused variable warning in _is_a () for abstract
+	  interfaces.  
+
 Sun Nov  9 08:06:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
