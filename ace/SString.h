@@ -24,6 +24,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_HAS_WCHAR)
+typedef wchar_t ACE_WSTRING_TYPE;
+#else /* ACE_HAS_WCHAR */
+typedef ACE_USHORT16 ACE_WSTRING_TYPE;
+#endif /* ACE_HAS_WCHAR */
+
 // Forward decl.
 class ACE_Allocator;
 
@@ -75,12 +81,10 @@ public:
   ACE_CString (const ACE_CString &);
   // Copy constructor.
 
-#if defined (ACE_HAS_WCHAR)
-  ACE_CString (const wchar_t *s,
+  ACE_CString (const ACE_WSTRING_TYPE *s,
                ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
   // Probable loss of data. Please use with care.
-#endif /* ACE_HAS_WCHAR */
 
   ACE_CString (char c, ACE_Allocator *alloc = 0);
   // Constructor that copies <c> into dynamically allocated memory.
@@ -199,12 +203,12 @@ private:
   // Represents the "NULL" string to simplify the internal logic.
 };
 
-ACE_Export ACE_INLINE ACE_CString operator + (const ACE_CString &, const ACE_CString &);
+ACE_Export ACE_INLINE ACE_CString operator + (const ACE_CString &, 
+                                              const ACE_CString &);
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ostream &operator << (ostream &, const ACE_CString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-#if defined (ACE_HAS_WCHAR)
 class ACE_Export ACE_WString
 {
   // = TITLE
@@ -227,44 +231,44 @@ public:
                ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
 
-  ACE_WString (const wchar_t *s,
+  ACE_WString (const ACE_WSTRING_TYPE *s,
                ACE_Allocator *alloc = 0);
   // Constructor that copies <s> into dynamically allocated memory.
 
-  ACE_WString (const wchar_t *s,
+  ACE_WString (const ACE_WSTRING_TYPE *s,
                size_t len,
                ACE_Allocator *alloc = 0);
-  // Constructor that copies <len> wchar_t's of <s> into dynamically
+  // Constructor that copies <len> ACE_WSTRING_TYPE's of <s> into dynamically
   // allocated memory (will NUL terminate the result).
 
   ACE_WString (size_t len, ACE_Allocator *alloc = 0);
   // Constructor that dynamically allocates memory for <len> + 1
-  // wchar_t characters. The newly created memory is set memset to 0.
+  // ACE_WSTRING_TYPE characters. The newly created memory is set memset to 0.
 
   ACE_WString (const ACE_WString &s);
   // Copy constructor.
 
-  ACE_WString (wchar_t c, ACE_Allocator *alloc = 0);
+  ACE_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc = 0);
   // Constructor that copies <c> into dynamically allocated memory.
 
   ~ACE_WString (void);
   // Deletes the memory...
 
-  wchar_t operator [] (size_t slot) const;
+  ACE_WSTRING_TYPE operator [] (size_t slot) const;
   // Return the <slot'th> character in the string (doesn't perform
   // bounds checking).
 
-  wchar_t &operator [] (size_t slot);
+  ACE_WSTRING_TYPE &operator [] (size_t slot);
   // Return the <slot'th> character by reference in the string
   // (doesn't perform bounds checking).
 
   ACE_WString &operator = (const ACE_WString &);
   // Assignment operator (does copy memory).
 
-  void set (const wchar_t *s);
+  void set (const ACE_WSTRING_TYPE *s);
   // Copy <s>
 
-  void set (const wchar_t *s,
+  void set (const ACE_WSTRING_TYPE *s,
             size_t len);
   // Copy <len> bytes of <s> (will NUL terminate the result)
 
@@ -285,16 +289,16 @@ public:
   size_t length (void) const;
   // Return the length of the string.
 
-  wchar_t *rep (void) const;
+  ACE_WSTRING_TYPE *rep (void) const;
   // Gets a copy of the underlying pointer.
 
   char *char_rep (void) const;
   // Transform into a copy of the ASCII character representation.
 
-  const wchar_t *fast_rep (void) const;
+  const ACE_WSTRING_TYPE *fast_rep (void) const;
   // Get at the underlying representation directly!
 
-  const wchar_t *c_str (void) const;
+  const ACE_WSTRING_TYPE *c_str (void) const;
   // Same as STL String's <c_str> and <fast_rep>.
 
   int strstr (const ACE_WString &s) const;
@@ -305,15 +309,15 @@ public:
   // Find <str> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
-  int find (const wchar_t *s, int pos = 0) const;
+  int find (const ACE_WSTRING_TYPE *s, int pos = 0) const;
   // Find <s> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
-  int find (wchar_t c, int pos = 0) const;
+  int find (ACE_WSTRING_TYPE c, int pos = 0) const;
   // Find <c> starting at pos.  Returns the slot of the first
   // location that matches, else npos.
 
-  int rfind (wchar_t c, int pos = npos) const;
+  int rfind (ACE_WSTRING_TYPE c, int pos = npos) const;
   // Find <c> starting at pos (counting from the end).  Returns the
   // slot of the first location that matches, else npos.
 
@@ -338,10 +342,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-  static size_t strlen (const wchar_t *);
-  // Computes the length of a "0" terminated wchar_t *.
+  static size_t strlen (const ACE_WSTRING_TYPE *);
+  // Computes the length of a "0" terminated ACE_WSTRING_TYPE *.
 
-  static const wchar_t *strstr (const wchar_t *s1, const wchar_t *s2);
+  static const ACE_WSTRING_TYPE *strstr (const ACE_WSTRING_TYPE *s1, 
+                                       const ACE_WSTRING_TYPE *s2);
   // Traditional style strstr
 
   void resize (size_t len);
@@ -357,7 +362,7 @@ private:
   size_t len_;
   // Length of the ACE_WString.
 
-  wchar_t *rep_;
+  ACE_WSTRING_TYPE *rep_;
   // Pointer to data.
 };
 
@@ -366,7 +371,6 @@ ACE_Export ACE_INLINE ACE_WString operator+ (const ACE_WString &,
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ostream &operator << (ostream &, const ACE_WString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#endif /* ACE_HAS_WCHAR */
 
 class ACE_Export ACE_SString
 {

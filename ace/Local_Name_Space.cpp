@@ -7,8 +7,6 @@
 #include "ace/ACE.h"
 #include "ace/Local_Name_Space.h"
 
-#if defined (ACE_HAS_WCHAR)
-
 ACE_RCSID(ace, Local_Name_Space, "$Id$")
 
 ACE_USHORT16 *
@@ -118,7 +116,8 @@ ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
 size_t
 ACE_NS_String::hash (void) const
 {
-  return ACE::hash_pjw (this->rep_);
+  return ACE::hash_pjw (ACE_reinterpret_cast (char *, this->rep_),
+                        this->len_ * sizeof (ACE_USHORT16));
 }
 
 ACE_NS_Internal::ACE_NS_Internal (void)
@@ -210,7 +209,5 @@ template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
 #pragma instantiate ACE_Read_Guard<ACE_RW_Process_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_RW_Process_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* ACE_HAS_WCHAR */
 
 #endif /* ACE_LOCAL_NAME_SPACE_C */

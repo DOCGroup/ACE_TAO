@@ -21,6 +21,35 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// These macros have been deprecated and should be replaced by their
+// ACE_TEXT_* equivalents.
+#if !defined (ACE_ONLY_LATEST_AND_GREATEST)
+// Convert the old unicode indicators
+# if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+#   define ACE_USES_WCHAR
+# endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+# if defined (ACE_HAS_UNICODE)
+#   define ACE_HAS_WCHAR
+# endif /* ACE_HAS_UNICODE */
+
+// These are defined to get older stuff to compile
+# define ASYS_TCHAR ACE_TCHAR
+# define ASYS_TEXT ACE_TEXT
+# define ASYS_ONLY_MULTIBYTE_STRING ACE_TEXT_ALWAYS_CHAR
+# define ASYS_MULTIBYTE_STRING ACE_TEXT_CHAR_TO_TCHAR
+# define ASYS_WIDE_STRING ACE_TEXT_CHAR_TO_TCHAR
+# define ACE_WIDE_STRING ACE_TEXT_CHAR_TO_TCHAR
+# define ACE_DIRECTORY_SEPARATOR_CHAR_A ACE_DIRECTORY_SEPARATOR_CHAR
+
+# if defined (ACE_USES_WCHAR)
+#   define ASYS_ONLY_WIDE_STRING(STRING) STRING
+# else /* ACE_USES_WCHAR */
+#   define ASYS_ONLY_WIDE_STRING(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
+# endif /* ACE_USES_WCHAR */
+
+#endif /* ACE_ONLY_LATEST_AND_GREATEST */
+
+
 #if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
 # include /**/ <tchar.h>
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */

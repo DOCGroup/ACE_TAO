@@ -26,8 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_WCHAR)
-
 #include "ace/Containers.h"
 #include "ace/Malloc_T.h"
 #include "ace/Synch.h"
@@ -119,8 +117,6 @@ private:
 
 // Include the ACE_Local_Name_Space templates stuff at this point.
 #include "ace/Local_Name_Space_T.h"
-
-#endif /* ACE_HAS_WCHAR */
 
 #include "ace/post.h"
 #endif /* ACE_LOCAL_NAME_SPACE_H */

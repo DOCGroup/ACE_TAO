@@ -1,3 +1,31 @@
+Sun Apr 23 18:14:33 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ace_wchar.h:
+          
+          Added compatibility for all the old ASYS_* macros by default. 
+          But no part of ACE/TAO should still use them anymore.  This 
+          compatibility can be turned off by defining 
+          ACE_ONLY_LATEST_AND_GREATEST.
+
+        * ace/SString.cpp:
+        * ace/SString.h:
+        * ace/SString.i:
+        * ace/Local_Name_Space.cpp:
+        * ace/Local_Name_Space.h:
+        * ace/Local_Name_Space_T.h:
+        * ace/Name_Space.cpp:
+        * ace/Name_Space.h:
+        * ace/Naming_Context.cpp:
+        * ace/Naming_Context.h:
+        * ace/Remote_Name_Space.cpp:
+        * ace/Remote_Name_Space.h:
+
+          Found a better way of support for the ACE_Name_Space classes when
+          there isn't a wchar_t.  We now define the ACE_WString to internally
+          use a type called ACE_WSTRING_TYPE, which is defined to wchar_t
+          unless ACE_USES_WCHAR is not defined (in which case it is defined
+          to ACE_USHORT16).
+
 Sun Apr 23 14:27:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/CLASSIX/CLASSIX_Port.cpp:

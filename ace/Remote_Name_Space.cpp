@@ -3,8 +3,6 @@
 
 #include "ace/Remote_Name_Space.h"
 
-#if defined (ACE_HAS_WCHAR)
-
 ACE_RCSID(ace, Remote_Name_Space, "$Id$")
 
 int
@@ -332,4 +330,3 @@ ACE_Remote_Name_Space::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-#endif /* ACE_HAS_WCHAR */

@@ -26,8 +26,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_HAS_WCHAR)
-
 #include "ace/Naming_Context.h"
 #include "ace/SString.h"
 #include "ace/Local_Name_Space.h"
@@ -251,8 +249,6 @@ private:
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Local_Name_Space_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
-#endif /* ACE_HAS_WCHAR */
 
 #include "ace/post.h"
 #endif /* ACE_LOCAL_NAME_SPACE_T_H */
