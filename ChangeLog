@@ -1,3 +1,8 @@
+Wed Dec  3 11:39:45 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
+
+	* tests/Task_Ex_Test.cpp:
+	Added explicit instantiations to ACE_Task_Ex and ACE_Message_Queue_Ex
+
 Tue Dec  2 16:33:14 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_Thread.h: Add #include "ace/Object_Manager_Base.h" to get
