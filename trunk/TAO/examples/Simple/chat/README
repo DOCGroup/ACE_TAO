@@ -56,11 +56,15 @@ line options.  That way, its stdin can be captured:
     ========== type 'quit' to exit  ===========
     : **** noname has joined the chat ****
 
-    abc
-    : [noname] abc
+    hello
+    : [noname] hello
 
-    def
-    : [noname] def
+    goodbye
+    : [noname] goodbye
 
     quit
     value = 0 = 0x0
+
+NOTE:  if you built your VxWorks executables with g++, replace "main"
+with "ace_main" above.  See ACE-INSTALL.html for an explanation of why
+ACE renames "main" to "ace_main" with g++ on VxWorks.
