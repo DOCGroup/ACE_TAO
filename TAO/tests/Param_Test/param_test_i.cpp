@@ -79,11 +79,11 @@ Param_Test_i::test_short (CORBA::Short s1,
 }
 
 // test long long
-CORBA::LongLong
-Param_Test_i::test_longlong (CORBA::LongLong s1,
-			     CORBA::LongLong &s2,
-			     CORBA::LongLong_out s3,
-			     CORBA::Environment &)
+CORBA::ULongLong
+Param_Test_i::test_ulonglong (CORBA::ULongLong s1,
+                              CORBA::ULongLong &s2,
+                              CORBA::ULongLong_out s3,
+                              CORBA::Environment &)
 {
   s2 = s1 * 2;
   s3 = s1 * 3;
@@ -114,9 +114,9 @@ Param_Test_i::test_unbounded_string (const char *s1,
 // it back
 char *
 Param_Test_i::test_bounded_string (const char *s1,
-				   char *&s2,
-				   CORBA::String_out s3,
-				   CORBA::Environment &)
+                                   char *&s2,
+                                   CORBA::String_out s3,
+                                   CORBA::Environment &)
 {
   char *retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
@@ -329,11 +329,11 @@ Param_Test::Coffee_Mix * Param_Test_i::test_coffe_mix (
     {
       Coffee_ptr c = s1[i];
       if (CORBA::is_nil (c))
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Element #%d is nil\n", i));
-	  continue;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Element #%d is nil\n", i));
+          continue;
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
                   "\ttype = <%s>\n",
@@ -341,7 +341,7 @@ Param_Test::Coffee_Mix * Param_Test_i::test_coffe_mix (
                   c->_interface_repository_id ()));
     }
 #endif /* 0 */
-  
+
 
   s2 = s1;
   *out = s1;
@@ -372,11 +372,11 @@ Param_Test::Bounded_Coffee_Mix * Param_Test_i::test_bounded_coffe_mix (
     {
       Coffee_ptr c = s1[i];
       if (CORBA::is_nil (c))
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      "Element #%d is nil\n", i));
-	  continue;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Element #%d is nil\n", i));
+          continue;
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
                   "\ttype = <%s>\n",
@@ -384,7 +384,7 @@ Param_Test::Bounded_Coffee_Mix * Param_Test_i::test_bounded_coffe_mix (
                   c->_interface_repository_id ()));
     }
 #endif /* 0 */
-  
+
 
   s2 = s1;
   *out = s1;
@@ -503,7 +503,7 @@ Param_Test_i::test_objref (Coffee_ptr o1,
       TAO_CHECK_ENV;
 
       if (!CORBA::is_nil (o2))
-	CORBA::release (o2);
+        CORBA::release (o2);
 
       if (myobj->_is_equivalent (o1, env))
         {

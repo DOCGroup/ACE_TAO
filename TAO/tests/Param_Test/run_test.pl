@@ -21,15 +21,15 @@ sub run_test
 
   $SV = Process::Create (".".$DIR_SEPARATOR."server".$Process::EXE_EXT,
                          "$debug -ORBobjrefstyle url -ORBport $port -o ".
-			 $iorfile);
-  
+                         $iorfile);
+
   sleep (5);     # Give the server a chance to start up
-  
+
   system (".".$DIR_SEPARATOR."client $debug -f $iorfile  -i $invocation -t ".
           "$type -n $num");
-  
+
   # @@
-  # Someday, a better way of doing this should be found.  Or at least 
+  # Someday, a better way of doing this should be found.  Or at least
   # something that can tell if a server is still alive.  There is kill -0 on
   # Unix, but on NT ???
 
@@ -40,7 +40,7 @@ sub run_test
 
 for ($i = 0; $i <= $#ARGV; $i++)
 {
-  SWITCH: 
+  SWITCH:
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
@@ -90,15 +90,15 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-@types = ("short", "ubstring", "bdstring", "fixed_struct",
-	  "ub_strseq", "bd_strseq",
-	  "var_struct", "nested_struct",
-	  "ub_struct_seq", "bd_struct_seq",
-	  "any", "objref", "objref_sequence", "objref_struct",
-	  "any_sequence",
-	  "ub_short_sequence", "ub_long_sequence", 
-	  "bd_short_sequence", "bd_long_sequence",
-	  "fixed_array", "var_array", "typecode");
+@types = ("short", "ulonglong", "ubstring", "bdstring", "fixed_struct",
+          "ub_strseq", "bd_strseq",
+          "var_struct", "nested_struct",
+          "ub_struct_seq", "bd_struct_seq",
+          "any", "objref", "objref_sequence", "objref_struct",
+          "any_sequence",
+          "ub_short_sequence", "ub_long_sequence",
+          "bd_short_sequence", "bd_long_sequence",
+          "fixed_array", "var_array", "typecode");
 
 if ($type ne "")
 {
@@ -108,7 +108,7 @@ else
 {
   foreach $type (@types)
   {
-    run_test ($type);	
+    run_test ($type);
   }
 }
 

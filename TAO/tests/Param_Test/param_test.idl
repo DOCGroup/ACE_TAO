@@ -40,10 +40,13 @@ interface Param_Test
                     inout short s2,
                     out short s3);
 
-  long long test_longlong (in long long s1,
-			   inout long long s2,
-			   out long long s3);
-  
+  // NOTE:  use unsigned long long instead of long long, because
+  // unsigned long long has much better support on platforms that
+  // do not have a native 64 bit int type.
+  unsigned long long test_ulonglong (in unsigned long long s1,
+                                     inout unsigned long long s2,
+                                     out unsigned long long s3);
+
   // strings unbounded
   string test_unbounded_string (in string s1,
                                 inout string s2,
@@ -51,8 +54,8 @@ interface Param_Test
 
   typedef string<128> short_string;
   short_string test_bounded_string (in short_string s1,
-				    inout short_string s2,
-				    out short_string s3);
+                                    inout short_string s2,
+                                    out short_string s3);
 
   // structures (fixed size)
   struct Fixed_Struct
@@ -84,13 +87,13 @@ interface Param_Test
 
   typedef sequence<long> Long_Seq;
   Long_Seq test_long_sequence (in Long_Seq s1,
-			       inout Long_Seq s2,
-			       out Long_Seq s3);
+                               inout Long_Seq s2,
+                               out Long_Seq s3);
 
   typedef sequence<long,32> Bounded_Long_Seq;
   Bounded_Long_Seq test_bounded_long_sequence (in Bounded_Long_Seq s1,
-					       inout Bounded_Long_Seq s2,
-					       out Bounded_Long_Seq s3);
+                                               inout Bounded_Long_Seq s2,
+                                               out Bounded_Long_Seq s3);
 
   typedef sequence<string> StrSeq;
   StrSeq test_strseq (in StrSeq s1,
@@ -99,8 +102,8 @@ interface Param_Test
 
   typedef sequence<string,32> Bounded_StrSeq;
   Bounded_StrSeq test_bounded_strseq (in Bounded_StrSeq s1,
-				      inout Bounded_StrSeq s2,
-				      out Bounded_StrSeq s3);
+                                      inout Bounded_StrSeq s2,
+                                      out Bounded_StrSeq s3);
 
   typedef sequence<Fixed_Struct> StructSeq;
   StructSeq test_struct_sequence (in StructSeq s1,
@@ -109,23 +112,23 @@ interface Param_Test
 
   typedef sequence<Fixed_Struct,32> Bounded_StructSeq;
   Bounded_StructSeq test_bounded_struct_sequence (in Bounded_StructSeq s1,
-						  inout Bounded_StructSeq s2,
-						  out Bounded_StructSeq s3);
+                                                  inout Bounded_StructSeq s2,
+                                                  out Bounded_StructSeq s3);
 
   typedef sequence<Coffee> Coffee_Mix;
   Coffee_Mix test_coffe_mix (in Coffee_Mix s1,
-			     inout Coffee_Mix s2,
-			     out Coffee_Mix s3);
+                             inout Coffee_Mix s2,
+                             out Coffee_Mix s3);
 
   typedef sequence<Coffee,32> Bounded_Coffee_Mix;
   Bounded_Coffee_Mix test_bounded_coffe_mix (in Bounded_Coffee_Mix s1,
-					     inout Bounded_Coffee_Mix s2,
-					     out Bounded_Coffee_Mix s3);
+                                             inout Bounded_Coffee_Mix s2,
+                                             out Bounded_Coffee_Mix s3);
 
   typedef sequence<any> AnySeq;
   AnySeq test_anyseq (in AnySeq s1,
-				      inout AnySeq s2,
-					  out AnySeq s3);
+                                      inout AnySeq s2,
+                                          out AnySeq s3);
 
 /*  typedef sequence<any, 32> Bounded_AnySeq;
   Bounded_AnySeq test_bounded_anyseq (in Bounded_AnySeq s1,
@@ -175,10 +178,10 @@ interface Param_Test
     Coffee y;
   };
   Objref_Struct test_objref_struct (in Objref_Struct t1,
-				    inout Objref_Struct t2,
-				    out Objref_Struct t3);
+                                    inout Objref_Struct t2,
+                                    out Objref_Struct t3);
   // test structures that contain object references.
-  
+
   // arrays (fixed)
   const unsigned long DIM1 = 10;
   typedef long Fixed_Array [DIM1];

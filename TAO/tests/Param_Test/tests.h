@@ -31,7 +31,7 @@
 #include "objref_struct.h"
 #include "objref.h"
 #include "short.h"
-#include "longlong.h"
+#include "ulonglong.h"
 #include "typecode.h"
 #include "ub_any_seq.h"
 #include "ub_long_seq.h"
