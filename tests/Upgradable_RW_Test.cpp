@@ -175,7 +175,7 @@ Reader_Task::svc (void)
         find_last ();
 #if defined (RW_MUTEX)
         if (use_try_upgrade)
-          result = 
+          result =
             rw_mutex.tryacquire_write_upgrade ();
 #endif /* RW_MUTEX */
 
@@ -469,7 +469,7 @@ main (int argc, ASYS_TCHAR *argv[])
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 

@@ -57,10 +57,10 @@ USELIB("..\ace\aced.lib");
 
 static void set_label(Widget w, const char *p)
 {
-  XtVaSetValues (w, 
-		 XmNlabelString, 
-		 XmStringCreateLocalized( (char*) p), 
-		 NULL);
+  XtVaSetValues (w,
+                 XmNlabelString,
+                 XmStringCreateLocalized( (char*) p),
+                 NULL);
 }
 #define LABEL_WIDGET xmLabelWidgetClass
 #define BUTTON_WIDGET xmPushButtonWidgetClass
@@ -289,25 +289,25 @@ main (int argc, char *argv[])
 
   //"Stop Test" button.
   goodbye = XtCreateWidget ( (char *) "goodbye",
-			     BUTTON_WIDGET,
-			     digits_rc,
-			     NULL,
-			     0);
+                             BUTTON_WIDGET,
+                             digits_rc,
+                             NULL,
+                             0);
   set_label(goodbye, "Stop Test");
 
   //"Press Me" button
   PressMe = XtCreateWidget ((char *) "PressMe",
-			    BUTTON_WIDGET,
-			    digits_rc,
-			    NULL,
-			    0);
+                            BUTTON_WIDGET,
+                            digits_rc,
+                            NULL,
+                            0);
 
   //Display for event counter
-  lbl = XtCreateWidget ((char *) "label_for_event_one", 
-			LABEL_WIDGET, 
-			digits_rc, 
-			NULL, 
-			0);
+  lbl = XtCreateWidget ((char *) "label_for_event_one",
+                        LABEL_WIDGET,
+                        digits_rc,
+                        NULL,
+                        0);
   set_label(lbl, "label_for_all_events");
   int ac = 0;
   children[ac++] = goodbye;
@@ -366,7 +366,7 @@ main (int argc, char *argv[])
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               "Xt not supported on this platform\n"));
 #endif /* ACE_HAS_XT */
   ACE_END_TEST;

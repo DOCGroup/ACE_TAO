@@ -151,7 +151,7 @@ main (int argc, ASYS_TCHAR *argv[])
 
   if (argc <= 1)
     // Disable LM_DEBUG messages.
-    ACE_Log_Msg::instance ()->priority_mask 
+    ACE_Log_Msg::instance ()->priority_mask
       (ACE_Log_Msg::instance ()->priority_mask () & ~ LM_DEBUG);
   else if (argc == 2)
     {
@@ -208,7 +208,8 @@ main (int argc, ASYS_TCHAR *argv[])
     }
 
 #else
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   // Re-enable LM_DEBUG messages.

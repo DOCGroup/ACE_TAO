@@ -267,7 +267,8 @@ main (int, ASYS_TCHAR *[])
   signal_catcher = 0;
 
 #else
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;

@@ -227,7 +227,7 @@ main (int, ASYS_TCHAR *[])
   // ourselves.
   ACE_Thread_Manager::instance ()->wait ();
 #else
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

@@ -138,7 +138,7 @@ reader (void *)
                       ASYS_TEXT ("(%t) upgraded to write lock!\n")));
 
           ACE_thread_t self = ACE_Thread::self ();
-          
+
           shared_data = self;
           data = self;
 
@@ -199,11 +199,11 @@ writer (void *)
       current_writers++;
 
       if (current_writers > 1)
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT (" (%t) other writers found!!!\n")));
 
       if (current_readers > 0)
-        ACE_DEBUG ((LM_DEBUG, 
+        ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT (" (%t) readers found!!!\n")));
 
       ACE_thread_t self = ACE_Thread::self ();
@@ -221,7 +221,7 @@ writer (void *)
         }
 
       current_writers--;
-       
+
       ACE_DEBUG((LM_DEBUG, ASYS_TEXT (" (%t) write %d done at %T\n"), iterations));
     }
   return 0;
@@ -254,32 +254,32 @@ int main (int argc, ASYS_TCHAR *argv[])
   current_readers = 0; // Possibly already done
   current_writers = 0; // Possibly already done
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT (" (%t) main thread starting\n")));
 
   if (ACE_Thread_Manager::instance ()->spawn_n (n_readers,
                                                ACE_THR_FUNC (reader),
                                                0,
                                                THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ASYS_TEXT ("%p\n"), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("spawn_n")), 1);
   else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers,
                                                     ACE_THR_FUNC (writer),
                                                     0,
                                                     THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
-                       ASYS_TEXT ("%p\n"), 
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("%p\n"),
                        ASYS_TEXT ("spawn_n")), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT (" (%t) exiting main thread\n")));
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR, 
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

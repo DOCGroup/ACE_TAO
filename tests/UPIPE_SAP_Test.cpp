@@ -171,10 +171,10 @@ main (int, char *[])
 #else
 
 #if !defined (ACE_HAS_THREADS)
-  ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
+  ACE_ERROR ((LM_INFO, "threads not supported on this platform\n"));
 #else
 #if !defined (ACE_HAS_STREAM_PIPES) && !defined (ACE_WIN32)
-  ACE_ERROR ((LM_ERROR, "UPIPE is not supported on this platform\n"));
+  ACE_ERROR ((LM_INFO, "UPIPE is not supported on this platform\n"));
 #endif /* !defined (ACE_HAS_STREAM_PIPES) && ! defined (ACE_WIN32) */
 #endif /* !defined (ACE_HAS_THREADS) */
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_WIN32)) */

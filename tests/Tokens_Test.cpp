@@ -253,7 +253,7 @@ main (int, char *[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) main thread exiting.\n"));
 #else
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

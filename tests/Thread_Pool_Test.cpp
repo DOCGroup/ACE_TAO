@@ -111,21 +111,21 @@ Thread_Pool::svc (void)
       int length = mb->length ();
 
       if (length > 0)
-	ACE_DEBUG ((LM_DEBUG,
-		    ASYS_TEXT ("(%t) in iteration %d, queue len = %d, length = %d, text = \"%*s\"\n"),
-		    count, this->msg_queue ()->message_count (),
-		    length, length - 1, mb->rd_ptr ()));
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%t) in iteration %d, queue len = %d, length = %d, text = \"%*s\"\n"),
+                    count, this->msg_queue ()->message_count (),
+                    length, length - 1, mb->rd_ptr ()));
 
       // We're responsible for deallocating this.
       mb->release ();
 
       if (length == 0)
-	{
-	  ACE_DEBUG ((LM_DEBUG,
-		      ASYS_TEXT ("(%t) in iteration %d, queue len = %d, got NULL message, exiting\n"),
-		      count, this->msg_queue ()->message_count ()));
-	  break;
-	}
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("(%t) in iteration %d, queue len = %d, got NULL message, exiting\n"),
+                      count, this->msg_queue ()->message_count ()));
+          break;
+        }
     }
 
   // Note that the ACE_Task::svc_run () method automatically removes
@@ -137,7 +137,7 @@ int
 Thread_Pool::open (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("(%t) producer start, dumping the Thread_Pool\n")));
+              ASYS_TEXT ("(%t) producer start, dumping the Thread_Pool\n")));
   this->dump ();
 
   // Create a pool of worker threads.
@@ -150,15 +150,15 @@ Thread_Pool::open (void *)
 
       // Allocate a new message.
       ACE_NEW_RETURN (mb,
-		      ACE_Message_Block (BUFSIZ, ACE_Message_Block::MB_DATA,
-					 0, 0, 0, &this->lock_adapter_),
-		      -1);
+                      ACE_Message_Block (BUFSIZ, ACE_Message_Block::MB_DATA,
+                                         0, 0, 0, &this->lock_adapter_),
+                      -1);
 
       ACE_OS::sprintf ((ASYS_TCHAR *) mb->rd_ptr (), ASYS_TEXT ("%d\n"), count);
       int n = ACE_OS::strlen ((ASYS_TCHAR *)mb->rd_ptr ());
 
       if (count == 0 || (count % 20 == 0))
-	ACE_OS::sleep (1);
+        ACE_OS::sleep (1);
 
       // Send a normal message to the waiting threads and continue
       // producing.
@@ -166,27 +166,27 @@ Thread_Pool::open (void *)
 
       // Pass the message to the Thread_Pool.
       if (this->put (mb) == -1)
-	ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
+        ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
     }
 
   // Send a shutdown message to the waiting threads and exit.
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\n(%t) sending shutdown message to %d threads, dump of task:\n"),
-	      this->thr_count ()));
+              ASYS_TEXT ("\n(%t) sending shutdown message to %d threads, dump of task:\n"),
+              this->thr_count ()));
   this->dump ();
 
   ACE_Message_Block *mb;
 
   ACE_NEW_RETURN (mb,
-		  ACE_Message_Block (0, ACE_Message_Block::MB_DATA,
-				     0, 0, 0, &this->lock_adapter_),
-		  -1);
+                  ACE_Message_Block (0, ACE_Message_Block::MB_DATA,
+                                     0, 0, 0, &this->lock_adapter_),
+                  -1);
 
   for (int i = this->thr_count (); i > 0; i--)
     {
       ACE_DEBUG ((LM_DEBUG,
-		  ASYS_TEXT ("(%t) EOF, enqueueing NULL block for thread = %d\n"),
-		  i));
+                  ASYS_TEXT ("(%t) EOF, enqueueing NULL block for thread = %d\n"),
+                  i));
 
       // Enqueue an empty message to flag each consumer to shutdown.
       // Note that we use reference counting to avoid having to copy
@@ -194,7 +194,7 @@ Thread_Pool::open (void *)
       ACE_Message_Block *dup = mb->duplicate ();
 
       if (this->put (dup) == -1)
-	ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
+        ACE_ERROR ((LM_ERROR, ASYS_TEXT (" (%t) %p\n"), ASYS_TEXT ("put")));
     }
 
   mb->release ();
@@ -240,7 +240,8 @@ main (int, ASYS_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) destroying worker tasks and exiting...\n")));
 
 #else
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

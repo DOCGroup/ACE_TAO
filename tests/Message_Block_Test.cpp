@@ -329,7 +329,8 @@ main (int, ASYS_TCHAR *[])
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) Exiting...\n")));
 #else
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;
   return 0;

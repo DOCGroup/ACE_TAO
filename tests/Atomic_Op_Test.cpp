@@ -15,7 +15,7 @@
 //      these operations.
 //
 // = AUTHOR
-//    Irfan Pyarali 
+//    Irfan Pyarali
 //
 // ============================================================================
 
@@ -71,11 +71,10 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Atomic_Op_Test"));
 
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;
 }
 #endif /* ACE_HAS_THREADS */
-
-

@@ -136,10 +136,10 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n\tTiming results notify() call:\n")));
   ACE_DEBUG ((LM_DEBUG,
-	      ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n\n"),
-	      et.real_time,
-	      et.user_time,
-	      et.system_time));
+              ASYS_TEXT ("\t\treal time = %f secs \n\t\tuser time = %f secs \n\t\tsystem time = %f secs\n\n"),
+              et.real_time,
+              et.user_time,
+              et.system_time));
 }
 
 int
@@ -152,20 +152,20 @@ main (int argc, ASYS_TCHAR *argv[])
     switch (c)
       {
       case 's':
-	opt_select_reactor = 1;
-	break;
+        opt_select_reactor = 1;
+        break;
       case 'w':
-	opt_wfmo_reactor = 1;
-	break;
+        opt_wfmo_reactor = 1;
+        break;
       case 'c':
-	opt_nthreads = ACE_OS::atoi (getopt.optarg);
-	break;
+        opt_nthreads = ACE_OS::atoi (getopt.optarg);
+        break;
       case 'l':
-	opt_nloops = ACE_OS::atoi (getopt.optarg);
-	break;
+        opt_nloops = ACE_OS::atoi (getopt.optarg);
+        break;
       case 'd':
-	opt_pass_notify_data = 1;
-	break;
+        opt_pass_notify_data = 1;
+        break;
       }
 
   // Sets up the correct reactor (based on platform and options)
@@ -235,7 +235,8 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Notify_Performance_Test"));
 
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("threads not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("threads not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;

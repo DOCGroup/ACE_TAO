@@ -178,7 +178,7 @@ main (int argc, ASYS_TCHAR *argv[])
   thr_mgr->spawn (ACE_THR_FUNC (worker));
 #else
   // Need to figure out how to implement this test.
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("threads not supported on this platform\n")));
 #endif /* ACE_HAS_THREADS */
 
@@ -199,7 +199,7 @@ main (int argc, ASYS_TCHAR *argv[])
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR,
+  ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("C++ exceptions not supported on this platform\n")));
 #endif /* ACE_HAS_EXCEPTIONS */
 

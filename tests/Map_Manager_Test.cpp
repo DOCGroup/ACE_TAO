@@ -184,7 +184,7 @@ test_hash_map_manager (size_t table_size, size_t iterations)
     ACE_ASSERT (i == iterations);
   }
   {
-    i = 0;    
+    i = 0;
     HASH_MAP_MANAGER::ENTRY *entry = 0;
 
     for (HASH_MAP_MANAGER::ITERATOR iterator (map);
@@ -332,7 +332,7 @@ test_map_manager (size_t table_size, size_t iterations)
     ACE_ASSERT (k == -1);
   }
   {
-    
+
     k = iterations - 1;
     ENTRY *entry = 0;
 
@@ -542,7 +542,8 @@ main (int argc, ASYS_TCHAR *argv[])
 
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("Template specializations not supported on this platform\n")));
+  ACE_ERROR ((LM_INFO,
+              ASYS_TEXT ("Template specializations not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;
