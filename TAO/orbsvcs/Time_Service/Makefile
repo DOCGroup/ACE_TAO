@@ -77,7 +77,7 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 .SECONDARY: $(IMPLREPO_SERVICE_OBJS)
 
 server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(IMPLREPO_SERVICE_OBJS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(IMPLREPO_SERVICE_OBJS) $(VLDLIBS) $(POSTLINK)
 
 clerk:	$(addprefix $(VDIR),$(SIMPLE_CRK_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)

@@ -1,3 +1,9 @@
+Thu Jan 21 14:10:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Makefile: 
+	  The server program was not compiling on IRIX, some object files
+	  were placed after the libraries in the link line. 
+
 Thu Jan 21 10:57:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/CDR.cpp: 
