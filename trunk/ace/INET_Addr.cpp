@@ -221,84 +221,11 @@ ACE_INET_Addr::set (u_short port_number,
 {
   ACE_TRACE ("ACE_INET_Addr::set");
 
-  // Yow, someone gave us a NULL host_name!
-  if (host_name == 0)
-    {
-      errno = EINVAL;
-      return -1;
-    }
-
-  ACE_OS_String::memset ((void *) &this->inet_addr_,
-                         0,
-                         sizeof this->inet_addr_);
-
-#if defined (ACE_HAS_IPV6)
-  struct addrinfo hints, *res, *res0;
-  int error;
-  ACE_OS_String::memset (&hints, 0, sizeof (hints));
-
-  hints.ai_family = address_family;
-
-  error = getaddrinfo (host_name, 0, &hints, &res0);
-  if (error)
-    return -1;
-
-  int ret = -1;
-  for (res = res0; res != 0; res = res->ai_next)
-    {
-      if (res->ai_family == AF_INET || res->ai_family == AF_INET6)
-        {
-          this->set_type (res->ai_family);
-          this->set_addr (res->ai_addr, res->ai_addrlen);
-          this->set_port_number (port_number, encode);
-          ret = 0;
-          break;
-        }
-    }
-  freeaddrinfo (res0);
-  return ret;
-
-#else /* ACE_HAS_IPV6 */
-
-  // IPv6 not supported... insure the family is set to IPv4
-  address_family = PF_INET;
-  this->set_type (address_family);
-  this->inet_addr_.in4_.sin_family = address_family;
-  ACE_UINT32 addrv4;
-  if (ACE_OS::inet_aton (host_name,
-                         (struct in_addr *) &addrv4) == 1)
-    return this->set (port_number,
-                      encode ? ntohl (addrv4) : addrv4,
-                      encode);
-  else
-    {
-#  if defined (VXWORKS) || defined (CHORUS)
-      hostent *hp = ACE_OS::gethostbyname (host_name);
-#  else
-      hostent hentry;
-      ACE_HOSTENT_DATA buf;
-      int error;
-
-      hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
-                                             buf, &error);
-#  endif /* VXWORKS */
-
-      if (hp == 0)
-        {
-          errno = EINVAL;
-          return -1;
-        }
-      else
-        {
-          (void) ACE_OS_String::memcpy ((void *) &addrv4,
-                                        hp->h_addr,
-                                        hp->h_length);
-          return this->set (port_number,
-                            encode ? ntohl (addrv4) : addrv4,
-                            encode);
-        }
-    }
-#endif /* ACE_HAS_IPV6 */
+  int ret = this->set_host_name(host_name,address_family);
+  if(ret != 0)
+    return ret;
+  this->set_port_number(port_number,encode);
+  return 0;
 }
 
 
@@ -643,6 +570,81 @@ ACE_INET_Addr::get_host_name (void) const
   return name;
 }
 
+int
+ACE_INET_Addr::set_host_name (const char host_name[],
+                              int address_family)
+{
+  // Yow, someone gave us a NULL host_name!
+  if (host_name == 0)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
+#if defined (ACE_HAS_IPV6)
+  struct addrinfo hints, *res, *res0;
+  int error;
+  ACE_OS_String::memset (&hints, 0, sizeof (hints));
+
+  hints.ai_family = address_family;
+
+  error = getaddrinfo (host_name, 0, &hints, &res0);
+  if (error)
+    return -1;
+
+  int ret = -1;
+  for (res = res0; res != 0; res = res->ai_next)
+    {
+      if (res->ai_family == AF_INET || res->ai_family == AF_INET6)
+        {
+          this->set_type (res->ai_family);
+          this->set_addr (res->ai_addr, res->ai_addrlen);
+          ret = 0;
+          break;
+        }
+    }
+  freeaddrinfo (res0);
+  return ret;
+
+#else /* ACE_HAS_IPV6 */
+
+  // IPv6 not supported... insure the family is set to IPv4
+  address_family = PF_INET;
+  this->set_type (address_family);
+  this->inet_addr_.in4_.sin_family = address_family;
+  ACE_UINT32 addrv4;
+  if (ACE_OS::inet_aton (host_name,
+                         (struct in_addr *) &addrv4) == 1) {
+      this->set_addr((void*)&addrv4, sizeof(addrv4));
+      return 0;
+    }
+  else
+    {
+#  if defined (VXWORKS) || defined (CHORUS)
+      hostent *hp = ACE_OS::gethostbyname (host_name);
+#  else
+      hostent hentry;
+      ACE_HOSTENT_DATA buf;
+      int error;
+
+      hostent *hp = ACE_OS::gethostbyname_r (host_name, &hentry,
+                                             buf, &error);
+#  endif /* VXWORKS */
+
+      if (hp == 0)
+        {
+          errno = EINVAL;
+          return -1;
+        }
+      else
+        {
+          this->set_addr((void*)hp->h_addr, hp->h_length);
+	  return 0;
+        }
+    }
+#endif /* ACE_HAS_IPV6 */
+}
+
 void
 ACE_INET_Addr::set_port_number (u_short port_number,
                                 int encode)
@@ -748,7 +750,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
     }
 }
 
-int ACE_INET_Addr::set_address (const char *ip_addr,
+int ACE_INET_Addr::set_address (const void *ip_addr,
                                 int len,
                                 int encode /* = 1 */)
 {
