@@ -1,3 +1,16 @@
+Thu Oct 16 20:44:40 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* ace/Message_Block.cpp: Changed how continuations are released in
+	  the Message_Block::release_i() method to use an iteration rather
+	  than recursion.  This is to avoid a stack overflow problem
+	  encountered by Janusz Stopa.
+
+	* ace/OS.cpp: Added ACE_Export to the declarations of ::writev and
+	  ::readv.  These are emulation implementations for systems that
+	  don't support them natively.  Was not being resolved correctly
+	  on NT.  Hopefully this will fix it.  Fix suggested by Rob Head
+	  (rhead@virtc.com).
+
 Thu Oct 16 14:21:34 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Proactor.cpp: Replaced #include "ace/Servie_Config.h" with
