@@ -1,3 +1,8 @@
+Thu Mar 15 07:21:21 2001  Balachandran Natarajan <bala@cs.wustl.edu>
+
+        * orbsvcs/tests/FaultTolerance/Makefile: 
+	  Fixed a problem with static builds.
+
 Wed Mar 14 21:21:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEventComm.idl:
