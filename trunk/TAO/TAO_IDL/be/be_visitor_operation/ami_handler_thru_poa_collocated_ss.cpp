@@ -190,7 +190,7 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_ss::gen_invoke (be_visi
     }
 
   ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_CS);
+  ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_COLLOCATED_ARG_UPCALL_SS);
   if (this->has_param_type (node, AST_Argument::dir_INOUT)
       || this->has_param_type (node, AST_Argument::dir_OUT))
     ctx.sub_state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_HAS_ARGUMENTS);
