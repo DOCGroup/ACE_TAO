@@ -66,7 +66,7 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_visitor_array_cdr_op_ci::"
+                             "(%N:%l) be_visitor_array_cdr_op_ci::"
                              "visit_array - "
                              "Bad base type\n"),
                             -1);
@@ -77,14 +77,14 @@ be_visitor_array_cdr_op_ci::visit_array (be_array *node)
 
       if (bt->node_type () == AST_Decl::NT_sequence)
         {
-          // @@ (JP) TODO - change state arg to _CI when the rest of
-          // the cdr_op files get unhacked.
+          // CDR operators for sequences are now declared in the .i file,
+          // so we pass this state to the function.
           if (this->gen_anonymous_base_type (bt, 
-                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CS) 
+                                             TAO_CodeGen::TAO_SEQUENCE_CDR_OP_CH) 
               == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_field_cdr_op_ch::"
+                                 "(%N:%l) be_visitor_array_cdr_op_ci::"
                                  "visit_array - "
                                  "gen_anonymous_base_type failed\n"),
                                 -1);
