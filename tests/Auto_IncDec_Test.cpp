@@ -88,11 +88,10 @@ template class ACE_Auto_IncDec<int>;
 
 // Spawn off threads.
 
+int
 main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Auto_IncDec_Test"));
-
-  ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG,
