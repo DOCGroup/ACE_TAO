@@ -193,6 +193,8 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
   return result;
 }
 
+#endif /* defined (ACE_HAS_WINCE) */
+
 int
 ACE_Log_Record::print (const ASYS_TCHAR *host_name,
                        u_long verbose_flag,
@@ -225,10 +227,6 @@ ACE_Log_Record::print (const ASYS_TCHAR *host_name,
 
   return result;
 }
-
-#else /* ! ACE_HAS_WINCE */
-
-#endif /* defined (ACE_HAS_WINCE) */
 
 #if ! defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
