@@ -59,6 +59,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Connector.h"
+#include "ace/Null_Condition.h"
+#include "ace/Null_Mutex.h"
 #include "Options.h"
 
 ACE_SVC_FACTORY_DECLARE (Peer_Factory)

@@ -5,6 +5,7 @@
 */
 
 #include "ace/OS_main.h"
+#include "ace/OS_Memory.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Service_Config.h"

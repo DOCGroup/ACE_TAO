@@ -2,8 +2,10 @@
 
 #define ACE_BUILD_SVC_DLL
 
-#include "Peer.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Signal.h"
+#include "Peer.h"
 
 ACE_RCSID(Peer, Peer, "$Id$")
 

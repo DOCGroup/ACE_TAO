@@ -9,6 +9,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Singleton.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "Logging_Acceptor.h"
 #include "Logging_Event_Handler.h"

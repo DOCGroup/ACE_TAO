@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_sys_time.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_List.h"
 #include "ace/Timer_Queue.h"

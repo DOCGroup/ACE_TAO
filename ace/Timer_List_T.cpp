@@ -4,6 +4,7 @@
 #define ACE_TIMER_LIST_T_C
 
 #include "ace/Timer_List_T.h"
+#include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

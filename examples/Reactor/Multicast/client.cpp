@@ -4,8 +4,10 @@
 // Log_Wrapper.
 
 #include "ace/OS_main.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_Memory.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "Log_Wrapper.h"

@@ -33,6 +33,7 @@ ACE_RCSID(src, Options, "$Id$")
 #include "Iterator.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
 
 // Global option coordinator for the entire program.
 Options option;

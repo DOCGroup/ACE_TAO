@@ -12,6 +12,8 @@ ACE_RCSID(Misc, test_reactors, "$Id$")
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Recursive_Thread_Mutex.h"
+
 static const int NUM_INVOCATIONS = 10;
 static const int MAX_TASKS = 20;
 
