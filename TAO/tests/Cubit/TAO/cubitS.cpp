@@ -5,11 +5,7 @@
 // TEST:	hand-written C-style "Cubit" stubs and "skeletons"
 //
 
-#include "tao/connect.h"
-#include "tao/params.h"
-#include "tao/debug.h"    // ... and debugging
-#include "tao/optable.h"  // TAO Dynamic Operation Table
-#include "tao/iiopobj.h"
+#include "tao/corba.h"
 
 #include "cubitS.h"
 #include "cubitC.cpp"
@@ -219,6 +215,8 @@ _skel_Cubit::_please_exit_skel (CORBA_ServerRequest &req,
                                 CORBA_Object_ptr    obj,
                                 CORBA_Environment   &env)
 {
-   Cubit *the_cubit = (Cubit*)obj->get_subclass();
-   the_cubit->Cubit_please_exit(env);
+  ACE_UNUSED_ARG (req);
+  
+  Cubit *the_cubit = (Cubit*)obj->get_subclass();
+  the_cubit->Cubit_please_exit(env);
 }
