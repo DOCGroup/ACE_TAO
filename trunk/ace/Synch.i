@@ -911,6 +911,7 @@ ACE_Auto_Event::~ACE_Auto_Event (void)
 {
 }
 
+#if defined (ACE_HAS_THREADS)
 ACE_INLINE 
 ACE_RW_Thread_Mutex::~ACE_RW_Thread_Mutex (void)
 {
@@ -935,3 +936,4 @@ ACE_INLINE
 ACE_Thread_Barrier::~ACE_Thread_Barrier (void)
 {
 }
+#endif /* ACE_HAS_THREADS */
