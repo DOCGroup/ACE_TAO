@@ -8,7 +8,7 @@ ACE_RCSID(Misc, test_read_buffer, "$Id$")
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_HANDLE handle = argc > 1 ? ACE_OS::open (argv[1], O_RDONLY) : 0;
+  ACE_HANDLE handle = argc > 1 ? ACE_OS::open (argv[1], O_RDONLY) : ACE_STDIN;
   int term = argc > 2 ? ACE_OS::atoi (argv[2]) : EOF;
   int search = argc > 3 ? ACE_OS::atoi (argv[3]) : '\n';
   int replace = argc > 4 ? ACE_OS::atoi (argv[4]) : '\0';

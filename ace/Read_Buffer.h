@@ -6,11 +6,10 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt
- *  @author Seth Widoff
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Seth Widoff 
  */
 //==========================================================================
-
 
 #ifndef ACE_READ_BUFFER_H
 #define ACE_READ_BUFFER_H
@@ -26,7 +25,6 @@
 #include "ace/OS.h"
 
 class ACE_Allocator;
-
 
 /**
  * @class ACE_Read_Buffer

@@ -50,8 +50,11 @@ Tue May 21 16:10:11 2002 Ru Gunatilleke <ru@ociweb.com>
 	* examples/RTCORBA/Activity/README: Fixed the description on
 	  supplying the service configurator file.
 
-	* examples/RTCORBA/Activity/svc.conf.server: Added -POACount 1
-	  and -JobCount 2
+	* examples/RTCORBA/Activity/svc.conf.server: Added -POACount 1 
+	  and -JobCount 2.  Thanks to Patrick Lardieri
+ 	  <patrick.j.lardieri@lmco.com> and Gautam Thaker
+ 	  <gthaker@atl.lmco.com> for reporting this and to
+	  Pradeep Gore for supplying the fix.
 
 Tue May 21 15:53:07 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
