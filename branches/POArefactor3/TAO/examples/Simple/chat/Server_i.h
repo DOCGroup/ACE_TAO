@@ -22,7 +22,7 @@
 #define SERVER_I_H
 
 #include "Broadcaster_i.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 
 class Server_i
 {

@@ -1,5 +1,5 @@
 // $Id$
-project(*Event_Sup): rtoldevent, namingexe {
+project(*Event_Sup): rtoldevent, namingexe, utils {
   exename = Event_Sup
   idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs $(TAO_ROOT)/orbsvcs
@@ -28,7 +28,7 @@ project(*Event_Con): rtoldevent, namingexe {
   }
 }
 
-project(*Logging_Sup): rtoldevent, namingexe {
+project(*Logging_Sup): rtoldevent, namingexe, utils {
   exename = Logging_Sup
   idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs $(TAO_ROOT)/orbsvcs
@@ -43,7 +43,7 @@ project(*Logging_Sup): rtoldevent, namingexe {
   }
 }
 
-project(*DualEC_Sup): rtoldevent, namingexe {
+project(*DualEC_Sup): rtoldevent, namingexe, utils {
   exename = DualEC_Sup
   idlflags += -I$(TAO_ROOT)/orbsvcs/orbsvcs
   includes += $(TAO_ROOT)/orbsvcs/orbsvcs $(TAO_ROOT)/orbsvcs
