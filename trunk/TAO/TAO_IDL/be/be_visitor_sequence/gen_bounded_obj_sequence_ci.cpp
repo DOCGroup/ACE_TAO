@@ -123,7 +123,7 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
                          "base type visit failed\n"),
                         -1);
     }
-  *os <<" **buf;" << be_nl
+  *os <<" **buf = 0;" << be_nl
       << be_nl
       << "ACE_NEW_RETURN (buf, ";
   pt->accept (visitor);
