@@ -188,11 +188,11 @@ CORBA::ULong
 TAO_UIOP_Profile::hash (CORBA::ULong max,
                         CORBA::Environment &)
 {
-  CORBA::ULong hashval;
+  CORBA::ULong hashval = 0;
 
   // Just grab a bunch of convenient bytes and hash them; could do
   // more (rendezvous_point, full key, exponential hashing)
-  // but no real need  to do so except if performance requires a more
+  // but no real need to do so except if performance requires a more
   // costly hash.
 
   hashval = this->object_key_.length () *
@@ -314,9 +314,6 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
       return -1;
     }
 
-  // We could use this->rendezvous_point(rendezvous) to set and check the
-  // rendezvous point.  However, it is safe to assume that it is valid 
-  // since it should only have been encoded if it was valid.
   this->object_addr_.set (rendezvous);
 
   // Clean up
