@@ -64,6 +64,10 @@
 #                   value representing a particular SCTP implementation. 
 #                   Recognized values include: openss7
 #
+#  versioned_so     Add versioning to libraries.  Defaults to 1 (true), and
+#                   can be turned off by passing versioned_so=0 to make.  Note
+#                   that setting it in platform_macros.GNU has no effect.
+#
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
 #  targets are listed below.
@@ -162,7 +166,9 @@ endif # static_libs
 
 #### Defined versioned_so = 1 if your platform requires version number
 #### be appended after so library.
-versioned_so = 0
+ifeq ($(versioned_so),)
+  versioned_so = 1
+endif
 
 #### The system has X Windows and we want to include the XtReactor in
 #### the library
@@ -172,22 +178,24 @@ ifndef PACE_ROOT
   PACE_ROOT = $(ACE_ROOT)/PACE
 endif # PACE_ROOT
 
-# Turn on symbol versioning. The scheme that we follow is to allow
-# applications dependent on libraries, with same version numbers (major,
-# minor and beta) to run, but applications with dependencies on libraries
-# with different minor or major or beta versions to fail.
-#
-ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+ifeq ($(versioned_so),1)
+  # Turn on symbol versioning. The scheme that we follow is to allow
+  # applications dependent on libraries, with same version numbers (major,
+  # minor and beta) to run, but applications with dependencies on libraries
+  # with different minor or major or beta versions to fail.
+  #
+  ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 
-# Version number of the libraries
-#
-SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+  # Version number of the libraries
+  #
+  SOVERSION = .$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
 
-# Name that will be written into the dynamic library
-#
-SONAME = $(SHLIB).$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+  # Name that will be written into the dynamic library
+  #
+  SONAME = $(SHLIB).$(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+endif
 
 # Include this before the below variables to make it possible for
 # platform_macros.GNU to set default values for them.
