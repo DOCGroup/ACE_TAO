@@ -1,3 +1,15 @@
+Mon Oct  4 13:23:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/argument.cpp:
+	  Eliminated use of ACE_NESTED_CLASS macro when
+	  generating function parameters in the header file. As
+	  with return types, MSVC does not have namespace
+	  problems with function parameters, and certain cases
+	  can lead to an insufficiently scoped name as the
+	  evaluation of the macro. Thanks to Michael Kircher
+	  <Michael.Kircher@mchp.siemens.de> for pointing
+	  this out.
+
 Mon Oct 04 12:52:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Servant_Base.cpp (TAO_DynamicImplementation::_create_stub):
