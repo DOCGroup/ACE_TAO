@@ -63,6 +63,12 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Send request, without blocking until any reply comes back.
 
+  void start (CORBA_Environment &TAO_IN_ENV =
+              TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Establishes a connection to the remote server, initializes
+  // headers etc.
+
 protected:
   virtual int invoke_i (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
