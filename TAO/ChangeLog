@@ -1,3 +1,11 @@
+Fri Jan 23 11:10:00 2004  Gary Maxey <gary.maxey@hp.com>
+	
+        * tao/ORB_Constants.h
+
+        Fix for BUGID 1723
+
+	Added two new profile Ids
+
 Fri Jan 23 11:43:25 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Fixed_Array_Argument_T.cpp:
