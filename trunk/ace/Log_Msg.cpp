@@ -513,22 +513,22 @@ ACE_Log_Msg::log (const char *format_str,
 #if defined (ACE_WIN32)			
 			LPVOID lpMsgBuf;
  
-			FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-				      NULL,
-				      errno,
-				      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-				      (LPTSTR) &lpMsgBuf,
-				      0,
-				      NULL);
+			::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+					 NULL,
+					 errno,
+					 MAKELANGID (LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+					 (LPTSTR) &lpMsgBuf,
+					 0,
+					 NULL);
 
 			ACE_OS::sprintf (bp, "%s: %s", 
 					 va_arg (argp, char *), lpMsgBuf);
 
 			// Free the buffer.
-			LocalFree( lpMsgBuf );
+			LocalFree (lpMsgBuf);
 #else
 			ACE_OS::sprintf (bp, "%s: <unknown error> = %d",
-				       va_arg (argp, char *), errno);
+					 va_arg (argp, char *), errno);
 #endif /* ACE_WIN32 */		       
 		      }
 		    break;
