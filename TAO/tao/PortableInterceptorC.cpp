@@ -5544,6 +5544,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Interceptor>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5737,6 +5738,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Current>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5800,6 +5802,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5863,6 +5866,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5926,6 +5930,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5989,6 +5994,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -6052,6 +6058,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -6115,6 +6122,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::IORInfo>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -6178,6 +6186,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -6241,6 +6250,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -6304,6 +6314,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -6367,6 +6378,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -6388,12 +6400,14 @@ TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::to_object (
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Interceptor>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR &)
 {
@@ -6403,12 +6417,14 @@ TAO::Any_Impl_T<PortableInterceptor::Interceptor>::demarshal_value (TAO_InputCDR
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Current>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
 {
@@ -6418,12 +6434,14 @@ TAO::Any_Impl_T<PortableInterceptor::Current>::demarshal_value (TAO_InputCDR &)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::demarshal_value (TAO_InputCDR &)
 {
@@ -6433,12 +6451,14 @@ TAO::Any_Impl_T<PortableInterceptor::RequestInfo>::demarshal_value (TAO_InputCDR
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::demarshal_value (TAO_InputCDR &)
 {
@@ -6448,12 +6468,14 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInfo>::demarshal_value (TAO_In
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::demarshal_value (TAO_InputCDR &)
 {
@@ -6463,12 +6485,14 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInfo>::demarshal_value (TAO_In
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::demarshal_value (TAO_InputCDR &)
 {
@@ -6478,12 +6502,14 @@ TAO::Any_Impl_T<PortableInterceptor::ClientRequestInterceptor>::demarshal_value 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::demarshal_value (TAO_InputCDR &)
 {
@@ -6493,12 +6519,14 @@ TAO::Any_Impl_T<PortableInterceptor::ServerRequestInterceptor>::demarshal_value 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::IORInfo>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::IORInfo>::demarshal_value (TAO_InputCDR &)
 {
@@ -6508,12 +6536,14 @@ TAO::Any_Impl_T<PortableInterceptor::IORInfo>::demarshal_value (TAO_InputCDR &)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::demarshal_value (TAO_InputCDR &)
 {
@@ -6523,12 +6553,14 @@ TAO::Any_Impl_T<PortableInterceptor::IORInterceptor>::demarshal_value (TAO_Input
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputCDR &)
 {
@@ -6538,12 +6570,14 @@ TAO::Any_Impl_T<PortableInterceptor::PolicyFactory>::demarshal_value (TAO_InputC
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR &)
 {
@@ -6553,12 +6587,14 @@ TAO::Any_Impl_T<PortableInterceptor::ORBInitInfo>::demarshal_value (TAO_InputCDR
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<PortableInterceptor::ORBInitializer>::demarshal_value (TAO_InputCDR &)
 {

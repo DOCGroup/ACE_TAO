@@ -2774,6 +2774,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<ImplementationRepository::Locator>::to_object (
     CORBA::Object_ptr &_tao_elem

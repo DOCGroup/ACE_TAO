@@ -4790,6 +4790,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RebindPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -4918,6 +4919,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -4981,6 +4983,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5044,6 +5047,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5107,6 +5111,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5170,6 +5175,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5233,6 +5239,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5296,6 +5303,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5424,6 +5432,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RoutingPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5487,6 +5496,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5550,6 +5560,7 @@ operator>>= (
       );
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
     CORBA::Object_ptr &_tao_elem
@@ -5571,12 +5582,14 @@ TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::to_object (
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RebindPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5586,12 +5599,14 @@ TAO::Any_Impl_T<Messaging::RebindPolicy>::demarshal_value (TAO_InputCDR &)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5601,12 +5616,14 @@ TAO::Any_Impl_T<Messaging::RequestPriorityPolicy>::demarshal_value (TAO_InputCDR
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5616,12 +5633,14 @@ TAO::Any_Impl_T<Messaging::ReplyPriorityPolicy>::demarshal_value (TAO_InputCDR &
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5631,12 +5650,14 @@ TAO::Any_Impl_T<Messaging::RequestStartTimePolicy>::demarshal_value (TAO_InputCD
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5646,12 +5667,14 @@ TAO::Any_Impl_T<Messaging::RequestEndTimePolicy>::demarshal_value (TAO_InputCDR 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5661,12 +5684,14 @@ TAO::Any_Impl_T<Messaging::ReplyStartTimePolicy>::demarshal_value (TAO_InputCDR 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5676,12 +5701,14 @@ TAO::Any_Impl_T<Messaging::ReplyEndTimePolicy>::demarshal_value (TAO_InputCDR &)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5691,12 +5718,14 @@ TAO::Any_Impl_T<Messaging::RelativeRequestTimeoutPolicy>::demarshal_value (TAO_I
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RoutingPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5706,12 +5735,14 @@ TAO::Any_Impl_T<Messaging::RoutingPolicy>::demarshal_value (TAO_InputCDR &)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
 {
@@ -5721,12 +5752,14 @@ TAO::Any_Impl_T<Messaging::MaxHopsPolicy>::demarshal_value (TAO_InputCDR &)
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_cs.cpp:60
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::marshal_value (TAO_OutputCDR &)
 {
   return 0;
 }
 
+template<>
 CORBA::Boolean
 TAO::Any_Impl_T<Messaging::QueueOrderPolicy>::demarshal_value (TAO_InputCDR &)
 {
