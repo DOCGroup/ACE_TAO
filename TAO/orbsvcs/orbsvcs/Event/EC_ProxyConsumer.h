@@ -16,6 +16,8 @@
 #define TAO_EC_PROXYCONSUMER_H
 #include /**/ "ace/pre.h"
 
+#include /**/ "event_export.h"
+
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
