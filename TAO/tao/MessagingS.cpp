@@ -1395,7 +1395,6 @@ POA_Messaging::QueueOrderPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  return new POA_Messaging::_tao_collocated_QueueOrderPolicy (this, stub);
 
   Messaging::QueueOrderPolicy *retval = 
     Messaging::QueueOrderPolicy::_nil ();
