@@ -1,4 +1,4 @@
-//$Id$ 
+//$Id$
 
 #ifndef PROPERTY_HANDLER_C
 #define PROPERTY_HANDLER_C
@@ -11,14 +11,11 @@
 using CIAO::Config_Handler::Utils;
 using CIAO::Config_Handler::Any_Handler;
 
-Deployment::Property *
-CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter)
+void
+CIAO::Config_Handler::Property_Handler::
+process_Property (DOMNodeIterator * iter,
+                  Deployment::Property &property)
 {
-  Deployment::Property_var ret_struct = 0;
-  ACE_NEW_THROW_EX (ret_struct,
-                    Deployment::Property,
-                    CORBA::NO_MEMORY ());
-
   //Check if the Schema IDs for both the elements match
   DOMNode * node = iter->nextNode ();
   XStr name (node->getNodeName ());
@@ -31,7 +28,7 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
     }
 
   // Populate the structure
-  ret_struct->name = Utils::parse_string (iter);
+  property.name = Utils::parse_string (iter);
 
   // Process its value
   node = iter->nextNode ();
@@ -44,11 +41,8 @@ CIAO::Config_Handler::Property_Handler::process_Property (DOMNodeIterator * iter
       ACE_THROW (CORBA::INTERNAL ());
     }
 
-  // Process the value associated 
-  ret_struct->value = Any_Handler::process_Any (iter);
-
-  // Return structure
-  return ret_struct._retn ();
+  // Process the value associated
+  Any_Handler::process_Any (iter, property.value);
 }
 
 #endif /* PROPERTY_HANDLER_C */

@@ -12,14 +12,11 @@
 using CIAO::Config_Handler::Utils;
 using CIAO::Config_Handler::Any_Handler;
 
-Deployment::SatisfierProperty *
-CIAO::Config_Handler::SP_Handler::process_SatisfierProperty (DOMNodeIterator * iter)
+void
+CIAO::Config_Handler::SP_Handler::
+process_SatisfierProperty (DOMNodeIterator * iter,
+                           Deployment::SatisfierProperty &property)
 {
-  Deployment::SatisfierProperty_var ret_struct = 0;
-  ACE_NEW_THROW_EX (ret_struct,
-                    Deployment::SatisfierProperty,
-                    CORBA::NO_MEMORY ());
-
   //Check if the Schema IDs for both the elements match
   DOMNode * node = iter->nextNode ();
   XStr name (node->getNodeName ());
@@ -32,7 +29,7 @@ CIAO::Config_Handler::SP_Handler::process_SatisfierProperty (DOMNodeIterator * i
     }
 
   // Populate name field in the Structure
-  ret_struct->name = Utils::parse_string (iter);
+  property.name = Utils::parse_string (iter);
 
   // Check if any <SatisfierProperty> elements are present
   node = iter->nextNode ();
@@ -47,7 +44,7 @@ CIAO::Config_Handler::SP_Handler::process_SatisfierProperty (DOMNodeIterator * i
       iter->previousNode ();
     }
   else
-      ret_struct->kind = SPK_Handler::process_SatisfierPropertyKind (iter);
+    SPK_Handler::process_SatisfierPropertyKind (iter, property.kind);
 
   // Process Any type
   node = iter->nextNode ();
@@ -61,10 +58,7 @@ CIAO::Config_Handler::SP_Handler::process_SatisfierProperty (DOMNodeIterator * i
       iter->previousNode ();
     }
   else
-    ret_struct->value = Any_Handler::process_Any (iter);
-
-  // Return structure
-  return ret_struct._retn ();
+    Any_Handler::process_Any (iter, property.value);
 }
 
 #endif /* RS_HANDLER_C */

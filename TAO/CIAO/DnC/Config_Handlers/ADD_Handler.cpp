@@ -45,7 +45,7 @@ namespace CIAO
     }
 
     /// handle the artifact deployment description and populate it
-    void ADD_Handler::process_ArtifactDeploymentDescription 
+    void ADD_Handler::process_ArtifactDeploymentDescription
     (::Deployment::ArtifactDeploymentDescription &add)
     {
       // This is bogus and should be replaced later.
@@ -92,7 +92,9 @@ namespace CIAO
 
               // delegate the populating process
               // @@ need to avoid this copy, possible memory leak @@
-              add.execParameter[i] = *Property_Handler::process_Property (this->iter_);
+              // Arvind: Addressed
+              Property_Handler::process_Property (this->iter_,
+                                                  add.execParameter[i]);
             }
           else if (node_name == XStr (ACE_TEXT ("deployRequirement")))
             {
@@ -102,14 +104,14 @@ namespace CIAO
 
               // delegate the populating process
               // @@ need to avoid this copy, possible memory leak @@
-              add.deployRequirement[i] = 
+              add.deployRequirement[i] =
                 *Requirement_Handler::process_Requirement (this->iter_);
             }
           else if (node_name == XStr (ACE_TEXT ("deployedResource")))
             {
               // @@Issue 6392@@
               // fetch the resource deployment description handler
-              RDD_Handler rdd_handler (iter_, false); 
+              RDD_Handler rdd_handler (iter_, false);
 
               // increase the length of the sequence
               CORBA::ULong i (add.deployedResource.length ());
@@ -128,7 +130,7 @@ namespace CIAO
     }
 
     /// handle name attribute
-    void ADD_Handler::process_name (const XMLCh* name, 
+    void ADD_Handler::process_name (const XMLCh* name,
                                     ::Deployment::ArtifactDeploymentDescription &add)
     {
       if (name)
@@ -138,7 +140,7 @@ namespace CIAO
     }
 
     /// handle location attribute
-    void ADD_Handler::process_location (const XMLCh* location, 
+    void ADD_Handler::process_location (const XMLCh* location,
                                         ::Deployment::ArtifactDeploymentDescription &add)
     {
       if (location)
@@ -152,7 +154,7 @@ namespace CIAO
     }
 
     /// handle node attribute
-    void ADD_Handler::process_node (const XMLCh* node, 
+    void ADD_Handler::process_node (const XMLCh* node,
                                     ::Deployment::ArtifactDeploymentDescription &add)
     {
       if (node)
@@ -162,7 +164,7 @@ namespace CIAO
     }
 
     /// handle source attribute
-    void ADD_Handler::process_source (const XMLCh* source, 
+    void ADD_Handler::process_source (const XMLCh* source,
                                       ::Deployment::ArtifactDeploymentDescription &add)
     {
       if (source)
@@ -179,4 +181,3 @@ namespace CIAO
 }
 
 #endif /* ADD_HANDLER_C */
-

@@ -9,14 +9,11 @@
 
 using CIAO::Config_Handler::Utils;
 
-Deployment::ComponentExternalPortEndpoint *
-CIAO::Config_Handler::CEPE_Handler::process_ComponentExternalPortEndpoint (DOMNodeIterator * iter)
+void
+CIAO::Config_Handler::CEPE_Handler::
+process_ComponentExternalPortEndpoint (DOMNodeIterator * iter,
+                                       Deployment::ComponentExternalPortEndpoint &ret_struct)
 {
-  Deployment::ComponentExternalPortEndpoint_var ret_struct = 0;
-  ACE_NEW_THROW_EX (ret_struct,
-                    Deployment::ComponentExternalPortEndpoint,
-                    CORBA::NO_MEMORY ());
-
   //Check if the Schema IDs for both the elements match
   DOMNode * node = iter->nextNode ();
   XStr name (node->getNodeName ());
@@ -30,10 +27,7 @@ CIAO::Config_Handler::CEPE_Handler::process_ComponentExternalPortEndpoint (DOMNo
     }
 
   // Populate the structure
-  ret_struct->portName = Utils::parse_string (iter);
-
-  // Return structure
-  return ret_struct._retn ();
+  ret_struct.portName = Utils::parse_string (iter);
 }
 
 #endif /* CEPE_HANDLER_C */

@@ -46,8 +46,9 @@ namespace CIAO
     class Config_Handler_Export CEPE_Handler
     {
     public:
-      static Deployment::ComponentExternalPortEndpoint *
-        process_ComponentExternalPortEndpoint (DOMNodeIterator * iter);
+      static void
+        process_ComponentExternalPortEndpoint (DOMNodeIterator * iter,
+                                               Deployment::ComponentExternalPortEndpoint &ret_struct);
       // process <ComponentExternalPortEndPoint> definitions in the descriptor
       // files
 

@@ -78,7 +78,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("realizes")))
             {
               // fetch the component interface description handler
-              CID_Handler handler (iter_, false); 
+              CID_Handler handler (iter_, false);
 
               // delegate the populating process
               handler.process_ComponentInterfaceDescription (dp.realizes);
@@ -87,7 +87,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("implementation")))
             {
               // fetch the monolithic deployment description handler
-              MDD_Handler mdd_handler (iter_, false); 
+              MDD_Handler mdd_handler (iter_, false);
 
               // increase the length of the sequence
               CORBA::ULong i (dp.implementation.length ());
@@ -99,7 +99,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("instance")))
             {
               // fetch the instance deployment description handler
-              IDD_Handler idd_handler (iter_, false); 
+              IDD_Handler idd_handler (iter_, false);
 
               // increase the length of the sequence
               CORBA::ULong i (dp.instance.length ());
@@ -111,7 +111,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("connection")))
             {
               // fetch the plan connection description handler
-              PCD_Handler pcd_handler (iter_, false); 
+              PCD_Handler pcd_handler (iter_, false);
 
               // increase the length of the sequence
               CORBA::ULong i (dp.connection.length ());
@@ -123,7 +123,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("externalProperty")))
             {
               // fetch the plan property mapping handler
-              PPM_Handler ppm_handler (iter_, false); 
+              PPM_Handler ppm_handler (iter_, false);
 
               // increase the length of the sequence
               CORBA::ULong i (dp.externalProperty.length ());
@@ -135,7 +135,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("dependsOn")))
             {
               // fetch the implementation dependencies handler
-              ID_Handler id_handler (iter_, false); 
+              ID_Handler id_handler (iter_, false);
 
               // increase the length of the sequence
               CORBA::ULong i (dp.dependsOn.length ());
@@ -147,7 +147,7 @@ namespace CIAO
           else if (node_name == XStr (ACE_TEXT ("artifact")))
             {
               // fetch the artifact deployment description handler
-              ADD_Handler add_handler (iter_, false); 
+              ADD_Handler add_handler (iter_, false);
 
               // increase the length of the sequence
               CORBA::ULong i (dp.artifact.length ());
@@ -160,7 +160,7 @@ namespace CIAO
             {
               // @@Issue 5967@@
               // fetch the property handler
-              Property_Handler prop_handler (iter_, false); 
+              Property_Handler prop_handler (iter_, false);
 
               // increase the length of the sequence
               CORBA::ULong i (dp.infoProperty.length ());
@@ -179,7 +179,7 @@ namespace CIAO
     }
 
     /// handle label attribute
-    void DP_Handler::process_label (const XMLCh* label, 
+    void DP_Handler::process_label (const XMLCh* label,
                                     ::Deployment::DeploymentPlan &dp)
     {
       if (label)
@@ -202,4 +202,3 @@ namespace CIAO
 }
 
 #endif /* DP_HANDLER_C */
-

@@ -9,14 +9,11 @@
 
 using CIAO::Config_Handler::Utils;
 
-Deployment::ImplementationDependency *
-CIAO::Config_Handler::ID_Handler::process_ImplementationDependency (DOMNodeIterator * iter)
+void
+CIAO::Config_Handler::ID_Handler::
+process_ImplementationDependency (DOMNodeIterator * iter,
+                                  Deployment::ImplementationDependency &ret_struct)
 {
-  Deployment::ImplementationDependency_var ret_struct = 0;
-  ACE_NEW_THROW_EX (ret_struct,
-                    Deployment::ImplementationDependency,
-                    CORBA::NO_MEMORY ());
-
   //Check if the Schema IDs for both the elements match
   DOMNode * node = iter->nextNode ();
   XStr name (node->getNodeName ());
@@ -30,10 +27,7 @@ CIAO::Config_Handler::ID_Handler::process_ImplementationDependency (DOMNodeItera
     }
 
   // Populate the structure
-  ret_struct->requiredType = Utils::parse_string (iter);
-
-  // Return structure
-  return ret_struct._retn ();
+  ret_struct.requiredType = Utils::parse_string (iter);
 }
 
 #endif /* ID_HANDLER_C */

@@ -16,7 +16,7 @@ using std::cerr;
 using std::endl;
 
 
-namespace CIAO 
+namespace CIAO
 {
   namespace Config_Handler
   {
@@ -43,7 +43,7 @@ namespace CIAO
     }
 
     /// handle the deployment plan and populate it
-    void RDD_Handler::process_ResourceDeploymentDescription 
+    void RDD_Handler::process_ResourceDeploymentDescription
     (::Deployment::ResourceDeploymentDescription &rdd)
     {
       // This is bogus and should be replaced later.
@@ -72,7 +72,8 @@ namespace CIAO
             {
               // delegate the populating process
               // @@should avoid this copy - Andy @@
-              rdd.resourceValue = Any_Handler::process_Any (this->iter_);
+              // Arvind: Resolved
+              Any_Handler::process_Any (this->iter_, rdd.resourceValue);
             }
           else
             {
@@ -84,7 +85,7 @@ namespace CIAO
     }
 
     /// handle requirement name attribute
-    void RDD_Handler::process_requirementName (const XMLCh* name, 
+    void RDD_Handler::process_requirementName (const XMLCh* name,
                                                ::Deployment::ResourceDeploymentDescription &rdd)
     {
       if (name)
@@ -94,7 +95,7 @@ namespace CIAO
     }
 
     /// handle resource name attribute
-    void RDD_Handler::process_resourceName (const XMLCh* name, 
+    void RDD_Handler::process_resourceName (const XMLCh* name,
                                             ::Deployment::ResourceDeploymentDescription &rdd)
     {
       if (name)
@@ -108,4 +109,3 @@ namespace CIAO
 }
 
 #endif /* RDD_HANDLER_C */
-
