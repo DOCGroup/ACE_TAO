@@ -1,0 +1,369 @@
+Tue Mar 25 16:11:39 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	Merged with main trunk!
+
+Mon Mar 24 13:57:09 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Object.h:
+	* tao/Object.cpp (_is_local): 
+	* tao/Object.i: Cosmetic fixes like improved documentation, making
+	  most of the member variables private instead of protected
+	  etc. Changed the member initializations to suit the above
+	  cosmetic fix. 
+	
+	* tao/PortableServer/Collocated_Object.cpp: Cosmetic fixes.
+
+Mon Mar 24 09:16:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Object.cpp: The return value from the call to
+	  initialize_object () is voided since not much can be done at
+	  that point if failures occur. We will do error checking later to
+	  throw the right exceptions. 
+
+Fri Mar 21 17:07:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Adapter.h:
+	* tao/Adapter.cpp: Added a method initialize_collocated_object ()
+	  in the TAO_Adapter_Factory and TAO_Adapter.
+
+	* tao/ORB_Core.pp: Implemented the initialize_collocated_object ()
+	  which basically calls the
+	  TAO_Adapter_Registry::initialize_collocated_object (). 
+
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/Object_Adapter.h: Added a new method
+	  initialize_collocated_object (). The implementation is pretty
+	  much similar to the create_collocated_object (), but instead of
+	  creating a new object, initializes an existing object. 
+
+	* tao/Object.h: 
+	* tao/Object.cpp:
+	* tao/Object.i:
+
+	  Added the following methods 
+	  
+	  - set_collocated_servant () which helps to initialize the
+	    CORBA::Object with TAO_Abstract_ServantBase
+
+	  - Accessors for orb_core () and IOP::IOR
+
+	  Added initialization of collocated objects in
+	  tao_initialize_object (). 
+
+	  The above checkin has lots of duplicated code. Need to refactor
+	  them in the next round. 
+	  
+Fri Mar 21 16:37:12 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/be/be_interface.cpp: Added a new argument to the
+	  constructor of stub objects. This change is made to make sure
+	  that stub objects have constructors similar to the
+	  CORBA::Object. 
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp: Added a new
+	  constructor as required by the latest changes to the
+	  CORBA::Object. 
+	
+	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp: Definition of
+	  the above constructor. 
+	
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: In
+	  _unchecked_narrow () we create a interface pointer object if the
+	  IOR is lazily evaluated by giving it the IOP::IOR and the
+	  ORB_Core. 
+	
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp: In the
+	  code generation for operation, initialize the object completely
+	  ie. evaluate the IOR completely and setup collocation if they
+	  have not been setup before (which is possible if the IOR's are
+	  evaluated lazily) proceeding with the operation. 
+	
+	* TAO_IDL/be/be_visitor_component/component_ch.cpp:
+	* TAO_IDL/be/be_visitor_component/component_ci.cpp:
+	* TAO_IDL/be/be_visitor_component/component_cs.cpp: Retrofit the
+	  above changes for components too.  
+
+Wed Mar 19 16:05:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_component/component_cs.cpp:Added a check
+	  for is_evaluated () before creating a new CORBA::Object () in
+	  _unchecked_narrow (). If the call is_evaluated fails, we just
+	  reinterpret cat the CORBA::Object to the right type of object.
+
+Wed Mar 19 15:35:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp: Added a check
+	  for is_evaluated () along with _is_local () before creating a
+	  new CORBA::Object () in _unchecked_narrow ().
+	
+Wed Mar 19 14:30:43 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Connector_Registry.cpp: Removed preconnect () completely
+	  from the code.
+
+	* tao/ORB_Core.cpp: Implemented the initialize_object () for
+	  non-local and non-collocated cases. 
+
+	* tao/Object.h:
+	* tao/Object.cpp (Object): 
+	* tao/Object.i: Made the following changes
+
+	  - Changed the constructor that took a const IOP::IOR_var to take
+	    a pointer to IOP::IOR. The pointer would be owned by
+	    CORBA::Object class and released at the end of its
+	    lifetime. It may be possible for us to release the memory
+	    owned by IOR_var if needed after the complete evaluation is
+	    done. At this point of time it is future work. 
+
+	  - Added a new method is_evaluated () which returns the status of
+	    the evaluation done on the IOR.
+
+	  - Added a non-const version of _stubobj ().
+
+	  - In the main constructor we set the ORB_Core if it is null
+	    before calling the resource factory to create the refcount
+	    lock. 
+
+	  - In the method is_nil_i () we now use the ORB_Core to access
+	    new definitions instead of going through the stub object. This
+	    would prevent accidental evaluation of IOR while calling
+	    is_nil () from the stubs or skeletons. 
+
+	  - Completed implementation of tao_object_initialize () for
+	    non-local and non-collocated objects. 
+
+	  With this checkin the Hello test and IORsize test work fine. 
+
+	
+Fri Mar  7 13:29:43 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Object.cpp:
+	* tao/IOP_CodecC.h:
+	* tao/IOP_IORC.h:
+	* tao/Makefile.tao:
+	* tao/IOPC.h: Fixed compile errors with g++.
+
+Fri Mar 07 09:49:35 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be_visitor_operation/thru_poa_proxy_impl_ss.cpp: Changed
+	  the generated code to call object_key () on the stub object
+	  within the CORBA::Object instead of calling _object_key (). 
+
+Mon Mar 03 14:07:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	This is just a temporary checkin to test it on another box.
+	
+	* tao/IOP_Codec.pidl:
+	* tao/IOP_IOR.pidl: New files. 
+	
+	* tao/IOP.pidl: Split the IOP.pidl into two pidl files. 
+
+	* tao/IOPC.cpp
+	* tao/IOPC.h:
+	* tao/IOPC.i: New generated files. 
+	
+	* tao/Buffering_Constraint_Policy.cpp: Initialized the base
+	  classes properly. 
+	
+	* tao/ORB_Core.cpp:
+	* tao/ORB_Core.h: Incomplete changes to initialize the CORBA
+	  object. 
+
+	* tao/Object.cpp:
+	* tao/Object.h:
+	* tao/Object.i: Added partial support for delayed creation of
+	  CORBA::Objects. This included adding a new static method
+	  tao_object_initialize (). The extraction operator will extract
+	  out to a IOP::IOR if lazy evaluation is used. Removing
+	  _object_key () since it serves very less purpose in this object
+	  but for just accessing the Stub to get the key. The lazy
+	  evaulation would be happy with this scenario!
+	
+	* tao/Resource_Factory.cpp:
+	* tao/Resource_Factory.h: Added the follwoing virtual methods
+	  - create_corba_object_lock (), which creates a SYNCH_MUTEX or a
+	    NULL_MUTEX as the case may be for CORBA::Object. 
+	  - resource_usage_strategy (), a strategy for advising whether
+	    the resources are used actively or lazily within the ORB. This
+	    strategy is not useful through out the ORB right away. There
+	    is atleast one place where this might be used now and it is in
+	    CORBA::Object. The >> of a CORBA::Object from a TAO_InputCDR
+	    will use this strategy.
+
+	* tao/default_resource.cpp:
+	* tao/default_resource.h: Concrete implementations for the above
+	  pure virtual methods within the default factory.
+	
+	* tao/TAO.dsp: Added new files in to the project files. 
+	
+	* tao/PortableServer/Collocated_Object.cpp:
+	* tao/PortableServer/ImR_LocatorS.cpp:
+	* tao/PortableServer/ImplRepoS.cpp:
+	* tao/PortableServer/PolicyS.cpp:
+	* tao/PortableServer/ThruPOA_Object_Proxy_Impl.cpp: Use the stub
+	  object on the CORBA::Object to access the ObjectKey instead of
+	  calling _object_key (). The  method _object_key () is going to
+	  be removed.
+
+Sat Feb 22 22:30:25 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Merged with the main trunk.
+
+Thu Feb 20 12:48:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* ace/Connector.cpp: Added a const to regulate the size of the map
+	  that is being used inside this class. A size of 1024 seems too
+	  excessive for runtime memory.
+
+Thu Feb 20 12:29:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Profile.h:
+	* tao/Profile.cpp:
+	* tao/Profile.i: Moved the ObjectKey from the inherited classes
+	  to the base class. Added a new protected constructor which can
+	  be used by the inherited classes to initialize the ObjectKey
+	  properly. Also added a new method set_tagged_components () which
+	  is a helper method useful for creating Tagged_Components of an
+	  IOR from a CDR stream. Uninlined the constructor, destructor and
+	  the methods for refcounted memory management.
+
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.cpp:
+	* tao/Strategies/DIOP_Profile.h:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/UIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Profile.cpp: Removed the ObjectKey from
+	  the following classes since it has now been moved to the base
+	  class. 
+	  
+	  Used the protected constructor in the base class while base
+	  member initializations.  
+
+	  Call the set_tagged_componets () to place a list of
+	  IIOPEndpoints in the Tagged_Components contained in the profile.
+	
+Thu Feb 20 12:10:13 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Tagged_Components.h:
+	* tao/Tagged_Components.cpp:
+	* tao/Tagged_Components.i (TAO_Tagged_Components): Reverted the
+	  change "Wed Feb 12 15:40:46 2003  Balachandran Natarajan
+	  <bala@isis-server.isis.vanderbilt.edu>" since it was counter
+	  productive. 
+
+	* tao/ClientRequestInfo_i.cpp: Reverted the changes made to
+	  accomodatethe above change.
+
+Thu Feb 13 17:53:44 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/IIOP_Endpoint.h (TAO_IIOP_Endpoint): 
+	* tao/IIOP_Profile.h:
+	* tao/Strategies/DIOP_Endpoint.h:
+	* tao/Strategies/SHMIOP_Endpoint.h: Cosmetic changes like removing
+	  ORB.h  inclusion etc.
+
+Wed Feb 12 18:15:24 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Merged in changes from the main trunk.
+
+Wed Feb 12 15:40:46 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Tagged_Components.h:
+	* tao/Tagged_Components.cpp:
+	* tao/Tagged_Components.i (TAO_Tagged_Components): Create
+	  IOP::MultipleComponentProfile lazily, instead of creating
+	  actively on the stack and increase the runtime footprint. If we
+	  do this we only pay when TAO gets something that TAO doesnt
+	  understand. This changed forced us to change the signature of
+	  the components (). Instead of returning a reference we now
+	  return a pointer to the underlying
+	  IOP::MultipleComponentProfile. 
+
+Thu Feb  6 17:51:06 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Tagged_Components.cpp: Removed some vague print statements. 
+	* tao/Strategies/SHMIOP_Connector.cpp: Fixed some debug
+	  statements. 
+
+Thu Feb  6 16:37:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Stub.cpp (ior_info_): 
+	* tao/Invocation.cpp:
+	* tao/ClientRequestInfo_i.cpp: Added error checks to the last
+	  checkins. 
+
+Sun Jan 26 23:50:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Profile.cpp:
+	* tao/Profile.h:
+ 	* tao/Profile.i: Added a new method create_tagged_profile
+	  (). Infact, this method existed in the derived classes returning
+	  a reference to the underlying IOP::TaggedProfile. Since the
+	  method existed in all the derived classes and was doing similar
+	  things it has now been moved to the base class with a slight
+	  signature change. This now returns a pointer to the underlying
+	  IOP:TaggedProfile. The signatuer change has been needed because
+	  of the change mentioned below.
+
+	  We will henceforth hold a pointer to the IOP::TaggedProfile
+	  instead of an instance in the Profile classes. We will create an
+	  instance when needed, (heard of lazy evaluation?). This change
+	  is forced on us due to the runtime memory consumed by
+	  IOR's. Holding a pointer instead of the actual object instance
+	  gets us approximately 24 bytes per IOR on Linux on a 32 bit
+	  processor. 
+
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.cpp: 
+	* tao/Strategies/UIOP_Profile.cpp:
+	* tao/Strategies/UIOP_Profile.h:
+	* tao/Strategies/SHMIOP_Profile.cpp:
+	* tao/Strategies/SHMIOP_Profile.h:
+	* tao/Strategies/DIOP_Profile.cpp:
+	* tao/Strategies/DIOP_Profile.h: Removed create_tagged_profile ()
+	  and the instance of IOP::TaggedProfile.
+	  
+	* tao/Invocation.cpp:
+	* tao/Stub.cpp:
+	* tao/ClientRequestInfo_i.cpp: Changes forced on us due to the
+	  signature change above.
+	
+Sun Jan 26 21:41:26 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* Mering with the main trunk and moving to a new branch. 
+
+Sun Jan 26 21:16:14 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* docs/Options.html: documented the new option.
+
+Mon Jan 20 09:00:55 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	The aim of this checkin is to provide an option to configure the
+	size of the dispatcher table in the Muxed_Transport_Strategy. 
+	
+	* tao/Client_Strategy_Factory.cpp: 
+	* tao/Client_Strategy_Factory.h: Added a new virtual method to
+	  fetch the dispatcher table size
+
+	* tao/default_client.cpp:
+	* tao/default_client.h: Concrete implementation for the new
+	  virtual method. The default value for the dispatcher table size
+	  is set to TAO_RD_TABLE_SIZE which is defined in orbconf.h. The
+	  table size can also be changed at runtime using a -ORB option
+	  which is explained below. 
+
+	  We now have an option called -ORBReplyDispatcherTableSize which
+	  will parse and set a user provided value as the dispatcher table 
+	  size. This gives extra flexibility to the user.
+	  
+	* tao/orbconf.h: Added TAO_RD_TABLE_SIZE and set the value to be
+	  16.
+	
+	* tao/Muxed_TMS.cpp:
+	* tao/Muxed_TMS.h: All the above changes were motivated to reduce
+	  the size of the hash table that this class creates increasing
+	  the run-time footprint. The default value of 1024 was probably
+	  an over kill for this class. 
