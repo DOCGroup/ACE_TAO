@@ -3,6 +3,7 @@
 // $Id$
 
 #include "ace/Handle_Set.h"
+#include "ace/Log_Msg.h"
 
 #include <openssl/err.h>
 
@@ -17,6 +18,32 @@ ACE_RCSID (ACE_SSL,
            "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
+
+ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
+  : ssl_ (0),
+    stream_ ()
+{
+  ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
+
+  ACE_SSL_Context * ctx =
+    (context == 0 ? ACE_SSL_Context::instance () : context);
+
+  this->ssl_ = ::SSL_new (ctx->context ());
+
+  if (this->ssl_ != 0)
+    {
+      ::SSL_set_verify (this->ssl_,
+                        ctx->default_verify_mode (),
+                        0);
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ACE_SSL_SOCK_Stream "
+                  "- cannot allocate new SSL structure %p\n",
+                  ACE_TEXT ("")));
+    }
+}
 
 ssize_t
 ACE_SSL_SOCK_Stream::sendv (const iovec iov[], size_t n) const

@@ -21,29 +21,6 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 }
 
 ASYS_INLINE
-ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
-  : ssl_ (0),
-    stream_ ()
-{
-  ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
-
-  ACE_SSL_Context * ctx =
-    (context == 0 ? ACE_SSL_Context::instance () : context);
-
-  this->ssl_ = ::SSL_new (ctx->context ());
-
-  if (this->ssl_ == 0)
-    ACE_ERROR ((LM_ERROR,
-		"(%P|%t) ACE_SSL_SOCK_Stream "
-                "- cannot allocate new SSL structure %p\n",
-		ACE_TEXT ("")));
-
-  ::SSL_set_verify (this->ssl_,
-                    ctx->default_verify_mode (),
-                    0);
-}
-
-ASYS_INLINE
 ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream (void)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream");
