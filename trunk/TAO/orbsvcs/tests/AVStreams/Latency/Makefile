@@ -8,10 +8,6 @@
 
 LDLIBS = -lTAO_AV -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_Strategies -lTAO_IORTable -lTAO_PortableServer -lTAO
 
-ifeq ($(rapi),1)
-  LDLIBS += -lACE_QoS 
-endif # rapi
-
 ifndef TAO_ROOT
 TAO_ROOT = $(ACE_ROOT)/TAO
 endif
@@ -43,6 +39,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
+
+ifeq ($(rapi),1)
+  LDLIBS += -lACE_QoS 
+endif # rapi
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs/AV
 

@@ -11,10 +11,6 @@
 
 LDLIBS     = -lTAO_AV -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
-ifeq ($(rapi),1)
-  LDLIBS += -lACE_QoS
-endif # rapi
-
 SERVER_OBJS = server.o
 CLIENT_OBJS = ftp.o
 
@@ -48,6 +44,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+ifeq ($(rapi),1)
+  LDLIBS += -lACE_QoS
+endif # rapi
 
 #DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
