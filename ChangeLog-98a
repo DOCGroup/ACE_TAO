@@ -20,6 +20,9 @@ Thu Dec 11 13:13:17 1997  David L. Levine  <levine@cs.wustl.edu>
         * include/makeinclude/platform_lynxos.GNU: added comment indicator
           to comment describing POSTLINK.
 
+        * ACE-INSTALL.html: updated DEC CXX 6.0 test status: all tests pass
+          with the version of DIGITAL UNIX 4.0 and cxx 6.0 that we use.
+
 Wed Dec 10 23:57:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
         * ACE version 4.4.4, released Wed Dec 10 23:57:00 1997.
