@@ -385,7 +385,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
   // Name generation.
   *os << "," << be_nl
       << "0," << be_nl
-      << "sizeof (" << node->name () << ")" << be_uidt_nl
+      << "0" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   // Is our enclosing scope a module? We need this check because for

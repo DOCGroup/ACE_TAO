@@ -1,3 +1,33 @@
+Tue Nov 16 09:45:26 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp:
+        
+          Removed generation of Objref_Traits<> specialization
+          declaration for non-defined forward declared interfaces.
+          Since the interface is not defined, the specialization
+          class is not defined in the corresponding .cpp file,
+          which can lead to problems when interfaces are forward
+          declared across translation units or libraries. It was
+          thought previously that this declaration generation was
+          needed, but perhaps recent fixes to code generation for
+          non-defined forward declared interfaces has eliminated
+          the need.
+          
+        * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+        
+          Fixed generation of exception copy constructor and 
+          assignment operator for exceptions to use Objref_Traits<>
+          for an interface member, in case it is forward declared and
+          not defined.
+          
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        
+          Changed the 'size' parameter passed to the typecode
+          constructor to always be 0. This parameter is not used
+          in the the TypeCode class constructor, and passing it
+          as 'sizeof()' causes problems when generating a typecode
+          for a typedef of a forward declared undefined interface.
+
 Tue Nov 16 13:04:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* tao/BoundsA.cpp:

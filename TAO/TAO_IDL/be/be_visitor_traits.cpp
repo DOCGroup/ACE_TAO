@@ -94,7 +94,7 @@ be_visitor_traits::visit_module (be_module *node)
 int
 be_visitor_traits::visit_interface (be_interface *node)
 {
-  if (node->cli_traits_gen ())
+  if (node->cli_traits_gen () || !node->is_defined ())
     {
       return 0;
     }
@@ -103,10 +103,8 @@ be_visitor_traits::visit_interface (be_interface *node)
 
   // Since the three blocks below generate specialized (i.e., non-template)
   // classes, we don't want to generate them unless it's necessary - thus
-  // the logic surrounding each one.
+  // the ifdef logic surrounding each one.
 
-  // I think we need to generate this only for non-defined forward
-  // declarations.
   if (!node->imported ())
     {
       os->gen_ifdef_macro (node->flat_name (), "traits");
