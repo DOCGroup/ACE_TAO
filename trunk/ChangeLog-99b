@@ -1,3 +1,15 @@
+Mon Jan 18 20:41:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block.h: Clarified that the wr_ptr() is incremented
+ 	  by n as a result of the copy operation.  Thanks to Zoran
+ 	  Ivanovic <zorani@pathcom.com> for suggesting this.
+
+	* ace/INET_Addr.h (ACE_INET_Addr): Changed the default for
+ 	  ipaddr_format to 1 (which is what it had been originally) rather
+ 	  than 0 since the original way is faster since it doesn't use
+ 	  DNS.  Thanks to Zoran Ivanovic <zorani@pathcom.com> for finding
+ 	  this.
+
 Mon Jan 18 20:31:47 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/006/client_handler.cpp: 

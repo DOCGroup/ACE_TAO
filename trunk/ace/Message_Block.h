@@ -248,14 +248,17 @@ public:
 
   int copy (const char *buf, size_t n);
   // Copies <n> bytes from <buf> into the Message_Block starting at
-  // the wr_ptr() offset.  Return 0 if succeeds and -1 if the size of
-  // the message is too small, i.e., for this to work correct, <end>
-  // must be >= <wr_ptr>.
+  // the <wr_ptr> offset.  Return 0 and increment <wr_ptr> by <n> if
+  // the method succeeds.  Returns -1 if the size of the message is
+  // too small, i.e., for this to work correct, <end> must be >=
+  // <wr_ptr>.
 
   int copy (const char *buf);
   // Copies <buf> into the Message_Block starting at the wr_ptr()
   // offset.  This call assumees that <buf> is NUL-terminated.  Return
-  // 0 if succeeds and -1 if the size of the message is too small...
+  // 0 and increment <wr_ptr> by <ACE_OS::strlen (buf) + 1> if the
+  // method succeeds.  Returns -1 if the size of the message is too
+  // small, i.e., for this to work correct, <end> must be >= <wr_ptr>.
 
   char *base (void) const;
   // Get message data.

@@ -108,15 +108,15 @@ ACE_Message_Block::copy (const char *buf)
 void
 ACE_Message_Block::crunch (void)
 {
-   if (this->rd_ptr () > this->base ())
-   {
+  if (this->rd_ptr () > this->base ())
+    {
       size_t len = this->length ();
       (void) ACE_OS::memmove (this->base (),
                               this->rd_ptr (),
                               len);
       this->rd_ptr (this->base ());
       this->wr_ptr (this->base () + len);
-   }
+    }
 }
 
 void
