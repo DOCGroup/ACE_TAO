@@ -1384,9 +1384,8 @@ Test_Supplier::close (CORBA::Environment &_env)
     return;
 
   this->consumer_proxy_->disconnect_push_consumer (_env);
-  if (_env.exception () != 0) return;
-
-  this->consumer_proxy_ = 0;
+  this->consumer_proxy_ =
+    RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
 void
@@ -1536,6 +1535,9 @@ Test_Supplier::push (const RtecEventComm::EventSet& events,
 void
 Test_Supplier::disconnect_push_supplier (CORBA::Environment& _env)
 {
+  if (CORBA::is_nil (this->supplier_proxy_.in ()))
+    return;
+
   this->supplier_proxy_->disconnect_push_supplier (_env);
 }
 
@@ -1627,9 +1629,8 @@ Test_Consumer::close (CORBA::Environment &_env)
     return;
 
   this->supplier_proxy_->disconnect_push_supplier (_env);
-  if (_env.exception () != 0) return;
-
-  this->supplier_proxy_ = 0;
+  this->supplier_proxy_ =
+    RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }
 
 void

@@ -11,6 +11,9 @@ Tue Nov 17 11:28:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
 	  for pointing this out.
 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  Removed a few problems with invocations through nil references.
+
 Tue Nov 17 10:25:25 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/run_test.pl: removed
