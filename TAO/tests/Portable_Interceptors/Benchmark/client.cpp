@@ -8,7 +8,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS.h"
 
-ACE_RCSID (Benchmark, client, "$Id$")
+ACE_RCSID (Benchmark,
+           client,
+           "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 5;
@@ -49,8 +51,8 @@ void
 run_test (Test_Interceptors::Secure_Vault_ptr server,
           CORBA::Environment &ACE_TRY_ENV)
 {
-  int i=0;
-  const char user [BUFSIZ] = "root";
+  int i = 0;
+  const char user[] = "root";
   Marker marker;
   ACE_Throughput_Stats throughput;
 
@@ -150,9 +152,9 @@ run_test (Test_Interceptors::Secure_Vault_ptr server,
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) iteration = %d\n", i));
 
     }
+
   marker.dump_stats ("update records  method  ", gsf, 3);
   ACE_CHECK;
-
 }
 
 
@@ -196,9 +198,6 @@ main (int argc, char *argv[])
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // Transfer ownership to the ORB.
-      (void) initializer._retn ();
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -211,7 +210,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       Test_Interceptors::Secure_Vault_var server =
-        Test_Interceptors::Secure_Vault::_narrow (object.in (), ACE_TRY_ENV);
+        Test_Interceptors::Secure_Vault::_narrow (object.in (),
+                                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -236,7 +236,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
      return 1;
     }
   ACE_ENDTRY;

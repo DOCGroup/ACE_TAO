@@ -258,6 +258,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   delete this->transport_sync_strategy_;
+
+  ACE_DEBUG ((LM_DEBUG, "******************** YESH! ***************\n"));
 }
 
 int
@@ -1085,8 +1087,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   this->has_shutdown_ = 0;
 
 #if (TAO_HAS_RT_CORBA == 1)
-  // check RT ORB options
-  if (this->RT_ORB_init (argc, argv, ACE_TRY_ENV) != 0)
+  // Check RT ORB options.
+  int rt_result = this->RT_ORB_init (argc, argv, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  if (rt_result != 0)
     return -1;
 #endif /* TAO_HAS_RT_CORBA */
 
@@ -1575,6 +1580,7 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
   this->root_poa_ = poa_adapter->root ();
 
   this->adapter_registry_.insert (poa_adapter, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return CORBA::Object::_duplicate (this->root_poa_.in ());
 }
@@ -1668,7 +1674,6 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
         {
           // Get the ith profile
           profile = mp.get_profile (i);
-          profile->the_stub (stub);
           profile->policies (policy_list);
         }
     }
