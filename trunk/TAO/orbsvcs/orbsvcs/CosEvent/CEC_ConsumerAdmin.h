@@ -24,14 +24,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_Proxy_Collection.h"
-#include "orbsvcs/Event/EC_Worker.h"
+#include "orbsvcs/ESF/ESF_Proxy_Admin.h"
+#include "CEC_ProxyPushSupplier.h"
+#include "CEC_ProxyPullSupplier.h"
 #include "event_export.h"
 
 class TAO_CEC_EventChannel;
-class TAO_CEC_ProxyPushSupplier;
-class TAO_CEC_ProxyPullSupplier;
-class TAO_CEC_ProxyPushConsumer;
 
 class TAO_Event_Export TAO_CEC_ConsumerAdmin : public POA_CosEventChannelAdmin::ConsumerAdmin
 {
@@ -62,9 +60,9 @@ public:
   virtual ~TAO_CEC_ConsumerAdmin (void);
   // destructor...
 
-  void for_each (TAO_EC_Worker<TAO_CEC_ProxyPushSupplier> *worker,
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker,
                  CORBA::Environment &ACE_TRY_ENV);
-  void for_each (TAO_EC_Worker<TAO_CEC_ProxyPullSupplier> *worker,
+  void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier> *worker,
                  CORBA::Environment &ACE_TRY_ENV);
   // For each elements call <worker->work()>.
 
@@ -106,43 +104,20 @@ private:
   TAO_CEC_EventChannel *event_channel_;
   // The Event Channel we belong to
 
-  typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPushSupplier> PushCollection;
-  PushCollection *push_collection_;
-  // The supplier container.
-
-  typedef TAO_EC_Proxy_Collection<TAO_CEC_ProxyPullSupplier> PullCollection;
-  PullCollection *pull_collection_;
-  // The supplier container.
-
   PortableServer::POA_var default_POA_;
   // Store the default POA.
+
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPushSupplier> push_admin_;
+  // Implement the push side of this class
+
+  TAO_ESF_Proxy_Admin<TAO_CEC_EventChannel,TAO_CEC_ProxyPullSupplier> pull_admin_;
+  // Implement the pull side of this class
+
 };
 
 // ****************************************************************
 
-class TAO_CEC_Shutdown_Push_Supplier : public TAO_EC_Worker<TAO_CEC_ProxyPushSupplier>
-{
-public:
-  TAO_CEC_Shutdown_Push_Supplier (void);
-
-  void work (TAO_CEC_ProxyPushSupplier *supplier,
-             CORBA::Environment &ACE_TRY_ENV);
-};
-
-// ****************************************************************
-
-class TAO_CEC_Shutdown_Pull_Supplier : public TAO_EC_Worker<TAO_CEC_ProxyPullSupplier>
-{
-public:
-  TAO_CEC_Shutdown_Pull_Supplier (void);
-
-  void work (TAO_CEC_ProxyPullSupplier *supplier,
-             CORBA::Environment &ACE_TRY_ENV);
-};
-
-// ****************************************************************
-
-class TAO_CEC_Propagate_Event_Push : public TAO_EC_Worker<TAO_CEC_ProxyPushSupplier>
+class TAO_CEC_Propagate_Event_Push : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
 {
 public:
   TAO_CEC_Propagate_Event_Push (const CORBA::Any& event);
@@ -157,7 +132,7 @@ private:
 
 // ****************************************************************
 
-class TAO_CEC_Propagate_Event_Pull : public TAO_EC_Worker<TAO_CEC_ProxyPullSupplier>
+class TAO_CEC_Propagate_Event_Pull : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier>
 {
 public:
   TAO_CEC_Propagate_Event_Pull (const CORBA::Any& event);

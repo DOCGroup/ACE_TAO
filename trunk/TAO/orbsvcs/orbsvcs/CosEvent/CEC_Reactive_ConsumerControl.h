@@ -22,7 +22,7 @@
 #include "ace/pre.h"
 
 #include "CEC_ConsumerControl.h"
-#include "orbsvcs/Event/EC_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -127,7 +127,7 @@ private:
 
 // ****************************************************************
 
-class TAO_CEC_Ping_Push_Consumer : public TAO_EC_Worker<TAO_CEC_ProxyPushSupplier>
+class TAO_CEC_Ping_Push_Consumer : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
 {
 public:
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
@@ -141,7 +141,7 @@ private:
 
 // ****************************************************************
 
-class TAO_CEC_Ping_Pull_Consumer : public TAO_EC_Worker<TAO_CEC_ProxyPullSupplier>
+class TAO_CEC_Ping_Pull_Consumer : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier>
 {
 public:
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);

@@ -147,7 +147,7 @@ void
 TAO_EC_Event_Channel::connected (TAO_EC_ProxyPushConsumer* consumer,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  this->consumer_admin_->connected (consumer, ACE_TRY_ENV);
+  this->consumer_admin_->peer_connected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
   this->supplier_admin_->connected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
@@ -159,7 +159,7 @@ void
 TAO_EC_Event_Channel::reconnected (TAO_EC_ProxyPushConsumer* consumer,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  this->consumer_admin_->reconnected (consumer, ACE_TRY_ENV);
+  this->consumer_admin_->peer_reconnected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
   this->supplier_admin_->reconnected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
@@ -171,7 +171,7 @@ void
 TAO_EC_Event_Channel::disconnected (TAO_EC_ProxyPushConsumer* consumer,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  this->consumer_admin_->disconnected (consumer, ACE_TRY_ENV);
+  this->consumer_admin_->peer_disconnected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
   this->supplier_admin_->disconnected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
@@ -183,7 +183,7 @@ void
 TAO_EC_Event_Channel::connected (TAO_EC_ProxyPushSupplier* supplier,
                                  CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_admin_->connected (supplier, ACE_TRY_ENV);
+  this->supplier_admin_->peer_connected (supplier, ACE_TRY_ENV);
   ACE_CHECK;
   this->consumer_admin_->connected (supplier, ACE_TRY_ENV);
   ACE_CHECK;
@@ -195,7 +195,7 @@ void
 TAO_EC_Event_Channel::reconnected (TAO_EC_ProxyPushSupplier* supplier,
                                    CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_admin_->reconnected (supplier, ACE_TRY_ENV);
+  this->supplier_admin_->peer_reconnected (supplier, ACE_TRY_ENV);
   ACE_CHECK;
   this->consumer_admin_->reconnected (supplier, ACE_TRY_ENV);
   ACE_CHECK;
@@ -207,7 +207,7 @@ void
 TAO_EC_Event_Channel::disconnected (TAO_EC_ProxyPushSupplier* supplier,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_admin_->disconnected (supplier, ACE_TRY_ENV);
+  this->supplier_admin_->peer_disconnected (supplier, ACE_TRY_ENV);
   ACE_CHECK;
   this->consumer_admin_->disconnected (supplier, ACE_TRY_ENV);
   ACE_CHECK;

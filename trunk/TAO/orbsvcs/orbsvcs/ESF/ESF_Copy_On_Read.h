@@ -7,7 +7,7 @@
 //   ORBSVCS Event Service Framework
 //
 // = FILENAME
-//   ESF_Proxy_Collection
+//   ESF_Copy_On_Read
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)

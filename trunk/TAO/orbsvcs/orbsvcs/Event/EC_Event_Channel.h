@@ -155,23 +155,23 @@ public:
   // Access the client control strategies.
 
   // = The factory methods, they delegate on the EC_Factory.
-  TAO_EC_ProxyPushSupplier* create_proxy_push_supplier (void);
-  void destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*);
+  void create_proxy (TAO_EC_ProxyPushSupplier*&);
+  void destroy_proxy (TAO_EC_ProxyPushSupplier*);
   // Create and destroy a ProxyPushSupplier
 
-  TAO_EC_ProxyPushConsumer* create_proxy_push_consumer (void);
-  void destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
+  void create_proxy (TAO_EC_ProxyPushConsumer*&);
+  void destroy_proxy (TAO_EC_ProxyPushConsumer*);
   // Create and destroy a ProxyPushConsumer
 
-  TAO_EC_ProxyPushSupplier_Collection*
-      create_proxy_push_supplier_collection (void);
-  void destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
+
+  void create_proxy_collection (TAO_EC_ProxyPushSupplier_Collection*&);
+  void destroy_proxy_collection (TAO_EC_ProxyPushSupplier_Collection*);
   // Create and destroy a the collections used to store
   // ProxyPushSuppliers
 
-  TAO_EC_ProxyPushConsumer_Collection*
-      create_proxy_push_consumer_collection (void);
-  void destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection*);
+
+  void create_proxy_collection (TAO_EC_ProxyPushConsumer_Collection*&);
+  void destroy_proxy_collection (TAO_EC_ProxyPushConsumer_Collection*);
   // Create and destroy a the collections used to store
   // ProxyPushConsumers
 

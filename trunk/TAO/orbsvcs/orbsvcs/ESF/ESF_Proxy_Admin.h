@@ -107,10 +107,11 @@ public:
   // removes the object from the collection and deactivates the
   // proxy.
 
-private:
+protected:
   EVENT_CHANNEL *event_channel_;
   // The Event Channel we belong to
 
+private:
   typedef TAO_ESF_Proxy_Collection<PROXY> Collection;
 
   Collection *collection_;

@@ -131,8 +131,26 @@ TAO_EC_ProxyPushSupplier::cleanup_i (void)
   this->child_ = 0;
 }
 
+RtecEventChannelAdmin::ProxyPushSupplier_ptr
+TAO_EC_ProxyPushSupplier::activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC (())
+{
+  RtecEventChannelAdmin::ProxyPushSupplier_var result;
+  ACE_TRY
+    {
+      result =
+        this->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // Ignore exceptions...
+    }
+  ACE_ENDTRY;
+  return result._retn ();
+}
+
 void
-TAO_EC_ProxyPushSupplier::deactivate (CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_ProxyPushSupplier::deactivate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC (())
 {
   ACE_TRY
     {
@@ -173,7 +191,7 @@ TAO_EC_ProxyPushSupplier::_decr_refcnt (void)
   }
 
   // Notify the event channel
-  this->event_channel_->destroy_proxy_push_supplier (this);
+  this->event_channel_->destroy_proxy (this);
   return 0;
 }
 
@@ -224,7 +242,12 @@ TAO_EC_ProxyPushSupplier::connect_push_consumer (
           this->event_channel_->reconnected (this, ACE_TRY_ENV);
           ACE_CHECK;
         }
-        return;
+
+        // A separate thread could have connected siomultaneously,
+        // this is probably an application error, handle it as
+        // gracefully as possible
+        if (this->is_connected_i ())
+          return; // @@ Should we throw
       }
 
     this->consumer_ =
@@ -348,7 +371,7 @@ TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
       return result;
   }
 
-  this->event_channel_->destroy_proxy_push_supplier (this);
+  this->event_channel_->destroy_proxy (this);
   return result;
 }
 
@@ -374,7 +397,7 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
       return result;
   }
 
-  this->event_channel_->destroy_proxy_push_supplier (this);
+  this->event_channel_->destroy_proxy (this);
   return result;
 }
 
@@ -419,7 +442,7 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
   if (this->refcount_ == 0)
     {
       this->lock_->release ();
-      this->event_channel_->destroy_proxy_push_supplier (this);
+      this->event_channel_->destroy_proxy (this);
     }
 }
 
@@ -464,7 +487,7 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
   if (this->refcount_ == 0)
     {
       this->lock_->release ();
-      this->event_channel_->destroy_proxy_push_supplier (this);
+      this->event_channel_->destroy_proxy (this);
     }
 }
 

@@ -25,7 +25,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_Worker.h"
+#include "orbsvcs/ESF/ESF_Worker.h"
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Dispatching;
@@ -47,11 +47,21 @@ class TAO_Event_Export TAO_CEC_ProxyPushConsumer : public POA_CosEventChannelAdm
   //   called.
   //
 public:
+  typedef CosEventChannelAdmin::ProxyPushConsumer_ptr _ptr_type;
+  typedef CosEventChannelAdmin::ProxyPushConsumer_var _var_type;
+
   TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* event_channel);
   // constructor...
 
   virtual ~TAO_CEC_ProxyPushConsumer (void);
   // destructor...
+
+  virtual CosEventChannelAdmin::ProxyPushConsumer_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC (());
+  // Activate in the POA
+
+  virtual void deactivate (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC (());
+  // Deactivate from the POA
 
   CORBA::Boolean is_connected (void) const;
   // Return 0 if no supplier is connected...
@@ -103,9 +113,6 @@ protected:
 
   void cleanup_i (void);
   // Release the supplier
-
-  void deactivate (CORBA::Environment &ACE_TRY_ENV);
-  // Deactivate from the POA
 
 private:
   TAO_CEC_EventChannel* event_channel_;

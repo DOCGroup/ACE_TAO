@@ -49,11 +49,21 @@ class TAO_Event_Export TAO_CEC_ProxyPushSupplier : public POA_CosEventChannelAdm
   //   the locking strategies.
   //
 public:
+  typedef CosEventChannelAdmin::ProxyPushSupplier_ptr _ptr_type;
+  typedef CosEventChannelAdmin::ProxyPushSupplier_var _var_type;
+
   TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel);
   // constructor...
 
   virtual ~TAO_CEC_ProxyPushSupplier (void);
   // destructor...
+
+  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr activate (CORBA::Environment &ACE_TRY_ENV) ACE_THROW_SPEC (());
+  // Activate in the POA
+
+  virtual void deactivate (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC (());
+  // Deactivate from the POA
 
   CORBA::Boolean is_connected (void) const;
   // Return 0 if no consumer is connected...
@@ -115,9 +125,6 @@ protected:
 
   void cleanup_i (void);
   // Release the child and the consumer
-
-  void deactivate (CORBA::Environment &ACE_TRY_ENV);
-  // Deactivate from the POA
 
 private:
   TAO_CEC_EventChannel* event_channel_;

@@ -1,8 +1,8 @@
 // $Id$
 
 template<class COLLECTION, class ITERATOR> ACE_INLINE
-TAO_EC_Copy_On_Write_Collection<COLLECTION,ITERATOR>::
-    TAO_EC_Copy_On_Write_Collection (void)
+TAO_ESF_Copy_On_Write_Collection<COLLECTION,ITERATOR>::
+    TAO_ESF_Copy_On_Write_Collection (void)
       :  refcount_ (1)
 {
 }
@@ -10,8 +10,8 @@ TAO_EC_Copy_On_Write_Collection<COLLECTION,ITERATOR>::
 // ****************************************************************
 
 template<class COLLECTION, class ITERATOR, class ACE_LOCK> ACE_INLINE
-TAO_EC_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
-    TAO_EC_Copy_On_Write_Read_Guard (ACE_LOCK &m,
+TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
+    TAO_ESF_Copy_On_Write_Read_Guard (ACE_LOCK &m,
                                      Collection*& collection_ref)
       :  collection (0),
          mutex (m)
@@ -22,8 +22,8 @@ TAO_EC_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
 }
 
 template<class COLLECTION, class ITERATOR, class ACE_LOCK> ACE_INLINE
-TAO_EC_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
-    ~TAO_EC_Copy_On_Write_Read_Guard (void)
+TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
+    ~TAO_ESF_Copy_On_Write_Read_Guard (void)
 {
   if (this->collection != 0)
     {
@@ -35,8 +35,8 @@ TAO_EC_Copy_On_Write_Read_Guard<COLLECTION,ITERATOR,ACE_LOCK>::
 // ****************************************************************
 
 template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> ACE_INLINE
-TAO_EC_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    TAO_EC_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &m,
+TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
+    TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &m,
                                       ACE_SYNCH_CONDITION_T &c,
                                       int &w,
                                       Collection*& cr)
@@ -67,8 +67,8 @@ TAO_EC_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 }
 
 template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> ACE_INLINE
-TAO_EC_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    ~TAO_EC_Copy_On_Write_Write_Guard (void)
+TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION,ITERATOR,ACE_SYNCH_USE>::
+    ~TAO_ESF_Copy_On_Write_Write_Guard (void)
 {
   Collection *tmp = 0;
   {

@@ -34,7 +34,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-template<class PROXY> class TAO_EC_Proxy_Collection;
+template<class PROXY> class TAO_ESF_Proxy_Collection;
 
 class TAO_RTEvent_Export TAO_EC_Per_Supplier_Filter : public TAO_EC_Supplier_Filter
 {
@@ -78,7 +78,7 @@ private:
   TAO_EC_ProxyPushConsumer* consumer_;
   // The proxy for the supplier we are bound to.
 
-  TAO_EC_Proxy_Collection<TAO_EC_ProxyPushSupplier>* collection_;
+  TAO_ESF_Proxy_Collection<TAO_EC_ProxyPushSupplier>* collection_;
   // Keep the collection of proxies for the consumers that may be
   // interested in our events.
 
