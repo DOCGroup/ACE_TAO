@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 //=============================================================================
 /**
- *  @file    PG_Properties_Encoder.h
+ *  @file    PG_Properties_Encoder.inl
  *
  *  $Id$
  *
@@ -42,14 +42,14 @@ namespace TAO_PG
   }
 
   ACE_INLINE
-  bool 
+  bool
   Properties_Encoder::NamedValue::operator == (const Properties_Encoder::NamedValue &rhs) const
   {
     return this->name_ == rhs.name_;
   }
 
   ACE_INLINE
-  bool 
+  bool
   Properties_Encoder::NamedValue::operator != (const Properties_Encoder::NamedValue &rhs) const
   {
     return this->name_ != rhs.name_;
