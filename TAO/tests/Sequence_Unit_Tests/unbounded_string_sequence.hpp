@@ -22,8 +22,9 @@ class unbounded_string_sequence
 {
 public:
   typedef char * value_type;
-  typedef details::unbounded_allocation_traits<char*,true> allocation_traits;
   typedef details::string_traits<char,true> element_traits;
+  typedef details::unbounded_reference_allocation_traits<char*,element_traits,true> allocation_traits;
+
   typedef details::string_sequence_element<char> element_type;
 
   typedef details::generic_sequence<char*, allocation_traits, element_traits> implementation_type;
@@ -80,7 +81,10 @@ public:
   inline void swap(unbounded_string_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
-  static char * * allocbuf(CORBA::ULong maximum) {
+#endif /* 0 */
+
+  static char * * allocbuf(CORBA::ULong maximum)
+  {
     return implementation_type::allocbuf(maximum);
   }
   static void freebuf(char * * buffer)
@@ -88,7 +92,6 @@ public:
     implementation_type::freebuf(buffer);
   }
 
-#endif /* 0 */
 
 private:
   implementation_type impl_;

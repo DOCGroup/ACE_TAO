@@ -14,9 +14,13 @@
 
 #include "unbounded_string_sequence.hpp"
 
+#include "ace/OS_NS_string.h"
+
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
+
+#include <sstream>
 
 using namespace boost::unit_test_framework;
 using namespace TAO;
@@ -24,6 +28,10 @@ using namespace TAO;
 struct Tester
   : public boost::enable_shared_from_this<Tester>
 {
+  typedef char char_type;
+  typedef char * value_type;
+  typedef char const * const_value_type;
+
   typedef TAO::details::string_traits<char,true> tested_element_traits;
   typedef TAO::details::unbounded_allocation_traits<char*,true> tested_allocation_traits;
   typedef TAO::details::range_checking<char*,true> range;
@@ -196,6 +204,64 @@ struct Tester
     BOOST_CHECK(text != t);
   }
 
+  void test_index_checking()
+  {
+    tested_sequence x;
+    x.length(8);
+
+    tested_sequence const & y = x;
+    char const * lhs = 0;
+    char const * rhs = 0;
+    BOOST_CHECK_THROW(lhs = y[32], std::range_error);
+    BOOST_CHECK_THROW(x[32] = rhs, std::range_error);
+  }
+
+  void test_copy_constructor_values()
+  {
+    tested_sequence a;
+    a.length(16);
+    for(CORBA::ULong i = 0; i != 16; ++i)
+    {
+      std::ostringstream os; os << (i*i);
+      a[i] = os.str().c_str();
+    }
+
+    expected_calls d(tested_element_traits::duplicate_calls);
+    expected_calls r(tested_element_traits::release_calls);
+    {
+      tested_sequence b(a);
+      BOOST_CHECK_MESSAGE(d.expect(16), d);
+
+      BOOST_CHECK_EQUAL(a.length(), b.length());
+      for(CORBA::ULong i = 0; i != a.length(); ++i)
+      {
+        BOOST_CHECK_MESSAGE(ACE_OS::strcmp(a[i], b[i]) == 0,
+            "Mismatched elements at index=" << i
+            << ", a=" << a[i]
+            << ", b=" << b[i]);
+      }
+    }
+    BOOST_CHECK_MESSAGE(r.expect(16), r);
+  }
+
+  void test_freebuf_releases_elements()
+  {
+    value_type * buffer = tested_sequence::allocbuf(32);
+    for(int i = 0; i != 32; ++i)
+    {
+      buffer[i] = tested_element_traits::duplicate("Foo bar baz");
+    }
+
+    expected_calls r(tested_element_traits::release_calls);
+    expected_calls f(tested_allocation_traits::freebuf_calls);
+
+    tested_sequence::freebuf(buffer);
+
+    BOOST_CHECK_MESSAGE(f.expect(0), f);
+    BOOST_CHECK_MESSAGE(r.expect(32), r);
+    
+  }
+
   void add_all(test_suite * ts)
   {
     ts->add(BOOST_CLASS_TEST_CASE(
@@ -218,6 +284,12 @@ struct Tester
                 shared_from_this()));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_index_accessor,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_index_checking,
+                shared_from_this()));
+    ts->add(BOOST_CLASS_TEST_CASE(
+                &Tester::test_copy_constructor_values,
                 shared_from_this()));
   }
 

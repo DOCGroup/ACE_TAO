@@ -5,8 +5,51 @@
  *
  * @brief Implement the generic version of CORBA sequences.
  *
- * All CORBA sequences are based on this class template.  The
- * differences are encapsulated in a TRAITS template argument.
+ * All CORBA sequences are based on this class template.  The behavior
+ * of this class is controlled by two sets of traits.  First, the
+ * ALLOCATION_TRAITS control how buffers are allocated and
+ * initialized.  Since this is where most of the variation between
+ * unbounded and bounded sequences is found, the ALLOCATION_TRAITS can
+ * be thought as the bounded aspect of the sequence.
+ *
+ * Second, the element traits control how are elements copied,
+ * initialized and released.  Value-like types, such as integers and
+ * structures, have trivial initialization and release requirements
+ * (their constructor/destructors do the job!)   But reference-like
+ * types, such as strings and object references, have more complicated
+ * requirements.  This is yet another aspect of the sequences, we can
+ * call it the "element copy semantics" or something.
+ *
+ * Oh, and let us not forget the type that the sequences encapsulates.
+ *
+ * The intent is not for sequences to simply derive or intantiate this
+ * type.  Instead, different each sequence type is written using
+ * composition.  They instantiate a generic sequence with the correct
+ * traits, and implement the adapt the generic sequence interface to
+ * whatever requirements the spec may impose.  For example, replace()
+ * has different number of arguments in bounded vs. unbounded
+ * sequences, and operator[] returns different types depending on the
+ * underlying type of the sequence.
+ *
+ * This class offers the strong exception-safety guarantee, as long as
+ * destructors and release operations do not throw.
+ *
+ * This class is not thread-safe.  Thread-safe collections are mostly
+ * useless anyways.
+ *
+ * In general the performance characteristics of the class depends on
+ * the traits.  Obviously, they can only be expressed on the number of
+ * element constructor and destructor calls.  If the constructor takes
+ * O(K) time that is not the sequence fault!
+ *
+ * All accessors are O(1), single-element modifiers are O(1), multiple
+ * element modifiers are O(n + m) where n is the number of elements
+ * originally in the sequence, and m is the number of elements left in
+ * the sequence afterwards.
+ *
+ * Beware:
+ * - get_buffer(true) may modify multiple elements
+ * - length(CORBA::ULong) may modify multiple elements!
  *
  * $Id$
  *
@@ -39,8 +82,6 @@ public:
     , buffer_(allocation_traits::default_buffer_allocation())
     , release_(true)
   {
-    element_traits::zero_range(
-        buffer_, buffer_ + maximum_);
   }
 
   explicit generic_sequence(CORBA::ULong maximum)
@@ -49,8 +90,6 @@ public:
     , buffer_(allocbuf(maximum_))
     , release_(true)
   {
-    element_traits::zero_range(
-        buffer_, buffer_ + maximum_);
   }
 
   generic_sequence(
