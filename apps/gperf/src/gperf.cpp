@@ -1,6 +1,6 @@
 // $Id$
 
-// Driver program for the Gen_Perf hash function generator
+// Driver program for the gperf hash function generator.
 
 /* Copyright (C) 1989 Free Software Foundation, Inc.  written by
    Douglas C. Schmidt (schmidt@ics.uci.edu)
@@ -22,8 +22,8 @@ along with GNU GPERF; see the file COPYING.  If not, write to the Free
 Software Foundation, 59 Temple Place - Suite 330, Boston, MA 02111,
 USA.  */
 
-// Simple driver program for the Gen_Perf.hash function generator.
-// All the hard work is done in class Gen_Perf and its class methods.
+// Simple driver program for the gperf hash function generator.  All
+// the hard work is done in class Gen_Perf and its class methods.
 
 #include "Gen_Perf.h"
 
@@ -32,18 +32,12 @@ ACE_RCSID(src, gperf, "$Id$")
 #if defined (ACE_HAS_GPERF)
 
 #include "Options.h"
+
 int
 main (int argc, char *argv[])
 {
   struct tm *tm;
   time_t clock;
-
-  time (&clock);
-  tm = localtime (&clock);
-  ACE_OS::printf ("/* starting time is %d:%02d:%02d */\n",
-                  tm->tm_hour,
-                  tm->tm_min,
-                  tm->tm_sec);
 
 #if defined (RLIMIT_STACK) && defined (LARGE_STACK_ARRAYS)
   // Get rid of any avoidable limit on stack size.
@@ -60,24 +54,30 @@ main (int argc, char *argv[])
   // Sets the Options.
   option (argc, argv);
 
+  ACE_OS::time (&clock);
+  tm = ACE_OS::localtime (&clock);
+
+  ACE_OS::printf ("/* starting time is %d:%02d:%02d */\n",
+                  tm->tm_hour,
+                  tm->tm_min,
+                  tm->tm_sec);
+
   // Initializes the key word list.
   Gen_Perf table;
 
-  // Generates and prints the Gen_Perf hash table.  Don't use exit
-  // here, it skips the destructors.
+  // Generates and prints the gperf hash table.  Don't use exit here,
+  // it skips the destructors.
   int status = table.generate ();
 
-  time (&clock);
-  tm = localtime (&clock);
+  ACE_OS::time (&clock);
+  tm = ACE_OS::localtime (&clock);
 
   ACE_OS::printf ("/* ending time is %d:%02d:%02d */\n",
                   tm->tm_hour,
                   tm->tm_min,
                   tm->tm_sec);
-
   return status;
 }
-
 #else  /* ! ACE_HAS_GPERF */
 int
 main (int argc, char *argv[])
@@ -85,10 +85,9 @@ main (int argc, char *argv[])
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
 
-  ACE_ERROR ((LM_ERROR, "gperf is not operational because "
-                        "ACE_HAS_GPERF was not enabled for the build\n"));
-
-  return 0;
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     "gperf is not operational because "
+                     "ACE_HAS_GPERF was not enabled for the build\n"),
+                    1);
 }
-
 #endif /* ! ACE_HAS_GPERF */
