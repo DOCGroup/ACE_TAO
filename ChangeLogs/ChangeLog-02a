@@ -4,7 +4,7 @@ Sat Jan 26 19:02:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	  Corrected code that always returned -1.  Code that should only
 	  have been run on error was always run since it was outside of an
-	  "if block."  Curly braces are a good thing.
+	  "if block."  Curly braces are a good thing (they were missing).
 
 Sat Jan 26 21:41:39 2002  Steve Huston  <shuston@riverace.com>
 
