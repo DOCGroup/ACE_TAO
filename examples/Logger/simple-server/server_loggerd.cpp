@@ -82,5 +82,7 @@ main (int argc, char *argv[])
 template class ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>
+#elif defined (__GNUC__) && defined (_AIX)
+template ACE_Singleton<ACE_Reactor, ACE_Null_Mutex> *
+  ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
