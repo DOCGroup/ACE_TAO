@@ -1,3 +1,9 @@
+Thu Sep  6 21:14:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Logging_Strategy_Test.cpp: Changed the usage of auto_ptr
+	  <> to ACE_Auto_Basic_Ptr<>. Thanks to Carlos O'Ryan for this
+	  suggestion. 
+
 Thu Sep 06 18:42:39 2001  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1: New directory that contains all of the example
