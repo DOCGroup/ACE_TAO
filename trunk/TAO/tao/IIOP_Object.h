@@ -256,6 +256,9 @@ protected:
   ACE_Lock* fwd_profile_lock_ptr_;
   // Mutex to protect access to the forwarding profile
   
+  size_t fwd_profile_success_;
+  // Have we successfully talked to the forward profile yet?
+
   ACE_SYNCH_MUTEX refcount_lock_;
   // Mutex to protect reference count
 
