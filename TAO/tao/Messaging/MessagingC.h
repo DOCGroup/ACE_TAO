@@ -690,6 +690,7 @@ TAO_Messaging_Export CORBA::Boolean operator>> (TAO_InputCDR &, Messaging::Excep
 #if !defined _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_H_
 #define _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_H_
 
+#if 0
 TAO_Messaging_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Messaging::ExceptionHolder::_tao_seq_Octet &
@@ -698,6 +699,8 @@ TAO_Messaging_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
     Messaging::ExceptionHolder::_tao_seq_Octet &
   );
+
+#endif /*if 0*/
 
 #endif /* _TAO_CDR_OP_Messaging_ExceptionHolder__tao_seq_Octet_H_ */
 
