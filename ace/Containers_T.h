@@ -915,8 +915,8 @@ public:
   // = Additional utility methods.
 
   int get (T *&item, size_t slot = 0);
-  // Delegates to ACE_Double_Linked_List, but where
-  // ACE_Double_Linked_List returns the node as the item, this get
+  // Delegates to <ACE_Double_Linked_List>, but where
+  // <ACE_Double_Linked_List> returns the node as the item, this get
   // returns the contents of the node in item.
 
   void dump (void) const;

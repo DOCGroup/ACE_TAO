@@ -141,6 +141,13 @@ endif
   LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
 endif # orbix
 
+ifeq (Compilers 5,$(findstring Compilers 5,$(CC_VERSION)))
+        ifeq ($(compat4),1)
+               COMPAT_LIBDIR=/opt/SUNWspro/lib/CC4
+               LIBS    += -L$(COMPAT_LIBDIR) -lC
+        endif
+endif
+
 LDFLAGS         += -xildoff
 
 OCFLAGS         += -O
