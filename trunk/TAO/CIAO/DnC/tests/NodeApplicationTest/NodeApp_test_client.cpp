@@ -113,12 +113,20 @@ main (int argc, char *argv[])
         roundtrip_var->cube_long (input ACE_ENV_ARG_PARAMETER);
 
      if (input == output)
-       ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
+       ACE_DEBUG ((LM_DEBUG, "Retrun values matched!!\n"));
      else
-       ACE_DEBUG ((LM_DEBUG, "Test failure\n"));
+     {
+       ACE_DEBUG ((LM_DEBUG, "Return values did not match: failure\n"));
+       exit (1);
+     }
+
+     ACE_DEBUG ((LM_DEBUG, "Try removing home\n"));
+     comserv->remove_home (info.component_instance_name); 
+     ACE_DEBUG ((LM_DEBUG, "Home removed successfully\n"));
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+     ACE_DEBUG ((LM_DEBUG, "Test success!!\n"));
     }
   ACE_CATCHANY
     {
