@@ -1,3 +1,7 @@
+Thu Jan 14 02:33:37 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.13 released.
+
 Thu Jan 14 00:07:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* docs/tutorials/014/stream.cpp: Added #include "ace/streams.h".
