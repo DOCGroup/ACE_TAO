@@ -91,7 +91,7 @@ $MODULE='ACE_wrappers';
       'TAO/orbsvcs/tests/EC_Basic , run_test.pl',
       'TAO/orbsvcs/tests/EC_Custom_Marshal , run_test.pl',
       'TAO/orbsvcs/tests/EC_Throughput , run_test.pl',
-      'TAO/orbsvcs/tests/EC_Mcast , run_test.pl',
+#      'TAO/orbsvcs/tests/EC_Mcast , run_test.pl',
 #      'TAO/orbsvcs/tests/EC_Multiple , run_test.pl',
       'TAO/orbsvcs/tests/Event_Latency , run_test.pl',
       'TAO/examples/Simple/echo , run_test.pl < Echo.idl',
@@ -105,7 +105,7 @@ $MODULE='ACE_wrappers';
 
 
 # We obtain our revision to report errors.
-$REVISION='$Revision$';
+$REVISION='$Revision$ ';
 
 # Find out the command name.
 $CMD = basename($0);
@@ -228,7 +228,7 @@ $ENV{'ACE_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD;
 $ENV{'TAO_ROOT'} = $CHECKOUT . '/' . $MODULE . '/build/' . $BUILD . '/TAO';
 
 @failures = ();
-$MAKEFLAGS .= " shared_libs_only=1";
+$MAKEFLAGS .= "";
 foreach $i (@BUILD_LIST) {
     $date = localtime;
     print LOG "$CMD: =============================================\n";
@@ -287,7 +287,7 @@ foreach $i (@RUN_LIST) {
     }
     while (<RUN>) {
 	print LOG $_;
-	if (m/^Error/ || m/FAILED/ || m/EXCEPTION/) {
+	if (m/Error/ || m/FAILED/ || m/EXCEPTION/) {
 	    $run_error = 1;
 	}
     }
