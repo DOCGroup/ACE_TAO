@@ -1,3 +1,12 @@
+Tue Oct  8 10:05:50 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Svc_Utils.dsp:
+
+	  Removed redundant/unnecessary "-I../../tao" TAO_IDL preprocessor
+	  directive.  Redundant directives currently cause problems in
+	  generated stubs.  Fixes a compile-time problem in Windows "DLL
+	  Release" builds.
+
 Tue Oct  8 09:44:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/Logging_Service/Basic_Logging_Service/Makefile (LDLIBS):
