@@ -1,3 +1,14 @@
+Tue Oct 14 23:21:00 UTC 2003  Don Hinton <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Removed following method declarations that were not implemented
+          or used: times(), cond_timedwait_i(), alarm_i(), ualarm_i(),
+          sleep_i(), nanosleep_i(), select_i(), poll_i(), sema_wait_i(),
+          sigtimedwait_i(), gettimeofday_i().
+
+        * ace/Process.h:
+          Fixed typo and added #include of Global_Macros.h.
+
 Tue Oct 14 17:13:46 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Process.h: Put the ACE_Process copy constructor and
