@@ -237,7 +237,7 @@ protected:
 
   typedef ACE_RB_Tree<const char *,
                       RtecScheduler::RT_Info*,
-                      ACE_Less_Than<char *>,
+                      ACE_Less_Than<const char *>,
                       ACE_LOCK> RT_INFO_TREE;
   // Type of tree used for O(log n) lookup of RT_Infos by their names.
 
@@ -430,4 +430,3 @@ protected:
 #endif /* __GNUC__ */
 
 #endif /* TAO_RECONFIG_SCHEDULER_T_H */
-
