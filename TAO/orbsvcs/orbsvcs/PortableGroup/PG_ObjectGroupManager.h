@@ -267,6 +267,11 @@ protected:
     const TAO_PG_ObjectGroup_Array & groups,
     TAO_PG_ObjectGroup_Map_Entry * group_entry);
 
+  /// get the position of the object_group_map_entry
+  size_t get_object_group_position (
+    const TAO_PG_ObjectGroup_Array & groups,
+    TAO_PG_ObjectGroup_Map_Entry * group_entry);
+
   /// Verify that the member type_id matches the object group type_id.
   /**
    * @todo Strategize this -- e.g. strict type checking.
