@@ -6,7 +6,7 @@
 #include "DSRT_Schedulers.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "DSRT_Schedulers.i"
+//#include "DSRT_Schedulers.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Kokyu, DSRT_Schedulers, "$Id$")
@@ -25,7 +25,7 @@ DSRT_Scheduler_Impl::DSRT_Scheduler_Impl ()
   // platform.
   int n;
   Priority_t current_priority = this->min_prio_;
-  for (n = 1; current_priority != this->max_; ++n)
+  for (n = 1; current_priority != this->max_prio_; ++n)
     {
       current_priority =
         ACE_Sched_Params::next_priority (this->sched_policy_,
@@ -153,7 +153,7 @@ Priority_t
 MIF_Scheduler_Impl::schedule_i (guid_t id, const DSRT_QoSDescriptor& qos)
 {
   ACE_UNUSED_ARG ((id));
-  ACE_DEBUG ((LM_DEBUG, "(%t) request for MIF schedule\n"));
+  //  ACE_DEBUG ((LM_DEBUG, "(%t) request for MIF schedule\n"));
 
   Priority_t prio = qos.importance_ * this->prio_range_ / this->importance_range_;
 
@@ -162,7 +162,7 @@ MIF_Scheduler_Impl::schedule_i (guid_t id, const DSRT_QoSDescriptor& qos)
       prio = max_prio_;
     }
 
-  return prio_;
+  return prio;
 }
 
 

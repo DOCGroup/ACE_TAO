@@ -1,3 +1,13 @@
+Mon Apr 28 08:44:43 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Kokyu_DLL.dsp:
+	* Kokyu/Kokyu_Static.dsp: 
+	  Updated projects to include DSRT work.
+	
+	* Kokyu/DSRT_Schedulers.cpp:
+	* Kokyu/DSRT_Scheduler_Impl.cpp: Fixed some compiler errors on
+	  MSVC++. Thanks to Simon McQueen for pointing this out.
+
 Mon Apr 28 07:54:04 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_Stream.h (ACE_MEM_Stream): Also mentioned that the
