@@ -1,3 +1,7 @@
+Fri Jan 26 07:38:01 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/README: Updated all the README entries.
+
 Thu Jan 25 22:36:00 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:

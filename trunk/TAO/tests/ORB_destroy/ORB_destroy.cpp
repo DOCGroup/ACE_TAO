@@ -12,7 +12,7 @@
 //     Simple ORB destruction test.
 //
 // = AUTHOR
-//     Irfan Pyarali
+//     Irfan Pyarali <irfan@cs.wustl.edu>
 //
 //=========================================================================
 
