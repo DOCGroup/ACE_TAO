@@ -13,8 +13,9 @@
 //    Tim Harrison (harrison@cs.wustl.edu)
 //
 // = DESCRIPTION
-//    ACE implementation of COSS Event Services For more detailed
-//    information, see http://www.cs.wustl.edu/~mda/event.html.  
+//    TAO implementation of the Real Time Event Services. For more
+//    detailed information, see
+//    http://www.cs.wustl.edu/~schmidt/oopsla.ps.gz
 //
 // =  NAMING CONVENTIONS
 //    Some of the naming might be confusing.  For instance
@@ -32,6 +33,7 @@
 #include "ace/Containers.h"
 #include "ace/Map_Manager.h"
 
+#include "Timeprobe.h"
 #include "Local_ESTypes.h"
 #include "CORBA_Utils_T.h"
 #include "Task_Manager.h"
@@ -759,10 +761,6 @@ private:
   RtecEventChannelAdmin::ProxyPushConsumer_ptr channel_;
   // For event forwarding.
 
-  RtecScheduler::handle_t forwarding_rt_info_;
-  // Ties together the suppliers and the consumers of the forward
-  // event.
-
   RtecEventChannelAdmin::SupplierQOS qos_;
   // Supplier QOS specifications.
 
@@ -1300,58 +1298,12 @@ private:
 const char *
 ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos);
 
-class ACE_Timeprobe
-{
-public:
-  static ACE_Timeprobe &instance ();
-
-  void timeprobe (const char *id);
-
-  void print_times () const;
-
-  void reset();
-
-  void destroy ();
-
-private:
-  static ACE_Timeprobe *instance_;
-
-  enum { SLOTS = 8192 };
-
-  u_int current_slot_;
-
-  typedef struct timeprobe_info {
-      const char *id_;
-      ACE_hrtime_t time_;
-  } timeprobe_t;
-  timeprobe_t timeprobes [SLOTS];
-
-  ACE_Timeprobe ();
-  ~ACE_Timeprobe ();
-
-  friend class null_friend_to_avoid_compiler_warning_about_no_friends;
-
-  ACE_Timeprobe (const ACE_Timeprobe &); // not implemented
-};
-
 // ************************************************************
 
 typedef ACE_ES_Simple_Array <ACE_ES_Consumer_Rep *,
   ACE_ES_MAX_CONSUMERS_PER_SUPPLIER> ACE_ES_CRSet;
 
 typedef ACE_ES_Array_Iterator <ACE_ES_Consumer_Rep *> ACE_ES_CRSet_Iterator;
-
-#if defined (ACE_ENABLE_TIMEPROBES)
-#  define ACE_TIMEPROBE_RESET ACE_Timeprobe::instance ().reset ()
-#  define ACE_TIMEPROBE(id) ACE_Timeprobe::instance ().timeprobe (id)
-#  define ACE_TIMEPROBE_PRINT ACE_Timeprobe::instance ().print_times ()
-#  define ACE_TIMEPROBE_FINI ACE_Timeprobe::instance ().destroy ()
-#else
-#  define ACE_TIMEPROBE_RESET
-#  define ACE_TIMEPROBE(id)
-#  define ACE_TIMEPROBE_PRINT
-#  define ACE_TIMEPROBE_FINI
-#endif /* ACE_ENABLE_TIMEPROBES */
 
 #if defined (__ACE_INLINE__)
 #include "Event_Channel.i"

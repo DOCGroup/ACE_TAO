@@ -173,7 +173,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
- $(TAO_ROOT)/tao/tao_internals.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
@@ -204,11 +203,11 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
+ $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
@@ -226,7 +225,10 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/orbsvcs/lib/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/lib/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/lib/Scheduler_Factory.i \
- Event_Channel.h Local_ESTypes.h \
+ Event_Channel.h \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
+ Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/lib/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/lib/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/lib/RtecSchedulerS.i \
@@ -383,7 +385,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
- $(TAO_ROOT)/tao/tao_internals.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
@@ -414,11 +415,11 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
+ $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
@@ -465,6 +466,8 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
  Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/lib/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/lib/CosNamingC.h \
@@ -548,7 +551,10 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Reactor.i \
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- Dispatching_Modules.h ReactorTask.h Fast_Reactor.h \
+ Dispatching_Modules.h \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
+ ReactorTask.h Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
@@ -659,6 +665,8 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
  Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/lib/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/lib/CosNamingC.h \
@@ -807,7 +815,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
- $(TAO_ROOT)/tao/tao_internals.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
@@ -838,11 +845,11 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
+ $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
@@ -855,7 +862,10 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/lib/RtecSchedulerC.i \
- RT_Task.i Debug_Macros.h Event_Channel.h Local_ESTypes.h \
+ RT_Task.i Debug_Macros.h Event_Channel.h \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.h \
+ $(TAO_ROOT)/orbsvcs/lib/Timeprobe.i \
+ Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/lib/Event_Service_Constants.h \
  $(TAO_ROOT)/orbsvcs/lib/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/lib/CosNamingC.i \
@@ -1006,7 +1016,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
- $(TAO_ROOT)/tao/tao_internals.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
@@ -1037,11 +1046,11 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
+ $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
@@ -1154,7 +1163,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/varout.h \
  $(TAO_ROOT)/tao/any.h \
  $(TAO_ROOT)/tao/poa.h \
- $(TAO_ROOT)/tao/tao_internals.h \
  $(TAO_ROOT)/tao/params.h \
  $(TAO_ROOT)/tao/client_factory.h \
  $(TAO_ROOT)/tao/server_factory.h \
@@ -1185,11 +1193,11 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/sequence.i \
  $(TAO_ROOT)/tao/typecode.i \
  $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/stub.i \
  $(TAO_ROOT)/tao/object.i \
  $(TAO_ROOT)/tao/orbobj.i \
  $(TAO_ROOT)/tao/marshal.i \
+ $(TAO_ROOT)/tao/cdr.i \
  $(TAO_ROOT)/tao/poa.i \
  $(TAO_ROOT)/tao/giop.i \
  $(TAO_ROOT)/tao/iioporb.i \
