@@ -5,14 +5,13 @@ Sat May  1 22:01:41 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 Sat May  1 21:01:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
-	  Stub code generation was not checking inout args for the
-	  char, wchar, boolean and octet cases, where the Any::to_*
-	  structs must be used when demarshaling. Result was
-	  'ambiguous >> operator' error in compilation. Added the
-	  switch statement, checks and code generation. Thanks to
-	  (trying to find who sent this in - will come back and update)
-	  for reporting this bug.
+	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp: Stub
+ 	  code generation was not checking inout args for the char, wchar,
+ 	  boolean and octet cases, where the Any::to_* structs must be
+ 	  used when demarshaling. Result was 'ambiguous >> operator' error
+ 	  in compilation. Added the switch statement, checks and code
+ 	  generation. Thanks to englishmalc@my-dejanew.com for reporting
+ 	  this bug.
 
 Sat May  1 17:44:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
