@@ -50,6 +50,7 @@ TAO_EC_ProxyPushSupplier_Set::execute_delayed_operations (void)
 template class ACE_Node<TAO_EC_ProxyPushSupplier*>;
 template class ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*>;
 template class ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*>;
+template class ACE_Guard<TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set> >;
 template class TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set>;
 template class TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
 template class TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>;
@@ -60,6 +61,7 @@ template class TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_P
 #pragma instantiate ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*>
 #pragma instantiate TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set>
+#pragma instantiate ACE_Guard<TAO_EC_Busy_Lock_Adapter<TAO_EC_ProxyPushSupplier_Set> >
 #pragma instantiate TAO_EC_Connected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>
 #pragma instantiate TAO_EC_Disconnected_Command<TAO_EC_ProxyPushSupplier_Set,TAO_EC_ProxyPushSupplier>
 
