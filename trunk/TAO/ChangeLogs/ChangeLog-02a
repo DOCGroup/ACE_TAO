@@ -1,3 +1,10 @@
+Tue Feb 29 10:37:53 2000  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp,
+	  orbsvcs/orbsvcs/AV/Flows_T.cpp: Fixed locations where iterators
+	  where used without 'advance ()', but just 'next ()' this would have
+	  resulted to deadlocks.
+
 Mon Feb 28 17:37:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * TAO_IDL/driver/drv_args.cpp:
