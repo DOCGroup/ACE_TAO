@@ -116,7 +116,7 @@ OBJFILES = \
 	$(OBJDIR)\y.tab.obj \
 	$(OBJDIR)\narrow.obj \
 	$(OBJDIR)\utl_decllist.obj \
-	$(OBJDIR)\utl_error.obj \
+	$(OBJDIR)\utl_err.obj \
 	$(OBJDIR)\utl_exceptlist.obj \
 	$(OBJDIR)\utl_exprlist.obj \
 	$(OBJDIR)\utl_global.obj \

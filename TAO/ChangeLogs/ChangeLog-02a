@@ -1,3 +1,13 @@
+Wed Apr 26 02:32:38 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/Makefile:
+	* TAO_IDL/Makefile.bor:
+	* TAO_IDL/tao_idl.dsp:
+	* TAO_IDL/tao_idl_static.dsp:
+	* TAO_IDL/include/util.h:
+	* TAO_IDL/include/utl_err.h:
+	* TAO_IDL/util/utl_err.cpp: Renamed utl_error.* to utl_err.*.
+
 Wed Apr 26 02:19:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/releasenotes/index.html:

@@ -64,10 +64,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#ifndef _UTL_ERROR_UTL_ERROR_HH
-#define _UTL_ERROR_UTL_ERROR_HH
+#ifndef _UTL_ERR_UTL_ERR_HH
+#define _UTL_ERR_UTL_ERR_HH
 
-// utl_error.hh
+// utl_err.hh
 //
 // Defines error codes and error handling class for UTL
 // This will change as a result of internationalization
@@ -195,4 +195,4 @@ public:
   void  back_end(long lineno, UTL_String *s);
 };
 
-#endif           // _UTL_ERROR_UTL_ERROR_HH
+#endif           // _UTL_ERR_UTL_ERR_HH

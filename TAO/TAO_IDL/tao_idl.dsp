@@ -29,7 +29,66 @@ CFG=TAO_IDL Compiler - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir "TAO_IDL0"
+# PROP BASE Intermediate_Dir "TAO_IDL0"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir "Release"
+# PROP Intermediate_Dir "Release"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"../../ace"
+# SUBTRACT BASE LINK32 /map
+# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /out:"..\..\bin\Release\tao_idl.exe" /libpath:"../../ace"
+# SUBTRACT LINK32 /map
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "TAO_IDL_"
+# PROP BASE Intermediate_Dir "TAO_IDL_"
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "Debug"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /YX /FD /c
+# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\..\ace"
+# SUBTRACT BASE LINK32 /pdb:none
+# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /out:"..\..\bin\tao_idl.exe" /pdbtype:sept /libpath:"..\..\ace"
+# SUBTRACT LINK32 /pdb:none
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -84,73 +143,14 @@ LINK32=link.exe
 # ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\bin\tao_idl.exe" /pdbtype:sept /libpath:"..\..\ace"
 # SUBTRACT LINK32 /pdb:none
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "TAO_IDL_"
-# PROP BASE Intermediate_Dir "TAO_IDL_"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
-# PROP Intermediate_Dir "Debug"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /YX /FD /c
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "include" /I "be_include" /I "../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /pdbtype:sept /libpath:"..\..\ace"
-# SUBTRACT BASE LINK32 /pdb:none
-# ADD LINK32 aced.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /out:"..\..\bin\tao_idl.exe" /pdbtype:sept /libpath:"..\..\ace"
-# SUBTRACT LINK32 /pdb:none
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir "TAO_IDL0"
-# PROP BASE Intermediate_Dir "TAO_IDL0"
-# PROP BASE Ignore_Export_Lib 0
-# PROP BASE Target_Dir ""
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 0
-# PROP Output_Dir "Release"
-# PROP Intermediate_Dir "Release"
-# PROP Ignore_Export_Lib 0
-# PROP Target_Dir ""
-CPP=cl.exe
-# ADD BASE CPP /nologo /Gt0 /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D IDL_CFE_VERSION=\"1.3.0\" /FD /c
-# SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /Gt0 /W3 /GX /O2 /I "include" /I "be_include" /I "../../" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /FD /c
-RSC=rc.exe
-# ADD BASE RSC /l 0x409 /d "NDEBUG"
-# ADD RSC /l 0x409 /d "NDEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-LINK32=link.exe
-# ADD BASE LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /libpath:"../../ace"
-# SUBTRACT BASE LINK32 /map
-# ADD LINK32 ace.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /subsystem:console /debug /machine:ALPHA /out:"..\..\bin\Release\tao_idl.exe" /libpath:"../../ace"
-# SUBTRACT LINK32 /map
-
 !ENDIF 
 
 # Begin Target
 
+# Name "TAO_IDL Compiler - Win32 Alpha Release"
+# Name "TAO_IDL Compiler - Win32 Alpha Debug"
 # Name "TAO_IDL Compiler - Win32 Release"
 # Name "TAO_IDL Compiler - Win32 Debug"
-# Name "TAO_IDL Compiler - Win32 Alpha Debug"
-# Name "TAO_IDL Compiler - Win32 Alpha Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter ".cpp"
@@ -158,13 +158,13 @@ LINK32=link.exe
 
 SOURCE=.\ast\ast_argument.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -173,13 +173,13 @@ SOURCE=.\ast\ast_argument.cpp
 
 SOURCE=.\ast\ast_array.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -188,13 +188,13 @@ SOURCE=.\ast\ast_array.cpp
 
 SOURCE=.\ast\ast_attribute.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -203,13 +203,13 @@ SOURCE=.\ast\ast_attribute.cpp
 
 SOURCE=.\ast\ast_check.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -218,13 +218,13 @@ SOURCE=.\ast\ast_check.cpp
 
 SOURCE=.\ast\ast_concrete_type.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -233,13 +233,13 @@ SOURCE=.\ast\ast_concrete_type.cpp
 
 SOURCE=.\ast\ast_constant.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -248,13 +248,13 @@ SOURCE=.\ast\ast_constant.cpp
 
 SOURCE=.\ast\ast_decl.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -263,13 +263,13 @@ SOURCE=.\ast\ast_decl.cpp
 
 SOURCE=.\ast\ast_enum.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -278,13 +278,13 @@ SOURCE=.\ast\ast_enum.cpp
 
 SOURCE=.\ast\ast_enum_val.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -293,13 +293,13 @@ SOURCE=.\ast\ast_enum_val.cpp
 
 SOURCE=.\ast\ast_exception.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -308,13 +308,13 @@ SOURCE=.\ast\ast_exception.cpp
 
 SOURCE=.\ast\ast_expression.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -323,13 +323,13 @@ SOURCE=.\ast\ast_expression.cpp
 
 SOURCE=.\ast\ast_field.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -338,13 +338,13 @@ SOURCE=.\ast\ast_field.cpp
 
 SOURCE=.\ast\ast_generator.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -353,13 +353,13 @@ SOURCE=.\ast\ast_generator.cpp
 
 SOURCE=.\ast\ast_interface.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -368,13 +368,13 @@ SOURCE=.\ast\ast_interface.cpp
 
 SOURCE=.\ast\ast_interface_fwd.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -383,13 +383,13 @@ SOURCE=.\ast\ast_interface_fwd.cpp
 
 SOURCE=.\ast\ast_module.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -398,13 +398,13 @@ SOURCE=.\ast\ast_module.cpp
 
 SOURCE=.\ast\ast_native.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -413,13 +413,13 @@ SOURCE=.\ast\ast_native.cpp
 
 SOURCE=.\ast\ast_operation.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -428,13 +428,13 @@ SOURCE=.\ast\ast_operation.cpp
 
 SOURCE=.\ast\ast_predefined_type.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -443,13 +443,13 @@ SOURCE=.\ast\ast_predefined_type.cpp
 
 SOURCE=.\ast\ast_recursive.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -458,13 +458,13 @@ SOURCE=.\ast\ast_recursive.cpp
 
 SOURCE=.\ast\ast_redef.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -473,13 +473,13 @@ SOURCE=.\ast\ast_redef.cpp
 
 SOURCE=.\ast\ast_root.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -488,13 +488,13 @@ SOURCE=.\ast\ast_root.cpp
 
 SOURCE=.\ast\ast_sequence.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -503,13 +503,13 @@ SOURCE=.\ast\ast_sequence.cpp
 
 SOURCE=.\ast\ast_string.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -518,13 +518,13 @@ SOURCE=.\ast\ast_string.cpp
 
 SOURCE=.\ast\ast_structure.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -533,13 +533,13 @@ SOURCE=.\ast\ast_structure.cpp
 
 SOURCE=.\ast\ast_type.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -548,13 +548,13 @@ SOURCE=.\ast\ast_type.cpp
 
 SOURCE=.\ast\ast_typedef.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -563,13 +563,13 @@ SOURCE=.\ast\ast_typedef.cpp
 
 SOURCE=.\ast\ast_union.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -578,13 +578,13 @@ SOURCE=.\ast\ast_union.cpp
 
 SOURCE=.\ast\ast_union_branch.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -593,13 +593,13 @@ SOURCE=.\ast\ast_union_branch.cpp
 
 SOURCE=.\ast\ast_union_label.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -608,13 +608,13 @@ SOURCE=.\ast\ast_union_label.cpp
 
 SOURCE=.\be\be_args.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -623,13 +623,13 @@ SOURCE=.\be\be_args.cpp
 
 SOURCE=.\be\be_argument.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -638,13 +638,13 @@ SOURCE=.\be\be_argument.cpp
 
 SOURCE=.\be\be_array.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -653,13 +653,13 @@ SOURCE=.\be\be_array.cpp
 
 SOURCE=.\be\be_attribute.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -668,13 +668,13 @@ SOURCE=.\be\be_attribute.cpp
 
 SOURCE=.\be\be_codegen.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -683,13 +683,13 @@ SOURCE=.\be\be_codegen.cpp
 
 SOURCE=.\be\be_constant.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -698,13 +698,13 @@ SOURCE=.\be\be_constant.cpp
 
 SOURCE=.\be\be_decl.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -713,13 +713,13 @@ SOURCE=.\be\be_decl.cpp
 
 SOURCE=.\be\be_enum.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -728,13 +728,13 @@ SOURCE=.\be\be_enum.cpp
 
 SOURCE=.\be\be_enum_val.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -743,13 +743,13 @@ SOURCE=.\be\be_enum_val.cpp
 
 SOURCE=.\be\be_exception.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -758,13 +758,13 @@ SOURCE=.\be\be_exception.cpp
 
 SOURCE=.\be\be_expression.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -773,13 +773,13 @@ SOURCE=.\be\be_expression.cpp
 
 SOURCE=.\be\be_field.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -788,13 +788,13 @@ SOURCE=.\be\be_field.cpp
 
 SOURCE=.\be\be_generator.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -803,13 +803,13 @@ SOURCE=.\be\be_generator.cpp
 
 SOURCE=.\be\be_helper.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -818,13 +818,13 @@ SOURCE=.\be\be_helper.cpp
 
 SOURCE=.\be\be_init.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -833,13 +833,13 @@ SOURCE=.\be\be_init.cpp
 
 SOURCE=.\be\be_interface.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -848,13 +848,13 @@ SOURCE=.\be\be_interface.cpp
 
 SOURCE=.\be\be_interface_fwd.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -863,13 +863,13 @@ SOURCE=.\be\be_interface_fwd.cpp
 
 SOURCE=.\be\be_interface_strategy.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -878,13 +878,13 @@ SOURCE=.\be\be_interface_strategy.cpp
 
 SOURCE=.\be\be_module.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -893,13 +893,13 @@ SOURCE=.\be\be_module.cpp
 
 SOURCE=.\be\be_native.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -908,13 +908,13 @@ SOURCE=.\be\be_native.cpp
 
 SOURCE=.\be\be_operation.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -923,13 +923,13 @@ SOURCE=.\be\be_operation.cpp
 
 SOURCE=.\be\be_operation_strategy.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -938,13 +938,13 @@ SOURCE=.\be\be_operation_strategy.cpp
 
 SOURCE=.\be\be_predefined_type.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -953,13 +953,13 @@ SOURCE=.\be\be_predefined_type.cpp
 
 SOURCE=.\be\be_produce.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -968,13 +968,13 @@ SOURCE=.\be\be_produce.cpp
 
 SOURCE=.\be\be_root.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -983,13 +983,13 @@ SOURCE=.\be\be_root.cpp
 
 SOURCE=.\be\be_scope.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -998,13 +998,13 @@ SOURCE=.\be\be_scope.cpp
 
 SOURCE=.\be\be_sequence.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1013,13 +1013,13 @@ SOURCE=.\be\be_sequence.cpp
 
 SOURCE=.\be\be_stream_factory.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1028,13 +1028,13 @@ SOURCE=.\be\be_stream_factory.cpp
 
 SOURCE=.\be\be_string.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1043,13 +1043,13 @@ SOURCE=.\be\be_string.cpp
 
 SOURCE=.\be\be_structure.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1058,13 +1058,13 @@ SOURCE=.\be\be_structure.cpp
 
 SOURCE=.\be\be_sunsoft.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1073,13 +1073,13 @@ SOURCE=.\be\be_sunsoft.cpp
 
 SOURCE=.\be\be_type.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1088,13 +1088,13 @@ SOURCE=.\be\be_type.cpp
 
 SOURCE=.\be\be_typedef.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1103,13 +1103,13 @@ SOURCE=.\be\be_typedef.cpp
 
 SOURCE=.\be\be_union.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1118,13 +1118,13 @@ SOURCE=.\be\be_union.cpp
 
 SOURCE=.\be\be_union_branch.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1133,13 +1133,13 @@ SOURCE=.\be\be_union_branch.cpp
 
 SOURCE=.\be\be_union_label.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1148,13 +1148,13 @@ SOURCE=.\be\be_union_label.cpp
 
 SOURCE=.\be\be_valuetype.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1163,13 +1163,13 @@ SOURCE=.\be\be_valuetype.cpp
 
 SOURCE=.\be\be_valuetype_fwd.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1178,13 +1178,13 @@ SOURCE=.\be\be_valuetype_fwd.cpp
 
 SOURCE=.\be\be_visitor.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1193,13 +1193,13 @@ SOURCE=.\be\be_visitor.cpp
 
 SOURCE=.\be\be_visitor_ami_pre_proc.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1208,13 +1208,13 @@ SOURCE=.\be\be_visitor_ami_pre_proc.cpp
 
 SOURCE=.\be\be_visitor_argument.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1223,13 +1223,13 @@ SOURCE=.\be\be_visitor_argument.cpp
 
 SOURCE=.\be\be_visitor_array.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1238,13 +1238,13 @@ SOURCE=.\be\be_visitor_array.cpp
 
 SOURCE=.\be\be_visitor_attribute.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1253,13 +1253,13 @@ SOURCE=.\be\be_visitor_attribute.cpp
 
 SOURCE=.\be\be_visitor_constant.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1268,13 +1268,13 @@ SOURCE=.\be\be_visitor_constant.cpp
 
 SOURCE=.\be\be_visitor_context.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1283,13 +1283,13 @@ SOURCE=.\be\be_visitor_context.cpp
 
 SOURCE=.\be\be_visitor_decl.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1298,13 +1298,13 @@ SOURCE=.\be\be_visitor_decl.cpp
 
 SOURCE=.\be\be_visitor_enum.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1313,13 +1313,13 @@ SOURCE=.\be\be_visitor_enum.cpp
 
 SOURCE=.\be\be_visitor_exception.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1328,13 +1328,13 @@ SOURCE=.\be\be_visitor_exception.cpp
 
 SOURCE=.\be\be_visitor_factory.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1343,13 +1343,13 @@ SOURCE=.\be\be_visitor_factory.cpp
 
 SOURCE=.\be\be_visitor_field.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1358,13 +1358,13 @@ SOURCE=.\be\be_visitor_field.cpp
 
 SOURCE=.\be\be_visitor_interface.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1373,13 +1373,13 @@ SOURCE=.\be\be_visitor_interface.cpp
 
 SOURCE=.\be\be_visitor_interface_fwd.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1388,13 +1388,13 @@ SOURCE=.\be\be_visitor_interface_fwd.cpp
 
 SOURCE=.\be\be_visitor_module.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1403,13 +1403,13 @@ SOURCE=.\be\be_visitor_module.cpp
 
 SOURCE=.\be\be_visitor_operation.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1418,13 +1418,13 @@ SOURCE=.\be\be_visitor_operation.cpp
 
 SOURCE=.\be\be_visitor_root.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1433,13 +1433,13 @@ SOURCE=.\be\be_visitor_root.cpp
 
 SOURCE=.\be\be_visitor_scope.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1448,13 +1448,13 @@ SOURCE=.\be\be_visitor_scope.cpp
 
 SOURCE=.\be\be_visitor_sequence.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1463,13 +1463,13 @@ SOURCE=.\be\be_visitor_sequence.cpp
 
 SOURCE=.\be\be_visitor_structure.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1478,13 +1478,13 @@ SOURCE=.\be\be_visitor_structure.cpp
 
 SOURCE=.\be\be_visitor_typecode.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1493,13 +1493,13 @@ SOURCE=.\be\be_visitor_typecode.cpp
 
 SOURCE=.\be\be_visitor_typedef.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1508,13 +1508,13 @@ SOURCE=.\be\be_visitor_typedef.cpp
 
 SOURCE=.\be\be_visitor_union.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1523,13 +1523,13 @@ SOURCE=.\be\be_visitor_union.cpp
 
 SOURCE=.\be\be_visitor_union_branch.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1538,13 +1538,13 @@ SOURCE=.\be\be_visitor_union_branch.cpp
 
 SOURCE=.\be\be_visitor_valuetype.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1553,13 +1553,13 @@ SOURCE=.\be\be_visitor_valuetype.cpp
 
 SOURCE=.\be\be_visitor_valuetype_fwd.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1568,13 +1568,13 @@ SOURCE=.\be\be_visitor_valuetype_fwd.cpp
 
 SOURCE=.\driver\drv_args.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1583,13 +1583,13 @@ SOURCE=.\driver\drv_args.cpp
 
 SOURCE=.\driver\drv_fork.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1598,13 +1598,13 @@ SOURCE=.\driver\drv_fork.cpp
 
 SOURCE=.\driver\drv_init.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1613,13 +1613,13 @@ SOURCE=.\driver\drv_init.cpp
 
 SOURCE=.\driver\drv_link.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1628,13 +1628,13 @@ SOURCE=.\driver\drv_link.cpp
 
 SOURCE=.\driver\drv_preproc.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1643,13 +1643,13 @@ SOURCE=.\driver\drv_preproc.cpp
 
 SOURCE=.\driver\drv_private.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1658,13 +1658,13 @@ SOURCE=.\driver\drv_private.cpp
 
 SOURCE=.\fe\fe_declarator.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1673,13 +1673,13 @@ SOURCE=.\fe\fe_declarator.cpp
 
 SOURCE=.\fe\fe_extern.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1688,13 +1688,13 @@ SOURCE=.\fe\fe_extern.cpp
 
 SOURCE=.\fe\fe_init.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1703,13 +1703,13 @@ SOURCE=.\fe\fe_init.cpp
 
 SOURCE=.\fe\fe_interface_header.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1718,13 +1718,13 @@ SOURCE=.\fe\fe_interface_header.cpp
 
 SOURCE=.\fe\fe_lookup.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1733,13 +1733,13 @@ SOURCE=.\fe\fe_lookup.cpp
 
 SOURCE=.\fe\fe_private.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1748,13 +1748,13 @@ SOURCE=.\fe\fe_private.cpp
 
 SOURCE=.\fe\lex.yy.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1763,13 +1763,13 @@ SOURCE=.\fe\lex.yy.cpp
 
 SOURCE=.\narrow\narrow.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1778,13 +1778,13 @@ SOURCE=.\narrow\narrow.cpp
 
 SOURCE=.\tao_idl.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1793,28 +1793,28 @@ SOURCE=.\tao_idl.cpp
 
 SOURCE=.\util\utl_decllist.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
 # End Source File
 # Begin Source File
 
-SOURCE=.\util\utl_error.cpp
+SOURCE=.\util\utl_err.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1823,13 +1823,13 @@ SOURCE=.\util\utl_error.cpp
 
 SOURCE=.\util\utl_exceptlist.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1838,13 +1838,13 @@ SOURCE=.\util\utl_exceptlist.cpp
 
 SOURCE=.\util\utl_exprlist.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1853,13 +1853,13 @@ SOURCE=.\util\utl_exprlist.cpp
 
 SOURCE=.\util\utl_global.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1868,13 +1868,13 @@ SOURCE=.\util\utl_global.cpp
 
 SOURCE=.\util\utl_identifier.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1883,13 +1883,13 @@ SOURCE=.\util\utl_identifier.cpp
 
 SOURCE=.\util\utl_idlist.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1898,13 +1898,13 @@ SOURCE=.\util\utl_idlist.cpp
 
 SOURCE=.\util\utl_indenter.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1913,13 +1913,13 @@ SOURCE=.\util\utl_indenter.cpp
 
 SOURCE=.\util\utl_labellist.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1928,13 +1928,13 @@ SOURCE=.\util\utl_labellist.cpp
 
 SOURCE=.\util\utl_list.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1943,13 +1943,13 @@ SOURCE=.\util\utl_list.cpp
 
 SOURCE=.\util\utl_namelist.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1958,13 +1958,13 @@ SOURCE=.\util\utl_namelist.cpp
 
 SOURCE=.\util\utl_scope.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1973,13 +1973,13 @@ SOURCE=.\util\utl_scope.cpp
 
 SOURCE=.\util\utl_stack.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -1988,13 +1988,13 @@ SOURCE=.\util\utl_stack.cpp
 
 SOURCE=.\util\utl_string.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -2003,13 +2003,13 @@ SOURCE=.\util\utl_string.cpp
 
 SOURCE=.\util\utl_strlist.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -2018,13 +2018,13 @@ SOURCE=.\util\utl_strlist.cpp
 
 SOURCE=.\fe\y.tab.cpp
 
-!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
+!IF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
 
 !ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Debug"
 
-!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Alpha Release"
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO_IDL Compiler - Win32 Debug"
 
 !ENDIF 
 
@@ -2483,7 +2483,7 @@ SOURCE=.\include\utl_decllist.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\include\utl_error.h
+SOURCE=.\include\utl_err.h
 # End Source File
 # Begin Source File
 
