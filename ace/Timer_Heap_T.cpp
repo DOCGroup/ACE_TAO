@@ -457,7 +457,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::reheap_up (ACE_Timer_Node_T<TYPE> *mo
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::insert (ACE_Timer_Node_T<TYPE> *new_node)
 {
-  if (this->cur_size_ + 2 >= this->max_size_)
+  if (this->cur_size_ + this->cur_limbo_ + 2 >= this->max_size_)
     this->grow_heap ();
 
   this->reheap_up (new_node,
