@@ -338,8 +338,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
 
 int
-TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
-
+TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE)
 {
   // Increase the reference count on the upcall that have passed us.
   long upcalls = this->incr_pending_upcalls ();
