@@ -88,7 +88,7 @@ ACE_RCSID(TAO_IDL, tao_idl, "$Id$")
 static void
 DRV_version()
 {
-  cerr << idl_global->prog_name() << endl;
+  cerr << idl_global->prog_name() << endl
        << GTDEVEL("FE: Based on Sun IDL CFE version ")
        << IDL_CFE_VERSION
        << "\n";
