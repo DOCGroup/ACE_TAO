@@ -1,3 +1,11 @@
+Sat Jun  7 11:27:45 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
+
+	* ace/Synch[_T]: Changed all the classes so that internal instance
+ 	  variables are now protected rather than private.  This allows
+ 	  greater flexibility if there's a need to subclass
+	  (which shouldn't occur very much...).  Thanks to
+	  Reza Roodsari <reza@sprynet.com> for suggesting this.
+
 Fri Jun 06 21:30:57 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Timer_{Hash,Wheel}_T.cpp:  added #includes of

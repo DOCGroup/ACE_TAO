@@ -148,10 +148,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   ACE_OS::ace_flock_t lock_;
   // Locking structure for OS record locks.
 
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_File_Lock &);
   ACE_File_Lock (const ACE_File_Lock &);
@@ -217,9 +218,10 @@ public:
   const ACE_sema_t &lock (void) const;
   // Return the underlying lock.
 
-private:
+protected:
   ACE_sema_t semaphore_;
 
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Semaphore &);
   ACE_Semaphore (const ACE_Semaphore &);
@@ -286,7 +288,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   ACE_Semaphore lock_;
 #else
@@ -350,10 +352,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   ACE_rwlock_t lock_;
   // Readers/writer lock.
 
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_RW_Mutex &);
   ACE_RW_Mutex (const ACE_RW_Mutex &);
@@ -515,7 +518,6 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-
   // = Prevent assignment and initialization.
   void operator= (const ACE_Null_Barrier &);
   ACE_Null_Barrier (const ACE_Null_Barrier &);
@@ -568,9 +570,10 @@ public:
   // ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   ACE_Null_Mutex &mutex_; // Reference to mutex lock.  
 
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Null_Condition_Mutex &);
   ACE_Null_Condition_Mutex (const ACE_Null_Condition_Mutex &c): mutex_
@@ -696,11 +699,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks
 
-private:
-
+protected:
   ACE_event_t handle_;
   // The underlying handle.
 
+private:
   // = Prevent copying.
   ACE_Event (const ACE_Event& event);
   const ACE_Event &operator= (const ACE_Event &rhs);
@@ -859,13 +862,14 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   ACE_Thread_Mutex &lock_;
   // Reference to the mutex.
 
   int owner_;
   // Keeps track of whether we acquired the lock or failed.
 
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Thread_Mutex_Guard &);
   ACE_Thread_Mutex_Guard (const ACE_Thread_Mutex_Guard &g): lock_ (g.lock_) {}
@@ -924,13 +928,14 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   ACE_cond_t cond_;
   // Condition variable.
 
   ACE_Thread_Mutex &mutex_; 
   // Reference to mutex lock.
 
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Condition_Thread_Mutex &);
   ACE_Condition_Thread_Mutex (const ACE_Condition_Thread_Mutex &c): mutex_ (c.mutex_) {}
@@ -989,7 +994,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   // These methods should *not* be public (they hold no locks...)
   void set_thread_id (ACE_thread_t t);
 
@@ -1006,6 +1011,7 @@ private:
   ACE_thread_t owner_id_;
   // Current owner of the lock.
 
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Recursive_Thread_Mutex &);
   ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &);
@@ -1096,7 +1102,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
 
-private:
+protected:
   ACE_Thread_Mutex lock_;
   // Serialize access to the barrier state.
 
@@ -1117,6 +1123,7 @@ private:
   // threads calls wait() again (i.e., starts up the next generation
   // barrier).
 
+private:
   // = Prevent assignment and initialization.
   void operator= (const ACE_Barrier &);
   ACE_Barrier (const ACE_Barrier &): sub_barrier_1_ (0, lock_), sub_barrier_2_ (0, lock_) {}
