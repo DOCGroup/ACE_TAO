@@ -1,3 +1,16 @@
+Tue Dec 14 17:38:16 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * performance-tests/Latency/Collocation/Client_Task.cpp:
+        * performance-tests/Latency/Collocation/Client_Task.h:
+        * performance-tests/Latency/Collocation/Server_Task.h:
+        * performance-tests/Latency/Collocation/Server_Task.cpp:
+        * performance-tests/Latency/Collocation/Collocated_Test.cpp:
+        * performance-tests/Latency/Collocation/run_test.pl
+
+          Fixed this test to directly obtain the reference of the remote
+          object than from a file. Also removed passing unnecessary ORB
+          references around. Added run_test.pl to run the test.
+
 Tue Dec 14 14:55:00 2004  Greg Bostrom <greg.bostrom@hp.com>
 
         * TAO_IDL/include/idl_uns_long.h:
