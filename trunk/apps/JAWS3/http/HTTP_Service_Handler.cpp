@@ -35,12 +35,12 @@ JAWS_HTTP_Service_Handler::close (unsigned long)
 }
 
 int
-JAWS_HTTP_Acceptor::init (int argc, ASYS_TCHAR *argv[])
+JAWS_HTTP_Acceptor::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opt (argc, argv, "p:");
 
   unsigned short p = 0;
-  
+
   int c;
   while ((c = opt ()) != -1)
     switch (c)
@@ -65,4 +65,3 @@ JAWS_HTTP_Acceptor::init (int argc, ASYS_TCHAR *argv[])
 }
 
 ACE_SVC_FACTORY_DEFINE (JAWS_HTTP_Acceptor)
-

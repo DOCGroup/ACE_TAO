@@ -56,7 +56,7 @@ class ACE_Svc_Export JAWS_HTTP_Acceptor
 {
 public:
 
-  int init (int argc, ASYS_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]);
 
 };
 
