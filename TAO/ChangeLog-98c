@@ -5,12 +5,15 @@ Tue Mar 24 19:13:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	mixing system exceptions with user defined exceptions. This has
 	been fixed and is under testing.
 
-	* TAO_IDL/{be_visitor_exception, be_exception}.cpp: The generated
+	* TAO_IDL/be/{be_visitor_exception, be_exception}.cpp: The generated
 	typecode for Exceptions erroneously had a "tk_struct" TypeCode
 	kind. This has been fixed to be "tk_except".
 
-	* TAO_IDL/be_visitor_operation.cpp: Handling of oneway operations
+	* TAO_IDL/be/be_visitor_operation.cpp: Handling of oneway operations
 	in the server skeletons was buggy. It is now fixed.
+
+	* TAO_IDL/be/be_predefined_type.cpp: TypeCodes for pseudo objects
+	were not getting properly generated. This is now fixed.
 
 Tue Mar 24 14:51:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 

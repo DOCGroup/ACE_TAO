@@ -395,13 +395,16 @@ be_predefined_type::gen_typecode (void)
       break;
     case AST_PredefinedType::PT_pseudo:
       {
-        *cs << this->tc_name () << ", \n";
-        if (!ACE_OS::strcmp (this->local_name ()->get_string (), "Object"))
-          {
-            *cs << this->tc_encap_len () << ", // encapsulation length\n";
-            // now emit the encapsulation
-            this->gen_encapsulation ();
-          }
+        if (!ACE_OS::strcmp (this->local_name ()->get_string (), "TypeCode"))
+          *cs << "CORBA::tk_typecode,\n\n";
+        else
+          if (!ACE_OS::strcmp (this->local_name ()->get_string (), "Object"))
+            {
+              *cs << "CORBA::tk_objref,\n";
+              *cs << this->tc_encap_len () << ", // encapsulation length\n";
+              // now emit the encapsulation
+              this->gen_encapsulation ();
+            }
       }
       break;
     }
