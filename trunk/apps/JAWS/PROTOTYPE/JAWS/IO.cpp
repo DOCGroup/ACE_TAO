@@ -110,7 +110,7 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
 
   int result = handle.error ();
 
-  if (result == ACE_Filecache_Handle::SUCCESS)
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
       ACE_SOCK_Stream stream;
       stream.set_handle (ioh->handle ());
@@ -129,7 +129,7 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
         result = -1;
     }
 
-  if (result != ACE_Filecache_Handle::SUCCESS)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     ioh->receive_file_error (result);
 }
 
@@ -145,7 +145,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
   int result = handle.error ();
 
-  if (result == ACE_Filecache_Handle::SUCCESS)
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
 #if defined (ACE_JAWS_BASELINE)
       ACE_SOCK_Stream stream;
@@ -188,7 +188,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 #endif /* ACE_JAWS_BASELINE */
     }
 
-  if (result != ACE_Filecache_Handle::SUCCESS)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     ioh->transmit_file_error (result);
 }
 
@@ -285,11 +285,11 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
   ACE_Message_Block *mb = 0;
   ACE_Filecache_Handle *handle;
 
-  ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length, NOMAP));
+  ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length, ACE_NOMAP));
 
   int result = handle->error ();
 
-  if (result == ACE_Filecache_Handle::SUCCESS)
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
       ACE_OS::memcpy (handle->address (),
                       initial_data,
@@ -315,7 +315,7 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
         }
     }
 
-  if (result != ACE_Filecache_Handle::SUCCESS)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     {
       this->handler_->receive_file_error (result);
       delete mb;
@@ -335,11 +335,11 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
     ACE_dynamic_cast (JAWS_Asynch_IO_Handler *, ioh);
 
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
-  ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename, NOMAP);
+  ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename, ACE_NOMAP);
 
   int result = handle->error ();
 
-  if (result == ACE_Filecache_Handle::SUCCESS)
+  if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
       ACE_Message_Block header_mb (header, header_size);
       ACE_Message_Block trailer_mb (trailer, trailer_size);
@@ -362,7 +362,7 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
         result = -1;
     }
 
-  if (result != ACE_Filecache_Handle::SUCCESS)
+  if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     {
       this->handler_->transmit_file_error (result);
       delete header_and_trailer;

@@ -250,7 +250,7 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
         {
           if (result.message_block ().length ()
               == result.message_block ().size ())
-            code = ACE_Filecache_Handle::SUCCESS;
+            code = ACE_Filecache_Handle::ACE_SUCCESS;
           else
             {
               ACE_Asynch_Read_Stream ar;
@@ -267,7 +267,7 @@ JAWS_Asynch_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result
       else
         code = -1;
 
-      if (code == ACE_Filecache_Handle::SUCCESS)
+      if (code == ACE_Filecache_Handle::ACE_SUCCESS)
         this->handler ()->receive_file_complete ();
       else
         this->handler ()->receive_file_error (code);
