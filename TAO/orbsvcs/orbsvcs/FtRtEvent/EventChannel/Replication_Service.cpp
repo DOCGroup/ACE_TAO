@@ -104,6 +104,8 @@ namespace FTRTEC
 
   void Replication_Service::become_primary()
   {
+    TAO_FTRTEC::Log(3, "become_primary\n");
+   
     Replication_Strategy* strategy =
       replication_strategy->make_primary_strategy();
 
