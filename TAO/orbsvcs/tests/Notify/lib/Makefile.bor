@@ -7,9 +7,9 @@ NAME = TAO_NotifyTests
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe
 
 OBJFILES = \
-	$(OBJDIR)\Activation_Manager.obj \
 	$(OBJDIR)\Activation_ManagerC.obj \
 	$(OBJDIR)\Activation_ManagerS.obj \
+	$(OBJDIR)\Activation_Manager.obj \
 	$(OBJDIR)\Application_Command.obj \
 	$(OBJDIR)\Command.obj \
 	$(OBJDIR)\Command_Builder.obj \
