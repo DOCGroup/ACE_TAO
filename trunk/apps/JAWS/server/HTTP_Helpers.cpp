@@ -77,8 +77,10 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   /* mktime is a Standard C function */
   {
 #if !defined (ACE_HAS_REENTRANT_LIBC)
+#if defined (ACE_HAS_THREADS)
     static ACE_Thread_Mutex mutex;
     ACE_Guard<ACE_Thread_Mutex> g(mutex);
+#endif /* ACE_HAS_THREADS */
 #endif /* NOT ACE_HAS_REENTRANT_LIBC */
     return ::mktime(&tms);
   }

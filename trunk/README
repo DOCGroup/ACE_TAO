@@ -33,9 +33,9 @@ services in one or more processes or threads.
 
 ACE has been ported to a wide range of uni-processor and multi-process
 OS platforms including Win32 (i.e., WinNT and Win95), most versions of
-UNIX (e.g., SunOS 4.x and 5.x, SGI IRIX, HP-UX, OSF/1, AIX, Linux, and
-SCO), VxWorks, and MVS OpenEdition.  It is currently used in
-commercial products by dozens of companies including Ericsson,
+UNIX (e.g., SunOS 4.x and 5.x, SGI IRIX, HP-UX, OSF/1, AIX, Linux,
+SCO, and FreeBSD), VxWorks, and MVS OpenEdition.  It is currently used
+in commercial products by dozens of companies including Ericsson,
 Bellcore, Siemens, Motorola, Kodak, and McDonnell Douglas.  There are
 both C++ and Java versions of ACE available.
 
