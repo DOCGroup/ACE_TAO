@@ -1,3 +1,10 @@
+Fri Apr 27 11:03:40 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/DynAny_Test/driver.cpp:
+
+          Clean up the orb in the Driver destructor.  This allows the test
+          to run properly on VxWorks.
+
 Fri Apr 27 10:45:35 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Explicit_Event_Loop/client.cpp:
