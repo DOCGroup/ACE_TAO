@@ -1,3 +1,9 @@
+Thu Nov 23 18:38:54 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * Makefile:
+          Add ACE_wrappers/html to the list of files tagged, even though
+          they are not included in the tar or zip files.
+
 Thu Nov 23 18:27:52 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * Makefile:
