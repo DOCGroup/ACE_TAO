@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ciao/Container_Base.h"
+#include "ace/DLL.h"
 
 ////////////////////////////////////////////////////////////////
 
@@ -98,6 +99,61 @@ CIAO::Session_Container::install_servant (PortableServer::Servant p
   ACE_CHECK_RETURN (0);
 
   return objref._retn ();
+}
+
+Components::CCMHome_ptr
+CIAO::Session_Container::_ciao_install_home (const char *exe_dll_name,
+                                             const char *exe_entrypt,
+                                             const char *sv_dll_name,
+                                             const char *sv_entrypt
+                                             ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ACE_DLL executor_dll (0), servant_dll (0);
+
+  if (exe_dll_name == 0 || sv_dll_name == 0)
+    ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+
+  if (executor_dll.open (exe_dll_name) != 0)
+    ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+
+  if (servant_dll.open (sv_dll_name) != 0)
+    {
+      executor_dll.close ();
+      ACE_THROW_RETURN (Components::Deployment::UnknownImplId (), 0);
+    }
+
+  if (exe_entrypt == 0 || sv_entrypt == 0)
+    ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
+
+  HomeFactory hcreator = (HomeFactory) executor_dll.symbol (exe_entrypt);
+  ServantFactory screator = (ServantFactory) servant_dll.symbol (sv_entrypt);
+
+  if (hcreator == 0 || screator == 0)
+    ACE_THROW_RETURN (Components::Deployment::ImplEntryPointNotFound (), 0);
+
+  Components::HomeExecutorBase_var home_executor = hcreator ();
+  if (CORBA::is_nil (home_executor))
+    ACE_THROW_RETURN (Components::Deployment::InstallationFailure (), 0);
+
+  PortableServer::Servant home_servant = screator (home_executor.in (),
+                                                   this
+                                                   ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (home_servant == 0)
+    ACE_THROW_RETURN (Components::Deployment::InstallationFailure (), 0);
+
+  CORBA::Object_var objref = this->install_servant (home_servant
+                                                    ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  Components::CCMHome_var homeref = Components::CCMHome::_narrow (objref
+                                                                  ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return homeref._retn ();
+
 }
 
 void

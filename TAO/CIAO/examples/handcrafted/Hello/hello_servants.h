@@ -256,3 +256,8 @@ protected:
   // My Container
   CIAO::Session_Container *container_;
 };
+
+extern "C" HELLO_SERVANT_Export ::PortableServer::Servant
+createHelloHome_Servant (::Components::HomeExecutorBase_ptr p,
+                         CIAO::Session_Container *c
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);

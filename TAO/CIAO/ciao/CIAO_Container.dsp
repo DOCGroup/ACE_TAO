@@ -7,19 +7,19 @@
 CFG=CIAO_Container - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "CIAO_Container.mak".
-!MESSAGE
+!MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
-!MESSAGE
+!MESSAGE 
 !MESSAGE NMAKE /f "CIAO_Container.mak" CFG="CIAO_Container - Win32 Debug"
-!MESSAGE
+!MESSAGE 
 !MESSAGE Possible choices for configuration are:
-!MESSAGE
+!MESSAGE 
 !MESSAGE "CIAO_Container - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "CIAO_Container - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
-!MESSAGE
+!MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib TAO_Security.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\CIAO_Container.dll" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib TAO_Security.lib  TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\CIAO_Container.dll" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "CIAO_Container - Win32 Debug"
 
@@ -81,7 +81,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib taod.lib TAO_IFR_Clientd.lib TAO_Securityd.lib TAO_PortableServerd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\CIAO_Containerd.dll" /pdbtype:sept /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\PortableServer"
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
@@ -116,10 +116,6 @@ SOURCE=.\CCM_TransactionC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Container_Base.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\CosPersistentStateC.cpp
 # End Source File
 # End Group
@@ -140,10 +136,6 @@ SOURCE=.\CCM_Container_ExC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\CIAO_Container_Export.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\CCM_ContainerC.h
 # End Source File
 # Begin Source File
@@ -156,7 +148,7 @@ SOURCE=.\CCM_TransactionC.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Container_Base.h
+SOURCE=.\CIAO_Container_Export.h
 # End Source File
 # Begin Source File
 
@@ -217,7 +209,7 @@ BuildCmds= \
 	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-
+	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -240,7 +232,7 @@ BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-
+	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -252,7 +244,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -270,7 +262,7 @@ BuildCmds= \
 	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-
+	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -293,7 +285,7 @@ BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-
+	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -305,7 +297,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -323,7 +315,7 @@ BuildCmds= \
 	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-
+	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -346,7 +338,7 @@ BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-
+	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -358,7 +350,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # Begin Source File
@@ -376,7 +368,7 @@ BuildCmds= \
 	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-
+	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -399,7 +391,7 @@ BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
 	del $(InputName)S_T.* \
-
+	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -411,7 +403,7 @@ BuildCmds= \
    $(BuildCmds)
 # End Custom Build
 
-!ENDIF
+!ENDIF 
 
 # End Source File
 # End Group

@@ -20,14 +20,15 @@
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
+#include "ciao/CCM_ContainerC.h"
+#include "ciao/CCM_DeploymentC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "CIAO_CONTAINER_export.h"
-
+#include "CIAO_SERVER_export.h"
 
 namespace CIAO
 {
@@ -39,7 +40,7 @@ namespace CIAO
    * Perhaps we can use local interface to define these interfaces as
    * we will also get reference counting automatically.
    */
-  class CIAO_CONTAINER_Export Container
+  class CIAO_SERVER_Export Container
   {
   public:
     Container (CORBA::ORB_ptr o);
@@ -61,7 +62,7 @@ namespace CIAO
     PortableServer::POA_var poa_;
   };
 
-  class CIAO_CONTAINER_Export Session_Container : public Container
+  class CIAO_SERVER_Export Session_Container : public Container
   {
   public:
     Session_Container (CORBA::ORB_ptr o);
@@ -71,6 +72,25 @@ namespace CIAO
     /// Initialize the container with a name.
     virtual int init (const char *name = 0
                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    /**
+     * @brief Simply installing a home executor into the component.
+     *
+     * This operation install a home executor into the component.  It
+     * requires the name of the DLLs to executor and the servant glue
+     * code, and the entry points to the respective DLLs.  Currently,
+     * we don't try to manage the lifetime of DLL objects, but we
+     * should at some later point.
+     *
+     * @retval Home objref of the installed home.
+     */
+    virtual Components::CCMHome_ptr _ciao_install_home
+      (const char *exe_dll_name,
+       const char *exe_entrypt,
+       const char *sv_dll_name,
+       const char *sv_entrypt
+       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Install a servant for component or home.
@@ -93,6 +113,12 @@ namespace CIAO
 
     static ACE_Atomic_Op <ACE_Thread_Mutex, long> serial_number_;
   };
+
+  typedef ::Components::HomeExecutorBase_ptr (*HomeFactory) (void);
+  typedef ::PortableServer::Servant (*ServantFactory)
+    (::Components::HomeExecutorBase_ptr p,
+     ::CIAO::Session_Container *c
+     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 };
 
 #endif /* CIAO_CONTAINER_BASE_H */
