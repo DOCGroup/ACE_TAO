@@ -1,3 +1,9 @@
+Fri Feb  7 16:55:58 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * ace/config-aix-4.x.h: Reverted change to aix config file:
+
+          Fri Feb  7 15:27:40 2003  Heather Drury  <drury_h@ociweb.com>
+
 Fri Feb  7 15:37:19 2003  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix_ibm.GNU: Define DCCFLAGS with the
