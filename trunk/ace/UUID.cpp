@@ -70,7 +70,6 @@ namespace ACE_Utils
 
     node_release_ = 1;
 
-    ACE_TRACE ("UUID::UUID");
 
     if (uuid_string.length() < NIL_UUID.to_string()->length())
       {
