@@ -1,3 +1,26 @@
+Tue Dec  16 18:25:01 2003  Tao Lu  <lu@tango.dre.vanderbilt.edu>
+
+	* docs/tutorial/Hello/README:
+	* docs/tutorial/Hello/config:
+	* docs/tutorial/Hello/CIAO_Installation_Data.ini:
+	* docs/tutorial/Hello/hello.idl:
+	* docs/tutorial/Hello/hello.cidl:
+	* docs/tutorial/Hello/hello.mpc:
+	* docs/tutorial/Hello/hello.csd:
+	* docs/tutorial/Hello/hello.ssd:
+	* docs/tutorial/Hello/hello_exec.cpp:
+	* docs/tutorial/Hello/hello_exec.h:
+	* docs/tutorial/Hello/hello_stub_export.h:
+	* docs/tutorial/Hello/hello_svnt_export.h:
+	* docs/tutorial/Hello/hello_exec_export.h:
+	* docs/tutorial/Hello/client.cpp:
+	* docs/tutorial/Hello/simple_client.cpp:
+	* docs/tutorial/Hello/run_test.pl:
+	* docs/tutorial/Hello/run_simple_test.pl:
+
+	Changed Nanbor's handcrafted helloworld example to use the CIDL compiler.
+	Stardard CIAO naming is used (_svnt, _exec etc.).
+
 Tue Dec  16 14:14:59 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* docs/tutorial/hello/index.html:
@@ -47,6 +70,7 @@ Wed Dec 3 12:25:20 2003  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
 	  Moved file to the right directory and updated name of the .cad file
           to the right one. Thanks to Gautam Thaker for pointing this out.
 
+
 Tue Dec  2 18:40:59 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * examples/Hello/Receiver/Receiver_exec.cpp:
@@ -55,6 +79,15 @@ Tue Dec  2 18:40:59 2003  Tao Lu  <lu@dre.vanderbilt.edu>
           Added two auto run perl scripts and fixed the bug in the
           Receiver_exec which caused the OBV run time error when
           the Sender and the Receiver are not collocated.
+
+Tue Dec 2 18:32:23 2003  Tao Lu  <lu@tango.dre.vanderbilt.edu>
+
+	* examples/Hello/Receiver/Receiver_exec.cpp:
+        * examples/Hello/descriptors/run_test_default.pl:
+	* examples/Hello/descriptors/run_test_remote.pl:
+	  Added two auto run perl scripts and fixed the bug in the
+	  Receiver_exec which caused the OBV run time error when
+	  the Sender and the Receiver are not collocated.
 
 Mon Dec  1 17:49:43 2003  Tao Lu  <lu@dre.vanderbilt.edu>
 
