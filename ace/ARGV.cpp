@@ -197,6 +197,8 @@ ACE_ARGV::argv_to_string (ASYS_TCHAR **argv,ASYS_TCHAR *&buf)
 
   ACE_NEW_RETURN (buf, ASYS_TCHAR[buf_len + 1],0);
 
+  // initial null charater to make it a null string.
+  buf[0] = '\0';
   ASYS_TCHAR *end = buf;
   int j;
 
@@ -212,8 +214,8 @@ ACE_ARGV::argv_to_string (ASYS_TCHAR **argv,ASYS_TCHAR *&buf)
       else
 	end = ACE::strecpy (end, argv[j]);
 
-      // Add white space and advance the pointer.
-      *end++ = ' ';
+      // Replace the null char that strecpy put there with white space.
+      *(end-1) = ' ';
     }
   // Null terminate the string.
   *end = '\0';
@@ -300,8 +302,9 @@ ACE_ARGV::ACE_ARGV (ASYS_TCHAR *argv[],
       else
 	end = ACE::strecpy (end, argv[j]);
 
-      // Add white space and advance the pointer.
-      *end++ = ' ';
+      // Replace the null char that strecpy copies with white space as
+      // a separator.
+      *(end-1) = ' ';
     }
 
   // Remember how many arguments there are

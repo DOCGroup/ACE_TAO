@@ -80,7 +80,7 @@ Client_i::~Client_i (void)
          i > 0;
          i--)
       delete this->low_priority_client_[i - 1];
-  delete this->low_priority_client_;
+  delete [] this->low_priority_client_;
   delete this->util_thread_;
   delete this->ts_;
 }

@@ -1,3 +1,9 @@
+Tue Sep 15 16:28:12 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* ace/ARGV.cpp (ACE_ARGV::argv_to_string): Fixed the problem where
+	  we were allocating space only for the length of the string whereas
+	  strecpy was inserting the extra '\0' leading to Array bounds write.
+
 Tue Sep 15 13:33:26 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/config-{WinCE,g++-common}.h:
