@@ -24,13 +24,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/os_include/os_signal.h"
 #include "ace/Event_Handler.h"
 
 // Type of the extended signal handler.
 typedef void (*ACE_Sig_Handler_Ex) (int, siginfo_t *siginfo, ucontext_t *ucontext);
-
-// This worksaround a horrible bug with HP/UX C++...
-typedef struct sigaction ACE_SIGACTION;
 
 /**
  * @class ACE_Sig_Set
@@ -192,7 +190,7 @@ public:
 
   /// Get current signal action.
   struct sigaction *get (void);
-  operator ACE_SIGACTION *();
+  operator struct sigaction *();
 
   /// Set current signal flags.
   void flags (int);

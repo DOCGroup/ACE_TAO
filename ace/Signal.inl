@@ -187,9 +187,9 @@ ACE_Sig_Action::get (void)
 }
 
 ACE_INLINE
-ACE_Sig_Action::operator ACE_SIGACTION * ()
+ACE_Sig_Action::operator struct sigaction * ()
 {
-  ACE_TRACE ("ACE_Sig_Action::operator ACE_SIGACTION *");
+  ACE_TRACE ("ACE_Sig_Action::operator struct sigaction *");
   return &this->sa_;
 }
 
