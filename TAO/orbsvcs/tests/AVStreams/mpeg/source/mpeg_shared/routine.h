@@ -27,7 +27,7 @@
 #if !defined (_MPEG_ROUTINE_H)
 #define _MPEG_ROUTINE_H
 
-#include "../include/common.h"
+#include "common.h"
 #ifdef LINUX
 #else
 void usleep(unsigned int usec);

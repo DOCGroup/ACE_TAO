@@ -10,7 +10,8 @@
 class Video_Control_i
   : public virtual POA_Video_Control
 {
-  Video_Control_i (void);
+public:
+  Video_Control_i ();
   virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para,
                                      CORBA::Environment &_tao_environment);
   
@@ -44,9 +45,9 @@ class Video_Control_i
 
   virtual CORBA::Boolean stop (CORBA::Long cmdsn,
                                CORBA::Environment &_tao_environment);
+
+  virtual ~Video_Control_i (void);
   
 };
 
 #endif /* if !defined (AV_VIDEO_CONTROL_H) */
-
-
