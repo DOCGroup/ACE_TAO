@@ -105,9 +105,12 @@ int
 TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_CString &address)
 {
-
+  // address is in the for host:port
   ACE_INET_Addr addr (address.c_str ());
 
+  // open endpoint.  If port ==0 then
+  // calling the open method will cause the system to assign
+  // an ephemeral port number number.
   if (this->base_acceptor_.open (
        // orb_core->orb_params ()->addr (),
        addr,
@@ -117,6 +120,22 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
        orb_core->server_factory ()->concurrency_strategy (),
        orb_core->server_factory ()->scheduling_strategy ()) == -1)
     return -1; // Failure
+
+  char tmp_host[MAXHOSTNAMELEN+1];
+  this->port_ = addr.get_port_number ();
+  if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
+    {
+      const char *tmp;
+      if ((tmp = addr.get_host_addr ()) == 0)
+        return -1;
+      this->host_ = tmp;
+    }
+  else
+    {
+       if (addr.get_host_name (tmp_host, MAXHOSTNAMELEN + 1) != 0)
+         return -1;
+       this->host_ = tmp_host;
+    }
 
   return 0;  // Success
 }
