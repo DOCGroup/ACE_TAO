@@ -16,7 +16,7 @@ NAMES = \
 	RMCast_Retransmission_Test \
 	RMCast_UDP_Best_Effort_Test
 
-OBJFILES = $(OBJDIR)\$(NAME).obj
+OBJFILES = $(OBJDIR)\$(NAME).obj $(OBJDIR)\Main.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \

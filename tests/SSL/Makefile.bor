@@ -6,7 +6,7 @@
 NAMES = \
 	Thread_Pool_Reactor_SSL_Test
 
-OBJFILES = $(OBJDIR)\$(NAME).obj
+OBJFILES = $(OBJDIR)\$(NAME).obj $(OBJDIR)\Main.obj
 
 CFLAGS = \
         $(ACE_CFLAGS) \
