@@ -26,6 +26,8 @@
 #  profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 #  purify           Purify all executables.
 #  quantify         Quantify all executables.
+#  repo             Use GNU template repository (g++ with repo patches and
+#                     egcs only).
 #  shared_libs      Build shared libraries. Ignored if static_libs_only is set.
 #  static_libs      Build shared libraries. Ignored if shared_libs_only is set.
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
@@ -307,6 +309,15 @@ ifdef quantify
   CFLAGS += -DACE_QUANTIFY
 endif # quantify
 
+ifeq ($(repo),0)
+  override repo =
+endif # repo
+
+ifdef repo
+  #### Remove -fno-implicit-templates from, and add -frepo to, CCFLAGS.
+  CCFLAGS := $(strip $(subst -fno-implicit-templates,,$(CCFLAGS)))
+  CCFLAGS += -frepo
+endif # repo
 
 #----------------------------------------------------------------------------
 #      Conditional macro definitions
