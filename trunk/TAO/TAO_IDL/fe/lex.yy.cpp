@@ -850,7 +850,7 @@ TAO_YY_MALLOC_DECL
 
 /* Code executed at the end of each rule. */
 #ifndef TAO_YY_BREAK
-#define TAO_YY_BREAK ACE_NOTREACHED (break;)
+#define TAO_YY_BREAK break;
 #endif
 
 #define TAO_YY_RULE_SETUP \
