@@ -144,7 +144,7 @@ TAO_POA_Manager::adapter_manager_state_changed (PortableServer::POAManager::Stat
   if (ior_adapter)
     {
       ior_adapter->adapter_manager_state_changed (TAO_POA_Manager::poa_manager_id_,
-                                                  state
+                                                  adapter_state
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
