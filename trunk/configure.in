@@ -1,7 +1,7 @@
 dnl
 dnl $Id$
 
-AC_REVISION($Revision 0.56 $)dnl
+AC_REVISION($Revision 0.57 $)dnl
 
 dnl
 dnl An autoconf script to automatically configure ACE.
@@ -6048,6 +6048,55 @@ ACE_CACHE_CHECK(for ACE_addr::sap_any support,
         ])
      ])
   ],, AC_DEFINE(ACE_HAS_BROKEN_SAP_ANY))
+
+dnl Check if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector
+ACE_CACHE_CHECK(if ACE needs conversion to pass ACE_TTY_IO to DEV_Connector,
+  ace_cv_lib_need_dev_io_conv,
+  [
+   dnl We want an empty ace/config.h to prevent multiple defines
+   dnl with Autoconf's confdefs.h
+   ACE_USE_TEMP_FILE(ace/config.h,
+     [
+      dnl Now run the compilation test
+      ACE_TRY_COMPILE([-I. -I${srcdir}],
+        [
+#if defined(ACE_UINT64_TYPEDEF)
+  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
+#endif /* ACE_UINT64_TYPEDEF */
+
+#include "ace/OS.cpp"
+        ],
+        [
+         int a=0; a += 1;
+        ],
+        [
+         ace_cv_lib_need_dev_io_conv=no
+        ],
+        [
+         dnl Now check if ACE_NEEDS_DEV_IO_CONVERSION makes
+         dnl compilation work!
+         ACE_TRY_COMPILE([-I. -I${srcdir}],
+           [
+#if defined(ACE_UINT64_TYPEDEF)
+  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
+#endif /* ACE_UINT64_TYPEDEF */
+
+#define ACE_NEEDS_DEV_IO_CONVERSION
+#include "ace/DEV_Connector.cpp"
+           ],
+           [
+            int a=0; a += 1;
+           ],
+           [
+            ace_cv_lib_need_dev_io_conv=yes
+           ],
+           [
+            dnl If we get here, then we have no idea what is wrong!
+            ace_cv_lib_need_dev_io_conv=no
+           ])
+        ])
+     ])
+  ], AC_DEFINE(ACE_NEEDS_DEV_IO_CONVERSION),)
 
 dnl End ACE macro tests!
 
