@@ -2,7 +2,7 @@
 
 <!-- If this file is moved to a different directory, make sure to change the
      path to the DTD below. Otherwise the examples won't work. -->
-<!DOCTYPE softpkg SYSTEM "../../../docs/XML/softpkg.dtd">
+<!DOCTYPE softpkg SYSTEM "../../../../docs/XML/softpkg.dtd">
 
 <!-- Worker's Servant Software Descriptor  -->
 <!-- This file describes various Worker servant -->

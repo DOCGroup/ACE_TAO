@@ -1,3 +1,21 @@
+Fri Nov 14 16:54:57 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/Controllers/Controller.mpc:
+	* tests/RTCCM/Priority_Test/Controllers/Controller_exec.cpp:
+	* tests/RTCCM/Priority_Test/Controllers/client.cpp:
+	* tests/RTCCM/Priority_Test/Workers/CB_Worker_exec.cpp:
+	* tests/RTCCM/Priority_Test/Workers/IOB_Worker_exec.cpp:
+	  Adopted the use of CIAO::debug_level according to the
+	  guidelines.  Added a triggering program in Controller.
+
+	* tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Controller.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Controller.ssd:
+	* tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Worker.ssd:
+	* tests/RTCCM/Priority_Test/descriptors/demo.cad:  Fixed softpkg
+	  descriptors and added a test assembly.
+
 Fri Nov 14 16:50:41 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* tools/Assembly_Deployer/Assembly_Deployer.cpp:

@@ -57,3 +57,17 @@ project(Priority_Test_Controller_exec) : ciao_component {
     Controller_exec.cpp
   }
 }
+
+project (*client) : ciao_client {
+  exename = client
+  after += Priority_Test_Controller_stub
+  libs += Controller_stub Priority_Test_stub
+  libpaths += ..
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    client.cpp
+  }
+}

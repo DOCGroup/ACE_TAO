@@ -2,7 +2,7 @@
 
 <!-- If this file is moved to a different directory, make sure to change the
      path to the DTD below. Otherwise the examples won't work. -->
-<!DOCTYPE softpkg SYSTEM "../../../docs/XML/softpkg.dtd">
+<!DOCTYPE softpkg SYSTEM "../../../../docs/XML/softpkg.dtd">
 
 <!-- IOB_Worker's Software Package Descriptor  -->
 <!-- This file describes various IOB_Worker executor -->
