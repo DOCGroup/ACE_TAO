@@ -25,7 +25,7 @@
 #ifndef TAO_SCHEDULING_SERVICE_H
 #define TAO_SCHEDULING_SERVICE_H
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/Sched/Reconfig_Scheduler.h"
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 #include "orbsvcs/Sched/Strategy_Scheduler.h"

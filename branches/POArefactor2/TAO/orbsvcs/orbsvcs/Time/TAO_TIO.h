@@ -18,7 +18,6 @@
 #define TAO_TIO_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/ORB_Manager.h"
 #include "orbsvcs/TimeServiceS.h"
 #include "TAO_UTO.h"
 #include "time_export.h"

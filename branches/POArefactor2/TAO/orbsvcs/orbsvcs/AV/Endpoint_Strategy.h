@@ -17,11 +17,11 @@
 #include /**/ "ace/pre.h"
 
 #include "AVStreams_i.h"
-#include "tao/PortableServer/ORB_Manager.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined (_MSC_VER)
+# pragma warning(push)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
@@ -173,6 +173,10 @@ protected:
 
 // Include the templates here.
 #include "Endpoint_Strategy_T.h"
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_AV_ENDPOINT_STRATEGY_H */

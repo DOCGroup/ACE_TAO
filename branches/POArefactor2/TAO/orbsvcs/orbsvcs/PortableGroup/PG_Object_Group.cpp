@@ -6,7 +6,6 @@
 #include "PG_Operators.h" // Borrow operator== on CosNaming::Name
 #include "PG_Utils.h"
 
-#include "tao/PortableServer/ORB_Manager.h"
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
