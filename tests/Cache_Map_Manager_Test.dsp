@@ -94,7 +94,7 @@ LINK32=link.exe
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "."
-# PROP Intermediate_Dir "./ETS_DLL/Debug"
+# PROP Intermediate_Dir ".\ETS_LIB\Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 CPP=cl.exe
@@ -131,7 +131,7 @@ SOURCE=.\Cache_Map_Manager_Test.cpp
 
 !ELSEIF  "$(CFG)" == "Cache_Map_Manager_Test - Win32 Alpha Debug"
 
-DEP_CPP_ATOMI=\
+DEP_CPP_CACHE=\
 	"..\ace\ACE.h"\
 	"..\ace\ACE.i"\
 	"..\ace\Atomic_Op.i"\
@@ -172,7 +172,7 @@ DEP_CPP_ATOMI=\
 	"..\ace\ws2tcpip.h"\
 	".\test_config.h"\
 	
-NODEP_CPP_ATOMI=\
+NODEP_CPP_CACHE=\
 	"..\ace\stdcpp.h"\
 	
 
