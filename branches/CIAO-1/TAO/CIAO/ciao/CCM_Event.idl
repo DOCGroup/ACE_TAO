@@ -63,7 +63,7 @@ module Components
                       in EventConsumerBase subscriber)
       raises (InvalidName,
               AlreadyConnected,
-              InvalidConnection
+              InvalidConnection,
               ExceededConnectionLimit);
 
     EventConsumerBase unsubscribe (in FeatureName publisher_name,

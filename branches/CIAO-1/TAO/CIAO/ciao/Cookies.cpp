@@ -24,6 +24,7 @@ CIAO::Map_Key_Cookie::insert (ACE_Active_Map_Manager_Key &key)
 {
   this->cookieValue ().length (ACE_Active_Map_Manager_Key::size ());
   key.encode (this->cookieValue ().get_buffer (0));
+  return 0;
 }
 
 int
