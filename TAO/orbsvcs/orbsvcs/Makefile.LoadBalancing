@@ -80,7 +80,8 @@ realclean: clean
 
 
 .obj/LoadBalancer_i.o .obj/LoadBalancer_i.so .shobj/LoadBalancer_i.o .shobj/LoadBalancer_i.so: LoadBalancing/LoadBalancer_i.cpp \
- LoadBalancing/LoadBalancer_i.h $(ACE_ROOT)/ace/pre.h \
+ LoadBalancing/LoadBalancer_i.h \
+ $(ACE_ROOT)/ace/pre.h \
  LoadBalancingS.h \
  LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -504,7 +505,8 @@ realclean: clean
  LoadBalancing/LoadBalancing_Strategy.i
 
 .obj/ReplicaLocator.o .obj/ReplicaLocator.so .shobj/ReplicaLocator.o .shobj/ReplicaLocator.so: LoadBalancing/ReplicaLocator.cpp \
- LoadBalancing/ReplicaLocator.h $(ACE_ROOT)/ace/pre.h \
+ LoadBalancing/ReplicaLocator.h \
+ $(ACE_ROOT)/ace/pre.h \
  LoadBalancingS.h \
  LoadBalancingC.h \
  $(TAO_ROOT)/tao/corba.h \
@@ -712,7 +714,8 @@ realclean: clean
  LoadBalancing/LoadBalancing_Strategy.h LoadBalancing/LoadBalancer_i.i
 
 .obj/ReplicaProxy.o .obj/ReplicaProxy.so .shobj/ReplicaProxy.o .shobj/ReplicaProxy.so: LoadBalancing/ReplicaProxy.cpp \
- LoadBalancing/ReplicaProxy.h $(ACE_ROOT)/ace/pre.h \
+ LoadBalancing/ReplicaProxy.h \
+ $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1554,9 +1557,7 @@ realclean: clean
  LoadBalancingS.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
  $(TAO_ROOT)/tao/PortableServer/Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
- $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
  $(ACE_ROOT)/ace/Pair_T.i \
  $(ACE_ROOT)/ace/Pair_T.cpp \
