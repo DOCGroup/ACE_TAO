@@ -1,3 +1,17 @@
+Sat Oct 11 23:19:31 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Wroker.ssd:
+	* tests/RTCCM/Priority_Test/descriptors/CIAO_Installation_Data.ini:
+	* tests/RTCCM/Priority_Test/descriptors/Controller.csd:
+	* tests/RTCCM/Priority_Test/descriptors/Controller.ssd:
+	* tests/RTCCM/Priority_Test/descriptors/RTsvc.conf:
+	* tests/RTCCM/Priority_Test/descriptors/svcmap.dat:
+	* tests/RTCCM/Priority_Test/descriptors/test.dat:
+	* tests/RTCCM/Priority_Test/descriptors/test.rtd: New files for
+	  running the test.
+
 Sat Oct 11 00:11:18 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/RTCCM/Priority_Test/Priority_Test.mpc:
