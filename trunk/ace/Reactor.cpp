@@ -911,6 +911,7 @@ ACE_Reactor::ACE_Reactor (size_t size, int rs, ACE_Sig_Handler *sh)
     timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Reactor::ACE_Reactor");
+
   if (this->open (size, rs, sh) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "open failed"));
 }

@@ -81,7 +81,7 @@ ACE_Connector<SH, PR_CO_2>::connect_svc_handler (SVC_HANDLER *svc_handler,
   else 
     timeout = (ACE_Time_Value *) synch_options.time_value ();
 
-  if (this->connector_.connect (*svc_handler,
+  if (this->connector_.connect (svc_handler->peer (),
 				remote_addr,
 				timeout,
 				local_addr,

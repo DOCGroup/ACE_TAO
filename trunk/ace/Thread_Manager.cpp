@@ -194,7 +194,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 			     int grp_id,
 			     void *stack, 
 			     size_t stack_size,
-			     ACE_Task<ACE_SYNCH> *task)
+			     ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_thread_t thr_id;
@@ -256,7 +256,7 @@ ACE_Thread_Manager::spawn_n (int n,
 			     long flags,
 			     u_int priority,
 			     int grp_id,
-			     ACE_Task<ACE_SYNCH> *task)
+			     ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::spawn_n");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
@@ -284,7 +284,7 @@ ACE_Thread_Manager::append_thr (ACE_thread_t t_id,
 				ACE_hthread_t t_handle,
 				ACE_Thread_State thr_state,
 				int grp_id,
-				ACE_Task<ACE_SYNCH> *task)
+				ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::append_thr");
   // Try to resize the array to twice its existing size if we run out
@@ -714,7 +714,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
 
 // Wait for task  
 int 
-ACE_Thread_Manager::wait_task (ACE_Task<ACE_SYNCH> *task,
+ACE_Thread_Manager::wait_task (ACE_Task_Base *task,
 			       const ACE_Time_Value *timeout)
 {
   // This method will be implemented in the future.  The way we
@@ -744,7 +744,7 @@ ACE_Thread_Manager::wait_group (int grp_id,
 }
 
 int
-ACE_Thread_Manager::apply_task (ACE_Task<ACE_SYNCH> *task, 
+ACE_Thread_Manager::apply_task (ACE_Task_Base *task, 
 				THR_FUNC func,
 				int arg)
 {
@@ -763,7 +763,7 @@ ACE_Thread_Manager::apply_task (ACE_Task<ACE_SYNCH> *task,
 
 // Suspend a task
 int  
-ACE_Thread_Manager::suspend_task (ACE_Task<ACE_SYNCH> *task)
+ACE_Thread_Manager::suspend_task (ACE_Task_Base *task)
 { 
   ACE_TRACE ("ACE_Thread_Manager::suspend_task");
   return this->apply_task (task, 
@@ -772,7 +772,7 @@ ACE_Thread_Manager::suspend_task (ACE_Task<ACE_SYNCH> *task)
 
 // Resume a task.
 int  
-ACE_Thread_Manager::resume_task (ACE_Task<ACE_SYNCH> *task)
+ACE_Thread_Manager::resume_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_task");
   return this->apply_task (task, 
@@ -781,7 +781,7 @@ ACE_Thread_Manager::resume_task (ACE_Task<ACE_SYNCH> *task)
 
 // Kill a task.
 int  
-ACE_Thread_Manager::kill_task (ACE_Task<ACE_SYNCH> *task, int /* signum */)
+ACE_Thread_Manager::kill_task (ACE_Task_Base *task, int /* signum */)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_task");
   return this->apply_task (task, 
@@ -790,7 +790,7 @@ ACE_Thread_Manager::kill_task (ACE_Task<ACE_SYNCH> *task, int /* signum */)
 
 // Cancel a task.
 int  
-ACE_Thread_Manager::cancel_task (ACE_Task<ACE_SYNCH> *task)
+ACE_Thread_Manager::cancel_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::cancel_task");
   return this->apply_task (task, 
@@ -802,7 +802,7 @@ ACE_Thread_Manager::cancel_task (ACE_Task<ACE_SYNCH> *task)
 // lock held.
 
 int 
-ACE_Thread_Manager::find_task (ACE_Task<ACE_SYNCH> *task, 
+ACE_Thread_Manager::find_task (ACE_Task_Base *task, 
 			       int index)
 {
   ACE_TRACE ("ACE_Thread_Manager::find_task");
@@ -838,7 +838,7 @@ ACE_Thread_Manager::num_tasks_in_group (int grp_id)
 // Returns the number of threads in an ACE_Task.
 
 int 
-ACE_Thread_Manager::num_threads_in_task (ACE_Task<ACE_SYNCH> *task)
+ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
 {
   ACE_TRACE ("ACE_Thread_Manager::num_threads_in_task");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
@@ -856,13 +856,13 @@ ACE_Thread_Manager::num_threads_in_task (ACE_Task<ACE_SYNCH> *task)
 
 int 
 ACE_Thread_Manager::task_list (int grp_id, 
-			       ACE_Task<ACE_SYNCH> *task_list[],
+			       ACE_Task_Base *task_list[],
 			       size_t n)
 {
   ACE_TRACE ("ACE_Thread_Manager::task_list");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  ACE_Task<ACE_SYNCH> **task_list_iterator = task_list;
+  ACE_Task_Base **task_list_iterator = task_list;
   size_t task_list_count = 0;
 
   for (size_t i = 0; i < this->current_count_; i++) 
@@ -878,8 +878,9 @@ ACE_Thread_Manager::task_list (int grp_id,
 }
 
 // Returns in thread_list a list of thread ids in an ACE_Task.
+
 int 
-ACE_Thread_Manager::thread_list (ACE_Task<ACE_SYNCH> *task, 
+ACE_Thread_Manager::thread_list (ACE_Task_Base *task, 
 				 ACE_thread_t thread_list[],
 				 size_t n)
 {
@@ -902,7 +903,7 @@ ACE_Thread_Manager::thread_list (ACE_Task<ACE_SYNCH> *task,
 // Returns in thread_list a list of thread handles in an ACE_Task.
 
 int 
-ACE_Thread_Manager::hthread_list (ACE_Task<ACE_SYNCH> *task, 
+ACE_Thread_Manager::hthread_list (ACE_Task_Base *task, 
 				  ACE_hthread_t hthread_list[],
 				  size_t n)
 {
@@ -925,7 +926,7 @@ ACE_Thread_Manager::hthread_list (ACE_Task<ACE_SYNCH> *task,
 }
 
 int 
-ACE_Thread_Manager::set_grp (ACE_Task<ACE_SYNCH> *task, int grp_id)
+ACE_Thread_Manager::set_grp (ACE_Task_Base *task, int grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::set_grp");
 
@@ -938,7 +939,7 @@ ACE_Thread_Manager::set_grp (ACE_Task<ACE_SYNCH> *task, int grp_id)
 }
 
 int 
-ACE_Thread_Manager::get_grp (ACE_Task<ACE_SYNCH> *task, int &grp_id)
+ACE_Thread_Manager::get_grp (ACE_Task_Base *task, int &grp_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::get_grp");
 

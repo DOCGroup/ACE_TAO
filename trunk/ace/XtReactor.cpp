@@ -28,6 +28,18 @@ ACE_XtReactor::ACE_XtReactor (XtAppContext context,
     id_len_ (0),
     ids_ (0)
 {
+  // When the ACE_Reactor is constructed it creates the notify pipe
+  // and registers it with the attach() method. The XtReactor
+  // overloads this method BUT because the attach occurs when
+  // constructing the base class ACE_Reactor, the ACE_Reactor attach()
+  // is called not the XtReactor attach().  This means that the notify
+  // pipe is registered with the ACE_Reactor event handling code not
+  // the XtReactor and so notfications don't work.  To get around this
+  // we simply close and re-opened the notification handler in the
+  // constructor of the XtReactor.
+
+  this->notification_handler_.close ();
+  this->notification_handler_.open (this);
 }
 
 ACE_XtReactor::~ACE_XtReactor (void)
@@ -103,15 +115,15 @@ ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId *id)
   self->reset_timeout ();
 }
 
-// This could be made shorter if we know which *kind* of event we
-// were about to get.  Here we use select () to find out which one
-// might be available.
+// This could be made shorter if we know which *kind* of event we were
+// about to get.  Here we use select () to find out which one might be
+// available.
 
 void ACE_XtReactor::InputCallbackProc (XtPointer closure, 
-				   int * source, 
-				   XtInputId *id)
+				       int * source, 
+				       XtInputId *id)
 {
-  ACE_XtReactor * self = (ACE_XtReactor*)closure;
+  ACE_XtReactor *self = (ACE_XtReactor *) closure;
 
   ACE_DEBUG ((LM_DEBUG, "ACE_XtReactor::Input on fd %d\n", *source));
 
@@ -179,8 +191,8 @@ XtAppContext ACE_XtReactor::context (void)
 
 int
 ACE_XtReactor::attach (ACE_HANDLE handle, 
-		     ACE_Event_Handler *handler,
-		     ACE_Reactor_Mask mask)
+		       ACE_Event_Handler *handler,
+		       ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_XtReactor::attach");
 
@@ -192,27 +204,33 @@ ACE_XtReactor::attach (ACE_HANDLE handle,
     return -1;
 
   // Ensure the list of InputId's is big enough
-  if (ids_ == 0 || id_len_ < handle + 1)
+  if (this->ids_ == 0 || this->id_len_ < handle + 1)
     {
       ACE_XtReactorID *more;
       ACE_NEW_RETURN (more, ACE_XtReactorID[handle + 1], -1);
+
       int i;
+
       for (i = 0; i < this->id_len_; i++)
 	more[i] = ids_[i];
+
       for (i = this->id_len_; i < handle + 1; i++)
 	more[i].good_id = 0;
+
       id_len_ = handle + 1;
       delete this->ids_;
       ids_ = more;
     }
 
   int condition = 0;
+
   if (mask & ACE_Event_Handler::READ_MASK)
-    condition |= XtInputReadMask;
+    ACE_SET_BITS (condition, XtInputReadMask);
   if (mask & ACE_Event_Handler::WRITE_MASK)
-    condition |= XtInputWriteMask;
+    ACE_SET_BITS (condition, XtInputWriteMask);
   if (mask & ACE_Event_Handler::EXCEPT_MASK)
-    condition |= XtInputExceptMask;
+    ACE_SET_BITS (condition, XtInputExceptMask);
+
   if (condition != 0)
     {
       if (ids_[handle].good_id)
@@ -293,7 +311,7 @@ ACE_XtReactor::schedule_timer (ACE_Event_Handler *handler,
     return result;
 
   this->reset_timeout ();
-  return 0;
+  return result;
 }
 
 int

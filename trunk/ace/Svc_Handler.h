@@ -94,7 +94,7 @@ public:
   ACE_PEER_STREAM &peer (void) const;
   // Returns the underlying PEER_STREAM
 
-  operator ACE_PEER_STREAM &();
+  // operator ACE_PEER_STREAM &();
   // Returns the underlying PEER_STREAM (used by
   // ACE_Acceptor::accept() and ACE_Connector::connect() factories).
 

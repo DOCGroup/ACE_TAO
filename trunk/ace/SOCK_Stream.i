@@ -11,8 +11,7 @@ inline int
 ACE_SOCK_Stream::close_reader (void)
 {
   ACE_TRACE ("ACE_SOCK_Stream::close_reader");
-  int result = ACE_OS::shutdown (this->get_handle (), 0);
-  return result;
+  return ACE_OS::shutdown (this->get_handle (), 0);
 }
 
 // Shut down just the writing end of a ACE_SOCK. 
@@ -21,8 +20,23 @@ inline int
 ACE_SOCK_Stream::close_writer (void)
 {
   ACE_TRACE ("ACE_SOCK_Stream::close_writer");
-  int result = ACE_OS::shutdown (this->get_handle (), 1);
-  return result;
+  return ACE_OS::shutdown (this->get_handle (), 1);
+}
+
+inline ssize_t 
+ACE_SOCK_Stream::send_n (const void *buf, size_t len, int flags,
+			 const ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_SOCK_Stream::send_n");
+  return ACE::send_n (this->get_handle (), buf, len, flags, timeout);
+}
+
+inline ssize_t 
+ACE_SOCK_Stream::recv_n (void *buf, size_t len, int flags, 
+			 const ACE_Time_Value *timeout)
+{
+  ACE_TRACE ("ACE_SOCK_Stream::send_n");
+  return ACE::recv_n (this->get_handle (), buf, len, flags, timeout);
 }
 
 // Receive exactly BUF_SIZE bytes from file descriptor this->handle

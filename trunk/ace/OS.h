@@ -937,6 +937,15 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_PLATFORM "Win32"
 #define ACE_PLATFORM_EXE_SUFFIX ".exe"
 
+// STRICT type checking in WINDOWS.H enhances type safety for Windows
+// programs by using distinct types to represent all the different
+// HANDLES in Windows. So for example, STRICT prevents you from
+// mistakenly passing an HPEN to a routine expecting an HBITMAP.
+// Note that we only use this if we 
+#if defined (ACE_HAS_STRICT)
+#define STRICT
+#endif /* ACE_HAS_STRICT */
+
 #include <sys/timeb.h>
 
 // The following 3 defines are used by the ACE Name Server...
@@ -1029,7 +1038,7 @@ PAGE_NOCACHE  */
 
 #include <winsock.h>
 
-#define MAXHOSTNAMELEN  (MAX_COMPUTERNAME_LENGTH+1) // This should be around 16 or so...
+#define MAXHOSTNAMELEN  256
 
 // error code mapping
 #define ETIME                   ERROR_SEM_TIMEOUT
