@@ -1465,7 +1465,7 @@ typedef int mode_t;
 typedef int uid_t;
 typedef int gid_t;
 typedef char *caddr_t;
-typedef ACE_QWORD hrtime_t;
+typedef ACE_QWORD ACE_hrtime_t;
 struct rlimit { };
 struct t_call { };
 struct t_bind { };
@@ -1851,14 +1851,16 @@ typedef long ACE_id_t;
 typedef short ACE_pri_t;
 #endif /* ACE_HAS_STHREADS */
 
-#if !defined (ACE_HAS_HI_RES_TIMER)
-#if defined (ACE_HAS_LONGLONG_T)
-typedef long long hrtime_t;
+#if defined (ACE_HAS_HI_RES_TIMER)
+  /* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
+  typedef hrtime_t ACE_hrtime_t;
 #else
-typedef long hrtime_t;
-#endif /* ACE_HAS_LONGLONG_T */
-/* hrtime_t is defined on systems (Suns) with ACE_HAS_HI_RES_TIMER */
-#endif /* ! ACE_HAS_HI_RES_TIMER */
+  #if defined (ACE_HAS_LONGLONG_T)
+    typedef long long ACE_hrtime_t;
+  #else
+    typedef long ACE_hrtime_t;
+  #endif /* ACE_HAS_LONGLONG_T */
+#endif /* ACE_HAS_HI_RES_TIMER */
 
 #endif /* ACE_WIN32 */
 

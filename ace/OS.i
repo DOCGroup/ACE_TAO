@@ -5627,6 +5627,11 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 }
 
 #if defined (ACE_HAS_PENTIUM)
+// Thanks to Tim Harrison and Wayne Vucenic <wvucenic@netgate.net>
+// for this assembly-language routine to read the clock; see
+// http://www.sandpile.org/80x86/rdtsc.shtml for a description of
+// the RDTSC instruction.
+//
 // The ACE_RDTSC function issues the RDTSC assembler instruction to get the
 // number of clock ticks since system boot, then stores the 64 bit
 // result into the array named counter.  Note that the most
@@ -5653,7 +5658,7 @@ ACE_RDTSC (unsigned long &lo, unsigned long &hi)
 }
 #endif /* ACE_HAS_PENTIUM */
 
-ACE_INLINE hrtime_t 
+ACE_INLINE ACE_hrtime_t 
 ACE_OS::gethrtime (void)
 {
   // ACE_TRACE ("ACE_OS::gethrtime");
