@@ -31,21 +31,19 @@ main (int, char *[])
   ACE_START_TEST ("Message_Queue_Test");
 
   const int ITERATIONS = 5;
-  char *buffer[ITERATIONS];
+  char buffer[ITERATIONS][BUFSIZ];
   QUEUE queue;
   int i;
 
   for (i = 0; i < ITERATIONS; i++)
     {
-      ACE_NEW_RETURN (buffer[i], char[BUFSIZ], -1);
       ACE_OS::sprintf (buffer[i], "%d", i+1);
 
       ACE_Message_Block *entry;
-
       ACE_NEW_RETURN (entry, ACE_Message_Block (buffer[i], sizeof buffer[i]), -1);
 
-      if (queue.enqueue_prio (entry) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue_prio\n"), -1);
+      if (queue.enqueue (entry) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR, "QUEUE::enqueue\n"), -1);
     }
   
   ACE_DEBUG ((LM_DEBUG, "\nForward Iterations\n"));
@@ -87,11 +85,6 @@ main (int, char *[])
 	 iterator.advance ())
       ACE_DEBUG ((LM_DEBUG, "%s\n", entry->base ()));
   }
-
-  for (i = 0; i < ITERATIONS; i++)
-    {
-      delete [] buffer[i];
-    }
 
   ACE_END_TEST;
   return 0;
