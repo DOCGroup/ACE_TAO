@@ -1583,7 +1583,7 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
 
 int
 TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (CORBA::SystemException)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Double check pattern
   if (this->open_called_ == 1)
