@@ -27,6 +27,10 @@ sub LocalFile ($)
     if ($^O eq "MSWin32") {
         $newfile =~ s/\//\\/g;
     }
+    elsif ($^O eq 'cygwin') {
+        chop($newfile = `/usr/bin/cygpath -w $newfile`);
+        $newfile =~ s/\\/\\\\/g;
+    }
 
     return $newfile;
 }
@@ -55,7 +59,7 @@ sub uniqueid
   }
   else
   {
-    return getpwnam (getlogin ());
+    return $>;
   }
 }
 
