@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_string.h"
 #include "URL_Visitor.h"
 #include "Command_Processor.h"
 

@@ -8,9 +8,11 @@
 // This file contains the implementation of the classes responsible for
 // managing the contents of a single object module (.o file).
 
-#include <ace/Process.h>
-#include <ace/Pipe.h>
-#include <ace/Message_Block.h>
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/Process.h"
+#include "ace/Pipe.h"
+#include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
 
 #include "Obj_Module.h"

@@ -24,6 +24,7 @@
 #include "ace/Proactor.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 

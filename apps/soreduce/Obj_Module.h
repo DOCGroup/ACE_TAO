@@ -22,6 +22,8 @@
 
 #include "Sig_List.h"
 
+class ACE_Message_Block;
+
 class Obj_Module {
 public:
   Obj_Module ( const ACE_CString &, int = 500);
