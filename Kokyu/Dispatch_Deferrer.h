@@ -89,11 +89,11 @@ class Dispatch_Deferrer : public ACE_Event_Handler
 
 } //namespace Kokyu
 
-#endif //defined KOKYU_HAS_RELEASE_GUARD
-
 #if defined (__ACE_INLINE__)
 #include "Dispatch_Deferrer.i"
 #endif /* __ACE_INLINE__ */
+
+#endif //defined KOKYU_HAS_RELEASE_GUARD
 
 #include /**/ "ace/post.h"
 #endif //DISPATCH_DEFERRER_H
