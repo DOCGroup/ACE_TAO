@@ -45,7 +45,7 @@ public:
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
   // The copy constructor (performs initialization).
 
-  void operator= (const ACE_Bounded_Stack<T> &s);
+  ACE_Bounded_Stack<T> & operator= (const ACE_Bounded_Stack<T> &s);
   // Assignment operator (performs assignment).
 
   ~ACE_Bounded_Stack (void);
@@ -115,7 +115,8 @@ public:
   ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
   // The copy constructor (performs initialization).
 
-  void operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
+  ACE_Fixed_Stack<T, ACE_SIZE> & 
+       operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
   // Assignment operator (performs assignment).
 
   ~ACE_Fixed_Stack (void);
@@ -264,7 +265,7 @@ public:
   ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
   // The copy constructor (performs initialization).
 
-  void operator= (const ACE_Unbounded_Stack<T> &s);
+  ACE_Unbounded_Stack<T> & operator= (const ACE_Unbounded_Stack<T> &s);
   // Assignment operator (performs assignment).
 
   ~ACE_Unbounded_Stack (void);
@@ -442,7 +443,7 @@ public:
   ACE_Unbounded_Queue (const ACE_Unbounded_Queue<T> &);
   // Copy constructor.
 
-  void operator= (const ACE_Unbounded_Queue<T> &);
+  ACE_Unbounded_Queue<T> & operator= (const ACE_Unbounded_Queue<T> &);
   // Assignment operator.
 
   ~ACE_Unbounded_Queue (void);
@@ -607,7 +608,7 @@ public:
   ACE_Double_Linked_List (ACE_Double_Linked_List<T> &);
   // Copy constructor.
 
-  void operator= (ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List<T> & operator= (ACE_Double_Linked_List<T> &);
   // Assignment operator.
 
   ~ACE_Double_Linked_List (void);
@@ -723,7 +724,7 @@ class ACE_DLList : public ACE_DLList_Base
 
 public:
 
-  void operator= (ACE_DLList<T> &l);
+  ACE_DLList<T> & operator= (ACE_DLList<T> &l);
   // Delegates to ACE_Double_Linked_List.
 
   // = Classic queue operations.
@@ -879,7 +880,7 @@ public:
   ACE_Unbounded_Set (const ACE_Unbounded_Set<T> &);
   // Copy constructor.
 
-  void operator= (const ACE_Unbounded_Set<T> &);
+  ACE_Unbounded_Set<T> & operator= (const ACE_Unbounded_Set<T> &);
   // Assignment operator.
 
   ~ACE_Unbounded_Set (void);
@@ -1016,7 +1017,7 @@ public:
   ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
   // Copy constructor.
 
-  void operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
+  ACE_Fixed_Set<T, ACE_SIZE> & operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
   // Assignment operator.
 
   ~ACE_Fixed_Set (void);
@@ -1151,7 +1152,7 @@ public:
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
   // Copy constructor.
 
-  void operator= (const ACE_Bounded_Set<T> &);
+  ACE_Bounded_Set<T> & operator= (const ACE_Bounded_Set<T> &);
   // Assignment operator.
 
   ~ACE_Bounded_Set (void);
@@ -1295,7 +1296,7 @@ public:
   ~ACE_Ordered_MultiSet (void);
   // Destructor.
 
-  void operator= (const ACE_Ordered_MultiSet<T> &);
+  ACE_Ordered_MultiSet<T> & operator= (const ACE_Ordered_MultiSet<T> &);
   // Assignment operator.
 
   // = Check boundary conditions.
@@ -1514,7 +1515,7 @@ public:
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.
 
-  void operator= (const ACE_Array<T> &s);
+  ACE_Array<T> & operator= (const ACE_Array<T> &s);
   // Assignment operator performs an assignment by making an exact
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.  Note that if the <max_size_> of <array_> is >= than

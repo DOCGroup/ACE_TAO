@@ -28,7 +28,7 @@ ACE_Handle_Set::reset (void)
 }
 
 #if defined (ACE_HAS_BIG_FD_SET)
-ACE_INLINE void 
+ACE_INLINE ACE_Handle_Set &
 ACE_Handle_Set::operator= (const ACE_Handle_Set &rhs)
 {
   ACE_TRACE ("ACE_Handle_Set::reset");
@@ -42,6 +42,8 @@ ACE_Handle_Set::operator= (const ACE_Handle_Set &rhs)
     }
   else
     this->reset ();
+
+  return *this;
 }
 #endif /* ACE_HAS_BIG_FD_SET */
 
