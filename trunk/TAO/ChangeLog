@@ -1,3 +1,12 @@
+Fri Nov 15 15:26:29 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/Basic.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/LB_server.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/client.cpp:
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp:
+
+	  Corrected ACE_RCSID macros.  They listed the wrong directory.
+
 Fri Nov 15 15:13:20 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/Signal_Handler.cpp (activate):
