@@ -16,7 +16,7 @@
 #include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
 
 /**
- * @ class ACEXML_Element_Tree_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
+ * @class ACEXML_Element_Tree_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
  *
  * @brief An abstract base class for describing DTD child element definition.
  *
@@ -46,7 +46,7 @@ protected:
 };
 
 /**
- * @ class ACEXML_Element_Tree_Name_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
+ * @class ACEXML_Element_Tree_Name_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
  *
  * @brief An abstract base class for describing a name node in a DTD
  *  child element definition.
@@ -75,7 +75,7 @@ protected:
 class ACEXML_Element_Tree_List_Stack;
 
 /**
- * @ class ACEXML_Element_Tree_List_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
+ * @class ACEXML_Element_Tree_List_Node Element_Tree.h "parser/debug_validator/Element_Tree.h"
  *
  * @brief An abstract base class for describing a node list in
  *  a DTD child element definition.
@@ -120,7 +120,7 @@ protected:
 };
 
 /**
- * @ class ACEXML_Element_Tree_List_Stack Element_Tree.h "parser/debug_validator/Element_Tree.h"
+ * @class ACEXML_Element_Tree_List_Stack Element_Tree.h "parser/debug_validator/Element_Tree.h"
  *
  * @brief A class for managing a stack of ACEXML_Element_Tree_List_Node's.
  *

@@ -17,9 +17,9 @@
 #include "ACEXML/common/Env.h"
 
 /**
- * @ class ACEXML_Element_Def_Builder Element_Def_Builder.h "common/Element_Def_Builder.h"
+ * @class ACEXML_Element_Def_Builder Element_Def_Builder.h "common/Element_Def_Builder.h"
  *
- * @ brief An abstract virtual class that defines the interface
+ * @brief An abstract virtual class that defines the interface
  *         to define an element definition.
  *
  * This class defines how to define an element definition after
