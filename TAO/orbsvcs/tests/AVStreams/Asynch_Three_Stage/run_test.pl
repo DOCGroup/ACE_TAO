@@ -20,7 +20,7 @@ $makefile = PerlACE::LocalFile ("input");
 unlink $nsior;
 
 $NS  = new PerlACE::Process ("../../../Naming_Service/Naming_Service", "-o $nsior");
-$SV  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender");
+$SV  = new PerlACE::Process ("sender", "-ORBInitRef NameService=file://$nsior -s sender -r 1");
 $RE1 = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -s distributer -r receiver1 -f output1");
 $RE2 = new PerlACE::Process ("receiver", "-ORBInitRef NameService=file://$nsior -s distributer -r receiver2 -f output2");
 $DI  = new PerlACE::Process ("distributer", "-ORBInitRef NameService=file://$nsior -s sender -r distributer");
