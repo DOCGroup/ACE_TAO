@@ -1,5 +1,9 @@
 Tue Jul 30 10:06:04 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Thread_Manager.cpp: Moved a stray colon until *after*
+	  the #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT) check.  Thanks
+ 	  to Alan Tanga <stang1@lucent.com> for reporting this.
+
 	* ace/POSIX_Proactor.cpp (delete_result_aiocb_list): Moved 
 	  the definition of size_t ai out of the for loops to avoid
  	  problems on older C++ compilers.  Thanks to George Varsamis

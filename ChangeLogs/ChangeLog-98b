@@ -8539,8 +8539,8 @@ Mon Jul 27 16:31:27 1998  Arturo Montes  <mitosys@colomsat.net.co>
           compatibility with the old code, ACE_Task::svc_run has not been
           altered.
 
-          We resolve a problem with ACE_TSS_cleanup, some platform using
-          Thread_Manager could be experimenting memory corruption because
+          We resolve a problem with ACE_TSS_cleanup, some platform
+          using Thread_Manager could be experimenting memory corruption because
           of ACE_TSS_cleanup was being invoked before Thread_Manager exit
           code. Now, if ACE_TSS_cleanup is called before of Thread_Manager
           exit code, ACE_TSS_cleanup delegate ACE_Log_Msg delete instance
