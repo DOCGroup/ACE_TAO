@@ -1,7 +1,3 @@
-Tue Dec 29 14:52:06 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * TAO version 0.2.45 released.
-
 Tue Dec 29 14:40:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/README: Added changes to the
@@ -9,6 +5,10 @@ Tue Dec 29 14:40:55 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  this example is at the object level, i.e. every object is
 	  associated with an dll which is loaded on demand.
 	 
+Tue Dec 29 14:32:06 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.45 released.
+
 Tue Dec 29 13:16:08 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
