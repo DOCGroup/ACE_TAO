@@ -1,3 +1,17 @@
+Fri Feb  8 19:36:33 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/ServerRequestInfo.cpp (adapter_name):
+
+	  Corrected and simplified code that incorrectly assigned the
+	  AdapterName sequence to a CORBA::StringSeq.  Just return the
+	  value, no need to assign the return value to a temporary
+	  variable of incorrect type.
+
+	* tao/PortableServer/POA.cpp (adapter_name_i):
+
+	  It is technically illegal to initialize a POA_var with zero.
+	  Fixed.
+
 Fri Feb  8 18:27:13 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/POAManager.h:

@@ -876,7 +876,7 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
 
   PortableServer::POA_ptr current_poa = this;
 
-  PortableServer::POA_var current_poa_name_parent = 0;
+  PortableServer::POA_var current_poa_name_parent;
 
   CORBA::ULong name_seq_length = 0;
 
@@ -905,7 +905,7 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
 
-  PortableInterceptor::AdapterName_var safe_args (name_seq);
+  PortableInterceptor::AdapterName_var safe_names (name_seq);
   name_seq->length (name_seq_length);
 
   // Should do it kind of a while loop .. get the poa_current and
@@ -932,7 +932,7 @@ TAO_POA::adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
       --name_seq_length;
     }
 
-  return safe_args._retn ();
+  return safe_names._retn ();
 }
 
 void
