@@ -289,14 +289,13 @@ namespace TAO
 // OMG defined TypeCode constants
 // ------------------------------------------------------------------
 
-namespace CORBA
-{
+// Notice that these are constant TypeCode references/pointers, not
+// constant TypeCodes.  TypeCodes are effectively read-only since
+// all non-static TypeCode operations are const.
 
-  // Notice that these are constant TypeCode references/pointers, not
-  // constant TypeCodes.  TypeCodes are effectively read-only since
-  // all non-static TypeCode operations are const.
 
-  TypeCode_ptr const TypeCode::_tc_Bounds  = &TAO::TypeCode::tc_Bounds;
-  TypeCode_ptr const TypeCode::_tc_BadKind = &TAO::TypeCode::tc_BadKind;
+CORBA::TypeCode_ptr const CORBA::TypeCode::_tc_BadKind =
+  &TAO::TypeCode::tc_BadKind;
+CORBA::TypeCode_ptr const CORBA::TypeCode::_tc_Bounds =
+  &TAO::TypeCode::tc_Bounds;
 
-}
