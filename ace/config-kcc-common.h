@@ -55,6 +55,7 @@
 
 // Define this if you want to use the standard C++ library
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#define ACE_HAS_STRING_CLASS
 #define ACE_HAS_STDCPP_STL_INCLUDES 1
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #define ACE_LACKS_IOSTREAM_FX 1

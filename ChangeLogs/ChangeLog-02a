@@ -1,8 +1,13 @@
+Sat May 13 19:07:32 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-kcc-common.h: Added ACE_HAS_STRING_CLASS.  This fixed
+	  the IOStream_Test.
+
 Sat May 13 13:01:08 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * tests/SString_Test.cpp:
 
-          So yesterday I changed a type from ACE_USHORT16 to 
+          So yesterday I changed a type from ACE_USHORT16 to
           wchar_t.  Rather, it should have been ACE_WSTRING_TYPE.
 
 Sat May 13 01:06:22 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -11,13 +16,13 @@ Sat May 13 01:06:22 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/Remote_Name_Space.cpp:
 
           SunCC 5 didn't like the template instantiations in the
-          Local_Name_Space_T file, so I moved them to 
+          Local_Name_Space_T file, so I moved them to
           Remote_Name_Space.cpp.
 
 Fri May 12 17:48:17 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * bin/generate_export_file.pl:
-          
+
           Found a new way to write this script using map and a __DATA__
           block.
 
