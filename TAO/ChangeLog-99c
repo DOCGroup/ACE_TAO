@@ -1,3 +1,16 @@
+Thu Jul  1 21:43:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/idl.ll:
+	* TAO_IDL/lex.yy.cpp:
+	  A couple of changes to the scanner's regular
+	  expressions - one to allow decimal point
+	  numbers without a leading integer to be
+	  assigned to float and double constants, the
+	  other to allow the escape character '\"' to
+	  appear in string literals. Thanks to Carlos
+	  for suggesting a regular expression for the
+	  latter that was very, very close.
+
 Thu Jul  1 21:37:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_ch.cpp:
