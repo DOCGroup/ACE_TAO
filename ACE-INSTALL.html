@@ -665,11 +665,16 @@ If you use the GNU GCC g++ compiler please note the following:
       <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>.<p>
 
   <li>egcs may have trouble linking some executables, such as the ACE
-      IOStream_Test, if its static libraries are used.  It's best to build
-      egcs with the <code>--enable-shared</code> egcs config option,
-      so that it provides shared libraries.  Be sure to set your
-      <code>LD_LIBRARY_PATH</code> environment variable, if necessary,
-      to pick up those shared libraries.<p>
+      IOStream_Test, if its static libraries are used.  Though
+      <a href="mailto:trose@bridgewatersys.com">Tim Rose</a> reports
+      that egcs 1.1.1 static libraries work just fine on Solaris 2.6
+      with  patches: 105181-12, 105568-13, 105210-19, 105591-05, 105395-04,
+      and 105490-07.<p>
+
+      If you need or want to use egcs' shared libraries, build it
+      with the <code>--enable-shared</code> egcs config option.  Be
+      sure to set your <code>LD_LIBRARY_PATH</code> environment variable,
+      if necessary, to pick up those shared libraries.<p>
 
   <li>On DEC Alpha, egcs through version 1.03a, at least, may fail
       to build ACE if debugging (-g) is enabled.  The fix is to
@@ -812,10 +817,10 @@ the STL fixes.
 <OL>
   <LI>Uncompress the ACE distribution into a directory, where it will create a
       ACE_wrappers directory containing the distribution.  The ACE_wrappers
-	  directory will be referred to as ACE_ROOT in the following steps -- so
-	  ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
-	  root directory.  <BR>
-	  <BR>
+      directory will be referred to as ACE_ROOT in the following steps -- so
+      ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
+      root directory.<BR>
+      <BR>
   <LI>Create a file called <code>config.h</code> in the ACE_ROOT\ace
       directory that contains: <BR>
       <BR>
