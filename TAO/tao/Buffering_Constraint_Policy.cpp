@@ -60,7 +60,7 @@ TAO_Buffering_Constraint_Policy::clone (void) const
 
 TAO::BufferingConstraint
 TAO_Buffering_Constraint_Policy::buffering_constraint (CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->buffering_constraint_;
 }
