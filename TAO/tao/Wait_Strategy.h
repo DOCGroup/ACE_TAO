@@ -103,8 +103,6 @@ protected:
   /// Flag to indicate whether the service handler that created the
   /// above transport has been registered with the reactor or not. The
   /// default is 0.
-  /// @@ Would this flag be a duplication of the one in the Connection
-  /// @@ Handler ?
   int is_registered_;
 };
 
