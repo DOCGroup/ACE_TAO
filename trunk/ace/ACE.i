@@ -117,13 +117,13 @@ ACE::hex2byte (char c)
     return (u_char) (10 + c - 'A');
 }
 
-ACE_INLINE char
+ASYS_INLINE char
 ACE::debug (void)
 {
   return ACE::debug_;
 }
 
-ACE_INLINE void
+ASYS_INLINE void
 ACE::debug (char c)
 {
   ACE::debug_ = c;
