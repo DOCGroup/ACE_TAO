@@ -223,7 +223,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     new_transient_poa_map.release ();
 }
 
-#include "Loadable_Thread_Policy.h"
+#include "ThreadPolicyFactory.h"
 #include "ace/Dynamic_Service.h"
 
 void
@@ -235,18 +235,18 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
 #if (TAO_HAS_MINIMUM_POA == 0)
 
   // Thread policy.
-  TAO::Loadable_Thread_Policy *policy =
-    ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
-           "Loadable_Thread_Policy");
+  TAO::PortableServer::ThreadPolicyFactory *policy =
+    ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+           "ThreadPolicyFactory");
 
   if (policy == 0)
     {
       ACE_Service_Config::process_directive (
-        TAO::ace_svc_desc_Loadable_Thread_Policy);
+        ::TAO::PortableServer::ace_svc_desc_ThreadPolicyFactory);
 
       policy =
-        ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
-           "Loadable_Thread_Policy");
+        ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+           "ThreadPolicyFactory");
     }
 
   if (policy != 0)

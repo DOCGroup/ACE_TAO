@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "POA_Policy.h"
+#include "PolicyFactory.h"
 #include "PortableServerC.h"
 #include "ace/Service_Config.h"
 
@@ -33,67 +33,70 @@ namespace CORBA
 
 namespace TAO
 {
-  class TAO_PortableServer_Export Policy_Strategy :
-     public virtual ACE_Service_Object
+  namespace PortableServer
   {
-  public:
-    virtual ~Policy_Strategy (void);
+    class TAO_PortableServer_Export Policy_Strategy :
+       public virtual ACE_Service_Object
+    {
+    public:
+      virtual ~Policy_Strategy (void);
 
-    void init(CORBA::PolicyList *policy_list) = 0;
+      void init(CORBA::PolicyList *policy_list) = 0;
+    }
+
+    class TAO_PortableServer_Export Thread_Strategy :
+       public virtual Policy_Strategy
+    {
+    public:
+      virtual ~Thread_Strategy (void);
+
+      virtual void enter () = 0;
+
+      virtual void exit () = 0;
+
+      void init(CORBA::PolicyList *policy_list)
+      {
+        // dependent on type create the correct strategy.
+      }
+    };
+
+    class TAO_PortableServer_Export Single_Thread_Strategy :
+       public virtual Thread_Strategy
+    {
+    public:
+      virtual ~Single_Thread_Strategy (void);
+
+      virtual void enter ()
+      {
+        lock.acquire();
+      }
+
+      virtual void exit ()
+      {
+        lock.release();
+      }
+
+    private:
+      TAO_SYNCH_RECURSIVE_MUTEX lock_;
+    };
+
+    class TAO_PortableServer_Export ORBControl_Thread_Strategy :
+       public virtual Thread_Strategy
+    {
+    public:
+      virtual ~ORBControl_Thread_Strategy (void);
+
+      virtual void enter ()
+      {
+        // Noop
+      }
+
+      virtual void exit ()
+      {
+        // Noop
+      }
+    };
   }
-
-  class TAO_PortableServer_Export Thread_Strategy :
-     public virtual Policy_Strategy
-  {
-  public:
-    virtual ~Thread_Strategy (void);
-
-    virtual void enter () = 0;
-
-    virtual void exit () = 0;
-
-    void init(CORBA::PolicyList *policy_list)
-    {
-      // dependent on type create the correct strategy.
-    }
-  };
-
-  class TAO_PortableServer_Export Single_Thread_Strategy :
-     public virtual Thread_Strategy
-  {
-  public:
-    virtual ~Single_Thread_Strategy (void);
-
-    virtual void enter ()
-    {
-      lock.acquire();
-    }
-
-    virtual void exit ()
-    {
-      lock.release();
-    }
-
-  private:
-    TAO_SYNCH_RECURSIVE_MUTEX lock_;
-  };
-
-  class TAO_PortableServer_Export ORBControl_Thread_Strategy :
-     public virtual Thread_Strategy
-  {
-  public:
-    virtual ~ORBControl_Thread_Strategy (void);
-
-    virtual void enter ()
-    {
-      // Noop
-    }
-
-    virtual void exit ()
-    {
-      // Noop
-    }
-  };
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

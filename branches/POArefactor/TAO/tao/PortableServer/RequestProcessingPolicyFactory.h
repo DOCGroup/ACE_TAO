@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Loadable_Request_Processing_Policy.h
+ *  @file RequestProcessingPolicyFactory.h
  *
  *  $Id$
  *
@@ -15,7 +15,7 @@
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
-#include "POA_Policy.h"
+#include "PolicyFactory.h"
 #include "PortableServerC.h"
 #include "ace/Service_Config.h"
 
@@ -32,35 +32,38 @@ namespace CORBA
 
 namespace TAO
 {
-  class TAO_PortableServer_Export Loadable_Request_Processing_Policy :
-     public virtual POA_Policy
+  namespace PortableServer
   {
-  public:
-    virtual ~Loadable_Request_Processing_Policy (void);
+    class TAO_PortableServer_Export RequestProcessingPolicyFactory :
+       public virtual PolicyFactory
+    {
+    public:
+      virtual ~RequestProcessingPolicyFactory (void);
 
-    /// Return the cached policy type for this policy.
-    virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+      /// Return the cached policy type for this policy.
+      virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
-    /// Returns the scope at which this policy can be applied. See orbconf.h.
-    virtual TAO_Policy_Scope _tao_scope (void) const;
+      /// Returns the scope at which this policy can be applied. See orbconf.h.
+      virtual TAO_Policy_Scope _tao_scope (void) const;
 
-    /// Create a new request processing policy
-    /**
-     * @note If all the compilers supported covariant return types we could
-     * change this to a CORBA::Policy_ptr create() call, which is defined
-     * as pure virtual in the base. This is something for the future.
-     */
-    PortableServer::RequestProcessingPolicy_ptr create (
-      PortableServer::RequestProcessingPolicyValue value);
+      /// Create a new request processing policy
+      /**
+       * @note If all the compilers supported covariant return types we could
+       * change this to a CORBA::Policy_ptr create() call, which is defined
+       * as pure virtual in the base. This is something for the future.
+       */
+      ::PortableServer::RequestProcessingPolicy_ptr create (
+        ::PortableServer::RequestProcessingPolicyValue value);
 
-    /// Create a new request processing policy
-    PortableServer::RequestProcessingPolicy_ptr create (
-      const CORBA::Any &value ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((CORBA::PolicyError));
-  };
+      /// Create a new request processing policy
+      ::PortableServer::RequestProcessingPolicy_ptr create (
+        const CORBA::Any &value ACE_ENV_ARG_DECL)
+        ACE_THROW_SPEC ((CORBA::PolicyError));
+    };
 
-  ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, Loadable_Request_Processing_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, Loadable_Request_Processing_Policy)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingPolicyFactory)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingPolicyFactory)
+  }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

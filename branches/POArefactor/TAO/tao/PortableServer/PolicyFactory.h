@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file POA_Policy.h
+ *  @file PolicyFactory.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_POA_POLICY_H
-#define TAO_POA_POLICY_H
+#ifndef TAO_PORTABLESERVER_POLICYFACTORY_H
+#define TAO_PORTABLESERVER_POLICYFACTORY_H
 #include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
@@ -24,20 +24,23 @@
 
 namespace TAO
 {
-  class TAO_PortableServer_Export POA_Policy :
-     public virtual ACE_Service_Object
+  namespace PortableServer
   {
-  public:
-    virtual ~POA_Policy (void);
+    class TAO_PortableServer_Export PolicyFactory :
+       public virtual ACE_Service_Object
+    {
+    public:
+      virtual ~PolicyFactory (void);
 
-    /// Return the cached policy type for this policy.
-    virtual TAO_Cached_Policy_Type _tao_cached_type (void) const = 0;
+      /// Return the cached policy type for this policy.
+      virtual TAO_Cached_Policy_Type _tao_cached_type (void) const = 0;
 
-    /// Returns the scope at which this policy can be applied. See
-    /// orbconf.h.
-    virtual TAO_Policy_Scope _tao_scope (void) const = 0;
-  };
-}
+      /// Returns the scope at which this policy can be applied. See
+      /// orbconf.h.
+      virtual TAO_Policy_Scope _tao_scope (void) const = 0;
+    };
+  } /* namespace PortableServer */
+} /* namespace TAO */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_POA_POLICY_H */
+#endif /* TAO_PORTABLESERVER_POLICYFACTORY_H */

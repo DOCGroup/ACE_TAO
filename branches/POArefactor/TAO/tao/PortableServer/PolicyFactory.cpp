@@ -1,26 +1,29 @@
 // $Id$
 
-#include "POA_Policy.h"
+#include "PolicyFactory.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
-           POA_Policy,
+           PolicyFactory,
            "$Id$")
 
 namespace TAO
 {
-  POA_Policy::~POA_Policy (void)
+  namespace PortableServer
   {
-  }
+    PolicyFactory::~PolicyFactory (void)
+    {
+    }
 
-  #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+    #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class ACE_Dynamic_Service<POA_Policy>;
+    template class ACE_Dynamic_Service<PolicyFactory>;
 
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-  #pragma instantiate ACE_Dynamic_Service<POA_Policy>
+    #pragma instantiate ACE_Dynamic_Service<PolicyFactory>
 
-  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-}
+    #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+  } /* namespace PortableServer */
+} /* namespace TAO */
 

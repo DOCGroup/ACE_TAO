@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Lifespan_Policy_Value.h
+ *  @file LifespanPolicyValue.h
  *
  *  $Id$
  *
@@ -25,41 +25,44 @@
 
 namespace TAO
 {
-  class TAO_PortableServer_Export Lifespan_Policy_Value
-    : public virtual ACE_Service_Object
+  namespace PortableServer
   {
-    public:
-      virtual ~Lifespan_Policy_Value (void);
+    class TAO_PortableServer_Export LifespanPolicyValue
+      : public virtual ACE_Service_Object
+    {
+      public:
+        virtual ~LifespanPolicyValue (void);
 
-      virtual PortableServer::LifespanPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-  };
+        virtual ::PortableServer::LifespanPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    };
 
-  class TAO_PortableServer_Export Transient_Lifespan_Policy
-    : public virtual Lifespan_Policy_Value
-  {
-    public:
-      virtual ~Transient_Lifespan_Policy (void);
+    class TAO_PortableServer_Export Transient_Lifespan_Policy
+      : public virtual LifespanPolicyValue
+    {
+      public:
+        virtual ~Transient_Lifespan_Policy (void);
 
-      virtual PortableServer::LifespanPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::LifespanPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  class TAO_PortableServer_Export Persistent_Lifespan_Policy
-    : public virtual Lifespan_Policy_Value
-  {
-    public:
-      virtual ~Persistent_Lifespan_Policy (void);
+    class TAO_PortableServer_Export Persistent_Lifespan_Policy
+      : public virtual LifespanPolicyValue
+    {
+      public:
+        virtual ~Persistent_Lifespan_Policy (void);
 
-      virtual PortableServer::LifespanPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::LifespanPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  ACE_STATIC_SVC_DECLARE (Persistent_Lifespan_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, Persistent_Lifespan_Policy)
+    ACE_STATIC_SVC_DECLARE (Persistent_Lifespan_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, Persistent_Lifespan_Policy)
 
-  ACE_STATIC_SVC_DECLARE (Transient_Lifespan_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, Transient_LifespanPolicy)
+    ACE_STATIC_SVC_DECLARE (Transient_Lifespan_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, Transient_LifespanPolicy)
+  }
 }
 
 #include /**/ "ace/post.h"

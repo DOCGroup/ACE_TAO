@@ -14,7 +14,7 @@ ACE_RCSID (PortableServer,
 
 #include "tao/StringSeqC.h"
 
-#include "tao/PortableServer/Loadable_Thread_Policy.h"
+#include "tao/PortableServer/ThreadPolicyFactory.h"
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ORT_Adapter.h"
@@ -64,24 +64,24 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO::Loadable_Thread_Policy *policy =
-    ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
-           "Loadable_Thread_Policy");
+  TAO::PortableServer::ThreadPolicyFactory *policy =
+    ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+           "ThreadPolicyFactory");
 
   // For static libraries try to force load
   if (policy == 0)
     {
       ACE_Service_Config::process_directive (
-        TAO::ace_svc_desc_Loadable_Thread_Policy);
+        ::TAO::PortableServer::ace_svc_desc_ThreadPolicyFactory);
 
       policy =
-        ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
-           "Loadable_Thread_Policy");
+        ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+           "ThreadPolicyFactory");
     }
 
   if (policy == 0)
     {
-      return PortableServer::ThreadPolicy::_nil();
+      return ::PortableServer::ThreadPolicy::_nil();
     }
   else
     {

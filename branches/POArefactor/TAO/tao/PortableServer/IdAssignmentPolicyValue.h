@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file IdAssignment_Policy_Value.h
+ *  @file IdAssignmentPolicyValue.h
  *
  *  $Id$
  *
@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_IDASSIGNMENT_POLICY_VALUE_H
-#define TAO_IDASSIGNMENT_POLICY_VALUE_H
+#ifndef TAO_PORTABLESERVER_IDASSIGNMENTPOLICYVALUE_H
+#define TAO_PORTABLESERVER_IDASSIGNMENTPOLICYVALUE_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
@@ -25,43 +25,46 @@
 
 namespace TAO
 {
-  class TAO_PortableServer_Export IdAssignment_Policy_Value
-    : public virtual ACE_Service_Object
+  namespace PortableServer
   {
-    public:
-      virtual ~IdAssignment_Policy_Value (void);
+    class TAO_PortableServer_Export IdAssignmentPolicyValue
+      : public virtual ACE_Service_Object
+    {
+      public:
+        virtual ~IdAssignmentPolicyValue (void);
 
-      virtual PortableServer::IdAssignmentPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-  };
+        virtual ::PortableServer::IdAssignmentPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    };
 
-  class TAO_PortableServer_Export User_IdAssignment_Policy
-    : public virtual IdAssignment_Policy_Value
-  {
-    public:
-      virtual ~User_IdAssignment_Policy (void);
+    class TAO_PortableServer_Export User_IdAssignment_Policy
+      : public virtual IdAssignmentPolicyValue
+    {
+      public:
+        virtual ~User_IdAssignment_Policy (void);
 
-      virtual PortableServer::IdAssignmentPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::IdAssignmentPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  class TAO_PortableServer_Export System_IdAssignment_Policy
-    : public virtual IdAssignment_Policy_Value
-  {
-    public:
-      virtual ~System_IdAssignment_Policy  (void);
+    class TAO_PortableServer_Export System_IdAssignment_Policy
+      : public virtual IdAssignmentPolicyValue
+    {
+      public:
+        virtual ~System_IdAssignment_Policy  (void);
 
-      virtual PortableServer::IdAssignmentPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::IdAssignmentPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  ACE_STATIC_SVC_DECLARE (System_IdAssignment_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, System_IdAssignment_Policy)
+    ACE_STATIC_SVC_DECLARE (System_IdAssignment_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, System_IdAssignment_Policy)
 
-  ACE_STATIC_SVC_DECLARE (User_IdAssignment_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, User_IdAssignment_Policy)
-}
+    ACE_STATIC_SVC_DECLARE (User_IdAssignment_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, User_IdAssignment_Policy)
+  } /* namespace PortableServer */
+} /* namespace TAO */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_IDASSIGNMENT_POLICY_VALUE_H */
+#endif /* TAO_PORTABLESERVER_IDASSIGNMENTPOLICYVALUE_H */
 

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Implicit_Activation_Policy_Value.h
+ *  @file ImplicitActivationPolicyValue.h
  *
  *  $Id$
  *
@@ -27,41 +27,44 @@
 
 namespace TAO
 {
-  class TAO_PortableServer_Export Implicit_Activation_Policy_Value
-    : public virtual ACE_Service_Object
+  namespace PortableServer
   {
-    public:
-      virtual ~Implicit_Activation_Policy_Value (void);
+    class TAO_PortableServer_Export ImplicitActivationPolicyValue
+      : public virtual ACE_Service_Object
+    {
+      public:
+        virtual ~ImplicitActivationPolicyValue (void);
 
-      virtual PortableServer::ImplicitActivationPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-  };
+        virtual ::PortableServer::ImplicitActivationPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    };
 
-  class TAO_PortableServer_Export Implicit_Implicit_Activation_Policy
-    : public virtual Implicit_Activation_Policy_Value
-  {
-    public:
-      virtual ~Implicit_Implicit_Activation_Policy (void);
+    class TAO_PortableServer_Export Implicit_Implicit_Activation_Policy
+      : public virtual ImplicitActivationPolicyValue
+    {
+      public:
+        virtual ~Implicit_Implicit_Activation_Policy (void);
 
-      virtual PortableServer::ImplicitActivationPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::ImplicitActivationPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  ACE_STATIC_SVC_DECLARE (Implicit_Implicit_Activation_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, Implicit_Implicit_Activation_Policy)
+    ACE_STATIC_SVC_DECLARE (Implicit_Implicit_Activation_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, Implicit_Implicit_Activation_Policy)
 
-  class TAO_PortableServer_Export No_Implicit_Implicit_Activation_Policy
-    : public virtual Implicit_Activation_Policy_Value
-  {
-    public:
-      virtual ~No_Implicit_Implicit_Activation_Policy  (void);
+    class TAO_PortableServer_Export No_Implicit_Implicit_Activation_Policy
+      : public virtual ImplicitActivationPolicyValue
+    {
+      public:
+        virtual ~No_Implicit_Implicit_Activation_Policy  (void);
 
-      virtual PortableServer::ImplicitActivationPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::ImplicitActivationPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  ACE_STATIC_SVC_DECLARE (No_Implicit_Implicit_Activation_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, No_Implicit_Implicit_Activation_Policy)
+    ACE_STATIC_SVC_DECLARE (No_Implicit_Implicit_Activation_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, No_Implicit_Implicit_Activation_Policy)
+  }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file POA_Servant_Retention_Policy.h
+ *  @file ServantRetentionPolicy.h
  *
  *  $Id$
  *
@@ -25,9 +25,7 @@
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
 #if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
 #pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
@@ -35,42 +33,45 @@
 
 namespace TAO
 {
-  class Servant_Retention_Policy_Value;
-
-  class TAO_PortableServer_Export POA_Servant_Retention_Policy :
-    public virtual PortableServer::ServantRetentionPolicy,
-    public virtual TAO_Local_RefCounted_Object
+  namespace PortableServer
   {
-  public:
-    POA_Servant_Retention_Policy ();
+    class ServantRetentionPolicyValue;
 
-    CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+    class TAO_PortableServer_Export ServantRetentionPolicy :
+      public virtual ::PortableServer::ServantRetentionPolicy,
+      public virtual TAO_Local_RefCounted_Object
+    {
+    public:
+      ServantRetentionPolicy ();
 
-    void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      CORBA::Policy_ptr copy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-    PortableServer::ServantRetentionPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      void destroy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-    CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::SystemException));
+      ::PortableServer::ServantRetentionPolicyValue value (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Initialise with the passed value
-    void init (PortableServer::ServantRetentionPolicyValue value);
+      CORBA::PolicyType policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::SystemException));
 
-    /// Initialise with the passed value
-    void init (const CORBA::Any &value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-      ACE_THROW_SPEC ((CORBA::PolicyError));
+      /// Initialise with the passed value
+      void init (::PortableServer::ServantRetentionPolicyValue value);
 
-  private:
-    Servant_Retention_Policy_Value *value_;
-  };
+      /// Initialise with the passed value
+      void init (const CORBA::Any &value ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+        ACE_THROW_SPEC ((CORBA::PolicyError));
+
+    private:
+      ServantRetentionPolicyValue *value_;
+    };
+  }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
 

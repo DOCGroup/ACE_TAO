@@ -1,5 +1,5 @@
 #include "PortableServer_PolicyFactory.h"
-#include "Loadable_Thread_Policy.h"
+#include "ThreadPolicyFactory.h"
 #include "IdAssignmentPolicyC.h"
 #include "IdUniquenessPolicyC.h"
 #include "ImplicitActivationPolicyC.h"
@@ -23,21 +23,21 @@ TAO_PortableServer_PolicyFactory::create_policy (
 {
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  if (type == PortableServer::THREAD_POLICY_ID)
+  if (type == ::PortableServer::THREAD_POLICY_ID)
   {
-    TAO::Loadable_Thread_Policy *policy =
-      ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
-             "Loadable_Thread_Policy");
+    TAO::PortableServer::ThreadPolicyFactory *policy =
+      ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+             "ThreadPolicyFactory");
 
     // For static libraries force load
     if (policy == 0)
       {
         ACE_Service_Config::process_directive (
-          TAO::ace_svc_desc_Loadable_Thread_Policy);
+          ::TAO::PortableServer::ace_svc_desc_ThreadPolicyFactory);
 
         policy =
-          ACE_Dynamic_Service<TAO::Loadable_Thread_Policy>::instance (
-             "Loadable_Thread_Policy");
+          ACE_Dynamic_Service<TAO::PortableServer::ThreadPolicyFactory>::instance (
+             "ThreadPolicyFactory");
       }
 
     if (policy == 0)

@@ -13,8 +13,8 @@
 
 #include "PortableServer.h"
 #include "Object_Adapter.h"
-#include "Thread_Policy_Value.h"
-#include "Loadable_Thread_Policy.h"
+#include "ThreadPolicyValue.h"
+#include "ThreadPolicyFactory.h"
 
 ACE_RCSID (PortableServer,
            PortableServer,

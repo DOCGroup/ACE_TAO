@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Servant_Retention_Policy_Value.h
+ *  @file ServantRetentionPolicyValue.h
  *
  *  $Id$
  *
@@ -27,41 +27,44 @@
 
 namespace TAO
 {
-  class TAO_PortableServer_Export Servant_Retention_Policy_Value
-    : public virtual ACE_Service_Object
+  namespace PortableServer
   {
-    public:
-      virtual ~Servant_Retention_Policy_Value (void);
+    class TAO_PortableServer_Export ServantRetentionPolicyValue
+      : public virtual ACE_Service_Object
+    {
+      public:
+        virtual ~ServantRetentionPolicyValue (void);
 
-      virtual PortableServer::ServantRetentionPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-  };
+        virtual ::PortableServer::ServantRetentionPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    };
 
-  class TAO_PortableServer_Export Retain_Servant_Retention_Policy
-    : public virtual Servant_Retention_Policy_Value
-  {
-    public:
-      virtual ~Retain_Servant_Retention_Policy (void);
+    class TAO_PortableServer_Export Retain_Servant_Retention_Policy
+      : public virtual ServantRetentionPolicyValue
+    {
+      public:
+        virtual ~Retain_Servant_Retention_Policy (void);
 
-      virtual PortableServer::ServantRetentionPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::ServantRetentionPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  ACE_STATIC_SVC_DECLARE (Retain_Servant_Retention_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, Retain_Servant_Retention_Policy)
+    ACE_STATIC_SVC_DECLARE (Retain_Servant_Retention_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, Retain_Servant_Retention_Policy)
 
-  class TAO_PortableServer_Export Non_Retain_Servant_Retention_Policy
-    : public virtual Servant_Retention_Policy_Value
-  {
-    public:
-      virtual ~Non_Retain_Servant_Retention_Policy  (void);
+    class TAO_PortableServer_Export Non_Retain_Servant_Retention_Policy
+      : public virtual ServantRetentionPolicyValue
+    {
+      public:
+        virtual ~Non_Retain_Servant_Retention_Policy  (void);
 
-      virtual PortableServer::ServantRetentionPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::ServantRetentionPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  ACE_STATIC_SVC_DECLARE (Non_Retain_Servant_Retention_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, Non_Retain_Servant_Retention_Policy)
+    ACE_STATIC_SVC_DECLARE (Non_Retain_Servant_Retention_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, Non_Retain_Servant_Retention_Policy)
+  }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

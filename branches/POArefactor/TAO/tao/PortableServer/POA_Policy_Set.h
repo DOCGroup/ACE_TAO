@@ -24,15 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class TAO_Policy_Validator;
 
 class TAO_PortableServer_Export TAO_POA_Policy_Set
@@ -74,10 +65,6 @@ public:
 protected:
   TAO_Policy_Set impl_;
 };
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
 # include "POA_Policy_Set.i"

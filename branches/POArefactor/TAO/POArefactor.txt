@@ -1,4 +1,11 @@
-Wed Sep 22 14:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fri Sep 24 14:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*.{h,cpp}:
+          Moved all new Policy Value classes to the TAO::PortableServer
+          namespace. Renamed everything to match filenames. Everything
+          compiles again, no testing done yet.
+
+Fri Sep 24 14:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/*_Value.{h,cpp}:
           Renamed these files, zapped all underscores so that filenames match

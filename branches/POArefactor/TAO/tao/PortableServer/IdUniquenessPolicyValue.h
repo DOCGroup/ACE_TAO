@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file IdUniqueness_Policy_Value.h
+ *  @file IdUniquenessPolicyValue.h
  *
  *  $Id$
  *
@@ -25,41 +25,44 @@
 
 namespace TAO
 {
-  class TAO_PortableServer_Export IdUniqueness_Policy_Value
-    : public virtual ACE_Service_Object
+  namespace PortableServer
   {
-    public:
-      virtual ~IdUniqueness_Policy_Value (void);
+    class TAO_PortableServer_Export IdUniquenessPolicyValue
+      : public virtual ACE_Service_Object
+    {
+      public:
+        virtual ~IdUniquenessPolicyValue (void);
 
-      virtual PortableServer::IdUniquenessPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
-  };
+        virtual ::PortableServer::IdUniquenessPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+    };
 
-  class TAO_PortableServer_Export Unique_IdUniqueness_Policy
-    : public virtual IdUniqueness_Policy_Value
-  {
-    public:
-      virtual ~Unique_IdUniqueness_Policy (void);
+    class TAO_PortableServer_Export Unique_IdUniqueness_Policy
+      : public virtual IdUniquenessPolicyValue
+    {
+      public:
+        virtual ~Unique_IdUniqueness_Policy (void);
 
-      virtual PortableServer::IdUniquenessPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::IdUniquenessPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  class TAO_PortableServer_Export Multiple_IdUniqueness_Policy
-    : public virtual IdUniqueness_Policy_Value
-  {
-    public:
-      virtual ~Multiple_IdUniqueness_Policy  (void);
+    class TAO_PortableServer_Export Multiple_IdUniqueness_Policy
+      : public virtual IdUniquenessPolicyValue
+    {
+      public:
+        virtual ~Multiple_IdUniqueness_Policy  (void);
 
-      virtual PortableServer::IdUniquenessPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-        ACE_THROW_SPEC ((CORBA::SystemException));
-  };
+        virtual ::PortableServer::IdUniquenessPolicyValue policy_type (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+          ACE_THROW_SPEC ((CORBA::SystemException));
+    };
 
-  ACE_STATIC_SVC_DECLARE (Multiple_IdUniqueness_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, Multiple_IdUniqueness_Policy)
+    ACE_STATIC_SVC_DECLARE (Multiple_IdUniqueness_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, Multiple_IdUniqueness_Policy)
 
-  ACE_STATIC_SVC_DECLARE (Unique_IdUniqueness_Policy)
-  ACE_FACTORY_DECLARE (TAO_PortableServer, Unique_IdUniqueness_Policy)
+    ACE_STATIC_SVC_DECLARE (Unique_IdUniqueness_Policy)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, Unique_IdUniqueness_Policy)
+  }
 }
 
 #include /**/ "ace/post.h"
