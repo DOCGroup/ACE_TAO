@@ -32,8 +32,8 @@ server switches:
 
 Usage:
 
-server_A -o ior1
-server_A -o ior2
+server -o ior1
+server -o ior2
 
 //for two client threads, 10 iterations and 5 server iterations
 client -f ior1 -g ior2 -n 2 -i 10 -s 5
