@@ -1,5 +1,14 @@
 Fri Apr 13 05:30:04 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* ace/Malloc_T.{h,i}: Added support for one of the calloc() methods
+	  to ACE_Cached_Allocator.  Thanks to Rachel G Smith
+ 	  <Rachel_G_Smith@raytheon.com> for motivating this change.
+	
+	* ace/Malloc_Allocator.h: Updated the comments for ACE_New_Allocator
+	  to indicate that the calloc() methods are also supported.
+  	  Thanks to Rachel G Smith <Rachel_G_Smith@raytheon.com> for
+ 	  motivating this change.
+
 	* docs/ACE-bug-process.html: Updated this document to explain how
 	  bugs pertaining to OCI's TAO releases should be handled.  Thanks
  	  to Georg Lohrer <GeorgLohrer@web.de> for motivating this.

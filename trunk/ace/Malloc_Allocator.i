@@ -37,67 +37,67 @@ ACE_New_Allocator::free (void *ptr)
 ACE_INLINE int
 ACE_New_Allocator::remove (void)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::bind (const char *, void *, int)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::trybind (const char *, void *&)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::find (const char *, void *&)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::find (const char *)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::unbind (const char *)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::unbind (const char *, void *&)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::sync (ssize_t, int)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::sync (void *, size_t, int)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::protect (ssize_t, int)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 ACE_INLINE int
 ACE_New_Allocator::protect (void *, size_t, int)
 {
-  return -1;
+  ACE_NOTSUP_RETURN (-1);
 }
 
 #if defined (ACE_HAS_MALLOC_STATS)
