@@ -200,7 +200,7 @@ int main (int argc, char *argv[])
             per_consumer_workload = 1;
 
           CORBA::Long base_event_type =
-            ACE_ES_EVENT_UNDEFINED + 2 * (i + 1);
+            ACE_ES_EVENT_UNDEFINED + 2;
           low_priority_group[i].init (experiment_id,
                                       base_event_type,
                                       iterations,

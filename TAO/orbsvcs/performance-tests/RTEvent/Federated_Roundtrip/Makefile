@@ -256,10 +256,16 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.h \
   $(TAO_ROOT)/tao/Messaging_SyncScopeC.i \
   $(TAO_ROOT)/tao/Messaging/MessagingC.i \
-  ../lib/SyncScope_Setup.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
+  ../lib/SyncScope_Setup.inl ../lib/Loopback_Pair.h \
+  ../lib/Loopback_Supplier.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
+  $(TAO_ROOT)/tao/TimeBaseS.h \
+  $(TAO_ROOT)/tao/TimeBaseS_T.h \
+  $(TAO_ROOT)/tao/TimeBaseS_T.i \
+  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
+  $(TAO_ROOT)/tao/TimeBaseS.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -288,21 +294,6 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(ACE_ROOT)/ace/Service_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.h \
-  $(ACE_ROOT)/ace/Shared_Object.i \
-  $(ACE_ROOT)/ace/Service_Object.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.h \
-  $(TAO_ROOT)/tao/TimeBaseS.h \
-  $(TAO_ROOT)/tao/TimeBaseS_T.h \
-  $(TAO_ROOT)/tao/TimeBaseS_T.i \
-  $(TAO_ROOT)/tao/TimeBaseS_T.cpp \
-  $(TAO_ROOT)/tao/TimeBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
@@ -321,6 +312,7 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseS.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/event_export.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecDefaultEventDataS_T.i \
@@ -332,15 +324,25 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseC.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
+  ../lib/Loopback_Consumer.h ../lib/Loopback_Pair.inl \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Event_Channel.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.h \
+  $(ACE_ROOT)/ace/Service_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.h \
+  $(ACE_ROOT)/ace/Shared_Object.i \
+  $(ACE_ROOT)/ace/Service_Object.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Factory.i \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Event/EC_Defaults.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
+  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS_T.cpp \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecBaseS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.h \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.i \
   $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS_T.cpp \
@@ -728,7 +730,8 @@ server: $(addprefix $(VDIR),$(server_OBJS))
   ../lib/Client_Group.h ../lib/Consumer.h \
   $(ACE_ROOT)/ace/Sample_History.h \
   $(ACE_ROOT)/ace/Sample_History.inl \
-  ../lib/Loopback_Supplier.h ../lib/Loopback_Consumer.h \
+  ../lib/Loopback_Pair.h ../lib/Loopback_Supplier.h \
+  ../lib/Loopback_Consumer.h ../lib/Loopback_Pair.inl \
   ../lib/Client_Group.inl ../lib/ORB_Task.h ../lib/Auto_Disconnect.h \
   ../lib/Auto_Disconnect.inl ../lib/Auto_Disconnect.cpp \
   ../lib/SyncScope_Setup.h \
