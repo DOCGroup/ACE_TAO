@@ -1,3 +1,9 @@
+Thu Sep 07 18:17:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
+	  (visit_operation): Added a missing space which caused
+	  compilation errors in generated code.
+
 Thu Sep  7 16:09:30 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp (string_copy):
@@ -33,7 +39,7 @@ Thu Sep 07 14:06:40 2000  Ossama Othman  <ossama@uci.edu>
 	  Once the ORB Core pointer has been added to the ORB table,
 	  release it from the Auto_Ptr since the ORB table owns it at that
 	  point.
-	
+
 	* tao/ORB_Core.cpp (bind):
 
 	  Make sure that the supplied ORB core pointer is valid,
@@ -44,7 +50,7 @@ Thu Sep 07 14:06:40 2000  Ossama Othman  <ossama@uci.edu>
 	  it, and is therefore responsible for destroying it.
 
 	  Only set the "first_orb_" member if the given ORB Core was
-	  successfully added to the ORB table. 
+	  successfully added to the ORB table.
 
 	  (~TAO_ORB_Table):
 
@@ -112,54 +118,54 @@ Thu Sep  7 10:29:40 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 Thu Sep  7 00:46:40 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h: 
+	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.h:
 	* orbsvcs/orbsvcs/Notify/Notify_AdminProperties.i:
 	  Implements the AdminProperties interface methods.
-	
-	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp: 
+
+	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_Buffering_Strategy.h:
 	  Buffering Strategy used for MT Worker tasks.
 	  Handles discard and order policies.
-	
-	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h: 
+
+	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_MT_Worker_Task.h:
 	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h: 
+	* orbsvcs/orbsvcs/Notify/Notify_Worker_Task.h:
 	  Split the Notify_worker as reactive and MT.
-	
+
 	* orbsvcs/orbsvcs/Makefile.CosNotification:
 	* orbsvcs/orbsvcs/CosNotification.dsp:
 	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
 	  Added new files, updated dependencies.
-	
-	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp: 
+
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
 	  Delegate admin properties get/set to TAO_Notify_AdminProperties.
-	
+
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h: 
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.h:
 	* orbsvcs/orbsvcs/Notify/Notify_Event_Manager.i:
 	  Added  TAO_Notify_AdminProperties member.
-	
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp: 
+
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.cpp:
  	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_T.h:
 	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_SequenceProxyPushConsumer_i.cpp:
  	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.cpp:
 	  on_connect and on_disconnect methods count number of consumers
 	  and suppliers connected to the channel.
-	
+
 	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
 	* orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp: 
-	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Dispatch_Command.cpp:
+	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.cpp:
  	* orbsvcs/orbsvcs/Notify/Notify_Event_Processor.h:
-	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h: 
+	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
 	  Changes related to accomodating the TAO_Notify_MT_Worker and
 	  minor corrections.
- 	 	
+
 	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.cpp:
 	* orbsvcs/tests/Notify/Basic/ConnectDisconnect.h:
 	  The usage message was printed incorrectly, fixed it.
@@ -168,13 +174,13 @@ Thu Sep  7 00:46:40 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 	  according to priority is difficult - i had to put a sleep(1)
 	  statement (temporary) in the TAO_Notify_MT_Task's svc method to
 	  slow it down enough to see priorities in action.
-	
+
 	* orbsvcs/tests/Notify/Basic/Makefile:
 	* orbsvcs/tests/Notify/Basic/README:
 	  Updated.
-	
+
 	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.cpp:
-	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.h: 
+	* orbsvcs/tests/Notify/Basic/AdminProperties_Test.h:
 	  Test for the newly added EC Admin QoS properties.
 
 07 01:04:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
