@@ -482,25 +482,23 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
     switch (file->action_)
       {
       case ACE_Filecache_Object::WRITING:
-        do
-          {
-            ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
+	{
+	  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (hashlock);
 
-            file->release ();
+	  file->release ();
 
-            this->remove_i ((char *) file->filename_);
-            result = this->hash_.bind (file->filename_, file);
+	  this->remove_i ((char *) file->filename_);
+	  result = this->hash_.bind (file->filename_, file);
 
-            if (result == 0)
-              file->acquire ();
-          }
-        while (0);
+	  if (result == 0)
+	    file->acquire ();
+	}
 
 	break;
       default:
 	file->release ();
 
-	// last one using a stale file is resposible for deleting it
+	// Last one using a stale file is resposible for deleting it.
         if (file->stale_)
           {
             // Try a lock.  If it succeds, we can delete it now.
