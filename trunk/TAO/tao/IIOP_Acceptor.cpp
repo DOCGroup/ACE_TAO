@@ -21,6 +21,7 @@ ACE_RCSID(tao,
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>;
 template class ACE_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>;
@@ -33,6 +34,7 @@ template class TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTO
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr>
 #pragma instantiate ACE_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Strategy_Acceptor<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR>
