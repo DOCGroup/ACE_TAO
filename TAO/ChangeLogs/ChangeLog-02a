@@ -1,3 +1,20 @@
+Wed Jan 19 17:51:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_check.cpp:
+	  Added update of AST_Decl's filename pointer before
+	  outputting a 'forward declaration not defined' error.
+	  In certain cases, #xxxx statements in the IDL file
+	  cause the preprocessor to add #<line number> "<filename>"
+	  statements where <filename> is a repeat of the main
+	  file name. This would invalidate
+	  the filename pointer held deep down in a forward
+	  declared interface node. If a forward declared interface
+	  is found not to have a full definition, the error 
+	  function that is called tries to use this filename
+	  pointer, causing a crash. Thanks to
+	  Hessel Idzenga <idzenga@lucent.com> for sending in
+	  the example file that uncovered this bug.
+
 Wed Jan 19 15:44:23 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_union/union_ci.cpp:
