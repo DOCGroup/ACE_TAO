@@ -1,3 +1,20 @@
+Sat Sep 19 14:06:52 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* apps/JAWS/PROTOTYPE/JAWS/IO.cpp: Fixed typo.
+
+	* apps/JAWS/PROTOTYPE/JAWS/jaws.dsp: 
+	* apps/gperf/src/gperf.dsp:
+	* ace/ace_dll.dsp:
+	* netsvcs/clients/Naming/Client/Client_Test.dsp:
+	* netsvcs/lib/netsvcs.dsp:
+	  Changed behavior of all DLL projects and utilities (like
+	  gperf) to put the dll and executables in $ACE_ROOT/bin.
+
+	* ace/config-win32.h: ACE_HAS_GPERF is back.
+
+	* ACE-INSTALL.html: On NT, $ACE_ROOT/bin should now be in 
+	  your path instead of $ACE_ROOT/ace.
+
 Sat Sep 19 12:27:31 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Asynch_IO.cpp: thread_function() is only for UNIX.
