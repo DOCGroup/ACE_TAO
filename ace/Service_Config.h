@@ -24,8 +24,7 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
-#include "ace/SString.h"
-#include "ace/XML_Svc_Conf.h"
+#include "ace/SStringfwd.h"
 #include "ace/OS_NS_signal.h"
 
 // Forward decl.
@@ -41,7 +40,9 @@ class ACE_DLL;
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 class ACE_Svc_Conf_Param;
-#endif /* ACE_USES_CLASSIC_SVC_CONF ==1 */
+#else
+class ACE_XML_Svc_Conf;
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
 extern "C"
 {
@@ -452,11 +453,6 @@ private:
 #include "ace/Service_Config.inl"
 #endif /* __ACE_INLINE__ */
 
-// These must go here to avoid circular includes...  (only left here
-// for to not break applications which rely on this - no real need any
-// longer)
-#include "ace/Reactor.h"
-#include "ace/Svc_Conf_Tokens.h"
 
 #include /**/ "ace/post.h"
 

@@ -1,3 +1,71 @@
+Fri Jan 28 20:30:02 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Configuration.h:
+
+	  Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
+	  declarations of ACE's string types are enough.  Reduces
+	  interheader dependencies and also reduces ACE's footprint
+	  slightly.
+
+	* ace/Configuration.cpp:
+	* ace/Local_Name_Space.cpp
+	* ace/Remote_Name_Space.cpp:
+	* ace/Service_Config.cpp:
+
+	  Include "ace/SString.h" since to pull in complete ACE string
+	  class declarations, since the corresponding header only has
+	  forward declarations of those string classes.
+
+	* ace/Filecache.cpp:
+	* ace/Filecache.h:
+
+	  Removed alternatives to C++ template specializations in these
+	  files.  All platforms supported by ACE support standard C++
+	  explicit/full specialization of classes and their members.
+
+	* ace/Local_Name_Space.h:
+	* ace/Remote_Name_Space.h:
+
+	  Forward declare ACE_NS_WString instead of including
+	  "ace/SString.h".  The former is all that is needed.
+
+	* ace/Name_Proxy.h:
+
+	  Include "ace/Event_Handler.h" to pull in complete
+	  ACE_Event_Handler class declaration.  Necessitated by include
+	  directive reductions in ace/Service_Config.h.
+
+	* ace/Process.h:
+	* ace/Time_Request_Reply.h:
+	* ace/Token_Collection.h:
+
+	  Removed "ace/SString.h" include directive.  It isn't needed.
+
+	* ace/Service_Config.h:
+
+	  Include "ace/SStringfwd.h" instead of "ace/SString.h".  Forward
+	  declarations of ACE's string types are enough.  Reduces
+	  interheader dependencies and also reduces ACE's footprint
+	  slightly.
+
+	  Forward declare ACE_XML_Svc_Conf class instead of include
+	  "ace/XML_Svc_Conf.h".  The former is all that is needed.
+
+	  Removed "ace/Reactor.h" and "ace/Svc_Conf_Tokens.h" include
+	  directives.  They haven't been needed for quite some time.
+
+	* ace/Svc_Handler.h:
+
+	  No need to include "ace/Service_Config.h".  "ace/Reactor.h" is
+	  enough.
+
+	* netsvcs/clients/Naming/Client/Client_Test.cpp:
+	* netsvcs/clients/Naming/Client/main.cpp:
+	* protocols/ace/HTBP/HTBP_Channel.cpp:
+
+	  Include "ace/Reactor.h" to pull in complete ACE_Reactor class
+	  declaration.
+
 Fri Jan 28 16:02:28 2005  Steve Huston  <shuston@riverace.com>
 
 	* tests/Proactor_Test.cpp:

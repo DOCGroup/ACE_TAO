@@ -6,10 +6,13 @@
 #include "ace/Naming_Context.h"
 #include "ace/ARGV.h"
 #include "ace/Log_Msg.h"
+#include "ace/Reactor.h"
 
 #include "Client_Test.h"
 
-ACE_RCSID(Client, main, "$Id$")
+ACE_RCSID (Client,
+           main,
+           "$Id$")
 
 int
 ACE_TMAIN (int, ACE_TCHAR *argv[])
@@ -20,9 +23,9 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
   // Load the existing <argv> into our new one.
   new_args.add (argv);
   // Enable loading of static services.
-  new_args.add (ACE_TEXT ("-y")); 
+  new_args.add (ACE_TEXT ("-y"));
   // Enable debugging within dynamically linked services.
-  new_args.add (ACE_TEXT ("-d")); 
+  new_args.add (ACE_TEXT ("-d"));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("argc = %d\n"),

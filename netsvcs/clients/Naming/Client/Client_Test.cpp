@@ -7,6 +7,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Thread_Manager.h"
 #include "Client_Test.h"
+#include "ace/Reactor.h"
 #include "ace/os_include/os_ctype.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_stdio.h"
@@ -14,7 +15,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_assert.h"
 
-ACE_RCSID(Client, Client_Test, "$Id$")
+ACE_RCSID (Client,
+           Client_Test,
+           "$Id$")
 
 class ACE_Svc_Export Client_Test : public ACE_Service_Object
 {

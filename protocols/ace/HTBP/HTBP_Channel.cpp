@@ -19,6 +19,7 @@
 #include "HTBP_Filter_Factory.h"
 
 #include "ace/Message_Block.h"
+#include "ace/Reactor.h"
 
 
 // Initialization and termination methods.
