@@ -303,8 +303,8 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     <TD><CODE>-ORBSkipServiceConfigOpen</CODE></TD>
     <TD><A name="-ORBSkipServiceConfigOpen"></a>Do not call the <code>ACE_Service_Config::open</code>
         method, which is necessary if the ORB is being linked dynamically via the ACE Service Configurator
-        which is not reentrant. The default is to call this
-        <CODE>open</CODE> method.  </TD>
+        which is not reentrant.  If this flag is not specified, the default behavior of the ORB
+        is to <CODE>open</CODE> the Service Configurator.  </TD>
   </TR>
   <TR>
     <TD><CODE>-ORBGIOPlite</CODE></TD>

@@ -1,5 +1,8 @@
 Thu Jul 19 06:55:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* ace/Connector.cpp (connect_svc_handler): Missed one change...
+	  Thanks to Bala for reporting this!
+
 	* include/makeinclude/platform_vxworks5.x_g++.GNU (HOST_DIR): Added
 	   support for the SH7700 and SH7700LE.  Thanks to Frank Wolf
  	  <WolfF@Becker.de> for reporting this.

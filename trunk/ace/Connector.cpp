@@ -884,7 +884,7 @@ ACE_Strategy_Connector<SVH, PR_CO_2>::make_svc_handler (SVC_HANDLER *&sh)
 
 template <class SVH, PR_CO_1> int
 ACE_Strategy_Connector<SVH, PR_CO_2>::connect_svc_handler
-  (SVH_HANDLER *&sh,
+  (SVH *&sh,
    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
    ACE_Time_Value *timeout,
    const ACE_PEER_CONNECTOR_ADDR &local_addr,
