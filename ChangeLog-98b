@@ -1,8 +1,20 @@
+Thu Oct 15 18:30:58 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Added ACE_HTONS(x) macros to complement ACE_HTONL(x)
+ 	  macros.  Thanks to Balaji Srinivasan <balaji@cplane.com>
+	  for reporting this.
+
+	* ace/[Hash_]Map_Manager.cpp: Postfix and prefix were inverted.
+  	  They are correct now.  Thanks to Balaji Srinivasan
+ 	  <balaji@cplane.com> for reporting this.
+
 Thu Oct 15 18:02:51 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/config-win32.h: For non-winnt systems, define ACE_LACKS_RECVMSG
-	  and ACE_LACKS_SENDMSG.  Thanks to Bill Hall <hts@gte.net> for 
-	  pointing this out.
+	* ace/config-win32.h: For non-winnt systems, define
+ 	  ACE_LACKS_RECVMSG and ACE_LACKS_SENDMSG.  Thanks to Bill Hall
+ 	  <hts@gte.net> for pointing this out.  BTW, Bill was the 400th
+ 	  individual to contribute an ACE/TAO bug report, thanks to
+ 	  everyone for all their help over the years!
 
 Thu Oct 15 16:50:09 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
