@@ -1,3 +1,25 @@
+Tue Oct 19 20:17:10 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* tests/Sequence_Unit_Tests/Bounded_Simple_Types.cpp:
+	* tests/Sequence_Unit_Tests/Bounded_String.cpp:
+	* tests/Sequence_Unit_Tests/Unbounded_Simple_Types.cpp:
+	* tests/Sequence_Unit_Tests/Unbounded_String.cpp:
+	  Fixed memory leak in the test.
+
+	* tests/Sequence_Unit_Tests/range_checking.hpp:
+	  Document the range checking traits in more detail.
+	  Add support so users can define their own specializations (read
+	  documentation) for the traits at compile-time.
+
+	* tests/Sequence_Unit_Tests/bounded_string_sequence_ut.cpp:
+	  Use the TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE (ugh)
+	  to define the test version of the range_checking traits.
+
+	* tests/Sequence_Unit_Tests/string_traits.hpp:
+	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
+	  Remove extra traits.  There was nothing customizable, at least
+	  nothing that I could foresee, and it just complicated the code.
+
 Tue Oct 19 13:56:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp (test_method):

@@ -17,7 +17,7 @@ int main(int,char*[])
   s_sequence a;
   s_sequence b(23);
 
-  s_sequence c(32, 0, s_sequence::allocbuf(32));
+  s_sequence c(32, 0, s_sequence::allocbuf(32), true);
   a = b;
 
   a.length(c.maximum());
@@ -31,7 +31,7 @@ int main(int,char*[])
   s_sequence const & d = a;
   c[0] = d[0];
 
-  b.replace(64, 0, s_sequence::allocbuf(64));
+  b.replace(64, 0, s_sequence::allocbuf(64), true);
 
   char const * const * x = d.get_buffer();
   if (x != 0)

@@ -7,10 +7,12 @@
  *
  * @author Carlos O'Ryan
  */
+#define TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE \
+        "testing_range_checking.hpp"
+
 #include "testing_string_traits.hpp"
 #include "string_traits.hpp"
 #include "testing_allocation_traits.hpp"
-#include "testing_range_checking.hpp"
 
 #include "bounded_string_sequence.hpp"
 #include "bounded_wstring_sequence.hpp"

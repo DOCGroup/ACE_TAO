@@ -44,7 +44,7 @@ public:
   {
   }
 
-  string_sequence_element & operator=(character_type const * rhs)
+  string_sequence_element & operator=(const_value_type rhs)
   {
     if (release())
     {
@@ -53,11 +53,11 @@ public:
       *element_ = tmp;
       return *this;
     }
-    traits::not_released_from_const(*element_, rhs);
+    *element_ = const_cast<value_type>(rhs);
     return *this;
   }
 
-  string_sequence_element & operator=(character_type * rhs)
+  string_sequence_element & operator=(value_type rhs)
   {
     if (release())
     {
