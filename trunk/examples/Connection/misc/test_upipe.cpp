@@ -177,6 +177,7 @@ template class ACE_Acceptor<Server_Service, ACE_UPIPE_ACCEPTOR>;
 template class ACE_Concurrency_Strategy<Server_Service>;
 template class ACE_Connector<Client_Service, ACE_UPIPE_CONNECTOR>;
 template class ACE_Creation_Strategy<Server_Service>;
+template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Client_Service> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Scheduling_Strategy<Server_Service>;

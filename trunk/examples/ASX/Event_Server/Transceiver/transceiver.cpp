@@ -209,6 +209,7 @@ main (int argc, char *argv[])
 template class ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 template class ACE_Svc_Tuple<Event_Transceiver>;
+template class ACE_Map_Entry<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *>;
 template class ACE_Map_Iterator<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ACE_HANDLE, ACE_Svc_Tuple<Event_Transceiver> *, ACE_SYNCH_RW_MUTEX>;
 
