@@ -19,7 +19,7 @@
 # include "SSLIOP_Connection_Handler.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(TAO_SSLIOP, SSLIOP_Connect, "$Id$")
+ACE_RCSID(TAO_SSLIOP, SSLIOP_Connection_Handler, "$Id$")
 
 
 
