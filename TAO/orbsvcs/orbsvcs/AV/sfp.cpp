@@ -1187,9 +1187,9 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int 
-TAO_SFP_Object::send_frame (const iovec *iov,
-                            int iovcnt,
-                            TAO_AV_frame_info *frame_info)
+TAO_SFP_Object::send_frame (const iovec */*iov*/,
+                            int /*iovcnt*/,
+                            TAO_AV_frame_info */*frame_info*/)
 {
   ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_SFP_Object::send_frame"),-1);
 }
@@ -1388,7 +1388,7 @@ TAO_AV_SFP_Factory::~TAO_AV_SFP_Factory (void)
 
 // Initialization hook from service configurator.
 int
-TAO_AV_SFP_Factory::init (int argc, char *argv[])
+TAO_AV_SFP_Factory::init (int /*argc*/, char **/*argv*/)
 {
   return 0;
 }
