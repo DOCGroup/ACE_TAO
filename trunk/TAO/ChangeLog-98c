@@ -1,77 +1,84 @@
+Wed May 06 06:36:18 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Param_Test/tests.cpp: (Test_Any::check_validity): added
+          missing definition of short_in.
+
+        * tests/Param_Test/run_test: filtered "grep" out of ps output,
+          and use SIGCHLD instead of hard-coded signal number.
+
 Wed May  6 00:28:09 1998  Marina Igorevna Spivak  <marina@macarena.cs.wustl.edu>
 
-	* orbscsvcs/tests/Naming/ns_tree.cpp: made several minor
- 	  modifications to the test program
-	
+        * orbscsvcs/tests/Naming/ns_tree.cpp: made several minor
+          modifications to the test program
 
 Tue May  5 15:40:09 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: Changed the
- 	  ACE_SYNCH_MUTEX to ACE_SYNCH_RECURSIVE_MUTEX to try and
- 	  workaround intra-class method deadlocks.  Thanks to Marina for
- 	  pointing this out.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: Changed the
+          ACE_SYNCH_MUTEX to ACE_SYNCH_RECURSIVE_MUTEX to try and
+          workaround intra-class method deadlocks.  Thanks to Marina for
+          pointing this out.
 
-	* tao/orbconf.h: Added macros for
- 	  TAO_SOCK_{STREAM,ACCEPTOR,CONNECTOR}, which can be overridden in
- 	  an ACE config.h file to select a different set of transport
- 	  APIs.
+        * tao/orbconf.h: Added macros for
+          TAO_SOCK_{STREAM,ACCEPTOR,CONNECTOR}, which can be overridden in
+          an ACE config.h file to select a different set of transport
+          APIs.
 
-	* tao/{ORB_Core,GIOP,Server_Strategy_Factory,ORB}.{h,cpp}: Changed
- 	  all uses of ACE_SOCK_* to TAO_SOCK_* so we can override this to
- 	  use a different transport API without changing the code at
- 	  compile time.
+        * tao/{ORB_Core,GIOP,Server_Strategy_Factory,ORB}.{h,cpp}: Changed
+          all uses of ACE_SOCK_* to TAO_SOCK_* so we can override this to
+          use a different transport API without changing the code at
+          compile time.
 
 Mon May  4 11:57:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	* orbsvcs/tests/EC_Multiple/gen_latency: 
-	* orbsvcs/tests/EC_Multiple/gen_throughput:
-	* orbsvcs/tests/EC_Multiple/gen_utilization:
-	* orbsvcs/tests/EC_Multiple/histo.pl:
-	* orbsvcs/tests/EC_Multiple/latency.pl:
-	* orbsvcs/tests/EC_Multiple/run_latency:
-	* orbsvcs/tests/EC_Multiple/run_schedule:
-	* orbsvcs/tests/EC_Multiple/run_throughput:
-	* orbsvcs/tests/EC_Multiple/run_utilization:
-	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h: 
-	* orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h: 
-	  The test now has two sets of consumers and two sets of
-	  suppliers, running at different rates, with different events,
-	  with varying number of suppliers and or consumers, etc.
-	  Statistics are kept for latency, total time, laxity, time per
-	  event, etc.
-	  The scripts were updated for the new command line interface.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+        * orbsvcs/tests/EC_Multiple/gen_latency:
+        * orbsvcs/tests/EC_Multiple/gen_throughput:
+        * orbsvcs/tests/EC_Multiple/gen_utilization:
+        * orbsvcs/tests/EC_Multiple/histo.pl:
+        * orbsvcs/tests/EC_Multiple/latency.pl:
+        * orbsvcs/tests/EC_Multiple/run_latency:
+        * orbsvcs/tests/EC_Multiple/run_schedule:
+        * orbsvcs/tests/EC_Multiple/run_throughput:
+        * orbsvcs/tests/EC_Multiple/run_utilization:
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime1.h:
+        * orbsvcs/tests/EC_Multiple/Scheduler_Runtime2.h:
+          The test now has two sets of consumers and two sets of
+          suppliers, running at different rates, with different events,
+          with varying number of suppliers and or consumers, etc.
+          Statistics are kept for latency, total time, laxity, time per
+          event, etc.
+          The scripts were updated for the new command line interface.
 
-	* orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp: 
-	  Fixed minor error in debug message.
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp:
+          Fixed minor error in debug message.
 
-	* orbsvcs/orbsvcs/Scheduler_Factory.h: 
-	* orbsvcs/orbsvcs/Scheduler_Factory.cpp: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.h: 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp: 
-	  The Runtime_Scheduler uses the POD_RT_Info array directly now.
+        * orbsvcs/orbsvcs/Scheduler_Factory.h:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.h:
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp:
+          The Runtime_Scheduler uses the POD_RT_Info array directly now.
 
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
-	  Set the LWP priority of the task to obtain proper priorities.
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+          Set the LWP priority of the task to obtain proper priorities.
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  The split some methods in the MT safe and non-MT safe counter
-	  parts (i.e. the version that takes locks and the _i version that
-	  does not), the method appeared to dead-lock in shutdown.
-	  Anyway the methods are only used at shutdown and startup so
-	  nothing should be broken by this.
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          The split some methods in the MT safe and non-MT safe counter
+          parts (i.e. the version that takes locks and the _i version that
+          does not), the method appeared to dead-lock in shutdown.
+          Anyway the methods are only used at shutdown and startup so
+          nothing should be broken by this.
 
-	* orbsvcs/tests/EC_Multiple/README: 
-	* docs/releasenotes/ec.html: 
-	  Updated the documentation on the multiple EC test.
+        * orbsvcs/tests/EC_Multiple/README:
+        * docs/releasenotes/ec.html:
+          Updated the documentation on the multiple EC test.
 
 Mon May  4 09:35:07 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* Comitted the files for the concurrency service
-	* Updated release notes
+        * Comitted the files for the concurrency service
+        * Updated release notes
 
 Mon May 04 09:05:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
