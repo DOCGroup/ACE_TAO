@@ -22,10 +22,10 @@
 //       gatewayd on that connection.
 //  
 //    3. The <Peer_Handler> waits for gatewayd to inform it of its
-//       supplier ID, which is prepended to all subsequent outgoing
+//       connection ID, which is prepended to all subsequent outgoing
 //       events sent from peerd.
 //
-//    4. Once the supplier ID is set, peerd periodically sends events
+//    4. Once the connection ID is set, peerd periodically sends events
 //       to gatewayd.  Peerd also receives and "processes" events
 //       forwarded to it from gatewayd.  In this program, peerd
 //       "processes" the events sent to it by writing them to stdout.
@@ -53,6 +53,7 @@
 #include "ace/Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
+#include "Options.h"
 
 ACE_SVC_FACTORY_DECLARE (Peer_Factory)
 
@@ -107,7 +108,7 @@ protected:
   int xmit_stdin (void);
   // Receive a event from stdin and send it to the gateway.
 
-  int await_supplier_id (void);
+  int await_connection_id (void);
   // Action that receives the route id.
 
   int await_events (void);
