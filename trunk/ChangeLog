@@ -1,3 +1,13 @@
+Mon Apr 15 14:04:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Dev_Poll_Reactor.h:
+	* ace/Dev_Poll_Reactor.inl:
+	* ace/Dev_Poll_Reactor.cpp:
+
+	  Experimental implementation of a /dev/poll (or Linux /dev/epoll)
+	  based Reactor.  Refinements will be committed to the
+	  implementation very soon.
+
 Mon Apr 15 11:29:49 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-win32-msvc-7.h (ACE_NEEDS_FUNC_DEFINITIONS):
