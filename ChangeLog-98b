@@ -8,6 +8,13 @@ Thu May 28 13:57:50 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Hash_Map_Manager.cpp,Map_Manager.cpp: replaced bare explicit
           destructor calls with ACE_DES_FREE_TEMPLATE macro invocations.
 
+        * ace/OS.h: #define ACE_DES_FREE_TEMPLATE to be null on LynxOS.
+          Without it, the g++ that's distributed with LynxOS 3.0.0 hopelessly
+          chokes on explicit calls to template class destructors.  This
+          hack could cause memory leaks, though currently ACE_DES_FREE_TEMPLATE
+          is only used to call empty, non-virtual destructors (in
+          Containers.cpp, Hash_Map_Manager.cpp, and Map_Manager.cpp).
+
 Thu May 28 07:47:41 1998  Steve Huston  <shuston@riverace.com>
 
         * tests/SOCK_Connector_Test.cpp: Changed the "should succeed" test
