@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    tests
-// 
+//
 // = FILENAME
 //    Buffer_Stream_Test.cpp
 //
@@ -18,7 +18,7 @@
 //
 // = AUTHOR
 //    Prashant Jain and Doug Schmidt
-// 
+//
 // ============================================================================
 
 #include "test_config.h"
@@ -32,9 +32,6 @@
 typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_MT_SYNCH> MT_Module;
 typedef ACE_Task<ACE_MT_SYNCH> MT_Task;
-
-// Control groups of threads.
-static ACE_Thread_Manager thread_manager;
 
 class Common_Task : public MT_Task
   // = TITLE
@@ -50,7 +47,7 @@ public:
 
 class Supplier : public Common_Task
 // = TITLE
-// Define the Supplier interface. 
+// Define the Supplier interface.
 {
 public:
   Supplier (void) {}
@@ -61,7 +58,7 @@ public:
 
 class Consumer : public Common_Task
   // = TITLE
-  //    Define the Consumer interface. 
+  //    Define the Consumer interface.
 {
 public:
   Consumer (void) {}
@@ -80,7 +77,7 @@ private:
 
 // Spawn off a new thread.
 
-int 
+int
 Common_Task::open (void *)
 {
   if (this->activate (THR_NEW_LWP | THR_DETACHED) == -1)
@@ -88,7 +85,7 @@ Common_Task::open (void *)
   return 0;
 }
 
-int 
+int
 Common_Task::close (u_long exit_status)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -135,14 +132,14 @@ Supplier::svc (void)
   if (this->put_next (mb) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) %p\n", "put_next"));
 
-  return 0; 
+  return 0;
 }
 
 int
 Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
-{ 
+{
   // Simply enqueue the Message_Block into the end of the queue.
-  return this->putq (mb, tv); 
+  return this->putq (mb, tv);
 }
 
 // The consumer dequeues a message from the ACE_Message_Queue, writes
@@ -193,7 +190,7 @@ Consumer::svc (void)
 
 // Main driver function.
 
-int 
+int
 main (int, char *[])
 {
   ACE_START_TEST ("Buffer_Stream_Test");
@@ -202,7 +199,7 @@ main (int, char *[])
   // Control hierachically-related active objects.
   MT_Stream stream;
   MT_Module *cm;
-  MT_Module *sm; 
+  MT_Module *sm;
 
   // Allocate the Consumer and Supplier modules.
   ACE_NEW_RETURN (cm, MT_Module ("Consumer", new Consumer), -1);
