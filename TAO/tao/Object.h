@@ -79,6 +79,11 @@ namespace CORBA
     /// Uninlined part of the now-inlined CORBA::is_nil().
     static CORBA::Boolean is_nil_i (CORBA::Object_ptr obj);
 
+    /// Marshalling operator used by the stub code. A long story why
+    /// the stub code uses this, let us keep it short here.
+    static CORBA::Boolean marshal (Object_ptr obj,
+                                   TAO_OutputCDR &strm);
+
     // These calls correspond to over-the-wire operations, or at least
     // do so in many common cases.  The normal implementation assumes a
     // particular simple, efficient, protocol-neutral interface for
