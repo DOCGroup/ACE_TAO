@@ -448,7 +448,9 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
                              ACE_Node,
                              <T>);
       this->cur_size_--;
-      ACE_ASSERT (this->cur_size_ >= 0);
+      // @@ Doesnt make sense to have this check since
+      // this will always be true. 
+      //   ACE_ASSERT (this->cur_size_ >= 0);
     }
 
   // Reset the list to be a circular list with just a dummy node.
