@@ -1,5 +1,9 @@
 Fri Sep 26 14:28:36 1997    <nw1@CHA-CHA>
 
+	* tests/SPIPE_Test.cpp:
+	* tests/Process_Strategy_Test: Changed the macro "ACE_LACKS_EXEC"
+	  to "ACE_LACKS_FORK".
+
 	* ace/SOCK_Stream.cpp (close): Added checking for invalid handle
 	  before shuuting down the write end.
 
