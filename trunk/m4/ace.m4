@@ -941,8 +941,44 @@ AM_CONDITIONAL([BUILD_ACEXML], [test X$ace_user_with_acexml = Xyes])
 ])
 
 
+# ACE_WITH_GL
+#---------------------------------------------------------------------------
+# Find OpenGL Libraries, flags, etc.
+AC_DEFUN([ACE_WITH_GL],
+[
+AM_CONDITIONAL([BUILD_GL], [false])
+])
+
+
+# ACE_WITH_FL
+#---------------------------------------------------------------------------
+# Find FL/TK Libraries, flags, etc.
+AC_DEFUN([ACE_WITH_FL],
+[AC_REQUIRE(ACE_WITH_GL)
+])
+
+
+# ACE_WITH_QT
+#---------------------------------------------------------------------------
+# Find Qt Libraries, flags, etc.
+AC_DEFUN([ACE_WITH_QT],
+[
+])
+
+
+# ACE_WITH_TK
+#---------------------------------------------------------------------------
+# Find Tk Libraries, flags, etc.
+AC_DEFUN([ACE_WITH_TK],
+[
+])
+
+
+# ACE_ENABLE_FL_REACTOR
+#---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_FL_REACTOR],
-[AC_ARG_ENABLE([fl-reactor],
+[AC_REQUIRE(ACE_WITH_FL)
+AC_ARG_ENABLE([fl-reactor],
   	       AS_HELP_STRING([--enable-fl-reactor],
 		              [build support for the FlReactor [[no]]]),
                [case "${enableval}" in
@@ -965,8 +1001,11 @@ AM_CONDITIONAL([BUILD_FL], [test X$ace_enable_fl_reactor = Xyes])
 ])
 
 
+# ACE_ENABLE_QT_REACTOR
+#---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_QT_REACTOR],
-[AC_ARG_ENABLE([qt-reactor],
+[AC_REQUIRE(ACE_WITH_QT)
+AC_ARG_ENABLE([qt-reactor],
   	       AS_HELP_STRING([--enable-qt-reactor],
 		              [build support for the QtReactor [[no]]]),
                [case "${enableval}" in
@@ -989,8 +1028,11 @@ AM_CONDITIONAL([BUILD_QT], [test X$ace_enable_qt_reactor = Xyes])
 ])
 
 
+# ACE_ENABLE_TK_REACTOR
+#---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_TK_REACTOR],
-[AC_ARG_ENABLE([tk-reactor],
+[AC_REQUIRE(ACE_WITH_TK)
+AC_ARG_ENABLE([tk-reactor],
   	       AS_HELP_STRING([--enable-tk-reactor],
 		              [build support for the TkReactor [[no]]]),
                [case "${enableval}" in
@@ -1013,6 +1055,8 @@ AM_CONDITIONAL([BUILD_TK], [test X$ace_enable_tk_reactor = Xyes])
 ])
 
 
+# ACE_ENABLE_XT_REACTOR
+#---------------------------------------------------------------------------
 AC_DEFUN([ACE_ENABLE_XT_REACTOR],
 [AC_ARG_ENABLE([xt-reactor],
                AS_HELP_STRING([--enable-xt-reactor],
