@@ -1,3 +1,9 @@
+Wed Oct 16 12:37:07 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Makefile:
+	  Added the new Makefile to compile "directories" under this
+	  directory.
+
 Wed Oct 16 12:23:29 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory:
