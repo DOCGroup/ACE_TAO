@@ -1,10 +1,26 @@
+Tue Apr 07 10:55:53 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/ss: generate port numbers based on
+          uid, and set TAO_ROOT (based on ACE_ROOT) if it's not set.
+          This utility should be moved, maybe up two directories?
+
+        * orbsvcs/orbsvcs/{Makefile,RtecScheduler.idl,Runtime_Scheduler.*,
+            Scheduler_Factor.*},
+          orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp,Event_Channel.cpp,
+            ReactorTask.cpp,
+          orbsvcs/orbsvcs/Sched/Config_Scheduler.{h,cpp},DynSched.*,
+            SchedEntry.*,Scheduler.cpp,Strategy_Scheduler.{h,cpp},
+          orbsvcs/tests/EC_Multiple/EC_Multiple.cpp,
+          orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          merged DynSched into liborbsvcs.
+
 Mon Apr  6 14:43:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Connect.cpp: 
-	  The process would crash if it was unable to resolve an address
-	  to a name, even though it was only used in a debugging
-	  message. Thanks to Keith Nicewarner <knicewar@sanders.com> for
-	  pointing out this.
+        * tao/Connect.cpp:
+          The process would crash if it was unable to resolve an address
+          to a name, even though it was only used in a debugging
+          message. Thanks to Keith Nicewarner <knicewar@sanders.com> for
+          pointing out this.
 
 Mon Apr 06 09:59:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -16,7 +32,7 @@ Mon Apr 06 09:59:22 1998  David L. Levine  <levine@cs.wustl.edu>
         * TAO_IDL/Makefile: moved include of rules.local.GNU to after
           include of rules.bin.GNU.  Without this change, tao_idl doesn't
           get build on LynxOS.
- 
+
         * TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): ACE_OS::mktemp ()
           instead of mktemp ().
 
