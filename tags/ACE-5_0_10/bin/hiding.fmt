@@ -1,0 +1,20 @@
+#
+# access control file for ADTs
+#
+# K. Dorn
+#
+
+CSAMERGECXXHXX
+off
+
+CSAHEADER
+on
+
+PUBLIC
+on
+
+PROTECTED
+on
+
+PRIVATE
+on
