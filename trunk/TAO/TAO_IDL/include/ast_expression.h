@@ -67,6 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_EXPRESSION_AST_EXPRESSION_HH
 #define _AST_EXPRESSION_AST_EXPRESSION_HH
 
+#include "ace/CDR_Stream.h"
+
 // Representation of expression values
 
 /*
@@ -126,23 +128,43 @@ public:
     , EV_none                   // Expression value is missing
   };
 
-  // Structure to descrive value of constant expression and its type
+  // Structure to describe value of constant expression and its type
   struct AST_ExprValue {
     union {
-      short             sval;   // Contains short expression value
-      unsigned short    usval;  // Contains unsigned short expr value
-      long              lval;   // Contains long expression value
-      unsigned long     ulval;  // Contains unsigned long expr value
-      unsigned long     bval;   // Contains boolean expression value
-      float             fval;   // Contains 32-bit float expr value
-      double            dval;   // Contains 64-bit float expr value
-      char              cval;   // Contains char expression value
-      unsigned char     oval;   // Contains unsigned char expr value
-      String            *strval; // Contains String * expr value
-      unsigned long     eval;   // Contains enumeration value
+      short               sval;     // Contains short expression value
+      unsigned short      usval;    // Contains unsigned short expr value
+      long                lval;     // Contains long expression value
+      unsigned long       ulval;    // Contains unsigned long expr value
+      unsigned long       bval;     // Contains boolean expression value
+      ACE_CDR::LongLong   llval;    // Contains long long expr value
+      ACE_CDR::ULongLong  ullval;   // Contains unsigned long long expr value
+      float               fval;     // Contains 32-bit float expr value
+      double              dval;     // Contains 64-bit float expr value
+      char                cval;     // Contains char expression value
+      ACE_CDR::WChar      wcval;    // Contains wchar expression value
+      unsigned char       oval;     // Contains unsigned char expr value
+      String              *strval;  // Contains String * expr value
+      unsigned long       eval;     // Contains enumeration value
     } u;
     ExprType et;
   };
+
+// Unfortunately, these are platform-dependent
+#if defined (_I64_MAX)
+# define LL_MAX _I64_MAX
+#elif defined LLONG_MAX
+# define LL_MAX LLONG_MAX
+#elif defined LONGLONG_MAX
+# define LL_MAX LONGLONG_MAX
+#endif
+
+#if defined (_UI64_MAX)
+# define ULL_MAX _UI64_MAX
+#elif defined (ULLONG_MAX)
+# define ULL_MAX ULLONG_MAX
+#elif defined (ULONGLONG_MAX)
+# define ULL_MAX ULONGLONG_MAX
+#endif
 
   // Operations
 
@@ -156,9 +178,12 @@ public:
   AST_Expression(long           l);
   AST_Expression(long           l, ExprType t);
   AST_Expression(unsigned long  ul);
+  AST_Expression(ACE_CDR::LongLong ll);
+  AST_Expression(ACE_CDR::ULongLong ull);
   AST_Expression(float          f);
   AST_Expression(double         d);
   AST_Expression(char           c);
+  AST_Expression(ACE_CDR::WChar wc);
   AST_Expression(unsigned char  uc);
   AST_Expression(String         *s);
   AST_Expression(UTL_ScopedName *n);

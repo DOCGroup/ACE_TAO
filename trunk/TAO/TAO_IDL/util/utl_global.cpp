@@ -671,16 +671,26 @@ IDL_GlobalData::PredefinedTypeToExprType(AST_PredefinedType::PredefinedType pt)
     return AST_Expression::EV_short;
   case AST_PredefinedType::PT_ushort:
     return AST_Expression::EV_ushort;
+  case AST_PredefinedType::PT_longlong:
+    return AST_Expression::EV_longlong;
+  case AST_PredefinedType::PT_ulonglong:
+    return AST_Expression::EV_ulonglong;
   case AST_PredefinedType::PT_float:
     return AST_Expression::EV_float;
   case AST_PredefinedType::PT_double:
     return AST_Expression::EV_double;
+  case AST_PredefinedType::PT_longdouble:
+    return AST_Expression::EV_longdouble;
   case AST_PredefinedType::PT_char:
     return AST_Expression::EV_char;
+  case AST_PredefinedType::PT_wchar:
+    return AST_Expression::EV_wchar;
   case AST_PredefinedType::PT_octet:
     return AST_Expression::EV_octet;
   case AST_PredefinedType::PT_boolean:
     return AST_Expression::EV_bool;
+  case AST_PredefinedType::PT_void:
+    return AST_Expression::EV_void;
   default:
     return AST_Expression::EV_any;
   }

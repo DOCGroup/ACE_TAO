@@ -117,11 +117,14 @@ exprtype_to_string(AST_Expression::ExprType et)
     return "void";
   case AST_Expression::EV_none:
     return "none";
-  case AST_Expression::EV_wstring:
-  case AST_Expression::EV_wchar:
-  case AST_Expression::EV_longdouble:
   case AST_Expression::EV_ulonglong:
+    return "unsigned long long";
   case AST_Expression::EV_longlong:
+    return "long long";
+  case AST_Expression::EV_wchar:
+    return "wchar";
+  case AST_Expression::EV_wstring:
+  case AST_Expression::EV_longdouble:
     return NULL;
   }
   return NULL;
