@@ -1,3 +1,15 @@
+Tue Apr  2 14:20:38 2002  Steve Totten  <totten_s@ociweb.com>
+
+        Applied to following changes on behalf of Rob Martin
+        <martin_r@ociweb.com>.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.h:
+
+          Override parse_string() from the base class to update the ssl
+          endpoint's iiop endpoint once the base class has completed
+          parsing the string.
+
 Tue Apr  2 13:41:38 UTC 2002  Don Hinton <dhinton@ieee.org>
 
 	* tao/Acceptor_Registry.cpp:
