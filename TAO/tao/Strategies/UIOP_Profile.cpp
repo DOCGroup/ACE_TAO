@@ -378,8 +378,15 @@ TAO_UIOP_Profile::decode (TAO_InputCDR& cdr)
                   encap_len));
     }
 
-  // Decode endpoints if any.
-  this->decode_endpoints ();
+#if (TAO_HAS_RT_CORBA == 1)
+  // This protection is here not for correctness but for efficiency.
+  // Currently there are > 1 endpoint per profile only with RTCORBA.
+
+  // Decode endpoints, if any.
+  if (this->decode_endpoints () == -1)
+    return -1;
+
+#endif  /* TAO_HAS_RT_CORBA == 1 */
 
   if (cdr.good_bit ())
     return 1;
@@ -551,14 +558,14 @@ TAO_UIOP_Profile::decode_endpoints (void)
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        return 0;
+        return -1;
       in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
 
       // Extract endpoints sequence.
       TAO_UIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
-        return 0;
+        return -1;
 
       // Get the priority of the first endpoint (head of the list.
       // It's other data is extracted as part of the standard profile
@@ -578,7 +585,7 @@ TAO_UIOP_Profile::decode_endpoints (void)
           TAO_UIOP_Endpoint *endpoint = 0;
           ACE_NEW_RETURN (endpoint,
                           TAO_UIOP_Endpoint,
-                          0);
+                          -1);
           this->add_endpoint (endpoint);
           if (endpoint->object_addr_.set
               (endpoints[i].rendezvous_point)
@@ -601,7 +608,7 @@ TAO_UIOP_Profile::decode_endpoints (void)
         }
     }
 
-  return 1;
+  return 0;
 }
 
 #endif  /* TAO_HAS_UIOP == 1 */

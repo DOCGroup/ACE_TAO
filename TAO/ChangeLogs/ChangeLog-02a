@@ -1,3 +1,20 @@
+Mon Dec  4 15:58:47 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/IIOP_Profile.h
+	* tao/IIOP_Profile.cpp
+	* tao/Strategies/UIOP_Profile.h
+	* tao/Strategies/UIOP_Profile.cpp
+	* tao/Strategies/SHMIOP_Profile.h
+	* tao/Strategies/SHMIOP_Profile.cpp:
+
+	  Added error checks in <decode> and <decode_endpoints> methods.
+	  For efficiency, <decode_endpoints> is now called onlywith
+	  RTCORBA.
+
+	* tao/IIOP_Endpoint.cpp (duplicate):
+
+	  Added comment.
+
 Mon Dec  4 13:04:55 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Invocation.h
