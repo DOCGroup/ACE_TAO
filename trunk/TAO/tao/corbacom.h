@@ -362,7 +362,7 @@ public:
     String_out (char *&p);
     // construction from a reference to a string
 
-    String_out (CORBA::String_var &p);
+    String_out (String_var &p);
     // construction from a var
 
     String_out (String_out &s);
@@ -388,7 +388,7 @@ public:
     // instance
 
     // assignment from _var disallowed
-    void operator= (const CORBA::String_var &);
+    void operator= (const String_var &);
   };
 
   // 94-9-32 Appendix A defines 16-bit UNICODE characters as
