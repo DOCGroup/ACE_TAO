@@ -1,3 +1,12 @@
+Fri Jan 23 09:34:00 2004  Gary Maxey <gary.maxey@hp.com>
+
+        * ace/OS_NS_unistd.inl:
+	 
+          Fix for BUGID 1709
+
+          Added #ifdef to use alternate select() when compiling for Tandem
+	  NSK platform.
+
 Fri Jan 23 10:30:12 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/create_ace_build.pl:
