@@ -1,3 +1,31 @@
+Mon Dec 29 15:10:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/Event_Service_Constants.h:
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+        * orbsvcs/orbsvcs/Concurrency/CC_Lock.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.h:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * orbsvcs/orbsvcs/Event/GPlot_File.h:
+        * orbsvcs/orbsvcs/Event/Memory_Pools.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * orbsvcs/orbsvcs/Naming/Entries.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable.{h,cpp}:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.h:
+        * orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_PCP_Manager.h:
+        * orbsvcs/orbsvcs/Sched/DynSched.h:
+        * orbsvcs/orbsvcs/Sched/Scheduler.{h,cpp}:
+        * orbsvcs/tests/Property/client.h:
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+          Fixed Synch[_T].h fuzz errors by removing #include Synch[_T].h
+          and refactoring includes.
+        
+        * tao/Messaging/Asynch_Invocation.cpp:
+          Fixed explicit tempate instatiation to use
+          TAO::Utils::Auto_Functor<> instead of auto_ptr<>.
+
 Mon Dec 29 13:32:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Fixed_Size_Argument_T.h:

@@ -24,7 +24,8 @@
 
 #include "orbsvcs/CosLoadBalancingS.h"
 
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 namespace TAO_LB
 {

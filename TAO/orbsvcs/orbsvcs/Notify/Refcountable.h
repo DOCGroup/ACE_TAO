@@ -20,10 +20,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
-
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 /**
  * @class TAO_Notify_Refcountable
