@@ -1,3 +1,9 @@
+Thu Dec 31 15:34:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp: 
+	  Removed temporary reference called _env, it is not needed
+	  because we can use TAO_THROW_ENV() instead of TAO_THROW.
+
 Thu Dec 31 15:04:57 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: 
