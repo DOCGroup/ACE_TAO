@@ -1,8 +1,6 @@
-// $Id$
-
 /* -*-C++-*- */
 // ============================================================================
-//
+// $Id$
 // = LIBRARY
 //    asnmp
 //
@@ -20,6 +18,7 @@
 // ============================================================================
 
 #include "asnmp/wpdu.h"
+#include <ace/Log_Msg.h>
 
 #define DEFINE_TRAP_CONSTANTS_
 #include "asnmp/enttraps.h"
@@ -72,6 +71,7 @@ wpdu::wpdu(const Pdu& pdu, const UdpTarget& target):
        break;      
 
      case sNMP_PDU_V1TRAP:
+       target.get_read_community(comm_str);
        if (set_trap_info(raw_pdu, pdu)) // will free raw_pdu
           return;
        break;
@@ -136,33 +136,50 @@ int wpdu::set_trap_info(snmp_pdu *raw_pdu, const Pdu& pdu) const
   else if ( trapid == egpNeighborLoss)
     raw_pdu->trap_type = V1_EGP_NEIGHBOR_LOSS;  // egp neighbor loss
   else {
-   raw_pdu->trap_type = V1_ENT_SPECIFIC;     // enterprise specific
+    raw_pdu->trap_type = V1_ENT_SPECIFIC;     // enterprise specific
                                // last oid subid is the specific value
                                // if 2nd to last subid is "0", remove it
                                // enterprise is always the notify oid prefix
-  raw_pdu->specific_type = (int) trapid[(int) (trapid.length() - 1)];
-  trapid.trim(1);
-  if ( trapid[(int)(trapid.length() - 1)] == 0 )
+   raw_pdu->specific_type = (int) trapid[(int) (trapid.length() - 1)];
+   trapid.trim(1);
+   if ( trapid[(int)(trapid.length() - 1)] == 0 )
      trapid.trim(1);
-     enterprise = trapid;
+   enterprise = trapid;
   }
 
-  if ( raw_pdu->trap_type != 6) // TODO: fix these magic numbers with defines 
-     pdu.get_notify_enterprise( enterprise);
+  if ( raw_pdu->trap_type != V1_ENT_SPECIFIC)
+    pdu.get_notify_enterprise( enterprise);
   if ( enterprise.length() > 0) {
-                // note!!
-                // these are hooks into an SNMP++ oid
-                // and therefor the raw_pdu enterprise
-                // should not free them. null them out!!
-                SmiLPOID rawOid;
-                rawOid = enterprise.oidval();
-                raw_pdu->enterprise = rawOid->ptr;
-                raw_pdu->enterprise_length = (int) rawOid->len;
+    // note!!  To the contrary, enterprise OID val is
+    // copied here and raw_pdu->enterprise is freed in free_pdu
+    // as it should be (HDN)
+    // these are hooks into an SNMP++ oid
+    // and therefor the raw_pdu enterprise
+    // should not free them. null them out!!
+    SmiLPOID rawOid;
+    rawOid = enterprise.oidval();
+    // HDN - enterprise is a local object, cannot simply assign pointer
+    //raw_pdu->enterprise = rawOid->ptr;
+    raw_pdu->enterprise_length = (int) rawOid->len;
+    ACE_NEW_RETURN(raw_pdu->enterprise, 
+		   oid[raw_pdu->enterprise_length],-1);
+    ACE_OS::memcpy((char *)raw_pdu->enterprise,(char *)rawOid->ptr,  
+		   raw_pdu->enterprise_length * sizeof(oid));
   }
  
   TimeTicks timestamp; 
   pdu.get_notify_timestamp( timestamp);
   raw_pdu->time = ( unsigned long) timestamp;
+
+  // HDN - set agent addr using the local hostname if possible
+  char localHostName[MAXHOSTNAMELEN];
+  if (ACE_OS::hostname(localHostName, sizeof(localHostName)) != -1) {
+    struct hostent* hostInfo;
+    if (hostInfo = ACE_OS::gethostbyname(localHostName)) {
+      ACE_OS::memcpy(&(raw_pdu->agent_addr.sin_addr), hostInfo->h_addr, hostInfo->h_length);
+    }
+  }
+
   return 0;
 }
 
@@ -496,6 +513,4 @@ const unsigned char *wpdu::get_community() const
 {
   return community_name;
 }
-
-
 
