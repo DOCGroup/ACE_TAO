@@ -3,6 +3,8 @@
 
 #include "mpool.h"
 
+#if ! defined(ACE_LACKS_SYSV_SHMEM)
+
 /*
   Set the values of all of the constants.  This guarantees that client
   and server don't get confused.
@@ -64,3 +66,5 @@ Allocator::pool_t & Allocator::pool(void)
 
     return *pool_;
 }
+
+#endif // ACE_LACKS_SYSV_SHMEM

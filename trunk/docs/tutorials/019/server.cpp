@@ -8,6 +8,12 @@
  */
 #include "shmem.h"
 
+#if defined(ACE_LACKS_SYSV_SHMEM)
+int main (int, char *[])
+{
+	ACE_ERROR_RETURN ((LM_ERROR, "System V Shared Memory not available on this platform\n"),100);
+}
+#else // ACE_LACKS_SYSV_SHMEM
 int main (int, char *argv[])
 {
         /*
@@ -114,3 +120,4 @@ int main (int, char *argv[])
     return 0;
 }
 
+#endif // ACE_LACKS_SYSV_SHMEM

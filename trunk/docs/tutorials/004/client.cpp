@@ -121,7 +121,7 @@ Client & Client::operator<<( ACE_SString & str )
       /*
         Get the actual data held in the string object
        */
-      char * cp = str.rep();
+      const char * cp = str.rep();
 
       /*
         Send that data to the peer using send_n() as before.  If we have

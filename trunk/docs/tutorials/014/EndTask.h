@@ -44,18 +44,18 @@ public:
     // when we get open()'d, it with 0 threads
     // since there is actually no processing to do.
 
-        cerr << __LINE__ << " " << __FILE__ << endl;
+        ACE_DEBUG ((LM_INFO,"(%P|%t) Line:  %d,  File:  %s\n",__LINE__,__FILE__));
   };
 
   virtual int open(void *)
   {
-        cerr << __LINE__ << " " << __FILE__ << endl;
+        ACE_DEBUG ((LM_INFO,"(%P|%t) Line:  %d,  File:  %s\n",__LINE__,__FILE__));
         return 0;
   }
 
   virtual int open(void)
   {
-        cerr << __LINE__ << " " << __FILE__ << endl;
+        ACE_DEBUG ((LM_INFO,"(%P|%t) Line:  %d,  File:  %s\n",__LINE__,__FILE__));
         return 0;
   }
 
@@ -65,7 +65,7 @@ public:
   virtual int put(ACE_Message_Block *message,
                   ACE_Time_Value *timeout) {
 
-        cerr << __LINE__ << " " << __FILE__ << endl;
+        ACE_DEBUG ((LM_INFO,"(%P|%t) Line:  %d,  File:  %s\n",__LINE__,__FILE__));
     ACE_UNUSED_ARG(timeout);
 
     // we don't have anything to do, so
