@@ -24,8 +24,7 @@
 #ifndef _PORTABLESERVER_PS_FORWARD_IDL_
 #define _PORTABLESERVER_PS_FORWARD_IDL_
 
-///FUZZ: disable check_for_include/
-#include <tao/OctetSeq.pidl>
+#include <OctetSeq.pidl>
 
 #pragma prefix "omg.org"
 

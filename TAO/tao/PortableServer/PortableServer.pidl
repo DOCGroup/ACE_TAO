@@ -45,9 +45,9 @@
 #define _PORTABLE_SERVER_IDL_
 
 ///FUZZ: disable check_for_include/
-#include <tao/Policy_Forward.pidl>
-#include <tao/OctetSeq.pidl>
-#include <tao/orb_types.pidl>
+#include <Policy_Forward.pidl>
+#include <OctetSeq.pidl>
+#include <orb_types.pidl>
 #include <tao/PortableServer/PS_Forward.pidl>
 #include <tao/PortableServer/IdAssignmentPolicy.pidl>
 #include <tao/PortableServer/IdUniquenessPolicy.pidl>

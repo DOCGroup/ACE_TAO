@@ -25,7 +25,7 @@
 #define _PORTABLESERVER_SERVANTLOCATOR_IDL_
 
 ///FUZZ: disable check_for_include/
-#include <tao/orb_types.pidl>
+#include <orb_types.pidl>
 #include <tao/PortableServer/PS_Forward.pidl>
 #include <tao/PortableServer/ServantManager.pidl>
 #include <tao/PortableServer/ForwardRequest.pidl>
