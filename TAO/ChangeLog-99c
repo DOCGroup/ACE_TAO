@@ -1,3 +1,12 @@
+1999-05-01  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): 
+	  Added stream.close () after stream.send_n () to explicitly 
+	  close the socket.
+	
+	  Thanks to James Johnson <jcej@lads.com> for finding this bug 
+	  and suggesting the fix.
+	
 Sat May 01 08:22:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
