@@ -1,3 +1,11 @@
+Wed Feb 10 15:04:26 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Makefile: added Pair_T.cpp and Template_Instantiations.cpp
+	  to the TEMPLATE_FILES list/variable.  They were missing.
+	* tests/Conn_Test.cpp (spawn_processes): initialized
+	  pid_t *children_ptr to zero to prevent "uninitialized"
+	  warnings from egcs 1.1.1.
+
 Wed Feb 10 14:16:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tests/Message_Queue_Test.cpp (performance_test): initialized
