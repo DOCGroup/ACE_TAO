@@ -72,13 +72,6 @@ pace_tcflush (int fildes, int queue_selector)
 }
 
 PACE_INLINE
-pace_pid_t
-pace_tcgetpgrp (int fildes)
-{
-  return tcgetpgrp (fildes);
-}
-
-PACE_INLINE
 int
 pace_tcsendbreak (int fildes, int duration)
 {
@@ -92,11 +85,4 @@ pace_tcsetattr (int fildes,
                 const pace_termios *termios_p)
 {
   return tcsetattr (fildes, optional_actions, termios_p);
-}
-
-PACE_INLINE
-int
-pace_tcsetpgrp (int fildes, pace_pid_t pgrp_id)
-{
-  return tcsetpgrp (fildes, pgrp_id);
 }
