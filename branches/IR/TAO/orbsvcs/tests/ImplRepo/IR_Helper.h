@@ -60,6 +60,7 @@ private:
   char *name_;
   char *ir_key_;
 
+  
   Implementation_Repository::INET_Addr *ir_addr_;
   
   POA_Ping_Object *ping_;  
