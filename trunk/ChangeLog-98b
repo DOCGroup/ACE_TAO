@@ -1,3 +1,10 @@
+Thu Sep 03 16:14:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch.i (ACE_Process_Mutex::remove): Reset this->lock_ to 0
+	  after removing the lock so we can avoid destroying the same
+	  kernel object twice.  Thanks to Detlef Becker
+	  <Detlef.Becker@med.siemens.de> for reporting this.
+	
 Thu Sep 03 15:43:22 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Upgradable_RW_Test.cpp: Fixed this file so that it works
