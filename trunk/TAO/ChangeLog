@@ -1,3 +1,10 @@
+Tue Dec  9 18:38:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/Makefile.CosTime:
+          Removed #include of wrapper_macros.GNU and rules.tao.GNU since
+          they are included automagically by all_in_one.GNU.  Thanks to
+          Johnny Willemsen <jwillemsen@remedy.nl> tracking this down.
+
 Tue Dec  9 11:37:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/extra_core.mpb:
