@@ -80,12 +80,12 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  /// Return a copy of <this>
+  /// Return a copy of @c this
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
   virtual TAO_Endpoint *duplicate (void);
 
-  /// Return true if this endpoint is equivalent to <other_endpoint>.  Two
+  /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent iff their port and host are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
