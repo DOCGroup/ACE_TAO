@@ -133,7 +133,7 @@ ACE_IO_SAP::disable (int value) const
 	return -1;
       break;
     default:
-      return -;1
+      return -1;
     }
   return 0;
 #else
