@@ -28,7 +28,7 @@ public:
   // Execute the consumer;
 
   virtual void close (void);
-  // shutdown the consumer.
+  // Shutdown the consumer.
 
 private:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
@@ -71,8 +71,9 @@ Consumer::handle_signal (int signum,
 void
 Consumer::close (void)
 {
- // Shut down the ORB
+  // clean up the input handler.
   ih_.close ();
+ // Shut down the ORB
   ch_.close ();
 }
 

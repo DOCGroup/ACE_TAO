@@ -68,7 +68,8 @@ public:
   // Set the Shutdown callback.
 
 private:
-ConsumerShutdown *consumershutdown;
+  ConsumerShutdown *consumershutdown;
+  // The callback to shutdown the consumer application.
 };
 
 // Forward reference.
