@@ -66,7 +66,8 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
                                              this->orb_core_),
                   -1);
 
-  auto_ptr<TAO_UIOP_Connect_Creation_Strategy> new_connect_creation_strategy (connect_creation_strategy);
+  auto_ptr<TAO_UIOP_Connect_Creation_Strategy>
+    new_connect_creation_strategy (connect_creation_strategy);
 
   TAO_Cached_Connector_Lock *connector_lock = 0;
   ACE_NEW_RETURN (connector_lock,
@@ -83,14 +84,11 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
                                            new_connector_lock.get (),
                                            1),
                   -1);
-  
-  auto_ptr<CACHED_CONNECT_STRATEGY> new_cached_connect_strategy (this->cached_connect_strategy_);
 
   // Finally everything is fine.  Make sure to take ownership away
   // from the auto pointer.
   connect_creation_strategy = new_connect_creation_strategy.release ();
-  connector_lock = new_connector_lock.release (); 
-  this->cached_connect_strategy_ = new_cached_connect_strategy.release ();
+  connector_lock = new_connector_lock.release ();
 
   return this->base_connector_.open (this->orb_core_->reactor (),
                                      &this->null_creation_strategy_,
@@ -232,12 +230,23 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
       ACE_NEW_RETURN (remote_addrs,
                       ACE_UNIX_Addr[num_connections],
                       -1);
+
+      auto_ptr<ACE_UNIX_Addr> safe_remote_addrs (remote_addrs);
+
       ACE_NEW_RETURN (handlers,
                       TAO_UIOP_Client_Connection_Handler *[num_connections],
                       -1);
+
+      auto_ptr<TAO_UIOP_Client_Connection_Handler *>
+        safe_handlers (handlers);
+
       ACE_NEW_RETURN (failures,
                       char[num_connections],
                       -1);
+
+      // No longer need to worry about exception safety at this point.
+      remote_addrs = safe_remote_addrs.release ();
+      handlers = safe_handlers.release ();
 
       size_t slot = 0;
 
@@ -474,10 +483,12 @@ TAO_UIOP_Connector::make_caching_strategy (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class auto_ptr<ACE_UNIX_Addr>;
+template class ACE_Auto_Basic_Ptr<ACE_UNIX_Addr>;
+template class auto_ptr<TAO_UIOP_Client_Connection_Handler>;
+template class ACE_Auto_Basic_Ptr<TAO_UIOP_Client_Connection_Handler>;
 template class auto_ptr<TAO_UIOP_Connect_Creation_Strategy>;
-template class auto_ptr<TAO_CACHED_CONNECT_STRATEGY>;
 template class ACE_Auto_Basic_Ptr<TAO_UIOP_Connect_Creation_Strategy>;
-template class ACE_Auto_Basic_Ptr<TAO_CACHED_CONNECT_STRATEGY>;
 
 template class ACE_Node<ACE_UNIX_Addr>;
 template class ACE_Unbounded_Stack<ACE_UNIX_Addr>;
@@ -561,10 +572,12 @@ template class ACE_Refcounted_Recyclable_Handler_Caching_Utility<TAO_ADDR, TAO_C
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma instantiate auto_ptr<ACE_UNIX_Addr>
+#pragma instantiate ACE_Auto_Basic_Ptr<ACE_UNIX_Addr>
+#pragma instantiate auto_ptr<TAO_UIOP_Client_Connection_Handler>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_UIOP_Client_Connection_Handler>
 #pragma instantiate auto_ptr<TAO_UIOP_Connect_Creation_Strategy>
-#pragma instantiate auto_ptr<TAO_CACHED_CONNECT_STRATEGY>
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_UIOP_Connect_Creation_Strategy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_CACHED_CONNECT_STRATEGY>
 
 #pragma instantiate ACE_Node<ACE_UNIX_Addr>
 #pragma instantiate ACE_Unbounded_Stack<ACE_UNIX_Addr>

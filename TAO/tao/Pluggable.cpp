@@ -138,7 +138,7 @@ int
 TAO_Unknown_Profile::addr_to_string (char * /* buffer */,
                                      size_t /* length */)
 {
-  return 0;
+  return -1;
 }
 
 void

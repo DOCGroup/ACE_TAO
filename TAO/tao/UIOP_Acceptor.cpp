@@ -78,7 +78,11 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                   -1);
 
   if (mprofile.give_profile (pfile) == -1)
-    return -1;
+    {
+      pfile->_decr_refcnt ();
+      pfile = 0;
+      return -1;
+    }
 
   if (this->orb_core_->orb_params ()->std_profile_components () == 0)
     return 0;
