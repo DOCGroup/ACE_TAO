@@ -567,5 +567,191 @@ TAO_MUF_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info
   return 0;
 }
 
+///////////////////////////////////////////
+// class TAO_RMS_Reconfig_Sched_Strategy //
+///////////////////////////////////////////
+
+// Ordering function to compare the DFS finish times of
+// two task entries, so qsort orders these in topological
+// order, with the higher times *first*
+int
+TAO_RMS_Reconfig_Sched_Strategy::comp_entry_finish_times (const void *first, const void *second)
+{
+  const TAO_Reconfig_Scheduler_Entry *first_entry =
+    * ACE_reinterpret_cast (const TAO_Reconfig_Scheduler_Entry *const *,
+                            first);
+
+  const TAO_Reconfig_Scheduler_Entry *second_entry =
+    * ACE_reinterpret_cast (const TAO_Reconfig_Scheduler_Entry *const *,
+                            second);
+
+  // sort blank entries to the end
+  if (! first_entry)
+  {
+    return (second_entry) ? 1 : 0;
+  }
+  else if (! second_entry)
+  {
+    return -1;
+  }
+
+  // Sort entries with higher forward DFS finishing times before those
+  // with lower forward DFS finishing times.
+  if (first_entry->fwd_finished () >
+      second_entry->fwd_finished ())
+  {
+    return -1;
+  }
+  else if (first_entry->fwd_finished () <
+           second_entry->fwd_finished ())
+  {
+    return 1;
+  }
+
+  return 0;
+}
+
+// Ordering function used to qsort an array of TAO_Reconfig_Scheduler_Entry
+// pointers into a total <priority, subpriority> ordering.  Returns -1 if the
+// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+int
+TAO_RMS_Reconfig_Sched_Strategy::total_priority_comp (const void *s, const void *t)
+{
+  // Convert the passed pointers: the double cast is needed to
+  // make Sun C++ 4.2 happy.
+  TAO_Reconfig_Scheduler_Entry **first =
+    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
+                          ACE_const_cast (void *, s));
+  TAO_Reconfig_Scheduler_Entry **second =
+    ACE_reinterpret_cast (TAO_Reconfig_Scheduler_Entry **,
+                          ACE_const_cast (void *, t));
+
+  // Check the converted pointers.
+  if (first == 0 || *first == 0)
+    {
+      return (second == 0 || *second == 0) ? 0 : 1;
+    }
+  else if (second == 0 || *second == 0)
+    {
+      return -1;
+    }
+
+  int result =
+    TAO_RMS_Reconfig_Sched_Strategy::priority_diff (*((*first)->actual_rt_info ()),
+                                                    *((*second)->actual_rt_info ()));
+
+  // Check whether they were distinguished by priority.
+  if (result == 0)
+    {
+      return TAO_RMS_Reconfig_Sched_Strategy::compare_subpriority (**first,
+                                                                   **second);
+    }
+  else
+    {
+      return result;
+    }
+}
+
+
+// Compares two entries by priority alone.  Returns -1 if the
+// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+int
+TAO_RMS_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &s,
+                                                   TAO_Reconfig_Scheduler_Entry &t)
+{
+  // Simply call the corresponding comparison based on the underlying rt_infos.
+  return TAO_RMS_Reconfig_Sched_Strategy::priority_diff (*s.actual_rt_info (),
+                                                         *t.actual_rt_info ());
+}
+
+
+// Compares two entries by subpriority alone.  Returns -1 if the
+// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+int
+TAO_RMS_Reconfig_Sched_Strategy::compare_subpriority (TAO_Reconfig_Scheduler_Entry &s,
+                                                      TAO_Reconfig_Scheduler_Entry &t)
+{
+  // @@ TO DO: add dependency hash tables to strategy, use them to look for
+  //           *direct* dependencies between two nodes.
+
+  // Compare importance.
+  if (s.actual_rt_info ()->importance > t.actual_rt_info ()->importance)
+    {
+      return -1;
+    }
+  else if (s.actual_rt_info ()->importance < t.actual_rt_info ()->importance)
+    {
+      return 1;
+    }
+  // Same importance, so look at dfs finish time as a tiebreaker.
+  else if (s.fwd_finished () > t.fwd_finished ())
+    {
+      return -1;
+    }
+  else if (s.fwd_finished () < t.fwd_finished ())
+    {
+      return 1;
+    }
+
+  // They're the same if we got here.
+  return 0;
+}
+
+
+// Compares two RT_Infos by priority alone.  Returns -1 if the
+// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+
+int
+TAO_RMS_Reconfig_Sched_Strategy::priority_diff (RtecScheduler::RT_Info &s,
+                                                RtecScheduler::RT_Info &t)
+{
+  // In RMS, priority is per criticality level: compare criticalities.
+  if (s.period > t.period)
+    {
+      return -1;
+    }
+  else if (s.period < t.period)
+    {
+      return 1;
+    }
+
+  // They're the same if we got here.
+  return 0;
+}
+
+
+// Determines whether or not an entry is critical, based on operation characteristics.
+// returns 1 if critical, 0 if not
+
+int
+TAO_RMS_Reconfig_Sched_Strategy::is_critical (TAO_Reconfig_Scheduler_Entry &rse)
+{
+  // Look at the underlying RT_Info's criticality field.
+  return (rse.actual_rt_info ()->criticality == RtecScheduler::HIGH_CRITICALITY ||
+          rse.actual_rt_info ()->criticality == RtecScheduler::VERY_HIGH_CRITICALITY)
+         ? 1 : 0;
+}
+
+// Fills in a static dispatch configuration for a priority level, based
+// on the operation characteristics of a representative scheduling entry.
+
+int
+TAO_RMS_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
+                                                TAO_Reconfig_Scheduler_Entry &rse)
+{
+    // Global and thread priority of dispatching queue are simply
+    // those assigned the representative operation it will dispatch.
+    info.preemption_priority = rse.actual_rt_info ()->preemption_priority;
+    info.thread_priority = rse.actual_rt_info ()->priority;
+
+    // Dispatching queues are all laxity-based in this strategy.
+    info.dispatching_type = RtecScheduler::STATIC_DISPATCHING;
+
+  return 0;
+}
+
 
 #endif /* TAO_RECONFIG_SCHED_UTILS_C */

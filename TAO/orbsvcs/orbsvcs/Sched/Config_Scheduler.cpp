@@ -480,3 +480,15 @@ ACE_Config_Scheduler::last_scheduled_priority (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   // Returns the last priority number assigned to an operation in the schedule.
   // The number returned is one less than the total number of scheduled priorities.
   // All scheduled priorities range from 0 to the number returned, inclusive.
+
+void
+ACE_Config_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out configs
+					 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   RtecScheduler::SYNCHRONIZATION_FAILURE,
+		   RtecScheduler::NOT_SCHEDULED))
+{
+  //TODO: fill the Config_Info_Set with the runtime Config_Infos
+  //for now, this function is unimplemented
+  return;
+}

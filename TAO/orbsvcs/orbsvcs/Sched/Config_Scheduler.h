@@ -118,6 +118,14 @@ public:
   // All scheduled priorities range from 0 to the number returned,
   // inclusive.
 
+  virtual void get_config_infos (RtecScheduler::Config_Info_Set_out configs
+				 ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+		     RtecScheduler::SYNCHRONIZATION_FAILURE,
+		     RtecScheduler::NOT_SCHEDULED));
+  // Provides the set of Config_Infos associated with the current schedule.
+
+
 private:
 
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
