@@ -185,7 +185,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 
   while (this->should_shutdown_ == 0)
     {
-      ACE_TIMEPROBE ("  -> CORBA_ORB::run handling events");
+      ACE_TIMEPROBE (TAO_CORBA_ORB_RUN);
       switch (r->handle_events (tv))
         {
         case 0: // Timed out, so we return to caller.
@@ -196,7 +196,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
           /* NOTREACHED */
         default: // Some handlers were dispatched, so keep on processing
                  // requests until we're told to shutdown .
-          ACE_TIMEPROBE ("  -> CORBA_ORB::run events handled");
+          ACE_TIMEPROBE (TAO_CORBA_ORB_RUN_END);
           break;
           /* NOTREACHED */
         }
