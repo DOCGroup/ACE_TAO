@@ -1,3 +1,16 @@
+Mon Jan  6 16:56:04 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/topinfo_iorsize_stats.sh: Scripts for capturing the size of
+	  the server and client when shipping large IOR's
+
+	* bin/topinfo_stats.sh: Renamed to topinfo_simple_stats.sh. This
+	  is a better to show that we capture the sizes of a simple server
+	  and client.
+	  
+	* bin/topinfo_simple_stats.sh: New file. We need to do some code
+	  sharing between these two scripts. Just postponing that for the
+	  timebeing. 
+
 Mon Jan  6 11:23:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_gnuwin32_common.GNU:
