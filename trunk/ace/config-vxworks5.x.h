@@ -45,6 +45,15 @@
 #   define ACE_HAS_POWERPC
 # endif /* ppc */
 
+# if defined (i386) || defined (__i386__)
+    // If running an Intel, assume that it's a Pentium so that
+    // ACE_OS::gethrtime () can use the RDTSC instruction.  If
+    // running a 486 or lower, be sure to comment this out.
+    // (If not running an Intel CPU, this #define will not be seen
+    //  because of the i386 protection, so it can be ignored.)
+#   define ACE_HAS_PENTIUM
+# endif /* i386 */
+
 # define ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA
 # define ACE_HAS_WCHAR_TYPEDEFS_CHAR
 # define ACE_LACKS_LONGLONG_T
