@@ -1,4 +1,11 @@
-﻿Wed Dec 10 11:42:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Wed Dec 10 06:12:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Client:
+	* orbsvcs/tests/Bug_1395_Regression/Makefile.Bug_1395_Server:
+
+	  Fixed the link lines in the Makefiles.
+
+Wed Dec 10 11:42:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/Bug_1330_Regression/Bug_1330_Client.dsp:
           Fixed release configuration, this should be the last for the 

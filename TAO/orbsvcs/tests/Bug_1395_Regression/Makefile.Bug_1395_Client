@@ -11,8 +11,6 @@ endif
 IDL_FILES = Test
 IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
 
-
-
 FILES = \
   TestC \
   client
