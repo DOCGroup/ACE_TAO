@@ -1,3 +1,17 @@
+Tue Nov  9 16:11:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/CONV_FRAMES_T.cpp:
+	* tao/DomainS_T.cpp:
+	* IOPS_T.cpp:
+	* MessagingS_T.cpp:
+	* PollableS_T.cpp:
+	* TAOS_T.cpp:L
+	* TimeBaseS_T.cpp:
+	  Removed unnecessary #pragma warning (disable:4250).
+	  Now that we are doing this in push/pop pairs (see
+	  entries below), this lone disable could cause
+	  problems.
+
 Tue Nov  9 16:06:59 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/TAO.dsp:
