@@ -58,6 +58,7 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
                            &len) == -1)
     return -1;
 
+  sa.set_type (addr->sa_family);
   sa.set_size (len);
   return 0;
 }

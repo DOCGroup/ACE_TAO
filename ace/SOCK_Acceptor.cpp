@@ -210,6 +210,8 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   int error = 0;
 
 #if defined (ACE_HAS_IPV6)
+  ACE_ASSERT (protocol_family == PF_INET || protocol_family == PF_INET6);
+
   if (protocol_family == PF_INET6)
     {
       sockaddr_in6 local_inet6_addr;
@@ -229,13 +231,15 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
                                                   local_sap.get_addr ());
 
       // We probably don't need a bind_port written here.
-      // There are currently no supported OS's that define ACE_LACKS_WILDCARD_BIND.
+      // There are currently no supported OS's that define
+      // ACE_LACKS_WILDCARD_BIND.
       if (ACE_OS::bind (this->get_handle (),
                         ACE_reinterpret_cast (sockaddr *,
                                               &local_inet6_addr),
                         sizeof local_inet6_addr) == -1)
         error = 1;
-    } else
+    }
+  else
 #endif
   if (protocol_family == PF_INET)
     {
@@ -340,6 +344,17 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
                          int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::open");
+
+  if (local_sap != ACE_Addr::sap_any)
+    protocol_family = local_sap.get_type ();
+  else if (protocol_family == PF_UNSPEC)
+    {
+#if defined (ACE_HAS_IPV6)
+      protocol_family = ACE_Sock_Connect::ipv6_enabled () ? PF_INET6 : PF_INET;
+#else
+      protocol_family = PF_INET;
+#endif /* ACE_HAS_IPV6 */
+    }
 
   if (ACE_SOCK::open (SOCK_STREAM,
                       protocol_family,

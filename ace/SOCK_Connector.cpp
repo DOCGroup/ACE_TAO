@@ -149,6 +149,10 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
 
+  // @@ Should remove this arg when IPv6 is merged...
+  ACE_UNUSED_ARG (protocol_family);
+  protocol_family = remote_sap.get_type ();
+
   if (this->shared_open (new_stream,
                          protocol_family,
                          protocol,
@@ -185,8 +189,12 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
 
+  // @@ Should remove this arg when IPv6 is merged...
+  ACE_UNUSED_ARG (protocol_family);
+  protocol_family = remote_sap.get_type ();
+
   if (this->shared_open (new_stream,
-                         protocol_family,
+                         remote_sap.get_type (),
                          protocol,
                          protocolinfo,
                          g,

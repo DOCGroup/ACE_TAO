@@ -7,6 +7,16 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
+#if defined (ACE_HAS_IPV6)
+#  if defined (ACE_HAS_THREADS)
+#    include "ace/Synch.h"
+#    include "ace/Object_Manager.h"
+#  endif /* ACE_HAS_THREADS */
+
+// Whether or not ipv6 is turned on in this box
+int ACE_Sock_Connect::ipv6_enabled_ = -1;
+#endif /* ACE_HAS_IPV6 */
+
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Sock_Connect.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
@@ -1032,4 +1042,38 @@ ACE_Sock_Connect::get_handle (void)
   handle = ACE_OS::socket (PF_INET, SOCK_DGRAM, 0);
 #endif /* sparc */
   return handle;
+}
+
+
+int
+ACE_Sock_Connect::ipv6_enabled (void)
+{
+#if defined (ACE_HAS_IPV6)
+  if (ACE_Sock_Connect::ipv6_enabled_ == -1)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                *ACE_Static_Object_Lock::instance (), 0));
+
+      if (ACE_Sock_Connect::ipv6_enabled_ == -1)
+        {
+          // Determine if the kernel has IPv6 support by attempting to
+          // create a PF_INET6 socket and see if it fails.
+          ACE_HANDLE s = ACE_OS::socket (PF_INET6, SOCK_DGRAM, 0);
+          if (s == ACE_INVALID_HANDLE)
+	    {
+	      ACE_Sock_Connect::ipv6_enabled_ = 0;
+	    }
+	  else
+	    {
+	      ACE_Sock_Connect::ipv6_enabled_ = 1;
+	      ACE_OS::closesocket (s);
+	    }
+        }
+    }
+
+  return ACE_Sock_Connect::ipv6_enabled_;
+#else
+  return 0;
+#endif /* ACE_HAS_IPV6 */
 }
