@@ -3,6 +3,7 @@
 #include "server_i.h"
 
 #include "tao/IORTable/IORTable.h"
+#include "tao/PortableServer/PS_CurrentC.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
