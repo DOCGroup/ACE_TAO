@@ -33,7 +33,7 @@ USELIB("..\ace\aced.lib");
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
 typedef ACE_Null_Mutex MUTEX;
-typedef unsigned long TYPE;
+typedef size_t TYPE;
 typedef ACE_Active_Map_Manager_Key ACTIVE_KEY;
 typedef ACE_Hash<TYPE> HASH_KEY;
 typedef ACE_Equal_To<TYPE> COMPARE_KEYS;
@@ -633,6 +633,12 @@ template class ACE_Map_Iterator_Base<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
 template class ACE_Map_Entry<TYPE, TYPE>;
+template class ACE_Active_Map_Manager<TYPE>;
+template class ACE_Map_Manager<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
+template class ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
+template class ACE_Map_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
+template class ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>;
+template class ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
@@ -645,5 +651,11 @@ template class ACE_Map_Entry<TYPE, TYPE>;
 #pragma instantiate ACE_Map_Iterator<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>
 #pragma instantiate ACE_Map_Entry<TYPE, TYPE>
+#pragma instantiate ACE_Active_Map_Manager<TYPE>
+#pragma instantiate ACE_Map_Manager<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
+#pragma instantiate ACE_Map_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, TYPE, MUTEX>
+#pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
