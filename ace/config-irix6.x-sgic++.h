@@ -31,6 +31,7 @@
 
 // IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
 #define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS_STD
 
 // Platforms has pthread_thr_sigsetmask
 #define ACE_HAS_PTHREAD_SIGMASK

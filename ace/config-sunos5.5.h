@@ -196,13 +196,12 @@
   // Platform supports POSIX pthreads *and* Solaris threads!  If you
   // only want to use POSIX pthreads just comment out ACE_HAS_STHREADS.
   // Or, add -D_POSIX_PTHREAD_SEMANTICS to your CFLAGS.
-# if defined (_POSIX_PTHREAD_SEMANTICS)
-#   define ACE_HAS_PTHREADS_1003_DOT_1C
-# else  /* ! _POSIX_PTHREAD_SEMANTICS */
+# if !defined (_POSIX_PTHREAD_SEMANTICS)
 #   define ACE_HAS_STHREADS
 # endif /* ! _POSIX_PTHREAD_SEMANTICS */
 
 # define ACE_HAS_PTHREADS
+# define ACE_HAS_PTHREADS_STD
   // . . . but only supports SCHED_OTHER scheduling policy
 # define ACE_HAS_ONLY_SCHED_OTHER
 # define ACE_HAS_SIGWAIT

@@ -75,7 +75,8 @@
 // Platforms lacks UNIX domain sockets.
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_UTSNAME_T
-#define ACE_HAS_PTHREADS_1003_DOT_1C
+#define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS_STD
 //#define ACE_LACKS_SETSCHED
 
 #define ACE_LACKS_MSYNC

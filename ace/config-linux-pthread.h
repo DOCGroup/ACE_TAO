@@ -16,6 +16,7 @@
 #endif
 // And they're even POSIX pthreads (MIT implementation)
 #define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS_STD
 #define ACE_LACKS_RWLOCK_T
 #define ACE_HAS_SIGWAIT
 // If ACE doesn't compile due to the lack of these methods, please
