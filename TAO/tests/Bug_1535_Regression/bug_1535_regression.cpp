@@ -220,6 +220,7 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK;
+  ACE_CHECK_REUTRN (1);
+
   return 0;
 }
