@@ -1,3 +1,14 @@
+Thu May 24 10:35:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Thread_Pool_Reactor_Resume_Test.cpp
+	* tests/Thread_Pool_Reactor_Resume_Test.h: A new test that tests
+	  the resumption of handler at the application level. This test is
+	  an adaptation of the famous Thread_Pool_Reactor_Test.
+
+	* tests/Makefile: Added the test for compilation.
+	* tests/run_test.lst: Added the above test for the nightly
+	  builds. 
+
 Thu May 24 10:26:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Event_Handler.cpp:
@@ -29,26 +40,25 @@ Wed May 23 17:37:30 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 	* bin/auto_run_tests.lst:
 	* tests/run_test.lst:
 
-	Removed some tests from being run on Single Threaded
-	Configuration as they were spawning threads. The tests removed
-	are:
-	   TAO/performance-tests/AMI_Latency/run_test.pl
-	   TAO/tests/AMI_Timeouts/run_test.pl
+	  Removed some tests from being run on Single Threaded
+	  Configuration as they were spawning threads. The tests removed
+	  are: 
+	
+	  TAO/performance-tests/AMI_Latency/run_test.pl
+	  TAO/tests/AMI_Timeouts/run_test.pl
+          and
+	  tests/Logging_Strategy_Test
 
-	and
-
-	   tests/Logging_Strategy_Test
-
-	This is related to Bug Id 912.
+	  This is related to Bug Id 912.
 
 Wed May 23 17:33:59 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* bin/make_pretty.pl:
 
-	Seems to have missed my previous update. Add the code to remove
-	the bogus warning associated with SunCC5. Check the ChangeLog tag
-	Mon May 21 16:37:18 2001  Krishnakumar B  <kitty@cs.wustl.edu> for
-	more.
+	  Seems to have missed my previous update. Add the code to remove
+	  the bogus warning associated with SunCC5. Check the ChangeLog
+	  tag  Mon May 21 16:37:18 2001  Krishnakumar B
+	  <kitty@cs.wustl.edu> for more.
 
 Wed May 23 18:22:41 2001  Steve Huston  <shuston@riverace.com>
 
