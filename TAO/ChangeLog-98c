@@ -1,5 +1,9 @@
 Wed Mar 19 10:25:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* IIOP/docs/us/codecount/*.count: Added to repository.
+
+	* Makefile: Added to repository.
+
 	* IIOP/objbase.h: Moved to IIOP/compat.
 
 	* IIOP/initguid.h: Moved to IIOP/compat.
