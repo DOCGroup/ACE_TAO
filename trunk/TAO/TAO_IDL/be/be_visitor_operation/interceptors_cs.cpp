@@ -109,30 +109,7 @@ be_visitor_operation_interceptors_cs::
 
   *os << " : public TAO_ClientRequestInfo" << be_nl
       << "{" << be_nl
-      << "public:" << be_idt_nl
-
-    // Need to declare the stub as a friend so that it can access the
-    // private members of the Request Info class.
-      << "friend class ";
-
-  be_decl *parent =
-    be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-  *os << parent->full_name () << ";" << be_nl << be_nl;
-
-#if 0
-  // The Proxy Implementation actually perform calls to
-  // the ClientRequestInfo class, so these class need
-  // to be friend as well.
-  be_interface *iface = be_interface::narrow_from_scope (node->defined_in ());
-
-  *os << "friend class "
-      << iface->remote_proxy_impl_name () << ";" << be_nl
-      << "friend class "
-      << iface->thru_poa_proxy_impl_name () << ";" << be_nl
-      << "friend class "
-      << iface->direct_proxy_impl_name () << ";\n" << be_nl;
-#endif /* 0 */
+      << "public:" << be_idt_nl;
 
   *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
@@ -228,6 +205,42 @@ be_visitor_operation_interceptors_cs::
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_uidt_nl;
+
+  // Store the result for later use.
+  // generate the return type.
+  bt = be_type::narrow_from_decl (node->return_type ());
+
+  if (!bt)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interceptors_ch::"
+                         "visit_operation - "
+                         "Bad return type\n"),
+                        -1);
+    }
+
+  // Grab the right visitor to generate the return type if its not
+  // void since we can't have a private member to be of void type.
+  if (!this->void_return_type (bt))
+    {
+      *os << "void result (";
+      ctx = *this->ctx_;
+      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
+      ctx.sub_state (TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB);
+      visitor = tao_cg->make_visitor (&ctx);
+
+      if (!visitor || (bt->accept (visitor) == -1))
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_operation_cs::"
+                             "visit_operation - "
+                             "codegen for retval pre invoke failed\n"),
+                            -1);
+        }
+
+      *os << " result);\n" << be_nl;
+    }
 
   *os << "private:" << be_idt_nl;
 
@@ -359,43 +372,6 @@ be_visitor_operation_interceptors_cs::
 
   delete visitor;
 
-  // Store the result for later use.
-  // generate the return type.
-  bt = be_type::narrow_from_decl (node->return_type ());
-
-  if (!bt)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interceptors_ch::"
-                         "visit_operation - "
-                         "Bad return type\n"),
-                        -1);
-    }
-
-  // Grab the right visitor to generate the return type if its not
-  // void since we can't have a private member to be of void type.
-  if (!this->void_return_type (bt))
-    {
-      *os << "void result (";
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
-      ctx.sub_state (TAO_CodeGen::TAO_INTERCEPTORS_INFO_STUB);
-      visitor = tao_cg->make_visitor (&ctx);
-
-      if (!visitor || (bt->accept (visitor) == -1))
-        {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_operation_cs::"
-                             "visit_operation - "
-                             "codegen for retval pre invoke failed\n"),
-                            -1);
-        }
-
-      *os << " result);" << be_nl
-          << "// update the result " << be_nl;
-    }
-
   // Generate the result data member.
   // Generate the return type.
   bt = be_type::narrow_from_decl (node->return_type ());
@@ -454,16 +430,6 @@ be_visitor_operation_interceptors_cs::
 
   // Save the node.
   this->ctx_->node (node);
-
-  // Generate the ClientRequestInfo object definition per operation
-  // to be used by the interecptors.
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << parent->full_name () << "::";
-    }
 
   *os << "TAO_ClientRequestInfo_"<< node->flat_name ();
 
@@ -584,14 +550,6 @@ be_visitor_operation_interceptors_cs::
   // -----------------------------------------------------------------
   *os << "Dynamic::ParameterList *" << be_nl;
 
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << parent->full_name () << "::";
-    }
-
   // The interceptors cant modify "in" and "out" parameters.
   *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
@@ -681,14 +639,6 @@ be_visitor_operation_interceptors_cs::
   // -----------------------------------------------------------------
   *os << "Dynamic::ExceptionList *" << be_nl;
 
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << parent->full_name () << "::";
-    }
-
   *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -769,14 +719,6 @@ be_visitor_operation_interceptors_cs::
   // PortableInterceptor::ClientRequestInfo::result()
   // -----------------------------------------------------------------
   *os << "CORBA::Any * " << be_nl;
-
-  if (node->is_nested ())
-    {
-      be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-      *os << parent->full_name () << "::";
-    }
 
   *os << "TAO_ClientRequestInfo_" << node->flat_name ();
 
@@ -883,14 +825,6 @@ be_visitor_operation_interceptors_cs::
   if (!this->void_return_type (bt))
     {
       *os << "void " << be_nl;
-
-      if (node->is_nested ())
-        {
-          be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
-
-          *os << parent->full_name () << "::";
-        }
 
       *os << "TAO_ClientRequestInfo_"<< node->flat_name ();
 

@@ -152,32 +152,8 @@ TAO_CodeGen::start_client_header (const char *fname)
         }
 
       // Including standard files.
-
-      // Switch between changing or non-changing standard include files
-      // include files, so that #include statements can be
-      // generated with ""s or <>s respectively, for the standard include
-      // files (e.g. tao/corba.h).
-      *this->client_header_ << "#include ";
-
-      if (be_global->changing_standard_include_files () == 1)
-        {
-          *this->client_header_ << "\"";
-        }
-      else
-        {
-          *this->client_header_ << "<";
-        }
-
-      *this->client_header_ << "tao/corba.h";
-
-      if (be_global->changing_standard_include_files () == 1)
-        {
-          *this->client_header_ << "\"\n";
-        }
-      else
-        {
-          *this->client_header_ << ">\n";
-        }
+      this->gen_standard_include (this->client_header_,
+                                  "tao/corba.h");
 
       // Some compilers don't optimize the #ifndef header include
       // protection, but do optimize based on #pragma once.
@@ -198,76 +174,19 @@ TAO_CodeGen::start_client_header (const char *fname)
       if (be_global->ami_call_back () == I_TRUE)
         {
           // Include Messaging skeleton file.
-          *this->client_header_ << "#include ";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->client_header_ << "\"";
-            }
-          else
-            {
-              *this->client_header_ << "<";
-            }
-
-          *this->client_header_ << "tao/MessagingC.h";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->client_header_ << "\"\n";
-            }
-          else
-            {
-              *this->client_header_ << ">\n";
-            }
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Messaging.h");
 
           // Including Asynch Invocation file.
-          *this->client_header_ << "#include ";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->client_header_ << "\"";
-            }
-          else
-            {
-              *this->client_header_ << "<";
-            }
-
-          *this->client_header_ << "tao/Asynch_Invocation.h";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->client_header_ << "\"\n";
-            }
-          else
-            {
-              *this->client_header_ << ">\n";
-            }
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Asynch_Invocation.h");
         }
 
       // Include the smart proxy base class if smart proxies are enabled.
       if (be_global->gen_smart_proxies () == I_TRUE)
         {
-          *this->client_header_ << "#include ";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->client_header_ << "\"";
-            }
-          else
-            {
-              *this->client_header_ << "<";
-            }
-
-          *this->client_header_ << "tao/SmartProxies/Smart_Proxies.h";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->client_header_ << "\"\n";
-            }
-          else
-            {
-              *this->client_header_ << ">\n";
-            }
+          this->gen_standard_include (this->client_header_,
+                                      "tao/SmartProxies/Smart_Proxies.h");
         }
 
       // We must include all the skeleton headers corresponding to
@@ -393,35 +312,15 @@ TAO_CodeGen::start_client_stubs (const char *fname)
                        << be_global->be_get_client_hdr_fname (1)
                        << "\"\n\n";
 
-  *this->client_stubs_ << "#include \"tao/Stub.h\"\n"
-                       << "#include \"tao/Invocation.h\"\n"
-                       << "\n";
+  this->gen_standard_include (this->client_stubs_, "tao/Stub.h");
+  this->gen_standard_include (this->client_stubs_, "tao/Invocation.h");
+  this->gen_standard_include (this->client_stubs_, "tao/ClientRequestInfo.h");
 
   // Include the RequestInfo_Util utility header.  Used by the
   // PortableInterceptor::RequestInfo subclasses.
-  *this->client_stubs_ << "#if TAO_HAS_INTERCEPTORS == 1\n"
-                        << "#include ";
 
-  if (be_global->changing_standard_include_files () == 1)
-    {
-      *this->client_stubs_ << "\"";
-    }
-  else
-    {
-      *this->client_stubs_ << "<";
-    }
-
-  *this->client_stubs_ << "tao/RequestInfo_Util.h";
-
-  if (be_global->changing_standard_include_files () == 1)
-    {
-      *this->client_stubs_ << "\"\n";
-    }
-  else
-    {
-      *this->client_stubs_ << ">\n";
-    }
-
+  *this->client_stubs_ << "#if TAO_HAS_INTERCEPTORS == 1\n";
+  this->gen_standard_include (this->client_stubs_, "tao/RequestInfo_Util.h");
   *this->client_stubs_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
 
   *this->client_stubs_ << "#if defined (__BORLANDC__)\n"
@@ -524,50 +423,10 @@ TAO_CodeGen::start_server_header (const char *fname)
       if (be_global->ami_call_back () == I_TRUE)
         {
           // Include Messaging skeleton file.
-          *this->server_header_ << "#include ";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->server_header_ << "\"";
-            }
-          else
-            {
-              *this->server_header_ << "<";
-            }
-
-          *this->server_header_ << "tao/PortableServer/MessagingS.h";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->server_header_ << "\"\n";
-            }
-          else
-            {
-              *this->server_header_ << ">\n";
-            }
-
-          // Including Asynch Invocation file.
-          *this->server_header_ << "#include ";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->server_header_ << "\"";
-            }
-          else
-            {
-              *this->server_header_ << "<";
-            }
-
-          *this->server_header_ << "tao/Asynch_Invocation.h";
-
-          if (be_global->changing_standard_include_files () == 1)
-            {
-              *this->server_header_ << "\"\n";
-            }
-          else
-            {
-              *this->server_header_ << ">\n";
-            }
+          this->gen_standard_include (this->server_header_,
+                                      "tao/PortableServer/MessagingS.h");
+          this->gen_standard_include (this->server_header_,
+                                      "tao/Asynch_Invocation.h");
         }
 
       // We must include all the skeleton headers corresponding to
@@ -607,14 +466,16 @@ TAO_CodeGen::start_server_header (const char *fname)
       // thing, because we need the definitions there, it also
       // registers the POA factory with the Service_Configurator, so
       // the ORB can automatically find it.
-      *this->server_header_
-        << "#include \"tao/PortableServer/PortableServer.h\"\n"
-        << "#include \"tao/PortableServer/Servant_Base.h\"\n"
-        << "#include \"tao/PortableServer/Collocated_Object.h\"\n"
-        << "#include \"tao/PortableServer/ThruPOA_Object_Proxy_Impl.h\"\n"
-        << "#include \"tao/PortableServer/Direct_Object_Proxy_Impl.h\"\n"
-        << "#include \"tao/PortableServer/ServerRequestInfo.h\"\n"
-        << "\n";
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/PortableServer.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/Servant_Base.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/Collocated_Object.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h");
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/Direct_Object_Proxy_Impl.h");
 
       *this->server_header_ << "#if defined(_MSC_VER)\n"
                             << "#if (_MSC_VER >= 1200)\n"
@@ -777,42 +638,33 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   *this->server_skeletons_
     << "#include \""
     << be_global->be_get_server_hdr_fname (1)
-    << "\"\n"
-    << "#include \"tao/PortableServer/Object_Adapter.h\"\n"
-    << "#include \"tao/PortableServer/Operation_Table.h\"\n"
-    << "#include \"tao/TAO_Server_Request.h\"\n"
-    << "#include \"tao/ORB_Core.h\"\n"
-    << "#include \"tao/Stub.h\"\n"
-    << "#include \"tao/IFR_Client_Adapter.h\"\n"
-    << "#include \"ace/Dynamic_Service.h\"\n"
-    << "\n";
+    << "\"\n\n";
+
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/Object_Adapter.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/Operation_Table.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/TAO_Server_Request.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/ORB_Core.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/Stub.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/IFR_Client_Adapter.h");
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/PortableServer/ServerRequestInfo.h");
 
   // Include the RequestInfo_Util utility header.  Used by the
   // PortableInterceptor::RequestInfo subclasses.
-  *this->server_skeletons_ << "#if TAO_HAS_INTERCEPTORS == 1\n"
-                        << "#include ";
-
-  if (be_global->changing_standard_include_files () == 1)
-    {
-      *this->server_skeletons_ << "\"";
-    }
-  else
-    {
-      *this->server_skeletons_ << "<";
-    }
-
-  *this->server_skeletons_ << "tao/RequestInfo_Util.h";
-
-  if (be_global->changing_standard_include_files () == 1)
-    {
-      *this->server_skeletons_ << "\"\n";
-    }
-  else
-    {
-      *this->server_skeletons_ << ">\n";
-    }
-
+  *this->server_skeletons_ << "#if TAO_HAS_INTERCEPTORS == 1\n";
+  this->gen_standard_include (this->server_skeletons_,
+                              "tao/RequestInfo_Util.h");
   *this->server_skeletons_ << "#endif  /* TAO_HAS_INTERCEPTORS == 1 */\n\n";
+
+  this->gen_standard_include (this->server_skeletons_,
+                              "ace/Dynamic_Service.h");
+
 
 
   *this->server_skeletons_ << "#if defined (__BORLANDC__)\n"
@@ -1390,6 +1242,29 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
                  macro_name);
   stream->print ("#define %s\n\n",
                  macro_name);
+}
+
+void
+TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
+                                   const char *included_file)
+{
+  // Switch between changing or non-changing standard include files
+  // include files, so that #include statements can be
+  // generated with ""s or <>s respectively, for the standard include
+  // files (e.g. tao/corba.h).
+
+  const char *start_delimiter = "\"";
+  const char *end_delimiter = "\"";
+
+  if (be_global->changing_standard_include_files () == 0)
+    {
+      start_delimiter = "<";
+      end_delimiter = ">";
+    }
+
+  *stream << "#include " << start_delimiter
+          << included_file
+          << end_delimiter << "\n";
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

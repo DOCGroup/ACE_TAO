@@ -105,7 +105,7 @@ public:
                                               // collocated
 
     TAO_ATTRIBUTE_BASE_PROXY_IMPL_CH,         // Proxy Impl Related Attribute visitors.
-    
+
     TAO_ATTRIBUTE_PROXY_IMPL_XH,
 
     TAO_ATTRIBUTE_REMOTE_PROXY_IMPL_CS,
@@ -687,6 +687,10 @@ private:
                           const char *prefix,
                           const char *suffix);
 
+  void gen_standard_include (TAO_OutStream *stream,
+                             const char *included_file);
+
+private:
   TAO_OutStream *client_header_;
   // Client header stream.
 
