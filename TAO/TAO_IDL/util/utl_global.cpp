@@ -207,32 +207,19 @@ IDL_GlobalData::IDL_GlobalData (void)
                      + ACE_OS::strlen ("/bin/")
                      + ACE_OS::strlen (ace_gperf)
                      + 1]);
-#  if defined (ACE_WIN32)
       ACE_OS::sprintf (this->gperf_path_,
-                       "%s\\bin\\%s",
+                       "%s" ACE_DIRECTORY_SEPARATOR_STR "bin" ACE_DIRECTORY_SEPARATOR_STR "%s",
                        ace_root,
                        ace_gperf);
-#  else /* Not ACE_WIN32 */
-      ACE_OS::sprintf (this->gperf_path_,
-                       "%s/bin/%s",
-                       ace_root,
-                       ace_gperf);
-#  endif /* ACE_WIN32 */
 #else /* Not ACE_GPERF */
       // Set it to the default value.
       ACE_NEW (this->gperf_path_,
                char [ACE_OS::strlen (ace_root)
                      + ACE_OS::strlen ("/bin/gperf")
                      + 1]);
-#  if defined (ACE_WIN32)
       ACE_OS::sprintf (this->gperf_path_,
-                       "%s\\bin\\gperf",
+                       "%s" ACE_DIRECTORY_SEPARATOR_STR "bin" ACE_DIRECTORY_SEPARATOR_STR "gperf",
                        ace_root);
-#  else /* Not ACE_WIN32 */
-      ACE_OS::sprintf (this->gperf_path_,
-                       "%s/bin/gperf",
-                       ace_root);
-#  endif /* ACE_WIN32 */
 #endif /* ACE_GPERF */
     }
 
@@ -718,207 +705,6 @@ IDL_GlobalData::n_included_idl_files (size_t n)
   this->n_included_idl_files_ = n;
 }
 
-// We need 'realpath' in validate_included_idl_files() below, if
-// we are on a non_Windows platform. This has been submitted by
-// by Denny Kolb <kolb@g2ss.com> for folks who are working on
-// LynxOS and are not cross-compiling the IDL compiler.
-
-#if defined (__Lynx__)
-
-/* 
- * 'realpath' is not implemented as part of the LynxOS 4.0 libc 
- * distribution so in order to use it we must include a version 
- * here. 
- *
- * Copyright (c) 2003 Constantin S. Svintsoff <kostik@@iclub.nsu.ru>
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. The names of the authors may not be used to endorse or promote
- *    products derived from this software without specific prior written
- *    permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- */
-
-/*
- * char *realpath(const char *path, char resolved[PATH_MAX]);
- *
- * Find the real name of path, by removing all ".", ".." and symlink
- * components.  Returns (resolved) on success, or (NULL) on failure,
- * in which case the path which caused trouble is left in (resolved).
- */
-char *
-realpath(const char *path, char resolved[PATH_MAX])
-{
-  struct stat sb;
-  char *p, *q, *s;
-          char *left_tmp, *resolved_tmp;
-  size_t left_len, resolved_len;
-  unsigned symlinks;
-  int serrno, slen;
-  char left[PATH_MAX], next_token[PATH_MAX], symlink[PATH_MAX];
-
-  serrno = errno;
-  symlinks = 0;
-  if (path[0] == '/') {
- 	  resolved[0] = '/';
- 	  resolved[1] = '\0';
- 	  if (path[1] == '\0')
- 		  return (resolved);
- 	  resolved_len = 1;
- 	  left_tmp = strncpy(left, path + 1, sizeof(left));
-                  left_len = strlen(left_tmp);
-  } else {
- 	  if (getcwd(resolved, PATH_MAX) == NULL) {
- 		  strncpy(resolved, ".", PATH_MAX);
- 		  return (NULL);
- 	  }
- 	  resolved_len = strlen(resolved);
- 	  left_tmp = strncpy(left, path, sizeof(left));
-                  left_len = strlen(left_tmp);
-  }
-  if (left_len >= sizeof(left) || resolved_len >= PATH_MAX) {
- 	  errno = ENAMETOOLONG;
- 	  return (NULL);
-  }
-
-  /*
- 	 * Iterate over path components in `left'.
- 	 */
-  while (left_len != 0) {
- 	  /*
- 		 * Extract the next path component and adjust `left'
- 		 * and its length.
- 		 */
- 	  p = strchr(left, '/');
- 	  s = p ? p : left + left_len;
- 	  if (s - left >= sizeof(next_token)) {
- 		  errno = ENAMETOOLONG;
- 		  return (NULL);
- 	  }
- 	  memcpy(next_token, left, s - left);
- 	  next_token[s - left] = '\0';
- 	  left_len -= s - left;
- 	  if (p != NULL)
- 		  memmove(left, s + 1, left_len + 1);
- 	  if (resolved[resolved_len - 1] != '/') {
- 		  if (resolved_len + 1 >= PATH_MAX) {
- 			  errno = ENAMETOOLONG;
- 			  return (NULL);
- 		  }
- 		  resolved[resolved_len++] = '/';
- 		  resolved[resolved_len] = '\0';
- 	  }
- 	  if (next_token[0] == '\0')
- 		  continue;
- 	  else if (strcmp(next_token, ".") == 0)
- 		  continue;
- 	  else if (strcmp(next_token, "..") == 0) {
- 		  /*
- 			 * Strip the last path component except when we have
- 			 * single "/"
- 			 */
- 		  if (resolved_len > 1) {
- 			  resolved[resolved_len - 1] = '\0';
- 			  q = strrchr(resolved, '/') + 1;
- 			  *q = '\0';
- 			  resolved_len = q - resolved;
- 		  }
- 		  continue;
- 	  }
-
- 	  /*
- 		 * Append the next path component and lstat() it. If
- 		 * lstat() fails we still can return successfully if
- 		 * there are no more path components left.
- 		 */
- 	  resolved_tmp = strncat(resolved, next_token, PATH_MAX);
- 	  resolved_len = strlen(resolved_tmp);
- 	  if (resolved_len >= PATH_MAX) {
- 		  errno = ENAMETOOLONG;
- 		  return (NULL);
- 	  }
- 	  if (lstat(resolved, &sb) != 0) {
- 		  if (errno == ENOENT && p == NULL) {
- 			  errno = serrno;
- 			  return (resolved);
- 		  }
- 		  return (NULL);
- 	  }
- 	  if (S_ISLNK(sb.st_mode)) {
- 		  if (symlinks++ > MAXSYMLINKS) {
- 			  errno = ELOOP;
- 			  return (NULL);
- 		  }
- 		  slen = readlink(resolved, symlink, sizeof(symlink) - 1);
- 		  if (slen < 0)
- 			  return (NULL);
- 		  symlink[slen] = '\0';
- 		  if (symlink[0] == '/') {
- 			  resolved[1] = 0;
- 			  resolved_len = 1;
- 		  } else if (resolved_len > 1) {
- 			  /* Strip the last path component. */
- 			  resolved[resolved_len - 1] = '\0';
- 			  q = strrchr(resolved, '/') + 1;
- 			  *q = '\0';
- 			  resolved_len = q - resolved;
- 		  }
-
- 		  /*
- 			 * If there are any path components left, then
- 			 * append them to symlink. The result is placed
- 			 * in `left'.
- 			 */
- 		  if (p != NULL) {
- 			  if (symlink[slen - 1] != '/') {
- 				  if (slen + 1 >= sizeof(symlink)) {
- 					  errno = ENAMETOOLONG;
- 					  return (NULL);
- 				  }
- 				  symlink[slen] = '/';
- 				  symlink[slen + 1] = 0;
- 			  }
- 			  left_tmp = strncat(symlink, left, sizeof(left));
- 			  left_len = strlen(left_tmp);
- 			  if (left_len >= sizeof(left)) {
- 				  errno = ENAMETOOLONG;
- 				  return (NULL);
- 			  }
- 		  }
- 		  left_tmp = strncpy(left, symlink, sizeof(left));
- 		  left_len = strlen(left_tmp);
- 	  }
-  }
-
-  /*
- 	 * Remove trailing slash except when the resolved pathname
- 	 * is a single "/".
- 	 */
-  if (resolved_len > 1 && resolved[resolved_len - 1] == '/')
- 	  resolved[resolved_len - 1] = '\0';
-  return (resolved);
-}
-
-#endif /* __Lynx__ */
-
 // Validate the included idl files, some files might have been
 // ignored by the preprocessor.
 void
@@ -936,17 +722,7 @@ IDL_GlobalData::validate_included_idl_files (void)
 
   // New number of included_idl_files.
   size_t newj = 0;
-  char separator[2];
   size_t n_found = 0;
-
-# if defined (ACE_WIN32)
-#   define FULLPATH(full, partial, maxlen) ::_fullpath (full, partial, maxlen)
-    ACE_OS::strcpy (separator, "\\");
-# else
-#   define FULLPATH(full, partial, maxlen) realpath (partial, full)
-    ACE_OS::strcpy (separator, "/");
-# endif
-
   size_t n_pre_preproc_includes = idl_global->n_included_idl_files ();
   char **pre_preproc_includes = idl_global->included_idl_files ();
   size_t n_post_preproc_includes = idl_global->n_include_file_names ();
@@ -963,16 +739,15 @@ IDL_GlobalData::validate_included_idl_files (void)
       // Check this name with the names list that we got from the
       // preprocessor.
       size_t valid_file = 0;
-      full_path = FULLPATH (pre_abspath,
-                            pre_preproc_includes[j],
-                            MAXPATHLEN);
+      full_path = ACE_OS::realpath (pre_preproc_includes[j],
+                                    pre_abspath);
 
       if (full_path != 0)
         {
           for (size_t ni = 0; ni < n_post_preproc_includes; ++ni)
             {
               post_tmp = post_preproc_includes[ni]->get_string ();
-              full_path = FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
+              full_path = ACE_OS::realpath (post_tmp, post_abspath);
 
               if (full_path != 0
                   && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
@@ -1002,18 +777,16 @@ IDL_GlobalData::validate_included_idl_files (void)
             {
               iter.next (path_tmp);
               ACE_CString pre_partial (*path_tmp);
-              pre_partial += separator;
+              pre_partial += ACE_DIRECTORY_SEPARATOR_STR;
               pre_partial += pre_preproc_includes[j];
-              full_path = FULLPATH (pre_abspath,
-                               ACE_const_cast (char *, pre_partial.c_str ()),
-                               MAXPATHLEN);
+              full_path = ACE_OS::realpath (pre_partial.c_str (), pre_abspath);
 
               if (full_path != 0)
                 {
                   for (size_t m = 0; m < n_post_preproc_includes; ++m)
                     {
                       post_tmp = post_preproc_includes[m]->get_string ();
-                      full_path = FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
+                      full_path = ACE_OS::realpath (post_tmp, post_abspath);
 
                       if (full_path != 0
                           && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
