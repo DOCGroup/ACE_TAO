@@ -490,8 +490,8 @@ TAO_ORB_Core::init (int& argc, char** argv)
   this_orb->_use_omg_ior_format (use_ior);
   this_orb->_optimize_collocation_objects (this->opt_for_collocation_);
 
-  // Set the <shutdown_lock_> for the ORB
-  this_orb->shutdown_lock_ = ssf->create_event_loop_lock ();
+  // Set the <shutdown_lock_> for the ORB.
+  this_orb->_shutdown_lock (ssf->create_event_loop_lock ());
 
   // @@ Michael: I don't know if this is the best spot,
   // we might have to discuss that.

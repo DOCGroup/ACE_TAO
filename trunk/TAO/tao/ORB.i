@@ -173,6 +173,12 @@ CORBA_ORB::should_shutdown (void)
   return this->should_shutdown_;
 }
 
+ACE_INLINE void
+CORBA_ORB::_shutdown_lock (ACE_Lock *lock)
+{
+  this->shutdown_lock_ = lock;
+}
+
 ACE_INLINE CORBA::ULong
 CORBA_ORB::_incr_refcnt (void)
 {

@@ -882,7 +882,7 @@ public:
   // TAO supports the "NameService", "TradingService", "RootPOA", and
   // "POACurrent" via this method.
 
-  // = TAO-specific Extensions
+  // = TAO-specific extensions to the CORBA specification.
 
   CORBA_Object_ptr resolve_root_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
                                      TAO_POA_Manager *poa_manager = 0,
@@ -925,6 +925,7 @@ public:
   // Establish connectsion to each of the comma-separated
   // <{host}>:<{port}> combinations specified in <connections>.
 
+  // @@ Irfan, I think this comment is in the wrong place!
   // This class is intended to be inherited by others, which will
   // provide some more of the CORBA support.  Implementations of this
   // "CORBA::ORB" class must know how to create stringify/destringify
@@ -940,12 +941,15 @@ public:
   // haven't been initialized yet.
 
   static CORBA::Boolean orb_free_resources (void);
-  // indicates if we have reached a point where all ORB owned resources will be
-  // deallocated
+  // Indicates if we have reached a point where all ORB owned
+  // resources will be deallocated.
 
   // Reference counting...
   virtual CORBA::ULong _incr_refcnt (void);
   virtual CORBA::ULong _decr_refcnt (void);
+
+  void _shutdown_lock (ACE_Lock *);
+  // Sets the pointer to our shutdown lock.
 
   TAO_Leader_Follower_Info &leader_follower_info (void);
   // Get access to the leader_follower_info
@@ -979,7 +983,8 @@ private:
   // lock required for mutual exclusion between multiple threads.
 
   u_int refcount_;
-  // maintains a reference count of number of instantiations of the ORB
+  // Maintains a reference count of number of instantiations of the
+  // ORB.
 
   u_int open_called_;
   // Flag which denotes that the open method was called.
@@ -988,6 +993,8 @@ private:
   // Mutual exclusion for calling open.
 
   ACE_Lock *shutdown_lock_;
+  // Pointer to our shutdown lock.
+
   int should_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should
   // return.
