@@ -10,7 +10,7 @@
 #include "TAO_Server_Request.h"
 #include "GIOP_Message_Locate_Header.h"
 #include "Transport.h"
-#include "tao/LF_Strategy.h"
+#include "LF_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
 # include "GIOP_Message_Base.i"
@@ -564,13 +564,38 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                     qd->msg_block_->length ());
 
 
-  // Create a input CDR stream.
+  // Create a input CDR stream. We do the following
+  //  1 - If the incoming message block has a data block with a flag
+  //      DONT_DELETE  (for the data block) we create an inpur CDR
+  //      stream the same way.
+  //  2 - If the incoming message block had a datablock from heap just
+  //      use it by duplicating it and make the flag 0.
   // NOTE: We use the same data block in which we read the message and
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  TAO_InputCDR input_cdr (qd->msg_block_->data_block (),
-                          ACE_Message_Block::DONT_DELETE,
+  ACE_Message_Block::Message_Flags flg = 0;
+  ACE_Data_Block *db = 0;
+
+  // Get the flag in the message block
+  flg = qd->msg_block_->self_flags ();
+
+  if (ACE_BIT_ENABLED (flg,
+                       ACE_Message_Block::DONT_DELETE))
+    {
+      // Use the same datablock
+      db = qd->msg_block_->data_block ();
+    }
+  else
+    {
+      // Use a duplicated datablock as the datablock has come off the
+      // heap.
+      db = qd->msg_block_->data_block ()->duplicate ();
+    }
+
+
+  TAO_InputCDR input_cdr (db,
+                          flg,
                           rd_pos,
                           wr_pos,
                           qd->byte_order_,
