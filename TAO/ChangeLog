@@ -13,7 +13,8 @@ Sun Jun 27 09:39:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  broken DNS surprising on Win32. 
 
 	  If the user sets a value through their config.h, the change
-	  should have no effect.
+	  should have no effect. Thanks to Boris for the suggestion and 
+	  Valery Salamakha for motivating this fix. 
 
 Fri Jun 25 14:45:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
