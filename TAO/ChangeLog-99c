@@ -1,124 +1,130 @@
+Thu Aug 26 08:43:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Acceptor_Impl.cpp: added #include "ace/Object_Manager.h",
+          because the file now uses the ACE_Static_Object_Lock.  Thanks
+          to Andy for reporting this.
+
 Wed Aug 25 23:13:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/POA.cpp:
-	  Use the correct (CORBA 2.3 compliant) minor code for the
-	  BAD_INV_ORDER exception. Thanks to Ossama for pointing this out.
+        * tao/POA.cpp:
+          Use the correct (CORBA 2.3 compliant) minor code for the
+          BAD_INV_ORDER exception. Thanks to Ossama for pointing this out.
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	  Remove unused method to set the orb of an ORB core, really evil
-	  stuff.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+          Remove unused method to set the orb of an ORB core, really evil
+          stuff.
 
 Wed Aug 25 22:31:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.h:
-	* tao/ORB.i:
-	* tao/ORB.cpp:
-	  Eliminated cached references to the Naming, Trading and ImplRepo
-	  because otherwise doing resolve_initial_references() after the
-	  server restarts does not return the new IOR.
-	  Also removed the place holders for the scheduling and event
-	  services that were not used at all and now can be replaced by
-	  the -ORBInitRef option.
-	  
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	  Moved the open() and create_stub_object() methods from the ORB
-	  class to the ORB_Core class, this is their natural location and
-	  eliminate cross calls between them.
+        * tao/ORB.h:
+        * tao/ORB.i:
+        * tao/ORB.cpp:
+          Eliminated cached references to the Naming, Trading and ImplRepo
+          because otherwise doing resolve_initial_references() after the
+          server restarts does not return the new IOR.
+          Also removed the place holders for the scheduling and event
+          services that were not used at all and now can be replaced by
+          the -ORBInitRef option.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+          Moved the open() and create_stub_object() methods from the ORB
+          class to the ORB_Core class, this is their natural location and
+          eliminate cross calls between them.
 
 Wed Aug 25 18:18:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
-	  Added missing parenthesis
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp:
+          Added missing parenthesis
 
 Wed Aug 25 16:47:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
           Removed an unused arg and some commented-out code.
 
-	* TAO_IDL/be/be_visitor_operation/operation_is.cpp:
-	  Fixed a const char*/char* compile error on MSVC.
+        * TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+          Fixed a const char*/char* compile error on MSVC.
 
 Wed Aug 25 16:20:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Sequence.cpp:
-	* tao/Sequence_T.cpp:
+        * tao/Sequence.cpp:
+        * tao/Sequence_T.cpp:
 
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
-	  Sequence copy constructors now check for a null rhs buffer. If a 
-	  sequence was instantiated, and (perhaps implicitly) passed to a 
-	  copy constructor without its length being set (deprecated but 
-	  possible) or its length set to 0 (definitely possible), setting 
-	  the length of the new sequence would result in a crash. Thanks to 
-	  Lothar Werzinger <werzinger.lothar@krones.de> for sending in
-	  the example that led to this discovery.
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+          Sequence copy constructors now check for a null rhs buffer. If a
+          sequence was instantiated, and (perhaps implicitly) passed to a
+          copy constructor without its length being set (deprecated but
+          possible) or its length set to 0 (definitely possible), setting
+          the length of the new sequence would result in a crash. Thanks to
+          Lothar Werzinger <werzinger.lothar@krones.de> for sending in
+          the example that led to this discovery.
 
 Wed Aug 25 16:17:24 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* examples/POA/Default_Servant/File_i.cpp (open):
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (activate):
-	* performance-tests/Thruput/TAO/utils.cpp (PrintStats):
-	* tests/NestedUpcall/MT_Client_Test/client.cpp (init):
+        * examples/POA/Default_Servant/File_i.cpp (open):
+        * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp (activate):
+        * performance-tests/Thruput/TAO/utils.cpp (PrintStats):
+        * tests/NestedUpcall/MT_Client_Test/client.cpp (init):
 
-	  Fixed format specifier mismatch warnings from gcc 2.95.1.
+          Fixed format specifier mismatch warnings from gcc 2.95.1.
 
-	* performance-tests/Makefile:
+        * performance-tests/Makefile:
 
-	  Do not build Latency test if Minimum CORBA support is enabled
-	  since _non_existent() is not defined in that case.
+          Do not build Latency test if Minimum CORBA support is enabled
+          since _non_existent() is not defined in that case.
 
-	* orbsvcs/orbsvcs/Runtime_Scheduler.cpp (set):
+        * orbsvcs/orbsvcs/Runtime_Scheduler.cpp (set):
 
-	  Fixed "comparison between signed and unsigned" warnings.
+          Fixed "comparison between signed and unsigned" warnings.
 
-	* tao/Stub.i (make_profiles):
-	* tao/IIOP_Profile.i (_key):
-	* tao/UIOP_Profile.i (_key):
-	* tao/default_resource.cpp:
+        * tao/Stub.i (make_profiles):
+        * tao/IIOP_Profile.i (_key):
+        * tao/UIOP_Profile.i (_key):
+        * tao/default_resource.cpp:
 
-	  Changed use of 'return new()' to ACE_NEW_RETURN() macro.  ACE_NEW
-	  macros should be used instead of the plain C++ new in TAO code.
+          Changed use of 'return new()' to ACE_NEW_RETURN() macro.  ACE_NEW
+          macros should be used instead of the plain C++ new in TAO code.
 
 Wed Aug 25 15:58:44 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_visitor_interface/interface_ih.h: 
-	* TAO_IDL/be/be_visitor_interface/interface_ih.cpp: 
-	* TAO_IDL/be_include/be_visitor_interface/interface_is.h:
-	* TAO_IDL/be/be_visitor_interface/interface_is.cpp: 
-	* TAO_IDL/be/be_visitor_operation/operation_is.cpp:
-	Made changes in order to remove the generation of the constructors
-	for the base classes, generate code for the operations of all the
-	base interfaces correctly.
-	Thanks to Timothy Canham <Timothy.Canham@jpl.nasa.gov>, Byron
-	Harris <harris_b@ociweb.com> and Jeff Parsons
-	<parsons@cs.wustl.edu> for pointing out the bugs
+        * TAO_IDL/be_include/be_visitor_interface/interface_ih.h:
+        * TAO_IDL/be/be_visitor_interface/interface_ih.cpp:
+        * TAO_IDL/be_include/be_visitor_interface/interface_is.h:
+        * TAO_IDL/be/be_visitor_interface/interface_is.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_is.cpp:
+        Made changes in order to remove the generation of the constructors
+        for the base classes, generate code for the operations of all the
+        base interfaces correctly.
+        Thanks to Timothy Canham <Timothy.Canham@jpl.nasa.gov>, Byron
+        Harris <harris_b@ociweb.com> and Jeff Parsons
+        <parsons@cs.wustl.edu> for pointing out the bugs
 
 Wed Aug 25 12:15:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB.pidl:
-	  Helper file used to generate the proper signature for several
-	  methods in the CORBA::ORB class
+        * tao/ORB.pidl:
+          Helper file used to generate the proper signature for several
+          methods in the CORBA::ORB class
 
-	* tao/Object.pidl:
-	  Helper file used to generate the proper signature for several
-	  methods in the CORBA::Object class
+        * tao/Object.pidl:
+          Helper file used to generate the proper signature for several
+          methods in the CORBA::Object class
 
 Wed Aug 25 12:09:42 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao_targets.GNU:
-	  Added new targets used in the top-level ACE makefile to compile
-	  just what TAO needs.
+        * tao_targets.GNU:
+          Added new targets used in the top-level ACE makefile to compile
+          just what TAO needs.
 
 Wed Aug 25 11:11:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
-	  Removed an unused arg from post_process().
+        * TAO_IDL/be/be_visitor_enum/enum_ch.cpp:
+          Removed an unused arg from post_process().
 
 Wed Aug 25 10:16:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
