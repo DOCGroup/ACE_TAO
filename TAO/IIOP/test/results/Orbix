@@ -65,6 +65,28 @@ MT-Orbix Thread-Per-Session    1         8.956                  111
                                2         9.581                  104
                                3        16.702                   59
 
+IO-intensive results over ATM with 20,000 calls
+-----------------------------------------------
+
+                               Clients  Latency (ms)            Calls/Sec
+
+MT-Orbix without filters       1        6.667                   149
+                               2       12.165                    82                    
+                               3       18.634                    54
+                                       
+                                       
+MT-Orbix Thread-Per-Request    1       6.812                    146
+                               2       6.937                    144
+                               3       7.706                    128
+                                       
+MT-Orbix Thread-Pool (25)      1       6.813                    146
+                               2       6.954                    144
+                               3       7.776                    128
+                                       
+MT-Orbix Thread-Per-Session    1       6.85                     145
+                               2       7.253                    137
+                               3       7.645                    130
+
       TNF client-side profile for MT-Orbix without filters for 20000 calls
 
 Function name         %      self+desc.          mean     max      min     std.
