@@ -382,12 +382,14 @@ DRV_parse_args (long ac, char **av)
               else if (av[i][2] == 'n')
                 idl_global->changing_standard_include_files (0);
               else
+                {
                   ACE_ERROR ((
                       LM_ERROR,
                       ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                       av[i]
                     ));
                   ACE_OS::exit (99);
+                }
               break;
 
               // Path for the perfect hash generator(gperf) program. Default
