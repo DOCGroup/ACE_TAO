@@ -106,16 +106,14 @@
 
 // Then the compiler specific parts
 
-// egcs or really modern gcc
-#if __GNUC__ > 2 || ( __GNUC__ == 2 && __GNUC_MINOR__ >= 90)
-# define ACE_HAS_ANSI_CASTS
-# define ACE_HAS_CPLUSPLUS_HEADERS
-# define ACE_HAS_STDCPP_STL_INCLUDES
-# define ACE_HAS_TEMPLATE_TYPEDEFS
-# define ACE_HAS_TYPENAME_KEYWORD
-#else
-# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-#endif /* EGCS */
+#if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+#elif defined (__KCC)
+// Add KCC support here!
+# error KCC support is not yet available from ace/config-linux-common.h
+#else  /* ! __GNUG__ && ! __KCC */
+# error unsupported compiler in ace/config-linux-common.h
+#endif /* ! __GNUG__ && ! __KCC */
 
 
 // Completely common part :-)
@@ -203,13 +201,6 @@
 #define ACE_HAS_SEMUN
 
 #define ACE_HAS_POSIX_TIME
-
-// TDN - adapted from file for SunOS4 platforms using the GNU g++ compiler
-// Compiler's template mechanism must see source code (i.e., .C files).
-#define ACE_TEMPLATES_REQUIRE_SOURCE
-
-#define ACE_HAS_TEMPLATE_SPECIALIZATION
-#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
