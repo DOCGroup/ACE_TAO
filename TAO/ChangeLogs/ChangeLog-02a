@@ -1,3 +1,13 @@
+Sat May 27 10:40:27 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp: 
+
+	  Fixed addressing problems. Modified the transport to initiate the PATH messaged only when explicitly initiated with a modify_qos or specifying the QoS during stream set-up.
+	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+
+	  Modified the test to demonstrate the initiation of QoS messages when explicitly stated with modify_qos.
+
 Sun May 27 22:43:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
         * tests/ior_corbaloc/Makefile:
