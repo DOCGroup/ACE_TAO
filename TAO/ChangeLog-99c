@@ -1,3 +1,13 @@
+Mon Feb 22 19:15:09 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * examples/Simple/bank/bank.dsw:
+        * examples/Simple/bank/client.dsp:
+        * examples/Simple/bank/server.dsp:
+          Created MSVC Project files for the Simple Bank Example.
+
+        * examples/TAO_Examples.dsw:
+          Added the Simple Bank Example project files.
+
 Mon Feb 22 14:27:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* rules.tao.GNU: Added rules to compile IDL files using Flick.
