@@ -1,3 +1,12 @@
+Mon Feb 28 09:16:40 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Local_Tokens.cpp (ACE_TPQ_Entry):
+
+	  Removed cast of ACE_thread_t to long unsigned int since some
+	  platforms (e.g. HPUX) declare the underlying thread type as a
+	  structure.  This change reverts back to the version prior to
+	  Steve's change.
+
 Mon Feb 28 08:33:43 2000  Zoran Ivanovic <Zoran_Ivanovic@i2.com>
 
         * docs/ACE-guidelines.html: fixed typo, in example
