@@ -1,13 +1,94 @@
 // $Id$
 
-This test application exercises basic features of TAO's Naming
-Service.  It behaves as follows:
+This application tests different features of TAO's Naming Service
+based on the command line option.
 
-        1. It obtains an object reference to a remote Naming
-           Service process.  This process is launched 
-           automatically by the run_test.pl perl script. 
+The following options exist:
 
-        2. It binds(), resolves(), and unbinds() an object
-           reference into the Naming Context.
+-s	Run the Simple test of the Naming Service.
 
-We'll add more features to this test over time.
+-t  	Run the Tree test of the Naming Service.
+
+-e	Run the Exceptions test of the Naming Service
+
+-i 	Run the Iterator test of the Naming Service.
+
+-y      Run the Destroy test of the Naming Service.
+
+If no option is specified, Simple test is run.  If more than one
+option is specified, only one test runs.
+
+Below is the description of each test.
+*******************************************
+
+Simple Test.
+
+Performs bind (), resolve (), and unbind () of an object reference in
+the root context.
+
+********************************************
+
+Tree Test.
+
+Checks all Naming Service functions with a tree of Naming Contexts.
+
+root->bind_new_context (level1) 
+
+new = root->new_context (), new->bind (foo, obj), and 
+  root->bind_context (level1/level2, new)
+
+We now have root->level1->level2->foo
+
+root->resolve (level1/level2/foo).
+root->unbind (level1/level2/foo).
+root->bind (level1/level2/foo, obj).
+
+new = root->new_context()
+root->rebind_context(level1/level2, new) 
+
+root->bind (level1/level2/foo obj)
+root->resolve (level1/level2/foo)
+root->rebind (level1/level2/foo, obj2) to have a different object under the name bar.
+root->resolve (level1/level2/foo) to make sure correct reference is returned.
+
+********************************************
+
+Exceptions Test.
+
+Makes sure that Naming Service throws exceptions as expected, and data
+inside exceptions is set correctly.
+
+Create a tree of Naming Contexts: root context -> level1 -> level2.  
+
+Bind an object with the name foo into each of the Naming Contexts.
+
+root->resolve () (with a Name of length 0) - should get InvalidName exception.
+root->bind (foo, obj) - should get AlreadyBound exception.
+root->bind (level1/foo, obj) - should get AlreadyBound exception.
+root->unbind (level1/level2/bar) - should get NotFound exception
+  with why = not_object, rest_of_name = bar.
+root->unbind (level1/level3/foo) - should get NotFound exception
+  with why = missing_node, rest_of_name = level3/foo.
+root->unbind (level1/foo/foo) -should get NotFound exception
+  with why = not_context, rest_of_name = foo/foo.
+
+*********************************************
+
+Iterator Test.
+
+Bind () objects with the following names foo1, foo2, foo3, and foo4
+into the root Naming Context.
+
+root->lists (1, bl, iter)  
+iter->next_one () 
+iter->next_n (2, bl) 
+iter->next_one () - should return false
+iter->destroy () 
+
+*********************************************
+
+Destroy Test. 
+
+This test will ...
+
+********************************************
