@@ -591,7 +591,9 @@ TAO_NamingContext::destroy (CORBA::Environment &_env)
   // Let go of the lock.
   //
   // Commit suicide: must have been dynamically allocated
-  delete this;
+
+  if (this->root_ != 0)
+    delete this;
 }
 
 void
