@@ -219,8 +219,11 @@ ifeq ($(debug),0)
 endif # debug
 
 ifeq ($(debug),)
-  CFLAGS  += -DACE_NDEBUG
-##  CCFLAGS += -DACE_NDEBUG
+  ifeq (,$(findstring $(CFLAGS),$(CCFLAGS)))
+    CCFLAGS += -DACE_NDEBUG
+  else
+    CFLAGS  += -DACE_NDEBUG
+  endif
 else
   CFLAGS  += $(DCFLAGS)
   CCFLAGS += $(DCCFLAGS)
