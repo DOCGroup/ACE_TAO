@@ -10,7 +10,6 @@
 #  include /**/ <string.h>             // Need to see strlen()
 #endif /* ACE_WIN32 */
 
-
 inline
 ACE_Wide_To_Ascii::~ACE_Wide_To_Ascii (void)
 {
@@ -22,7 +21,6 @@ ACE_Wide_To_Ascii::char_rep (void)
 {
   return this->s_;
 }
-
 
 inline char *
 ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
@@ -66,13 +64,11 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
   return str;
 }
 
-
 inline
 ACE_Wide_To_Ascii::ACE_Wide_To_Ascii (const wchar_t *s)
   : s_ (ACE_Wide_To_Ascii::convert (s))
 {
 }
-
 
 inline
 ACE_Ascii_To_Wide::~ACE_Ascii_To_Wide (void)
@@ -85,7 +81,6 @@ ACE_Ascii_To_Wide::wchar_rep (void)
 {
   return this->s_;
 }
-
 
 inline wchar_t *
 ACE_Ascii_To_Wide::convert (const char *str)
@@ -116,12 +111,10 @@ ACE_Ascii_To_Wide::convert (const char *str)
   return wstr;
 }
 
-
 inline
 ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (const char *s)
 : s_ (ACE_Ascii_To_Wide::convert (s))
 {
 }
-
 
 #endif /* ACE_HAS_WCHAR */
