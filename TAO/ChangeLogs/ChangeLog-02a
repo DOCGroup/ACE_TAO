@@ -1,3 +1,11 @@
+Tue Mar 28 14:29:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+	  Added code to deal with the repo id in the >>=
+	  operator. The corresponding stream operators
+	  insert the repo id, but don't extract it. Thanks to
+	  Carlos for suggesting this approach.
+
 Mon Mar 27 23:30:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/orbconf.h: Changed the following macro definitions to be 0
