@@ -58,7 +58,9 @@ public:
   // Noop virtual destructor
 
   virtual int remove (void) = 0;
-  // Explicitly destroy the lock.
+  // Explicitly destroy the lock.  Note that only one thread should
+  // call this method since it doesn't protect against race
+  // conditions.
 
   virtual int acquire (void) = 0;
   // Block the thread until the lock is acquired.  Returns -1 on
@@ -248,7 +250,9 @@ public:
   // Implicitly destroy the semaphore.
 
   int remove (void);
-  // Explicitly destroy the semaphore.
+  // Explicitly destroy the semaphore.  Note that only one thread
+  // should call this method since it doesn't protect against race
+  // conditions.
 
   int acquire (void);
   // Block the thread until the semaphore count becomes
@@ -348,7 +352,9 @@ public:
   // Implicitly destroy the semaphore.
 
   int remove (void);
-  // Explicitly destroy the semaphore.
+  // Explicitly destroy the semaphore.  Note that only one thread
+  // should call this method since it doesn't protect against race
+  // conditions.
 
   int acquire (void);
   // Block the thread until the semaphore count becomes greater than
@@ -456,7 +462,9 @@ public:
   // Implicitly destroy a readers/writer lock
 
   int remove (void);
-  // Explicitly destroy a readers/writer lock.
+  // Explicitly destroy a readers/writer lock.  Note that only one
+  // thread should call this method since it doesn't protect against
+  // race conditions.
 
   int acquire_read (void);
   // Acquire a read lock, but block if a writer hold the lock.
@@ -528,7 +536,9 @@ public:
   // Implicitly destroy the mutex.
 
   int remove (void);
-  // Explicitly destroy the mutex.
+  // Explicitly destroy the mutex.  Note that only one thread should
+  // call this method since it doesn't protect against race
+  // conditions.
 
   int acquire (void);
   // Acquire lock ownership (wait on queue if necessary).
@@ -615,7 +625,9 @@ public:
   ~ACE_Process_Mutex (void);
 
   int remove (void);
-  // Explicitly destroy the mutex.
+  // Explicitly destroy the mutex.  Note that only one thread should
+  // call this method since it doesn't protect against race
+  // conditions.
 
   int acquire (void);
   // Acquire lock ownership (wait on queue if necessary).
@@ -691,7 +703,9 @@ public:
   ~ACE_RW_Process_Mutex (void);
 
   int remove (void);
-  // Explicitly destroy the mutex.
+  // Explicitly destroy the mutex.  Note that only one thread should
+  // call this method since it doesn't protect against race
+  // conditions.
 
   int acquire (void);
   // Acquire lock ownership (wait on queue if necessary).
@@ -913,7 +927,9 @@ public:
   // Implicitly destroy the event variable.
 
   int remove (void);
-  // Explicitly destroy the event variable.
+  // Explicitly destroy the event variable.  Note that only one thread
+  // should call this method since it doesn't protect against race
+  // conditions.
 
   ACE_event_t handle (void) const;
   // Underlying handle to event.
@@ -1068,7 +1084,9 @@ public:
   // Implicitly destroy the mutex.
 
   int remove (void);
-  // Explicitly destroy the mutex.
+  // Explicitly destroy the mutex.  Note that only one thread should
+  // call this method since it doesn't protect against race
+  // conditions.
 
   int acquire (void);
   // Acquire lock ownership (wait on queue if necessary).
@@ -1154,7 +1172,9 @@ public:
   // the reason for this).
 
   int remove (void);
-  // Explicitly release the lock.
+  // Explicitly release the lock.  Note that only one thread should
+  // call this method since it doesn't protect against race
+  // conditions.
 
   int acquire (void);
   // Explicitly acquire the lock.
@@ -1245,7 +1265,9 @@ public:
   // Implicitly destroy the condition variable.
 
   int remove (void);
-  // Explicitly destroy the condition variable.
+  // Explicitly destroy the condition variable.  Note that only one
+  // thread should call this method since it doesn't protect against
+  // race conditions.
 
   int wait (const ACE_Time_Value *abstime);
   // Block on condition, or until absolute time-of-day has passed.  If
@@ -1313,7 +1335,9 @@ public:
   // Implicitly release a recursive mutex.
 
   int remove (void);
-  // Implicitly release a recursive mutex.
+  // Implicitly release a recursive mutex.  Note that only one thread
+  // should call this method since it doesn't protect against race
+  // conditions.
 
   int acquire (void);
   // Acquire a recursive mutex (will increment the nesting level and
