@@ -4,7 +4,8 @@ Sun Sep 05 23:52:16 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  define these macros, we should always assume the child process
 	  exit properly because the return status does not tell us how the
 	  process exited.  Likewise, the WEXITSTATUS macro should simply
-	  return the status.
+	  return the status we got from ACE_OS::wait because it only
+	  contains the exit status of child process.
 
 Sun Sep  5 23:40:25 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
