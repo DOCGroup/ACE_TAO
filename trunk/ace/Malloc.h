@@ -391,8 +391,8 @@ public:
               ? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN) \
               : ACE_MALLOC_ALIGN) / int (sizeof (long)))
 # endif /* !ACE_CONTROL_BLOCK_ALIGN_LONGS */
+  /// Force alignment.
   long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
-  // Force alignment.
 #endif /* ACE_CONTROL_BLOCK_ALIGN_LONGS && ACE_CONTROL_BLOCK_ALIGN_LONGS == 0 */
 
   /// Dummy node used to anchor the freelist.  This needs to come last...

@@ -183,7 +183,7 @@ protected:
   /// Destructor.
   virtual ~ACE_WIN32_Asynch_Operation (void);
 
-  /// WIn32 Proactor.
+  /// Win32 Proactor.
   ACE_WIN32_Proactor *win32_proactor_;
 
   /// Proactor that this asynch IO is registered with.
@@ -1193,18 +1193,18 @@ public:
    */
   int close (void);
 
-  /// virtual from ACE_Event_Handler
+  /// Virtual from ACE_Event_Handler
   ACE_HANDLE get_handle (void) const;
 
-  /// virtual from ACE_Event_Handler
+  /// Virtual from ACE_Event_Handler
   void set_handle (ACE_HANDLE handle);
 
-  /// virtual from ACE_Event_Handler
+  /// Virtual from ACE_Event_Handler
   int handle_input  ( ACE_HANDLE handle);
   int handle_output ( ACE_HANDLE handle);
   int handle_exception ( ACE_HANDLE handle);
 
-  /// virtual from ACE_Event_Handler
+  /// Virtual from ACE_Event_Handler
   int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) ;
 
   // = Methods belong to ACE_WIN32_Asynch_Operation base class. These
@@ -1544,6 +1544,8 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Read_Dgram factory.
   ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Handler &handler,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
@@ -1554,8 +1556,6 @@ protected:
                                       ACE_HANDLE event,
                                       int priority,
                                       int signal_number = 0);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Read_Dgram factory.
 
   /// Proactor will call this method when the read completes.
   virtual void complete (u_long bytes_transferred,
@@ -1603,6 +1603,8 @@ class ACE_Export ACE_WIN32_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dg
 public:
   /// Constructor.
   ACE_WIN32_Asynch_Read_Dgram (ACE_WIN32_Proactor *win32_proactor);
+
+  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Dgram (void);
 
    /** This starts off an asynchronous read.  Upto
@@ -1731,6 +1733,8 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
 protected:
+  /// Constructor is protected since creation is limited to
+  /// ACE_Asynch_Write_Stream factory.
   ACE_WIN32_Asynch_Write_Dgram_Result (ACE_Handler &handler,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block *message_block,
@@ -1740,8 +1744,6 @@ protected:
                                        ACE_HANDLE event,
                                        int priority,
                                        int signal_number = 0);
-  // Constructor is protected since creation is limited to
-  // ACE_Asynch_Write_Stream factory.
 
   /// ACE_Proactor will call this method when the write completes.
   virtual void complete (u_long bytes_transferred,
@@ -1785,6 +1787,8 @@ class ACE_Export ACE_WIN32_Asynch_Write_Dgram : public virtual ACE_Asynch_Write_
 public:
   /// Constructor.
   ACE_WIN32_Asynch_Write_Dgram (ACE_WIN32_Proactor *win32_proactor);
+
+  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Dgram (void);
 
   /** This starts off an asynchronous send.  Upto

@@ -41,8 +41,10 @@ class ACE_QoS_Export ACE_QoS_Manager
 {
 
 public:
-  /// Default ctor/dtor.
+  /// Default constructor.
   ACE_QoS_Manager (void);
+
+  /// Default destructor.
   ~ACE_QoS_Manager (void);
 
   /**

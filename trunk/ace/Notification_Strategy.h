@@ -33,24 +33,34 @@ class ACE_Reactor;
 class ACE_Export ACE_Notification_Strategy
 {
 public:
+  /// Constructor.
   ACE_Notification_Strategy (ACE_Event_Handler *eh,
                              ACE_Reactor_Mask mask);
+
+  /// Destructor.
   virtual ~ACE_Notification_Strategy (void);
 
   virtual int notify (void) = 0;
   virtual int notify (ACE_Event_Handler *,
                       ACE_Reactor_Mask mask) = 0;
 
-  // Get/Set the event handler
+  /// Get the event handler.
   ACE_Event_Handler *event_handler (void);
+
+  /// Set the event handler.
   void event_handler (ACE_Event_Handler *eh);
 
-  // Get/Set the reactor mask
+  /// Get the reactor mask.
   ACE_Reactor_Mask mask (void);
+
+  /// Set the reactor mask.
   void mask (ACE_Reactor_Mask m);
 
 protected:
+  /// The event handler.
   ACE_Event_Handler *eh_;
+
+  /// The reactor mask.
   ACE_Reactor_Mask mask_;
 };
 

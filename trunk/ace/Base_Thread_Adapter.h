@@ -74,6 +74,7 @@ protected:
 class ACE_OS_Export ACE_Base_Thread_Adapter
 {
 public:
+  /// Constructor.
   ACE_Base_Thread_Adapter (ACE_THR_FUNC user_func,
                            void *arg,
                            ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
@@ -82,7 +83,6 @@ public:
                            , ACE_SEH_EXCEPT_HANDLER selector = 0
                            , ACE_SEH_EXCEPT_HANDLER handler = 0
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-  /// Constructor.
                       );
 
   /// Virtual method invoked by the thread entry point.

@@ -287,36 +287,52 @@ public:
   void parse_args (int argc,
                    ACE_TCHAR *argv[]);
 
-  // = Set/Get port number
+  /// Set the port number
   void nameserver_port (int port);
+
+  /// Get the port number
   int nameserver_port (void);
 
-  // = Set/Get the context
+  /// Get the context
   ACE_Naming_Context::Context_Scope_Type context (void);
+
+  /// Set the context
   void context (ACE_Naming_Context::Context_Scope_Type);
 
-  // = Set/Get host name
+  /// Set the host name
   void nameserver_host (const ACE_TCHAR *host);
+
+  /// Get the host name
   const ACE_TCHAR *nameserver_host (void);
 
-  // = Set/Get name space directory
+  /// Set name space directory
   void namespace_dir (const ACE_TCHAR *dir);
+
+  /// Get name space directory
   const ACE_TCHAR *namespace_dir (void);
 
-  // = Set/Get process name
+  /// Set process name
   void process_name (const ACE_TCHAR *dir);
+
+  /// Get process name
   const ACE_TCHAR *process_name (void);
 
-  // = Set/Get database name
+  /// Set database name
   void database (const ACE_TCHAR *);
+
+  /// Get database name
   const ACE_TCHAR *database (void);
 
-  // = Set/Get base address of the underlying allocator
+  /// Set base address of the underlying allocator
   void base_address (char *address);
+
+  /// Get base address of the underlying allocator
   char *base_address (void);
 
-  // Set/Get use of registry in naming
+  /// Get use of registry in naming
   int use_registry (void);
+
+  /// Set use of registry in naming
   void use_registry (int);
 
   /// Return debug status
