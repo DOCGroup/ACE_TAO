@@ -1,3 +1,10 @@
+Sun Oct 21 16:44:41 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Proactor_Test.cpp (disable_signal):
+
+	  Fixed warnings regarding a method that "hid" virtual function
+	  with the same name, in addition to unused argument warnings.
+
 Sun Oct 21 15:22:57 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Proactor_Test.cpp:
