@@ -56,11 +56,6 @@
 // Platform does not support reentrant password file accessor functiions.
 #define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
 
-// Platform does not support reentrant netdb functions (getprotobyname_r,
-// getprotobynumber_r, gethostbyaddr_r, gethostbyname_r,
-// getservbyname_r).
-#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-
 // uses ctime_r & asctime_r with only two parameters vs. three
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 
@@ -94,9 +89,5 @@
 # define ACE_CC_MINOR_VERSION (_COMPILER_VERSION % 100)
 # define ACE_CC_BETA_VERSION  (0)
 #endif /* _COMPILER_VERSION */
-
-#if !defined (ACE_HAS_NETDB_REENTRANT_FUNCTIONS)
-#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-#endif /* ACE_HAS_NETDB_REENTRANT_FUNCTIONS */
 
 #endif /* ACE_CONFIG_IRIX6X_NTHR_H */

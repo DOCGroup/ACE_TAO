@@ -2,6 +2,8 @@
 
 # Irix 6.x with KCC 3.3f
 
+include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
+
 # WARNING_FLAGS +=
 # 111: statement is unreachable.    There's a whole bunch of these
 #                                   in the ace code.

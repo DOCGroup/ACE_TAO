@@ -128,7 +128,15 @@
 // Platform supports POSIX timers via timestruc_t.
 #define ACE_HAS_POSIX_TIME
 #define ACE_LACKS_SYSTIME_H
+
 //**************************************************************
+
+// IRIX 6.4 and below do not support reentrant netdb functions
+// (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,
+// gethostbyname_r, getservbyname_r).
+#if ACE_IRIX_VERS <= 64 && !defined (ACE_HAS_NETDB_REENTRANT_FUNCTIONS)
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+#endif /* ACE_HAS_NETDB_REENTRANT_FUNCTIONS */
 
 #define ACE_HAS_DIRENT
 // Unless the thread enabled version is used the readdir_r interface
