@@ -1,3 +1,14 @@
+Fri Oct  9 13:42:47 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
+
+	* performance-tests/Thruput/TAO/results/REMOTE/README: added this
+	  file so cvs won't erase these empty directories for storing
+	  results of the thruput test. Note: also added the empty
+	  directories ./results/REMOTE. 
+
+	* performance-tests/Thruput/TAO/run_client: run_client now checks
+	  for the testname directory and if it doesn't exist, it will
+	  create a directory to put the results.
+
 Fri Oct 09 02:19:09 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/IIOP_Object.cpp (Profile): Added new constructor.
