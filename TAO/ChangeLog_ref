@@ -231,12 +231,12 @@ Wed Jun 25 19:01:33 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/Valuetype/Value_VarOut_T.cpp:
         * tao/Valuetype/Value_VarOut_T.h:
 
-	        Partial support for traits code generation, along with
-	        corresponding changes to ORB code, some of it temporary
-	        until the hand-crafted files can be regenerated. These
-	        changes add code generation for interface and valuetype
-	        traits, and  modify sequence code to use some of these
-	        traits.
+          Partial support for traits code generation, along with
+          corresponding changes to ORB code, some of it temporary
+	  until the hand-crafted files can be regenerated. These
+	  changes add code generation for interface and valuetype
+	  traits, and  modify sequence code to use some of these
+	  traits.
 
           Also removed the _upcast and _downcast methods from
           bounded and unbounded versions of object sequences.
@@ -484,8 +484,8 @@ Thu Jun 19 17:31:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/Bench/wire/test_i.cpp:
         * tests/Bench/wire/test_i.h:
 
-	        New files, handcrafted example for testing
-	        changes in this branch.
+	  New files, handcrafted example for testing changes in this
+	  branch. 
 
         * tao/Argument.h:
         * tao/BD_String_Argument_T.h:
@@ -499,15 +499,14 @@ Thu Jun 19 17:31:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/UB_String_Argument_T.h:
         * tao/UB_String_Arguments.h:
 
-	        Changes to the new TAO template args/traits
-	        interface.
+          Changes to the new TAO template args/traits interface.
 
         * tao/CORBA_String.h:
         * tao/CORBA_String.inl:
 
-	        Added ptr() method to (w)string _var classes,
-	        to get a return value of T * without giving
-	        up ownership of the underlying pointer.
+	  Added ptr() method to (w)string _var classes, to get a return
+	  value of T * without giving up ownership of the underlying
+	  pointer. 
 
 Wed Jun 18 22:57:37 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
