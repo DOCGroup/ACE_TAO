@@ -5,6 +5,22 @@
 #       applications
 #----------------------------------------------------------------------------
 
+#### The "release" and "releaseall" targets can be used to create
+#### the ACE and ACE+TAO kits.  By default, each creates a new beta
+#### release.  To create a new minor or major release, add "REL=minor"
+#### or "REL=major", respectively, to the make invocation.
+####
+#### NOTE: the REL modifier applies to _both_ ACE and TAO in
+#### releaseall!
+####
+#### To create a new ACE minor release and a TAO beta release:
+####   % make release REL=minor
+####   % cd TAO
+####   % make release
+####
+#### To see what make release* would do without actually doing it, add
+#### "CHECK=-n" to the invocation.
+
 #----------------------------------------------------------------------------
 #       Local macros
 #----------------------------------------------------------------------------
@@ -82,9 +98,7 @@ RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
                 ACE_wrappers/ACE-INSTALL \
                 ACE_wrappers/man
 
-ALL_RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
-                    ACE_wrappers/ACE-INSTALL \
-                    ACE_wrappers/man \
+ALL_RELEASE_FILES = $(RELEASE_FILES) \
 		    ACE_wrappers/TAO
 
 RELEASE_LIB_FILES = \
@@ -164,13 +178,13 @@ endif
 FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' \
          ! -name '*.MAK' -print
 
-cleanrelease: ACE-INSTALL
+cleanrelease-old: ACE-INSTALL
 	@$(TIMESTAMP) (make realclean; cd ..; \
          find $(RELEASE_FILES) $(FILTER) | \
            cpio -o -H tar | gzip -9 > ACE.tar.gz; \
          chmod a+r ACE.tar.gz; mv ACE.tar.gz ./ACE_wrappers/)
 
-release: ACE-INSTALL
+release-old: ACE-INSTALL
 	@$(TIMESTAMP) (cd ..; \
          find $(RELEASE_FILES) $(FILTER) | \
            cpio -o -H tar | gzip -9 > ACE.tar.gz; \
@@ -179,13 +193,38 @@ release: ACE-INSTALL
          chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
          mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
 
-releaseall: release
+releaseall-old: release
 	@cd TAO; make releaseall
 	@(cd ..; \
          find $(ALL_RELEASE_FILES) $(FILTER) | \
            cpio -o -H tar | gzip -9 > ACE+TAO.tar.gz; \
          chmod a+r ACE+TAO.tar.gz; \
          mv ACE+TAO.tar.gz ./ACE_wrappers/)
+
+REL = beta
+CHECK =
+
+#### The release target creates the ACE (only) kit.
+release: ACE-INSTALL
+	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
+	   -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
+	   -l "$(RELEASE_LIB_FILES)"
+
+#### The following target is for use by the TAO Makefile.  It should not
+#### be called directly from the command line.  The releasetao target
+#### creates the combined ACE-TAO kit.
+releasetao:
+	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace+tao -t $(REL) \
+	   -c "$(CONTROLLED_FILES)" -r "$(ALL_RELEASE_FILES)"
+
+#### The releaseall target:
+####   1) Creates the ACE kit.
+####   2) Updates the TAO release (VERSION, ChangeLog, and tag) by
+####      recursively invoking make release in the TAO directory.
+####      The make then recursively invokes make releasetao in this
+####      directory to create the combined ACE-TAO kit.
+releaseall: release
+	@cd TAO && make release REL=$(REL)
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
