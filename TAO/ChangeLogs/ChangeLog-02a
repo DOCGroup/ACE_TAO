@@ -1,3 +1,9 @@
+Mon Mar  6 22:49:45 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+          removed ACE_CHECK_RETURN from the get_channel method to
+	  fix compile warning with kai3.3e
+
 Mon Mar  6 19:43:00 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
