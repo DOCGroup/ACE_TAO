@@ -14,6 +14,98 @@
 
 ACE_RCSID(tao, UIOP_Connector, "$Id$")
 
+#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
+int
+TAO_UIOP_Connector::purge_connections (void)
+{
+  return this->cached_connect_strategy_->purge_connections ();
+}
+
+#define TAO_HANDLER TAO_UIOP_Client_Connection_Handler
+#define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_HANDLER>
+#define TAO_ADDR TAO_UIOP_Connector::TAO_IADDR
+#define TAO_HASH_KEY TAO_UIOP_Connector::TAO_HASH_KEY
+#define TAO_COMPARE_KEYS TAO_UIOP_Connector::TAO_COMPARE_KEYS
+#define TAO_ATTRIBUTES TAO_UIOP_Connector::TAO_ATTRIBUTES
+#define TAO_CACHED_HANDLER TAO_UIOP_Connector::TAO_CACHED_HANDLER
+#define TAO_HASH_MAP TAO_UIOP_Connector::TAO_HASH_MAP
+#define TAO_HASH_MAP_ITERATOR TAO_UIOP_Connector::TAO_HASH_MAP_ITERATOR
+#define TAO_HASH_MAP_REVERSE_ITERATOR TAO_UIOP_Connector::TAO_HASH_MAP_REVERSE_ITERATOR
+#define TAO_CACHING_UTILITY TAO_UIOP_Connector::TAO_CACHING_UTILITY
+#define TAO_CACHING_STRATEGY TAO_UIOP_Connector::TAO_CACHING_STRATEGY
+#define TAO_CACHED_CONNECT_STRATEGY TAO_UIOP_Connector::TAO_CACHED_CONNECT_STRATEGY
+
+typedef ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
+        TAO_UIOP_LRU_CACHING_STRATEGY;
+
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+typedef TAO_UIOP_LRU_CACHING_STRATEGY
+        TAO_UIOP_CACHING_STRATEGY;
+#else
+typedef ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
+        TAO_UIOP_CACHING_STRATEGY;
+typedef ACE_LFU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
+        TAO_UIOP_LFU_CACHING_STRATEGY;
+typedef ACE_FIFO_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
+        TAO_UIOP_FIFO_CACHING_STRATEGY;
+typedef ACE_Null_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
+        TAO_UIOP_NULL_CACHING_STRATEGY;
+typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_UIOP_LRU_CACHING_STRATEGY>
+        TAO_UIOP_LRU_CACHING_STRATEGY_ADAPTER;
+typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_UIOP_LFU_CACHING_STRATEGY>
+        TAO_UIOP_LFU_CACHING_STRATEGY_ADAPTER;
+typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_UIOP_FIFO_CACHING_STRATEGY>
+        TAO_UIOP_FIFO_CACHING_STRATEGY_ADAPTER;
+typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_UIOP_NULL_CACHING_STRATEGY>
+        TAO_UIOP_NULL_CACHING_STRATEGY_ADAPTER;
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+int
+TAO_UIOP_Connector::make_caching_strategy (void)
+{
+
+  TAO_Resource_Factory *resource_factory =
+    this->orb_core_->resource_factory ();
+
+#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
+  ACE_NEW_RETURN (this->caching_strategy_,
+                  TAO_UIOP_CACHING_STRATEGY,
+                  -1);
+#else
+  switch (resource_factory->connection_caching_strategy_type ())
+    {
+    case TAO_Resource_Factory::NOOP:
+      ACE_NEW_RETURN (this->caching_strategy_,
+                      TAO_UIOP_NULL_CACHING_STRATEGY_ADAPTER,
+                      -1);
+      break;
+
+    default:
+    case TAO_Resource_Factory::LRU:
+      ACE_NEW_RETURN (this->caching_strategy_,
+                      TAO_UIOP_LRU_CACHING_STRATEGY_ADAPTER,
+                      -1);
+      break;
+
+    case TAO_Resource_Factory::LFU:
+      ACE_NEW_RETURN (this->caching_strategy_,
+                      TAO_UIOP_LFU_CACHING_STRATEGY_ADAPTER,
+                      -1);
+      break;
+
+    case TAO_Resource_Factory::FIFO:
+      ACE_NEW_RETURN (this->caching_strategy_,
+                      TAO_UIOP_FIFO_CACHING_STRATEGY_ADAPTER,
+                      -1);
+      break;
+    }
+#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
+
+  this->caching_strategy_->purge_percent (resource_factory->purge_percentage ());
+  return 0;
+}
+#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
+
 // The TAO_Cached_Connector_Lock template instantiations are in
 // Resource_Factory.cpp.
 
@@ -609,97 +701,5 @@ TAO_UIOP_Connector::object_key_delimiter (void) const
 {
   return TAO_UIOP_Profile::object_key_delimiter;
 }
-
-#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
-int
-TAO_UIOP_Connector::purge_connections (void)
-{
-  return this->cached_connect_strategy_->purge_connections ();
-}
-
-#define TAO_HANDLER TAO_UIOP_Client_Connection_Handler
-#define TAO_SVC_TUPLE ACE_Svc_Tuple<TAO_HANDLER>
-#define TAO_ADDR TAO_UIOP_Connector::TAO_IADDR
-#define TAO_HASH_KEY TAO_UIOP_Connector::TAO_HASH_KEY
-#define TAO_COMPARE_KEYS TAO_UIOP_Connector::TAO_COMPARE_KEYS
-#define TAO_ATTRIBUTES TAO_UIOP_Connector::TAO_ATTRIBUTES
-#define TAO_CACHED_HANDLER TAO_UIOP_Connector::TAO_CACHED_HANDLER
-#define TAO_HASH_MAP TAO_UIOP_Connector::TAO_HASH_MAP
-#define TAO_HASH_MAP_ITERATOR TAO_UIOP_Connector::TAO_HASH_MAP_ITERATOR
-#define TAO_HASH_MAP_REVERSE_ITERATOR TAO_UIOP_Connector::TAO_HASH_MAP_REVERSE_ITERATOR
-#define TAO_CACHING_UTILITY TAO_UIOP_Connector::TAO_CACHING_UTILITY
-#define TAO_CACHING_STRATEGY TAO_UIOP_Connector::TAO_CACHING_STRATEGY
-#define TAO_CACHED_CONNECT_STRATEGY TAO_UIOP_Connector::TAO_CACHED_CONNECT_STRATEGY
-
-typedef ACE_LRU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
-        TAO_UIOP_LRU_CACHING_STRATEGY;
-
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-typedef TAO_UIOP_LRU_CACHING_STRATEGY
-        TAO_UIOP_CACHING_STRATEGY;
-#else
-typedef ACE_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
-        TAO_UIOP_CACHING_STRATEGY;
-typedef ACE_LFU_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
-        TAO_UIOP_LFU_CACHING_STRATEGY;
-typedef ACE_FIFO_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
-        TAO_UIOP_FIFO_CACHING_STRATEGY;
-typedef ACE_Null_Caching_Strategy<TAO_ATTRIBUTES, TAO_CACHING_UTILITY>
-        TAO_UIOP_NULL_CACHING_STRATEGY;
-typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_UIOP_LRU_CACHING_STRATEGY>
-        TAO_UIOP_LRU_CACHING_STRATEGY_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_UIOP_LFU_CACHING_STRATEGY>
-        TAO_UIOP_LFU_CACHING_STRATEGY_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_UIOP_FIFO_CACHING_STRATEGY>
-        TAO_UIOP_FIFO_CACHING_STRATEGY_ADAPTER;
-typedef ACE_Caching_Strategy_Adapter<TAO_ATTRIBUTES, TAO_CACHING_UTILITY, TAO_UIOP_NULL_CACHING_STRATEGY>
-        TAO_UIOP_NULL_CACHING_STRATEGY_ADAPTER;
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
-int
-TAO_UIOP_Connector::make_caching_strategy (void)
-{
-
-  TAO_Resource_Factory *resource_factory =
-    this->orb_core_->resource_factory ();
-
-#if defined (ACE_HAS_BROKEN_EXTENDED_TEMPLATES)
-  ACE_NEW_RETURN (this->caching_strategy_,
-                  TAO_UIOP_CACHING_STRATEGY,
-                  -1);
-#else
-  switch (resource_factory->connection_caching_strategy_type ())
-    {
-    case TAO_Resource_Factory::NOOP:
-      ACE_NEW_RETURN (this->caching_strategy_,
-                      TAO_UIOP_NULL_CACHING_STRATEGY_ADAPTER,
-                      -1);
-      break;
-
-    default:
-    case TAO_Resource_Factory::LRU:
-      ACE_NEW_RETURN (this->caching_strategy_,
-                      TAO_UIOP_LRU_CACHING_STRATEGY_ADAPTER,
-                      -1);
-      break;
-
-    case TAO_Resource_Factory::LFU:
-      ACE_NEW_RETURN (this->caching_strategy_,
-                      TAO_UIOP_LFU_CACHING_STRATEGY_ADAPTER,
-                      -1);
-      break;
-
-    case TAO_Resource_Factory::FIFO:
-      ACE_NEW_RETURN (this->caching_strategy_,
-                      TAO_UIOP_FIFO_CACHING_STRATEGY_ADAPTER,
-                      -1);
-      break;
-    }
-#endif /* ACE_HAS_BROKEN_EXTENDED_TEMPLATES */
-
-  this->caching_strategy_->purge_percent (resource_factory->purge_percentage ());
-  return 0;
-}
-#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 #endif /* TAO_HAS_UIOP */
