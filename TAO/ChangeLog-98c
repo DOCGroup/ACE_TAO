@@ -1,3 +1,9 @@
+Mon Jan 26 00:57:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/connect.cpp (open): Conditionally compile the code for
+ 	  TCP_NODELAY only if this macro is present.  Thanks to Edgar
+ 	  Villanueva <edgarvil@ix.netcom.com> for reporting this.
+
 Sun Jan 25 14:30:04 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/client.dsp: Added a missing source.
