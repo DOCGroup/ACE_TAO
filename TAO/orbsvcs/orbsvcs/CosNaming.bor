@@ -52,6 +52,7 @@ LIBFILES = \
 	$(TAO_LIB) \
 	$(TAO_PORTABLESERVER_LIB) \
 	$(TAO_IORTABLE_LIB) \
+	$(TAO_MESSAGING_LIB) \
 	$(TAO_SVC_UTILS_LIB)
 
 all: idl_src_files

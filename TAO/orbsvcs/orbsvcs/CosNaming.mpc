@@ -5,6 +5,8 @@ project(CosNaming) : orbsvcslib, core, svc_utils, iortable {
   tagchecks   += Naming
   // Add this include path for precompiled headers
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
+  libs += TAO_Messaging
+  after += Messaging
 
   IDL_Files {
     CosNaming.idl

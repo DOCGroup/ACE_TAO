@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_typedef, 
-           typedef_ci, 
+ACE_RCSID (be_visitor_typedef,
+           typedef_ci,
            "$Id$")
 
 // ******************************************************
@@ -78,7 +78,7 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad primitive base type\n"),  
+                             "bad primitive base type\n"),
                             -1);
         }
 
@@ -88,7 +88,7 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"),  
+                             "failed to accept visitor\n"),
                             -1);
         }
 
@@ -108,7 +108,7 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "bad base type\n"),  
+                             "bad base type\n"),
                             -1);
         }
 
@@ -118,7 +118,7 @@ be_visitor_typedef_ci::visit_typedef (be_typedef *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ch::"
                              "visit_typedef - "
-                             "failed to accept visitor\n"),  
+                             "failed to accept visitor\n"),
                             -1);
         }
 
@@ -169,7 +169,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
     }
   else
     {
-      if (bt->imported ())
+      if (bt->imported () && bt->cli_inline_gen())
         {
           // Code below is generated in another file.
           return 0;
@@ -240,7 +240,7 @@ be_visitor_typedef_ci::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ci::"
                              "visit_sequence - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -271,7 +271,7 @@ be_visitor_typedef_ci::visit_structure (be_structure *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ci::"
                              "visit_structure - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }
@@ -302,7 +302,7 @@ be_visitor_typedef_ci::visit_union (be_union *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_typedef_ci::"
                              "visit_union - "
-                             "base class visitor failed \n"),  
+                             "base class visitor failed \n"),
                             -1);
         }
     }

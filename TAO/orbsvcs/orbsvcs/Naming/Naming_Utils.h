@@ -85,7 +85,9 @@ public:
                      const ACE_TCHAR *persistence_location = 0,
                      void *base_addr = TAO_NAMING_BASE_ADDR,
                      int enable_multicast = 1,
-                     int use_storable_context = 0);
+                     int use_storable_context = 0,
+                     int round_trip_timeout = 0,
+                     int use_round_trip_timeout = 0);
 
   /**
    * Initializer.  Attempts to find an existing Naming Service if
@@ -109,7 +111,9 @@ public:
             const ACE_TCHAR *persistence_location = 0,
             void *base_addr = TAO_NAMING_BASE_ADDR,
             int enable_multicast = 1,
-            int use_storable_context = 0);
+            int use_storable_context = 0,
+            int round_trip_timeout = 0,
+            int use_round_trip_timeout = 0);
 
   /// Initialize the Naming Service with the command line arguments and
   /// the ORB.
@@ -146,7 +150,9 @@ protected:
                        void *base_addr,
                        size_t context_size,
                        int enable_multicast,
-                       int use_storable_context);
+                       int use_storable_context,
+                       int round_trip_timeout = 0,
+                       int use_round_trip_timeout = 0);
 
   /// parses the arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -223,7 +229,10 @@ protected:
    * If not zero support redundant naming servers.
    */
   int use_redundancy_;
-
+  
+  // If not zero use round trip timeout policy set to value specified
+  int round_trip_timeout_;
+  int use_round_trip_timeout_;
 };
 
 /**

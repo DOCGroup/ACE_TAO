@@ -434,7 +434,7 @@ catpoop (char* string
 int
 main (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "f:n:");
+  ACE_Get_Opt get_opt (argc, argv, "f:");
 
   ACE_DECLARE_NEW_CORBA_ENV;
   CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO" ACE_ENV_ARG_PARAMETER);
@@ -445,15 +445,6 @@ main (int argc, char *argv[])
     {
       switch (opt)
         {
-        case 'n':
-          //  Read the CosName from the NamingService convert the
-          //  object_ptr to a CORBA::String_var via the call to
-          //  object_to_string.
-          ACE_DEBUG ((LM_DEBUG,
-                      "opening a connection to the NamingService\n"
-                      "resolving the CosName %s\n",
-                      get_opt.opt_arg ()));
-          break;
         case 'f':
           {
             //  Read the file into a CORBA::String_var.
@@ -548,7 +539,6 @@ main (int argc, char *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Usage: %s "
                              "-f filename "
-                             "-n CosName "
                              "\n"
                              "Reads an IOR "
                              "and dumps the contents to stdout "

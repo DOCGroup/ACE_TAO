@@ -247,6 +247,10 @@ namespace CORBA
     void create_list (CORBA::Long count,
                       CORBA::NVList_ptr &new_list
                       ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+                      
+    void create_operation_list(CORBA::OperationDef_ptr,
+                             CORBA::NVList_ptr&
+                             ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
     void create_named_value (CORBA::NamedValue_ptr &nmval
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);

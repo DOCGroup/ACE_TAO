@@ -149,8 +149,20 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n,
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->bind (simple_name, obj ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY
+        {
+          context->bind (simple_name, obj ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
+        {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::bind(), Caught CORBA::TIMEOUT exception");
+          // throw a CannotProceed exception back to the client
+          //
+          ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
+                         (context.in (), simple_name));
+        }
+      ACE_ENDTRY;
     }
   // If we received a simple name, we need to bind it in this context.
   else
@@ -203,8 +215,20 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->rebind (simple_name, obj ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY
+        {
+          context->rebind (simple_name, obj ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
+        {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::rebind(), Caught CORBA::TIMEOUT exception");
+          // throw a CannotProceed exception back to the client
+          //
+          ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
+                         (context.in (), simple_name));
+        }
+      ACE_ENDTRY;
     }
   else
     // If we received a simple name, we need to rebind it in this
@@ -263,8 +287,18 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->bind_context (simple_name, nc ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY
+        {
+          context->bind_context (simple_name, nc ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
+        {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::bind_context (), Caught CORBA::TIMEOUT exception");
+          ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
+                         (context.in (), simple_name));
+        }
+      ACE_ENDTRY;
     }
   // If we received a simple name, we need to bind it in this context.
   else
@@ -317,8 +351,18 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->rebind_context (simple_name, nc ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY
+        {
+          context->rebind_context (simple_name, nc ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
+        {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::rebind_context (), Caught CORBA::TIMEOUT exception");
+          ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
+                         (context.in (), simple_name));
+        }
+      ACE_ENDTRY;
     }
   else
     // If we received a simple name, we need to rebind it in this
@@ -422,8 +466,23 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n
              + 1);
 
           // If there are any exceptions, they will propagate up.
-          return context->resolve (rest_of_name
-                                   ACE_ENV_ARG_PARAMETER);
+          ACE_TRY
+            {
+              CORBA::Object_ptr resolved_ref;
+              resolved_ref = context->resolve (rest_of_name
+                                               ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+              return resolved_ref;
+            }
+          ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
+            {
+              ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::resolve (), Caught CORBA::TIMEOUT exception");
+              // throw a CannotProceed exception back to the client
+              //
+              ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
+                             (context.in (), rest_of_name));
+            }
+          ACE_ENDTRY;
         }
     }
   // If the name we had to resolve was simple, we just need to return
@@ -464,8 +523,18 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n
       CosNaming::Name simple_name;
       simple_name.length (1);
       simple_name[0] = n[name_len - 1];
-      context->unbind (simple_name ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY
+        {
+          context->unbind (simple_name ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      ACE_CATCH (CORBA::TIMEOUT, timeoutEx)
+        {
+          ACE_PRINT_EXCEPTION (timeoutEx, "Hash_Naming_Context::unbind (), Caught CORBA::TIMEOUT exception");
+          ACE_TRY_THROW (CosNaming::NamingContext::CannotProceed
+                         (context.in (), simple_name));
+        }
+      ACE_ENDTRY;
     }
   // If we received a simple name, we need to unbind it in this
   // context.

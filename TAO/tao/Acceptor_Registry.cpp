@@ -122,6 +122,14 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   // protocol_factories is in the following form
   //   IOP1://addr1,addr2,...,addrN/;IOP2://addr1,...addrM/;...
   TAO_EndpointSet endpoint_set = orb_core->orb_params ()->endpoints ();
+  
+  // Check to see if there is an additional endpoint value defined
+  // as an environment property.
+  ACE_CString env_endpoint = ACE_OS::getenv ("TAO_ORBENDPOINT");
+  if (ACE_OS::strcmp (env_endpoint.c_str(), "") != 0)
+  {
+    endpoint_set.enqueue_tail (env_endpoint);
+  }
 
   if (endpoint_set.is_empty ())
     {

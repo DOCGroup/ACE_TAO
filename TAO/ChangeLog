@@ -1,8 +1,165 @@
+Tue Nov 18 13:59:11 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tao/ORB.cpp (resolve_service):
+
+          Remove the check for an environment property defining the IOR of one
+          of the four 'known' services.
+
+          (resolve_initial_references):
+
+          Check instead for an environment property in the form <name>IOR after
+          checking the IOR table (where name is any name). This fixes bug
+          #1334.
+
+          (create_operation_list):
+          Added this method. Delegates to TAO_IFR_Client_Adapter (see below).
+
+        * tao/CORBA_methods.h:
+        * tao/ORB.h (create_operation_list):
+        * tao/IFR_Client_Adapter.h (create_operation_list):
+        * tao/IFR_Client/IFR_ClientAdapterImpl.h (create_operation_list):
+        * tao/IFR_Client/IFR_ClientAdapterImpl.cpp (create_operation_list):
+
+          Implemented create_operation_list. This fixes bug #1630.
+
+        * orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_removing_visitor.h:
+
+          Added visit_root method. This fixes bug #1331.
+
+        * tao/DynamicAny/DynUnion_i.cpp (to_any):
+
+          Check if union is empty, i.e. check if it has an active member,
+          before adding member_ to the CDR Stream. This fixes bug #1636.
+
+          (set_from_any):
+
+          Strip alias from type code. This fixes bug #1639.
+
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nslist.cpp:
+        * utils/nslist/README:
+
+          Add the ability to list the IORs of subcontexts within a naming
+          graph. This fixes bug #1624.
+
+        * tao/Valuetype/ValueBase.cpp (_tao_unmarshal_pre):
+
+          If no type information is given in the CDR encoding, as indicated
+          by the <value-tag>, then use the repository id parameter instead.
+          This fixes bug #1629.
+
+        * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp (visit_array):
+
+          Fix check for definition in another file. This fixes bug #1628.
+
+        * utils/catior/catior.cpp (main):
+
+          Removed -n option. It doesn't do anything. Fixes bug #1332.
+
+        * tao/Acceptor_Registry.cpp (open):
+
+          Allow additional -ORBEndpoint value(s) to be specified as the
+          environment property TAO_ORBENDPOINT. This fixes bug #1627.
+
+        * orbsvcs/orbsvcs/CosNaming.bor:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+
+          Added dependency on TAO_Messaging. See below.
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+
+          Set relative round trip timeout on Orb in response to value
+          of new '-z' command line NameService parameter. This fixes
+          bug #1634.
+
+        * orbsvcs/Naming_Service/README:
+
+          Documented the -z option.
+
+        * orbsvcs/tests/Bug_1334_Regression/Bug_1334_client.dsp:
+        * orbsvcs/tests/Bug_1334_Regression/Bug_1334_client.dsw:
+        * orbsvcs/tests/Bug_1334_Regression/Bug_1334_Regression.dsw:
+        * orbsvcs/tests/Bug_1334_Regression/client.cpp:
+        * orbsvcs/tests/Bug_1334_Regression/Makefile:
+        * orbsvcs/tests/Bug_1334_Regression/Makefile.Bug_1334_client:
+        * orbsvcs/tests/Bug_1334_Regression/README:
+        * orbsvcs/tests/Bug_1334_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1334_Regression/test.mpc:
+        * orbsvcs/tests/Bug_1630_Regression/Bug_1630_Regression.dsw:
+        * orbsvcs/tests/Bug_1630_Regression/Bug_1630_testclient.dsp:
+        * orbsvcs/tests/Bug_1630_Regression/Makefile:
+        * orbsvcs/tests/Bug_1630_Regression/Makefile.Bug_1630_testclient:
+        * orbsvcs/tests/Bug_1630_Regression/run_test.pl:
+        * orbsvcs/tests/Bug_1630_Regression/test.mpc:
+        * orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+        * tests/Bug_1330_Regression/Bug_1330_Client.dsp:
+        * tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+        * tests/Bug_1330_Regression/Bug_1330_Server.dsp:
+        * tests/Bug_1330_Regression/client.cpp:
+        * tests/Bug_1330_Regression/Makefile:
+        * tests/Bug_1330_Regression/Makefile.Bug_1330_Client:
+        * tests/Bug_1330_Regression/Makefile.Bug_1330_Server:
+        * tests/Bug_1330_Regression/README:
+        * tests/Bug_1330_Regression/run_test.pl:
+        * tests/Bug_1330_Regression/server.cpp:
+        * tests/Bug_1330_Regression/Test.idl:
+        * tests/Bug_1330_Regression/Test_i.cpp:
+        * tests/Bug_1330_Regression/Test_i.h:
+        * tests/Bug_1627_Regression/Bug_1627_Client.dsp:
+        * tests/Bug_1627_Regression/Bug_1627_Regression.dsw:
+        * tests/Bug_1627_Regression/Bug_1627_Server.dsp:
+        * tests/Bug_1627_Regression/client.cpp:
+        * tests/Bug_1627_Regression/Makefile:
+        * tests/Bug_1627_Regression/Makefile.Bug_1627_Client:
+        * tests/Bug_1627_Regression/Makefile.Bug_1627_Server:
+        * tests/Bug_1627_Regression/README:
+        * tests/Bug_1627_Regression/run_test.pl:
+        * tests/Bug_1627_Regression/server.cpp::
+        * tests/Bug_1627_Regression/Test.idl:
+        * tests/Bug_1627_Regression/test.mpc:
+        * tests/Bug_1627_Regression/Test_i.cpp:
+        * tests/Bug_1627_Regression/Test_i.h:
+        * tests/Bug_1628_Regression/run_test.pl:
+        * tests/Bug_1628_Regression/TestCase.idl:
+        * tests/Bug_1628_Regression/TestType.idl:
+        * tests/Bug_1635_Regression/Bug_1635_Client.dsp:
+        * tests/Bug_1635_Regression/Bug_1635_Regression.dsw:
+        * tests/Bug_1635_Regression/Bug_1635_Regression.mpc:
+        * tests/Bug_1635_Regression/client.cpp:
+        * tests/Bug_1635_Regression/Makefile:
+        * tests/Bug_1635_Regression/Makefile.Bug_1635_Client:
+        * tests/Bug_1635_Regression/README:
+        * tests/Bug_1635_Regression/run_test.pl:
+        * tests/Bug_1636_Regression/Bug_1636_Regression.dsw:
+        * tests/Bug_1636_Regression/bug_1636_testclient.dsp:
+        * tests/Bug_1636_Regression/client.cpp:
+        * tests/Bug_1636_Regression/Makefile:
+        * tests/Bug_1636_Regression/Makefile.bug_1636_testclient:
+        * tests/Bug_1636_Regression/README:
+        * tests/Bug_1636_Regression/run_test.pl:
+        * tests/Bug_1636_Regression/test.idl:
+        * tests/Bug_1636_Regression/test.mpc:
+        * tests/Bug_1639_Regression/Bug_1639_Regression.dsw:
+        * tests/Bug_1639_Regression/Bug_1639_testclient.dsp:
+        * tests/Bug_1639_Regression/Makefile:
+        * tests/Bug_1639_Regression/Makefile.Bug_1639_testclient:
+        * tests/Bug_1639_Regression/run_test.pl:
+        * tests/Bug_1639_Regression/struct.idl:
+        * tests/Bug_1639_Regression/struct_client.cpp:
+        * tests/Bug_1639_Regression/test.mpc:
+
+          Regression tests added.
+
 Tue Nov 18 07:46:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * orbsvcs/orbsvcs/FaultTolerance/FT_ORB_Utils_export.h:
 
-	  Removed the pragma message.
+          Removed the pragma message.
 
 Tue Nov 18 05:12:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -22,11 +179,11 @@ Tue Nov 18 05:12:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Nov 17 20:42:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
-	  
-	  Reverted the change to fault_tol_export.h. This was creating
-	  problems with g++, especially the pragma messages. This
-	  reversion just removes those messages. 
+        * orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
+
+          Reverted the change to fault_tol_export.h. This was creating
+          problems with g++, especially the pragma messages. This
+          reversion just removes those messages.
 
 Mon Nov 17 16:31:39 2003  Dale Wilson  <wilson_d@ociweb.com>
 

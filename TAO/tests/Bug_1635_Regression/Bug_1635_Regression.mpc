@@ -1,0 +1,7 @@
+project(Bug_1635_Client): client {
+  libpaths += $(TAO_ROOT)/tao $(ACE_ROOT)/ace
+  Source_Files {
+    client.cpp
+  }
+}
+

@@ -1,0 +1,17 @@
+project (Bug_1639_testclient) : taoexe {
+   exename    = client
+   includes   += $(ACE_ROOT)/include .
+   libpaths   += $(ACE_ROOT)/ace . $(TAO_ROOT)/tao/PortableServer $(TAO_ROOT)/tao/DynamicAny $(TAO_ROOT)/tao
+   libs       +=  ACE TAO TAO_PortableServer TAO_DynamicAny
+
+   Source_Files {
+      struct_client.cpp
+      structC.cpp
+      structS.cpp
+   }
+   
+   IDL_Files {
+      struct.idl
+   }
+
+}

@@ -13,6 +13,7 @@
 #include "tao/ORB_Core.h"
 
 #include "tao/IORTable/IORTable.h"
+#include "tao/Messaging/Messaging.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Auto_Ptr.h"
@@ -35,7 +36,9 @@ TAO_Naming_Server::TAO_Naming_Server (void)
     multicast_ (0),
     use_storable_context_ (0),
     use_servant_activator_ (0),
-    use_redundancy_(0)
+    use_redundancy_(0),
+    round_trip_timeout_ (0),
+    use_round_trip_timeout_ (0)
 {
 }
 
@@ -47,7 +50,9 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       const ACE_TCHAR *persistence_location,
                                       void *base_addr,
                                       int enable_multicast,
-                                      int use_storable_context)
+                                      int use_storable_context,
+                                      int round_trip_timeout,
+                                      int use_round_trip_timeout)
   : naming_context_ (),
     ior_multicast_ (0),
     naming_service_ior_ (),
@@ -60,7 +65,9 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
     multicast_ (0),
     use_storable_context_ (use_storable_context),
     use_servant_activator_ (0),
-    use_redundancy_(0)
+    use_redundancy_(0),
+    round_trip_timeout_ (0),
+    use_round_trip_timeout_ (0)
 {
   if (this->init (orb,
                   poa,
@@ -70,7 +77,9 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                   persistence_location,
                   base_addr,
                   enable_multicast,
-                  use_storable_context) == -1)
+                  use_storable_context,
+                  round_trip_timeout,
+                  use_round_trip_timeout) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) %p\n",
                 "TAO_Naming_Server::init"));
@@ -86,7 +95,9 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          const ACE_TCHAR *persistence_location,
                          void *base_addr,
                          int enable_multicast,
-                         int use_storable_context)
+                         int use_storable_context,
+                         int round_trip_timeout,
+                         int use_round_trip_timeout)
 {
   if (resolve_for_existing_naming_service)
     {
@@ -141,14 +152,16 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                                 base_addr,
                                 context_size,
                                 enable_multicast,
-                                use_storable_context);
+                                use_storable_context,
+                                round_trip_timeout,
+                                use_round_trip_timeout);
 }
 
 int
 TAO_Naming_Server::parse_args (int argc,
                                ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:f:m:u:r:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("b:do:p:s:f:m:u:r:z:"));
 
   int c;
   int size, result;
@@ -176,7 +189,7 @@ TAO_Naming_Server::parse_args (int argc,
       case 'o': // outputs the naming service ior to a file.
         this->ior_output_file_ =
           ACE_OS::fopen (get_opts.opt_arg (), ACE_LIB_TEXT("w"));
-        
+
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
             ACE_LIB_TEXT("Unable to open %s for writing:(%u) %p\n"),
@@ -222,6 +235,10 @@ TAO_Naming_Server::parse_args (int argc,
         this->persistence_file_name_ = get_opts.opt_arg ();
         u_opt_used = 1;
         break;
+      case 'z':
+        this->use_round_trip_timeout_ = 1;
+        this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -235,6 +252,7 @@ TAO_Naming_Server::parse_args (int argc,
                            ACE_LIB_TEXT ("-f <persistence_file_name> ")
                            ACE_LIB_TEXT ("-u <storable_persistence_directory (not used with -f)> ")
                            ACE_LIB_TEXT ("-r <redundant_persistence_directory> ")
+                           ACE_LIB_TEXT ("-z <relative round trip timeout> ")
                            ACE_LIB_TEXT ("\n"),
                            argv [0]),
                           -1);
@@ -365,7 +383,9 @@ TAO_Naming_Server::init_with_orb (int argc,
                            this->persistence_file_name_,
                            this->base_address_,
                            this->multicast_,
-                           this->use_storable_context_);
+                           this->use_storable_context_,
+                           this->round_trip_timeout_,
+                           this->use_round_trip_timeout_);
       if (result == -1)
         return result;
     }
@@ -408,7 +428,9 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     void *base_addr,
                                     size_t context_size,
                                     int enable_multicast,
-                                    int use_storable_context)
+                                    int use_storable_context,
+                                    int round_trip_timeout,
+                                    int use_round_trip_timeout)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -603,6 +625,30 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 #else
   ACE_UNUSED_ARG (enable_multicast);
 #endif /* ACE_HAS_IP_MULTICAST */
+
+      if (use_round_trip_timeout == 1)
+      {
+        TimeBase::TimeT roundTripTimeoutVal = round_trip_timeout;
+        CORBA::Any anyObjectVal;
+        anyObjectVal <<= roundTripTimeoutVal;
+        CORBA::PolicyList polList (1);
+        polList.length (1);
+        polList[0] = orb->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
+                                         anyObjectVal);
+        ACE_TRY_CHECK;
+
+        // set a timeout on the orb
+        //
+        CORBA::Object_var orbPolicyManagerObj = orb->resolve_initial_references ("ORBPolicyManager");
+        CORBA::PolicyManager_var orbPolicyManager =
+          CORBA::PolicyManager::_narrow (orbPolicyManagerObj.in ());
+        ACE_TRY_CHECK;
+        orbPolicyManager->set_policy_overrides (polList, CORBA::SET_OVERRIDE);
+
+        polList[0]->destroy ();
+        ACE_TRY_CHECK;
+        polList[0] = CORBA::Policy::_nil ();
+      }
     }
   ACE_CATCHANY
     {
