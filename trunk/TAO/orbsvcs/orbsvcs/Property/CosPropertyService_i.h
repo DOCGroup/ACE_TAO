@@ -19,6 +19,7 @@
 #define	COSPROPERTYSERVICE_I_H
 
 #include "ace/OS.h"
+#include "orbsvcs/orbsvcs_export.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 #include "CosProperty_Hash.h"
 
