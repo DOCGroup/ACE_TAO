@@ -22,6 +22,7 @@
 #include "ace/Codeset_Registry.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
+#include "ace/os_include/os_ctype.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_RT_PolicyC.h"
