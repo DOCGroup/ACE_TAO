@@ -42,7 +42,7 @@ main (int argc, char** argv)
       // Create a Service Type Repository and a Trader Object.
       TAO_Service_Type_Repository type_repos;
       auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader =
-	TAO_Trader_Factory::create_trader (argc, argv);
+	auto_ptr<TAO_Trader_Factory::TAO_TRADER>(TAO_Trader_Factory::create_trader (argc, argv));
       TAO_Support_Attributes_Impl& sup_attr = trader->support_attributes ();
       TAO_Trading_Components_Impl& trd_comp = trader->trading_components ();
 
