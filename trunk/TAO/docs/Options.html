@@ -244,9 +244,16 @@ merged with <a href="#-ORBCollocation"><code>-ORBCollocation</code></a>.
     <TD><CODE>-ORBMulticastDiscoveryEndpoint</CODE> <EM>end_point</EM></TD>
     <TD>Specifies the endpoint that should be used for locating the
         Naming Service through multicast. <EM>end_point</EM> is of the
-        form ip-number:port-number (e.g., "tango.cs.wustl.edu:1234" or
-        "128.252.166.57:1234"). If there is no ':' in the end_point it
-        is assumed to be a port number, with the IP address being INADDR_ANY.
+        form ip-number:port-number@network_interface_name
+        (e.g., "tango.cs.wustl.edu:1234@eth0" or
+        "128.252.166.57:1234@eth0"). If there is no ':' in the end_point it
+        is assumed to be a port number, with the IP address being
+	INADDR_ANY. If there is no '@' in the end_point, it is assumed
+	that the network interface name is not specified. And, the
+	default one will be chosen. Thus, using this option, when one
+	has more than one nic's available, one can choose the nic
+	where they want the multicast service to be run.
+
   </TR>
   <TR>
     <TD><CODE>-ORBCollocation</CODE> <EM>global/per-orb/no</EM></TD>
@@ -333,13 +340,28 @@ the ORB.
     <TD><A name="-ORBInitRef"></a> Allows specification of an arbitrary
         object reference for an initial service. The IOR could be in any
         one of the following formats : OMG IOR, URL, corbaloc (including
-        uioploc) or file. corbaloc is a multiple end-point IOR understood by
-        the string_to_object () method and used as a boot-strapping
-        mechanism by the resolve_initial_references () method. The mappings
-        specified through this argument override the orb-install-time
-        defaults. The file://<I>pathname</I> interprets the contents of the
-        <I>pathname</I> file as an object reference in any of the above
+        uioploc), mcast or file. corbaloc is a multiple end-point IOR
+        understood by the string_to_object () method and used as a
+        boot-strapping mechanism by the resolve_initial_references ()
+	method. The mappings specified through this argument override the
+	orb-install-time defaults. The mcast format is used for
+	getting a reference to a multicast service which is run at non-default
+	multicast address, port number, network interface or when you want to
+	specify the time-to-live TTL value. The format of a
+	mcast format is
+	mcast://mcast_address:mcast_port:network_interface_name:ttl_value
+        You just need to specify the values of the variables which are
+	non-default. The default values of these variables are
+	mcast_address : ACE_DEFAULT_MULTICAST_ADDR (which is 224.9.9.2)
+	mcast_port    : TAO_DEFAULT_NAME_SERVER_REQUEST_PORT (10013)
+	mcast_nic     : The default nic that is chosen by the
+		         machine. Can be known by doing a 'netstat -i'
+	mcast_ttl     : 1
+
+	The file://<I>pathname</I> interprets the contents of the
+	<I>pathname</I> file as an object reference in any of the above
         formats.
+
     </TD>
   </TR>
 
@@ -466,7 +488,7 @@ the ORB.
   <TD><a name="-ORBConnectionCachingStrategy"></a>
       Opened connections are added to the transport cache so they can be
       reused.  However, if a process continues to run and these
-      connections are not reused, the cache will continue to grow. 
+      connections are not reused, the cache will continue to grow.
       Therefore, before each new connection, the cache is checked and
       purged if it has reached the limit specified by the
       -ORBConnectionCacheMax option or the system default if that option was
@@ -935,7 +957,7 @@ superseded by <code><A HREF="#-ORBReactorType">-ORBReactorType</A></code>.
   <TD><a name="-ORBSchedPolicy"></a>
       Specify the scheduling policy used for the priority mapping
       computations and to specify the scheduling policy used when
-      creating RTCORBA threads. 
+      creating RTCORBA threads.
       Priority mappings map the CORBA priority range (from 0 to 32767)
       into the native OS priority range, but in some operating systems
       the range depends on the scheduling policy used.

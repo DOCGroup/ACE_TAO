@@ -62,7 +62,36 @@ TAO_IOR_Multicast::init (const char *ior,
                          const char *mcast_addr,
                          TAO_Service_ID service_id)
 {
-  if (this->mcast_addr_.set (mcast_addr) == -1)
+  // Look for a '@' incase a nic is specified.
+  this->mcast_nic_ = ACE_OS::strchr (mcast_addr, '@');
+
+  CORBA::String_var actual_mcast_addr;
+  CORBA::ULong length_addr;
+
+  if (this->mcast_nic_ != 0)
+    {
+      // i.e. a nic name has been specified
+      length_addr = this->mcast_nic_ - mcast_addr + 1;
+      actual_mcast_addr = CORBA::string_alloc (length_addr);
+
+      ACE_OS::strncpy (actual_mcast_addr,
+                       mcast_addr,
+                       length_addr - 1);
+
+      actual_mcast_addr[length_addr - 1] = '\0';
+
+      /// Save for use later.
+      this->mcast_nic_ = this->mcast_nic_ + 1;
+    }
+  else
+    {
+      actual_mcast_addr =
+        CORBA::string_alloc (ACE_OS::strlen (mcast_addr));
+
+      actual_mcast_addr = mcast_addr;
+    }
+
+  if (this->mcast_addr_.set (actual_mcast_addr.in ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "set"),
@@ -84,16 +113,32 @@ TAO_IOR_Multicast::common_init (const char *ior,
                        "set"),
                       -1);
   else if (this->response_.open (this->response_addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "set"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "set"),
+                        -1);
+    }
+
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
-  else if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "subscribe"),
-                      -1);
+  if (this->mcast_nic_ != 0)
+    {
+      if (this->mcast_dgram_.subscribe (this->mcast_addr_,
+                                        1,
+                                        this->mcast_nic_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "subscribe"),
+                          -1);
+    }
+  else
+    {
+      if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "subscribe"),
+                          -1);
+    }
   return 0;
 }
 
