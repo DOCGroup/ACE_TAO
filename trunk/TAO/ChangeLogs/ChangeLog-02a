@@ -1,3 +1,8 @@
+Tue Feb 19 09:11:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV.bor:
+          Added ACE_QoS library
+
 Tue Feb 19 08:58:34 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/GIOP_Message_State.cpp:
