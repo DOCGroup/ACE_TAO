@@ -157,10 +157,8 @@ char * cuserid (char *s);
 #define ACE_LACKS_PTHREAD_CANCEL
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
-// If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this.
-// #define ACE_LACKS_CONDATTR_PSHARED
-// #define ACE_LACKS_MUTEXATTR_PSHARED
+#define ACE_LACKS_CONDATTR_PSHARED
+#define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 // #define ACE_HAS_SIGWAIT
