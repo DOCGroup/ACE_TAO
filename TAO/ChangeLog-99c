@@ -1,3 +1,14 @@
+Fri Jul 16 14:05:33 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/configurations.html:
+
+	  Updated the run-time options section with information about how
+	  UIOP will provide considerably better performance over IIOP and
+	  IIOP with GIOPlite for ORB's running on the same host.
+
+	  Additional minor updates to capitalization in "-ORB" options
+	  described in the document.
+
 Fri Jul 16 13:59:10 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Borland: Updated the examples to contain several minor
