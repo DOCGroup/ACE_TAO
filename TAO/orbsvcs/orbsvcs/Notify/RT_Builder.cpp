@@ -8,6 +8,7 @@
 #include "RT_POA_Helper.h"
 #include "Properties.h"
 #include "orbsvcs/NotifyExtC.h"
+#include "Object.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_Builder.inl"
