@@ -1,3 +1,17 @@
+Fri Apr  3 17:43:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.h: 
+	* tao/orbconf.h: 
+	* tao/CDR.cpp: 
+	  Added configuration macros to enable swap on write, and to
+	  disable swap on read.
+	  Also increased the default size of a CDR buffer.
+
+	* tests/CDR/Makefile: 
+	* tests/CDR/growth.cpp: 
+	  Added another simple test of the CDR buffer, this one tries to
+	  measure performance.
+
 Fri Apr  3 17:15:22 1998  Steve Huston  <shuston@riverace.com>
 
 	* TAO_IDL/Makefile: The sources that go into the compiler are
