@@ -62,7 +62,7 @@ using Persistent Object References, as defined in the Portable Object Adapter (P
 specification, can be restarted. This service will allow servers to come and go without
 invalidating the Persistent Object References that they use. </p>
 
-<h3>Constraints when using the Information Repository</h3>
+<h3>Constraints when using the Implmentation Repository</h3>
 
 <ul>
   <li>When a server is restarted by the Implementation Repository, it must be able to recreate
@@ -126,10 +126,10 @@ ignored.&nbsp; </p>
 
 <p>We plan on implementing IIOP 1.1 to make the implementation of the Implementation
 Repository easier.&nbsp; Persistant IORs will have an extra profile pointing to an
-Information Repository.&nbsp; If the connection attempt to the first profile fails, then
-the next profile (the Information Repository) will be contacted it it will return a
-Location Forward to the server.&nbsp; The new IORs will contain multiple profiles and tags
-for such things as the ORB type and server name.</p>
+Implementation Repository.&nbsp; If the connection attempt to the first profile fails,
+then the next profile (the Implementation Repository) will be contacted it it will return
+a Location Forward to the server.&nbsp; The new IORs will contain multiple profiles and
+tags for such things as the ORB type and server name.</p>
 
 <table border="1" width="100%">
   <tr>
@@ -248,7 +248,7 @@ for such things as the ORB type and server name.</p>
   // ....
 
   exception Already_Registered {};
-  // Object already bound in the Information Repository
+  // Object already bound in the Implementation Repository
 
   exception Cannot_Activate
   {
@@ -256,7 +256,7 @@ for such things as the ORB type and server name.</p>
   }
 
   exception Not_Found {};
-  // Object not found in the Information Repository  
+  // Object not found in the Implementation Repository  
   
   struct Environment_Variable
   {
@@ -289,7 +289,7 @@ for such things as the ORB type and server name.</p>
     // Creation flags
   };
 
-  interface Information_Repository
+  interface Implementation_Repository
   {
     Object activate_object (in Object obj)
       raises (Not_Found,
