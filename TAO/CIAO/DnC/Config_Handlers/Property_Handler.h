@@ -8,8 +8,9 @@
  */
 //===================================================================
 
-#ifndef RS_HANDLER_H
-#define RS_HANDLER_H
+#ifndef PROPERTY_HANDLER_H
+#define PROPERTY_HANDLER_H
+
 #include /**/ "ace/pre.h"
 
 #include "DeploymentC.h"
@@ -42,7 +43,8 @@ namespace CIAO
     class Config_Handler_Export Property_Handler
     {
     public:
-      static void process_Property (DOMNodeIterator * iter,
+      static void process_Property (xercesc::DOMDocument *,
+                                    DOMNodeIterator * iter,
                                     Deployment::Property &property);
       // process elements of type Property definitions in
       // the descriptor files
@@ -53,4 +55,4 @@ namespace CIAO
 
 #include /**/ "ace/post.h"
 
-#endif /* ID_HANDLER_H */
+#endif /* PROPERTY_HANDLER_H */
