@@ -1029,6 +1029,8 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
 
       output << object_ptr;
     }
+#else
+  ACE_UNUSED_ARG (request_id);
 #endif /* TAO_HAS_MINIMUM_CORBA */
   // Only CORBA exceptions are caught here.
   ACE_CATCHANY
@@ -1108,6 +1110,8 @@ TAO_GIOP::process_server_request (TAO_Transport *transport,
                     "but client is not waiting a response\n"));
       return;
     }
+#else
+  ACE_UNUSED_ARG (response_required);
 #endif /* TAO_HAS_EXCEPTIONS */
   ACE_ENDTRY;
 
