@@ -6,10 +6,9 @@
  *
  *  $Id$
  *
- *  @author Doug Schmidt <schmidt@uci.edu>
+ *  @author Douglas C. Schmidt <schmidt@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_STREAM_H
 #define ACE_STREAM_H
@@ -135,7 +134,7 @@ public:
                    ACE_Time_Value *timeout = 0);
 
   /**
-   * Read the message <mb> that is stored in the the stream head.
+   * Read the message <mb> that is stored in the stream head.
    * Wait for upto <timeout> amount of absolute time for the operation
    * to complete (or block forever if <timeout> == 0).
    */
