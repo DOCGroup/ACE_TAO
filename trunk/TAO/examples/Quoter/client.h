@@ -90,6 +90,9 @@ private:
   int useLifeCycleService_;
   // Flag to tell if the a Generic Factory is going to be used
   // or the LifeCycle Service (0 means Generic Factory, 1 means LCS)
+
+  int debug_level_;
+  // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
 };
 
 class Quoter_Task : public ACE_Task<ACE_SYNCH>

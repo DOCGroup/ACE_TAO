@@ -27,7 +27,8 @@ Quoter_Client::Quoter_Client (void)
     quoter_key_ (ACE_OS::strdup ("key0")),
     shutdown_ (0),
     quoter_var_ (Stock::Quoter::_nil ()),
-    useLifeCycleService_(0)  // use the Generic Factory
+    useLifeCycleService_(0),  // use the Generic Factory
+    debug_level_ (1)
 {
   // Nothing
 }
@@ -37,17 +38,18 @@ Quoter_Client::Quoter_Client (void)
 int
 Quoter_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "n:dlx");
-  int c;
+  ACE_Get_Opt get_opts (argc_, argv_, "n:d:lx");
+  int opt;
+  int exit_code = 0;
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((opt = get_opts ()) != -1)
+    switch (opt)
     {
       case 'n':  // multiple threads
         // ignore it, it was handled already
         break;
-      case 'd':  // debug flag
-        TAO_debug_level++;
+      case 'd':  // debug flag.
+        this->debug_level_ = ACE_OS::atoi (get_opts.optarg);
         break;
       case 'l':
         this->useLifeCycleService_ = 1;
@@ -55,19 +57,22 @@ Quoter_Client::parse_args (void)
       case 'x':
         this->shutdown_ = 1;
         break;
-      case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "usage:  %s"
-                          " [-m]"
-                          " [-d]"
-                          " [-l] # use the lifecycle service instead of the generic factory"
-                          " [-x]"
-                          " [-s]"
-                          "\n",
-                          this->argv_ [0]),
-                          -1);
-    }
+        exit_code = 1;
+        ACE_ERROR ((LM_ERROR, 
+                    "%s: unknown arg, -%c\n",
+                    this->argv_[0], char(opt)));
+      case '?':
+        ACE_DEBUG ((LM_DEBUG,
+                    "usage:  %s"
+                    " [-m]"
+                    " [-d] <debug level> - Set the debug level\n"
+                    " [-l]               - use the lifecycle service instead of the generic factory"
+                    " [-x]"
+                    "\n",
+                    this->argv_ [0]));
+        ACE_OS::exit (exit_code);
+  }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -76,6 +81,10 @@ Quoter_Client::parse_args (void)
 int
 Quoter_Client::run (void)
 {
+  if (this->debug_level_ >= 1)
+    ACE_DEBUG ((LM_DEBUG,
+                "\nQuoter Example: Quoter_Client is running\n"));
+
   const char *exception_message = "Null Message";
   ACE_TRY_NEW_ENV
     {
@@ -83,7 +92,8 @@ Quoter_Client::run (void)
       CORBA::Long q = this->quoter_var_->get_quote ("ACE Hardware", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "ACE Hardware = %i\n", q));
+      if (this->debug_level_ >= 1)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: ACE Hardware = %i\n", q));
 
       // Copy the Quoter
 
@@ -112,14 +122,15 @@ Quoter_Client::run (void)
                            "Quoter_Client::run: Copied Quoter is nil!"),
                           -1);
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Copied object.\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object.\n"));
 
       exception_message = "While using get_quote () on copied object";
       q = copied_quoter_var->get_quote ("ACE Hardware", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Copied object: ACE Hardware = %i\n", q));
+      if (this->debug_level_ >= 1)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object: ACE Hardware = %i\n", q));
 
       // Move the Quoter
 
@@ -131,14 +142,15 @@ Quoter_Client::run (void)
 
       // Caution, the object reference stays the same
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Moved object\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Moved object\n"));
 
       exception_message = "While using get_quote () on moved object";
       q = this->quoter_var_->get_quote ("ACE Hardware", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Moved object: ACE Hardware = %i\n", q));
+      if (this->debug_level_ >= 1)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Moved object: ACE Hardware = %i\n", q));
     }
   ACE_CATCHANY
     {
@@ -182,16 +194,16 @@ Quoter_Client::init_naming_service (void)
         CosNaming::NamingContext::_narrow (naming_obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Naming Service.\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Have a proper reference to the Naming Service.\n"));
 
       CosNaming::Name quoterFactoryFinderName (2);
       quoterFactoryFinderName.length (2);
       quoterFactoryFinderName[0].id = CORBA::string_dup ("IDL_Quoter");
       quoterFactoryFinderName[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Trying to resolve the Quoter Factory Finder!\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Trying to resolve the Quoter Factory Finder!\n"));
 
       exception_message = "While resolving the factory finder";
       CORBA::Object_var factory_obj =
@@ -199,8 +211,8 @@ Quoter_Client::init_naming_service (void)
                                  ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory Finder!\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Resolved the Quoter Factory Finder!\n"));
 
       exception_message = "While narrowing the factory finder";
       factory_Finder_var_ =
@@ -213,8 +225,8 @@ Quoter_Client::init_naming_service (void)
                            " could not resolve quoter factory in Naming service <%s>\n"),
                           -1);
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory Finder.\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Have a proper reference to the Quoter Factory Finder.\n"));
 
       // The name of the Quoter Generic Factory
       CosLifeCycle::Key factoryName (2);  // max = 2
@@ -233,8 +245,8 @@ Quoter_Client::init_naming_service (void)
         factoryName[1].id = CORBA::string_dup ("Quoter_Generic_Factory");
       }
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Trying to get a reference of a factory.\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Trying to get a reference of a factory.\n"));
 
       // Find an appropriate factory over there.
       exception_message = "While finding factories";
@@ -247,8 +259,8 @@ Quoter_Client::init_naming_service (void)
                            "Did not get a Generic Quoter Factory.\n"),
                           -1);
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Got a proper reference of a factory.\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Got a proper reference of a factory.\n"));
 
 
       // Get the first object reference to a factory.
@@ -273,8 +285,8 @@ Quoter_Client::init_naming_service (void)
                            "Factory received is not valid.\n"),
                           -1);
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory.\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Have a proper reference to the Quoter Factory.\n"));
     }
   ACE_CATCH (CosLifeCycle::NoFactory, excpt)
     {
@@ -321,8 +333,8 @@ Quoter_Client::init (int argc, char **argv)
       if (naming_result == -1)
         return naming_result;
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Factory received OK\n"));
 
       // using the Quoter Generic Factory
       CosLifeCycle::Key genericFactoryName (1);  // max = 1
@@ -346,8 +358,8 @@ Quoter_Client::init (int argc, char **argv)
       this->quoter_var_ = Stock::Quoter::_narrow (quoterObject_var.in(), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
+      if (this->debug_level_ >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Quoter Created\n"));
 
       if (CORBA::is_nil (this->quoter_var_.in()))
       {
@@ -373,8 +385,6 @@ int
 main (int argc, char **argv)
 {
   ACE_Thread_Manager thr_mgr;
-
-  ACE_DEBUG ((LM_DEBUG,"\n\tQuoter: client\n\n"));
 
   int i;
   int threads = 1;

@@ -31,59 +31,61 @@ $debug = "";
 $cm = "";
 $sm = "";
 $other = "";
-$c_conf = "client.conf";
-$s_conf = "server.conf";
+$c_conf = ""; #-ORBsvcconf client.conf";
+$s_conf = ""; #-ORBsvcconf server.conf";
+
+# Programs that are run
+
+$name_server = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
+               "Naming_Service$DIR_SEPARATOR"."Naming_Service$EXE_EXT";
+$lifecycle_server = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
+                    "LifeCycle_Service$DIR_SEPARATOR"."LifeCycle_Service$EXE_EXT";
+$quoter_server = $EXE_PREFIX."server$EXE_EXT";
+$factory_finder = $EXE_PREFIX."Factory_Finder$EXE_EXT";
+$generic_factory = $EXE_PREFIX."Generic_Factory$EXE_EXT";
+$quoter_client = $EXE_PREFIX."client$EXE_EXT";
 
 sub name_server
 {
   my $args = "$other -o $nsiorfile";
-  my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
-             "Naming_Service$DIR_SEPARATOR".
-             "Naming_Service$EXE_EXT";
-
-  $NS = Process::Create ($prog, $args);
+  $NS = Process::Create ($name_server, $args);
 }
 
 sub lifecycle_server
 {
-  my $args = "$other -ORBInitRef NameService=file://$nsiorfile -ORBsvcconf svc.conf";
-  my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
-             "LifeCycle_Service$DIR_SEPARATOR".
-             "LifeCycle_Service$EXE_EXT";
-
-  $LC = Process::Create ($prog, $args);
+  my $args = "$other $debug -ORBInitRef NameService=file://$nsiorfile";
+  $LC = Process::Create ($lifecycle_server, $args);
 }
 
 sub server
 {
   my $args = "$other $debug $sm ".
-             "-ORBInitRef NameService=file://$nsiorfile -ORBsvcconf $s_conf";
+             "-ORBInitRef NameService=file://$nsiorfile $s_conf";
 
-  $SV = Process::Create ("server$EXE_EXT", $args);
+  $SV = Process::Create ($quoter_server, $args);
 }
 
 sub factory_finder
 {
-  my $args = "$other -ORBInitRef NameService=file://$nsiorfile -ORBsvcconf svc.conf";
+  my $args = "$other $debug -ORBInitRef NameService=file://$nsiorfile";
 
-  $FF = Process::Create ("Factory_Finder".$EXE_EXT, $args);
+  $FF = Process::Create ($factory_finder, $args);
 }
 
 sub generic_factory
 {
-  my $args = "$other -l -ORBInitRef NameService=file://$nsiorfile -ORBsvcconf svc.conf";
+  my $args = "$other -l $debug -ORBInitRef NameService=file://$nsiorfile";
 
-  $GF = Process::Create ("Generic_Factory".$EXE_EXT, $args);
+  $GF = Process::Create ($generic_factory, $args);
 }
 
 sub client
 {
-  my $exe = $EXEPREFIX."client$EXE_EXT";
-  my $args2 = "$other -l $debug $cm ".
-            "-ORBInitRef NameService=file://$nsiorfile -ORBsvcconf $c_conf";
+  my $args = "$other -l $debug $cm ".
+            "-ORBInitRef NameService=file://$nsiorfile $c_conf";
   for ($j = 0; $j < $n; $j++)
   {
-    $client_ = Process::Create($exe, $args2);
+    $client_ = Process::Create($quoter_client, $args);
     if ( $client_->TimedWait (60) ) {
       print STDERR "ERROR: a client has timedout\n";
       $status = 1;
@@ -101,13 +103,13 @@ for ($i = 0; $i <= $#ARGV; $i++)
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
       print "run_test [-n num] [-leave] [-onewin]".
-        "[-twowin] [-d] [-h] [-nt] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
+        "[-twowin] [-d level] [-h] [-nt] [-cm] [-sm] [-ns|sv|ff|cl|gf]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-leave              -- leaves the servers running and their windows open\n";
       print "-onewin             -- keeps all tests in one window on NT\n";
       print "-twowin             -- put each test in a separate window on NT\n";
-      print "-d                  -- runs each in debug mode\n";
+      print "-d level            -- runs each at debug level <level>\n";
       print "-h                  -- prints this information\n";
       print "-nt num             -- number of threads in the client (twice for server)\n";
       print "                       make sure this is before any -cm or -sm\n";
@@ -130,7 +132,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "-d")
     {
-      $debug = $debug." -d";
+      $debug = $debug." -d $ARGV[$i + 1]";
+      $i++;
       last SWITCH;
     }
     if ($ARGV[$i] eq "-cm")
@@ -176,8 +179,8 @@ for ($i = 0; $i <= $#ARGV; $i++)
     if ($ARGV[$i] eq "-customconf")  #secret flag from testall.pl
     {
       #use a different set of *.conf files
-      $c_conf = "c.conf";
-      $s_conf = "s.conf";
+      $c_conf = "-ORBsvcconf c.conf";
+      $s_conf = "-ORBsvcconf s.conf";
       last SWITCH;
     }
     if ($ARGV[$i] eq "-onewin")

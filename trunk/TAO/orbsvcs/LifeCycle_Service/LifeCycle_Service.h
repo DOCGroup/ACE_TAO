@@ -63,6 +63,9 @@ private:
 
   char **argv_;
   // commandline arguments.
+
+  int debug_level_;
+  // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
 };
 
 #endif /* LIFECYCLE_SERVICE_H */

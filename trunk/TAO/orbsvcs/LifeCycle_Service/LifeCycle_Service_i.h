@@ -26,7 +26,7 @@ class Life_Cycle_Service_i : public POA_LifeCycleService::Life_Cycle_Service
   //   A CosLifeCycle conforming Generic Factory.
 
 public:
-  Life_Cycle_Service_i (void);
+  Life_Cycle_Service_i (int debug_level = 1);
   ~Life_Cycle_Service_i (void);
 
   CORBA::Boolean supports (const CosLifeCycle::Key &factory_key,
@@ -57,6 +57,9 @@ public:
 
 private:
   Factory_Trader *factory_trader_ptr_;
+
+  int debug_level_;
+  // debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
 };
 
 #endif /* LIFECYCLE_SERVICE_IMPL_H */
