@@ -35,7 +35,7 @@ class TAO_Notify_Export TAO_NS_Service : public ACE_Service_Object
 public:
 
   /// Call the base class init
-  int init (int argc, char **argv);
+  int init (int argc, char **argv) = 0;
 
   /// Init the service.
   virtual void init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL) = 0;
