@@ -634,12 +634,20 @@ TAO_Object_Adapter::dispatch (TAO_ObjectKey &key,
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
+#if (TAO_HAS_MINIMUM_CORBA == 0)
   ACE_CATCH (PortableServer::ForwardRequest, forward_request)
     {
       forward_to =
         CORBA::Object::_duplicate (forward_request.forward_reference.in ());
       return TAO_Adapter::DS_FORWARD;
     }
+#else
+  ACE_CATCHANY
+    {
+      ACE_UNUSED_ARG (forward_to);
+      ACE_RE_THROW;
+    }
+#endif /* TAO_HAS_MINIMUM_CORBA */
   ACE_ENDTRY;
 
   return TAO_Adapter::DS_OK;

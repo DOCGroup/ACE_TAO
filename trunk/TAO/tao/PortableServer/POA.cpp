@@ -87,17 +87,15 @@ private:
 
 ACE_RCSID(tao, POA, "$Id$")
 
-#if (TAO_NO_IOR_TABLE == 0)
-  // This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
-  // It's an array of octets representing ^t^a^o/0 in octal.
-  CORBA::Octet
+// This is the TAO_Object_key-prefix that is appended to all TAO Object keys.
+// It's an array of octets representing ^t^a^o/0 in octal.
+CORBA::Octet
 TAO_POA::objectkey_prefix [TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE] = {
   024, // octal for ^t
   001, // octal for ^a
   017, // octal for ^o
   000
 };
-#endif /* TAO_NO_IOR_TABLE */
 
 TAO_POA::TAO_POA (const TAO_POA::String &name,
                   TAO_POA_Manager &poa_manager,
@@ -3857,12 +3855,11 @@ TAO_POA::key_to_object (const TAO_ObjectKey &key,
   this->orb_core_.check_shutdown (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  CORBA::Object_ptr obj = CORBA::Object::_nil ();
-
   //
   // ImplRepo related.
   //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
+  CORBA::Object_ptr obj = CORBA::Object::_nil ();
 
   if (this->use_imr_
       && this->policies_.lifespan () == PortableServer::PERSISTENT)

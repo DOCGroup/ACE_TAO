@@ -236,9 +236,8 @@ if (_tao_vfr.valid ())
       ACE_TRY_ENV
     );
 
-    CORBA::Policy_ptr  _tao_retval_info = _tao_retval._retn ();
     #if (TAO_HAS_INTERCEPTORS == 1)
-
+    CORBA::Policy_ptr  _tao_retval_info = _tao_retval._retn ();
      ri.result (_tao_retval_info);
     _tao_retval = _tao_retval_info;
     #endif /* TAO_HAS_INTERCEPTORS */
@@ -585,6 +584,10 @@ POA_CORBA_DomainManager::TAO_ServerRequest_Info_CORBA_DomainManager_get_domain_p
   }
 
 #endif /* TAO_HAS_INTERCEPTORS */
+
+
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 class TAO_CORBA_ConstructionPolicy_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTable
 {
 private:
@@ -1067,3 +1070,5 @@ POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_ma
   }
 
 #endif /* TAO_HAS_INTERCEPTORS && TAO_HAS_INTERFACE_REPOSITORY */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

@@ -188,20 +188,12 @@ CORBA_DomainManager_out::operator-> (void)
 
 #endif /* end #if !defined */
 
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___CI_)
-#define _CORBA_CONSTRUCTIONPOLICY___CI_
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
 ACE_INLINE
 CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (TAO_Stub *objref, CORBA::Boolean _tao_collocated) // constructor
   : CORBA_Object (objref, _tao_collocated)
 {}
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___VAR_CI_)
-#define _CORBA_CONSTRUCTIONPOLICY___VAR_CI_
 
 // *************************************************************
 // Inline operations for class CORBA_ConstructionPolicy_var
@@ -296,13 +288,6 @@ CORBA_ConstructionPolicy_var::_retn (void)
   return val;
 }
 
-
-#endif /* end #if !defined */
-
-
-#if !defined (_CORBA_CONSTRUCTIONPOLICY___OUT_CI_)
-#define _CORBA_CONSTRUCTIONPOLICY___OUT_CI_
-
 // *************************************************************
 // Inline operations for class CORBA_ConstructionPolicy_out
 // *************************************************************
@@ -367,7 +352,57 @@ CORBA_ConstructionPolicy_out::operator-> (void)
 }
 
 
-#endif /* end #if !defined */
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &,
+    const CORBA_ConstructionPolicy_ptr
+  );
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &,
+    CORBA_ConstructionPolicy_ptr &
+  );
+
+ACE_INLINE CORBA::Boolean
+operator<< (
+    TAO_OutputCDR &strm,
+    const CORBA_ConstructionPolicy_ptr _tao_objref
+  )
+{
+  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
+  return (strm << _tao_corba_obj);
+}
+
+ACE_INLINE CORBA::Boolean
+operator>> (
+    TAO_InputCDR &strm,
+    CORBA_ConstructionPolicy_ptr &_tao_objref
+  )
+{
+  ACE_TRY_NEW_ENV
+  {
+    CORBA::Object_var obj;
+    if ((strm >> obj.inout ()) == 0)
+      return 0;
+    // narrow to the right type
+    _tao_objref =
+      CORBA_ConstructionPolicy::_unchecked_narrow (
+          obj.in (),
+          ACE_TRY_ENV
+        );
+    ACE_TRY_CHECK;
+    return 1;
+  }
+  ACE_CATCHANY
+  {
+    // do nothing
+  }
+  ACE_ENDTRY;
+  return 0;
+}
+
+
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -778,56 +813,6 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &,
-    const CORBA_ConstructionPolicy_ptr
-  );
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &,
-    CORBA_ConstructionPolicy_ptr &
-  );
-
-ACE_INLINE CORBA::Boolean
-operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA_ConstructionPolicy_ptr _tao_objref
-  )
-{
-  CORBA::Object_ptr _tao_corba_obj = _tao_objref;
-  return (strm << _tao_corba_obj);
-}
-
-ACE_INLINE CORBA::Boolean
-operator>> (
-    TAO_InputCDR &strm,
-    CORBA_ConstructionPolicy_ptr &_tao_objref
-  )
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::Object_var obj;
-    if ((strm >> obj.inout ()) == 0)
-      return 0;
-    // narrow to the right type
-    _tao_objref =
-      CORBA_ConstructionPolicy::_unchecked_narrow (
-          obj.in (),
-          ACE_TRY_ENV
-        );
-    ACE_TRY_CHECK;
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-    // do nothing
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
 
 #if !defined _TAO_CDR_OP_CORBA_DomainManagerList_I_
 #define _TAO_CDR_OP_CORBA_DomainManagerList_I_

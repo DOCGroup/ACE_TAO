@@ -103,6 +103,8 @@ CORBA::Policy_ptr POA_CORBA_DomainManager_tie<T>::get_domain_policy  (
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_CORBA_ConstructionPolicy_tie<T>::POA_CORBA_ConstructionPolicy_tie (T &t)
@@ -238,3 +240,5 @@ void POA_CORBA_ConstructionPolicy_tie<T>::destroy  (
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
+
+#endif /* TAO_HAS_MINIMUM_CORBA */

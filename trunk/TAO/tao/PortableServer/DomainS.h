@@ -274,6 +274,8 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#if (TAO_HAS_MINIMUM_CORBA == 0)
+
 class POA_CORBA_ConstructionPolicy;
 typedef POA_CORBA_ConstructionPolicy *POA_CORBA_ConstructionPolicy_ptr;
 class TAO_PortableServer_Export POA_CORBA_ConstructionPolicy : public virtual POA_CORBA::Policy
@@ -528,6 +530,7 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#endif /* TAO_HAS_MINIMUM_CORBA */
 
 #include "DomainS_T.h"
 
