@@ -9,7 +9,7 @@ Sun Jul 29 22:10:40 2001  Ossama Othman  <ossama@uci.edu>
 	  New files associated with the existing Service_Config_Test.
 	  They are used when testing the reentrance/thread-safety of the
 	  Service Configurator, in addition to testing the Service
-	  Configurator's ability to handle nested process of Service
+	  Configurator's ability to handle nested processing of Service
 	  Configurator directives.
 
 Sun Jul 29 19:19:20 2001  Ossama Othman  <ossama@uci.edu>
