@@ -14,7 +14,9 @@
 #include "SystemException.h"
 #include "ORB_Constants.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (tao,
            CDR_Encaps_Codec,
@@ -169,12 +171,22 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
     {
       ACE_Message_Block * mb = data._tao_get_cdr ();
 
+      auto_ptr<ACE_Message_Block> safe_mb;
+
       if (mb == 0)
         {
-          ACE_NEW_THROW_EX (mb,
+          ACE_Message_Block * tmp;
+
+          ACE_NEW_THROW_EX (tmp,
                             ACE_Message_Block,
                             CORBA::NO_MEMORY ());
           ACE_CHECK_RETURN (0);
+
+          ACE_AUTO_PTR_RESET (safe_mb,
+                              tmp,
+                              ACE_Message_Block);
+
+          mb = tmp;
 
           TAO_OutputCDR out;
           CORBA::Any any (data);
