@@ -1,11 +1,11 @@
 Tue Oct 27 21:54:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* man: Added the ACE_Service_Repository_Iterator.{html,3} files.
-  	  Thanks to Erik Koerber <erik.koerber@siemens.at> for reporting
- 	  this.
+        * man: Added the ACE_Service_Repository_Iterator.{html,3} files.
+          Thanks to Erik Koerber <erik.koerber@siemens.at> for reporting
+          this.
 
-	* Updated the manual pages to reflect the latest APIs in
-	  the new release.
+        * Updated the manual pages to reflect the latest APIs in
+          the new release.
 
 Tue Oct 27 14:16:27 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
@@ -49,6 +49,9 @@ Tue Oct 27 08:22:41 1998  David L. Levine  <levine@cs.wustl.edu>
           instance_->shutting_down_ on entry.  This will avoid
           reentrance if fini () is called before the Object_Manager
           is (explicitly) destroyed.  Thanks to Gonzo for reporting it.
+
+        * tests/run_tests.sh: commented out Thread_Pool_Reactor_Test.
+          It doesn't run properly on some platforms.
 
 Tue Oct 27 05:47:21 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
