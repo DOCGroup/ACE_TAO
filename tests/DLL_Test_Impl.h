@@ -56,9 +56,8 @@ public:
   /// Overloaded new operator, nothrow_t variant.
   void *operator new (size_t bytes, const ACE_nothrow_t &nt);
 #endif /* ACE_HAS_NEW_NOTHROW */
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
+
   void operator delete (void *ptr);
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 };
 
