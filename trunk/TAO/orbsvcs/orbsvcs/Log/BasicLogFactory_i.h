@@ -1,5 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
+
 // ============================================================================
 // = LIBRARY
 //   orbsvcs
@@ -11,7 +12,8 @@
 //   Implements the Factory for BasicLog Objects.
 //
 // = AUTHOR
-//    Matthew Braun (mjb2@cs.wustl.edu) and Pradeep Gore <pradeep@cs.wustl.edu>
+//   Matthew Braun <mjb2@cs.wustl.edu>
+//   Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -21,6 +23,7 @@
 
 #include "orbsvcs/DsLogAdminS.h"
 #include "orbsvcs/Log/LogMgr_i.h"
+#include "orbsvcs/Log/BasicLog_i.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -55,25 +58,25 @@ public:
   // Activate this servant with the POA passed in.
 
   DsLogAdmin::BasicLog_ptr
-    create (DsLogAdmin::LogFullAction full_action,
+    create (DsLogAdmin::LogFullActionType full_action,
             CORBA::ULongLong max_size,
             DsLogAdmin::LogId_out id
             ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
-                     DsLogAdmin::NoResources
+                     DsLogAdmin::InvalidLogFullAction
                      ));
   // Allows clients to create new BasicLog objects. Raises
   // DsLogAdmin::NoResources and DsLogAdmin::InvalidThreshold
 
   DsLogAdmin::BasicLog_ptr
     create_with_id (DsLogAdmin::LogId id,
-                    DsLogAdmin::LogFullAction full_action,
-                    CORBA::ULongLong max_size
+                    DsLogAdmin::LogFullActionType full_action,
+                    CORBA::ULongLong max_size//,
                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
-                     DsLogAdmin::NoResources,
-                     DsLogAdmin::LogIdAlreadyExists
+                     DsLogAdmin::LogIdAlreadyExists,
+                     DsLogAdmin::InvalidLogFullAction
                      ));
   // Same as create (), but allows clients to specify the id.
 
