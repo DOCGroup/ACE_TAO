@@ -1,3 +1,11 @@
+Thu Jun 24 08:38:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Profile.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * tests/Param_Test/helper.cpp:
+          Added missing includes for Tru64 no online build
+
 Thu Jun 24 06:31:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Abstract_Interface/test_i.cpp:
