@@ -35,15 +35,19 @@ Fri Jul  2 11:49:12 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
+	* ace/Strategies_T.h (ACE_Cached_Connect_Strategy): Made "virtual"
+	  methods which were getting overriden in the derived
+	  Cached_Connect_Strategy_Ex class.
+	
+	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
+	  "purge_connections ()" which allows explicit purging of
+ 	  connnections from the connection cache.
+	
   	* tests/Cached_Conn_Test.cpp: This is a test which shows how the
 	  Strategy Connector can automagically as well as explicitly cache
  	  and purge connection from its connection cache using different
  	  caching strategies.
-
-	* ace/Cached_Connect_Strategy_T.{h, cpp}: Added a method
-	  "purge_connections ()" which allows explicit purging of
- 	  connnections from the connection cache.
-
+	
 Fri Jul  2 11:49:12 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
   
   	* tests/Cached_Conn_Test.cpp: This is a test which shows how the 
