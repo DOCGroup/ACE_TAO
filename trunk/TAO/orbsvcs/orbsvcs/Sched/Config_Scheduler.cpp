@@ -442,7 +442,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 
   ACE_DEBUG ((LM_DEBUG, "Schedule prepared.\n"));
   ACE_DEBUG ((LM_DEBUG, "Dumping to stdout.\n"));
-  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()), 
+  ACE_Scheduler_Factory::dump_schedule (*(infos.ptr()),
                                         *(dependencies.ptr()),
                                         *(configs.ptr()),
                                         *(anomalies.ptr()), 0);
@@ -521,7 +521,7 @@ void ACE_Config_Scheduler::reset (RtecScheduler::handle_t,
                    RtecScheduler::INTERNAL,
                    RtecScheduler::SYNCHRONIZATION_FAILURE))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::set_seq (const RtecScheduler::RT_Info_Set&
@@ -533,7 +533,7 @@ void ACE_Config_Scheduler::set_seq (const RtecScheduler::RT_Info_Set&
 // Set characteristics of the RT_Infos corresponding to the passed handles.
 // Tuples are added in the case of existing and/or multiple definitions.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::reset_seq (const RtecScheduler::RT_Info_Set&
@@ -545,7 +545,7 @@ void ACE_Config_Scheduler::reset_seq (const RtecScheduler::RT_Info_Set&
 // Reset characteristics of the RT_Infos corresponding to the passed handles.
 // Tuples are replaced in the case of existing and/or multiple definitions.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set&
@@ -559,7 +559,7 @@ void ACE_Config_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set&
 // reset to their uninitialized values, i.e., the same they have
 // just after the create call.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::remove_dependency (RtecScheduler::handle_t,
@@ -572,7 +572,7 @@ void ACE_Config_Scheduler::remove_dependency (RtecScheduler::handle_t,
                    RtecScheduler::UNKNOWN_TASK))
 // This method removes a dependency between two RT_Infos.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t,
@@ -586,7 +586,7 @@ void ACE_Config_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t,
                    RtecScheduler::UNKNOWN_TASK))
 // This method sets the enable state of a dependency between two RT_Infos.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set &
@@ -596,7 +596,7 @@ void ACE_Config_Scheduler::set_dependency_enable_state_seq (const RtecScheduler:
                    RtecScheduler::UNKNOWN_TASK))
 // This method sets the enable state of a sequence of dependencies.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t,
@@ -607,7 +607,7 @@ void ACE_Config_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t,
                    RtecScheduler::UNKNOWN_TASK))
 // This method enables or disables an RT_Info.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::set_rt_info_enable_state_seq (
@@ -618,7 +618,7 @@ void ACE_Config_Scheduler::set_rt_info_enable_state_seq (
                    RtecScheduler::UNKNOWN_TASK))
 // This method enables or disables a sequence of RT_Infos.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::recompute_scheduling (CORBA::Long,
@@ -634,7 +634,7 @@ void ACE_Config_Scheduler::recompute_scheduling (CORBA::Long,
                    RtecScheduler::DUPLICATE_NAME))
 // Recomputes the scheduling priorities, etc.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out
@@ -645,7 +645,7 @@ void ACE_Config_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out
 // Returns the set of rt_infos, with their assigned priorities (as
 // of the last schedule re-computation).
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out
@@ -656,7 +656,7 @@ void ACE_Config_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out
 // Returns the set of rt_infos, with their assigned priorities (as
 // of the last schedule re-computation).
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
 void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out
@@ -667,5 +667,11 @@ void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_o
 // Returns the set of config_infos, describing the appropriate
 // number, types, and priority levels for the dispatching lanes.
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());  
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_DNode<TAO_RT_Info_Tuple *>;
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_DNode<TAO_RT_Info_Tuple *>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
