@@ -48,6 +48,7 @@ CPP_SRCS += \
   POA_Policy_Set \
   Default_Policy_Validator \
   IORInfo \
+  Default_ORTC \
   ObjectReferenceFactory \
   ObjectReferenceTemplate \
   AMH_Response_Handler \

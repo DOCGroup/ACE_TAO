@@ -75,11 +75,28 @@ public:
   static CORBA_Environment * _duplicate (CORBA_Environment *);
   static CORBA_Environment * _nil (void);
 
-  /// Return the exception.  Caller must call <_incr_refcnf> in order
-  /// to keep the ptr.
+  /// Return the contained CORBA::Exception.
+  /**
+   * CORBA::Environment retains ownership of the exception, this is
+   * contrary to the normal memory management rules in the C++
+   * mapping, but actually mandated by the specification:
+   *
+   * "C++ Language Mapping" (formal/00-01-02). Section 1.27
+   * Environment (page 1-113)
+   *
+   */
   CORBA_Exception* exception (void) const;
 
-  /// Set the exception to <ex>, taking a reference on it.
+  /// Set the contained CORBA::Exception to <ex>
+  /**
+   * CORBA::Environment assumes ownership of the exception, this is
+   * contrary to the normal memory management rules in the C++
+   * mapping, but actually mandated by the specification:
+   *
+   * "C++ Language Mapping" (formal/00-01-02). Section 1.27
+   * Environment (page 1-113)
+   *
+   */
   void exception (CORBA_Exception *ex);
 
   /// Return if the exception is a user exception or a system

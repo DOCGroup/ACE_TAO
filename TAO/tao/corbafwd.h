@@ -37,12 +37,6 @@
 #include "tao/varbase.h"
 #include "tao/TAO_Export.h"
 
-// @@ NW: Disable messing with the alignment for now.
-// For some reason, PC compilers don't implement "natural" alignment,
-// but only use fixed alignment policies.  The following #pragmas
-// configure fixed one-byte alignment policy, since some fixed policy
-// needs to apply throughout an ORB.
-
 #if defined (_MSC_VER) || defined (__BORLANDC__)
 # ifdef   _DEBUG                  /* convert from VC++ convention ... */
 #   define  TAO_DEBUG             /* ... to normal convention */
@@ -151,9 +145,6 @@ TAO_SYSTEM_EXCEPTION_LIST
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-class CORBA_WrongTransaction;
-typedef CORBA_WrongTransaction *CORBA_WrongTransaction_ptr;
-
 class CORBA_ConstructionPolicy;
 class CORBA_ConstructionPolicy_var;
 class CORBA_ConstructionPolicy_out;
@@ -250,60 +241,6 @@ class CORBA_WString_var;
 class CORBA_WString_out;
 
 class CORBA_ExceptionList;
-
-class CORBA_PolicyError;
-typedef CORBA_PolicyError *CORBA_PolicyError_ptr;
-
-class CORBA_InvalidPolicies;
-typedef CORBA_InvalidPolicies* CORBA_InvalidPolicies_ptr;
-
-class CORBA_PolicyTypeSeq;
-class CORBA_PolicyTypeSeq_var;
-class CORBA_PolicyTypeSeq_out;
-
-class CORBA_PolicyManager;
-class CORBA_PolicyManager_var;
-class CORBA_PolicyManager_out;
-typedef CORBA_PolicyManager *CORBA_PolicyManager_ptr;
-
-class CORBA_PolicyCurrent;
-class CORBA_PolicyCurrent_var;
-class CORBA_PolicyCurrent_out;
-typedef CORBA_PolicyCurrent *CORBA_PolicyCurrent_ptr;
-
-class CORBA_Policy;
-class CORBA_Policy_var;
-class CORBA_Policy_out;
-typedef CORBA_Policy *CORBA_Policy_ptr;
-
-class CORBA_PolicyList;
-class CORBA_PolicyList_var;
-class CORBA_PolicyList_out;
-
-class CORBA_DomainManager;
-class CORBA_DomainManager_var;
-class CORBA_DomainManager_out;
-typedef CORBA_DomainManager *CORBA_DomainManager_ptr;
-
-class CORBA_DomainManagerList;
-class CORBA_DomainManagerList_var;
-class CORBA_DomainManagerList_out;
-typedef CORBA_DomainManagerList *CORBA_DomainManagerList_ptr;
-
-class CORBA_PollableSet;
-class CORBA_PollableSet_var;
-class CORBA_PollableSet_out;
-typedef CORBA_PollableSet *CORBA_PollableSet_ptr;
-
-class CORBA_Pollable;
-class CORBA_Pollable_var;
-class CORBA_Pollable_out;
-typedef CORBA_Pollable *CORBA_Pollable_ptr;
-
-class CORBA_DIIPollable;
-class CORBA_DIIPollable_var;
-class CORBA_DIIPollable_out;
-typedef CORBA_DIIPollable *CORBA_DIIPollable_ptr;
 
 /**
  * @class TAO_OutputCDR;
@@ -600,9 +537,6 @@ class CORBA_OctetSeq;
 class CORBA_OctetSeq_var;
 class CORBA_OctetSeq_out;
 
-class CORBA_Bounds;
-typedef CORBA_Bounds *CORBA_Bounds_ptr;
-
 // enum values defined in tao/NVList.h, bitwise ORed.
 typedef u_int CORBA_Flags;
 
@@ -811,8 +745,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_TypeCodeFactory_var TypeCodeFactory_var;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TypeCodeFactory;
 
-  typedef CORBA_Bounds Bounds;
-  typedef CORBA_Bounds *Bounds_ptr;
 #ifdef TAO_HAS_VALUETYPE
   typedef CORBA_ValueBase ValueBase;
   typedef CORBA_ValueBase *ValueBase_ptr;
@@ -969,7 +901,6 @@ TAO_NAMESPACE CORBA
 
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_UnknownUserException;
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Bounds;
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_Current;
 
   TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_NamedValue;
@@ -998,41 +929,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA::String_var ORBid_var;
   typedef CORBA::String_out ORBid_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ORBid;
-
-
-
-  typedef CORBA::Short PolicyErrorCode;
-  typedef CORBA::Short_out PolicyErrorCode_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyErrorCode;
-
-  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode BAD_POLICY;
-  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode UNSUPPORTED_POLICY;
-  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode BAD_POLICY_TYPE;
-  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode BAD_POLICY_VALUE;
-  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode UNSUPPORTED_POLICY_VALUE;
-
-  typedef CORBA_PolicyError PolicyError;
-  typedef CORBA_PolicyError *PolicyError_ptr;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyError;
-
-  typedef CORBA_InvalidPolicies InvalidPolicies;
-  typedef CORBA_InvalidPolicies* InvalidPolicies_ptr;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidPolicies;
-
-  typedef CORBA::ULong PolicyType;
-  typedef CORBA::ULong_out PolicyType_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyType;
-
-  typedef CORBA_Policy Policy;
-  typedef CORBA_Policy *Policy_ptr;
-  typedef CORBA_Policy_var Policy_var;
-  typedef CORBA_Policy_out Policy_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Policy;
-
-  typedef CORBA_PolicyList PolicyList;
-  typedef CORBA_PolicyList_var PolicyList_var;
-  typedef CORBA_PolicyList_out PolicyList_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyList;
 
   // = Service definitions
   typedef CORBA::UShort ServiceType;
@@ -1066,77 +962,7 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ServiceInformation *ServiceInformation_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServiceInformation;
 
-  typedef CORBA_PolicyTypeSeq PolicyTypeSeq;
-  typedef CORBA_PolicyTypeSeq_var PolicyTypeSeq_var;
-  typedef CORBA_PolicyTypeSeq_out PolicyTypeSeq_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyTypeSeq;
-
-  enum SetOverrideType
-  {
-    SET_OVERRIDE,
-    ADD_OVERRIDE
-  };
-  typedef SetOverrideType &SetOverrideType_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_SetOverrideType;
-
-  typedef CORBA_PolicyManager PolicyManager;
-  typedef CORBA_PolicyManager_var PolicyManager_var;
-  typedef CORBA_PolicyManager_out PolicyManager_out;
-  typedef CORBA_PolicyManager *PolicyManager_ptr;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyManager;
-
-  typedef CORBA_PolicyCurrent PolicyCurrent;
-  typedef CORBA_PolicyCurrent_var PolicyCurrent_var;
-  typedef CORBA_PolicyCurrent_out PolicyCurrent_out;
-  typedef CORBA_PolicyCurrent *PolicyCurrent_ptr;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyCurrent;
-
-  typedef CORBA_DomainManager DomainManager;
-  typedef CORBA_DomainManager *DomainManager_ptr;
-  typedef CORBA_DomainManager_var DomainManager_var;
-  typedef CORBA_DomainManager_out DomainManager_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DomainManager;
-
-  typedef CORBA_DomainManagerList DomainManagerList;
-  typedef CORBA_DomainManagerList *DomainManagerList_ptr;
-  typedef CORBA_DomainManagerList_var DomainManagerList_var;
-  typedef CORBA_DomainManagerList_out DomainManagerList_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DomainManagerList;
-
-  TAO_NAMESPACE_STORAGE_CLASS const PolicyType SecConstruction;
-
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-  typedef CORBA_ConstructionPolicy ConstructionPolicy;
-  typedef CORBA_ConstructionPolicy *ConstructionPolicy_ptr;
-  typedef CORBA_ConstructionPolicy_var ConstructionPolicy_var;
-  typedef CORBA_ConstructionPolicy_out ConstructionPolicy_out;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ConstructionPolicy;
-
-  typedef CORBA_WrongTransaction WrongTransaction;
-  typedef WrongTransaction *WrongTransaction_ptr;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_WrongTransaction;
-
-#endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
-
   // ****************************************************************
-
-  typedef CORBA_PollableSet PollableSet;
-  typedef CORBA_PollableSet_var PollableSet_var;
-  typedef CORBA_PollableSet_out PollableSet_out;
-  typedef CORBA_PollableSet_ptr PollableSet_ptr;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PollableSet;
-
-  typedef CORBA_Pollable Pollable;
-  typedef CORBA_Pollable_var Pollable_var;
-  typedef CORBA_Pollable_out Pollable_out;
-  typedef CORBA_Pollable_ptr Pollable_ptr;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Pollable;
-
-  typedef CORBA_DIIPollable DIIPollable;
-  typedef CORBA_DIIPollable_var DIIPollable_var;
-  typedef CORBA_DIIPollable_out DIIPollable_out;
-  typedef CORBA_DIIPollable_ptr DIIPollable_ptr;
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DIIPollable;
 
   // =================== Interface Repository =====================
   typedef char *RepositoryId;

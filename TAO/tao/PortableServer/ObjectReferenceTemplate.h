@@ -18,18 +18,13 @@
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/portableserver_export.h"
-
-#include "tao/ObjectReferenceTemplateC.h"
-
-#include "tao/ValueBase.h"
-#include "tao/Sequence_T.h"
+#include "Default_ORTC.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -37,7 +32,6 @@
 #endif /* _MSC_VER >= 1200 */
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 class TAO_POA;
 
@@ -48,8 +42,8 @@ class TAO_POA;
  *        interface.
  */
 class TAO_PortableServer_Export TAO_ObjectReferenceTemplate
-  : public CORBA::DefaultValueRefCountBase,
-    public virtual PortableInterceptor::ObjectReferenceTemplate
+  : public virtual CORBA::DefaultValueRefCountBase
+  , public virtual OBV_TAO_Default_ORT::ObjectReferenceTemplate
 {
  public:
 

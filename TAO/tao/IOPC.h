@@ -23,17 +23,16 @@
 #define _TAO_IDL_ORIG_IOPC_H_
 
 #include "ace/pre.h"
-#include "TAO_Export.h"
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Any.h"
-#include "Object.h"
+#include "TAO_Export.h"
 #include "Exception.h"
-#include "CDR.h"
-#include "Sequence.h"
+#include "Object.h"
+#include "Any.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -58,15 +57,11 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
-#if defined (IOR)
-#undef IOR
-#endif /* IOR */
-
 TAO_NAMESPACE  IOP
 {
   typedef CORBA::ULong ProfileId;
   typedef CORBA::ULong_out ProfileId_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ProfileId;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ProfileId;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_INTERNET_IOP;
 
@@ -90,7 +85,6 @@ TAO_NAMESPACE  IOP
 #define _IOP_TAGGEDPROFILE__TAO_SEQ_OCTET_CH_
 
     class _tao_seq_Octet;
-    class _tao_seq_Octet_var;
 
     // *************************************************************
     // _tao_seq_Octet
@@ -98,28 +92,23 @@ TAO_NAMESPACE  IOP
 
     class TAO_Export _tao_seq_Octet : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-      TAO_Unbounded_Sequence<CORBA::Octet>
+    TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-      TAO_Unbounded_Sequence<CORBA::Octet>
+    TAO_Unbounded_Sequence<CORBA::Octet>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
     {
     public:
       _tao_seq_Octet (void); // default ctor
       _tao_seq_Octet (CORBA::ULong max); // uses max size
       _tao_seq_Octet (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::Octet *buffer,
-        CORBA::Boolean release = 0
-      );
+          CORBA::ULong max,
+          CORBA::ULong length,
+          CORBA::Octet *buffer,
+          CORBA::Boolean release = 0
+        );
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void);
       static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-      typedef _tao_seq_Octet_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
@@ -133,20 +122,22 @@ TAO_NAMESPACE  IOP
 
 #endif /* end #if !defined */
 
+
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _profile_data_seq;
-  #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
+#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
 
-          _tao_seq_Octet profile_data;
+    _tao_seq_Octet profile_data;
+
   };
 
   class TAO_Export TaggedProfile_var
   {
   public:
-    TaggedProfile_var (void); // default constructor
+    TaggedProfile_var (void);
     TaggedProfile_var (TaggedProfile *);
-    TaggedProfile_var (const TaggedProfile_var &); // copy constructor
-    ~TaggedProfile_var (void); // destructor
+    TaggedProfile_var (const TaggedProfile_var &);
+    ~TaggedProfile_var (void);
 
     TaggedProfile_var &operator= (TaggedProfile *);
     TaggedProfile_var &operator= (const TaggedProfile_var &);
@@ -156,7 +147,8 @@ TAO_NAMESPACE  IOP
     operator const TaggedProfile &() const;
     operator TaggedProfile &();
     operator TaggedProfile &() const;
-    operator TaggedProfile *&(); // variable-size types only
+    // Variable-size types only.
+    operator TaggedProfile *&();
 
     // in, inout, out, _retn
     const TaggedProfile &in (void) const;
@@ -183,11 +175,11 @@ TAO_NAMESPACE  IOP
 
   private:
     TaggedProfile *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const TaggedProfile_var &);
   };
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TaggedProfile;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedProfile;
 
   struct IOR;
   class IOR_var;
@@ -208,37 +200,47 @@ TAO_NAMESPACE  IOP
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CH_
 
-      class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile : public TAO_Unbounded_Base_Sequence
-      {
-      public:
-        // = Initialization and termination methods.
-
-        _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (void); // Default constructor.
-        _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum);
-        _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum,
+    class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile
+      : public TAO_Unbounded_Base_Sequence
+    {
+    public:
+      // = Initialization and termination methods.
+      _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (void);
+      _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum);
+      _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (
+          CORBA::ULong maximum,
           CORBA::ULong length,
           ACE_NESTED_CLASS (IOP, TaggedProfile) *data,
-          CORBA::Boolean release = 0);
-        _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs);
-        _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &operator= (const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs);
-        virtual ~_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (void); // Dtor.
-        // = Accessors.
-        ACE_NESTED_CLASS (IOP, TaggedProfile) &operator[] (CORBA::ULong i);
-        const ACE_NESTED_CLASS (IOP, TaggedProfile) &operator[] (CORBA::ULong i) const;
-        // = Static operations.
-        static ACE_NESTED_CLASS (IOP, TaggedProfile) *allocbuf (CORBA::ULong size);
-        static void freebuf (ACE_NESTED_CLASS (IOP, TaggedProfile) *buffer);
-        virtual void _allocate_buffer (CORBA::ULong length);
-        virtual void _deallocate_buffer (void);
-        // Implement the TAO_Base_Sequence methods (see Sequence.h)
+          CORBA::Boolean release = 0
+        );
+      _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (
+          const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs
+        );
+      _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &operator= (
+          const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs
+        );
+      virtual ~_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (void);
 
-        ACE_NESTED_CLASS (IOP, TaggedProfile) *get_buffer (CORBA::Boolean orphan = 0);
-        const ACE_NESTED_CLASS (IOP, TaggedProfile) *get_buffer (void) const;
-        void replace (CORBA::ULong max,
+      // = Accessors.
+      ACE_NESTED_CLASS (IOP, TaggedProfile) &operator[] (CORBA::ULong i);
+      const ACE_NESTED_CLASS (IOP, TaggedProfile) &operator[] (CORBA::ULong i) const;
+
+      // = Static operations.
+      static ACE_NESTED_CLASS (IOP, TaggedProfile) *allocbuf (CORBA::ULong size);
+      static void freebuf (ACE_NESTED_CLASS (IOP, TaggedProfile) *buffer);
+
+      // Implement the TAO_Base_Sequence methods (see Sequence.h)
+      virtual void _allocate_buffer (CORBA::ULong length);
+      virtual void _deallocate_buffer (void);
+      ACE_NESTED_CLASS (IOP, TaggedProfile) *get_buffer (CORBA::Boolean orphan = 0);
+      const ACE_NESTED_CLASS (IOP, TaggedProfile) *get_buffer (void) const;
+      void replace (
+          CORBA::ULong max,
           CORBA::ULong length,
           ACE_NESTED_CLASS (IOP, TaggedProfile) *data,
-          CORBA::Boolean release);
-      };
+          CORBA::Boolean release
+        );
+    };
 
 #endif /* end #if !defined */
 
@@ -249,7 +251,6 @@ TAO_NAMESPACE  IOP
 #define _IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CH_
 
     class _tao_seq_TaggedProfile;
-    class _tao_seq_TaggedProfile_var;
 
     // *************************************************************
     // _tao_seq_TaggedProfile
@@ -257,46 +258,44 @@ TAO_NAMESPACE  IOP
 
     class TAO_Export _tao_seq_TaggedProfile : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-      _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile
+    _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-      TAO_Unbounded_Sequence<ACE_NESTED_CLASS (IOP, TaggedProfile)>
+    TAO_Unbounded_Sequence<ACE_NESTED_CLASS (IOP, TaggedProfile)>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
     {
     public:
       _tao_seq_TaggedProfile (void); // default ctor
       _tao_seq_TaggedProfile (CORBA::ULong max); // uses max size
       _tao_seq_TaggedProfile (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        ACE_NESTED_CLASS (IOP, TaggedProfile) *buffer,
-        CORBA::Boolean release = 0
-      );
+          CORBA::ULong max,
+          CORBA::ULong length,
+          ACE_NESTED_CLASS (IOP, TaggedProfile) *buffer,
+          CORBA::Boolean release = 0
+        );
       _tao_seq_TaggedProfile (const _tao_seq_TaggedProfile &); // copy ctor
       ~_tao_seq_TaggedProfile (void);
       static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-      typedef _tao_seq_TaggedProfile_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
 
     };
 
 #endif /* end #if !defined */
 
+
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_TaggedProfile _profiles_seq;
-  #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
+#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
 
-          _tao_seq_TaggedProfile profiles;
+    _tao_seq_TaggedProfile profiles;
+
   };
 
   class TAO_Export IOR_var
   {
   public:
-    IOR_var (void); // default constructor
+    IOR_var (void);
     IOR_var (IOR *);
-    IOR_var (const IOR_var &); // copy constructor
-    ~IOR_var (void); // destructor
+    IOR_var (const IOR_var &);
+    ~IOR_var (void);
 
     IOR_var &operator= (IOR *);
     IOR_var &operator= (const IOR_var &);
@@ -306,7 +305,8 @@ TAO_NAMESPACE  IOP
     operator const IOR &() const;
     operator IOR &();
     operator IOR &() const;
-    operator IOR *&(); // variable-size types only
+    // Variable-size types only.
+    operator IOR *&();
 
     // in, inout, out, _retn
     const IOR &in (void) const;
@@ -333,15 +333,15 @@ TAO_NAMESPACE  IOP
 
   private:
     IOR *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const IOR_var &);
   };
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_IOR;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_IOR;
 
   typedef CORBA::ULong ComponentId;
   typedef CORBA::ULong_out ComponentId_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ComponentId;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ComponentId;
 
   struct TaggedComponent;
   class TaggedComponent_var;
@@ -361,7 +361,6 @@ TAO_NAMESPACE  IOP
 #define _IOP_TAGGEDCOMPONENT__TAO_SEQ_OCTET_CH_
 
     class _tao_seq_Octet;
-    class _tao_seq_Octet_var;
 
     // *************************************************************
     // _tao_seq_Octet
@@ -369,28 +368,23 @@ TAO_NAMESPACE  IOP
 
     class TAO_Export _tao_seq_Octet : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-      TAO_Unbounded_Sequence<CORBA::Octet>
+    TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-      TAO_Unbounded_Sequence<CORBA::Octet>
+    TAO_Unbounded_Sequence<CORBA::Octet>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
     {
     public:
       _tao_seq_Octet (void); // default ctor
       _tao_seq_Octet (CORBA::ULong max); // uses max size
       _tao_seq_Octet (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::Octet *buffer,
-        CORBA::Boolean release = 0
-      );
+          CORBA::ULong max,
+          CORBA::ULong length,
+          CORBA::Octet *buffer,
+          CORBA::Boolean release = 0
+        );
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void);
       static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-      typedef _tao_seq_Octet_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
@@ -404,20 +398,22 @@ TAO_NAMESPACE  IOP
 
 #endif /* end #if !defined */
 
+
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _component_data_seq;
-  #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
+#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
 
-          _tao_seq_Octet component_data;
+    _tao_seq_Octet component_data;
+
   };
 
   class TAO_Export TaggedComponent_var
   {
   public:
-    TaggedComponent_var (void); // default constructor
+    TaggedComponent_var (void);
     TaggedComponent_var (TaggedComponent *);
-    TaggedComponent_var (const TaggedComponent_var &); // copy constructor
-    ~TaggedComponent_var (void); // destructor
+    TaggedComponent_var (const TaggedComponent_var &);
+    ~TaggedComponent_var (void);
 
     TaggedComponent_var &operator= (TaggedComponent *);
     TaggedComponent_var &operator= (const TaggedComponent_var &);
@@ -427,7 +423,8 @@ TAO_NAMESPACE  IOP
     operator const TaggedComponent &() const;
     operator TaggedComponent &();
     operator TaggedComponent &() const;
-    operator TaggedComponent *&(); // variable-size types only
+    // Variable-size types only.
+    operator TaggedComponent *&();
 
     // in, inout, out, _retn
     const TaggedComponent &in (void) const;
@@ -454,11 +451,11 @@ TAO_NAMESPACE  IOP
 
   private:
     TaggedComponent *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const TaggedComponent_var &);
   };
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TaggedComponent;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponent;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -466,37 +463,47 @@ TAO_NAMESPACE  IOP
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CH_
 
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (void); // Default constructor.
-      _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum,
+  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile
+    : public TAO_Unbounded_Base_Sequence
+  {
+  public:
+    // = Initialization and termination methods.
+    _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (void);
+    _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum);
+    _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         TaggedComponent *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs);
-      _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &operator= (const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs);
-      virtual ~_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (void); // Dtor.
-      // = Accessors.
-      TaggedComponent &operator[] (CORBA::ULong i);
-      const TaggedComponent &operator[] (CORBA::ULong i) const;
-      // = Static operations.
-      static TaggedComponent *allocbuf (CORBA::ULong size);
-      static void freebuf (TaggedComponent *buffer);
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (
+        const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs
+      );
+    _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &operator= (
+        const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (void);
 
-      TaggedComponent *get_buffer (CORBA::Boolean orphan = 0);
-      const TaggedComponent *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+    // = Accessors.
+    TaggedComponent &operator[] (CORBA::ULong i);
+    const TaggedComponent &operator[] (CORBA::ULong i) const;
+
+    // = Static operations.
+    static TaggedComponent *allocbuf (CORBA::ULong size);
+    static void freebuf (TaggedComponent *buffer);
+
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
+    virtual void _allocate_buffer (CORBA::ULong length);
+    virtual void _deallocate_buffer (void);
+    TaggedComponent *get_buffer (CORBA::Boolean orphan = 0);
+    const TaggedComponent *get_buffer (void) const;
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         TaggedComponent *data,
-        CORBA::Boolean release);
-    };
+        CORBA::Boolean release
+      );
+  };
 
 #endif /* end #if !defined */
 
@@ -515,20 +522,20 @@ TAO_NAMESPACE  IOP
 
   class TAO_Export MultipleComponentProfile : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile
+  _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<TaggedComponent>
+  TAO_Unbounded_Sequence<TaggedComponent>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     MultipleComponentProfile (void); // default ctor
     MultipleComponentProfile (CORBA::ULong max); // uses max size
     MultipleComponentProfile (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      TaggedComponent *buffer,
-      CORBA::Boolean release = 0
-    );
+        CORBA::ULong max,
+        CORBA::ULong length,
+        TaggedComponent *buffer,
+        CORBA::Boolean release = 0
+      );
     MultipleComponentProfile (const MultipleComponentProfile &); // copy ctor
     ~MultipleComponentProfile (void);
     static void _tao_any_destructor (void*);
@@ -536,6 +543,7 @@ TAO_NAMESPACE  IOP
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef MultipleComponentProfile_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
 
   };
 
@@ -552,10 +560,10 @@ TAO_NAMESPACE  IOP
   class TAO_Export MultipleComponentProfile_var
   {
   public:
-    MultipleComponentProfile_var (void); // default constructor
+    MultipleComponentProfile_var (void);
     MultipleComponentProfile_var (MultipleComponentProfile *);
-    MultipleComponentProfile_var (const MultipleComponentProfile_var &); // copy constructor
-    ~MultipleComponentProfile_var (void); // destructor
+    MultipleComponentProfile_var (const MultipleComponentProfile_var &);
+    ~MultipleComponentProfile_var (void);
 
     MultipleComponentProfile_var &operator= (MultipleComponentProfile *);
     MultipleComponentProfile_var &operator= (const MultipleComponentProfile_var &);
@@ -603,14 +611,14 @@ TAO_NAMESPACE  IOP
 
   private:
     MultipleComponentProfile *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const MultipleComponentProfile_var &);
   };
 
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_MultipleComponentProfile;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_MultipleComponentProfile;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -618,37 +626,47 @@ TAO_NAMESPACE  IOP
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CH_
 
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IOP_TaggedComponentList : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentList (void); // Default constructor.
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum,
+  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_TaggedComponentList
+    : public TAO_Unbounded_Base_Sequence
+  {
+  public:
+    // = Initialization and termination methods.
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentList (void);
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum);
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentList (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         TaggedComponent *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentList (const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs);
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentList &operator= (const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs);
-      virtual ~_TAO_Unbounded_Sequence_IOP_TaggedComponentList (void); // Dtor.
-      // = Accessors.
-      TaggedComponent &operator[] (CORBA::ULong i);
-      const TaggedComponent &operator[] (CORBA::ULong i) const;
-      // = Static operations.
-      static TaggedComponent *allocbuf (CORBA::ULong size);
-      static void freebuf (TaggedComponent *buffer);
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentList (
+        const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs
+      );
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentList &operator= (
+        const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_IOP_TaggedComponentList (void);
 
-      TaggedComponent *get_buffer (CORBA::Boolean orphan = 0);
-      const TaggedComponent *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+    // = Accessors.
+    TaggedComponent &operator[] (CORBA::ULong i);
+    const TaggedComponent &operator[] (CORBA::ULong i) const;
+
+    // = Static operations.
+    static TaggedComponent *allocbuf (CORBA::ULong size);
+    static void freebuf (TaggedComponent *buffer);
+
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
+    virtual void _allocate_buffer (CORBA::ULong length);
+    virtual void _deallocate_buffer (void);
+    TaggedComponent *get_buffer (CORBA::Boolean orphan = 0);
+    const TaggedComponent *get_buffer (void) const;
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         TaggedComponent *data,
-        CORBA::Boolean release);
-    };
+        CORBA::Boolean release
+      );
+  };
 
 #endif /* end #if !defined */
 
@@ -667,20 +685,20 @@ TAO_NAMESPACE  IOP
 
   class TAO_Export TaggedComponentList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_IOP_TaggedComponentList
+  _TAO_Unbounded_Sequence_IOP_TaggedComponentList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<TaggedComponent>
+  TAO_Unbounded_Sequence<TaggedComponent>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     TaggedComponentList (void); // default ctor
     TaggedComponentList (CORBA::ULong max); // uses max size
     TaggedComponentList (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      TaggedComponent *buffer,
-      CORBA::Boolean release = 0
-    );
+        CORBA::ULong max,
+        CORBA::ULong length,
+        TaggedComponent *buffer,
+        CORBA::Boolean release = 0
+      );
     TaggedComponentList (const TaggedComponentList &); // copy ctor
     ~TaggedComponentList (void);
     static void _tao_any_destructor (void*);
@@ -688,6 +706,7 @@ TAO_NAMESPACE  IOP
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef TaggedComponentList_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
 
   };
 
@@ -704,10 +723,10 @@ TAO_NAMESPACE  IOP
   class TAO_Export TaggedComponentList_var
   {
   public:
-    TaggedComponentList_var (void); // default constructor
+    TaggedComponentList_var (void);
     TaggedComponentList_var (TaggedComponentList *);
-    TaggedComponentList_var (const TaggedComponentList_var &); // copy constructor
-    ~TaggedComponentList_var (void); // destructor
+    TaggedComponentList_var (const TaggedComponentList_var &);
+    ~TaggedComponentList_var (void);
 
     TaggedComponentList_var &operator= (TaggedComponentList *);
     TaggedComponentList_var &operator= (const TaggedComponentList_var &);
@@ -755,14 +774,14 @@ TAO_NAMESPACE  IOP
 
   private:
     TaggedComponentList *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const TaggedComponentList_var &);
   };
 
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TaggedComponentList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponentList;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -770,37 +789,47 @@ TAO_NAMESPACE  IOP
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CH_
 
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void); // Default constructor.
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum,
+  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq
+    : public TAO_Unbounded_Base_Sequence
+  {
+  public:
+    // = Initialization and termination methods.
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void);
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum);
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         TaggedComponent *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs);
-      _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &operator= (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs);
-      virtual ~_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void); // Dtor.
-      // = Accessors.
-      TaggedComponent &operator[] (CORBA::ULong i);
-      const TaggedComponent &operator[] (CORBA::ULong i) const;
-      // = Static operations.
-      static TaggedComponent *allocbuf (CORBA::ULong size);
-      static void freebuf (TaggedComponent *buffer);
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (
+        const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs
+      );
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &operator= (
+        const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void);
 
-      TaggedComponent *get_buffer (CORBA::Boolean orphan = 0);
-      const TaggedComponent *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+    // = Accessors.
+    TaggedComponent &operator[] (CORBA::ULong i);
+    const TaggedComponent &operator[] (CORBA::ULong i) const;
+
+    // = Static operations.
+    static TaggedComponent *allocbuf (CORBA::ULong size);
+    static void freebuf (TaggedComponent *buffer);
+
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
+    virtual void _allocate_buffer (CORBA::ULong length);
+    virtual void _deallocate_buffer (void);
+    TaggedComponent *get_buffer (CORBA::Boolean orphan = 0);
+    const TaggedComponent *get_buffer (void) const;
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         TaggedComponent *data,
-        CORBA::Boolean release);
-    };
+        CORBA::Boolean release
+      );
+  };
 
 #endif /* end #if !defined */
 
@@ -819,20 +848,20 @@ TAO_NAMESPACE  IOP
 
   class TAO_Export TaggedComponentSeq : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq
+  _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<TaggedComponent>
+  TAO_Unbounded_Sequence<TaggedComponent>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     TaggedComponentSeq (void); // default ctor
     TaggedComponentSeq (CORBA::ULong max); // uses max size
     TaggedComponentSeq (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      TaggedComponent *buffer,
-      CORBA::Boolean release = 0
-    );
+        CORBA::ULong max,
+        CORBA::ULong length,
+        TaggedComponent *buffer,
+        CORBA::Boolean release = 0
+      );
     TaggedComponentSeq (const TaggedComponentSeq &); // copy ctor
     ~TaggedComponentSeq (void);
     static void _tao_any_destructor (void*);
@@ -840,6 +869,7 @@ TAO_NAMESPACE  IOP
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef TaggedComponentSeq_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
 
   };
 
@@ -856,10 +886,10 @@ TAO_NAMESPACE  IOP
   class TAO_Export TaggedComponentSeq_var
   {
   public:
-    TaggedComponentSeq_var (void); // default constructor
+    TaggedComponentSeq_var (void);
     TaggedComponentSeq_var (TaggedComponentSeq *);
-    TaggedComponentSeq_var (const TaggedComponentSeq_var &); // copy constructor
-    ~TaggedComponentSeq_var (void); // destructor
+    TaggedComponentSeq_var (const TaggedComponentSeq_var &);
+    ~TaggedComponentSeq_var (void);
 
     TaggedComponentSeq_var &operator= (TaggedComponentSeq *);
     TaggedComponentSeq_var &operator= (const TaggedComponentSeq_var &);
@@ -907,14 +937,14 @@ TAO_NAMESPACE  IOP
 
   private:
     TaggedComponentSeq *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const TaggedComponentSeq_var &);
   };
 
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TaggedComponentSeq;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_TaggedComponentSeq;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_ORB_TYPE;
 
@@ -938,7 +968,7 @@ TAO_NAMESPACE  IOP
 
   typedef CORBA::ULong ServiceId;
   typedef CORBA::ULong_out ServiceId_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServiceId;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceId;
 
   struct ServiceContext;
   class ServiceContext_var;
@@ -958,7 +988,6 @@ TAO_NAMESPACE  IOP
 #define _IOP_SERVICECONTEXT__TAO_SEQ_OCTET_CH_
 
     class _tao_seq_Octet;
-    class _tao_seq_Octet_var;
 
     // *************************************************************
     // _tao_seq_Octet
@@ -966,28 +995,23 @@ TAO_NAMESPACE  IOP
 
     class TAO_Export _tao_seq_Octet : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-      TAO_Unbounded_Sequence<CORBA::Octet>
+    TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-      TAO_Unbounded_Sequence<CORBA::Octet>
+    TAO_Unbounded_Sequence<CORBA::Octet>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
     {
     public:
       _tao_seq_Octet (void); // default ctor
       _tao_seq_Octet (CORBA::ULong max); // uses max size
       _tao_seq_Octet (
-        CORBA::ULong max,
-        CORBA::ULong length,
-        CORBA::Octet *buffer,
-        CORBA::Boolean release = 0
-      );
+          CORBA::ULong max,
+          CORBA::ULong length,
+          CORBA::Octet *buffer,
+          CORBA::Boolean release = 0
+        );
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void);
       static void _tao_any_destructor (void*);
-
-#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-      typedef _tao_seq_Octet_var _var_type;
-#endif /* ! __GNUC__ || g++ >= 2.8 */
-
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (
@@ -1001,20 +1025,22 @@ TAO_NAMESPACE  IOP
 
 #endif /* end #if !defined */
 
+
 #if !defined (__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef _tao_seq_Octet _context_data_seq;
-  #endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
+#endif /* ! __GNUC__ || ACE_HAS_GNUG_PRE_2_8 */
 
-          _tao_seq_Octet context_data;
+    _tao_seq_Octet context_data;
+
   };
 
   class TAO_Export ServiceContext_var
   {
   public:
-    ServiceContext_var (void); // default constructor
+    ServiceContext_var (void);
     ServiceContext_var (ServiceContext *);
-    ServiceContext_var (const ServiceContext_var &); // copy constructor
-    ~ServiceContext_var (void); // destructor
+    ServiceContext_var (const ServiceContext_var &);
+    ~ServiceContext_var (void);
 
     ServiceContext_var &operator= (ServiceContext *);
     ServiceContext_var &operator= (const ServiceContext_var &);
@@ -1024,7 +1050,8 @@ TAO_NAMESPACE  IOP
     operator const ServiceContext &() const;
     operator ServiceContext &();
     operator ServiceContext &() const;
-    operator ServiceContext *&(); // variable-size types only
+    // Variable-size types only.
+    operator ServiceContext *&();
 
     // in, inout, out, _retn
     const ServiceContext &in (void) const;
@@ -1051,11 +1078,11 @@ TAO_NAMESPACE  IOP
 
   private:
     ServiceContext *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const ServiceContext_var &);
   };
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServiceContext;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceContext;
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -1063,37 +1090,47 @@ TAO_NAMESPACE  IOP
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CH_
 
-    class TAO_EXPORT_NESTED_MACRO _TAO_Unbounded_Sequence_IOP_ServiceContextList : public TAO_Unbounded_Base_Sequence
-    {
-    public:
-      // = Initialization and termination methods.
-
-      _TAO_Unbounded_Sequence_IOP_ServiceContextList (void); // Default constructor.
-      _TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum);
-      _TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum,
+  class TAO_EXPORT_MACRO _TAO_Unbounded_Sequence_IOP_ServiceContextList
+    : public TAO_Unbounded_Base_Sequence
+  {
+  public:
+    // = Initialization and termination methods.
+    _TAO_Unbounded_Sequence_IOP_ServiceContextList (void);
+    _TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum);
+    _TAO_Unbounded_Sequence_IOP_ServiceContextList (
+        CORBA::ULong maximum,
         CORBA::ULong length,
         ServiceContext *data,
-        CORBA::Boolean release = 0);
-      _TAO_Unbounded_Sequence_IOP_ServiceContextList (const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs);
-      _TAO_Unbounded_Sequence_IOP_ServiceContextList &operator= (const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs);
-      virtual ~_TAO_Unbounded_Sequence_IOP_ServiceContextList (void); // Dtor.
-      // = Accessors.
-      ServiceContext &operator[] (CORBA::ULong i);
-      const ServiceContext &operator[] (CORBA::ULong i) const;
-      // = Static operations.
-      static ServiceContext *allocbuf (CORBA::ULong size);
-      static void freebuf (ServiceContext *buffer);
-      virtual void _allocate_buffer (CORBA::ULong length);
-      virtual void _deallocate_buffer (void);
-      // Implement the TAO_Base_Sequence methods (see Sequence.h)
+        CORBA::Boolean release = 0
+      );
+    _TAO_Unbounded_Sequence_IOP_ServiceContextList (
+        const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs
+      );
+    _TAO_Unbounded_Sequence_IOP_ServiceContextList &operator= (
+        const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs
+      );
+    virtual ~_TAO_Unbounded_Sequence_IOP_ServiceContextList (void);
 
-      ServiceContext *get_buffer (CORBA::Boolean orphan = 0);
-      const ServiceContext *get_buffer (void) const;
-      void replace (CORBA::ULong max,
+    // = Accessors.
+    ServiceContext &operator[] (CORBA::ULong i);
+    const ServiceContext &operator[] (CORBA::ULong i) const;
+
+    // = Static operations.
+    static ServiceContext *allocbuf (CORBA::ULong size);
+    static void freebuf (ServiceContext *buffer);
+
+    // Implement the TAO_Base_Sequence methods (see Sequence.h)
+    virtual void _allocate_buffer (CORBA::ULong length);
+    virtual void _deallocate_buffer (void);
+    ServiceContext *get_buffer (CORBA::Boolean orphan = 0);
+    const ServiceContext *get_buffer (void) const;
+    void replace (
+        CORBA::ULong max,
         CORBA::ULong length,
         ServiceContext *data,
-        CORBA::Boolean release);
-    };
+        CORBA::Boolean release
+      );
+  };
 
 #endif /* end #if !defined */
 
@@ -1112,20 +1149,20 @@ TAO_NAMESPACE  IOP
 
   class TAO_Export ServiceContextList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    _TAO_Unbounded_Sequence_IOP_ServiceContextList
+  _TAO_Unbounded_Sequence_IOP_ServiceContextList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
-    TAO_Unbounded_Sequence<ServiceContext>
+  TAO_Unbounded_Sequence<ServiceContext>
 #endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     ServiceContextList (void); // default ctor
     ServiceContextList (CORBA::ULong max); // uses max size
     ServiceContextList (
-      CORBA::ULong max,
-      CORBA::ULong length,
-      ServiceContext *buffer,
-      CORBA::Boolean release = 0
-    );
+        CORBA::ULong max,
+        CORBA::ULong length,
+        ServiceContext *buffer,
+        CORBA::Boolean release = 0
+      );
     ServiceContextList (const ServiceContextList &); // copy ctor
     ~ServiceContextList (void);
     static void _tao_any_destructor (void*);
@@ -1133,6 +1170,7 @@ TAO_NAMESPACE  IOP
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
     typedef ServiceContextList_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
+
 
   };
 
@@ -1149,10 +1187,10 @@ TAO_NAMESPACE  IOP
   class TAO_Export ServiceContextList_var
   {
   public:
-    ServiceContextList_var (void); // default constructor
+    ServiceContextList_var (void);
     ServiceContextList_var (ServiceContextList *);
-    ServiceContextList_var (const ServiceContextList_var &); // copy constructor
-    ~ServiceContextList_var (void); // destructor
+    ServiceContextList_var (const ServiceContextList_var &);
+    ~ServiceContextList_var (void);
 
     ServiceContextList_var &operator= (ServiceContextList *);
     ServiceContextList_var &operator= (const ServiceContextList_var &);
@@ -1200,14 +1238,14 @@ TAO_NAMESPACE  IOP
 
   private:
     ServiceContextList *&ptr_;
-    // assignment from T_var not allowed
+    // Assignment from T_var not allowed.
     void operator= (const ServiceContextList_var &);
   };
 
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServiceContextList;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ServiceContextList;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TransactionService;
 
@@ -1240,6 +1278,12 @@ TAO_NAMESPACE  IOP
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong FT_GROUP_VERSION;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong FT_REQUEST;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_UIPMC;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_GROUP;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong TAG_GROUP_IIOP;
 
 
 #if !defined (_IOP_CODEC___PTR_CH_)
@@ -1280,7 +1324,10 @@ TAO_NAMESPACE  IOP
     static Codec_ptr tao_duplicate (Codec_ptr);
     static void tao_release (Codec_ptr);
     static Codec_ptr tao_nil (void);
-    static Codec_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static Codec_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1321,7 +1368,8 @@ TAO_NAMESPACE  IOP
 #if !defined (_IOP_CODEC_CH_)
 #define _IOP_CODEC_CH_
 
-class TAO_Export Codec : public virtual CORBA_Object
+  class TAO_Export Codec
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1329,22 +1377,25 @@ class TAO_Export Codec : public virtual CORBA_Object
     typedef Codec_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
+    static int _tao_class_id;
 
-  // the static operations
-  static Codec_ptr _duplicate (Codec_ptr obj);
-  static Codec_ptr _narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    // The static operations.
+    static Codec_ptr _duplicate (Codec_ptr obj);
 
-  static Codec_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    static Codec_ptr _narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
-  static Codec_ptr _nil (void)
-    {
-      return (Codec_ptr)0;
-    }
+    static Codec_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
+    static Codec_ptr _nil (void)
+      {
+        return (Codec_ptr)0;
+      }
 
 
 #if !defined (_IOP_CODEC_INVALIDTYPEFORENCODING_CH_)
@@ -1355,15 +1406,15 @@ class TAO_Export Codec : public virtual CORBA_Object
     public:
 
       InvalidTypeForEncoding (void);
-      // Default constructor.
-
       InvalidTypeForEncoding (const InvalidTypeForEncoding &);
-      // Copy constructor.
-
       ~InvalidTypeForEncoding (void);
-      // Destructor.
 
       InvalidTypeForEncoding &operator= (const InvalidTypeForEncoding &);
+
+      static InvalidTypeForEncoding *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -1377,12 +1428,8 @@ class TAO_Export Codec : public virtual CORBA_Object
           ACE_ENV_ARG_DECL_NOT_USED
         );
 
-      static InvalidTypeForEncoding *_downcast (CORBA::Exception *);
 
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception IOP::Codec::InvalidTypeForEncoding.
+    };
 
 
 #endif /* end #if !defined */
@@ -1396,15 +1443,15 @@ class TAO_Export Codec : public virtual CORBA_Object
     public:
 
       FormatMismatch (void);
-      // Default constructor.
-
       FormatMismatch (const FormatMismatch &);
-      // Copy constructor.
-
       ~FormatMismatch (void);
-      // Destructor.
 
       FormatMismatch &operator= (const FormatMismatch &);
+
+      static FormatMismatch *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -1418,12 +1465,8 @@ class TAO_Export Codec : public virtual CORBA_Object
           ACE_ENV_ARG_DECL_NOT_USED
         );
 
-      static FormatMismatch *_downcast (CORBA::Exception *);
 
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception IOP::Codec::FormatMismatch.
+    };
 
 
 #endif /* end #if !defined */
@@ -1437,15 +1480,15 @@ class TAO_Export Codec : public virtual CORBA_Object
     public:
 
       TypeMismatch (void);
-      // Default constructor.
-
       TypeMismatch (const TypeMismatch &);
-      // Copy constructor.
-
       ~TypeMismatch (void);
-      // Destructor.
 
       TypeMismatch &operator= (const TypeMismatch &);
+
+      static TypeMismatch *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -1459,52 +1502,48 @@ class TAO_Export Codec : public virtual CORBA_Object
           ACE_ENV_ARG_DECL_NOT_USED
         );
 
-      static TypeMismatch *_downcast (CORBA::Exception *);
 
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception IOP::Codec::TypeMismatch.
+    };
 
 
 #endif /* end #if !defined */
 
-    virtual CORBA::OctetSeq * encode (
+    virtual ::CORBA::OctetSeq * encode (
         const CORBA::Any & data
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        IOP::Codec::InvalidTypeForEncoding
+        CORBA::SystemException
+        , IOP::Codec::InvalidTypeForEncoding
       )) = 0;
 
     virtual CORBA::Any * decode (
         const CORBA::OctetSeq & data
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        IOP::Codec::FormatMismatch
+        CORBA::SystemException
+        , IOP::Codec::FormatMismatch
       )) = 0;
 
-    virtual CORBA::OctetSeq * encode_value (
+    virtual ::CORBA::OctetSeq * encode_value (
         const CORBA::Any & data
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        IOP::Codec::InvalidTypeForEncoding
+        CORBA::SystemException
+        , IOP::Codec::InvalidTypeForEncoding
       )) = 0;
 
     virtual CORBA::Any * decode_value (
         const CORBA::OctetSeq & data,
         CORBA::TypeCode_ptr tc
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        IOP::Codec::FormatMismatch,
-        IOP::Codec::TypeMismatch
+        CORBA::SystemException
+        , IOP::Codec::FormatMismatch
+        , IOP::Codec::TypeMismatch
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -1512,9 +1551,10 @@ class TAO_Export Codec : public virtual CORBA_Object
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    Codec ();
+    Codec (void);
 
     virtual ~Codec (void);
+
   private:
     Codec (const Codec &);
     void operator= (const Codec &);
@@ -1525,7 +1565,7 @@ class TAO_Export Codec : public virtual CORBA_Object
 
   typedef CORBA::Short EncodingFormat;
   typedef CORBA::Short_out EncodingFormat_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_EncodingFormat;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_EncodingFormat;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short ENCODING_CDR_ENCAPS;
 
@@ -1544,20 +1584,23 @@ class TAO_Export Codec : public virtual CORBA_Object
     ACE_NESTED_CLASS (IOP, EncodingFormat) format;
     CORBA::Octet major_version;
     CORBA::Octet minor_version;
+
   };
 
   class TAO_Export Encoding_var
   {
   public:
-    Encoding_var (void); // default constructor
+    Encoding_var (void);
     Encoding_var (Encoding *);
-    Encoding_var (const Encoding_var &); // copy constructor
-    Encoding_var (const Encoding &); // fixed-size types only
-    ~Encoding_var (void); // destructor
+    Encoding_var (const Encoding_var &);
+    // Fixed-size types only.
+    Encoding_var (const Encoding &);
+    ~Encoding_var (void);
 
     Encoding_var &operator= (Encoding *);
     Encoding_var &operator= (const Encoding_var &);
-    Encoding_var &operator= (const Encoding &); // fixed-size types only
+    // Fixed-size types only.
+    Encoding_var &operator= (const Encoding &);
     Encoding *operator-> (void);
     const Encoding *operator-> (void) const;
 
@@ -1578,7 +1621,7 @@ class TAO_Export Codec : public virtual CORBA_Object
 
   typedef Encoding &Encoding_out;
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Encoding;
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_Encoding;
 
 
 #if !defined (_IOP_CODECFACTORY___PTR_CH_)
@@ -1619,7 +1662,10 @@ class TAO_Export Codec : public virtual CORBA_Object
     static CodecFactory_ptr tao_duplicate (CodecFactory_ptr);
     static void tao_release (CodecFactory_ptr);
     static CodecFactory_ptr tao_nil (void);
-    static CodecFactory_ptr tao_narrow (CORBA::Object * ACE_ENV_ARG_DECL_NOT_USED);
+    static CodecFactory_ptr tao_narrow (
+        CORBA::Object *
+        ACE_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1660,7 +1706,8 @@ class TAO_Export Codec : public virtual CORBA_Object
 #if !defined (_IOP_CODECFACTORY_CH_)
 #define _IOP_CODECFACTORY_CH_
 
-class TAO_Export CodecFactory : public virtual CORBA_Object
+  class TAO_Export CodecFactory
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1668,22 +1715,25 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
     typedef CodecFactory_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
+    static int _tao_class_id;
 
-  // the static operations
-  static CodecFactory_ptr _duplicate (CodecFactory_ptr obj);
-  static CodecFactory_ptr _narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    // The static operations.
+    static CodecFactory_ptr _duplicate (CodecFactory_ptr obj);
 
-  static CodecFactory_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+    static CodecFactory_ptr _narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
-  static CodecFactory_ptr _nil (void)
-    {
-      return (CodecFactory_ptr)0;
-    }
+    static CodecFactory_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      );
+
+    static CodecFactory_ptr _nil (void)
+      {
+        return (CodecFactory_ptr)0;
+      }
 
 
 #if !defined (_IOP_CODECFACTORY_UNKNOWNENCODING_CH_)
@@ -1694,15 +1744,15 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
     public:
 
       UnknownEncoding (void);
-      // Default constructor.
-
       UnknownEncoding (const UnknownEncoding &);
-      // Copy constructor.
-
       ~UnknownEncoding (void);
-      // Destructor.
 
       UnknownEncoding &operator= (const UnknownEncoding &);
+
+      static UnknownEncoding *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -1716,23 +1766,19 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
           ACE_ENV_ARG_DECL_NOT_USED
         );
 
-      static UnknownEncoding *_downcast (CORBA::Exception *);
 
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception IOP::CodecFactory::UnknownEncoding.
+    };
 
 
 #endif /* end #if !defined */
 
-    virtual IOP::Codec_ptr create_codec (
+    virtual ::IOP::Codec_ptr create_codec (
         const IOP::Encoding & enc
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        IOP::CodecFactory::UnknownEncoding
+        CORBA::SystemException
+        , IOP::CodecFactory::UnknownEncoding
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -1740,9 +1786,10 @@ class TAO_Export CodecFactory : public virtual CORBA_Object
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    CodecFactory ();
+    CodecFactory (void);
 
     virtual ~CodecFactory (void);
+
   private:
     CodecFactory (const CodecFactory &);
     void operator= (const CodecFactory &);

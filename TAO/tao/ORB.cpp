@@ -81,86 +81,86 @@ static const char ior_prefix [] = "IOR:";
 // Count of the number of ORBs.
 int CORBA_ORB::orb_init_count_ = 0;
 
-CORBA::Boolean
-operator<< (TAO_OutputCDR &strm,
-            const CORBA::ORB::InvalidName &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._id ())
-    return 1;
-  else
-    return 0;
-}
+// ****************************************************************
 
-CORBA::Boolean operator>> (TAO_InputCDR &,
-                           CORBA::ORB::InvalidName &)
-{
-  return 1;
-}
-
-CORBA_ORB::InvalidName::InvalidName (void)
+CORBA::ORB::InvalidName::InvalidName (void)
   : CORBA_UserException ("IDL:omg.org/CORBA/ORB/InvalidName:1.0")
 {
 }
 
+// Destructor - all members are of self managing types.
 CORBA::ORB::InvalidName::~InvalidName (void)
 {
 }
 
-CORBA::ORB::InvalidName::InvalidName (const CORBA::ORB::InvalidName &_tao_excp)
+// Copy constructor.
+CORBA::ORB::InvalidName::InvalidName (const ::CORBA::ORB::InvalidName &_tao_excp)
   : CORBA_UserException (_tao_excp._id ())
 {
 }
 
-// assignment operator
+// Assignment operator.
 CORBA::ORB::InvalidName&
-CORBA::ORB::InvalidName::operator= (const CORBA::ORB::InvalidName &_tao_excp)
+CORBA::ORB::InvalidName::operator= (const ::CORBA::ORB::InvalidName &_tao_excp)
 {
-
   this->CORBA_UserException::operator= (_tao_excp);
   return *this;
 }
 
-CORBA_ORB::InvalidName*
-CORBA_ORB::InvalidName::_downcast (CORBA_Exception *ex)
+CORBA::ORB::InvalidName *
+CORBA::ORB::InvalidName::_downcast (CORBA::Exception *exc)
 {
-  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0", ex->_id ()))
-    return ACE_dynamic_cast (CORBA::ORB::InvalidName*, ex);
+  if (!ACE_OS::strcmp ("IDL:omg.org/CORBA/ORB/InvalidName:1.0", exc->_id ()))
+    {
+      return ACE_dynamic_cast (InvalidName *, exc);
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-void CORBA_ORB::InvalidName::_raise (void)
+CORBA::Exception *CORBA::ORB::InvalidName::_alloc (void)
 {
-  TAO_RAISE(*this);
-}
-
-void CORBA_ORB::InvalidName::_tao_encode (TAO_OutputCDR &cdr
-                                          ACE_ENV_ARG_DECL) const
-{
-  if (cdr << *this)
-    return;
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-void CORBA_ORB::InvalidName::_tao_decode (TAO_InputCDR &cdr
-                                          ACE_ENV_ARG_DECL)
-{
-  if (cdr >> *this)
-    return;
-  ACE_THROW (CORBA::MARSHAL ());
-}
-
-// TAO extension - the _alloc method
-CORBA::Exception *
-CORBA::ORB::InvalidName::_alloc (void)
-{
-  CORBA::ORB::InvalidName *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  CORBA::ORB::InvalidName,
-                  0);
+  CORBA::Exception *retval = 0;
+  ACE_NEW_RETURN (retval, ::CORBA::ORB::InvalidName, 0);
   return retval;
 }
+
+CORBA::Exception *
+CORBA::ORB::InvalidName::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (
+      result,
+      ::CORBA::ORB::InvalidName (*this),
+      0
+    );
+  return result;
+}
+
+void CORBA::ORB::InvalidName::_raise ()
+{
+  TAO_RAISE (*this);
+}
+
+void CORBA::ORB::InvalidName::_tao_encode (
+    TAO_OutputCDR &
+    ACE_ENV_ARG_DECL
+  ) const
+{
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+void CORBA::ORB::InvalidName::_tao_decode (
+    TAO_InputCDR &
+    ACE_ENV_ARG_DECL
+  )
+{
+  ACE_THROW (CORBA::MARSHAL ());
+}
+
+// ****************************************************************
 
 CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
   : lock_ (),

@@ -125,9 +125,9 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
 
    */
 
-  CORBA_Policy_var priority_model_policy;
-  CORBA_Policy_var lanes_policy;
-  CORBA_Policy_var bands_policy;
+  CORBA::Policy_var priority_model_policy;
+  CORBA::Policy_var lanes_policy;
+  CORBA::Policy_var bands_policy;
 
   // Create a priority model policy.
   priority_model_policy =
@@ -217,6 +217,3 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
-
-
-

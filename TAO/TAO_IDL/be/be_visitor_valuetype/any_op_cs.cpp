@@ -57,7 +57,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 
   // Generate the Any <<= and >>= operator declarations
 
-  *os << be_global->stub_export_macro () << "void" << be_nl
+  *os << be_global->stub_export_macro () << " void" << be_nl
       << "operator<<= (CORBA::Any &any, " << node->name ()
       << " *value) // copying" << be_nl
       << "{" << be_idt_nl
@@ -71,7 +71,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "}" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
-  *os << be_global->stub_export_macro () << "void" << be_nl
+  *os << be_global->stub_export_macro () << " void" << be_nl
       << "operator<<= (CORBA::Any &any, " << node->name ()
       << " **value) // non-copying" << be_nl
       << "{" << be_idt_nl
@@ -90,7 +90,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       << "}" << be_nl << be_nl;
 
 
-  *os << be_global->stub_export_macro () << "CORBA::Boolean" << be_nl
+  *os << be_global->stub_export_macro () << " CORBA::Boolean" << be_nl
       << "operator>>= (const CORBA::Any &any, "
       << node->name () << " *&value)" << be_nl
       << "{" << be_idt_nl

@@ -19,48 +19,48 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-ACE_INLINE void POA_CORBA_ConstructionPolicy::_get_policy_type_skel (
+ACE_INLINE void POA_CORBA::ConstructionPolicy::_get_policy_type_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
-  POA_CORBA_Policy::_get_policy_type_skel (
+  POA_CORBA::Policy_ptr impl = (POA_CORBA::ConstructionPolicy_ptr) obj;
+  POA_CORBA::Policy::_get_policy_type_skel (
       req,
-      (POA_CORBA_Policy_ptr) impl,
+      (POA_CORBA::Policy_ptr) impl,
       context
       ACE_ENV_ARG_PARAMETER
     );
 }
-ACE_INLINE void POA_CORBA_ConstructionPolicy::copy_skel (
+ACE_INLINE void POA_CORBA::ConstructionPolicy::copy_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
-  POA_CORBA_Policy::copy_skel (
+  POA_CORBA::Policy_ptr impl = (POA_CORBA::ConstructionPolicy_ptr) obj;
+  POA_CORBA::Policy::copy_skel (
       req,
-      (POA_CORBA_Policy_ptr) impl,
+      (POA_CORBA::Policy_ptr) impl,
       context
-       ACE_ENV_ARG_PARAMETER
+      ACE_ENV_ARG_PARAMETER
     );
 }
-ACE_INLINE void POA_CORBA_ConstructionPolicy::destroy_skel (
+ACE_INLINE void POA_CORBA::ConstructionPolicy::destroy_skel (
     TAO_ServerRequest &req,
     void *obj,
     void *context
     ACE_ENV_ARG_DECL
   )
 {
-  POA_CORBA_Policy_ptr impl = (POA_CORBA_ConstructionPolicy_ptr) obj;
-  POA_CORBA_Policy::destroy_skel (
+  POA_CORBA::Policy_ptr impl = (POA_CORBA::ConstructionPolicy_ptr) obj;
+  POA_CORBA::Policy::destroy_skel (
       req,
-      (POA_CORBA_Policy_ptr) impl,
+      (POA_CORBA::Policy_ptr) impl,
       context
-       ACE_ENV_ARG_PARAMETER
+      ACE_ENV_ARG_PARAMETER
     );
 }

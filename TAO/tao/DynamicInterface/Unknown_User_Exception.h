@@ -73,6 +73,7 @@ public:
   /// To throw an UnknownUserException of this type.
   virtual void _raise (void);
 
+  virtual CORBA::Exception *_tao_duplicate (void) const;
   virtual void _tao_encode (TAO_OutputCDR &cdr
                             ACE_ENV_ARG_DECL) const;
   virtual void _tao_decode (TAO_InputCDR &cdr

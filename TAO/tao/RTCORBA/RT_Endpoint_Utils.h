@@ -18,8 +18,10 @@
 #define RT_ENDPOINT_UTILS_H
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
 #include "rtcorba_export.h"
+
+#include "tao/corbafwd.h"
+#include "tao/Policy_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

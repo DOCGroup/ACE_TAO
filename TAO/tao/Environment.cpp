@@ -19,12 +19,11 @@ CORBA_Environment::CORBA_Environment (void)
 }
 
 CORBA_Environment::CORBA_Environment (const CORBA_Environment& rhs)
-  : exception_ (rhs.exception_)
+  : exception_ (0)
   , previous_ (0)
 {
-  //  TAO_ORB_Core_instance ()->default_environment (this);
-  if (this->exception_)
-    this->exception_->_incr_refcnt ();
+  if (rhs.exception_)
+    this->exception_ = rhs.exception_->_tao_duplicate ();
 }
 
 CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
@@ -37,11 +36,17 @@ CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
 CORBA_Environment&
 CORBA_Environment::operator= (const CORBA_Environment& rhs)
 {
-  if (this != &rhs)
-    {
-      this->clear ();
-      this->exception (rhs.exception_);
-    }
+  CORBA_Environment tmp (rhs);
+  {
+    CORBA_Exception *tmp_ex = this->exception_;
+    this->exception_ = rhs.exception_;
+    tmp.exception_ = tmp_ex;
+  }
+  {
+    CORBA_Environment *tmp_env = this->previous_;
+    this->previous_ = rhs.previous_;
+    tmp.previous_ = tmp_env;
+  }
   return *this;
 }
 
@@ -59,26 +64,37 @@ CORBA_Environment::~CORBA_Environment (void)
 void
 CORBA_Environment::exception (CORBA_Exception *ex)
 {
+  // @@ This does not look right, setting the exception to the
+  //    contained exception is a bug,  the application is only
+  //    supposed to pass in a pointer to an exception that it (the
+  //    application) owns, however, if we contain the exception then
+  //    *WE* own it.
+  //    Normally I (coryan) would remove code like this, but I feel
+  //    that it is a typical example of defensive programming for the
+  //    *BAD*, i.e. we are not helping the application to get better
+  //    and only making the ORB bigger and slower.
+#if 0
   if (ex != this->exception_)
     {
       this->clear ();
-      this->exception_ = ex;
     }
-  if (this->exception_ != 0)
-    {
-      this->exception_->_incr_refcnt ();
+#else
+  ACE_ASSERT (ex != this->exception_);
+  this->clear ();
+#endif /* 0 */
+
+  this->exception_ = ex;
+
 #if defined (TAO_HAS_EXCEPTIONS)
-      this->exception_->_raise ();
+  if (this->exception_ != 0)
+    this->exception_->_raise ();
 #endif /* TAO_HAS_EXCEPTIONS */
-    }
 }
 
 void
 CORBA_Environment::clear (void)
 {
-  if (this->exception_)
-    this->exception_->_decr_refcnt ();
-
+  delete this->exception_;
   this->exception_ = 0;
 }
 
@@ -193,26 +209,21 @@ CORBA::Environment::print_exception (const char *info,
 CORBA_Environment_var &
 CORBA_Environment_var::operator= (CORBA_Environment_ptr p)
 {
-  if (this->ptr_ != p)
-  {
-    if (this->ptr_ != 0)
-    delete (this->ptr_);
-
-    this->ptr_ = p;
-  }
+  CORBA_Environment_var tmp (p);
+  // @@ We need as ACE_Swap<> template!!
+  CORBA_Environment *tmp_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_ = tmp_ptr;
   return *this;
 }
 
 CORBA_Environment_var &
 CORBA_Environment_var::operator= (const CORBA_Environment_var &r)
 {
-  if (this->ptr_ != 0)
-    {
-      delete this->ptr_;
-      this->ptr_ = 0;
-    }
-
-  ACE_NEW_RETURN (this->ptr_,
-                  CORBA::Environment (*r.ptr_), *this);
+  CORBA_Environment_var tmp (r);
+  // @@ We need as ACE_Swap<> template!!
+  CORBA_Environment *tmp_ptr = this->ptr_;
+  this->ptr_ = tmp.ptr_;
+  tmp.ptr_ = tmp_ptr;
   return *this;
 }

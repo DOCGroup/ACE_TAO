@@ -8,7 +8,7 @@
 //   The command used to generate code is:
 //
 //     tao_idl
-//          -Ge 1
+//       -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
 //          -Wb,export_macro=TAO_Export
 //          -Wb,export_include="corbafwd.h"
 //          -Wb,pre_include="ace/pre.h"

@@ -23,30 +23,30 @@
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerObject_tie<T>::ServerObject_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerObject_tie<T>::ServerObject_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerObject_tie<T>::ServerObject_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerObject_tie<T>::ServerObject_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -100,6 +100,7 @@ POA_ImplementationRepository::ServerObject_tie<T>::_default_POA (ACE_ENV_SINGLE_
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerObject_tie<T>::ping  (
+    
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -113,6 +114,7 @@ ACE_ENV_SINGLE_ARG_PARAMETER
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerObject_tie<T>::shutdown  (
+    
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -130,30 +132,30 @@ ACE_ENV_SINGLE_ARG_PARAMETER
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::Administration_tie<T>::Administration_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -211,14 +213,13 @@ void POA_ImplementationRepository::Administration_tie<T>::activate_server  (
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    ImplementationRepository::Administration::NotFound,
-    ImplementationRepository::Administration::CannotActivate
+    CORBA::SystemException
+    , ImplementationRepository::Administration::NotFound
+    , ImplementationRepository::Administration::CannotActivate
   ))
 {
   this->ptr_->activate_server (
-server
-    ACE_ENV_ARG_PARAMETER
+server ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -229,14 +230,13 @@ void POA_ImplementationRepository::Administration_tie<T>::register_server  (
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    ImplementationRepository::Administration::AlreadyRegistered
+    CORBA::SystemException
+    , ImplementationRepository::Administration::AlreadyRegistered
   ))
 {
   this->ptr_->register_server (
 server,
-    options
-    ACE_ENV_ARG_PARAMETER
+    options ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -252,8 +252,7 @@ void POA_ImplementationRepository::Administration_tie<T>::reregister_server  (
 {
   this->ptr_->reregister_server (
 server,
-    options
-    ACE_ENV_ARG_PARAMETER
+    options ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -263,13 +262,12 @@ void POA_ImplementationRepository::Administration_tie<T>::remove_server  (
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    ImplementationRepository::Administration::NotFound
+    CORBA::SystemException
+    , ImplementationRepository::Administration::NotFound
   ))
 {
   this->ptr_->remove_server (
-server
-    ACE_ENV_ARG_PARAMETER
+server ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -279,13 +277,12 @@ void POA_ImplementationRepository::Administration_tie<T>::shutdown_server  (
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    ImplementationRepository::Administration::NotFound
+    CORBA::SystemException
+    , ImplementationRepository::Administration::NotFound
   ))
 {
   this->ptr_->shutdown_server (
-server
-    ACE_ENV_ARG_PARAMETER
+server ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -297,15 +294,14 @@ char * POA_ImplementationRepository::Administration_tie<T>::server_is_running  (
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    ImplementationRepository::Administration::NotFound
+    CORBA::SystemException
+    , ImplementationRepository::Administration::NotFound
   ))
 {
   return this->ptr_->server_is_running (
 server,
     addr,
-    server_object
-    ACE_ENV_ARG_PARAMETER
+    server_object ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -315,13 +311,12 @@ void POA_ImplementationRepository::Administration_tie<T>::server_is_shutting_dow
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    ImplementationRepository::Administration::NotFound
+    CORBA::SystemException
+    , ImplementationRepository::Administration::NotFound
   ))
 {
   this->ptr_->server_is_shutting_down (
-server
-    ACE_ENV_ARG_PARAMETER
+server ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -332,14 +327,13 @@ void POA_ImplementationRepository::Administration_tie<T>::find  (
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    ImplementationRepository::Administration::NotFound
+    CORBA::SystemException
+    , ImplementationRepository::Administration::NotFound
   ))
 {
   this->ptr_->find (
 server,
-    info
-    ACE_ENV_ARG_PARAMETER
+    info ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -357,8 +351,7 @@ void POA_ImplementationRepository::Administration_tie<T>::list  (
   this->ptr_->list (
 how_many,
     server_list,
-    server_iterator
-    ACE_ENV_ARG_PARAMETER
+    server_iterator ACE_ENV_ARG_PARAMETER
   );
 }
 
@@ -368,30 +361,30 @@ how_many,
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformationIterator_tie (T &t)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformationIterator_tie (T &t, PortableServer::POA_ptr poa)
-        : ptr_ (&t),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (0)
+	: ptr_ (&t),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformationIterator_tie (T *tp, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_nil ()),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_nil ()),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_ImplementationRepository::ServerInformationIterator_tie<T>::ServerInformationIterator_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-        : ptr_ (tp),
-          poa_ (PortableServer::POA::_duplicate (poa)),
-          rel_ (release)
+	: ptr_ (tp),
+	  poa_ (PortableServer::POA::_duplicate (poa)),
+	  rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -455,13 +448,13 @@ CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator_tie<T>::n
 {
   return this->ptr_->next_n (
 how_many,
-    server_list
-    ACE_ENV_ARG_PARAMETER
+    server_list ACE_ENV_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 void POA_ImplementationRepository::ServerInformationIterator_tie<T>::destroy  (
+    
     ACE_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((

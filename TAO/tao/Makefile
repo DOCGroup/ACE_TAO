@@ -159,6 +159,7 @@ ORB_CORE_FILES = \
   ObjectIDList \
   ORB \
   corbafwd \
+  Policy_ForwardC \
   PolicyC \
   Policy_Validator \
   Encodable \

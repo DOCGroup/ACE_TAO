@@ -24,7 +24,7 @@
 #define _CORBA_DOMAINMANAGER___CI_
 
 ACE_INLINE
-CORBA_DomainManager::CORBA_DomainManager (
+CORBA::DomainManager::DomainManager (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
@@ -42,7 +42,7 @@ CORBA_DomainManager::CORBA_DomainManager (
 #define _CORBA_CONSTRUCTIONPOLICY___CI_
 
 ACE_INLINE
-CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (
+CORBA::ConstructionPolicy::ConstructionPolicy (
     TAO_Stub *objref,
     CORBA::Boolean _tao_collocated,
     TAO_Abstract_ServantBase *servant
@@ -61,23 +61,23 @@ CORBA_ConstructionPolicy::CORBA_ConstructionPolicy (
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_CORBA_DOMAINMANAGERLIST_CI_
 
-ACE_INLINE CORBA_DomainManager **
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::allocbuf (CORBA::ULong nelems)
+ACE_INLINE CORBA::DomainManager **
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::allocbuf (CORBA::ULong nelems)
 {
-  CORBA_DomainManager **buf = 0;
+  CORBA::DomainManager **buf = 0;
   
-  ACE_NEW_RETURN (buf, CORBA_DomainManager*[nelems], 0);
+  ACE_NEW_RETURN (buf, CORBA::DomainManager*[nelems], 0);
   
   for (CORBA::ULong i = 0; i < nelems; i++)
     {
-      buf[i] = CORBA_DomainManager::_nil ();
+      buf[i] = CORBA::DomainManager::_nil ();
     }
   
   return buf;
 }
 
 ACE_INLINE void 
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::freebuf (CORBA_DomainManager **buffer)
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::freebuf (CORBA::DomainManager **buffer)
 {
   if (buffer == 0)
     return;
@@ -85,37 +85,37 @@ _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::freebuf (CORBA_DomainMan
 }
 
 ACE_INLINE
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (void)
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (void)
 {
 }
 
 ACE_INLINE
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (CORBA::ULong maximum)
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::allocbuf (maximum))
 {
 }
 
 ACE_INLINE
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (CORBA::ULong maximum,
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList (CORBA::ULong maximum,
   CORBA::ULong length,
-  CORBA_DomainManager* *value,
+  CORBA::DomainManager* *value,
   CORBA::Boolean release)
 : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
 {
 }
 
 ACE_INLINE
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList(const _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList &rhs)
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList(const _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   if (rhs.buffer_ != 0)
   {
-    CORBA_DomainManager **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::allocbuf (this->maximum_);
-    CORBA_DomainManager ** const tmp2 = ACE_reinterpret_cast (CORBA_DomainManager ** ACE_CAST_CONST, rhs.buffer_);
+    CORBA::DomainManager **tmp1 = _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::allocbuf (this->maximum_);
+    CORBA::DomainManager ** const tmp2 = ACE_reinterpret_cast (CORBA::DomainManager ** ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
       {
-        tmp1[i] = CORBA_DomainManager::_duplicate (tmp2[i]);
+        tmp1[i] = CORBA::DomainManager::_duplicate (tmp2[i]);
       }
     
     this->buffer_ = tmp1;
@@ -126,20 +126,20 @@ _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::_TAO_Unbounded_Object_Se
   }
 }
 
-ACE_INLINE _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList &
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList &rhs)
+ACE_INLINE CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList &
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::operator= (const _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList &rhs)
 {
   if (this == &rhs)
     return *this;
   
   if (this->release_)
   {
-    CORBA_DomainManager **tmp = ACE_reinterpret_cast (CORBA_DomainManager **, this->buffer_);
+    CORBA::DomainManager **tmp = ACE_reinterpret_cast (CORBA::DomainManager **, this->buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
       CORBA::release (tmp[i]);
-      tmp[i] = CORBA_DomainManager::_nil ();
+      tmp[i] = CORBA::DomainManager::_nil ();
     }
     if (this->maximum_ < rhs.maximum_)
     {
@@ -152,30 +152,30 @@ _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::operator= (const _TAO_Un
   
   TAO_Unbounded_Base_Sequence::operator= (rhs);
   
-  CORBA_DomainManager **tmp1 = ACE_reinterpret_cast (CORBA_DomainManager **, this->buffer_);
-  CORBA_DomainManager ** const tmp2 = ACE_reinterpret_cast (CORBA_DomainManager ** ACE_CAST_CONST, rhs.buffer_);
+  CORBA::DomainManager **tmp1 = ACE_reinterpret_cast (CORBA::DomainManager **, this->buffer_);
+  CORBA::DomainManager ** const tmp2 = ACE_reinterpret_cast (CORBA::DomainManager ** ACE_CAST_CONST, rhs.buffer_);
   
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     {
-      tmp1[i] = CORBA_DomainManager::_duplicate (tmp2[i]);
+      tmp1[i] = CORBA::DomainManager::_duplicate (tmp2[i]);
     }
   
   return *this;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var>
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::operator[] (CORBA::ULong index) const
+ACE_INLINE TAO_Object_Manager<CORBA::DomainManager,CORBA::DomainManager_var>
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::operator[] (CORBA::ULong index) const
 // read-write accessor
 {
   ACE_ASSERT (index < this->maximum_);
-  CORBA_DomainManager ** const tmp = ACE_reinterpret_cast (CORBA_DomainManager ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<CORBA_DomainManager,CORBA_DomainManager_var> (tmp + index, this->release_);
+  CORBA::DomainManager ** const tmp = ACE_reinterpret_cast (CORBA::DomainManager ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Object_Manager<CORBA::DomainManager,CORBA::DomainManager_var> (tmp + index, this->release_);
 }
 
-ACE_INLINE CORBA_DomainManager* *
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::get_buffer (CORBA::Boolean orphan)
+ACE_INLINE CORBA::DomainManager* *
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::get_buffer (CORBA::Boolean orphan)
 {
-  CORBA_DomainManager **result = 0;
+  CORBA::DomainManager **result = 0;
   if (orphan == 0)
   {
     // We retain ownership.
@@ -187,7 +187,7 @@ _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::get_buffer (CORBA::Boole
     }
     else
     {
-      result = ACE_reinterpret_cast (CORBA_DomainManager**, this->buffer_);
+      result = ACE_reinterpret_cast (CORBA::DomainManager**, this->buffer_);
     }
   }
   else // if (orphan == 1)
@@ -196,7 +196,7 @@ _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::get_buffer (CORBA::Boole
     {
       // We set the state back to default and relinquish
       // ownership.
-      result = ACE_reinterpret_cast(CORBA_DomainManager**,this->buffer_);
+      result = ACE_reinterpret_cast(CORBA::DomainManager**,this->buffer_);
       this->maximum_ = 0;
       this->length_ = 0;
       this->buffer_ = 0;
@@ -206,10 +206,10 @@ _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::get_buffer (CORBA::Boole
   return result;
 }
 
-ACE_INLINE const CORBA_DomainManager* *
-_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::get_buffer (void) const
+ACE_INLINE const CORBA::DomainManager* *
+CORBA::_TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::get_buffer (void) const
 {
-  return ACE_reinterpret_cast(const CORBA_DomainManager ** ACE_CAST_CONST, this->buffer_);
+  return ACE_reinterpret_cast(const CORBA::DomainManager ** ACE_CAST_CONST, this->buffer_);
 }
 
 
@@ -222,44 +222,44 @@ _TAO_Unbounded_Object_Sequence_CORBA_DomainManagerList::get_buffer (void) const
 #define _CORBA_DOMAINMANAGERLIST_CI_
 
 // *************************************************************
-// Inline operations for class CORBA_DomainManagerList_var
+// Inline operations for class CORBA::DomainManagerList_var
 // *************************************************************
 
 ACE_INLINE
-CORBA_DomainManagerList_var::CORBA_DomainManagerList_var (void) // default constructor
+CORBA::DomainManagerList_var::DomainManagerList_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA_DomainManagerList_var::CORBA_DomainManagerList_var (CORBA_DomainManagerList *p)
+CORBA::DomainManagerList_var::DomainManagerList_var (DomainManagerList *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA_DomainManagerList_var::CORBA_DomainManagerList_var (const ::CORBA_DomainManagerList_var &p) // copy constructor
+CORBA::DomainManagerList_var::DomainManagerList_var (const ::CORBA::DomainManagerList_var &p) // copy constructor
 {
   if (p.ptr_)
-    ACE_NEW (this->ptr_, ::CORBA_DomainManagerList (*p.ptr_));
+    ACE_NEW (this->ptr_, ::CORBA::DomainManagerList (*p.ptr_));
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_DomainManagerList_var::~CORBA_DomainManagerList_var (void) // destructor
+CORBA::DomainManagerList_var::~DomainManagerList_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA_DomainManagerList_var &
-CORBA_DomainManagerList_var::operator= (CORBA_DomainManagerList *p)
+ACE_INLINE CORBA::DomainManagerList_var &
+CORBA::DomainManagerList_var::operator= (DomainManagerList *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE ::CORBA_DomainManagerList_var &
-CORBA_DomainManagerList_var::operator= (const ::CORBA_DomainManagerList_var &p)
+ACE_INLINE ::CORBA::DomainManagerList_var &
+CORBA::DomainManagerList_var::operator= (const ::CORBA::DomainManagerList_var &p)
 {
   if (this != &p)
     {
@@ -270,12 +270,12 @@ CORBA_DomainManagerList_var::operator= (const ::CORBA_DomainManagerList_var &p)
         }
       else
         {
-          CORBA_DomainManagerList *deep_copy =
-            new CORBA_DomainManagerList (*p.ptr_);
+          DomainManagerList *deep_copy =
+            new DomainManagerList (*p.ptr_);
           
           if (deep_copy != 0)
             {
-              CORBA_DomainManagerList *tmp = deep_copy;
+              DomainManagerList *tmp = deep_copy;
               deep_copy = this->ptr_;
               this->ptr_ = tmp;
               delete deep_copy;
@@ -286,97 +286,97 @@ CORBA_DomainManagerList_var::operator= (const ::CORBA_DomainManagerList_var &p)
   return *this;
 }
 
-ACE_INLINE const ::CORBA_DomainManagerList *
-CORBA_DomainManagerList_var::operator-> (void) const
+ACE_INLINE const ::CORBA::DomainManagerList *
+CORBA::DomainManagerList_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA_DomainManagerList *
-CORBA_DomainManagerList_var::operator-> (void)
+ACE_INLINE ::CORBA::DomainManagerList *
+CORBA::DomainManagerList_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_DomainManagerList_var::operator const ::CORBA_DomainManagerList &() const // cast
+CORBA::DomainManagerList_var::operator const ::CORBA::DomainManagerList &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_DomainManagerList_var::operator ::CORBA_DomainManagerList &() // cast 
+CORBA::DomainManagerList_var::operator ::CORBA::DomainManagerList &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA_DomainManagerList_var::operator ::CORBA_DomainManagerList &() const // cast 
+CORBA::DomainManagerList_var::operator ::CORBA::DomainManagerList &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-CORBA_DomainManagerList_var::operator ::CORBA_DomainManagerList *&() // cast 
+CORBA::DomainManagerList_var::operator ::CORBA::DomainManagerList *&() // cast 
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_DomainManager, CORBA_DomainManager_var>
-CORBA_DomainManagerList_var::operator[] (CORBA::ULong index)
+ACE_INLINE TAO_Object_Manager<CORBA::DomainManager, CORBA::DomainManager_var>
+CORBA::DomainManagerList_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const ::CORBA_DomainManagerList &
-CORBA_DomainManagerList_var::in (void) const
+ACE_INLINE const ::CORBA::DomainManagerList &
+CORBA::DomainManagerList_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE ::CORBA_DomainManagerList &
-CORBA_DomainManagerList_var::inout (void)
+ACE_INLINE ::CORBA::DomainManagerList &
+CORBA::DomainManagerList_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE ::CORBA_DomainManagerList *&
-CORBA_DomainManagerList_var::out (void)
+ACE_INLINE ::CORBA::DomainManagerList *&
+CORBA::DomainManagerList_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA_DomainManagerList *
-CORBA_DomainManagerList_var::_retn (void)
+ACE_INLINE ::CORBA::DomainManagerList *
+CORBA::DomainManagerList_var::_retn (void)
 {
-  ::CORBA_DomainManagerList *tmp = this->ptr_;
+  ::CORBA::DomainManagerList *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE ::CORBA_DomainManagerList *
-CORBA_DomainManagerList_var::ptr (void) const
+ACE_INLINE ::CORBA::DomainManagerList *
+CORBA::DomainManagerList_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA_DomainManagerList_out
+// Inline operations for class CORBA::DomainManagerList_out
 // *************************************************************
 
 ACE_INLINE
-CORBA_DomainManagerList_out::CORBA_DomainManagerList_out (CORBA_DomainManagerList *&p)
+CORBA::DomainManagerList_out::DomainManagerList_out (DomainManagerList *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA_DomainManagerList_out::CORBA_DomainManagerList_out (CORBA_DomainManagerList_var &p) // constructor from _var
+CORBA::DomainManagerList_out::DomainManagerList_out (DomainManagerList_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -384,44 +384,44 @@ CORBA_DomainManagerList_out::CORBA_DomainManagerList_out (CORBA_DomainManagerLis
 }
 
 ACE_INLINE
-CORBA_DomainManagerList_out::CORBA_DomainManagerList_out (const ::CORBA_DomainManagerList_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA_DomainManagerList_out&, p).ptr_)
+CORBA::DomainManagerList_out::DomainManagerList_out (const ::CORBA::DomainManagerList_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (DomainManagerList_out&, p).ptr_)
 {}
 
-ACE_INLINE ::CORBA_DomainManagerList_out &
-CORBA_DomainManagerList_out::operator= (const ::CORBA_DomainManagerList_out &p)
+ACE_INLINE ::CORBA::DomainManagerList_out &
+CORBA::DomainManagerList_out::operator= (const ::CORBA::DomainManagerList_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA_DomainManagerList_out&, p).ptr_;
+  this->ptr_ = ACE_const_cast (DomainManagerList_out&, p).ptr_;
   return *this;
 }
 
-ACE_INLINE ::CORBA_DomainManagerList_out &
-CORBA_DomainManagerList_out::operator= (CORBA_DomainManagerList *p)
+ACE_INLINE ::CORBA::DomainManagerList_out &
+CORBA::DomainManagerList_out::operator= (DomainManagerList *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA_DomainManagerList_out::operator ::CORBA_DomainManagerList *&() // cast
+CORBA::DomainManagerList_out::operator ::CORBA::DomainManagerList *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA_DomainManagerList *&
-CORBA_DomainManagerList_out::ptr (void) // ptr
+ACE_INLINE ::CORBA::DomainManagerList *&
+CORBA::DomainManagerList_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE ::CORBA_DomainManagerList *
-CORBA_DomainManagerList_out::operator-> (void)
+ACE_INLINE ::CORBA::DomainManagerList *
+CORBA::DomainManagerList_out::operator-> (void)
 {
   return this->ptr_;
 }
 
-ACE_INLINE TAO_Object_Manager<CORBA_DomainManager, CORBA_DomainManager_var>
-CORBA_DomainManagerList_out::operator[] (CORBA::ULong index)
+ACE_INLINE TAO_Object_Manager<CORBA::DomainManager, CORBA::DomainManager_var>
+CORBA::DomainManagerList_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -429,24 +429,24 @@ CORBA_DomainManagerList_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA_DomainManager_ptr
+    const CORBA::DomainManager_ptr
   );
 
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA_DomainManager_ptr &
+    CORBA::DomainManager_ptr &
   );
 
-CORBA::Boolean TAO_Export operator<< (
+TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const CORBA_ConstructionPolicy_ptr
+    const CORBA::ConstructionPolicy_ptr
   );
 
-CORBA::Boolean TAO_Export operator>> (
+TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    CORBA_ConstructionPolicy_ptr &
+    CORBA::ConstructionPolicy_ptr &
   );
 
 
@@ -455,11 +455,12 @@ CORBA::Boolean TAO_Export operator>> (
 
 CORBA::Boolean TAO_Export operator<< (
     TAO_OutputCDR &,
-    const CORBA_DomainManagerList &
+    const CORBA::DomainManagerList &
   );
 CORBA::Boolean TAO_Export operator>> (
     TAO_InputCDR &,
-    CORBA_DomainManagerList &
+    CORBA::DomainManagerList &
   );
 
 #endif /* _TAO_CDR_OP_CORBA_DomainManagerList_I_ */
+

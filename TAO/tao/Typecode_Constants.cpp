@@ -169,93 +169,16 @@ TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBid, 0)
 TAO_NAMESPACE_END
 
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Bounds, 0)
-TAO_NAMESPACE_END
-
 CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
-CORBA::TypeCode_ptr CORBA_ORB::_tc_InvalidName = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ConstructionPolicy, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NamedValue, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_WrongTransaction, 0)
 TAO_NAMESPACE_END
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyErrorCode, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyError, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InvalidPolicies, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyType, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Policy, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyList, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyTypeSeq, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_SetOverrideType, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyManager, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyCurrent, 0)
-TAO_NAMESPACE_END
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_DomainManager, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_DomainManagerList, 0)
-TAO_NAMESPACE_END
-
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PollableSet, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Pollable, 0)
-TAO_NAMESPACE_END
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_DIIPollable, 0)
-TAO_NAMESPACE_END
 
 // Service definitions
 TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
@@ -281,9 +204,6 @@ TAO_NAMESPACE_END
 
 // Internal to TAO ORB
 CORBA::TypeCode_ptr TC_opaque = 0;
-#if 0
-CORBA::TypeCode_ptr TC_ServiceContextList = 0;
-#endif /* 0 */
 CORBA::TypeCode_ptr TC_completion_status = 0;
 
 // Flag that denotes that the TAO TypeCode constants have been
@@ -461,31 +381,6 @@ TAO_TypeCodes::init (void)
                          1,
                          sizeof (CORBA::TypeCode::BadKind));
 
-  static const CORBA::Long _oc_CORBA_ORB_InvalidName[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    38, ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4f52),
-    ACE_NTOHL (0x422f496e),
-    ACE_NTOHL (0x76616c69),
-    ACE_NTOHL (0x644e616d),
-    ACE_NTOHL (0x653a312e),
-    ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/ORB/InvalidName:1.0
-    12, ACE_NTOHL (0x496e7661),
-    ACE_NTOHL (0x6c69644e),
-    ACE_NTOHL (0x616d6500),  // name = InvalidName
-    0, // member count
-  };
-  CORBA::ORB::_tc_InvalidName =
-    new CORBA::TypeCode(CORBA::tk_except,
-                        sizeof (_oc_CORBA_ORB_InvalidName),
-                        (char *) &_oc_CORBA_ORB_InvalidName,
-                        0,
-                        sizeof (CORBA::ORB::InvalidName));
-
   static const CORBA::Long _oc_CORBA_ORBid[] =
   {
     TAO_ENCAP_BYTE_ORDER, // byte order
@@ -537,37 +432,6 @@ TAO_TypeCodes::init (void)
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  static const CORBA::Long _oc_CORBA_ConstructionPolicy[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    41,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f436f),
-    ACE_NTOHL (0x6e737472),
-    ACE_NTOHL (0x75637469),
-    ACE_NTOHL (0x6f6e506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),          // repository ID =
-                              //   IDL:omg.org/CORBA/ConstructionPolicy:1.0
-    19,
-    ACE_NTOHL (0x436f6e73),
-    ACE_NTOHL (0x74727563),
-    ACE_NTOHL (0x74696f6e),
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63790000),   // name = ConstructionPolicy,
-  };
-  CORBA::_tc_ConstructionPolicy =
-    new CORBA::TypeCode (CORBA::tk_objref,
-                         sizeof (_oc_CORBA_ConstructionPolicy),
-                         (char *) &_oc_CORBA_ConstructionPolicy,
-                         0,
-                         sizeof (CORBA::ConstructionPolicy));
-
-
   static const CORBA::Long _oc_corba_NamedValue[] =
   {
     TAO_ENCAP_BYTE_ORDER,     // byte order
@@ -594,36 +458,6 @@ TAO_TypeCodes::init (void)
                          (char *) &_oc_corba_NamedValue,
                          0,
                          sizeof (CORBA::NamedValue));
-
-  static const CORBA::Long _oc_CORBA_WrongTransaction[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    39,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f5772),
-    ACE_NTOHL (0x6f6e6754),
-    ACE_NTOHL (0x72616e73),
-    ACE_NTOHL (0x61637469),
-    ACE_NTOHL (0x6f6e3a31),
-    ACE_NTOHL (0x2e300000),   // repository ID =
-                              //   IDL:omg.org/CORBA/WrongTransaction:1.0
-    17,
-    ACE_NTOHL (0x57726f6e),
-    ACE_NTOHL (0x67547261),
-    ACE_NTOHL (0x6e736163),
-    ACE_NTOHL (0x74696f6e),
-    ACE_NTOHL (0x0),          // name = WrongTransaction
-    0,                        // member count
-  };
-  CORBA::_tc_WrongTransaction =
-    new CORBA::TypeCode (CORBA::tk_except,
-                         sizeof (_oc_CORBA_WrongTransaction),
-                         (char *) &_oc_CORBA_WrongTransaction,
-                         0,
-                         sizeof (CORBA::WrongTransaction));
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -903,526 +737,6 @@ TAO_TypeCodes::init (void)
                          0,
                          sizeof (CORBA::ServiceInformation));
 
-  // ****************************************************************
-
-  static const CORBA::Long _oc_CORBA_PolicyErrorCode[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    38,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x4572726f),
-    ACE_NTOHL (0x72436f64),
-    ACE_NTOHL (0x653a312e),
-    ACE_NTOHL (0x30000000),  // repository ID =
-                             //   IDL:omg.org/CORBA/PolicyErrorCode:1.0
-    16,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63794572),
-    ACE_NTOHL (0x726f7243),
-    ACE_NTOHL (0x6f646500),  // name = PolicyErrorCode
-    CORBA::tk_short,
-  };
-  CORBA::_tc_PolicyErrorCode =
-    new CORBA::TypeCode (CORBA::tk_alias,
-                         sizeof (_oc_CORBA_PolicyErrorCode),
-                         (char *) &_oc_CORBA_PolicyErrorCode,
-                         0,
-                         sizeof (CORBA::PolicyErrorCode));
-
-  static const CORBA::Long _oc_CORBA_PolicyError[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    34,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x4572726f),
-    ACE_NTOHL (0x723a312e),
-    ACE_NTOHL (0x30000000),   // repository ID =
-                              //   IDL:omg.org/CORBA/PolicyError:1.0
-    12,
-    ACE_NTOHL (0x506f6c69),
-
-    ACE_NTOHL (0x63794572),
-    ACE_NTOHL (0x726f7200),   // name = PolicyError
-    1, // member count
-    7,
-    ACE_NTOHL (0x72656173),
-    ACE_NTOHL (0x6f6e0000),   // name = reason
-    CORBA::tk_alias,          // typecode kind for typedefs
-    72,                       // encapsulation length
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    38,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x4572726f),
-    ACE_NTOHL (0x72436f64),
-    ACE_NTOHL (0x653a312e),
-    ACE_NTOHL (0x30000000),   // repository ID =
-                              //   IDL:omg.org/CORBA/PolicyErrorCode:1.0
-    16,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63794572),
-    ACE_NTOHL (0x726f7243),
-    ACE_NTOHL (0x6f646500),   // name = PolicyErrorCode
-    CORBA::tk_short,
-  };
-  CORBA::_tc_PolicyError =
-    new CORBA::TypeCode(CORBA::tk_except,
-                        sizeof (_oc_CORBA_PolicyError),
-                        (char *) &_oc_CORBA_PolicyError,
-                        0,
-                        sizeof (CORBA::PolicyError));
-
-  static const CORBA::Long _oc_CORBA_InvalidPolicies[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    38,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f496e),
-    ACE_NTOHL (0x76616c69),
-    ACE_NTOHL (0x64506f6c),
-    ACE_NTOHL (0x69636965),
-    ACE_NTOHL (0x733a312e),
-    ACE_NTOHL (0x30000000),   // repository ID = IDL:omg.org/CORBA/InvalidPolicies:1.0
-    16,
-    ACE_NTOHL (0x496e7661),
-    ACE_NTOHL (0x6c696450),
-    ACE_NTOHL (0x6f6c6963),
-    ACE_NTOHL (0x69657300),   // name = InvalidPolicies
-    1,                        // member count
-    8,
-    ACE_NTOHL (0x696e6469),
-    ACE_NTOHL (0x63657300),   // name = indices
-    CORBA::tk_sequence,       // typecode kind
-    12,                       // encapsulation length
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    CORBA::tk_ushort,
-    0,
-  };
-  CORBA::_tc_InvalidPolicies =
-    new CORBA::TypeCode (CORBA::tk_except,
-                         sizeof (_oc_CORBA_InvalidPolicies),
-                         (char *) &_oc_CORBA_InvalidPolicies,
-                         0,
-                         sizeof (CORBA::InvalidPolicies));
-
-  static const CORBA::Long _oc_CORBA_PolicyType[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    33,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x54797065),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),          // repository ID =
-                              //   IDL:omg.org/CORBA/PolicyType:1.0
-    11,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63795479),
-    ACE_NTOHL (0x70650000),   // name = PolicyType
-    CORBA::tk_ulong,
-  };
-  CORBA::_tc_PolicyType =
-    new CORBA::TypeCode (CORBA::tk_alias,
-                         sizeof (_oc_CORBA_PolicyType),
-                         (char *) &_oc_CORBA_PolicyType,
-                         0,
-                         sizeof (CORBA::PolicyType));
-
-  static const CORBA::Long _oc_CORBA_Policy[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    29,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),          // repository ID = IDL:omg.org/CORBA/Policy:1.0
-    7,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63790000),   // name = Policy,
-  };
-  CORBA::_tc_Policy =
-    new CORBA::TypeCode (CORBA::tk_objref,
-                         sizeof (_oc_CORBA_Policy),
-                         (char *) &_oc_CORBA_Policy,
-                         1,
-                         sizeof (CORBA::Policy));
-
-  static const CORBA::Long _oc_CORBA_PolicyList[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,       // byte order
-    33,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x4c697374),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),            // repository ID =
-                                //   IDL:omg.org/CORBA/PolicyList:1.0
-    11,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63794c69),
-    ACE_NTOHL (0x73740000),     // name = PolicyList
-    CORBA::tk_sequence,         // typecode kind
-    68,                         // encapsulation length
-    TAO_ENCAP_BYTE_ORDER,       // byte order
-    CORBA::tk_objref,           // typecode kind
-    52,                         // encapsulation length
-    TAO_ENCAP_BYTE_ORDER,       // byte order
-    29,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),            // repository ID =
-                                //   IDL:omg.org/CORBA/Policy:1.0
-    7,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63790000),     // name = Policy,
-    0,
-  };
- CORBA::_tc_PolicyList =
-   new CORBA::TypeCode (CORBA::tk_alias,
-                        sizeof (_oc_CORBA_PolicyList),
-                        (char *) &_oc_CORBA_PolicyList,
-                        1,
-                        sizeof (CORBA::PolicyList));
-
-  static const CORBA::Long _oc_CORBA_PolicyTypeSeq[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    36,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x54797065),
-    ACE_NTOHL (0x5365713a),
-    ACE_NTOHL (0x312e3000),   // repository ID =
-                              //   IDL:omg.org/CORBA/PolicyTypeSeq:1.0
-    14,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63795479),
-    ACE_NTOHL (0x70655365),
-    ACE_NTOHL (0x71000000),   // name = PolicyTypeSeq
-    CORBA::tk_sequence,       // typecode kind
-    80,                       // encapsulation length
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    CORBA::tk_alias,          // typecode kind for typedefs
-    64,                       // encapsulation length
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    33,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x54797065),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),          // repository ID =
-                              //   IDL:omg.org/CORBA/PolicyType:1.0
-    11,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63795479),
-    ACE_NTOHL (0x70650000),   // name = PolicyType
-    CORBA::tk_ulong,
-    0,
- };
- CORBA::_tc_PolicyTypeSeq =
-   new CORBA::TypeCode (CORBA::tk_alias,
-                        sizeof (_oc_CORBA_PolicyTypeSeq),
-                        (char *) &_oc_CORBA_PolicyTypeSeq,
-                        0,
-                        sizeof (CORBA::PolicyTypeSeq));
-
-  static const CORBA::Long _oc_CORBA_SetOverrideType[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    38,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f5365),
-    ACE_NTOHL (0x744f7665),
-    ACE_NTOHL (0x72726964),
-    ACE_NTOHL (0x65547970),
-    ACE_NTOHL (0x653a312e),
-    ACE_NTOHL (0x30000000),   // repository ID =
-                              //   IDL:omg.org/CORBA/SetOverrideType:1.0
-    16,
-    ACE_NTOHL (0x5365744f),
-    ACE_NTOHL (0x76657272),
-    ACE_NTOHL (0x69646554),
-    ACE_NTOHL (0x79706500),   // name = SetOverrideType
-    2,                        // member count
-    13,
-    ACE_NTOHL (0x5345545f),
-    ACE_NTOHL (0x4f564552),
-    ACE_NTOHL (0x52494445),
-    ACE_NTOHL (0x0),          // name = SET_OVERRIDE
-    13,
-    ACE_NTOHL (0x4144445f),
-    ACE_NTOHL (0x4f564552),
-    ACE_NTOHL (0x52494445),
-    ACE_NTOHL (0x0),          // name = ADD_OVERRIDE
-  };
- CORBA::_tc_SetOverrideType =
-   new CORBA::TypeCode (CORBA::tk_enum,
-                        sizeof (_oc_CORBA_SetOverrideType),
-                        (char *) &_oc_CORBA_SetOverrideType,
-                        0,
-                        sizeof (CORBA::SetOverrideType));
-
-  static const CORBA::Long _oc_CORBA_PolicyManager[] =
- {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    36,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x4d616e61),
-    ACE_NTOHL (0x6765723a),
-    ACE_NTOHL (0x312e3000),   // repository ID =
-                              //   IDL:omg.org/CORBA/PolicyManager:1.0
-    14,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63794d61),
-    ACE_NTOHL (0x6e616765),
-    ACE_NTOHL (0x72000000),   // name = PolicyManager,
-  };
- CORBA::_tc_PolicyManager =
-   new CORBA::TypeCode (CORBA::tk_objref,
-                        sizeof (_oc_CORBA_PolicyManager),
-                        (char *) &_oc_CORBA_PolicyManager,
-                        0,
-                        sizeof (CORBA::PolicyManager));
-
-  static const CORBA::Long _oc_CORBA_PolicyCurrent[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    36,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c696379),
-    ACE_NTOHL (0x43757272),
-    ACE_NTOHL (0x656e743a),
-    ACE_NTOHL (0x312e3000),   // repository ID =
-                              //   IDL:omg.org/CORBA/PolicyCurrent:1.0
-    14,
-    ACE_NTOHL (0x506f6c69),
-    ACE_NTOHL (0x63794375),
-    ACE_NTOHL (0x7272656e),
-    ACE_NTOHL (0x74000000),   // name = PolicyCurrent,
-  };
- CORBA::_tc_PolicyCurrent =
-   new CORBA::TypeCode  (CORBA::tk_objref,
-                         sizeof (_oc_CORBA_PolicyCurrent),
-                         (char *) &_oc_CORBA_PolicyCurrent,
-                         0,
-                         sizeof (CORBA::PolicyCurrent));
-
-  static const CORBA::Long _oc_CORBA_DomainManager[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    36,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f446f),
-    ACE_NTOHL (0x6d61696e),
-    ACE_NTOHL (0x4d616e61),
-    ACE_NTOHL (0x6765723a),
-    ACE_NTOHL (0x312e3000),   // repository ID =
-                              //IDL:omg.org/CORBA/DomainManager:1.0
-    14,
-    ACE_NTOHL (0x446f6d61),
-
-    ACE_NTOHL (0x696e4d61),
-    ACE_NTOHL (0x6e616765),
-    ACE_NTOHL (0x72000000),   // name = DomainManager,
-  };
-  CORBA::_tc_DomainManager =
-    new CORBA::TypeCode (CORBA::tk_objref,
-                         sizeof (_oc_CORBA_DomainManager),
-                         (char *) &_oc_CORBA_DomainManager,
-                         0,
-                         sizeof (CORBA_DomainManager));
-
-  static const CORBA::Long _oc_CORBA_DomainManagerList[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,       // byte order
-    40,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f446f),
-    ACE_NTOHL (0x6d61696e),
-    ACE_NTOHL (0x4d616e61),
-    ACE_NTOHL (0x6765724c),
-    ACE_NTOHL (0x6973743a),
-    ACE_NTOHL (0x312e3000),     // repository ID =
-                                //IDL:omg.org/CORBA/DomainManagerList:1.0
-    18,
-    ACE_NTOHL (0x446f6d61),
-    ACE_NTOHL (0x696e4d61),
-    ACE_NTOHL (0x6e616765),
-    ACE_NTOHL (0x724c6973),
-    ACE_NTOHL (0x74000000),     // name = DomainManagerList
-    CORBA::tk_sequence,         // typecode kind
-    80,                         // encapsulation length
-    TAO_ENCAP_BYTE_ORDER,       // byte order
-    CORBA::tk_objref,           // typecode kind
-    64,                         // encapsulation length
-    TAO_ENCAP_BYTE_ORDER,       // byte order
-    36,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f446f),
-    ACE_NTOHL (0x6d61696e),
-    ACE_NTOHL (0x4d616e61),
-    ACE_NTOHL (0x6765723a),
-    ACE_NTOHL (0x312e3000),     // repository ID =
-                                //IDL:omg.org/CORBA/DomainManager:1.0
-    14,
-    ACE_NTOHL (0x446f6d61),
-    ACE_NTOHL (0x696e4d61),
-    ACE_NTOHL (0x6e616765),
-    ACE_NTOHL (0x72000000),     // name = DomainManager,
-    0,
-  };
-  CORBA::_tc_DomainManagerList =
-    new CORBA::TypeCode (CORBA::tk_alias,
-                         sizeof (_oc_CORBA_DomainManagerList),
-                         (char *) &_oc_CORBA_DomainManagerList,
-                         0,
-                         sizeof (CORBA_DomainManagerList));
-
- // ****************************************************************
-
-#if (TAO_HAS_AMI_POLLER == 1)
-  static const CORBA::Long _oc_CORBA_Pollable[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    31,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c6c6162),
-    ACE_NTOHL (0x6c653a31),
-    ACE_NTOHL (0x2e300000),   // repository ID =
-                              //   IDL:omg.org/CORBA/Pollable:1.0
-    9,
-    ACE_NTOHL (0x506f6c6c),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x0),          // name = Pollable,
-  };
- CORBA::_tc_Pollable =
-   new CORBA::TypeCode (CORBA::tk_objref,
-                        sizeof (_oc_CORBA_Pollable),
-                        (char *) &_oc_CORBA_Pollable,
-                        0,
-                        sizeof (CORBA_Pollable));
-
-  static const CORBA::Long _oc_CORBA_DIIPollable[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    34,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f4449),
-    ACE_NTOHL (0x49506f6c),
-    ACE_NTOHL (0x6c61626c),
-    ACE_NTOHL (0x653a312e),
-    ACE_NTOHL (0x30000000),   // repository ID =
-                              //   IDL:omg.org/CORBA/DIIPollable:1.0
-    12,
-    ACE_NTOHL (0x44494950),
-    ACE_NTOHL (0x6f6c6c61),
-    ACE_NTOHL (0x626c6500),   // name = DIIPollable,
-  };
- CORBA::_tc_DIIPollable =
-   new CORBA::TypeCode (CORBA::tk_objref,
-                        sizeof (_oc_CORBA_DIIPollable),
-                        (char *) &_oc_CORBA_DIIPollable,
-                        0,
-                        sizeof (CORBA::DIIPollable));
-
-  static const CORBA::Long _oc_CORBA_PollableSet[] =
-  {
-    TAO_ENCAP_BYTE_ORDER,     // byte order
-    34,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f506f),
-    ACE_NTOHL (0x6c6c6162),
-    ACE_NTOHL (0x6c655365),
-    ACE_NTOHL (0x743a312e),
-    ACE_NTOHL (0x30000000),   // repository ID =
-                              //   IDL:omg.org/CORBA/PollableSet:1.0
-    12,
-    ACE_NTOHL (0x506f6c6c),
-    ACE_NTOHL (0x61626c65),
-    ACE_NTOHL (0x53657400),   // name = PollableSet,
-  };
- CORBA::_tc_PollableSet =
-   new CORBA::TypeCode (CORBA::tk_objref,
-                        sizeof (_oc_CORBA_PollableSet),
-                        (char *) &_oc_CORBA_PollableSet,
-                        0,
-                        sizeof (CORBA_PollableSet));
-
-#endif /* TAO_HAS_AMI_POLLER == 1 */
-
  // ****************************************************************
 
   static const CORBA::Long _oc_CORBA_Current[] =
@@ -1557,30 +871,6 @@ TAO_TypeCodes::init (void)
                          (char *) &oc_completion_status,
                          1,
                          sizeof (CORBA::CompletionStatus));
-
-  static const CORBA::Long _oc_CORBA_Bounds[] =
-  {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    29,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x434f5242),
-    ACE_NTOHL (0x412f426f),
-    ACE_NTOHL (0x756e6473),
-    ACE_NTOHL (0x3a312e30),
-    ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/CORBA/Bounds:1.0
-    7,
-    ACE_NTOHL (0x426f756e),
-    ACE_NTOHL (0x64730000),  // name = Bounds
-    0, // member count
-  };
- CORBA::_tc_Bounds =
-   new CORBA::TypeCode (CORBA::tk_except,
-                        sizeof (_oc_CORBA_Bounds),
-                        (char *) &_oc_CORBA_Bounds,
-                        0,
-                        sizeof (CORBA_Bounds));
 }
 
 // destroy all the typecodes owned by the ORB
@@ -1651,72 +941,26 @@ TAO_TypeCodes::fini (void)
   CORBA::release (CORBA::TypeCode::_tc_BadKind);
 
   // additional typecodes in the CORBA namespace
-  CORBA::release (CORBA::_tc_Policy);
-
-  CORBA::release (CORBA::_tc_PolicyList);
-
   CORBA::release (CORBA::_tc_Current);
-
-  CORBA::release (CORBA::ORB::_tc_InvalidName);
 
   CORBA::release (CORBA::_tc_ORBid);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-  CORBA::release (CORBA::_tc_ConstructionPolicy);
-
   CORBA::release (CORBA::_tc_NamedValue);
-
-  CORBA::release (CORBA::_tc_WrongTransaction);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::release (CORBA_ORB::_tc_ObjectId);
 
-  CORBA::release (CORBA::_tc_PolicyType);
-
-  CORBA::release (CORBA::_tc_PolicyErrorCode);
-
-  CORBA::release (CORBA::_tc_PolicyError);
-
-  CORBA::release (CORBA::_tc_InvalidPolicies);
-
-  CORBA::release (CORBA::_tc_PolicyTypeSeq);
-
-  CORBA::release (CORBA::_tc_SetOverrideType);
-
-  CORBA::release (CORBA::_tc_PolicyManager);
-
-  CORBA::release (CORBA::_tc_PolicyCurrent);
-
-  CORBA::release (CORBA::_tc_DomainManager);
-
-  CORBA::release (CORBA::_tc_DomainManagerList);
-
-#if (TAO_HAS_AMI_POLLER == 1)
-  CORBA::release (CORBA::_tc_Pollable);
-
-  CORBA::release (CORBA::_tc_DIIPollable);
-
-  CORBA::release (CORBA::_tc_PollableSet);
-#endif /* (TAO_HAS_AMI_POLLER == 1) */
-
   // Service types
-   //= Service type
-   CORBA::release (CORBA::_tc_ServiceType);
-   CORBA::release (CORBA::_tc_ServiceOption);
-   CORBA::release (CORBA::_tc_ServiceDetailType);
-   CORBA::release (CORBA::_tc_ServiceDetail);
-   CORBA::release (CORBA::_tc_ServiceInformation);
-
-   CORBA::release (CORBA::_tc_Bounds);
-
+  CORBA::release (CORBA::_tc_ServiceType);
+  CORBA::release (CORBA::_tc_ServiceOption);
+  CORBA::release (CORBA::_tc_ServiceDetailType);
+  CORBA::release (CORBA::_tc_ServiceDetail);
+  CORBA::release (CORBA::_tc_ServiceInformation);
+  
   // TAO specific
   CORBA::release (TC_opaque);
-
-
-#if 0
-  CORBA::release (TC_ServiceContextList);
-#endif /* 0 */
 
   CORBA::release (TC_completion_status);
 }

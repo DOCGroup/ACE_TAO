@@ -77,18 +77,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "{" << be_nl;
       *os << "}" << be_nl << be_nl;
 
-      if (!node->is_local ())
-        {
-          *os << "void "
-              << node->name ()
-              << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
-              << "{" << be_idt_nl
-              << node->local_name () << " *tmp = ACE_static_cast ("
-              << node->local_name () << "*, _tao_void_pointer);" << be_nl
-              << "delete tmp;" << be_uidt_nl
-              << "}" << be_nl << be_nl;
-        }
-
       // Copy constructor.
       *os << "// Copy constructor." << be_nl;
       *os << node->name () << "::" << node->local_name () << " (const ::"
@@ -154,8 +142,18 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "return *this;" << be_uidt_nl
           << "}" << be_nl << be_nl;
 
-      // Narrow method.
-      *os << "// Narrow." << be_nl;
+      if (!node->is_local ())
+        {
+          *os << "void "
+              << node->name ()
+              << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
+              << "{" << be_idt_nl
+              << node->local_name () << " *tmp = ACE_static_cast ("
+              << node->local_name () << "*, _tao_void_pointer);" << be_nl
+              << "delete tmp;" << be_uidt_nl
+              << "}" << be_nl << be_nl;
+        }
+
       *os << node->name () << " *" << be_nl;
       *os << node->name () << "::_downcast (CORBA::Exception *exc)" << be_nl;
       *os << "{" << be_idt_nl;
@@ -171,10 +169,32 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "}" << be_uidt << be_uidt_nl;
       *os << "}" << be_nl << be_nl;
 
+      // Generate the _alloc method.
+      *os << "CORBA::Exception *" << node->name ()
+          << "::_alloc (void)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "CORBA::Exception *retval = 0;" << be_nl
+          << "ACE_NEW_RETURN (retval, ::" << node->name ()
+          << ", 0);" << be_nl
+          << "return retval;" << be_uidt_nl;
+      *os << "}" << be_nl << be_nl;
+
+      *os << "CORBA::Exception *" << be_nl
+          << node->name () << "::_tao_duplicate (void) const" << be_nl
+          << "{" << be_idt_nl
+          << "CORBA::Exception *result;" << be_nl
+          << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
+          << "result," << be_nl
+          << "::" << node->name () << " (*this)," << be_nl
+          << "0" << be_uidt_nl
+          << ");" << be_uidt_nl
+          << "return result;" << be_uidt_nl
+          << "}\n" << be_nl;
+      
       *os << "void " << node->name () << "::_raise ()" << be_nl
           << "{" << be_idt_nl
           << "TAO_RAISE (*this);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+          << "}\n" << be_nl;
 
       *os << "void " << node->name ()
           << "::_tao_encode (" << be_idt << be_idt_nl;
@@ -263,17 +283,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
 
           *os << "}" << be_nl << be_nl;
         }
-
-      // Generate the _alloc method.
-      *os << "// TAO extension - the _alloc method." << be_nl;
-      *os << "CORBA::Exception *" << node->name ()
-          << "::_alloc (void)" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "CORBA::Exception *retval = 0;" << be_nl
-          << "ACE_NEW_RETURN (retval, ::" << node->name ()
-          << ", 0);" << be_nl
-          << "return retval;" << be_uidt_nl;
-      *os << "}" << be_nl << be_nl;
 
       // Constructor taking all members. It exists only if there are any
       // members.

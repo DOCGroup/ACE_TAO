@@ -463,4 +463,3 @@ template class auto_ptr<TAO_InputCDR>;
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_InputCDR>
 #pragma instantiate auto_ptr<TAO_InputCDR>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

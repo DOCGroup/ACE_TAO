@@ -27,7 +27,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/RequestInfo_Util.h"
-#include "tao/ClientRequestInfo.h"
+#include "tao/ClientRequestInfo_i.h"
 #include "tao/ClientInterceptorAdapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -85,7 +85,9 @@ tao_PortableInterceptor_Interceptor_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::Interceptor_var
+// PortableInterceptor::Interceptor_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::Interceptor_var::Interceptor_var (void) // default constructor
@@ -208,7 +210,9 @@ PortableInterceptor::Interceptor_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::Interceptor_out
+// PortableInterceptor::Interceptor_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::Interceptor_out::Interceptor_out (Interceptor_ptr &p)
@@ -267,41 +271,44 @@ PortableInterceptor::Interceptor_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::Interceptor::Interceptor (void)
 {}
-  // destructor
-  PortableInterceptor::Interceptor::~Interceptor (void)
-  {}
 
-  PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return Interceptor::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::Interceptor::~Interceptor (void)
+{}
 
-  PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return Interceptor::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            Interceptor_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &Interceptor::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::Interceptor_ptr PortableInterceptor::Interceptor::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return Interceptor::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::Interceptor_ptr
+PortableInterceptor::Interceptor::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return Interceptor::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          Interceptor_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &Interceptor::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::Interceptor_ptr
@@ -344,12 +351,6 @@ PortableInterceptor::ForwardRequest::~ForwardRequest (void)
 {
 }
 
-void PortableInterceptor::ForwardRequest::_tao_any_destructor (void *_tao_void_pointer)
-{
-  ForwardRequest *tmp = ACE_static_cast (ForwardRequest*, _tao_void_pointer);
-  delete tmp;
-}
-
 // Copy constructor.
 PortableInterceptor::ForwardRequest::ForwardRequest (const ::PortableInterceptor::ForwardRequest &_tao_excp)
   : CORBA_UserException (_tao_excp._id ())
@@ -368,7 +369,12 @@ PortableInterceptor::ForwardRequest::operator= (const ::PortableInterceptor::For
   return *this;
 }
 
-// Narrow.
+void PortableInterceptor::ForwardRequest::_tao_any_destructor (void *_tao_void_pointer)
+{
+  ForwardRequest *tmp = ACE_static_cast (ForwardRequest*, _tao_void_pointer);
+  delete tmp;
+}
+
 PortableInterceptor::ForwardRequest *
 PortableInterceptor::ForwardRequest::_downcast (CORBA::Exception *exc)
 {
@@ -380,6 +386,25 @@ PortableInterceptor::ForwardRequest::_downcast (CORBA::Exception *exc)
     {
       return 0;
     }
+}
+
+CORBA::Exception *PortableInterceptor::ForwardRequest::_alloc (void)
+{
+  CORBA::Exception *retval = 0;
+  ACE_NEW_RETURN (retval, ::PortableInterceptor::ForwardRequest, 0);
+  return retval;
+}
+
+CORBA::Exception *
+PortableInterceptor::ForwardRequest::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (
+      result,
+      PortableInterceptor::ForwardRequest (*this),
+      0
+    );
+  return result;
 }
 
 void PortableInterceptor::ForwardRequest::_raise ()
@@ -411,14 +436,6 @@ void PortableInterceptor::ForwardRequest::_tao_decode (
     }
 
   ACE_THROW (CORBA::MARSHAL ());
-}
-
-// TAO extension - the _alloc method.
-CORBA::Exception *PortableInterceptor::ForwardRequest::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableInterceptor::ForwardRequest, 0);
-  return retval;
 }
 
 PortableInterceptor::ForwardRequest::ForwardRequest (
@@ -602,12 +619,6 @@ PortableInterceptor::InvalidSlot::~InvalidSlot (void)
 {
 }
 
-void PortableInterceptor::InvalidSlot::_tao_any_destructor (void *_tao_void_pointer)
-{
-  InvalidSlot *tmp = ACE_static_cast (InvalidSlot*, _tao_void_pointer);
-  delete tmp;
-}
-
 // Copy constructor.
 PortableInterceptor::InvalidSlot::InvalidSlot (const ::PortableInterceptor::InvalidSlot &_tao_excp)
   : CORBA_UserException (_tao_excp._id ())
@@ -622,7 +633,12 @@ PortableInterceptor::InvalidSlot::operator= (const ::PortableInterceptor::Invali
   return *this;
 }
 
-// Narrow.
+void PortableInterceptor::InvalidSlot::_tao_any_destructor (void *_tao_void_pointer)
+{
+  InvalidSlot *tmp = ACE_static_cast (InvalidSlot*, _tao_void_pointer);
+  delete tmp;
+}
+
 PortableInterceptor::InvalidSlot *
 PortableInterceptor::InvalidSlot::_downcast (CORBA::Exception *exc)
 {
@@ -634,6 +650,25 @@ PortableInterceptor::InvalidSlot::_downcast (CORBA::Exception *exc)
     {
       return 0;
     }
+}
+
+CORBA::Exception *PortableInterceptor::InvalidSlot::_alloc (void)
+{
+  CORBA::Exception *retval = 0;
+  ACE_NEW_RETURN (retval, ::PortableInterceptor::InvalidSlot, 0);
+  return retval;
+}
+
+CORBA::Exception *
+PortableInterceptor::InvalidSlot::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (
+      result,
+      PortableInterceptor::InvalidSlot (*this),
+      0
+    );
+  return result;
 }
 
 void PortableInterceptor::InvalidSlot::_raise ()
@@ -665,14 +700,6 @@ void PortableInterceptor::InvalidSlot::_tao_decode (
     }
 
   ACE_THROW (CORBA::MARSHAL ());
-}
-
-// TAO extension - the _alloc method.
-CORBA::Exception *PortableInterceptor::InvalidSlot::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableInterceptor::InvalidSlot, 0);
-  return retval;
 }
 
 static const CORBA::Long _oc_PortableInterceptor_InvalidSlot[] =
@@ -762,7 +789,9 @@ tao_PortableInterceptor_Current_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::Current_var
+// PortableInterceptor::Current_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::Current_var::Current_var (void) // default constructor
@@ -885,7 +914,9 @@ PortableInterceptor::Current_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::Current_out
+// PortableInterceptor::Current_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::Current_out::Current_out (Current_ptr &p)
@@ -944,41 +975,44 @@ PortableInterceptor::Current_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::Current::Current (void)
 {}
-  // destructor
-  PortableInterceptor::Current::~Current (void)
-  {}
 
-  PortableInterceptor::Current_ptr PortableInterceptor::Current::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::Current::~Current (void)
+{}
 
-  PortableInterceptor::Current_ptr PortableInterceptor::Current::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return Current::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            Current_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &Current::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::Current_ptr PortableInterceptor::Current::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return Current::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::Current_ptr
+PortableInterceptor::Current::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return Current::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          Current_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &Current::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::Current_ptr
@@ -1068,7 +1102,9 @@ tao_PortableInterceptor_RequestInfo_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::RequestInfo_var
+// PortableInterceptor::RequestInfo_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::RequestInfo_var::RequestInfo_var (void) // default constructor
@@ -1191,7 +1227,9 @@ PortableInterceptor::RequestInfo_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::RequestInfo_out
+// PortableInterceptor::RequestInfo_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::RequestInfo_out::RequestInfo_out (RequestInfo_ptr &p)
@@ -1250,41 +1288,44 @@ PortableInterceptor::RequestInfo_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::RequestInfo::RequestInfo (void)
 {}
-  // destructor
-  PortableInterceptor::RequestInfo::~RequestInfo (void)
-  {}
 
-  PortableInterceptor::RequestInfo_ptr PortableInterceptor::RequestInfo::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return RequestInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::RequestInfo::~RequestInfo (void)
+{}
 
-  PortableInterceptor::RequestInfo_ptr PortableInterceptor::RequestInfo::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return RequestInfo::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            RequestInfo_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &RequestInfo::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::RequestInfo_ptr PortableInterceptor::RequestInfo::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return RequestInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::RequestInfo_ptr
+PortableInterceptor::RequestInfo::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return RequestInfo::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          RequestInfo_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &RequestInfo::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::RequestInfo_ptr
@@ -1362,7 +1403,9 @@ tao_PortableInterceptor_ClientRequestInfo_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ClientRequestInfo_var
+// PortableInterceptor::ClientRequestInfo_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::ClientRequestInfo_var::ClientRequestInfo_var (void) // default constructor
@@ -1485,7 +1528,9 @@ PortableInterceptor::ClientRequestInfo_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ClientRequestInfo_out
+// PortableInterceptor::ClientRequestInfo_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::ClientRequestInfo_out::ClientRequestInfo_out (ClientRequestInfo_ptr &p)
@@ -1544,41 +1589,44 @@ PortableInterceptor::ClientRequestInfo_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::ClientRequestInfo::ClientRequestInfo (void)
 {}
-  // destructor
-  PortableInterceptor::ClientRequestInfo::~ClientRequestInfo (void)
-  {}
 
-  PortableInterceptor::ClientRequestInfo_ptr PortableInterceptor::ClientRequestInfo::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return ClientRequestInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::ClientRequestInfo::~ClientRequestInfo (void)
+{}
 
-  PortableInterceptor::ClientRequestInfo_ptr PortableInterceptor::ClientRequestInfo::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return ClientRequestInfo::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            ClientRequestInfo_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &ClientRequestInfo::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::ClientRequestInfo_ptr PortableInterceptor::ClientRequestInfo::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return ClientRequestInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::ClientRequestInfo_ptr
+PortableInterceptor::ClientRequestInfo::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return ClientRequestInfo::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          ClientRequestInfo_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &ClientRequestInfo::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::ClientRequestInfo_ptr
@@ -1668,7 +1716,9 @@ tao_PortableInterceptor_ServerRequestInfo_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ServerRequestInfo_var
+// PortableInterceptor::ServerRequestInfo_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::ServerRequestInfo_var::ServerRequestInfo_var (void) // default constructor
@@ -1791,7 +1841,9 @@ PortableInterceptor::ServerRequestInfo_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ServerRequestInfo_out
+// PortableInterceptor::ServerRequestInfo_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::ServerRequestInfo_out::ServerRequestInfo_out (ServerRequestInfo_ptr &p)
@@ -1850,41 +1902,44 @@ PortableInterceptor::ServerRequestInfo_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::ServerRequestInfo::ServerRequestInfo (void)
 {}
-  // destructor
-  PortableInterceptor::ServerRequestInfo::~ServerRequestInfo (void)
-  {}
 
-  PortableInterceptor::ServerRequestInfo_ptr PortableInterceptor::ServerRequestInfo::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return ServerRequestInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::ServerRequestInfo::~ServerRequestInfo (void)
+{}
 
-  PortableInterceptor::ServerRequestInfo_ptr PortableInterceptor::ServerRequestInfo::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return ServerRequestInfo::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            ServerRequestInfo_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &ServerRequestInfo::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::ServerRequestInfo_ptr PortableInterceptor::ServerRequestInfo::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return ServerRequestInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::ServerRequestInfo_ptr
+PortableInterceptor::ServerRequestInfo::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return ServerRequestInfo::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          ServerRequestInfo_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &ServerRequestInfo::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::ServerRequestInfo_ptr
@@ -1974,7 +2029,9 @@ tao_PortableInterceptor_ClientRequestInterceptor_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ClientRequestInterceptor_var
+// PortableInterceptor::ClientRequestInterceptor_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::ClientRequestInterceptor_var::ClientRequestInterceptor_var (void) // default constructor
@@ -2097,7 +2154,9 @@ PortableInterceptor::ClientRequestInterceptor_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ClientRequestInterceptor_out
+// PortableInterceptor::ClientRequestInterceptor_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::ClientRequestInterceptor_out::ClientRequestInterceptor_out (ClientRequestInterceptor_ptr &p)
@@ -2156,41 +2215,44 @@ PortableInterceptor::ClientRequestInterceptor_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::ClientRequestInterceptor::ClientRequestInterceptor (void)
 {}
-  // destructor
-  PortableInterceptor::ClientRequestInterceptor::~ClientRequestInterceptor (void)
-  {}
 
-  PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientRequestInterceptor::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return ClientRequestInterceptor::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::ClientRequestInterceptor::~ClientRequestInterceptor (void)
+{}
 
-  PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientRequestInterceptor::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return ClientRequestInterceptor::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            ClientRequestInterceptor_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &ClientRequestInterceptor::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::ClientRequestInterceptor_ptr PortableInterceptor::ClientRequestInterceptor::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return ClientRequestInterceptor::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::ClientRequestInterceptor_ptr
+PortableInterceptor::ClientRequestInterceptor::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return ClientRequestInterceptor::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          ClientRequestInterceptor_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &ClientRequestInterceptor::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::ClientRequestInterceptor_ptr
@@ -2280,7 +2342,9 @@ tao_PortableInterceptor_ServerRequestInterceptor_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ServerRequestInterceptor_var
+// PortableInterceptor::ServerRequestInterceptor_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::ServerRequestInterceptor_var::ServerRequestInterceptor_var (void) // default constructor
@@ -2403,7 +2467,9 @@ PortableInterceptor::ServerRequestInterceptor_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ServerRequestInterceptor_out
+// PortableInterceptor::ServerRequestInterceptor_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::ServerRequestInterceptor_out::ServerRequestInterceptor_out (ServerRequestInterceptor_ptr &p)
@@ -2462,41 +2528,44 @@ PortableInterceptor::ServerRequestInterceptor_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::ServerRequestInterceptor::ServerRequestInterceptor (void)
 {}
-  // destructor
-  PortableInterceptor::ServerRequestInterceptor::~ServerRequestInterceptor (void)
-  {}
 
-  PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerRequestInterceptor::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return ServerRequestInterceptor::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::ServerRequestInterceptor::~ServerRequestInterceptor (void)
+{}
 
-  PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return ServerRequestInterceptor::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            ServerRequestInterceptor_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &ServerRequestInterceptor::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::ServerRequestInterceptor_ptr PortableInterceptor::ServerRequestInterceptor::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return ServerRequestInterceptor::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::ServerRequestInterceptor_ptr
+PortableInterceptor::ServerRequestInterceptor::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return ServerRequestInterceptor::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          ServerRequestInterceptor_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &ServerRequestInterceptor::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr
@@ -2586,7 +2655,9 @@ tao_PortableInterceptor_IORInfo_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::IORInfo_var
+// PortableInterceptor::IORInfo_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::IORInfo_var::IORInfo_var (void) // default constructor
@@ -2709,7 +2780,9 @@ PortableInterceptor::IORInfo_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::IORInfo_out
+// PortableInterceptor::IORInfo_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::IORInfo_out::IORInfo_out (IORInfo_ptr &p)
@@ -2768,41 +2841,44 @@ PortableInterceptor::IORInfo_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::IORInfo::IORInfo (void)
 {}
-  // destructor
-  PortableInterceptor::IORInfo::~IORInfo (void)
-  {}
 
-  PortableInterceptor::IORInfo_ptr PortableInterceptor::IORInfo::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return IORInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::IORInfo::~IORInfo (void)
+{}
 
-  PortableInterceptor::IORInfo_ptr PortableInterceptor::IORInfo::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return IORInfo::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            IORInfo_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &IORInfo::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::IORInfo_ptr PortableInterceptor::IORInfo::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return IORInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::IORInfo_ptr
+PortableInterceptor::IORInfo::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return IORInfo::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          IORInfo_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &IORInfo::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::IORInfo_ptr
@@ -2880,7 +2956,9 @@ tao_PortableInterceptor_IORInterceptor_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::IORInterceptor_var
+// PortableInterceptor::IORInterceptor_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::IORInterceptor_var::IORInterceptor_var (void) // default constructor
@@ -3003,7 +3081,9 @@ PortableInterceptor::IORInterceptor_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::IORInterceptor_out
+// PortableInterceptor::IORInterceptor_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::IORInterceptor_out::IORInterceptor_out (IORInterceptor_ptr &p)
@@ -3062,41 +3142,44 @@ PortableInterceptor::IORInterceptor_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::IORInterceptor::IORInterceptor (void)
 {}
-  // destructor
-  PortableInterceptor::IORInterceptor::~IORInterceptor (void)
-  {}
 
-  PortableInterceptor::IORInterceptor_ptr PortableInterceptor::IORInterceptor::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return IORInterceptor::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::IORInterceptor::~IORInterceptor (void)
+{}
 
-  PortableInterceptor::IORInterceptor_ptr PortableInterceptor::IORInterceptor::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return IORInterceptor::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            IORInterceptor_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &IORInterceptor::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::IORInterceptor_ptr PortableInterceptor::IORInterceptor::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return IORInterceptor::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::IORInterceptor_ptr
+PortableInterceptor::IORInterceptor::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return IORInterceptor::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          IORInterceptor_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &IORInterceptor::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::IORInterceptor_ptr
@@ -3186,7 +3269,9 @@ tao_PortableInterceptor_PolicyFactory_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::PolicyFactory_var
+// PortableInterceptor::PolicyFactory_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::PolicyFactory_var::PolicyFactory_var (void) // default constructor
@@ -3309,7 +3394,9 @@ PortableInterceptor::PolicyFactory_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::PolicyFactory_out
+// PortableInterceptor::PolicyFactory_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::PolicyFactory_out::PolicyFactory_out (PolicyFactory_ptr &p)
@@ -3368,41 +3455,44 @@ PortableInterceptor::PolicyFactory_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::PolicyFactory::PolicyFactory (void)
 {}
-  // destructor
-  PortableInterceptor::PolicyFactory::~PolicyFactory (void)
-  {}
 
-  PortableInterceptor::PolicyFactory_ptr PortableInterceptor::PolicyFactory::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return PolicyFactory::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::PolicyFactory::~PolicyFactory (void)
+{}
 
-  PortableInterceptor::PolicyFactory_ptr PortableInterceptor::PolicyFactory::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return PolicyFactory::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            PolicyFactory_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &PolicyFactory::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::PolicyFactory_ptr PortableInterceptor::PolicyFactory::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return PolicyFactory::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::PolicyFactory_ptr
+PortableInterceptor::PolicyFactory::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return PolicyFactory::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          PolicyFactory_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &PolicyFactory::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::PolicyFactory_ptr
@@ -3480,7 +3570,9 @@ tao_PortableInterceptor_ORBInitInfo_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ORBInitInfo_var
+// PortableInterceptor::ORBInitInfo_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::ORBInitInfo_var::ORBInitInfo_var (void) // default constructor
@@ -3603,7 +3695,9 @@ PortableInterceptor::ORBInitInfo_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ORBInitInfo_out
+// PortableInterceptor::ORBInitInfo_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::ORBInitInfo_out::ORBInitInfo_out (ORBInitInfo_ptr &p)
@@ -3662,41 +3756,44 @@ PortableInterceptor::ORBInitInfo_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::ORBInitInfo::ORBInitInfo (void)
 {}
-  // destructor
-  PortableInterceptor::ORBInitInfo::~ORBInitInfo (void)
-  {}
 
-  PortableInterceptor::ORBInitInfo_ptr PortableInterceptor::ORBInitInfo::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return ORBInitInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::ORBInitInfo::~ORBInitInfo (void)
+{}
 
-  PortableInterceptor::ORBInitInfo_ptr PortableInterceptor::ORBInitInfo::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return ORBInitInfo::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            ORBInitInfo_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &ORBInitInfo::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::ORBInitInfo_ptr PortableInterceptor::ORBInitInfo::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return ORBInitInfo::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::ORBInitInfo_ptr
+PortableInterceptor::ORBInitInfo::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return ORBInitInfo::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          ORBInitInfo_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &ORBInitInfo::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::ORBInitInfo_ptr
@@ -3755,7 +3852,6 @@ PortableInterceptor::ORBInitInfo::DuplicateName::operator= (const ::PortableInte
   return *this;
 }
 
-// Narrow.
 PortableInterceptor::ORBInitInfo::DuplicateName *
 PortableInterceptor::ORBInitInfo::DuplicateName::_downcast (CORBA::Exception *exc)
 {
@@ -3767,6 +3863,25 @@ PortableInterceptor::ORBInitInfo::DuplicateName::_downcast (CORBA::Exception *ex
     {
       return 0;
     }
+}
+
+CORBA::Exception *PortableInterceptor::ORBInitInfo::DuplicateName::_alloc (void)
+{
+  CORBA::Exception *retval = 0;
+  ACE_NEW_RETURN (retval, ::PortableInterceptor::ORBInitInfo::DuplicateName, 0);
+  return retval;
+}
+
+CORBA::Exception *
+PortableInterceptor::ORBInitInfo::DuplicateName::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (
+      result,
+      PortableInterceptor::ORBInitInfo::DuplicateName (*this),
+      0
+    );
+  return result;
 }
 
 void PortableInterceptor::ORBInitInfo::DuplicateName::_raise ()
@@ -3788,14 +3903,6 @@ void PortableInterceptor::ORBInitInfo::DuplicateName::_tao_decode (
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
-}
-
-// TAO extension - the _alloc method.
-CORBA::Exception *PortableInterceptor::ORBInitInfo::DuplicateName::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableInterceptor::ORBInitInfo::DuplicateName, 0);
-  return retval;
 }
 
 PortableInterceptor::ORBInitInfo::DuplicateName::DuplicateName (
@@ -3831,7 +3938,6 @@ PortableInterceptor::ORBInitInfo::InvalidName::operator= (const ::PortableInterc
   return *this;
 }
 
-// Narrow.
 PortableInterceptor::ORBInitInfo::InvalidName *
 PortableInterceptor::ORBInitInfo::InvalidName::_downcast (CORBA::Exception *exc)
 {
@@ -3843,6 +3949,25 @@ PortableInterceptor::ORBInitInfo::InvalidName::_downcast (CORBA::Exception *exc)
     {
       return 0;
     }
+}
+
+CORBA::Exception *PortableInterceptor::ORBInitInfo::InvalidName::_alloc (void)
+{
+  CORBA::Exception *retval = 0;
+  ACE_NEW_RETURN (retval, ::PortableInterceptor::ORBInitInfo::InvalidName, 0);
+  return retval;
+}
+
+CORBA::Exception *
+PortableInterceptor::ORBInitInfo::InvalidName::_tao_duplicate (void) const
+{
+  CORBA::Exception *result;
+  ACE_NEW_RETURN (
+      result,
+      PortableInterceptor::ORBInitInfo::InvalidName (*this),
+      0
+    );
+  return result;
 }
 
 void PortableInterceptor::ORBInitInfo::InvalidName::_raise ()
@@ -3864,14 +3989,6 @@ void PortableInterceptor::ORBInitInfo::InvalidName::_tao_decode (
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
-}
-
-// TAO extension - the _alloc method.
-CORBA::Exception *PortableInterceptor::ORBInitInfo::InvalidName::_alloc (void)
-{
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::PortableInterceptor::ORBInitInfo::InvalidName, 0);
-  return retval;
 }
 
 int PortableInterceptor::ORBInitializer::_tao_class_id = 0;
@@ -3920,7 +4037,9 @@ tao_PortableInterceptor_ORBInitializer_upcast (
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ORBInitializer_var
+// PortableInterceptor::ORBInitializer_var
+// TAO_IDL - Generated from
+// be/be_interface.cpp:654
 // *************************************************************
 
 PortableInterceptor::ORBInitializer_var::ORBInitializer_var (void) // default constructor
@@ -4043,7 +4162,9 @@ PortableInterceptor::ORBInitializer_var::tao_upcast (void *src)
 }
 
 // *************************************************************
-// Operations for class PortableInterceptor::ORBInitializer_out
+// PortableInterceptor::ORBInitializer_out
+// TAO_IDL - Generated from
+// be/be_interface.cpp:932
 // *************************************************************
 
 PortableInterceptor::ORBInitializer_out::ORBInitializer_out (ORBInitializer_ptr &p)
@@ -4102,41 +4223,44 @@ PortableInterceptor::ORBInitializer_out::operator-> (void)
 }
 
 
-// default constructor
+// TAO_IDL - Generated from
+// be/be_visitor_interface/interface_cs.cpp:209
+
 PortableInterceptor::ORBInitializer::ORBInitializer (void)
 {}
-  // destructor
-  PortableInterceptor::ORBInitializer::~ORBInitializer (void)
-  {}
 
-  PortableInterceptor::ORBInitializer_ptr PortableInterceptor::ORBInitializer::_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL
-    )
-  {
-    return ORBInitializer::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
-  }
+PortableInterceptor::ORBInitializer::~ORBInitializer (void)
+{}
 
-  PortableInterceptor::ORBInitializer_ptr PortableInterceptor::ORBInitializer::_unchecked_narrow (
-      CORBA::Object_ptr obj
-      ACE_ENV_ARG_DECL_NOT_USED
-    )
-  {
-    if (CORBA::is_nil (obj))
-      return ORBInitializer::_nil ();
-    return
-        ACE_reinterpret_cast
-          (
-            ORBInitializer_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &ORBInitializer::_tao_class_id
-                    )
-                )
-          );
+PortableInterceptor::ORBInitializer_ptr PortableInterceptor::ORBInitializer::_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL
+  )
+{
+  return ORBInitializer::_unchecked_narrow (obj ACE_ENV_ARG_PARAMETER);
+}
+
+PortableInterceptor::ORBInitializer_ptr
+PortableInterceptor::ORBInitializer::_unchecked_narrow (
+    CORBA::Object_ptr obj
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (obj))
+    return ORBInitializer::_nil ();
+  return
+      ACE_reinterpret_cast
+        (
+          ORBInitializer_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &ORBInitializer::_tao_class_id
+                  )
+              )
+        );
 }
 
 PortableInterceptor::ORBInitializer_ptr
@@ -4431,4 +4555,3 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const PortableIntercepto
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
   #  pragma instantiate TAO_Object_Manager<PortableInterceptor::ORBInitializer,PortableInterceptor::ORBInitializer_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-

@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_PORTABLEINTERCEPTORC_H_
-#define _TAO_IDL_PORTABLEINTERCEPTORC_H_
+#ifndef _TAO_IDL_ORIG_PORTABLEINTERCEPTORC_H_
+#define _TAO_IDL_ORIG_PORTABLEINTERCEPTORC_H_
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
@@ -29,11 +29,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "DynamicC.h"
-#include "MessagingC.h"
+#include "TAO_Export.h"
 #include "CurrentC.h"
-#include "PolicyC.h"
+#include "DynamicC.h"
 #include "ObjectReferenceTemplateC.h"
+#include "MessagingC.h"
+#include "IOPC.h"
+#include "PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -173,6 +175,7 @@ TAO_NAMESPACE  PortableInterceptor
       }
 
     virtual char * name (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -180,6 +183,7 @@ TAO_NAMESPACE  PortableInterceptor
       )) = 0;
 
     virtual void destroy (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -214,17 +218,17 @@ TAO_NAMESPACE  PortableInterceptor
     CORBA::Boolean permanent;
 
     ForwardRequest (void);
-    // Default constructor.
-
     ForwardRequest (const ForwardRequest &);
-    // Copy constructor.
-
     ~ForwardRequest (void);
-    // Destructor.
+
+    ForwardRequest &operator= (const ForwardRequest &);
 
     static void _tao_any_destructor (void*);
 
-    ForwardRequest &operator= (const ForwardRequest &);
+    static ForwardRequest *_downcast (CORBA::Exception *);
+    static CORBA::Exception *_alloc (void);
+
+    virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void);
 
@@ -238,17 +242,13 @@ TAO_NAMESPACE  PortableInterceptor
         ACE_ENV_ARG_DECL_NOT_USED
       );
 
-    static ForwardRequest *_downcast (CORBA::Exception *);
-
-    ForwardRequest (
+        ForwardRequest (
         const CORBA::Object_ptr  _tao_forward,
         CORBA::Boolean _tao_permanent
       );
 
-    // = TAO extension.
-    static CORBA::Exception *_alloc (void);
     virtual CORBA::TypeCode_ptr _type (void) const;
-  }; // Exception PortableInterceptor::ForwardRequest.
+  };
 
 TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ForwardRequest;
 
@@ -284,17 +284,17 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ForwardRequest;
   public:
 
     InvalidSlot (void);
-    // Default constructor.
-
     InvalidSlot (const InvalidSlot &);
-    // Copy constructor.
-
     ~InvalidSlot (void);
-    // Destructor.
+
+    InvalidSlot &operator= (const InvalidSlot &);
 
     static void _tao_any_destructor (void*);
 
-    InvalidSlot &operator= (const InvalidSlot &);
+    static InvalidSlot *_downcast (CORBA::Exception *);
+    static CORBA::Exception *_alloc (void);
+
+    virtual CORBA::Exception *_tao_duplicate (void) const;
 
     virtual void _raise (void);
 
@@ -308,13 +308,9 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_ForwardRequest;
         ACE_ENV_ARG_DECL_NOT_USED
       );
 
-    static InvalidSlot *_downcast (CORBA::Exception *);
 
-
-    // = TAO extension.
-    static CORBA::Exception *_alloc (void);
     virtual CORBA::TypeCode_ptr _type (void) const;
-  }; // Exception PortableInterceptor::InvalidSlot.
+  };
 
 TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
@@ -434,20 +430,22 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       }
 
     virtual CORBA::Any * get_slot (
-        PortableInterceptor::SlotId id ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::SlotId id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::InvalidSlot
+        CORBA::SystemException
+        , PortableInterceptor::InvalidSlot
       )) = 0;
 
     virtual void set_slot (
         PortableInterceptor::SlotId id,
-        const CORBA::Any & data ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        const CORBA::Any & data
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::InvalidSlot
+        CORBA::SystemException
+        , PortableInterceptor::InvalidSlot
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -580,6 +578,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       }
 
     virtual CORBA::ULong request_id (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -587,6 +586,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual char * operation (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -594,6 +594,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::Dynamic::ParameterList * arguments (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -601,6 +602,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::Dynamic::ExceptionList * exceptions (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -608,6 +610,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::Dynamic::ContextList * contexts (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -615,6 +618,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::Dynamic::RequestContext * operation_context (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -622,6 +626,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual CORBA::Any * result (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -629,6 +634,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual CORBA::Boolean response_expected (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -636,17 +642,17 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
 #if TAO_HAS_CORBA_MESSAGING == 1
-
     virtual Messaging::SyncScope sync_scope (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-
-#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
+#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
     virtual PortableInterceptor::ReplyStatus reply_status (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -654,6 +660,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual CORBA::Object_ptr forward_reference (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -661,22 +668,25 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual CORBA::Any * get_slot (
-        PortableInterceptor::SlotId id ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::SlotId id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::InvalidSlot
+        CORBA::SystemException
+        , PortableInterceptor::InvalidSlot
       )) = 0;
 
     virtual ::IOP::ServiceContext * get_request_service_context (
-        IOP::ServiceId id ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        IOP::ServiceId id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::IOP::ServiceContext * get_reply_service_context (
-        IOP::ServiceId id ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        IOP::ServiceId id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -812,6 +822,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       }
 
     virtual CORBA::Object_ptr target (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -819,6 +830,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual CORBA::Object_ptr effective_target (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -826,6 +838,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::IOP::TaggedProfile * effective_profile (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -833,6 +846,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual CORBA::Any * received_exception (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -840,6 +854,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual char * received_exception_id (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -847,21 +862,24 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::IOP::TaggedComponent * get_effective_component (
-        IOP::ComponentId id ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        IOP::ComponentId id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::IOP::TaggedComponentSeq * get_effective_components (
-        IOP::ComponentId id ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        IOP::ComponentId id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual ::CORBA::Policy_ptr get_request_policy (
-        CORBA::PolicyType type ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::PolicyType type
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -869,7 +887,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
     virtual void add_request_service_context (
         const IOP::ServiceContext & service_context,
-        CORBA::Boolean replace ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Boolean replace
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1005,6 +1024,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       }
 
     virtual CORBA::Any * sending_exception (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1012,6 +1032,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual char * server_id (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1019,6 +1040,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual char * orb_id (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1026,6 +1048,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::PortableInterceptor::AdapterName * adapter_name (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1033,6 +1056,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::CORBA::OctetSeq * object_id (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1040,6 +1064,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::CORBA::OctetSeq * adapter_id (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1047,6 +1072,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual char * target_most_derived_interface (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1054,7 +1080,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::CORBA::Policy_ptr get_server_policy (
-        CORBA::PolicyType type ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::PolicyType type
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1062,15 +1089,17 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
     virtual void set_slot (
         PortableInterceptor::SlotId id,
-        const CORBA::Any & data ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        const CORBA::Any & data
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::InvalidSlot
+        CORBA::SystemException
+        , PortableInterceptor::InvalidSlot
       )) = 0;
 
     virtual CORBA::Boolean target_is_a (
-        const char * id ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        const char * id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1078,7 +1107,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
     virtual void add_reply_service_context (
         const IOP::ServiceContext & service_context,
-        CORBA::Boolean replace ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Boolean replace
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1214,41 +1244,46 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       }
 
     virtual void send_request (
-        PortableInterceptor::ClientRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ClientRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ForwardRequest
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
       )) = 0;
 
     virtual void send_poll (
-        PortableInterceptor::ClientRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ClientRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void receive_reply (
-        PortableInterceptor::ClientRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ClientRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void receive_exception (
-        PortableInterceptor::ClientRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ClientRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ForwardRequest
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
       )) = 0;
 
     virtual void receive_other (
-        PortableInterceptor::ClientRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ClientRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ForwardRequest
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -1381,42 +1416,47 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       }
 
     virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ServerRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ForwardRequest
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
       )) = 0;
 
     virtual void receive_request (
-        PortableInterceptor::ServerRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ServerRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ForwardRequest
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
       )) = 0;
 
     virtual void send_reply (
-        PortableInterceptor::ServerRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ServerRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void send_exception (
-        PortableInterceptor::ServerRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ServerRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ForwardRequest
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
       )) = 0;
 
     virtual void send_other (
-        PortableInterceptor::ServerRequestInfo_ptr ri ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ServerRequestInfo_ptr ri
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ForwardRequest
+        CORBA::SystemException
+        , PortableInterceptor::ForwardRequest
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -1549,14 +1589,16 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       }
 
     virtual ::CORBA::Policy_ptr get_effective_policy (
-        CORBA::PolicyType type ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::PolicyType type
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void add_ior_component (
-        const IOP::TaggedComponent & component ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        const IOP::TaggedComponent & component
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1564,13 +1606,15 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
     virtual void add_ior_component_to_profile (
         const IOP::TaggedComponent & component,
-        IOP::ProfileId profile_id ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        IOP::ProfileId profile_id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual PortableInterceptor::AdapterManagerId manager_id (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1578,6 +1622,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual PortableInterceptor::AdapterState state (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1585,6 +1630,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::PortableInterceptor::ObjectReferenceTemplate * adapter_template (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1592,6 +1638,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::PortableInterceptor::ObjectReferenceFactory * current_factory (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -1599,7 +1646,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual void current_factory (
-        PortableInterceptor::ObjectReferenceFactory * current_factory ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ObjectReferenceFactory * current_factory
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1735,14 +1783,16 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       }
 
     virtual void establish_components (
-        PortableInterceptor::IORInfo_ptr info ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::IORInfo_ptr info
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void components_established (
-        PortableInterceptor::IORInfo_ptr info ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::IORInfo_ptr info
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1750,7 +1800,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
     virtual void adapter_manager_state_changed (
         PortableInterceptor::AdapterManagerId id,
-        PortableInterceptor::AdapterState state ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::AdapterState state
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1758,7 +1809,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
     virtual void adapter_state_changed (
         const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-        PortableInterceptor::AdapterState state ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::AdapterState state
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -1895,11 +1947,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
     virtual ::CORBA::Policy_ptr create_policy (
         CORBA::PolicyType type,
-        const CORBA::Any & value ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        const CORBA::Any & value
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CORBA::PolicyError
+        CORBA::SystemException
+        , CORBA::PolicyError
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
@@ -2044,15 +2097,15 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       TAO_String_Manager name;
 
       DuplicateName (void);
-      // Default constructor.
-
       DuplicateName (const DuplicateName &);
-      // Copy constructor.
-
       ~DuplicateName (void);
-      // Destructor.
 
       DuplicateName &operator= (const DuplicateName &);
+
+      static DuplicateName *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -2066,15 +2119,11 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
           ACE_ENV_ARG_DECL_NOT_USED
         );
 
-      static DuplicateName *_downcast (CORBA::Exception *);
-
-      DuplicateName (
+            DuplicateName (
           const char * _tao_name
         );
 
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception PortableInterceptor::ORBInitInfo::DuplicateName.
+    };
 
 
 #endif /* end #if !defined */
@@ -2088,15 +2137,15 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
     public:
 
       InvalidName (void);
-      // Default constructor.
-
       InvalidName (const InvalidName &);
-      // Copy constructor.
-
       ~InvalidName (void);
-      // Destructor.
 
       InvalidName &operator= (const InvalidName &);
+
+      static InvalidName *_downcast (CORBA::Exception *);
+      static CORBA::Exception *_alloc (void);
+
+      virtual CORBA::Exception *_tao_duplicate (void) const;
 
       virtual void _raise (void);
 
@@ -2110,17 +2159,14 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
           ACE_ENV_ARG_DECL_NOT_USED
         );
 
-      static InvalidName *_downcast (CORBA::Exception *);
 
-
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception PortableInterceptor::ORBInitInfo::InvalidName.
+    };
 
 
 #endif /* end #if !defined */
 
     virtual ::CORBA::StringSeq * arguments (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -2128,6 +2174,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual char * orb_id (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -2135,6 +2182,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
       )) = 0;
 
     virtual ::IOP::CodecFactory_ptr codec_factory (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -2143,46 +2191,52 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
     virtual void register_initial_reference (
         const char * id,
-        CORBA::Object_ptr obj ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        CORBA::Object_ptr obj
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::InvalidName
+        CORBA::SystemException
+        , PortableInterceptor::ORBInitInfo::InvalidName
       )) = 0;
 
     virtual CORBA::Object_ptr resolve_initial_references (
-        const char * id ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        const char * id
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::InvalidName
+        CORBA::SystemException
+        , PortableInterceptor::ORBInitInfo::InvalidName
       )) = 0;
 
     virtual void add_client_request_interceptor (
-        PortableInterceptor::ClientRequestInterceptor_ptr interceptor ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ClientRequestInterceptor_ptr interceptor
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::DuplicateName
+        CORBA::SystemException
+        , PortableInterceptor::ORBInitInfo::DuplicateName
       )) = 0;
 
     virtual void add_server_request_interceptor (
-        PortableInterceptor::ServerRequestInterceptor_ptr interceptor ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ServerRequestInterceptor_ptr interceptor
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::DuplicateName
+        CORBA::SystemException
+        , PortableInterceptor::ORBInitInfo::DuplicateName
       )) = 0;
 
     virtual void add_ior_interceptor (
-        PortableInterceptor::IORInterceptor_ptr interceptor ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::IORInterceptor_ptr interceptor
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::DuplicateName
+        CORBA::SystemException
+        , PortableInterceptor::ORBInitInfo::DuplicateName
       )) = 0;
 
     virtual PortableInterceptor::SlotId allocate_slot_id (
+
         ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
@@ -2191,7 +2245,8 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
     virtual void register_policy_factory (
         CORBA::PolicyType type,
-        PortableInterceptor::PolicyFactory_ptr policy_factory ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::PolicyFactory_ptr policy_factory
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2220,6 +2275,12 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
 
   class ORBInitializer;
   typedef ORBInitializer *ORBInitializer_ptr;
+
+  /// Register an ORBInitializer with the global ORBInitializer
+  /// table.
+  TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
+      ORBInitializer_ptr init
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* end #if !defined */
 
@@ -2266,11 +2327,6 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_InvalidSlot;
     ORBInitializer_var &operator= (const TAO_Base_var &rhs);
   };
 
-/// Register an ORBInitializer with the global ORBInitializer
-/// table.
-TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
-  ORBInitializer_ptr init
-  ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* end #if !defined */
 
@@ -2332,14 +2388,16 @@ TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
       }
 
     virtual void pre_init (
-        PortableInterceptor::ORBInitInfo_ptr info ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ORBInitInfo_ptr info
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void post_init (
-        PortableInterceptor::ORBInitInfo_ptr info ACE_ENV_ARG_DECL_WITH_DEFAULTS
+        PortableInterceptor::ORBInitInfo_ptr info
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -2367,6 +2425,11 @@ TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
 TAO_NAMESPACE_CLOSE // module PortableInterceptor
 
 TAO_NAMESPACE  OBV_PortableInterceptor
+{
+}
+TAO_NAMESPACE_CLOSE
+
+TAO_NAMESPACE  OBV_Messaging
 {
 }
 TAO_NAMESPACE_CLOSE

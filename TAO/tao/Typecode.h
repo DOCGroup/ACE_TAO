@@ -68,15 +68,17 @@ public:
   public:
     Bounds (void);
 
+    static Bounds* _downcast (CORBA_Exception *ex);
+    static CORBA::Exception *_alloc (void);
+
+    virtual CORBA::Exception *_tao_duplicate (void) const;
+
     virtual void _raise (void);
 
     virtual void _tao_encode (TAO_OutputCDR &cdr
                               ACE_ENV_ARG_DECL_NOT_USED) const;
     virtual void _tao_decode (TAO_InputCDR &cdr
                               ACE_ENV_ARG_DECL_NOT_USED);
-
-    static Bounds* _downcast (CORBA_Exception *ex);
-    virtual int _is_a (const char* interface_id) const;
   };
 
   class TAO_Export BadKind : public CORBA_UserException
@@ -84,15 +86,17 @@ public:
   public:
     BadKind (void);
 
+    static BadKind* _downcast (CORBA_Exception *ex);
+    static CORBA::Exception *_alloc (void);
+
+    virtual CORBA::Exception *_tao_duplicate (void) const;
+
     virtual void _raise (void);
 
     virtual void _tao_encode (TAO_OutputCDR &cdr
                               ACE_ENV_ARG_DECL_NOT_USED) const;
     virtual void _tao_decode (TAO_InputCDR &cdr
                               ACE_ENV_ARG_DECL_NOT_USED);
-
-    static BadKind* _downcast (CORBA_Exception *ex);
-    virtual int _is_a (const char* interface_id) const;
   };
 
   static CORBA::TypeCode_ptr _tc_Bounds;

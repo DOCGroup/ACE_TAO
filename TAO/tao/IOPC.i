@@ -407,176 +407,176 @@ IOP::IOR_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CI_
 
-  // = Static operations.
-  ACE_INLINE IOP::TaggedProfile *
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE IOP::TaggedProfile *
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  IOP::TaggedProfile *retval = 0;
+  ACE_NEW_RETURN (retval, IOP::TaggedProfile[size], 0);
+  return retval;
+}
+
+ACE_INLINE void IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::freebuf (IOP::TaggedProfile *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum,
+  CORBA::ULong length,
+  IOP::TaggedProfile *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    IOP::TaggedProfile *retval = 0;
-    ACE_NEW_RETURN (retval, IOP::TaggedProfile[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::freebuf (IOP::TaggedProfile *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (CORBA::ULong maximum,
-    CORBA::ULong length,
-    IOP::TaggedProfile *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile (const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      IOP::TaggedProfile *tmp1 = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (this->maximum_);
-      IOP::TaggedProfile * const tmp2 = ACE_reinterpret_cast (IOP::TaggedProfile * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::operator= (const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        IOP::TaggedProfile *tmp = ACE_reinterpret_cast (IOP::TaggedProfile *, this->buffer_);
-        _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    IOP::TaggedProfile *tmp1 = ACE_reinterpret_cast (IOP::TaggedProfile *, this->buffer_);
+    IOP::TaggedProfile *tmp1 = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (this->maximum_);
     IOP::TaggedProfile * const tmp2 = ACE_reinterpret_cast (IOP::TaggedProfile * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::operator= (const _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE IOP::TaggedProfile &
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::TaggedProfile* tmp = ACE_reinterpret_cast(IOP::TaggedProfile*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const IOP::TaggedProfile &
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::TaggedProfile * const tmp = ACE_reinterpret_cast (IOP::TaggedProfile* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE IOP::TaggedProfile *
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::get_buffer (CORBA::Boolean orphan)
-  {
-    IOP::TaggedProfile *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (IOP::TaggedProfile*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(IOP::TaggedProfile*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const IOP::TaggedProfile *
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const IOP::TaggedProfile * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  IOP::TaggedProfile *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      IOP::TaggedProfile *tmp = ACE_reinterpret_cast(IOP::TaggedProfile*,this->buffer_);
+      // free the old buffer
+      IOP::TaggedProfile *tmp = ACE_reinterpret_cast (IOP::TaggedProfile *, this->buffer_);
       _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  IOP::TaggedProfile *tmp1 = ACE_reinterpret_cast (IOP::TaggedProfile *, this->buffer_);
+  IOP::TaggedProfile * const tmp2 = ACE_reinterpret_cast (IOP::TaggedProfile * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE IOP::TaggedProfile &
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::TaggedProfile* tmp = ACE_reinterpret_cast(IOP::TaggedProfile*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const IOP::TaggedProfile &
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::TaggedProfile * const tmp = ACE_reinterpret_cast (IOP::TaggedProfile* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE IOP::TaggedProfile *
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::get_buffer (CORBA::Boolean orphan)
+{
+  IOP::TaggedProfile *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (IOP::TaggedProfile*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(IOP::TaggedProfile*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const IOP::TaggedProfile *
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const IOP::TaggedProfile * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::replace (CORBA::ULong max,
+CORBA::ULong length,
+IOP::TaggedProfile *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    IOP::TaggedProfile *tmp = ACE_reinterpret_cast(IOP::TaggedProfile*,this->buffer_);
+    _TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 
@@ -776,176 +776,176 @@ IOP::TaggedComponent_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_MULTIPLECOMPONENTPROFILE_CI_
 
-  // = Static operations.
-  ACE_INLINE IOP::TaggedComponent *
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE IOP::TaggedComponent *
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  IOP::TaggedComponent *retval = 0;
+  ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
+  return retval;
+}
+
+ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::freebuf (IOP::TaggedComponent *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum,
+  CORBA::ULong length,
+  IOP::TaggedComponent *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    IOP::TaggedComponent *retval = 0;
-    ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::freebuf (IOP::TaggedComponent *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (CORBA::ULong maximum,
-    CORBA::ULong length,
-    IOP::TaggedComponent *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile (const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (this->maximum_);
-      IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::operator= (const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
-        _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
+    IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (this->maximum_);
     IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::operator= (const _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE IOP::TaggedComponent &
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const IOP::TaggedComponent &
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE IOP::TaggedComponent *
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::get_buffer (CORBA::Boolean orphan)
-  {
-    IOP::TaggedComponent *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (IOP::TaggedComponent*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const IOP::TaggedComponent *
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  IOP::TaggedComponent *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      IOP::TaggedComponent *tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+      // free the old buffer
+      IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
       _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
+  IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE IOP::TaggedComponent &
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const IOP::TaggedComponent &
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE IOP::TaggedComponent *
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::get_buffer (CORBA::Boolean orphan)
+{
+  IOP::TaggedComponent *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (IOP::TaggedComponent*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const IOP::TaggedComponent *
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::replace (CORBA::ULong max,
+CORBA::ULong length,
+IOP::TaggedComponent *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    IOP::TaggedComponent *tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+    _TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 
@@ -1170,176 +1170,176 @@ IOP::MultipleComponentProfile_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTLIST_CI_
 
-  // = Static operations.
-  ACE_INLINE IOP::TaggedComponent *
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE IOP::TaggedComponent *
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  IOP::TaggedComponent *retval = 0;
+  ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
+  return retval;
+}
+
+ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::freebuf (IOP::TaggedComponent *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum,
+  CORBA::ULong length,
+  IOP::TaggedComponent *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    IOP::TaggedComponent *retval = 0;
-    ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::freebuf (IOP::TaggedComponent *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (CORBA::ULong maximum,
-    CORBA::ULong length,
-    IOP::TaggedComponent *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::_TAO_Unbounded_Sequence_IOP_TaggedComponentList (const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (this->maximum_);
-      IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList &
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::operator= (const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
-        _TAO_Unbounded_Sequence_IOP_TaggedComponentList::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
+    IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (this->maximum_);
     IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList &
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::operator= (const _TAO_Unbounded_Sequence_IOP_TaggedComponentList &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE IOP::TaggedComponent &
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const IOP::TaggedComponent &
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE IOP::TaggedComponent *
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::get_buffer (CORBA::Boolean orphan)
-  {
-    IOP::TaggedComponent *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (IOP::TaggedComponent*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const IOP::TaggedComponent *
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  IOP::TaggedComponent *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      IOP::TaggedComponent *tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+      // free the old buffer
+      IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
       _TAO_Unbounded_Sequence_IOP_TaggedComponentList::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
+  IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE IOP::TaggedComponent &
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const IOP::TaggedComponent &
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE IOP::TaggedComponent *
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::get_buffer (CORBA::Boolean orphan)
+{
+  IOP::TaggedComponent *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_IOP_TaggedComponentList::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (IOP::TaggedComponent*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const IOP::TaggedComponent *
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::replace (CORBA::ULong max,
+CORBA::ULong length,
+IOP::TaggedComponent *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    IOP::TaggedComponent *tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentList::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 
@@ -1564,176 +1564,176 @@ IOP::TaggedComponentList_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_TAGGEDCOMPONENTSEQ_CI_
 
-  // = Static operations.
-  ACE_INLINE IOP::TaggedComponent *
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE IOP::TaggedComponent *
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  IOP::TaggedComponent *retval = 0;
+  ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
+  return retval;
+}
+
+ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (IOP::TaggedComponent *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  IOP::TaggedComponent *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    IOP::TaggedComponent *retval = 0;
-    ACE_NEW_RETURN (retval, IOP::TaggedComponent[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (IOP::TaggedComponent *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    IOP::TaggedComponent *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (this->maximum_);
-      IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator= (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
-        _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
+    IOP::TaggedComponent *tmp1 = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (this->maximum_);
     IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator= (const _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE IOP::TaggedComponent &
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const IOP::TaggedComponent &
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE IOP::TaggedComponent *
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    IOP::TaggedComponent *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (IOP::TaggedComponent*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const IOP::TaggedComponent *
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  IOP::TaggedComponent *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      IOP::TaggedComponent *tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+      // free the old buffer
+      IOP::TaggedComponent *tmp = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
       _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  IOP::TaggedComponent *tmp1 = ACE_reinterpret_cast (IOP::TaggedComponent *, this->buffer_);
+  IOP::TaggedComponent * const tmp2 = ACE_reinterpret_cast (IOP::TaggedComponent * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE IOP::TaggedComponent &
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::TaggedComponent* tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const IOP::TaggedComponent &
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::TaggedComponent * const tmp = ACE_reinterpret_cast (IOP::TaggedComponent* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE IOP::TaggedComponent *
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::get_buffer (CORBA::Boolean orphan)
+{
+  IOP::TaggedComponent *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (IOP::TaggedComponent*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const IOP::TaggedComponent *
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const IOP::TaggedComponent * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::replace (CORBA::ULong max,
+CORBA::ULong length,
+IOP::TaggedComponent *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    IOP::TaggedComponent *tmp = ACE_reinterpret_cast(IOP::TaggedComponent*,this->buffer_);
+    _TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 
@@ -2151,176 +2151,176 @@ IOP::ServiceContext_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_IOP_SERVICECONTEXTLIST_CI_
 
-  // = Static operations.
-  ACE_INLINE IOP::ServiceContext *
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
+// = Static operations.
+ACE_INLINE IOP::ServiceContext *
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  IOP::ServiceContext *retval = 0;
+  ACE_NEW_RETURN (retval, IOP::ServiceContext[size], 0);
+  return retval;
+}
+
+ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::freebuf (IOP::ServiceContext *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (void) // Default constructor.
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum,
+  CORBA::ULong length,
+  IOP::ServiceContext *data,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    IOP::ServiceContext *retval = 0;
-    ACE_NEW_RETURN (retval, IOP::ServiceContext[size], 0);
-    return retval;
-  }
-  
-  ACE_INLINE void IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::freebuf (IOP::ServiceContext *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (void) // Default constructor.
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (maximum))
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (CORBA::ULong maximum,
-    CORBA::ULong length,
-    IOP::ServiceContext *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-  
-  ACE_INLINE
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::_TAO_Unbounded_Sequence_IOP_ServiceContextList (const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      IOP::ServiceContext *tmp1 = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (this->maximum_);
-      IOP::ServiceContext * const tmp2 = ACE_reinterpret_cast (IOP::ServiceContext * ACE_CAST_CONST, rhs.buffer_);
-      
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-      
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-  
-  ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList &
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::operator= (const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-    
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        IOP::ServiceContext *tmp = ACE_reinterpret_cast (IOP::ServiceContext *, this->buffer_);
-        _TAO_Unbounded_Sequence_IOP_ServiceContextList::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (rhs.maximum_);
-    
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
-    IOP::ServiceContext *tmp1 = ACE_reinterpret_cast (IOP::ServiceContext *, this->buffer_);
+    IOP::ServiceContext *tmp1 = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (this->maximum_);
     IOP::ServiceContext * const tmp2 = ACE_reinterpret_cast (IOP::ServiceContext * ACE_CAST_CONST, rhs.buffer_);
     
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
     
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList &
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::operator= (const _TAO_Unbounded_Sequence_IOP_ServiceContextList &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
     return *this;
-  }
   
-  // = Accessors.
-  ACE_INLINE IOP::ServiceContext &
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::operator[] (CORBA::ULong i)
-  // operator []
+  if (this->release_)
   {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::ServiceContext* tmp = ACE_reinterpret_cast(IOP::ServiceContext*,this->buffer_);
-    return tmp[i];
-  }
-  
-  ACE_INLINE const IOP::ServiceContext &
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    IOP::ServiceContext * const tmp = ACE_reinterpret_cast (IOP::ServiceContext* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-  
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
-  ACE_INLINE IOP::ServiceContext *
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::get_buffer (CORBA::Boolean orphan)
-  {
-    IOP::ServiceContext *result = 0;
-    if (orphan == 0)
+    if (this->maximum_ < rhs.maximum_)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (IOP::ServiceContext*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(IOP::ServiceContext*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-  
-  ACE_INLINE const IOP::ServiceContext *
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const IOP::ServiceContext * ACE_CAST_CONST, this->buffer_);
-  }
-  
-  ACE_INLINE void
-  IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::replace (CORBA::ULong max,
-  CORBA::ULong length,
-  IOP::ServiceContext *data,
-  CORBA::Boolean release)
-  {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      IOP::ServiceContext *tmp = ACE_reinterpret_cast(IOP::ServiceContext*,this->buffer_);
+      // free the old buffer
+      IOP::ServiceContext *tmp = ACE_reinterpret_cast (IOP::ServiceContext *, this->buffer_);
       _TAO_Unbounded_Sequence_IOP_ServiceContextList::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (rhs.maximum_);
     }
-    this->buffer_ = data;
-    this->release_ = release;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (rhs.maximum_);
   
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  IOP::ServiceContext *tmp1 = ACE_reinterpret_cast (IOP::ServiceContext *, this->buffer_);
+  IOP::ServiceContext * const tmp2 = ACE_reinterpret_cast (IOP::ServiceContext * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE IOP::ServiceContext &
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::ServiceContext* tmp = ACE_reinterpret_cast(IOP::ServiceContext*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const IOP::ServiceContext &
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  IOP::ServiceContext * const tmp = ACE_reinterpret_cast (IOP::ServiceContext* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE IOP::ServiceContext *
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::get_buffer (CORBA::Boolean orphan)
+{
+  IOP::ServiceContext *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_IOP_ServiceContextList::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (IOP::ServiceContext*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(IOP::ServiceContext*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const IOP::ServiceContext *
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const IOP::ServiceContext * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::replace (CORBA::ULong max,
+CORBA::ULong length,
+IOP::ServiceContext *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    IOP::ServiceContext *tmp = ACE_reinterpret_cast(IOP::ServiceContext*,this->buffer_);
+    _TAO_Unbounded_Sequence_IOP_ServiceContextList::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
+
 #endif /* end #if !defined */
 
 
@@ -2560,7 +2560,6 @@ IOP::ServiceContextList_out::operator[] (CORBA::ULong index)
 #define _IOP_CODEC___CI_
 
 
-
 #endif /* end #if !defined */
 
 // *************************************************************
@@ -2715,6 +2714,7 @@ IOP::Encoding_var::ptr (void) const
 
 #if !defined (_IOP_CODECFACTORY___CI_)
 #define _IOP_CODECFACTORY___CI_
+
 
 #endif /* end #if !defined */
 

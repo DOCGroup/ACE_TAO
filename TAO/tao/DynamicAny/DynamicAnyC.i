@@ -31,49 +31,6 @@
 #if !defined (_DYNAMICANY_DYNANY___CI_)
 #define _DYNAMICANY_DYNANY___CI_
 
-ACE_INLINE DynamicAny::DynAny_ptr
-tao_DynamicAny_DynAny_duplicate (
-    DynamicAny::DynAny_ptr p
-  )
-{
-  return DynamicAny::DynAny::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_DynamicAny_DynAny_release (
-    DynamicAny::DynAny_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE DynamicAny::DynAny_ptr
-tao_DynamicAny_DynAny_nil (
-    void
-  )
-{
-  return DynamicAny::DynAny::_nil ();
-}
-
-ACE_INLINE DynamicAny::DynAny_ptr
-tao_DynamicAny_DynAny_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DynamicAny::DynAny::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_DynamicAny_DynAny_upcast (
-    void *src
-  )
-{
-  DynamicAny::DynAny **tmp =
-    ACE_static_cast (DynamicAny::DynAny **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
@@ -81,98 +38,12 @@ tao_DynamicAny_DynAny_upcast (
 #if !defined (_DYNAMICANY_DYNFIXED___CI_)
 #define _DYNAMICANY_DYNFIXED___CI_
 
-ACE_INLINE DynamicAny::DynFixed_ptr
-tao_DynamicAny_DynFixed_duplicate (
-    DynamicAny::DynFixed_ptr p
-  )
-{
-  return DynamicAny::DynFixed::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_DynamicAny_DynFixed_release (
-    DynamicAny::DynFixed_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE DynamicAny::DynFixed_ptr
-tao_DynamicAny_DynFixed_nil (
-    void
-  )
-{
-  return DynamicAny::DynFixed::_nil ();
-}
-
-ACE_INLINE DynamicAny::DynFixed_ptr
-tao_DynamicAny_DynFixed_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DynamicAny::DynFixed::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_DynamicAny_DynFixed_upcast (
-    void *src
-  )
-{
-  DynamicAny::DynFixed **tmp =
-    ACE_static_cast (DynamicAny::DynFixed **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
 
 #if !defined (_DYNAMICANY_DYNENUM___CI_)
 #define _DYNAMICANY_DYNENUM___CI_
-
-ACE_INLINE DynamicAny::DynEnum_ptr
-tao_DynamicAny_DynEnum_duplicate (
-    DynamicAny::DynEnum_ptr p
-  )
-{
-  return DynamicAny::DynEnum::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_DynamicAny_DynEnum_release (
-    DynamicAny::DynEnum_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE DynamicAny::DynEnum_ptr
-tao_DynamicAny_DynEnum_nil (
-    void
-  )
-{
-  return DynamicAny::DynEnum::_nil ();
-}
-
-ACE_INLINE DynamicAny::DynEnum_ptr
-tao_DynamicAny_DynEnum_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DynamicAny::DynEnum::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_DynamicAny_DynEnum_upcast (
-    void *src
-  )
-{
-  DynamicAny::DynEnum **tmp =
-    ACE_static_cast (DynamicAny::DynEnum **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -228,7 +99,7 @@ DynamicAny::NameValuePair_var::operator= (const ::DynamicAny::NameValuePair_var 
         {
           NameValuePair *deep_copy =
             new NameValuePair (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               NameValuePair *tmp = deep_copy;
@@ -238,7 +109,7 @@ DynamicAny::NameValuePair_var::operator= (const ::DynamicAny::NameValuePair_var 
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -261,20 +132,20 @@ DynamicAny::NameValuePair_var::operator const ::DynamicAny::NameValuePair &() co
 }
 
 ACE_INLINE
-DynamicAny::NameValuePair_var::operator ::DynamicAny::NameValuePair &() // cast
+DynamicAny::NameValuePair_var::operator ::DynamicAny::NameValuePair &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-DynamicAny::NameValuePair_var::operator ::DynamicAny::NameValuePair &() const // cast
+DynamicAny::NameValuePair_var::operator ::DynamicAny::NameValuePair &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-DynamicAny::NameValuePair_var::operator ::DynamicAny::NameValuePair *&() // cast
+DynamicAny::NameValuePair_var::operator ::DynamicAny::NameValuePair *&() // cast 
 {
   return this->ptr_;
 }
@@ -291,7 +162,7 @@ DynamicAny::NameValuePair_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::DynamicAny::NameValuePair *&
 DynamicAny::NameValuePair_var::out (void)
 {
@@ -352,7 +223,7 @@ DynamicAny::NameValuePair_out::operator= (NameValuePair *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::NameValuePair_out::operator ::DynamicAny::NameValuePair *&() // cast
 {
   return this->ptr_;
@@ -376,176 +247,176 @@ DynamicAny::NameValuePair_out::operator-> (void)
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEVALUEPAIRSEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEVALUEPAIRSEQ_CI_
 
-  // = Static operations.
-  ACE_INLINE DynamicAny::NameValuePair *
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    DynamicAny::NameValuePair *retval = 0;
-    ACE_NEW_RETURN (retval, DynamicAny::NameValuePair[size], 0);
-    return retval;
-  }
+// = Static operations.
+ACE_INLINE DynamicAny::NameValuePair *
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  DynamicAny::NameValuePair *retval = 0;
+  ACE_NEW_RETURN (retval, DynamicAny::NameValuePair[size], 0);
+  return retval;
+}
 
-  ACE_INLINE void DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::freebuf (DynamicAny::NameValuePair *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
+ACE_INLINE void DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::freebuf (DynamicAny::NameValuePair *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
 
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (void) // Default constructor.
-  {
-  }
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (void) // Default constructor.
+{
+}
 
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (maximum))
-  {
-  }
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (maximum))
+{
+}
 
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    DynamicAny::NameValuePair *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (const _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      DynamicAny::NameValuePair *tmp1 = _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (this->maximum_);
-      DynamicAny::NameValuePair * const tmp2 = ACE_reinterpret_cast (DynamicAny::NameValuePair * ACE_CAST_CONST, rhs.buffer_);
-
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-
-  ACE_INLINE DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::operator= (const _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        DynamicAny::NameValuePair *tmp = ACE_reinterpret_cast (DynamicAny::NameValuePair *, this->buffer_);
-        _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (rhs.maximum_);
-
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-
-    DynamicAny::NameValuePair *tmp1 = ACE_reinterpret_cast (DynamicAny::NameValuePair *, this->buffer_);
-    DynamicAny::NameValuePair * const tmp2 = ACE_reinterpret_cast (DynamicAny::NameValuePair * ACE_CAST_CONST, rhs.buffer_);
-
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-
-    return *this;
-  }
-
-  // = Accessors.
-  ACE_INLINE DynamicAny::NameValuePair &
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    DynamicAny::NameValuePair* tmp = ACE_reinterpret_cast(DynamicAny::NameValuePair*,this->buffer_);
-    return tmp[i];
-  }
-
-  ACE_INLINE const DynamicAny::NameValuePair &
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    DynamicAny::NameValuePair * const tmp = ACE_reinterpret_cast (DynamicAny::NameValuePair* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-  ACE_INLINE DynamicAny::NameValuePair *
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    DynamicAny::NameValuePair *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (DynamicAny::NameValuePair*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(DynamicAny::NameValuePair*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-
-  ACE_INLINE const DynamicAny::NameValuePair *
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const DynamicAny::NameValuePair * ACE_CAST_CONST, this->buffer_);
-  }
-
-  ACE_INLINE void
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::replace (CORBA::ULong max,
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (CORBA::ULong maximum,
   CORBA::ULong length,
   DynamicAny::NameValuePair *data,
   CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq (const _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      DynamicAny::NameValuePair *tmp = ACE_reinterpret_cast(DynamicAny::NameValuePair*,this->buffer_);
-      _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
+    DynamicAny::NameValuePair *tmp1 = _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (this->maximum_);
+    DynamicAny::NameValuePair * const tmp2 = ACE_reinterpret_cast (DynamicAny::NameValuePair * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    this->buffer_ = tmp1;
   }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::operator= (const _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
+    return *this;
+  
+  if (this->release_)
+  {
+    if (this->maximum_ < rhs.maximum_)
+    {
+      // free the old buffer
+      DynamicAny::NameValuePair *tmp = ACE_reinterpret_cast (DynamicAny::NameValuePair *, this->buffer_);
+      _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (rhs.maximum_);
+    }
+  }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (rhs.maximum_);
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  DynamicAny::NameValuePair *tmp1 = ACE_reinterpret_cast (DynamicAny::NameValuePair *, this->buffer_);
+  DynamicAny::NameValuePair * const tmp2 = ACE_reinterpret_cast (DynamicAny::NameValuePair * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE DynamicAny::NameValuePair &
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  DynamicAny::NameValuePair* tmp = ACE_reinterpret_cast(DynamicAny::NameValuePair*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const DynamicAny::NameValuePair &
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  DynamicAny::NameValuePair * const tmp = ACE_reinterpret_cast (DynamicAny::NameValuePair* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE DynamicAny::NameValuePair *
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::get_buffer (CORBA::Boolean orphan)
+{
+  DynamicAny::NameValuePair *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (DynamicAny::NameValuePair*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(DynamicAny::NameValuePair*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const DynamicAny::NameValuePair *
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const DynamicAny::NameValuePair * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::replace (CORBA::ULong max,
+CORBA::ULong length,
+DynamicAny::NameValuePair *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    DynamicAny::NameValuePair *tmp = ACE_reinterpret_cast(DynamicAny::NameValuePair*,this->buffer_);
+    _TAO_Unbounded_Sequence_DynamicAny_NameValuePairSeq::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_DYNAMICANY_NAMEVALUEPAIRSEQ_CI_)
 #define _DYNAMICANY_NAMEVALUEPAIRSEQ_CI_
@@ -601,7 +472,7 @@ DynamicAny::NameValuePairSeq_var::operator= (const ::DynamicAny::NameValuePairSe
         {
           NameValuePairSeq *deep_copy =
             new NameValuePairSeq (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               NameValuePairSeq *tmp = deep_copy;
@@ -611,7 +482,7 @@ DynamicAny::NameValuePairSeq_var::operator= (const ::DynamicAny::NameValuePairSe
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -627,27 +498,27 @@ DynamicAny::NameValuePairSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::NameValuePairSeq_var::operator const ::DynamicAny::NameValuePairSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-DynamicAny::NameValuePairSeq_var::operator ::DynamicAny::NameValuePairSeq &() // cast
+ACE_INLINE 
+DynamicAny::NameValuePairSeq_var::operator ::DynamicAny::NameValuePairSeq &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-DynamicAny::NameValuePairSeq_var::operator ::DynamicAny::NameValuePairSeq &() const // cast
+ACE_INLINE 
+DynamicAny::NameValuePairSeq_var::operator ::DynamicAny::NameValuePairSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-DynamicAny::NameValuePairSeq_var::operator ::DynamicAny::NameValuePairSeq *&() // cast
+DynamicAny::NameValuePairSeq_var::operator ::DynamicAny::NameValuePairSeq *&() // cast 
 {
   return this->ptr_;
 }
@@ -676,7 +547,7 @@ DynamicAny::NameValuePairSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::DynamicAny::NameValuePairSeq *&
 DynamicAny::NameValuePairSeq_var::out (void)
 {
@@ -737,7 +608,7 @@ DynamicAny::NameValuePairSeq_out::operator= (NameValuePairSeq *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::NameValuePairSeq_out::operator ::DynamicAny::NameValuePairSeq *&() // cast
 {
   return this->ptr_;
@@ -815,7 +686,7 @@ DynamicAny::NameDynAnyPair_var::operator= (const ::DynamicAny::NameDynAnyPair_va
         {
           NameDynAnyPair *deep_copy =
             new NameDynAnyPair (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               NameDynAnyPair *tmp = deep_copy;
@@ -825,7 +696,7 @@ DynamicAny::NameDynAnyPair_var::operator= (const ::DynamicAny::NameDynAnyPair_va
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -848,20 +719,20 @@ DynamicAny::NameDynAnyPair_var::operator const ::DynamicAny::NameDynAnyPair &() 
 }
 
 ACE_INLINE
-DynamicAny::NameDynAnyPair_var::operator ::DynamicAny::NameDynAnyPair &() // cast
+DynamicAny::NameDynAnyPair_var::operator ::DynamicAny::NameDynAnyPair &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-DynamicAny::NameDynAnyPair_var::operator ::DynamicAny::NameDynAnyPair &() const // cast
+DynamicAny::NameDynAnyPair_var::operator ::DynamicAny::NameDynAnyPair &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-DynamicAny::NameDynAnyPair_var::operator ::DynamicAny::NameDynAnyPair *&() // cast
+DynamicAny::NameDynAnyPair_var::operator ::DynamicAny::NameDynAnyPair *&() // cast 
 {
   return this->ptr_;
 }
@@ -878,7 +749,7 @@ DynamicAny::NameDynAnyPair_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::DynamicAny::NameDynAnyPair *&
 DynamicAny::NameDynAnyPair_var::out (void)
 {
@@ -939,7 +810,7 @@ DynamicAny::NameDynAnyPair_out::operator= (NameDynAnyPair *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::NameDynAnyPair_out::operator ::DynamicAny::NameDynAnyPair *&() // cast
 {
   return this->ptr_;
@@ -963,176 +834,176 @@ DynamicAny::NameDynAnyPair_out::operator-> (void)
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEDYNANYPAIRSEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_NAMEDYNANYPAIRSEQ_CI_
 
-  // = Static operations.
-  ACE_INLINE DynamicAny::NameDynAnyPair *
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    DynamicAny::NameDynAnyPair *retval = 0;
-    ACE_NEW_RETURN (retval, DynamicAny::NameDynAnyPair[size], 0);
-    return retval;
-  }
+// = Static operations.
+ACE_INLINE DynamicAny::NameDynAnyPair *
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  DynamicAny::NameDynAnyPair *retval = 0;
+  ACE_NEW_RETURN (retval, DynamicAny::NameDynAnyPair[size], 0);
+  return retval;
+}
 
-  ACE_INLINE void DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::freebuf (DynamicAny::NameDynAnyPair *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
+ACE_INLINE void DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::freebuf (DynamicAny::NameDynAnyPair *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
 
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (void) // Default constructor.
-  {
-  }
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (void) // Default constructor.
+{
+}
 
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (maximum))
-  {
-  }
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (maximum))
+{
+}
 
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    DynamicAny::NameDynAnyPair *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (const _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      DynamicAny::NameDynAnyPair *tmp1 = _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (this->maximum_);
-      DynamicAny::NameDynAnyPair * const tmp2 = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair * ACE_CAST_CONST, rhs.buffer_);
-
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-
-  ACE_INLINE DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::operator= (const _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        DynamicAny::NameDynAnyPair *tmp = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair *, this->buffer_);
-        _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (rhs.maximum_);
-
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-
-    DynamicAny::NameDynAnyPair *tmp1 = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair *, this->buffer_);
-    DynamicAny::NameDynAnyPair * const tmp2 = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair * ACE_CAST_CONST, rhs.buffer_);
-
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-
-    return *this;
-  }
-
-  // = Accessors.
-  ACE_INLINE DynamicAny::NameDynAnyPair &
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    DynamicAny::NameDynAnyPair* tmp = ACE_reinterpret_cast(DynamicAny::NameDynAnyPair*,this->buffer_);
-    return tmp[i];
-  }
-
-  ACE_INLINE const DynamicAny::NameDynAnyPair &
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    DynamicAny::NameDynAnyPair * const tmp = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-  ACE_INLINE DynamicAny::NameDynAnyPair *
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::get_buffer (CORBA::Boolean orphan)
-  {
-    DynamicAny::NameDynAnyPair *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(DynamicAny::NameDynAnyPair*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-
-  ACE_INLINE const DynamicAny::NameDynAnyPair *
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const DynamicAny::NameDynAnyPair * ACE_CAST_CONST, this->buffer_);
-  }
-
-  ACE_INLINE void
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::replace (CORBA::ULong max,
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (CORBA::ULong maximum,
   CORBA::ULong length,
   DynamicAny::NameDynAnyPair *data,
   CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq (const _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      DynamicAny::NameDynAnyPair *tmp = ACE_reinterpret_cast(DynamicAny::NameDynAnyPair*,this->buffer_);
-      _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
+    DynamicAny::NameDynAnyPair *tmp1 = _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (this->maximum_);
+    DynamicAny::NameDynAnyPair * const tmp2 = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    this->buffer_ = tmp1;
   }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::operator= (const _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
+    return *this;
+  
+  if (this->release_)
+  {
+    if (this->maximum_ < rhs.maximum_)
+    {
+      // free the old buffer
+      DynamicAny::NameDynAnyPair *tmp = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair *, this->buffer_);
+      _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (rhs.maximum_);
+    }
+  }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (rhs.maximum_);
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  DynamicAny::NameDynAnyPair *tmp1 = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair *, this->buffer_);
+  DynamicAny::NameDynAnyPair * const tmp2 = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE DynamicAny::NameDynAnyPair &
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  DynamicAny::NameDynAnyPair* tmp = ACE_reinterpret_cast(DynamicAny::NameDynAnyPair*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const DynamicAny::NameDynAnyPair &
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  DynamicAny::NameDynAnyPair * const tmp = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE DynamicAny::NameDynAnyPair *
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::get_buffer (CORBA::Boolean orphan)
+{
+  DynamicAny::NameDynAnyPair *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (DynamicAny::NameDynAnyPair*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(DynamicAny::NameDynAnyPair*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const DynamicAny::NameDynAnyPair *
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const DynamicAny::NameDynAnyPair * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::replace (CORBA::ULong max,
+CORBA::ULong length,
+DynamicAny::NameDynAnyPair *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    DynamicAny::NameDynAnyPair *tmp = ACE_reinterpret_cast(DynamicAny::NameDynAnyPair*,this->buffer_);
+    _TAO_Unbounded_Sequence_DynamicAny_NameDynAnyPairSeq::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_DYNAMICANY_NAMEDYNANYPAIRSEQ_CI_)
 #define _DYNAMICANY_NAMEDYNANYPAIRSEQ_CI_
@@ -1188,7 +1059,7 @@ DynamicAny::NameDynAnyPairSeq_var::operator= (const ::DynamicAny::NameDynAnyPair
         {
           NameDynAnyPairSeq *deep_copy =
             new NameDynAnyPairSeq (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               NameDynAnyPairSeq *tmp = deep_copy;
@@ -1198,7 +1069,7 @@ DynamicAny::NameDynAnyPairSeq_var::operator= (const ::DynamicAny::NameDynAnyPair
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -1214,27 +1085,27 @@ DynamicAny::NameDynAnyPairSeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::NameDynAnyPairSeq_var::operator const ::DynamicAny::NameDynAnyPairSeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-DynamicAny::NameDynAnyPairSeq_var::operator ::DynamicAny::NameDynAnyPairSeq &() // cast
+ACE_INLINE 
+DynamicAny::NameDynAnyPairSeq_var::operator ::DynamicAny::NameDynAnyPairSeq &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-DynamicAny::NameDynAnyPairSeq_var::operator ::DynamicAny::NameDynAnyPairSeq &() const // cast
+ACE_INLINE 
+DynamicAny::NameDynAnyPairSeq_var::operator ::DynamicAny::NameDynAnyPairSeq &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-DynamicAny::NameDynAnyPairSeq_var::operator ::DynamicAny::NameDynAnyPairSeq *&() // cast
+DynamicAny::NameDynAnyPairSeq_var::operator ::DynamicAny::NameDynAnyPairSeq *&() // cast 
 {
   return this->ptr_;
 }
@@ -1263,7 +1134,7 @@ DynamicAny::NameDynAnyPairSeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::DynamicAny::NameDynAnyPairSeq *&
 DynamicAny::NameDynAnyPairSeq_var::out (void)
 {
@@ -1324,7 +1195,7 @@ DynamicAny::NameDynAnyPairSeq_out::operator= (NameDynAnyPairSeq *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::NameDynAnyPairSeq_out::operator ::DynamicAny::NameDynAnyPairSeq *&() // cast
 {
   return this->ptr_;
@@ -1355,98 +1226,12 @@ DynamicAny::NameDynAnyPairSeq_out::operator[] (CORBA::ULong index)
 #if !defined (_DYNAMICANY_DYNSTRUCT___CI_)
 #define _DYNAMICANY_DYNSTRUCT___CI_
 
-ACE_INLINE DynamicAny::DynStruct_ptr
-tao_DynamicAny_DynStruct_duplicate (
-    DynamicAny::DynStruct_ptr p
-  )
-{
-  return DynamicAny::DynStruct::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_DynamicAny_DynStruct_release (
-    DynamicAny::DynStruct_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE DynamicAny::DynStruct_ptr
-tao_DynamicAny_DynStruct_nil (
-    void
-  )
-{
-  return DynamicAny::DynStruct::_nil ();
-}
-
-ACE_INLINE DynamicAny::DynStruct_ptr
-tao_DynamicAny_DynStruct_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DynamicAny::DynStruct::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_DynamicAny_DynStruct_upcast (
-    void *src
-  )
-{
-  DynamicAny::DynStruct **tmp =
-    ACE_static_cast (DynamicAny::DynStruct **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
 
 #if !defined (_DYNAMICANY_DYNUNION___CI_)
 #define _DYNAMICANY_DYNUNION___CI_
-
-ACE_INLINE DynamicAny::DynUnion_ptr
-tao_DynamicAny_DynUnion_duplicate (
-    DynamicAny::DynUnion_ptr p
-  )
-{
-  return DynamicAny::DynUnion::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_DynamicAny_DynUnion_release (
-    DynamicAny::DynUnion_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE DynamicAny::DynUnion_ptr
-tao_DynamicAny_DynUnion_nil (
-    void
-  )
-{
-  return DynamicAny::DynUnion::_nil ();
-}
-
-ACE_INLINE DynamicAny::DynUnion_ptr
-tao_DynamicAny_DynUnion_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DynamicAny::DynUnion::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_DynamicAny_DynUnion_upcast (
-    void *src
-  )
-{
-  DynamicAny::DynUnion **tmp =
-    ACE_static_cast (DynamicAny::DynUnion **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -1457,176 +1242,176 @@ tao_DynamicAny_DynUnion_upcast (
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_ANYSEQ_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_DYNAMICANY_ANYSEQ_CI_
 
-  // = Static operations.
-  ACE_INLINE CORBA::Any *
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (CORBA::ULong size)
-  // Allocate storage for the sequence.
-  {
-    CORBA::Any *retval = 0;
-    ACE_NEW_RETURN (retval, CORBA::Any[size], 0);
-    return retval;
-  }
+// = Static operations.
+ACE_INLINE CORBA::Any *
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (CORBA::ULong size)
+// Allocate storage for the sequence.
+{
+  CORBA::Any *retval = 0;
+  ACE_NEW_RETURN (retval, CORBA::Any[size], 0);
+  return retval;
+}
 
-  ACE_INLINE void DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::freebuf (CORBA::Any *buffer)
-  // Free the sequence.
-  {
-    delete [] buffer;
-  }
+ACE_INLINE void DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::freebuf (CORBA::Any *buffer)
+// Free the sequence.
+{
+  delete [] buffer;
+}
 
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::_TAO_Unbounded_Sequence_DynamicAny_AnySeq (void) // Default constructor.
-  {
-  }
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::_TAO_Unbounded_Sequence_DynamicAny_AnySeq (void) // Default constructor.
+{
+}
 
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::_TAO_Unbounded_Sequence_DynamicAny_AnySeq (CORBA::ULong maximum) // Constructor using a maximum length value.
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (maximum))
-  {
-  }
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::_TAO_Unbounded_Sequence_DynamicAny_AnySeq (CORBA::ULong maximum) // Constructor using a maximum length value.
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (maximum))
+{
+}
 
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::_TAO_Unbounded_Sequence_DynamicAny_AnySeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    CORBA::Any *data,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
-  {
-  }
-
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::_TAO_Unbounded_Sequence_DynamicAny_AnySeq (const _TAO_Unbounded_Sequence_DynamicAny_AnySeq &rhs)
-  // Copy constructor.
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
-    {
-      CORBA::Any *tmp1 = _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (this->maximum_);
-      CORBA::Any * const tmp2 = ACE_reinterpret_cast (CORBA::Any * ACE_CAST_CONST, rhs.buffer_);
-
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-        tmp1[i] = tmp2[i];
-
-      this->buffer_ = tmp1;
-    }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
-
-  ACE_INLINE DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq &
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::operator= (const _TAO_Unbounded_Sequence_DynamicAny_AnySeq &rhs)
-  // Assignment operator.
-  {
-    if (this == &rhs)
-      return *this;
-
-    if (this->release_)
-    {
-      if (this->maximum_ < rhs.maximum_)
-      {
-        // free the old buffer
-        CORBA::Any *tmp = ACE_reinterpret_cast (CORBA::Any *, this->buffer_);
-        _TAO_Unbounded_Sequence_DynamicAny_AnySeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (rhs.maximum_);
-
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-
-    CORBA::Any *tmp1 = ACE_reinterpret_cast (CORBA::Any *, this->buffer_);
-    CORBA::Any * const tmp2 = ACE_reinterpret_cast (CORBA::Any * ACE_CAST_CONST, rhs.buffer_);
-
-    for (CORBA::ULong i = 0; i < this->length_; ++i)
-      tmp1[i] = tmp2[i];
-
-    return *this;
-  }
-
-  // = Accessors.
-  ACE_INLINE CORBA::Any &
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::operator[] (CORBA::ULong i)
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA::Any* tmp = ACE_reinterpret_cast(CORBA::Any*,this->buffer_);
-    return tmp[i];
-  }
-
-  ACE_INLINE const CORBA::Any &
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::operator[] (CORBA::ULong i) const
-  // operator []
-  {
-    ACE_ASSERT (i < this->maximum_);
-    CORBA::Any * const tmp = ACE_reinterpret_cast (CORBA::Any* ACE_CAST_CONST, this->buffer_);
-    return tmp[i];
-  }
-
-  // Implement the TAO_Base_Sequence methods (see Sequence.h)
-
-  ACE_INLINE CORBA::Any *
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::get_buffer (CORBA::Boolean orphan)
-  {
-    CORBA::Any *result = 0;
-    if (orphan == 0)
-    {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (this->length_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (CORBA::Any*, this->buffer_);
-      }
-    }
-    else // if (orphan == 1)
-    {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(CORBA::Any*,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
-    }
-    return result;
-  }
-
-  ACE_INLINE const CORBA::Any *
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::get_buffer (void) const
-  {
-    return ACE_reinterpret_cast(const CORBA::Any * ACE_CAST_CONST, this->buffer_);
-  }
-
-  ACE_INLINE void
-  DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::replace (CORBA::ULong max,
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::_TAO_Unbounded_Sequence_DynamicAny_AnySeq (CORBA::ULong maximum,
   CORBA::ULong length,
   CORBA::Any *data,
   CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, data, release)
+{
+}
+
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::_TAO_Unbounded_Sequence_DynamicAny_AnySeq (const _TAO_Unbounded_Sequence_DynamicAny_AnySeq &rhs)
+// Copy constructor.
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    this->maximum_ = max;
-    this->length_ = length;
-    if (this->buffer_ && this->release_ == 1)
-    {
-      CORBA::Any *tmp = ACE_reinterpret_cast(CORBA::Any*,this->buffer_);
-      _TAO_Unbounded_Sequence_DynamicAny_AnySeq::freebuf (tmp);
-    }
-    this->buffer_ = data;
-    this->release_ = release;
+    CORBA::Any *tmp1 = _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (this->maximum_);
+    CORBA::Any * const tmp2 = ACE_reinterpret_cast (CORBA::Any * ACE_CAST_CONST, rhs.buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
+      tmp1[i] = tmp2[i];
+    
+    this->buffer_ = tmp1;
   }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
+
+ACE_INLINE DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq &
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::operator= (const _TAO_Unbounded_Sequence_DynamicAny_AnySeq &rhs)
+// Assignment operator.
+{
+  if (this == &rhs)
+    return *this;
+  
+  if (this->release_)
+  {
+    if (this->maximum_ < rhs.maximum_)
+    {
+      // free the old buffer
+      CORBA::Any *tmp = ACE_reinterpret_cast (CORBA::Any *, this->buffer_);
+      _TAO_Unbounded_Sequence_DynamicAny_AnySeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (rhs.maximum_);
+    }
+  }
+  else
+    this->buffer_ = _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (rhs.maximum_);
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  CORBA::Any *tmp1 = ACE_reinterpret_cast (CORBA::Any *, this->buffer_);
+  CORBA::Any * const tmp2 = ACE_reinterpret_cast (CORBA::Any * ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < this->length_; ++i)
+    tmp1[i] = tmp2[i];
+  
+  return *this;
+}
+
+// = Accessors.
+ACE_INLINE CORBA::Any &
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::operator[] (CORBA::ULong i)
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::Any* tmp = ACE_reinterpret_cast(CORBA::Any*,this->buffer_);
+  return tmp[i];
+}
+
+ACE_INLINE const CORBA::Any &
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::operator[] (CORBA::ULong i) const
+// operator []
+{
+  ACE_ASSERT (i < this->maximum_);
+  CORBA::Any * const tmp = ACE_reinterpret_cast (CORBA::Any* ACE_CAST_CONST, this->buffer_);
+  return tmp[i];
+}
+
+// Implement the TAO_Base_Sequence methods (see Sequence.h)
+
+ACE_INLINE CORBA::Any *
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::get_buffer (CORBA::Boolean orphan)
+{
+  CORBA::Any *result = 0;
+  if (orphan == 0)
+  {
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Sequence_DynamicAny_AnySeq::allocbuf (this->length_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (CORBA::Any*, this->buffer_);
+    }
+  }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(CORBA::Any*,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const CORBA::Any *
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const CORBA::Any * ACE_CAST_CONST, this->buffer_);
+}
+
+ACE_INLINE void
+DynamicAny::_TAO_Unbounded_Sequence_DynamicAny_AnySeq::replace (CORBA::ULong max,
+CORBA::ULong length,
+CORBA::Any *data,
+CORBA::Boolean release)
+{
+  this->maximum_ = max;
+  this->length_ = length;
+  if (this->buffer_ && this->release_ == 1)
+  {
+    CORBA::Any *tmp = ACE_reinterpret_cast(CORBA::Any*,this->buffer_);
+    _TAO_Unbounded_Sequence_DynamicAny_AnySeq::freebuf (tmp);
+  }
+  this->buffer_ = data;
+  this->release_ = release;
+}
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_DYNAMICANY_ANYSEQ_CI_)
 #define _DYNAMICANY_ANYSEQ_CI_
@@ -1682,7 +1467,7 @@ DynamicAny::AnySeq_var::operator= (const ::DynamicAny::AnySeq_var &p)
         {
           AnySeq *deep_copy =
             new AnySeq (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               AnySeq *tmp = deep_copy;
@@ -1692,7 +1477,7 @@ DynamicAny::AnySeq_var::operator= (const ::DynamicAny::AnySeq_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -1708,27 +1493,27 @@ DynamicAny::AnySeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::AnySeq_var::operator const ::DynamicAny::AnySeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-DynamicAny::AnySeq_var::operator ::DynamicAny::AnySeq &() // cast
+ACE_INLINE 
+DynamicAny::AnySeq_var::operator ::DynamicAny::AnySeq &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-DynamicAny::AnySeq_var::operator ::DynamicAny::AnySeq &() const // cast
+ACE_INLINE 
+DynamicAny::AnySeq_var::operator ::DynamicAny::AnySeq &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-DynamicAny::AnySeq_var::operator ::DynamicAny::AnySeq *&() // cast
+DynamicAny::AnySeq_var::operator ::DynamicAny::AnySeq *&() // cast 
 {
   return this->ptr_;
 }
@@ -1757,7 +1542,7 @@ DynamicAny::AnySeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::DynamicAny::AnySeq *&
 DynamicAny::AnySeq_var::out (void)
 {
@@ -1818,7 +1603,7 @@ DynamicAny::AnySeq_out::operator= (AnySeq *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::AnySeq_out::operator ::DynamicAny::AnySeq *&() // cast
 {
   return this->ptr_;
@@ -1851,162 +1636,162 @@ DynamicAny::AnySeq_out::operator[] (CORBA::ULong index)
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CI_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_DYNAMICANY_DYNANYSEQ_CI_
 
-  ACE_INLINE DynamicAny::DynAny **
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (CORBA::ULong nelems)
-  {
-    DynamicAny::DynAny **buf = 0;
-
-    ACE_NEW_RETURN (buf, DynamicAny::DynAny*[nelems], 0);
-
-    for (CORBA::ULong i = 0; i < nelems; i++)
-      {
-        buf[i] = DynamicAny::DynAny::_nil ();
-      }
-
-    return buf;
-  }
-
-  ACE_INLINE void
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::freebuf (DynamicAny::DynAny **buffer)
-  {
-    if (buffer == 0)
-      return;
-    delete[] buffer;
-  }
-
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (void)
-  {
-  }
-
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (CORBA::ULong maximum)
-    : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (maximum))
-  {
-  }
-
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (CORBA::ULong maximum,
-    CORBA::ULong length,
-    DynamicAny::DynAny* *value,
-    CORBA::Boolean release)
-  : TAO_Unbounded_Base_Sequence (maximum, length, value, release)
-  {
-  }
-
-  ACE_INLINE
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq(const _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &rhs)
-    : TAO_Unbounded_Base_Sequence (rhs)
-  {
-    if (rhs.buffer_ != 0)
+ACE_INLINE DynamicAny::DynAny **
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (CORBA::ULong nelems)
+{
+  DynamicAny::DynAny **buf = 0;
+  
+  ACE_NEW_RETURN (buf, DynamicAny::DynAny*[nelems], 0);
+  
+  for (CORBA::ULong i = 0; i < nelems; i++)
     {
-      DynamicAny::DynAny **tmp1 = _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (this->maximum_);
-      DynamicAny::DynAny ** const tmp2 = ACE_reinterpret_cast (DynamicAny::DynAny ** ACE_CAST_CONST, rhs.buffer_);
-
-      for (CORBA::ULong i = 0; i < rhs.length_; ++i)
-        {
-          tmp1[i] = DynamicAny::DynAny::_duplicate (tmp2[i]);
-        }
-
-      this->buffer_ = tmp1;
+      buf[i] = DynamicAny::DynAny::_nil ();
     }
-    else
-    {
-      this->buffer_ = 0;
-    }
-  }
+  
+  return buf;
+}
 
-  ACE_INLINE DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::operator= (const _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &rhs)
+ACE_INLINE void 
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::freebuf (DynamicAny::DynAny **buffer)
+{
+  if (buffer == 0)
+    return;
+  delete[] buffer;
+}
+
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (void)
+{
+}
+
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (CORBA::ULong maximum)
+  : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (maximum))
+{
+}
+
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq (CORBA::ULong maximum,
+  CORBA::ULong length,
+  DynamicAny::DynAny* *value,
+  CORBA::Boolean release)
+: TAO_Unbounded_Base_Sequence (maximum, length, value, release)
+{
+}
+
+ACE_INLINE
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq(const _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &rhs)
+  : TAO_Unbounded_Base_Sequence (rhs)
+{
+  if (rhs.buffer_ != 0)
   {
-    if (this == &rhs)
-      return *this;
-
-    if (this->release_)
-    {
-      DynamicAny::DynAny **tmp = ACE_reinterpret_cast (DynamicAny::DynAny **, this->buffer_);
-
-      for (CORBA::ULong i = 0; i < this->length_; ++i)
-      {
-        CORBA::release (tmp[i]);
-        tmp[i] = DynamicAny::DynAny::_nil ();
-      }
-      if (this->maximum_ < rhs.maximum_)
-      {
-        _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::freebuf (tmp);
-        this->buffer_ = _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (rhs.maximum_);
-      }
-    }
-    else
-      this->buffer_ = _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (rhs.maximum_);
-
-    TAO_Unbounded_Base_Sequence::operator= (rhs);
-
-    DynamicAny::DynAny **tmp1 = ACE_reinterpret_cast (DynamicAny::DynAny **, this->buffer_);
+    DynamicAny::DynAny **tmp1 = _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (this->maximum_);
     DynamicAny::DynAny ** const tmp2 = ACE_reinterpret_cast (DynamicAny::DynAny ** ACE_CAST_CONST, rhs.buffer_);
-
+    
     for (CORBA::ULong i = 0; i < rhs.length_; ++i)
       {
         tmp1[i] = DynamicAny::DynAny::_duplicate (tmp2[i]);
       }
+    
+    this->buffer_ = tmp1;
+  }
+  else
+  {
+    this->buffer_ = 0;
+  }
+}
 
+ACE_INLINE DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::operator= (const _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq &rhs)
+{
+  if (this == &rhs)
     return *this;
-  }
-
-  ACE_INLINE TAO_Object_Manager<DynamicAny::DynAny,DynamicAny::DynAny_var>
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::operator[] (CORBA::ULong index) const
-  // read-write accessor
+  
+  if (this->release_)
   {
-    ACE_ASSERT (index < this->maximum_);
-    DynamicAny::DynAny ** const tmp = ACE_reinterpret_cast (DynamicAny::DynAny ** ACE_CAST_CONST, this->buffer_);
-    return TAO_Object_Manager<DynamicAny::DynAny,DynamicAny::DynAny_var> (tmp + index, this->release_);
-  }
-
-  ACE_INLINE DynamicAny::DynAny* *
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::get_buffer (CORBA::Boolean orphan)
-  {
-    DynamicAny::DynAny **result = 0;
-    if (orphan == 0)
+    DynamicAny::DynAny **tmp = ACE_reinterpret_cast (DynamicAny::DynAny **, this->buffer_);
+    
+    for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
-      // We retain ownership.
-      if (this->buffer_ == 0)
-      {
-        result = _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (this->maximum_);
-        this->buffer_ = result;
-        this->release_ = 1;
-      }
-      else
-      {
-        result = ACE_reinterpret_cast (DynamicAny::DynAny**, this->buffer_);
-      }
+      CORBA::release (tmp[i]);
+      tmp[i] = DynamicAny::DynAny::_nil ();
     }
-    else // if (orphan == 1)
+    if (this->maximum_ < rhs.maximum_)
     {
-      if (this->release_ != 0)
-      {
-        // We set the state back to default and relinquish
-        // ownership.
-        result = ACE_reinterpret_cast(DynamicAny::DynAny**,this->buffer_);
-        this->maximum_ = 0;
-        this->length_ = 0;
-        this->buffer_ = 0;
-        this->release_ = 0;
-      }
+      _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::freebuf (tmp);
+      this->buffer_ = _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (rhs.maximum_);
     }
-    return result;
   }
+  else
+    this->buffer_ = _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (rhs.maximum_);
+  
+  TAO_Unbounded_Base_Sequence::operator= (rhs);
+  
+  DynamicAny::DynAny **tmp1 = ACE_reinterpret_cast (DynamicAny::DynAny **, this->buffer_);
+  DynamicAny::DynAny ** const tmp2 = ACE_reinterpret_cast (DynamicAny::DynAny ** ACE_CAST_CONST, rhs.buffer_);
+  
+  for (CORBA::ULong i = 0; i < rhs.length_; ++i)
+    {
+      tmp1[i] = DynamicAny::DynAny::_duplicate (tmp2[i]);
+    }
+  
+  return *this;
+}
 
-  ACE_INLINE const DynamicAny::DynAny* *
-  DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::get_buffer (void) const
+ACE_INLINE TAO_Object_Manager<DynamicAny::DynAny,DynamicAny::DynAny_var>
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::operator[] (CORBA::ULong index) const
+// read-write accessor
+{
+  ACE_ASSERT (index < this->maximum_);
+  DynamicAny::DynAny ** const tmp = ACE_reinterpret_cast (DynamicAny::DynAny ** ACE_CAST_CONST, this->buffer_);
+  return TAO_Object_Manager<DynamicAny::DynAny,DynamicAny::DynAny_var> (tmp + index, this->release_);
+}
+
+ACE_INLINE DynamicAny::DynAny* *
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::get_buffer (CORBA::Boolean orphan)
+{
+  DynamicAny::DynAny **result = 0;
+  if (orphan == 0)
   {
-    return ACE_reinterpret_cast(const DynamicAny::DynAny ** ACE_CAST_CONST, this->buffer_);
+    // We retain ownership.
+    if (this->buffer_ == 0)
+    {
+      result = _TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::allocbuf (this->maximum_);
+      this->buffer_ = result;
+      this->release_ = 1;
+    }
+    else
+    {
+      result = ACE_reinterpret_cast (DynamicAny::DynAny**, this->buffer_);
+    }
   }
+  else // if (orphan == 1)
+  {
+    if (this->release_ != 0)
+    {
+      // We set the state back to default and relinquish
+      // ownership.
+      result = ACE_reinterpret_cast(DynamicAny::DynAny**,this->buffer_);
+      this->maximum_ = 0;
+      this->length_ = 0;
+      this->buffer_ = 0;
+      this->release_ = 0;
+    }
+  }
+  return result;
+}
+
+ACE_INLINE const DynamicAny::DynAny* *
+DynamicAny::_TAO_Unbounded_Object_Sequence_DynamicAny_DynAnySeq::get_buffer (void) const
+{
+  return ACE_reinterpret_cast(const DynamicAny::DynAny ** ACE_CAST_CONST, this->buffer_);
+}
 
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
 
 #if !defined (_DYNAMICANY_DYNANYSEQ_CI_)
 #define _DYNAMICANY_DYNANYSEQ_CI_
@@ -2062,7 +1847,7 @@ DynamicAny::DynAnySeq_var::operator= (const ::DynamicAny::DynAnySeq_var &p)
         {
           DynAnySeq *deep_copy =
             new DynAnySeq (*p.ptr_);
-
+          
           if (deep_copy != 0)
             {
               DynAnySeq *tmp = deep_copy;
@@ -2072,7 +1857,7 @@ DynamicAny::DynAnySeq_var::operator= (const ::DynamicAny::DynAnySeq_var &p)
             }
         }
     }
-
+  
   return *this;
 }
 
@@ -2088,27 +1873,27 @@ DynamicAny::DynAnySeq_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::DynAnySeq_var::operator const ::DynamicAny::DynAnySeq &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-DynamicAny::DynAnySeq_var::operator ::DynamicAny::DynAnySeq &() // cast
+ACE_INLINE 
+DynamicAny::DynAnySeq_var::operator ::DynamicAny::DynAnySeq &() // cast 
 {
   return *this->ptr_;
 }
 
-ACE_INLINE
-DynamicAny::DynAnySeq_var::operator ::DynamicAny::DynAnySeq &() const // cast
+ACE_INLINE 
+DynamicAny::DynAnySeq_var::operator ::DynamicAny::DynAnySeq &() const // cast 
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-DynamicAny::DynAnySeq_var::operator ::DynamicAny::DynAnySeq *&() // cast
+DynamicAny::DynAnySeq_var::operator ::DynamicAny::DynAnySeq *&() // cast 
 {
   return this->ptr_;
 }
@@ -2131,7 +1916,7 @@ DynamicAny::DynAnySeq_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size
+// mapping for variable size 
 ACE_INLINE ::DynamicAny::DynAnySeq *&
 DynamicAny::DynAnySeq_var::out (void)
 {
@@ -2192,7 +1977,7 @@ DynamicAny::DynAnySeq_out::operator= (DynAnySeq *p)
   return *this;
 }
 
-ACE_INLINE
+ACE_INLINE 
 DynamicAny::DynAnySeq_out::operator ::DynamicAny::DynAnySeq *&() // cast
 {
   return this->ptr_;
@@ -2223,49 +2008,6 @@ DynamicAny::DynAnySeq_out::operator[] (CORBA::ULong index)
 #if !defined (_DYNAMICANY_DYNSEQUENCE___CI_)
 #define _DYNAMICANY_DYNSEQUENCE___CI_
 
-ACE_INLINE DynamicAny::DynSequence_ptr
-tao_DynamicAny_DynSequence_duplicate (
-    DynamicAny::DynSequence_ptr p
-  )
-{
-  return DynamicAny::DynSequence::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_DynamicAny_DynSequence_release (
-    DynamicAny::DynSequence_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE DynamicAny::DynSequence_ptr
-tao_DynamicAny_DynSequence_nil (
-    void
-  )
-{
-  return DynamicAny::DynSequence::_nil ();
-}
-
-ACE_INLINE DynamicAny::DynSequence_ptr
-tao_DynamicAny_DynSequence_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DynamicAny::DynSequence::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_DynamicAny_DynSequence_upcast (
-    void *src
-  )
-{
-  DynamicAny::DynSequence **tmp =
-    ACE_static_cast (DynamicAny::DynSequence **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
@@ -2273,98 +2015,12 @@ tao_DynamicAny_DynSequence_upcast (
 #if !defined (_DYNAMICANY_DYNARRAY___CI_)
 #define _DYNAMICANY_DYNARRAY___CI_
 
-ACE_INLINE DynamicAny::DynArray_ptr
-tao_DynamicAny_DynArray_duplicate (
-    DynamicAny::DynArray_ptr p
-  )
-{
-  return DynamicAny::DynArray::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_DynamicAny_DynArray_release (
-    DynamicAny::DynArray_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE DynamicAny::DynArray_ptr
-tao_DynamicAny_DynArray_nil (
-    void
-  )
-{
-  return DynamicAny::DynArray::_nil ();
-}
-
-ACE_INLINE DynamicAny::DynArray_ptr
-tao_DynamicAny_DynArray_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DynamicAny::DynArray::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_DynamicAny_DynArray_upcast (
-    void *src
-  )
-{
-  DynamicAny::DynArray **tmp =
-    ACE_static_cast (DynamicAny::DynArray **, src);
-  return *tmp;
-}
-
 
 #endif /* end #if !defined */
 
 
 #if !defined (_DYNAMICANY_DYNVALUE___CI_)
 #define _DYNAMICANY_DYNVALUE___CI_
-
-ACE_INLINE DynamicAny::DynValue_ptr
-tao_DynamicAny_DynValue_duplicate (
-    DynamicAny::DynValue_ptr p
-  )
-{
-  return DynamicAny::DynValue::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_DynamicAny_DynValue_release (
-    DynamicAny::DynValue_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE DynamicAny::DynValue_ptr
-tao_DynamicAny_DynValue_nil (
-    void
-  )
-{
-  return DynamicAny::DynValue::_nil ();
-}
-
-ACE_INLINE DynamicAny::DynValue_ptr
-tao_DynamicAny_DynValue_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DynamicAny::DynValue::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_DynamicAny_DynValue_upcast (
-    void *src
-  )
-{
-  DynamicAny::DynValue **tmp =
-    ACE_static_cast (DynamicAny::DynValue **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -2376,49 +2032,6 @@ tao_DynamicAny_DynValue_upcast (
 
 #if !defined (_DYNAMICANY_DYNANYFACTORY___CI_)
 #define _DYNAMICANY_DYNANYFACTORY___CI_
-
-ACE_INLINE DynamicAny::DynAnyFactory_ptr
-tao_DynamicAny_DynAnyFactory_duplicate (
-    DynamicAny::DynAnyFactory_ptr p
-  )
-{
-  return DynamicAny::DynAnyFactory::_duplicate (p);
-}
-
-ACE_INLINE void
-tao_DynamicAny_DynAnyFactory_release (
-    DynamicAny::DynAnyFactory_ptr p
-  )
-{
-  CORBA::release (p);
-}
-
-ACE_INLINE DynamicAny::DynAnyFactory_ptr
-tao_DynamicAny_DynAnyFactory_nil (
-    void
-  )
-{
-  return DynamicAny::DynAnyFactory::_nil ();
-}
-
-ACE_INLINE DynamicAny::DynAnyFactory_ptr
-tao_DynamicAny_DynAnyFactory_narrow (
-    CORBA::Object *p
-    ACE_ENV_ARG_DECL
-  )
-{
-  return DynamicAny::DynAnyFactory::_narrow (p ACE_ENV_ARG_PARAMETER);
-}
-
-ACE_INLINE CORBA::Object *
-tao_DynamicAny_DynAnyFactory_upcast (
-    void *src
-  )
-{
-  DynamicAny::DynAnyFactory **tmp =
-    ACE_static_cast (DynamicAny::DynAnyFactory **, src);
-  return *tmp;
-}
 
 
 #endif /* end #if !defined */
@@ -2432,7 +2045,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const DynamicAny::Nam
     return 1;
   else
     return 0;
-
+  
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, DynamicAny::NameValuePair &_tao_aggregate)
@@ -2444,7 +2057,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, DynamicAny::NameValueP
     return 1;
   else
     return 0;
-
+  
 }
 
 
