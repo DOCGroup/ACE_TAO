@@ -1082,6 +1082,8 @@ ACE_OS::default_win32_security_attributes_r (LPSECURITY_ATTRIBUTES sa,
     }
   return sa;
 #else /* !ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
+  ACE_UNUSED_ARG(sa_buffer);
+  ACE_UNUSED_ARG(sd_buffer);
   return sa;
 #endif /* ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES */
 }

@@ -1,3 +1,8 @@
+Fri Jun 11 14:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_stdio.inl:
+          Fixed unused parameter warning
+
 Fri Jun 11 13:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
