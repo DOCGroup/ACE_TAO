@@ -161,24 +161,24 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 #else
       // Attempting to use writev
       // Is this faster?
-      ACE_IO_Vector iov[3];
+      iovec iov[3];
       int iovcnt = 0;
       if (header_size > 0)
         {
-          iov[iovcnt].buffer ((char*)header);
-          iov[iovcnt].length (header_size);
+          iov[iovcnt].iov_base = (char*)header;
+          iov[iovcnt].iov_len =  header_size;
           iovcnt++;
         }
       if (handle.size () > 0)
         {
-          iov[iovcnt].buffer (handle.address ());
-          iov[iovcnt].length (handle.size ());
+          iov[iovcnt].iov_base = handle.address ();
+          iov[iovcnt].iov_len = handle.size ();
           iovcnt++;
         }
       if (trailer_size > 0)
         {
-          iov[iovcnt].buffer ((char*)trailer);
-          iov[iovcnt].length (trailer_size);
+          iov[iovcnt].iov_base = (char*)trailer;
+          iov[iovcnt].iob_len = trailer_size;
           iovcnt++;
         }
       if (ACE_OS::writev (ioh->handle (), iov, iovcnt) < 0)
