@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_ORIG_IMPLREPOS_CPP_
-#define _TAO_IDL_ORIG_IMPLREPOS_CPP_
+#ifndef _TAO_IDL_IMPLREPOS_CPP_
+#define _TAO_IDL_IMPLREPOS_CPP_
 
 #include "ImplRepoS.h"
 
@@ -55,9 +55,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 10:26:32 */
+/* starting time is 18:22:12 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /project/sirion/coryan/amh/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: /project/beguine/bala/patches/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -151,7 +151,7 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const ch
     }
   return 0;
 }
-/* ending time is 10:26:32 */
+/* ending time is 18:22:12 */
 static TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable tao_ImplementationRepository_ServerObject_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -946,9 +946,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 10:26:32 */
+/* starting time is 18:22:12 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /project/sirion/coryan/amh/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: /project/beguine/bala/patches/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -1051,7 +1051,7 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::lookup (const 
     }
   return 0;
 }
-/* ending time is 10:26:32 */
+/* ending time is 18:22:12 */
 static TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable tao_ImplementationRepository_Administration_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -3940,9 +3940,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 10:26:32 */
+/* starting time is 18:22:12 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /project/sirion/coryan/amh/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: /project/beguine/bala/patches/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -4035,7 +4035,7 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::loo
     }
   return 0;
 }
-/* ending time is 10:26:32 */
+/* ending time is 18:22:12 */
 static TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable tao_ImplementationRepository_ServerInformationIterator_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)

@@ -357,120 +357,182 @@ TAO_NAMESPACE_TYPE (const CORBA::ULong)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::ULong, INVOCATION_POLICIES, 2U)
 TAO_NAMESPACE_END
-void operator<<= (CORBA::Any &_tao_any, const Messaging::PolicyValue &_tao_elem) // copying
+
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/any_op_cs.cpp:58
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const Messaging::PolicyValue &_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_PolicyValue,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
+  
+  if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          Messaging::_tc_PolicyValue,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    Messaging::PolicyValue *_tao_elem
+  )
+{
+  TAO_OutputCDR stream;
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          Messaging::_tc_PolicyValue,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          Messaging::PolicyValue::_tao_any_destructor
+        );
+    }
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    Messaging::PolicyValue *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const Messaging::PolicyValue *&,
+      _tao_elem
     );
 }
 
-void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValue *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_PolicyValue,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Messaging::PolicyValue::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValue *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const Messaging::PolicyValue*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyValue *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const Messaging::PolicyValue *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (Messaging::_tc_PolicyValue ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          Messaging::_tc_PolicyValue
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
-    if (!result)
-      return 0; // not equivalent
+    if (result == 0)
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const Messaging::PolicyValue*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      Messaging::PolicyValue *tmp;
-      ACE_NEW_RETURN (tmp, Messaging::PolicyValue, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_PolicyValue,
-            1,
-            ACE_static_cast (void *, tmp),
-            Messaging::PolicyValue::_tao_any_destructor
+        _tao_elem = ACE_static_cast (
+            const Messaging::PolicyValue*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        Messaging::PolicyValue *tmp;
+        ACE_NEW_RETURN (
+            tmp,
+            Messaging::PolicyValue,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                Messaging::_tc_PolicyValue,
+                1,
+                ACE_static_cast (void *, tmp),
+                Messaging::PolicyValue::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
+
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/any_op_cs.cpp:61
+
+// Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
     const Messaging::PolicyValueSeq &_tao_elem
-  ) // copying
+  )
 {
   TAO_OutputCDR stream;
+  
   if (stream << _tao_elem)
-  {
-    _tao_any._tao_replace (
-        Messaging::_tc_PolicyValueSeq,
-        TAO_ENCAP_BYTE_ORDER,
-        stream.begin ()
-      );
-  }
+    {
+      _tao_any._tao_replace (
+          Messaging::_tc_PolicyValueSeq,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
 }
 
-void operator<<= (CORBA::Any &_tao_any, Messaging::PolicyValueSeq *_tao_elem) // non copying
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    Messaging::PolicyValueSeq *_tao_elem
+  )
 {
   TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Messaging::_tc_PolicyValueSeq,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Messaging::PolicyValueSeq::_tao_any_destructor
-    );
+  
+  if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          Messaging::_tc_PolicyValueSeq,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          Messaging::PolicyValueSeq::_tao_any_destructor
+        );
+    }
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSeq *&_tao_elem)
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    Messaging::PolicyValueSeq *&_tao_elem
+  )
 {
   return _tao_any >>= ACE_const_cast(
       const Messaging::PolicyValueSeq*&,
@@ -478,56 +540,76 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSe
     );
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Messaging::PolicyValueSeq *&_tao_elem)
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const Messaging::PolicyValueSeq *&_tao_elem
+  )
 {
   _tao_elem = 0;
+  
   ACE_TRY_NEW_ENV
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     
-    CORBA::Boolean result = type->equivalent (Messaging::_tc_PolicyValueSeq ACE_ENV_ARG_PARAMETER);
+    CORBA::Boolean result =
+      type->equivalent (
+          Messaging::_tc_PolicyValueSeq
+          ACE_ENV_ARG_PARAMETER
+        );
     ACE_TRY_CHECK;
     
     if (!result)
-      return 0; // not equivalent
+      {
+        return 0; // not equivalent
+      }
     
     if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const Messaging::PolicyValueSeq*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      Messaging::PolicyValueSeq *tmp;
-      ACE_NEW_RETURN (tmp, Messaging::PolicyValueSeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Messaging::_tc_PolicyValueSeq,
-            1,
-            ACE_static_cast (void *, tmp),
-            Messaging::PolicyValueSeq::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const Messaging::PolicyValueSeq*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
+        
         return 1;
       }
-      else
+    else
       {
-        delete tmp;
+        Messaging::PolicyValueSeq *tmp = 0;
+        ACE_NEW_RETURN (
+            tmp,
+            Messaging::PolicyValueSeq,
+            0
+          );
+        
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+          {
+            ((CORBA::Any *)&_tao_any)->_tao_replace (
+                Messaging::_tc_PolicyValueSeq,
+                1,
+                ACE_static_cast (void *, tmp),
+                Messaging::PolicyValueSeq::_tao_any_destructor
+              );
+            
+            _tao_elem = tmp;
+            return 1;
+          }
+        else
+          {
+            delete tmp;
+          }
       }
-    }
   }
   ACE_CATCHANY
   {
   }
   ACE_ENDTRY;
+  
   return 0;
 }
 
@@ -570,16 +652,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
@@ -636,16 +718,16 @@ CORBA::Boolean operator>> (
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)
   {
+    // Add a check to the length of the sequence
+    // to make sure it does not exceed the length
+    // of the stream. (See bug 1159.)
+    if (_tao_seq_len > strm.length())
+      return 0;
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
     if (0 >= _tao_seq_len) 
       return 1;
-    // Add a check to the length of the sequence
-    // to make sure it does not exceed the length
-    // of the stream. (See bug 58.)
-    if (_tao_seq_len > strm.length())
-      return 0;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
