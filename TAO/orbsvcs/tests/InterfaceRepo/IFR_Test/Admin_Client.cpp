@@ -1243,6 +1243,11 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
                                     ACE_OS::strlen (tmp)));
     }
 
+#if defined (ACE_NDEBUG)
+  // ACE_ASSERT macro expands to nothing, so...
+  ACE_UNUSED_ARG (tmp);
+#endif /* ACE_NDEBUG */
+
   e_var->destroy (ACE_TRY_ENV);
   ACE_CHECK;
   svar->destroy (ACE_TRY_ENV);
@@ -1848,6 +1853,11 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
 
       ACE_ASSERT (!ACE_OS::strncmp (str.in (), tmp, ACE_OS::strlen (tmp)));
     }
+
+#if defined (ACE_NDEBUG)
+  // ACE_ASSERT macro expands to nothing, so...
+  ACE_UNUSED_ARG (tmp);
+#endif /* ACE_NDEBUG */
 
   e_var->destroy (ACE_TRY_ENV);
   ACE_CHECK;
@@ -2813,6 +2823,11 @@ Admin_Client::move_test (CORBA::Environment &ACE_TRY_ENV)
                                     base, 
                                     ACE_OS::strlen (base)));
     }
+
+#if defined (ACE_NDEBUG)
+  // ACE_ASSERT macro expands to nothing, so...
+  ACE_UNUSED_ARG (base);
+#endif /* ACE_NDEBUG */
 
   IR::StructMemberSeq_var out_s_members = s_tmp->members (ACE_TRY_ENV);
   ACE_CHECK;
