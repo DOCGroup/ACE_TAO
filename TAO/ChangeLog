@@ -1,3 +1,27 @@
+Tue Jan 20 16:59:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/include/ast_extern.h:
+        * TAO_IDL/ast/ast_recursive.cpp:
+        
+          Beefed up the checked for illegal recursion to include the
+          following category:
+          
+          interface foo
+          {
+            struct bar
+            {
+			  foo foo_mem;
+			};
+		  };
+		  
+		  and similar cases with the recursion nested at deeper levels.
+		  Thanks to Milan Cvetkovic <mcvetkovic@mpathix.com> for sending
+		  in the example IDL.
+		  
+		* tests/IDL_Test/interface.idl:
+		
+		  Added the above example to the test file.
+
 Tue Jan 20 16:59:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
        * tao/Policy_Set.i: 
