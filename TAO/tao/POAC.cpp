@@ -283,15 +283,15 @@ PortableServer::ThreadPolicy_ptr PortableServer::ThreadPolicy::_narrow (
   ACE_CHECK_RETURN (PortableServer::ThreadPolicy::_nil ());
   if (check)
     return PortableServer::ThreadPolicy::_nil ();
-  TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
+  TAO_Stub* stub = obj->_stubobj ();
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/ThreadPolicy:1.0");
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
+  if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ThreadPolicy::_nil ());
 #else
+  stub->_incr_refcnt ();
   if (servant == 0)
     return new PortableServer::ThreadPolicy(stub);
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
@@ -421,14 +421,14 @@ PortableServer::LifespanPolicy_ptr PortableServer::LifespanPolicy::_narrow (
   if (check)
     return PortableServer::LifespanPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/LifespanPolicy:1.0");
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
+  if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::LifespanPolicy::_nil ());
 #else
+  stub->_incr_refcnt ();
   if (servant == 0)
     return new PortableServer::LifespanPolicy(stub);
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
@@ -558,14 +558,14 @@ PortableServer::IdUniquenessPolicy_ptr PortableServer::IdUniquenessPolicy::_narr
   if (check)
     return PortableServer::IdUniquenessPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/IdUniquenessPolicy:1.0");
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
+  if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::IdUniquenessPolicy::_nil ());
 #else
+  stub->_incr_refcnt ();
   if (servant == 0)
     return new PortableServer::IdUniquenessPolicy(stub);
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
@@ -694,14 +694,14 @@ PortableServer::IdAssignmentPolicy_ptr PortableServer::IdAssignmentPolicy::_narr
   if (check)
     return PortableServer::IdAssignmentPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/IdAssignmentPolicy:1.0");
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
+  if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::IdAssignmentPolicy::_nil ());
 #else
+  stub->_incr_refcnt ();
   if (servant == 0)
     return new PortableServer::IdAssignmentPolicy(stub);
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
@@ -833,14 +833,14 @@ PortableServer::ImplicitActivationPolicy_ptr PortableServer::ImplicitActivationP
   if (check)
     return PortableServer::ImplicitActivationPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/ImplicitActivationPolicy:1.0");
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
+  if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ImplicitActivationPolicy::_nil ());
 #else
+  stub->_incr_refcnt ();
   if (servant == 0)
     return new PortableServer::ImplicitActivationPolicy(stub);
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
@@ -970,14 +970,14 @@ PortableServer::ServantRetentionPolicy_ptr PortableServer::ServantRetentionPolic
   if (check)
     return PortableServer::ServantRetentionPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/ServantRetentionPolicy:1.0");
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
+  if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantRetentionPolicy::_nil ());
 #else
+  stub->_incr_refcnt ();
   if (servant == 0)
     return new PortableServer::ServantRetentionPolicy(stub);
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
@@ -1107,14 +1107,14 @@ PortableServer::RequestProcessingPolicy_ptr PortableServer::RequestProcessingPol
   if (check)
     return PortableServer::RequestProcessingPolicy::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
   void* servant = 0;
   if (obj->_is_collocated () && obj->_servant() != 0)
     servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/RequestProcessingPolicy:1.0");
 #if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
-  else
+  if (servant == 0)
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::RequestProcessingPolicy::_nil ());
 #else
+  stub->_incr_refcnt ();
   if (servant == 0)
     return new PortableServer::RequestProcessingPolicy(stub);
 #endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
@@ -1225,16 +1225,15 @@ PortableServer::POAManager_ptr PortableServer::POAManager::_narrow (
   ACE_CHECK_RETURN (PortableServer::POAManager::_nil ());
   if (check)
     return PortableServer::POAManager::_nil ();
-  if (!obj->_is_collocated () || !obj->_servant())
+  void* servant = 0;
+  if (!obj->_is_collocated ()
+      || !obj->_servant()
+      || (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/POAManager:1.0")) == 0)
       // This can only be colocated
       ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POAManager::_nil ());
-
-  TAO_Stub *stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/POAManager:1.0");
   return new POA_PortableServer::_tao_collocated_POAManager(
                                                             ACE_reinterpret_cast(POA_PortableServer::POAManager_ptr, servant),
-                                                            stub
+                                                            0
                                                             );
 }
 
@@ -1415,16 +1414,14 @@ PortableServer::AdapterActivator_ptr PortableServer::AdapterActivator::_narrow (
   ACE_CHECK_RETURN (PortableServer::AdapterActivator::_nil ());
   if (check)
     return PortableServer::AdapterActivator::_nil ();
-  if (!obj->_is_collocated () || !obj->_servant())
+  void *servant = 0;
+  if (!obj->_is_collocated () || !obj->_servant() ||
+      (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/AdapterActivator:1.0")) == 0)
       // This can only be colocated
       ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::AdapterActivator::_nil ());
-
-  TAO_Stub *stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/AdapterActivator:1.0");
   return new POA_PortableServer::_tao_collocated_AdapterActivator(
                                                                   ACE_reinterpret_cast(POA_PortableServer::AdapterActivator_ptr, servant),
-                                                                  stub
+                                                                  0
                                                                   );
 }
 
@@ -1479,16 +1476,14 @@ PortableServer::ServantManager_ptr PortableServer::ServantManager::_narrow (
   ACE_CHECK_RETURN (PortableServer::ServantManager::_nil ());
   if (check)
     return PortableServer::ServantManager::_nil ();
-  if (!obj->_is_collocated () || !obj->_servant())
+  void *servant = 0;
+  if (!obj->_is_collocated () || !obj->_servant() ||
+      (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/ServantManager:1.0")) == 0)
     // This can only be colocated
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantManager::_nil ());
-
-  TAO_Stub *stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/ServantManager:1.0");
   return new POA_PortableServer::_tao_collocated_ServantManager(
                                                                 ACE_reinterpret_cast(POA_PortableServer::ServantManager_ptr, servant),
-                                                                stub
+                                                                0
                                                                 );
 }
 
@@ -1543,16 +1538,14 @@ PortableServer::ServantActivator_ptr PortableServer::ServantActivator::_narrow (
   ACE_CHECK_RETURN (PortableServer::ServantActivator::_nil ());
   if (check)
     return PortableServer::ServantActivator::_nil ();
-  if (!obj->_is_collocated () || !obj->_servant())
+  void *servant = 0;
+  if (!obj->_is_collocated () || !obj->_servant() ||
+      (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/ServantActivator:1.0")) == 0)
       // This can only be colocated
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantActivator::_nil ());
-
-  TAO_Stub *stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/ServantActivator:1.0");
   return new POA_PortableServer::_tao_collocated_ServantActivator(
                                                                   ACE_reinterpret_cast(POA_PortableServer::ServantActivator_ptr, servant),
-                                                                  stub
+                                                                  0
                                                                   );
 }
 
@@ -1608,16 +1601,14 @@ PortableServer::ServantLocator_ptr PortableServer::ServantLocator::_narrow (
   ACE_CHECK_RETURN (PortableServer::ServantLocator::_nil ());
   if (check)
     return PortableServer::ServantLocator::_nil ();
-  if (!obj->_is_collocated () || !obj->_servant())
+  void *servant = 0;
+  if (!obj->_is_collocated () || !obj->_servant() ||
+      (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/ServantLocator:1.0")) == 0)
     // This can only be colocated
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::ServantLocator::_nil ());
-
-  TAO_Stub *stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/ServantLocator:1.0");
   return new POA_PortableServer::_tao_collocated_ServantLocator(
                                                                 ACE_reinterpret_cast(POA_PortableServer::ServantLocator_ptr, servant),
-                                                                stub
+                                                                0
                                                                 );
 }
 
@@ -1675,16 +1666,14 @@ PortableServer::POA_ptr PortableServer::POA::_narrow (
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
   if (check)
     return PortableServer::POA::_nil ();
-  if (!obj->_is_collocated () || !obj->_servant())
+  void *servant = 0;
+  if (!obj->_is_collocated () || !obj->_servant() ||
+      (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/POA:1.0")) == 0)
     // This can only be colocated
     ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::POA::_nil ());
-
-  TAO_Stub *stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/POA:1.0");
   return new POA_PortableServer::_tao_collocated_POA(
                                                      ACE_reinterpret_cast(POA_PortableServer::POA_ptr, servant),
-                                                     stub
+                                                     0
                                                      );
 }
 
@@ -3125,17 +3114,15 @@ PortableServer::Current_ptr PortableServer::Current::_narrow (
   ACE_CHECK_RETURN (PortableServer::Current::_nil ());
   if (check)
     return PortableServer::Current::_nil ();
-  TAO_Stub* stub = obj->_stubobj ();
-  stub->_incr_refcnt ();
-  void* servant = 0;
-  if (obj->_is_collocated () && obj->_servant() != 0)
-    servant = obj->_servant()->_downcast ("IDL:omg.org/PortableServer/Current:1.0");
-  if (servant == 0)
-    return new PortableServer::Current(stub);
+  void *servant = 0;
+  if (!obj->_is_collocated () || !obj->_servant() ||
+      (servant = obj->_servant ()->_downcast ("IDL:omg.org/PortableServer/Current:1.0")) == 0)
+    // This can only be colocated
+    ACE_THROW_RETURN (CORBA::MARSHAL (), PortableServer::Current::_nil ());
   return new POA_PortableServer::_tao_collocated_Current(
-      ACE_reinterpret_cast(POA_PortableServer::Current_ptr, servant),
-      stub
-    );
+                                                         ACE_reinterpret_cast(POA_PortableServer::Current_ptr, servant),
+                                                         0
+                                                         );
 }
 
 // default constructor
@@ -3269,6 +3256,8 @@ PortableServer::POA_ptr  PortableServer::Current::get_POA (CORBA::Environment &A
 
 PortableServer::ObjectId * PortableServer::Current::get_object_id (CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ This doesn't look right at all. - nw.
+
     static TAO_Exception_Data _tao_PortableServer_Current_get_object_id_exceptiondata [] =
   {
     {PortableServer::Current::_tc_NoContext, PortableServer::Current::NoContext::_alloc}

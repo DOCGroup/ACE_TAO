@@ -254,7 +254,7 @@ CORBA_ORB::work_pending (void)
   return 1;
 #if 0
   return this->orb_core_->reactor ()->work_pending ();
-#endif 
+#endif
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
@@ -1380,7 +1380,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
       // Marshal the objref into an encapsulation bytestream.
       (void) cdr.write_octet (TAO_ENCAP_BYTE_ORDER);
       if ((cdr << obj) == 0)
-        return 0;
+        ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 
       // Now hexify the encapsulated CDR data into a string, and
       // return that string.
@@ -1412,7 +1412,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj,
   else
     {
       if (obj->_stubobj () == 0)
-        ACE_THROW_RETURN (CORBA::INV_OBJREF (), 0);
+        ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
 
       return obj->_stubobj ()->profile_in_use ()->to_string (ACE_TRY_ENV);
     }
