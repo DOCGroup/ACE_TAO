@@ -204,11 +204,13 @@ ACE_INLINE
 ACE_Sig_Guard::~ACE_Sig_Guard (void)
 {
   ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
+#if !defined (ACE_WIN32)
 #if 0 /* defined (ACE_MT_SAFE) */
   ACE_OS::thr_sigsetmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
 #else
   ACE_OS::sigprocmask (SIG_SETMASK, (sigset_t *) this->omask_, 0);
 #endif /* ACE_MT_SAFE */
+#endif /* ACE_WIN32 */
 }
 
 ACE_INLINE int
