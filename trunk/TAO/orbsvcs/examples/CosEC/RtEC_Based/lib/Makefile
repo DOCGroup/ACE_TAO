@@ -8,9 +8,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LIBNAME  = libTAO_RTEC_COSEC
-LIB      = $(LIBNAME).a
-SHLIB    = $(LIBNAME).$(SOEXT)
 
 ACE_SHLIBS = -lTAO_RTEvent -lTAO_CosEvent \
              -lTAO_Svc_Utils -lTAO_PortableServer -lTAO -lACE
@@ -39,9 +36,11 @@ include $(TAO_ROOT)/rules.tao.GNU
 #### If the orbsvcs library wasn't built with all components, don't
 #### try to build certain tests.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (RTEvent,$(findstring RTEvent,$(TAO_ORBSVCS)))
-ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
+ifeq (RTEvent,$(findstring RTEvent ,$(TAO_ORBSVCS)))
+ifeq (CosEvent,$(findstring CosEvent ,$(TAO_ORBSVCS)))
+LIBNAME  = libTAO_RTEC_COSEC
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
 endif # RTEvent
 endif # CosEvent
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
