@@ -1,13 +1,17 @@
+Tue Jun 29 22:46:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAOACE.dsw: Fixed inter-project dependencies.
+
 Tue Jun 29 22:34:12 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/UIOP_Profile.{h,i,cpp}:
 
 	  Removed rendezvous_point_ from the TAO_UIOP_Profile class.  It
-	  is already stored in the profile's object_addr_ member, and name 
-	  lookup overhead isn't an issue for UNIX domain rendezvous points 
+	  is already stored in the profile's object_addr_ member, and name
+	  lookup overhead isn't an issue for UNIX domain rendezvous points
 	  as it is for hostname lookup in the INET domain.
 
-	  TAO_UIOP_Profile now warns if a provided rendezvous_point is too 
+	  TAO_UIOP_Profile now warns if a provided rendezvous_point is too
 	  long, i.e. if the ACE_UNIX_Addr truncates it since it is larger
 	  than the sun_path[] array in the underlying sockaddr_un
 	  structure.
@@ -28,9 +32,9 @@ Tue Jun 29 21:26:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Tue Jun 29 21:06:17 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* orbsvcs/tests/Property/client.cpp: 
+	* orbsvcs/tests/Property/client.cpp:
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
-	  Fixed the exception problems reported by Carlos. Thanks Carlos. 
+	  Fixed the exception problems reported by Carlos. Thanks Carlos.
 
 Tue Jun 29 20:57:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -49,7 +53,7 @@ Tue Jun 29 20:37:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
-        * tao/ORB.cpp:  Changed resolve_implrepo_service () to work 
+        * tao/ORB.cpp:  Changed resolve_implrepo_service () to work
           correctly with the ACE CORBA macros.
 
         * examples/Quoter/Factory_Finder.cpp:
@@ -57,9 +61,9 @@ Tue Jun 28 20:19:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
         * examples/Quoter/Quoter_i.cpp:
         * examples/Quoter/client.cpp:
         * examples/Quoter/server.cpp:
-        * examples/Simple/time/Time_Client_i.cpp: 
-        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp: 
-          Fixed some bugs with using old print_exception method instead of 
+        * examples/Simple/time/Time_Client_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp:
+          Fixed some bugs with using old print_exception method instead of
           ACE_PRINT_EXCEPTION.
 
         * orbsvcs/tests/ImplRepo/airplane_client_i.cpp: Removed the
