@@ -22,14 +22,11 @@
 #include "orbsvcs/CosNotificationC.h"
 #include "Destroy_Callback.h"
 #include "EventTypeSeq.h"
-//#include "Types.h"
 
 class TAO_NS_Proxy;
 class TAO_NS_QoSProperties;
 class TAO_NS_Peer;
 
-template <class PEER> class TAO_NS_Dispatch_Observer_T;
-typedef TAO_NS_Dispatch_Observer_T<TAO_NS_Peer> TAO_NS_Updates_Dispatch_Observer;
 
 /**
  * @class TAO_NS_Peer
@@ -47,38 +44,32 @@ public:
   /// Destructor
   virtual ~TAO_NS_Peer ();
 
-  /// Shutdown the peer.
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
-
-  /// Install the updates observer.
-  void updates_dispatch_observer (TAO_NS_Updates_Dispatch_Observer* updates_dispatch_observer);
-
-  /// Access Proxy.
-  virtual TAO_NS_Proxy* proxy (void) = 0;
-
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
-  /// Dispatch Pending.
-  void dispatch_pending (ACE_ENV_SINGLE_ARG_DECL);
+  /// Shutdown the peer.
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Access Proxy.
+  virtual TAO_NS_Proxy* proxy (void) = 0;
+
+  // Dispatch updates
+  virtual void dispatch_updates (const TAO_NS_EventTypeSeq & added,
+                                 const TAO_NS_EventTypeSeq & removed
+                                 ACE_ENV_ARG_DECL);
 
   /// QoS changed notification from the Peer.
   virtual void qos_changed (TAO_NS_QoSProperties& qos_properties);
 
+  /// Handle dispatch exceptions.
+  void handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL);
+
 protected:
-  // Dispatch updates implementation.
-  virtual void dispatch_updates_i (const TAO_NS_EventTypeSeq & added,
-                                   const TAO_NS_EventTypeSeq & removed
+  /// Implementation of Peer specific dispatch_updates
+  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
+                                   const CosNotification::EventTypeSeq& removed
                                    ACE_ENV_ARG_DECL) = 0;
-
-  ///= Data Members
-
-  // Updates Dispatch Observer
-  TAO_NS_Updates_Dispatch_Observer* updates_dispatch_observer_;
-
-  /// Retry count. How many times have we failed to contact the remote peer?
-  int retry_count_;
 };
 
 #if defined (__ACE_INLINE__)

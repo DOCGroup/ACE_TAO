@@ -66,6 +66,9 @@ public:
   const CosNotification::EventType& native (void) const;
   // Get the type underneath us.
 
+  /// Helper to print contents.
+  void dump (void);
+
 protected:
   /// Init this object.
   void init_i (const char* domain_name, const char* type_name);

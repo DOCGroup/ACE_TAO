@@ -30,10 +30,10 @@
 
 class Updates;
 
-class Update_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
+class Updates_StructuredPushConsumer : public TAO_Notify_StructuredPushConsumer
 {
 public:
-  Update_StructuredPushConsumer (Updates *test_client);
+  Updates_StructuredPushConsumer (Updates *test_client);
   // Contructor.
 
   virtual void offer_change (const CosNotification::EventTypeSeq & added,
@@ -49,13 +49,13 @@ protected:
 
 /***************************************************************************/
 
-class Update_StructuredPushSupplier : public TAO_Notify_StructuredPushSupplier
+class Updates_StructuredPushSupplier : public TAO_Notify_StructuredPushSupplier
 {
 public:
-  Update_StructuredPushSupplier (Updates * test_client);
+  Updates_StructuredPushSupplier (Updates * test_client);
   // Constructor.
 
-  virtual ~Update_StructuredPushSupplier ();
+  virtual ~Updates_StructuredPushSupplier ();
   // Destructor.
 
   virtual void subscription_change (
@@ -80,37 +80,45 @@ public:
   Updates (void);
   virtual ~Updates ();
 
-  int parse_args(int argc, char *argv[]) ;
-
   int init (int argc, char *argv [] ACE_ENV_ARG_DECL);
   // initialization.
 
   void run_test (ACE_ENV_SINGLE_ARG_DECL);
   // Run the test.
 
-  void end_test (ACE_ENV_SINGLE_ARG_DECL);
-  // End the test.
+  /// print_event_types
+  void print_event_types (const CosNotification::EventTypeSeq &types);
 
-  int check_results (void);
-  // check if we got the expected results.
+  /// Invoked by Supplier and Consumer when they receive updates
+  void types_changed (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed);
+
+  /// Wait for expected count of updates.
+  void wait_for_updates (int expected_added, int expected_removed);
 
 protected:
   void create_EC (ACE_ENV_SINGLE_ARG_DECL);
   // Create EC
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
-  // we are waiting for 4 events to happen.
+  /// Helper to add types.
+  void add_type (CosNotification::EventTypeSeq& type_seq, const char* type);
 
-  const char* domain_name_;
-  const char* type_name_;
+  // test subscription_change
+  void test_subscription_change (ACE_ENV_SINGLE_ARG_DECL);
 
-  int update_count_;
-  // Number of updates to test.
+  // test offer_change
+  void test_offer_change (ACE_ENV_SINGLE_ARG_DECL);
 
-  int offers_added_, offers_removed_;
-  // Check if these are equal to <update_count_> at the end of the test.
+  /// Reset the counts.
+  void reset_counts (void);
 
-  int subscriptions_added_, subscriptions_removed_;
+  /// Lock to serialize internal state.
+  TAO_SYNCH_MUTEX lock_;
+
+  /// Count of added updates received
+  int added_count_;
+
+  /// Count of removed updates received
+  int removed_count_;
   // Check if these are equal to <update_count_> at the end of the test.
 
   CosNotifyChannelAdmin::EventChannel_var ec_;
@@ -129,8 +137,8 @@ protected:
   // Supplier
 
 private:
-  friend class Update_StructuredPushSupplier;
-  friend class Update_StructuredPushConsumer;
+  friend class Updates_StructuredPushSupplier;
+  friend class Updates_StructuredPushConsumer;
 };
 
 /***************************************************************************/

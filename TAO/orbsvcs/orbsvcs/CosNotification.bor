@@ -98,7 +98,8 @@ OBJFILES = \
         $(OBJDIR)\Notify_Default_Collection_Factory.obj \
         $(OBJDIR)\Notify_Default_EMO_Factory.obj \
         $(OBJDIR)\Notify_Default_POA_Factory.obj \
-        $(OBJDIR)\Notify_EventChannelFactory_i.obj
+        $(OBJDIR)\Notify_EventChannelFactory_i.obj \
+        $(OBJDIR)\Method_Request_Updates.obj
 
 RESOURCE = $(OBJDIR)\CosNotification.res
 

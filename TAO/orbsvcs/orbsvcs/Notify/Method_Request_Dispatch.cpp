@@ -50,20 +50,18 @@ TAO_NS_Method_Request_Dispatch::execute (ACE_ENV_SINGLE_ARG_DECL)
 
   ACE_TRY
     {
-      this->proxy_supplier_->consumer ()->push (this->event_ ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      TAO_NS_Consumer* consumer = this->proxy_supplier_->consumer ();
+
+      if (consumer != 0)
+        {
+          consumer->push (this->event_ ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
-  ACE_CATCH (CORBA::UserException, ue)
+  ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ue,
-                           "TAO_NS_Method_Request_Dispatch::: error sending event. ");
-      //ACE_RE_THROW;
-      }
-  ACE_CATCH (CORBA::SystemException, se)
-    {
-      ACE_PRINT_EXCEPTION (se,
-                           "TAO_NS_Method_Request_Dispatch::: error sending event. ");
-      //ACE_RE_THROW;
+      if (TAO_debug_level > 0)
+        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_NS_Method_Request_Dispatch::: error sending event. \n ");
     }
   ACE_ENDTRY;
 

@@ -132,6 +132,19 @@ void
 TAO_NS_ThreadPool_Task::shutdown (void)
 {
   this->msg_queue_.enqueue (new TAO_NS_Method_Request_Shutdown (this));
+
+  // We can not wait for ourselves to quit
+  if (this->thr_mgr ())
+    {
+      // call this->thr_mgr ()->task () in the main thread will assert ()
+      // fail in ACE_Thread_Manager::thread_desc_self (void) so I get
+      // task this way.
+      ACE_Thread_Descriptor *mydesc = this->thr_mgr ()->thread_descriptor (ACE_OS::thr_self ());
+
+      if (mydesc && mydesc->task () == this)
+        return;
+    }
+
   this->wait ();
   return;
 }

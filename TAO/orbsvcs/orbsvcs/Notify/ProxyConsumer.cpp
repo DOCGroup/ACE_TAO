@@ -64,15 +64,18 @@ TAO_NS_ProxyConsumer::connect (TAO_NS_Supplier *supplier ACE_ENV_ARG_DECL)
     {
       supplier_ = supplier;
 
-      supplier->updates_dispatch_observer (this->event_manager_->updates_dispatch_observer ());
-
       this->parent_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
       ACE_CHECK;
 
       // Inform QoS values.
       supplier_->qos_changed (this->qos_properties_);
 
-      event_manager_->publish (this, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
+      TAO_NS_EventTypeSeq removed;
+
+      this->event_manager_->offer_change (this, this->subscribed_types_, removed ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      this->event_manager_->connect (this ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Increment the global supplier count
@@ -83,7 +86,12 @@ TAO_NS_ProxyConsumer::connect (TAO_NS_Supplier *supplier ACE_ENV_ARG_DECL)
 void
 TAO_NS_ProxyConsumer::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  event_manager_->un_publish (this, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
+  TAO_NS_EventTypeSeq added;
+
+  event_manager_->offer_change (this, added, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->event_manager_->disconnect (this ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Decrement the global supplier count

@@ -47,7 +47,7 @@ TAO_NS_ProxySupplier::connect (TAO_NS_Consumer *consumer ACE_ENV_ARG_DECL)
                    , CosEventChannelAdmin::AlreadyConnected
                    ))
 {
-  const TAO_NS_Atomic_Property_Long& consumer_count = this->admin_properties_->consumers ();
+  TAO_NS_Atomic_Property_Long& consumer_count = this->admin_properties_->consumers ();
   const TAO_NS_Property_Long& max_consumers = this->admin_properties_->max_consumers ();
 
   if (max_consumers != 0 &&
@@ -67,24 +67,37 @@ TAO_NS_ProxySupplier::connect (TAO_NS_Consumer *consumer ACE_ENV_ARG_DECL)
     {
       consumer_ = consumer;
 
-      consumer->event_dispatch_observer (this->event_manager_->event_dispatch_observer ());
-      consumer->updates_dispatch_observer (this->event_manager_->updates_dispatch_observer ());
-
       // Inform QoS values.
       consumer_->qos_changed (this->qos_properties_);
 
       this->parent_->subscribed_types (this->subscribed_types_ ACE_ENV_ARG_PARAMETER); // get the parents subscribed types.
       ACE_CHECK;
 
-      event_manager_->subscribe (this, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
+      TAO_NS_EventTypeSeq removed;
+
+      this->event_manager_->subscription_change (this, this->subscribed_types_, removed ACE_ENV_ARG_PARAMETER);
+
+      this->event_manager_->connect (this ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+
+      // Increment the global consumer count
+      ++consumer_count;
     }
 }
 
 void
 TAO_NS_ProxySupplier::disconnect (ACE_ENV_SINGLE_ARG_DECL)
 {
-  event_manager_->un_subscribe (this, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
+  TAO_NS_EventTypeSeq added;
+
+  this->event_manager_->subscription_change (this, added, this->subscribed_types_ ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
+  this->event_manager_->disconnect (this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Decrement the global consumer count
+  this->admin_properties_->consumers ()--;
 }
 
 void

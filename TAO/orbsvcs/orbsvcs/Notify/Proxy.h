@@ -49,11 +49,8 @@ public:
   /// Check if this event passes the admin and proxy filters.
   CORBA::Boolean check_filters (TAO_NS_Event_var &event ACE_ENV_ARG_DECL);
 
-  /// Subscription type added
-  void type_added (const TAO_NS_EventType& added);
-
-  /// Subscription type removed
-  void type_removed (const TAO_NS_EventType& removed);
+  /// Inform this proxy that the following types are being advertised.
+  void types_changed (const TAO_NS_EventTypeSeq& added, const TAO_NS_EventTypeSeq& removed ACE_ENV_ARG_DECL);
 
   /// Have updates been turned off.
   CORBA::Boolean updates_off (void);
@@ -64,16 +61,16 @@ public:
   /// Access our Peer.
   virtual TAO_NS_Peer* peer (void) = 0;
 
-  /// Obtain Types.
-  virtual CosNotification::EventTypeSeq* obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode ACE_ENV_ARG_DECL)
+  /// Implement the Obtain Types.
+  virtual CosNotification::EventTypeSeq* obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, const TAO_NS_EventTypeSeq& types ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   /// Notification of subscriptions/offers set at the admin.
-  virtual void admin_subscription (const CosNotification::EventTypeSeq & added,
-                                   const CosNotification::EventTypeSeq & removed
-                                   ACE_ENV_ARG_DECL) = 0;
+  virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
+                                    const CosNotification::EventTypeSeq & removed
+                                    ACE_ENV_ARG_DECL) = 0;
 
 
   /// Override, TAO_NS_Object::qos_changed
@@ -84,12 +81,6 @@ protected:
 
   /// Filter Administration
   TAO_NS_FilterAdmin filter_admin_;
-
-  /// Types added.
-  TAO_NS_EventTypeSeq added_;
-
-  /// Types removed.
-  TAO_NS_EventTypeSeq removed_;
 
   /// The types that we're subscribed with the event manager.
   TAO_NS_EventTypeSeq subscribed_types_;
