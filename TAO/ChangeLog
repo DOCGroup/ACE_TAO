@@ -1,3 +1,11 @@
+Sun Aug  4 14:38:14 2002  Priyanka Gontla <pggontla@ece.uci.edu>
+
+        * orbsvcs/examples/PSS/Client.dsp:
+	* orbsvcs/examples/PSS/Server.dsp:
+	* orbsvcs/examples/PSS/Simple_Naming.dsp:
+	* orbsvcs/examples/PSS/PSS.dsw:
+	  Fixed and added the files back to the repo.
+
 Sun Aug  4 13:30:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
