@@ -22,6 +22,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
     use_lite_protocol_ (0),
     use_dotted_decimal_addresses_ (0),
     std_profile_components_ (1),
+    ace_sched_policy_ (ACE_SCHED_OTHER),
     sched_policy_ (THR_SCHED_DEFAULT),
     scope_policy_ (THR_SCOPE_PROCESS),
     single_read_optimization_ (1)

@@ -150,7 +150,7 @@ public:
                                   CORBA::Boolean keep_alive,
                                   CORBA::Boolean dont_route,
                                   CORBA::Boolean no_delay,
-				  CORBA::Boolean enable_network_priority
+                                  CORBA::Boolean enable_network_priority
                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException ));
 
@@ -239,6 +239,23 @@ public:
 
   /// Get the Thread Pool Manager.
   TAO_Thread_Pool_Manager &tp_manager (void);
+
+  /**
+   * This method changes the scheduling policy of the calling thread
+   * to match the scheduling policy specified in the svc.conf file.
+   * The priority of the calling thread will be set to the minimum
+   * priority supported by that scheduling policy.
+   *
+   * This method make sense on those platform (e.g., Linux) where
+   * PTHREAD_SCOPE_SYSTEM is the only scheduling scope supported.  On
+   * other platforms, this method is a no-op since the only way to get
+   * the real-time threading behavior is to setup the
+   * PTHREAD_SCOPE_SYSTEM scheduling scope when a thread is being
+   * created.  On such platforms, one can set the correct scheduling
+   * scope and policy when creating the thread, thus not needing to
+   * use this method.
+   */
+  static int modify_thread_scheduling_policy (CORBA::ORB_ptr orb);
 
 protected:
   /// Protected destructor to enforce proper memory management of this

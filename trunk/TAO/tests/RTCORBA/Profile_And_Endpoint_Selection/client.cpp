@@ -16,6 +16,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+#include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "../check_supported_priorities.cpp"
@@ -133,7 +134,8 @@ private:
 class Worker_Thread : public ACE_Task_Base
 {
 public:
-  Worker_Thread (Client &client,
+  Worker_Thread (ACE_Thread_Manager &thread_manager,
+                 Client &client,
                  test_ptr test,
                  RTCORBA::Current_ptr current,
                  CORBA::Short priority);
@@ -149,11 +151,13 @@ private:
   CORBA::Short priority_;
 };
 
-Worker_Thread::Worker_Thread (Client &client,
+Worker_Thread::Worker_Thread (ACE_Thread_Manager &thread_manager,
+                              Client &client,
                               test_ptr test,
                               RTCORBA::Current_ptr current,
                               CORBA::Short priority)
-  : client_ (client),
+  : ACE_Task_Base (&thread_manager),
+    client_ (client),
     test_ (test::_duplicate (test)),
     current_ (RTCORBA::Current::_duplicate (current)),
     priority_ (priority)
@@ -272,12 +276,15 @@ Client::priority_invocations (int debug
                     Worker_Thread *[priorities.size ()],
                     CORBA::NO_MEMORY ());
 
+  ACE_Thread_Manager thread_manager;
+
   for (i = 0;
        i < priorities.size ();
        ++i)
     {
       ACE_NEW_THROW_EX (workers[i],
-                        Worker_Thread (*this,
+                        Worker_Thread (thread_manager,
+                                       *this,
                                        this->test_.in (),
                                        this->current_.in (),
                                        priorities[i]),
@@ -286,8 +293,7 @@ Client::priority_invocations (int debug
       long flags =
         THR_NEW_LWP |
         THR_JOINABLE |
-        this->orb_->orb_core ()->orb_params ()->scope_policy () |
-        this->orb_->orb_core ()->orb_params ()->sched_policy ();
+        this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
       result =
         workers[i]->activate (flags);
@@ -299,7 +305,7 @@ Client::priority_invocations (int debug
         }
     }
 
-  ACE_Thread_Manager::instance ()->wait ();
+  thread_manager.wait ();
 
   for (i = 0;
        i < priorities.size ();
@@ -393,28 +399,35 @@ Client::reset_policies (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
-int
-main (int argc, char **argv)
+class Task : public ACE_Task_Base
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+public:
 
-  ACE_TRY
+  Task (ACE_Thread_Manager &thread_manager,
+        CORBA::ORB_ptr orb);
+
+  int svc (void);
+
+  CORBA::ORB_var orb_;
+
+};
+
+Task::Task (ACE_Thread_Manager &thread_manager,
+            CORBA::ORB_ptr orb)
+  : ACE_Task_Base (&thread_manager),
+    orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
+int
+Task::svc (void)
+{
+  ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv,
-                         0
-                         ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RTORB"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTORB"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
 
       RTCORBA::RTORB_var rt_orb =
         RTCORBA::RTORB::_narrow (object.in ()
@@ -422,8 +435,8 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("ORBPolicyManager"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("ORBPolicyManager"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyManager_var policy_manager =
@@ -432,8 +445,8 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RTCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTCurrent"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
@@ -445,14 +458,9 @@ main (int argc, char **argv)
                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      int parse_args_result =
-        parse_args (argc, argv);
-      if (parse_args_result != 0)
-        return parse_args_result;
-
       object =
-        orb->string_to_object (ior
-                               ACE_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (ior
+                                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test_var test =
@@ -461,7 +469,7 @@ main (int argc, char **argv)
       ACE_TRY_CHECK;
 
       Client client (test.in (),
-                     orb.in (),
+                     this->orb_.in (),
                      current.in (),
                      rt_orb.in (),
                      policy_manager.in ());
@@ -539,6 +547,77 @@ main (int argc, char **argv)
           test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Error!");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
+}
+
+int
+main (int argc, char **argv)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+
+  ACE_TRY
+    {
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         0
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      int parse_args_result =
+        parse_args (argc, argv);
+      if (parse_args_result != 0)
+        return parse_args_result;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in());
+
+      // Thread Manager for managing task.
+      ACE_Thread_Manager thread_manager;
+
+      // Create task.
+      Task task (thread_manager,
+                 orb.in ());
+
+      // Task activation flags.
+      long flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        orb->orb_core ()->orb_params ()->thread_creation_flags ();
+
+      // Activate task.
+      int result =
+        task.activate (flags);
+      if (result == -1)
+        {
+          if (errno == EPERM)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot create thread with scheduling policy %s\n"
+                                 "because the user does not have the appropriate privileges, terminating program....\n"
+                                 "Check svc.conf options and/or run as root\n",
+                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                2);
+            }
+          else
+            // Unexpected error.
+            ACE_ASSERT (0);
+        }
+
+      // Wait for task to exit.
+      result =
+        thread_manager.wait ();
+      ACE_ASSERT (result != -1);
     }
   ACE_CATCHANY
     {

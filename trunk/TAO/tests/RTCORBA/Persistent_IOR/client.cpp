@@ -2,7 +2,6 @@
 
 #include "ace/Get_Opt.h"
 #include "testC.h"
-#include "../check_supported_priorities.cpp"
 
 static int iterations = 5;
 static int shutdown_server = 0;
@@ -66,10 +65,6 @@ main (int argc, char **argv)
         parse_args (argc, argv);
       if (result != 0)
         return result;
-      
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
 
       CORBA::Object_var object =
         orb->string_to_object (ior

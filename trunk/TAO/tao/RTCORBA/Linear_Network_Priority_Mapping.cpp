@@ -39,29 +39,29 @@ ACE_RCSID(Strategies, Linear_Network_Priority_Mapping, "$Id$")
 
 
 static int dscp [] =
-  {
-    // IPDSFIELD_DSCP_DEFAULT ,
-    IPDSFIELD_DSCP_CS1     ,
-    IPDSFIELD_DSCP_CS2     ,
-    IPDSFIELD_DSCP_CS3     ,
-    IPDSFIELD_DSCP_CS4     ,
-    IPDSFIELD_DSCP_CS5     ,
-    IPDSFIELD_DSCP_CS6     ,
-    IPDSFIELD_DSCP_CS7     ,
-    IPDSFIELD_DSCP_AF11    ,
-    IPDSFIELD_DSCP_AF12    ,
-    IPDSFIELD_DSCP_AF13    ,
-    IPDSFIELD_DSCP_AF21    ,
-    IPDSFIELD_DSCP_AF22    ,
-    IPDSFIELD_DSCP_AF23    ,
-    IPDSFIELD_DSCP_AF31    ,
-    IPDSFIELD_DSCP_AF32    ,
-    IPDSFIELD_DSCP_AF33    ,
-    IPDSFIELD_DSCP_AF41    ,
-    IPDSFIELD_DSCP_AF42    ,
-    IPDSFIELD_DSCP_AF43    ,
-    IPDSFIELD_DSCP_EF      
-  };
+{
+  // IPDSFIELD_DSCP_DEFAULT ,
+  IPDSFIELD_DSCP_CS1     ,
+  IPDSFIELD_DSCP_CS2     ,
+  IPDSFIELD_DSCP_CS3     ,
+  IPDSFIELD_DSCP_CS4     ,
+  IPDSFIELD_DSCP_CS5     ,
+  IPDSFIELD_DSCP_CS6     ,
+  IPDSFIELD_DSCP_CS7     ,
+  IPDSFIELD_DSCP_AF11    ,
+  IPDSFIELD_DSCP_AF12    ,
+  IPDSFIELD_DSCP_AF13    ,
+  IPDSFIELD_DSCP_AF21    ,
+  IPDSFIELD_DSCP_AF22    ,
+  IPDSFIELD_DSCP_AF23    ,
+  IPDSFIELD_DSCP_AF31    ,
+  IPDSFIELD_DSCP_AF32    ,
+  IPDSFIELD_DSCP_AF33    ,
+  IPDSFIELD_DSCP_AF41    ,
+  IPDSFIELD_DSCP_AF42    ,
+  IPDSFIELD_DSCP_AF43    ,
+  IPDSFIELD_DSCP_EF
+};
 
 
 /*
@@ -92,16 +92,18 @@ static const char *dscp_char[]=
 */
 
 TAO_Linear_Network_Priority_Mapping::TAO_Linear_Network_Priority_Mapping (long policy)
-  :policy_ (policy)
+  : policy_ (policy)
 {
-  this->min_ = 0; //ACE_Sched_Params::priority_min (this->policy_);
-  this->max_ = 32767; //ACE_Sched_Params::priority_max (this->policy_);
-  
+  this->min_ = 0;
+  this->max_ = 32767;
+
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-		"Min = %d\n  Max = %d\n",
-		this->min_,
-		this->max_));
+                "Min = %d\n"
+                "Max = %d\n",
+                this->min_,
+                this->max_));
+
   this->increment_ = (((this->max_ - this->min_) + 1) / 20) + 1;
 }
 
@@ -111,23 +113,23 @@ TAO_Linear_Network_Priority_Mapping::~TAO_Linear_Network_Priority_Mapping (void)
 
 CORBA::Boolean
 TAO_Linear_Network_Priority_Mapping::to_network (RTCORBA::Priority corba_priority,
-					 RTCORBA::NetworkPriority &network_priority)
+                                         RTCORBA::NetworkPriority &network_priority)
 {
   network_priority = dscp [(corba_priority - this->min_) / this->increment_];
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-		"TAO_Linear_Network_Priority_Mapping::to_network = %x increment = %d\n",
-		network_priority,
-		this->increment_));
+                "TAO_Linear_Network_Priority_Mapping::to_network = %x increment = %d\n",
+                network_priority,
+                this->increment_));
   return 1;
 }
 
 CORBA::Boolean
 TAO_Linear_Network_Priority_Mapping::to_CORBA (RTCORBA::NetworkPriority /*network_priority*/,
-                                       RTCORBA::Priority &/*corba_priority*/)
+                                               RTCORBA::Priority &/*corba_priority*/)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
-		"TAO_Linear_Network_Priority_Mapping::to_corba\n"));
+                "TAO_Linear_Network_Priority_Mapping::to_corba\n"));
   return 1;
 }

@@ -117,7 +117,7 @@ Test_i::test_method (CORBA::Boolean client_propagated,
 
 void
 Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0
                         ACE_ENV_ARG_PARAMETER);
@@ -365,7 +365,7 @@ main (int argc, char *argv[])
 
       // Make sure we can support multiple priorities that are required
       // for this test.
-      check_supported_priorities (orb.in());
+      check_supported_priorities (orb.in ());
 
       // Get the RTORB.
       CORBA::Object_var object =
@@ -592,8 +592,8 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      "Unexpected exception caught in Banded_Connections test server:");
-      return 1;
+                           "Unexpected exception caught in Banded_Connections test server:");
+      return -1;
     }
   ACE_ENDTRY;
 

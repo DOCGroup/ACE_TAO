@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "../check_supported_priorities.cpp"
 
 ACE_RCSID(Destroy_Thread_Pools, Destroy_Thread_Pools, "$Id$")
 
@@ -100,10 +99,6 @@ main (int argc, char *argv[])
                          ""
                          ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
 
       CORBA::Object_var object =
         orb->resolve_initial_references ("RTORB"
@@ -165,7 +160,7 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception caught:");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 

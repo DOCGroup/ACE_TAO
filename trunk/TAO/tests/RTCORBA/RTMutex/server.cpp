@@ -5,7 +5,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Get_Opt.h"
-#include "../check_supported_priorities.cpp"
 
 static int test_try_lock_flag =
 #if defined (ACE_HAS_MUTEX_TIMEOUTS) && !defined (ACE_HAS_WTHREADS)
@@ -90,7 +89,7 @@ test_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Unexpected exception caught in test_mutex_simple()");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 
@@ -116,7 +115,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
       if (created_flag != 1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "ERROR: Expected named mutex larry to be created, but it wasn't\n"),
-                          1);
+                          -1);
 
       moe_mutex1 = rt_orb->create_named_mutex ("moe",
                                                created_flag
@@ -126,7 +125,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
       if (created_flag != 1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "ERROR: Expected named mutex moe to be created, but it wasn't\n"),
-                          1);
+                          -1);
 
       larry_mutex1->lock (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -145,14 +144,14 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
         if (created_flag != 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Expected named mutex to already be created, but it wasn't\n"),
-                            1);
+                            -1);
 
         // test the pointers...
         if (ACE_reinterpret_cast (void *, larry_mutex1.in ())
             != ACE_reinterpret_cast (void *, larry_mutex2.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
-                            1);
+                            -1);
 
         larry_mutex2->lock (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -173,7 +172,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
             != ACE_reinterpret_cast (void *,larry_mutex3.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
-                            1);
+                            -1);
 
         larry_mutex3->lock (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -199,7 +198,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Unexpected exception caught in test_named_mutex_simple()");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 
@@ -222,7 +221,7 @@ test_named_mutex_exception (RTCORBA::RTORB_ptr rt_orb)
 
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Expected a MutexNotFound exception, but didn't get one.\n"),
-                        1);
+                        -1);
     }
   ACE_CATCH (RTCORBA::RTORB::MutexNotFound, ex)
     {
@@ -232,7 +231,7 @@ test_named_mutex_exception (RTCORBA::RTORB_ptr rt_orb)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Unexpected exception caught in test_named_mutex_exception()");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 
@@ -280,7 +279,7 @@ mutex_test_thread (void *args)
           if (*shared_var != 0)
             {
               ACE_ERROR ((LM_ERROR,
-                         "Expected shared_var to be 0 under the mutex\n"));
+                          "Expected shared_var to be 0 under the mutex\n"));
               *data->error_flag = 1;
             }
 
@@ -366,7 +365,7 @@ test_mutex_threads (RTCORBA::RTORB_ptr rt_orb)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Unexpected exception caught in test_mutex_threads()");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 
@@ -425,7 +424,7 @@ mutex_test_try_lock_thread (void *args)
                       measured.usec()));
 
           if ((measured.sec() == 4 && measured.usec() >= 500000)
-               || (measured.sec() == 5 && measured.usec() <= 500000))
+              || (measured.sec() == 5 && measured.usec() <= 500000))
             /* success */;
           else
             {
@@ -467,7 +466,7 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
       if (!result)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "try_lock failed\n"),
-                          1);
+                          -1);
 
       test_data.mutex = mutex;
       test_data.shared_var = &shared_var;
@@ -492,7 +491,7 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Unexpected exception caught in test_mutex_try_lock()");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 
@@ -512,11 +511,7 @@ main (int argc, char *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
-        return 1;
-        
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
+        return -1;
 
       // RTORB.
       CORBA::Object_var object =
@@ -526,7 +521,7 @@ main (int argc, char *argv[])
                                                            ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
-        return 1;
+        return -1;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Running RTCORBA Mutex unit tests\n"));
@@ -534,18 +529,18 @@ main (int argc, char *argv[])
       if (test_mutex_simple (rt_orb.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "test_mutex_simple failed\n"),
-                          1);
+                          -1);
 
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
       if (test_named_mutex_simple (rt_orb.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "test_named_mutex_simple failed\n"),
-                          1);
+                          -1);
 
       if (test_named_mutex_exception (rt_orb. in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "test_named_mutex_exception failed\n"),
-                          1);
+                          -1);
 #else
       ACE_DEBUG ((LM_DEBUG,
                   "Named RT_Mutex support is not enabled. "
@@ -557,11 +552,11 @@ main (int argc, char *argv[])
       if (test_mutex_threads (rt_orb.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "test_mutex_threads failed\n"),
-                          1);
+                          -1);
       else if (test_mutex_try_lock (rt_orb.in ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "test_mutex_try_lock failed\n"),
-                          1);
+                          -1);
 
 #endif /* ACE_HAS_THREADS */
 
@@ -571,10 +566,9 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Unexpected exception caught in Mutex test server:");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 
   return 0;
 }
-

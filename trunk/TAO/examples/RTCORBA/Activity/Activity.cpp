@@ -50,18 +50,6 @@ Activity::orb (void)
   return orb_.in ();
 }
 
-long
-Activity::scope_policy (void)
-{
-  return thr_scope_policy_;
-}
-
-long
-Activity::sched_policy (void)
-{
-  return thr_sched_policy_;
-}
-
 RTCORBA::Current_ptr
 Activity::current (void)
 {
@@ -81,8 +69,6 @@ Activity::init (int& argc, char *argv []
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->init_sched ();
-
   CORBA::Object_var object =
     orb_->resolve_initial_references ("RootPOA"
                                       ACE_ENV_ARG_PARAMETER);
@@ -99,7 +85,7 @@ Activity::init (int& argc, char *argv []
 
   object =
     orb_->resolve_initial_references ("RTORB"
-                                     ACE_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->rt_orb_ =
@@ -255,7 +241,7 @@ Activity::activate_schedule (ACE_ENV_SINGLE_ARG_DECL)
       name[0].id = CORBA::string_dup (task->job ());
 
       CORBA::Object_var obj =
-                this->naming_->resolve (name ACE_ENV_ARG_PARAMETER);
+        this->naming_->resolve (name ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       Job_var job = Job::_narrow (obj.in () ACE_ENV_ARG_PARAMETER);
@@ -321,18 +307,18 @@ void
 Activity::job_ended (Job_i* /*ended_job*/)
 {
   ACE_DEBUG ((LM_DEBUG, "Active job count = %d\n",active_job_count_));
- {
-   ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
-   --active_job_count_;
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, *state_lock_);
+    --active_job_count_;
   }
 
- this->check_ifexit ();
+  this->check_ifexit ();
 }
 
 void
 Activity::check_ifexit (void)
 {
- // All tasks have finished and all jobs have been shutdown.
+  // All tasks have finished and all jobs have been shutdown.
   if (active_task_count_ == 0 && active_job_count_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Shutdown in progress ...\n"));
@@ -380,69 +366,6 @@ Activity::get_server_priority (CORBA::Object_ptr server
   return priority_policy->server_priority (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-int
-Activity::init_sched (void)
-{
-  thr_sched_policy_ = orb_->orb_core ()->orb_params ()->sched_policy ();
-  thr_scope_policy_ = orb_->orb_core ()->orb_params ()->scope_policy ();
-
-  if (thr_sched_policy_ == THR_SCHED_FIFO)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_FIFO\n"));
-
-      sched_policy_ = ACE_SCHED_FIFO;
-    }
-  else if (thr_sched_policy_ == THR_SCHED_RR)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
-
-      sched_policy_ = ACE_SCHED_RR;
-    }
-  else
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
-
-      sched_policy_ = ACE_SCHED_OTHER;
-    }
-
-  int min_priority = ACE_Sched_Params::priority_min (sched_policy_);
-  int max_priority = ACE_Sched_Params::priority_max (sched_policy_);
-
-  if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
-                  max_priority, min_priority));
-
-      if (max_priority == min_priority)
-        {
-          ACE_DEBUG ((LM_DEBUG,"Detected max_priority == min_priority\n"));
-        }
-    }
-
-  // Set the main thread to min priority...
-  int priority = min_priority;
-
-  if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy_,
-                                              priority,
-                                              ACE_SCOPE_PROCESS)) != 0)
-    {
-      if (ACE_OS::last_error () == EPERM)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t): user is not superuser, "
-                      "test runs in time-shared class\n"));
-        }
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t): sched_params failed\n"),-1);
-                           }
-
-  return 0;
-}
-
 void
 Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
 {
@@ -450,7 +373,7 @@ Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
   ACE_CHECK;
 
   if (this->resolve_naming_service (ACE_ENV_SINGLE_ARG_PARAMETER) == -1)
-          return;
+    return;
   ACE_CHECK;
 
   this->activate_poa_list (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -463,7 +386,6 @@ Activity::run (int argc, char *argv[] ACE_ENV_ARG_DECL)
   ACE_CHECK;
 
   this->create_started_flag_file (argc, argv);
-
 
   orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
