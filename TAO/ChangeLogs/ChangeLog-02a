@@ -1,3 +1,12 @@
+Sat May 26 16:45:04 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* examples/PluggableUDP/tests/SimplePerformance/run_test.pl:
+
+	The previous changelog should have been mentioned
+	examples/PluggableUDP/tests/SimplePerformance/run_test.pl and not
+	examples/PluggableUDP/run_test.pl. Added the new file with correct
+	permissions.
+
 Sat May 26 16:42:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* examples/PluggableUDP/run_test.pl:
