@@ -1,3 +1,10 @@
+Tue Feb 1 14:33:37 2005  Martin Corino  <mcorino@remedy.nl>
+
+	* test/OS_Test.cpp:
+
+	  Excluded rename test for VxWorks since this is only supported for a restricted
+          set of filesystem drivers.
+
 Tue Feb 1 14:30:37 2005  Martin Corino  <mcorino@remedy.nl>
 
 	* ace/OS_NS_time.inl:
