@@ -14,18 +14,7 @@ $cwd = getcwd();
 $ior1file = "$cwd$DIR_SEPARATOR" . "server1.ior";
 $ior2file = "$cwd$DIR_SEPARATOR" . "server2.ior";
 
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }
-}
+ACE::checkForTarget($cwd);
 
 # Make sure the files are gone
 unlink $ior1file;

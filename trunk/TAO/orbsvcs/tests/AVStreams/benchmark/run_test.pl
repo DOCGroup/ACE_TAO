@@ -17,18 +17,7 @@ $status = 0;
 $cwd = getcwd();
 local $nsior = "$cwd$DIR_SEPARATOR" . "ns.ior";
 
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }
-}
+ACE::checkForTarget($cwd);
 
 $name_server_prog = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."Naming_Service".$DIR_SEPARATOR."Naming_Service".$EXE_EXT;
 $server_prog = $EXEPREFIX.".".$DIR_SEPARATOR."server".$EXE_EXT;

@@ -73,6 +73,9 @@ sub run_test
           "fixed_array", "var_array", "typecode", "exception",
           "big_union", "recursive_union", "complex_any");
 
+
+ACE::checkForTarget($cwd);
+
 for ($i = 0; $i <= $#ARGV; $i++)
 {
   SWITCH:
@@ -90,17 +93,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "-i (dii|sii)        -- Changes the type of invocation\n";
       print "-chorus <target>    -- Run tests on chorus target\n";
       exit 0;
-    }
-    if ($ARGV[$i] eq '-chorus') {
-      $i++;
-      if (defined $ARGV[$i]) {
-        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-      }
-      else {
-        print STDERR "The -chorus option requires the hostname of the target\n";
-        exit(1);
-      }
-      last SWITCH;
     }
     if ($ARGV[$i] eq "-n")
     {

@@ -19,18 +19,7 @@ $status = 0;
 unlink $ior;
 unlink $ready_file;
 
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }                     
-}
+ACE::checkForTarget($cwd);
 
 $TS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
                        "..".$DIR_SEPARATOR.

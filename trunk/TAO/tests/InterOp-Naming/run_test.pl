@@ -12,28 +12,15 @@ use Cwd;
 
 $cwd  = getcwd();
 $file = "$cwd$DIR_SEPARATOR" . "test.ior";
-$port = ACE::uniqueid () + 10001;  # This must be > 10000 for Chorus 4.0
-$hostname = "localhost";
+$port = ACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
 
-for($i = 0; $i <= $#ARGV; $i++) {
-  if ($ARGV[$i] eq '-chorus') {
-    $i++;
-    if (defined $ARGV[$i]) {
-      $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-      $hostname = $ARGV[$i];
-    }
-    else {
-      print STDERR "The -chorus option requires the hostname of the target\n";
-      exit(1);
-    }
-  }
-}
+ACE::checkForTarget($cwd);
 
 print STDERR "\n\n==== InitRef test\n";
 
 unlink $file;
 $SV = Process::Create ($EXEPREFIX."INS_test_server".$EXE_EXT,
-                       "-ORBEndpoint iiop://$hostname:$port "
+                       "-ORBEndpoint iiop://$TARGETHOSTNAME:$port "
                        . " -i object_name -o $file");
 
 if (ACE::waitforfile_timed ($file, 5) == -1) {
@@ -45,7 +32,7 @@ if (ACE::waitforfile_timed ($file, 5) == -1) {
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " random_service "
                        ."-ORBInitRef random_service="
-                       ."iioploc://$hostname:$port/object_name");
+                       ."iioploc://$TARGETHOSTNAME:$port/object_name");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -61,7 +48,7 @@ print STDERR "\n\n==== InvalidName test\n";
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " not_a_service "
                        ."-ORBInitRef random_service="
-                       ."iioploc://$hostname:$port/object_name");
+                       ."iioploc://$TARGETHOSTNAME:$port/object_name");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -77,7 +64,7 @@ print STDERR "\n\n==== DefaultInitRef test\n";
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
                        . "-ORBDefaultInitRef"
-                       ." iioploc://$hostname:$port");
+                       ." iioploc://$TARGETHOSTNAME:$port");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -97,9 +84,9 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " random_service "
                        . "-ORBInitRef random_service="
                        ."iioploc://"
-                       ."$hostname:$port1,"
-                       ."$hostname:$port2,"
-                       ."$hostname:$port"
+                       ."$TARGETHOSTNAME:$port1,"
+                       ."$TARGETHOSTNAME:$port2,"
+                       ."$TARGETHOSTNAME:$port"
                        ."/object_name");
 
 $client = $CL->TimedWait (60);
@@ -122,9 +109,9 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        . " -l "
                        . "-ORBInitRef random_service="
                        . "iioploc://"
-                       . "$hostname:$port1,"
-                       . "$hostname:$port2,"
-                       . "$hostname:$port"
+                       . "$TARGETHOSTNAME:$port1,"
+                       . "$TARGETHOSTNAME:$port2,"
+                       . "$TARGETHOSTNAME:$port"
                        . "/object_name");
 
 $client = $CL->TimedWait (60);
@@ -142,9 +129,9 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
                        . "-ORBDefaultInitRef "
                        ."iioploc://"
-                       ."$hostname:$port1,"
-                       ."$hostname:$port2,"
-                       ."$hostname:$port");
+                       ."$TARGETHOSTNAME:$port1,"
+                       ."$TARGETHOSTNAME:$port2,"
+                       ."$TARGETHOSTNAME:$port");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {
@@ -161,7 +148,7 @@ $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
                        " object_name "
                        . "-ORBDefaultInitRef "
                        ."iioploc://"
-                       ."$hostname:$port/");
+                       ."$TARGETHOSTNAME:$port/");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

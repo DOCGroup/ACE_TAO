@@ -21,6 +21,8 @@ $status = 0;
 unlink $server_ior;
 unlink $clerk_ior;
 
+ACE::checkForTarget($cwd);
+
 $server_program = $EXEPREFIX."..$DIR_SEPARATOR..$DIR_SEPARATOR"."Time_Service".$DIR_SEPARATOR."Time_Service_Server".$EXE_EXT;
 $clerk_program = $EXEPREFIX."..$DIR_SEPARATOR..$DIR_SEPARATOR"."Time_Service".$DIR_SEPARATOR."Time_Service_Clerk".$EXE_EXT;
 $client_program = $EXEPREFIX."client".$EXE_EXT;
@@ -128,17 +130,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
     if ($ARGV[$i] eq "use_files")
     {
       time_service_test_using_files ();
-      last SWITCH;
-    }
-    if ($ARGV[$i] eq '-chorus') {
-      $i++;
-      if (defined $ARGV[$i]) {
-        $EXEPREFIX = "rsh $ARGV[$i] arun $cwd$DIR_SEPARATOR";
-      }
-      else {
-        print STDERR "The -chorus option requires the hostname of the target\n";
-        exit(1);
-      }
       last SWITCH;
     }
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
