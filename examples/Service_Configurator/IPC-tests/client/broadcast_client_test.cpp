@@ -11,12 +11,12 @@
 ACE_RCSID(client, broadcast_client_test, "$Id$")
 
 /* Name of the program. */
-static char *program_name;
+static ACE_TCHAR *program_name;
 
 /* Port number to use. */
 static unsigned short broadcast_port_number = ACE_DEFAULT_BROADCAST_PORT;
 
-static void 
+static void
 print_usage_and_die (void)
 {
   ACE_OS::fprintf (stderr, "usage: %s [-p broadcast portnum]\n",
@@ -25,9 +25,9 @@ print_usage_and_die (void)
 }
 
 void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "p:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("p:"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -42,7 +42,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ACE_TCHAR *argv[])
 {
   program_name = argv[0];
   parse_args (argc, argv);

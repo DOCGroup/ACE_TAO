@@ -9,16 +9,16 @@
 
 ACE_RCSID(client, remote_service_directory_test, "$Id$")
 
-// Port number to use. 
+// Port number to use.
 static unsigned short port_number = ACE_DEFAULT_SERVICE_PORT;
 
-// Name of remote host. 
-static const char *host_name = ACE_DEFAULT_SERVER_HOST;
+// Name of remote host.
+static const ACE_TCHAR *host_name = ACE_DEFAULT_SERVER_HOST;
 
 // Trigger a remote reconfiguration.
 static int remote_reconfigure = 0;
 
-static void 
+static void
 print_usage_and_die (void)
 {
   ACE_ERROR ((LM_ERROR,
@@ -27,9 +27,9 @@ print_usage_and_die (void)
 }
 
 void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "p:h:r");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("p:h:r"));
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
@@ -49,9 +49,9 @@ parse_args (int argc, char *argv[])
   }
 }
 
-int 
-main (int argc, char *argv[]) 
-{ 
+int
+main (int argc, ACE_TCHAR *argv[])
+{
   ACE_LOG_MSG->open (argv[0]);
 
   parse_args (argc, argv);
@@ -64,7 +64,7 @@ main (int argc, char *argv[])
   if (con.connect (sc,
                    ACE_INET_Addr (port_number,
                                   host_name)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, 
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n%a",
                        "connect",
                        1),
@@ -76,7 +76,7 @@ main (int argc, char *argv[])
 
   // Send the command.
 
-  if (sc.send_n (buf, 
+  if (sc.send_n (buf,
                  ACE_OS::strlen (buf) + 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n%a",
@@ -95,13 +95,13 @@ main (int argc, char *argv[])
                          "write",
                          1),
                         -1);
-	 
+
   if (sc.close () == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n%a",
                          "close",
                          1),
                         -1);
-    
+
   return 0;
 }
