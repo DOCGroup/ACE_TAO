@@ -13,8 +13,8 @@ Options::parse_args (int argc, char *argv[])
 
   ACE_LOG_MSG->open (argv[0]);
 
-  this->hostname_ = "tao.cs.wustl.edu";
-  this->uri_ = "index.html";//"~kirthika/auto_purge_client.html";
+  this->hostname_ = "www.cs.wustl.edu";
+  this->uri_ = "index.html";
   this->recurse_ = 0;
   this->debug_ = 0;
   this->timeout_.sec (ACE_DEFAULT_TIMEOUT);
@@ -22,9 +22,9 @@ Options::parse_args (int argc, char *argv[])
   this->verbose_ = 0;
   this->order_ = "FIFO";
   this->port_no_ = ACE_DEFAULT_HTTP_PORT;
-  this->handle_limit_ = -1;
+  
   // The default is to make this limit as large as possible.
-  //  int handle_limit = 10;
+  this->handle_limit_ = -1;
 
   for (int c;
        (c = getopt ()) != EOF;
@@ -88,26 +88,6 @@ Options::parse_args (int argc, char *argv[])
         /* NOTREACHED */
       }
 
-  // Don't bother checking the return value since this is just a
-  // "hint" and isn't portable to all OS platforms.
-  
-  //   ACE::set_handle_limit (handle_limit);
-  /* ACE_DEBUG ((LM_DEBUG, "Changing rlimit\n"));
-  struct rlimit rl;
-  if (getrlimit (RLIMIT_NOFILE, &rl) == -1)
-    cout << "getrlimit: errno = "<< errno <<endl;
-  
-  rl.rlim_cur = handle_limit;
-  if (setrlimit (RLIMIT_NOFILE, &rl) == -1)
-   cout << "setrlimit: errno = "<< errno <<endl;
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p \n"),
-                       -1);
-  if (getrlimit (RLIMIT_NOFILE, &rl) == -1)
-    cout << "getrlimit: errno = "<< errno <<endl;
-  else 
-    cout << "limit "<< rl.rlim_cur<<endl;
-  ACE_DEBUG ((LM_DEBUG, "Changed rlimit\n")); */
   return 0;
 }
 
