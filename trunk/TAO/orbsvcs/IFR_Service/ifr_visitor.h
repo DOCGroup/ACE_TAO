@@ -23,12 +23,13 @@
 #include "ast_visitor.h"
 #include "be_extern.h"
 #include "tao/Environment.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ifr_visitor : public ast_visitor
+class TAO_IFR_Service_Export ifr_visitor : public ast_visitor
 {
   //
   // = TITLE

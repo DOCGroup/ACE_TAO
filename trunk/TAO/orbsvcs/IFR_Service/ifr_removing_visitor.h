@@ -21,12 +21,13 @@
 #define TAO_IFR_REMOVING_VISITOR_H
 
 #include "ifr_visitor.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ifr_removing_visitor : public ifr_visitor
+class TAO_IFR_Service_Export ifr_removing_visitor : public ifr_visitor
 {
   //
   // = TITLE

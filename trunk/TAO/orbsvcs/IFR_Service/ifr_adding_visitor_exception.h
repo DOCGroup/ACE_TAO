@@ -21,12 +21,13 @@
 #define TAO_IFR_ADDING_VISITOR_EXCEPTION_H
 
 #include "ifr_adding_visitor.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class ifr_adding_visitor_exception : public ifr_adding_visitor
+class TAO_IFR_Service_Export ifr_adding_visitor_exception : public ifr_adding_visitor
 {
   //
   // = TITLE
