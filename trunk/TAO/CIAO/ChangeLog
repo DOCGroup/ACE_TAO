@@ -1,3 +1,37 @@
+Sat Mar  5 17:10:42 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DAnCE/ciao/CCM_Core.mpc:
+        * DAnCE/ciao/Container_Base.h:
+        * DAnCE/ciao/Context_Impl_T.cpp:
+        * DAnCE/ciao/Deployment_Core.idl:
+        * DAnCE/ciao/Dynamic_Component_Activator.cpp:
+        * DAnCE/ciao/Dynamic_Component_Activator.h:
+        * DAnCE/ciao/Dynamic_Component_Servant_Base.cpp:
+        * DAnCE/ciao/Dynamic_Component_Servant_Base.h:
+        * DAnCE/ciao/Dynamic_Component_Servant_T.cpp:
+        * DAnCE/ciao/Dynamic_Component_Servant_T.h:
+        * DAnCE/ciao/Home_Servant_Impl_Base.h:
+        * DAnCE/ciao/Home_Servant_Impl_T.cpp:
+        * DAnCE/ciao/Home_Servant_Impl_T.h:
+        * DAnCE/ciao/Port_Activator_T.cpp:
+        * DAnCE/ciao/Servant_Activator.cpp:
+        * DAnCE/ciao/Servant_Activator.h:
+        * DAnCE/ciao/Servant_Impl_Base.cpp:
+        * DAnCE/ciao/Servant_Impl_Base.h:
+        * DAnCE/ciao/Servant_Impl_T.cpp:
+        * DAnCE/ciao/Servant_Impl_T.h:
+        * DAnCE/ciao/Swapping_Container.cpp:
+        * DAnCE/ciao/Swapping_Container.h:
+        * DAnCE/ciao/Swapping_Container.inl:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_Base.cpp:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_Base.h:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.cpp:
+        * DAnCE/ciao/Swapping_Servant_Home_Impl_T.h:
+
+          Added changes to allow the CIAO infrastructure
+          to dynamically replace or swap component
+          implementations.
+
 Fri Mar  4 17:13:16 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Hello_Base/Hello_Base.idl:
@@ -5,7 +39,7 @@ Fri Mar  4 17:13:16 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/Hello/Receiver/Receiver.idl:
         * examples/Hello/Receiver/Receiver.mpc:
         * examples/Hello/Sender/Sender.mpc:
-        
+
           Cosmetic changes to IDL files and changes to MPC files to
           eliminate unnecessary files in a given project and bring
           in missing export header files.
@@ -14,24 +48,24 @@ Thu Mar  3 10:31:10 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecImplGenerator.cpp:
         * CIDLC/ExecImplHeaderGenerator.cpp:
-        
+
           - Added support for .cdl file extension similar to
             support already in the servant generators.
-            
+
           - Fixed bug in export include generation.
-          
+
           Thanks to Matt Emerson <mjemerson@isis.vanderbilt.edu>,
           Ming Xiong <xiongm@isi.vanderbilt.edu>, James Hill
           <jhill@isis.vanderbilt.edu> and Stoyan Paunov
           <spaunov@isis.vanderbilt.edu> for reporting these
           problems.
-            
+
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           - Replaced remaining instances of generation of 'new' with
             'ACE_NEW' and changed code generation to reduce line
             lengths.
-            
+
           - Changed code generation of Cookie_var for multiplex
             receptacles to pass a Cookie* to ACE_NEW, then
             assign to the _var, instead of passing in _var.out(),
@@ -54,7 +88,7 @@ Mon Mar 03 09:37:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 	* DAnCE/examples/Hello/step-by-step.html
 
 	  Fixed this page to reflex the above change.
-	  
+
 Mon Mar 03 08:59:23 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* DAnCE/examples/Hello/Hello_Base/Hello_Base.mpc
