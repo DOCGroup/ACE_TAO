@@ -1,5 +1,8 @@
 // $Id$
+
 #include "Collocation_Tester.h"
+
+ACE_RCSID (tests, Collocation_Tester, "$Id$")
 
 const char *Quote::top = "Ciao";
 const char *Quote::left = "Hola";
@@ -56,9 +59,9 @@ Collocation_Tester::test_top (CORBA::Environment &ACE_TRY_ENV)
               ACE_TEXT ("\n\nCalling all method supported by the Interface Top\n\n")));
 
   CORBA::String_var msg = top->top_quote (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (0);
 
-  failure += this->match_answer (Quote.top, msg.in (), "top_quote");
+  failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
   if (failure)
     ACE_ERROR ((LM_DEBUG,
@@ -91,14 +94,14 @@ Collocation_Tester::test_right (CORBA::Environment &ACE_TRY_ENV)
               ACE_TEXT ("\n\nCalling all method supported by the Interface Right\n\n")));
 
   CORBA::String_var msg = right->top_quote (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (1);
 
-  failure += this->match_answer (Quote.top, msg.in (), "top_quote");
+  failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
   msg = right->right_quote (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (1);
 
-  failure += this->match_answer (Quote.right, msg.in (), "right_quote");
+  failure += this->match_answer (Quote::right, msg.in (), "right_quote");
 
   if (failure)
     ACE_ERROR ((LM_DEBUG,
@@ -133,14 +136,14 @@ Collocation_Tester::test_left (CORBA::Environment &ACE_TRY_ENV)
               ACE_TEXT ("\n\nCalling all method supported by the Interface Left\n\n")));
 
   CORBA::String_var msg = left->top_quote (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (1);
 
-  failure += this->match_answer (Quote.top, msg.in (), "top_quote");
+  failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
   msg = left->left_quote (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(1);
 
-  failure += this->match_answer (Quote.left, msg.in (), "left_quote");
+  failure += this->match_answer (Quote::left, msg.in (), "left_quote");
 
   if (failure)
     ACE_ERROR ((LM_DEBUG,
@@ -175,22 +178,22 @@ Collocation_Tester::test_bottom (CORBA::Environment &ACE_TRY_ENV)
               ACE_TEXT ("\n\nCalling all method supported by the Interface Bottom\n\n")));
 
   CORBA::String_var msg = bottom->top_quote (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(1);
 
   failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
   msg = bottom->left_quote (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (1);
 
   failure += this->match_answer (Quote::left, msg.in (), "left_quote");
 
   msg = bottom->right_quote (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(1);
 
   failure += this->match_answer (Quote::right, msg.in (), "right_quote");
 
   msg = bottom->bottom_quote (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(1);
 
   failure += this->match_answer (Quote::bottom, msg.in (), "bottom_quote");
 

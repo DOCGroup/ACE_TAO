@@ -2,6 +2,8 @@
 
 #include "Multiple_Impl.h"
 
+ACE_RCSID (tests, server, "$Id$")
+
 int main (int argc, char *argv[])
 {
 

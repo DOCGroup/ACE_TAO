@@ -26,7 +26,7 @@ BIN = client server
 
 SRC = $(addsuffix .cpp, $(MISC_TEST_SRC) $(BIN))
 
-CLIENT_OBJ = $(addsuffix .o, $(CLIENT_SRC)) MultipleC.o
+CLIENT_OBJ = $(addsuffix .o, $(CLIENT_SRC)) $(IDL_SRC:.cpp=.o)
 SERVER_OBJ = $(addsuffix .o, $(SERVER_SRC)) $(IDL_SRC:.cpp=.o)
 
 TAO_IDLFLAGS += -Ge 1 -Gd
