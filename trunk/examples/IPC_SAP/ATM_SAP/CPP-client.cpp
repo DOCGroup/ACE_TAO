@@ -115,6 +115,12 @@ int main (int argc, char *argv[])
 		    remote_addr.addr_to_string ()));
     }
 
+  ACE_UINT16 vpi, vci;
+  atm_stream.get_vpi_vci(vpi, vci);
+  ACE_DEBUG ((LM_DEBUG,
+              "connected to VPI %d VCI %d\n",
+              vpi, vci));
+
   // Send data to server (correctly handles "incomplete writes").
   
   for (int r_bytes;
