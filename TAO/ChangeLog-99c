@@ -1,3 +1,8 @@
+Mon Jul 26 10:42:26 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* orbsvcs/examples/CosEC/Factory: Added a README file.
+	  Thanks to Pradeep Gore for contributing this.
+
 Fri Jul 23 17:54:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Acceptor_Impl.cpp (TAO_Accept_Strategy): Added a new accept
