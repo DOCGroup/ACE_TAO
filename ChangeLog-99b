@@ -1,3 +1,19 @@
+1999-08-31  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	  Added following files for the ACE QOS test.
+	
+	* ACE_wrappers/examples/QOS/server.cpp
+	* ACE_wrappers/examples/QOS/client.cpp
+	* ACE_wrappers/examples/QOS/QOS_Event_Handler.cpp
+	* ACE_wrappers/examples/QOS/QosEvent.h
+	* ACE_wrappers/examples/QOS/Read_Handler.h
+	* ACE_wrappers/examples/QOS/QOS_Event_Handler.h
+	* ACE_wrappers/examples/QOS/Read_Handler.cpp
+	* ACE_wrappers/examples/QOS/QOS.dsw
+	* ACE_wrappers/examples/QOS/client.dsp
+	* ACE_wrappers/examples/QOS/server.dsp
+
+	
 Tue Aug 31 14:47:54 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Added a note on building egcs with the
