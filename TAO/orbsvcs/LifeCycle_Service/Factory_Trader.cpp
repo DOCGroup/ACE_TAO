@@ -27,8 +27,8 @@ const char * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID = "IDL:CosL
 
 
 Factory_Trader::Factory_Trader ()
-  : trading_Components_ptr_ (0), 
-    trader_ptr_(0), 
+  : trader_ptr_(0),
+    trading_Components_ptr_ (0), 
     support_Attributes_ptr_(0)
 { 
   TAO_TRY
@@ -90,15 +90,14 @@ Factory_Trader::add_type ()
       propStructSeq[2] = propStruct_description;
             
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq superTypeSeq;
-      CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnationNumber;
 
       // Add the new type
-      incarnationNumber = this->repository_.add_type (CORBA::string_dup("Factory"),
-						      GENERIC_FACTORY_INTERFACE_REPOSITORY_ID,
-						      propStructSeq,
-						      superTypeSeq,
-						      TAO_TRY_ENV);
-      TAO_CHECK_ENV;      
+      this->repository_.add_type (CORBA::string_dup("Factory"),
+                                  GENERIC_FACTORY_INTERFACE_REPOSITORY_ID,
+                                  propStructSeq,
+                                  superTypeSeq,
+                                  TAO_TRY_ENV);
+      TAO_CHECK_ENV;
     }
   TAO_CATCH (CORBA::UserException, userex)
     {
