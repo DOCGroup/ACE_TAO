@@ -1,3 +1,11 @@
+Wed Dec 18 20:37:06 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/handcrafted/Hello/run_test.pl: Added a script to
+	  automate running this stuff.
+
+	* examples/handcrafted/Hello/README: Replaced the reference to
+	  CIAO_single_com_server to Simple_Component_Server.
+
 Tue Dec 17 23:30:59 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/CIAO_single_com_server/*:
