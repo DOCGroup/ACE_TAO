@@ -1,5 +1,11 @@
 Sat Jan 25 11:34:56 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
+	* ace/SOCK_Connector.cpp (complete): Added a sleep of zero seconds
+	  which allows non-blocking connects to work properly on NT.
+
+	* ace/config-winnt-4.0-msvc4.x.h and config-win32-msvc4.x.h: 
+	  Added ACE_HAS_BROKEN_NON_BLOCKING_CONNECTS.
+
 	* ace/OS.i: Moved out all code for Time_Value from #if region. It
 	  is common to all.
 
@@ -7,6 +13,9 @@ Sat Jan 25 11:34:56 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 	  bitching about destructors in exception handling code.
 
 	* ace/ace.{mak,mdp}: Removed Time_Value.cpp from project.
+
+	* tests/tests.{mak,mdp}: Corrected the creation of SOCK_Test and
+	  Message_Blob_Test executables and temporary files.
 
 Fri Jan 24 09:01:50 1997  David L. Levine  <levine@cs.wustl.edu>
 
