@@ -1,3 +1,20 @@
+Fri Jul 25 17:32:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/os_dlfcn.h:
+          Define ACE_DEFAULT_SHLIB_MODE to be RTLD_LAZY|RTLD_GLOBAL
+          when ACE_HAS_SVR4_DYNAMIC_LINKING, not just for Linux.
+          Thanks to Krishnakumar B <kitty@cse.wustl.edu> for suggesting
+          this.
+
+        * include/makeinclude/platform_macosx.GNU:  Add with_ld=macosx.
+        * include/makeinclude/plafform_g++_common.GNU:
+          Don't add "-Wl,-E" to LDFLAGS when with_ld=macosx.  Thanks to
+          John Michael Zorko <j.zorko@att.net> pointing out the problem
+          and supplying a patch.  Also, thanks to Craig Rodrigues
+          <crodrigu@bbn.com> for suggesting we set the default for
+          with_ld=gnu and only add "-Wl,-E", which id gnu linker
+          specific, if we're using the gnu version of ld.
+
 Fri Jul 25 11:37:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:

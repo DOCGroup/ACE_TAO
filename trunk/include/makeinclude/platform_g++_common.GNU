@@ -43,6 +43,10 @@ ifeq ($(templates),explicit)
   CPPFLAGS += -DACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
 endif
 
+ifeq (,$(with_ld))
+ with_ld = gnu
+endif
+
 # The correct flags to pass to the linker for ELF dynamic shared library
 # versioning
 #
@@ -62,7 +66,9 @@ endif
 # for shared libraries. (see http://gcc.gnu.org/faq.html#dso)
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
-    LDFLAGS += -Wl,-E
+    ifeq ($(with_ld), gnu)
+      LDFLAGS += -Wl,-E
+    endif # macosx
   endif # static_libs_only
 endif # shared_libs
 
