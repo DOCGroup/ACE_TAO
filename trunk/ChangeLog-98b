@@ -1,3 +1,10 @@
+Tue Jun 30 00:07:39 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* examples/Service_Configurator/Misc/main.dsp: Added macro
+ 	  definition ACE_SVC_HAS_DLL=0 in this project.  DLL linkage is
+ 	  not used in this example (yet.)  Thanks to Joe Covalesky
+ 	  <joe@nowsol.com> for noticing this.
+
 Mon Jun 29 21:16:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (invoke): wrapped final return with ACE_NOTREACHED.
