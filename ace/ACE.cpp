@@ -1529,17 +1529,25 @@ ACE::handle_timed_complete (ACE_HANDLE h,
       // ACE_NONBLOCK flag has not been turned off .
       n = ACE::recv (h, &dummy, 1, MSG_PEEK);
 
+      // If no data was read/peeked at, check to see if it's because of a
+      // non-connected socket (and therefore an error) or there's just no
+      // data yet.
       if (n <= 0)
         {
           if (n == 0)
-            errno = ECONNREFUSED;
-          return ACE_INVALID_HANDLE;
+	    {
+	      errno = ECONNREFUSED;
+	      h = ACE_INVALID_HANDLE;
+	    }
+	  else if (errno != EWOULDBLOCK && errno != EAGAIN)
+	    h = ACE_INVALID_HANDLE;
         }
     }
 
-  // 1. The HANDLE is ready for writing or 2. recv() returned that
-  // there are data to be read, which indicates the connection was
-  // successfully established.
+  // 1. The HANDLE is ready for writing and doesn't need to be checked or
+  // 2. recv() returned an indication of the state of the socket - if there is
+  // either data present, or a recv is legit but there's no data yet,
+  // the connection was successfully established.
   return h;
 }
 
