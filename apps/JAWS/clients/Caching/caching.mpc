@@ -2,6 +2,8 @@
 // $Id$
 
 project(http_client) : aceexe {
+  requires += ace_filecache
+
   Source_Files {
     http_handler.cpp
     http_client.cpp
