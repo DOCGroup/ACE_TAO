@@ -196,6 +196,15 @@ IIOP::Profile::Profile (const char *h,
   (void) this->set (h, p, key, &addr);
 }
 
+IIOP::Profile::Profile (const char *h,
+                        const CORBA::UShort p,
+                        const TAO_opaque &key,
+                        const ACE_INET_Addr &addr)
+  : host (0)
+{
+  (void) this->set (h, p, key, &addr);
+}
+
 IIOP::Profile::Profile (const ACE_INET_Addr &addr,
                         const char *key)
   : host (0)
@@ -211,8 +220,8 @@ IIOP::Profile::Profile (const ACE_INET_Addr &addr,
 }
 
 
-IIOP::Profile
-&IIOP::Profile::operator = (const IIOP::Profile &src)
+IIOP::Profile &
+IIOP::Profile::operator= (const IIOP::Profile &src)
 {
   this->set (src.host,
              src.port,
