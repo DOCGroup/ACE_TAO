@@ -1,4 +1,10 @@
+Sat Mar 10 23:15:10 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* bin/auto_run_tests.lst:
+	  Fixed name of Crashed_Callback test
+
 Sat Mar 10 19:28:30 PST 2001 Mayur Deshpande <mayur@ics.uci.edu>
+
         * include/makeinclude/platform_qnx_rtp_gcc.GNU:
           Fixes to enable debugging on QNX without ACE crashing.
           Thanks to Andy Olson for the suggestions.
