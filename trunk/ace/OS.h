@@ -404,7 +404,7 @@ private:
 // It just evaporated ;-) Not pleasant.
 # define ACE_UNIMPLEMENTED_FUNC(f)
 #else
-# define ACE_UNIMPLEMENTED_FUNC(f) f
+# define ACE_UNIMPLEMENTED_FUNC(f) f;
 #endif /* ACE_REQUIRES_FUNC_DEFINITIONS */
 
 // Easy way to designate that a class is used as a pseudo-namespace.

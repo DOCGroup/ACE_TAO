@@ -195,8 +195,8 @@ private:
   // Pointer to the freelist of <ACE_Timer_Node_T<TYPE>>.
 
   // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &));
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK> &))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
