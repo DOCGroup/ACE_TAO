@@ -18,4 +18,20 @@
 
 #define ACE_HAS_WINNT4 0
 #define ACE_HAS_WINSOCK2 0
-#include "ace/config-win32.h"
+#define ACE_LACKS_MMAP
+#define ACE_LACKS_MPROTECT
+#define ACE_LACKS_MSYNC
+
+// There's no host table, by default. So using "localhost" won't work.
+// If your system does have the ability to use "localhost" and you want to,
+// define it before including this file.
+#if !defined (ACE_LOCALHOST)
+# define ACE_LOCALHOST "127.0.0.1"
+#endif /* ACE_LOCALHOST */
+
+// Don't know how to get the page size at execution time. This is most likely
+// the correct value.
+#define ACE_PAGE_SIZE 4096
+
+#include /**/ "ace/config-win32.h"
+#include <embkern.h>
