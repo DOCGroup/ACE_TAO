@@ -4,6 +4,11 @@ Tue Jul 13 04:27:19 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	  Removed unused variable.
 
+Mon Jul 12 11:06:54 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
+
+	* CCF/Documentation/Build.html: Fixed a few URLs. Thanks to
+	  Matthew Gillen <mgillen@bbn.com> for reporting this.
+
 Sun Jul 11 06:07:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/XML_Helpers/Assembly_Handlers.inl:
