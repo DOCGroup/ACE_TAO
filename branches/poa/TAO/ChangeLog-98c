@@ -1,3 +1,10 @@
+Wed Jan  7 15:09:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/fe/y.tab.cpp: 
+	  This is the actual file generated from idl.yy, thanks to the
+	  "clone" scheme for building ACE it was lost in the previous
+	  commits.
+
 Wed Jan  7 14:17:14 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orbobj.{h,cpp} (key_to_object): Changed signature so that
