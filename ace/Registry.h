@@ -55,7 +55,8 @@ public:
     Istring id_;
     Istring kind_;
 
-    int operator== (const Name_Component &rhs);
+    int operator== (const Name_Component &rhs) const;
+    int operator!= (const Name_Component &rhs) const;
     // Comparison
   };
   // The <id_> field is used,
@@ -91,7 +92,8 @@ public:
     // Constructor
     // (String version)
 
-    int operator== (const Binding &rhs);
+    int operator== (const Binding &rhs) const;
+    int operator!= (const Binding &rhs) const;
     // Comparison
 
     void name (Name &name);

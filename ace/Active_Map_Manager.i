@@ -37,6 +37,12 @@ ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs) c
     this->generation_ == rhs.generation_;
 }
 
+ACE_INLINE int 
+ACE_Active_Map_Manager_Key::operator!= (const ACE_Active_Map_Manager_Key &rhs) const
+{
+  return !this->operator== (rhs);
+}
+
 ACE_INLINE void 
 ACE_Active_Map_Manager_Key::index (u_long i)
 {

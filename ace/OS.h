@@ -4086,8 +4086,8 @@ public:
   void handle (ACE_hthread_t);
 
   // != Comparison operator.
-  int operator == (const ACE_Thread_ID &);
-  int operator != (const ACE_Thread_ID &);
+  int operator== (const ACE_Thread_ID &) const;
+  int operator!= (const ACE_Thread_ID &) const;
 
 private:
   ACE_thread_t thread_id_;
@@ -5822,10 +5822,10 @@ public:
   ACE_TSS_Ref (void);
   // Default constructor
 
-  int operator== (const ACE_TSS_Ref &);
+  int operator== (const ACE_TSS_Ref &) const;
   // Check for equality.
 
-  int operator!= (const ACE_TSS_Ref &);
+  int operator!= (const ACE_TSS_Ref &) const;
   // Check for inequality.
 
 // private:
