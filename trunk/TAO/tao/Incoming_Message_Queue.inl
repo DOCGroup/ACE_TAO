@@ -26,11 +26,25 @@ TAO_Queued_Data::release (TAO_Queued_Data *qd)
   delete qd;
 }
 
-/*static*/
+
 ACE_INLINE TAO_Queued_Data *
 TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
 {
-  // @@TODO: Use the global pool for allocationg...
+  // Check to see if the underlying block is on the stack. If not it
+  // is fine. If the datablock is on stack, try to make a copy of that
+  // befor doing a duplicate.
+  // @@ todo: Theoretically this should be within the Message Block,
+  // but we dont have much scope to do this in that mess. Probably in
+  // the next stage of MB rewrite we should be okay
+  ACE_Message_Block::Message_Flags fl =
+    sqd.msg_block_->self_flags ();
+
+  if (ACE_BIT_ENABLED (fl,
+                       ACE_Message_Block::DONT_DELETE))
+    (void) TAO_Queued_Data::replace_data_block (*sqd.msg_block_);
+
+
+  // @@TODO: Use the pool for allocation...
   TAO_Queued_Data *qd = 0;
   ACE_NEW_RETURN (qd,
                   TAO_Queued_Data (sqd),

@@ -1,3 +1,18 @@
+Mon Apr 15 22:19:31 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Incoming_Message_Queue.h:
+	* tao/Incoming_Message_Queue.cpp:
+	* tao/Incoming_Message_Queue.inl: Added a check in
+	  TAO_Queued_Data::duplicate ()  to see if the incoming data block
+	  was off the stack or heap. If the data_block is off the stack,
+	  we carefully clone the datablock and then created a new
+	  TAO_Queued_Data pointer. This problem showed up along one of the
+	  code paths handling fragmented messages. Once we have the new
+	  design implemented these problem shouldnt show up.
+
+	  Thanks to Andy Guy <andrew.guy@monis.com> for reporting this
+	  problem. 
+
 Mon Apr 15 16:58:40 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (init_new_naming):
