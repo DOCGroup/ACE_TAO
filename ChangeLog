@@ -1,3 +1,11 @@
+Tue Jul 22 15:12:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/iosfwd.h:
+          Added #include "ace/streams.h" if __APPLE_CC__ is defined.  This
+          fixes problems with gperf hanging on MAC OSX.  Thanks to John
+          Michael Zorko <j.zorko@att.net> for reporting the problem and
+          supplying the patch.
+
 Tue Jul 22 14:59:59 UTC 2003 Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/platform_linux.GNU:
