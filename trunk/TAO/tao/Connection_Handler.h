@@ -99,6 +99,9 @@ public:
   /// Purge our entry from the Connection Cache
   int purge_entry (void);
 
+  /// Mark an entry unusable
+  void mark_invalid (void);
+
 protected:
 
   /// Return our TAO_ORB_Core pointer
