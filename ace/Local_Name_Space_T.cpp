@@ -466,17 +466,17 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::create_manager_i (void)
 
 
 template <ACE_MEM_POOL_1, class LOCK> int 
-ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names (ACE_PWSTRING_SET &set,
-							const ACE_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names_i (ACE_PWSTRING_SET &set,
+							  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_names");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
-
+  
   MAP_ITERATOR map_iterator (*this->name_space_map_);
   MAP_ENTRY *map_entry;
-
+  
   int result = 1;
-
+  
   for (map_entry = 0;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance())
@@ -484,7 +484,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names (ACE_PWSTRING_SET &set,
       if (map_entry->ext_id_.strstr (pattern) != -1)
 	{
 	  ACE_WString entry (map_entry->ext_id_ );
-
+	  
 	  if (set.insert (entry) == -1)
 	    {
 	      result = -1;
@@ -499,8 +499,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names (ACE_PWSTRING_SET &set,
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
-ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_values (ACE_PWSTRING_SET &set,
-						   const ACE_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_values_i (ACE_PWSTRING_SET &set,
+							   const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_values");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
@@ -532,8 +532,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_values (ACE_PWSTRING_SET &set,
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
-ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_types (ACE_PWSTRING_SET &set,
-							const ACE_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_types_i (ACE_PWSTRING_SET &set,
+							  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_types");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
@@ -556,26 +556,26 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_types (ACE_PWSTRING_SET &set,
 #else /* If we don't have regular expressions just use the pattern directly. */
   compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
-
+  
   int result = 1;
-
+  
   for (map_entry = 0;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance ())
     {
       // Get the type
       const char *type = map_entry->int_id_.type ();
-
+      
       if (ACE_OS::strcmp ("", pattern_rep) == 0 // Everything matches the wildcard.
 #if defined (ACE_HAS_REGEX)
 	  || ACE_OS::step (type, compiled_regexp) != 0)
 #else /* If we don't have regular expressions just use strstr() for substring matching. */
-	  || ACE_OS::strstr (type, compiled_regexp) != 0)
+	|| ACE_OS::strstr (type, compiled_regexp) != 0)
 #endif /* ACE_HAS_REGEX */
 
         {
           ACE_WString entry (type);
-
+	  
 	  if (set.insert (entry) == -1)
 	    {
 	      result = -1;
@@ -594,8 +594,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_types (ACE_PWSTRING_SET &set,
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
-ACE_Local_Name_Space <ACE_MEM_POOL_2, LOCK>::list_name_entries (ACE_BINDING_SET &set,
-                                                          const ACE_WString &pattern)
+ACE_Local_Name_Space <ACE_MEM_POOL_2, LOCK>::list_name_entries_i (ACE_BINDING_SET &set,
+                                                                  const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_name_entries");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
@@ -622,8 +622,8 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, LOCK>::list_name_entries (ACE_BINDING_SET 
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
-ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_value_entries (ACE_BINDING_SET &set,
-					                  const ACE_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_value_entries_i (ACE_BINDING_SET &set,
+					                          const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_value_entries");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
@@ -649,8 +649,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_value_entries (ACE_BINDING_SET 
 }
 
 template <ACE_MEM_POOL_1, class LOCK> int 
-ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_type_entries (ACE_BINDING_SET &set,
-							 const ACE_WString &pattern)
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_type_entries_i (ACE_BINDING_SET &set,
+							         const ACE_WString &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_type_entries");
   ACE_READ_GUARD_RETURN (ACE_RW_Process_Mutex, ace_mon, *this->lock_, -1);
@@ -704,7 +704,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_type_entries (ACE_BINDING_SET &
 }
 
 template <ACE_MEM_POOL_1, class LOCK> void
-ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump_i (void) const
 {
   ACE_TRACE ("ACE_Local_Name_Space::dump");
 
@@ -729,6 +729,120 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_names (ACE_PWSTRING_SET &set,
+							const ACE_WString &pattern)
+{
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  ACE_SEH_TRY 
+    {
+      return this->list_names_i (set, pattern);
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
+}
+
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_values (ACE_PWSTRING_SET &set,
+						         const ACE_WString &pattern)
+{
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  ACE_SEH_TRY 
+    {
+      return this->list_values_i (set, pattern);
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
+}
+
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_types (ACE_PWSTRING_SET &set,
+							const ACE_WString &pattern)
+{
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  ACE_SEH_TRY 
+    {
+      return this->list_types_i (set, pattern);
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
+}
+
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space <ACE_MEM_POOL_2, LOCK>::list_name_entries (ACE_BINDING_SET &set,
+								const ACE_WString &pattern)
+{
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  ACE_SEH_TRY 
+    {
+      return this->list_name_entries_i (set, pattern);
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
+}
+
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_value_entries (ACE_BINDING_SET &set,
+								const ACE_WString &pattern)
+{
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  ACE_SEH_TRY 
+    {
+      return this->list_value_entries_i (set, pattern);
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
+}
+
+template <ACE_MEM_POOL_1, class LOCK> int 
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::list_type_entries (ACE_BINDING_SET &set,
+							       const ACE_WString &pattern)
+{
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  ACE_SEH_TRY 
+    {
+      return this->list_type_entries_i (set, pattern);
+    }
+  ACE_SEH_EXCEPT (this->remap (GetExceptionInformation ())) 
+    {
+    }
+}
+
+template <ACE_MEM_POOL_1, class LOCK> void
+ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const
+{
+  // Note that we *must* use structured exception handling here
+  // because (1) we may need to commit virtual memory pages and (2)
+  // C++ exception handling doesn't support resumption.
+  // This should really be a const cast
+  ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK> *fake_this = 
+    (ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK> *) this;
+  ACE_SEH_TRY 
+    {
+      this->dump_i ();
+    }
+  ACE_SEH_EXCEPT (fake_this->remap (GetExceptionInformation ())) 
+    {
+    }
 }
 
 #endif /* ACE_LOCAL_NAME_SPACE_T_C */
