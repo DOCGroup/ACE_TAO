@@ -1,3 +1,11 @@
+Sat Jan 16 18:13:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/wrapper_macros.GNU: Commented out adding
+	  ACE_NDEBUG to CCFLAGS to avoid defining it twice.  Most (if not
+	  all) platforms include CFLAGS into CCFLAGS.  So, if "make
+	  debug=0" no longer work on your platform, then, you may need to
+	  add "CCFLAGS += $(CFLAGS)" into your platform_xxx.GNU.
+
 Sat Jan 16 13:40:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Proactor.cpp (schedule_timer): Had to add an
@@ -8,12 +16,12 @@ Sat Jan 16 13:40:40 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  add
 
 	  # if defined (ACE_HAS_STHREADS) || (defined (sun) && (ACE_MT_SAFE != 0))
-	  
+
 	  instead of
-	  
+
 	  # if defined (ACE_HAS_STHREADS) || defined (sun)
-	  
-	  to avoid problems when threads=0.  
+
+	  to avoid problems when threads=0.
 
 	* ace/Asynch_IO.cpp: Replaced some ACE_Thread_Mutex decls with
  	  ACE_SYNCH_MUTEX to avoid problems with threads=0.
@@ -40,12 +48,12 @@ Fri Jan 15 21:28:04 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
  	  interface and override the log() method. They must then register
  	  their subclass with the Log_Msg class and make sure that they
  	  turn on the ACE_Log_Msg::MSG_CALLBACK flag.
-     
+
           Your log() routine is called with an instance of
           ACE_Log_Record.  From this class, you can get the log
           message, the verbose log message, message type, message
-          priority, and so on. 
-     
+          priority, and so on.
+
           Remember that there is one Log_Msg object per thread.
           Therefore, you may need to register your callback object with
           many Log_Msg objects (and have the correct synchronization in
