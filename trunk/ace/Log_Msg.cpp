@@ -576,6 +576,7 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
 //   'o': print as an octal number
 //   'P': format the current process id
 //   'p': format the appropriate errno value from sys_errlist
+//   'Q': print out the uint64 number
 //   'r': call the function pointed to by the corresponding argument
 //   'R': print return status
 //   'S': format the appropriate _sys_siglist entry corresponding to var-argument.
@@ -912,6 +913,9 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                 case 'g': case 'G':
                   type = 7 + wpc; // 7, 8, 9
                   break;
+                case 'Q':
+                  type = 10 + wpc;
+                  break;
                 case '*':       // consume width/precision
                   w[wpc++] = va_arg (argp, int);
                   break;
@@ -958,6 +962,9 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   break;
                 case 9:
                   ACE_OS::sprintf (bp, fp, w[0], w[1], va_arg (argp, double));
+                  break;
+                case 10:
+                  ACE_OS::sprintf (bp, ACE_UINT64_FORMAT_SPECIFIER, va_arg (argp, ACE_UINT64));
                   break;
                 }
               *format = c;      // Restore char we overwrote.
