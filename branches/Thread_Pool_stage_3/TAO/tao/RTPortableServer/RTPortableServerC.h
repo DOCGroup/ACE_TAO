@@ -95,11 +95,11 @@ TAO_NAMESPACE  RTPortableServer
 
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
-    static POA_ptr duplicate (POA_ptr);
-    static void release (POA_ptr);
-    static POA_ptr nil (void);
-    static POA_ptr narrow (CORBA::Object *, CORBA::Environment &);
-    static CORBA::Object * upcast (void *);
+    static POA_ptr tao_duplicate (POA_ptr);
+    static void tao_release (POA_ptr);
+    static POA_ptr tao_nil (void);
+    static POA_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static CORBA::Object * tao_upcast (void *);
 
   private:
     POA_ptr ptr_;
