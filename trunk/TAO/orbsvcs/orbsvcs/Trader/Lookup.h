@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 
-// ============================================================================
+// ========================================================================
 // $Id$
 //
 // = LIBRARY
@@ -14,7 +14,7 @@
 //    Seth Widoff <sbw1@cs.wustl.edu>
 //    Irfan Pyarali <irfan@cs.wustl.edu>
 // 
-// ============================================================================
+// ========================================================================
 
 #ifndef TAO_LOOKUP_H
 #define TAO_LOOKUP_H
@@ -203,7 +203,7 @@ private:
   // Check if offers of a type fit the constraints and order them
   // according to the preferences submitted.
     
-  void fill_receptacles (const char* type,
+  int fill_receptacles (const char* type,
 			 LOOKUP_OFFER_LIST& ordered_offers,
 			 CORBA::ULong how_many,
 			 const CosTrading::Lookup::SpecifiedProps& desired_props,			 
@@ -217,10 +217,90 @@ private:
   // iterator. In addition, fill_receptacles uses the
   // TAO_Property_Filter to ensure the returned offers contain the
   // properties specified in the desired_props in parameter.
+
+  void forward_query (const CosTrading::TraderName& starting_trader,
+		      const char *type,
+		      const char *constr,
+		      const char *pref,
+		      TAO_Policies& policies,
+		      const CosTrading::Lookup::SpecifiedProps& desired_props,
+		      CORBA::ULong how_many,
+		      CosTrading::OfferSeq_out offers,
+		      CosTrading::OfferIterator_out offer_itr,
+		      CosTrading::PolicyNameSeq_out limits_applied,
+		      CORBA::Environment& env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosTrading::IllegalServiceType,
+		     CosTrading::UnknownServiceType,
+		     CosTrading::IllegalConstraint,
+		     CosTrading::Lookup::IllegalPreference,
+		     CosTrading::Lookup::IllegalPolicyName,
+		     CosTrading::Lookup::PolicyTypeMismatch,
+		     CosTrading::Lookup::InvalidPolicyValue,
+		     CosTrading::IllegalPropertyName,
+		     CosTrading::DuplicatePropertyName,
+		     CosTrading::DuplicatePolicyName));
+  // If a starting_trader policy was specfied, foward the query to the 
+  // next link in the sequence.
+		      
+  CORBA::Boolean duplicate_stem_id (TAO_Policies& policies,
+				    CORBA::Environment& _env);
+  // Determine if the stem id provided to the query is one we've
+  // already seen.
+
+  CORBA::Boolean retrieve_links (TAO_Policies& policies,
+				 CORBA::ULong offer_returned,
+				 CosTrading::LinkNameSeq_out links,
+				 CORBA::Environment& _env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosTrading::Lookup::PolicyTypeMismatch));
+  // Assemble a sequence of links that the federate_query method
+  // should follow. Use the starting_trader policy, if one's provided, 
+  // otherwise use the Link interface to determine which of the
+  // registered links should be followed in this query.
+  
+  void federated_query (const CosTrading::LinkNameSeq& links,
+			const char *type,
+			const char *constr,
+			const char *pref,
+			TAO_Policies& policies,
+			const CosTrading::Lookup::SpecifiedProps& desired_props,
+			CORBA::ULong how_many,
+			CosTrading::OfferSeq_out offers,
+			CosTrading::OfferIterator_out offer_itr,
+			CosTrading::PolicyNameSeq_out limits_applied,
+			CORBA::Environment& env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+		     CosTrading::IllegalServiceType,
+		     CosTrading::UnknownServiceType,
+		     CosTrading::IllegalConstraint,
+		     CosTrading::Lookup::IllegalPreference,
+		     CosTrading::Lookup::IllegalPolicyName,
+		     CosTrading::Lookup::PolicyTypeMismatch,
+		     CosTrading::Lookup::InvalidPolicyValue,
+		     CosTrading::IllegalPropertyName,
+		     CosTrading::DuplicatePropertyName,
+		     CosTrading::DuplicatePolicyName));
+  // Perform and pass on a query over a set of links. Merge the
+  // results of the federated queries into a single set of results
+  // suitable for returning to the user.  
   
   TRADER &trader_;
   // A reference to the trader for obtaining offer maps.
+
+  typedef set
+    <
+    CosTrading::Admin::OctetSeq_var,
+    less <CosTrading::Admin::OctetSeq_var>
+    >
+    REQUEST_IDS;
+  
+  REQUEST_IDS request_ids_;
+  // A list of recent request_id_stems 
 };
+
+int operator< (const CosTrading::Admin::OctetSeq_var& left,
+	       const CosTrading::Admin::OctetSeq_var& right);
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Lookup.cpp"

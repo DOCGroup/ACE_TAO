@@ -17,15 +17,10 @@
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
 
-#if defined (OS_NO_NAMESPACE)
-#define queue foobar
-#endif /* OS_NO_NAMESPACE */
+#include <map>
+#include <string>
 
-#include "orbsvcs/CosTradingC.h"
-
-#if defined (OS_NO_NAMESPACE)
-#undef queue
-#endif /* OS_NO_NAMESPACE */
+#include "Policies.h"
 
 class TAO_Policy_Manager
 // = TITLE
@@ -36,22 +31,6 @@ class TAO_Policy_Manager
 {
 public:
 
-  enum POLICY_TYPE
-  {
-    EXACT_TYPE_MATCH,
-    HOP_COUNT,
-    LINK_FOLLOW_RULE,
-    MATCH_CARD,
-    RETURN_CARD,
-    SEARCH_CARD,
-    STARTING_TRADER,
-    USE_DYNAMIC_PROPERTIES,
-    USE_MODIFIABLE_PROPERTIES,
-    USE_PROXY_OFFERS
-  };
-
-  static const char * POLICY_NAMES[];
-  
   TAO_Policy_Manager (int num_policies = 0);
 
   // = Routines to set policies.
@@ -74,6 +53,8 @@ public:
 
   void hop_count (CORBA::ULong hop_count);
 
+  void request_id (CosTrading::Admin::OctetSeq* reqiest_id);
+  
   void exact_type_match (CORBA::Boolean exact_type);
 
   operator const CosTrading::PolicySeq& (void) const;
@@ -84,11 +65,13 @@ public:
   
 private:
 
-  CosTrading::Policy& fetch_next_policy (void);
+  CosTrading::Policy& fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type);
   
-  int num_policies_;
+  int poltable_[TAO_Policies::REQUEST_ID + 1];
   
   CosTrading::PolicySeq policies_;
+
+  CORBA::ULong num_policies_;
 };
 
 #endif /* TAO_POLICY_MANAGER_H */
