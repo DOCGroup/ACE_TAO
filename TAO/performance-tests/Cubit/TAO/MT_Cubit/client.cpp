@@ -212,7 +212,7 @@ do_priority_inversion_test (ACE_Thread_Manager *thread_manager,
   ACE_Time_Value delta_t;
   timer_.start ();
   // execute one computation.
-  for (int k=0; k < 1000; k++)
+  for (k=0; k < 1000; k++)
     util_thread.computation ();
   timer_.stop ();
   timer_.elapsed_time (delta_t);
