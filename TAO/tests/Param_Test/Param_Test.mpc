@@ -39,7 +39,6 @@ project(*Client): messaging, taoexe, portableserver, minimum_corba, dynamicinter
     objref_struct.cpp
     options.cpp
     param_test_i.cpp
-    param_testA.cpp
     recursive_struct.cpp
     recursive_union.cpp
     results.cpp

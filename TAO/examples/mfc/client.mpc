@@ -6,4 +6,6 @@ project(MFC client): namingexe {
     w32_testC.cpp
     client.cpp
   }
+  Resource_Files {
+  }
 }

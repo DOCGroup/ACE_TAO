@@ -3,6 +3,7 @@
 #include "tao/corba.h"
 #include "w32_testC.h"
 #include "tao/PortableServer/POA.h"
+#include "ace/streams.h"
 
 int
 main (int argc, char *argv[])
@@ -60,7 +61,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
