@@ -1,3 +1,14 @@
+Fri Nov  7 21:09:01 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Makefile.ace:
+        * ace/ace.mpc:
+        * ace/OS.cpp:
+        * ace/OS_main.h
+        * ace/OS_main.cpp:
+          Added new file, OS_main.cpp, and restructured the "main" macros
+          to call real functions the now live in OS_main.cpp.  Added
+          OS_main.cpp to the makefiles and OS.cpp.
+
 Fri Nov  7 15:21:49 2003  Steve Huston  <shuston@riverace.com>
 
 	* ace/Connector.cpp: Added #include "ace/os_include/os_fcntl.h" to
