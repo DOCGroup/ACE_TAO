@@ -12,7 +12,7 @@ ACE_INLINE double
 ACE_OS::ceil (double x)
 {
   // This method computes the smallest integral value not less than x.
-  double floor = ACE_OS::floor (x);
+  const double floor = ACE_OS::floor (x);
   if (floor == x)
     return floor;
   else
