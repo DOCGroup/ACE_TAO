@@ -165,7 +165,7 @@ public:
                 ::Preemption_Priority ((*iter).rt_info, env);
               if (env.exception () != 0)
                 continue;
-              if (rt_info_ == 0)
+              if (rt_info_ == 0 || q < p)
                 {
                   this->rt_info_ = ((*iter).rt_info);
                   p = q;
