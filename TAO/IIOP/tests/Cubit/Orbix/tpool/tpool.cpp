@@ -1,7 +1,7 @@
 #include "tpool.h"
 
 Thread_Pool::Thread_Pool (int n_threads)
-  : ACE_Task<ACE_MT_SYNCH> (ACE_Service_Config::thr_mgr ())
+  : ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ())
 {
   if (this->activate (THR_DETACHED | THR_NEW_LWP, n_threads) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "activate failed"));

@@ -191,7 +191,7 @@ main (int    argc, char   *argv[])
 
 
 #if !defined(USE_HOMEBREW_EVENT_LOOP)
-  ACE_Service_Config::run_reactor_event_loop();
+  ACE_Reactor::run_event_loop();
 #else
   while (1)
     {
