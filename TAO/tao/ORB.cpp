@@ -1,10 +1,10 @@
 // $Id$
 
-#include "tao/ORB.h"
-#include "tao/ORB_Table.h"
-#include "tao/Connector_Registry.h"
-#include "tao/IOR_Parser.h"
-#include "tao/Parser_Registry.h"
+#include "ORB.h"
+#include "ORB_Table.h"
+#include "Connector_Registry.h"
+#include "IOR_Parser.h"
+#include "Parser_Registry.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Repository.h"
@@ -15,35 +15,35 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Arg_Shifter.h"
 
-#include "tao/Object.h"
-#include "tao/Typecode.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/debug.h"
-#include "tao/TAO_Internal.h"
-#include "tao/NVList.h"
-#include "tao/Dynamic_Adapter.h"
-#include "tao/CDR.h"
-#include "tao/MProfile.h"
+#include "Object.h"
+#include "Typecode.h"
+#include "Stub.h"
+#include "ORB_Core.h"
+#include "Server_Strategy_Factory.h"
+#include "debug.h"
+#include "TAO_Internal.h"
+#include "NVList.h"
+#include "Dynamic_Adapter.h"
+#include "CDR.h"
+#include "MProfile.h"
 
-#include "tao/RT_ORB.h"
-#include "tao/Priority_Mapping_Manager.h"
-#include "tao/RT_Current.h"
+#include "RT_ORB.h"
+#include "Priority_Mapping_Manager.h"
+#include "RT_Current.h"
 
-# include "tao/ORBInitInfo.h"
-# include "tao/ORBInitializer_Registry.h"
+# include "ORBInitInfo.h"
+# include "ORBInitializer_Registry.h"
 
 #if TAO_HAS_RT_CORBA == 1
-# include "tao/RT_ORBInitializer.h"         // @@ This should go away!
+# include "RT_ORBInitializer.h"         // @@ This should go away!
 #endif  /* TAO_HAS_RT_CORBA == 1 */
 
 #if TAO_HAS_CORBA_MESSAGING == 1
-# include "tao/Messaging_ORBInitializer.h"  // @@ This should go away!
+# include "Messaging_ORBInitializer.h"  // @@ This should go away!
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #if defined (TAO_HAS_VALUETYPE)
-#  include "tao/ValueFactory_Map.h"
+#  include "ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
 
 #include "Object_KeyC.h"
@@ -64,7 +64,7 @@ using std::set_unexpected;
 #endif /* ACE_HAS_EXCEPTIONS */
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB.i"
+# include "ORB.i"
 #endif /* ! __ACE_INLINE__ */
 
 
@@ -924,7 +924,7 @@ CORBA_ORB::resolve_initial_references (const char *name,
   // -----------------------------------------------------------------
 
   // Is not one of the well known services, try to find it in the
-  // InitRef table....  
+  // InitRef table....
   result = this->orb_core ()->resolve_rir (name, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -1247,7 +1247,32 @@ CORBA::ORB_init (int &argc,
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
+  // The ORB table increases the reference count on the ORB Core so do
+  // not release it here.  Allow the TAO_ORB_Core_Auto_Ptr do decrease
+  // the reference on the ORB Core when it goes out of scope.
   TAO_ORB_Core_Auto_Ptr safe_oc (oc);
+
+  // Initialize the Service Configurator.  This must occur before the
+  // ORBInitializer::pre_init() method is invoked on each registered
+  // ORB initializer.
+  int result = TAO_Internal::open_services (argc, argv);
+
+  // Check for errors returned from <TAO_Internal::open_services>.
+  if (result != 0 && errno != ENOENT)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("Unable to initialize the ")
+                  ACE_TEXT ("Service Configurator")));
+      ACE_THROW_RETURN (CORBA::INITIALIZE (
+                          CORBA_SystemException::_tao_minor_code (
+                            TAO_ORB_CORE_INIT_LOCATION_CODE,
+                            0),
+                          CORBA::COMPLETED_NO),
+                        CORBA::ORB::_nil ());
+    }
+
+  // Run the registered ORB initializers, and initialize the ORB_Core.
 
   TAO_ORBInitInfo *orb_init_info_temp;
   ACE_NEW_THROW_EX (orb_init_info_temp,
@@ -1261,20 +1286,20 @@ CORBA::ORB_init (int &argc,
                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
-  /// This ORBInitInfo instance is only valid for the duration of this
-  /// ORB's initialization.
+  // This ORBInitInfo instance is only valid for the duration of this
+  // ORB's initialization.
   PortableInterceptor::ORBInitInfo_var orb_init_info =
     orb_init_info_temp;
 
 
-  /// Call the ORBInitializer::pre_init() on each registered ORB
-  /// initializer.
+  // Call the ORBInitializer::pre_init() on each registered ORB
+  // initializer.
   TAO_ORBInitializer_Registry::instance ()->pre_init (orb_init_info.in (),
-                                                     ACE_TRY_ENV);
+                                                      ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Initialize the ORB Core instance.
-  int result = safe_oc->init (argc, argv, ACE_TRY_ENV);
+  result = safe_oc->init (argc, argv, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Check for errors and return nil pseudo-reference on error.
@@ -1307,10 +1332,6 @@ CORBA::ORB_init (int &argc,
     ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO),
                       CORBA::ORB::_nil ());
-
-  // Release the ORB Core pointer from its Auto_Ptr since the ORB
-  // table now owns it.
-  oc = safe_oc.release ();
 
   // Return a duplicate since the ORB_Core should release the last
   // reference to the ORB.

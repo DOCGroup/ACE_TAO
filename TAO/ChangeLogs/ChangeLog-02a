@@ -1,3 +1,51 @@
+Tue Nov 21 16:26:03 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Table.cpp (bind):
+
+	  Make sure the ORB table owns the ORB Core by increasing the
+	  reference count on it.
+
+	* tao/ORB_Core.h (svc_config_argc_, svc_config_argv_):
+
+	  Removed these attributes.  They are no longer needed since the
+	  Service Configurator is now initialized in the CORBA::ORB_init()
+	  function.
+	
+	* tao/ORB_Core.cpp (init):
+
+	  Moved all Service Configurator related option parsing code to
+	  TAO_Internal::open_services(), and moved the code that invokes
+	  open_services() to CORBA::ORB_init().  This is necessary to make
+	  sure that services are loaded prior to invoking the pre_init()
+	  method in registered ORBInitializers.
+
+	* tao/ORB.cpp (ORB_init):
+
+	  The ORB table increases the reference count on the ORB Core so
+	  do not release it here.  Allow the TAO_ORB_Core_Auto_Ptr to
+	  decrease the reference on the ORB Core.
+
+	  Initialize the Service Configurator.  This must occur before the
+	  ORBInitializer::pre_init() method is invoked on each registered
+	  ORB initializer.
+
+	* tao/TAO_Internal.h (open_services, open_services_i):
+
+	  Added new "open_services()" method declaration, and renamed the
+	  existing one to "open_services_i()" since it is invoked by the
+	  former.
+
+	* tao/TAO_Internal.cpp (open_services):
+
+	  Construct a Service Configurator argument vector from options
+	  extracted from the argument vector passed in from
+	  CORBA::ORB_init().
+
+	* orbsvcs/examples/Security/Send_File/Makefile (BIN):
+
+	  Conditionally build the binaries on the "ssl" make variable
+	  instead of the deprecate "ace_components" script.
+
 Tue Nov 21 18:07:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynamicAny/DynArray_i.cpp:

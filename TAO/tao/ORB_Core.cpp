@@ -3,9 +3,6 @@
 #include "ORB_Core.h"
 #include "ORB_Table.h"
 
-#include "ace/Env_Value_T.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Auto_Ptr.h"
 
 #include "TAO_Internal.h"
 #include "default_client.h"
@@ -146,8 +143,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     delayed_buffering_sync_strategy_ (0),
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
     transport_sync_strategy_ (0),
-    svc_config_argc_ (0),
-    svc_config_argv_ (0),
     refcount_ (1),
     policy_factory_registry_ (),
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -268,17 +263,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   delete this->transport_sync_strategy_;
-
-  // This is deleted in init() so we should only get here if the
-  // ORB_Core is destroyed prematurely.
-  if (this->svc_config_argv_ != 0)
-    {
-      for (int i = 0; i < this->svc_config_argc_; i++)
-        CORBA::string_free (this->svc_config_argv_[i]);
-
-      this->svc_config_argc_ = 0;
-      delete [] this->svc_config_argv_;
-    }
 }
 
 int
@@ -296,26 +280,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   //
   // In some instances, we may actually build another vector of
   // arguments and stash it for use initializing other components such
-  // as the ACE_Service_Config or the RootPOA.
-  //
-  // Prepare a copy of the argument vector for the service configurator.
-
-  ACE_NEW_THROW_EX (this->svc_config_argv_,
-                    char *[argc + 1],
-                    CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
-                        TAO_ORB_CORE_INIT_LOCATION_CODE,
-                        ENOMEM),
-                      CORBA::COMPLETED_NO));
-  ACE_CHECK_RETURN (-1);
-
-  // Be certain to copy the program name so that service configurator
-  // has something to skip!
-  ACE_Arg_Shifter arg_shifter (argc, argv);
-  const char *argv0 = "";
-  if (argc > 0 && argv != 0)
-    argv0 = argv[0];
-  this->svc_config_argv_[this->svc_config_argc_++] = CORBA::string_dup (argv0);
+  // as the RootPOA.
 
   // @@ GIOPLite should be an alternative ORB Messaging protocols, fredk
   // int giop_lite = 0;
@@ -344,10 +309,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   // Use TCP_NODELAY.
   size_t nodelay = 1;
-
-  // Should we skip the <ACE_Service_Config::open> method, e.g., if we
-  // already being configured by the ACE Service Configurator.
-  int skip_service_config_open = 0;
 
   // Use dotted decimal addresses
   // @@ This option will be treated as a suggestion to each loaded
@@ -387,6 +348,8 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   }
 #endif  /* TAO_DEBUG */
 
+  ACE_Arg_Shifter arg_shifter (argc, argv);
+
   while (arg_shifter.is_anything_left ())
     {
       char *current_arg = 0;
@@ -394,22 +357,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
       ////////////////////////////////////////////////////////////////
       // begin with the 'parameterless' flags                       //
       ////////////////////////////////////////////////////////////////
-      if (arg_shifter.cur_arg_strncasecmp ("-ORBDaemon") == 0)
-        {
-          // Be a daemon
-          this->svc_config_argv_[this->svc_config_argc_++] =
-            CORBA::string_dup ("-b");
-
-          arg_shifter.consume_arg ();
-        }
-      else if (arg_shifter.cur_arg_strncasecmp
-               ("-ORBSkipServiceConfigOpen") == 0)
-        {
-          skip_service_config_open = 1;
-
-          arg_shifter.consume_arg ();
-        }
-      else if (arg_shifter.cur_arg_strncasecmp ("-ORBGIOPlite") == 0)
+      if (arg_shifter.cur_arg_strncasecmp ("-ORBGIOPlite") == 0)
         {
           // @@ This will have to change since gioplite
           // will be considered as an alternate ORB
@@ -428,39 +376,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
           ACE::debug (1);
           TAO_orbdebug = 1;
           arg_shifter.consume_arg ();
-        }
-
-      ////////////////////////////////////////////////////////////////
-      // continue with the 'parameter' flags                        //
-      ////////////////////////////////////////////////////////////////
-      else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBSvcConfDirective")))
-        {
-          // This is used to pass arguments to the Service
-          // Configurator using the "command line" to provide
-          // configuration information rather than using a svc.conf
-          // file.  Pass the "-S" to the service configurator.
-          this->svc_config_argv_[this->svc_config_argc_++] =
-            CORBA::string_dup ("-S");
-
-          // Pass the next argument.
-          this->svc_config_argv_[this->svc_config_argc_++] =
-            CORBA::string_dup (current_arg);
-
-          arg_shifter.consume_arg ();
-        }
-
-      else if ((current_arg =
-                arg_shifter.get_the_parameter ("-ORBSvcConf")))
-        {
-          // Specify the name of the svc.conf file to be used.
-          this->svc_config_argv_[this->svc_config_argc_++] =
-            CORBA::string_dup ("-f");
-
-          this->svc_config_argv_[this->svc_config_argc_++] =
-            CORBA::string_dup (current_arg);
-
-          arg_shifter.consume_arg();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
                 ("-ORBDottedDecimalAddresses")))
@@ -974,40 +889,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // these kinds of applications, anyway?
   (void) ACE_OS::signal (SIGPIPE, SIG_IGN);
 #endif /* SIGPIPE */
-
-  // Initialize the Service Configurator -check for return values.
-  // Load the resource factory, connector registry, acceptor registry
-  // and protocols.  Will need to call the open () method on
-  // the registries!
-  int result = TAO_Internal::open_services (this->svc_config_argc_,
-                                            this->svc_config_argv_,
-                                            0,
-                                            skip_service_config_open);
-
-  // Make sure to free up all the dynamically allocated memory.  If we
-  // decide we don't need to allocate this stuff dynamically then we
-  // can remove this.
-  for (int i = 0; i < this->svc_config_argc_; i++)
-    CORBA::string_free (this->svc_config_argv_[i]);
-
-  delete [] this->svc_config_argv_;
-  this->svc_config_argc_ = 0;
-  this->svc_config_argv_ = 0;
-
-  // Check for errors returned from <TAO_Internal::open_services>.
-  if (result != 0 && errno != ENOENT)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("ORB Core unable to initialize the ")
-                  ACE_TEXT ("Service Configurator")));
-      ACE_THROW_RETURN (CORBA::INITIALIZE (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_ORB_CORE_INIT_LOCATION_CODE,
-                            0),
-                          CORBA::COMPLETED_NO),
-                        -1);
-    }
 
   // Calling the open method here so that the svc.conf file is
   // opened and TAO_default_resource_factory::init () is called by the
