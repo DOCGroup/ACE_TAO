@@ -84,12 +84,14 @@ create_poas (PortableServer::POA_ptr root_poa,
                                      PortableServer::POAManager::_nil (),
                                      policies,
                                      ACE_TRY_ENV);
+  ACE_CHECK;
 
   policies[2]->destroy (ACE_TRY_ENV);
   ACE_CHECK;
 
   policies[2] = root_poa->create_id_assignment_policy (PortableServer::USER_ID,
                                                        ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Creation of the thirdPOA
   name = "thirdPOA";
@@ -104,6 +106,7 @@ create_poas (PortableServer::POA_ptr root_poa,
 
   policies[1] = root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID,
                                                        ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Creation of the forthPOA
   name = "forthPOA";
@@ -111,6 +114,7 @@ create_poas (PortableServer::POA_ptr root_poa,
                                     PortableServer::POAManager::_nil (),
                                     policies,
                                     ACE_TRY_ENV);
+  ACE_CHECK;
 
   // Creation of the new POAs over, so destroy the policies
   for (CORBA::ULong i = 0;
@@ -748,8 +752,10 @@ main (int argc, char **argv)
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception!");
+      return -1;
     }
   ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 
   return 0;
 }
