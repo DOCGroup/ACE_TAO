@@ -76,31 +76,67 @@ ace_main_i
 
 #   elif !defined (ACE_WINCE)
 
-class ACE_Export xxx
+#     if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+class ACE_Export ACE_Main_Base
 {
 public:
-  xxx (void);
-  ~xxx (void) {}
   int run (int, ACE_TCHAR *[]);
   virtual int run_i (int, ACE_TCHAR *[]) = 0;
 };
 
 #       define wmain \
-ace_os_wmain_i (xxx&, int, ACE_TCHAR *[]); \
-int xxx::run_i (int argc, ACE_TCHAR *argv[])  \
+ace_wmain_i (int, ACE_TCHAR *[]); \
+ACE_Export int ace_os_wmain_i (ACE_Main_Base&, int, ACE_TCHAR *[]); \
+class ACE_Main : public ACE_Main_Base {int run_i (int, ACE_TCHAR *[]);}; \
+inline int ACE_Main::run_i (int argc, ACE_TCHAR *argv[])  \
 { \
-  return ace_os_wmain_i (argc, argv); \
+  return ace_wmain_i (argc, argv); \
 } \
 int \
 ACE_WMAIN (int argc, ACE_TCHAR *argv[]) /* user's entry point, e.g., wmain */ \
 { \
-  xxx x; \
-  return ace_os_wmain_i (x, argc, argv);   /* what the user calls "main" */ \
+  ACE_Main m; \
+  return ace_os_wmain_i (m, argc, argv);   /* what the user calls "main" */ \
+} \
+int \
+ace_wmain_i
+
+#     else /* ! (ACE_WIN32 && ACE_USES_WCHAR) */
+
+class ACE_Export ACE_Main_Base
+{
+public:
+  int run (int, char *[]);
+  virtual int run_i (int, char *[]) = 0;
+};
+
+#       define main \
+ace_main_i (int, char *[]); \
+ACE_Export int ace_os_main_i (ACE_Main_Base&, int, char *[]); \
+class ACE_Main : public ACE_Main_Base {int run_i (int, char *[]);}; \
+inline int ACE_Main::run_i (int argc, char *argv[])  \
+{ \
+  return ace_main_i (argc, argv); \
+} \
+int \
+ACE_MAIN (int argc, char *argv[]) /* user's entry point, e.g., wmain */ \
+{ \
+  ACE_Main m; \
+  return ace_os_main_i (m, argc, argv);   /* what the user calls "main" */ \
 } \
 int \
 ace_main_i
 
+#     endif /* ACE_WIN32 && ACE_USES_WCHAR */
+
 #   else /* ACE_HAS_WINCE */
+
+class ACE_Export ACE_Main_Base
+{
+public:
+  int run (HINSTANCE, HINSTANCE, LPWSTR, int);
+  virtual int run_i (int, ACE_TCHAR *[]) = 0;
+};
 
 #     if defined (ACE_TMAIN)  // Use WinMain on CE; others give warning/error.
 #       undef ACE_TMAIN
@@ -114,29 +150,48 @@ ace_main_i
 // CE had CommandLineToArgvW()... but it's only on NT3.5 and up.
 
 #     define ACE_TMAIN \
-ace_os_wintmain_i (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow);  /* forward declaration */ \
+ace_tmain_i (int, ACE_TCHAR *[]); \
+ACE_Export int ace_os_wintmain_i (ACE_Main_Base&, HINSTANCE, HINSTANCE, LPWSTR, int);  /* forward declaration */ \
+class ACE_Main : public ACE_Main_Base {int run_i (int argc, ACE_TCHAR *argv[]);}; \
+inline int ACE_Main::run_i (int argc, ACE_TCHAR *argv[])  \
+{ \
+  return ace_tmain_i (argc, argv); \
+} \
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
-  return ace_os_wintmain_i (hInstance, hPrevInstance, lpCmdLine, nCmdShow); \
+  ACE_Main m; \
+  return ace_os_wintmain_i (m, hInstance, hPrevInstance, lpCmdLine, nCmdShow); \
 } \
-int ace_main_i
+int ace_tmain_i
 
 // Support for wchar_t but still can't fit to CE because of the command
 // line parameters.
 #     define wmain \
-ace_os_winwmain_i (int, ACE_TCHAR *[]);  /* forward declaration */ \
+ace_wmain_i (int, ACE_TCHAR *[]); \
+ACE_Export int ace_os_winwmain_i (ACE_Main_Base&, hInstance, hPrevInstance, lpCmdLine, nCmdShow);  /* forward declaration */ \
+class ACE_Main : public ACE_Main_Base {int run_i (int argc, ACE_TCHAR *argv[]);}; \
+inline int ACE_Main::run_i (int argc, ACE_TCHAR *argv[])  \
+{ \
+  return ace_wmain_i (argc, argv); \
+} \
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
   return ace_os_winwmain_i (hInstance, hPrevInstance, lpCmdLine, nCmdShow); \
 } \
-int ace_main_i
+int ace_wmain_i
 
 // Supporting legacy 'main' is A LOT easier for users than changing existing
 // code on WinCE. Unfortunately, evc 3 can't grok a #include within the macro
 // expansion, so it needs to go out here.
 #     include "ace/Argv_Type_Converter.h"
 #     define main \
-ace_os_winmain_i (int, char *[]);  /* forward declaration */ \
+ace_main_i (int, ACE_TCHAR *[]); \
+ACE_Export int ace_os_winmain_i (ACE_Main_Base&, hInstance, hPrevInstance, lpCmdLine, nCmdShow);  /* forward declaration */ \
+class ACE_Main : public ACE_Main_Base {int run_i (int argc, ACE_TCHAR *argv[]);}; \
+inline int ACE_Main::run_i (int argc, ACE_TCHAR *argv[])  \
+{ \
+  return ace_main_i (argc, argv); \
+} \
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
   return ace_os_winmain_i (hInstance, hPrevInstance, lpCmdLine, nCmdShow); \

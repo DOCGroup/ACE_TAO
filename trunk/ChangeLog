@@ -1,3 +1,9 @@
+Sat Nov  8 04:11:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS_main.h
+        * ace/OS_main.cpp:
+          Fixed last checkin on Windows and WINCE.
+
 Fri Nov  7 23:29:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS_main.h
