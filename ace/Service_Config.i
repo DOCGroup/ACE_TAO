@@ -21,3 +21,9 @@ ACE_Static_Svc_Descriptor::operator== (struct ACE_Static_Svc_Descriptor &d) cons
 {
   return ACE_OS::strcmp (name_, d.name_) == 0;
 }
+
+ACE_INLINE void
+ACE_Service_Config::signal_handler (ACE_Sig_Adapter *signal_handler)
+{
+  signal_handler_ = signal_handler;
+}

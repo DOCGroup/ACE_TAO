@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Service_Config.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_SERVICE_CONFIG_H)
@@ -37,13 +37,13 @@ struct ACE_Static_Svc_Descriptor
 {
   char *name_;
   // Name of the service.
-  
+
   int type_;
   // Type of service.
 
   ACE_SERVICE_ALLOCATOR alloc_;
   // Factory function that allocates the service.
-  
+
   u_int flags_;
   // Bitmask flags indicating how the framework should delete memory.
 
@@ -76,9 +76,9 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_Service_Config (int ignore_static_svcs = 0, 
-		      size_t size = ACE_Service_Config::MAX_SERVICES, 
-		      int signum = SIGHUP);
+  ACE_Service_Config (int ignore_static_svcs = 0,
+                      size_t size = ACE_Service_Config::MAX_SERVICES,
+                      int signum = SIGHUP);
   // Initialize the Service Repository.
 
   ACE_Service_Config (const char program_name[]);
@@ -109,7 +109,7 @@ public:
   // <Service_Repository> itself.
   // @@ What is its return value?
 
-  static int close_singletons (void); 
+  static int close_singletons (void);
   // Delete the dynamically allocated Singletons (i.e., the <Reactor>,
   // <Proactor>, <ReactorEx>, <Thread_Manager>, and <Allocator>).
   // @@ What is its return value?
@@ -177,7 +177,7 @@ public:
 
   static ACE_Service_Repository *svc_rep (ACE_Service_Repository *);
   // Set pointer to a process-wide <ACE_Service_Repository> and return
-  // existing pointer.  
+  // existing pointer.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
   // Use ACE_Service_Repository::instance() instead.
 
@@ -207,29 +207,32 @@ public:
   //   of the Service Configurator class category.
   static int initialize (const ACE_Service_Type *, char parameters[]);
   // Dynamically link the shared object file and retrieve
-  // a pointer to the designated shared object in this file. 
+  // a pointer to the designated shared object in this file.
 
   static int initialize (const char svc_name[], char parameters[]);
-  // Initialize and activate a statically <svc_name> service. 
+  // Initialize and activate a statically <svc_name> service.
 
   static int resume (const char svc_name[]);
   // Resume a <svc_name> that was previously suspended or has not yet
-  // been resumed (e.g., a static service). 
+  // been resumed (e.g., a static service).
 
   static int suspend (const char svc_name[]);
-  // Suspend <svc_name>.  Note that this will not unlink the service 
-  // from the daemon if it was dynamically linked, it will mark it 
+  // Suspend <svc_name>.  Note that this will not unlink the service
+  // from the daemon if it was dynamically linked, it will mark it
   // as being suspended in the Service Repository and call the
-  // suspend() member function on the appropriate ACE_Service_Object.  
-  // A service can be resumed later on by calling the RESUME() 
-  // member function... 
+  // suspend() member function on the appropriate ACE_Service_Object.
+  // A service can be resumed later on by calling the RESUME()
+  // member function...
 
   static int remove (const char svc_name[]);
-  // Totally remove <svc_name> from the daemon by removing it 
+  // Totally remove <svc_name> from the daemon by removing it
   // from the ACE_Reactor, and unlinking it if necessary.
 
   void dump (void) const;
   // Dump the state of an object.
+
+  static ACE_INLINE void signal_handler (ACE_Sig_Adapter *);
+  // Set the signal_handler;for internal use by ACE_Object_Manager only.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -245,11 +248,12 @@ protected:
   // program name.
 
   static int start_daemon (void);
-  // Become a daemon. 
+  // Become a daemon.
 
   static int load_static_svcs (void);
   // Add the default statically-linked services to the <ACE_Service_Repository>.
 
+public:
   static void handle_signal (int sig, siginfo_t *, ucontext_t *);
   // Handles signals to trigger reconfigurations.
 
@@ -269,7 +273,7 @@ private:
   static sig_atomic_t reconfig_occurred_;
   // True if reconfiguration occurred.
 
-  // = Set by command-line options. 
+  // = Set by command-line options.
   static char debug_;
   static char be_a_daemon_;
   static char no_static_svcs_;
@@ -277,7 +281,7 @@ private:
   static int signum_;
   // Number of the signal used to trigger reconfiguration.
 
-  static ACE_Sig_Adapter signal_handler_;
+  static ACE_Sig_Adapter *signal_handler_;
   // Handles the reconfiguration signals.
 };
 
@@ -286,7 +290,7 @@ private:
 #endif /* __ACE_INLINE__ */
 
 // These must go here to avoid circular includes...
-// (only left here for to not break applications 
+// (only left here for to not break applications
 //  which rely on this - no real need any longer)
 #include "ace/Reactor.h"
 #include "ace/Svc_Conf_Tokens.h"
