@@ -20,16 +20,15 @@
 #ifndef TAO_IIOP_PROFILE_H
 #define TAO_IIOP_PROFILE_H
 
-#include "tao/ORB.h"
+#include "tao/Profile.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Pluggable.h"
+#include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
 #include "tao/GIOP.h"
-#include "tao/Tagged_Components.h"
 
 #include "ace/Synch.h"
 #include "ace/INET_Addr.h"
@@ -148,11 +147,6 @@ public:
   void reset_hint (void);
   //  Reset the hint's value.
 
-  const TAO_Tagged_Components& tagged_components (void) const;
-  TAO_Tagged_Components& tagged_components (void);
-  // Access the tagged components, notice that they are empty and
-  // ignored for GIOP 1.0
-
 private:
   int set (const ACE_INET_Addr &addr);
   // helper method to set the INET_Addr.
@@ -181,9 +175,6 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
-
-  TAO_Tagged_Components tagged_components_;
-  // The tagged components
 };
 
 #if defined (__ACE_INLINE__)

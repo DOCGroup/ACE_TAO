@@ -4,7 +4,7 @@
 
 interface Test
 {
-  unsigned long long test_method (in unsigned long long stamp);
+  void test_method (in long id);
 
   oneway void shutdown ();
 };

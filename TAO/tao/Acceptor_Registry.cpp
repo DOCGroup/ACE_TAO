@@ -277,7 +277,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   return 0;
 }
 
-// Iterate through the loaded transport protocols and create a default 
+// Iterate through the loaded transport protocols and create a default
 // server for each protocol.
 int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                                          const char *options)
@@ -291,10 +291,10 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
        i != end;
        ++i)
     {
-      // if the protocol requires an explicit -ORBEndpoint option then 
+      // if the protocol requires an explicit -ORBEndpoint option then
       // don't use it, otherwise open a default endpoint for that
       // protocol, this solves the problem with persistent endpoints
-      // (such as UNIX domain rendesvouz points), that are not cleaned 
+      // (such as UNIX domain rendesvouz points), that are not cleaned
       // up if the server crashes.
       if (!(*i)->factory ()->requires_explicit_endpoint ())
         {

@@ -1,3 +1,54 @@
+Wed Sep  1 12:37:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Makefile:
+	* tao/Pluggable.h:
+	* tao/Pluggable.i:
+	* tao/Pluggable.cpp:
+	* tao/Profile.h:
+	* tao/Profile.i:
+	* tao/Profile.cpp:
+	  Move the TAO_Profile class to its own file.
+	  The base class now implements the methods to access and
+	  manipulate the tagged components of the profile.
+
+	* tao/MProfile.h:
+	* tao/Acceptor_Registry.cpp:
+	  Needs to include the new Profile file.
+
+	* tao/Invocation.cpp:
+	  If the TAO_USE_PRIORITY_POLICY macro is defined the ORB will use 
+	  the profile that matches the current thread priority.
+
+	* tao/Tagged_Components.cpp:
+	  Fixed several bugs in the demarshaling code.
+
+	* tao/UIOP_Profile.h:
+	* tao/UIOP_Profile.i:
+	* tao/UIOP_Profile.cpp:
+	* tao/IIOP_Profile.h:
+	* tao/IIOP_Profile.i:
+	* tao/IIOP_Profile.cpp:
+	  The tagged component access and manipulation code is in the base 
+	  class now.
+
+	* tao/Pool_Per_Endpoint.cpp:
+	* tao/Reactor_Per_Priority.cpp:
+	  Only print debugging messages if the debug level is high
+	  enough.
+
+	* tests/Endpoint_Per_Priority/Makefile:
+	* tests/Endpoint_Per_Priority/client.conf:
+	* tests/Endpoint_Per_Priority/client.cpp:
+	* tests/Endpoint_Per_Priority/server.conf:
+	* tests/Endpoint_Per_Priority/test.idl:
+	* tests/Endpoint_Per_Priority/test_i.h:
+	* tests/Endpoint_Per_Priority/test_i.cpp:
+	  Modified the test to pass an application level id of the client
+	  thread to the server. This is used to verify that the request
+	  actually executes at the right level on the server-side.
+	  The client receives the number and priorities of the threads on
+	  the command line.
+
 Wed Sep  1 12:30:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/MessagingS.cpp:
