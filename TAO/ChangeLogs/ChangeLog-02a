@@ -1,3 +1,13 @@
+Wed May 31 12:34:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.h:
+	* tao/Any.i:
+	  Changed the insertion/extraction operators for Any_var
+	  to pass a reference to the Any_var as the lhs. 
+	  Otherwise a copy of the Any_var is made, which is
+	  inefficient at best and, when the rhs is a pointer
+	  type, the operation would fail.
+
 Wed May 31 12:17:20 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Explicit_Activation/Alt_Resources/Resource_Factory.cpp:
