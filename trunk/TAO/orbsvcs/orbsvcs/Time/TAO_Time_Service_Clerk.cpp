@@ -51,7 +51,7 @@ TAO_Time_Service_Clerk::universal_time (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
   // Return the global time as a UTO.
 
-  return uto->_this ();
+  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // This method returns the global time in a UTO only if the time can
@@ -63,7 +63,8 @@ TAO_Time_Service_Clerk::secure_universal_time (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosTime::TimeUnavailable))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (ACE_ENV_SINGLE_ARG_PARAMETER),
+                    CosTime::UTO::_nil ());
 }
 
 // This creates a new UTO based on the given parameters.
@@ -83,7 +84,8 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                              tdf),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
-  return uto->_this ();
+
+  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // This creates a new UTO given a time in the UtcT form.
@@ -108,7 +110,7 @@ TAO_Time_Service_Clerk::uto_from_utc (const TimeBase::UtcT &utc
                              utc.tdf),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::UTO::_nil ());
-  return uto->_this ();
+  return uto->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 // This creates a new TIO with the given parameters.
@@ -126,7 +128,7 @@ TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
                              upper),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (CosTime::TIO::_nil ());
-  return tio->_this ();
+  return tio->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::ULongLong
@@ -134,18 +136,17 @@ TAO_Time_Service_Clerk::get_time (void)
 {
   // Globally sync. time is the latest global time plus the time
   // elapsed since last updation was done.
-  CORBA::ULongLong time;
 
-  time = (CORBA::ULongLong) (ACE_static_cast (CORBA::ULongLong,
-                                              ACE_OS::gettimeofday ().sec ()) *
+  const ACE_Time_Value timeofday = ACE_OS::gettimeofday ();
+
+  return (CORBA::ULongLong) (ACE_static_cast (CORBA::ULongLong,
+                                              timeofday.sec ()) *
                              ACE_static_cast (ACE_UINT32,
                                               10000000) +
                              ACE_static_cast (CORBA::ULongLong,
-                                              ACE_OS::gettimeofday ().usec () * 10))
+                                              timeofday.usec () * 10))
     - this->update_timestamp_
     + this->time_;
-
-  return time;
 }
 
 // Returns the time displacement factor in minutes.
