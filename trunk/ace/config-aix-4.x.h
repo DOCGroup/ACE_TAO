@@ -14,6 +14,9 @@
    //********************************************************************
    //
 
+// Compiler does this with a builtin - it's not in libc.
+#  define ACE_HAS_ALLOCA
+
    // Compiler supports the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
 
@@ -125,7 +128,6 @@
 #endif /* ACE_AIX_VERS >= 403 */
 
 #define ACE_HAS_AIX_HI_RES_TIMER
-#define ACE_HAS_ALLOCA
 
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
