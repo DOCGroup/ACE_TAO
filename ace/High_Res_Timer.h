@@ -51,6 +51,11 @@ public:
   static int supported ();
   // Returns 1 if high-resolution time is supported on the platform, 0 if not.
 
+  static int get_env_global_scale_factor (const char *env = "ACE_SCALE_FACTOR");
+  // Sets the global_scale_factor to the value in the <env>
+  // environment variable.  Returns 0 on success, -1 on failure.  Note
+  // if <env> points to string "0" (value zero), this call will fail.
+
   static void global_scale_factor (double gsf);
   // <gsf> is used as a global scale factor.  Any High_Res_Timers
   // constructed with scale_factor == 0 will check and use <gsf> if
