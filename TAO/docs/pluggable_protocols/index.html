@@ -62,13 +62,17 @@ Washington University at St.Louis
 </UL>
 <LI><A NAME="TOC_SECTION230" HREF="#SECTION230">The <TT>Profile</TT> Object</A>
 <LI><A NAME="TOC_SECTION240" HREF="#SECTION240">The <TT>Protocol_Factory</TT> Object</A>
-<LI><A NAME="TOC_SECTION250" HREF="#SECTION250">The <TT> Transport</TT> Object</A>
+<LI><A NAME="TOC_SECTION250" HREF="#SECTION250">The <TT>Transport</TT> Object</A>
 <UL>
 <LI><A NAME="TOC_SECTION251" HREF="#SECTION251">Context</A>
 <LI><A NAME="TOC_SECTION252" HREF="#SECTION252">Problem</A>
 <LI><A NAME="TOC_SECTION253" HREF="#SECTION253">Solution</A>
 <LI><A NAME="TOC_SECTION254" HREF="#SECTION254">Applying the solution in TAO</A>
-<LI><A NAME="TOC_SECTION255" HREF="#SECTION255"><TT> Transport</TT> Implementation</A>
+<LI><A NAME="TOC_SECTION255" HREF="#SECTION255"><TT>Transport</TT> Implementation</A>
+</UL>
+<LI><A NAME="TOC_SECTION260" HREF="#SECTION260">The <TT>Connection_Handler</TT></A></LI>
+<UL>
+<LI><A NAME="TOC_SECTION261" HREF="#SECTION261"><TT>Connection_Handler</TT> Implementation</A></LI
 </UL>
 </UL>
 <LI><A NAME="TOC_SECTION300" HREF="#SECTION300">Notes From a ``Real World'' Pluggable Protocol Implementation</A>
@@ -279,7 +283,7 @@ Figure&nbsp;<A HREF="#server">1</A> illustrates how TAO's pluggable protocols fr
 the design presented in Section&nbsp;<A HREF="#design:transparent"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
  SRC="cross_ref_motif.png"></A>. The concrete ACE
 <TT>Service Handler</TT> created by the ACE <TT>Acceptor</TT> is responsible
-for implementing the External Polymorphism pattern and encapsulating itself
+for implementing the External Polymorphism pattern&nbsp;[<A HREF="#Schmidt:97e">2</A>] and encapsulating itself
 behind the <TT>Transport</TT> interface defined in our pluggable protocols framework.
 
 <P>
@@ -1663,7 +1667,7 @@ The <TT>Protocol_Factory</TT> Object</A>
 
 <P>
 TAO's uses the ACE's Service Configurator implementation&nbsp;[<A
- HREF="#Schmidt:94k">2</A>]
+ HREF="#Schmidt:94k">3</A>]
 to dynamically load pluggable protocol factories. A <TT>Protocol_Factory</TT>
 is responsible for creating the <TT>Acceptor</TT> and <TT>Connector</TT> for
 the given pluggable protocol. TAO iterates through the list of loaded <TT>Protocol
@@ -2037,7 +2041,7 @@ be possible to isolate them from the details of the ORB messaging implementation
 Care must be taken, however, because not all ORB Messaging protocols can be
 used with all transport protocols, <I>i.e.</I>, some mechanism is needed to
 ensure only semantically compatible protocols are configured&nbsp;[<A
- HREF="#Johnson:95a">3</A>].
+ HREF="#Johnson:95a">4</A>].
 
 <P></P>
 <DIV ALIGN="CENTER"><A NAME="iop_client"></A><A NAME="700"></A>
@@ -2069,7 +2073,7 @@ Solution</A>
 
 <P>
 Use the Layers architecture pattern&nbsp;[<A
- HREF="#Buschmann:95b">4</A>], which decomposes
+ HREF="#Buschmann:95b">5</A>], which decomposes
 the system into groups of components, each one at a different level of abstraction.<A NAME="tex2html5"
  HREF="#foot549"><SUP>1</SUP></A> For the client, the ORB uses a particular ORB messaging protocol to send a
 request. This ORB messaging protocol delegates part of the work to the transport
@@ -2135,6 +2139,21 @@ creates and initializes these objects.
 <H3><A NAME="SECTION255" HREF="#TOC_SECTION255">
 <TT>Transport</TT> Implementation</A>
 </H3>
+
+<P>
+A <TT>Transport</TT> implements
+external polymorphism&nbsp;[<A HREF="#Schmidt:97e">2</A>] over the
+<TT>Client_Connector_Handler</TT> and the
+<TT>Service_Connector_Handler</TT> objects described in the
+<A HREF="#SECTION260"><TT>Connection_Handler</TT></A> section of this
+document.  A <TT>Connection_Handler</TT> is simply a template
+instantiation of <TT>ACE_Svc_Handler&lt;&gt;</TT>, but they don't do
+much work.  They just delegate on the <TT>Transport</TT> classes.
+This somewhat strange design is easy to understand once it is realized
+that not all <TT>ACE_Svc_Handler&lt;&gt;</TT> classes are type
+compatible (except in their most basic <TT>ACE_Event_Handler</TT>
+form).  So they must be wrapped using the <TT>TAO_Transport</TT>
+class.
 
 <P>
 All TAO pluggable protocol <TT>Transport</TT> classes must inherit from the
@@ -2435,6 +2454,40 @@ protocols.
 TAO's existing pluggable protocols implement client-side and server-side specific
 <TT>Transport</TT>s. For the most part, they can be used as references for other
 pluggable protocols.
+
+<H2><A NAME="SECTION260" HREF="#TOC_SECTION260">
+The <TT>Connection_Handler</TT></A>
+</H2>
+A <TT>Connection_Handler</TT> is simply a template instantiation of
+<TT>ACE_Svc_Handler&lt;&gt;</TT>&nbsp;[<A HREF="#Schmidt:97c">1</A>],
+a service handler.  <TT>ACE_Svc_Handler</TT>s provide a well-defined
+interface that <TT>Acceptor</TT> and <TT>Connector</TT> pattern
+factories use as their target.  Service handlers perform
+application-specific processing and communicate via the connection
+established by the <TT>Connector</TT> and <TT>Acceptor</TT>
+components.  Typically, TAO <TT>Connection_Handler</TT>s will subclass
+<TT>ACE_Svc_Handler</TT> and do all the interesting work in the
+subclass.
+
+<P>
+
+<H3><A NAME="SECTION261" HREF="#TOC_SECTION261">
+<TT>Connection_Handler</TT> Implementation</A>
+</H3>
+
+TAO pluggable transport protocol <TT>Connection_Handler</TT>s should
+be derived from the <TT>ACE_Svc_Handler</TT> class declared in
+&lt;<A
+      HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ace/Svc_Handler.h"><TT>ace/Svc_Handler.h</TT></A>&gt;.  TAO's existing pluggable transport protocol
+implementations define three classes, a base class derived from an
+<TT>ACE_Svc_Handler</TT> specific to that protocol, and a client-side
+and a server-side class derived from that base class.  Generally, it
+is a good idea to base new <TT>Connection_Handler</TT> implementations
+on TAO's existing ones.  The interfaces for the existing
+<TT>Connection_Handler</TT>s are defined in
+&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/IIOP_Connect.h"><TT>tao/IIOP_Connect.h</TT></A>&gt;
+and
+&lt;<A HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/TAO/tao/UIOP_Connect.h"><TT>tao/UIOP_Connect.h</TT></A>&gt;.
 
 <P>
 <HR>
@@ -3166,7 +3219,17 @@ D. C. Schmidt,
   (R. Martin, F. Buschmann, and D. Riehle, eds.), Reading, MA: Addison-Wesley,
   1997.
 
-<P></P><DT><A NAME="Schmidt:94k">2</A>
+<P></P><DT><A NAME="Schmidt:97e">5</A>
+<DD>
+C. Cleeland, D. C. Schmidt and T. Harrison,
+``<A HREF=http://www.cs.wustl.edu/~schmidt/External-Polymorphism.ps.gz>
+  External Polymorphism -- An Object Structural Pattern for
+  Transparently Extending Concrete Data Types</A>,''
+  in <EM> Pattern Languages of Program Design</EM>
+  (R. Martin, F. Buschmann, and D. Riehle, eds.), Reading, MA: Addison-Wesley,
+  1997.
+
+<P></P><DT><A NAME="Schmidt:94k">3</A>
 <DD>
 D. C. Schmidt and T. Suda,
   ``<A HREF=http://www.cs.wustl.edu/~schmidt/DSEJ-94.ps.gz>
@@ -3175,16 +3238,17 @@ D. C. Schmidt and T. Suda,
   Distributed Systems Engineering Journal (Special Issue on Configurable
   Distributed Systems)</EM>, vol. 2, pp. 280-293, December 1994.
 
-<P></P><DT><A NAME="Johnson:95a">3</A>
+<P></P><DT><A NAME="Johnson:95a">4</A>
 <DD>
 H. Hueni, R. Johnson, and R. Engel, ``A Framework for Network Protocol
   Software,'' in <EM> Proceedings of OOPSLA '95</EM>, (Austin, Texas), ACM,
   October 1995.
 
-<P></P><DT><A NAME="Buschmann:95b">4</A>
+<P></P><DT><A NAME="Buschmann:95b">5</A>
 <DD>
 F. Buschmann, R. Meunier, H. Rohnert, P. Sommerlad, and M. Stal, <EM>  Pattern-Oriented Software Architecture - A System of Patterns</EM>.
 <BR>Wiley and Sons, 1996.
+
 </DL>
 
 <P>
@@ -3201,7 +3265,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:othman@cs.wustl.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Sat Dec 18 12:46:03 CST 1999
+Last modified: Sat Dec 18 14:22:35 CST 1999
 <!-- hhmts end -->
 </BODY>
 </HTML>
