@@ -23,9 +23,10 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+  /* For future upgradeability to wchar */
 #ifndef PACE_TCHAR
 #define PACE_TCHAR
-  typedef char PACE_TCHAR;
+  typedef char pace_tchar;
 #endif /* PACE_TCHAR */
 
 #ifndef PACE_HANDLE
