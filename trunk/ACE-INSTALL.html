@@ -1006,10 +1006,10 @@ against the VCL-compatible (ie pascal-compatible) runtime library.  To
 tell the difference between these libraries the VCL-compatible ones
 have a 'p' in the suffix (i.e., 'p' for pascal).  To build VCL
 compatible libraries try
-<PRE><CODE>
+<pre><code>
 make -f Makefile.bor -DPASCAL
-</PRE></CODE>
- 
+</code></pre>
+
 Please see <A
 HREF="http://www.tenermerx.com/tao_bcb/index.html">http://www.tenermerx.com/tao_bcb/index.html</A>
 for more information on building ACE+TAO with Borland C++ Builder. <P>
@@ -1737,7 +1737,7 @@ intact.<p>
   <LI><A HREF="#cloning">Cloning the Source Tree</A>
   <LI><A HREF="#corba">Building CORBA Versions of ACE</A>
   <LI><A HREF="#mvs">Additional Build Tips for MVS</A>
-  <LI><A HREF="#flags">Makfile Flags</A>
+  <LI><A HREF="#flags">Makefile Flags</A>
   <LI><A HREF="http://www.cs.wustl.edu/~levine/CVS.html">Version Control</A>
   <LI><A HREF="http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html">ACE Makefile hints</a>
   <LI><A
@@ -1913,11 +1913,25 @@ uncommenting the PMAP and LMAP lines in the platform_mvs.GNU file.<P>
 <HR><P>
 <H4><A NAME="flags">Makefile Flags</A></H4>
 
-ACE supports the following flags.  They can be enabled either on the command
-line, e.g., "make purify=1", or added to your platform_macros.GNU.  To
-disable the option, set the flag to null, e.g., "make debug=".  Some flags
-support setting to 0 disable, e.g., "make debug=0".  debug=1 is enabled in
-the platform files that are released with ACE.<P>
+GNU make provides many options to customize its operation.  See its
+documentation for more information.  One example is that for multi-cpu
+UNIX machines you will be able to build faster if you use:<P>
+
+<pre><code>
+% make -j <em>n</em>
+</code></pre><p>
+
+which allows parallel compilation. The number <i>n</i> should
+typically be the number of CPUs.  It is likely that builds will be
+faster even on single-CPU UNIX machines with <code>make -j
+2</code>.<P>
+
+ACE further supports the following flags.  They can be enabled either
+on the command line, e.g., "make purify=1", or added to your
+platform_macros.GNU.  To disable the option, set the flag to null,
+e.g., "make debug=".  Some flags support setting to 0 disable, e.g.,
+"make debug=0".  debug=1 is enabled in the platform files that are
+released with ACE.<P>
 
 Please note that the effects of a flag may be platform specific.
 Also, combinations of certain flags may or may not be allowed on
