@@ -1,3 +1,9 @@
+Wed Jun 16 22:44:48 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Log/Logger_i.cpp (Logger_Factory_i): Removed
+	  template specialization.  ACE_CString already has a hash()
+	  method.
+
 Wed Jun 16 22:49:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Callback_Quoter/Makefile:

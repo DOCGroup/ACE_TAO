@@ -8,17 +8,6 @@
 
 ACE_RCSID(Log, Logger_i, "$Id$")
 
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-#define TAO_Logger_Hash \
-  ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex>
-
-u_long
-TAO_Logger_Hash::hash (const ACE_CString &ext_id)
-{
-  return ACE::hash_pjw (ext_id.fast_rep ());
-}
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION */
-
 Logger_Factory_i::Logger_Factory_i (void)
 {
 }
