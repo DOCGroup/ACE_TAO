@@ -30,9 +30,6 @@
 #include "Incoming_Message_Queue.h"
 #include "Synch_Refcountable.h"
 
-// @@Phil -- why should this be included?
-#include "CONV_FRAMEC.h"
-
 class TAO_ORB_Core;
 class TAO_Target_Specification;
 class TAO_Operation_Details;

@@ -49,6 +49,13 @@ public:
 
     return CORBA::string_dup (name);
   };
+
+  ACE_CDR::WChar * op2 (const ACE_CDR::WChar *s1
+			ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    return CORBA::wstring_dup (s1);
+  };
 };
 
 // ------------------------------------------------------------
@@ -60,7 +67,7 @@ int main(int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       // Init the orb
-      CORBA::ORB_var orb= CORBA::ORB_init (argc, 
+      CORBA::ORB_var orb= CORBA::ORB_init (argc,
                                            argv,
                                            ""
                                            ACE_ENV_ARG_PARAMETER);

@@ -82,10 +82,13 @@ Generator::gen_wstring (int max_length)
   CORBA::ULong len = (CORBA::ULong) (::ACE_OS::rand () % max_length);
   CORBA::WChar *buf = CORBA::wstring_alloc (len);
   CORBA::ULong i = 0;
+  CORBA::WChar limit = 1;
+  for (i = ACE_OutputCDR::wchar_maxbytes(); i > 0; i--)
+    limit *= 256;
 
   while (i < len)
     {
-      CORBA::WChar wc = ACE_OS::rand () % ACE_WCHAR_MAX;
+      CORBA::WChar wc = ACE_OS::rand () % limit;
       if (wc)
         {
           buf[i] = wc;

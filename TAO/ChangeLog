@@ -1,3 +1,29 @@
+Mon Mar 31 15:09:32 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Codeset_Manager.cpp:
+        * tao/Codeset_Manager.h:
+        * tao/Codeset_Translator_Factory.h:
+        * tao/Codeset_Translator_Factory_T.h:
+        * tao/Invocation.cpp:
+        * tao/Transport.h:
+        * tao/default_resource.cpp: Address the conserns raised by
+          Bala. These include adding Doxygen documentation and making some
+          calls more efficient by using inline code to check conditions
+          before making calls.
+
+        * tests/CodeSets/simple/client.cpp:
+        * tests/CodeSets/simple/cs_test.conf:
+        * tests/CodeSets/simple/server.cpp:
+        * tests/CodeSets/simple/simple.idl: Add a wstring test to the
+          simple interface.
+
+        * tests/Param_Test/helper.cpp: Limit the generation of random
+          wchar values to only those values that fit in the output cdr's
+          wchar_maxbytes number of bytes.
+
+        * tests/Param_Test/svc.conf: Use a 2 byte codeset for the native
+          wchar type.
+
 Mon Mar 31 14:05:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp (get_is_multiple):
@@ -24,10 +50,10 @@ Mon Mar 31 13:05:41 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Mon Mar 31 12:29:32 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Makefile (DIRS): Updated  to include the new test.
-	
+
 	* tests/Collocation_Tests/Makefile.bor:
 	* tests/Collocation_Tests/Collocated_Test.bor: Borland files.
-	
+
 Mon Mar 31 12:20:31 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Collocation_Tests/Client_Task.cpp:
@@ -41,7 +67,7 @@ Mon Mar 31 12:20:31 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tests/Collocation_Tests/run_test.pl: Restructured the test to
 	  work under different values of -ORBCollocation and multiple
 	  ORB's. Thanks to Priyanka for helping me to trace the problem
-	  with the first version of this test. 
+	  with the first version of this test.
 
 	* tao/ORB_Core.cpp: Cosmetic fixes.
 
@@ -50,7 +76,7 @@ Mon Mar 31 12:03:51 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
 	* tao/IOP_IORC.{h,cpp,i}: Regenerated the files
 	* tao/diffs/IOP_IOR.diff:
-	* tao/diffs/IOP_Codec.diff: Added the diffs for future use. 
+	* tao/diffs/IOP_Codec.diff: Added the diffs for future use.
 
 Mon Mar 31 11:52:26 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -90,25 +116,25 @@ Mon Mar 31 14:18:23 2003  Simon McQueen  <sm@prismtechnologies.com>
 Mon Mar 31 06:57:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp: Fixed 
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp: Fixed
 	  warning in BCB builds by generating the other version of
 	  CORBA::_stubobj (). Thanks to Johnny for reporting this.
 
 Mon Mar 31 06:43:20 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	* tao/default_resource.h: Fixed a warning in our daily builds. 
+	* tao/default_resource.h: Fixed a warning in our daily builds.
 
 Sun Mar 30 21:44:17 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* performance-tests/Memory/IOR_Size/server.conf: Added the lazy
 	  strategy to the conf file.
 
-Sun Mar 30 15:25:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu> 
+Sun Mar 30 15:25:05 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* docs/tutorials/Quoter/Simple/Persistent/server.dsp: Added RTTI to
 	  some of he files in the above projects.
 
-Sun Mar 30 15:21:18 2003  Balachandran Natarajan <bala@isis-server.isis.vanderbilt.edu> 
+Sun Mar 30 15:21:18 2003  Balachandran Natarajan <bala@isis-server.isis.vanderbilt.edu>
 
 	* examples/ior_corbaloc/ior_corbaloc_client.dsp:
 	* examples/ior_corbaloc/ior_corbaloc_server.dsp:
