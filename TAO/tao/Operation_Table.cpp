@@ -30,13 +30,15 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry
                                                     ACE_Allocator *alloc)
   : hash_ (hashtblsize, alloc)
 {
-  // The job of the constructor is to go thru each entry of the
-  // database and bind the operation name to its corresponding
-  // skeleton.
+  // Iterate thru each entry in the database and bind the operation
+  // name to its corresponding skeleton.
 
   for (CORBA::ULong i = 0; i < dbsize; i++)
     // @@ (ASG): what happens if bind fails ???
-    (void) this->bind (db[i].opname_, db[i].skel_ptr_);
+    if (this->bind (db[i].opname_, db[i].skel_ptr_) == -1)
+      ACE_ERROR ((LM_DEBUG,
+                  "(%P|%t) %p\n",
+                  "bind failed"));
 }
 
 TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
