@@ -1,11 +1,9 @@
 # $Id$
 
-BIN = ECT_Supplier ECT_Consumer ECT_Throughput
-
-LDLIBS= -lorbsvcs -lTAO
+LDLIBS = -lorbsvcs -lTAO
 
 ifndef TAO_ROOT
-TAO_ROOT = $(ACE_ROOT)/TAO
+  TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
@@ -15,9 +13,18 @@ ECT_Supplier_OBJS=$(addsuffix .o,ECT_Supplier ECT_Driver ECT_Supplier_Driver)
 ECT_Consumer_OBJS=$(addsuffix .o,ECT_Consumer ECT_Driver ECT_Consumer_Driver)
 ECT_Throughput_OBJS=$(addsuffix .o,ECT_Throughput ECT_Driver ECT_Consumer ECT_Supplier)
 
-SRC =   $(addsuffix .cpp, $(BIN)) \
-	ECT_Supplier_Driver.cpp \
-	ECT_Consumer_Driver.cpp
+SRC = $(addsuffix .cpp, $(BIN)) \
+      ECT_Supplier_Driver.cpp \
+      ECT_Consumer_Driver.cpp
+
+BIN2 = ECT_Supplier ECT_Consumer ECT_Throughput
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Event,$(findstring Event,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # Event
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -41,9 +48,6 @@ ECT_Consumer: $(addprefix $(VDIR),$(ECT_Consumer_OBJS))
 
 ECT_Throughput: $(addprefix $(VDIR),$(ECT_Throughput_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-realclean:
-	$(RM) -f $(BIN)
 
 #----------------------------------------------------------------------------
 #       Dependencies
