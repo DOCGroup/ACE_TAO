@@ -95,6 +95,10 @@ SOURCE=.\client.cpp
 
 SOURCE=..\IDL_Cubit\cubitC.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=..\IDL_Cubit\cubitS.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -102,6 +106,10 @@ SOURCE=..\IDL_Cubit\cubitC.cpp
 # Begin Source File
 
 SOURCE=..\IDL_Cubit\cubitC.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\IDL_Cubit\cubitS.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
