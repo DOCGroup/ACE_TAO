@@ -1424,9 +1424,9 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
   // Bind.
   TAO_Transport_Mux_Strategy *tms = this->transport_->tms ();
 
-  TAO_Bind_Dispatcher_Guard dispatch_guard(this->op_details_.request_id(),
-                                           &this->rd_,
-                                           this->transport_->tms ());
+  TAO_Bind_Dispatcher_Guard dispatch_guard (this->op_details_.request_id(),
+                                            &this->rd_,
+                                            tms);
   int retval = dispatch_guard.status();
 
   if (retval == -1)
