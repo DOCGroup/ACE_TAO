@@ -1,3 +1,10 @@
+Thu Oct 10 15:11:07 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/make_release: A pattern matching issue. The cvs server now
+	  gives a message starting with "cvs server:.." instead of "cvs
+	  checkout:..". This created problems for Ossama when he was
+	  trying to cut the beta.
+
 Wed Oct  9 23:43:51 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/WIN32_Asynch_IO.cpp (ACE_Asynch_Read_Stream::readv,
