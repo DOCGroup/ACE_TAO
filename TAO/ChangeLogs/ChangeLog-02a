@@ -1,3 +1,13 @@
+Thu May  3 14:56:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply): 
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/GIOP_Message_Generator_Parser_10.cpp:
+	* tao/GIOP_Message_Generator_Parser_12.cpp: Changed the call
+	  steal_data () to exchange_data_blocks (). This should give us a
+	  "release" free, malloc free and a lock free version of what we
+	  want to achieve.
+
 Thu May  3 11:55:42 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	These are a set of changes for enabling lock free CDR input
