@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  TAO_Notify_QoSAdmin_i : public virtual POA_CosNotification::QoSAdmin
+class TAO_ORBSVCS_Export TAO_Notify_QoSAdmin_i : public virtual POA_CosNotification::QoSAdmin
 {
   // = TITLE
   //   TAO_Notify_QoSAdmin_i

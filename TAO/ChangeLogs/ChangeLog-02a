@@ -1,7 +1,38 @@
+Tue Jan 11 00:27:51 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/Notify_Service/Notify_Service.dsp
+	* orbsvcs/Notify_Service/Notify_Service.dsw
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  Added Notify Service.
+
+	* orbsvcs/orbsvcs/Notify/NotifyPublish_i.h:
+	* orbsvcs/orbsvcs/Notify/NotifySubscribe_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Dispatcher.h:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_FilterFactory_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyConsumer_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushConsumer_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_QoSAdmin_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushConsumer_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.h:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushConsumer.h:
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.h: Added
+	  TAO_ORBSVCS_Export.
+
 Mon Jan 10 18:12:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/PollableC.cpp: Fixed two instances of wrong usage of
-	  ACE_NEW_RETURN. 
+	  ACE_NEW_RETURN.
 
 Mon Jan 10 16:43:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
@@ -49,13 +80,13 @@ Sat Jan  8 12:13:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  g++ David Levine.
 
 Sat Jan  8 03:30:00 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
- 
+
 	* TAO/docs/releasenotes/index.html
 	  TAO/examples/AMI/FL_Callback/README,
 	  TAO/examples/Buffered_AMI/README,
 	  TAO/tests/AMI/README:
 	  Made the documentation of 'defines' necessary to compile
-	  AMI consistent across various documentations. 
+	  AMI consistent across various documentations.
 	  Currently, you need to set TAO_HAS_CORBA_MESSAGING and
 	  TAO_HAS_AMI_CALLBACK to activate AMI code in the TAO library.
 	  (TAO_HAS_VALUETYPE is needed as well, but is defined by default)
@@ -121,7 +152,7 @@ Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
           - Object_Adapter.cpp
           - Object_Adapter.h
           - Object_Adapter.i
-  
+
           Thanks to Erik Johannes <ejohannes@oresis.com> for motivating
  	  this change.
 

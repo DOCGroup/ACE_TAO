@@ -23,7 +23,7 @@
 #include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/CosNotificationC.h"
 
-class TAO_Notify_Constraint_Evaluator : public TAO_Constraint_Evaluator
+class TAO_ORBSVCS_Export TAO_Notify_Constraint_Evaluator : public TAO_Constraint_Evaluator
 {
  public:
   TAO_Notify_Constraint_Evaluator (const CosNotification::StructuredEvent& s_event);

@@ -26,7 +26,7 @@
 
 class TAO_Constraint_Evaluator;
 
-class TAO_Notify_Constraint_Interpreter : public TAO_Interpreter
+class TAO_ORBSVCS_Export TAO_Notify_Constraint_Interpreter : public TAO_Interpreter
 {
   //
   // = TITLE
