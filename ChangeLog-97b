@@ -1,3 +1,10 @@
+Thu Oct 23 22:07:03 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (wait_task,wait_grp):  We should also
+	  check for thread creation flags when collection information for
+	  threads belong to this group and don't try to join those threads
+	  created with THR_DETACHED or THR_DAEMON.
+
 Thu Oct 23 21:22:16 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Copied some documentation about makefile flags
