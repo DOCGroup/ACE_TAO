@@ -88,7 +88,7 @@ TAO::PG_Object_Group_Manipulator::create_object_group (
   return object_group._retn ();
 }
 
-int
+void
 TAO::PG_Object_Group_Manipulator::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
   ACE_ASSERT (CORBA::is_nil (this->orb_.in ()) && !CORBA::is_nil (orb));
@@ -100,13 +100,11 @@ TAO::PG_Object_Group_Manipulator::init (CORBA::ORB_ptr orb, PortableServer::POA_
   // Get an object reference for the ORBs IORManipulation object!
   CORBA::Object_var IORM = this->orb_->resolve_initial_references (
     TAO_OBJID_IORMANIPULATION, 0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
+  ACE_CHECK;
 
   this->iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (
     IORM.in () ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN(-1);
-
-  return 0;
+//  ACE_CHECK;
 }
 
 int TAO::PG_Object_Group_Manipulator::set_primary (

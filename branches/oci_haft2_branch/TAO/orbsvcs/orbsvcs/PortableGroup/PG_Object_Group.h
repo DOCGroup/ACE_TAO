@@ -111,23 +111,18 @@ namespace TAO
       TAO_PG_Location_Equal_To,
       MemberMapMutex> MemberMap_Iterator;
 
-    /**
-     * Private constructor -- use static create method.
-     * NOTE: gcc complains about private constructor so
-     * make it protected.  Now it really should complain
-     * about non-virtual destructor, but it's not that smart.
-     */
-  protected:
+    /////////////////////
+    // Construct/Destruct
+  public:
     PG_Object_Group (
       CORBA::ORB_ptr orb,
-      TAO::PG_Object_Group_Manipulator * manipulator,
+      TAO::PG_Object_Group_Manipulator & manipulator,
       CORBA::Object_ptr empty_group,
-      const PortableGroup::TagGroupTaggedComponent & tag_component,
+      const PortableGroup::TagGroupTaggedComponent & tagged_component,
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       TAO_PG::Properties_Decoder * type_properties);
 
-  public:
 
     /// Destructor
     ~PG_Object_Group ();
@@ -239,6 +234,7 @@ namespace TAO
     /////////////////
     // Static Methods
   public:
+#if 0
     /**
      * Static creation method needed because exceptions can happen.
      */
@@ -250,7 +246,7 @@ namespace TAO
       const PortableGroup::Criteria & the_criteria,
       TAO_PG::Properties_Decoder * type_properties
       ACE_ENV_ARG_DECL);
-
+#endif
     ///////////////
     // Static Data
   private:
@@ -268,7 +264,7 @@ namespace TAO
     CORBA::ORB_var orb_;
 
     // The object group manipulator
-    TAO::PG_Object_Group_Manipulator * manipulator_;
+    TAO::PG_Object_Group_Manipulator & manipulator_;
 
     /// boolean true if empty group
     int empty_;

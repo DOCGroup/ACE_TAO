@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef TAO_PG_OBJECT_GROUP_CREATOR_H
-#define TAO_PG_OBJECT_GROUP_CREATOR_H
+#ifndef TAO_PG_OBJECT_GROUP_MANIPULATOR_H
+#define TAO_PG_OBJECT_GROUP_MANIPULATOR_H
 
 #include /**/ "ace/pre.h"
 #include "orbsvcs/PortableGroupS.h"
@@ -47,7 +47,7 @@ namespace TAO
     /**
      * Initializes the group creator.
      */
-    int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
+    void init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa ACE_ENV_ARG_DECL);
 
     /**
      * Create an empty object group.
