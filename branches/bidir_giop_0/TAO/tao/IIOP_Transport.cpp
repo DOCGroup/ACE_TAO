@@ -454,7 +454,7 @@ TAO_IIOP_Transport::process_message (void)
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_REPLY)
     {
-      TAO_Pluggable_Reply_Params params;
+      TAO_Pluggable_Reply_Params params (this->orb_core ());
       if (this->messaging_object_->process_reply_message (params)  == -1)
         {
 
@@ -468,12 +468,8 @@ TAO_IIOP_Transport::process_message (void)
           return -1;
         }
 
-      /*      result =
-        this->tms_->dispatch_reply (params.request_id_,
-                                    params.reply_status_,
-                                    message_state->giop_version,
-                                    params.svc_ctx_,
-                                    message_state);*/
+      result =
+        this->tms_->dispatch_reply (params);
 
       // @@ Somehow it seems dangerous to reset the state *after*
       //    dispatching the request, what if another threads receives
@@ -483,6 +479,27 @@ TAO_IIOP_Transport::process_message (void)
       //    - The the muxed case each thread has its own message_state.
       //    I'm pretty sure this comment is right.  Could somebody else
       //    please look at it and confirm my guess?
+
+      // @@ The above comment was found in the older versions of the
+      //    code. The code was also written in such a way that, when
+      //    the client thread on a call from handle_input () from the
+      //    reactor a call would be made on the handle_client_input
+      //    (). The implementation of handle_client_input () looked so
+      //    flaky. It used to create a message state upon entry in to
+      //    the function using the TMS and destroy that on exit. All
+      //    this was fine _theoretically_ for multiple threads. But
+      //    the flakiness was originating in the implementation of
+      //    get_message_state () where we were creating message state
+      //    only once and dishing it out for every thread till one of
+      //    them destroy's it. So, it looked broken. That has been
+      //    changed. Why?. To my knowledge, the reactor does not call
+      //    handle_input () on two threads at the same time. So, IMHO
+      //    that defeats the purpose of creating a message state for
+      //    every thread. This is just my guess. If we run in to
+      //    problems this place needs to be revisited. If someone else
+      //    is going to take a look please contact bala@cs.wustl.edu
+      //    for details on this-- Bala
+
       if (result == -1)
         {
           if (TAO_debug_level > 0)
@@ -504,8 +521,6 @@ TAO_IIOP_Transport::process_message (void)
       // This is a NOOP for the Exclusive request case, but it actually
       // destroys the stream in the muxed case.
       //this->tms_->destroy_message_state (message_state);
-      // @@@@ Need to process replies.....
-
     }
   else if (t == TAO_PLUGGABLE_MESSAGE_MESSAGERROR)
     {

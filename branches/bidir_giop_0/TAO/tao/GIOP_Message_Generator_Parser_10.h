@@ -80,6 +80,10 @@ public:
   virtual int parse_reply (TAO_InputCDR &input,
                            TAO_Pluggable_Reply_Params &params);
 
+    /// Parse the reply message from the server
+  virtual int parse_locate_reply (TAO_InputCDR &input,
+                                  TAO_Pluggable_Reply_Params &params);
+
   /// Our versions
   virtual CORBA::Octet major_version (void);
   virtual CORBA::Octet minor_version (void);

@@ -584,7 +584,7 @@ TAO_GIOP_Message_Base::process_request (TAO_Transport *transport,
       if (!CORBA::is_nil (forward_to.in ()))
         {
           // We should forward to another object...
-          TAO_Pluggable_Reply_Params reply_params;
+          TAO_Pluggable_Reply_Params reply_params (orb_core);
           reply_params.request_id_ = request_id;
           reply_params.reply_status_ = TAO_GIOP_LOCATION_FORWARD;
           reply_params.svc_ctx_.length (0);
@@ -1230,7 +1230,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
                         orb_core->to_iso8859 (),
                         orb_core->to_unicode ());
 
-  TAO_Pluggable_Reply_Params reply_params;
+  TAO_Pluggable_Reply_Params reply_params (orb_core);
   reply_params.request_id_ = request_id;
   reply_params.svc_ctx_.length (0);
 

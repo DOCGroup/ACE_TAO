@@ -24,6 +24,8 @@
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
 
+class TAO_Pluggable_Reply_Params;
+
 class TAO_Export TAO_Muxed_TMS : public TAO_Transport_Mux_Strategy
 {
   // = DESCRIPTION
@@ -52,13 +54,13 @@ public:
   virtual int bind_dispatcher (CORBA::ULong request_id,
                                TAO_Reply_Dispatcher *rh);
   virtual void unbind_dispatcher (CORBA::ULong request_id);
-  virtual int dispatch_reply (CORBA::ULong request_id,
-                              CORBA::ULong reply_status,
-                              const TAO_GIOP_Version& version,
-                              IOP::ServiceContextList& reply_ctx,
-                              TAO_GIOP_Message_State* message_state);
-  virtual TAO_GIOP_Message_State *get_message_state (void);
-  virtual void destroy_message_state (TAO_GIOP_Message_State *);
+
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
+
+  // @@ Commented for the time being, let the commented line stay for
+  //    sometime - Bala
+  // virtual TAO_GIOP_Message_State *get_message_state (void);
+  // virtual void destroy_message_state (TAO_GIOP_Message_State *);
   virtual int idle_after_send (void);
   virtual int idle_after_reply (void);
   virtual void connection_closed (void);
@@ -84,7 +86,9 @@ protected:
   // Keep track of the orb core pointer. We need to this to create the
   // Reply Dispatchers.
 
-  TAO_GIOP_Message_State *message_state_;
+  // @@ Commented for the time being, let the commented line stay for
+  //    sometime - Bala
+  // TAO_GIOP_Message_State *message_state_;
   // Message state where the current input message is being read. This
   // is created at start of each incoming message. When that message
   // is read, the message is processed and for the next message a new

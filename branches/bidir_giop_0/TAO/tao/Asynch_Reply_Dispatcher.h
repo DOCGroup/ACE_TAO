@@ -26,6 +26,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class TAO_Pluggable_Reply_Params;
+class TAO_ORB_Core ;
+
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 #include "tao/Reply_Dispatcher.h"
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
@@ -36,7 +39,7 @@
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-class TAO_Export TAO_Asynch_Reply_Dispatcher_Base 
+class TAO_Export TAO_Asynch_Reply_Dispatcher_Base
   : public TAO_Reply_Dispatcher
 {
   // = TITLE
@@ -46,7 +49,7 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher_Base
   //    Base class for TAO_Asynch_Reply_Dispatcher and
   //    TAO_DII_Deferred_Reply_Dispatcher.
 public:
-  TAO_Asynch_Reply_Dispatcher_Base (void);
+  TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core);
   // Default constructor.
 
   virtual ~TAO_Asynch_Reply_Dispatcher_Base (void);
@@ -56,12 +59,9 @@ public:
   // Sets the transport for this invocation.
 
   // = The Reply Dispatcher methods
-  virtual int dispatch_reply (CORBA::ULong reply_status,
-                              const TAO_GIOP_Version &version,
-                              IOP::ServiceContextList &reply_ctx,
-                              TAO_GIOP_Message_State *message_state);
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
-  virtual TAO_GIOP_Message_State *message_state (void);
+  // virtual TAO_GIOP_Message_State *message_state (void);
 
   virtual void dispatcher_bound (TAO_Transport *t);
 
@@ -75,8 +75,12 @@ protected:
   // because our TAO_Asynch_Invocation or TAO_DII_Deferred_Invocation
   // will go out of scope before we are done.
 
-  TAO_GIOP_Message_State *message_state_;
+  // TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
+
+  TAO_InputCDR reply_cdr_;
+  // CDR stream which has the reply information that needs to be
+  // demarshalled by the stubs
 
   TAO_Transport *transport_;
   // This invocation is using this transport, may change...
@@ -88,7 +92,7 @@ protected:
 
 #if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
 
-class TAO_Export TAO_Asynch_Reply_Dispatcher 
+class TAO_Export TAO_Asynch_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
 {
   // = TITLE
@@ -99,7 +103,8 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher
 public:
   TAO_Asynch_Reply_Dispatcher (
       const TAO_Reply_Handler_Skeleton &reply_handler_skel,
-      Messaging::ReplyHandler_ptr reply_handler_ptr
+      Messaging::ReplyHandler_ptr reply_handler_ptr,
+      TAO_ORB_Core *orb_core
     );
  // Constructor.
 
@@ -107,10 +112,7 @@ public:
   // Destructor.
 
   // = The Reply Dispatcher methods
-  virtual int dispatch_reply (CORBA::ULong reply_status,
-                              const TAO_GIOP_Version &version,
-                              IOP::ServiceContextList &reply_ctx,
-                              TAO_GIOP_Message_State *message_state);
+  virtual int dispatch_reply (TAO_Pluggable_Reply_Params &params);
 
   virtual void connection_closed (void);
 

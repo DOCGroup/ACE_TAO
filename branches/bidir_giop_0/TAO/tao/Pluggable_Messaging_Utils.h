@@ -23,17 +23,12 @@
 
 #include "tao/IOPC.h"
 
-// @@ Bala: It is not clear that all protocol would use a request id
-// or that they will be able to pass a service context around.  OTOH
-// we can always leave the svc_ctx empty for protocols that don't
-// support it.  And use an internal table to map request ids to
-// whatever underlying request token is used.
-// @@ Carlos: I agree. My aim (not a great one though) was to identify
-// the different components, seggregate them at different logical
-// places. That would help us when we do the next iteration to attack
-// these places. IMHO, your idea of internal table to map request_ids
-// to different request tokens can be extended to other data in the
-// class.
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/CDR.h"
+
 class TAO_Export TAO_Pluggable_Reply_Params
 {
   // = TITLE
@@ -43,7 +38,7 @@ class TAO_Export TAO_Pluggable_Reply_Params
   //   This represents a set of data that would be received by the
   //   connector from the acceptor.
 public:
-  TAO_Pluggable_Reply_Params (void);
+  TAO_Pluggable_Reply_Params (TAO_ORB_Core *orb_core);
   // Constructor.
 
   IOP::ServiceContextList svc_ctx_;
@@ -77,6 +72,10 @@ public:
   CORBA::Boolean argument_flag_;
   // A flag that indicates if there is any data is going to get
   // marshalled in the reply
+
+  TAO_InputCDR input_cdr_;
+  // The stream with the non-demarshalled reply. This stream will be
+  // passed up to the stubs to demarshall the parameter values.
 
 private:
   IOP::ServiceContextList *service_context_;
