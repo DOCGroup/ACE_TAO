@@ -7,6 +7,11 @@ Thu Aug 19 11:24:35 1999  David L. Levine  <levine@cs.wustl.edu>
           on cross-compile platforms, we reduce the size of libTAO.a
           by 420 Kb.
 
+Thu Aug 19 08:30:49 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* docs/releasenotes/index.html: Added information
+	  about Asynchronous Method Invocation.
+
 Thu Aug 19 01:47:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * docs/compiler.html: Added documentation for the new -Gl flag
