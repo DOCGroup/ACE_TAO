@@ -1,5 +1,16 @@
 Fri Oct 16 15:45:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Service_Config.cpp (parse_args): Modified the -S option to
+ 	  enqueue the directives in FIFO order rather than in LIFO order.
+  	  It's more intuitive to process them in the order they are
+ 	  received!
+
+	* ace/Service_Config: It's now possible to give multiple -f
+ 	  options to the Service Configurator and it will open multiple
+ 	  files and process each one in the order specified in argv.
+  	  Thanks to David O'Farrell <dave.ofarrell@aersoft.ie> for
+ 	  suggesting this.
+
 	* ace: Replaced all #if !defined (ACE_FOO_H) with #ifndef
  	  ACE_FOO_H since many C++ preprocessors can recognize this idiom
  	  and optimize for it.

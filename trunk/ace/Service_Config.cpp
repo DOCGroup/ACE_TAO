@@ -57,9 +57,6 @@ int ACE_Service_Config::signum_ = SIGHUP;
 // Name of file used to store messages.
 LPCTSTR ACE_Service_Config::logger_key_ = ACE_DEFAULT_LOGGER_KEY;
 
-// Name of the service configuration file.
-const ASYS_TCHAR *ACE_Service_Config::service_config_file_ = ASYS_TEXT (ACE_DEFAULT_SVC_CONF);
-
 // The ACE_Service_Manager static service object is now defined
 // by the ACE_Object_Manager, in Object_Manager.cpp.
 
@@ -67,6 +64,7 @@ const ASYS_TCHAR *ACE_Service_Config::service_config_file_ = ASYS_TEXT (ACE_DEFA
 
 ACE_STATIC_SVCS *ACE_Service_Config::static_svcs_ = 0;
 ACE_SVC_QUEUE *ACE_Service_Config::svc_queue_ = 0;
+ACE_SVC_QUEUE *ACE_Service_Config::svc_conf_file_queue_ = 0;
 
 ACE_STATIC_SVCS *
 ACE_Service_Config::static_svcs (void)
@@ -199,6 +197,19 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
                       ASYS_TEXT ("bdf:k:nys:S:"),
                       1); // Start at argv[1].
 
+  if (ACE_Service_Config::svc_conf_file_queue_ == 0)
+    {
+      ACE_NEW (ACE_Service_Config::svc_conf_file_queue_,
+               ACE_SVC_QUEUE);
+
+      // Load the default "svc.conf" entry here.
+      if (ACE_Service_Config::svc_queue_->enqueue_tail
+          (ACE_CString (ACE_DEFAULT_SVC_CONF)) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    ASYS_TEXT ("%p\n"),
+                    "enqueue_tail"));
+    }
+
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
@@ -209,10 +220,15 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         ACE::debug (1);
         break;
       case 'f':
-        ACE_Service_Config::service_config_file_ = getopt.optarg;
+        if (ACE_Service_Config::svc_queue_->enqueue_tail
+            (ACE_CString (getopt.optarg)) == -1)
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("%p\n"),
+                      "enqueue_tail"));
         break;
       case 'k':
-        ACE_Service_Config::logger_key_ = ACE_WIDE_STRING (getopt.optarg);
+        ACE_Service_Config::logger_key_ =
+          ACE_WIDE_STRING (getopt.optarg);
         break;
       case 'n':
         ACE_Service_Config::no_static_svcs_ = 1;
@@ -225,7 +241,8 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
           // There's no point in dealing with this on NT since it
           // doesn't really support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
-          ACE_Service_Config::signum_ = ACE_OS::atoi (getopt.optarg);
+          ACE_Service_Config::signum_ =
+            ACE_OS::atoi (getopt.optarg);
 
           if (ACE_Reactor::instance ()->register_handler
               (ACE_Service_Config::signum_,
@@ -237,13 +254,14 @@ ACE_Service_Config::parse_args (int argc, ASYS_TCHAR *argv[])
         }
       case 'S':
         if (ACE_Service_Config::svc_queue_ == 0)
-          ACE_Service_Config::svc_queue_ = new ACE_SVC_QUEUE;
+          ACE_NEW (ACE_Service_Config::svc_queue_,
+                   ACE_SVC_QUEUE);
 
-        if (ACE_Service_Config::svc_queue_->enqueue_head
+        if (ACE_Service_Config::svc_queue_->enqueue_tail
             (ACE_CString (getopt.optarg)) == -1)
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("%p\n"),
-                      "enqueue_head"));
+                      "enqueue_tail"));
         break;
       default:
         ACE_ERROR ((LM_ERROR,
@@ -268,13 +286,13 @@ ACE_Service_Config::initialize (const ASYS_TCHAR svc_name[],
                 ASYS_TEXT ("opening static service %s\n"),
                 svc_name));
 
-  if (ACE_Service_Repository::instance ()->find (svc_name,
-                                                 (const ACE_Service_Type **) &srp) == -1)
+  if (ACE_Service_Repository::instance ()->find 
+      (svc_name,
+       (const ACE_Service_Type **) &srp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ASYS_TEXT ("%s not found\n"),
                        svc_name),
                       -1);
-
   else if (srp->type ()->init (args.argc (),
                                args.argv ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -368,27 +386,57 @@ ACE_Service_Config::process_directive (const ASYS_TCHAR directive[])
   return result;
 }
 
-// Process service configuration requests as indicated in the
-// <service_config_file>.
+// Process service configuration requests as indicated in the queue of
+// svc.conf files.
 
 int
 ACE_Service_Config::process_directives (void)
 {
   ACE_TRACE ("ACE_Service_Config::process_directives");
 
-  FILE *fp = ACE_OS::fopen (ACE_Service_Config::service_config_file_,
-                            ASYS_TEXT ("r"));
+  int result = 0;
 
-  if (fp == 0)
+  if (ACE_Service_Config::svc_conf_file_queue_ != 0)
     {
-      errno = ENOENT;
-      return -1; // No service configuration file
+      ACE_CString *sptr = 0;
+      ACE_SVC_QUEUE &queue = *ACE_Service_Config::svc_conf_file_queue_;
+
+      // Iterate through all the svc.conf files.
+      for (ACE_SVC_QUEUE_ITERATOR iter (queue);
+           iter.next (sptr) != 0;
+           iter.advance ())
+        {
+          // @@ We can remove the ASYS_WIDE_STRING stuff when this is
+          // defined as an ACE_WString...
+          FILE *fp = ACE_OS::fopen (ASYS_WIDE_STRING (sptr->fast_rep ()),
+                                    ASYS_TEXT ("r"));
+
+          if (fp == 0)
+            {
+              // Invalid svc.conf file.  We'll report it her and keep
+              // track of this and return -1 when the method finishes.
+              // all the files.
+              ACE_ERROR ((LM_ERROR,
+                          ASYS_TEXT ("%p\n"),
+                          // @@ Beware of the WString here...  Not
+                          // sure how to fix this with %p...
+                          ASYS_TEXT (sptr->fast_rep ())));
+              result = -1; 
+            }
+          else
+            {
+              ace_yyrestart (fp);
+              return ACE_Service_Config::process_directives_i ();
+            }
+        }
+
+      delete ACE_Service_Config::svc_conf_file_queue_;
+      ACE_Service_Config::svc_conf_file_queue_ = 0;
     }
-  else
-    {
-      ace_yyrestart (fp);
-      return ACE_Service_Config::process_directives_i ();
-    }
+
+  if (result == -1)
+    errno = ENOENT;
+  return result;
 }
 
 int
@@ -406,7 +454,8 @@ ACE_Service_Config::process_commandline_directives (void)
            iter.advance ())
         {
           // Process just a single directive.
-          if (ACE_Service_Config::process_directive (ASYS_WIDE_STRING (sptr->fast_rep ())) == -1)
+          if (ACE_Service_Config::process_directive 
+              (ASYS_WIDE_STRING (sptr->fast_rep ())) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("%p\n"),
