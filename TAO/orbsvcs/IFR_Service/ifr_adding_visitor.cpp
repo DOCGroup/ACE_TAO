@@ -80,7 +80,7 @@ ifr_adding_visitor::visit_predefined_type (AST_PredefinedType *node)
                                   this->predefined_type_to_pkind (node),
                                   this->env_
                                 );
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -95,7 +95,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
   IR_Contained_var prev_def = 
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (prev_def.in ()))
     {
@@ -110,7 +110,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
                                    this->gen_version (node),
                                    this->env_
                                  );
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
@@ -128,7 +128,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
       // Reopened module.
       new_def = IR_ModuleDef::_narrow (prev_def.in (),
                                        this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this modules's repo id from already being
       // in the repository as another type, if it came from another
@@ -150,7 +150,7 @@ ifr_adding_visitor::visit_module (AST_Module *node)
         }
     }
 
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   if (be_global->ifr_scopes ().push (new_def.in ()) != 0)
     {
@@ -203,7 +203,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   // If not, create a new entry.
   if (CORBA::is_nil (prev_def.in ()))
@@ -223,11 +223,11 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
           result = 
             be_global->repository ()->lookup_id (parents[i]->repoID (),
                                                  this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           bases[i] = IR_InterfaceDef::_narrow (result.in (),
                                                this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           if (CORBA::is_nil (bases[i]))
             {
@@ -258,7 +258,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                                                 node->is_local ()),
                                this->env_
                              );
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           node->ifr_added_ = 1;
 
@@ -266,7 +266,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
           IR_Container_var new_scope =
             IR_Container::_narrow (new_def.in (),
                                    this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
             {
@@ -340,7 +340,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
           IR_InterfaceDef_var extant_def =
             IR_InterfaceDef::_narrow (prev_def.in (),
                                       this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           // Nothing prevents this interface's repo id from already being
           // in the repository as another type, if it came from another
@@ -386,7 +386,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
               result = 
                 be_global->repository ()->lookup_id (parents[i]->repoID (),
                                                      this->env_);
-              ACE_CHECK_RETURN (-1);
+              TAO_IFR_CHECK_RETURN (-1);
 
               // If one of our interface's parents is not in the repository,
               // that means that it has not yet been seen (even as a forward
@@ -397,14 +397,14 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
                   this->ir_current_ =
                     IR_IDLType::_narrow (prev_def.in (),
                                          this->env_);
-                  ACE_CHECK_RETURN (-1);
+                  TAO_IFR_CHECK_RETURN (-1);
 
                   return 0;
                 }
 
               bases[i] = IR_InterfaceDef::_narrow (result.in (),
                                                    this->env_);
-              ACE_CHECK_RETURN (-1);
+              TAO_IFR_CHECK_RETURN (-1);
 
               if (CORBA::is_nil (bases[i]))
                 {
@@ -421,24 +421,24 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
 
           extant_def->base_interfaces (bases,
                                        this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           extant_def->is_abstract (ACE_static_cast (CORBA::Boolean,
                                                     node->is_abstract ()),
                                    this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           extant_def->is_local (ACE_static_cast (CORBA::Boolean,
                                                  node->is_local ()),
                                 this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           node->ifr_added_ = 1;
 
           IR_Container_var new_scope =
             IR_Container::_narrow (extant_def.in (),
                                    this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           // Push the new IR object onto the scope stack.
           if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
@@ -494,7 +494,7 @@ ifr_adding_visitor::visit_interface (AST_Interface *node)
           this->ir_current_ = 
             IR_InterfaceDef::_narrow (prev_def.in (),
                                       this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           if (CORBA::is_nil (this->ir_current_.in ()))
             {
@@ -522,7 +522,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (i->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   // If not, create an empty entry, to be populated later.
   if (CORBA::is_nil (prev_def.in ()))
@@ -544,7 +544,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
                                0,
                                this->env_
                              );
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           i->ifr_fwd_added_ = 1;
         }
@@ -566,7 +566,7 @@ ifr_adding_visitor::visit_interface_fwd (AST_InterfaceFwd *node)
       this->ir_current_ = 
         IR_InterfaceDef::_narrow (prev_def.in (),
                                   this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this interface's repo id from already being
       // in the repository as another type, if it came from another
@@ -619,7 +619,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
   IR_Contained_var prev_def = 
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (prev_def.in ()))
     {
@@ -641,7 +641,7 @@ ifr_adding_visitor::visit_structure (AST_Structure *node)
       this->ir_current_ =
         IR_IDLType::_narrow (prev_def.in (),
                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this struct's repo id from already being
       // in the repository as another type, if it came from another
@@ -684,7 +684,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   // If not, create a new entry.
   if (CORBA::is_nil (prev_def.in ()))
@@ -716,7 +716,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
                                         this->gen_version (node),
                                         members,
                                         this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
@@ -736,7 +736,7 @@ ifr_adding_visitor::visit_enum (AST_Enum *node)
       this->ir_current_ = 
         IR_EnumDef::_narrow (prev_def.in (),
                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this enum's repo id from already being
       // in the repository as another type, if it came from another
@@ -807,7 +807,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   IR_AttributeDef_var new_def;
 
@@ -834,12 +834,12 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
           IR_Contained_var prev_type_def =
             be_global->repository ()->lookup_id (type->repoID (),
                                                   this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
 
           this->ir_current_ = 
             IR_IDLType::_narrow (prev_type_def.in (),
                                  this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
@@ -876,7 +876,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
                                      dummy,
                                      dummy,
                                      this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
@@ -894,7 +894,7 @@ ifr_adding_visitor::visit_attribute (AST_Attribute *node)
       new_def = 
         IR_AttributeDef::_narrow (prev_def.in (),
                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this attribute's repo id from already being
       // in the repository as another type, if it came from another
@@ -925,7 +925,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
   IR_Contained_var prev_def = 
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (prev_def.in ()))
     {
@@ -947,7 +947,7 @@ ifr_adding_visitor::visit_union (AST_Union *node)
       this->ir_current_ =
         IR_UnionDef::_narrow (prev_def.in (),
                              this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this union's repo id from already being
       // in the repository as another type, if it came from another
@@ -1012,7 +1012,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (id,
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   // Nothing prevents this constant's repo id from already being
   // in the repository as another type, if it came from another
@@ -1024,7 +1024,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
       IR_ConstantDef_var const_def =
         IR_ConstantDef::_narrow (prev_def.in (),
                                  this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       if (CORBA::is_nil (const_def.in ()))
         {
@@ -1051,7 +1051,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
   IR_IDLType_var idl_type = 
     be_global->repository ()->get_primitive (pkind,
                                              this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   CORBA::Any any;
 
@@ -1069,7 +1069,7 @@ ifr_adding_visitor::visit_constant (AST_Constant *node)
                                         idl_type.in (),
                                         any,
                                         this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
     }
   else
     {
@@ -1089,7 +1089,7 @@ int
 ifr_adding_visitor::visit_array (AST_Array *node)
 {
   this->element_type (node->base_type ());
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   AST_Expression **dims = node->dims ();
 
@@ -1099,7 +1099,7 @@ ifr_adding_visitor::visit_array (AST_Array *node)
         be_global->repository ()->create_array (dims[i - 1]->ev ()->u.ulval,
                                                 this->ir_current_.in (),
                                                 this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
     }
 
   return 0;
@@ -1109,7 +1109,7 @@ int
 ifr_adding_visitor::visit_sequence (AST_Sequence *node)
 {
   this->element_type (node->base_type ());
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   this->ir_current_ =
     be_global->repository ()->create_sequence (
@@ -1117,7 +1117,7 @@ ifr_adding_visitor::visit_sequence (AST_Sequence *node)
                                   this->ir_current_.in (),
                                   this->env_
                                 );
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -1144,7 +1144,7 @@ ifr_adding_visitor::visit_string (AST_String *node)
                                                   this->env_);
     }
 
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   return 0;
 }
@@ -1156,13 +1156,13 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   // If not, create a new entry.
   if (CORBA::is_nil (prev_def.in ()))
     {
       this->element_type (node->base_type ());
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       IR_Container_ptr current_scope = IR_Container::_nil ();
 
@@ -1174,7 +1174,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
                                          this->gen_version (node),
                                          this->ir_current_.in (),
                                          this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
@@ -1194,7 +1194,7 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
       this->ir_current_ = 
         IR_TypedefDef::_narrow (prev_def.in (),
                                  this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this typedef's repo id from already being
       // in the repository as another type, if it came from another
@@ -1225,7 +1225,7 @@ ifr_adding_visitor::visit_root (AST_Root *node)
   IR_Container_var new_scope = 
     IR_Container::_narrow (be_global->repository (),
                            this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   if (be_global->ifr_scopes ().push (new_scope.in ()) != 0)
     {
@@ -1271,7 +1271,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
   IR_Contained_var prev_def =
     be_global->repository ()->lookup_id (node->repoID (),
                                          this->env_);
-  ACE_CHECK_RETURN (-1);
+  TAO_IFR_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (prev_def.in ()))
     {
@@ -1284,7 +1284,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
                                           node->local_name ()->get_string (),
                                           this->gen_version (node),
                                           this->env_);
-          ACE_CHECK_RETURN (-1);
+          TAO_IFR_CHECK_RETURN (-1);
         }
       else
         {
@@ -1302,7 +1302,7 @@ ifr_adding_visitor::visit_native (AST_Native *node)
       this->ir_current_ =
         IR_NativeDef::_narrow (prev_def.in (),
                                this->env_);
-      ACE_CHECK_RETURN (-1);
+      TAO_IFR_CHECK_RETURN (-1);
 
       // Nothing prevents this native type's repo id from already being
       // in the repository as another type, if it came from another
@@ -1528,7 +1528,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type)
       IR_Contained_var contained = 
         be_global->repository ()->lookup_id (base_type->repoID (),
                                              this->env_);
-      ACE_CHECK;
+      TAO_IFR_CHECK;
 
       if (CORBA::is_nil (contained.in ()))
         {
@@ -1541,7 +1541,7 @@ ifr_adding_visitor::element_type (AST_Type *base_type)
 
       this->ir_current_ = IR_IDLType::_narrow (contained.in (),
                                                this->env_);
-      ACE_CHECK;
+      TAO_IFR_CHECK;
     }
 }
 
