@@ -1,3 +1,23 @@
+Thu Jan  8 15:33:31 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* CCF/CCF/CCF.mwc
+	* CCF/CCF/CIDL/CIDL.mpc
+	* CCF/CCF/CodeGenerationKit/CodeGenerationKit.mpc
+	* CCF/CCF/CompilerElements/CompilerElements.mpc
+	* CCF/CCF/IDL2/IDL2.mpc
+	* CCF/CCF/IDL3/IDL3.mpc
+	* CCF/CCF.mwc
+	* CCF/Example/CIDL/CIDL.mwc
+	* CCF/Example/CIDL/LocalExecutorMapping/LocalExecutorMapping.mpc
+	* CCF/Example/Example.mwc
+	* CCF/Example/CodeGenerationKit/Indentation/IDL/IDL.mpc
+	* CCF/Example/CodeGenerationKit/Indentation/XML/XML.mpc
+	* CCF/Example/CodeGenerationKit/Indentation/Indentation.mwc
+	* CCF/Example/CodeGenerationKit/CodeGenerationKit.mwc
+	* CIDLC/cidlc.mpc
+
+	  Removed all these MPC files since CIDL is not working with MPC yet.
+
 Thu Jan  8 15:10:24 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/LexicalAnalyzer.cpp:
