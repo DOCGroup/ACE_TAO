@@ -63,7 +63,7 @@ PIC             = -fPIC
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = @true
-SOFLAGS         = -G $(CPPFLAGS)
+SOFLAGS         += -G $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
 

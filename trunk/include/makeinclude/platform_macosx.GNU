@@ -19,5 +19,5 @@ LIBS            += -lcc_dynamic -lstdc++ -lSystem $(ACELIB)
 OCFLAGS         += -O3
 RANLIB          = ranlib
 SOEXT		= dylib
-SOFLAGS = -dynamic
+SOFLAGS += -dynamic
 SOBUILD = -o $(VSHDIR)$*.dylib $<

@@ -33,7 +33,7 @@ OCFLAGS         += -O4
 PIC             =
 ARFLAGS         = rsuv
 RANLIB          = @true
-SOFLAGS         = -shared $(ACELIB)
+SOFLAGS         += -shared $(ACELIB)
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 

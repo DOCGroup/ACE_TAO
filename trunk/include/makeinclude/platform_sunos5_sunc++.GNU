@@ -214,7 +214,7 @@ PIC             = -KPIC
 AR              = CC
 ARFLAGS         = -xar -o
 RANLIB          = echo
-SOFLAGS         = -G $(CPPFLAGS)
+SOFLAGS         += -G $(CPPFLAGS)
 
 ifdef BIN
   #### Builds .shobj/$*.o file, then .shobj/$*.so file.  The .o files

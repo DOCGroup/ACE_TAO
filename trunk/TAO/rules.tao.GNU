@@ -242,3 +242,24 @@ $(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl
 endif # tao_dont_use_idl_make_rule
 
 endif # use_flick = 1
+
+# Turn on symbol versioning. The scheme that we follow is to allow
+# applications dependent on libraries, with same version numbers (major,
+# minor and beta) to run, but applications with dependencies on libraries
+# with different minor or major or beta versions to fail.
+#
+TAO_MAJOR_VERSION := $(shell echo `perl -ne  'if (/TAO version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\1/ ; print }' ${TAO_ROOT}/VERSION`)
+TAO_MINOR_VERSION := $(shell echo `perl -ne  'if (/TAO version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\2/ ; print }' ${TAO_ROOT}/VERSION`)
+TAO_BETA_VERSION := $(shell echo `perl -ne  'if (/TAO version/) { s/[^0-9]+(\d+)+\.(\d+)+\.(\d+)+.+/\3/ ; print }' ${TAO_ROOT}/VERSION`)
+
+# Version number of the libraries
+#
+ifneq ($(SOVERSION),)
+  SOVERSION = .$(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)
+endif
+
+# Name that will be written into the dynamic library
+#
+ifneq ($(SONAME),)
+SONAME = $(SHLIB).$(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)
+endif

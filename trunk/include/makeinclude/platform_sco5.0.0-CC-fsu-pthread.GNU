@@ -16,7 +16,7 @@ CC              = cc
 LDLIBS	+= -L $(ACE_ROOT)/ace # -z muldefs
 CXX		= CC
 CFLAGS		+= -belf
-CCFLAGS		+= +.cpp +d -Dvolatile= -belf -Kpic -pts -I ${FSU_PTHREADS_DIR}/include 
+CCFLAGS		+= +.cpp +d -Dvolatile= -belf -Kpic -pts -I ${FSU_PTHREADS_DIR}/include
 DCFLAGS		+= -g
 DCCFLAGS	+= $(DCFLAGS)
 DLD             = $(CXX)
@@ -30,7 +30,7 @@ AR              = ar
 ARFLAGS         = ruv
 RANLIB          = /bin/true
 
-SOFLAGS = $(CPPFLAGS) -melf -fPIC -G 
+SOFLAGS += $(CPPFLAGS) -melf -fPIC -G
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<
 PRELIB  = @true

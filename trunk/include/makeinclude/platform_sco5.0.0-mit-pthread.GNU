@@ -34,7 +34,7 @@ AR              = ar
 ARFLAGS         = ruv
 RANLIB          = /bin/true
 
-SOFLAGS = $(CPPFLAGS) -melf -fPIC -G
+SOFLAGS += $(CPPFLAGS) -melf -fPIC -G
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 # SOLINK	= $(SOLINK.cc) -o $@ $(LDFLAGS) $<
 PRELIB  = @true

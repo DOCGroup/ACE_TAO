@@ -89,7 +89,7 @@ AR         = ar
 ARFLAGS    = rsuv
 RANLIB     = ranlib
 SOEXT      = dll
-SOFLAGS    = $(MODEL_FLAGS) $(CPPFLAGS)
+SOFLAGS    += $(MODEL_FLAGS) $(CPPFLAGS)
 SOBUILD    = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 
 # The sed below is to strip comments on the .def file,

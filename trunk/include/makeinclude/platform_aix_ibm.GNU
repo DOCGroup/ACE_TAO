@@ -91,7 +91,7 @@ DCFLAGS     += -g -qcheck=nobounds:div:null
 # Now sort out the compiler differences here...
 ifeq ($(XLCVERSION),0x0306)
  CCFLAGS    += -qlanglvl=ansi -qflag=e:e
- SOFLAGS     = -p 0
+ SOFLAGS    += -p 0
 # ibmcxx_build turns on the extra step for instantiating and compiling
 # template instances in rules.lib.GNU.
  ibmcxx_build = 1
@@ -100,7 +100,7 @@ else
  ifeq ($(XLCVERSION),0x0500)
   CCFLAGS    += -qflag=w:w -qstaticinline
   DLD         = $(CXX) -qmkshrobj
-  SOFLAGS     = $(CCFLAGS) $(CPPFLAGS) $(INCLDIRS)
+  SOFLAGS    += $(CCFLAGS) $(CPPFLAGS) $(INCLDIRS)
   ifeq ($(buildbits),64)
     DLD     += -q64
     CCFLAGS += -q64
@@ -133,6 +133,8 @@ endif
 
 LIBS	    += $(ACELIB) -ltli_r -ldl
 
+SONAME	    =
+SOVERSION   =
 # Default OCCFLAGS builds common code for all RS/6000 architectures but
 # this can be set to optimize for your particular computer. The commented
 # out example optimizes for RS/6000 43P.
@@ -143,4 +145,4 @@ LIBS	    += $(ACELIB) -ltli_r -ldl
 # -O2 is too much for Visual Age C++ 5.0.  It ends up calling
 # the wrong methods in some cases (orbsvcs/tests/EC_Throughput).
 # Chad Elliott 7/24/2001
-OCCFLAGS    += -qlibansi -O -qarch=com 
+OCCFLAGS    += -qlibansi -O -qarch=com

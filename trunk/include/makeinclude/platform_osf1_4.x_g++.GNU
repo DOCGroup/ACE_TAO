@@ -41,6 +41,6 @@ ARFLAGS         = cruvZ
 # When libraries are archived, a hash index is automatically created so there
 # is no need for ranlib
 RANLIB          = /usr/bin/true
-SOFLAGS         = -shared $(CPPFLAGS) $(ACELIB)
+SOFLAGS         += -shared $(CPPFLAGS) $(ACELIB)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
