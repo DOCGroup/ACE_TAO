@@ -1,3 +1,15 @@
+Sat Dec 13 22:06:25 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* tao/poa.* (get_key): Removed this method, since it's
+ 	unnecessary.
+
+	* tao/objkey.idl: Added this file, which is the idl for an object
+ 	key.
+
+	* tao/iiopobj.*: Added some '@@' comments for Irfan.
+
+	* tao/Makefile: Reworked this monstrositry a bit.
+
 Fri Dec 12 12:09:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: Changed to use
