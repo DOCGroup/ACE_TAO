@@ -1,8 +1,13 @@
+Thu Apr 22 14:00:05 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ace_tests.lst:
+          The wfmo reactor tests shouldn't be run using Cywin. The wfmo
+          run_test.pl test for windows but Cygwin runs on windows but
+          doesn't have the wfmo reactor.
+
 Thu Apr 22 07:58:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
-
         * bin/prj_install.pl:
-
           Removed this file.  It now lives in the MPC directory.
 
 Thu Apr 22 00:26:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
