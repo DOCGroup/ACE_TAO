@@ -2,6 +2,7 @@
 
 namespace Kokyu
 {
+
 ACE_INLINE
 int Dispatcher_Impl::init (const ConfigInfoSet& config_info)
 {
@@ -21,8 +22,4 @@ int Dispatcher_Impl::shutdown ()
   return shutdown_i ();
 }
 
-ACE_INLINE
-Dispatcher_Impl::~Dispatcher_Impl()
-{
-}
 }

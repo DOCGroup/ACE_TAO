@@ -1,4 +1,20 @@
-project : acelib, core {
-  sharedname   = Kokyu
-  dynamicflags = KOKYU_BUILD_DLL
+project(Kokyu) : acelib {
+  sharedname  = Kokyu
+  dllflags    += KOKYU_BUILD_DLL
+
+  Source_Files {
+    Dispatcher_Impl 
+    Kokyu 
+    Default_Dispatcher_Impl 
+    Dispatcher_Task 
+    Kokyu_defs    
+  }
+
+  Template_Files {
+    Kokyu_dsrt
+    DSRT_Direct_Dispatcher_Impl_T
+    DSRT_Dispatcher_Impl_T
+    DSRT_Dispatch_Item_T
+    DSRT_Sched_Queue_T    
+  }
 }
