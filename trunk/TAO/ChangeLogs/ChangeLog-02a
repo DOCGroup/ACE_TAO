@@ -224,64 +224,64 @@ Tue Apr 16 16:34:38 2002  Ossama Othman  <ossama@uci.edu>
 
 Tue Apr 16 14:02:14 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 	
-	* TAO/orbsvcs/IFR_Service/AbstractInterfaceDef_i.h:
-	* TAO/orbsvcs/IFR_Service/AliasDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ArrayDef_i.h:
-	* TAO/orbsvcs/IFR_Service/AttributeDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ComponentDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ComponentRepository_i.h:
-	* TAO/orbsvcs/IFR_Service/ConstantDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ConsumesDef_i.h:
-	* TAO/orbsvcs/IFR_Service/Contained_i.h:
-	* TAO/orbsvcs/IFR_Service/Container_i.h:
-	* TAO/orbsvcs/IFR_Service/EmitsDef_i.h:
-	* TAO/orbsvcs/IFR_Service/EnumDef_i.h:
-	* TAO/orbsvcs/IFR_Service/EventDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ExceptionDef_i.h:
-	* TAO/orbsvcs/IFR_Service/FactoryDef_i.h:
-	* TAO/orbsvcs/IFR_Service/FinderDef_i.h:
-	* TAO/orbsvcs/IFR_Service/FixedDef_i.h:
-	* TAO/orbsvcs/IFR_Service/HomeDef_i.h:
-	* TAO/orbsvcs/IFR_Service/IDLType_i.h:
-	* TAO/orbsvcs/IFR_Service/IFR_Service.cpp:
-	* TAO/orbsvcs/IFR_Service/IFR_Service.h:
-	* TAO/orbsvcs/IFR_Service/IFR_Service_Loader.cpp:
-	* TAO/orbsvcs/IFR_Service/IFR_Service_Loader.h:
-	* TAO/orbsvcs/IFR_Service/IRObject_i.h:
-	* TAO/orbsvcs/IFR_Service/InterfaceDef_i.h:
-	* TAO/orbsvcs/IFR_Service/LocalInterfaceDef_i.h:
-	* TAO/orbsvcs/IFR_Service/Makefile:
-	* TAO/orbsvcs/IFR_Service/Makefile.BE:
-	* TAO/orbsvcs/IFR_Service/Makefile.IFR_Service:
-	* TAO/orbsvcs/IFR_Service/Makefile.IFR_Service_LIB:
-	* TAO/orbsvcs/IFR_Service/ModuleDef_i.h:
-	* TAO/orbsvcs/IFR_Service/NativeDef_i.h:
-	* TAO/orbsvcs/IFR_Service/OperationDef_i.h:
-	* TAO/orbsvcs/IFR_Service/Options.h:
-	* TAO/orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
-	* TAO/orbsvcs/IFR_Service/PrimitiveDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ProvidesDef_i.h:
-	* TAO/orbsvcs/IFR_Service/PublishesDef_i.h:
-	* TAO/orbsvcs/IFR_Service/Repository_i.h:
-	* TAO/orbsvcs/IFR_Service/SequenceDef_i.h:
-	* TAO/orbsvcs/IFR_Service/Servant_Factory.h:
-	* TAO/orbsvcs/IFR_Service/Servant_Locator.h:
-	* TAO/orbsvcs/IFR_Service/StringDef_i.h:
-	* TAO/orbsvcs/IFR_Service/StructDef_i.h:
-	* TAO/orbsvcs/IFR_Service/TypedefDef_i.h:
-	* TAO/orbsvcs/IFR_Service/UnionDef_i.h:
-	* TAO/orbsvcs/IFR_Service/UsesDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ValueBoxDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ValueDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ValueMemberDef_i.h:
-	* TAO/orbsvcs/IFR_Service/WstringDef_i.h:
-	* TAO/orbsvcs/IFR_Service/ifr_adding_visitor.h:
-	* TAO/orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
-	* TAO/orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
-	* TAO/orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
-	* TAO/orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
-	* TAO/orbsvcs/IFR_Service/ifr_removing_visitor.h:
-	* TAO/orbsvcs/IFR_Service/ifr_visitor.h:
+	* orbsvcs/IFR_Service/AbstractInterfaceDef_i.h:
+	* orbsvcs/IFR_Service/AliasDef_i.h:
+	* orbsvcs/IFR_Service/ArrayDef_i.h:
+	* orbsvcs/IFR_Service/AttributeDef_i.h:
+	* orbsvcs/IFR_Service/ComponentDef_i.h:
+	* orbsvcs/IFR_Service/ComponentRepository_i.h:
+	* orbsvcs/IFR_Service/ConstantDef_i.h:
+	* orbsvcs/IFR_Service/ConsumesDef_i.h:
+	* orbsvcs/IFR_Service/Contained_i.h:
+	* orbsvcs/IFR_Service/Container_i.h:
+	* orbsvcs/IFR_Service/EmitsDef_i.h:
+	* orbsvcs/IFR_Service/EnumDef_i.h:
+	* orbsvcs/IFR_Service/EventDef_i.h:
+	* orbsvcs/IFR_Service/ExceptionDef_i.h:
+	* orbsvcs/IFR_Service/FactoryDef_i.h:
+	* orbsvcs/IFR_Service/FinderDef_i.h:
+	* orbsvcs/IFR_Service/FixedDef_i.h:
+	* orbsvcs/IFR_Service/HomeDef_i.h:
+	* orbsvcs/IFR_Service/IDLType_i.h:
+	* orbsvcs/IFR_Service/IFR_Service.cpp:
+	* orbsvcs/IFR_Service/IFR_Service.h:
+	* orbsvcs/IFR_Service/IFR_Service_Loader.cpp:
+	* orbsvcs/IFR_Service/IFR_Service_Loader.h:
+	* orbsvcs/IFR_Service/IRObject_i.h:
+	* orbsvcs/IFR_Service/InterfaceDef_i.h:
+	* orbsvcs/IFR_Service/LocalInterfaceDef_i.h:
+	* orbsvcs/IFR_Service/Makefile:
+	* orbsvcs/IFR_Service/Makefile.BE:
+	* orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* orbsvcs/IFR_Service/Makefile.IFR_Service_LIB:
+	* orbsvcs/IFR_Service/ModuleDef_i.h:
+	* orbsvcs/IFR_Service/NativeDef_i.h:
+	* orbsvcs/IFR_Service/OperationDef_i.h:
+	* orbsvcs/IFR_Service/Options.h:
+	* orbsvcs/IFR_Service/PrimaryKeyDef_i.h:
+	* orbsvcs/IFR_Service/PrimitiveDef_i.h:
+	* orbsvcs/IFR_Service/ProvidesDef_i.h:
+	* orbsvcs/IFR_Service/PublishesDef_i.h:
+	* orbsvcs/IFR_Service/Repository_i.h:
+	* orbsvcs/IFR_Service/SequenceDef_i.h:
+	* orbsvcs/IFR_Service/Servant_Factory.h:
+	* orbsvcs/IFR_Service/Servant_Locator.h:
+	* orbsvcs/IFR_Service/StringDef_i.h:
+	* orbsvcs/IFR_Service/StructDef_i.h:
+	* orbsvcs/IFR_Service/TypedefDef_i.h:
+	* orbsvcs/IFR_Service/UnionDef_i.h:
+	* orbsvcs/IFR_Service/UsesDef_i.h:
+	* orbsvcs/IFR_Service/ValueBoxDef_i.h:
+	* orbsvcs/IFR_Service/ValueDef_i.h:
+	* orbsvcs/IFR_Service/ValueMemberDef_i.h:
+	* orbsvcs/IFR_Service/WstringDef_i.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+	* orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+	* orbsvcs/IFR_Service/ifr_removing_visitor.h:
+	* orbsvcs/IFR_Service/ifr_visitor.h:
 	  Made changes to dynamically load the IFR Service. Added a new
 	  file Makefile.IFR_Service_LIB to create a new library
 	  libTAO_IFRService which is needed for the dynamic loading
@@ -1488,8 +1488,8 @@ Tue Mar 26 07:46:42 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Mar 26 07:26:00 2002  Si Mong Park  <spark@ociweb.com>
 
-        * TAO/tao/Services.cpp:
-        * TAO/tao/Services.i:
+        * tao/Services.cpp:
+        * tao/Services.i:
           Moved _tao_seq_Octet's Dtor back to cpp as eVC (WinCE) does not complain
           unresolved symbol linker error anymore.  Inline Dtor was causing compiler
           error on Tru64, although it was okay on WinCE, NT, Solaris, and etc.
@@ -1499,7 +1499,7 @@ Tue Mar 26 07:26:00 2002  Si Mong Park  <spark@ociweb.com>
 
 Mon Mar 25 16:00:00 2002  Si Mong Park  <spark@ociweb.com>
 
-        * TAO/orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
           Changed format specifier for size_t type from %d to %u.
           Thanks to Craig Rodrigues for this fix.
 
@@ -1513,146 +1513,146 @@ Mon Mar 25 15:07:24 2002  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Mon Mar 25 09:56:00 2002  Si Mong Park  <spark@ociweb.com>
 
-        * TAO/orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/Event_Service/Event_Service.cpp:
           Added missing c_str() call for ACE_CString output on ACE_ERROR_RETURN.
 
-        * TAO/orbsvcs/Time_Service/Server_i.cpp:
-        * TAO/orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/Time_Service/Server_i.h:
           Fixed incorrect env parameter macro for init_naming_service().
 
 Sun Mar 24 22:06:00 2002  Si Mong Park  <spark@ociweb.com>
 
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
           Fixed for warning on 'const char*' to 'char*' conversion.
 
-        * TAO/orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
           Added back original C-style casting, (const char*), for ACE_DEBUG
           output of task lists' entry points to fix compilation warning
           on some platforms.
 
 Sun Mar 24 13:39:00 2002  Si Mong Park  <spark@ociweb.com>
 
-        * TAO/orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
-        * TAO/orbsvcs/Concurrency_Service/Concurrency_Service.h:
-        * TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
-        * TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.h:
-        * TAO/orbsvcs/Naming_Service/Naming_Service.cpp:
-        * TAO/orbsvcs/Naming_Service/Naming_Service.h:
-        * TAO/orbsvcs/Time_Service/Clerk_i.cpp:
-        * TAO/orbsvcs/Time_Service/Clerk_i.h:
-        * TAO/orbsvcs/Time_Service/Server_i.cpp:
-        * TAO/orbsvcs/Time_Service/Server_i.h:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.cpp:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.h:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.h:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.h:
+        * orbsvcs/Time_Service/Clerk_i.cpp:
+        * orbsvcs/Time_Service/Clerk_i.h:
+        * orbsvcs/Time_Service/Server_i.cpp:
+        * orbsvcs/Time_Service/Server_i.h:
           Changed 'char' type parameter to 'ACE_TCHAR' type, and removed
           attributes that store the argc and pointers of argv.
 
-        * TAO/orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
-        * TAO/orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
-        * TAO/orbsvcs/Naming_Service/Naming_Server.cpp:
-        * TAO/orbsvcs/Notify_Service/Notify_Server.cpp:
-        * TAO/orbsvcs/Time_Service/Time_Service_Clerk.cpp:
-        * TAO/orbsvcs/Time_Service/Time_Service_Server.cpp:
-        * TAO/orbsvcs/Trading_Service/Trading_Server.cpp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.cpp:
+        * orbsvcs/Naming_Service/Naming_Server.cpp:
+        * orbsvcs/Notify_Service/Notify_Server.cpp:
+        * orbsvcs/Time_Service/Time_Service_Clerk.cpp:
+        * orbsvcs/Time_Service/Time_Service_Server.cpp:
+        * orbsvcs/Trading_Service/Trading_Server.cpp:
           Changed 'main' to 'ACE_TMAIN'.
 
-        * TAO/orbsvcs/Event_Service/Event_Service.cpp:
-        * TAO/orbsvcs/Event_Service/Event_Service.h:
-        * TAO/orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
-        * TAO/orbsvcs/Scheduling_Service/Scheduling_Service.h:
+        * orbsvcs/Event_Service/Event_Service.cpp:
+        * orbsvcs/Event_Service/Event_Service.h:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.h:
           Changed 'char' type parameter to 'ACE_TCHAR' type, and changed '*char'
           type attributes to ACE_CString to make copy instead of storing pointer.
 
-        * TAO/orbsvcs/Notify_Service/Notify_Service.cpp:
-        * TAO/orbsvcs/Notify_Service/Notify_Service.h:
-        * TAO/orbsvcs/Trading_Service/Trading_Service.cpp:
-        * TAO/orbsvcs/Trading_Service/Trading_Service.h:
-        * TAO/orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
-        * TAO/orbsvcs/orbsvcs/Naming/Naming_Utils.h:
-        * TAO/orbsvcs/orbsvcs/Trader/Trader.cpp:
-        * TAO/orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+        * orbsvcs/Notify_Service/Notify_Service.h:
+        * orbsvcs/Trading_Service/Trading_Service.cpp:
+        * orbsvcs/Trading_Service/Trading_Service.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
           Changed 'char' type parameter to 'ACE_TCHAR' type.
 
-        * TAO/orbsvcs/ImplRepo_Service/Repository.cpp:
-        * TAO/orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
-        * TAO/orbsvcs/orbsvcs/Event/GPlot_File.cpp:
-        * TAO/orbsvcs/orbsvcs/IOR_Multicast.cpp:
-        * TAO/orbsvcs/orbsvcs/Scheduler_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/Log/Log_i.cpp:
-        * TAO/orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
-        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
-        * TAO/orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+        * orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+        * orbsvcs/orbsvcs/Event/GPlot_File.cpp:
+        * orbsvcs/orbsvcs/IOR_Multicast.cpp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp:
           Updated/changed to be wide-character build compatible.
 
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
-        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
-        * TAO/orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
-        * TAO/orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/Event/EC_Sched_Factory.h:
-        * TAO/orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
-        * TAO/orbsvcs/orbsvcs/Naming/Naming_Loader.h:
-        * TAO/orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h:
-        * TAO/orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
-        * TAO/orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
-        * TAO/orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.cpp:
-        * TAO/orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h:
-        * TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
-        * TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Sched_Factory.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_CO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_POA_Factory.h:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trading_Loader.h:
           Changed the matching char parameter type to ACE_TCHAR as defined
           in the base class' virtual interface.
 
-        * TAO/orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
-        * TAO/orbsvcs/orbsvcs/Sched/DynSched.cpp:
-        * TAO/orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
-        * TAO/orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
-        * TAO/orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_l.cpp:
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp:
+        * orbsvcs/orbsvcs/Sched/Strategy_Scheduler.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
           Added preprocessor for WinCE platform specific difference.
 
-        * TAO/orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
           Added preprocessor check to undefine 'interface' because the token
           'interface' is defined by default on WinCE causing error.  Since this
           works fine on Windows NT and Solaris, it is currently for all platforms.
           If any error is generated by this, then it may have to be changed for
           WinCE specific.
 
-        * TAO/TAOACE_WinCE.vcw:
+        * TAOACE_WinCE.vcw:
           Some dependencies have updated and removed Time Service projects.
 
-        * TAO/orbsvcs/Concurrency_Service/Concurrency_Service.vcp:
-        * TAO/orbsvcs/CosEvent_Service/CosEvent_Service.vcp:
-        * TAO/orbsvcs/Dump_Schedule/Dump_Schedule.vcp:
-        * TAO/orbsvcs/Event_Service/Event_Service.vcp:
-        * TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.vcp:
-        * TAO/orbsvcs/Naming_Service/Naming_Service.vcp:
-        * TAO/orbsvcs/Notify_Service/Notify_Service.vcp:
-        * TAO/orbsvcs/Scheduling_Service/Scheduling_Service.vcp:
-        * TAO/orbsvcs/Time_Service/Time_Service_Clerk.vcp:
-        * TAO/orbsvcs/Time_Service/Time_Service_Server.vcp:
-        * TAO/orbsvcs/Trading_Service/Trading_Service.vcp:
-        * TAO/orbsvcs/orbsvcs/IOR_Multicast.vcp:
-        * TAO/orbsvcs/orbsvcs/Scheduler_Factory.vcp:
-        * TAO/orbsvcs/orbsvcs/CosCOncurrency.vcp:
-        * TAO/orbsvcs/orbsvcs/CosEvent.vcp:
-        * TAO/orbsvcs/orbsvcs/CosLifeCycle.vcp:
-        * TAO/orbsvcs/orbsvcs/CosNaming.vcp:
-        * TAO/orbsvcs/orbsvcs/CosNotification.vcp:
-        * TAO/orbsvcs/orbsvcs/CosProperty.vcp:
-        * TAO/orbsvcs/orbsvcs/CosTime.vcp:
-        * TAO/orbsvcs/orbsvcs/CosTrading.vcp:
-        * TAO/orbsvcs/orbsvcs/DsLogAdmin.vcp:
-        * TAO/orbsvcs/orbsvcs/ETCL.vcp:
-        * TAO/orbsvcs/orbsvcs/Fault_Tolerance.vcp:
-        * TAO/orbsvcs/orbsvcs/RTEvent.vcp:
-        * TAO/orbsvcs/orbsvcs/RTOLDEvent.vcp:
-        * TAO/orbsvcs/orbsvcs/RTSched.vcp:
-        * TAO/orbsvcs/orbsvcs/RTSchedEvent.vcp:
-        * TAO/orbsvcs/orbsvcs/Security.vcp:
-        * TAO/orbsvcs/orbsvcs/Svc_Utils.vcp:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.vcp:
+        * orbsvcs/CosEvent_Service/CosEvent_Service.vcp:
+        * orbsvcs/Dump_Schedule/Dump_Schedule.vcp:
+        * orbsvcs/Event_Service/Event_Service.vcp:
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.vcp:
+        * orbsvcs/Naming_Service/Naming_Service.vcp:
+        * orbsvcs/Notify_Service/Notify_Service.vcp:
+        * orbsvcs/Scheduling_Service/Scheduling_Service.vcp:
+        * orbsvcs/Time_Service/Time_Service_Clerk.vcp:
+        * orbsvcs/Time_Service/Time_Service_Server.vcp:
+        * orbsvcs/Trading_Service/Trading_Service.vcp:
+        * orbsvcs/orbsvcs/IOR_Multicast.vcp:
+        * orbsvcs/orbsvcs/Scheduler_Factory.vcp:
+        * orbsvcs/orbsvcs/CosCOncurrency.vcp:
+        * orbsvcs/orbsvcs/CosEvent.vcp:
+        * orbsvcs/orbsvcs/CosLifeCycle.vcp:
+        * orbsvcs/orbsvcs/CosNaming.vcp:
+        * orbsvcs/orbsvcs/CosNotification.vcp:
+        * orbsvcs/orbsvcs/CosProperty.vcp:
+        * orbsvcs/orbsvcs/CosTime.vcp:
+        * orbsvcs/orbsvcs/CosTrading.vcp:
+        * orbsvcs/orbsvcs/DsLogAdmin.vcp:
+        * orbsvcs/orbsvcs/ETCL.vcp:
+        * orbsvcs/orbsvcs/Fault_Tolerance.vcp:
+        * orbsvcs/orbsvcs/RTEvent.vcp:
+        * orbsvcs/orbsvcs/RTOLDEvent.vcp:
+        * orbsvcs/orbsvcs/RTSched.vcp:
+        * orbsvcs/orbsvcs/RTSchedEvent.vcp:
+        * orbsvcs/orbsvcs/Security.vcp:
+        * orbsvcs/orbsvcs/Svc_Utils.vcp:
           New eMbedded Visual C++ 3.0 project file for WinCE build.
 
 Sun Mar 24 10:29:08 2002  Craig Rodrigues  <crodrigu@bbn.com>
@@ -2019,66 +2019,66 @@ Fri Mar 15 07:15:28 2002  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri Mar 15 00:46:00 2002  Si Mong Park  <spark@ociweb.com>
 
-        * TAO/tao/ORB_Core.cpp:
-        * TAO/tao/ORB_Core.h:
-        * TAO/tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
           Changed TAO_ORB_Core::init() to accept char type to match the
           type used in CORBA::ORB_init() to prevent confusion.
 
-        * TAO/tao/TAO_Internal.cpp:
+        * tao/TAO_Internal.cpp:
           Fixed an error that caused an access violation upon deleting
           string sequence that is not under proper owner ship.
 
-        * TAO/tao/default_resource.cpp:
-        * TAO/tao/Resource_Factory.cpp:
-        * TAO/tao/Resource_Factory.h:
+        * tao/default_resource.cpp:
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h:
           Changed back to use ACE_CString due to the unexpected additional
           awkward type conversion.
 
-        * TAO/tao/BiDir_GIOP/BiDirGIOP.cpp:
-        * TAO/tao/BiDir_GIOP/BiDirGIOP.h:
-        * TAO/tao/DynamicAny/DynamicAny.cpp:
-        * TAO/tao/DynamicAny/DynamicAny.h:
-        * TAO/tao/IORManipulation/IORManip_Loader.cpp:
-        * TAO/tao/IORManipulation/IORManip_Loader.h:
-        * TAO/tao/RTCORBA/RT_ORB_Loader.cpp:
-        * TAO/tao/RTCORBA/RT_ORB_Loader.h:
-        * TAO/tao/Strategies/advanced_resource.cpp:
-        * TAO/tao/Strategies/advanced_resource.h:
-        * TAO/tao/Strategies/DIOP_Factory.cpp:
-        * TAO/tao/Strategies/DIOP_Factory.h:
-        * TAO/tao/Strategies/SHMIOP_Acceptor.cpp:
-        * TAO/tao/Strategies/SHMIOP_Acceptor.h:
-        * TAO/tao/Strategies/SHMIOP_Factory.cpp:
-        * TAO/tao/Strategies/SHMIOP_Factory.h:
-        * TAO/tao/Strategies/UIOP_Factory.cpp:
-        * TAO/tao/Strategies/UIOP_Factory.h:
-        * TAO/tao/Strategies/UIOP_Lite_Factory.cpp:
-        * TAO/tao/Strategies/UIOP_Lite_Factory.h:
-        * TAO/tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
-        * TAO/tao/TypeCodeFactory/TypeCodeFactory_Loader.h:
+        * tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * tao/BiDir_GIOP/BiDirGIOP.h:
+        * tao/DynamicAny/DynamicAny.cpp:
+        * tao/DynamicAny/DynamicAny.h:
+        * tao/IORManipulation/IORManip_Loader.cpp:
+        * tao/IORManipulation/IORManip_Loader.h:
+        * tao/RTCORBA/RT_ORB_Loader.cpp:
+        * tao/RTCORBA/RT_ORB_Loader.h:
+        * tao/Strategies/advanced_resource.cpp:
+        * tao/Strategies/advanced_resource.h:
+        * tao/Strategies/DIOP_Factory.cpp:
+        * tao/Strategies/DIOP_Factory.h:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.h:
+        * tao/Strategies/SHMIOP_Factory.cpp:
+        * tao/Strategies/SHMIOP_Factory.h:
+        * tao/Strategies/UIOP_Factory.cpp:
+        * tao/Strategies/UIOP_Factory.h:
+        * tao/Strategies/UIOP_Lite_Factory.cpp:
+        * tao/Strategies/UIOP_Lite_Factory.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_Loader.h:
           Changed the matching char parameter type to ACE_TCHAR as defined
           in the base class' virtual interface.
 
-        * TAO/tao/Strategies/SHMIOP_Connection_Handler.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.cpp:
           Changed ACE_TEXT to ACE_LIB_TEXT.
 
-        * TAO/TAOACE_WinCE.vcw:
+        * TAOACE_WinCE.vcw:
           Minor change in project dependency.
 
-        * TAO/tao/BiDir_GIOP/TAO_BiDir_GIOP.vcp:
-        * TAO/tao/Domain/TAO_Domain.vcp:
-        * TAO/tao/DynamicAny/TAO_DynamicAny.vcp:
-        * TAO/tao/DynamicInterface/TAO_DynamicInterface.vcp:
-        * TAO/tao/IFR_Client/TAO_IFR_Client.vcp:
-        * TAO/tao/IORManipulation/TAO_IORManip.vcp:
-        * TAO/tao/IORTable/TAO_IORTable.vcp:
-        * TAO/tao/PortableServer/TAO_PortableServer.vcp:
-        * TAO/tao/RTCORBA/TAO_RTCORBA.vcp:
-        * TAO/tao/RTPortableServer/TAO_RTPortableServer.vcp:
-        * TAO/tao/SmartProxies/SmartProxies.vcp:
-        * TAO/tao/Strategies/TAO_Strategies.vcp:
-        * TAO/tao/TypeCodeFactory/TypeCodeFactory.vcp:
+        * tao/BiDir_GIOP/TAO_BiDir_GIOP.vcp:
+        * tao/Domain/TAO_Domain.vcp:
+        * tao/DynamicAny/TAO_DynamicAny.vcp:
+        * tao/DynamicInterface/TAO_DynamicInterface.vcp:
+        * tao/IFR_Client/TAO_IFR_Client.vcp:
+        * tao/IORManipulation/TAO_IORManip.vcp:
+        * tao/IORTable/TAO_IORTable.vcp:
+        * tao/PortableServer/TAO_PortableServer.vcp:
+        * tao/RTCORBA/TAO_RTCORBA.vcp:
+        * tao/RTPortableServer/TAO_RTPortableServer.vcp:
+        * tao/SmartProxies/SmartProxies.vcp:
+        * tao/Strategies/TAO_Strategies.vcp:
+        * tao/TypeCodeFactory/TypeCodeFactory.vcp:
           eMbedded Visual C++ 3.0 project file for main TAO.dll for WinCE
           build.
 
@@ -2175,64 +2175,64 @@ Thu Mar 14 08:12:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Mar 13 21:41:00 2002  Si Mong Park  <spark@ociweb.com>
 
-        * TAO/tao/BiDir_Adapter.h:
-        * TAO/tao/default_client.cpp:
-        * TAO/tao/default_client.h:
-        * TAO/tao/default_resource.cpp:
-        * TAO/tao/default_resource.h:
-        * TAO/tao/default_server.cpp:
-        * TAO/tao/default_server.h:
-        * TAO/tao/IIOP_Factory.cpp:
-        * TAO/tao/IIOP_Factory.h:
-        * TAO/tao/IIOP_Lite_Factory.cpp:
-        * TAO/tao/IIOP_Lite_Factory.h:
-        * TAO/tao/Object_Loader.h:
-        * TAO/tao/Protocol_Factory.cpp:
-        * TAO/tao/Protocol_Factory.h:
+        * tao/BiDir_Adapter.h:
+        * tao/default_client.cpp:
+        * tao/default_client.h:
+        * tao/default_resource.cpp:
+        * tao/default_resource.h:
+        * tao/default_server.cpp:
+        * tao/default_server.h:
+        * tao/IIOP_Factory.cpp:
+        * tao/IIOP_Factory.h:
+        * tao/IIOP_Lite_Factory.cpp:
+        * tao/IIOP_Lite_Factory.h:
+        * tao/Object_Loader.h:
+        * tao/Protocol_Factory.cpp:
+        * tao/Protocol_Factory.h:
           Changed parameter type from 'char'-base to 'ACE_TCHAR'-base for
           the interface defined in base class that is in the ACE layer.
 
-        * TAO/tao/Resource_Factory.cpp:
-        * TAO/tao/Resource_Factory.h:
+        * tao/Resource_Factory.cpp:
+        * tao/Resource_Factory.h:
           Changed ACE_CString to ACE_TString to reduce type conversions on
           wide-character/Unicode builds.
 
-        * TAO/tao/DLL_ORB.cpp:
+        * tao/DLL_ORB.cpp:
           Added argv type conversion only for WinCE.
 
-        * TAO/tao/Services.cpp:
-        * TAO/tao/Services.h:
-        * TAO/tao/Services.i:
+        * tao/Services.cpp:
+        * tao/Services.h:
+        * tao/Services.i:
           Made virtual Dtor's empty body as inline to make WinCE compiler happy.
 
-        * TAO/tao/ORB_Core.cpp:
-        * TAO/tao/ORB_Core.h:
-        * TAO/tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
           Changed all char* type names to ACE_CString to have its own copies of
           strings instead of storing argv pointers.  This is required to make TAO
           compatible with wide-character/Unicode platforms because of possible
           type conversions of argv parameters.
 
-        * TAO/tao/TAO_Internal.cpp:
-        * TAO/tao/TAO_Internal.h:
+        * tao/TAO_Internal.cpp:
+        * tao/TAO_Internal.h:
           Changed open_services() to use ACE_TCHAR to reduce the amount of
           conversion using ACE library.
 
-        * TAO/tao/Exception.cpp:
-        * TAO/tao/Exception.h:
-        * TAO/tao/FILE_Parser.cpp:
-        * TAO/tao/GIOP_Message_Base.cpp:
-        * TAO/tao/GIOP_Message_State.cpp:
-        * TAO/tao/IIOP_Acceptor.cpp:
-        * TAO/tao/IIOP_Connection_Handler.cpp:
-        * TAO/tao/IIOP_Connector.cpp:
-        * TAO/tao/Object.cpp:
-        * TAO/tao/ORB.cpp:
-        * TAO/tao/Transport.cpp:
+        * tao/Exception.cpp:
+        * tao/Exception.h:
+        * tao/FILE_Parser.cpp:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_State.cpp:
+        * tao/IIOP_Acceptor.cpp:
+        * tao/IIOP_Connection_Handler.cpp:
+        * tao/IIOP_Connector.cpp:
+        * tao/Object.cpp:
+        * tao/ORB.cpp:
+        * tao/Transport.cpp:
           Modified to be compatible with wide-character/Unicode platforms.
 
-        * TAO/TAOACE_WinCE.vcw:
-        * TAO/tao/TAO.vcp:
+        * TAOACE_WinCE.vcw:
+        * tao/TAO.vcp:
           eMbedded Visual C++ 3.0 project file for main TAO.dll for WinCE build.
 
 Wed Mar 13 14:39:06 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -4136,7 +4136,7 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	  the variables SyncScope and SynScope_out to the new Messaging
 	  directory. The variables SyncScope and SyncScope_out are needed
 	  by the ORB. So they are moved to a new file
-	  Messaging_SyncScopeC.h in the TAO/tao directory.
+	  Messaging_SyncScopeC.h in the tao directory.
 
 	* tao/Messaging_SyncScope.pidl:
 	* tao/Messaging_SyncScopeC.cpp:
@@ -4145,7 +4145,7 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	  The variables SyncScope and SyncScope_out in the Messaging
 	  NAMESPACE are needed by the ORB. So they are not moved to the new
 	  Messaging directory and are moved to these new files in the
-	  TAO/tao directory.
+	  tao directory.
 
 	* tao/ORB.cpp:
 	  Moved the ORB_Initializer for the Messaging class to the
@@ -4216,7 +4216,7 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	  the variables SyncScope and SynScope_out to the new Messaging
 	  directory. The variables SyncScope and SyncScope_out are needed
 	  by the ORB. So they are moved to a new file
-	  Messaging_SyncScopeC.h in the TAO/tao directory.
+	  Messaging_SyncScopeC.h in the tao directory.
 
 	* tao/Messaging/Twoway_Asynch_Invocation.cpp:
 	* tao/Messaging/Twoway_Asynch_Invocation.h:
@@ -4258,336 +4258,336 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
 	* tao/Strategies/UIOP_Connection_Handler.cpp:
-	* TAO/TAO_IDL/Makefile.BE:
-	* TAO/TAO_IDL/Makefile.EXE:
-	* TAO/TAO_IDL/Makefile.FE:
-	* TAO/TAO_IDL/be/be_codegen.cpp:
-	* TAO/docs/tutorials/Quoter/AMI/Makefile:
-	* TAO/docs/tutorials/Quoter/Event_Service/Makefile:
-	* TAO/docs/tutorials/Quoter/Naming_Service/Makefile:
-	* TAO/docs/tutorials/Quoter/On_Demand_Activation/Makefile:
-	* TAO/docs/tutorials/Quoter/RT_Event_Service/Makefile:
-	* TAO/docs/tutorials/Quoter/Simple/Client/Makefile:
-	* TAO/docs/tutorials/Quoter/Simple/Impl-Repo/Makefile:
-	* TAO/docs/tutorials/Quoter/Simple/ImprovedServer/Makefile:
-	* TAO/docs/tutorials/Quoter/Simple/Persistent/Makefile:
-	* TAO/docs/tutorials/Quoter/Simple/Server/Makefile:
-	* TAO/docs/tutorials/Quoter/idl/Makefile:
-	* TAO/examples/AMI/FL_Callback/Makefile:
-	* TAO/examples/Buffered_AMI/Makefile:
-	* TAO/examples/Buffered_AMI/client.cpp:
-	* TAO/examples/Buffered_Oneways/Makefile:
-	* TAO/examples/Buffered_Oneways/client.cpp:
-	* TAO/examples/Callback_Quoter/Makefile:
-	* TAO/examples/Content_Server/AMI_Iterator/Makefile:
-	* TAO/examples/Content_Server/AMI_Observer/Makefile:
-	* TAO/examples/Content_Server/SMI_Iterator/Makefile:
-	* TAO/examples/Event_Comm/Makefile:
-	* TAO/examples/Load_Balancing/Makefile:
-	* TAO/examples/Load_Balancing_persistent/Makefile:
-	* TAO/examples/Logging/Makefile:
-	* TAO/examples/OBV/Typed_Events/Makefile:
-	* TAO/examples/POA/Adapter_Activator/Makefile:
-	* TAO/examples/POA/DSI/Makefile:
-	* TAO/examples/POA/Default_Servant/Makefile:
-	* TAO/examples/POA/Explicit_Activation/Makefile:
-	* TAO/examples/POA/FindPOA/Makefile:
-	* TAO/examples/POA/Forwarding/Makefile:
-	* TAO/examples/POA/Generic_Servant/Makefile:
-	* TAO/examples/POA/Loader/Makefile:
-	* TAO/examples/POA/NewPOA/Makefile:
-	* TAO/examples/POA/On_Demand_Activation/Makefile:
-	* TAO/examples/POA/On_Demand_Loading/Makefile:
-	* TAO/examples/POA/Reference_Counted_Servant/Makefile:
-	* TAO/examples/POA/RootPOA/Makefile:
-	* TAO/examples/POA/TIE/Makefile:
-	* TAO/examples/Persistent_Grid/Makefile:
-	* TAO/examples/PluggableUDP/tests/Basic/Makefile:
-	* TAO/examples/PluggableUDP/tests/Performance/Makefile:
-	* TAO/examples/PluggableUDP/tests/SimplePerformance/Makefile:
-	* TAO/examples/Quoter/Makefile:
-	* TAO/examples/RTCORBA/Activity/Makefile:
-	* TAO/examples/Simple/bank/Makefile:
-	* TAO/examples/Simple/chat/Makefile:
-	* TAO/examples/Simple/echo/Makefile:
-	* TAO/examples/Simple/grid/Makefile:
-	* TAO/examples/Simple/time/Makefile:
-	* TAO/examples/Simple/time-date/Makefile:
-	* TAO/examples/Simulator/Event_Supplier/Makefile:
-	* TAO/examples/TypeCode_Creation/Makefile:
-	* TAO/orbsvcs/Concurrency_Service/Makefile:
-	* TAO/orbsvcs/CosEvent_Service/Makefile:
-	* TAO/orbsvcs/Dump_Schedule/Makefile:
-	* TAO/orbsvcs/Event_Service/Makefile:
-	* TAO/orbsvcs/IFR_Service/Makefile.BE:
-	* TAO/orbsvcs/IFR_Service/Makefile.EX:
-	* TAO/orbsvcs/IFR_Service/Makefile.IFR_Service:
-	* TAO/orbsvcs/ImplRepo_Service/Makefile:
-	* TAO/orbsvcs/LifeCycle_Service/Makefile:
-	* TAO/orbsvcs/LoadBalancer/Makefile:
-	* TAO/orbsvcs/Logging_Service/Makefile:
-	* TAO/orbsvcs/Naming_Service/Makefile:
-	* TAO/orbsvcs/Notify_Service/Makefile:
-	* TAO/orbsvcs/Scheduling_Service/Makefile:
-	* TAO/orbsvcs/TAO_Service/Makefile:
-	* TAO/orbsvcs/Time_Service/Makefile:
-	* TAO/orbsvcs/Trading_Service/Makefile:
-	* TAO/orbsvcs/examples/CosEC/Factory/Makefile:
-	* TAO/orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile:
-	* TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
-	* TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile:
-	* TAO/orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
-	* TAO/orbsvcs/examples/CosEC/Simple/Makefile:
-	* TAO/orbsvcs/examples/Log/Client/Makefile:
-	* TAO/orbsvcs/examples/Log/test/Makefile:
-	* TAO/orbsvcs/examples/Notify/Filter/Makefile:
-	* TAO/orbsvcs/examples/Notify/Subscribe/Makefile:
-	* TAO/orbsvcs/examples/RtEC/MCast/Makefile:
-	* TAO/orbsvcs/examples/RtEC/Schedule/Makefile:
-	* TAO/orbsvcs/examples/RtEC/Simple/Makefile:
-	* TAO/orbsvcs/examples/Security/Send_File/Makefile:
-	* TAO/orbsvcs/orbsvcs/Makefile.CosConcurrency:
-	* TAO/orbsvcs/orbsvcs/Makefile.CosEvent:
-	* TAO/orbsvcs/orbsvcs/Makefile.CosLifeCycle:
-	* TAO/orbsvcs/orbsvcs/Makefile.CosNaming:
-	* TAO/orbsvcs/orbsvcs/Makefile.CosNotification:
-	* TAO/orbsvcs/orbsvcs/Makefile.CosProperty:
-	* TAO/orbsvcs/orbsvcs/Makefile.CosTime:
-	* TAO/orbsvcs/orbsvcs/Makefile.CosTrading:
-	* TAO/orbsvcs/orbsvcs/Makefile.DsLogAdmin:
-	* TAO/orbsvcs/orbsvcs/Makefile.ETCL:
-	* TAO/orbsvcs/orbsvcs/Makefile.FTORB:
-	* TAO/orbsvcs/orbsvcs/Makefile.FaultTolerance:
-	* TAO/orbsvcs/orbsvcs/Makefile.LoadBalancing:
-	* TAO/orbsvcs/orbsvcs/Makefile.PortableGroup:
-	* TAO/orbsvcs/orbsvcs/Makefile.RTEvent:
-	* TAO/orbsvcs/orbsvcs/Makefile.RTOLDEvent:
-	* TAO/orbsvcs/orbsvcs/Makefile.RTSched:
-	* TAO/orbsvcs/orbsvcs/Makefile.RTSchedEvent:
-	* TAO/orbsvcs/orbsvcs/Makefile.SSLIOP:
-	* TAO/orbsvcs/orbsvcs/Makefile.Svc_Utils:
-	* TAO/orbsvcs/orbsvcs/Makefile.av:
-	* TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
-	* TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
-	* TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
-	* TAO/orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
-	* TAO/orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
-	* TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
-	* TAO/orbsvcs/orbsvcs/Sched/DynSched.cpp:
-	* TAO/orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
-	* TAO/orbsvcs/performance-tests/EC_Federated_Latency/client.cpp:
-	* TAO/orbsvcs/performance-tests/EC_Federated_Latency/server.cpp:
-	* TAO/orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
-	* TAO/orbsvcs/performance-tests/EC_Federated_Scalability/client.cpp:
-	* TAO/orbsvcs/performance-tests/EC_Federated_Scalability/server.cpp:
-	* TAO/orbsvcs/performance-tests/EC_Latency/Makefile:
-	* TAO/orbsvcs/performance-tests/EC_Latency/client.cpp:
-	* TAO/orbsvcs/performance-tests/EC_Latency/server.cpp:
-	* TAO/orbsvcs/performance-tests/EC_Scalability/Makefile:
-	* TAO/orbsvcs/performance-tests/EC_Scalability/client.cpp:
-	* TAO/orbsvcs/performance-tests/EC_Scalability/server.cpp:
-	* TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
-	* TAO/orbsvcs/tests/AVStreams/Component_Switching/Makefile:
-	* TAO/orbsvcs/tests/AVStreams/Full_Profile/Makefile:
-	* TAO/orbsvcs/tests/AVStreams/Latency/Makefile:
-	* TAO/orbsvcs/tests/AVStreams/Multicast/Makefile:
-	* TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
-	* TAO/orbsvcs/tests/AVStreams/Pluggable/Makefile:
-	* TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
-	* TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
-	* TAO/orbsvcs/tests/Concurrency/Makefile:
-	* TAO/orbsvcs/tests/CosEvent/Basic/Makefile:
-	* TAO/orbsvcs/tests/CosEvent/lib/Makefile:
-	* TAO/orbsvcs/tests/EC_Custom_Marshal/Makefile:
-	* TAO/orbsvcs/tests/EC_Mcast/Makefile:
-	* TAO/orbsvcs/tests/EC_Multiple/Makefile:
-	* TAO/orbsvcs/tests/EC_Throughput/Makefile:
-	* TAO/orbsvcs/tests/Event/Basic/Makefile:
-	* TAO/orbsvcs/tests/Event/Performance/Latency.cpp:
-	* TAO/orbsvcs/tests/Event/Performance/Latency_Server.cpp:
-	* TAO/orbsvcs/tests/Event/Performance/Makefile:
-	* TAO/orbsvcs/tests/Event/lib/Makefile:
-	* TAO/orbsvcs/tests/FaultTolerance/IOGR/Makefile:
-	* TAO/orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
-	* TAO/orbsvcs/tests/ImplRepo/Makefile:
-	* TAO/orbsvcs/tests/ImplRepo/NameService/Makefile:
-	* TAO/orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
-	* TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
-	* TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/Makefile:
-	* TAO/orbsvcs/tests/Interoperable_Naming/Makefile:
-	* TAO/orbsvcs/tests/LoadBalancing/Makefile:
-	* TAO/orbsvcs/tests/Miop/McastHello/Makefile:
-	* TAO/orbsvcs/tests/Notify/Basic/Makefile:
-	* TAO/orbsvcs/tests/Notify/Blocking/Makefile:
-	* TAO/orbsvcs/tests/Notify/Discarding/Makefile:
-	* TAO/orbsvcs/tests/Notify/MT_Dispatching/Makefile:
-	* TAO/orbsvcs/tests/Notify/Ordering/Makefile:
-	* TAO/orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
-	* TAO/orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
-	* TAO/orbsvcs/tests/Notify/Structured_Filter/Makefile:
-	* TAO/orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
-	* TAO/orbsvcs/tests/Notify/lib/Makefile:
-	* TAO/orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
-	* TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
-	* TAO/orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
-	* TAO/orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
-	* TAO/orbsvcs/tests/Property/Makefile:
-	* TAO/orbsvcs/tests/Sched/Makefile:
-	* TAO/orbsvcs/tests/Sched_Conf/Makefile:
-	* TAO/orbsvcs/tests/Security/Big_Request/Makefile:
-	* TAO/orbsvcs/tests/Security/Callback/Makefile:
-	* TAO/orbsvcs/tests/Security/MT_SSLIOP/Makefile:
-	* TAO/orbsvcs/tests/Security/Secure_Invocation/Makefile:
-	* TAO/orbsvcs/tests/Security/SecurityLevel1/Makefile:
-	* TAO/orbsvcs/tests/Simple_Naming/Makefile:
-	* TAO/orbsvcs/tests/Time/Makefile:
-	* TAO/orbsvcs/tests/Trading/Makefile:
-	* TAO/orbsvcs/tests/ior_corbaname/Makefile::
-	* TAO/orbsvcs/tests/tests_svc_loader/Makefile:
-	* TAO/performance-tests/Callback/Makefile:
-	* TAO/performance-tests/Callback/client.cpp:
-	* TAO/performance-tests/Callback/server.cpp:
-	* TAO/performance-tests/Cubit/TAO/DII_Cubit/Makefile:
-	* TAO/performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
-	* TAO/performance-tests/Cubit/TAO/MT_Cubit/Makefile:
-	* TAO/performance-tests/Latency/AMH/Single_Threaded/Makefile:
-	* TAO/performance-tests/Latency/AMI/Makefile:
-	* TAO/performance-tests/Latency/DII/Makefile:
-	* TAO/performance-tests/Latency/DSI/Makefile:
-	* TAO/performance-tests/Latency/Deferred/Makefile:
-	* TAO/performance-tests/Latency/Single_Threaded/Makefile:
-	* TAO/performance-tests/Latency/Thread_Per_Connection/Makefile:
-	* TAO/performance-tests/Latency/Thread_Pool/Makefile:
-	* TAO/performance-tests/POA/Create_Reference/Makefile:
-	* TAO/performance-tests/POA/Demux/Makefile:
-	* TAO/performance-tests/POA/Implicit_Activation/Makefile:
-	* TAO/performance-tests/POA/Object_Creation_And_Registration/Makefile:
-	* TAO/performance-tests/Pluggable/Makefile:
-	* TAO/performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
-	* TAO/performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
-	* TAO/performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
-	* TAO/performance-tests/RTCorba/Oneways/Reliable/Makefile:
-	* TAO/performance-tests/RTCorba/Oneways/Reliable/client.cpp:
-	* TAO/performance-tests/Throughput/Makefile:
-	* TAO/tests/AMI/Makefile:
-	* TAO/tests/AMI_Buffering/Makefile:
-	* TAO/tests/AMI_Buffering/client.cpp:
-	* TAO/tests/AMI_Timeouts/Makefile:
-	* TAO/tests/AMI_Timeouts/timeout_client.cpp:
-	* TAO/tests/BiDirectional/Makefile:
-	* TAO/tests/BiDirectional_NestedUpcall/Makefile:
-	* TAO/tests/Big_Oneways/Makefile:
-	* TAO/tests/Big_Reply/Makefile:
-	* TAO/tests/Big_Request_Muxing/Client_Task.h:
-	* TAO/tests/Big_Request_Muxing/Makefile:
-	* TAO/tests/Big_Request_Muxing/client.cpp:
-	* TAO/tests/Big_Twoways/Makefile:
-	* TAO/tests/Blocking_Sync_None/Makefile:
-	* TAO/tests/Blocking_Sync_None/client.cpp:
-	* TAO/tests/CDR/Makefile:
-	* TAO/tests/Cache_Growth_Test/Makefile:
-	* TAO/tests/Client_Leaks/Makefile:
-	* TAO/tests/Codec/Makefile:
-	* TAO/tests/Collocation/Makefile.impl:
-	* TAO/tests/Collocation/Makefile.stub:
-	* TAO/tests/Collocation/Makefile.test:
-	* TAO/tests/Connection_Purging/Makefile:
-	* TAO/tests/Crash_On_Write/Makefile:
-	* TAO/tests/Crashed_Callback/Makefile:
-	* TAO/tests/Crashed_Callback/client.cpp:
-	* TAO/tests/Crashed_Callback/server.cpp:
-	* TAO/tests/DLL_ORB/Makefile.Test_Client_Module:
-	* TAO/tests/DLL_ORB/Makefile.Test_Server_Module:
-	* TAO/tests/DSI_Gateway/Makefile:
-	* TAO/tests/DynAny_Test/Makefile:
-	* TAO/tests/Explicit_Event_Loop/Makefile:
-	* TAO/tests/Exposed_Policies/Makefile:
-	* TAO/tests/FL_Cube/Makefile:
-	* TAO/tests/Faults/Makefile:
-	* TAO/tests/File_IO/Makefile:
-	* TAO/tests/Forwarding/Makefile:
-	* TAO/tests/Hello/Makefile:
-	* TAO/tests/IDL_Test/Makefile:
-	* TAO/tests/IORManipulation/Makefile:
-	* TAO/tests/InterOp-Naming/Makefile:
-	* TAO/tests/Leader_Followers/Makefile:
-	* TAO/tests/LongUpcalls/Makefile:
-	* TAO/tests/MProfile/Makefile:
-	* TAO/tests/MProfile_Forwarding/Makefile:
-	* TAO/tests/MT_Client/Makefile:
-	* TAO/tests/MT_Server/Makefile:
-	* TAO/tests/MT_Timeout/Client_Task.cpp:
-	* TAO/tests/MT_Timeout/Makefile:
-	* TAO/tests/Multiple/Makefile:
-	* TAO/tests/Multiple_Inheritance/Makefile:
-	* TAO/tests/Muxing/Makefile:
-	* TAO/tests/Native_Exceptions/Makefile:
-	* TAO/tests/NestedUpcall/MT_Client_Test/Makefile:
-	* TAO/tests/NestedUpcall/Simple/Makefile:
-	* TAO/tests/NestedUpcall/Triangle_Test/Makefile:
-	* TAO/tests/Nested_Event_Loop/Makefile:
-	* TAO/tests/OBV/Any/Makefile:
-	* TAO/tests/OBV/Factory/Makefile:
-	* TAO/tests/OBV/Forward/Makefile:
-	* TAO/tests/ORB_destroy/Makefile:
-	* TAO/tests/ORB_init/Makefile:
-	* TAO/tests/Object_Loader/Makefile:
-	* TAO/tests/Objref_Sequence_Test/Makefile:
-	* TAO/tests/OctetSeq/Makefile:
-	* TAO/tests/Oneway_Buffering/Makefile:
-	* TAO/tests/Oneway_Buffering/client.cpp:
-	* TAO/tests/Oneways_Invoking_Twoways/Makefile:
-	* TAO/tests/POA/Etherealization/Makefile:
-	* TAO/tests/POA/Excessive_Object_Deactivations/Makefile:
-	* TAO/tests/POA/Identity/Makefile:
-	* TAO/tests/POA/Non_Servant_Upcalls/Makefile:
-	* TAO/tests/POA/Object_Reactivation/Makefile:
-	* TAO/tests/POA/POA_Destruction/Makefile:
-	* TAO/tests/POA/Single_Threaded_POA/Makefile:
-	* TAO/tests/POA/wait_for_completion/Makefile:
-	* TAO/tests/Param_Test/Makefile:
-	* TAO/tests/Policies/Makefile:
-	* TAO/tests/Policies/Manipulation.cpp:
-	* TAO/tests/Portable_Interceptors/Benchmark/Makefile:
-	* TAO/tests/Portable_Interceptors/Dynamic/Makefile:
-	* TAO/tests/Portable_Interceptors/ForwardRequest/Makefile:
-	* TAO/tests/Portable_Interceptors/IORInterceptor/Makefile:
-	* TAO/tests/Portable_Interceptors/PICurrent/Makefile:
-	* TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile:
-	* TAO/tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
-	* TAO/tests/QtTests/Makefile:
-	* TAO/tests/Queued_Message_Test/Makefile:
-	* TAO/tests/RTCORBA/Banded_Connections/Makefile:
-	* TAO/tests/RTCORBA/Client_Propagated/Makefile:
-	* TAO/tests/RTCORBA/Client_Protocol/Makefile:
-	* TAO/tests/RTCORBA/Collocation/Makefile:
-	* TAO/tests/RTCORBA/Destroy_Thread_Pool/Makefile:
-	* TAO/tests/RTCORBA/Explicit_Binding/Makefile:
-	* TAO/tests/RTCORBA/Linear_Priority/Makefile:
-	* TAO/tests/RTCORBA/MT_Client_Protocol_Priority/Makefile:
-	* TAO/tests/RTCORBA/ORB_init/Makefile:
-	* TAO/tests/RTCORBA/Persistent_IOR/Makefile:
-	* TAO/tests/RTCORBA/Policy_Combinations/Makefile:
-	* TAO/tests/RTCORBA/Private_Connection/Makefile:
-	* TAO/tests/RTCORBA/RTMutex/Makefile:
-	* TAO/tests/RTCORBA/Server_Declared/Makefile:
-	* TAO/tests/RTCORBA/Server_Protocol/Makefile:
-	* TAO/tests/RTCORBA/Thread_Pool/Makefile:
-	* TAO/tests/Reliable_Oneways/Makefile:
-	* TAO/tests/Reliable_Oneways/client.cpp:
-	* TAO/tests/Server_Leaks/Makefile:
-	* TAO/tests/Single_Read/Makefile:
-	* TAO/tests/Smart_Proxies/Makefile:
-	* TAO/tests/Smart_Proxies/On_Demand/Makefile:
-	* TAO/tests/Strategies/Makefile:
-	* TAO/tests/Timed_Buffered_Oneways/Makefile:
-	* TAO/tests/Timed_Buffered_Oneways/client.cpp:
-	* TAO/tests/Timeout/Makefile:
-	* TAO/tests/Timeout/client.cpp:
-	* TAO/tests/Xt_Stopwatch/Makefile:
-	* TAO/utils/IOR-parser/Makefile:
-	* TAO/utils/catior/Makefile:
-	* TAO/utils/nslist/Makefile:
+	* TAO_IDL/Makefile.BE:
+	* TAO_IDL/Makefile.EXE:
+	* TAO_IDL/Makefile.FE:
+	* TAO_IDL/be/be_codegen.cpp:
+	* docs/tutorials/Quoter/AMI/Makefile:
+	* docs/tutorials/Quoter/Event_Service/Makefile:
+	* docs/tutorials/Quoter/Naming_Service/Makefile:
+	* docs/tutorials/Quoter/On_Demand_Activation/Makefile:
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
+	* docs/tutorials/Quoter/Simple/Client/Makefile:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Makefile:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Makefile:
+	* docs/tutorials/Quoter/Simple/Persistent/Makefile:
+	* docs/tutorials/Quoter/Simple/Server/Makefile:
+	* docs/tutorials/Quoter/idl/Makefile:
+	* examples/AMI/FL_Callback/Makefile:
+	* examples/Buffered_AMI/Makefile:
+	* examples/Buffered_AMI/client.cpp:
+	* examples/Buffered_Oneways/Makefile:
+	* examples/Buffered_Oneways/client.cpp:
+	* examples/Callback_Quoter/Makefile:
+	* examples/Content_Server/AMI_Iterator/Makefile:
+	* examples/Content_Server/AMI_Observer/Makefile:
+	* examples/Content_Server/SMI_Iterator/Makefile:
+	* examples/Event_Comm/Makefile:
+	* examples/Load_Balancing/Makefile:
+	* examples/Load_Balancing_persistent/Makefile:
+	* examples/Logging/Makefile:
+	* examples/OBV/Typed_Events/Makefile:
+	* examples/POA/Adapter_Activator/Makefile:
+	* examples/POA/DSI/Makefile:
+	* examples/POA/Default_Servant/Makefile:
+	* examples/POA/Explicit_Activation/Makefile:
+	* examples/POA/FindPOA/Makefile:
+	* examples/POA/Forwarding/Makefile:
+	* examples/POA/Generic_Servant/Makefile:
+	* examples/POA/Loader/Makefile:
+	* examples/POA/NewPOA/Makefile:
+	* examples/POA/On_Demand_Activation/Makefile:
+	* examples/POA/On_Demand_Loading/Makefile:
+	* examples/POA/Reference_Counted_Servant/Makefile:
+	* examples/POA/RootPOA/Makefile:
+	* examples/POA/TIE/Makefile:
+	* examples/Persistent_Grid/Makefile:
+	* examples/PluggableUDP/tests/Basic/Makefile:
+	* examples/PluggableUDP/tests/Performance/Makefile:
+	* examples/PluggableUDP/tests/SimplePerformance/Makefile:
+	* examples/Quoter/Makefile:
+	* examples/RTCORBA/Activity/Makefile:
+	* examples/Simple/bank/Makefile:
+	* examples/Simple/chat/Makefile:
+	* examples/Simple/echo/Makefile:
+	* examples/Simple/grid/Makefile:
+	* examples/Simple/time/Makefile:
+	* examples/Simple/time-date/Makefile:
+	* examples/Simulator/Event_Supplier/Makefile:
+	* examples/TypeCode_Creation/Makefile:
+	* orbsvcs/Concurrency_Service/Makefile:
+	* orbsvcs/CosEvent_Service/Makefile:
+	* orbsvcs/Dump_Schedule/Makefile:
+	* orbsvcs/Event_Service/Makefile:
+	* orbsvcs/IFR_Service/Makefile.BE:
+	* orbsvcs/IFR_Service/Makefile.EX:
+	* orbsvcs/IFR_Service/Makefile.IFR_Service:
+	* orbsvcs/ImplRepo_Service/Makefile:
+	* orbsvcs/LifeCycle_Service/Makefile:
+	* orbsvcs/LoadBalancer/Makefile:
+	* orbsvcs/Logging_Service/Makefile:
+	* orbsvcs/Naming_Service/Makefile:
+	* orbsvcs/Notify_Service/Makefile:
+	* orbsvcs/Scheduling_Service/Makefile:
+	* orbsvcs/TAO_Service/Makefile:
+	* orbsvcs/Time_Service/Makefile:
+	* orbsvcs/Trading_Service/Makefile:
+	* orbsvcs/examples/CosEC/Factory/Makefile:
+	* orbsvcs/examples/CosEC/RtEC_Based/bin/Makefile:
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Basic/Makefile:
+	* orbsvcs/examples/CosEC/RtEC_Based/tests/Multiple/Makefile:
+	* orbsvcs/examples/CosEC/Simple/Makefile:
+	* orbsvcs/examples/Log/Client/Makefile:
+	* orbsvcs/examples/Log/test/Makefile:
+	* orbsvcs/examples/Notify/Filter/Makefile:
+	* orbsvcs/examples/Notify/Subscribe/Makefile:
+	* orbsvcs/examples/RtEC/MCast/Makefile:
+	* orbsvcs/examples/RtEC/Schedule/Makefile:
+	* orbsvcs/examples/RtEC/Simple/Makefile:
+	* orbsvcs/examples/Security/Send_File/Makefile:
+	* orbsvcs/orbsvcs/Makefile.CosConcurrency:
+	* orbsvcs/orbsvcs/Makefile.CosEvent:
+	* orbsvcs/orbsvcs/Makefile.CosLifeCycle:
+	* orbsvcs/orbsvcs/Makefile.CosNaming:
+	* orbsvcs/orbsvcs/Makefile.CosNotification:
+	* orbsvcs/orbsvcs/Makefile.CosProperty:
+	* orbsvcs/orbsvcs/Makefile.CosTime:
+	* orbsvcs/orbsvcs/Makefile.CosTrading:
+	* orbsvcs/orbsvcs/Makefile.DsLogAdmin:
+	* orbsvcs/orbsvcs/Makefile.ETCL:
+	* orbsvcs/orbsvcs/Makefile.FTORB:
+	* orbsvcs/orbsvcs/Makefile.FaultTolerance:
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
+	* orbsvcs/orbsvcs/Makefile.PortableGroup:
+	* orbsvcs/orbsvcs/Makefile.RTEvent:
+	* orbsvcs/orbsvcs/Makefile.RTOLDEvent:
+	* orbsvcs/orbsvcs/Makefile.RTSched:
+	* orbsvcs/orbsvcs/Makefile.RTSchedEvent:
+	* orbsvcs/orbsvcs/Makefile.SSLIOP:
+	* orbsvcs/orbsvcs/Makefile.Svc_Utils:
+	* orbsvcs/orbsvcs/Makefile.av:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connection_Handler.cpp:
+	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Latency/Makefile:
+	* orbsvcs/performance-tests/EC_Federated_Latency/client.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Latency/server.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/Makefile:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/client.cpp:
+	* orbsvcs/performance-tests/EC_Federated_Scalability/server.cpp:
+	* orbsvcs/performance-tests/EC_Latency/Makefile:
+	* orbsvcs/performance-tests/EC_Latency/client.cpp:
+	* orbsvcs/performance-tests/EC_Latency/server.cpp:
+	* orbsvcs/performance-tests/EC_Scalability/Makefile:
+	* orbsvcs/performance-tests/EC_Scalability/client.cpp:
+	* orbsvcs/performance-tests/EC_Scalability/server.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Latency/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+	* orbsvcs/tests/Concurrency/Makefile:
+	* orbsvcs/tests/CosEvent/Basic/Makefile:
+	* orbsvcs/tests/CosEvent/lib/Makefile:
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
+	* orbsvcs/tests/EC_Mcast/Makefile:
+	* orbsvcs/tests/EC_Multiple/Makefile:
+	* orbsvcs/tests/EC_Throughput/Makefile:
+	* orbsvcs/tests/Event/Basic/Makefile:
+	* orbsvcs/tests/Event/Performance/Latency.cpp:
+	* orbsvcs/tests/Event/Performance/Latency_Server.cpp:
+	* orbsvcs/tests/Event/Performance/Makefile:
+	* orbsvcs/tests/Event/lib/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGR/Makefile:
+	* orbsvcs/tests/FaultTolerance/IOGRManipulation/Makefile:
+	* orbsvcs/tests/ImplRepo/Makefile:
+	* orbsvcs/tests/ImplRepo/NameService/Makefile:
+	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+	* orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
+	* orbsvcs/tests/InterfaceRepo/Persistence_Test/Makefile:
+	* orbsvcs/tests/Interoperable_Naming/Makefile:
+	* orbsvcs/tests/LoadBalancing/Makefile:
+	* orbsvcs/tests/Miop/McastHello/Makefile:
+	* orbsvcs/tests/Notify/Basic/Makefile:
+	* orbsvcs/tests/Notify/Blocking/Makefile:
+	* orbsvcs/tests/Notify/Discarding/Makefile:
+	* orbsvcs/tests/Notify/MT_Dispatching/Makefile:
+	* orbsvcs/tests/Notify/Ordering/Makefile:
+	* orbsvcs/tests/Notify/Sequence_Multi_ETCL_Filter/Makefile:
+	* orbsvcs/tests/Notify/Sequence_Multi_Filter/Makefile:
+	* orbsvcs/tests/Notify/Structured_Filter/Makefile:
+	* orbsvcs/tests/Notify/Structured_Multi_Filter/Makefile:
+	* orbsvcs/tests/Notify/lib/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/Filter/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/RedGreen/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Makefile:
+	* orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.cpp:
+	* orbsvcs/tests/Property/Makefile:
+	* orbsvcs/tests/Sched/Makefile:
+	* orbsvcs/tests/Sched_Conf/Makefile:
+	* orbsvcs/tests/Security/Big_Request/Makefile:
+	* orbsvcs/tests/Security/Callback/Makefile:
+	* orbsvcs/tests/Security/MT_SSLIOP/Makefile:
+	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
+	* orbsvcs/tests/Security/SecurityLevel1/Makefile:
+	* orbsvcs/tests/Simple_Naming/Makefile:
+	* orbsvcs/tests/Time/Makefile:
+	* orbsvcs/tests/Trading/Makefile:
+	* orbsvcs/tests/ior_corbaname/Makefile::
+	* orbsvcs/tests/tests_svc_loader/Makefile:
+	* performance-tests/Callback/Makefile:
+	* performance-tests/Callback/client.cpp:
+	* performance-tests/Callback/server.cpp:
+	* performance-tests/Cubit/DII_Cubit/Makefile:
+	* performance-tests/Cubit/IDL_Cubit/Makefile:
+	* performance-tests/Cubit/MT_Cubit/Makefile:
+	* performance-tests/Latency/AMH/Single_Threaded/Makefile:
+	* performance-tests/Latency/AMI/Makefile:
+	* performance-tests/Latency/DII/Makefile:
+	* performance-tests/Latency/DSI/Makefile:
+	* performance-tests/Latency/Deferred/Makefile:
+	* performance-tests/Latency/Single_Threaded/Makefile:
+	* performance-tests/Latency/Thread_Per_Connection/Makefile:
+	* performance-tests/Latency/Thread_Pool/Makefile:
+	* performance-tests/POA/Create_Reference/Makefile:
+	* performance-tests/POA/Demux/Makefile:
+	* performance-tests/POA/Implicit_Activation/Makefile:
+	* performance-tests/POA/Object_Creation_And_Registration/Makefile:
+	* performance-tests/Pluggable/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
+	* performance-tests/RTCorba/Multiple_Endpoints/Single_Endpoint/Makefile:
+	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
+	* performance-tests/RTCorba/Oneways/Reliable/client.cpp:
+	* performance-tests/Throughput/Makefile:
+	* tests/AMI/Makefile:
+	* tests/AMI_Buffering/Makefile:
+	* tests/AMI_Buffering/client.cpp:
+	* tests/AMI_Timeouts/Makefile:
+	* tests/AMI_Timeouts/timeout_client.cpp:
+	* tests/BiDirectional/Makefile:
+	* tests/BiDirectional_NestedUpcall/Makefile:
+	* tests/Big_Oneways/Makefile:
+	* tests/Big_Reply/Makefile:
+	* tests/Big_Request_Muxing/Client_Task.h:
+	* tests/Big_Request_Muxing/Makefile:
+	* tests/Big_Request_Muxing/client.cpp:
+	* tests/Big_Twoways/Makefile:
+	* tests/Blocking_Sync_None/Makefile:
+	* tests/Blocking_Sync_None/client.cpp:
+	* tests/CDR/Makefile:
+	* tests/Cache_Growth_Test/Makefile:
+	* tests/Client_Leaks/Makefile:
+	* tests/Codec/Makefile:
+	* tests/Collocation/Makefile.impl:
+	* tests/Collocation/Makefile.stub:
+	* tests/Collocation/Makefile.test:
+	* tests/Connection_Purging/Makefile:
+	* tests/Crash_On_Write/Makefile:
+	* tests/Crashed_Callback/Makefile:
+	* tests/Crashed_Callback/client.cpp:
+	* tests/Crashed_Callback/server.cpp:
+	* tests/DLL_ORB/Makefile.Test_Client_Module:
+	* tests/DLL_ORB/Makefile.Test_Server_Module:
+	* tests/DSI_Gateway/Makefile:
+	* tests/DynAny_Test/Makefile:
+	* tests/Explicit_Event_Loop/Makefile:
+	* tests/Exposed_Policies/Makefile:
+	* tests/FL_Cube/Makefile:
+	* tests/Faults/Makefile:
+	* tests/File_IO/Makefile:
+	* tests/Forwarding/Makefile:
+	* tests/Hello/Makefile:
+	* tests/IDL_Test/Makefile:
+	* tests/IORManipulation/Makefile:
+	* tests/InterOp-Naming/Makefile:
+	* tests/Leader_Followers/Makefile:
+	* tests/LongUpcalls/Makefile:
+	* tests/MProfile/Makefile:
+	* tests/MProfile_Forwarding/Makefile:
+	* tests/MT_Client/Makefile:
+	* tests/MT_Server/Makefile:
+	* tests/MT_Timeout/Client_Task.cpp:
+	* tests/MT_Timeout/Makefile:
+	* tests/Multiple/Makefile:
+	* tests/Multiple_Inheritance/Makefile:
+	* tests/Muxing/Makefile:
+	* tests/Native_Exceptions/Makefile:
+	* tests/NestedUpcall/MT_Client_Test/Makefile:
+	* tests/NestedUpcall/Simple/Makefile:
+	* tests/NestedUpcall/Triangle_Test/Makefile:
+	* tests/Nested_Event_Loop/Makefile:
+	* tests/OBV/Any/Makefile:
+	* tests/OBV/Factory/Makefile:
+	* tests/OBV/Forward/Makefile:
+	* tests/ORB_destroy/Makefile:
+	* tests/ORB_init/Makefile:
+	* tests/Object_Loader/Makefile:
+	* tests/Objref_Sequence_Test/Makefile:
+	* tests/OctetSeq/Makefile:
+	* tests/Oneway_Buffering/Makefile:
+	* tests/Oneway_Buffering/client.cpp:
+	* tests/Oneways_Invoking_Twoways/Makefile:
+	* tests/POA/Etherealization/Makefile:
+	* tests/POA/Excessive_Object_Deactivations/Makefile:
+	* tests/POA/Identity/Makefile:
+	* tests/POA/Non_Servant_Upcalls/Makefile:
+	* tests/POA/Object_Reactivation/Makefile:
+	* tests/POA/POA_Destruction/Makefile:
+	* tests/POA/Single_Threaded_POA/Makefile:
+	* tests/POA/wait_for_completion/Makefile:
+	* tests/Param_Test/Makefile:
+	* tests/Policies/Makefile:
+	* tests/Policies/Manipulation.cpp:
+	* tests/Portable_Interceptors/Benchmark/Makefile:
+	* tests/Portable_Interceptors/Dynamic/Makefile:
+	* tests/Portable_Interceptors/ForwardRequest/Makefile:
+	* tests/Portable_Interceptors/IORInterceptor/Makefile:
+	* tests/Portable_Interceptors/PICurrent/Makefile:
+	* tests/Portable_Interceptors/Request_Interceptor_Flow/Makefile:
+	* tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
+	* tests/QtTests/Makefile:
+	* tests/Queued_Message_Test/Makefile:
+	* tests/RTCORBA/Banded_Connections/Makefile:
+	* tests/RTCORBA/Client_Propagated/Makefile:
+	* tests/RTCORBA/Client_Protocol/Makefile:
+	* tests/RTCORBA/Collocation/Makefile:
+	* tests/RTCORBA/Destroy_Thread_Pool/Makefile:
+	* tests/RTCORBA/Explicit_Binding/Makefile:
+	* tests/RTCORBA/Linear_Priority/Makefile:
+	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile:
+	* tests/RTCORBA/ORB_init/Makefile:
+	* tests/RTCORBA/Persistent_IOR/Makefile:
+	* tests/RTCORBA/Policy_Combinations/Makefile:
+	* tests/RTCORBA/Private_Connection/Makefile:
+	* tests/RTCORBA/RTMutex/Makefile:
+	* tests/RTCORBA/Server_Declared/Makefile:
+	* tests/RTCORBA/Server_Protocol/Makefile:
+	* tests/RTCORBA/Thread_Pool/Makefile:
+	* tests/Reliable_Oneways/Makefile:
+	* tests/Reliable_Oneways/client.cpp:
+	* tests/Server_Leaks/Makefile:
+	* tests/Single_Read/Makefile:
+	* tests/Smart_Proxies/Makefile:
+	* tests/Smart_Proxies/On_Demand/Makefile:
+	* tests/Strategies/Makefile:
+	* tests/Timed_Buffered_Oneways/Makefile:
+	* tests/Timed_Buffered_Oneways/client.cpp:
+	* tests/Timeout/Makefile:
+	* tests/Timeout/client.cpp:
+	* tests/Xt_Stopwatch/Makefile:
+	* utils/IOR-parser/Makefile:
+	* utils/catior/Makefile:
+	* utils/nslist/Makefile:
 	  Change all #includes to point to the new Messaging directory.
 	  For example, change #include MessagingC.h to
 	  #include tao/Messaging/MessagingC.h.
@@ -7271,8 +7271,8 @@ Tue Jan 22 12:42:13 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* tests/OBV/Forward/Makefile:
 	* docs/tutorials/Quoter/Event_Service/Makefile:
 	* orbsvcs/tests/Security/Callback/Makefile:
-	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+	* performance-tests/Cubit/MT_Cubit/Makefile:
+	* performance-tests/Cubit/IDL_Cubit/Makefile:
 	  Regenerated dependencies.
 
 Tue Jan 22 12:25:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
@@ -7759,12 +7759,12 @@ Sat Jan 19 09:22:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Sat Jan 19 09:03:32 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/Makefile:
+	* performance-tests/Cubit/MT_Cubit/Makefile:
 	  Fixed Makefile error.
 
 Sat Jan 19 09:00:16 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/Makefile:
+	* performance-tests/Cubit/IDL_Cubit/Makefile:
 	  Fixed Makefile error.
 
 Sat Jan 19 08:52:55 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
