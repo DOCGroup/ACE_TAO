@@ -116,7 +116,10 @@ CORBA::Policy_ptr CORBA_DomainManager::get_domain_policy (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
@@ -248,7 +251,10 @@ void CORBA::ConstructionPolicy::make_domain_manager (
     _tao_call.start (ACE_TRY_ENV);
     ACE_CHECK;
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK;
 
 #if 0

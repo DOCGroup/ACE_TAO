@@ -249,7 +249,10 @@ CORBA::PolicyType CORBA_Policy::policy_type (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -299,7 +302,10 @@ CORBA_Policy_ptr CORBA_Policy::copy (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK_RETURN (_tao_retval);
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK_RETURN (_tao_retval);
 
     int _invoke_status =
@@ -348,7 +354,10 @@ void CORBA_Policy::destroy (
     _tao_call.start (ACE_TRY_ENV);
         ACE_CHECK;
 
-    _tao_call.prepare_header (1, ACE_TRY_ENV);
+    CORBA::Short flag = TAO::SYNC_WITH_TARGET;
+
+    _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
+                              ACE_TRY_ENV);
     ACE_CHECK;
 
     int _invoke_status =
