@@ -1,0 +1,415 @@
+--- PortableInterceptorC.h.old	Fri Mar  2 12:18:45 2001
++++ PortableInterceptorC.h	Fri Mar  2 12:18:56 2001
+@@ -23,15 +23,17 @@
+ #define _TAO_IDL_PORTABLEINTERCEPTORC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++
++#include "corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+-#include "tao/corbafwd.h"
+ #include "DynamicC.h"
+ #include "MessagingC.h"
++#include "CurrentC.h"
++#include "IOPC.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+@@ -156,16 +158,14 @@
+       }
+ 
+     virtual char * name (
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
+ 
+     virtual void destroy (
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+@@ -600,6 +600,8 @@
+         CORBA::SystemException
+       )) = 0;
+ 
++#if TAO_HAS_CORBA_MESSAGING == 1
++
+     virtual Messaging::SyncScope sync_scope (
+         CORBA::Environment &ACE_TRY_ENV =
+           TAO_default_environment ()
+@@ -608,6 +610,8 @@
+         CORBA::SystemException
+       )) = 0;
+ 
++#endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
++
+     virtual PortableInterceptor::ReplyStatus reply_status (
+         CORBA::Environment &ACE_TRY_ENV =
+           TAO_default_environment ()
+@@ -1140,9 +1144,8 @@
+       }
+ 
+     virtual void send_request (
+-        PortableInterceptor::ClientRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ClientRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+@@ -1150,27 +1153,24 @@
+       )) = 0;
+ 
+     virtual void send_poll (
+-        PortableInterceptor::ClientRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ClientRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
+ 
+     virtual void receive_reply (
+-        PortableInterceptor::ClientRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ClientRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
+ 
+     virtual void receive_exception (
+-        PortableInterceptor::ClientRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ClientRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+@@ -1178,9 +1178,8 @@
+       )) = 0;
+ 
+     virtual void receive_other (
+-        PortableInterceptor::ClientRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ClientRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+@@ -1301,9 +1300,8 @@
+       }
+ 
+     virtual void receive_request_service_contexts (
+-        PortableInterceptor::ServerRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ServerRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+@@ -1311,9 +1309,8 @@
+       )) = 0;
+ 
+     virtual void receive_request (
+-        PortableInterceptor::ServerRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ServerRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+@@ -1321,18 +1318,16 @@
+       )) = 0;
+ 
+     virtual void send_reply (
+-        PortableInterceptor::ServerRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ServerRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
+ 
+     virtual void send_exception (
+-        PortableInterceptor::ServerRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ServerRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+@@ -1340,9 +1335,8 @@
+       )) = 0;
+ 
+     virtual void send_other (
+-        PortableInterceptor::ServerRequestInfo_ptr ri,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ServerRequestInfo_ptr ri
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+@@ -1604,9 +1598,8 @@
+       }
+ 
+     virtual void establish_components (
+-        PortableInterceptor::IORInfo_ptr info,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::IORInfo_ptr info
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+@@ -1727,9 +1720,8 @@
+ 
+     virtual CORBA::Policy_ptr create_policy (
+         CORBA::PolicyType type,
+-        const CORBA::Any & value,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        const CORBA::Any & value
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException,
+@@ -2145,18 +2137,16 @@
+       }
+ 
+     virtual void pre_init (
+-        PortableInterceptor::ORBInitInfo_ptr info,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ORBInitInfo_ptr info
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+       )) = 0;
+ 
+     virtual void post_init (
+-        PortableInterceptor::ORBInitInfo_ptr info,
+-        CORBA::Environment &ACE_TRY_ENV =
+-          TAO_default_environment ()
++        PortableInterceptor::ORBInitInfo_ptr info
++        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+       )
+       ACE_THROW_SPEC ((
+         CORBA::SystemException
+@@ -2178,6 +2168,11 @@
+ 
+ #endif /* end #if !defined */
+ 
++/// Register an ORBInitializer with the global ORBInitializer
++/// table.
++TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
++  ORBInitializer_ptr init,
++  CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+ 
+ }
+ TAO_NAMESPACE_CLOSE // module PortableInterceptor
+--- PortableInterceptorC.i.old	Fri Mar  2 12:16:13 2001
++++ PortableInterceptorC.i	Fri Mar  2 12:16:42 2001
+@@ -1,6 +1,6 @@
+ // -*- C++ -*-
+ //
+-// $Id$
++// $Id$
+ 
+ // ****  Code generated by the The ACE ORB (TAO) IDL Compiler ****
+ // TAO and the TAO IDL Compiler have been developed by:
+--- PortableInterceptorC.cpp.old	Fri Mar  2 12:16:13 2001
++++ PortableInterceptorC.cpp	Fri Mar  2 12:19:47 2001
+@@ -21,10 +21,6 @@
+ 
+ #include "PortableInterceptorC.h"
+ 
+-#if TAO_HAS_INTERCEPTORS == 1
+-#include "tao/RequestInfo_Util.h"
+-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
+-
+ #if defined (__BORLANDC__)
+ #pragma option -w-rvl -w-rch -w-ccc -w-aus
+ #endif /* __BORLANDC__ */
+@@ -33,6 +29,7 @@
+ #include "PortableInterceptorC.i"
+ #endif /* !defined INLINE */
+ 
++#include "CORBA_String.h"
+ 
+ // default constructor
+ PortableInterceptor::Interceptor::Interceptor ()
+@@ -91,7 +88,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -165,7 +162,7 @@
+     {
+       return;
+     }
+-  
++
+   ACE_THROW (CORBA::MARSHAL ());
+ }
+ 
+@@ -178,7 +175,7 @@
+     {
+       return;
+     }
+-  
++
+   ACE_THROW (CORBA::MARSHAL ());
+ }
+ 
+@@ -338,7 +335,7 @@
+     {
+       return;
+     }
+-  
++
+   ACE_THROW (CORBA::MARSHAL ());
+ }
+ 
+@@ -351,7 +348,7 @@
+     {
+       return;
+     }
+-  
++
+   ACE_THROW (CORBA::MARSHAL ());
+ }
+ 
+@@ -452,7 +449,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -521,7 +518,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -602,7 +599,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -683,7 +680,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -764,7 +761,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -845,7 +842,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -914,7 +911,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -995,7 +992,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -1064,7 +1061,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -1133,7 +1130,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -1348,7 +1345,7 @@
+   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+     retv = ACE_reinterpret_cast (void *,
+       ACE_static_cast (CORBA::Object_ptr, this));
+-    
++
+   if (retv)
+     this->_add_ref ();
+   return retv;
+@@ -1618,4 +1615,3 @@
+   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+   #  pragma instantiate TAO_Object_Manager<PortableInterceptor::ORBInitializer,PortableInterceptor::ORBInitializer_var>
+ #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+-
