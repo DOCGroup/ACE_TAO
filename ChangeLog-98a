@@ -1,3 +1,7 @@
+Thu Dec 18 15:48:03 1997    <nw1@JIG>
+
+	* ace/OS.cpp (invoke): Added a dummy return to shut gcc up.
+	
 Thu Dec 18 20:18:50 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.7, released Thu Dec 18 20:18:50 1997.
