@@ -23,6 +23,7 @@
 // ==========================================================================
 
 #include "test_config.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
@@ -105,6 +106,8 @@ int run_sender( )
     ACE_ERROR_RETURN(( LM_ERROR, "%pn", "Cannot open broadcast socket" ), -1);
 
 }
+
+#if defined( ACE_LACKS_FORK ) && defined( ACE_HAS_THREADS )
 /* \brief Thread main function to run run_receiver function
    \note run_receiver return valu is stored in receiver_exit_code global variable
 */
@@ -113,6 +116,7 @@ static ACE_THR_FUNC_RETURN run_thread_receiver( void * )
     receiver_exit_code = run_receiver();
     return 0;
 }
+#endif /* defined( ACE_LACKS_FORK ) && defined( ACE_HAS_THREADS ) */
 
 /* \brief Just runs automatic tests
 
