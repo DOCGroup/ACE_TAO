@@ -831,7 +831,7 @@ class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
   // = TITLE
   //   No op class for nonthreaded platform protocols.
 public:
-  ACE_Null_Token (void);
+  ACE_INLINE_FOR_GNUC ACE_Null_Token (void);
   // Construction.
 
   ~ACE_Null_Token (void);
