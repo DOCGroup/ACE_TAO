@@ -23,7 +23,7 @@ sub new {
   my(@creators) = @_;
   my($self)     = bless {'path'     => $path,
                          'name'     => $name,
-                         'version'  => 0.8,
+                         'version'  => 0.9,
                          'types'    => {},
                          'creators' => \@creators,
                         }, $class;
@@ -45,7 +45,8 @@ sub usageAndExit {
                "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
                (" " x (length($base) + 8)) . "[-template <file>] " .
                "[-dynamic_only] [-static_only]\n" .
-               (" " x (length($base) + 8)) . "[-relative NAME=VAR]\n" .
+               (" " x (length($base) + 8)) . "[-relative NAME=VAR] " .
+               "[-noreldefs]\n" .
                (" " x (length($base) + 8)) . "[-type <";
 
   my(@keys) = sort keys %{$self->{'types'}};
@@ -73,6 +74,7 @@ sub usageAndExit {
 "       -relative     Any \$() variable in an mpc that is matched to NAME\n" .
 "                     is replaced by VAR only if VAR can be made into a\n" .
 "                     relative path based on the current working directory.\n" .
+"       -noreldefs    Do not try to generate default relative definitions.\n" .
 "       -type         Specifies the type of project file to generate.  This\n" .
 "                     option can be used multiple times to generate multiple\n" .
 "                     types.\n";
@@ -85,7 +87,7 @@ sub completion_command {
   my($self) = shift;
   my($str)  = "complete $self->{'name'} " .
               "'c/-/(global include type template relative " .
-              "ti dynamic_only static_only)/' " .
+              "ti dynamic_only static_only noreldefs)/' " .
               "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
               "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
 
@@ -116,6 +118,7 @@ sub run {
   my($static)     = 1;
   my($signif)     = 3;
   my(%relative)   = ();
+  my($reldefs)    = 1;
 
   ## Dynamically load in each perl module and set up
   ## the type tags and project creators
@@ -164,6 +167,9 @@ sub run {
         $self->usageAndExit("-include requires a directory argument");
       }
       push(@include, $include);
+    }
+    elsif ($arg eq '-noreldefs') {
+      $reldefs = 0;
     }
     elsif ($arg eq '-template') {
       $i++;
@@ -238,15 +244,17 @@ sub run {
     push(@include, $self->{'path'} . "/config");
     push(@include, $self->{'path'} . "/templates");
   }
-  if (!defined $relative{'ACE_ROOT'} && defined $ENV{ACE_ROOT}) {
-    $relative{'ACE_ROOT'} = $ENV{ACE_ROOT};
-  }
-  if (!defined $relative{'TAO_ROOT'}) {
-    if (defined $ENV{TAO_ROOT}) {
-      $relative{'TAO_ROOT'} = $ENV{TAO_ROOT};
+  if ($reldefs) {
+    if (!defined $relative{'ACE_ROOT'} && defined $ENV{ACE_ROOT}) {
+      $relative{'ACE_ROOT'} = $ENV{ACE_ROOT};
     }
-    else {
-      $relative{'TAO_ROOT'} = "$relative{ACE_ROOT}/TAO";
+    if (!defined $relative{'TAO_ROOT'}) {
+      if (defined $ENV{TAO_ROOT}) {
+        $relative{'TAO_ROOT'} = $ENV{TAO_ROOT};
+      }
+      else {
+        $relative{'TAO_ROOT'} = "$relative{ACE_ROOT}/TAO";
+      }
     }
   }
 
