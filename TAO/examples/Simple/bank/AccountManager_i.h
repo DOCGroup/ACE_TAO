@@ -96,7 +96,7 @@ private:
   // bind into the hash map manager if <name> is unique, else it will
   // return a previously bound entry.
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const AccountManager_i&));
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const AccountManager_i &));
   // Keeping g++2.7.2
 };
 
