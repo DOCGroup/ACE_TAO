@@ -2578,7 +2578,7 @@ ACE_OS::thr_exit (void *status)
     int using_afx = -1;
     ACE_Thread_Descriptor *td = ACE_Log_Msg::instance ()->thr_desc ();
     if (td)
-      using_afx = ACE_BIT_ENABLED (td, THR_USE_AFX);
+      using_afx = ACE_BIT_ENABLED (td->flags (), THR_USE_AFX);
 # endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
 
     // Call TSS destructors.
