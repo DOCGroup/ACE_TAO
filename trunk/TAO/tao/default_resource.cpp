@@ -110,7 +110,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
             else if (ACE_OS::strcasecmp (name, "select_st") == 0)
               reactor_type_ = TAO_REACTOR_SELECT_ST;
             else if (ACE_OS::strcasecmp (name, "fl_reactor") == 0)
-#if ACE_HAS_FL
+#if defined(ACE_HAS_FL)
               reactor_type_ = TAO_REACTOR_FL;
 #else
               ACE_DEBUG ((LM_DEBUG,
@@ -118,7 +118,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           " not supported on this platform\n"));
 #endif /* ACE_HAS_FL */
             else if (ACE_OS::strcasecmp (name, "xt_reactor") == 0)
-#if ACE_HAS_XT
+#if defined(ACE_HAS_XT)
               reactor_type_ = TAO_REACTOR_XT;
 #else
               ACE_DEBUG ((LM_DEBUG,
@@ -126,7 +126,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           " not supported on this platform\n"));
 #endif /* ACE_HAS_XT */
             else if (ACE_OS::strcasecmp (name, "WFMO") == 0)
-#if ACE_WIN32
+#if defined(ACE_WIN32)
               reactor_type_ = TAO_REACTOR_WFMO;
 #else
               ACE_DEBUG ((LM_DEBUG,
@@ -134,7 +134,7 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           " not supported on this platform\n"));
 #endif /* ACE_WIN32 */
             else if (ACE_OS::strcasecmp (name, "MsgWFMO") == 0)
-#if ACE_WIN32
+#if defined(ACE_WIN32)
               reactor_type_ = TAO_REACTOR_MSGWFMO;
 #else
               ACE_DEBUG ((LM_DEBUG,

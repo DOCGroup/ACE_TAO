@@ -1,3 +1,9 @@
+Wed May 19 16:21:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/default_resource.cpp:
+	  Fixed incorrect use of ACE_WIN32, ACE_HAS_FL and ACE_HAS_XT
+	  macros, thanks to Jeff Parsons for reporting this.
+
 Wed May 19 15:54:53 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode_Constants.cpp:
