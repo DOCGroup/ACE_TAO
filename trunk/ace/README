@@ -60,6 +60,7 @@ ACE_HAS_THR_KEYDELETE			Platform supports thr_keydelete (e.g,. UNIXWARE)
 ACE_HAS_THR_MINSTACK			Platform calls thr_minstack() rather than thr_min_stack() (e.g., Tandem).
 ACE_HAS_LIMITED_RUSAGE_T		The rusage_t structure has only two fields.
 ACE_HAS_LONGLONG_T			Compiler/platform supports the "long long" datatype.
+ACE_HAS_LONG_FDMASK			Compiler/platform has typedef u_long fdmask (e.g., Linux).
 ACE_HAS_LONG_MAP_FAILED                 Platform defines MAP_FAILED as a long constant.
 ACE_HAS_MFC				Platform supports Microsoft Foundation Classes
 ACE_HAS_MSG				Platform supports recvmsg and sendmsg

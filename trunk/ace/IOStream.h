@@ -10,13 +10,9 @@
 //    IOStream.h
 //
 // = AUTHOR
-//    James CE Johnson <jcej@lads.com>
-//
-// = COAUTHOR
-//    Jim Crossley <jim@lads.com>
+//    James CE Johnson <jcej@lads.com> and Jim Crossley <jim@lads.com>
 //
 // ============================================================================
-
 
 #if !defined (ACE_IOSTREAM_H)
 #define ACE_IOSTREAM_H
@@ -35,31 +31,28 @@ typedef CString ACE_IOStream_String;
 #include /**/ <String.h>
 typedef String ACE_IOStream_String;
 #endif /* ACE_WIN32 */
-#endif /* ACE_HAS_STRING_CLASS */
-
-#if defined (ACE_HAS_STRING_CLASS)
 
 #if defined (DIGITAL_UNIX) && defined (DEC_CXX)
 #include /**/ <stl_macros>
 #endif /* DIGITAL_UNIX && DEC_CXX */
 
-class QuotedString : public ACE_IOStream_String
+class ACE_Quoted_String : public ACE_IOStream_String
 {
 public:
-  inline QuotedString (void) { *this = ""; }
-  inline QuotedString (const char * c) { *this = ACE_IOStream_String (c); }
-  inline QuotedString (const ACE_IOStream_String& s) { *this = s; }
-  inline QuotedString& operator= (const ACE_IOStream_String& s)
+  inline ACE_Quoted_String (void) { *this = ""; }
+  inline ACE_Quoted_String (const char *c) { *this = ACE_IOStream_String (c); }
+  inline ACE_Quoted_String (const ACE_IOStream_String &s) { *this = s; }
+  inline ACE_Quoted_String &operator= (const ACE_IOStream_String& s)
   {
-    return (QuotedString&) ACE_IOStream_String::operator= (s);
+    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (s);
   }
-  inline QuotedString & operator = (const char  c) {
-    return (QuotedString&) ACE_IOStream_String::operator= (c);
+  inline ACE_Quoted_String &operator = (const char c) {
+    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (c);
   }
-  inline QuotedString & operator = (const char* c) {
-    return (QuotedString&) ACE_IOStream_String::operator= (c);
+  inline ACE_Quoted_String &operator = (const char *c) {
+    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (c);
   }
-  inline bool operator < (const QuotedString& s) const {
+  inline bool operator < (const ACE_Quoted_String &s) const {
     return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
   }
 #if defined (ACE_WIN32)
@@ -68,8 +61,6 @@ public:
 };
 
 #endif /* ACE_HAS_STRING_CLASS */
-
-///////////////////////////////////////////////////////////////////////////
 
 class ACE_Export ACE_Streambuf : public streambuf
   // = TITLE
@@ -141,43 +132,50 @@ public:
   // providing separate read/write buffers, it is up to us to manage
   // their memory.
 
-  ACE_Time_Value * recv_timeout( ACE_Time_Value * tv = NULL );
+  ACE_Time_Value *recv_timeout (ACE_Time_Value *tv = NULL);
   // Get the current Time_Value pointer and provide a new one.
 
-  char * reset_put_buffer(char * newBuffer = NULL, u_int _streambuf_size = 0, u_int _pptr = 0 );
-  // Use this to allocate a new/different buffer for put operations.  If you
-  // do not provide a buffer pointer, one will be allocated.  That is the
-  // preferred method.  If you do provide a buffer, the size must match that
-  // being used by the get buffer.
-  // If successful, you will receive a pointer to the current put buffer.
-  // It is your responsibility to delete this memory when you are done with it.
+  char *reset_put_buffer (char *newBuffer = NULL, 
+			  u_int _streambuf_size = 0, 
+			  u_int _pptr = 0 );
+  // Use this to allocate a new/different buffer for put operations.
+  // If you do not provide a buffer pointer, one will be allocated.
+  // That is the preferred method.  If you do provide a buffer, the
+  // size must match that being used by the get buffer.  If
+  // successful, you will receive a pointer to the current put buffer.
+  // It is your responsibility to delete this memory when you are done
+  // with it.
 
-  u_int put_avail(void);
+  u_int put_avail (void);
   // Return the number of bytes to be 'put' onto the stream media.
   //	pbase + put_avail = pptr
 
-  char * reset_get_buffer(char * newBuffer = NULL, u_int _streambuf_size = 0, u_int _gptr = 0, u_int _egptr = 0 );
-  // Use this to allocate a new/different buffer for get operations.  If you
-  // do not provide a buffer pointer, one will be allocated.  That is the
-  // preferred method.  If you do provide a buffer, the size must match that
-  // being used by the put buffer.
-  // If successful, you will receive a pointer to the current get buffer.
-  // It is your responsibility to delete this memory when you are done with it.
+  char *reset_get_buffer (char *newBuffer = NULL, 
+			  u_int _streambuf_size = 0,
+			  u_int _gptr = 0,
+			  u_int _egptr = 0);
+  // Use this to allocate a new/different buffer for get operations.
+  // If you do not provide a buffer pointer, one will be allocated.
+  // That is the preferred method.  If you do provide a buffer, the
+  // size must match that being used by the put buffer.  If
+  // successful, you will receive a pointer to the current get buffer.
+  // It is your responsibility to delete this memory when you are done
+  // with it.
 
-  u_int get_waiting(void);
-  // Return the number of bytes not yet gotten.
-  //	eback + get_waiting = gptr
-  //
-  u_int get_avail(void);
-  // Return the number of bytes in the get area (includes some already gotten);
-  //	eback + get_avail = egptr
-  //
+  u_int get_waiting (void);
+  // Return the number of bytes not yet gotten.  eback + get_waiting =
+  // gptr
 
-  u_int streambuf_size(void);
+  u_int get_avail (void);
+  // Return the number of bytes in the get area (includes some already
+  // gotten); eback + get_avail = egptr
+
+  u_int streambuf_size (void);
   // Query the streambuf for the size of it's buffers.
 
 protected:
-  ACE_Streambuf (u_int streambuf_size, int io_mode);
+  ACE_Streambuf (u_int streambuf_size, 
+		 int io_mode);
 
   virtual int sync (void);
   // Sync both input and output. See syncin/syncout below for
@@ -190,9 +188,9 @@ protected:
   // The overflow function receives the character which caused the
   // overflow.
 
-  void reset_base(void);
-  // Resets the base() pointer and streambuf mode.  This is
-  // used internally when get/put buffers are allocatd.
+  void reset_base (void);
+  // Resets the base() pointer and streambuf mode.  This is used
+  // internally when get/put buffers are allocatd.
 
 protected:
   // = Two pointer sets for manipulating the read/write areas.
@@ -215,19 +213,19 @@ protected:
   // iostream.
 
   const u_int streambuf_size_;
-  // This defines the size of the input and output buffers.  It can
-  // be set by the object constructor.
+  // This defines the size of the input and output buffers.  It can be
+  // set by the object constructor.
 
-  ACE_Time_Value   recv_timeout_value_;
-  ACE_Time_Value * recv_timeout_;
+  ACE_Time_Value recv_timeout_value_;
+  ACE_Time_Value *recv_timeout_;
   // We want to allow the user to provide Time_Value pointers to
   // prevent infinite blocking while waiting to receive data.
 
   int syncin (void);
   // syncin is called when the input needs to be synced with the
   // source file.  In a filebuf, this results in the seek() system
-  // call being used.  We can't do that on socket-like connections,
-  // so this does basically nothing.  That's safe because we have a
+  // call being used.  We can't do that on socket-like connections, so
+  // this does basically nothing.  That's safe because we have a
   // separate read buffer to maintain the already-read data.  In a
   // filebuf, the single common buffer is used forcing the seek()
   // call.
@@ -245,24 +243,31 @@ protected:
   // underflow.  It will attempt to fill the read buffer from the
   // peer.
 
-  virtual int get_one_byte ( );
+  virtual int get_one_byte (void);
   // Used by fillbuf and others to get exactly one byte from the peer.
   // recv_n is used to be sure we block until something is available.
   // It is virtual because we really need to override it for
   // datagram-derived objects.
 
-  virtual ssize_t send  ( char * buf, ssize_t len ) = 0;
-  virtual ssize_t recv  ( char * buf, ssize_t len, ACE_Time_Value * tv = NULL ) = 0;
-  virtual ssize_t recv  ( char * buf, ssize_t len, int flags, ACE_Time_Value * tv = NULL ) = 0;
-  virtual ssize_t recv_n( char * buf, ssize_t len, int flags = 0, ACE_Time_Value * tv = NULL ) = 0;
-  // Stream connections and "unconnected connections" (ie -- datagrams)
-  // need to work just a little differently.  We derive custom
-  // Streambuf objects for them and provide these functions at that time.
+  virtual ssize_t send (char *buf,
+			ssize_t len) = 0;
+  virtual ssize_t recv (char *buf,
+			ssize_t len,
+			ACE_Time_Value *tv = NULL) = 0;
+  virtual ssize_t recv (char *buf, 
+			ssize_t len,
+			int flags,
+			ACE_Time_Value *tv = NULL) = 0;
+  virtual ssize_t recv_n (char *buf, 
+			  ssize_t len,
+			  int flags = 0,
+			  ACE_Time_Value *tv = NULL) = 0;
+  // Stream connections and "unconnected connections" (ie --
+  // datagrams) need to work just a little differently.  We derive
+  // custom Streambuf objects for them and provide these functions at
+  // that time.
 
-  virtual ACE_HANDLE get_handle(void)
-  {
-	return 0;
-  }
+  virtual ACE_HANDLE get_handle (void);
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -279,8 +284,6 @@ typedef ostream& (*__omanip_)(ostream&);
 // __*manip typedefs causes Linux do segfault when "<<endl" is done.
 //
 //        virtual MT& operator<<(ios& (*func)(ios&))  { (*func)(*this); return *this; }
-
-
 
 // This macro defines the get operator for class MT into datatype DT.
 // We will use it below to quickly override most (all?)  iostream get
@@ -351,7 +354,6 @@ typedef ostream& (*__omanip_)(ostream&);
         inline virtual MT& operator<<(__omanip_ func) CODE2 \
         inline virtual MT& operator<<(__manip_ func)  CODE2
 
-
 #if defined (ACE_LACKS_SIGNED_CHAR)
   #define GET_FUNC_SET1(MT,CODE,CODE2) GET_FUNC_SET0(MT,CODE,CODE2)
   #define PUT_FUNC_SET1(MT,CODE,CODE2) PUT_FUNC_SET0(MT,CODE,CODE2)
@@ -374,17 +376,11 @@ typedef ostream& (*__omanip_)(ostream&);
 #define PUT_FUNC_SET(MT)	PUT_FUNC_SET1(MT,PUT_CODE,PUT_MANIP_CODE)
 #define	GETPUT_FUNC_SET(MT)	GET_FUNC_SET(MT) PUT_FUNC_SET(MT)
 
-
 #define GET_SIG_SET(MT)		GET_FUNC_SET1(MT,= 0;,= 0;)
 #define PUT_SIG_SET(MT)		PUT_FUNC_SET1(MT,= 0;,= 0;)
 #define	GETPUT_SIG_SET(MT)	GET_SIG_SET(MT) PUT_SIG_SET(MT)
 
-
-///////////////////////////////////////////////////////////////////////////
-
 // Include the templates here.
 #include "ace/IOStream_T.h"
-
 #endif /* !ACE_LACKS_ACE_IOSTREAM */
-
 #endif /* ACE_IOSTREAM_H */

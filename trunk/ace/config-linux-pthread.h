@@ -11,6 +11,7 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#define ACE_HAS_LONG_FDMASK
 #define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG
 #define ACE_HAS_STRING_CLASS

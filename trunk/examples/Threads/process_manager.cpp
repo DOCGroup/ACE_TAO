@@ -158,6 +158,7 @@ main (int argc, char *argv[])
       ACE_OS::sleep (1);
 
       // Shutdown the child.
+
       if (proc_mgr.terminate (pid) == -1)
 	ACE_ERROR_RETURN ((LM_DEBUG, "(%P|%t) %p\n", "terminate"), 1);
 

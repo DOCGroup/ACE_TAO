@@ -583,8 +583,8 @@ ACE_Log_Msg::open (const char *prog_name,
     {
       ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::OSTREAM);
       // Only set this to cerr if it hasn't already been set.
-      if (ACE_LOG_MSG->msg_ostream () == 0)
-	ACE_LOG_MSG->msg_ostream (&cerr);
+      if (this->msg_ostream () == 0)
+	this->msg_ostream (&cerr);
     }
   if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::SILENT))
     ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT);

@@ -580,8 +580,11 @@ ACE_Connector<SH, PR_CO_2>::info (char **strp, size_t length) const
   else if (addr.addr_to_string (addr_str, sizeof addr) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, "%s\t %s %s", 
-	     "ACE_Connector", addr_str, "# connector factory\n");
+  ACE_OS::sprintf (buf,
+		   "%s\t %s %s", 
+		   "ACE_Connector",
+		   addr_str,
+		   "# connector factory\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
