@@ -2,10 +2,6 @@ Fri Mar 20 20:53:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Parse_Node.cpp: Fixed typos.
 
-Fri Mar 20 20:06:28 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ACE version 4.4.34, released Fri Mar 20 20:06:28 1998.
-
 Fri Mar 20 14:18:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* performance-tests/UDP/udp_test.cpp: Completed the ACE'ification
