@@ -1,4 +1,3 @@
-
 Fri Jun 27 12:12:09 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.cpp:
@@ -92,6 +91,9 @@ Thu Jun 26 22:34:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  as an entry point when spawning new DTs.
 	
 	* tao/RTScheduling/Makefile
+	* tao/Makefile.dirs
+
+	  Corresponding Makefiles to compile RTScheduler library.
 
 	
 Thu Jun 26 17:35:00 2003  Justin Michel  <michel_j@ociweb.com>
