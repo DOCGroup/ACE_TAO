@@ -43,10 +43,10 @@ LIST   = http://tao.doc.wustl.edu/bugzilla/Borland_Wchar/
 WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?borland_wchar
 STATUS = http://tao.doc.wustl.edu/bugzilla/Borland_Wchar/status.txt
 
-[Win2000_Fuzz]
-LIST   = http://tao.doc.wustl.edu/bugzilla/Fuzz/
-WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?fuzz
-STATUS = http://tao.doc.wustl.edu/bugzilla/Fuzz/status.txt
+#[Win2000_Fuzz]
+#LIST   = http://tao.doc.wustl.edu/bugzilla/Fuzz/
+#WEB    = http://tao.doc.wustl.edu/bugzilla/cgi/show_log_dir.pl?fuzz
+#STATUS = http://tao.doc.wustl.edu/bugzilla/Fuzz/status.txt
 
 [Win2000_WChar_Unicode]
 LIST   = http://tao.doc.wustl.edu/bugzilla/Unicode/
