@@ -1,3 +1,8 @@
+Wed May 16 12:50:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO.dsp: During my merge this file got screwed up losing
+	  some of the old entries. Fixed those.
+
 Wed May 16 12:00:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO_Static.dsp:
