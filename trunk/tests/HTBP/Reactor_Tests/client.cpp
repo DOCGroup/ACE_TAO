@@ -13,7 +13,7 @@
 #include "ace/HTBP/HTBP_Environment.h"
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
@@ -29,13 +29,13 @@ main (int argc, char *argv[])
 #endif /* 0 */
 
   ACE::HTBP::ID_Requestor req (&env);
-  ACE::HTBP::Addr local = req.get_HTID();
+  ACE::HTBP::Addr local = ACE_TEXT_ALWAYS_CHAR(req.get_HTID());
 
   unsigned remote_port = 8088;
-  const char * remote_host = argv[1];
+  const ACE_TCHAR * remote_host = argv[1];
 
   unsigned proxy_port = 0;
-  ACE_CString proxy_host;
+  ACE_TString proxy_host;
 
   if (env.get_proxy_port(proxy_port) != 0 ||
       env.get_proxy_host(proxy_host) != 0)
@@ -48,7 +48,7 @@ main (int argc, char *argv[])
     }
 
   ACE_INET_Addr proxy(proxy_port,proxy_host.c_str());
-  ACE::HTBP::Addr remote (remote_port,remote_host);
+  ACE::HTBP::Addr remote (remote_port,ACE_TEXT_ALWAYS_CHAR(remote_host));
 
   ACE::HTBP::Session session(remote,local,ACE::HTBP::Session::next_session_id(),&proxy);
   ACE::HTBP::Stream stream (&session);
@@ -62,9 +62,10 @@ main (int argc, char *argv[])
       ACE_OS::sprintf (buffer,"Do you hear me? %d",i);
       n = stream.send (buffer,ACE_OS::strlen(buffer)+1);
       if (n == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, "%p\n","stream send"),-1);
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
+                           ACE_TEXT("stream send")),-1);
 
-      ACE_DEBUG ((LM_DEBUG, "send returned %d\n",n));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("send returned %d\n"),n));
 
       retrycount = 10;
       while ((n = ch->recv_ack()) == -1
@@ -72,11 +73,13 @@ main (int argc, char *argv[])
              && retrycount > 0)
         {
           retrycount--;
-          ACE_DEBUG ((LM_DEBUG,"waiting for ack, %d tries left\n",
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("waiting for ack, %d tries left\n"),
                       retrycount));
           ACE_OS::sleep (1);
         }
-      ACE_DEBUG ((LM_DEBUG,"After wait for ack, n = %d, retry = %d\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("After wait for ack, n = %d, retry = %d\n"),
                   n,retrycount,errno));
 
       retrycount = 10;
@@ -85,13 +88,16 @@ main (int argc, char *argv[])
              && retrycount > 0)
         {
           retrycount--;
-          ACE_DEBUG ((LM_DEBUG,"waiting for inbound data, %d tries left\n",
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("waiting for inbound data, %d tries left\n"),
                       retrycount));
           ACE_OS::sleep(1);
         }
       if (retrycount == 0 || n < 0)
         {
-          ACE_DEBUG ((LM_DEBUG,"bailing after wait, %p\n","recv"));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("bailing after wait, %p\n"),
+                      ACE_TEXT("recv")));
           break;
         }
 
@@ -101,12 +107,14 @@ main (int argc, char *argv[])
     }
   ACE::HTBP::Channel *ch = session.outbound();
   if (ch == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,"session's outbound channel is null!\n"),1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("session's outbound channel is null!\n")),1);
   n = stream.send ("goodbye",7);
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n","stream send"),-1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
+                       ACE_TEXT("stream send")),-1);
 
-  ACE_DEBUG ((LM_DEBUG, "send returned %d\n",n));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("send returned %d\n"),n));
 
   retrycount = 10;
   while (ch &&
@@ -115,11 +123,13 @@ main (int argc, char *argv[])
          && retrycount > 0)
     {
       retrycount--;
-      ACE_DEBUG ((LM_DEBUG,"waiting for ack, %d tries left\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("waiting for ack, %d tries left\n"),
                   retrycount));
       ACE_OS::sleep (1);
     }
-  ACE_DEBUG ((LM_DEBUG,"After wait for ack, n = %d, retry = %d\n",
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT("After wait for ack, n = %d, retry = %d\n"),
               n,retrycount,errno));
 
   return 0;

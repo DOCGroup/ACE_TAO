@@ -23,96 +23,62 @@ ACE::HTBP::Inside_Squid_Filter::send_data_trailer (ACE::HTBP::Channel *ch)
 
 int
 ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
-                                                   const char *cmd,
-                                                   char *buffer,
-                                                   size_t buffer_size)
+                                                     const char *cmd,
+                                                     char *buffer,
+                                                     size_t buffer_size)
 {
-  const char *format[] = {"http://",
-                          "/",
-                          "/",
-                          "/request",
-                          ".html HTTP/1.1\n",
-                          0};
-  char *buf = buffer;
-  size_t space = buffer_size;
+  // the string is formatted as:
+  // command  http://host:port/htid/sessionId/request<requestId>.html HTTP/1.1\n
+  // host:port is the remote host and port from the channel,
+  // htid is the local endpoint identifier
+  // sessionId is the discreet session counter between these peers
+  // requestId is the discreet request sent for this session.
+
   ACE::HTBP::Session *session = ch->session();
-  for (int i = 0; format[i >> 1]; i++)
-    {
-      char addr_buff[BUFSIZ];
-      const char *token = 0;
-      size_t toklen = 0;
-      if ( (( i >> 1) << 1) != i)
-        {
-          token = format [i >> 1];
-          toklen = ACE_OS::strlen (token);
-        }
-      else
-        {
-          token = addr_buff;
-          switch (i) {
-          case 0:
-            {
-              token = cmd;
-              toklen = ACE_OS::strlen (token);
-              break;
-            }
-          case 2:
-            {
-              if (session->peer_addr().addr_to_string(addr_buff,
-                                                      sizeof addr_buff) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "could not convert peer_addr to string\n"),
-                                  -1);
-              toklen = ACE_OS::strlen (token);
-              break;
-            }
-          case 4:
-            {
-              if (session->local_addr().addr_to_string(addr_buff,
-                                                       sizeof addr_buff) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "could not convert peer_addr to string\n"),
-                                  -1);
-              toklen = ACE_OS::strlen (token);
-              if (toklen && addr_buff[toklen-1] == '\n')
-                toklen --;
-              break;
-            }
-          case 6:
-            {
-              toklen = ACE_OS::strlen (ACE_OS::itoa(session->session_id().id_,
-                                                    addr_buff,
-                                                    10));
-              break;
-            }
-          case 8:
-            {
-              toklen = ACE_OS::strlen (ACE_OS::itoa(ch->request_count(),
-                                                    addr_buff,
-                                                    10));
-              break;
-            }
-          case 10:
-            break;
-          default:
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "ACE::HTBP::Inside_Squid_Filter::make_request_header: "
-                          "Oops, switch hit with i = %d\n",i));
-            }
-          }
-        }
-      if (toklen > space)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "request header buffer too small "
-                           "segment %d, need %d, have %d of total %d\n",
-                           i,toklen, space, buffer_size),
-                          -1);
-      ACE_OS::strncpy (buf,token,space);
-      buf += toklen;
-      space -= toklen;
-      *buf = '\0';
-    }
+
+  const char * format = "%shttp://%s:%d/%s/%d/request%d.html HTTP/1.1\n";
+  char remote_host[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1];
+  unsigned remote_port = session->peer_addr().get_port_number();
+  const char *local_htid = session->local_addr().get_htid();
+
+  ACE_UINT32 tempId = session->session_id().id_;
+  size_t sid_size = 1;
+  size_t rid_size = 1;
+  while (tempId /= 10) sid_size++;
+  tempId = ch->request_count();
+  while (tempId /= 10) rid_size++;
+
+  if (session->peer_addr().get_host_name(remote_host,
+                                         sizeof remote_host) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("HTBP::Inside_Squid_Filter:could not get ")
+                       ACE_TEXT("peer_addr hostname\n")),
+                      -1);
+
+
+  size_t size =
+    ACE_OS::strlen(format)
+    - 12    // subtract out the size of the format specifiers
+    + ACE_OS::strlen (cmd)
+    + ACE_OS::strlen (remote_host)
+    + 5     // maximum size for a the remote port number
+    + ACE_OS::strlen (local_htid)
+    + sid_size // size of session id
+    + rid_size; // size of request id
+
+  if (size > buffer_size)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT("HTBP::Inside_Squid_Filter: insufficient ")
+                       ACE_TEXT("buffer space for request header, need %d ")
+                       ACE_TEXT("got %d\n"),
+                       size, buffer_size),
+                      -1);
+
+  ACE_OS::sprintf (buffer,format,
+                   cmd,remote_host,remote_port,
+                   local_htid, session->session_id().id_,
+                   ch->request_count());
+
   return ACE_OS::strlen(buffer);
 }
 

@@ -14,6 +14,11 @@
 
 ACE_RCSID(HTBP,ACE_HTBP_Filter,"$ID: $")
 
+ACE::HTBP::Filter::Filter (void)
+  :http_code_ (0)
+{
+}
+
 ACE::HTBP::Filter::~Filter (void)
 {
 }

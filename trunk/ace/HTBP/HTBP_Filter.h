@@ -47,6 +47,8 @@ namespace ACE
     class HTBP_Export Filter
     {
     public:
+      Filter (void);
+
       virtual ~Filter (void);
 
       /// Inside and outside Send filters need to supply a data header that

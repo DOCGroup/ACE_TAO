@@ -67,8 +67,8 @@ ACE::HTBP::Session::Session (void)
     sock_flags_(0)
 {
   ACE::HTBP::ID_Requestor req;
-  char * htid = req.get_HTID();
-  session_id_.local_ = htid;
+  ACE_TCHAR * htid = req.get_HTID();
+  session_id_.local_ = ACE_TEXT_ALWAYS_CHAR(htid);
   delete[] htid;
   session_id_.id_ = ACE::HTBP::Session::next_session_id();
   ACE_NEW (inbound_, ACE::HTBP::Channel (this));
@@ -166,7 +166,7 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s)
   this->proxy_addr_->get_host_name(host,100);
   if (conn.connect (s->ace_stream(),*this->proxy_addr_) == -1)
     {
-      char buffer[128];
+      ACE_TCHAR buffer[128];
       this->proxy_addr_->addr_to_string(buffer,128, 0);
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT("ACE::HTBP::Session::reconnect failed to %s, %p\n"),
