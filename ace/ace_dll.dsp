@@ -4760,10 +4760,6 @@ SOURCE=.\Cleanup_Strategies_T.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Configuration.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Connector.i
 # End Source File
 # Begin Source File
