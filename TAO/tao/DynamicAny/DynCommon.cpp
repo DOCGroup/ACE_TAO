@@ -1429,7 +1429,7 @@ TAO_DynCommon::get_any (ACE_ENV_SINGLE_ARG_DECL)
 
       CORBA::Any_var val = tmp;
 
-      if ((this->any_ >>= ACE_const_cast (const CORBA::Any *&, tmp)) == 0)
+      if ((this->any_ >>= tmp) == 0)
         {
           ACE_THROW_RETURN (DynamicAny::DynAny::TypeMismatch (),
                             0);

@@ -1,3 +1,9 @@
+Mon Apr  7 10:39:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/DynamicAny/DynCommon.cpp (get_any):
+
+          Removed const cast from rhs of Any extraction.
+
 Sun Apr  6 23:34:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/OBV/Any/server.dsp:
@@ -9,7 +15,7 @@ Sun Apr  6 23:34:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tests/OBV/TC_Alignment/server.dsp:
         * tests/Param_Test/anyop.dsp:
 
-		  Turned on RTTI for some configurations of these projects.
+          Turned on RTTI for some configurations of these projects.
 
 Sun Apr  6 23:18:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
