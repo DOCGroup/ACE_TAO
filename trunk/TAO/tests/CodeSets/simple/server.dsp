@@ -1,10 +1,10 @@
-# Microsoft Developer Studio Project File - Name="Simple server" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Codeset Simple server" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Simple server - Win32 Release
+CFG=Codeset Simple server - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
@@ -65,8 +65,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../" /I "../../../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD  /c
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../" /I "../../../../" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -118,19 +118,19 @@ SOURCE=.\simpleS.h
 
 SOURCE=.\simple.idl
 
-!IF  "$(CFG)" == "Simple server - Win32 Release"
+!IF  "$(CFG)" == "Codeset Simple server - Win32 Release"
 
-USERDEP__SIMPL="..\..\..\..\release\bin\tao_idl .exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
+USERDEP__SIMPL="..\..\..\..\release\bin\tao_idl.exe"	
+# Begin Custom Build
 InputPath=.\simple.idl
 InputName=simple
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\..\..\release\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\Release\tao_idl -Ge 1 $(InputName).idl
 
 # End Custom Build
 
-!ELSEIF  "$(CFG)" == "Simple server - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Codeset Simple server - Win32 Debug"
 
 USERDEP__SIMPL="..\..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputPath)
