@@ -8,7 +8,7 @@
 #include "XML_Helper.h"
 #include "DnC_Dump.h"
 #include "tao/ORB.h"
-static const char *input_file = "test.xml";
+static const char *input_file = "BasicSP.cdp";
 
 
 static int
@@ -65,6 +65,8 @@ int main (int argc, char *argv[])
     }
   
   std::cout << "Test completed!\n";
+
+  return 0;
 }
 
     

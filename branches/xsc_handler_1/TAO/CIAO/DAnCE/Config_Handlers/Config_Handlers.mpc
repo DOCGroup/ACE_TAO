@@ -49,6 +49,9 @@ project (Config_Handlers) : acelib, ciao_deployment_stub {
     XML_Helper.cpp
     XML_File_Intf.cpp
     IDREF_Base.cpp
+    DnC_Dump.cpp
+    DnC_Dump_T.cpp
+    Dump_Obj.cpp
   }
 
   Header_Files {
@@ -56,9 +59,11 @@ project (Config_Handlers) : acelib, ciao_deployment_stub {
 }
 
 project (XSC_Config_Handlers_Tests) : ciao_deployment_stub {
-  requires += dummy_label
+  
+  // requires += dummy_label
   exename = test
-  dynamicflags   = CONFIG_HANDLER_BUILD_DLL
+  after    += Config_Handlers
+  dynamicflags   = CONFIG_HANDLERS_BUILD_DLL
   macros   += XML_USE_PTHREADS
   requires += exceptions
   includes += $(XERCESCROOT)/include  .
@@ -67,13 +72,7 @@ project (XSC_Config_Handlers_Tests) : ciao_deployment_stub {
                                                                                 
   Source_Files {
     test.cpp
-    DnC_Dump.cpp
-    DnC_Dump_T.cpp
-    Dump_Obj.cpp
   }
-
-                                                                                
-                                                                                
 }
 
 
