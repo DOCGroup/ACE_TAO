@@ -1,4 +1,4 @@
-project(TAO) : acelib, taoversion, core, tao_output {
+project(TAO) : acelib, taoversion, core, tao_output, extra_core {
   includes    += $(TAO_ROOT) $(TAO_ROOT)/tao
   sharedname   = TAO
   dynamicflags = TAO_BUILD_DLL
@@ -227,12 +227,6 @@ project(TAO) : acelib, taoversion, core, tao_output {
       Valuetype_Adapter.cpp
       ObjectKey_Table.cpp
       Refcounted_ObjectKey.cpp
-      Policy_Manager.cpp
-      Buffering_Constraint_Policy.cpp
-      Messaging_PolicyValueC.cpp
-      ServicesC.cpp
-      NVList.cpp
-      Dynamic_Adapter.cpp
     }
   }
 }
