@@ -89,6 +89,23 @@ namespace
     {
       os << endl << STRS[ENV_ARG] << ");";
     }
+    
+    /// If we don't do this, the comma() method just below
+    /// gets used not only with the arguments, but also
+    /// in raises(). Even though we are not generating the
+    /// exception list here, the front end iterator still
+    /// executes, and picks up the overridden comma(). So
+    /// we override raises() itself to do nothing.
+    virtual void
+    raises (Type&)
+    {
+    }
+    
+    virtual void
+    comma (Type&)
+    {
+      os << "," << endl;
+    }
   };
 
   struct OpExecReturnEmitter : Traversal::Type,
@@ -215,12 +232,8 @@ namespace
       operation_emitter.edge_traverser (receives);
       operation_emitter.edge_traverser (returns);
 
-      ParameterExecEmitter<Traversal::InParameter> in_param (os);
-      ParameterExecEmitter<Traversal::InOutParameter> inout_param (os);
-      ParameterExecEmitter<Traversal::OutParameter> out_param (os);
-      receives.node_traverser (in_param);
-      receives.node_traverser (inout_param);
-      receives.node_traverser (out_param);
+      ParameterExecEmitter<Traversal::Parameter> param (os);
+      receives.node_traverser (param);
 
       OpExecReturnEmitter return_emitter (os);
       returns.node_traverser (return_emitter);
