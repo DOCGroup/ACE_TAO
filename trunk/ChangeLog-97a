@@ -1,5 +1,9 @@
 Sun May 18 09:20:15 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Singleton.cpp: Added the updated version of
+ 	  ACE_TSS_Singleton that implements the Double-Checked Locking
+ 	  pattern.  Thanks to Rich Christy and Chris Lahey for this.
+
 	* ace/Strategies_T.cpp (activate_svc_handler): Fixed the logic so
  	  that a value is always returned.  Thanks to David Levine for
  	  noticing this.

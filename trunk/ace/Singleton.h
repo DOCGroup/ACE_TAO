@@ -12,7 +12,7 @@
 // = DESCRIPTION
 //
 // = AUTHOR
-//    Tim Harrison (harrison@cs.wustl.edu) and Douglas C. Schmidt
+//    Tim Harrison (harrison@cs.wustl.edu), Douglas C. Schmidt, Chris Lahey, and Rich Christy
 // 
 // ============================================================================
 
@@ -56,7 +56,7 @@ protected:
   // Get reference to Singleton lock;
 };
 
-template <class TYPE>
+template <class TYPE, class LOCK>
 class ACE_TSS_Singleton
   // = TITLE
   //     A Thread Specific Storage Singleton Adapter.
@@ -73,10 +73,13 @@ public:
   // Dump the state of the object.
 
 protected:
-  //#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
-  static ACE_TSS<TYPE> *tss_instance_;
+#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
+  static ACE_TSS<TYPE> *instance_;
   // Pointer to the Singleton instance.
-  // #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+
+  static LOCK ace_singleton_lock_;
+  // Lock the creation of the singleton.                                        
+#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 };
 
 #if defined (__ACE_INLINE__)
