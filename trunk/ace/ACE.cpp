@@ -2156,7 +2156,7 @@ int
 ACE::set_flags (ACE_HANDLE handle, int flags)
 {
   ACE_TRACE ("ACE::set_flags");
-#if defined (ACE_WIN32) || defined (ACE_LACKS_FCNTL)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_LACKS_FCNTL)
   switch (flags)
     {
     case ACE_NONBLOCK:
@@ -2192,7 +2192,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
 {
   ACE_TRACE ("ACE::clr_flags");
 
-#if defined (ACE_WIN32) || defined (ACE_LACKS_FCNTL)
+#if defined (ACE_WIN32) || defined (VXWORKS) || defined (ACE_LACKS_FCNTL)
   switch (flags)
     {
     case ACE_NONBLOCK:
