@@ -1,118 +1,118 @@
 Tue Oct 20 11:07:18 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* tests/Param_Test/param_test_i.cpp: A re-check in...
+        * tests/Param_Test/param_test_i.cpp: A re-check in...
 
 Tue Oct 20 11:17:01 EDT 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be:
+        * TAO_IDL/be:
 
-	  Introduced a small modification (read hack) so that all the CDR
-	  operators are now generated in the *.i file and with the
-	  ACE_INLINE keyword. Also, if ACE_INLINE is not defined, then we
-	  take care of this by generating the prototypes in the header
-	  enclosed within #ifndef .. #define .. #endif statements. This is
-	  just a first attempt to reduce fuction call overhead for
-	  compiled marshaling operators. However, an elegant solution to
-	  do this on a selective basis is needed. At this time, we force
-	  all <<, >> operators to be inlined. If the compiler decides not
-	  to inline, then we are going to pay a penalty.
+          Introduced a small modification (read hack) so that all the CDR
+          operators are now generated in the *.i file and with the
+          ACE_INLINE keyword. Also, if ACE_INLINE is not defined, then we
+          take care of this by generating the prototypes in the header
+          enclosed within #ifndef .. #define .. #endif statements. This is
+          just a first attempt to reduce fuction call overhead for
+          compiled marshaling operators. However, an elegant solution to
+          do this on a selective basis is needed. At this time, we force
+          all <<, >> operators to be inlined. If the compiler decides not
+          to inline, then we are going to pay a penalty.
 
-	  Affected files are:
+          Affected files are:
 
-	  be_visitor_root/root.cpp
-	  be_visitor_root/cdr_op.cpp
+          be_visitor_root/root.cpp
+          be_visitor_root/cdr_op.cpp
 
-	  In addition, I found out that in a number of files, we were
-	  tightly coupling the generated code to a specific output stream
-	  e.g., the client stubs file. In the above scenario, when I moved
-	  the generation of the CDR operators to the inline files in the
-	  root.cpp file, I expected all the children nodes to generate
-	  code in the inline file. However, since the code for the child
-	  nodes were tightly coupled with the client stubs file, it
-	  resulted in errors.
+          In addition, I found out that in a number of files, we were
+          tightly coupling the generated code to a specific output stream
+          e.g., the client stubs file. In the above scenario, when I moved
+          the generation of the CDR operators to the inline files in the
+          root.cpp file, I expected all the children nodes to generate
+          code in the inline file. However, since the code for the child
+          nodes were tightly coupled with the client stubs file, it
+          resulted in errors.
 
-	  The best way to hide which output stream we are currently
-	  dealing with is to use the "stream" accessor of the
-	  visitor_context class. The desired stream gets set at the root
-	  level and this information is passed to all the children via the
-	  context.
+          The best way to hide which output stream we are currently
+          dealing with is to use the "stream" accessor of the
+          visitor_context class. The desired stream gets set at the root
+          level and this information is passed to all the children via the
+          context.
 
-	  Affected files are:
+          Affected files are:
 
-	  be_visitor_array/any_op_ch.cpp
-	  be_visitor_array/any_op_cs.cpp
-	  be_visitor_array/cdr_op_ch.cpp
-	  be_visitor_array/cdr_op_cs.cpp
-	  be_visitor_enum/any_op_ch.cpp
-	  be_visitor_enum/any_op_cs.cpp
-	  be_visitor_enum/cdr_op_ch.cpp
-	  be_visitor_enum/cdr_op_cs.cpp
-	  be_visitor_exception/any_op_ch.cpp
-	  be_visitor_exception/any_op_cs.cpp
-	  be_visitor_exception/cdr_op_ch.cpp
-	  be_visitor_exception/cdr_op_cs.cpp
-	  be_visitor_interface/any_op_ch.cpp
-	  be_visitor_interface/any_op_cs.cpp
-	  be_visitor_interface/cdr_op_ch.cpp
-	  be_visitor_interface/cdr_op_cs.cpp
-	  be_visitor_sequence/any_op_ch.cpp
-	  be_visitor_sequence/any_op_cs.cpp
-	  be_visitor_sequence/cdr_op_ch.cpp
-	  be_visitor_sequence/cdr_op_cs.cpp
-	  be_visitor_structure/any_op_ch.cpp
-	  be_visitor_structure/any_op_cs.cpp
-	  be_visitor_structure/cdr_op_ch.cpp
-	  be_visitor_structure/cdr_op_cs.cpp
-	  be_visitor_typedef/any_op_ch.cpp
-	  be_visitor_typedef/any_op_cs.cpp
-	  be_visitor_typedef/cdr_op_ch.cpp
-	  be_visitor_typedef/cdr_op_cs.cpp
-	  be_visitor_union/any_op_ch.cpp
-	  be_visitor_union/any_op_cs.cpp
-	  be_visitor_union/cdr_op_ch.cpp
-	  be_visitor_union/cdr_op_cs.cpp
+          be_visitor_array/any_op_ch.cpp
+          be_visitor_array/any_op_cs.cpp
+          be_visitor_array/cdr_op_ch.cpp
+          be_visitor_array/cdr_op_cs.cpp
+          be_visitor_enum/any_op_ch.cpp
+          be_visitor_enum/any_op_cs.cpp
+          be_visitor_enum/cdr_op_ch.cpp
+          be_visitor_enum/cdr_op_cs.cpp
+          be_visitor_exception/any_op_ch.cpp
+          be_visitor_exception/any_op_cs.cpp
+          be_visitor_exception/cdr_op_ch.cpp
+          be_visitor_exception/cdr_op_cs.cpp
+          be_visitor_interface/any_op_ch.cpp
+          be_visitor_interface/any_op_cs.cpp
+          be_visitor_interface/cdr_op_ch.cpp
+          be_visitor_interface/cdr_op_cs.cpp
+          be_visitor_sequence/any_op_ch.cpp
+          be_visitor_sequence/any_op_cs.cpp
+          be_visitor_sequence/cdr_op_ch.cpp
+          be_visitor_sequence/cdr_op_cs.cpp
+          be_visitor_structure/any_op_ch.cpp
+          be_visitor_structure/any_op_cs.cpp
+          be_visitor_structure/cdr_op_ch.cpp
+          be_visitor_structure/cdr_op_cs.cpp
+          be_visitor_typedef/any_op_ch.cpp
+          be_visitor_typedef/any_op_cs.cpp
+          be_visitor_typedef/cdr_op_ch.cpp
+          be_visitor_typedef/cdr_op_cs.cpp
+          be_visitor_union/any_op_ch.cpp
+          be_visitor_union/any_op_cs.cpp
+          be_visitor_union/cdr_op_ch.cpp
+          be_visitor_union/cdr_op_cs.cpp
 
-	* performance-tests/Demux:
-	  performance-tests/Demux/CodeGen:
+        * performance-tests/Demux:
+          performance-tests/Demux/CodeGen:
 
-	  Completely rewrote the entire test suite using proper ACE
-	  programming guidelines. The older version was written to work
-	  with the SunSoft's IIOP code. the current one is now fully CORBA
-	  compliant and works with TAO.
+          Completely rewrote the entire test suite using proper ACE
+          programming guidelines. The older version was written to work
+          with the SunSoft's IIOP code. the current one is now fully CORBA
+          compliant and works with TAO.
 
-	  A bunch of files have been deleted and new ones added. In
-	  particular, we now generate an interface definition and rely on
-	  TAO_IDL compiler to generate the stubs and skeletons (rather
-	  than we generating them as we did before). In addition, we have
-	  added an additional parameter i.e., POA depth.
+          A bunch of files have been deleted and new ones added. In
+          particular, we now generate an interface definition and rely on
+          TAO_IDL compiler to generate the stubs and skeletons (rather
+          than we generating them as we did before). In addition, we have
+          added an additional parameter i.e., POA depth.
 
-	  Read the README files in both the directories to see how to use
-	  this test suite. We need to experiment with this to see how TAo
-	  performs.
+          Read the README files in both the directories to see how to use
+          this test suite. We need to experiment with this to see how TAo
+          performs.
 
-	  Newly added files are:
+          Newly added files are:
 
-	  ./demux_test_client.{h, cpp}
-	  ./demux_test_macros.h
-	  ./demux_test_server.{h, cpp}
-	  ./CodeGen/codegen.{h, cpp}
-	  ./CodeGen/debug.cpp
-	  ./CodeGen/demux.cpp
-	  ./CodeGen/gen_names.cpp
-	  ./CodeGen/idl.cpp
-	  ./CodeGen/servant_hdr.cpp
-	  ./CodeGen/servant_impl.cpp
+          ./demux_test_client.{h, cpp}
+          ./demux_test_macros.h
+          ./demux_test_server.{h, cpp}
+          ./CodeGen/codegen.{h, cpp}
+          ./CodeGen/debug.cpp
+          ./CodeGen/demux.cpp
+          ./CodeGen/gen_names.cpp
+          ./CodeGen/idl.cpp
+          ./CodeGen/servant_hdr.cpp
+          ./CodeGen/servant_impl.cpp
 
-	   Files removed are:
+           Files removed are:
 
-	  ./CodeGen/gen.cpp
-	  ./CodeGen/impl.cpp
-	  ./CodeGen/objcreate.cpp
-	  ./CodeGen/perf.cpp
-	  ./CodeGen/impl.cpp
-	  ./CodeGen/skel.cpp
-	  ./CodeGen/stub.cpp
-	  ./CodeGen/tao.{h, cpp}
+          ./CodeGen/gen.cpp
+          ./CodeGen/impl.cpp
+          ./CodeGen/objcreate.cpp
+          ./CodeGen/perf.cpp
+          ./CodeGen/impl.cpp
+          ./CodeGen/skel.cpp
+          ./CodeGen/stub.cpp
+          ./CodeGen/tao.{h, cpp}
 
 
 Mon Oct 19 21:40:56 1998  David L. Levine  <levine@cs.wustl.edu>
