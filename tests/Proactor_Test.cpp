@@ -1933,6 +1933,13 @@ run_main (int argc, ACE_TCHAR *argv[])
               bufs,
               bufr));
 
+  if (connector.get_total_snd () == 0 ||
+      connector.get_total_rcv () == 0 ||
+      acceptor.get_total_snd ()  == 0 ||
+      acceptor.get_total_rcv ()  == 0   )
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("It appears that this test didn't ")
+                ACE_TEXT ("really do anything. Something is very wrong.\n")));
+
   ACE_END_TEST;
 
   return 0;

@@ -1,3 +1,19 @@
+Wed Nov 24 16:02:21 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_Connector.{h cpp}: Removed the locally-defined
+	  "static ACE_INET_Addr local_default" used for the default
+	  local address on connects. In the lower levels of ACE, the local
+	  address is compared to ACE_Addr::sap_any, and this one didn't
+	  match with IPv6 defined. The default arg is now ACE_Addr::sap_any,
+	  like the other default local addresses, such as ACE_Connector.
+
+	* ace/WIN32_Asynch_IO.cpp: If a ACE_OS::bind() fails, print a message
+	  with the real reason in it, not just "ACE_OS::bind failed".
+
+	* tests/Proactor_Test.cpp: Added a check to see that the test
+	  actually does some data transfer, else it isn't really doing
+	  anything.
+
 Wed Nov 24 14:40:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/NonBlocking_Conn_Test.cpp (test): Don't leave bogus
