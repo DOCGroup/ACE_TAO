@@ -1,12 +1,18 @@
+Sun Aug 05 15:03:31 2001  Balachandran Natarajan <bala@cs.wustl.edu>
+
+	* tao/TAO_Static.dsp: Added the new flushing strategies to the
+	  static builds.
+
 Fri Aug 04 3:33:31 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* TAO/orbsvcs/orbsvcs/AV/QoS_UDP.h: 
-	* TAO/orbsvcs/orbsvcs/AV/QoS_UDP.cpp: 
-	* TAO/orbsvcs/orbsvcs/AV/QoS_UDP.i: 	
+	* TAO/orbsvcs/orbsvcs/AV/QoS_UDP.h:
+	* TAO/orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+	* TAO/orbsvcs/orbsvcs/AV/QoS_UDP.i:
 
-	  Added a helper class to create qos sessions, activate qos handlers and set qos on a session.
-	  Fixed a bug in translation from ACE_Flow_Spec to AVStreams::streamQoS.
-	  Fixed addressing problems.
+	  Added a helper class to create qos sessions, activate qos
+	  handlers and set qos on a session. Fixed a bug in translation
+	  from ACE_Flow_Spec to AVStreams::streamQoS. Fixed addressing
+	  problems.
 
 Fri Aug 03 20:50:42 2001  Ossama Othman  <ossama@uci.edu>
 
