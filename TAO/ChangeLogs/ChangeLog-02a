@@ -1,33 +1,48 @@
+Fri Apr 20 21:29:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * TAO/tao/Client_Strategy_Factory.cpp:
+        * TAO/tao/Client_Strategy_Factory.h:
+        * TAO/tao/default_client.cpp:
+        * TAO/tao/default_client.h:
+	  Added a new method <allow_callback> that query the strategy
+	  factory whether the effective wait strategy allows any form of
+	  callback.
+
+        * TAO/tao/Strategies/SHMIOP_Acceptor.cpp (open):
+        * TAO/tao/Strategies/SHMIOP_Connector.cpp (open): Added code to
+	  hint the MEM_Stream's to use the new multithreaded transport when
+	  the client/server strategies allow them to.
+
 Fri Apr 20 16:13:40 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.av: 
+	* orbsvcs/orbsvcs/Makefile.av:
 	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.i:	
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:	
-	* orbsvcs/orbsvcs/AV/Transport.cpp:	
-	* orbsvcs/orbsvcs/AV/AV_Core.h:	
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp:	
-	* orbsvcs/orbsvcs/AV/UDP.cpp:	
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:		
-	* orbsvcs/orbsvcs/AV/QoS_UDP.h:		
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:			
-	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:					
-	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp:				
+	* orbsvcs/orbsvcs/AV/AVStreams_i.i:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/Transport.cpp:
+	* orbsvcs/orbsvcs/AV/AV_Core.h:
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
+	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+	* orbsvcs/orbsvcs/AV/QoS_UDP.h:
+	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:
+	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp:
 
-	  Integrated AQoSA and AVStreams for the UDP unicast protocol. This allows 
+	  Integrated AQoSA and AVStreams for the UDP unicast protocol. This allows
 	  to set up an RSVP session between the sender and receiver using AQoSA.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile: 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/README: 	  
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/runtest.pl: 	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/input: 	  
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Simple_Two_Stage_With_QoS.dsw: 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h: 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp: 	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.dsp: 	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h: 	
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp: 		
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.dsp: 	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/README:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/runtest.pl:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/input:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Simple_Two_Stage_With_QoS.dsw:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.dsp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.dsp:
 
 	  Test to verify the AQoSA/AV integration.
 
@@ -60,11 +75,11 @@ Fri Apr 20 15:51:52 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
 Fri Apr 20 16:00:40 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp: 
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp: 
+	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
 	  Added missing explicit template instatiation to fix the
 	  problem on compiler that use explicit template instantiation.
-	
+
 Fri Apr 20 08:17:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
