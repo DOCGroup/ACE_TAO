@@ -149,20 +149,23 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
   // operation fails we are out of luck (some platforms do not support
   // it and return -1).
 
-  // Called by the <Strategy_Acceptor> when the handler is completely
-  // connected.
+  // Called by the <Strategy_Acceptor> when the handler is
+  // completely connected.
   ACE_INET_Addr addr;
 
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char client[MAXHOSTNAMELEN + 16];
-  (void) addr.addr_to_string (client, sizeof (client));
-
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) IIOP connection from client <%s> on %d\n"),
-                client, this->peer ().get_handle ()));
+    {
+      char client[MAXHOSTNAMELEN + 16];
+      (void) addr.addr_to_string (client, sizeof (client));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) IIOP connection from client")
+                  ACE_TEXT ("<%s> on %d\n"),
+                  client, this->peer ().get_handle ()));
+    }
 
   return 0;
 }
@@ -422,14 +425,17 @@ TAO_IIOP_Client_Connection_Handler::open (void *)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  char server[MAXHOSTNAMELEN + 16];
-
-  (void) addr.addr_to_string (server, sizeof (server));
-
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) IIOP connection to server <%s> on %d\n"),
-                server, this->peer ().get_handle ()));
+    {
+      char server[MAXHOSTNAMELEN + 16];
+
+      (void) addr.addr_to_string (server, sizeof (server));
+
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) IIOP connection to server ")
+                  ACE_TEXT ("<%s> on %d\n"),
+                  server, this->peer ().get_handle ()));
+    }
 
   // Register the handler with the Reactor if necessary.
   return this->transport ()->wait_strategy ()->register_handler ();
