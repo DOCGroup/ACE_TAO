@@ -236,7 +236,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::release (int close)
         this->memory_pool_.release (0);
 
       if (retv == 0)
-        this->memory_pool_.release (1);
+        this->remove ();
       return retv;
     }
   return -1;

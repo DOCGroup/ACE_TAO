@@ -1,3 +1,9 @@
+Thu Oct 17 00:26:13 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc_T.i (release): Instead of releasing the memory_pool_
+	  explicitly, changed to use remove () to make sure all resources
+	  are removed properly.
+
 Wed Oct 16 20:23:09 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
         * ACEXML/common/FileCharStream.cpp (getchar_i):
