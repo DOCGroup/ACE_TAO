@@ -1,3 +1,9 @@
+Tue Jul 18 12:55:55 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU:
+          Added PACE_SYSVER assignment to distinguish different
+          versions of LynxOS in the future.
+
 Mon Jul 17 23:44:36 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
 
 	* ace/Makefile (OTHER_FILES): Moved SOCK_Dgram_Mcast_QoS to the 
