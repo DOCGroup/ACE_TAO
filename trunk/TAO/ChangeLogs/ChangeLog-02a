@@ -1,3 +1,15 @@
+Thu Mar  1 09:30:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/IFR_Client/InterfaceC.i:
+        * tao/IFR_Client/InterfaceC.h:
+        * tao/IFR_Client/InterfaceC.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.h:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
+
+          Replaced the interceptor code I ill-advisedly removed
+          some time ago. More changes are soon to come for these
+          files, so the .diff files have not yet been regenerated.
+
 Wed Feb 28 20:44:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Pluggable/ftp.cpp: 
