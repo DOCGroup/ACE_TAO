@@ -109,12 +109,8 @@ UTL_ScopeStack *
 UTL_ScopeStack::push(UTL_Scope *el)
 {
   UTL_Scope	**tmp;
-  AST_Decl	*d = ScopeAsDecl(el);
   long		ostack_data_nalloced;
   long		i;
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (d);
 
   // Make sure there's space for one more
   if (pd_stack_data_nalloced == pd_stack_top) {
