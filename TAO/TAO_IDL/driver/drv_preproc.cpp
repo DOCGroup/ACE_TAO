@@ -170,7 +170,7 @@ DRV_cpp_init()
       if (ACE_ROOT != 0)
         {
           ACE_OS::strcat (option, ACE_ROOT);
-          ACE_OS::strcat (option, "TAO/tao");
+          ACE_OS::strcat (option, "/TAO/tao");
         }
       else
         {

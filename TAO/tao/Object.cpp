@@ -494,8 +494,19 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   // get a profile container to store all profiles in the IOR.
   TAO_MProfile mp (profile_count);
 
+  TAO_ORB_Core *orb_core = cdr.orb_core ();
+  if (orb_core == 0)
+    {
+      orb_core = TAO_ORB_Core_instance ();
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "WARNING: extracting object from default ORB_Core\n"));
+        }
+    }
+
   TAO_Connector_Registry *connector_registry =
-    cdr.orb_core ()->connector_registry ();
+    orb_core->connector_registry ();
   for (CORBA::ULong i = 0; i != profile_count && cdr.good_bit (); ++i)
     {
       TAO_Profile *pfile =
