@@ -24,7 +24,8 @@ $SV2->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
+    $SV1->Kill (); $SV1->TimedWait (1);
+    $SV2->Kill (); $SV2->TimedWait (1);
     exit 1;
 } 
 
