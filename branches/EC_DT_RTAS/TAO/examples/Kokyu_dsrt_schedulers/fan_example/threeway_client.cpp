@@ -202,10 +202,6 @@ main (int argc, char *argv[])
   non_dsui_timer.calibrate ();
   non_dsui_timer.start();
 
-  Object_ID oid = ACE_OBJECT_COUNTER->increment();
-
-  /* MEASURE: Program start time */
-  DSTRM_EVENT(MAIN_GROUP_FAM, START,0, sizeof(Object_ID), (char*)&oid);
 
   EDF_Scheduler* scheduler=0;
   RTScheduling::Current_var current;
@@ -253,6 +249,14 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): main thread prio is %d\n", prio));
 
   CPULoad::calibrate(10);
+  Object_ID oid = ACE_OBJECT_COUNTER->increment();
+
+//print out the start time of the program.
+  ACE_Time_Value start_time=ACE_OS::gettimeofday();
+  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
+  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
+
+
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =

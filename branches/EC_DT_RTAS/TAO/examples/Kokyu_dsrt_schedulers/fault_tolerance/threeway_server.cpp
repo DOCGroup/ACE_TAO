@@ -11,7 +11,12 @@
 #include <sys/mman.h>
 #include "cpuload.h"
 
+#if defined (ACE_HAS_DSUI)
+#include "ft_config.h"
+#include "ft_dsui_families.h"
 #include <dsui.h>
+#include <cstdlib>
+#endif
 
 ACE_RCSID(MT_Server, server, "$Id$")
 
@@ -105,6 +110,13 @@ main (int argc, char *argv[])
   task_stats.init (100000);
 
    CPULoad::calibrate(10);
+
+  Object_ID oid = ACE_OBJECT_COUNTER->increment();
+
+//print out the start time of the program.
+  ACE_Time_Value start_time=ACE_OS::gettimeofday();
+  ACE_OS::printf ( ACE_TEXT ("The Start time: %u (sec), %u (usec)\n"), start_time.sec(), start_time.usec());
+  DSTRM_EVENT(MAIN_GROUP_FAM, START,0,sizeof(Object_ID), (char*)&oid);
 
   int mflags = O_RDWR | O_CREAT;
   int fd;
@@ -258,6 +270,9 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
+
+  /* MEASURE: Program stop time */
+  DSTRM_EVENT(MAIN_GROUP_FAM, STOP, 0,  sizeof(Object_ID), (char*)&oid);
 
   ACE_DEBUG ((LM_DEBUG, "Exiting main...\n"));
   return 0;
