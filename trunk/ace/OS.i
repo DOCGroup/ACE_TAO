@@ -3651,22 +3651,27 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
     return -1; // @@ ACE_ASSERT (!"count should not be 0!\n");
 
 
-  int result;
+  int result = 0;
   int error = 0;
 
-  // Give preference to writers over readers...
-  if (rw->num_waiting_writers_ > 0)
+  if (rw->important_writer_ && rw->ref_count_ == 1) 
+    // only the reader requesting to upgrade its lock is left over
+    {
+      result = ACE_OS::cond_signal (&rw->waiting_important_writer_);
+      error = errno;
+    }
+  else if (rw->num_waiting_writers_ > 0 && rw->ref_count_ == 0)
+    // Give preference to writers over readers...
     {
       result = ACE_OS::cond_signal (&rw->waiting_writers_);
       error = errno;
     }
-  else if (rw->num_waiting_readers_ > 0)
+  else if (rw->num_waiting_readers_ > 0 && rw->num_waiting_writers_ == 0)
     {
       result = ACE_OS::cond_broadcast (&rw->waiting_readers_);
       error = errno;
     }
-  else
-    result = 0;
+
 
   ACE_OS::mutex_unlock (&rw->lock_);
   errno = error;
@@ -3680,6 +3685,10 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 
 // Note that the caller of this method *must* already possess this
 // lock as a read lock.
+// return {-1 and no errno set means: error,
+//         -1 and errno==EBUSY set means: could not upgrade,
+//         0 means: upgraded successfully}
+            
 
 ACE_INLINE int
 ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
@@ -3691,37 +3700,60 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
-#if 0
+#if 1
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
   int result = 0;
 
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    result = -1; // -1 means didn't get the mutex.
-  else if (rw->ref_count_ != 1)
+    return -1; 
+    // -1 means didn't get the mutex, error
+  else if (rw->important_writer_) 
+    // an other reader upgrades already
     {
-      // There were other readers, so we'll have to bail out without
-      // becoming upgrading to the write lock.
-      errno = EBUSY;
       result = -1;
+      errno = EBUSY;
     }
-  if (result == 0)
-    // We force the lock to become a write lock, thereby putting
-    // ourselves ahead of all other waiting writers.
-    rw->ref_count_ = -1;
+  else 
+    {
+      while (rw->ref_count_ > 1) // wait until only I am left 
+        {
+          rw->num_waiting_writers_++; // prohibit any more readers
+          rw->important_writer_ = 1;
 
-  if (result != -1 || errno == EBUSY)
-    ACE_OS::mutex_unlock (&rw->lock_);
+          if (ACE_OS::cond_wait (&rw->waiting_important_writer_, &rw->lock_) == -1)
+            {
+              result = -1;               
+              // we know that we have the lock again, we have this guarantee,
+              // but something went wrong
+            }
+          rw->important_writer_ = 0;
+          rw->num_waiting_writers_--;
+        }
+      if (result == 0) 
+        {
+          // nothing bad happend
+          rw->ref_count_ = -1;
+          // now I am a writer
+          // everything is O.K.
+        }
+    }
+
+  ACE_OS::mutex_unlock (&rw->lock_);
+
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_POP (0);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
-  return 0;
-#else  /* ! 0 */
+
+  return result;
+
+#else  /* 0 */
   ACE_UNUSED_ARG (rw);
   errno = EBUSY;
   return -1;
-#endif /* ! 0 */
+  // report that we were not able to upgrade
+#endif /* 0 */
 #endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (rw);
@@ -3753,6 +3785,7 @@ ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
 #else /* NT, POSIX, and VxWorks don't support this natively. */
   ACE_OS::mutex_destroy (&rw->lock_);
   ACE_OS::cond_destroy (&rw->waiting_readers_);
+  ACE_OS::cond_destroy (&rw->waiting_important_writer_);
   return ACE_OS::cond_destroy (&rw->waiting_writers_);
 #endif /* ACE_HAS_STHREADS && !defined (ACE_LACKS_RWLOCK_T) */
 #else

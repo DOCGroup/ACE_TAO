@@ -51,7 +51,7 @@ static size_t n_writers = 4;
 static ACE_thread_t shared_data;
 
 // Lock for shared_data.
-static ACE_RW_Mutex rw_mutex;
+static ACE_RW_Thread_Mutex rw_mutex;
 
 // Count of the number of readers and writers.
 static ACE_Atomic_Op<ACE_Thread_Mutex, int> current_readers;
@@ -106,7 +106,7 @@ reader (void *)
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_OS::sleep(pause);
-      ACE_Read_Guard<ACE_RW_Mutex> g (rw_mutex);
+      ACE_Read_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
       // int n = ++current_readers;
       // ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%t) I'm reader number %d\n"), n));
 
@@ -125,11 +125,53 @@ reader (void *)
                         data, shared_data));
         }
 
-      --current_readers;
+      int result = rw_mutex.tryacquire_write_upgrade ();
+
+      if (result == 0)
+        {
+          current_readers--;
+          current_writers++;
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) upgraded to write lock!\n"));
+
+          ACE_thread_t self = ACE_Thread::self ();
+          
+          shared_data = self;
+          data = self;
+
+          for (size_t loop = 1; loop <= n_loops; loop++)
+            {
+              if (ACE_OS::thr_equal (shared_data, data) == 0)
+                ACE_DEBUG ((LM_DEBUG,
+                            ASYS_TEXT ("(%t) upgraded writer error: somebody changed %d to %d\n"),
+                            data,
+                            shared_data));
+            }
+
+          current_writers--;
+          // we were a writer
+        }
+      else if (result == -1 && errno == EBUSY)
+        {
+          current_readers--;
+          // we were still a reader
+
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("(%t) could not upgrade to write lock!\n")));
+
+        }
+      else // result == -1
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("(%t) failure in upgrading to write lock!\n"),
+                      1));
+        }
       //ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%t) done with reading guarded data\n")));
 
-      ACE_DEBUG((LM_DEBUG, ASYS_TEXT (" (%t) read %d done at %T\n"), iterations));
-      // ACE_Thread::yield ();
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("(%t) reader finished %d iterations at %T\n"),
+                  iterations));
     }
   return 0;
 }
@@ -149,23 +191,24 @@ writer (void *)
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_OS::sleep(pause);
+      {
+        // Add an additional scope here to bound the duration that the
+        // write lock is held.
+        ACE_Write_Guard<ACE_RW_Thread_Mutex> g (rw_mutex);
 
-      ACE_Write_Guard<ACE_RW_Mutex> g (rw_mutex);
-
-      ++current_writers;
-      //ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%t) writing to guarded data\n")));
-
+        current_writers++;
       if (current_writers > 1)
-        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%t) other writers found!!!\n")));
+        ACE_DEBUG ((LM_DEBUG, 
+                    ASYS_TEXT (" (%t) other writers found!!!\n")));
 
       if (current_readers > 0)
-        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%t) readers found!!!\n")));
+        ACE_DEBUG ((LM_DEBUG, 
+                    ASYS_TEXT (" (%t) readers found!!!\n")));
+        ACE_thread_t self = ACE_Thread::self ();
 
-      ACE_thread_t self = ACE_Thread::self ();
+        shared_data = self;
 
-      shared_data = self;
-
-      for (size_t loop = 1; loop <= n_loops; loop++)
+	for (size_t loop = 1; loop <= n_loops; loop++)
         {
           ACE_Thread::yield ();
 
@@ -174,10 +217,8 @@ writer (void *)
                         ASYS_TEXT (" (%t) somebody wrote on my data %d\n"),
                         shared_data));
         }
-
-      --current_writers;
-
-      //ACE_DEBUG ((LM_DEBUG, ASYS_TEXT (" (%t) done with guarded data\n")));
+        current_writers--;
+      }
 
       ACE_DEBUG((LM_DEBUG, ASYS_TEXT (" (%t) write %d done at %T\n"), iterations));
       // ACE_Thread::yield ();
@@ -218,12 +259,16 @@ int main (int argc, ASYS_TCHAR *argv[])
                                                ACE_THR_FUNC (reader),
                                                0,
                                                THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn_n")), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ASYS_TEXT ("%p\n"), 
+                       ASYS_TEXT ("spawn_n")), 1);
   else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers,
                                                     ACE_THR_FUNC (writer),
                                                     0,
                                                     THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("%p\n"), ASYS_TEXT ("spawn_n")), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       ASYS_TEXT ("%p\n"), 
+                       ASYS_TEXT ("spawn_n")), 1);
 
   ACE_Thread_Manager::instance ()->wait ();
 

@@ -1,3 +1,23 @@
+Wed Jun 17 17:30:11 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * ace/OS.h: Added a condition variable and a flag to 
+	  the definition of reader/writer locks.
+	
+	* ace/OS.i: Implemented ACE_OS::rw_trywrlock_upgrade properly
+	  using one condition variable and a flag. The condition 
+	  variable is used to get in front of all the possible 
+	  waiting writers and to wait on still working readers
+	  on the rw_lock. The flag is used to indicate, that
+	  a reader is upgrading its lock. rw_unlock obeys one more
+	  case now.
+
+	* ace/OS.cpp: The constructor for the Reader/writer locks
+	  has changed slightly to initialize and destroy the
+	  new members.
+	
+	* tests/Reader_Writer_Test.cpp: Added the use of the
+	  rw_mutex.tryacquire_write_upgrade () method to the test.
+
 Wed Jun 17 07:34:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/IOStream_Test.cpp (server): fixed sign of constant
