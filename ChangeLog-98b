@@ -1,3 +1,8 @@
+Tue Jul 14 11:26:40 1998  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/Dynamic_Priority_Test.cpp: commented out unused global
+          FIFO_receipt_order.
+
 Tue Jul 14 11:18:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * Makefile: added STL back in, because TAO's AVStreams still uses it.
@@ -10,7 +15,7 @@ Tue Jul 14 11:18:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Jul 13 22:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
-        * Dynamic_Priority_Test.cpp: swapped "const" and "static"
+        * tests/Dynamic_Priority_Test.cpp: swapped "const" and "static"
           qualifiers so that "static" appears first.
           (run_performance_test): initialized random_int to 0 to avoid
           g++ warning.
