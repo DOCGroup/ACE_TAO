@@ -2,12 +2,7 @@
 
 # platform_freebsd.GNU
 
-#####################################################
-# Replace 3 with 2 if you are running FreeBSD 2.x.x
-#  ** How do we detect os version here?
-#####################################################
-VERSION = 3
-
+VERSION := $(shell uname -r | sed -e "s/`uname -r | sed -e = 's/.//'`//")
 ifneq ($(VERSION),3)
 versioned_so = 1
 endif
