@@ -11,7 +11,6 @@
 typedef Reactor_Logging_Server_Adapter<Logging_Acceptor_Ex>
         Server_Logging_Daemon_Ex;
 
-ACE_FACTORY_DECLARE (SLDEX, Server_Logging_Daemon_Ex)
 ACE_FACTORY_DEFINE (SLDEX, Server_Logging_Daemon_Ex)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
