@@ -1,3 +1,9 @@
+Wed Jun 16 15:31:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union/dsicriminant_ci.cpp:
+	  Fixed code that was adding the scope twice when setting the
+          discriminant to a default (unused) enum value.
+
 Wed Jun 16 15:10:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/Forwarding/MyFooServant.cpp (handle_input): Changed
