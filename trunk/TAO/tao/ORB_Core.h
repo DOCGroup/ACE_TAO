@@ -927,7 +927,6 @@ protected:
   ACE_Data_Block *create_data_block_i (size_t size,
                                        ACE_Allocator *buffer_allocator,
                                        ACE_Allocator *dblock_allocator,
-                                       ACE_Allocator *msgblock_allocator,
                                        ACE_Lock *lock);
 #if (TAO_HAS_RT_CORBA == 1)
 
