@@ -47,13 +47,13 @@ endif
 ifeq (,$(pipes))
   pipes = 1
 endif
-
 ifeq ($(debug),0)
 CFLAGS += -DNDEBUG
 endif
 
 CC      = gcc
 CXX     = g++
+RC      = windres
 
 MODEL_FLAGS += -mcpu=$(TCPU)
 

@@ -100,8 +100,10 @@
 #  ARFLAGS      Flags for the archive utility (ar)
 #  CC           C compiler command
 #  CXX          C++ compiler command
+#  RC           Resource compiler command
 #  COMPILE.c    Flags for compiling with C
 #  COMPILE.cc   Flags for compiling with C++
+#  COMPILE.rc   Flags for compiling with the resource compiler
 #  CPPFLAGS     C pre-processor flags
 #  CFLAGS       C compilation flags
 #  CCFLAGS      C++ compilation flags
@@ -725,6 +727,7 @@ endif # pipes
 
 COMPILE.c       = $(CC) $(CFLAGS) $(CPPFLAGS) -c
 COMPILE.cc      = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS) -c
+COMPILE.rc      = $(RC)
 COMPILE-NO_DASH_G.cc = `echo $(COMPILE.cc) | sed 's/-g //'`
 # 960905 Marius Kjeldahl <marius@funcom.com>
 # Added the line below to be used for compiling executable shared objects
