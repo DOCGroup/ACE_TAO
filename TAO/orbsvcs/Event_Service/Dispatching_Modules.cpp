@@ -10,10 +10,6 @@
 #include "Dispatching_Modules.i"
 #endif /* __ACE_INLINE__ */
 
-typedef ACE_EventChannel::DISPATCH_ERROR DISPATCH_ERROR;
-typedef ACE_EventChannel::SYNCHRONIZATION_ERROR SYNC_ERROR;
-typedef ACE_EventChannel::QOS_ERROR QOS_ERROR;
-
 // ************************************************************
 
 void

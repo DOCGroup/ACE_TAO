@@ -57,6 +57,8 @@ BE_FILES	= \
 		be_decl \
 		be_scope \
 		be_visitor \
+		be_visitor_interface \
+		be_visitor_args \
 		be_visitor_root \
 		be_visitor_sequence \
 		be_interpretive
@@ -138,16 +140,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -214,16 +215,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -290,16 +290,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -366,16 +365,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -442,16 +440,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -518,16 +515,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -594,16 +590,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -670,16 +665,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -746,16 +740,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -822,16 +815,17 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h \
+ ../be_include/be_visitor_interface.h ../be_include/be_visitor.h \
+ ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -898,16 +892,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -974,16 +967,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1050,16 +1042,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1126,16 +1117,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1202,16 +1192,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1278,16 +1267,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1354,16 +1342,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1431,16 +1418,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1507,16 +1493,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1583,16 +1568,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1659,16 +1643,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1735,16 +1718,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1811,16 +1793,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1887,16 +1868,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -1963,16 +1943,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2039,16 +2018,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2115,16 +2093,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2192,16 +2169,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2268,16 +2244,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2344,16 +2319,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2420,16 +2394,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2496,16 +2469,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2572,16 +2544,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2648,16 +2619,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2724,16 +2694,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2800,16 +2769,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2876,16 +2844,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -2952,16 +2919,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -3028,16 +2994,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -3104,16 +3069,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -3180,16 +3144,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -3257,16 +3220,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -3334,16 +3296,15 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
@@ -3410,16 +3371,12 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  ../include/ast_constant.h ../include/ast_enum_val.h \
  ../include/ast_array.h ../include/ast_sequence.h \
  ../include/ast_string.h ../include/ast_typedef.h \
- ../include/ast_native.h ../include/utl_strlist.h \
- ../include/utl_exprlist.h ../include/ast_generator.h \
- ../include/util.h ../include/utl_stack.h ../include/utl_idlist.h \
- ../include/utl_exceptlist.h ../include/utl_namelist.h \
- ../include/utl_labellist.h ../include/utl_decllist.h \
- ../include/idl_global.h ../include/utl_error.h \
- ../include/utl_indenter.h ../include/idl_extern.h \
- ../include/fe_extern.h ../include/be_extern.h ../include/drv_extern.h \
- ../include/ast_extern.h ../include/nr_extern.h \
- ../include/global_extern.h ../be_include/be.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h ../be_include/be.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \

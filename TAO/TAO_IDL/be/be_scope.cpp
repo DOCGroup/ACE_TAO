@@ -30,6 +30,12 @@ be_scope::comma (unsigned short comma)
 }
 
 int
+be_scope::comma (void) const
+{
+  return this->comma_;
+}
+
+int
 be_scope::gen_client_header (void)
 {
   UTL_ScopeActiveIterator *si;

@@ -63,8 +63,14 @@ public:
   virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   // Return the scheduling strategy used.
 
-  virtual TAO_Object_Table *create_object_table (void);
+  virtual TAO_Object_Table_Impl *create_object_table (void);
   // Return a new key-->object table
+
+  virtual ACE_Lock *create_poa_lock (void);
+  // Return a new lock for use in locking the POA.
+
+  virtual ACE_Lock *create_poa_mgr_lock (void);
+  // Return a new lock for use in locking the POA Manager.
 };
 
 #endif /* TAO_SERVER_FACTORY_H */

@@ -13,3 +13,11 @@ The individual directories contain READMEs on how to run the tests.
 
          Cubit example. The servant returns the cube of the number
          sent to it by the client.
+
+    . POA
+
+         Contains various small tests of POA features.
+
+    . Param_Test
+
+         Tests features of the typecode interpreter.

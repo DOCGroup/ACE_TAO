@@ -993,7 +993,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
   CORBA::Boolean continue_decoding = CORBA::B_TRUE;
   CDR *stream = (CDR *) context;
   TAO_Base_Sequence *seq = (TAO_Base_Sequence *)data;
-  //  CORBA::OctetSeq *seq = (CORBA::OctetSeq *) data;
+
   CORBA::TypeCode::traverse_status retval =
     CORBA::TypeCode::TRAVERSE_CONTINUE;  // return status
   CORBA::TypeCode_ptr    tc2;  // typecode of the element

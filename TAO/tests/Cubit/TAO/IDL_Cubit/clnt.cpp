@@ -28,21 +28,14 @@
 #define quote(x) #x
 
 Cubit_Client::Cubit_Client (void)
-  : cubit_factory_key_ ("factory"),
+  : cubit_factory_key_ (0),
     cubit_key_ ("key0"),
-    hostname_ (ACE_DEFAULT_SERVER_HOST),
     loop_count_ (250),
     exit_later_ (0),
-    factory_ (Cubit_Factory::_nil ()),
-    objref_ (CORBA::Object::_nil ()),
     cubit_ (Cubit::_nil ()),
-    orb_ptr_ (0),
     call_count_ (0),
     error_count_ (0)
 {
-  ACE_Env_Value<CORBA::UShort> defport(quote(TAO_DEFAULT_SERVER_PORT),
-                                       TAO_DEFAULT_SERVER_PORT);
-  portnum_ = defport;
 }
 
 // Simple function that returns the substraction of 117 from the
@@ -59,7 +52,7 @@ Cubit_Client::func (u_int i)
 int
 Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:h:p:k:x");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:k:x");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -71,13 +64,10 @@ Cubit_Client::parse_args (void)
       case 'n':			// loop count
         loop_count_ = (u_int) ACE_OS::atoi (get_opts.optarg);
         break;
-      case 'h':
-        hostname_ = ACE_OS::strdup (get_opts.optarg);
-        break;
-      case 'p':
-        portnum_ = ACE_OS::atoi (get_opts.optarg);
-        break;
-      case 'k':			// stringified objref
+      case 'f':
+	cubit_factory_key_ = ACE_OS::strdup (get_opts.optarg);
+	break;
+      case 'k':
         cubit_key_ = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'x':
@@ -89,9 +79,8 @@ Cubit_Client::parse_args (void)
                            "usage:  %s"
                            " [-d]"
                            " [-n loopcount]"
+                           " [-f cubit_factory-obj-ref-key]"
                            " [-k cubit-obj-ref-key]"
-                           " [-h hostname]"
-                           " [-p port]"
                            " [-x]"
                            "\n",
                            this->argv_ [0]),
@@ -670,10 +659,12 @@ Cubit_Client::run (void)
 Cubit_Client::~Cubit_Client (void)
 {
   // Free resources
-  CORBA::release (this->orb_ptr_);
-  CORBA::release (this->objref_);
-  CORBA::release (this->factory_);
   CORBA::release (this->cubit_);
+
+  if (this->cubit_factory_key_ != 0)
+    ACE_OS::free (this->cubit_factory_key_);
+  if (this->cubit_key_ != 0)
+    ACE_OS::free (this->cubit_key_);
 }
 
 int
@@ -682,76 +673,62 @@ Cubit_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  // Retrieve the ORB.
-  this->orb_ptr_ = CORBA::ORB_init (this->argc_,
-                                    this->argv_,
-                                    "internet",
-                                    this->env_);
-
-  // Parse command line and verify parameters.
-  if (this->parse_args () == -1)
-    return -1;
-
-  if (this->env_.exception () != 0)
+  TAO_TRY
     {
-      this->env_.print_exception ("ORB initialization");
+      // Retrieve the ORB.
+      this->orb_ = CORBA::ORB_init (this->argc_,
+				    this->argv_,
+				    "internet",
+				    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      // Parse command line and verify parameters.
+      if (this->parse_args () == -1)
+	return -1;
+
+      if (this->cubit_factory_key_ == 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "%s: no cubit factory key specified\n",
+			   this->argv_[0]),
+			  -1);
+
+
+      CORBA::Object_var factory_object = 
+	this->orb_->string_to_object (this->cubit_factory_key_,
+				      TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      this->factory_ = 
+	Cubit_Factory::_narrow (factory_object, TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (CORBA::is_nil (this->factory_.in ()))
+	{
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "invalid factory key <%s>\n",
+			     this->cubit_factory_key_),
+			    -1);
+	}
+
+      ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
+      
+      // Now retrieve the Cubit obj ref corresponding to the key.
+      this->cubit_ =
+	this->factory_->make_cubit (this->cubit_key_,
+				    TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      if (CORBA::is_nil (this->cubit_))
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "null cubit objref returned by factory\n"),
+			  -1);
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Cubit::init");
       return -1;
     }
-
-  if (this->cubit_key_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-               "%s: must specify an object reference using -k <key>\n",
-		       this->argv_[0]),
-		      -1);
-
-  // Retrieve a factory objref.
-  this->objref_ = Cubit_Factory::_bind (this->hostname_,
-                                        this->portnum_,
-                                        this->cubit_factory_key_,
-                                        this->env_);
-
-  if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("Cubit_Factory::_bind");
-      return -1;
-    }
-
-  if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " _bind returned null object for key (%s), host (%s), port (%d)\n",
-                       this->cubit_factory_key_,
-                       this->hostname_,
-                       this->portnum_),
-                      -1);
-
-  // Narrow the CORBA::Object reference to the stub object, checking
-  // the type along the way using _is_a.  There is really no need to
-  // narrow <objref> because <_bind> will return us the
-  // <Cubit_Factory> pointer.  However, we do it so that we can
-  // explicitly test the _narrow function.
-  this->factory_ = Cubit_Factory::_narrow (this->objref_, this->env_);
-  //CORBA::release (this->objref_);
-  this->objref_->Release ();
-
-  if (this->factory_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to narrow object reference to a Cubit_Factory_ptr.\n"),
-		      -1);
-
-  // Now retrieve the Cubit obj ref corresponding to the key.
-  this->cubit_ =
-    this->factory_->make_cubit (this->cubit_key_, this->env_);
-
-  if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("string2object");
-      return -1;
-    }
-
-  if (CORBA::is_nil (this->cubit_))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "null cubit objref returned by factory\n"),
-                      -1);
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -765,8 +742,8 @@ main (int argc, char **argv)
 
   if (cubit_client.init (argc, argv) == -1)
     return 1;
-  else
-    return cubit_client.run ();
+
+  return cubit_client.run ();
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

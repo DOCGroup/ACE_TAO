@@ -91,11 +91,12 @@
 #include "tao/sequence.h"
 #include "tao/sequence_T.h"
 
+#include "tao/objkeyC.h"
+
 typedef TAO_Unbounded_Sequence<CORBA::Octet> TAO_opaque;
 extern CORBA::TypeCode TC_opaque;
 
 #include "tao/any.h"
-#include "tao/poa.h"
 
 #include "tao/params.h"
 #include "tao/client_factory.h"
@@ -118,6 +119,14 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/marshal.h"
 #include "tao/cdr.h"
 #include "tao/stub.h"
+
+#include "tao/poa.h"
+
+extern TAO_Export int operator== (const PortableServer::ObjectId &l,
+				  const PortableServer::ObjectId &r);
+
+extern TAO_Export int operator== (const TAO::ObjectKey &l,
+				  const TAO::ObjectKey &r);
 
 // TAO specific includes
 #include "tao/connect.h"
@@ -151,7 +160,6 @@ extern CORBA::TypeCode TC_opaque;
 #include "tao/orbobj.i"
 #include "tao/marshal.i"
 #include "tao/cdr.i"
-#include "tao/poa.i"
 #include "tao/giop.i"
 #include "tao/iioporb.i"
 #include "tao/iiopobj.i"

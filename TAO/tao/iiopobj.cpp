@@ -1,3 +1,4 @@
+// $Id$
 
 // @ (#)iiopobj.cpp     1.9 95/11/04
 // Copyright 1995 by Sun Microsystems Inc.
@@ -53,16 +54,16 @@ IIOP::Profile::set (const char *h,
   char buffer[bufs];
   if (key == 0)
     {
+      // @@ (IRFAN) Object key generation
       // Use <this> as the key...
       ACE_OS::sprintf (buffer, "0x%024.24x", this);
       key = buffer;
     }
 
-  this->object_key.length (ACE_OS::strlen (key) + 1);
+  int l = ACE_OS::strlen (key);
+  this->object_key.length (l);
 
-  for (CORBA::ULong i = 0;
-       i < this->object_key.length ();
-       ++i)
+  for (int i = 0; i < l; ++i)
     {
       this->object_key[i] = key[i];
     }
@@ -326,12 +327,11 @@ IIOP_Object::QueryInterface (REFIID riid,
   return TAO_NOERROR;
 }
 
-//TAO extensions
-const char *
-IIOP_Object::_get_name (CORBA::Environment &)
+// TAO extensions
+TAO::ObjectKey*
+IIOP_Object::key (CORBA::Environment &)
 {
-  // @@ We need access to the underlying buffer.
-  return (const char *) &(this->profile.object_key[0]);
+  return new TAO::ObjectKey (this->profile.object_key);
 }
 
 // It will usually be used by the _bind call.
