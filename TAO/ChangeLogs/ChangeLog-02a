@@ -4,6 +4,11 @@ Fri Mar 15 16:06:10 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 	  Fixed the warning gcc-3.0 was complaining about by correcting the
 	  format specifier used.
 
+Fri Mar 15 16:02:52 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* TAO-INSTALL.html: Updated to include Solaris 8.  Thanks to
+	  Stephane Chatre <schatre@qoptics.com> for reporting this.	
+
 Fri Mar 15 07:50:23 2002  Chad Elliott  <elliott_c@ociweb.com>
 
        Committing this change for Yan Dai <dai_y@ociweb.com>.
