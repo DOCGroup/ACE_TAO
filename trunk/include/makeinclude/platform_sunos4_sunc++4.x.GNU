@@ -7,10 +7,11 @@ DCFLAGS		+= -g
 DLD             = $(CXX)
 LD		= $(CXX)
 LIBS            += 
+LDFLAGS		+= $(PIC)
 AR              = CC
 ARFLAGS         = -xar -o
 PIC             = -pic
 RANLIB          = ranlib
 SOFLAGS         = -G $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $<; \
-                  $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
+                  $(SOLINK.cc) $(PIC) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
