@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Argument_T.h"
+#include "tao/Argument.h"
 
 namespace TAO
 {
