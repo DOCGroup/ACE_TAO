@@ -353,9 +353,8 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::_get_policy_type (
   ))
 {
   ((TAO::Arg_Traits< ::CORBA::PolicyType>::ret_val *) args[0])->arg () =
-    dynamic_cast<
-        POA_CORBA::Policy_ptr> (
-        servant)
+    dynamic_cast<POA_CORBA::Policy_ptr>
+      (servant)
     ->policy_type (
           ACE_ENV_SINGLE_ARG_PARAMETER
         );
@@ -376,9 +375,8 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::copy (
   ))
 {
   ((TAO::Arg_Traits< CORBA::Policy>::ret_val *) args[0])->arg () =
-    dynamic_cast<
-        POA_CORBA::Policy_ptr> (
-        servant)
+    dynamic_cast<POA_CORBA::Policy_ptr>
+      (servant)
     ->copy (
           ACE_ENV_SINGLE_ARG_PARAMETER
         );
@@ -398,9 +396,8 @@ POA_CORBA::_TAO_Policy_Direct_Proxy_Impl::destroy (
     CORBA::SystemException
   ))
 {
-  dynamic_cast<
-      POA_CORBA::Policy_ptr> (
-      servant)
+  dynamic_cast<POA_CORBA::Policy_ptr>
+    (servant)
   ->destroy (
         ACE_ENV_SINGLE_ARG_PARAMETER
       );
