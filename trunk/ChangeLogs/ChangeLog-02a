@@ -1,3 +1,9 @@
+Fri Aug 17 08:07:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/Map_T.(h i): made the return value of
+          ACE_Incremental_Key_Generator::current_value const T& instead
+          of T&. Added uppercase traits to the ACE_Map class.
+
 Thu Aug 16 19:27:29 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.cpp (ACE_Process_Options::pass_handle): Add
@@ -24,7 +30,7 @@ Thu Aug 16 10:34:20 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 	* ace/POSIX_Proactor.cpp (allocate_aio_slot): Added a fix so that
 	  the POSIX Proactor compiles with FreeBSD 4.4.  Thanks to Yev
  	  Omenzel <omenzel@yahoo.com> for reporting this and to Craig
- 	  Rodrigues <crodrigu@bbn.com> for fixing it and to 
+ 	  Rodrigues <crodrigu@bbn.com> for fixing it and to
 	  John E Hein <jhein@timing.com> for fixing the fix ;-)
 
 Thu Aug 16 08:09:53 2001  Chad Elliott  <elliott_c@ociweb.com>
@@ -40,7 +46,7 @@ Wed Aug 15 15:50:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/WFMO_Reactor.cpp: Don't try to purge the notifications if
 	  notify_handler_ is 0.  Thanks to Edan Ayal
-	  <edanayal@hotmail.com> for reporting this. 
+	  <edanayal@hotmail.com> for reporting this.
 
 Wed Aug 15 11:33:26 2001  Carlos O'Ryan  <coryan@uci.edu>
 
