@@ -1,3 +1,12 @@
+Thu Feb 21 13:09:13 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/streams.h: strstream was deprecated in the 1998 ISO C++
+	standard [D.7 depr.str.strstreams], and has been replaced by
+	sstream.  Including <strstream> or <strstream.h> causes annoying
+	warnings with gcc 3.1.  Since strstream and sstream are not used 
+	internally within ACE or TAO, remove includes for strstream, and
+	let the developer include them in their own code.
+
 Wed Feb 20 15:26:43 2002  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* apps/soreduce/Library.cpp:
