@@ -1,3 +1,12 @@
+Sat Aug 10 17:09:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/examples/PSS/PSS.dsw:
+	* orbsvcs/examples/PSS/Client.dsp:
+	* orbsvcs/examples/PSS/Server.dsp:
+	* orbsvcs/examples/PSS/Simple_Naming.dsp: Removed them from the
+	  repo. They dont seem to work right in any configuration and this
+	  should be fixed after the beta. 
+
 Fri Aug  9 15:28:10 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
