@@ -1,3 +1,15 @@
+Wed Dec 24 12:35:41 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-osf1-4.0.h:
+          Removed ACE_HAS_TLI and ACE_HAS_TLI_PROTOTYPES. Added ACE_HAS_XTI.
+          This fixes compile errors on Tru64.
+
+        * include/makeinclude/platform_osf1_4.x_cxx.GNU:
+        * include/makeinclude/platform_osf1_4.x_g++.GNU:
+        * include/makeinclude/platform_osf1_4.x_kcc.GNU:
+        * include/makeinclude/platform_osf1_4.x_rcc.GNU:
+          Link with xti library instead of tli
+
 Wed Dec 24 09:54:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
