@@ -1,0 +1,33 @@
+This is the cubit example that uses the CORBAplus IDL compiler to generate
+the stubs and skeletons. Additional features include presence of a
+factory to create Cubit objects.
+
+You can either run the server in the background in the same window as
+the client or open a separate window for the client and server.
+
+server:
+-------
+
+% svr [-d] [-n <number-of-cubit-objects>] [-pbtrace]
+
+The server cubit factory maintained num_of_cubit objects (default =
+1). They are assigned keys that look like "key0", "key1", ...
+
+When the server is started and you have used the -d flag, you should
+see as the first line of output something that looks like
+pbkr://128.252.165.140:35158/repid=IDL:Cubit_Factory:1.0;uid=80FCA58C00004F49348220C300000000;
+
+Using -d turns on debugging messages.  It is additive, i.e., the more
+-d options provided, the more debugging you can get.  At the moment,
+only 2 levels of debugging are implemented, and more than 2 -d options
+are ignored.
+
+client:
+-------
+
+% clnt [-d] [-k <cubit key>] [-n <iterations>] -pbinit Cubit_Factory <Object_Reference>
+
+Object_Reference corresponds to the output from the server that might look like this:
+pbkr://128.252.165.140:35158/repid=IDL:Cubit_Factory:1.0;uid=80FCA58C00004F49348220C300000000;
+
+cubit_key corresponds to "key0", "key1", ...
