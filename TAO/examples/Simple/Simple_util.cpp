@@ -60,20 +60,20 @@ template <class Servant> int
 Server<Servant>::init (const char *servant_name, 
                            int argc, 
                            char *argv[], 
-                           CORBA::Environment &env)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
                                          "child_poa",
-                                         env) == -1)
+                                         ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
 	
-  TAO_CHECK_ENV_RETURN (env, -1);
+  ACE_CHECK_RETURN (-1);
   
   this->argc_ = argc;
   this->argv_ = argv;
@@ -93,15 +93,15 @@ Server<Servant>::init (const char *servant_name,
 
   // Activate the servant in its own child POA.
 
-  // Make sure that you check for failures here via the TAO_TRY
+  // Make sure that you check for failures here via the ACE_TRY
   // macros?!
-  TAO_TRY
+  ACE_TRY
     {
       CORBA::String_var str  =
         this->orb_manager_.activate_under_child_poa (servant_name,
                                                      &this->servant_,
-                                                     env);
-      TAO_CHECK_ENV;
+                                                     ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
      ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
@@ -113,13 +113,14 @@ Server<Servant>::init (const char *servant_name,
                           str.in ());
          ACE_OS::fclose (this->ior_output_file_);
        }
+
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("\tException in activation of POA");
+      ACE_TRY_ENV.print_exception ("\tException in activation of POA");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -147,25 +148,26 @@ Server<Servant>::register_name (void)
   bindName[0].id = CORBA::string_dup (name);
 
   // (re)Bind the object.
-  TAO_TRY
+  ACE_TRY
     {
-      CORBA::Object_var object = servant_._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::Object_var object = servant_._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       namingClient->rebind (bindName,
                           object.in(),       
-                          TAO_TRY_ENV);
-      TAO_CHECK_ENV;  
+                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;  
     }
-  TAO_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
+  ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to bind %s \n",
                   name));
       
-      TAO_TRY_ENV.clear ();
+      ACE_TRY_ENV.clear ();
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK;
 
 }
 
@@ -254,15 +256,17 @@ Client<InterfaceObj, Var>::init (int argc, char **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
+
   
-  TAO_TRY
+  
+  ACE_TRY_NEW_ENV
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     0,
-                                    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
@@ -274,27 +278,30 @@ Client<InterfaceObj, Var>::init (int argc, char **argv)
                            this->argv_[0]),
                           -1);
 
+      
       CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->ior_, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        this->orb_->string_to_object (this->ior_, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
       
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid ior <%s>\n",
                            this->ior_),
                           -1);
-
+      
       this->server_ = InterfaceObj::_narrow (server_object.in (),
-                                             TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
+                                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Client_i::init");
+      ACE_TRY_ENV.print_exception ("Client_i::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  
   
   return 0;
 }
