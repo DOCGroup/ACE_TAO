@@ -1582,6 +1582,13 @@ CORBA::ORB_init (int &argc,
                  char *argv[],
                  const char *orb_name)
 {
+  // Make sure TAO's singleton manager is initialized.
+  //
+  // We need to initialize before TAO_default_environment() is called
+  // since that call instantiates a TAO_TSS_Singleton.
+  if (TAO_Singleton_Manager::instance ()->init () == -1)
+    return CORBA::ORB::_nil ();
+
   return CORBA::ORB_init (argc,
                           argv,
                           orb_name,

@@ -1,17 +1,23 @@
+Wed May 16 21:28:22 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB.cpp (ORB_init):
+
+	  Make sure the TAO_Singleton_Manager is initialized in the
+	  ORB_init() method that doesn't accept a CORBA::Environment()
+	  argument.  This fixes a memory leak that occured due to the
+	  inability of a TAO_TSS_Singleton to be registered with the
+	  TAO_Singleton_Manager since the TAO_Singleton_Manager wasn't
+	  fully initialized.  Thanks to Mogens Hansen
+	  <mogens_h@dk-online.dk> for providing the fix.
+
 Wed May 16 20:59:15 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Singleton_Manager.cpp (instance):
 
 	  Fixed this method so that it actually returns a valid pointer to
-	  the TAO_Singleton_Manager.  This should fix a memory leak
-	  reported by Mogens Hansen <mogens_h@dk-online.dk> that was
-	  caused by the inability of a TAO_TSS_Singleton to register
-	  itself with the incorrectly initialized TAO_Singleton_Manager.
-	  The TAO_Singleton_Manager should now be fully initialized before
-	  any TAO singleton is instantiated.
-
-	  This fix may also address issues described in bug 908.  However,
-	  that still needs to be confirmed.
+	  the TAO_Singleton_Manager.  This fix may address issues
+	  described in bug 908.  However, that still needs to be
+	  confirmed.
 
 Wed May 16 20:58:51 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
