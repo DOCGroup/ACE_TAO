@@ -36,7 +36,7 @@ an enhancement, then use our
 
 <UL>
   <LI><A HREF="#platforms">Supported Platforms and C++ Compilers</A>
-  <LI><A HREF="#installnotes">Installation Notes for Supported Platforms</A>
+  <LI><A HREF="#installnotes">Installation Notes</A>
   <LI><A HREF="#g++">Compiling ACE with GNU g++</A>
   <LI><A HREF="#egcs">Compiling ACE with egcs</A>
   <LI><A HREF="#aceinstall">Building and Installing ACE</A>
@@ -52,42 +52,61 @@ an enhancement, then use our
 
 <!--#include virtual="/~schmidt/ACE-versions-i.html" -->
 
-<p>The following table summarizes platforms on which ACE runs and its
-level of support by the <A HREF="http://www.cs.wustl.edu/~doc/">DOC
-group</A>.  Additional support is available from <A
-HREF="http://www.riverace.com/">Riverace</A> and <A
-HREF="http://www.ociweb.com">OCI</A>.<P>
+<p>The following tables summarize platforms on which ACE runs and
+indicates the level of support provided by the <A
+HREF="http://www.cs.wustl.edu/~doc/">DOC group</A>, <A
+HREF="http://www.riverace.com/">Riverace</A>, and <A
+HREF="http://www.theaceorb.com">OCI</A>.<P>
 
-<table width="100%" border=1>
+<table width="75%" border=1>
   <tr valign=top>
-    <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 2.5, 2.6, 7 and 8 (many compilers excluding SunC++ 4.x),
-        Windows NT 4.0 and Windows 2000 (MSVC++ 5.x, 6.x, and 7.x, and Borland C++ Builder 5.0),
-        and Linux/Intel (many compilers).
+    <td><b><A HREF="http://ringil.ece.uci.edu/scoreboard/">Tested</A> and used daily by
+        the DOC group</b></td>
+    <td>Solaris 2.5, 2.6, 7 and 8 (many compilers excluding SunC++ 4.x)<BR>
+        Windows NT 4.0 and Windows 2000 (MSVC++ 5.x, 6.x, and 7.x, and
+        Borland C++ Builder 5.0)<BR>
+        Linux/Intel (many compilers).
     </td>
   </tr>
+</table><P>
+
+These are the platforms that the DOC group uses for their daily R&D
+activities.  The <A HREf="docs/ACE-bug-process.html">bug fixing
+policies</A> followed by the DOC group are designed to strike a
+balance between our many <A
+HREF="http://www.cs.wustl.edu/~schmidt/research.html">research
+projects</A> and our commitment to the ACE+TAO <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-users.html">user
+community</A>. <P>
+
+Fortunately, ACE and TAO are solidly supported by <A
+HREF="http://www.riverace.com">Riverace</A> and <A
+HREF="http://www.theaceorb.com">OCI</A>, respectively.  In response to
+user demand, they will continue to expand their support of the
+following platforms that ACE+TAO run on: <P>
+
+<table width="75%" border=1>
   <tr valign=top bgcolor="#AFAFAF">
-   <td><b>Nearly fully supported, i.e., periodically tested</b></td>
-   <td>Windows 95, Chorus, OS/9, PharLap TNT Embedded ToolSuite 9.1,
-       QNX RTP, VxWorks, LynxOS, Digital UNIX 4.0 and 5.0, HP/UX 10.x
-       and 11.x.
+   <td><b>Windows platforms</b></td>
+   <td>Windows 95/98, Windows CE, Windows NT and Windows 2000 with the following compilers:
+	  Borland C++ Builder 4.0, IBM VisualAge C++, and GNU g++ on
+	  MinGW.
    </td>
   </tr>
   <tr valign=top>
-    <td><b>Partially supported, i.e., infrequently tested</b></td>
-    <td> Windows NT and Windows 2000 with the following compilers:
-	  Borland C++ Builder 4.0, IBM VisualAge C++, and GNU g++ on
-	  Mingw.<BR>
-          AIX 4.x, IRIX 6.x, and UnixWare 7.1.0, Solaris with SunC++
-          4.x, Linux/Alpha, and OpenMVS. <BR>
-	  Windows CE, Tandem, SCO, SunOS 4.x, FreeBSD, NetBSD, Linux/PPC,
-	  QNX Neutrino 2.0, and RTEMS.
+    <td><b>Other versions of UNIX</b></td>
+    <td> 
+        Digital UNIX 4.0 and 5.0, HP/UX 10.x and 11.x,
+        AIX 4.x, IRIX 6.x, and UnixWare 7.1.0, Solaris with SunC++
+          4.x, Linux/Alpha, Linux/PPC, and OpenMVS.
+	  Tandem, SCO, SunOS 4.x, FreeBSD, and NetBSD
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
-    <td><b>Planned support</b></td>
-    OpenVMS, Stratus VOS, and OSE (contact <A
-    HREF="http://www.ociweb.com">OCI</A> for details).
+    <td><b>Real-time and embedded OS platforms</b></td>
+    <td> 
+      Chorus, OS/9, PharLap TNT Embedded ToolSuite 9.1,
+       QNX RTP, QNX Neutrino 2.0, VxWorks, LynxOS, and RTEMS.
     <td></td>
   </tr>
 </table>
@@ -100,9 +119,8 @@ HREF="news:comp.soft-sys.ace">ACE Newsgroup</A> or the <A
 HREF="mailto:ace-users@cs.wustl.edu">ACE mailing list</A> and we'll
 try to help you fix the problems.
 
-
 <P><HR><P>
-<H3><A NAME="installnotes">Installation Notes for Supported Platforms</A></H3>
+<H3><A NAME="installnotes">Installation Notes</A></H3>
 
 <UL>
   <LI><B>Win32 (Windows NT, Windows 2000 and Windows '9x/ME) </B><P>
