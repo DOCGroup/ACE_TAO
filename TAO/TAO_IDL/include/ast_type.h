@@ -102,7 +102,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Type);
 
   // Visiting.
-  virtual int accept (ast_visitor *visitor);
+  virtual int ast_accept (ast_visitor *visitor);
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

@@ -122,7 +122,7 @@ public:
   virtual void destroy (void);
 
   // Visiting.
-  virtual int accept (ast_visitor *visitor);
+  virtual int ast_accept (ast_visitor *visitor);
 
 private:
   friend void fe_populate (AST_Module *m);

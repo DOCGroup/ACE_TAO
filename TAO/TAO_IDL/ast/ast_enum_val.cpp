@@ -106,7 +106,7 @@ AST_EnumVal::dump (ostream &o)
 }
 
 int
-AST_EnumVal::accept (ast_visitor *visitor)
+AST_EnumVal::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_enum_val (this);
 }

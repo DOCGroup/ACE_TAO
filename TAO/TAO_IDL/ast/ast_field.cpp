@@ -143,7 +143,7 @@ AST_Field::dump (ostream &o)
 }
 
 int
-AST_Field::accept (ast_visitor *visitor)
+AST_Field::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_field (this);
 }

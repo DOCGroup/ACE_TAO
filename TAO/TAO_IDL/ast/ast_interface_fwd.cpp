@@ -155,7 +155,7 @@ AST_InterfaceFwd::dump (ostream &o)
 }
 
 int
-AST_InterfaceFwd::accept (ast_visitor *visitor)
+AST_InterfaceFwd::ast_accept (ast_visitor *visitor)
 {
   if (this->is_valuetype ())
     {

@@ -158,7 +158,7 @@ AST_Array::dump (ostream &o)
 }
 
 int
-AST_Array::accept (ast_visitor *visitor)
+AST_Array::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_array (this);
 }

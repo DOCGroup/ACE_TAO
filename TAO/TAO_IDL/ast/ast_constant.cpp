@@ -183,7 +183,7 @@ AST_Constant::dump (ostream &o)
 }
 
 int
-AST_Constant::accept (ast_visitor *visitor)
+AST_Constant::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_constant (this);
 }

@@ -1886,7 +1886,7 @@ UTL_Scope::dump (ostream &o)
 }
 
 int
-UTL_Scope::accept (ast_visitor *visitor)
+UTL_Scope::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_scope (this);
 }

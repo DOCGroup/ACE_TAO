@@ -730,7 +730,7 @@ AST_Union::dump (ostream &o)
 }
 
 int
-AST_Union::accept (ast_visitor *visitor)
+AST_Union::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_union (this);
 }

@@ -114,7 +114,7 @@ AST_UnionLabel::dump (ostream &o)
 }
 
 int
-AST_UnionLabel::accept (ast_visitor *visitor)
+AST_UnionLabel::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_union_label (this);
 }
