@@ -6878,60 +6878,55 @@ ACE_OS_Object_Manager::fini (void)
 #if ! defined (ACE_HAS_STATIC_PREALLOCATION)
       // Cleanup the dynamically preallocated objects.
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#   if !defined (__Lynx__)
-      // LynxOS 3.0.0 has problems with this after fork.
+#   if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
       if (ACE_OS::thread_mutex_destroy (ACE_reinterpret_cast (
         ACE_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
           __LINE__, ACE_LIB_TEXT ("ACE_OS_MONITOR_LOCK"));
-#   endif /* ! __Lynx__ */
+#   endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_OS_MONITOR_LOCK)
-#   if !defined (__Lynx__)
-      // LynxOS 3.0.0 has problems with this after fork.
+#   if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
       if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
         ACE_recursive_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[
           ACE_TSS_CLEANUP_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
           __LINE__, ACE_LIB_TEXT ("ACE_TSS_CLEANUP_LOCK"));
-#   endif /* ! __Lynx__ */
+#   endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_CLEANUP_LOCK)
-#   if !defined (__Lynx__)
-      // LynxOS 3.0.0 has problems with this after fork.
+#   if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
       if (ACE_OS::thread_mutex_destroy (ACE_reinterpret_cast (
         ACE_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object
             [ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
           __LINE__, ACE_LIB_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK "));
-#   endif /* ! __Lynx__ */
+#   endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_LOG_MSG_INSTANCE_LOCK)
 #   if defined (ACE_HAS_TSS_EMULATION)
-#     if !defined (__Lynx__)
-        // LynxOS 3.0.0 has problems with this after fork.
+#     if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
         if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
           ACE_recursive_thread_mutex_t *,
           ACE_OS_Object_Manager::preallocated_object[
             ACE_TSS_KEY_LOCK])) != 0)
           ACE_OS_Object_Manager::print_error_message (
             __LINE__, ACE_LIB_TEXT ("ACE_TSS_KEY_LOCK"));
-#     endif /* ! __Lynx__ */
+#     endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_KEY_LOCK)
 #     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
-#       if !defined (__Lynx__)
-          // LynxOS 3.0.0 has problems with this after fork.
+#       if !defined(ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK)
           if (ACE_OS::recursive_mutex_destroy (ACE_reinterpret_cast (
             ACE_recursive_thread_mutex_t *,
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_BASE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
               __LINE__, ACE_LIB_TEXT ("ACE_TSS_BASE_LOCK"));
-#       endif /* ! __Lynx__ */
+#       endif /* ! ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_BASE_LOCK)
 #     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
