@@ -1,0 +1,13 @@
+//
+// $Id$
+//
+
+interface Test
+{
+  oneway void oneway_op (in unsigned long request_number);
+
+  void twoway_op (in unsigned long request_number);
+
+  oneway void shutdown ();
+};
+
