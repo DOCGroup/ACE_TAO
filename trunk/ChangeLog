@@ -1,3 +1,27 @@
+Fri Apr 11 13:09:36 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/config/acedefaults.mpb:
+
+          Avoid duplicate default lib values by assigning instead of adding.
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          If there's only one resource file, take it even if it doesn't
+          match the project name.
+
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+
+          Make fornotlast, forlast, fornotfirst and forfirst abide by if
+          statements.
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+
+          Fixed a bug with idlgendir.  The idl generated files were not
+          going where they were supposed to if idlgendir didn't equal ".".
+
 Fri Apr 11 16:18:08 2003  Simon McQueen  <sm@prismtechnologies.com>
 
          * ace/Makefile.ace:
