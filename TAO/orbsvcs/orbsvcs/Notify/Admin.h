@@ -22,6 +22,7 @@
 #include "Container_T.h"
 #include "FilterAdmin.h"
 #include "EventTypeSeq.h"
+#include "EventChannel.h"
 
 class TAO_NS_Proxy;
 class TAO_NS_EventChannel;

@@ -1,3 +1,12 @@
+Thu Nov 28 07:57:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Notify/Admin.h:
+	* orbsvcs/orbsvcs/Notify/EventChannel.h:
+	* orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+	* orbsvcs/orbsvcs/Notify/Proxy.h: Added missing includes to
+	  compile a bit better on VC 7.0. Thanks to Tommy Andreasen
+	  <tommy.andreasen@radiometer.dk> for providing patches.
+
 Thu Nov 28 07:40:16 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/OBV/TC_Alignment/server.cpp: Fixed fuzz errors.
