@@ -1,3 +1,18 @@
+Tue Nov 30 17:32:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* m4/ace.m4: Added two new options, --enable-pthreads and
+	  --enable-uithreads. These en/dis-able the use of Pthreads and
+	  UI Threads (aka Solaris threads), respectively. Some platforms
+	  (namely AIX) offer a hokey UI Threads that barely functions but
+	  can't be used for any real work. Efforts to detect this and
+	  automatically disable it have been unfruitful, so this option was
+	  added. Pthreads defaults to yes, UI threads defaults to, except on
+	  Solaris where it defaults to yes.
+
+	* m4/threads.m4: Only do Pthreads/UIthreads checks if the corresponding
+	  implementation is enabled by the command line (or default) using
+	  the above new options.
+
 Tue Nov 30 07:32:18 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * apps/gperf/tests/iout2_gen/.empty:
