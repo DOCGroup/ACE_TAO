@@ -103,11 +103,10 @@ preparePlan (const Deployment::DeploymentPlan &plan,
   // Check if the plan already exists and the ApplicationManager is active
   // Then return the same
   Deployment::DomainApplicationManager * temp = 0;
-  if (this->table_.find (plan.UUID, temp))
+  if (this->table_.find (plan.UUID, temp) == 0)
     return Deployment::DomainApplicationManager::_duplicate (temp);
 
   // Create a new DomainApplicationManager
-
   CIAO::DomainApplicationManager_Impl * servant = 0;
   ACE_NEW_THROW_EX (servant,
                     CIAO::DomainApplicationManager_Impl
@@ -117,6 +116,7 @@ preparePlan (const Deployment::DeploymentPlan &plan,
                      plan,
                      this->init_file_),
                     CORBA::NO_MEMORY ());
+
   /**
    *===================================================================
    * MAIN STEP: This call parses the deployment plan, generates the Node
@@ -124,6 +124,8 @@ preparePlan (const Deployment::DeploymentPlan &plan,
    *===================================================================
    */
   servant->init ();
+
+  ACE_DEBUG ((LM_DEBUG, "ExecutionManager:init () DAM successful \n"));
 
   // Things are ready for Launching Applications
   PortableServer::ServantBase_var save_servant (servant);
