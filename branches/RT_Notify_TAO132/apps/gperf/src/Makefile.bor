@@ -1,0 +1,23 @@
+
+NAME = gperf
+
+OBJFILES = \
+        $(OBJDIR)\Options.obj \
+        $(OBJDIR)\Iterator.obj \
+        $(OBJDIR)\Gen_Perf.obj \
+        $(OBJDIR)\Key_List.obj \
+        $(OBJDIR)\List_Node.obj \
+        $(OBJDIR)\Hash_Table.obj \
+        $(OBJDIR)\Bool_Array.obj \
+        $(OBJDIR)\Vectors.obj \
+        $(OBJDIR)\Version.obj \
+        $(OBJDIR)\gperf.obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
+

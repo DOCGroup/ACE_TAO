@@ -1,0 +1,14 @@
+project(Leader Followers Server): strategies, server {
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(Leader Followers Client): strategies, client {
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

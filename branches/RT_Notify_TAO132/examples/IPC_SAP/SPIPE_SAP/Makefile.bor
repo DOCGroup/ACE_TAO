@@ -1,0 +1,24 @@
+#
+# Makefile for building the IPC_SAP SPIPE_SAP ace examples
+#
+
+NAMES = \
+        client \
+        server \
+	consumer_msg \
+	consumer_read \
+	producer_msg \
+	producer_read \
+#        NPClient \
+#        NPServer
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = $(ACE_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = $(ACE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

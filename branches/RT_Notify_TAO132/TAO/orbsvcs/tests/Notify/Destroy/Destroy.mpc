@@ -1,0 +1,12 @@
+project (Notify_Test_Destroy): notifytest {
+  exename  = Notify_Tests_Destroy
+
+  libpaths += $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL
+  libpaths += $(TAO_ROOT)/tao/IORTable
+  libpaths += $(TAO_ROOT)/tao/DynamicAny
+  libpaths += $(TAO_ROOT)/tao/PortableServer
+
+  Source_Files {
+  main.cpp     
+  }
+}

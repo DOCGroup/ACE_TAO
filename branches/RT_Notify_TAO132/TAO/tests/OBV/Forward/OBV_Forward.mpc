@@ -1,0 +1,16 @@
+project(OBV Forward Server): server {
+  Source_Files {
+    Test_impl.cpp
+    server.cpp
+  }
+}
+
+project(OBV Forward Client): client {
+  Source_Files {
+    TreeBaseC.cpp
+    TreeControllerC.cpp
+    TreeNodeC.cpp
+    client.cpp
+  }
+}
+

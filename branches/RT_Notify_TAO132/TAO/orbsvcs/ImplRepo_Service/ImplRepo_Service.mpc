@@ -1,0 +1,49 @@
+project : orbsvcsexe, core, acexml, minimum_corba {
+  depends += Svc_Utils IORTable PortableServer
+  exename  = ImplRepo_Service
+  libs    += TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+  comps   += Naming
+
+  Source_Files {
+    ImR_Activator.cpp  
+    ImR_Activator_i.cpp
+    Iterator.cpp
+    Locator.cpp
+    Options.cpp
+    Server_Info.cpp
+    Server_Repository.cpp
+    Repository_Configuration.cpp
+    XML_ContentHandler.cpp
+    NT_Service.cpp
+  }
+}
+
+
+project(ImR_Activator) : orbsvcsexe, core, acexml, minimum_corba {
+  depends += Svc_Utils IORTable PortableServer
+  exename  = ImR_Activator
+  libs    += TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+  comps   += Naming
+
+  Source_Files {
+    Adapter_Activator.cpp
+    Forwarder.cpp
+    ImR_Locator.cpp
+    ImR_Locator_i.cpp
+  }
+}
+
+
+project(tao_imr) : orbsvcsexe, core, acexml, minimum_corba {
+  depends += Svc_Utils IORTable PortableServer
+  exename  = tao_imr
+  libs    += TAO_Svc_Utils TAO_IORTable TAO_PortableServer
+  comps   += Naming
+
+  Source_Files {
+    tao_imr.cpp
+    tao_imr_i.cpp
+  }
+}
+
+
