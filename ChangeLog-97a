@@ -1,3 +1,14 @@
+Tue Apr 15 13:01:13 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/Token_Request_Reply.cpp (ctor): added initialization of transfer_.data_ to
+	  avoid unitialized memory read.
+
+	* tests/test_config.h: removed "static" qualifier from randomize () to avoid warning from
+	  g++ when it's not called in a test.
+
+	* examples/IPC_SAP/SPIPE_SAP/server.cpp (main): moved declaration of local variable "handle"
+	  up before its first use.
+
 Mon Apr 14 23:08:27 1997    <irfan@TWOSTEP>
 
 	* INSTALL: Updated install files for Win32.
