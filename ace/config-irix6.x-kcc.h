@@ -54,6 +54,15 @@
 // Compiler/platform supports sys_siglist array.
 //#define ACE_HAS_SYS_SIGLIST
 
+// This gets defined in config-irix6.x-common.h, but kcc does support this.
+#undef ACE_LACKS_PLACEMENT_OPERATOR_DELETE
+
+// Shift this --- otherwise, it lands on top of libKCC.
+#define ACE_DEFAULT_BASE_ADDR ((char*) 0x0500000)
+
+// kcc 4.0d miscompiles memchr_emulation on irix at +K3 optimization.
+// So just use the library version instead.
+#define ACE_HAS_MEMCHR
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */

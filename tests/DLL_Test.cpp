@@ -23,7 +23,7 @@
 
 ACE_RCSID(tests, DLL_Test, "$Id$")
 
-#if defined (ACE_WIN32) && defined (_DEBUG) 
+#if defined (ACE_WIN32) && defined (_DEBUG)
 # define OBJ_SUFFIX ACE_TEXT ("d") ACE_DLL_SUFFIX
 #else /* ACE_WIN32 && _DEBUG */
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
@@ -58,9 +58,21 @@ main (int, ACE_TCHAR *[])
     defined (__hpux)
 
   ACE_DLL dll;
+
+#if defined (__KCC)
+  /* With KCC, turning on close-on-destruction will cause problems
+     when libKCC tries to call dtors. */
+  int retval = dll.open (ACE_TEXT (OBJ_PREFIX)
+                         ACE_TEXT ("DLL_Test")
+                         ACE_TEXT (OBJ_SUFFIX),
+                         ACE_DEFAULT_SHLIB_MODE,
+                         0);
+#else
   int retval = dll.open (OBJ_PREFIX
                          ACE_TEXT ("DLL_Test")
                          OBJ_SUFFIX);
+#endif /* __KCC */
+
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error in DLL Open\n")),
@@ -80,7 +92,7 @@ main (int, ACE_TCHAR *[])
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
-		       dll.error ()),
+                       dll.error ()),
                       -1);
 
   auto_ptr<Hello> my_hello (factory ());
