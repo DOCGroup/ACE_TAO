@@ -30,3 +30,47 @@ Solaris, you should always make sure that you have more than 1 LWP (by
 using either the -B or the -n options) since otherwise the program may
 get into an infinite loop due to the semantics of SunOS unbound
 threads... (This may no longer be the case.)
+
+
+Available Options in Performance_Test module:
+=============================================
+
+Thread Creation:
+----------------
+      -B:    Create thread with THR_BOUND
+      -D:    Create thread with THR_DETACHED
+      -N:    Create thread with flag THR_NEW_LWP
+      -n:    Set # of lwp's (default is 0)
+      -t:    Set # of threads contending the lock (default is 4)
+
+Run Test:
+---------
+      -s:    Set testing duration (in seconds, default is 100)
+      -T:    Enable/disable tracing.
+
+Misc:
+-----
+      -p:    Toggle whether summary is printed
+      -e:    Perform eager exit (without cleaning up)
+      -M:    Set message size in pipe_[proc|thr]_test
+
+Reserved Flags:
+---------------
+      -a:    Not used.  (do_ack ???)
+      -A:    Not used.  (set rendezvous point)
+      -c:    Not used.  (# of connections)
+      -C:    Not used.  (Toggle calculate checksum)
+      -d:    Not used.  (Enable debugging)
+      -F:    Not used.  (Free memory)
+      -g:    Not used.  (generate data ??)
+      -H:    Not used.  (set high water mark)
+      -i:    Not used.  (# of iterations)
+      -L:    Not used.  (set low water mark)
+      -l:    Not used.  (set initial queue length)
+      -m:    Not used.  (set mapped file name)
+      -P:    Not used.  (set consecutive ports)
+      -S:    Not used.  (set service_entry ???)
+      -u:    Not used.  (use udp)
+      -v:    Not used.  (set display verbosely)
+      -X:    Not used.  (Use xdr conversion)
+      -Z:    Not used.  (Do zero copy)
