@@ -1,3 +1,14 @@
+Mon Aug 25 13:56:22 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test_i.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/test_i.h:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/run_test.pl:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Server_Task.cpp:
+        * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/Collocated_Test.cpp:
+
+          Fixed reference counting bug in collocated interceptor test.
+
 Mon Aug 25 12:30:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* docs/releasenotes/index.html:
@@ -41,6 +52,7 @@ Mon Aug 25 18:41:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Thanks to Charlie Frasch <cfrasch@spawar.navy.mil> for reporting
           this. This fixes bugzilla [1575].
 
+>>>>>>> 1.2419
 Mon Aug 25 11:18:39 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * TAOACE.mwc:
