@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 # $Id$
 
 # Irix 6.[234] with SGI C++
@@ -14,6 +16,10 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
+
+ifndef templates
+  templates = implicit
+endif # templates
 
 include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
 
@@ -44,9 +50,12 @@ CCFLAGS		+= -exceptions -DACE_HAS_EXCEPTIONS
 # Use the standard library and standard template instantiation mechanisms
 CCFLAGS		+= -LANG:std
 
-# Instantiate no templates automatically, do not run prelinker. There
-# are other choices available, but those have not been used in a while.
-CCFLAGS		+= -ptnone -no_prelink
+ifneq ($(templates),implicit)
+  # Instantiate no templates automatically, do not run prelinker. There
+  # are other choices available, but those have not been used in a while.
+  CCFLAGS		+= -no_prelink
+endif # templates != implicit
+
 # Instantiate everything; without this, apps/Gateway/Gateway/gatewayd might
 # not build due to missing template instantiations. NOTE: it seems
 # this setting no longer works for ACE.
@@ -55,6 +64,7 @@ CCFLAGS		+= -ptnone -no_prelink
 #CCFLAGS	+= -ptused -prelink
 # Instantiate used templates, but do not run prelinker
 #CCFLAGS		+= -ptused
+
 # Suppress warnings about "pack" pragmas not being defined
 # Suppress warnings about "member with the same name as its class"
 # Suppress warnings about "class has no copy assignment operator"
