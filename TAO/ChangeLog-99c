@@ -1,3 +1,10 @@
+Thu Sep 30 14:58:38 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
+	  Changes to make sure that anonymous sequence typedefs
+	  get generated for valuetypes.
+
 Thu Sep 30 14:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tao/MessagingC.h,
