@@ -1,3 +1,10 @@
+Sun Jun  4 14:55:46 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/fuzz.pl:
+
+          Added html files to the list of files checked for
+          ending with a newline.
+
 Sun Jun  4 14:38:43 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/OS_String.inl:
