@@ -1,9 +1,17 @@
+Sun Jun 27 17:10:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/TAO-Tests.dsw:
+	* tests/Faults/Faults.dsw:
+	* tests/Faults/client.dsp:
+	* tests/Faults/server.dsp: Added new workspace/projects and
+	  updated test workspace.
+
 Sun Jun 27 17:15:45 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp: 
+	* orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp:
 	  Replaced ACE_TRY_ENV.print_exceptions with
 	  ACE_PRINT_EXCEPTION. Thanks to Carlos for reporting these.
-	
+
 Sun Jun 27 16:57:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/IIOP_Connect.cpp:
@@ -25,7 +33,7 @@ Sun Jun 27 16:48:54 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/Faults/test_i.cpp:
 	* tests/Faults/test_i.h:
 	* tests/Faults/test_i.i:
-	  Added a new test to check that the ORB can handle a crash on the 
+	  Added a new test to check that the ORB can handle a crash on the
 	  server and/or the client; it doesn't cover all the possible
 	  cases, but at least it is a start.
 
@@ -102,7 +110,7 @@ Sun Jun 27 09:17:11 1999  David L. Levine  <levine@cs.wustl.edu>
 
 Sun Jun 27 11:02:03 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: Reformatted a lot of this file so it'll conform 
+	* orbsvcs/orbsvcs/Sched/SchedEntry.cpp: Reformatted a lot of this file so it'll conform
 	  to the ACE+TAO programming guidelines.
 
 	* tao/Object_Adapter.cpp: Cleanedup the programming style to make
