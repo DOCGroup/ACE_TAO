@@ -49,15 +49,15 @@ Client_Task::svc (void)
       //// Start Test ///////////////////////////////
       CORBA::Long test_time = 1234L;
 
-      //Warm up the system
+      // Warm up the system
       for (int i=0; i < 1000; i++)
         rt->test_method (test_time);
 
-      /// Start for actual Measurements
+      // Start for actual Measurements
       ACE_Sample_History history (niterations);
 
       ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-      for (int i = 0; i < niterations; ++i)
+      for (int itercounter = 0; itercounter < niterations; ++itercounter)
         {
           ACE_hrtime_t start = ACE_OS::gethrtime ();
 
