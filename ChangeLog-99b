@@ -22,6 +22,14 @@ Wed Mar 03 21:49:58 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-WinCE.h: added ACE_MAIN and ACE_MAIN_OBJECT_MANAGER
           #defines, to support merging of the main () #defines in OS.h.
 
+        * ace/OS.{h,cpp}: added ACE_OS_Object_Manager::starting_up ()
+          and shutting_down ().  (ACE_TSS_Cleanup::remove): replaced
+          use of ACE_Object_Manager::shutting_down () with
+          ACE_OS_Object_Manager::shutting_down ().  Thanks to Irfan
+          for reporting that, otherwise, ace/Object_Manager.h had
+          to be #included by OS.cpp on NT, if ACE_NONSTATIC_OBJECT_MANAGER
+          wasn't #defined.
+
 Wed Mar 03 19:08:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/Map_T.h (ACE_Map): Further degraded my code to make it
