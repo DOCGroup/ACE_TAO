@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="Throughput" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Inversion" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Throughput - Win32 Debug
+CFG=Inversion - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Throughput.mak".
+!MESSAGE NMAKE /f "Inversion.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Throughput.mak" CFG="Throughput - Win32 Debug"
+!MESSAGE NMAKE /f "Inversion.mak" CFG="Inversion - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Throughput - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Throughput - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "Inversion - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Inversion - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=Throughput - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Throughput - Win32 Release"
+!IF  "$(CFG)" == "Inversion - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -50,9 +50,9 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 TAO_CosNaming.lib TAO_RTEvent.lib TAO_RTSched.lib TAO_Svc_Utils.lib ECTest.lib TAO.lib ace.lib /nologo /subsystem:console /machine:I386 /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 ECTest.lib TAO.lib ace.lib TAO_CosNaming.lib TAO_RTEvent.lib TAO_RTSched.lib TAO_Svc_Utils.lib /nologo /subsystem:console /machine:I386 /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Throughput - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Inversion - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -74,20 +74,20 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 TAO_CosNamingd.lib TAO_RTEventd.lib TAO_RTSchedd.lib TAO_Svc_Utilsd.lib ECTestd.lib TAOd.lib aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
+# ADD LINK32 ECTestd.lib TAOd.lib aced.lib TAO_CosNamingd.lib TAO_RTEventd.lib TAO_RTSchedd.lib TAO_Svc_Utilsd.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\lib" /libpath:"..\..\..\orbsvcs" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\..\..\ace"
 
 !ENDIF 
 
 # Begin Target
 
-# Name "Throughput - Win32 Release"
-# Name "Throughput - Win32 Debug"
+# Name "Inversion - Win32 Release"
+# Name "Inversion - Win32 Debug"
 # Begin Group "Header Files"
 
 # PROP Default_Filter ".h"
 # Begin Source File
 
-SOURCE=.\Throughput.h
+SOURCE=.\Inversion.h
 # End Source File
 # End Group
 # Begin Group "Source Files"
@@ -95,7 +95,7 @@ SOURCE=.\Throughput.h
 # PROP Default_Filter ".cpp"
 # Begin Source File
 
-SOURCE=.\Throughput.cpp
+SOURCE=.\Inversion.cpp
 # End Source File
 # End Group
 # End Target
