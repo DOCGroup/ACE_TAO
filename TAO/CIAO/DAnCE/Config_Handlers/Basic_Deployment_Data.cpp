@@ -2565,7 +2565,6 @@ namespace CIAO
     node_ (new ::XMLSchema::string< char > (*s.node_)),
     source_ (new ::XMLSchema::string< char > (*s.source_)),
     implementation_ (new ::XMLSchema::IDREF< char > (*s.implementation_)),
-    deployedResource_ (s.deployedResource_.get () ? new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (*s.deployedResource_) : 0),
     deployedSharedResource_ (s.deployedSharedResource_.get () ? new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (*s.deployedSharedResource_) : 0),
     id_ (s.id_.get () ? new ::XMLSchema::ID< char > (*s.id_) : 0),
     regulator__ ()
@@ -2581,7 +2580,13 @@ namespace CIAO
         ++i) add_configProperty (*i);
       }
 
-      if (deployedResource_.get ()) deployedResource_->container (this);
+      deployedResource_.reserve (s.deployedResource_.size ());
+      {
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
+      }
+
       if (deployedSharedResource_.get ()) deployedSharedResource_->container (this);
       if (id_.get ()) id_->container (this);
     }
@@ -2605,8 +2610,13 @@ namespace CIAO
         ++i) add_configProperty (*i);
       }
 
-      if (s.deployedResource_.get ()) deployedResource (*(s.deployedResource_));
-      else deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > (0);
+      deployedResource_.clear ();
+      deployedResource_.reserve (s.deployedResource_.size ());
+      {
+        for (deployedResource_const_iterator i (s.deployedResource_.begin ());
+        i != s.deployedResource_.end ();
+        ++i) add_deployedResource (*i);
+      }
 
       if (s.deployedSharedResource_.get ()) deployedSharedResource (*(s.deployedSharedResource_));
       else deployedSharedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > (0);
@@ -2751,37 +2761,53 @@ namespace CIAO
 
     // InstanceDeploymentDescription
     // 
-    bool InstanceDeploymentDescription::
-    deployedResource_p () const
+    InstanceDeploymentDescription::deployedResource_iterator InstanceDeploymentDescription::
+    begin_deployedResource ()
     {
-      return deployedResource_.get () != 0;
+      return deployedResource_.begin ();
     }
 
-    ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& InstanceDeploymentDescription::
-    deployedResource () const
+    InstanceDeploymentDescription::deployedResource_iterator InstanceDeploymentDescription::
+    end_deployedResource ()
     {
-      return *deployedResource_;
+      return deployedResource_.end ();
     }
 
-    ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription& InstanceDeploymentDescription::
-    deployedResource ()
+    InstanceDeploymentDescription::deployedResource_const_iterator InstanceDeploymentDescription::
+    begin_deployedResource () const
     {
-      return *deployedResource_;
+      return deployedResource_.begin ();
+    }
+
+    InstanceDeploymentDescription::deployedResource_const_iterator InstanceDeploymentDescription::
+    end_deployedResource () const
+    {
+      return deployedResource_.end ();
     }
 
     void InstanceDeploymentDescription::
-    deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& e)
+    add_deployedResource (::CIAO::Config_Handlers::InstanceResourceDeploymentDescription const& e)
     {
-      if (deployedResource_.get ())
+      if (deployedResource_.capacity () < deployedResource_.size () + 1)
       {
-        *deployedResource_ = e;
+        ::std::vector< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > v;
+        v.reserve (deployedResource_.size () + 1);
+
+        while (deployedResource_.size ())
+        {
+          //@@ VC6
+          ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription& t = deployedResource_.back ();
+          t.container (0);
+          v.push_back (t);
+          v.back ().container (this);
+          deployedResource_.pop_back ();
+        }
+
+        deployedResource_.swap (v);
       }
 
-      else
-      {
-        deployedResource_ = ::std::auto_ptr< ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription > (new ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription (e));
-        deployedResource_->container (this);
-      }
+      deployedResource_.push_back (e);
+      deployedResource_.back ().container (this);
     }
 
     // InstanceDeploymentDescription
@@ -5720,7 +5746,7 @@ namespace CIAO
         else if (n == "deployedResource")
         {
           ::CIAO::Config_Handlers::InstanceResourceDeploymentDescription t (e);
-          deployedResource (t);
+          add_deployedResource (t);
         }
 
         else if (n == "deployedSharedResource")
@@ -8948,8 +8974,7 @@ namespace CIAO
         source (o);
         implementation (o);
         configProperty (o);
-        if (o.deployedResource_p ()) deployedResource (o);
-        else deployedResource_none (o);
+        deployedResource (o);
         if (o.deployedSharedResource_p ()) deployedSharedResource (o);
         else deployedSharedResource_none (o);
         if (o.id_p ()) id (o);
@@ -8966,8 +8991,7 @@ namespace CIAO
         source (o);
         implementation (o);
         configProperty (o);
-        if (o.deployedResource_p ()) deployedResource (o);
-        else deployedResource_none (o);
+        deployedResource (o);
         if (o.deployedSharedResource_p ()) deployedSharedResource (o);
         else deployedSharedResource_none (o);
         if (o.id_p ()) id (o);
@@ -9124,13 +9148,79 @@ namespace CIAO
       void InstanceDeploymentDescription::
       deployedResource (Type& o)
       {
-        dispatch (o.deployedResource ());
+        // VC6 anathema strikes again
+        //
+        InstanceDeploymentDescription::Type::deployedResource_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+
+        if (b != e)
+        {
+          deployedResource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployedResource_next (o);
+          }
+
+          deployedResource_post (o);
+        }
+
+        else deployedResource_none (o);
       }
 
       void InstanceDeploymentDescription::
       deployedResource (Type const& o)
       {
-        dispatch (o.deployedResource ());
+        // VC6 anathema strikes again
+        //
+        InstanceDeploymentDescription::Type::deployedResource_const_iterator b (o.begin_deployedResource()), e (o.end_deployedResource());
+
+        if (b != e)
+        {
+          deployedResource_pre (o);
+          for (;
+           b != e;
+          )
+          {
+            dispatch (*b);
+            if (++b != e) deployedResource_next (o);
+          }
+
+          deployedResource_post (o);
+        }
+
+        else deployedResource_none (o);
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_pre (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_pre (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_next (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_next (Type const&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_post (Type&)
+      {
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_post (Type const&)
+      {
       }
 
       void InstanceDeploymentDescription::
@@ -12058,10 +12148,21 @@ namespace CIAO
       }
 
       void InstanceDeploymentDescription::
-      deployedResource (Type const& o)
+      deployedResource_pre (Type const&)
       {
         push_ (::XSCRT::XML::Element< char > ("deployedResource", top_ ()));
-        Traversal::InstanceDeploymentDescription::deployedResource (o);
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_next (Type const& o)
+      {
+        deployedResource_post (o);
+        deployedResource_pre (o);
+      }
+
+      void InstanceDeploymentDescription::
+      deployedResource_post (Type const&)
+      {
         pop_ ();
       }
 

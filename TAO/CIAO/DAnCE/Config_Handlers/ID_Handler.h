@@ -47,18 +47,19 @@ namespace CIAO
     * corresponding CORBA IDL Any type.
     *
     */
+    class Config_Handlers_Export ID_Handler
+    {
+    public:
 
-    class Config_Handlers_Export ID_Handler {
+      ID_Handler (void);
+      virtual ~ID_Handler (void);
 
-      public:
+      void get_ImplementationDependency (
+          Deployment::ImplementationDependency& toconfig,
+          ImplementationDependency& desc);
 
-        ID_Handler (void);
-        virtual ~ID_Handler (void);
-
-        void get_ImplementationDependency (
-             Deployment::ImplementationDependency& toconfig,
-             ImplementationDependency& desc);
-
+      ImplementationDependency impl_dependency (
+          const ::Deployment::ImplementationDependency& src);
     };
   }
 }

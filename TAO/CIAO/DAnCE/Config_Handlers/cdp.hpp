@@ -42,7 +42,6 @@ namespace CIAO
       // UUID
       // 
       public:
-      bool UUID_p () const;
       ::XMLSchema::string< char > const& UUID () const;
       ::XMLSchema::string< char >& UUID ();
       void UUID (::XMLSchema::string< char > const& );
@@ -141,7 +140,8 @@ namespace CIAO
       ::std::vector< ::CIAO::Config_Handlers::Property > infoProperty_;
 
       public:
-      DeploymentPlan (::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes__,
+      DeploymentPlan (::XMLSchema::string< char > const& UUID__,
+      ::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes__,
       ::CIAO::Config_Handlers::MonolithicDeploymentDescription const& implementation__);
 
       DeploymentPlan (::XSCRT::XML::Element< char > const&);
@@ -202,12 +202,6 @@ namespace CIAO
 
         virtual void
         UUID (Type const&);
-
-        virtual void
-        UUID_none (Type&);
-
-        virtual void
-        UUID_none (Type const&);
 
         virtual void
         realizes (Type&);

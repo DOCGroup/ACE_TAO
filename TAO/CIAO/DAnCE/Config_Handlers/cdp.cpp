@@ -9,13 +9,16 @@ namespace CIAO
     // 
 
     DeploymentPlan::
-    DeploymentPlan (::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes__,
+    DeploymentPlan (::XMLSchema::string< char > const& UUID__,
+    ::CIAO::Config_Handlers::ComponentInterfaceDescription const& realizes__,
     ::CIAO::Config_Handlers::MonolithicDeploymentDescription const& implementation__)
     :
+    UUID_ (new ::XMLSchema::string< char > (UUID__)),
     realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (realizes__)),
     implementation_ (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription (implementation__)),
     regulator__ ()
     {
+      UUID_->container (this);
       realizes_->container (this);
       implementation_->container (this);
     }
@@ -24,13 +27,13 @@ namespace CIAO
     DeploymentPlan (::CIAO::Config_Handlers::DeploymentPlan const& s)
     :
     label_ (s.label_.get () ? new ::XMLSchema::string< char > (*s.label_) : 0),
-    UUID_ (s.UUID_.get () ? new ::XMLSchema::string< char > (*s.UUID_) : 0),
+    UUID_ (new ::XMLSchema::string< char > (*s.UUID_)),
     realizes_ (new ::CIAO::Config_Handlers::ComponentInterfaceDescription (*s.realizes_)),
     implementation_ (new ::CIAO::Config_Handlers::MonolithicDeploymentDescription (*s.implementation_)),
     regulator__ ()
     {
       if (label_.get ()) label_->container (this);
-      if (UUID_.get ()) UUID_->container (this);
+      UUID_->container (this);
       realizes_->container (this);
       implementation_->container (this);
       instance_.reserve (s.instance_.size ());
@@ -75,8 +78,7 @@ namespace CIAO
       if (s.label_.get ()) label (*(s.label_));
       else label_ = ::std::auto_ptr< ::XMLSchema::string< char > > (0);
 
-      if (s.UUID_.get ()) UUID (*(s.UUID_));
-      else UUID_ = ::std::auto_ptr< ::XMLSchema::string< char > > (0);
+      UUID (s.UUID ());
 
       realizes (s.realizes ());
 
@@ -163,12 +165,6 @@ namespace CIAO
 
     // DeploymentPlan
     // 
-    bool DeploymentPlan::
-    UUID_p () const
-    {
-      return UUID_.get () != 0;
-    }
-
     ::XMLSchema::string< char > const& DeploymentPlan::
     UUID () const
     {
@@ -184,16 +180,7 @@ namespace CIAO
     void DeploymentPlan::
     UUID (::XMLSchema::string< char > const& e)
     {
-      if (UUID_.get ())
-      {
-        *UUID_ = e;
-      }
-
-      else
-      {
-        UUID_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
-        UUID_->container (this);
-      }
+      *UUID_ = e;
     }
 
     // DeploymentPlan
@@ -520,8 +507,8 @@ namespace CIAO
 
         else if (n == "UUID")
         {
-          ::XMLSchema::string< char > t (e);
-          UUID (t);
+          UUID_ = ::std::auto_ptr< ::XMLSchema::string< char > > (new ::XMLSchema::string< char > (e));
+          UUID_->container (this);
         }
 
         else if (n == "realizes")
@@ -624,8 +611,7 @@ namespace CIAO
         pre (o);
         if (o.label_p ()) label (o);
         else label_none (o);
-        if (o.UUID_p ()) UUID (o);
-        else UUID_none (o);
+        UUID (o);
         realizes (o);
         implementation (o);
         instance (o);
@@ -642,8 +628,7 @@ namespace CIAO
         pre (o);
         if (o.label_p ()) label (o);
         else label_none (o);
-        if (o.UUID_p ()) UUID (o);
-        else UUID_none (o);
+        UUID (o);
         realizes (o);
         implementation (o);
         instance (o);
@@ -696,16 +681,6 @@ namespace CIAO
       UUID (Type const& o)
       {
         dispatch (o.UUID ());
-      }
-
-      void DeploymentPlan::
-      UUID_none (Type&)
-      {
-      }
-
-      void DeploymentPlan::
-      UUID_none (Type const&)
-      {
       }
 
       void DeploymentPlan::
