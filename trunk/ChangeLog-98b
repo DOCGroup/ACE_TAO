@@ -1,3 +1,12 @@
+Tue Jun 30 14:04:42 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Message_Queue_T.cpp: Fixed references to an undeclared
+	  priority_eval_func_ptr_ - I think I figured out what it was
+	  supposed to be doing, but I'm not quite sure.  It compiles ;-)
+
+	* ace/Synch.h (ACE_Adaptive_Lock): Removed "= 0" (pure virtual) from
+	  destructor decl.  The function is defined in Synch.cpp.
+
 Tue Jun 30 13:13:21 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/WFMO_Reactor.cpp (open): Made sure that size does not exceed
