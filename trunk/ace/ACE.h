@@ -159,11 +159,10 @@ namespace ACE
 
 #endif /* ACE_HAS_TLI */
 
-  ACE_NAMESPACE_INLINE_FUNCTION
-  ssize_t recv (ACE_HANDLE handle,
-                void *buf,
-                size_t len,
-                const ACE_Time_Value *timeout = 0);
+  extern ACE_Export ssize_t recv (ACE_HANDLE handle,
+                                  void *buf,
+                                  size_t len,
+                                  const ACE_Time_Value *timeout = 0);
 
   extern ACE_Export ssize_t recvmsg (ACE_HANDLE handle,
                                      struct msghdr *msg,
