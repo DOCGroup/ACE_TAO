@@ -1,3 +1,9 @@
+Sat Jun  5 14:59:47 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/tests/NodeApplicationTest/README:
+	  Added this readme file for user to understand the testing scenario.
+
+
 Sat Jun  5 14:46:12 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
         * ./DnC/ciao/Servant_Impl_Base.h:
