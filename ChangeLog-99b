@@ -1,3 +1,10 @@
+Thu Jul 22 11:54:58 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/SV_Shared_Memory_Test.cpp (child): added a one
+          second sleep to give the parent a chance to create the
+          semaphore.  This allows the test to succeed on LynxOS/PPC
+          (with fork ()).
+
 Thu Jul 22 10:42:06 1999  Clarence M. Weaver  <clarence_m_weaver@md.northgrum.com>
 
         * ACE-INSTALL.html: added steps for running the ACE tests
