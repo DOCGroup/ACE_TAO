@@ -1,8 +1,18 @@
+Sun Apr 20 23:08:37 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/{Local,Remote}_Tokens.h: Added a private declarations of the
+	  copy constructor and assignment operator for classes that
+	  inherit from ACE_TSS. This is necessary since the compiler will
+	  auto generate these two operations that will end up using the
+	  non-existent copy constructor and assignment operator from the
+	  TSS class and cause linker errors.
+
 Sun Apr 20 20:47:34 1997  Sumedh Mungee	      <sumedh@cs.wustl.edu>
 
 	* apps/JAWS/client: Reworked the ACE_Blob* classes to work
 	  with the new Connector behavior. Added README for this 
 	  directory. Added comments.
+
 	* apps/JAWS/stress-testing: Added README file
 	
 Sat Apr 19 11:56:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>

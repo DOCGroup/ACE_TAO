@@ -196,6 +196,10 @@ public:
 #endif
 
 private:
+  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &);
+  void operator= (const ACE_TSS_TPQ_Entry &);
+  // Private: should not be used
+
   // = These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
   const ACE_Token_Proxy *proxy_;
