@@ -9,6 +9,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/Thread_Manager.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(IDL_Cubit, collocation_test, "$Id$")
 
