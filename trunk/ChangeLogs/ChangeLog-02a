@@ -1,3 +1,10 @@
+Fri Jul 28 10:39:17 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/Reader_Writer_Test.cpp (n_iterations): use
+          default value of 25 instead of 50 on LynxOS as well
+          as on VxWorks, so the test runs in a reasonable period
+          of time (under 1.5 seconds on a 266 MHz PPC).
+
 Fri Jul 28 10:34:01 2000  David L. Levine <levine@cs.wustl.edu>
 
         * test/Semaphore_Test.cpp (ACE_ALLOWED_SLACK): set
