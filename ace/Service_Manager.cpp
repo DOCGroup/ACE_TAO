@@ -296,6 +296,8 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
     }
 
   ACE_TCHAR request[BUFSIZ];
+  ACE_TCHAR* offset = request;
+  ssize_t remaining = sizeof (request);
 
   // Read service request from client.
 
@@ -303,10 +305,32 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
   // Keep looping until we actually get the request.  Note that Win32
   // sets the socket into non-blocking mode, so we may need to loop if
-  // the system is heavily loaded.
+  // the system is heavily loaded.  Read bytes into the buffer until a
+  // '\n' or '\r' is found in the buffer, otherwise the buffer
+  // contains an incomplete string.
   do
-    result = client_stream_.recv (request, sizeof request);
-  while (result == -1 && errno == EWOULDBLOCK);
+    {
+      result = client_stream_.recv (offset, remaining);
+
+      if (result >= 0)
+        {
+          if ((remaining -= result) <= 0)
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_LIB_TEXT ("Request buffer overflow.\n")));
+              result = 0;
+              break;
+            }
+
+          offset += result;
+          *offset = 0;
+
+          if (ACE_OS::strchr (request, '\r') != 0
+              || ACE_OS::strchr (request, '\n') != 0)
+            remaining = 0;
+        }
+    }
+  while (result == -1 && errno == EWOULDBLOCK || remaining > 0);
 
   switch (result)
     {
