@@ -3,6 +3,7 @@
 // OS.cpp
 #define ACE_BUILD_DLL
 #include "ace/OS.h"
+#include "ace/SString.h"
 #include "ace/Sched_Params.h"
 
 #if defined (ACE_WIN32)
@@ -379,6 +380,7 @@ ACE_OS::sprintf (char *buf, const char *format, ...)
 
 #if defined (ACE_HAS_UNICODE)
 #if defined (ACE_WIN32)
+
 int 
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
@@ -390,6 +392,20 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
   va_end (ap);
   return result;
 }
+
+int 
+ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
+{
+  // ACE_TRACE ("ACE_OS::sprintf");
+  const wchar_t *wide_format = ACE_WString (format).fast_rep ();
+  int result;
+  va_list ap;  
+  va_start (ap, wide_format);
+  ACE_OSCALL (::vswprintf (buf, wide_format, ap), int, -1, result);
+  va_end (ap);
+  return result;
+}
+
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
 
@@ -2115,14 +2131,13 @@ ACE_OS::socket_init (int version_high, int version_low)
 #if defined (ACE_WIN32)
   if (ACE_OS::socket_initialized_ == 0)
     {
+      // cout << "WSAStartup" << endl;
       WORD version_requested = MAKEWORD (version_high, version_low);
       WSADATA wsa_data;
       int error = ::WSAStartup (version_requested, &wsa_data);
 
       if (error != 0)
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   "WSAStartup failed, WSAGetLastError returned %u.\n",
-			   error), -1);
+	cerr << "WSAStartup failed, WSAGetLastError returned " << error << endl;
 
       ACE_OS::socket_initialized_ = 1;
     }
@@ -2139,14 +2154,11 @@ ACE_OS::socket_fini (void)
 #if defined (ACE_WIN32)
   if (ACE_OS::socket_initialized_ != 0)
     {
+      // cout << "WSACleanup" << endl;
       if (::WSACleanup () != 0)
 	{
 	  int error = ::WSAGetLastError ();
-	  /*
-	  ACE_ERROR_RETURN ((LM_ERROR, 
-			     "WSACleanup failed, WSAGetLastError returned %u.\n", 
-			     error), -1);
-	  */
+	  cerr << "WSACleanup failed, WSAGetLastError returned " << error << endl;
 	}
       ACE_OS::socket_initialized_ = 0;
     }

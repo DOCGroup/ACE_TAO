@@ -61,7 +61,11 @@ ACE_Process_Old::kill (int signum)
 ACE_INLINE u_long
 ACE_Process_Options::creation_flags (void) const
 {
+#if defined (UNICODE)  
+  return creation_flags_ | CREATE_UNICODE_ENVIRONMENT;
+#else
   return creation_flags_;
+#endif /* UNICODE */
 }
 
 ACE_INLINE void
@@ -153,7 +157,7 @@ ACE_Process_Options::working_directory (void)
 }
 
 ACE_INLINE void
-ACE_Process_Options::working_directory (const TCHAR *wd)
+ACE_Process_Options::working_directory (LPCTSTR wd)
 {
   ACE_OS::strcpy (working_directory_, wd);
 }
