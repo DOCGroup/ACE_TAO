@@ -287,8 +287,9 @@ protected:
 /**
  * @class ACE_Reactive_Strategy
  *
- * @brief Defines the interface for specifying a Reactive concurrency
- * strategy for a SVC_HANDLER.
+ * @brief Defines the interface for specifying a reactive concurrency
+ * strategy for a SVC_HANDLER, where all upcalls to @c handle_*()
+ * methods run in the reactor's thread of control.  
  *
  * This class provides a strategy that registers the
  * <SVC_HANDLER> with a <Reactor>.
@@ -347,11 +348,11 @@ protected:
  * @brief Defines the interface for specifying a concurrency strategy
  * for a <SVC_HANDLER> based on multithreading.
  *
- * This class provides a strategy that manages the creation of
- * threads to handle requests from clients concurrently.  It
- * behaves as a "thread factory", spawning threads "on-demand"
- * to run the service specified by a user-supplied
- * <SVC_HANDLER>.
+ * This class provides a strategy that manages the creation of threads
+ * to handle requests from clients concurrently via a
+ * thread-per-connection model.  It behaves as a "thread factory",
+ * spawning threads "on-demand" to run the service specified by a
+ * user-supplied <SVC_HANDLER>.  
  */
 template <class SVC_HANDLER>
 class ACE_Thread_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
@@ -415,10 +416,10 @@ protected:
  * for a <SVC_HANDLER> based on multiprocessing.
  *
  * This class provides a strategy that manages the creation of
- * processes to handle requests from clients concurrently.  It
- * behaves as a "process factory", using <ACE::fork> to fork
- * threads "on-demand" to run the service specified by a
- * user-supplied <SVC_HANDLER> in a separate process.
+ * processes to handle requests from clients concurrently using a
+ * process-per-connection model.  It behaves as a "process factory",
+ * using <ACE::fork> to fork threads "on-demand" to run the service
+ * specified by a user-supplied <SVC_HANDLER> in a separate process.
  */
 template <class SVC_HANDLER>
 class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
