@@ -38,7 +38,7 @@ ACE_Service_Record::type (void) const
   return this->type_;
 }
 
-ACE_INLINE const void *
+ACE_INLINE const ACE_SHLIB_HANDLE
 ACE_Service_Record::handle (void) const
 {
   ACE_TRACE ("ACE_Service_Record::handle");
@@ -63,7 +63,7 @@ ACE_Service_Record::type (const ACE_Service_Type *o, int enabled)
 }
 
 ACE_INLINE void 
-ACE_Service_Record::handle (const void *h)
+ACE_Service_Record::handle (const ACE_SHLIB_HANDLE h)
 {
   ACE_TRACE ("ACE_Service_Record::handle");
   this->handle_ = h;
