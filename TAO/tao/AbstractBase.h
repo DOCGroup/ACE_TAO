@@ -103,21 +103,6 @@ private:
   CORBA::Boolean is_collocated_;
   TAO_Abstract_ServantBase *servant_;
   CORBA::Boolean is_local_;
-
-  /// Number of outstanding references to this object.
-  CORBA::ULong refcount_;
-
-  /// Protect reference count manipulation from race conditions.
-  /**
-   * This lock is only instantiated for unconstrained objects.  The
-   * reason for this is that locality-constrained objects that do not
-   * require reference counting (the default) may be instantiated in
-   * the critical path.
-   *
-   * @note This assumes that unconstrained objects will not be
-   *       instantiated in the critical path.
-   */
-  TAO_SYNCH_MUTEX * refcount_lock_;
 };
 
 /**

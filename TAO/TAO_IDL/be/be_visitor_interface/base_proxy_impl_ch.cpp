@@ -85,19 +85,16 @@ be_visitor_interface_base_proxy_impl_ch::visit_interface (be_interface *node)
           has_concrete_parent = 1;
         }
 
-      if (has_concrete_parent == 1)
-        {
-          *os << be_uidt << be_uidt_nl;
-        }
+      *os << be_uidt;
     }
 
   if (has_concrete_parent == 0)
     {
-      *os << "public virtual TAO_Object_Proxy_Impl" << be_uidt_nl;
+      *os << "public virtual TAO_Object_Proxy_Impl";
     }
 
-  *os << "{" << be_nl << "public:"
-      << be_idt_nl; // idt = 1
+  *os << be_uidt_nl << "{" << be_nl << "public:"
+      << be_idt_nl;
 
   // Destructor Declaration.
   *os << "virtual ~" << node->base_proxy_impl_name () << " (void) {}";

@@ -1,3 +1,37 @@
+Tue Oct  1 10:49:39 2002  Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
+
+        * tao/AbstractBase.cpp:
+        * tao/AbstractBase.h:
+
+	  Removed the refcounting stuff. It is all handled by the derived
+	  class, whether interface or valuetype.
+
+	* TAO_IDL/ast/ast_interface_fwd.cpp:
+	* TAO_IDL/ast/ast_module.cpp:
+	* TAO_IDL/ast/ast_structure_fwd.cpp:
+
+	  Fixed a bug in redefinition of forward declarations that shows up
+	  when multiple forward declarations are made in separate module
+	  openings, and the full declaration is in yet another. Thanks to
+	  Nick S. Petrov <nicksp@ci.nnov.ru> for sending in the example IDL
+	  file that uncovered the bug.
+
+	* TAO_IDL/be/be_visitor_interface/base_proxy_impl_ch.cpp:
+
+	  Fixed indentation in the generated inheritance list.
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+
+	  Added missing generated utility function for extracting the
+	  valuetype from an abstract interface.
+
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+
+	  Added generated destructors for the OBV classes. While not necessary
+	  for correct build or behavior, they provide a place to set
+	  breakpoints when debugging, to follow the chain of destructors.
+
 Tue Oct 01 07:10:28 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * orbsvcs/tests/Log/Makefile.bor:
