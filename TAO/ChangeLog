@@ -1,3 +1,9 @@
+Sat Aug 14 03:32:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1904_Regression/test.cpp:
+
+	  Fixed warnings in the daily builds.
+
 Fri Aug 13 11:06:43 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h (OpenSSL_st_var):
