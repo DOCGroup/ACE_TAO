@@ -1,3 +1,60 @@
+Tue Sep 14 15:15:59 1999  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Client_Priority_Policy.cpp
+	* tao/Client_Priority_Policy.h
+	* tao/Client_Priority_Policy.i
+	* tao/TAO.pidl
+	* tao/TAOC.cpp
+	* tao/TAOC.h
+	* tao/TAOC.i
+	* tao/TAOS.cpp
+	* tao/TAOS.h
+	* tao/TAOS.i
+	* tao/TAOS_T.cpp
+	* tao/TAOS_T.h
+	* tao/TAOS_T.i
+	* tao/Policy_Manager.cpp
+	* tao/Policy_Manager.h
+	* tao/Policy_Manager.i
+	* tao/Stub.cpp
+	* tao/Stub.h
+	* tao/ORB.cpp
+	* tao/ORB_Core.h
+	* tao/ORB_Core.i
+	* tao/Makefile
+	* tao/orbconf.h :
+ 	  Added/modified the files above (and the two below) to provide
+	  client-side support for connections with priorities (aka Multiple
+	  Endpoints).
+
+	  Added a client side TAO-specific policy for specifying the
+	  priority of profiles to be used for consequent CORBA calls.
+	  The policy interface is in TAO.pidl.  New idl interface had to
+	  be defined for this policy since none of the policies
+	  from the RT spec provided the right semantics.  For an example
+	  of how to use the policy and multiple endpoints, see example in 
+	  tests/Endpoint_Per_Priority. 
+
+	* tao/Invocation.cpp
+	* tao/Invocation.h:
+	  Use the value of the TAO::ClientPriorityPolicy to select the
+	  profile with the right priority for this invocation.
+	  Right now this feature works correctly for cases where the
+	  following two assumptions are true: 1) no location forwarding, 2) no
+	  certain types of errors during the invocation.
+	
+	* tao/Profile.h:
+	  Minor comment fixes.  
+	
+	* tao/TAO.cpp :
+	  Changed the use of CORBA::String to CORBA::String_var, which is
+	  offers better memory management and standard mapping.
+
+	* tao/TAO.h:
+	  Removed TAO class which provided namespace which contained
+	  TAO_ORB_Manager and TAO_Object_Key.  Those classes are not
+	  used through TAO::, but rather directly.  
+
 Tue Sep 14 16:47:52 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
