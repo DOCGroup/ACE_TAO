@@ -1,46 +1,46 @@
 Wed Sep 16 22:17:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/OS.h: 
-	* ace/DEV_IO.cpp: 
-	* ace/DEV_IO.h: 
-	* ace/DEV_IO.i: 
-	* ace/FIFO_Send_Msg.cpp: 
-	* ace/FILE_IO.cpp: 
-	* ace/FILE_IO.h: 
-	* ace/FILE_IO.i: 
-	* ace/LSOCK.cpp: 
-	* ace/LSOCK_Stream.cpp: 
-	* ace/LSOCK_Stream.h: 
-	* ace/SOCK_Dgram.cpp: 
-	* ace/SOCK_Dgram.h: 
-	* ace/SOCK_Dgram_Bcast.h: 
-	* ace/SOCK_Dgram_Mcast.cpp: 
-	* ace/SOCK_Dgram_Mcast.h: 
-	* ace/SOCK_Dgram_Mcast.i: 
-	* ace/SOCK_IO.cpp: 
-	* ace/SOCK_IO.h: 
-	* ace/SOCK_IO.i: 
-	* ace/SPIPE_Stream.cpp: 
-	* ace/SPIPE_Stream.h: 
-	* ace/SPIPE_Stream.i: 
-	  More iovec to ACE_IO_Vector_Base conversion.
+        * ace/OS.h:
+        * ace/DEV_IO.cpp:
+        * ace/DEV_IO.h:
+        * ace/DEV_IO.i:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/FILE_IO.cpp:
+        * ace/FILE_IO.h:
+        * ace/FILE_IO.i:
+        * ace/LSOCK.cpp:
+        * ace/LSOCK_Stream.cpp:
+        * ace/LSOCK_Stream.h:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram.h:
+        * ace/SOCK_Dgram_Bcast.h:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast.i:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_IO.h:
+        * ace/SOCK_IO.i:
+        * ace/SPIPE_Stream.cpp:
+        * ace/SPIPE_Stream.h:
+        * ace/SPIPE_Stream.i:
+          More iovec to ACE_IO_Vector_Base conversion.
 
-	* ace/Containers.i: 
-	  The ACE_DLList_Node and ACE_DLList_Iterator class are protected
-	  by a !defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER), so
-	  should be their inline methods.
+        * ace/Containers.i:
+          The ACE_DLList_Node and ACE_DLList_Iterator class are protected
+          by a !defined (ACE_LACKS_TEMPLATE_AS_TEMPLATE_PARAMETER), so
+          should be their inline methods.
 
-	* ace/SOCK_Dgram_Mcast.cpp: 
-	* ace/SOCK_Dgram_Mcast.h: 
-	* ace/SOCK_Dgram_Mcast.i: 
-	  Added a generic unsubscribe() method.
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_Dgram_Mcast.i:
+          Added a generic unsubscribe() method.
 
 Wed Sep 16 21:45:48 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/ACE.{h.cpp}: Changed some iovecs to ACE_IO_Vector_Base.
+        * ace/ACE.{h.cpp}: Changed some iovecs to ACE_IO_Vector_Base.
 
-	* ace/config-win32.h: Commented out ACE_HAS_GPERF until we get
-	  everything working with it.
+        * ace/config-win32.h: Commented out ACE_HAS_GPERF until we get
+          everything working with it.
 
 Wed Sep 16 21:43:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -140,6 +140,10 @@ Wed Sep 16 11:41:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/TSS_Test.cpp (worker): allow second group of TSS keys to
           be allocated, with TSS emulation.
+
+        * ace/Svc_Handler.cpp (new): added check that
+          ACE_Dynamic::instance () is non-null before dereferencing it.
+          ACE_ASSERT/return 0 if it is null.
 
 Wed Sep 16 11:28:47 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
