@@ -5,6 +5,15 @@ Fri Jul 12 12:37:42 2002  Steve Huston  <shuston@riverace.com>
           from void * to func ptr... so cast void * to ptrdiff_t, then to
           func ptr.
 
+Fri Jul 12 12:26:27 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Timer_Heap_T.cpp (ctor): Alloc timer_ids_ as ssize_t[],
+          not long[].
+
+        * examples/C++NPv2/TPCLS.dsp: Added SSL libraries to link input.
+
+        * examples/C++NPv2/TPLS.dsp: Added Logging_Handler.{h cpp} to project.
+
 Fri Jul 12 12:15:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Timer_Heap_T.cpp (grow_heap): Fix compile warning.

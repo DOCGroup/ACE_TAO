@@ -69,8 +69,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TPLS_EXPORTS" /YX /FD  /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\.." /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TPLS_EXPORTS" /D "TPLS_BUILD_DLL" /FD  /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TPLS_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\.." /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TPLS_EXPORTS" /D "TPLS_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
@@ -102,16 +102,16 @@ SOURCE=.\Logging_Event_Handler.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Logging_Handler.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\TP_Logging_Server.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
-# Begin Source File
-
-SOURCE=.\TPC_Logging_Server.h
-# End Source File
 # Begin Source File
 
 SOURCE=.\Logging_Acceptor.h
@@ -122,7 +122,15 @@ SOURCE=.\Logging_Event_Handler.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Logging_Handler.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\TP_Logging_Server.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\TPC_Logging_Server.h
 # End Source File
 # Begin Source File
 
