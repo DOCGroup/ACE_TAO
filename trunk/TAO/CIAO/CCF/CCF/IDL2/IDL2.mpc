@@ -18,11 +18,15 @@ project {
     SemanticAction/Operation.cpp
     SyntaxTree/BuiltIn.cpp
     SyntaxTree/Elements.cpp
+    SyntaxTree/ElementsCtor.cpp
     SyntaxTree/Interface.cpp
+    SyntaxTree/InterfaceCtor.cpp
     SyntaxTree/Module.cpp
     SyntaxTree/Operation.cpp
     SyntaxTree/Translation.cpp
+    SyntaxTree/TranslationCtor.cpp
     SyntaxTree/ValueType.cpp
+    SyntaxTree/ValueTypeCtor.cpp
     Traversal/BuiltIn.cpp
     Traversal/Elements.cpp
     Traversal/Interface.cpp

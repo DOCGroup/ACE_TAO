@@ -25,6 +25,10 @@ Mon Nov 24 13:39:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
           added for the Elements, Interface and Valuetype classes in
           IDL2::SyntaxTree.
 
+        * CCF/CCF/IDL2/SyntaxTree/IDL2.mpc:
+        
+          Updated with recently added files.
+          
 Thu Nov 20 20:05:34 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/ComponentsS.h:
