@@ -21,7 +21,7 @@ Handle_L_Stream::open (const ACE_UNIX_Addr &suas,
 {
   if (this->ACE_LSOCK_Acceptor::open (suas) == -1)
     return -1;
-  else if (async && this->ACE_LSOCK_Acceptor::enable (SIGIO) == -1)
+  else if (async && this->ACE_LSOCK_Acceptor::enable (ACE_SIGIO) == -1)
     return -1;
   else
     return 0;

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 #include "ace/Get_Opt.h"
 #include "ace/WFMO_Reactor.h"
 
@@ -17,7 +16,7 @@ Handle_R_Stream::open (const ACE_INET_Addr &sia, int async)
 {
   if (this->ACE_SOCK_Acceptor::open (sia) == -1)
     return -1;
-  else if (async && this->ACE_SOCK_Acceptor::enable (SIGIO) == -1)
+  else if (async && this->ACE_SOCK_Acceptor::enable (ACE_SIGIO) == -1)
     return -1;
   else
     return 0;
@@ -26,13 +25,17 @@ Handle_R_Stream::open (const ACE_INET_Addr &sia, int async)
 ACE_INLINE int 
 Handle_R_Stream::info (char **strp, size_t length) const
 {
-  char      buf[BUFSIZ];
+  char buf[BUFSIZ];
   ACE_INET_Addr sa;
 
   if (this->get_local_addr (sa) == -1)
     return -1;
   
-  ACE_OS::sprintf (buf, "%d/%s %s", sa.get_port_number (), "tcp", "# tests remote stream\n");
+  ACE_OS::sprintf (buf,
+                   "%d/%s %s",
+                   sa.get_port_number (),
+                   "tcp",
+                   "# tests remote stream\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -59,9 +62,12 @@ Handle_R_Stream::init (int argc, char *argv[])
   
   if (this->open (sis) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+
   else if (ACE_Reactor::instance ()->register_handler 
 	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "registering service with ACE_Reactor\n"),
+                      -1);
   return 0;
 }
 
@@ -89,7 +95,8 @@ Handle_R_Stream::handle_input (int)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  int reset_new_handle = ACE_Reactor::instance ()->uses_event_associations ();
+  int reset_new_handle =
+    ACE_Reactor::instance ()->uses_event_associations ();
 
   if (this->accept (this->new_remote_stream, // stream
                     0, // remote address
@@ -107,8 +114,10 @@ Handle_R_Stream::handle_input (int)
   if (this->new_remote_stream.get_remote_addr (sa) == -1)
     return -1;
 
-  ACE_DEBUG ((LM_INFO, "accepted from host %s at port %d\n", 
-	     sa.get_host_name (), sa.get_port_number ()));
+  ACE_DEBUG ((LM_INFO,
+              "accepted from host %s at port %d\n", 
+              sa.get_host_name (),
+              sa.get_port_number ()));
 
   ACE_OS::puts ("----------------------------------------");
 

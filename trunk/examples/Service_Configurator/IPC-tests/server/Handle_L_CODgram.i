@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 #include "ace/Get_Opt.h"
 
 ACE_INLINE
@@ -14,7 +13,7 @@ Handle_L_CODgram::open (const ACE_UNIX_Addr &suad, int async)
 {
   if (this->ACE_LSOCK_CODgram::open (ACE_Addr::sap_any, suad) == -1)
     return -1;
-  else if (async && this->ACE_LSOCK_CODgram::enable (SIGIO) == -1)
+  else if (async && this->ACE_LSOCK_CODgram::enable (ACE_SIGIO) == -1)
     return -1;
   else
     return 0;

@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 #include "ace/Get_Opt.h"
 
 ACE_INLINE
@@ -19,7 +18,7 @@ Handle_Broadcast::open (const ACE_INET_Addr &r, int async)
 {
   if (this->ACE_SOCK_Dgram::open (r) == -1)
     return -1;
-  else if (async && ACE_SOCK_Dgram::enable (SIGIO) == -1)
+  else if (async && ACE_SOCK_Dgram::enable (ACE_SIGIO) == -1)
     return -1;
   else
     return 0;
