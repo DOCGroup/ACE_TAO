@@ -1,3 +1,11 @@
+Mon Aug  9 08:55:12 UTC 2004  Johnny Willemsen  <jwillemen@remedy.nl>
+
+        * ace/OS_NS_unistd.inl (chdir):
+          Fixed Visual Age on Win32 implementation
+
+          Thanks to Boris Kaminer <boris_kaminer@mail.ru> for reporting
+          this.
+
 Sun Aug  8 22:43:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-integritySCA.h:
