@@ -20,7 +20,7 @@
 ACE_RCSID(Buffered_Oneways, client, "$Id$")
 
 // Name of file contains ior.
-static char *IOR = "file://ior";
+static const char *IOR = "file://ior";
 
 // Default iterations.
 static CORBA::ULong iterations = 20;
