@@ -76,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 #include "idl_narrow.h"
+#include "ace/os_include/sys/os_types.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
