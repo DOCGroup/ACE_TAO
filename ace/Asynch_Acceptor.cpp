@@ -15,6 +15,7 @@ ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
+#include "ace/OS_Errno.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
@@ -72,10 +73,16 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
                                  this->listen_handle_,
                                  0,
                                  this->proactor ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("ACE_Asynch_Accept::open")),
-                      -1);
+    {
+      ACE_Errno_Guard g (errno);
+      ACE_ERROR ((LM_ERROR,
+		  ACE_LIB_TEXT ("%p\n"),
+		  ACE_LIB_TEXT ("ACE_Asynch_Accept::open")));
+      ACE_OS::closesocket (this->listen_handle_);
+      this->listen_handle_ = ACE_INVALID_HANDLE;
+      return -1;
+    }
+
   if (reuse_addr)
     {
       // Reuse the address
@@ -85,10 +92,15 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
                               SO_REUSEADDR,
                               (const char*) &one,
                               sizeof one) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("%p\n"),
-                           ACE_LIB_TEXT ("ACE_OS::setsockopt")),
-                          -1);
+	{
+	  ACE_Errno_Guard g (errno);
+	  ACE_ERROR ((LM_ERROR,
+		      ACE_LIB_TEXT ("%p\n"),
+		      ACE_LIB_TEXT ("ACE_OS::setsockopt")));
+	  ACE_OS::closesocket (this->listen_handle_);
+	  this->listen_handle_ = ACE_INVALID_HANDLE;
+	  return -1;
+	}
     }
 
   // If port is not specified, bind to any port.
@@ -98,39 +110,62 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
       ACE_Sock_Connect::bind_port (this->listen_handle_,
 	                           INADDR_ANY,
 				   address.get_type()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("%p\n"),
-                       ACE_LIB_TEXT ("ACE::bind_port")),
-                      -1);
+    {
+      ACE_Errno_Guard g (errno);
+      ACE_ERROR ((LM_ERROR,
+		  ACE_LIB_TEXT ("%p\n"),
+		  ACE_LIB_TEXT ("ACE::bind_port")));
+      ACE_OS::closesocket (this->listen_handle_);
+      this->listen_handle_ = ACE_INVALID_HANDLE;
+      return -1;
+    }
 
   // Bind to the specified port.
   if (ACE_OS::bind (this->listen_handle_,
                     ACE_reinterpret_cast (sockaddr *,
                                           address.get_addr ()),
                     address.get_size ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_OS::bind"),
-                      -1);
+    {
+      ACE_Errno_Guard g (errno);
+      ACE_ERROR ((LM_ERROR,
+		  ACE_LIB_TEXT ("%p\n"),
+		  ACE_LIB_TEXT ("ACE_OS::bind")));
+      ACE_OS::closesocket (this->listen_handle_);
+      this->listen_handle_ = ACE_INVALID_HANDLE;
+      return -1;
+    }
 
   // Start listening.
   if (ACE_OS::listen (this->listen_handle_, backlog) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_OS::listen"),
-                      -1);
+    {
+      ACE_Errno_Guard g (errno);
+      ACE_ERROR ((LM_ERROR,
+		  ACE_LIB_TEXT ("%p\n"),
+		  ACE_LIB_TEXT ("ACE_OS::listen")));
+      ACE_OS::closesocket (this->listen_handle_);
+      this->listen_handle_ = ACE_INVALID_HANDLE;
+      return -1;
+    }
 
   // For the number of <intial_accepts>.
   if (number_of_initial_accepts == -1)
     number_of_initial_accepts = backlog;
 
   for (int i = 0; i < number_of_initial_accepts; i++)
-    // Initiate accepts.
-    if (this->accept (bytes_to_read) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n",
-                         "ACE_Asynch_Acceptor::accept"),
-                        -1);
+    {
+      // Initiate accepts.
+      if (this->accept (bytes_to_read) == -1)
+	{
+	  ACE_Errno_Guard g (errno);
+	  ACE_ERROR ((LM_ERROR,
+		      ACE_LIB_TEXT ("%p\n"),
+		      ACE_LIB_TEXT ("ACE_Asynch_Acceptor::accept")));
+	  ACE_OS::closesocket (this->listen_handle_);
+	  this->listen_handle_ = ACE_INVALID_HANDLE;
+	  return -1;
+	}
+    }
+
   return 0;
 }
 
