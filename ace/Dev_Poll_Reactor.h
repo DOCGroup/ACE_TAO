@@ -1059,8 +1059,16 @@ protected:
   struct pollfd *dp_fds_;
 #endif  /* ACE_HAS_EVENT_POLL */
 
-  /// Pointer to the array 
-  struct pollfd *pfds_;
+  /// Pointer to the next pollfd array element that contains the next
+  /// event to be dispatched.
+  struct pollfd *start_pfds_;
+
+  /// The last element in the pollfd array plus one.
+  /**
+   * The loop that dispatches IO events stops when this->start_pfds ==
+   * this->end_pfds_.
+   */
+  struct pollfd *end_pfds_;
 
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.

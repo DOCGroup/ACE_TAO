@@ -752,12 +752,14 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
   : initialized_ (0)
   , poll_fd_ (ACE_INVALID_HANDLE)
   , size_ (0)
-  , ready_set_ ()
+  // , ready_set_ ()
 #if defined (ACE_HAS_EVENT_POLL)
   , mmap_ (0)
 #else
   , dp_fds_ (0)
 #endif  /* ACE_HAS_EVENT_POLL */
+  , start_pfds_ (0)
+  , end_pfds_ (0)
   , deactivated_ (0)
   , lock_ ()
   , lock_adapter_ (lock_)
@@ -795,12 +797,14 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
   : initialized_ (0)
   , poll_fd_ (ACE_INVALID_HANDLE)
   , size_ (0)
-  , ready_set_ ()
+  // , ready_set_ ()
 #if defined (ACE_HAS_EVENT_POLL)
   , mmap_ (0)
 #else
   , dp_fds_ (0)
 #endif  /* ACE_HAS_EVENT_POLL */
+  , start_pfds_ (0)
+  , end_pfds_ (0)
   , deactivated_ (0)
   , lock_ ()
   , lock_adapter_ (lock_)
