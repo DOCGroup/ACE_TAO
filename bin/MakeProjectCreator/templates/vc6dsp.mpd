@@ -185,7 +185,7 @@ InputDir=<%dirname(idl_file)%>
 
 BuildCmds= \
 	PATH=%PATH%;<%idl_compiler_libs%> \
-	<%idl_compiler("$(ACE_ROOT)\\bin\\tao_idl")%> -o <%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags("-Sc")%><%endif%> $(InputPath)
+	<%idl_compiler%> -o <%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%><%idlflags%><%endif%> $(InputPath)
 
 "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%if(dirname_found)%>$(InputDir)<%else%>.<%endif%><%endif%><%endif%>\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
