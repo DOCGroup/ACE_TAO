@@ -17,16 +17,22 @@
 #if !defined (ACE_RB_TREE_H)
 #define ACE_RB_TREE_H
 
-enum RB_Tree_Node_Color {RED, BLACK};
-
 #include "ace/ACE.h"
+
+class RB_Tree_Node_Base
+{
+public:
+
+  enum RB_Tree_Node_Color {RED, BLACK};
+
+};
 
 // Class Template: RB_Tree_Node
 //
 // Purpose:        Implements a node in a Red-Black Tree ADT
 //
 template <class KEY, class T>
-class RB_Tree_Node
+class RB_Tree_Node : public RB_Tree_Node_Base
 {
 public:
   RB_Tree_Node (const KEY &k, const T &t);

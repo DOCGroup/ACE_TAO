@@ -20,14 +20,14 @@ RB_Tree_Node<KEY, T>::item ()
   // item accessor
 
 template <class KEY, class T> ACE_INLINE void
-RB_Tree_Node<KEY, T>::color (RB_Tree_Node_Color c)
+RB_Tree_Node<KEY, T>::color (RB_Tree_Node<KEY, T>::RB_Tree_Node_Color c)
 {
   color_ = c;
 }
   // set color of the node
 
 template <class KEY, class T>
-ACE_INLINE RB_Tree_Node_Color
+ACE_INLINE RB_Tree_Node<KEY, T>::RB_Tree_Node_Color
 RB_Tree_Node<KEY, T>::color ()
 {
   return color_;
