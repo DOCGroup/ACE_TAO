@@ -61,8 +61,18 @@ extern "C" {
   } pace_siginfo_t;
 # endif /* PACE_SIGINFO_T */
 
+#ifndef PACE_SIGEVENT
   typedef struct sigevent pace_sigevent;
+#endif /* PACE_SIGEVENT */
+
+#ifndef PACE_SIGVAL
   typedef union sigval pace_sigval;
+#endif /* PACE_SIGVAL */
+
+#if (PACE_HAS_POSIX_SIG_UOF)
+  int sigaction (int sig, const pace_sigaction_s * act,
+                 pace_sigaction_s * oact);
+#endif /* PACE_HAS_POSIX_SIG_UOF */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }

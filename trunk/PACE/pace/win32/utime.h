@@ -28,6 +28,10 @@ extern "C" {
   typedef struct _utimbuf pace_utimbuf;
 #endif /* PACE_UTIMBUF */
 
+#if (PACE_HAS_POSIX_FS_UOF)
+  int win32_utime (const char * path, const pace_utimbuf * times);
+#endif /* PACE_HAS_POSIX_FS_UOF */
+
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */

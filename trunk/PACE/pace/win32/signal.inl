@@ -40,23 +40,7 @@ int
 pace_sigaction (int sig, const pace_sigaction_s * act,
                 pace_sigaction_s * oact)
 {
-  pace_sigaction_s sa;
-
-  if (oact == 0)
-    {
-      oact = &sa;
-    }
-
-  if (act == 0)
-    {
-      oact->sa_handler = signal (sig, SIG_IGN);
-      signal (sig, oact->sa_handler);
-    }
-  else
-    {
-      oact->sa_handler = signal (sig, act->sa_handler);
-    }
-  return (oact->sa_handler == SIG_ERR ? -1 : 0);
+  return sigaction (sig, act, oact);
 }
 #endif /* PACE_HAS_POSIX_SIG_UOF */
 

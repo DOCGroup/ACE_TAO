@@ -55,6 +55,18 @@ extern "C" {
 
 #endif /* PACE_DIR_T */
 
+#if (PACE_HAS_POSIX_FS_UOF)
+  int closedir (PACE_DIR * dirp);
+#endif /* PACE_HAS_POSIX_FS_UOF */
+
+#if (PACE_HAS_POSIX_FS_UOF)
+  PACE_DIR * opendir (const char * dirname);
+#endif /* PACE_HAS_POSIX_FS_UOF */
+
+#if (PACE_HAS_POSIX_FS_UOF)
+  pace_dirent * readdir (PACE_DIR * dirp);
+#endif /* PACE_HAS_POSIX_FS_UOF */
+
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
