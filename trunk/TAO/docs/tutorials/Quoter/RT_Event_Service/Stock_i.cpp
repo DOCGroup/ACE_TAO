@@ -6,9 +6,7 @@
 ///derive a class from the tie template class to release itself by ref_count
 class MyTieStock:public POA_RtecEventComm::PushSupplier_tie<Quoter_Stock_i>
 {
-  friend Quoter_Stock_i::Quoter_Stock_i (const char *symbol,
-                                         const char *full_name,
-                                         CORBA::Double price);
+  friend class Quoter_Stock_i;
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> ref_count_;
 
 protected:
