@@ -36,7 +36,7 @@ Frank A. Hunleth <fhunleth@cs.wustl.edu>
 Prashant Jain <pjain@cs.wustl.edu>
 Vishal Kachroo <vishal@cs.wustl.edu>
 Michael Kircher <Michael.Kircher@mchp.siemens.de>
-Boris Kolpackov <boris@dre.vanderbilt.edu>
+Boris Kolpackov <boris@dre.isis.vanderbilt.edu>
 Arvind S. Krishna<arvindk@dre.vanderbilt.edu>
 Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
 Fred Kuhns <fredk@cs.wustl.edu>
@@ -198,7 +198,7 @@ Padhu Ramalingam <padhu@magicnet.net>
 Jay Denkberg <jay_denkberg@comverse.com>
 Ayman Farahat <afarahat@CCGATE.HAC.COM>
 Tilo Christ <christ@swl.fh-heilbronn.de>
-Ari Erev <Ari_Erev@icomverse.com>
+rev <Ari_Erev@icomverse.com>
 Hamutal Yanay <Hamutal_Yanay@icomverse.com>
 Vital Aza <va3@cs.wustl.edu>
 Alex Villazon <villazon@cui.unige.ch>
@@ -1841,6 +1841,7 @@ Yury Osadchy <Yuryo@maxbill.com>
 Pavan Mandalkar <pm2@cs.wustl.edu>
 Gabriele Trombetti <gabtromb@isis.vanderbilt.edu>
 Scott Willey <scott@sanasecurity.com>
+Wu Yongwei <adah@netstd.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson in the early 1990's.  Paul devised the recursive Makefile

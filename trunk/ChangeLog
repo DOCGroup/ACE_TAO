@@ -1,3 +1,15 @@
+Mon Feb 23 16:08:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ace/ACE_export.h:
+	  When using Cygwin and MinGW GCC version 3.3.1 or later we get dozens
+	  of warnings about methods that are defined locally after being
+          referenced with dllimport. So, when using Cygwin or MinGW, when
+          building with inlining enabled, make sure the methods in the ACE_OS
+          namespace are marked as inline and not with dllimport. This fixes
+          the warnings in the ACE_OS namespace but not the warnings in all other
+          places. Thanks to Wu Yongwei <adah@netstd.com> for sending a fix
+	  for this.
+
 Mon Feb 23 07:03:11 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
