@@ -1,3 +1,13 @@
+Sun Mar  6 17:17:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	From Matthew Harris <mharris at hynomics dot com>
+	* m4/ace.m4:
+
+	  Fixed "$withval" mismatch in AC_ARG_ENABLE blocks.  Use
+	  "$enableval" instead.  Addresses problems where attempts to
+	  enable/disable support for the ACE ACEXML, QoS and SSL libraries
+	  via the `configure script' would fail.  [Bug 2053]
+
 Sun Mar  6 20:04:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process_Manager.cpp:
