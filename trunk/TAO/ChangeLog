@@ -1,3 +1,9 @@
+Sun Jul 6 13:01:12 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
+          Set the correct BUILD_DLL define. This fixes the link error on the
+          MinGW build.
+
 Sun Jul 6 12:41:03 UTC 2003  Johnny Willemsne  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/lib/Makefile:
