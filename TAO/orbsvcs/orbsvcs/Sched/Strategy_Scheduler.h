@@ -114,8 +114,8 @@ class TAO_ORBSVCS_Export ACE_Scheduler_Strategy
 {
 public:
 
-        ACE_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
-    // ctor
+  ACE_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
+  // ctor
 
   virtual int priority_comp (const Dispatch_Entry &first_entry,
                              const Dispatch_Entry &second_entry) = 0;
@@ -149,6 +149,10 @@ public:
     // = provide a lowest level ordering based first on importance (descending),
     //   and then on the dependency topological sort finishing time (ascending).
 
+
+  virtual ACE_DynScheduler::Dispatching_Type 
+    dispatch_type (const Dispatch_Entry &entry) = 0;
+  // provide the dispatching queue type for the given dispatch entry
 
 protected:
 
@@ -201,6 +205,10 @@ public:
 
   virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
     // = determine the minimum critical priority number
+
+  virtual ACE_DynScheduler::Dispatching_Type 
+    dispatch_type (const Dispatch_Entry &entry);
+  // provide the dispatching queue type for the given dispatch entry
 
 protected:
 
@@ -261,6 +269,10 @@ public:
   virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
     // = determine the minimum critical priority number
 
+  virtual ACE_DynScheduler::Dispatching_Type 
+    dispatch_type (const Dispatch_Entry &entry);
+  // provide the dispatching queue type for the given dispatch entry
+
 protected:
 
     virtual long dynamic_subpriority (Dispatch_Entry &entry,
@@ -314,6 +326,10 @@ public:
   virtual void sort (Dispatch_Entry **dispatch_entries,
                      u_int count);
     // = sort the dispatch entry link pointer array in ascending laxity order
+
+  virtual ACE_DynScheduler::Dispatching_Type 
+    dispatch_type (const Dispatch_Entry &entry);
+  // provide the dispatching queue type for the given dispatch entry
 
 protected:
 
@@ -369,6 +385,10 @@ public:
   virtual void sort (Dispatch_Entry **dispatch_entries,
                      u_int count);
     // = sort the dispatch entry link pointer array in ascending deadline (period) order
+
+  virtual ACE_DynScheduler::Dispatching_Type 
+    dispatch_type (const Dispatch_Entry &entry);
+  // provide the dispatching queue type for the given dispatch entry
 
 protected:
 
@@ -430,6 +450,10 @@ public:
 
     virtual ACE_DynScheduler::Preemption_Priority minimum_critical_priority ();
   // = determine the minimum critical priority number
+
+  virtual ACE_DynScheduler::Dispatching_Type 
+    dispatch_type (const Dispatch_Entry &entry);
+  // provide the dispatching queue type for the given dispatch entry
 
 protected:
 

@@ -246,6 +246,28 @@ void ACE_Scheduler::export(RT_Info& info, FILE* file)
 
 }
 
+ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
+                                       OS_Thread_Priority & priority,
+                                       Dispatching_Type & d_type)
+{
+  // look up the stored configuration info for the given priority level
+  Config_Info *config_info;
+  if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Config info for priority %lu could not be found\n", 
+                       p_priority),
+                      -1);
+  }
+
+  priority = config_info->thread_priority;
+  d_type = config_info->dispatching_type;
+
+  return 0;
+}
+  // provide the thread priority and queue type for the given priority level
+
+
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

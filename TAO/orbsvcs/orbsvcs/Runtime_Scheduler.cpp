@@ -10,10 +10,14 @@
 ACE_RCSID(orbsvcs, Runtime_Scheduler, "$Id$")
 
 ACE_Runtime_Scheduler::
-ACE_Runtime_Scheduler (int entry_count,
+ACE_Runtime_Scheduler (int config_count,
+					   ACE_Scheduler_Factory::POD_Config_Info config_info[],
+					   int entry_count,
                        ACE_Scheduler_Factory::POD_RT_Info rt_info[])
-  :  entry_count_ (entry_count),
-     rt_info_ (rt_info)
+  : config_count_ (config_count)
+  , config_info_ (config_info)
+  , entry_count_ (entry_count)
+  , rt_info_ (rt_info)
 {
 }
 
@@ -189,6 +193,7 @@ void ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 void ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
                                                 CORBA::Long maximum_priority,
                                                 RtecScheduler::RT_Info_Set_out infos,
+												RtecScheduler::Config_Info_Set_out configs,
                                                 CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
@@ -200,3 +205,63 @@ void ACE_Runtime_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   // TODO: fill up the infos.
   return;
 }
+
+
+void ACE_Runtime_Scheduler::dispatch_configuration(RtecScheduler::Preemption_Priority p_priority,
+												   RtecScheduler::OS_Priority& priority,
+												   enum RtecScheduler::Dispatching_Type & d_type,
+												   CORBA::Environment &_env)
+     TAO_THROW_SPEC ((CORBA::SystemException,
+                      RtecScheduler::NOT_SCHEDULED,
+                      RtecScheduler::UNKNOWN_PRIORITY_LEVEL))
+{
+  // throw an exception if a valid schedule has not been loaded
+  if (config_count_ <= 0 || 
+	  config_info_ [p_priority].preemption_priority != p_priority)
+  {
+      TAO_THROW (RtecScheduler::NOT_SCHEDULED());
+      ACE_NOTREACHED (return);
+  }
+  // throw an exception if an invalid priority was passed
+  else if (p_priority < 0 || p_priority >= config_count_)
+  {
+      TAO_THROW (RtecScheduler::UNKNOWN_PRIORITY_LEVEL());
+      ACE_NOTREACHED (return);
+  }
+  else
+  {
+    priority = config_info_ [p_priority].thread_priority;
+    d_type = config_info_ [p_priority].dispatching_type;
+    return;
+  }
+}
+  // provide the thread priority and queue type for the given priority level
+
+RtecScheduler::Preemption_Priority 
+ACE_Runtime_Scheduler::last_scheduled_priority (CORBA::Environment &_env)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                    RtecScheduler::NOT_SCHEDULED))
+{
+  // throw an exception if a valid schedule has not been loaded
+  if (config_count_ <= 0)
+  {
+    TAO_THROW_RETURN (RtecScheduler::NOT_SCHEDULED(), 
+		              (RtecScheduler::Preemption_Priority) -1);
+  }
+  else
+  {
+    return (RtecScheduler::Preemption_Priority) (config_count_ - 1);
+  }
+}
+  // Returns the last priority number assigned to an operation in the schedule.
+  // The number returned is one less than the total number of scheduled priorities.
+  // All scheduled priorities range from 0 to the number returned, inclusive.
+
+
+
+
+
+
+
+
+
