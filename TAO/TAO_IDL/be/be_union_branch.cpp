@@ -63,7 +63,7 @@ be_union_branch::gen_encapsulation (void)
 
   // emit the case label value
   AST_Expression *expression = this->label ()->label_val ();
-  AST_ExprValue *ev = expression->ev ();
+  AST_Expression::AST_ExprValue *ev = expression->ev ();
   switch (ev->et) // the_union->udisc_type ())
     {
     case AST_Expression::EV_char:
@@ -95,7 +95,7 @@ be_union_branch::gen_encapsulation (void)
         }
       break;
     }
-  
+
   *cs << ", // union case label (evaluated)" << nl;
   // emit name
   *cs << (ACE_OS::strlen (this->local_name ()->get_string ())+1) << ", ";
