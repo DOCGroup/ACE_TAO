@@ -1649,7 +1649,7 @@ ACE_CONVERT_WARNINGS_TO_ERRORS([
 
 dnl If we are using GNU C++, see if it accepts the -pipe compiler flag.
 dnl "-pipe" on cygwin32 doesn't seem to work, for example.
-if test -n "$GXX"; then
+if test "$GXX" = yes; then
   PREPIPECXXFLAGS="$CXXFLAGS"
   CXXFLAGS="$CXXFLAGS -pipe"
   PREPIPECFLAGS="$CFLAGS"
@@ -6337,7 +6337,7 @@ ACE_CACHE_CHECK([if running on an Alpha],
      *linux*)
        dnl We only define ACE_HAS_ALPHA_TIMER if we are running Linux
        dnl on an Alpha and are using GNU C++!
-       if test -n "$GXX"; then
+       if test "$GXX" = yes; then
          AC_DEFINE([ACE_HAS_ALPHA_TIMER])
        fi
        ;;
@@ -6363,7 +6363,7 @@ ACE_CACHE_CHECK([if running on a Power PC],
        ;;
      *)
        dnl Only define ACE_HAS_POWERPC_TIMER when using GNU C++!
-       if test -n "$GXX"; then
+       if test "$GXX" = yes; then
          AC_DEFINE([ACE_HAS_POWERPC_TIMER])
        fi
        ;;
@@ -6377,7 +6377,7 @@ ACE_CACHE_CHECK([if running on a Pentium(tm) processor],
 dnl If we do have a pentium, than define ACE_HAS_PENTIUM and add
 dnl gethrtime.cpp to the source list, but only if we're using GNU C++
 dnl since gethrtime.cpp uses assembler code specific to that compiler.
-	if test -n "$GXX"; then
+	if test "$GXX" = yes; then
           ace_cv_feature_pentium=yes
         else
           ace_cv_feature_pentium=no
