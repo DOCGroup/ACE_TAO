@@ -1,3 +1,41 @@
+Tue Nov  4 18:03:51 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* The ACE developer's drinking song:
+ 
+          100 little bugs in the code,
+	  100 bugs in the code,
+	  fix one bug, compile it again,
+	  101 little bugs in the code.
+	  101 little bugs in the code.....
+
+	  Thanks to Steve Huston for appreciating the humor in this ;-).
+
+        * ace/Containers.cpp (insert_head): Added some minor stylistic
+          fixes.
+
+        * apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptor):
+          Changed
+
+          if (ACE_Reactor::instance ()->register_handler
+              (&this->acceptor_, ACE_Event_Handler::ACCEPT_MASK) == -1)
+
+          to:
+
+          if (this->acceptor_.open(this->options ().acceptor_port_,
+            ACE_Reactor::instance (), this->options ().blocking_semantics_) == -1)
+
+          Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
+        * apps/Gateway/Gateway/Gateway.cpp (parse_args): Changed
+
+          ACE_Get_Opt get_opt (argc, argv, "abC:cdP:pq:t:vw:", 0);
+
+          to:
+
+          ACE_Get_Opt get_opt (argc, argv, "abC:cdP:p:q:t:vw:", 0);
+
+          Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
+
 Tue Nov  4 18:13:52 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
 	* examples/Timer_Queue/Async_Timer_Queue_Test.cpp (cancel): 
@@ -28,34 +66,6 @@ Tue Nov 04 10:12:21 1997  David L. Levine  <levine@cs.wustl.edu>
 Tue Nov 04 04:13:23 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.36, released Tue Nov 04 04:13:23 1997.
-
-Tue Nov  4 04:08:42 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
-
-        * ace/Containers.cpp (insert_head): Added some minor stylistic
-          fixes.
-
-        * apps/Gateway/Gateway/Event_Channel.cpp (initiate_acceptor):
-          Changed
-
-          if (ACE_Reactor::instance ()->register_handler
-              (&this->acceptor_, ACE_Event_Handler::ACCEPT_MASK) == -1)
-
-          to:
-
-          if (this->acceptor_.open(this->options ().acceptor_port_,
-            ACE_Reactor::instance (), this->options ().blocking_semantics_) == -1)
-
-          Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
-
-        * apps/Gateway/Gateway/Gateway.cpp (parse_args): Changed
-
-          ACE_Get_Opt get_opt (argc, argv, "abC:cdP:pq:t:vw:", 0);
-
-          to:
-
-          ACE_Get_Opt get_opt (argc, argv, "abC:cdP:p:q:t:vw:", 0);
-
-          Thanks to Ganesh Pai <gpai@voicetek.com> for reporting this.
 
 Tue Nov 04 03:50:57 1997    <irfan@TWOSTEP>
 
