@@ -1,3 +1,12 @@
+Wed Jan 30 22:41:39 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux.GNU (CXX_VERSION):
+
+          Made it work when someone wants to turn off the implicit
+          template instantiation. Care should be taken to #define
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION in config.h also.
+          Surprisingly the code compiles without that also...
+
 Wed Jan 30 17:22:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.cpp (wait (const ACE_Time_Value&, ACE_exitcode *)):
