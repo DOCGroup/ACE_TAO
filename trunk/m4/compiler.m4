@@ -160,6 +160,15 @@ AC_DEFUN(ACE_SET_COMPILER_FLAGS, dnl
    *sunos4*)
      ;;
    *solaris2*)
+     case "$CXX" in
+       CC)
+         CXXFLAGS="$CXXFLAGS"
+         ACE_CXXFLAGS="$ACE_CXXFLAGS"
+         DCXXFLAGS="$DCXXFLAGS"
+         OCXXFLAGS="$OCXXFLAGS"
+         LDFLAGS="$LDFLAGS -xildoff"
+         ;;
+     esac
      ;;
    *tandem*)
      ;;
