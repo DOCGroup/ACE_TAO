@@ -589,11 +589,6 @@ typedef int clockid_t;
 #include /**/ <bstring.h>
 #endif /* ACE_HAS_BSTRING */
 
-// IRIX5.3 defines timeval in this odd file...
-#if defined (IRIX5)
-#include /**/ <unistd.h>
-#endif /* IRIX5 */
-
 // AIX defines bzero() in this odd file...
 #if defined (ACE_HAS_STRINGS)
 #include /**/ <strings.h>
@@ -602,6 +597,12 @@ typedef int clockid_t;
 #if defined (ACE_HAS_TERM_IOCTLS)
 #include /**/ <sys/termios.h>
 #endif /* ACE_HAS_TERM_IOCTLS */
+
+#if !defined (ACE_LACKS_UNISTD_H)
+// IRIX5.3 defines timeval in this odd file, so it needs to come
+// before ACE_Time_Value.
+#include /**/ <unistd.h>
+#endif /* ACE_LACKS_UNISTD_H */
 
 class ACE_Export ACE_Time_Value
   // = TITLE
@@ -2313,7 +2314,6 @@ extern "C"
 #include /**/ <sys/signal.h>
 #include /**/ <sys/wait.h>
 #include /**/ <pwd.h>
-#include /**/ <unistd.h>
 extern_C int      getgid          __((void));
 extern_C int      getuid          __((void));
 extern_C char*    getcwd          __((char* buf, size_t size));
@@ -2340,7 +2340,6 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #endif /* ! VXWORKS */
 #include /**/ <sys/ioctl.h>
 #include /**/ <dirent.h>
-#include /**/ <unistd.h>
 
 #if !defined (ACE_LACKS_PARAM_H)
 #include /**/ <sys/param.h>

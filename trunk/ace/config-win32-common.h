@@ -24,6 +24,7 @@
 #define ACE_LACKS_MSGBUF_T
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_FIFO
+#define ACE_LACKS_UNISTD_H
 
 // Only MSVC 5.0 definitions
 #if (_MSC_VER >= 1100)

@@ -1,3 +1,35 @@
+Wed Oct 29 19:30:07 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS.h: #include <unistd.h> before ACE_Time_Value as long as
+ 	  ACE_LACKS_UNISTD_H is false.  Added this flag to the VxWorks and
+ 	  Win32 config.h files.
+
+	* ace/OS.h: Added a special #define for IRIX5, which seems to put
+ 	  timeval in a strange file...  Also, moved this #include to
+ 	  *before* ACE_Time_Value.  Thanks to Carlos O'Ryan for suggesting
+ 	  this and to Laura Paterno <lpaterno@d0chb.fnal.gov> for
+ 	  reporting the problem in the first place.
+
+        * ace: Changes all uses of the overly long
+          ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS to
+          ACE_LACKS_SOME_POSIX_PROTOTYPES.  However, I'm not really sure
+          how this relates to the ACE_LACKS_POSIX_PROTOTYPES macro.  I
+          suspect we probably only need one of these...
+
+        * ace/OS.h: Added a new ACE_HAS_STDARG_THR_DEST to handle
+          weirdness with LynxOS.  Thanks to Kirill.Rybaltchenko
+          <Kirill.Rybaltchenko@cern.ch> for reporting this.
+
+        * ace: OS.h,config-lynxos.h: Added a new ACE_LACKS_GETOPT_PROTO
+          for LynxOS.  Thanks to Kirill.Rybaltchenko
+          <Kirill.Rybaltchenko@cern.ch> for reporting this.
+
+        * ace/config-lynxos.h: Replaced
+          ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS with
+          ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCTIONS.  Thanks to
+          Kirill.Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
+          this.
+
 Wed Oct 29 18:51:12 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/OS.{h,i}: Added strcasecmp functionality for NT
@@ -23,28 +55,6 @@ Wed Oct 29 15:56:01 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/IOStream.h: DEC_CXX #includes now depend on compiler version.
           Thanks to James Johnson <jcej@lads.com> for providing the fix.
-
-Wed Oct 29 10:25:12 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-        * ace: Changes all uses of the overly long
-          ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS to
-          ACE_LACKS_SOME_POSIX_PROTOTYPES.  However, I'm not really sure
-          how this relates to the ACE_LACKS_POSIX_PROTOTYPES macro.  I
-          suspect we probably only need one of these...
-
-        * ace/OS.h: Added a new ACE_HAS_STDARG_THR_DEST to handle
-          weirdness with LynxOS.  Thanks to Kirill.Rybaltchenko
-          <Kirill.Rybaltchenko@cern.ch> for reporting this.
-
-        * ace: OS.h,config-lynxos.h: Added a new ACE_LACKS_GETOPT_PROTO
-          for LynxOS.  Thanks to Kirill.Rybaltchenko
-          <Kirill.Rybaltchenko@cern.ch> for reporting this.
-
-        * ace/config-lynxos.h: Replaced
-          ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS with
-          ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCTIONS.  Thanks to
-          Kirill.Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
-          this.
 
 Wed Oct 29 10:32:16 1997  David L. Levine  <levine@cs.wustl.edu>
 
