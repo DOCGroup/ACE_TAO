@@ -1,17 +1,22 @@
+Tue Feb 08 21:46:51 2000  Girish Birajdar  <birajdar@lucent.com>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          added SIMSPARCSOLARIS support.
+
 Tue Feb  8 16:29:38 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ltcf-cxx.sh:
-	* ltconfig:
-	* ltmain.sh:
+        * ltcf-cxx.sh:
+        * ltconfig:
+        * ltmain.sh:
 
-	  Updated from latest libtool multi-language branch versions.
+          Updated from latest libtool multi-language branch versions.
 
 Tue Feb  8 14:25:46 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-sunos5.5.h (ACE_HAS_TYPENAME_KEYWORD):
+        * ace/config-sunos5.5.h (ACE_HAS_TYPENAME_KEYWORD):
 
-	  According to ACE's configure script, Sun C++ 5.0 also supports
-	  the typename keyword.
+          According to ACE's configure script, Sun C++ 5.0 also supports
+          the typename keyword.
 
 Tue Feb  8 16:17:21 2000  Steve Huston  <shuston@riverace.com>
 
@@ -20,165 +25,165 @@ Tue Feb  8 16:17:21 2000  Steve Huston  <shuston@riverace.com>
 
 Tue Feb  8 14:16:50 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/config-sunos5.5.h (ACE_HAS_USING_KEYWORD):
+        * ace/config-sunos5.5.h (ACE_HAS_USING_KEYWORD):
 
-	  Sun C++ 5.0 supports the `using' keyword.  Thanks to David Wicks
-	  <wicks@swbell.net> for pointing this out.
+          Sun C++ 5.0 supports the `using' keyword.  Thanks to David Wicks
+          <wicks@swbell.net> for pointing this out.
 
 Mon Feb 07 21:11:32 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Token: Bug 416
-	  (http://ace.cs.wustl.edu/bugs/show_bug.cgi?id=416) was causing
-	  problems for TAO/tests/Leader_Followers.  The current owner of
-	  the token was in the process of waking up the next thread. In
-	  the meantime, the thread that was going to be woken up next
-	  timed out.  This lead to double deletes from queues and double
-	  decrements of counters: one by the thread doing the signaling
-	  and the other by the thread timing out. In addition, the other
-	  threads waiting for token never woke up since there was nobody
-	  to wake them up.
+        * ace/Token: Bug 416
+          (http://ace.cs.wustl.edu/bugs/show_bug.cgi?id=416) was causing
+          problems for TAO/tests/Leader_Followers.  The current owner of
+          the token was in the process of waking up the next thread. In
+          the meantime, the thread that was going to be woken up next
+          timed out.  This lead to double deletes from queues and double
+          decrements of counters: one by the thread doing the signaling
+          and the other by the thread timing out. In addition, the other
+          threads waiting for token never woke up since there was nobody
+          to wake them up.
 
-	  The following changes were made to rectify this problem:
+          The following changes were made to rectify this problem:
 
-	  - ACE_Token::ACE_Token_Queue::insert_entry() factored out common
-	    code for adding followers to the queue.
+          - ACE_Token::ACE_Token_Queue::insert_entry() factored out common
+            code for adding followers to the queue.
 
-	  - The thread adding itself to the waiter queue and changing the
-	    counters is the one responsible for undoing the state
-	    changes.  The thread doing to wake up is only responsible for
-	    the signaling.
+          - The thread adding itself to the waiter queue and changing the
+            counters is the one responsible for undoing the state
+            changes.  The thread doing to wake up is only responsible for
+            the signaling.
 
-	  - When a thread timeouts, it must check if it was also selected
-	    as the next owner.  If it was, it must wakeup another waiter.
+          - When a thread timeouts, it must check if it was also selected
+            as the next owner.  If it was, it must wakeup another waiter.
 
-	  - renew() was simplified and made consistent with
-	    shared_acquire() and release().
+          - renew() was simplified and made consistent with
+            shared_acquire() and release().
 
-	  - wakeup_next_waiter() abstracted out the code for the selection
-	    of the next owner.
+          - wakeup_next_waiter() abstracted out the code for the selection
+            of the next owner.
 
-	  - Improved state management including values for <this->owner_>
-	    and <this->in_use_>.
+          - Improved state management including values for <this->owner_>
+            and <this->in_use_>.
 
-	  - The wait() loop was not correct. We now loop until the token
-	    is no longer in use.  This way if the token ownership was taken
-	    by another (new) waiter thread by the time we wake up, we simply
-	    go back to sleep.
+          - The wait() loop was not correct. We now loop until the token
+            is no longer in use.  This way if the token ownership was taken
+            by another (new) waiter thread by the time we wake up, we simply
+            go back to sleep.
 
 Mon Feb  7 17:54:06 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* bin/run_all_list.pm:
-	  Added TAO/tests/DynAny_Test/run_test.pl to the general
-	  and single-threaded test groups.
+        * bin/run_all_list.pm:
+          Added TAO/tests/DynAny_Test/run_test.pl to the general
+          and single-threaded test groups.
 
 Mon Feb  7 17:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/ACE.cpp (out_of_handles): Added ENOTSUP (Operation not
-	  supported) check for SunOS. This helped in solving a bug when
-	  the Cached_Conn_Test was executed using a single-threaded build.
-	  Thanks to Steve Huston <shuston@riverace.com> for reporting this
-	  bug.
+        * ace/ACE.cpp (out_of_handles): Added ENOTSUP (Operation not
+          supported) check for SunOS. This helped in solving a bug when
+          the Cached_Conn_Test was executed using a single-threaded build.
+          Thanks to Steve Huston <shuston@riverace.com> for reporting this
+          bug.
 
 Mon Feb  7 17:28:40 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/clients/Naming/Client/main.cpp (main): Removed two
-	  warnings that crept in recently.  Thanks to David Levine
-	  for reporting this.
+        * netsvcs/clients/Naming/Client/main.cpp (main): Removed two
+          warnings that crept in recently.  Thanks to David Levine
+          for reporting this.
 
 Mon Feb  7 08:34:26 2000  Darrell Brunsch <brunsch@uci.edu>
 
-	* docs/ACE-subsets.html:
+        * docs/ACE-subsets.html:
           Removed the instructions for subsets on Win32. Subsets are not
           supported under MSVC Project files.
 
 Sun Feb  6 20:44:26 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace-config.1.in:
+        * ace-config.1.in:
 
-	  Updated e-mail address of author (me).
+          Updated e-mail address of author (me).
 
-	* configure.in:
+        * configure.in:
 
-	  Updated e-mail address of configure script maintainer (me again).
+          Updated e-mail address of configure script maintainer (me again).
 
-	  (PURE_CACHE_DIR):
+          (PURE_CACHE_DIR):
 
-	  Fixed syntax of shell script variables.  This fixes a problem
-	  that occurred on FreeBSD.
+          Fixed syntax of shell script variables.  This fixes a problem
+          that occurred on FreeBSD.
 
-	  (LIBS):
+          (LIBS):
 
-	  Removed manual addition of some thread related libraries.  They
-	  are now in the auto-detection list in threads.m4.
+          Removed manual addition of some thread related libraries.  They
+          are now in the auto-detection list in threads.m4.
 
-	* m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
+        * m4/compiler.m4 (ACE_SET_COMPILER_FLAGS):
 
-	  Improved support for HP aCC, and corrections.  Set WERROR to
-	  "+We67" to cause use of "#pragma once" to be an error instead of
-	  a warning.
+          Improved support for HP aCC, and corrections.  Set WERROR to
+          "+We67" to cause use of "#pragma once" to be an error instead of
+          a warning.
 
-	* m4/features.m4 (ACE_CHECK_ASYNCH_IO):
+        * m4/features.m4 (ACE_CHECK_ASYNCH_IO):
 
-	  Reduce timeout value in test program from INT_MAX to 5 seconds.
+          Reduce timeout value in test program from INT_MAX to 5 seconds.
 
-	* m4/threads.m4 (ACE_CHECK_THREADS):
+        * m4/threads.m4 (ACE_CHECK_THREADS):
 
-	  Add "-xnolib" to CXXFLAGS when testing thread flag support using
-	  Sun C++.  Sun C++ links a thread function stub library in the
-	  single-threaded case.  The stubs are no-ops but they exist,
-	  nonetheless.  This causes the link tests used to determine if a
-	  thread flag is needed to incorrectly pass.
+          Add "-xnolib" to CXXFLAGS when testing thread flag support using
+          Sun C++.  Sun C++ links a thread function stub library in the
+          single-threaded case.  The stubs are no-ops but they exist,
+          nonetheless.  This causes the link tests used to determine if a
+          thread flag is needed to incorrectly pass.
 
 Sun Feb  6 14:52:28 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ace/Makefile.am (libACE_Demux_la_SOURCES):
+        * ace/Makefile.am (libACE_Demux_la_SOURCES):
 
-	  Added `QtReactor.cpp' to list of sources.
+          Added `QtReactor.cpp' to list of sources.
 
-	  (libACE_Other_la_SOURCES):
+          (libACE_Other_la_SOURCES):
 
-	  Added `QoS_Session_Impl.cpp' and `QoS_Session_Factory.cpp' to
-	  the list of sources.
+          Added `QoS_Session_Impl.cpp' and `QoS_Session_Factory.cpp' to
+          the list of sources.
 
-	  (HEADER_FILES):
+          (HEADER_FILES):
 
-	  Added `Min_Max.h', `QoS_Session_Impl.h' and
-	  `QoS_Session_Factory.h' to the list of headers.
+          Added `Min_Max.h', `QoS_Session_Impl.h' and
+          `QoS_Session_Factory.h' to the list of headers.
 
-	  (INLINE_FILES):
+          (INLINE_FILES):
 
-	  Added `QoS_Session_Impl.i' to the list of inline files.
+          Added `QoS_Session_Impl.i' to the list of inline files.
 
-	* ace/OS.h (ACE_LOFF_T):
+        * ace/OS.h (ACE_LOFF_T):
 
-	  HP-UX has a 64 bit offset type "off64_t."
+          HP-UX has a 64 bit offset type "off64_t."
 
 Sat Feb  5 20:49:50 2000  Ossama Othman  <ossama@uci.edu>
 
-	* ltcf-c.sh:
-	* ltcf-cxx.sh:
-	* ltconfig:
-	* ltmain.sh:
+        * ltcf-c.sh:
+        * ltcf-cxx.sh:
+        * ltconfig:
+        * ltmain.sh:
 
-	  Updated from latest libtool multi-language CVS branch.
+          Updated from latest libtool multi-language CVS branch.
 
-	* m4/compiler.m4 (LDFLAGS):
+        * m4/compiler.m4 (LDFLAGS):
 
-	  Remove "-xildoff" from the Sun C++ linker flags.  It doesn't
-	  seem to be needed since the compiler is smart enough to know
-	  when to use it.
+          Remove "-xildoff" from the Sun C++ linker flags.  It doesn't
+          seem to be needed since the compiler is smart enough to know
+          when to use it.
 
 Fri Feb  4 23:12:36 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (handle_input): Added code to
-	  handle the case where all the data isn't available when we do a
- 	  "recv()" from the socket.  Thanks to David X. Callaway
- 	  <david.x.callaway@intel.com> for reporting this.
+        * netsvcs/lib/Client_Logging_Handler.cpp (handle_input): Added code to
+          handle the case where all the data isn't available when we do a
+          "recv()" from the socket.  Thanks to David X. Callaway
+          <david.x.callaway@intel.com> for reporting this.
 
-	* ace/Log_Msg.cpp (open): Add a special-purpose case for NT to make sure
-	  that handles are reused in the client logging daemon.  Thanks to
- 	  David X. Callaway <david.x.callaway@intel.com> for reporting
- 	  this.
+        * ace/Log_Msg.cpp (open): Add a special-purpose case for NT to make sure
+          that handles are reused in the client logging daemon.  Thanks to
+          David X. Callaway <david.x.callaway@intel.com> for reporting
+          this.
 
 Fri Feb  4 19:29:31 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -217,39 +222,39 @@ Fri Feb  4 15:56:31 2000  Steve Huston  <shuston@riverace.com>
 
 Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Malloc_T.cpp (unbind): Removed the != 0 test since it was
-	  causing ambiguity problems for G++.  Thanks to David Levine for
- 	  reporting this.
+        * ace/Malloc_T.cpp (unbind): Removed the != 0 test since it was
+          causing ambiguity problems for G++.  Thanks to David Levine for
+          reporting this.
 
-	* ace/Malloc_T.cpp (unbind): Make sure to update the prev_ pointer
-	  so that we don't end up with an improperly linked list.  Thanks
- 	  to Sandro Doro <doro.s@flashnet.it> for reporting this.
+        * ace/Malloc_T.cpp (unbind): Make sure to update the prev_ pointer
+          so that we don't end up with an improperly linked list.  Thanks
+          to Sandro Doro <doro.s@flashnet.it> for reporting this.
 
-	* examples/Shared_Malloc/test_position_independent_malloc.cpp: Only
-	  explicitly instantiate a template for ACE_Malloc_T if we've got
- 	  ACE_HAS_POSITION_INDEPEDENT_MALLOC enabled.  Thanks to David
- 	  Levine for reporting this.
+        * examples/Shared_Malloc/test_position_independent_malloc.cpp: Only
+          explicitly instantiate a template for ACE_Malloc_T if we've got
+          ACE_HAS_POSITION_INDEPEDENT_MALLOC enabled.  Thanks to David
+          Levine for reporting this.
 
 Thu Feb  3 11:40:27 2000  Ossama Othman  <ossama@uci.edu>
 
-	* docs/ACE-subsets.html:
+        * docs/ACE-subsets.html:
 
-	  Added some notes about building ACE subsets using MSVC++.
-	  Thanks to Paul von Behren <vonbepd@lmy-deja.com> for providing
-	  the tips.
+          Added some notes about building ACE subsets using MSVC++.
+          Thanks to Paul von Behren <vonbepd@lmy-deja.com> for providing
+          the tips.
 
 Thu Feb  3 11:38:15 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i,
-	* ace/Synch.cpp: Added a cast of (short) to the use of USYNC_THREAD
-	  in order to prevent ambiguity problems for KAI C++.  Thanks to
-	  Chad Elliott <elliott_c@ociweb.com> for reporting this.  This
-	  fixes bugid 418.
+        * ace/OS.i,
+        * ace/Synch.cpp: Added a cast of (short) to the use of USYNC_THREAD
+          in order to prevent ambiguity problems for KAI C++.  Thanks to
+          Chad Elliott <elliott_c@ociweb.com> for reporting this.  This
+          fixes bugid 418.
 
         * ace/OS.cpp (thr_create): Added yet another cast to (long) for
           PRIORITY_MAX so that the types will be consistent for the
- 	  ace_min() function.  Thanks to Stephen Moon <smoon@oxmol.co.uk>
- 	  for reporting this.
+          ace_min() function.  Thanks to Stephen Moon <smoon@oxmol.co.uk>
+          for reporting this.
 
 Thu Feb  3 08:38:22 2000  Carlos O'Ryan  <coryan@uci.edu>
 
