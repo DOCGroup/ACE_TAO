@@ -19,7 +19,9 @@
 // gcc 2.95.2 supplies the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
 
-#  include "ace/config-hpux11.h"
+// gcc 3.0 claims to have wide character stuff, but (at least the version
+// built by HP) can't actually compile it. It refers to a wctype.h file
+// that's only available with aC++.
 
 #else
 
@@ -56,7 +58,7 @@
 // The HP/UX compiler doesn't support volatile!!!!
 #    define volatile
 
-#else  // aC++ definitions
+#  else  // aC++ definitions
 
 // Parts of TAO (at least) use __HP_aCC to detect this compiler, but the
 // macro is not set until A.03.13. If it's not set, set it - it won't be an
@@ -128,6 +130,10 @@
 #    else
 #      define ACE_SIZEOF_LONG 4
 #    endif
+
+// Platform has XPG4 wide character support
+#    define ACE_HAS_XPG4_MULTIBYTE_CHAR
+#    define ACE_HAS_WCHAR
 
 #  endif /* __cplusplus < 199707L */
 
@@ -310,10 +316,6 @@
 
 // accept() is thread-safe
 #define ACE_HAS_THREAD_SAFE_ACCEPT
-
-// Platform has XPG4 wide character support
-#define ACE_HAS_XPG4_MULTIBYTE_CHAR
-#define ACE_HAS_WCHAR
 
 // Platform lacks a typedef for timespec_t, but has struct timespec
 #define ACE_LACKS_TIMESPEC_T
