@@ -114,7 +114,7 @@ be_visitor_sequence_ch::gen_object_manager (be_sequence *node)
   // operator= from T_var @@Bala
   *os << object_manager << " &operator= ("; 
   pt->accept (visitor); 
-  *os << "_var p);" << be_nl;
+  *os << "_var &p);" << be_nl;
 
   // operator -> @@Bala
   pt->accept (visitor); 

@@ -229,7 +229,7 @@ TAO_Object_Manager<T,T_var>::operator=(T* p)
 }
 
 template <class T,class T_var>TAO_Object_Manager<T,T_var> &
-TAO_Object_Manager<T,T_var>::operator=(T_var p)
+TAO_Object_Manager<T,T_var>::operator=(T_var &p)
 {
   if (this->release_)
     {
