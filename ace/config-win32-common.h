@@ -284,11 +284,6 @@ typedef unsigned __int64 ACE_UINT64;
         #endif /* _UNICODE */
 #endif /* UNICODE */
 
-// If __ACE_INLINE__ is defined to be 0, we will undefine it
-#if defined (__ACE_INLINE__) && (__ACE_INLINE__ == 0)
-        #undef __ACE_INLINE__
-#endif /* __ACE_INLINE__ */
-
 #ifdef _DEBUG
 #if !defined (ACE_HAS_WINCE)
         #include /**/ <crtdbg.h>
@@ -300,6 +295,11 @@ typedef unsigned __int64 ACE_UINT64;
                 #define __ACE_INLINE__
         #endif /* __ACE_INLINE__ */
 #endif
+
+// If __ACE_INLINE__ is defined to be 0, we will undefine it
+#if defined (__ACE_INLINE__) && (__ACE_INLINE__ == 0)
+        #undef __ACE_INLINE__
+#endif /* __ACE_INLINE__ */
 
 // We are build ACE and want to use MFC (multithreaded)
 #if defined(ACE_HAS_MFC) && (ACE_HAS_MFC != 0) && defined (_MT)
