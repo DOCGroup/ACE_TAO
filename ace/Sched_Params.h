@@ -24,25 +24,46 @@
 
 class ACE_Export ACE_Sched_Params
   // = TITLE
-  //    Container for thread scheduling-related parameters.
+  //    Container for scheduling-related parameters.
   //
   // = DESCRIPTION
   //    ACE_Sched_Params are passed via
-  //    ACE_OS::set_sched_params () to the OS to specify scheduling
-  //    parameters.  It is intended that ACE_OS::set_sched_params ()
-  //    be called from main () before any threads have been spawned.
+  //    ACE_OS::sched_params () to the OS to specify scheduling
+  //    parameters.  These parameters include scheduling policy,
+  //    such as FIFO, round-robin, or an implementation-defined
+  //    "OTHER" (to which many systems default); priority; and
+  //    a time-slice quantum for round-robin scheduling.
+  //    A "scope" parameter specifies whether the ACE_Sched_Params
+  //    applies to the current process, current lightweight process
+  //    (LWP) (on Solaris), or current thread.  Please see the "NOTE"
+  //    below about not all combinations of parameters being legal
+  //    on a particular platform.
+  //
+  //    For the case of thread priorities, it is intended that
+  //    ACE_OS::sched_params () usually be called from main () before
+  //    any threads have been spawned.
   //    If spawned threads inherit their parent's priority (I think
-  //    that's the case for all of our platforms), then this sets
-  //    the default base priority.  Individual thread priorities can
-  //    be adjusted as usual using ACE_OS::thr_prio () or via the
+  //    that's the default behavior for all of our platforms), then
+  //    this sets the default base priority.  Individual thread priorities
+  //    can be adjusted as usual using ACE_OS::thr_prio () or via the
   //    ACE_Thread interface.  See the parameter descriptions in the
   //    private: section below.
   //
   //    NOTE:  this class does not do any checking of parameters.
   //    It is just a container class.  If it is constructed with values
   //    that are not supported on a platform, the call to
-  //    ACE_OS::set_sched_params () will fail by returning -1 with EINVAL
+  //    ACE_OS::sched_params () will fail by returning -1 with EINVAL
   //    (available through ACE_OS::last_error ()).
+
+  //    OS Scheduling parameters are complicated and often confusing.  Many
+  //    thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for his
+  //    careful review of this class design, thoughtful comments, and
+  //    assistance with implementation, especially for PTHREADS platforms.
+  //    Please don't blame him for anything about this class or
+  //    ACE_OS::sched_params () that you don't like or that isn't right;
+  //    the ACE Team, in particular David Levine <levine@cs.wustl.edu>
+  //    is fully responsible for that.  Please send any comments or
+  //    corrections to us.
 {
 public:
   typedef int Policy;
@@ -96,8 +117,8 @@ private:
   // Scheduling policy.
 
   ACE_Sched_Priority priority_;
-  // Default <priority_>: sets the priority to be used for newly
-  // spawned threads.
+  // Default <priority_>: for setting the priority for the process, LWP,
+  // or thread, as indicated by the scope_ parameter.
 
   int scope_;
   // <scope_> must one of the following:
@@ -110,6 +131,10 @@ private:
   //   ACE_SCOPE_THREAD: sets the scheduling policy for the thread,
   //     if the OS supports it, such as with Posix threads, and the
   //     thread priority.
+  // NOTE:  I don't think that these are the same as POSIX
+  //        contention scope.  POSIX users who are interested in,
+  //        and understand, contention scope will have to set it
+  //        by using system calls outside of ACE.
 
   ACE_Time_Value quantum_;
   // The <quantum_> is for time slicing.  An ACE_Time_Value of 0 has

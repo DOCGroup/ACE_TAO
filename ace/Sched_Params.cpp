@@ -56,8 +56,9 @@ ACE_Sched_Params::priority_min (const Policy policy)
         }
 
       // OK, now we've got the class ID in pcinfo.pc_cid.  In addition,
-      // the maximum configured real-time priority is in ((tsinfo_t *)
-      // pcinfo.pc_clinfo)->ts_maxupri.
+      // the maximum configured time-share priority is in ((tsinfo_t *)
+      // pcinfo.pc_clinfo)->ts_maxupri.  The minimum priority is just
+      // the negative of that.
 
       return -((tsinfo_t *) pcinfo.pc_clinfo)->ts_maxupri;
     }
@@ -144,6 +145,7 @@ ACE_Sched_Params::next_priority (const Policy policy, const int priority)
         return THREAD_PRIORITY_TIME_CRITICAL;
     }
 #elif defined (ACE_HAS_THREADS)
+  // including STHREADS, DCETHREADS, and PTHREADS
   const int max = priority_max (policy);
   return priority < max  ?  priority + 1  :  max;
 #elif
@@ -179,6 +181,7 @@ ACE_Sched_Params::previous_priority (const Policy policy,
         return THREAD_PRIORITY_HIGHEST;
     }
 #elif defined (ACE_HAS_THREADS)
+  // including STHREADS, DCETHREADS, and PTHREADS
   const int min = priority_min (policy);
   return priority > min  ?  priority - 1  :  min;
 #elif
