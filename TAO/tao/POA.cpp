@@ -2550,6 +2550,12 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
                       context,
                       env);
 
+  if (env.exception () != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "Servant raised exception: \n"));
+      env.print_exception ("detected in POA::dispatch");
+    }
+
   // Cleanup from upcall
   poa->post_invoke (servant,
                     operation,
