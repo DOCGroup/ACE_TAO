@@ -192,7 +192,7 @@ TAO_AV_UDP_Transport::close (void)
 int
 TAO_AV_UDP_Transport::mtu (void)
 {
-  return ACE_MAX_DGRAM_SIZE;
+  return 65535;
 }
 
 ACE_Addr*
@@ -974,7 +974,10 @@ TAO_AV_UDP_Object::send_frame (const iovec *iov,
                                int iovcnt,
                                TAO_AV_frame_info * /*frame_info*/)
 {
-  return this->transport_->send (iov,iovcnt);
+  int result = this->transport_->send (iov,iovcnt);
+  if (result < 0);
+    return result;
+  return 0;  
 }
 
 int
@@ -991,7 +994,7 @@ TAO_AV_UDP_Object::TAO_AV_UDP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport)
 {
-  this->frame_.size (2 * this->transport_->mtu ());
+  this->frame_.size (this->transport_->mtu ());
 }
 
 TAO_AV_UDP_Object::~TAO_AV_UDP_Object (void)
