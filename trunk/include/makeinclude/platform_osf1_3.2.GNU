@@ -23,5 +23,5 @@ RANLIB          = /usr/bin/true
 #### SOFLAGS         = -shared
 SOFLAGS         = -L/usr/lib/cmplrs/cxx -rpath /usr/lib/cmplrs/cxx \
                   -L$(ACE_ROOT)/ace -L./ -g2 -O0 -shared
-SOBUILD         = /bin/rm -f $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
+SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@

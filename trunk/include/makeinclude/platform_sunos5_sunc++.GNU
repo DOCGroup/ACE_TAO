@@ -98,8 +98,8 @@ else
   #### a .so extension.  Rather than muck with the ACE build rules and
   #### risk upsetting builds on other platforms, just ln the output
   #### after building it.
-  SOBUILD = /bin/rm -f $@; \
-           $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && /bin/ln $(VSHDIR)$*.o $@
+  SOBUILD = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
+                      /bin/ln $(VSHDIR)$*.o $@
 endif # BIN
 
 #### The following macro overrides enable creation of fast executables.
