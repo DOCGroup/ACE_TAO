@@ -181,7 +181,7 @@ MyImpl::EC_exec_i::active (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 
 void
 MyImpl::EC_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                        ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -189,7 +189,7 @@ MyImpl::EC_exec_i::set_session_context (Components::SessionContext_ptr ctx
 
   this->context_ =
     BasicSP::CCM_EC_Context::_narrow (ctx
-                                             ACE_ENV_ARG_PARAMETER);
+                                      ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (this->context_.in ()))
@@ -256,14 +256,14 @@ MyImpl::ECHome_exec_i::~ECHome_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::ECHome_exec_i::new_EC (CORBA::Long hertz
-                               ACE_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return new MyImpl::EC_exec_i (hertz);
 }
 
 ::Components::EnterpriseComponent_ptr
-MyImpl::ECHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+MyImpl::ECHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {

@@ -33,8 +33,11 @@ namespace StringLiterals
     // ACE Environment portability macros.
     "ACE_ENV_ARG_DECL_WITH_DEFAULTS",                     // ENV_HDR
     "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS",              // ENV_SNGL_HDR
+    "ACE_ENV_SINGLE_ARG_DECL_NOT_USED",                   // ENV_SNGL_HDR_NOTUSED
     "ACE_ENV_ARG_DECL",                                   // ENV_SRC
+    "ACE_ENV_ARG_DECL_NOT_USED",                          // ENV_SRC_NOTUSED
     "ACE_ENV_SINGLE_ARG_DECL",                            // ENV_SNGL_SRC
+    "ACE_ENV_SINGLE_ARG_DECL_NOT_USED",                   // ENV_SNGL_SRC_NOTUSED
     "ACE_ENV_ARG_PARAMETER",                              // ENV_ARG
     "ACE_ENV_SINGLE_ARG_PARAMETER",                       // ENV_SNGL_ARG
 

@@ -28,21 +28,21 @@ Sender_Impl::Sender_exec_i::~Sender_exec_i ()
 
 void
 Sender_Impl::Sender_exec_i::local_message (const char * local_message
-		       ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+		                           ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   message_ = CORBA::string_dup (local_message);
 }
 
 char *
-Sender_Impl::Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+Sender_Impl::Sender_exec_i::local_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::string_dup(message_);
 }
 
 Hello::CCM_message_ptr
-Sender_Impl::Sender_exec_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL)
+Sender_Impl::Sender_exec_i::get_push_message (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG, "Sender_Impl::Sender_exec.i::get_push_message called\n "));
@@ -65,7 +65,7 @@ Sender_Impl::Sender_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
 // Operations from Components::SessionComponen
 void
 Sender_Impl::Sender_exec_i::set_session_context (Components::SessionContext_ptr ctx
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+                                                ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -120,7 +120,7 @@ Sender_Impl::SenderHome_exec_i::~SenderHome_exec_i ()
 }
 
 ::Components::EnterpriseComponent_ptr
-Sender_Impl::SenderHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
+Sender_Impl::SenderHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
