@@ -1,14 +1,14 @@
 //$Id$
-static void M302 (Demux_Test_ptr objref, 
-                CORBA::Environment &env)
+static void M302 (Demux_Test_ptr objref
+                  TAO_ENV_ARG_DECL)
 {
-  objref->M302 (env);
+  objref->M302 (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
-static void shutdown (Demux_Test_ptr objref, 
-                CORBA::Environment &env)
+static void shutdown (Demux_Test_ptr objref
+                      TAO_ENV_ARG_DECL)
 {
-  objref->shutdown (env);
+  objref->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 int Demux_Test_Client::init_operation_db (void)

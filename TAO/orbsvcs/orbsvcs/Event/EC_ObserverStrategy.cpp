@@ -24,8 +24,8 @@ TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy (void)
 
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Null_ObserverStrategy::append_observer (
-       RtecEventChannelAdmin::Observer_ptr,
-       CORBA::Environment &ACE_TRY_ENV)
+       RtecEventChannelAdmin::Observer_ptr
+       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
@@ -38,8 +38,8 @@ TAO_EC_Null_ObserverStrategy::append_observer (
 
 void
 TAO_EC_Null_ObserverStrategy::remove_observer (
-       RtecEventChannelAdmin::Observer_Handle,
-       CORBA::Environment &ACE_TRY_ENV)
+       RtecEventChannelAdmin::Observer_Handle
+       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
@@ -49,26 +49,26 @@ TAO_EC_Null_ObserverStrategy::remove_observer (
 }
 
 void
-TAO_EC_Null_ObserverStrategy::connected (TAO_EC_ProxyPushConsumer*,
-                                         CORBA::Environment &)
+TAO_EC_Null_ObserverStrategy::connected (TAO_EC_ProxyPushConsumer*
+                                         TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_EC_Null_ObserverStrategy::disconnected (TAO_EC_ProxyPushConsumer*,
-                                            CORBA::Environment &)
+TAO_EC_Null_ObserverStrategy::disconnected (TAO_EC_ProxyPushConsumer*
+                                            TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_EC_Null_ObserverStrategy::connected (TAO_EC_ProxyPushSupplier*,
-                                         CORBA::Environment &)
+TAO_EC_Null_ObserverStrategy::connected (TAO_EC_ProxyPushSupplier*
+                                         TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_EC_Null_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*,
-                                            CORBA::Environment &)
+TAO_EC_Null_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*
+                                            TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -82,8 +82,8 @@ TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy (void)
 
 RtecEventChannelAdmin::Observer_Handle
 TAO_EC_Basic_ObserverStrategy::append_observer (
-       RtecEventChannelAdmin::Observer_ptr obs,
-       CORBA::Environment &ACE_TRY_ENV)
+       RtecEventChannelAdmin::Observer_ptr obs
+       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
@@ -106,15 +106,15 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
   }
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
-  this->fill_qos (c_qos, ACE_TRY_ENV);
+  this->fill_qos (c_qos TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  obs->update_consumer (c_qos, ACE_TRY_ENV);
+  obs->update_consumer (c_qos TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
-  this->fill_qos (s_qos, ACE_TRY_ENV);
+  this->fill_qos (s_qos TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-  obs->update_supplier (s_qos, ACE_TRY_ENV);
+  obs->update_supplier (s_qos TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return this->handle_generator_;
@@ -123,8 +123,8 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
 
 void
 TAO_EC_Basic_ObserverStrategy::remove_observer (
-       RtecEventChannelAdmin::Observer_Handle handle,
-       CORBA::Environment &ACE_TRY_ENV)
+       RtecEventChannelAdmin::Observer_Handle handle
+       TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
@@ -141,14 +141,14 @@ TAO_EC_Basic_ObserverStrategy::remove_observer (
 
 void
 TAO_EC_Basic_ObserverStrategy::connected (
-    TAO_EC_ProxyPushConsumer *consumer,
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_EC_ProxyPushConsumer *consumer
+    TAO_ENV_ARG_DECL)
 {
   if (consumer->publications ().is_gateway)
     return;
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
-  this->fill_qos (s_qos, ACE_TRY_ENV);
+  this->fill_qos (s_qos TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   int size = 0;
@@ -176,21 +176,21 @@ TAO_EC_Basic_ObserverStrategy::connected (
 
   for (int i = 0; i != size; ++i)
     {
-      copy[i]->update_supplier (s_qos, ACE_TRY_ENV);
+      copy[i]->update_supplier (s_qos TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 TAO_EC_Basic_ObserverStrategy::disconnected (
-    TAO_EC_ProxyPushConsumer* consumer,
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_EC_ProxyPushConsumer* consumer
+    TAO_ENV_ARG_DECL)
 {
   if (consumer->publications ().is_gateway)
     return;
 
   RtecEventChannelAdmin::SupplierQOS s_qos;
-  this->fill_qos (s_qos, ACE_TRY_ENV);
+  this->fill_qos (s_qos TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   int size = 0;
@@ -218,21 +218,21 @@ TAO_EC_Basic_ObserverStrategy::disconnected (
 
   for (int i = 0; i != size; ++i)
     {
-      copy[i]->update_supplier (s_qos, ACE_TRY_ENV);
+      copy[i]->update_supplier (s_qos TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 TAO_EC_Basic_ObserverStrategy::connected (
-    TAO_EC_ProxyPushSupplier* supplier,
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_EC_ProxyPushSupplier* supplier
+    TAO_ENV_ARG_DECL)
 {
   if (supplier->subscriptions ().is_gateway)
     return;
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
-  this->fill_qos (c_qos, ACE_TRY_ENV);
+  this->fill_qos (c_qos TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   int size = 0;
@@ -260,21 +260,21 @@ TAO_EC_Basic_ObserverStrategy::connected (
 
   for (int i = 0; i != size; ++i)
     {
-      copy[i]->update_consumer (c_qos, ACE_TRY_ENV);
+      copy[i]->update_consumer (c_qos TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 TAO_EC_Basic_ObserverStrategy::disconnected (
-    TAO_EC_ProxyPushSupplier* supplier,
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_EC_ProxyPushSupplier* supplier
+    TAO_ENV_ARG_DECL)
 {
   if (supplier->subscriptions ().is_gateway)
     return;
 
   RtecEventChannelAdmin::ConsumerQOS c_qos;
-  this->fill_qos (c_qos, ACE_TRY_ENV);
+  this->fill_qos (c_qos TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   int size = 0;
@@ -302,20 +302,20 @@ TAO_EC_Basic_ObserverStrategy::disconnected (
 
   for (int i = 0; i != size; ++i)
     {
-      copy[i]->update_consumer (c_qos, ACE_TRY_ENV);
+      copy[i]->update_consumer (c_qos TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
 TAO_EC_Basic_ObserverStrategy::fill_qos (
-      RtecEventChannelAdmin::ConsumerQOS &qos,
-      CORBA::Environment &ACE_TRY_ENV)
+      RtecEventChannelAdmin::ConsumerQOS &qos
+      TAO_ENV_ARG_DECL)
 {
   Headers headers;
 
   TAO_EC_Accumulate_Supplier_Headers worker (headers);
-  this->event_channel_->consumer_admin ()->for_each (&worker, ACE_TRY_ENV);
+  this->event_channel_->consumer_admin ()->for_each (&worker TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   RtecEventChannelAdmin::DependencySet& dep = qos.dependencies;
@@ -336,14 +336,14 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
 void
 TAO_EC_Basic_ObserverStrategy::fill_qos (
-      RtecEventChannelAdmin::SupplierQOS &qos,
-      CORBA::Environment &ACE_TRY_ENV)
+      RtecEventChannelAdmin::SupplierQOS &qos
+      TAO_ENV_ARG_DECL)
 {
   Headers headers;
 
   TAO_EC_Accumulate_Consumer_Headers worker (headers);
-  this->event_channel_->supplier_admin ()->for_each (&worker,
-                                                     ACE_TRY_ENV);
+  this->event_channel_->supplier_admin ()->for_each (&worker
+                                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   qos.publications.length (headers.current_size ());
@@ -358,8 +358,8 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 // ****************************************************************
 
 void
-TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier,
-                                          CORBA::Environment &)
+TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier
+                                          TAO_ENV_ARG_DECL_NOT_USED)
 {
   const RtecEventChannelAdmin::ConsumerQOS& sub =
     supplier->subscriptions ();
@@ -380,8 +380,8 @@ TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier,
 // ****************************************************************
 
 void
-TAO_EC_Accumulate_Consumer_Headers::work (TAO_EC_ProxyPushConsumer *consumer,
-                                          CORBA::Environment &)
+TAO_EC_Accumulate_Consumer_Headers::work (TAO_EC_ProxyPushConsumer *consumer
+                                          TAO_ENV_ARG_DECL_NOT_USED)
 {
   const RtecEventChannelAdmin::SupplierQOS& pub =
     consumer->publications ();

@@ -15,10 +15,10 @@ public:
   // ctor
 
   // = The Test methods.
-  void test_method (CORBA::Environment&)
+  void test_method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment&)
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -32,7 +32,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::test_method (CORBA::Environment &/* ACE_TRY_ENV */)
+Test_i::test_method (TAO_ENV_SINGLE_ARG_DECL_NOT_USED/* TAO_ENV_SINGLE_ARG_PARAMETER */)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -40,10 +40,10 @@ Test_i::test_method (CORBA::Environment &/* ACE_TRY_ENV */)
 }
 
 void
-Test_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
+Test_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }
 
 //*************************************************************************
@@ -99,23 +99,23 @@ int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *server_impl,
-               const char *filename,
-               CORBA::Environment &ACE_TRY_ENV)
+               const char *filename
+               TAO_ENV_ARG_DECL)
 {
   // Register with poa.
   PortableServer::ObjectId_var id =
-    poa->activate_object (server_impl, ACE_TRY_ENV);
+    poa->activate_object (server_impl TAO_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var server =
-    poa->id_to_reference (id.in (),
-                          ACE_TRY_ENV);
+    poa->id_to_reference (id.in ()
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Print out the IOR.
   CORBA::String_var ior =
-    orb->object_to_string (server.in (), ACE_TRY_ENV);
+    orb->object_to_string (server.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG, "<%s>\n\n", ior.in ()));
@@ -143,7 +143,7 @@ main (int argc, char *argv[])
     {
       // ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse arguments.
@@ -152,17 +152,17 @@ main (int argc, char *argv[])
 
       // RootPOA.
       CORBA::Object_var object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
         return 1;
 
       // POAManager.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Servants.
@@ -174,8 +174,8 @@ main (int argc, char *argv[])
       result = create_object (root_poa.in (),
                               orb.in (),
                               &server_impl1,
-                              ior_output_file1,
-                              ACE_TRY_ENV);
+                              ior_output_file1
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
         return 1;
@@ -183,17 +183,17 @@ main (int argc, char *argv[])
       result = create_object (root_poa.in (),
                               orb.in (),
                               &server_impl2,
-                              ior_output_file2,
-                              ACE_TRY_ENV);
+                              ior_output_file2
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
         return 1;
 
       // Run ORB Event loop.
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n"));

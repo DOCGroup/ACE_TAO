@@ -23,30 +23,30 @@
 
 template <class T> ACE_INLINE
 POA_CORBA_DomainManager_tie<T>::POA_CORBA_DomainManager_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA_DomainManager_tie<T>::POA_CORBA_DomainManager_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA_DomainManager_tie<T>::POA_CORBA_DomainManager_tie (T *tp, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA_DomainManager_tie<T>::POA_CORBA_DomainManager_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -90,55 +90,55 @@ POA_CORBA_DomainManager_tie<T>::_is_owner (CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA_DomainManager_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+POA_CORBA_DomainManager_tie<T>::_default_POA (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->POA_CORBA_DomainManager::_default_POA (ACE_TRY_ENV);
+  return this->POA_CORBA_DomainManager::_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class T> ACE_INLINE
 CORBA::Policy_ptr POA_CORBA_DomainManager_tie<T>::get_domain_policy  (
-    CORBA::PolicyType policy_type,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::PolicyType policy_type
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   return this->ptr_->get_domain_policy (
-policy_type,
-    ACE_TRY_ENV
+policy_type
+    TAO_ENV_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 POA_CORBA_ConstructionPolicy_tie<T>::POA_CORBA_ConstructionPolicy_tie (T &t)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA_ConstructionPolicy_tie<T>::POA_CORBA_ConstructionPolicy_tie (T &t, PortableServer::POA_ptr poa)
-	: ptr_ (&t),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (0)
+        : ptr_ (&t),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (0)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA_ConstructionPolicy_tie<T>::POA_CORBA_ConstructionPolicy_tie (T *tp, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_nil ()),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_nil ()),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
 POA_CORBA_ConstructionPolicy_tie<T>::POA_CORBA_ConstructionPolicy_tie (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)
-	: ptr_ (tp),
-	  poa_ (PortableServer::POA::_duplicate (poa)),
-	  rel_ (release)
+        : ptr_ (tp),
+          poa_ (PortableServer::POA::_duplicate (poa)),
+          rel_ (release)
 {}
 
 template <class T> ACE_INLINE
@@ -182,19 +182,19 @@ POA_CORBA_ConstructionPolicy_tie<T>::_is_owner (CORBA::Boolean b)
 }
 
 template <class T> ACE_INLINE PortableServer::POA_ptr
-POA_CORBA_ConstructionPolicy_tie<T>::_default_POA (CORBA::Environment &ACE_TRY_ENV)
+POA_CORBA_ConstructionPolicy_tie<T>::_default_POA (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->poa_.in ()))
     return PortableServer::POA::_duplicate (this->poa_.in ());
 
-  return this->POA_CORBA_ConstructionPolicy::_default_POA (ACE_TRY_ENV);
+  return this->POA_CORBA_ConstructionPolicy::_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 template <class T> ACE_INLINE
 void POA_CORBA_ConstructionPolicy_tie<T>::make_domain_manager  (
     CORBA::InterfaceDef_ptr object_type,
-    CORBA::Boolean constr_policy,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Boolean constr_policy
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -202,47 +202,47 @@ void POA_CORBA_ConstructionPolicy_tie<T>::make_domain_manager  (
 {
   this->ptr_->make_domain_manager (
 object_type,
-    constr_policy,
-    ACE_TRY_ENV
+    constr_policy
+    TAO_ENV_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 CORBA::PolicyType POA_CORBA_ConstructionPolicy_tie<T>::policy_type  (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   return this->ptr_->policy_type (
-ACE_TRY_ENV
+TAO_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 CORBA::Policy_ptr POA_CORBA_ConstructionPolicy_tie<T>::copy  (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   return this->ptr_->copy (
-ACE_TRY_ENV
+TAO_ENV_SINGLE_ARG_PARAMETER
   );
 }
 
 template <class T> ACE_INLINE
 void POA_CORBA_ConstructionPolicy_tie<T>::destroy  (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ))
 {
   this->ptr_->destroy (
-ACE_TRY_ENV
+TAO_ENV_SINGLE_ARG_PARAMETER
   );
 }
 

@@ -31,10 +31,10 @@ public:
   void dump_results (void);
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &payload,
-                             CORBA::Environment &ACE_TRY_ENV)
+  virtual void receive_data (const Test::Payload &payload
+                             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual CORBA::Long get_event_count (CORBA::Environment &ACE_TRY_ENV)
+  virtual CORBA::Long get_event_count (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

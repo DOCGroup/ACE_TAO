@@ -11,17 +11,17 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "\n\tNestea Bookshelf Server\n\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      int retval = server.init (argc, argv, ACE_TRY_ENV);
+      int retval = server.init (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval == -1)
         return -1;
       else
         {
-          server.run (ACE_TRY_ENV);
+          server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -38,7 +38,7 @@ public:
     WORST
   };
 
-  typedef void (*OP_PTR) (Demux_Test_ptr, CORBA::Environment &);
+  typedef void (*OP_PTR) (Demux_Test_ptr TAO_ENV_ARG_DECL_NOT_USED);
 
   struct Operation_DB_Entry
   {
@@ -51,12 +51,10 @@ public:
   ~Demux_Test_Client (void);
   // DTOR
 
-  int init (int argc, char *argv [], CORBA::Environment &env
-            = CORBA::Environment::default_environment ());
+  int init (int argc, char *argv [] TAO_ENV_ARG_DECL_WITH_DEFAULTS);
   // initialize the client test bed
 
-  int run (CORBA::Environment &env
-           = CORBA::Environment::default_environment ());
+  int run (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // run the tests
 
 private:
@@ -67,20 +65,16 @@ private:
   int init_operation_db (void);
   // initialize the operation database
 
-  int run_linear_test (CORBA::Environment &env
-                       = CORBA::Environment::default_environment ());
+  int run_linear_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // run linear strategy
 
-  int run_random_test (CORBA::Environment &env
-                       = CORBA::Environment::default_environment ());
+  int run_random_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // run random strategy
 
-  int run_best_test (CORBA::Environment &env
-                     = CORBA::Environment::default_environment ());
+  int run_best_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // run best strategy (w.r.t to linear)
 
-  int run_worst_test (CORBA::Environment &env
-                      = CORBA::Environment::default_environment ());
+  int run_worst_test (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
   // run worst strategy (w.r.t to linear)
 
   int print_results (void);
@@ -121,9 +115,9 @@ private:
 
   CORBA::ULong step_;
   // Step for the no. of objects to be skipped while making remote calls
-  // on the given no. of objects. 
+  // on the given no. of objects.
   // If the step is 100, a call will be made to every 100th Object.
-  
+
   Operation_DB_Entry op_db_[TAO_DEMUX_TEST_MAX_OPS];
   // database of operations
 

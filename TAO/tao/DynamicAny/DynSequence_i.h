@@ -34,7 +34,7 @@
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_DynamicAny_Export TAO_DynSequence_i 
+class TAO_DynamicAny_Export TAO_DynSequence_i
   : public virtual DynamicAny::DynSequence,
     public virtual TAO_DynCommon,
     public virtual TAO_Local_RefCounted_Object
@@ -52,55 +52,50 @@ public:
   ~TAO_DynSequence_i (void);
   // Destructor.
 
-  void init (CORBA_TypeCode_ptr tc,
-             CORBA::Environment &ACE_TRY_ENV);
+  void init (CORBA_TypeCode_ptr tc
+             TAO_ENV_ARG_DECL);
   // Initialize using just a TypeCode.
 
-  void init (const CORBA_Any& any,
-             CORBA::Environment &ACE_TRY_ENV);
+  void init (const CORBA_Any& any
+             TAO_ENV_ARG_DECL);
   // Initialize using an Any.
 
   // = LocalObject methods.
   static TAO_DynSequence_i *_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   virtual void *_tao_QueryInterface (ptr_arith_t type);
 
   // = Functions specific to DynSequence.
 
   virtual CORBA::ULong get_length (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void set_length (
-      CORBA::ULong len,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      CORBA::ULong len
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::InvalidValue
       ));
 
   virtual DynamicAny::AnySeq * get_elements (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void set_elements (
-      const DynamicAny::AnySeq & value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const DynamicAny::AnySeq & value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -108,18 +103,16 @@ public:
       ));
 
   virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void set_elements_as_dyn_any (
-      const DynamicAny::DynAnySeq & value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const DynamicAny::DynAnySeq & value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -130,10 +123,9 @@ public:
   // = DynAny common functions not implemented in class TAO_DynCommon.
 
   virtual void from_any (
-      const CORBA::Any & value,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      const CORBA::Any & value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch,
@@ -141,34 +133,30 @@ public:
       ));
 
   virtual CORBA::Any * to_any (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual CORBA::Boolean equal (
-      DynamicAny::DynAny_ptr dyn_any,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      DynamicAny::DynAny_ptr dyn_any
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual void destroy (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
   virtual DynamicAny::DynAny_ptr current_component (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((
         CORBA::SystemException,
         DynamicAny::DynAny::TypeMismatch
@@ -176,8 +164,7 @@ public:
 
 private:
   // Utility, turns the type of elements contained in the sequence.
-  CORBA::TypeCode_ptr get_element_type (CORBA::Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
+  CORBA::TypeCode_ptr get_element_type (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   // Called by both versions of init().
   void init_common (void);

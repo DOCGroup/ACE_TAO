@@ -66,11 +66,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -79,11 +79,11 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Install a persistent POA in order to achieve a persistent IOR
@@ -91,26 +91,26 @@ main (int argc, char *argv[])
       CORBA::PolicyList policies;
       policies.length (2);
       policies[0] =
-        root_poa->create_lifespan_policy(PortableServer::PERSISTENT,
-                                         ACE_TRY_ENV);
+        root_poa->create_lifespan_policy(PortableServer::PERSISTENT
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       policies[1] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID,
-                                               ACE_TRY_ENV);
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       PortableServer::POA_var persistent_poa =
         root_poa->create_POA("persistent",
                              poa_manager.in (),
-                             policies,
-                             ACE_TRY_ENV);
+                             policies
+                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      policies[0]->destroy (ACE_TRY_ENV);
+      policies[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      policies[1]->destroy (ACE_TRY_ENV);
+      policies[1]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -124,26 +124,26 @@ main (int argc, char *argv[])
         PortableServer::string_to_ObjectId ("UDP_Object");
 
       persistent_poa->activate_object_with_id (id.in (),
-                                               &udp_i,
-                                               ACE_TRY_ENV);
+                                               &udp_i
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        persistent_poa->id_to_reference (id.in (),
-                                         ACE_TRY_ENV);
+        persistent_poa->id_to_reference (id.in ()
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
-      UDP_var udp_var = UDP::_narrow (obj.in (), ACE_TRY_ENV);
+      UDP_var udp_var = UDP::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
 
-      // UDP_var udp_var = udp_i._this (ACE_TRY_ENV);
+      // UDP_var udp_var = udp_i._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (udp_var.in ()))
         ACE_DEBUG ((LM_DEBUG,
                     "Failed to narrow correct object reference.\n"));
 
       CORBA::String_var ior =
-        orb->object_to_string (udp_var.in (), ACE_TRY_ENV);
+        orb->object_to_string (udp_var.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
@@ -161,7 +161,7 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       /*
@@ -171,7 +171,7 @@ main (int argc, char *argv[])
       udpHandler_i.orb (orb.in ());
 
       UDP_var udpHandler_var =
-        udpHandler_i._this (ACE_TRY_ENV);
+        udpHandler_i._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Instantiate client
@@ -182,17 +182,17 @@ main (int argc, char *argv[])
       client->activate ();
       */
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (1,  // ethernalize objects
-                         0, // wait for completion
-                         ACE_TRY_ENV);
+                         0  // wait for completion
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //delete client;
@@ -200,7 +200,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

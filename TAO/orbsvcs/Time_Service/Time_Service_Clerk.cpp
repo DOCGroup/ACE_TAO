@@ -14,16 +14,16 @@ main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "[SERVER] Process/Thread Id : (%P/%t) Time Service clerk\n"));
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      int r = clerk.init (argc, argv, ACE_TRY_ENV);
+      int r = clerk.init (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (r == -1)
         return 1;
       else
         {
-          clerk.run (ACE_TRY_ENV);
+          clerk.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

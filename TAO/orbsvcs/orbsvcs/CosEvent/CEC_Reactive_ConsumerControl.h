@@ -85,18 +85,18 @@ public:
   // = Documented in TAO_CEC_ConsumerControl
   virtual int activate (void);
   virtual int shutdown (void);
-  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy,
-                                   CORBA::Environment &);
-  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy,
-                                   CORBA::Environment &);
+  virtual void consumer_not_exist (TAO_CEC_ProxyPushSupplier *proxy
+                                   TAO_ENV_ARG_DECL_NOT_USED);
+  virtual void consumer_not_exist (TAO_CEC_ProxyPullSupplier *proxy
+                                   TAO_ENV_ARG_DECL_NOT_USED);
   virtual void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &,
-                                 CORBA::Environment &);
+                                 CORBA::SystemException &
+                                 TAO_ENV_ARG_DECL_NOT_USED);
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_consumers (CORBA::Environment &ACE_TRY_ENV);
+  void query_consumers (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// The polling rate
@@ -128,8 +128,8 @@ class TAO_CEC_Ping_Push_Consumer : public TAO_ESF_Worker<TAO_CEC_ProxyPushSuppli
 public:
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPushSupplier *supplier,
-                     CORBA::Environment &ACE_TRY_ENV);
+  virtual void work (TAO_CEC_ProxyPushSupplier *supplier
+                     TAO_ENV_ARG_DECL);
 
 private:
   TAO_CEC_ConsumerControl *control_;
@@ -142,8 +142,8 @@ class TAO_CEC_Ping_Pull_Consumer : public TAO_ESF_Worker<TAO_CEC_ProxyPullSuppli
 public:
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);
 
-  virtual void work (TAO_CEC_ProxyPullSupplier *supplier,
-                     CORBA::Environment &ACE_TRY_ENV);
+  virtual void work (TAO_CEC_ProxyPullSupplier *supplier
+                     TAO_ENV_ARG_DECL);
 
 private:
   TAO_CEC_ConsumerControl *control_;

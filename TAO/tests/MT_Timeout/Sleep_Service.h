@@ -25,11 +25,11 @@ public:
   Sleep_Service (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual void go_to_sleep (CORBA::ULong microseconds,
-                            CORBA::Environment &ACE_TRY_ENV)
+  virtual void go_to_sleep (CORBA::ULong microseconds
+                            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

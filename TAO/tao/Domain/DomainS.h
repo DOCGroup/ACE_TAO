@@ -66,10 +66,9 @@
 
 
     virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        const char* logical_type_id
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     virtual void* _downcast (
         const char* logical_type_id
@@ -78,42 +77,40 @@
     static void _is_a_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &req,
-        void *_servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *_servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     ::CORBA::DomainManager *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 
     virtual const char* _interface_repository_id (void) const;
 
     virtual CORBA::Policy_ptr get_domain_policy (
-        CORBA::PolicyType policy_type,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::PolicyType policy_type
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -121,8 +118,8 @@
     static void get_domain_policy_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
-        void *_tao_servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *_tao_servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
 
@@ -141,16 +138,16 @@
     virtual ~_TAO_DomainManager_Strategized_Proxy_Broker (void);
 
     virtual _TAO_CORBA_DomainManager_Proxy_Impl &select_proxy (
-      ::CORBA::DomainManager *object,
-      CORBA_Environment &ACE_TRY_ENV
+      ::CORBA::DomainManager *object
+      TAO_ENV_ARG_DECL
     );
 
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
     void create_proxy (
-      int collocation_strategy,
-      CORBA::Environment &ACE_TRY_ENV
+      int collocation_strategy
+      TAO_ENV_ARG_DECL
     );
 
     // Caches the proxy implementations. The proxy implementation
@@ -189,8 +186,8 @@
 
     virtual CORBA::Policy_ptr get_domain_policy (
         CORBA::Object_ptr _collocated_tao_target_,
-        CORBA::PolicyType policy_type,
-        CORBA::Environment &ACE_TRY_ENV
+        CORBA::PolicyType policy_type
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -221,10 +218,9 @@
 
 
     virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        const char* logical_type_id
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     virtual void* _downcast (
         const char* logical_type_id
@@ -233,43 +229,41 @@
     static void _is_a_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &req,
-        void *_servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *_servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     CORBA_ConstructionPolicy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 
     virtual const char* _interface_repository_id (void) const;
 
     virtual void make_domain_manager (
         CORBA::InterfaceDef_ptr object_type,
-        CORBA::Boolean constr_policy,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Boolean constr_policy
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -277,33 +271,30 @@
     static void make_domain_manager_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
-        void *_tao_servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *_tao_servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     static void _get_policy_type_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        void *context
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     static void copy_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        void *context
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     static void destroy_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *context,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        void *context
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
 
   };
@@ -321,16 +312,16 @@
     virtual ~_TAO_ConstructionPolicy_Strategized_Proxy_Broker (void);
 
     virtual _TAO_CORBA_ConstructionPolicy_Proxy_Impl &select_proxy (
-      CORBA_ConstructionPolicy *object,
-      CORBA_Environment &ACE_TRY_ENV
+      CORBA_ConstructionPolicy *object
+      TAO_ENV_ARG_DECL
     );
 
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
     void create_proxy (
-      int collocation_strategy,
-      CORBA::Environment &ACE_TRY_ENV
+      int collocation_strategy
+      TAO_ENV_ARG_DECL
     );
 
     // Caches the proxy implementations. The proxy implementation
@@ -372,8 +363,8 @@
     virtual void make_domain_manager (
         CORBA::Object_ptr _collocated_tao_target_,
         CORBA::InterfaceDef_ptr object_type,
-        CORBA::Boolean constr_policy,
-        CORBA::Environment &ACE_TRY_ENV
+        CORBA::Boolean constr_policy
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

@@ -42,8 +42,8 @@ class TAO_RTCORBA_Export TAO_RT_Default_Endpoint_Selector :
   public TAO_Default_Endpoint_Selector
 {
 public:
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV);
+  virtual void select_endpoint (TAO_GIOP_Invocation *invocation
+                                TAO_ENV_ARG_DECL);
 };
 
 // ****************************************************************
@@ -67,8 +67,8 @@ public:
   /// Destructor.
   virtual ~TAO_Priority_Endpoint_Selector (void);
 
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV);
+  virtual void select_endpoint (TAO_GIOP_Invocation *invocation
+                                TAO_ENV_ARG_DECL);
 private:
   /// Helper for <select_endpoint>.
   int is_multihomed (TAO_Endpoint *endpoint);
@@ -95,8 +95,8 @@ public:
   /// Destructor.
   virtual ~TAO_Bands_Endpoint_Selector (void);
 
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV);
+  virtual void select_endpoint (TAO_GIOP_Invocation *invocation
+                                TAO_ENV_ARG_DECL);
 };
 
 // ****************************************************************
@@ -121,13 +121,13 @@ public:
   /// Destructor.
   virtual ~TAO_Protocol_Endpoint_Selector (void);
 
-  virtual void select_endpoint (TAO_GIOP_Invocation *invocation,
-                                CORBA::Environment &ACE_TRY_ENV);
-  virtual void next (TAO_GIOP_Invocation *invocation,
-                     CORBA::Environment &ACE_TRY_ENV);
+  virtual void select_endpoint (TAO_GIOP_Invocation *invocation
+                                TAO_ENV_ARG_DECL);
+  virtual void next (TAO_GIOP_Invocation *invocation
+                     TAO_ENV_ARG_DECL);
   virtual void forward (TAO_GIOP_Invocation *invocation,
-                        const TAO_MProfile &mprofile,
-                        CORBA::Environment &ACE_TRY_ENV);
+                        const TAO_MProfile &mprofile
+                        TAO_ENV_ARG_DECL);
   virtual void success (TAO_GIOP_Invocation *invocation);
   virtual void close_connection (TAO_GIOP_Invocation *invocation);
 };

@@ -77,15 +77,15 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
 
       CORBA::Object_var table_object =
         this->orb_manager_.orb ()->resolve_initial_references (
-            "IORTable",
-            ACE_TRY_ENV);
+            "IORTable"
+            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+        IORTable::Table::_narrow (table_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      adapter->bind (this->ins_, ior.in (), ACE_TRY_ENV);
+      adapter->bind (this->ins_, ior.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, ex)
@@ -100,15 +100,15 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
 // Initialize the server.
 int
 Server_i::init (int argc,
-                char *argv[],
-                CORBA::Environment &ACE_TRY_ENV)
+                char *argv[]
+                TAO_ENV_ARG_DECL)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
-                                         "child_poa",
-                                         ACE_TRY_ENV) == -1)
+                                         "child_poa"
+                                         TAO_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
@@ -133,8 +133,8 @@ Server_i::init (int argc,
     {
       CORBA::String_var str  =
         this->orb_manager_.activate_under_child_poa ("INS_servant",
-                                                     &this->servant_,
-                                                     ACE_TRY_ENV);
+                                                     &this->servant_
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -167,10 +167,10 @@ Server_i::init (int argc,
 }
 
 int
-Server_i::run (CORBA::Environment &env)
+Server_i::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (env) == -1)
+  if (this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Server_i::run"),
                       -1);

@@ -46,8 +46,8 @@ TAO_Service_Callbacks::reset_profile_flags (void)
 void
 TAO_Service_Callbacks::service_context_list (TAO_Stub *& /*stub*/ ,
                                              IOP::ServiceContextList & /*service_list*/,
-                                             CORBA::Boolean ,
-                                             CORBA::Environment & /*ACE_TRY_ENV*/)
+                                             CORBA::Boolean
+                                             TAO_ENV_ARG_DECL_NOT_USED /*TAO_ENV_SINGLE_ARG_PARAMETER*/)
 {
   return;
 }
@@ -55,8 +55,8 @@ TAO_Service_Callbacks::service_context_list (TAO_Stub *& /*stub*/ ,
 int
 TAO_Service_Callbacks::raise_comm_failure (
     TAO_GIOP_Invocation * /*invoke*/,
-    TAO_Profile * /*profile*/,
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_Profile * /*profile*/
+    TAO_ENV_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::COMM_FAILURE (
       CORBA_SystemException::_tao_minor_code (
@@ -69,8 +69,8 @@ TAO_Service_Callbacks::raise_comm_failure (
 int
 TAO_Service_Callbacks::raise_transient_failure (
     TAO_GIOP_Invocation * /*invoke*/,
-    TAO_Profile * /*profile*/,
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_Profile * /*profile*/
+    TAO_ENV_ARG_DECL)
 {
   ACE_THROW_RETURN (CORBA::TRANSIENT (
       CORBA_SystemException::_tao_minor_code (

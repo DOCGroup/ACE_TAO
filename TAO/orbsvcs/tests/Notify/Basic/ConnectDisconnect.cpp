@@ -68,26 +68,26 @@ ConnectDisconnect::on_entity_destroyed (void)
 }
 
 void
-ConnectDisconnect::init (int argc, char* argv [], CORBA::Environment &ACE_TRY_ENV)
+ConnectDisconnect::init (int argc, char* argv [] TAO_ENV_ARG_DECL)
 {
   // init base class
-  Notify_Test_Client::init (argc, argv, ACE_TRY_ENV);
+  Notify_Test_Client::init (argc, argv TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Create all participents ...
-  this->create_EC (ACE_TRY_ENV);
+  this->create_EC (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::AdminID adminid;
 
   supplier_admin_ =
-    ec_->new_for_suppliers (this->ifgop_, adminid, ACE_TRY_ENV);
+    ec_->new_for_suppliers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (supplier_admin_.in ()));
 
   consumer_admin_ =
-    ec_->new_for_consumers (this->ifgop_, adminid, ACE_TRY_ENV);
+    ec_->new_for_consumers (this->ifgop_, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (consumer_admin_.in ()));
@@ -160,21 +160,21 @@ ConnectDisconnect::parse_args(int argc, char *argv[])
 }
 
 void
-ConnectDisconnect::create_EC (CORBA::Environment &ACE_TRY_ENV)
+ConnectDisconnect::create_EC (TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ChannelID id;
 
   ec_ = notify_factory_->create_channel (initial_qos_,
                                          initial_admin_,
-                                         id,
-                                         ACE_TRY_ENV);
+                                         id
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
 }
 
 void
-ConnectDisconnect::run_test (CORBA::Environment &ACE_TRY_ENV)
+ConnectDisconnect::run_test (TAO_ENV_SINGLE_ARG_DECL)
 {
   for (int iterations = 0; iterations < count_; ++iterations)
     {
@@ -184,85 +184,85 @@ ConnectDisconnect::run_test (CORBA::Environment &ACE_TRY_ENV)
         {
           // Create and connect Any consumers
           any_consumer_[i] = new CD_PushConsumer (this, i);
-          any_consumer_[i]->init (root_poa_.in (), ACE_TRY_ENV);
+          any_consumer_[i]->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          any_consumer_[i]->connect (this->consumer_admin_.in (), ACE_TRY_ENV);
+          any_consumer_[i]->connect (this->consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           // Create and connect Structured consumers
           structured_consumer_[i] = new CD_StructuredPushConsumer (this, i);
-          structured_consumer_[i]->init (root_poa_.in (), ACE_TRY_ENV);
+          structured_consumer_[i]->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          structured_consumer_[i]->connect (this->consumer_admin_.in (), ACE_TRY_ENV);
+          structured_consumer_[i]->connect (this->consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           // Create and connect Sequence consumers
           sequence_consumer_[i] = new CD_SequencePushConsumer (this, i);
-          sequence_consumer_[i]->init (root_poa_.in (), ACE_TRY_ENV);
+          sequence_consumer_[i]->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          sequence_consumer_[i]->connect (this->consumer_admin_.in (), ACE_TRY_ENV);
+          sequence_consumer_[i]->connect (this->consumer_admin_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
       for (i = 0; i < this->suppliers_; ++i)
         {
           any_supplier_[i] = new CD_PushSupplier (this, i);
-          any_supplier_[i]->init (root_poa_.in (), ACE_TRY_ENV);
+          any_supplier_[i]->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          any_supplier_[i]->connect (this->supplier_admin_.in (), ACE_TRY_ENV);
+          any_supplier_[i]->connect (this->supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           // Create and connect Structured suppliers
           structured_supplier_[i] = new CD_StructuredPushSupplier (this, i);
-          structured_supplier_[i]->init (root_poa_.in (), ACE_TRY_ENV);
+          structured_supplier_[i]->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          structured_supplier_[i]->connect (this->supplier_admin_.in (), ACE_TRY_ENV);
+          structured_supplier_[i]->connect (this->supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
           // Create and connect Sequence suppliers
           sequence_supplier_[i] = new CD_SequencePushSupplier (this, i);
-          sequence_supplier_[i]->init (root_poa_.in (), ACE_TRY_ENV);
+          sequence_supplier_[i]->init (root_poa_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
-          sequence_supplier_[i]->connect (this->supplier_admin_.in (), ACE_TRY_ENV);
+          sequence_supplier_[i]->connect (this->supplier_admin_.in () TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
 
       for (i = 0; i < this->consumers_; ++i)
         {
           // Disconnnect Any consumers.
-          any_consumer_[i]->disconnect (ACE_TRY_ENV);
+          any_consumer_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           // Disconnect Structured Consumers.
-          structured_consumer_[i]->disconnect (ACE_TRY_ENV);
+          structured_consumer_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           // Disconnect Sequence Consumers.
-          sequence_consumer_[i]->disconnect (ACE_TRY_ENV);
+          sequence_consumer_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
 
       for (i = 0; i < this->suppliers_; ++i)
         {
           // Disconnnect Any suppliers.
-          any_supplier_[i]->disconnect (ACE_TRY_ENV);
+          any_supplier_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           // Disconnect Structured Suppliers.
-          structured_supplier_[i]->disconnect (ACE_TRY_ENV);
+          structured_supplier_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           // Disconnect Sequence Suppliers.
-          sequence_supplier_[i]->disconnect (ACE_TRY_ENV);
+          sequence_supplier_[i]->disconnect (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
 }
 
 void
-ConnectDisconnect::end_test (CORBA::Environment &ACE_TRY_ENV)
+ConnectDisconnect::end_test (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->shutdown (ACE_TRY_ENV);
+  this->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
 }
 
 int
@@ -277,8 +277,8 @@ ConnectDisconnect::check_results (void)
     ACE_DEBUG ((LM_DEBUG, "ConnectDisconnect test succeded\n"));
 
   // Destroy the channel
-  ACE_DECLARE_NEW_CORBA_ENV;
-  this->ec_->destroy (ACE_TRY_ENV);
+  TAO_ENV_DECLARE_NEW_ENV;
+  this->ec_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -296,14 +296,14 @@ main (int argc, char* argv[])
 
   ACE_TRY_NEW_ENV
     {
-      client.init (argc, argv,
-                      ACE_TRY_ENV); //Init the Client
+      client.init (argc, argv
+                      TAO_ENV_ARG_PARAMETER); //Init the Client
       ACE_TRY_CHECK;
 
-      client.run_test (ACE_TRY_ENV);
+      client.run_test (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      client.end_test (ACE_TRY_ENV);
+      client.end_test (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, ue)

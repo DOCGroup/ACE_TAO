@@ -53,7 +53,7 @@
  * // The T_var for the IDL interface implemented by the PROXY.
  *
  * PROXY::_ptr_type
- * PROXY::activate (CORBA::Environment &) throw ();
+ * PROXY::activate (TAO_ENV_SINGLE_ARG_DECL_NOT_USED) throw ();
  * // activate the proxy and return the object reference
  * @endverbatim
  *
@@ -69,8 +69,8 @@ public:
   virtual ~TAO_ESF_Proxy_Admin (void);
 
   /// Iterate over its internal collection.
-  void for_each (TAO_ESF_Worker<PROXY> *worker,
-                 CORBA::Environment &ACE_TRY_ENV)
+  void for_each (TAO_ESF_Worker<PROXY> *worker
+                 TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // @TODO We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
@@ -80,7 +80,7 @@ public:
   // code is supposed to run under TAO only.
   /// Create a new PROXY and activate it.
   virtual INTERFACE*
-      obtain (CORBA::Environment &)
+      obtain (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -88,7 +88,7 @@ public:
    * down. Invoke <shutdown> on all the proxies, cleanup the
    * collection and prepare to terminate.
    */
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -96,8 +96,8 @@ public:
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
-  virtual void connected (PROXY *proxy,
-                          CORBA::Environment &ACE_TRY_ENV)
+  virtual void connected (PROXY *proxy
+                          TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -106,8 +106,8 @@ public:
    * The default implementation delegates on the collection
    * <reconnected> method
    */
-  virtual void reconnected (PROXY *proxy,
-                            CORBA::Environment &ACE_TRY_ENV)
+  virtual void reconnected (PROXY *proxy
+                            TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -115,8 +115,8 @@ public:
    * removes the object from the collection and deactivates the
    * proxy.
    */
-  virtual void disconnected (PROXY *proxy,
-                             CORBA::Environment &ACE_TRY_ENV)
+  virtual void disconnected (PROXY *proxy
+                             TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

@@ -126,8 +126,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "_skel (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request," << be_nl
       << "void *_tao_object_reference," << be_nl
-      << "void *_tao_servant_upcall," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "void *_tao_servant_upcall" << be_nl
+      << "TAO_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
 
   // Generate the actual code for the skeleton. However, if any of the argument
@@ -313,7 +313,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << be_nl << be_nl;
 
   // Invoke the receive_request() interception point.
-  *os << "_tao_vfr.receive_request (&_tao_ri, ACE_TRY_ENV);" << be_nl
+  *os << "_tao_vfr.receive_request (&_tao_ri TAO_ENV_ARG_PARAMETER);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */\n";
@@ -424,7 +424,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   *os << "_tao_ri.reply_status (PortableInterceptor::SUCCESSFUL);" << be_nl
-      << "_tao_vfr.send_reply (&_tao_ri, ACE_TRY_ENV);"<< be_nl
+      << "_tao_vfr.send_reply (&_tao_ri TAO_ENV_ARG_PARAMETER);"<< be_nl
           << "ACE_TRY_CHECK;" << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
@@ -433,8 +433,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // Update the ServerRequestInfo exception attribute.
   *os << "_tao_ri.exception (&ACE_ANY_EXCEPTION);"<< be_nl
       << "_tao_vfr.send_exception (" << be_idt << be_idt_nl
-      << "&_tao_ri," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
+      << "&_tao_ri" << be_nl
+      << "TAO_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
@@ -443,7 +443,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // exception.
   *os << be_nl
       << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
-      << "_tao_ri.reply_status (ACE_TRY_ENV);" << be_uidt_nl
+      << "_tao_ri.reply_status (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl;
 
   *os << be_nl
@@ -484,12 +484,10 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     }
 
   *os << "// In case _tao_servant_upcall is not used in this function"
-      << be_nl 
+      << be_nl
       << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_nl << be_nl;
 
-  *os << "// In case ACE_TRY_ENV is not used in this function" << be_nl
-      << "ACE_UNUSED_ARG (ACE_TRY_ENV);" << be_uidt_nl
-      << "}\n\n";
+  *os << be_uidt << "}\n\n";
   return 0;
 }
 

@@ -32,31 +32,31 @@ TAO_EC_Trivial_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer*)
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier*,
-                                           CORBA::Environment &)
+TAO_EC_Trivial_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier*
+                                           TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier*,
-                                             CORBA::Environment &)
+TAO_EC_Trivial_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier*
+                                             TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier*,
-                                              CORBA::Environment &)
+TAO_EC_Trivial_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier*
+                                              TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::shutdown (CORBA::Environment &)
+TAO_EC_Trivial_Supplier_Filter::shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
 {
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
-                                      CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event
+                                      TAO_ENV_ARG_DECL)
 {
   TAO_EC_ConsumerAdmin* consumer_admin =
     this->event_channel_->consumer_admin ();
@@ -71,7 +71,7 @@ TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
       TAO_EC_QOS_Info qos_info;
 
       TAO_EC_Filter_Worker worker (single_event, qos_info);
-      consumer_admin->for_each (&worker, ACE_TRY_ENV);
+      consumer_admin->for_each (&worker TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

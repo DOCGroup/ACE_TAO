@@ -24,15 +24,15 @@ Consumer::Consumer (void)
 int
 Consumer::run (int argc, char* argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Do *NOT* make a copy because we don't want the ORB to outlive 
+      // Do *NOT* make a copy because we don't want the ORB to outlive
       // the run() method.
       this->orb_ = orb.in ();
 
@@ -44,40 +44,40 @@ Consumer::run (int argc, char* argv[])
         }
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       PortableServer::POAManager_var poa_manager =
-        poa->the_POAManager (ACE_TRY_ENV);
+        poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the event channel, we could use a naming service, a
       // command line argument or resolve_initial_references(), but
       // this is simpler...
       object =
-        orb->string_to_object (argv[1], ACE_TRY_ENV);
+        orb->string_to_object (argv[1] TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
-        RtecEventChannelAdmin::EventChannel::_narrow (object.in (),
-                                                      ACE_TRY_ENV);
+        RtecEventChannelAdmin::EventChannel::_narrow (object.in ()
+                                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The canonical protocol to connect to the EC
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        event_channel->for_consumers (ACE_TRY_ENV);
+        event_channel->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
-        consumer_admin->obtain_push_supplier (ACE_TRY_ENV);
+        consumer_admin->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventComm::PushConsumer_var consumer =
-        this->_this (ACE_TRY_ENV);
+        this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Simple subscription, but usually the helper classes in
@@ -94,11 +94,11 @@ Consumer::run (int argc, char* argv[])
       h1.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
       h1.source = ACE_ES_EVENT_SOURCE_ANY;
 
-      supplier->connect_push_consumer (consumer.in (), qos,
-                                       ACE_TRY_ENV);
+      supplier->connect_push_consumer (consumer.in (), qos
+                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Wait for events, using work_pending()/perform_work() may help 
+      // Wait for events, using work_pending()/perform_work() may help
       // or using another thread, this example is too simple for that.
       orb->run ();
 
@@ -119,8 +119,8 @@ Consumer::run (int argc, char* argv[])
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events,
-                CORBA::Environment &)
+Consumer::push (const RtecEventComm::EventSet& events
+                TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (events.length () == 0)
@@ -140,13 +140,13 @@ Consumer::push (const RtecEventComm::EventSet& events,
 }
 
 void
-Consumer::disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // In this example we shutdown the ORB when we disconnect from the
   // EC (or rather the EC disconnects from us), but this doesn't have
   // to be the case....
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************

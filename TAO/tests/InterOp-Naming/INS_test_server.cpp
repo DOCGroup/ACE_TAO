@@ -16,12 +16,12 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       if (server.init (argc,
-                       argv,
-                       ACE_TRY_ENV) == -1)
+                       argv
+                       TAO_ENV_ARG_PARAMETER) == -1)
         return 1;
       else
         {
-          server.run (ACE_TRY_ENV);
+          server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -20,8 +20,8 @@ Server_Request_Interceptor::~Server_Request_Interceptor (void)
 void
 Server_Request_Interceptor::forward_references (
   CORBA::Object_ptr obj1,
-  CORBA::Object_ptr obj2,
-  CORBA::Environment &ACE_TRY_ENV)
+  CORBA::Object_ptr obj2
+  TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (obj1) || CORBA::is_nil (obj2))
@@ -57,12 +57,10 @@ Server_Request_Interceptor::receive_request_service_contexts (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   this->request_count_++;
 
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_TRY_ENV);
+    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected)   // A one-way request.
@@ -99,10 +97,8 @@ Server_Request_Interceptor::receive_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_TRY_ENV);
+    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected)   // A one-way request.
@@ -160,10 +156,8 @@ Server_Request_Interceptor::send_other (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   CORBA::Boolean response_expected =
-    ri->response_expected (ACE_TRY_ENV);
+    ri->response_expected (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!response_expected)   // A one-way request.
@@ -175,7 +169,7 @@ Server_Request_Interceptor::send_other (
   // This will throw an exception if a location forward has not
   // occured.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
-  CORBA::Object_var forward = ri->forward_reference (ACE_TRY_ENV);
+  CORBA::Object_var forward = ri->forward_reference (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (forward.in ()))

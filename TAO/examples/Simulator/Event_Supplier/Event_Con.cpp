@@ -59,7 +59,7 @@ int
 Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                               const char *my_name)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Get a Scheduler.
@@ -68,7 +68,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
         ACE_Scheduler_Factory::server ();
 
       // Define Real-time information.
-      rt_info_ = server->create (my_name, ACE_TRY_ENV);
+      rt_info_ = server->create (my_name TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       server->set (rt_info_,
@@ -80,8 +80,8 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                    RtecScheduler::VERY_LOW_IMPORTANCE,
                    ORBSVCS_Time::zero (),
                    1,
-                   RtecScheduler::OPERATION,
-                   ACE_TRY_ENV);
+                   RtecScheduler::OPERATION
+                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -100,14 +100,14 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
       // = Connect as a consumer.
 
       this->consumer_admin_ =
-        channel_admin_->for_consumers (ACE_TRY_ENV);
+        channel_admin_->for_consumers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain a pointer to a push supplier.  "suppliers" is
       // inherited from a base class.
 
       this->suppliers_ =
-        consumer_admin_->obtain_push_supplier (ACE_TRY_ENV);
+        consumer_admin_->obtain_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The _this function returns an object pointer. This is needed
@@ -115,12 +115,12 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
       // CORBA::Object.
 
       RtecEventComm::PushConsumer_var objref =
-        this->_this (ACE_TRY_ENV);
+        this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->suppliers_->connect_push_consumer (objref.in (),
-                                               dependencies.get_ConsumerQOS (),
-                                               ACE_TRY_ENV);
+                                               dependencies.get_ConsumerQOS ()
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR, se)
@@ -141,7 +141,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 void
-Demo_Consumer::disconnect_push_consumer (CORBA::Environment &)
+Demo_Consumer::disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -149,8 +149,8 @@ Demo_Consumer::disconnect_push_consumer (CORBA::Environment &)
 }
 
 void
-Demo_Consumer::push (const RtecEventComm::EventSet &events,
-                     CORBA::Environment &ACE_TRY_ENV)
+Demo_Consumer::push (const RtecEventComm::EventSet &events
+                     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
@@ -177,39 +177,39 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events,
             {
               // Use a temporary int to avoid overload ambiguities with
               // the enum.
-              int kind = events[i].data.any_value.type()->kind (ACE_TRY_ENV);
+              int kind = events[i].data.any_value.type()->kind (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              cout << "ID: " << events[i].data.any_value.type()->id(ACE_TRY_ENV) << endl;
+              cout << "ID: " << events[i].data.any_value.type()->id(TAO_ENV_SINGLE_ARG_PARAMETER) << endl;
               ACE_TRY_CHECK;
-              cout << "Name: " << events[i].data.any_value.type()->name(ACE_TRY_ENV) << endl;
+              cout << "Name: " << events[i].data.any_value.type()->name(TAO_ENV_SINGLE_ARG_PARAMETER) << endl;
               ACE_TRY_CHECK;
-              cout << "member_count: " << events[i].data.any_value.type()->member_count(ACE_TRY_ENV) << endl;
+              cout << "member_count: " << events[i].data.any_value.type()->member_count(TAO_ENV_SINGLE_ARG_PARAMETER) << endl;
               ACE_TRY_CHECK;
               cout << "TCKind: " << kind << endl;
 
-              int ret = _tc_Navigation->equal (events[i].data.any_value.type(), ACE_TRY_ENV);
-	      ACE_TRY_CHECK;
-	      if (ret)
+              int ret = _tc_Navigation->equal (events[i].data.any_value.type() TAO_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+              if (ret)
                 {
                   Navigation *navigation_ = (Navigation*) events[i].data.any_value.value ();
                   cout << "Found a Navigation struct in the any: pos_lat = " << navigation_->position_latitude << endl;
                 }
-	      else {
-		ret = (_tc_Weapons->equal (events[i].data.any_value.type(), ACE_TRY_ENV));
-		ACE_TRY_CHECK;
-		if (ret) {
-		  Weapons *weapons_ = (Weapons*) events[i].data.any_value.value ();
-		  cout << "Found a Navigation struct in the any: pos_lat = " << weapons_->number_of_weapons << endl;
+              else {
+                ret = (_tc_Weapons->equal (events[i].data.any_value.type() TAO_ENV_ARG_PARAMETER));
+                ACE_TRY_CHECK;
+                if (ret) {
+                  Weapons *weapons_ = (Weapons*) events[i].data.any_value.value ();
+                  cout << "Found a Navigation struct in the any: pos_lat = " << weapons_->number_of_weapons << endl;
                 }
-	      }
-	    }
+              }
+            }
           ACE_CATCHANY
             {
               ACE_ERROR ((LM_ERROR, "(%t)Error in extracting the Navigation and Weapons data.\n"));
             }
           ACE_ENDTRY;
-	  ACE_CHECK;
+          ACE_CHECK;
         }
     }
 }
@@ -221,7 +221,7 @@ Demo_Consumer::shutdown (void)
     {
       // Disconnect from the push supplier.
 
-      this->suppliers_->disconnect_push_supplier (ACE_TRY_ENV);
+      this->suppliers_->disconnect_push_supplier (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "@@ we should shutdown here!!!\n"));
@@ -286,12 +286,12 @@ main (int argc, char *argv [])
       // Initialize ORB.
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "internet" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA",
-                                        ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA"
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -300,16 +300,16 @@ main (int argc, char *argv [])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var naming_obj =
-        orb->resolve_initial_references ("NameService",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("NameService"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (naming_obj.in ()))
@@ -318,8 +318,8 @@ main (int argc, char *argv [])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           ACE_TRY_ENV);
+        CosNaming::NamingContext::_narrow (naming_obj.in ()
+                                           TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
@@ -334,12 +334,12 @@ main (int argc, char *argv [])
       channel_name[0].id = CORBA::string_dup ("EventService");
 
       CORBA::Object_var ec_obj =
-        naming_context->resolve (channel_name,
-                                 ACE_TRY_ENV);
+        naming_context->resolve (channel_name
+                                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RtecEventChannelAdmin::EventChannel_var ec =
-        RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in(), ACE_TRY_ENV);
+        RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in() TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ec.ptr() == 0)
@@ -360,19 +360,19 @@ main (int argc, char *argv [])
                            "Someone was feeling introverted.\n"),
                           -1);
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Run the ORB
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       delete demo_consumer;
 
       root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
+                         1
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

@@ -20,14 +20,14 @@ TAO_ComponentRepository_i::~TAO_ComponentRepository_i (void)
 {
 }
 
-IR::ComponentDef_ptr 
+IR::ComponentDef_ptr
 TAO_ComponentRepository_i::create_component (
     const char *id,
     const char *name,
     const char *version,
     IR::ComponentDef_ptr base_component,
-    const CORBA_InterfaceDefSeq & supports_interfaces,
-    CORBA::Environment &ACE_TRY_ENV
+    const CORBA_InterfaceDefSeq & supports_interfaces
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -37,18 +37,18 @@ TAO_ComponentRepository_i::create_component (
                                    name,
                                    version,
                                    base_component,
-                                   supports_interfaces,
-                                   ACE_TRY_ENV);
+                                   supports_interfaces
+                                   TAO_ENV_ARG_PARAMETER);
 }
 
-IR::ComponentDef_ptr 
+IR::ComponentDef_ptr
 TAO_ComponentRepository_i::create_component_i (
     const char * /* id */,
     const char * /* name */,
     const char * /* version */,
     IR::ComponentDef_ptr /* base_component */,
-    const CORBA_InterfaceDefSeq & /* supports_interfaces */,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    const CORBA_InterfaceDefSeq & /* supports_interfaces */
+    TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -56,15 +56,15 @@ TAO_ComponentRepository_i::create_component_i (
   return 0;
 }
 
-IR::HomeDef_ptr 
+IR::HomeDef_ptr
 TAO_ComponentRepository_i::create_home (
     const char *id,
     const char *name,
     const char *version,
     IR::HomeDef_ptr base_component,
     IR::ComponentDef_ptr managed_component,
-    CORBA_ValueDef_ptr primary_key,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA_ValueDef_ptr primary_key
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -75,19 +75,19 @@ TAO_ComponentRepository_i::create_home (
                               version,
                               base_component,
                               managed_component,
-                              primary_key,
-                              ACE_TRY_ENV);
+                              primary_key
+                              TAO_ENV_ARG_PARAMETER);
 }
 
-IR::HomeDef_ptr 
+IR::HomeDef_ptr
 TAO_ComponentRepository_i::create_home_i (
     const char * /* id */,
     const char * /* name */,
     const char * /* version */,
     IR::HomeDef_ptr /* base_component */,
     IR::ComponentDef_ptr /* managed_component */,
-    CORBA_ValueDef_ptr /* primary_key */,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    CORBA_ValueDef_ptr /* primary_key */
+    TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {

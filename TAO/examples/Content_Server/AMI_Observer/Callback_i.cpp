@@ -46,8 +46,8 @@ Callback_i::~Callback_i (void)
 
 void
 Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
-                        CORBA::Boolean last_chunk,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Boolean last_chunk
+                        TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (!last_chunk)
@@ -93,7 +93,7 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
       if (this->metadata_received ())
         {
           (void) this->file_io_.close ();
-          this->deactivate (ACE_TRY_ENV);
+          this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
 
           (void) this->spawn_viewer ();
@@ -104,7 +104,7 @@ Callback_i::next_chunk (const Web_Server::Chunk_Type & chunk_data,
 void
 Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       {
@@ -126,7 +126,7 @@ Callback_i::metadata (const Web_Server::Metadata_Type &metadata)
       // an external viewer to display it.
       if (this->content_received ())
         {
-          this->deactivate (ACE_TRY_ENV);
+          this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           (void) this->spawn_viewer ();
@@ -273,19 +273,19 @@ Callback_i::spawn_viewer (void)
 }
 
 void
-Callback_i::deactivate (CORBA::Environment &ACE_TRY_ENV)
+Callback_i::deactivate (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Get the POA used when activating the Reply Handler object.
-  PortableServer::POA_var poa = this->_default_POA (ACE_TRY_ENV);
+  PortableServer::POA_var poa = this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this,
-                        ACE_TRY_ENV);
+    poa->servant_to_id (this
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now deactivate the iterator object.
-  poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+  poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }

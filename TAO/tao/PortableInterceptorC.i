@@ -49,11 +49,11 @@ tao_PortableInterceptor_Interceptor_nil (
 
 ACE_INLINE PortableInterceptor::Interceptor_ptr
 tao_PortableInterceptor_Interceptor_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::Interceptor::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::Interceptor::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -107,11 +107,11 @@ tao_PortableInterceptor_Current_nil (
 
 ACE_INLINE PortableInterceptor::Current_ptr
 tao_PortableInterceptor_Current_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::Current::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::Current::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -157,11 +157,11 @@ tao_PortableInterceptor_RequestInfo_nil (
 
 ACE_INLINE PortableInterceptor::RequestInfo_ptr
 tao_PortableInterceptor_RequestInfo_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::RequestInfo::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::RequestInfo::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -207,11 +207,11 @@ tao_PortableInterceptor_ClientRequestInfo_nil (
 
 ACE_INLINE PortableInterceptor::ClientRequestInfo_ptr
 tao_PortableInterceptor_ClientRequestInfo_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::ClientRequestInfo::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::ClientRequestInfo::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -257,11 +257,11 @@ tao_PortableInterceptor_ServerRequestInfo_nil (
 
 ACE_INLINE PortableInterceptor::ServerRequestInfo_ptr
 tao_PortableInterceptor_ServerRequestInfo_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::ServerRequestInfo::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::ServerRequestInfo::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -307,11 +307,11 @@ tao_PortableInterceptor_ClientRequestInterceptor_nil (
 
 ACE_INLINE PortableInterceptor::ClientRequestInterceptor_ptr
 tao_PortableInterceptor_ClientRequestInterceptor_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::ClientRequestInterceptor::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::ClientRequestInterceptor::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -357,11 +357,11 @@ tao_PortableInterceptor_ServerRequestInterceptor_nil (
 
 ACE_INLINE PortableInterceptor::ServerRequestInterceptor_ptr
 tao_PortableInterceptor_ServerRequestInterceptor_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::ServerRequestInterceptor::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::ServerRequestInterceptor::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -407,11 +407,11 @@ tao_PortableInterceptor_IORInfo_nil (
 
 ACE_INLINE PortableInterceptor::IORInfo_ptr
 tao_PortableInterceptor_IORInfo_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::IORInfo::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::IORInfo::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -457,11 +457,11 @@ tao_PortableInterceptor_IORInterceptor_nil (
 
 ACE_INLINE PortableInterceptor::IORInterceptor_ptr
 tao_PortableInterceptor_IORInterceptor_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::IORInterceptor::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::IORInterceptor::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -507,11 +507,11 @@ tao_PortableInterceptor_PolicyFactory_nil (
 
 ACE_INLINE PortableInterceptor::PolicyFactory_ptr
 tao_PortableInterceptor_PolicyFactory_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::PolicyFactory::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::PolicyFactory::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -565,11 +565,11 @@ tao_PortableInterceptor_ORBInitInfo_nil (
 
 ACE_INLINE PortableInterceptor::ORBInitInfo_ptr
 tao_PortableInterceptor_ORBInitInfo_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::ORBInitInfo::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::ORBInitInfo::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *
@@ -615,11 +615,11 @@ tao_PortableInterceptor_ORBInitializer_nil (
 
 ACE_INLINE PortableInterceptor::ORBInitializer_ptr
 tao_PortableInterceptor_ORBInitializer_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return PortableInterceptor::ORBInitializer::_narrow (p, ACE_TRY_ENV);
+  return PortableInterceptor::ORBInitializer::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE CORBA::Object *

@@ -31,23 +31,19 @@ public:
   // ctor
 
   // = The Test methods.
-  void oneway_payload_test (const Test::data &d,
-                            CORBA::Environment &ACE_TRY_ENV =
-                            TAO_default_environment ())
+  void oneway_payload_test (const Test::data &d
+                            TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void oneway_work_test (CORBA::ULong work,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ())
+  void oneway_work_test (CORBA::ULong work
+                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void twoway_work_test (CORBA::ULong work,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ())
+  void twoway_work_test (CORBA::ULong work
+                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV =
-                   TAO_default_environment ())
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

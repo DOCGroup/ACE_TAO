@@ -13,8 +13,8 @@ CORBA::Long
 Simple_Server_i::test_method (CORBA::Long x,
                               const Structure& the_in_structure,
                               Structure_out the_out_structure,
-                              char *&name,
-                              CORBA::Environment&)
+                              char *&name
+                              TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   Structure *tmp;
@@ -39,7 +39,7 @@ Simple_Server_i::test_method (CORBA::Long x,
 }
 
 void
-Simple_Server_i::raise_user_exception (CORBA::Environment &ACE_TRY_ENV)
+Simple_Server_i::raise_user_exception (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      test_exception))
 {
@@ -49,15 +49,15 @@ Simple_Server_i::raise_user_exception (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Simple_Server_i::raise_system_exception (CORBA::Environment &ACE_TRY_ENV)
+Simple_Server_i::raise_system_exception (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::NO_PERMISSION ());
 }
 
 void
-Simple_Server_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
+Simple_Server_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

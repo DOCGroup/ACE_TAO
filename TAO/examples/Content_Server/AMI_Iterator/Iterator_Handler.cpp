@@ -29,8 +29,8 @@ Iterator_Handler::~Iterator_Handler (void)
 
 void
 Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
-                              const Web_Server::Chunk_Type &chunk_data,
-                              CORBA::Environment &ACE_TRY_ENV)
+                              const Web_Server::Chunk_Type &chunk_data
+                              TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (pending_data)
@@ -52,8 +52,8 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
         this->offset_ += chunk->length ();
 
       this->contents_->sendc_next_chunk (this->ami_handler_.in (),
-                                         this->offset_,
-                                         ACE_TRY_ENV);
+                                         this->offset_
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
     }
@@ -66,8 +66,8 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
       (*this->request_count_)--;  // No more data.
 
       // Done with the iterator, so destroy it.
-      this->contents_->sendc_destroy (this->ami_handler_.in (),
-                                      ACE_TRY_ENV);
+      this->contents_->sendc_destroy (this->ami_handler_.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // File retrieval has completed, so spawn an external viewer to
@@ -77,11 +77,11 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
     }
 }
 void
-Iterator_Handler::destroy (CORBA::Environment &ACE_TRY_ENV)
+Iterator_Handler::destroy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Deactivate this reply handler.
-  this->deactivate (ACE_TRY_ENV);
+  this->deactivate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -89,8 +89,8 @@ Iterator_Handler::destroy (CORBA::Environment &ACE_TRY_ENV)
 void
 Iterator_Handler::run (int *request_count,
                        const char *pathname,
-                       Web_Server::Iterator_Factory_ptr factory,
-                       CORBA::Environment &ACE_TRY_ENV)
+                       Web_Server::Iterator_Factory_ptr factory
+                       TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
@@ -101,34 +101,34 @@ Iterator_Handler::run (int *request_count,
     ACE_THROW (CORBA::BAD_PARAM ());
   // Initialize the Content Iterator
   this->initialize_content_iterator (pathname,
-                                     factory,
-                                     ACE_TRY_ENV);
+                                     factory
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Activate this Reply Handler.
-  this->ami_handler_ = this->_this (ACE_TRY_ENV);
+  this->ami_handler_ = this->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Begin the asynchronous invocation.
   this->contents_->sendc_next_chunk (this->ami_handler_.in (),
-                                     this->offset_,
-                                     ACE_TRY_ENV);
+                                     this->offset_
+                                     TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 void
 Iterator_Handler::initialize_content_iterator
   (const char *pathname,
-   Web_Server::Iterator_Factory_ptr factory,
-   CORBA::Environment &ACE_TRY_ENV)
+   Web_Server::Iterator_Factory_ptr factory
+   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Web_Server::Error_Result))
 {
   // Obtain a Content Iterator for the desired file.
   factory->get_iterator (pathname,
                          this->contents_,
-                         this->metadata_,
-                         ACE_TRY_ENV);
+                         this->metadata_
+                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Create a temporary file to store the retrieved data.
@@ -149,21 +149,21 @@ Iterator_Handler::initialize_content_iterator
 }
 
 void
-Iterator_Handler::deactivate (CORBA::Environment &ACE_TRY_ENV)
+Iterator_Handler::deactivate (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Get the POA used when activating the Reply Handler object.
   PortableServer::POA_var poa =
-    this->_default_POA (ACE_TRY_ENV);
+    this->_default_POA (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the object ID associated with this servant.
   PortableServer::ObjectId_var oid =
-    poa->servant_to_id (this, ACE_TRY_ENV);
+    poa->servant_to_id (this TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now deactivate the iterator object.
-  poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+  poa->deactivate_object (oid.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

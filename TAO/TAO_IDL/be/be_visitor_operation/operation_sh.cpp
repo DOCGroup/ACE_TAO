@@ -137,9 +137,8 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
         "_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest &_tao_req," << be_nl
           << "void *_tao_obj," << be_nl
-          << "void *_tao_servant_upcall," << be_nl
-          << "CORBA::Environment &ACE_TRY_ENV"
-          << be_uidt_nl
+          << "void *_tao_servant_upcall" << be_nl
+          << "TAO_ENV_ARG_DECL" << be_uidt_nl
           << ");" << be_uidt << "\n\n";
     }
 

@@ -12,12 +12,12 @@
 ACE_RCSID(ESF, ESF_Shutdown_Proxy, "$Id$")
 
 template<class PROXY> void
-TAO_ESF_Shutdown_Proxy<PROXY>::work (PROXY *proxy,
-                                     CORBA::Environment &ACE_TRY_ENV)
+TAO_ESF_Shutdown_Proxy<PROXY>::work (PROXY *proxy
+                                     TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
-      proxy->shutdown (ACE_TRY_ENV);
+      proxy->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -29,13 +29,13 @@ visit_property (TAO_Property_Constraint* literal)
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
-      ACE_DECLARE_NEW_CORBA_ENV;
+      TAO_ENV_DECLARE_NEW_ENV;
 
       CORBA::Any *value = 0;
       // Retrieve the value of the property from the Property_Evaluator
       ACE_TRY
         {
-          // value = this->prop_eval_.property_value (prop_index, ACE_TRY_ENV);
+          // value = this->prop_eval_.property_value (prop_index TAO_ENV_ARG_PARAMETER);
           ACE_NEW_THROW_EX (value,
                             CORBA::Any,
                             CORBA::NO_MEMORY ());

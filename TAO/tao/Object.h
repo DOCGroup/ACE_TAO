@@ -51,12 +51,10 @@ public:
 
   /// No-op it is just here to simplify some templates.
   ACE_INLINE_FOR_GNUC
-  static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj,
-                                   CORBA_Environment &ACE_TRY_ENV =
-                                     TAO_default_environment ());
-  static CORBA_Object_ptr _unchecked_narrow (CORBA_Object_ptr obj,
-                                             CORBA_Environment &ACE_TRY_ENV =
-                                                 TAO_default_environment ());
+  static CORBA_Object_ptr _narrow (CORBA_Object_ptr obj
+                                   TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  static CORBA_Object_ptr _unchecked_narrow (CORBA_Object_ptr obj
+                                             TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// Used in the implementation of CORBA::Any
   static void _tao_any_destructor (void*);
@@ -71,9 +69,8 @@ public:
   // appropriate.
 
   /// determine if we are of the type specified by the "logical_type_id"
-  virtual CORBA::Boolean _is_a (const char *logical_type_id,
-                                CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ());
+  virtual CORBA::Boolean _is_a (const char *logical_type_id
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /// The repository ID for the most derived class, this is an
   /// implementation method and does no remote invocations!
@@ -89,21 +86,18 @@ public:
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  virtual CORBA::Boolean _non_existent (CORBA_Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ());
+  virtual CORBA::Boolean _non_existent (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// This method is deprecated in the CORBA 2.2 spec, we just return 0
   /// every time.
   virtual CORBA::ImplementationDef_ptr _get_implementation (
-      CORBA_Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 
   /// Get info about the object from the Interface Repository.
   virtual CORBA_InterfaceDef_ptr _get_interface (
-      CORBA_Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 
   // DII operations to create a request.
   //
@@ -116,9 +110,8 @@ public:
                                 CORBA::NVList_ptr arg_list,
                                 CORBA::NamedValue_ptr result,
                                 CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags,
-                                CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ());
+                                CORBA::Flags req_flags
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   virtual void _create_request (CORBA::Context_ptr ctx,
                                 const char *operation,
@@ -127,49 +120,42 @@ public:
                                 CORBA::ExceptionList_ptr exclist,
                                 CORBA::ContextList_ptr ctxtlist,
                                 CORBA::Request_ptr &request,
-                                CORBA::Flags req_flags,
-                                CORBA_Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ());
+                                CORBA::Flags req_flags
+                                TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   // The default implementation of this method uses the same simple,
   // multi-protocol remote invocation interface as is assumed by the
   // calls above ... that's how it can have a default implementation.
 
   /// DII operation to create a request.
-  virtual CORBA::Request_ptr _request (const char *operation,
-                                       CORBA_Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ());
+  virtual CORBA::Request_ptr _request (const char *operation
+                                       TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   CORBA::Policy_ptr _get_policy (
-      CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::PolicyType type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   CORBA::Policy_ptr _get_client_policy (
-      CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::PolicyType type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   CORBA::Object_ptr _set_policy_overrides (
       const CORBA::PolicyList & policies,
-      CORBA::SetOverrideType set_add,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::SetOverrideType set_add
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   CORBA::PolicyList * _get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      const CORBA::PolicyTypeSeq & types
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
   CORBA::Boolean _validate_connection (
-      CORBA::PolicyList_out inconsistent_policies,
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    );
+      CORBA::PolicyList_out inconsistent_policies
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -180,9 +166,8 @@ public:
    * different ORB protocols are in use) there is no default
    * implementation.
    */
-  virtual CORBA::ULong _hash (CORBA::ULong maximum,
-                              CORBA_Environment &ACE_TRY_ENV =
-                                TAO_default_environment ());
+  virtual CORBA::ULong _hash (CORBA::ULong maximum
+                              TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
   /**
    * Try to determine if this object is the same as <other_obj>.  This
@@ -190,14 +175,13 @@ public:
    * private state.  Since that changes easily (when different ORB
    * protocols are in use) there is no default implementation.
    */
-  virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj,
-                                         CORBA_Environment &ACE_TRY_ENV =
-                                             TAO_default_environment ())
+  virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj
+                                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC (());
 
   /// Return the object key as an out parameter.  Caller should release
   /// return value when finished with it.
-  virtual TAO_ObjectKey *_key (CORBA_Environment &ACE_TRY_ENV);
+  virtual TAO_ObjectKey *_key (TAO_ENV_SINGLE_ARG_DECL);
 
   /**
    * Return a reference to the object key of profile in-use.
@@ -312,7 +296,7 @@ public:
   static CORBA::Object_ptr tao_duplicate (CORBA::Object_ptr);
   static void tao_release (CORBA::Object_ptr);
   static CORBA::Object_ptr tao_nil (void);
-  static CORBA::Object_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+  static CORBA::Object_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
   static CORBA::Object * tao_upcast (void *);
 
 private:

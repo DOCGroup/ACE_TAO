@@ -64,15 +64,15 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -81,7 +81,7 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -94,11 +94,11 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var coordinator_owner_transfer(coordinator_impl);
 
       Test::Coordinator_var coordinator =
-        coordinator_impl->_this (ACE_TRY_ENV);
+        coordinator_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (coordinator.in (), ACE_TRY_ENV);
+        orb->object_to_string (coordinator.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // If the ior_output_file exists, output the ior to it
@@ -111,7 +111,7 @@ main (int argc, char *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Waiting for peers . . . "));
@@ -120,7 +120,7 @@ main (int argc, char *argv[])
            ++i)
         {
           ACE_Time_Value tv (1, 0);
-          orb->run (tv, ACE_TRY_ENV);
+          orb->run (tv TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_DEBUG ((LM_DEBUG, "done.\n"));
@@ -139,7 +139,7 @@ main (int argc, char *argv[])
       PortableServer::ServantBase_var session_control_owner_transfer(session_control_impl);
 
       Test::Session_Control_var session_control =
-        session_control_impl->_this (ACE_TRY_ENV);
+        session_control_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Session_List session_list;
@@ -147,8 +147,8 @@ main (int argc, char *argv[])
                                              payload_size,
                                              thread_count,
                                              message_count,
-                                             session_list,
-                                             ACE_TRY_ENV);
+                                             session_list
+                                             TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_ASSERT (session_list.length () == peer_count);
@@ -168,8 +168,8 @@ main (int argc, char *argv[])
                 Test::Session::_duplicate (session_list[k]);
             }
 
-          session_list[j]->start (other_sessions,
-                                  ACE_TRY_ENV);
+          session_list[j]->start (other_sessions
+                                  TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
         }
@@ -180,7 +180,7 @@ main (int argc, char *argv[])
            ++k)
         {
           ACE_Time_Value tv (1, 0);
-          orb->run (tv, ACE_TRY_ENV);
+          orb->run (tv TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -195,18 +195,18 @@ main (int argc, char *argv[])
 
       for (j = 0; j != peer_count; ++j)
         {
-          session_list[j]->destroy (ACE_TRY_ENV);
+          session_list[j]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
         }
 
-      coordinator_impl->shutdown_all_peers (ACE_TRY_ENV);
+      coordinator_impl->shutdown_all_peers (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

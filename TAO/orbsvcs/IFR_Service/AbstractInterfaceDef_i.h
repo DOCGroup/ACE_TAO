@@ -47,27 +47,24 @@ public:
   // Constructor
 
   virtual ~TAO_AbstractInterfaceDef_i (void);
-  // Destructor  
+  // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual CORBA::Boolean is_a (
-      const char *interface_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      const char *interface_id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Boolean is_a_i (
-      const char *interface_id,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      const char *interface_id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

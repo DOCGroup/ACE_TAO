@@ -11,8 +11,8 @@ Shutdown_Helper::Shutdown_Helper (CORBA::ORB_ptr orb)
 }
 
 void
-Shutdown_Helper::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Shutdown_Helper::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

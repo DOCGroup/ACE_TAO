@@ -37,18 +37,18 @@ main (int argc, char *argv [])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       SLevel1_Server_var server =
-        SLevel1_Server::_narrow (object.in (), ACE_TRY_ENV);
+        SLevel1_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -59,21 +59,21 @@ main (int argc, char *argv [])
                             1);
         }
 
-      CORBA::Boolean authorized = 
-        server->authorize_level1 (ACE_TRY_ENV);
+      CORBA::Boolean authorized =
+        server->authorize_level1 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
-      
+
       if (authorized == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "AUTHORIZED\n"));
       else if (authorized == 1)
         ACE_DEBUG ((LM_DEBUG,
                     "DENIED: You Do NOT have enough privileges\n"));
-        
-      server->shutdown (ACE_TRY_ENV);
+
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -86,4 +86,4 @@ main (int argc, char *argv [])
 
   return 0;
 }
-      
+

@@ -41,17 +41,17 @@ public:
 
   // = The CosEventComm::PushSupplier methods
 
-  void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                CORBA::Environment &ACE_TRY_ENV);
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Simple connect/disconnect methods..
 
-  void push (const CORBA::Any& events,
-             CORBA::Environment &_env)
+  void push (const CORBA::Any& events
+             TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Push an event.
 
-  virtual void disconnect_push_supplier (CORBA::Environment &)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // The skeleton methods.
 
@@ -79,7 +79,7 @@ public:
   void stop (void);
   CORBA::ULong push_count (void);
 
-  void run (CORBA::Environment &ACE_TRY_ENV);
+  void run (TAO_ENV_SINGLE_ARG_DECL);
   // Run a single iteration of the test
 
 private:
@@ -115,18 +115,18 @@ public:
 
   // = The CosEventComm::PullSupplier methods
 
-  void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                CORBA::Environment &ACE_TRY_ENV);
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void connect (CosEventChannelAdmin::SupplierAdmin_ptr supplier_admin
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Simple connect/disconnect methods..
 
   // The PullSupplier methods.
-  CORBA::Any* pull (CORBA::Environment &_env)
+  CORBA::Any* pull (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
-  CORBA::Any* try_pull (CORBA::Boolean_out has_event,
-                        CORBA::Environment &_env)
+  CORBA::Any* try_pull (CORBA::Boolean_out has_event
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
-  virtual void disconnect_pull_supplier (CORBA::Environment &)
+  virtual void disconnect_pull_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ULong event_count;

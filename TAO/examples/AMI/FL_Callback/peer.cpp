@@ -100,11 +100,11 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -113,25 +113,25 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var progress_object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Progress_var progress =
-        Progress::_narrow (progress_object.in (), ACE_TRY_ENV);
+        Progress::_narrow (progress_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_Time_Value delay (0, interval);
@@ -139,8 +139,8 @@ main (int argc, char *argv[])
       Peer_i peer;
       peer.init (orb.in (),
                  progress.in (),
-                 delay,
-                 ACE_TRY_ENV);
+                 delay
+                 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Worker worker (orb.in ());
@@ -157,7 +157,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Catched exception:");
+                           "Caught exception:");
       return 1;
     }
   ACE_ENDTRY;

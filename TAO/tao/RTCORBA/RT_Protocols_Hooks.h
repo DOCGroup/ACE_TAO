@@ -35,8 +35,8 @@ public:
   virtual ~TAO_RT_Protocols_Hooks (void);
 
   /// Initialize the protocols hooks instance.
-  virtual void init_hooks (TAO_ORB_Core *orb_core,
-                           CORBA::Environment &ACE_TRY_ENV);
+  virtual void init_hooks (TAO_ORB_Core *orb_core
+                           TAO_ENV_ARG_DECL);
 
   /// Invoke the client_protocols hook if present.
   /**
@@ -91,13 +91,13 @@ public:
 
   virtual void rt_service_context (TAO_Stub *stub,
                                    TAO_Service_Context &service_context,
-                                   CORBA::Boolean restart,
-                                   CORBA::Environment &ACE_TRY_ENV);
+                                   CORBA::Boolean restart
+                                   TAO_ENV_ARG_DECL);
 
   virtual void add_rt_service_context_hook (TAO_Service_Context &service_context,
                                             CORBA::Policy *model_policy,
-                                            CORBA::Short &client_priority,
-                                            CORBA::Environment &ACE_TRY_ENV);
+                                            CORBA::Short &client_priority
+                                            TAO_ENV_ARG_DECL);
 
   virtual void get_selector_hook (CORBA::Policy *model_policy,
                                   CORBA::Boolean
@@ -117,30 +117,30 @@ public:
    * some critical components.
    */
   //@{
-  virtual int get_thread_CORBA_priority (CORBA::Short &,
-                                         CORBA::Environment &);
+  virtual int get_thread_CORBA_priority (CORBA::Short &
+                                         TAO_ENV_ARG_DECL_NOT_USED);
 
-  virtual int get_thread_native_priority (CORBA::Short &,
-                                          CORBA::Environment &);
+  virtual int get_thread_native_priority (CORBA::Short &
+                                          TAO_ENV_ARG_DECL_NOT_USED);
 
   virtual int get_thread_CORBA_and_native_priority (CORBA::Short &,
-                                                    CORBA::Short &,
-                                                    CORBA::Environment &);
+                                                    CORBA::Short &
+                                                    TAO_ENV_ARG_DECL_NOT_USED);
 
-  virtual int set_thread_CORBA_priority (CORBA::Short,
-                                         CORBA::Environment &);
+  virtual int set_thread_CORBA_priority (CORBA::Short
+                                         TAO_ENV_ARG_DECL_NOT_USED);
 
-  virtual int set_thread_native_priority (CORBA::Short,
-                                          CORBA::Environment &);
+  virtual int set_thread_native_priority (CORBA::Short
+                                          TAO_ENV_ARG_DECL_NOT_USED);
 
   //@}
 
   /// 1. Sets ORB-level policy defaults for this ORB.  Currently sets
   /// default RTCORBA policies: ClientProtocolPolicy.
-  virtual int set_default_policies (CORBA::Environment &ACE_TRY_ENV);
+  virtual int set_default_policies (TAO_ENV_SINGLE_ARG_DECL);
 
-  int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry,
-                                          CORBA::Environment &ACE_TRY_ENV);
+  int set_default_server_protocol_policy (TAO_Acceptor_Registry &acceptor_registry
+                                          TAO_ENV_ARG_DECL);
 
 protected:
   TAO_ORB_Core *orb_core_;

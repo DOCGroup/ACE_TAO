@@ -55,7 +55,7 @@ public:
                      const char *my_name);
 
   /// Disconnect from the Event Service and deactivate the object
-  void close (CORBA::Environment &);
+  void close (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
   void entry_point (const char*);
   const char *entry_point () const;
@@ -63,7 +63,7 @@ public:
   /// Print timing statistics.
   void print_stats () /* const */;
 
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -71,8 +71,8 @@ public:
    * the supplier.  If its a shutdown message, the consumer
    * disconnects from the channel.
    */
-  virtual void push (const RtecEventComm::EventSet &events,
-                     CORBA::Environment &)
+  virtual void push (const RtecEventComm::EventSet &events
+                     TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
@@ -145,7 +145,7 @@ public:
     , public PortableServer::RefCountServantBase
   {
   public:
-    virtual void disconnect_push_supplier (CORBA::Environment &)
+    virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -164,11 +164,11 @@ public:
     , public PortableServer::RefCountServantBase
   {
   public:
-    virtual void push (const RtecEventComm::EventSet &events,
-                       CORBA::Environment &)
+    virtual void push (const RtecEventComm::EventSet &events
+                       TAO_ENV_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-    virtual void disconnect_push_consumer (CORBA::Environment &)
+    virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
@@ -203,18 +203,18 @@ public:
 
   /// Disconnect from the Event Service, deactivate the supplier and
   /// consumer personalities
-  void close (CORBA::Environment &ACE_TRY_ENV);
+  void close (TAO_ENV_SINGLE_ARG_DECL);
 
   /// The channel is disconnecting.
-  void disconnect_push_supplier (CORBA::Environment &);
+  void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
   /// The channel is disconnecting.
-  void disconnect_push_consumer (CORBA::Environment &);
+  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
 
   /// Takes a timestamp and then pushes event_ to all consumers, either
   /// directly, or via a channel.
-  void push (const RtecEventComm::EventSet &events,
-             CORBA::Environment &);
+  void push (const RtecEventComm::EventSet &events
+             TAO_ENV_ARG_DECL_NOT_USED);
 
   /**
    * Called when the supplier should start generating events.

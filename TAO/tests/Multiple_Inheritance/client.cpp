@@ -38,13 +38,13 @@ parse_args (int argc, char **argv)
         ior = get_opts.optarg;
         break;
       case 'f':
-	ior_input_file = get_opts.optarg;
-	break;
+        ior_input_file = get_opts.optarg;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\nusage:  %s "
-			   "-i <ior_input_file> "
+                           "-i <ior_input_file> "
                            "-k IOR "
                            "\n",
                            argv [0]),
@@ -54,13 +54,13 @@ parse_args (int argc, char **argv)
   if (ior == 0 && ior_input_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "\nPlease specify the IOR or IOR input file"
-		       " for the servant"),
-		      -1);
+                       " for the servant"),
+                      -1);
   if (ior != 0 && ior_input_file != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "\nPlease specify only an IOR or only an IOR"
-		       " input file but not both"),
-		      -1);
+                       "\nPlease specify only an IOR or only an IOR"
+                       " input file but not both"),
+                      -1);
 
   // Indicates successful parsing of the command line.
   return 0;
@@ -69,12 +69,12 @@ parse_args (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0,
-                                            ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Parse the command-line arguments to get the IOR
@@ -100,62 +100,62 @@ main (int argc, char **argv)
           ior_buffer.alloc ()-> free (data);
           ACE_OS::close (input_file);
         }
-      
+
       // Get the object reference with the IOR
-      CORBA::Object_var object = orb->string_to_object (ior, ACE_TRY_ENV);
+      CORBA::Object_var object = orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var string;
 
       // Narrow the object reference
-      A_var a = A::_narrow (object.in (), ACE_TRY_ENV);
+      A_var a = A::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the object reference
-      B_var b = B::_narrow (a.in (), ACE_TRY_ENV);
+      B_var b = B::_narrow (a.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the object reference
-      C_var c = C::_narrow (a.in (), ACE_TRY_ENV);
+      C_var c = C::_narrow (a.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the object reference
-      D_var d = D::_narrow (c.in (), ACE_TRY_ENV);
+      D_var d = D::_narrow (c.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      string = a->method1 (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
-
-      string = b->method1 (ACE_TRY_ENV);
+      string = a->method1 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = b->method2 (ACE_TRY_ENV);
+      string = b->method1 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = c->method1 (ACE_TRY_ENV);
+      string = b->method2 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = c->method3 (ACE_TRY_ENV);
+      string = c->method1 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = d->method1 (ACE_TRY_ENV);
+      string = c->method3 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = d->method2 (ACE_TRY_ENV);
+      string = d->method1 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = d->method3 (ACE_TRY_ENV);
+      string = d->method2 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
 
-      string = d->method4 (ACE_TRY_ENV);
+      string = d->method3 (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
+
+      string = d->method4 (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG, "%s\n", string.in ()));
     }

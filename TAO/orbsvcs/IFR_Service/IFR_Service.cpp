@@ -44,25 +44,25 @@ IFR_Service::~IFR_Service (void)
 
 int
 IFR_Service::init (int argc,
-                   char *argv[],
-                   CORBA::Environment &ACE_TRY_ENV)
+                   char *argv[]
+                   TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
-                                    0,
-                                    ACE_TRY_ENV);
+                                    0
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("RootPOA",
-                                                ACE_TRY_ENV);
+        this->orb_->resolve_initial_references ("RootPOA"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->root_poa_ =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int retval = OPTIONS::instance()->parse_args (argc,
@@ -71,31 +71,31 @@ IFR_Service::init (int argc,
       if (retval != 0)
         return retval;
 
-      retval = this->create_poas (ACE_TRY_ENV);
+      retval = this->create_poas (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
         return retval;
 
-      retval = this->open_config (ACE_TRY_ENV);
+      retval = this->open_config (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
         return retval;
 
-      retval = this->create_repository (ACE_TRY_ENV);
+      retval = this->create_repository (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
         return retval;
 
-      retval = this->create_locator (ACE_TRY_ENV);
+      retval = this->create_locator (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
         return retval;
 
-      retval = this->init_multicast_server (ACE_TRY_ENV);
+      retval = this->init_multicast_server (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (retval != 0)
@@ -118,22 +118,22 @@ IFR_Service::init (int argc,
 }
 
 int
-IFR_Service::run (CORBA::Environment &ACE_TRY_ENV)
+IFR_Service::run (TAO_ENV_SINGLE_ARG_DECL)
 {
-  this->orb_->run (0, ACE_TRY_ENV);
+  this->orb_->run (0 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-IFR_Service::fini (CORBA::Environment &ACE_TRY_ENV)
+IFR_Service::fini (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
       this->root_poa_->destroy (1,
-                                1,
-                                ACE_TRY_ENV);
+                                1
+                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -148,13 +148,13 @@ IFR_Service::fini (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
+IFR_Service::create_poas (TAO_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POAManager_var poa_manager =
-    this->root_poa_->the_POAManager (ACE_TRY_ENV);
+    this->root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  poa_manager->activate (ACE_TRY_ENV);
+  poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::PolicyList policies (4);
@@ -162,8 +162,8 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
 
   // So the Repository's POA can survive a crash.
   policies[0] =
-    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
-                                             ACE_TRY_ENV);
+    this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
+                                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   ACE_TString repo_name = "repoPOA";
@@ -171,8 +171,8 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
   this->repo_poa_ =
     this->root_poa_->create_POA (repo_name.c_str (),
                                  poa_manager.in (),
-                                 policies,
-                                 ACE_TRY_ENV);
+                                 policies
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   policies.length (4);
@@ -180,24 +180,24 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
   // So we can create object ids based on the DefinitionKind.
   policies[1] =
     this->root_poa_->create_id_assignment_policy (
-                         PortableServer::USER_ID,
-                         ACE_TRY_ENV
+                         PortableServer::USER_ID
+                         TAO_ENV_ARG_PARAMETER
                        );
   ACE_CHECK_RETURN (-1);
 
   // We'll use a servant manager.
   policies[2] =
     this->root_poa_->create_request_processing_policy (
-                         PortableServer::USE_SERVANT_MANAGER,
-                         ACE_TRY_ENV
+                         PortableServer::USE_SERVANT_MANAGER
+                         TAO_ENV_ARG_PARAMETER
                        );
   ACE_CHECK_RETURN (-1);
 
   // Specifically, we'll use a servant locator.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
-                         PortableServer::NON_RETAIN,
-                         ACE_TRY_ENV
+                         PortableServer::NON_RETAIN
+                         TAO_ENV_ARG_PARAMETER
                        );
   ACE_CHECK_RETURN (-1);
 
@@ -206,8 +206,8 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
   this->ir_object_poa_ =
     this->root_poa_->create_POA (name.c_str (),
                                  poa_manager.in (),
-                                 policies,
-                                 ACE_TRY_ENV);
+                                 policies
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Destroy the policy objects as they have been passed to
@@ -217,7 +217,7 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
-      policy->destroy (ACE_TRY_ENV);
+      policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -225,22 +225,22 @@ IFR_Service::create_poas (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-IFR_Service::create_locator (CORBA::Environment &ACE_TRY_ENV)
+IFR_Service::create_locator (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_NEW_THROW_EX (this->servant_locator_impl_,
                     IFR_ServantLocator (this->repo_impl_),
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (-1);
 
-  this->ir_object_poa_->set_servant_manager (this->servant_locator_impl_,
-                                             ACE_TRY_ENV);
+  this->ir_object_poa_->set_servant_manager (this->servant_locator_impl_
+                                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-IFR_Service::open_config (CORBA::Environment &ACE_TRY_ENV)
+IFR_Service::open_config (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (OPTIONS::instance ()->using_registry ())
     {
@@ -294,7 +294,7 @@ IFR_Service::open_config (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-IFR_Service::create_repository (CORBA::Environment &ACE_TRY_ENV)
+IFR_Service::create_repository (TAO_ENV_SINGLE_ARG_DECL)
 {
   TAO_ComponentRepository_i *impl = 0;
   ACE_NEW_THROW_EX (
@@ -328,11 +328,11 @@ IFR_Service::create_repository (CORBA::Environment &ACE_TRY_ENV)
   this->repo_impl_ = impl;
 
   PortableServer::ObjectId_var repo_oid =
-    this->repo_poa_->activate_object (impl_tie,
-                                      ACE_TRY_ENV);
+    this->repo_poa_->activate_object (impl_tie
+                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->repository_ = impl_tie->_this (ACE_TRY_ENV);
+  this->repository_ = impl_tie->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 
@@ -340,17 +340,17 @@ IFR_Service::create_repository (CORBA::Environment &ACE_TRY_ENV)
 
   // Save and output the IOR string.
   this->ifr_ior_ =
-    this->orb_->object_to_string (this->repository_,
-                                  ACE_TRY_ENV);
+    this->orb_->object_to_string (this->repository_
+                                  TAO_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (-1);
 
   CORBA::Object_var table_object =
-    this->orb_->resolve_initial_references ("IORTable", ACE_TRY_ENV);
+    this->orb_->resolve_initial_references ("IORTable" TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   IORTable::Table_var adapter =
-    IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
+    IORTable::Table::_narrow (table_object.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   if (CORBA::is_nil (adapter.in ()))
     {
@@ -359,8 +359,8 @@ IFR_Service::create_repository (CORBA::Environment &ACE_TRY_ENV)
   else
     {
       adapter->bind ("InterfaceRepository",
-                     this->ifr_ior_.in (),
-                     ACE_TRY_ENV);
+                     this->ifr_ior_.in ()
+                     TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -379,7 +379,7 @@ IFR_Service::create_repository (CORBA::Environment &ACE_TRY_ENV)
 
 // Install ior multicast handler.
 int
-IFR_Service::init_multicast_server (CORBA::Environment &ACE_TRY_ENV)
+IFR_Service::init_multicast_server (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Get reactor instance from TAO.
   ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();

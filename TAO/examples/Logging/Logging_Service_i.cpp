@@ -24,14 +24,14 @@ Logger_Server::parse_args (void)
         TAO_debug_level++;
         break;
       case 'n':  // Set factory name to cmnd line arg
-	service_name_ = get_opts.optarg;
-	break;
+        service_name_ = get_opts.optarg;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
-			   " [-n service-name]"
+                           " [-n service-name]"
                            "\n",
                            argv_ [0]),
                           -1);
@@ -43,8 +43,8 @@ Logger_Server::parse_args (void)
 
 int
 Logger_Server::init (int argc,
-		     char *argv[],
-		     CORBA::Environment &ACE_TRY_ENV)
+                     char *argv[]
+                     TAO_ENV_ARG_DECL)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -52,44 +52,44 @@ Logger_Server::init (int argc,
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
-					 argv,
-					 "child_poa",
-					 ACE_TRY_ENV) == -1)
+                                         argv,
+                                         "child_poa"
+                                         TAO_ENV_ARG_PARAMETER) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "init_child_poa"),
-		      -1);
+                       "%p\n",
+                       "init_child_poa"),
+                      -1);
 
   ACE_CHECK_RETURN (-1);
 
-  this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+  this->orb_manager_.activate_poa_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Parse the command line arguments.
   if (this->parse_args () != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "parse_args"),
-		      -1);
+                       "%p\n",
+                       "parse_args"),
+                      -1);
 
   // Activate the logger_factory.
   CORBA::String_var str =
     this->orb_manager_.activate_under_child_poa ("logger_factory",
-						 &this->factory_impl_,
-						 ACE_TRY_ENV);
+                                                 &this->factory_impl_
+                                                 TAO_ENV_ARG_PARAMETER);
     if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-		"The IOR is: <%s>\n",
-		str.in ()));
+                "The IOR is: <%s>\n",
+                str.in ()));
 
     // Initialize the naming service
-    int ret = this->init_naming_service (ACE_TRY_ENV);
+    int ret = this->init_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
     ACE_CHECK_RETURN (-1);
     if (ret != 0)
       ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "init_naming_service"),
-		      -1);
+                       "%p\n",
+                       "init_naming_service"),
+                      -1);
   else
     return 0;
 }
@@ -99,7 +99,7 @@ Logger_Server::init (int argc,
 // and logger_factory object.
 
 int
-Logger_Server::init_naming_service (CORBA::Environment& ACE_TRY_ENV)
+Logger_Server::init_naming_service (TAO_ENV_SINGLE_ARG_DECL_NOT_USED TAO_ENV_SINGLE_ARG_PARAMETER)
 {
   // Get pointers to the ORB and child POA
   CORBA::ORB_var orb = this->orb_manager_.orb ();
@@ -107,11 +107,11 @@ Logger_Server::init_naming_service (CORBA::Environment& ACE_TRY_ENV)
 
   // Initialize the naming service
   if (this->my_name_server_.init (orb.in (),
-				  child_poa.in ()) == -1)
+                                  child_poa.in ()) == -1)
     return -1;
 
   // Create an instance of the Logger_Factory
-  Logger_Factory_var factory = this->factory_impl_._this (ACE_TRY_ENV);
+  Logger_Factory_var factory = this->factory_impl_._this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   //Register the logger_factory
@@ -119,17 +119,17 @@ Logger_Server::init_naming_service (CORBA::Environment& ACE_TRY_ENV)
   factory_name.length (1);
   factory_name[0].id = CORBA::string_dup ("Logger_Factory");
   this->my_name_server_->bind (factory_name,
-			       factory.in (),
-			       ACE_TRY_ENV);
+                               factory.in ()
+                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Logger_Server::run (CORBA::Environment &ACE_TRY_ENV)
+Logger_Server::run (TAO_ENV_SINGLE_ARG_DECL)
 {
-  int ret = this->orb_manager_.run (ACE_TRY_ENV);
+  int ret = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
   if (ret == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

@@ -41,17 +41,17 @@ public:
   virtual ~TAO_Adapter (void);
 
   /// Initialize the Adapter
-  virtual void open (CORBA::Environment &) = 0;
+  virtual void open (TAO_ENV_SINGLE_ARG_DECL_NOT_USED) = 0;
 
   /// The ORB is shutting down, destroy any resources attached to this
   /// adapter.
-  virtual void close (int wait_for_completion,
-                      CORBA::Environment &) = 0;
+  virtual void close (int wait_for_completion
+                      TAO_ENV_ARG_DECL_NOT_USED) = 0;
 
   /// Check if the adapter can be closed in the current context, raise
   /// an exception if not.
-  virtual void check_close (int wait_for_completion,
-                            CORBA::Environment &) = 0;
+  virtual void check_close (int wait_for_completion
+                            TAO_ENV_ARG_DECL_NOT_USED) = 0;
 
   /**
    * Return the priority assigned to this adapter.
@@ -63,8 +63,8 @@ public:
   /// Return the status....
   virtual int dispatch (TAO_ObjectKey &key,
                         TAO_ServerRequest &request,
-                        CORBA::Object_out forward_to,
-                        CORBA::Environment &ACE_TRY_ENV)
+                        CORBA::Object_out forward_to
+                        TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
   enum {
@@ -118,20 +118,20 @@ public:
    * is invoked in an innapropriate context (think shutting down the
    * POA while performing an upcall).
    */
-  void close (int wait_for_completion,
-              CORBA::Environment &ACE_TRY_ENV);
+  void close (int wait_for_completion
+              TAO_ENV_ARG_DECL);
 
   /**
    * Verify if the close() call can be invoked in the current
    * context for *all* adapters.
    * Raise the right exception if not.
    */
-  void check_close (int wait_for_completion,
-                    CORBA::Environment &ACE_TRY_ENV);
+  void check_close (int wait_for_completion
+                    TAO_ENV_ARG_DECL);
 
   /// Insert a new adapter into the registry.
-  void insert (TAO_Adapter *adapter,
-               CORBA::Environment &ACE_TRY_ENV);
+  void insert (TAO_Adapter *adapter
+               TAO_ENV_ARG_DECL);
 
   /**
    * Dispatch the request to all the adapters.
@@ -140,8 +140,8 @@ public:
    */
   void dispatch (TAO_ObjectKey &key,
                  TAO_ServerRequest &request,
-                 CORBA::Object_out forward_to,
-                 CORBA::Environment &ACE_TRY_ENV)
+                 CORBA::Object_out forward_to
+                 TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Create a collocated object using the given profile and stub.

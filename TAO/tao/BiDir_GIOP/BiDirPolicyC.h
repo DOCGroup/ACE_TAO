@@ -76,7 +76,7 @@ TAO_NAMESPACE  BiDirPolicy
 
   class BidirectionalPolicy;
   typedef BidirectionalPolicy *BidirectionalPolicy_ptr;
-  
+
 #endif /* end #if !defined */
 
 
@@ -87,31 +87,31 @@ TAO_NAMESPACE  BiDirPolicy
   {
   public:
     BidirectionalPolicy_var (void); // default constructor
-    BidirectionalPolicy_var (BidirectionalPolicy_ptr p) : ptr_ (p) {} 
+    BidirectionalPolicy_var (BidirectionalPolicy_ptr p) : ptr_ (p) {}
     BidirectionalPolicy_var (const BidirectionalPolicy_var &); // copy constructor
     ~BidirectionalPolicy_var (void); // destructor
-    
+
     BidirectionalPolicy_var &operator= (BidirectionalPolicy_ptr);
     BidirectionalPolicy_var &operator= (const BidirectionalPolicy_var &);
     BidirectionalPolicy_ptr operator-> (void) const;
-    
+
     operator const BidirectionalPolicy_ptr &() const;
     operator BidirectionalPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     BidirectionalPolicy_ptr in (void) const;
     BidirectionalPolicy_ptr &inout (void);
     BidirectionalPolicy_ptr &out (void);
     BidirectionalPolicy_ptr _retn (void);
     BidirectionalPolicy_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static BidirectionalPolicy_ptr tao_duplicate (BidirectionalPolicy_ptr);
     static void tao_release (BidirectionalPolicy_ptr);
     static BidirectionalPolicy_ptr tao_nil (void);
-    static BidirectionalPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static BidirectionalPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     BidirectionalPolicy_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -138,7 +138,7 @@ TAO_NAMESPACE  BiDirPolicy
     operator BidirectionalPolicy_ptr &();
     BidirectionalPolicy_ptr &ptr (void);
     BidirectionalPolicy_ptr operator-> (void);
-  
+
   private:
     BidirectionalPolicy_ptr &ptr_;
   };
@@ -163,35 +163,32 @@ class TAO_BiDirGIOP_Export BidirectionalPolicy: public virtual CORBA::Policy
     // the static operations
     static BidirectionalPolicy_ptr _duplicate (BidirectionalPolicy_ptr obj);
     static BidirectionalPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static BidirectionalPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static BidirectionalPolicy_ptr _nil (void)
       {
         return (BidirectionalPolicy_ptr)0;
       }
 
     virtual BiDirPolicy::BidirectionalPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     BidirectionalPolicy ();
-    
+
     virtual ~BidirectionalPolicy (void);
   private:
     BidirectionalPolicy (const BidirectionalPolicy &);

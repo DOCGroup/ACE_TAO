@@ -22,7 +22,7 @@ TAO_POA_Manager::~TAO_POA_Manager (void)
 }
 
 void
-TAO_POA_Manager::activate_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Manager::activate_i (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POAManager::AdapterInactive))
 {
@@ -43,15 +43,15 @@ TAO_POA_Manager::activate_i (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
-                               CORBA::Boolean wait_for_completion,
-                               CORBA::Environment &ACE_TRY_ENV)
+                               CORBA::Boolean wait_for_completion
+                               TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                 wait_for_completion,
-                                                 ACE_TRY_ENV);
+                                                 wait_for_completion
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // This operation changes the state of the POA manager to
@@ -101,8 +101,8 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
     {
       TAO_POA *poa = *iterator;
       poa->deactivate_all_objects_i (etherealize_objects,
-                                     wait_for_completion,
-                                     ACE_TRY_ENV);
+                                     wait_for_completion
+                                     TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -116,15 +116,15 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 void
-TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion
+                                  TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                 wait_for_completion,
-                                                 ACE_TRY_ENV);
+                                                 wait_for_completion
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // This operation changes the state of the POA manager to
@@ -164,23 +164,23 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion,
            ++iterator)
         {
           TAO_POA *poa = *iterator;
-          poa->wait_for_completions (wait_for_completion,
-                                     ACE_TRY_ENV);
+          poa->wait_for_completions (wait_for_completion
+                                     TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }
 }
 
 void
-TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion,
-                                     CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion
+                                     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POAManager::AdapterInactive))
 {
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_POA::check_for_valid_wait_for_completions (this->object_adapter_.orb_core (),
-                                                 wait_for_completion,
-                                                 ACE_TRY_ENV);
+                                                 wait_for_completion
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // This operation changes the state of the POA manager to
@@ -222,8 +222,8 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion,
            ++iterator)
         {
           TAO_POA *poa = *iterator;
-          poa->wait_for_completions (wait_for_completion,
-                                     ACE_TRY_ENV);
+          poa->wait_for_completions (wait_for_completion
+                                     TAO_ENV_ARG_PARAMETER);
           ACE_CHECK;
         }
     }

@@ -27,23 +27,23 @@ Echo_Client_i::run (const char *name,
   if (client.init (name,argc, argv) == -1)
     return -1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       while (1)
         {
-          char buf[BUFSIZ];    
-          
+          char buf[BUFSIZ];
+
           // Get the input message which has to be displayed.
           ACE_DEBUG ((LM_DEBUG,
                       "ECHO? "));
-          
+
           if (ACE_OS::fgets (buf,sizeof buf, stdin) == 0)
             break;
-          
-          CORBA::String_var s = client->echo_string (buf,
-                                                     ACE_TRY_ENV);
+
+          CORBA::String_var s = client->echo_string (buf
+                                                     TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_DEBUG ((LM_DEBUG,
@@ -52,12 +52,12 @@ Echo_Client_i::run (const char *name,
         }
 
       if (client.shutdown () == 1)
-        client->shutdown (ACE_TRY_ENV);
-      
+        client->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+
       ACE_TRY_CHECK;
-       
+
     }
-  ACE_CATCHANY 
+  ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"\n Exception in RMI");
       return -1;

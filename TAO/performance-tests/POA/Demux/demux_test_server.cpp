@@ -45,8 +45,8 @@ Demux_Test_Server::~Demux_Test_Server (void)
 //
 
 int
-Demux_Test_Server::init (int argc, char *argv [],
-                         CORBA::Environment &ACE_TRY_ENV)
+Demux_Test_Server::init (int argc, char *argv []
+                         TAO_ENV_ARG_DECL)
 {
   printf ("here\n");
 
@@ -58,7 +58,7 @@ Demux_Test_Server::init (int argc, char *argv [],
     {
       // get the underlying ORB
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX(GET_ORB);
     }
   ACE_CATCHANY
@@ -77,8 +77,8 @@ Demux_Test_Server::init (int argc, char *argv [],
       // Get the Root POA
 
       temp =
-        this->orb_->resolve_initial_references ("RootPOA",
-                                                ACE_TRY_ENV);
+        this->orb_->resolve_initial_references ("RootPOA"
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX(GET_ROOT_POA);
       if (CORBA::is_nil (temp.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -86,8 +86,8 @@ Demux_Test_Server::init (int argc, char *argv [],
                           1);
 
       this->root_poa_ =
-        PortableServer::POA::_narrow (temp.in (),
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (temp.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (GET_ROOT_POA);
     }
   ACE_CATCHANY
@@ -104,7 +104,7 @@ Demux_Test_Server::init (int argc, char *argv [],
     {
 
       this->poa_mgr_ =
-        this->root_poa_->the_POAManager (ACE_TRY_ENV);
+        this->root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (GET_POA_MGR);
     }
   ACE_CATCHANY
@@ -146,8 +146,8 @@ Demux_Test_Server::init (int argc, char *argv [],
                       "Using the USER_ID policy ... \n"));
 
           policies[0] =
-            this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID,
-                                                          ACE_TRY_ENV);
+            this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID
+                                                          TAO_ENV_ARG_PARAMETER);
         }
       else
         {
@@ -155,8 +155,8 @@ Demux_Test_Server::init (int argc, char *argv [],
                       "Using the SYSTEM_ID policy ... \n"));
 
           policies[0] =
-            this->root_poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID,
-                                                          ACE_TRY_ENV);
+            this->root_poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID
+                                                          TAO_ENV_ARG_PARAMETER);
         }
 
       ACE_TRY_CHECK_EX (POLICY);
@@ -168,8 +168,8 @@ Demux_Test_Server::init (int argc, char *argv [],
                       "Using the TRANSIENT Lifespan policy for the POAs\n"));
 
           policies[1] =
-            this->root_poa_->create_lifespan_policy (PortableServer::TRANSIENT,
-                                                     ACE_TRY_ENV);
+            this->root_poa_->create_lifespan_policy (PortableServer::TRANSIENT
+                                                     TAO_ENV_ARG_PARAMETER);
         }
       else
         {
@@ -177,8 +177,8 @@ Demux_Test_Server::init (int argc, char *argv [],
                       "Using the PERSISTENT Lifespan policy for the POAs\n"));
 
           policies[1] =
-            this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT,
-                                                     ACE_TRY_ENV);
+            this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT
+                                                     TAO_ENV_ARG_PARAMETER);
         }
 
       ACE_TRY_CHECK_EX (POLICY);
@@ -229,8 +229,8 @@ Demux_Test_Server::init (int argc, char *argv [],
         {
           this->child_poa_[i] = prev_poa->create_POA (poa_name,
                                                       this->poa_mgr_.in (),
-                                                      policies,
-                                                      ACE_TRY_ENV);
+                                                      policies
+                                                      TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (CREATE_POA);
         }
       ACE_CATCHANY
@@ -257,8 +257,8 @@ Demux_Test_Server::init (int argc, char *argv [],
                                   -1);
 
                   //id = this->child_poa_[i]->activate_object (&this->demux_test_[j],
-                  id = this->child_poa_[i]->activate_object (demux_test_i_ptr,
-                                                             ACE_TRY_ENV);
+                  id = this->child_poa_[i]->activate_object (demux_test_i_ptr
+                                                             TAO_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK_EX (ACTIVATE_OBJ);
                 }
               ACE_CATCHANY
@@ -273,12 +273,12 @@ Demux_Test_Server::init (int argc, char *argv [],
               // Get the IOR and output it to the file
               ACE_TRY_EX (IOR)
                 {
-                  CORBA::Object_var demux_var = this->child_poa_[i]->id_to_reference (id.in (),
-                                                                                      ACE_TRY_ENV);
+                  CORBA::Object_var demux_var = this->child_poa_[i]->id_to_reference (id.in ()
+                                                                                      TAO_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK_EX (IOR);
 
                   CORBA::String_var ior = this->orb_->object_to_string
-                    (demux_var.in (), ACE_TRY_ENV);
+                    (demux_var.in () TAO_ENV_ARG_PARAMETER);
 
                   ACE_TRY_CHECK_EX (IOR);
 
@@ -318,17 +318,17 @@ Demux_Test_Server::init (int argc, char *argv [],
                     PortableServer::string_to_ObjectId (servant_name);
 
                   this->child_poa_[i]->activate_object_with_id (oid.in (),
-                                                                demux_test_i_ptr,
-                                                                ACE_TRY_ENV);
+                                                                demux_test_i_ptr
+                                                                TAO_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
                   // Get Object reference for demux_test_i impl object.
-                  CORBA::Object_var demux_var = demux_test_i_ptr->_this (ACE_TRY_ENV);
+                  CORBA::Object_var demux_var = demux_test_i_ptr->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
 
                   ACE_TRY_CHECK;
 
                   CORBA::String_var ior = this->orb_->object_to_string
-                    (demux_var.in (), ACE_TRY_ENV);
+                    (demux_var.in () TAO_ENV_ARG_PARAMETER);
 
                   ACE_TRY_CHECK;
 
@@ -359,7 +359,7 @@ Demux_Test_Server::init (int argc, char *argv [],
 
   ACE_TRY_EX (ACTIVATE)
     {
-      this->poa_mgr_->activate (ACE_TRY_ENV);
+      this->poa_mgr_->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK_EX (ACTIVATE);
     }
@@ -468,11 +468,11 @@ Demux_Test_Server::init_naming_service (void)
 
 // The main program for Demux_Test
 int
-Demux_Test_Server::run (CORBA::Environment &ACE_TRY_ENV)
+Demux_Test_Server::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
-      this->orb_->run (ACE_TRY_ENV);
+      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

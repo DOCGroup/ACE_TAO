@@ -71,31 +71,31 @@ class TAO_Export CORBA_Current_var : public TAO_Base_var
 {
 public:
   CORBA_Current_var (void); // default constructor
-  CORBA_Current_var (CORBA_Current_ptr p) : ptr_ (p) {} 
+  CORBA_Current_var (CORBA_Current_ptr p) : ptr_ (p) {}
   CORBA_Current_var (const CORBA_Current_var &); // copy constructor
   ~CORBA_Current_var (void); // destructor
-  
+
   CORBA_Current_var &operator= (CORBA_Current_ptr);
   CORBA_Current_var &operator= (const CORBA_Current_var &);
   CORBA_Current_ptr operator-> (void) const;
-  
+
   operator const CORBA_Current_ptr &() const;
   operator CORBA_Current_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   CORBA_Current_ptr in (void) const;
   CORBA_Current_ptr &inout (void);
   CORBA_Current_ptr &out (void);
   CORBA_Current_ptr _retn (void);
   CORBA_Current_ptr ptr (void) const;
-  
+
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
   static CORBA_Current_ptr tao_duplicate (CORBA_Current_ptr);
   static void tao_release (CORBA_Current_ptr);
   static CORBA_Current_ptr tao_nil (void);
   static CORBA_Current_ptr tao_narrow (
-      CORBA::Object *,
-      CORBA::Environment &
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
     );
   static CORBA::Object * tao_upcast (void *);
 
@@ -147,34 +147,32 @@ public:
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static int _tao_class_id;
-  
+
   // The static operations.
   static CORBA_Current_ptr _duplicate (CORBA_Current_ptr obj);
-  
+
   static CORBA_Current_ptr _narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-  
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
+
   static CORBA_Current_ptr _unchecked_narrow (
-      CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    );
-  
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
+
   static CORBA_Current_ptr _nil (void)
     {
       return (CORBA_Current_ptr)0;
     }
-  
+
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   CORBA_Current (void);
-  
+
   virtual ~CORBA_Current (void);
 
 private:

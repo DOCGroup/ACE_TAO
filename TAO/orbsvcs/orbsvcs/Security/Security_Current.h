@@ -62,8 +62,8 @@ public:
   /// Return the security attributes corresponding to the types in the
   /// given attribute type list associated with the current request.
   virtual Security::AttributeList * get_attributes (
-      const Security::AttributeTypeList & attributes,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      const Security::AttributeTypeList & attributes
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 
@@ -77,7 +77,7 @@ public:
   /// Return the Credentials received from the client associate with
   /// the current request.
   virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials (
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

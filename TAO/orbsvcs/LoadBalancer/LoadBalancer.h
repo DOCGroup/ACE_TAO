@@ -38,16 +38,16 @@ public:
   ~TAO_LoadBalancer (void);
   // Destructor.
 
-  void init (int argc, char *argv[],
-             CORBA::Environment &ACE_TRY_ENV);
+  void init (int argc, char *argv[]
+             TAO_ENV_ARG_DECL);
   // Initialize the service
 
-  void run (CORBA_Environment &ACE_TRY_ENV);
+  void run (TAO_ENV_SINGLE_ARG_DECL);
   // Run the TAO_Loadbalancer.
 
 protected:
-  void parse_args (int argc, char *argv[],
-                   CORBA::Environment &ACE_TRY_ENV);
+  void parse_args (int argc, char *argv[]
+                   TAO_ENV_ARG_DECL);
   // parses the arguments.
 
   void usage (const char *msg) const;

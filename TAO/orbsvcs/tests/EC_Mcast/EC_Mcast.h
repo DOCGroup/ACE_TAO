@@ -110,17 +110,17 @@ public:
   // The ipaddr (in host byte order) of the event type <i>
 
   void open (TAO_ECG_UDP_Out_Endpoint *endoint,
-             RtecEventChannelAdmin::EventChannel_ptr ec,
-             CORBA::Environment &_env);
+             RtecEventChannelAdmin::EventChannel_ptr ec
+             TAO_ENV_ARG_DECL);
   // Connect the UDP sender to the EC.
 
-  void close (CORBA::Environment &_env);
+  void close (TAO_ENV_SINGLE_ARG_DECL);
   // Close the UDP sender, disconnect from the EC
 
   int sender_local_addr (ACE_INET_Addr& addr);
   // Return the sender local address
 
-  RtecUDPAdmin::AddrServer_ptr addr_server (CORBA::Environment &env);
+  RtecUDPAdmin::AddrServer_ptr addr_server (TAO_ENV_SINGLE_ARG_DECL);
   // This address server can be used to convert event headers
   // (type,source) to UDP addresses (ipaddr,port)
 
@@ -163,28 +163,28 @@ public:
   ECM_Supplier (ECM_Local_Federation* federation);
 
   void open (const char* name,
-             RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             CORBA::Environment& _env);
+             RtecEventChannelAdmin::EventChannel_ptr event_channel
+             TAO_ENV_ARG_DECL);
   // This method connects the supplier to the EC.
 
-  void close (CORBA::Environment &_env);
+  void close (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
-                 RtecEventComm::Time interval,
-                 CORBA::Environment& _env);
+                 RtecEventComm::Time interval
+                 TAO_ENV_ARG_DECL);
   // Connect as a consumer to start receiving events.
 
   RtecEventComm::EventSourceID supplier_id (void) const;
   // The supplier ID.
 
-  void push (const RtecEventComm::EventSet& events,
-             CORBA::Environment &_env);
-  void disconnect_push_consumer (CORBA::Environment &);
+  void push (const RtecEventComm::EventSet& events
+             TAO_ENV_ARG_DECL);
+  void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Implement the callbacks for our consumer personality.
 
   // = The POA_RtecEventComm::PushSupplier methods.
-  virtual void disconnect_push_supplier (CORBA::Environment &)
+  virtual void disconnect_push_supplier (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -220,24 +220,24 @@ public:
 
   void open (const char* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             ACE_RANDR_TYPE &seed,
-             CORBA::Environment& _env);
+             ACE_RANDR_TYPE &seed
+             TAO_ENV_ARG_DECL);
   // This method connects the consumer to the EC.
 
-  void close (CORBA::Environment &_env);
+  void close (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
-  void connect (ACE_RANDR_TYPE& seed,
-                CORBA::Environment &_env);
-  void disconnect (CORBA::Environment &_env);
+  void connect (ACE_RANDR_TYPE& seed
+                TAO_ENV_ARG_DECL);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
   // = The POA_RtecEventComm::PushComsumer methods.
-  virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
+  virtual void push (const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
@@ -265,36 +265,36 @@ public:
   // Destructor
 
   void open (int event_count,
-             RtecEventChannelAdmin::EventChannel_ptr event_channel,
-             CORBA::Environment& _env);
+             RtecEventChannelAdmin::EventChannel_ptr event_channel
+             TAO_ENV_ARG_DECL);
   // Connect both the supplier and the consumer.
 
-  void close (CORBA::Environment& _env);
+  void close (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect everybody from the EC
 
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
-                 RtecEventComm::Time interval,
-                 CORBA::Environment& _env);
+                 RtecEventComm::Time interval
+                 TAO_ENV_ARG_DECL);
   // Activate the supplier
 
-  void supplier_timeout (RtecEventComm::PushConsumer_ptr consumer,
-                         CORBA::Environment& _env);
+  void supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
+                         TAO_ENV_ARG_DECL);
   // The supplier is ready to send a new event.
 
   void consumer_push (ACE_hrtime_t arrival,
-                      const RtecEventComm::EventSet& event,
-                      CORBA::Environment& _env);
+                      const RtecEventComm::EventSet& event
+                      TAO_ENV_ARG_DECL);
   // The consumer just received an event.
 
   const ECM_Federation *federation (void) const;
   // The federation description.
 
   void open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
-                      TAO_ECG_UDP_Out_Endpoint* ignore_from,
-                      CORBA::Environment &_env);
+                      TAO_ECG_UDP_Out_Endpoint* ignore_from
+                      TAO_ENV_ARG_DECL);
   // Connect the UDP receiver to the EC.
 
-  void close_receiver (CORBA::Environment &_env);
+  void close_receiver (TAO_ENV_SINGLE_ARG_DECL);
   // Close the UDP receiver, disconnect from the EC
 
   void dump_results (void) const;
@@ -413,41 +413,41 @@ public:
   int run (int argc, char* argv[]);
   // Run the test, read all the configuration files, etc.
 
-  void federation_has_shutdown (ECM_Local_Federation *federation,
-                                CORBA::Environment& _env);
+  void federation_has_shutdown (ECM_Local_Federation *federation
+                                TAO_ENV_ARG_DECL);
   // One of the federations has completed its simulation, once all of
   // them finish the test exists.
 
 
 private:
-  void open_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
-                         CORBA::Environment &_env);
+  void open_federations (RtecEventChannelAdmin::EventChannel_ptr ec
+                         TAO_ENV_ARG_DECL);
   // Connect the federations to the EC.
 
-  void activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec,
-                             CORBA::Environment &_env);
+  void activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec
+                             TAO_ENV_ARG_DECL);
   // Activate all the federations
 
-  void close_federations (CORBA::Environment &_env);
+  void close_federations (TAO_ENV_SINGLE_ARG_DECL);
   // Close the federations, i.e. disconnect from the EC, deactivate
   // the objects, etc.
 
-  void open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
-                     CORBA::Environment &_env);
+  void open_senders (RtecEventChannelAdmin::EventChannel_ptr ec
+                     TAO_ENV_ARG_DECL);
   // Connect all the senders, so we can start multicasting events.
 
-  void open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec,
-                       CORBA::Environment &_env);
+  void open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec
+                       TAO_ENV_ARG_DECL);
   // Connect all the receivers, thus we accept events arriving through
   // multicast.
 
-  void close_senders (CORBA::Environment &_env);
+  void close_senders (TAO_ENV_SINGLE_ARG_DECL);
   // Close all the senders to cleanup resources.
 
-  void close_receivers (CORBA::Environment &_env);
+  void close_receivers (TAO_ENV_SINGLE_ARG_DECL);
   // Close all the receivers to cleanup resources.
 
-  int shutdown (CORBA::Environment&);
+  int shutdown (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Called when the main thread.
 
   int parse_args (int argc, char* argv[]);

@@ -56,7 +56,7 @@ parse_args (int argc, char *argv[])
   return 0;
 }
 
-int 
+int
 run_test (CORBA::ORB_ptr orb_ptr,
           int target)
 {
@@ -67,28 +67,28 @@ run_test (CORBA::ORB_ptr orb_ptr,
       if (target == 1)
         {
           object =
-            orb->string_to_object (ior1,
-                                   ACE_TRY_ENV);
+            orb->string_to_object (ior1
+                                   TAO_ENV_ARG_PARAMETER);
         }
       else
         {
           object =
-            orb->string_to_object (ior2,
-                                   ACE_TRY_ENV);
+            orb->string_to_object (ior2
+                                   TAO_ENV_ARG_PARAMETER);
         }
       ACE_TRY_CHECK;
-      
+
       Test_var server =
-        Test::_narrow (object.in (),
-                       ACE_TRY_ENV);
+        Test::_narrow (object.in ()
+                       TAO_ENV_ARG_PARAMETER);
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Object reference is nil\n"),
                           1);
-      
+
       server->method (0);
-      server->shutdown (ACE_TRY_ENV);
-      
+      server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -97,7 +97,7 @@ run_test (CORBA::ORB_ptr orb_ptr,
                            "Client-side exception:");
     }
   ACE_ENDTRY;
-return 0;  
+return 0;
 }
 
 int
@@ -108,13 +108,13 @@ main (int argc, char *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv,
-                         "",
-                         ACE_TRY_ENV);
+                         ""
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
-      
+
       // To use the smart proxy it is necessary to allocate the
       // user-defined smart factory on the heap as the smart proxy
       // generated classes take care of destroying the object. This
@@ -126,14 +126,14 @@ main (int argc, char *argv[])
       // this interface) but if there is a need for flexibility per
       // object instance then <one_shot_factory> needs to be set to 0.
       Smart_Test_Factory *test_factory = 0;
-      ACE_NEW_RETURN (test_factory, 
+      ACE_NEW_RETURN (test_factory,
                       Smart_Test_Factory (one_shot_factory),
                       -1);
-      
-      // To make KAI Compiler happy as it considers <test_factory> to be 
+
+      // To make KAI Compiler happy as it considers <test_factory> to be
       // an unused variable.
       ACE_UNUSED_ARG (test_factory);
-      
+
       run_test (orb.in (), 1);
       run_test (orb.in (), 2);
 

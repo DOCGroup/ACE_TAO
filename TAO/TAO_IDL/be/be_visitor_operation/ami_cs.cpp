@@ -491,7 +491,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
       << "for (;;)" << be_nl
       << "{" << be_idt_nl;
 
-  *os << "_tao_call.start (ACE_TRY_ENV);" << be_nl;
+  *os << "_tao_call.start (TAO_ENV_SINGLE_ARG_PARAMETER);" << be_nl;
   // Check if there is an exception.
   // Return type is void, so we know what to generate here.
   *os << "ACE_CHECK;" << be_nl;
@@ -511,7 +511,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
 
   *os << be_nl
       << "_tao_call.prepare_header (" << be_idt << be_idt_nl
-      << "ACE_static_cast (CORBA::Octet, _tao_response_flag), ACE_TRY_ENV"
+      << "ACE_static_cast (CORBA::Octet, _tao_response_flag) TAO_ENV_ARG_PARAMETER"
       << be_uidt_nl << ");" << be_uidt << "\n";
 
   // Now make sure that we have some in and inout
@@ -555,7 +555,7 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
     }
 
   *os << be_nl
-      << "int _invoke_status = _tao_call.invoke (ACE_TRY_ENV);";
+      << "int _invoke_status = _tao_call.invoke (TAO_ENV_SINGLE_ARG_PARAMETER);";
 
   *os << be_uidt_nl;
 

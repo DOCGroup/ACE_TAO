@@ -37,17 +37,16 @@ public:
   ~Identity_i (void);
   // Destructor.
 
-  virtual void get_name (CORBA::String_out name,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         CORBA::Environment::default_environment ())
+  virtual void get_name (CORBA::String_out name
+                         TAO_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns the name of this object.
 
-  PortableServer::POA_ptr _default_POA (CORBA::Environment &ACE_TRY_ENV)
+  PortableServer::POA_ptr _default_POA (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Method for the POA that will return the persistent POA_ptr stored
   // in here..
-  
+
 private:
 
   CORBA::String_var name_;

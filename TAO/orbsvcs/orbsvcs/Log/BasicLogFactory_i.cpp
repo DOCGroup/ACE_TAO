@@ -14,30 +14,30 @@ BasicLogFactory_i::~BasicLogFactory_i()
 }
 
 DsLogAdmin::BasicLogFactory_ptr
-BasicLogFactory_i::activate (PortableServer::POA_ptr poa,
-                           CORBA::Environment &ACE_TRY_ENV)
+BasicLogFactory_i::activate (PortableServer::POA_ptr poa
+                           TAO_ENV_ARG_DECL)
 {
   DsLogAdmin::BasicLogFactory_var v_return;
 
   PortableServer::ObjectId_var oid =
-    poa->activate_object (this,
-                          ACE_TRY_ENV);
+    poa->activate_object (this
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (v_return._retn ());
 
   CORBA::Object_var obj =
-    poa->id_to_reference (oid.in (),
-                          ACE_TRY_ENV);
+    poa->id_to_reference (oid.in ()
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (v_return._retn ());
 
   // narrow and store the result..
   this->log_mgr_ =
-    DsLogAdmin::LogMgr::_narrow (obj.in (),
-                                 ACE_TRY_ENV);
+    DsLogAdmin::LogMgr::_narrow (obj.in ()
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (v_return._retn ());
 
   v_return =
-    DsLogAdmin::BasicLogFactory::_narrow (obj.in (),
-                                          ACE_TRY_ENV);
+    DsLogAdmin::BasicLogFactory::_narrow (obj.in ()
+                                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLogFactory::_nil ());
 
   return v_return._retn ();
@@ -46,8 +46,8 @@ BasicLogFactory_i::activate (PortableServer::POA_ptr poa,
 DsLogAdmin::BasicLog_ptr
 BasicLogFactory_i::create (DsLogAdmin::LogFullAction full_action,
                            CORBA::ULongLong max_rec_size,
-                           DsLogAdmin::LogId_out id,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           DsLogAdmin::LogId_out id
+                           TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    DsLogAdmin::NoResources
                    ))
@@ -58,8 +58,8 @@ BasicLogFactory_i::create (DsLogAdmin::LogFullAction full_action,
   DsLogAdmin::BasicLog_ptr basiclog =
     this->create_with_id (this->max_id_,
                           full_action,
-                          max_rec_size,
-                          ACE_TRY_ENV);
+                          max_rec_size
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   // Set the id to return..
@@ -70,8 +70,8 @@ BasicLogFactory_i::create (DsLogAdmin::LogFullAction full_action,
 DsLogAdmin::BasicLog_ptr
 BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
                                    DsLogAdmin::LogFullAction full_action,
-                                   CORBA::ULongLong max_size,
-                                   CORBA::Environment &ACE_TRY_ENV)
+                                   CORBA::ULongLong max_size
+                                   TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    DsLogAdmin::NoResources,
@@ -101,14 +101,14 @@ BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   auto_ptr<BasicLog_i> basic_log_auto (basic_log_i);
   // just in case the activation fails.
 
-  basic_log_i->init (ACE_TRY_ENV);
+  basic_log_i->init (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (basic_log._retn ());
 
   // Register with the poa
-  basic_log = basic_log_i->_this (ACE_TRY_ENV);
+  basic_log = basic_log_i->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (basic_log._retn ());
 
-  basic_log_i->_remove_ref (ACE_TRY_ENV);
+  basic_log_i->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   // Add to the Hash table..

@@ -52,24 +52,24 @@ public:
   virtual ~TAO_Notify_ProxyConsumer (void);
   // Destructor
 
-  void init (CosNotifyChannelAdmin::ProxyID myID, CORBA::Environment &ACE_TRY_ENV);
+  void init (CosNotifyChannelAdmin::ProxyID myID TAO_ENV_ARG_DECL);
   // Init the Proxy.
 
   // = TAO_Notify_EventSource methods.
-  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
+  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event TAO_ENV_ARG_DECL);
   // Evaluates true if this event is acceptable by the Source.
 
   TAO_Notify_Worker_Task* filter_eval_task (void);
   // The Worker task associated with the event listener for filter evaluation.
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (CORBA::Environment &ACE_TRY_ENV)
+  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual CosNotification::EventTypeSeq * obtain_subscription_types (
-    CosNotifyChannelAdmin::ObtainInfoMode mode,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::ObtainInfoMode mode
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -77,8 +77,8 @@ public:
 
 virtual void offer_change (
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed,
-    CORBA::Environment &ACE_TRY_ENV
+    const CosNotification::EventTypeSeq & removed
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -87,10 +87,10 @@ virtual void offer_change (
 
 protected:
   // = Helper methods
-  void on_connected (CORBA::Environment &ACE_TRY_ENV);
+  void on_connected (TAO_ENV_SINGLE_ARG_DECL);
   // Derived classes should call this when their suppliers connect.
 
-  void on_disconnected (CORBA::Environment &ACE_TRY_ENV);
+  void on_disconnected (TAO_ENV_SINGLE_ARG_DECL);
   // Derived classes should call this when their suppliers disconnect.
 
   // = Data members

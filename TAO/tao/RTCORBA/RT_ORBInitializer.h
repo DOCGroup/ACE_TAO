@@ -66,8 +66,8 @@ private:
 
   /// Register RTCORBA policy factories.
   void register_policy_factories (
-    PortableInterceptor::ORBInitInfo_ptr info,
-    CORBA::Environment &ACE_TRY_ENV);
+    PortableInterceptor::ORBInitInfo_ptr info
+    TAO_ENV_ARG_DECL);
 
 private:
 

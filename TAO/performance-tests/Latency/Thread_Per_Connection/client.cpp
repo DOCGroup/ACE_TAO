@@ -76,18 +76,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in (), ACE_TRY_ENV);
+        Test::Roundtrip::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (roundtrip.in ()))
@@ -134,7 +134,7 @@ main (int argc, char *argv[])
 
       if (do_shutdown)
         {
-          roundtrip->shutdown (ACE_TRY_ENV);
+          roundtrip->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

@@ -73,31 +73,23 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_SS:
           {
-            // if the operation node has parameters, then we need to insert a comma
-            *os << "," << be_nl;
-            *os << "ACE_TRY_ENV";
+            *os << " TAO_ENV_ARG_PARAMETER";
             break;
           }
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CS:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SS:
           {
-            // if the operation node has parameters, then we need to insert a comma
-            *os << "," << be_nl;
            // last argument - is always CORBA::Environment
-            *os << "CORBA::Environment &";
+            *os << " TAO_ENV_ARG_DECL_NOT_USED";
             break;
           }
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH:
         case TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_SH:
             {
               // @@ Do it for all cases i.e arg count > = 0
-              *os << "," << be_nl;
 
               // last argument - is always CORBA::Environment
-              *os << "CORBA::Environment &ACE_TRY_ENV";
-              *os << " = " << be_idt_nl
-                  << "TAO_default_environment ()"
-                  << be_uidt << be_uidt_nl;
+              *os << " TAO_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl;
               break;
             }
         default:

@@ -12,8 +12,8 @@ Blocking_Sync_None::Blocking_Sync_None (CORBA::ORB_ptr orb)
 
 void
 Blocking_Sync_None::slow_operation (const Test::Payload &,
-                                    CORBA::ULong sleep_microseconds,
-                                    CORBA::Environment &)
+                                    CORBA::ULong sleep_microseconds
+                                    TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Time_Value sleep_time (0, sleep_microseconds);
@@ -21,8 +21,8 @@ Blocking_Sync_None::slow_operation (const Test::Payload &,
 }
 
 void
-Blocking_Sync_None::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Blocking_Sync_None::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

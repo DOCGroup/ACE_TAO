@@ -32,10 +32,10 @@ public:
                                             CORBA::ULong payload_size,
                                             CORBA::ULong thread_count,
                                             CORBA::ULong message_count,
-                                            CORBA::ULong peer_count,
-                                            CORBA::Environment &ACE_TRY_ENV)
+                                            CORBA::ULong peer_count
+                                            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV)
+  virtual void shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:

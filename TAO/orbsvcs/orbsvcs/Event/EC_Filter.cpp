@@ -37,8 +37,8 @@ TAO_EC_Filter::size (void) const
 }
 
 void
-TAO_EC_Filter::get_qos_info (TAO_EC_QOS_Info&,
-                             CORBA::Environment &ACE_TRY_ENV)
+TAO_EC_Filter::get_qos_info (TAO_EC_QOS_Info&
+                             TAO_ENV_ARG_DECL)
 {
   ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
@@ -48,44 +48,44 @@ TAO_EC_Filter::get_qos_info (TAO_EC_QOS_Info&,
 
 int
 TAO_EC_Null_Filter::filter (const RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info,
-                            CORBA::Environment& ACE_TRY_ENV)
+                            TAO_EC_QOS_Info& qos_info
+                            TAO_ENV_ARG_DECL)
 {
   // This is a leaf, no need to query any children, and we accept all
   // events, so push it.
-  this->push (event, qos_info, ACE_TRY_ENV);
+  this->push (event, qos_info TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
   return 1;
 }
 
 int
 TAO_EC_Null_Filter::filter_nocopy (RtecEventComm::EventSet& event,
-                                   TAO_EC_QOS_Info& qos_info,
-                                   CORBA::Environment& ACE_TRY_ENV)
+                                   TAO_EC_QOS_Info& qos_info
+                                   TAO_ENV_ARG_DECL)
 {
   // This is a leaf, no need to query any children, and we accept all
   // events, so push it.
-  this->push_nocopy (event, qos_info, ACE_TRY_ENV);
+  this->push_nocopy (event, qos_info TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
   return 1;
 }
 
 void
 TAO_EC_Null_Filter::push (const RtecEventComm::EventSet& event,
-                          TAO_EC_QOS_Info& qos_info,
-                          CORBA::Environment& ACE_TRY_ENV)
+                          TAO_EC_QOS_Info& qos_info
+                          TAO_ENV_ARG_DECL)
 {
   if (this->parent () != 0)
-    this->parent ()->push (event, qos_info, ACE_TRY_ENV);
+    this->parent ()->push (event, qos_info TAO_ENV_ARG_PARAMETER);
 }
 
 void
 TAO_EC_Null_Filter::push_nocopy (RtecEventComm::EventSet& event,
-                                 TAO_EC_QOS_Info& qos_info,
-                                 CORBA::Environment& ACE_TRY_ENV)
+                                 TAO_EC_QOS_Info& qos_info
+                                 TAO_ENV_ARG_DECL)
 {
   if (this->parent () != 0)
-    this->parent ()->push_nocopy (event, qos_info, ACE_TRY_ENV);
+    this->parent ()->push_nocopy (event, qos_info TAO_ENV_ARG_PARAMETER);
 }
 
 void
@@ -112,8 +112,8 @@ TAO_EC_Null_Filter::can_match (const RtecEventComm::EventHeader&) const
 int
 TAO_EC_Null_Filter::add_dependencies (
       const RtecEventComm::EventHeader &,
-      const TAO_EC_QOS_Info &,
-      CORBA::Environment &)
+      const TAO_EC_QOS_Info &
+      TAO_ENV_ARG_DECL_NOT_USED)
 
 {
   return 0;

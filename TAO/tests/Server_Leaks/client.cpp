@@ -18,19 +18,19 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-	ior = get_opts.optarg;
-	break;
+        ior = get_opts.optarg;
+        break;
 
       case 'x':
-	do_shutdown = 1;
-	break;
+        do_shutdown = 1;
+        break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-k <ior> "
-			   "-x "
+                           "-k <ior> "
+                           "-x "
                            "\n",
                            argv [0]),
                           -1);
@@ -45,18 +45,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior, ACE_TRY_ENV);
+        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Ping_Service_var ping_service =
-        Test::Ping_Service::_narrow(tmp.in (), ACE_TRY_ENV);
+        Test::Ping_Service::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (ping_service.in ()))
@@ -69,17 +69,17 @@ main (int argc, char *argv[])
 
       for (int i = 0; i != 10; ++i)
         {
-          ping_service->ping (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-  
-      if (do_shutdown)
-        {
-          ping_service->shutdown (ACE_TRY_ENV);
+          ping_service->ping (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
-      orb->destroy (ACE_TRY_ENV);
+      if (do_shutdown)
+        {
+          ping_service->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -51,23 +51,23 @@ public:
 
   /// Parse the ior-string that is passed.
   virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb,
-                                          CORBA::Environment &)
+                                          CORBA::ORB_ptr orb
+                                          TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 
   /// Checks the prefix to see if it is RIR.
-  virtual int check_prefix (const char *endpoint,
-                            CORBA::Environment &ACE_TRY_ENV)
+  virtual int check_prefix (const char *endpoint
+                            TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Helps count the length of the <obj_addr_list> and the number of
   /// individual <obj_addr> in the <obj_addr_list>.
   virtual void parse_string_count_helper (const char * &corbaloc_name,
                                           CORBA::ULong &addr_list_length,
-                                          CORBA::ULong &count_addr,
-                                          CORBA::Environment &)
+                                          CORBA::ULong &count_addr
+                                          TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -78,8 +78,8 @@ private:
    */
   virtual void parse_string_mprofile_helper (const char * end_point,
                                              CORBA::ORB_ptr orb,
-                                             TAO_MProfile &mprofile,
-                                             CORBA::Environment &)
+                                             TAO_MProfile &mprofile
+                                             TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -89,15 +89,15 @@ private:
    */
   virtual CORBA::Object_ptr
     make_stub_from_mprofile (CORBA::ORB_ptr orb,
-                             TAO_MProfile &mprofile,
-                             CORBA::Environment &)
+                             TAO_MProfile &mprofile
+                             TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Gets the pointer to the key_string when the protocol used is RIR
   virtual CORBA::Object_ptr
     parse_string_rir_helper (const char * &corbaloc_name,
-                             CORBA::ORB_ptr orb,
-                             CORBA::Environment &)
+                             CORBA::ORB_ptr orb
+                             TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Tokenizes the <obj_addr_list> using "," as the seperator. Assigns
@@ -106,8 +106,8 @@ private:
                                            ACE_CString &key_string,
                                            ACE_CString &cloc_name,
                                            CORBA::ORB_ptr orb,
-                                           TAO_MProfile &mprofile,
-                                           CORBA::Environment &)
+                                           TAO_MProfile &mprofile
+                                           TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
@@ -120,8 +120,8 @@ private:
                       ACE_CString &key_string,
                       CORBA::ULong &addr_list_length,
                       CORBA::ORB_ptr orb,
-                      TAO_MProfile &mprofile,
-                      CORBA::Environment &)
+                      TAO_MProfile &mprofile
+                      TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 };

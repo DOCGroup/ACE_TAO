@@ -52,19 +52,19 @@ main (int argc, char *argv[])
       PortableInterceptor::ORBInitializer_var initializer =
         temp_initializer;
 
-      PortableInterceptor::register_orb_initializer (initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+        orb->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -72,35 +72,35 @@ main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Secure_Vault_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&server_impl,
-                                   ACE_TRY_ENV);
+        root_poa->activate_object (&server_impl
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var test_obj =
-        root_poa->id_to_reference (id.in (),
-                                   ACE_TRY_ENV);
+        root_poa->id_to_reference (id.in ()
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test_Interceptors::Secure_Vault_var server =
-        Test_Interceptors::Secure_Vault::_narrow (test_obj.in (),
-                                                  ACE_TRY_ENV);
+        Test_Interceptors::Secure_Vault::_narrow (test_obj.in ()
+                                                  TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        orb->object_to_string (server.in (), ACE_TRY_ENV);
+        orb->object_to_string (server.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
@@ -120,12 +120,12 @@ main (int argc, char *argv[])
           ACE_OS::fclose (output_file);
         }
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      root_poa->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

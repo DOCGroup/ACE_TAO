@@ -36,8 +36,8 @@ public:
   TAO_Remote_Object_Proxy_Broker (void);
   ~TAO_Remote_Object_Proxy_Broker (void);
 
-  virtual TAO_Object_Proxy_Impl &select_proxy (CORBA::Object_ptr object,
-                                               CORBA::Environment &ACE_TRY_ENV);
+  virtual TAO_Object_Proxy_Impl &select_proxy (CORBA::Object_ptr object
+                                               TAO_ENV_ARG_DECL);
 
 private:
   TAO_Remote_Object_Proxy_Impl remote_proxy_impl_;

@@ -38,14 +38,14 @@ public:
   ~Time_Date_i (void);
   // Destructor
 
-  virtual void bin_date (CORBA::Long_out time_date,
-                         CORBA::Environment &)
+  virtual void bin_date (CORBA::Long_out time_date
+                         TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   // Obtain the time and date in binary format.
 
-  virtual void str_date (CORBA::String_out time_date,
-                         CORBA::Environment &)
+  virtual void str_date (CORBA::String_out time_date
+                         TAO_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Obtain the time and date in string format.
 

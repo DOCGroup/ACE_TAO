@@ -24,8 +24,8 @@ TAO_Interceptor_List::~TAO_Interceptor_List (void)
 
 size_t
 TAO_Interceptor_List::add_interceptor_i (
-    PortableInterceptor::Interceptor_ptr interceptor,
-    CORBA::Environment &ACE_TRY_ENV)
+    PortableInterceptor::Interceptor_ptr interceptor
+    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))
 {
@@ -71,7 +71,7 @@ TAO_Interceptor_List::add_interceptor_i (
       /// Increase the length of the Interceptor sequence by one.
       size_t new_len = old_len + 1;
       this->length (new_len);
-	  return old_len;
+          return old_len;
     }
   else
     ACE_THROW_RETURN (CORBA::INV_OBJREF (
@@ -121,11 +121,11 @@ TAO_ClientRequestInterceptor_List::interceptor (size_t index)
 
 void
 TAO_ClientRequestInterceptor_List::add_interceptor (
-  PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ClientRequestInterceptor_ptr interceptor
+  TAO_ENV_ARG_DECL)
 {
-  size_t index = this->add_interceptor_i (interceptor,
-                                          ACE_TRY_ENV);
+  size_t index = this->add_interceptor_i (interceptor
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->interceptors_[index] =
@@ -167,11 +167,11 @@ TAO_ServerRequestInterceptor_List::interceptor (size_t index)
 
 void
 TAO_ServerRequestInterceptor_List::add_interceptor (
-  PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor
+  TAO_ENV_ARG_DECL)
 {
-  size_t index = this->add_interceptor_i (interceptor,
-                                          ACE_TRY_ENV);
+  size_t index = this->add_interceptor_i (interceptor
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->interceptors_[index] =
@@ -215,11 +215,11 @@ TAO_IORInterceptor_List::interceptor (size_t index)
 
 void
 TAO_IORInterceptor_List::add_interceptor (
-  PortableInterceptor::IORInterceptor_ptr interceptor,
-  CORBA::Environment &ACE_TRY_ENV)
+  PortableInterceptor::IORInterceptor_ptr interceptor
+  TAO_ENV_ARG_DECL)
 {
-  size_t index = this->add_interceptor_i (interceptor,
-                                          ACE_TRY_ENV);
+  size_t index = this->add_interceptor_i (interceptor
+                                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->interceptors_[index] =

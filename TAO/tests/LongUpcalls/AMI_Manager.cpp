@@ -14,8 +14,8 @@ AMI_Manager::AMI_Manager (CORBA::ORB_ptr orb)
 void
 AMI_Manager::start_workers (CORBA::Short worker_count,
                             CORBA::Long milliseconds,
-                            Test::Controller_ptr controller,
-                            CORBA::Environment &)
+                            Test::Controller_ptr controller
+                            TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_Thread_Manager thread_manager;
@@ -31,10 +31,10 @@ AMI_Manager::start_workers (CORBA::Short worker_count,
 }
 
 void
-AMI_Manager::shutdown (CORBA::Environment &ACE_TRY_ENV)
+AMI_Manager::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
@@ -54,7 +54,7 @@ int
 Worker::svc (void)
 {
   // ACE_DEBUG ((LM_DEBUG, "Worker starts\n"));
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       TAO_SYNCH_MUTEX mutex;
@@ -69,11 +69,11 @@ Worker::svc (void)
                         -1);
 
         PortableServer::ServantBase_var auto_destroy (handler_impl);
-        handler = handler_impl->_this (ACE_TRY_ENV);
+        handler = handler_impl->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
-      this->controller_->sendc_worker_started (handler.in (),
-                                               ACE_TRY_ENV);
+      this->controller_->sendc_worker_started (handler.in ()
+                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ACE_DEBUG ((LM_DEBUG, "Worker start reported\n"));
@@ -81,8 +81,8 @@ Worker::svc (void)
       ACE_Time_Value tv (0, 1000 * this->milliseconds_);
       ACE_OS::sleep (tv);
 
-      this->controller_->sendc_worker_finished (handler.in (),
-                                                ACE_TRY_ENV);
+      this->controller_->sendc_worker_finished (handler.in ()
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // ACE_DEBUG ((LM_DEBUG, "Worker completion reported\n"));
@@ -90,7 +90,7 @@ Worker::svc (void)
       for (;;)
         {
           ACE_Time_Value tv (0, 1000 * this->milliseconds_);
-          this->orb_->run (tv, ACE_TRY_ENV);
+          this->orb_->run (tv TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, mutex, -1);
@@ -117,7 +117,7 @@ Controller_Handler::Controller_Handler (TAO_SYNCH_MUTEX *mutex,
 }
 
 void
-Controller_Handler::worker_started (CORBA::Environment &)
+Controller_Handler::worker_started (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
@@ -126,13 +126,13 @@ Controller_Handler::worker_started (CORBA::Environment &)
 
 void
 Controller_Handler::worker_started_excep
-    (Test::AMI_ControllerExceptionHolder* h,
-     CORBA::Environment &ACE_TRY_ENV)
+    (Test::AMI_ControllerExceptionHolder* h
+     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      h->raise_worker_started (ACE_TRY_ENV);
+      h->raise_worker_started (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -145,7 +145,7 @@ Controller_Handler::worker_started_excep
 }
 
 void
-Controller_Handler::worker_finished (CORBA::Environment &)
+Controller_Handler::worker_finished (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->mutex_);
@@ -154,13 +154,13 @@ Controller_Handler::worker_finished (CORBA::Environment &)
 
 void
 Controller_Handler::worker_finished_excep
-    (Test::AMI_ControllerExceptionHolder *h,
-     CORBA::Environment &ACE_TRY_ENV)
+    (Test::AMI_ControllerExceptionHolder *h
+     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {
-      h->raise_worker_finished (ACE_TRY_ENV);
+      h->raise_worker_finished (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

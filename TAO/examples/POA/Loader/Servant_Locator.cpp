@@ -75,8 +75,6 @@ ServantLocator_i::preinvoke (const PortableServer::ObjectId &oid,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   PortableServer::Servant servant =
     (*servant_supplier_) (oid,
                           poa,

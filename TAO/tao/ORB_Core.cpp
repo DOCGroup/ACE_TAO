@@ -57,7 +57,7 @@ ACE_RCSID(tao, ORB_Core, "$Id$")
 
 // ****************************************************************
 
-CORBA::Environment &
+CORBA::Environment&
 TAO_default_environment ()
 {
   return *TAO_TSS_RESOURCES::instance ()->default_environment_;
@@ -240,7 +240,7 @@ TAO_ORB_Core::default_buffering_constraint (void) const
 
 
 int
-TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::init (int &argc, char *argv[] TAO_ENV_ARG_DECL)
 {
   // Right now, this code expects to begin parsing in argv[1] rather
   // than argv[0].  I don't think that's wise.  I think we need to
@@ -1031,10 +1031,10 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // registries!
 
   // Set ORB-level policy defaults.
-  TAO_Protocols_Hooks *tph = this->get_protocols_hooks (ACE_TRY_ENV);
+  TAO_Protocols_Hooks *tph = this->get_protocols_hooks (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  int status = tph->set_default_policies (ACE_TRY_ENV);
+  int status = tph->set_default_policies (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (status != 0)
@@ -1063,7 +1063,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   // Look for BiDirectional library here. If the user has svc.conf
   // file, load the library at this point.
-  int ret = this->bidirectional_giop_init (ACE_TRY_ENV);
+  int ret = this->bidirectional_giop_init (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (ret == -1)
@@ -1086,8 +1086,8 @@ TAO_ORB_Core::fini (void)
   ACE_TRY_NEW_ENV
     {
       // Shutdown the ORB and block until the shutdown is complete.
-      this->shutdown (1,
-                      ACE_TRY_ENV);
+      this->shutdown (1
+                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -1315,7 +1315,7 @@ TAO_ORB_Core::set_protocols_hooks (const char *protocols_hooks)
 }
 
 TAO_Protocols_Hooks *
-TAO_ORB_Core::get_protocols_hooks (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::get_protocols_hooks (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Check if there is a cached reference.
   if (this->protocols_hooks_ != 0)
@@ -1327,14 +1327,14 @@ TAO_ORB_Core::get_protocols_hooks (CORBA::Environment &ACE_TRY_ENV)
     (TAO_ORB_Core::protocols_hooks_name_);
 
   // Initialize the protocols hooks instance.
-  this->protocols_hooks_->init_hooks (this,
-                                      ACE_TRY_ENV);
+  this->protocols_hooks_->init_hooks (this
+                                       TAO_ENV_ARG_PARAMETER);
 
   return this->protocols_hooks_;
 }
 
 int
-TAO_ORB_Core::bidirectional_giop_init (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::bidirectional_giop_init (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (this->bidir_adapter_ == 0)
     {
@@ -1345,20 +1345,20 @@ TAO_ORB_Core::bidirectional_giop_init (CORBA::Environment &ACE_TRY_ENV)
   if (this->bidir_adapter_)
     return this->bidir_adapter_->activate (this->orb_.in (),
                                            0,
-                                           0,
-                                           ACE_TRY_ENV);
+                                           0
+                                            TAO_ENV_ARG_PARAMETER);
   else
     return 0;
 }
 
 int
-TAO_ORB_Core::parse_bidir_policy (CORBA::Policy_ptr policy,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::parse_bidir_policy (CORBA::Policy_ptr policy
+                                  TAO_ENV_ARG_DECL)
 {
   if (this->bidir_adapter_)
     return this->bidir_adapter_->parse_policy (this,
-                                               policy,
-                                               ACE_TRY_ENV);
+                                               policy
+                                                TAO_ENV_ARG_PARAMETER);
   else
     // @@ The BiDirectional library hasn't been loaded. What do we do?
     // We are just returning an error which will be processd by the
@@ -1379,15 +1379,15 @@ TAO_ORB_Core::services_callbacks_init (void)
 
 int
 TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
-                                          TAO_Profile *profile,
-                                          CORBA::Environment &ACE_TRY_ENV)
+                                          TAO_Profile *profile
+                                          TAO_ENV_ARG_DECL)
 {
   if (this->ft_service_.service_callback ())
     {
       return this->ft_service_.service_callback ()->
                  raise_comm_failure (invoke,
-                                     profile,
-                                     ACE_TRY_ENV);
+                                     profile
+                                      TAO_ENV_ARG_PARAMETER);
     }
 
   invoke->close_connection ();
@@ -1402,15 +1402,15 @@ TAO_ORB_Core::service_raise_comm_failure (TAO_GIOP_Invocation *invoke,
 
 int
 TAO_ORB_Core::service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
-                                               TAO_Profile *profile,
-                                               CORBA::Environment &ACE_TRY_ENV)
+                                               TAO_Profile *profile
+                                               TAO_ENV_ARG_DECL)
 {
   if (this->ft_service_.service_callback ())
     {
       return this->ft_service_.service_callback ()->
                  raise_transient_failure (invoke,
-                                          profile,
-                                          ACE_TRY_ENV);
+                                          profile
+                                           TAO_ENV_ARG_PARAMETER);
     }
 
   ACE_THROW_RETURN (CORBA::TRANSIENT (
@@ -1426,8 +1426,8 @@ void
 TAO_ORB_Core::service_context_list (
     TAO_Stub *stub,
     TAO_Service_Context &service_context,
-    CORBA::Boolean restart,
-    CORBA::Environment &ACE_TRY_ENV)
+    CORBA::Boolean restart
+    TAO_ENV_ARG_DECL)
 {
   // @@ We look at the services if they are loaded. But if more
   // services offer this feature we may want to keep expanding the
@@ -1437,15 +1437,15 @@ TAO_ORB_Core::service_context_list (
     {
       this->ft_service_.service_callback ()->service_context_list (stub,
                                                                    service_context.service_info (),
-                                                                   restart,
-                                                                   ACE_TRY_ENV);
+                                                                   restart
+                                                                    TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
   this->protocols_hooks_->rt_service_context (stub,
                                               service_context,
-                                              restart,
-                                              ACE_TRY_ENV);
+                                              restart
+                                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -1495,7 +1495,7 @@ TAO_ORB_Core::inherit_from_parent_thread (
 }
 
 CORBA::Object_ptr
-TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::root_poa (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (!CORBA::is_nil (this->root_poa_.in ()))
     return CORBA::Object::_duplicate (this->root_poa_.in ());
@@ -1518,12 +1518,12 @@ TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV)
 
   // @@ Not exception safe
   TAO_Adapter *poa_adapter = factory->create (this);
-  poa_adapter->open (ACE_TRY_ENV);
+  poa_adapter->open (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   this->root_poa_ = poa_adapter->root ();
 
-  this->adapter_registry_.insert (poa_adapter, ACE_TRY_ENV);
+  this->adapter_registry_.insert (poa_adapter TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
   return CORBA::Object::_duplicate (this->root_poa_.in ());
@@ -1546,14 +1546,14 @@ TAO_ORB_Core::poa_adapter (void)
 
 TAO_Stub *
 TAO_ORB_Core::create_stub (const char *repository_id,
-                           const TAO_MProfile &profiles,
-                           CORBA::Environment &ACE_TRY_ENV)
+                           const TAO_MProfile &profiles
+                           TAO_ENV_ARG_DECL)
 {
   TAO_Stub *retval =
     this->stub_factory ()->create_stub (repository_id,
                                         profiles,
-                                        this,
-                                        ACE_TRY_ENV);
+                                        this
+                                         TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
   return retval;
 }
@@ -1562,8 +1562,8 @@ TAO_ORB_Core::create_stub (const char *repository_id,
 TAO_Stub *
 TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
                                   const char *type_id,
-                                  CORBA::PolicyList *policy_list,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::PolicyList *policy_list
+                                  TAO_ENV_ARG_DECL)
 {
   // Add the Polices contained in "policy_list" to each profile so
   // that those policies will be exposed to the client in the IOR.  In
@@ -1581,7 +1581,7 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
         {
           // Get the ith profile
           profile = mprofile.get_profile (i);
-          profile->policies (policy_list, ACE_TRY_ENV);
+          profile->policies (policy_list TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
     }
@@ -1589,11 +1589,11 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
   // for this servant.
-  this->establish_components (mprofile, policy_list, ACE_TRY_ENV);
+  this->establish_components (mprofile, policy_list TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Done creating profiles.  Initialize a TAO_Stub object with them.
-  TAO_Stub *stub = this->create_stub (type_id, mprofile, ACE_TRY_ENV);
+  TAO_Stub *stub = this->create_stub (type_id, mprofile TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (stub);
 
   stub->base_profiles ().policy_list (policy_list);
@@ -1603,8 +1603,8 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
 
 void
 TAO_ORB_Core::establish_components (TAO_MProfile &mp,
-                                    CORBA::PolicyList *policy_list,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::PolicyList *policy_list
+                                    TAO_ENV_ARG_DECL)
 {
   // Iterate over the registered IOR interceptors so that they may be
   // given the opportunity to add tagged components to the profiles
@@ -1765,8 +1765,8 @@ TAO_ORB_Core::lf_strategy (void)
 
 int
 TAO_ORB_Core::run (ACE_Time_Value *tv,
-                   int perform_work,
-                   CORBA::Environment &)
+                   int perform_work
+                   TAO_ENV_ARG_DECL_NOT_USED)
 {
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
@@ -1862,17 +1862,17 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
 
 void
-TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
-                        CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
+                        TAO_ENV_ARG_DECL)
 {
   if (this->has_shutdown () == 0)
     {
-      this->adapter_registry_.check_close (wait_for_completion,
-                                           ACE_TRY_ENV);
+      this->adapter_registry_.check_close (wait_for_completion
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      this->adapter_registry_.close (wait_for_completion,
-                                     ACE_TRY_ENV);
+      this->adapter_registry_.close (wait_for_completion
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Set the shutdown flag
@@ -1892,7 +1892,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
         tm->wait ();
 
       // Invoke Interceptor::destroy() on all registered interceptors.
-      this->destroy_interceptors (ACE_TRY_ENV);
+      this->destroy_interceptors (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       // Explicitly destroy the object reference table since it
@@ -1903,7 +1903,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion,
 }
 
 void
-TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
+TAO_ORB_Core::destroy (TAO_ENV_SINGLE_ARG_DECL)
 {
   //
   // All destroy() should do is (a) call shutdown() and (b) unbind()
@@ -1920,7 +1920,7 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
   //
 
   // Shutdown the ORB and block until the shutdown is complete.
-  this->shutdown (1, ACE_TRY_ENV);
+  this->shutdown (1 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now remove it from the ORB table so that it's ORBid may be
@@ -1933,7 +1933,7 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_ORB_Core::destroy_interceptors (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::destroy_interceptors (TAO_ENV_SINGLE_ARG_DECL)
 {
   size_t len = 0;
 
@@ -1959,10 +1959,6 @@ TAO_ORB_Core::destroy_interceptors (CORBA::Environment &ACE_TRY_ENV)
     }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-#ifdef TAO_HAS_EXCEPTIONS
-  ACE_UNUSED_ARG (ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
-#endif  /* TAO_HAS_EXCEPTIONS */
-
   TAO_IORInterceptor_List::TYPE &ior_interceptors =
     this->ior_interceptors_.interceptors ();
 
@@ -1981,7 +1977,7 @@ TAO_ORB_Core::lane_resources (void)
 }
 
 void
-TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_typecodefactory_i (TAO_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("TypeCodeFactory_Loader");
@@ -1995,11 +1991,11 @@ TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
   this->typecode_factory_ =
-    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
+    loader->create_object (this->orb_.in (), 0, 0 TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_ORB_Core::resolve_dynanyfactory_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_dynanyfactory_i (TAO_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("DynamicAny_Loader");
@@ -2013,11 +2009,11 @@ TAO_ORB_Core::resolve_dynanyfactory_i (CORBA::Environment &ACE_TRY_ENV)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
   this->dynany_factory_ =
-    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
+    loader->create_object (this->orb_.in (), 0, 0 TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_ORB_Core::resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_iormanipulation_i (TAO_ENV_SINGLE_ARG_DECL)
 {
   TAO_Object_Loader *loader =
     ACE_Dynamic_Service<TAO_Object_Loader>::instance ("IORManip_Loader");
@@ -2032,11 +2028,11 @@ TAO_ORB_Core::resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV)
         ACE_THROW (CORBA::ORB::InvalidName ());
     }
   this->ior_manip_factory_ =
-    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
+    loader->create_object (this->orb_.in (), 0, 0 TAO_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_ORB_Core::resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_ior_table_i (TAO_ENV_SINGLE_ARG_DECL)
 {
   TAO_Adapter_Factory *factory =
     ACE_Dynamic_Service<TAO_Adapter_Factory>::instance ("TAO_IORTable");
@@ -2052,18 +2048,18 @@ TAO_ORB_Core::resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV)
 
   // @@ Not exception safe
   TAO_Adapter *iortable_adapter = factory->create (this);
-  this->adapter_registry_.insert (iortable_adapter, ACE_TRY_ENV);
+  this->adapter_registry_.insert (iortable_adapter TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  iortable_adapter->open (ACE_TRY_ENV);
+  iortable_adapter->open (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->ior_table_ = iortable_adapter->root ();
 }
 
 CORBA::Object_ptr
-TAO_ORB_Core::resolve_rir (const char *name,
-                           CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_rir (const char *name
+                           TAO_ENV_ARG_DECL)
 {
   // Get the table of initial references specified through
   // -ORBInitRef.
@@ -2072,7 +2068,7 @@ TAO_ORB_Core::resolve_rir (const char *name,
 
   // Is the service name in the IOR Table.
   if (this->init_ref_map_.find (object_id, ior) == 0)
-    return this->orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
+    return this->orb ()->string_to_object (ior.c_str () TAO_ENV_ARG_PARAMETER);
 
   // Get the list of initial reference prefixes specified through
   // -ORBDefaultInitRef.
@@ -2116,15 +2112,15 @@ TAO_ORB_Core::resolve_rir (const char *name,
 
       list_of_profiles += object_id;
 
-      return this->orb ()->string_to_object (list_of_profiles.c_str (),
-                                             ACE_TRY_ENV);
+      return this->orb ()->string_to_object (list_of_profiles.c_str ()
+                                              TAO_ENV_ARG_PARAMETER);
     }
 
   return CORBA::Object::_nil ();
 }
 
 CORBA::ORB::ObjectIdList_ptr
-TAO_ORB_Core::list_initial_references (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::list_initial_references (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Unsupported initial services should NOT be included in the below list!
   const char *initial_services[] = { TAO_LIST_OF_INITIAL_SERVICES };
@@ -2551,7 +2547,7 @@ TAO_ORB_Core::implrepo_service (void)
 
       ACE_TRY_NEW_ENV
         {
-          CORBA::Object_var temp = this->orb_->resolve_initial_references ("ImplRepoService", ACE_TRY_ENV);
+          CORBA::Object_var temp = this->orb_->resolve_initial_references ("ImplRepoService" TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::Object::_nil ());
@@ -2818,10 +2814,10 @@ TAO_ORB_Core_instance (void)
           CORBA::ORB_var orb;
 
           int argc = 0;
-          ACE_DECLARE_NEW_CORBA_ENV;
+          TAO_ENV_DECLARE_NEW_ENV;
           ACE_TRY
             {
-              orb = CORBA::ORB_init (argc, 0, 0, ACE_TRY_ENV);
+              orb = CORBA::ORB_init (argc, 0, 0 TAO_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
           ACE_CATCHANY
@@ -2837,8 +2833,8 @@ TAO_ORB_Core_instance (void)
 
 
 int
-TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object
+                                    TAO_ENV_ARG_DECL)
 {
 
   TAO_Stub *stub = object->_stubobj ();
@@ -2849,8 +2845,8 @@ TAO_ORB_Core::collocation_strategy (CORBA::Object_ptr object,
         stub->servant_orb_var ()->orb_core ();
 
       int collocated =
-        orb_core->collocation_resolver ().is_collocated (object,
-                                                         ACE_TRY_ENV);
+        orb_core->collocation_resolver ().is_collocated (object
+                                                          TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
 
       if (collocated)

@@ -75,29 +75,29 @@ TAO_NAMESPACE  TAO_IOP
 
     EmptyProfileList (void);
     // Default constructor.
-    
+
     EmptyProfileList (const EmptyProfileList &);
     // Copy constructor.
-    
+
     ~EmptyProfileList (void);
     // Destructor.
-    
+
     static void _tao_any_destructor (void*);
-    
+
     EmptyProfileList &operator= (const EmptyProfileList &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
-    
+
     static EmptyProfileList *_downcast (CORBA::Exception *);
 
 
@@ -121,29 +121,29 @@ TAO_NAMESPACE  TAO_IOP
 
     NotFound (void);
     // Default constructor.
-    
+
     NotFound (const NotFound &);
     // Copy constructor.
-    
+
     ~NotFound (void);
     // Destructor.
-    
+
     static void _tao_any_destructor (void*);
-    
+
     NotFound &operator= (const NotFound &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
-    
+
     static NotFound *_downcast (CORBA::Exception *);
 
 
@@ -167,29 +167,29 @@ TAO_NAMESPACE  TAO_IOP
 
     Duplicate (void);
     // Default constructor.
-    
+
     Duplicate (const Duplicate &);
     // Copy constructor.
-    
+
     ~Duplicate (void);
     // Destructor.
-    
+
     static void _tao_any_destructor (void*);
-    
+
     Duplicate &operator= (const Duplicate &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
-    
+
     static Duplicate *_downcast (CORBA::Exception *);
 
 
@@ -213,29 +213,29 @@ TAO_NAMESPACE  TAO_IOP
 
     Invalid_IOR (void);
     // Default constructor.
-    
+
     Invalid_IOR (const Invalid_IOR &);
     // Copy constructor.
-    
+
     ~Invalid_IOR (void);
     // Destructor.
-    
+
     static void _tao_any_destructor (void*);
-    
+
     Invalid_IOR &operator= (const Invalid_IOR &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
-    
+
     static Invalid_IOR *_downcast (CORBA::Exception *);
 
 
@@ -259,29 +259,29 @@ TAO_NAMESPACE  TAO_IOP
 
     MultiProfileList (void);
     // Default constructor.
-    
+
     MultiProfileList (const MultiProfileList &);
     // Copy constructor.
-    
+
     ~MultiProfileList (void);
     // Destructor.
-    
+
     static void _tao_any_destructor (void*);
-    
+
     MultiProfileList &operator= (const MultiProfileList &);
-    
+
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
-    
+
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
-    
+
     static MultiProfileList *_downcast (CORBA::Exception *);
 
 
@@ -301,7 +301,7 @@ TAO_NAMESPACE  TAO_IOP
 
   class TAO_IOR_Property;
   typedef TAO_IOR_Property *TAO_IOR_Property_ptr;
-  
+
 #endif /* end #if !defined */
 
 
@@ -312,31 +312,31 @@ TAO_NAMESPACE  TAO_IOP
   {
   public:
     TAO_IOR_Property_var (void); // default constructor
-    TAO_IOR_Property_var (TAO_IOR_Property_ptr p) : ptr_ (p) {} 
+    TAO_IOR_Property_var (TAO_IOR_Property_ptr p) : ptr_ (p) {}
     TAO_IOR_Property_var (const TAO_IOR_Property_var &); // copy constructor
     ~TAO_IOR_Property_var (void); // destructor
-    
+
     TAO_IOR_Property_var &operator= (TAO_IOR_Property_ptr);
     TAO_IOR_Property_var &operator= (const TAO_IOR_Property_var &);
     TAO_IOR_Property_ptr operator-> (void) const;
-    
+
     operator const TAO_IOR_Property_ptr &() const;
     operator TAO_IOR_Property_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     TAO_IOR_Property_ptr in (void) const;
     TAO_IOR_Property_ptr &inout (void);
     TAO_IOR_Property_ptr &out (void);
     TAO_IOR_Property_ptr _retn (void);
     TAO_IOR_Property_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static TAO_IOR_Property_ptr tao_duplicate (TAO_IOR_Property_ptr);
     static void tao_release (TAO_IOR_Property_ptr);
     static TAO_IOR_Property_ptr tao_nil (void);
-    static TAO_IOR_Property_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static TAO_IOR_Property_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     TAO_IOR_Property_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -363,7 +363,7 @@ TAO_NAMESPACE  TAO_IOP
     operator TAO_IOR_Property_ptr &();
     TAO_IOR_Property_ptr &ptr (void);
     TAO_IOR_Property_ptr operator-> (void);
-  
+
   private:
     TAO_IOR_Property_ptr &ptr_;
   };
@@ -388,25 +388,22 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
     // the static operations
     static TAO_IOR_Property_ptr _duplicate (TAO_IOR_Property_ptr obj);
     static TAO_IOR_Property_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static TAO_IOR_Property_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static TAO_IOR_Property_ptr _nil (void)
       {
         return (TAO_IOR_Property_ptr)0;
       }
 
     virtual CORBA::Boolean set_property (
-        CORBA::Object_ptr ior,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::Invalid_IOR
@@ -414,10 +411,9 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
 
     virtual CORBA::Boolean set_primary (
         CORBA::Object_ptr ior1,
-        CORBA::Object_ptr ior2,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior2
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::Duplicate,
@@ -425,31 +421,29 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Object_ptr get_primary (
-        CORBA::Object_ptr ior,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
       )) = 0;
 
     virtual CORBA::Boolean is_primary_set (
-        CORBA::Object_ptr ior,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     TAO_IOR_Property ();
-    
+
     virtual ~TAO_IOR_Property (void);
   private:
     TAO_IOR_Property (const TAO_IOR_Property &);
@@ -465,7 +459,7 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
 
   class TAO_IOR_Manipulation;
   typedef TAO_IOR_Manipulation *TAO_IOR_Manipulation_ptr;
-  
+
 #endif /* end #if !defined */
 
 
@@ -476,31 +470,31 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
   {
   public:
     TAO_IOR_Manipulation_var (void); // default constructor
-    TAO_IOR_Manipulation_var (TAO_IOR_Manipulation_ptr p) : ptr_ (p) {} 
+    TAO_IOR_Manipulation_var (TAO_IOR_Manipulation_ptr p) : ptr_ (p) {}
     TAO_IOR_Manipulation_var (const TAO_IOR_Manipulation_var &); // copy constructor
     ~TAO_IOR_Manipulation_var (void); // destructor
-    
+
     TAO_IOR_Manipulation_var &operator= (TAO_IOR_Manipulation_ptr);
     TAO_IOR_Manipulation_var &operator= (const TAO_IOR_Manipulation_var &);
     TAO_IOR_Manipulation_ptr operator-> (void) const;
-    
+
     operator const TAO_IOR_Manipulation_ptr &() const;
     operator TAO_IOR_Manipulation_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     TAO_IOR_Manipulation_ptr in (void) const;
     TAO_IOR_Manipulation_ptr &inout (void);
     TAO_IOR_Manipulation_ptr &out (void);
     TAO_IOR_Manipulation_ptr _retn (void);
     TAO_IOR_Manipulation_ptr ptr (void) const;
-    
+
     // Hooks used by template sequence and object manager classes
     // for non-defined forward declared interfaces.
     static TAO_IOR_Manipulation_ptr tao_duplicate (TAO_IOR_Manipulation_ptr);
     static void tao_release (TAO_IOR_Manipulation_ptr);
     static TAO_IOR_Manipulation_ptr tao_nil (void);
-    static TAO_IOR_Manipulation_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static TAO_IOR_Manipulation_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
-  
+
   private:
     TAO_IOR_Manipulation_ptr ptr_;
     // Unimplemented - prevents widening assignment.
@@ -527,7 +521,7 @@ class TAO_IORManip_Export TAO_IOR_Property : public virtual CORBA_Object
     operator TAO_IOR_Manipulation_ptr &();
     TAO_IOR_Manipulation_ptr &ptr (void);
     TAO_IOR_Manipulation_ptr operator-> (void);
-  
+
   private:
     TAO_IOR_Manipulation_ptr &ptr_;
   };
@@ -552,15 +546,13 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     // the static operations
     static TAO_IOR_Manipulation_ptr _duplicate (TAO_IOR_Manipulation_ptr obj);
     static TAO_IOR_Manipulation_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static TAO_IOR_Manipulation_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static TAO_IOR_Manipulation_ptr _nil (void)
       {
         return (TAO_IOR_Manipulation_ptr)0;
@@ -568,7 +560,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-      
+
 #if !defined (__TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_)
 #define __TAO_UNBOUNDED_OBJECT_SEQUENCE_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_
 
@@ -576,7 +568,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
       {
       public:
         // = Initialization and termination methods.
-        
+
         _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (void);
         _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (CORBA::ULong maximum);
         _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList (CORBA::ULong maximum,
@@ -597,43 +589,42 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
         virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
         virtual void _downcast (
             void* target,
-            CORBA_Object *src,
-            CORBA_Environment &ACE_TRY_ENV = 
-              TAO_default_environment ()
-          );
+            CORBA_Object *src
+            TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
         virtual CORBA_Object* _upcast (void *src) const;
-        
+
       };
 
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-    
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_)
 #define _TAO_IOP_TAO_IOR_MANIPULATION_IORLIST_CH_
 
     class IORList;
     class IORList_var;
-    
+
     // *************************************************************
     // IORList
     // *************************************************************
-    
-    class TAO_IORManip_Export IORList : public 
+
+    class TAO_IORManip_Export IORList : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
       _TAO_Unbounded_Object_Sequence_TAO_IOP_TAO_IOR_Manipulation_IORList
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
       TAO_Unbounded_Object_Sequence<CORBA::Object,CORBA::Object_var>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
     {
     public:
       IORList (void); // default ctor
       IORList (CORBA::ULong max); // uses max size
       IORList (
-        CORBA::ULong max, 
-        CORBA::ULong length, 
-        CORBA::Object_ptr *buffer, 
+        CORBA::ULong max,
+        CORBA::ULong length,
+        CORBA::Object_ptr *buffer,
         CORBA::Boolean release = 0
       );
       IORList (const IORList &); // copy ctor
@@ -645,7 +636,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
     };
-    
+
 #endif /* end #if !defined */
 
 
@@ -663,20 +654,20 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
       IORList_var (IORList *);
       IORList_var (const IORList_var &); // copy constructor
       ~IORList_var (void); // destructor
-      
+
       IORList_var &operator= (IORList *);
       IORList_var &operator= (const IORList_var &);
       IORList *operator-> (void);
       const IORList *operator-> (void) const;
-      
+
       operator const IORList &() const;
       operator IORList &();
       operator IORList &() const;
       operator IORList *&(); // variable-size base types only
-      
+
       TAO_Object_Manager<CORBA::Object,CORBA::Object_var> operator[] (CORBA::ULong index);
-      
-      // in, inout, out, _retn 
+
+      // in, inout, out, _retn
       const IORList &in (void) const;
       IORList &inout (void);
       IORList *&out (void);
@@ -706,7 +697,7 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
       IORList *&ptr (void);
       IORList *operator-> (void);
       TAO_Object_Manager<CORBA::Object,CORBA::Object_var> operator[] (CORBA::ULong index);
-      
+
     private:
       IORList *&ptr_;
       // assignment from T_var not allowed
@@ -717,10 +708,9 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 #endif /* end #if !defined */
 
     virtual CORBA::Object_ptr merge_iors (
-        const TAO_IOP::TAO_IOR_Manipulation::IORList & iors,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        const TAO_IOP::TAO_IOR_Manipulation::IORList & iors
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList,
@@ -730,10 +720,9 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 
     virtual CORBA::Object_ptr add_profiles (
         CORBA::Object_ptr ior1,
-        CORBA::Object_ptr ior2,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior2
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList,
@@ -743,10 +732,9 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 
     virtual CORBA::Object_ptr remove_profiles (
         CORBA::Object_ptr ior1,
-        CORBA::Object_ptr ior2,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior2
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::Invalid_IOR,
@@ -756,10 +744,9 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 
     virtual CORBA::Boolean set_property (
         TAO_IOP::TAO_IOR_Property_ptr prop,
-        CORBA::Object_ptr ior,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::Invalid_IOR,
@@ -769,10 +756,9 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
     virtual CORBA::Boolean set_primary (
         TAO_IOP::TAO_IOR_Property_ptr prop,
         CORBA::Object_ptr ior1,
-        CORBA::Object_ptr ior2,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior2
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::Invalid_IOR,
@@ -783,10 +769,9 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 
     virtual CORBA::Object_ptr get_primary (
         TAO_IOP::TAO_IOR_Property_ptr prop,
-        CORBA::Object_ptr ior,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
@@ -794,42 +779,39 @@ class TAO_IORManip_Export TAO_IOR_Manipulation : public virtual CORBA_Object
 
     virtual CORBA::Boolean is_primary_set (
         TAO_IOP::TAO_IOR_Property_ptr prop,
-        CORBA::Object_ptr ior,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::ULong is_in_ior (
         CORBA::Object_ptr ior1,
-        CORBA::Object_ptr ior2,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior2
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::NotFound
       )) = 0;
 
     virtual CORBA::ULong get_profile_count (
-        CORBA::Object_ptr ior,
-        CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr ior
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         TAO_IOP::EmptyProfileList
       )) = 0;
 
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     TAO_IOR_Manipulation ();
-    
+
     virtual ~TAO_IOR_Manipulation (void);
   private:
     TAO_IOR_Manipulation (const TAO_IOR_Manipulation &);

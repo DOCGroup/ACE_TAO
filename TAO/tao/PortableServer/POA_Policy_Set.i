@@ -19,21 +19,21 @@ TAO_POA_Policy_Set::get_cached_policy (TAO_Cached_Policy_Type type)
 }
 
 ACE_INLINE void
-TAO_POA_Policy_Set::merge_policies (const CORBA::PolicyList &policies,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Policy_Set::merge_policies (const CORBA::PolicyList &policies
+                                    TAO_ENV_ARG_DECL)
 {
   // Add the policies if they don't exist, override them if they do.
   this->impl_.set_policy_overrides (policies,
-                                    CORBA::ADD_OVERRIDE,
-                                    ACE_TRY_ENV);
+                                    CORBA::ADD_OVERRIDE
+                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 ACE_INLINE void
-TAO_POA_Policy_Set::merge_policy (const CORBA::Policy_ptr policy,
-                                  CORBA::Environment &ACE_TRY_ENV)
+TAO_POA_Policy_Set::merge_policy (const CORBA::Policy_ptr policy
+                                  TAO_ENV_ARG_DECL)
 {
-  this->impl_.set_policy (policy, ACE_TRY_ENV);
+  this->impl_.set_policy (policy TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

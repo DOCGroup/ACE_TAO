@@ -56,28 +56,28 @@ public:
 
   /// Constructor.
   TAO_IORInfo (TAO_ORB_Core *orb_core,
-	       TAO_MProfile &mp,
-	       CORBA::PolicyList *policy_list);
+               TAO_MProfile &mp,
+               CORBA::PolicyList *policy_list);
 
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
   virtual CORBA::Policy_ptr get_effective_policy (
-      CORBA::PolicyType type,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      CORBA::PolicyType type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles.
   virtual void add_ior_component (
-      const IOP::TaggedComponent & component,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      const IOP::TaggedComponent & component
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
   virtual void add_ior_component_to_profile (
       const IOP::TaggedComponent & component,
-      IOP::ProfileId profile_id,
-      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+      IOP::ProfileId profile_id
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:

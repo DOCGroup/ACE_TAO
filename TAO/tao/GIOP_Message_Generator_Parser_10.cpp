@@ -116,8 +116,8 @@ TAO_GIOP_Message_Generator_Parser_10::write_locate_request_header (
 int
 TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
     TAO_OutputCDR &output,
-    TAO_Pluggable_Reply_Params_Base &reply,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_Pluggable_Reply_Params_Base &reply
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -240,8 +240,6 @@ TAO_GIOP_Message_Generator_Parser_10::write_reply_header (
   // Write the reply status
   this->marshal_reply_status (output,
                               reply);
-
-  ACE_UNUSED_ARG (ACE_TRY_ENV);  // FUZZ: ignore check_for_ace_check
 
   return 1;
 }

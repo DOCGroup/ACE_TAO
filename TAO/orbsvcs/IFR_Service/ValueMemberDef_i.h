@@ -50,101 +50,86 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual void destroy (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry.
 
   virtual void destroy_i (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_Contained::Description *describe (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA_Contained::Description *describe_i (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From Contained_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr type_i (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_IDLType_ptr type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_IDLType_ptr type_def_i (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void type_def (
-      CORBA_IDLType_ptr type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      CORBA_IDLType_ptr type_def
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void type_def_i (
-      CORBA_IDLType_ptr type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      CORBA_IDLType_ptr type_def
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::Visibility access (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::Visibility access_i (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void access (
-      CORBA::Visibility access,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      CORBA::Visibility access
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void access_i (
-      CORBA::Visibility access,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      CORBA::Visibility access
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 };
 

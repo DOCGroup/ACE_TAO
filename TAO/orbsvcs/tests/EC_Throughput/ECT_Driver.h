@@ -25,8 +25,8 @@ class ECT_Driver
 public:
   virtual ~ECT_Driver (void);
 
-  virtual void shutdown_consumer (void* consumer_cookie,
-                                  CORBA::Environment&) = 0;
+  virtual void shutdown_consumer (void* consumer_cookie
+                                  TAO_ENV_ARG_DECL_NOT_USED) = 0;
   // Callback method for consumers, each consumer will call this
   // method once it receives all the shutdown events from the
   // suppliers.

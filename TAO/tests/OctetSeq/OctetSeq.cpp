@@ -161,13 +161,13 @@ run (char* buf, size_t bufsize,
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
-                                            0,
-                                            ACE_TRY_ENV);
+                                            0
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int n = 64;

@@ -320,8 +320,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetCompo
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetComponent,
-                        ACE_TRY_ENV);
+      type->equivalent (CONV_FRAME::_tc_CodeSetComponent
+                         TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -375,8 +375,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSe
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetComponent,
-                        ACE_TRY_ENV);
+      type->equivalent (CONV_FRAME::_tc_CodeSetComponent
+                         TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -455,8 +455,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetCompo
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo,
-                        ACE_TRY_ENV);
+      type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo
+                         TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -510,8 +510,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSe
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo,
-                        ACE_TRY_ENV);
+      type->equivalent (CONV_FRAME::_tc_CodeSetComponentInfo
+                         TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -590,7 +590,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CONV_FRAME::CodeSetConte
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetContext, ACE_TRY_ENV);
+      type->equivalent (CONV_FRAME::_tc_CodeSetContext TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)
@@ -644,7 +644,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CONV_FRAME::CodeSe
   {
     CORBA::TypeCode_var type = _tao_any.type ();
     CORBA::Boolean result =
-      type->equivalent (CONV_FRAME::_tc_CodeSetContext, ACE_TRY_ENV);
+      type->equivalent (CONV_FRAME::_tc_CodeSetContext TAO_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
     if (!result)

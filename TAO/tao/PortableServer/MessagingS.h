@@ -75,10 +75,9 @@ TAO_NAMESPACE  POA_Messaging
 
 
     virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        const char* logical_type_id
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     virtual void* _downcast (
         const char* logical_type_id
@@ -87,34 +86,33 @@ TAO_NAMESPACE  POA_Messaging
     static void _is_a_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &req,
-        void *_servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *_servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     ::Messaging::ReplyHandler *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 
     virtual const char* _interface_repository_id (void) const;
 
@@ -134,8 +132,8 @@ TAO_NAMESPACE  POA_Messaging
     virtual ~_TAO_ReplyHandler_Strategized_Proxy_Broker (void);
 
     virtual ::Messaging::_TAO_ReplyHandler_Proxy_Impl &select_proxy (
-      ::Messaging::ReplyHandler *object,
-      CORBA_Environment &ACE_TRY_ENV
+      ::Messaging::ReplyHandler *object
+      TAO_ENV_ARG_DECL
     );
 
   private:
@@ -143,8 +141,8 @@ TAO_NAMESPACE  POA_Messaging
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
     void create_proxy (
-      int collocation_strategy,
-      CORBA::Environment &ACE_TRY_ENV
+      int collocation_strategy
+      TAO_ENV_ARG_DECL
     );
 
   private:

@@ -351,7 +351,7 @@ TAO_ORB_Core::has_shutdown (void)
 }
 
 ACE_INLINE void
-TAO_ORB_Core::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
+TAO_ORB_Core::check_shutdown (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (this->has_shutdown ())
     {
@@ -385,52 +385,52 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_typecodefactory (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_typecodefactory (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->typecode_factory_))
     {
-      this->resolve_typecodefactory_i (ACE_TRY_ENV);
+      this->resolve_typecodefactory_i (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   return CORBA::Object::_duplicate (this->typecode_factory_);
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_dynanyfactory (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->dynany_factory_))
     {
-      this->resolve_dynanyfactory_i (ACE_TRY_ENV);
+      this->resolve_dynanyfactory_i (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   return CORBA::Object::_duplicate (this->dynany_factory_);
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_ior_manipulation (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_ior_manipulation (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->ior_manip_factory_))
     {
-      this->resolve_iormanipulation_i (ACE_TRY_ENV);
+      this->resolve_iormanipulation_i (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   return CORBA::Object::_duplicate (this->ior_manip_factory_);
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_ior_table (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_ior_table (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
   if (CORBA::is_nil (this->ior_table_))
     {
-      this->resolve_ior_table_i (ACE_TRY_ENV);
+      this->resolve_ior_table_i (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
     }
   return CORBA::Object::_duplicate (this->ior_table_);
@@ -481,7 +481,7 @@ TAO_ORB_Core::poa_current (void)
         {
           // @@ This is a hack.  FIXME!
           // This forces the POACurrent to be initialized.
-          CORBA::Object_var root = this->root_poa (ACE_TRY_ENV);
+          CORBA::Object_var root = this->root_poa (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -525,7 +525,7 @@ TAO_ORB_Core::default_environment (CORBA_Environment *env)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_rt_orb (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->rt_orb_.in ()))
     {
@@ -536,8 +536,8 @@ TAO_ORB_Core::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
           // Save a reference to the priority mapping manager.
           this->rt_orb_ =
               this->object_ref_table ().resolve_initial_references (
-              TAO_OBJID_RTORB,
-              ACE_TRY_ENV);
+              TAO_OBJID_RTORB
+               TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
         }
     }
@@ -546,7 +546,7 @@ TAO_ORB_Core::resolve_rt_orb (CORBA::Environment &ACE_TRY_ENV)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_rt_current (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::resolve_rt_current (TAO_ENV_SINGLE_ARG_DECL)
 {
   if (CORBA::is_nil (this->rt_current_.in ()))
     {
@@ -557,8 +557,8 @@ TAO_ORB_Core::resolve_rt_current (CORBA::Environment &ACE_TRY_ENV)
           // Save a reference to the priority mapping manager.
           this->rt_current_ =
               this->object_ref_table ().resolve_initial_references (
-              TAO_OBJID_RTCURRENT,
-              ACE_TRY_ENV);
+              TAO_OBJID_RTCURRENT
+               TAO_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (CORBA::Object::_nil ());
         }
     }
@@ -586,20 +586,20 @@ TAO_ORB_Core::pi_current (TAO_PICurrent *current)
 
 ACE_INLINE void
 TAO_ORB_Core::add_interceptor (
-   PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-   CORBA_Environment &ACE_TRY_ENV)
+   PortableInterceptor::ClientRequestInterceptor_ptr interceptor
+   TAO_ENV_ARG_DECL)
 {
-  this->client_request_interceptors_.add_interceptor (interceptor,
-                                                      ACE_TRY_ENV);
+  this->client_request_interceptors_.add_interceptor (interceptor
+                                                       TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE void
 TAO_ORB_Core::add_interceptor (
-   PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-   CORBA_Environment &ACE_TRY_ENV)
+   PortableInterceptor::ServerRequestInterceptor_ptr interceptor
+   TAO_ENV_ARG_DECL)
 {
-  this->server_request_interceptors_.add_interceptor (interceptor,
-                                                      ACE_TRY_ENV);
+  this->server_request_interceptors_.add_interceptor (interceptor
+                                                       TAO_ENV_ARG_PARAMETER);
 }
 
 // ------
@@ -625,11 +625,11 @@ TAO_ORB_Core::server_request_interceptors (void)
 
 ACE_INLINE void
 TAO_ORB_Core::add_interceptor (
-   PortableInterceptor::IORInterceptor_ptr interceptor,
-   CORBA_Environment &ACE_TRY_ENV)
+   PortableInterceptor::IORInterceptor_ptr interceptor
+   TAO_ENV_ARG_DECL)
 {
-  this->ior_interceptors_.add_interceptor (interceptor,
-                                           ACE_TRY_ENV);
+  this->ior_interceptors_.add_interceptor (interceptor
+                                            TAO_ENV_ARG_PARAMETER);
 }
 
 ACE_INLINE TAO_IORInterceptor_List::TYPE &

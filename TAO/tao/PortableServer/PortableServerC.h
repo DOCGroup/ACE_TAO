@@ -114,7 +114,7 @@ TAO_NAMESPACE  PortableServer
     static POA_ptr tao_duplicate (POA_ptr);
     static void tao_release (POA_ptr);
     static POA_ptr tao_nil (void);
-    static POA_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static POA_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -182,10 +182,9 @@ TAO_NAMESPACE  PortableServer
       virtual void _shrink_buffer (CORBA::ULong nl, CORBA::ULong ol);
       virtual void _downcast (
           void* target,
-          CORBA_Object *src,
-          CORBA_Environment &ACE_TRY_ENV =
-            TAO_default_environment ()
-        );
+          CORBA_Object *src
+          TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
       virtual CORBA_Object* _upcast (void *src) const;
 
     };
@@ -448,13 +447,13 @@ TAO_NAMESPACE  PortableServer
     virtual void _raise (void);
 
     virtual void _tao_encode (
-        TAO_OutputCDR &,
-        CORBA::Environment &
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       ) const;
 
     virtual void _tao_decode (
-        TAO_InputCDR &,
-        CORBA::Environment &
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
       );
 
     static ForwardRequest *_downcast (CORBA::Exception *);
@@ -539,7 +538,7 @@ TAO_NAMESPACE  PortableServer
     static ThreadPolicy_ptr tao_duplicate (ThreadPolicy_ptr);
     static void tao_release (ThreadPolicy_ptr);
     static ThreadPolicy_ptr tao_nil (void);
-    static ThreadPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static ThreadPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -593,24 +592,21 @@ class TAO_PortableServer_Export ThreadPolicy: public virtual CORBA::Policy
     // the static operations
     static ThreadPolicy_ptr _duplicate (ThreadPolicy_ptr obj);
     static ThreadPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ThreadPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ThreadPolicy_ptr _nil (void)
       {
         return (ThreadPolicy_ptr)0;
       }
 
     virtual PortableServer::ThreadPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -680,7 +676,7 @@ class TAO_PortableServer_Export ThreadPolicy: public virtual CORBA::Policy
     static LifespanPolicy_ptr tao_duplicate (LifespanPolicy_ptr);
     static void tao_release (LifespanPolicy_ptr);
     static LifespanPolicy_ptr tao_nil (void);
-    static LifespanPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static LifespanPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -734,24 +730,21 @@ class TAO_PortableServer_Export LifespanPolicy: public virtual CORBA::Policy
     // the static operations
     static LifespanPolicy_ptr _duplicate (LifespanPolicy_ptr obj);
     static LifespanPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static LifespanPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static LifespanPolicy_ptr _nil (void)
       {
         return (LifespanPolicy_ptr)0;
       }
 
     virtual PortableServer::LifespanPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -819,7 +812,7 @@ class TAO_PortableServer_Export LifespanPolicy: public virtual CORBA::Policy
     static IdUniquenessPolicy_ptr tao_duplicate (IdUniquenessPolicy_ptr);
     static void tao_release (IdUniquenessPolicy_ptr);
     static IdUniquenessPolicy_ptr tao_nil (void);
-    static IdUniquenessPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static IdUniquenessPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -873,24 +866,21 @@ class TAO_PortableServer_Export IdUniquenessPolicy: public virtual CORBA::Policy
     // the static operations
     static IdUniquenessPolicy_ptr _duplicate (IdUniquenessPolicy_ptr obj);
     static IdUniquenessPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static IdUniquenessPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static IdUniquenessPolicy_ptr _nil (void)
       {
         return (IdUniquenessPolicy_ptr)0;
       }
 
     virtual PortableServer::IdUniquenessPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -958,7 +948,7 @@ class TAO_PortableServer_Export IdUniquenessPolicy: public virtual CORBA::Policy
     static IdAssignmentPolicy_ptr tao_duplicate (IdAssignmentPolicy_ptr);
     static void tao_release (IdAssignmentPolicy_ptr);
     static IdAssignmentPolicy_ptr tao_nil (void);
-    static IdAssignmentPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static IdAssignmentPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1012,24 +1002,21 @@ class TAO_PortableServer_Export IdAssignmentPolicy: public virtual CORBA::Policy
     // the static operations
     static IdAssignmentPolicy_ptr _duplicate (IdAssignmentPolicy_ptr obj);
     static IdAssignmentPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static IdAssignmentPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static IdAssignmentPolicy_ptr _nil (void)
       {
         return (IdAssignmentPolicy_ptr)0;
       }
 
     virtual PortableServer::IdAssignmentPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1100,7 +1087,7 @@ class TAO_PortableServer_Export IdAssignmentPolicy: public virtual CORBA::Policy
     static ImplicitActivationPolicy_ptr tao_duplicate (ImplicitActivationPolicy_ptr);
     static void tao_release (ImplicitActivationPolicy_ptr);
     static ImplicitActivationPolicy_ptr tao_nil (void);
-    static ImplicitActivationPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static ImplicitActivationPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1154,24 +1141,21 @@ class TAO_PortableServer_Export ImplicitActivationPolicy: public virtual CORBA::
     // the static operations
     static ImplicitActivationPolicy_ptr _duplicate (ImplicitActivationPolicy_ptr obj);
     static ImplicitActivationPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ImplicitActivationPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ImplicitActivationPolicy_ptr _nil (void)
       {
         return (ImplicitActivationPolicy_ptr)0;
       }
 
     virtual PortableServer::ImplicitActivationPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1244,7 +1228,7 @@ class TAO_PortableServer_Export ImplicitActivationPolicy: public virtual CORBA::
     static ServantRetentionPolicy_ptr tao_duplicate (ServantRetentionPolicy_ptr);
     static void tao_release (ServantRetentionPolicy_ptr);
     static ServantRetentionPolicy_ptr tao_nil (void);
-    static ServantRetentionPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static ServantRetentionPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1298,24 +1282,21 @@ class TAO_PortableServer_Export ServantRetentionPolicy: public virtual CORBA::Po
     // the static operations
     static ServantRetentionPolicy_ptr _duplicate (ServantRetentionPolicy_ptr obj);
     static ServantRetentionPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ServantRetentionPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ServantRetentionPolicy_ptr _nil (void)
       {
         return (ServantRetentionPolicy_ptr)0;
       }
 
     virtual PortableServer::ServantRetentionPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1389,7 +1370,7 @@ class TAO_PortableServer_Export ServantRetentionPolicy: public virtual CORBA::Po
     static RequestProcessingPolicy_ptr tao_duplicate (RequestProcessingPolicy_ptr);
     static void tao_release (RequestProcessingPolicy_ptr);
     static RequestProcessingPolicy_ptr tao_nil (void);
-    static RequestProcessingPolicy_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static RequestProcessingPolicy_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1443,24 +1424,21 @@ class TAO_PortableServer_Export RequestProcessingPolicy: public virtual CORBA::P
     // the static operations
     static RequestProcessingPolicy_ptr _duplicate (RequestProcessingPolicy_ptr obj);
     static RequestProcessingPolicy_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static RequestProcessingPolicy_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static RequestProcessingPolicy_ptr _nil (void)
       {
         return (RequestProcessingPolicy_ptr)0;
       }
 
     virtual PortableServer::RequestProcessingPolicyValue value (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1522,7 +1500,7 @@ class TAO_PortableServer_Export RequestProcessingPolicy: public virtual CORBA::P
     static POAManager_ptr tao_duplicate (POAManager_ptr);
     static void tao_release (POAManager_ptr);
     static POAManager_ptr tao_nil (void);
-    static POAManager_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static POAManager_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1576,15 +1554,13 @@ class TAO_PortableServer_Export POAManager : public virtual CORBA_Object
     // the static operations
     static POAManager_ptr _duplicate (POAManager_ptr obj);
     static POAManager_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static POAManager_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static POAManager_ptr _nil (void)
       {
         return (POAManager_ptr)0;
@@ -1612,13 +1588,13 @@ class TAO_PortableServer_Export POAManager : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static AdapterInactive *_downcast (CORBA::Exception *);
@@ -1640,9 +1616,8 @@ class TAO_PortableServer_Export POAManager : public virtual CORBA_Object
     };
     typedef State &State_out;
     virtual void activate (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POAManager::AdapterInactive
@@ -1651,20 +1626,18 @@ class TAO_PortableServer_Export POAManager : public virtual CORBA_Object
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual void hold_requests (
-        CORBA::Boolean wait_for_completion,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Boolean wait_for_completion
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POAManager::AdapterInactive
       )) = 0;
 
     virtual void discard_requests (
-        CORBA::Boolean wait_for_completion,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Boolean wait_for_completion
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POAManager::AdapterInactive
@@ -1672,10 +1645,9 @@ class TAO_PortableServer_Export POAManager : public virtual CORBA_Object
 
     virtual void deactivate (
         CORBA::Boolean etherealize_objects,
-        CORBA::Boolean wait_for_completion,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Boolean wait_for_completion
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POAManager::AdapterInactive
@@ -1684,9 +1656,8 @@ class TAO_PortableServer_Export POAManager : public virtual CORBA_Object
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual PortableServer::POAManager::State get_state (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1748,7 +1719,7 @@ class TAO_PortableServer_Export POAManager : public virtual CORBA_Object
     static AdapterActivator_ptr tao_duplicate (AdapterActivator_ptr);
     static void tao_release (AdapterActivator_ptr);
     static AdapterActivator_ptr tao_nil (void);
-    static AdapterActivator_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static AdapterActivator_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1802,15 +1773,13 @@ class TAO_PortableServer_Export AdapterActivator : public virtual CORBA_Object
     // the static operations
     static AdapterActivator_ptr _duplicate (AdapterActivator_ptr obj);
     static AdapterActivator_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static AdapterActivator_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static AdapterActivator_ptr _nil (void)
       {
         return (AdapterActivator_ptr)0;
@@ -1818,10 +1787,9 @@ class TAO_PortableServer_Export AdapterActivator : public virtual CORBA_Object
 
     virtual CORBA::Boolean unknown_adapter (
         PortableServer::POA_ptr parent,
-        const char * name,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const char * name
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1881,7 +1849,7 @@ class TAO_PortableServer_Export AdapterActivator : public virtual CORBA_Object
     static ServantManager_ptr tao_duplicate (ServantManager_ptr);
     static void tao_release (ServantManager_ptr);
     static ServantManager_ptr tao_nil (void);
-    static ServantManager_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static ServantManager_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1935,15 +1903,13 @@ class TAO_PortableServer_Export ServantManager : public virtual CORBA_Object
     // the static operations
     static ServantManager_ptr _duplicate (ServantManager_ptr obj);
     static ServantManager_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ServantManager_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ServantManager_ptr _nil (void)
       {
         return (ServantManager_ptr)0;
@@ -2004,7 +1970,7 @@ class TAO_PortableServer_Export ServantManager : public virtual CORBA_Object
     static ServantActivator_ptr tao_duplicate (ServantActivator_ptr);
     static void tao_release (ServantActivator_ptr);
     static ServantActivator_ptr tao_nil (void);
-    static ServantActivator_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static ServantActivator_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -2058,15 +2024,13 @@ class TAO_PortableServer_Export ServantActivator: public virtual ServantManager
     // the static operations
     static ServantActivator_ptr _duplicate (ServantActivator_ptr obj);
     static ServantActivator_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ServantActivator_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ServantActivator_ptr _nil (void)
       {
         return (ServantActivator_ptr)0;
@@ -2155,7 +2119,7 @@ class TAO_PortableServer_Export ServantActivator: public virtual ServantManager
     static ServantLocator_ptr tao_duplicate (ServantLocator_ptr);
     static void tao_release (ServantLocator_ptr);
     static ServantLocator_ptr tao_nil (void);
-    static ServantLocator_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static ServantLocator_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -2212,15 +2176,13 @@ class TAO_PortableServer_Export ServantLocator: public virtual ServantManager
     // the static operations
     static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
     static ServantLocator_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ServantLocator_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static ServantLocator_ptr _nil (void)
       {
         return (ServantLocator_ptr)0;
@@ -2292,15 +2254,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
     // the static operations
     static POA_ptr _duplicate (POA_ptr obj);
     static POA_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static POA_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static POA_ptr _nil (void)
       {
         return (POA_ptr)0;
@@ -2329,13 +2289,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
 
@@ -2371,13 +2331,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static AdapterNonExistent *_downcast (CORBA::Exception *);
@@ -2413,13 +2373,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static InvalidPolicy *_downcast (CORBA::Exception *);
@@ -2459,13 +2419,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static NoServant *_downcast (CORBA::Exception *);
@@ -2502,13 +2462,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static ObjectAlreadyActive *_downcast (CORBA::Exception *);
@@ -2543,13 +2503,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static ObjectNotActive *_downcast (CORBA::Exception *);
@@ -2584,13 +2544,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static ServantAlreadyActive *_downcast (CORBA::Exception *);
@@ -2625,13 +2585,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static ServantNotActive *_downcast (CORBA::Exception *);
@@ -2666,13 +2626,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static WrongAdapter *_downcast (CORBA::Exception *);
@@ -2707,13 +2667,13 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static WrongPolicy *_downcast (CORBA::Exception *);
@@ -2729,10 +2689,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
     virtual PortableServer::POA_ptr create_POA (
         const char * adapter_name,
         PortableServer::POAManager_ptr a_POAManager,
-        const CORBA::PolicyList & policies,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const CORBA::PolicyList & policies
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::AdapterAlreadyExists,
@@ -2741,10 +2700,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 
     virtual PortableServer::POA_ptr find_POA (
         const char * adapter_name,
-        CORBA::Boolean activate_it,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Boolean activate_it
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::AdapterNonExistent
@@ -2752,10 +2710,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 
     virtual void destroy (
         CORBA::Boolean etherealize_objects,
-        CORBA::Boolean wait_for_completion,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Boolean wait_for_completion
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -2763,10 +2720,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual PortableServer::ThreadPolicy_ptr create_thread_policy (
-        PortableServer::ThreadPolicyValue value,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::ThreadPolicyValue value
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -2774,28 +2730,25 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual PortableServer::LifespanPolicy_ptr create_lifespan_policy (
-        PortableServer::LifespanPolicyValue value,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::LifespanPolicyValue value
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual PortableServer::IdUniquenessPolicy_ptr create_id_uniqueness_policy (
-        PortableServer::IdUniquenessPolicyValue value,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::IdUniquenessPolicyValue value
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual PortableServer::IdAssignmentPolicy_ptr create_id_assignment_policy (
-        PortableServer::IdAssignmentPolicyValue value,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::IdAssignmentPolicyValue value
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -2803,28 +2756,25 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual PortableServer::ImplicitActivationPolicy_ptr create_implicit_activation_policy (
-        PortableServer::ImplicitActivationPolicyValue value,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::ImplicitActivationPolicyValue value
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual PortableServer::ServantRetentionPolicy_ptr create_servant_retention_policy (
-        PortableServer::ServantRetentionPolicyValue value,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::ServantRetentionPolicyValue value
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual PortableServer::RequestProcessingPolicy_ptr create_request_processing_policy (
-        PortableServer::RequestProcessingPolicyValue value,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::RequestProcessingPolicyValue value
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -2832,33 +2782,29 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual char * the_name (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual PortableServer::POA_ptr the_parent (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual PortableServer::POAList * the_children (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual PortableServer::POAManager_ptr the_POAManager (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -2866,45 +2812,40 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 #if (TAO_HAS_MINIMUM_POA == 0)
 
     virtual PortableServer::AdapterActivator_ptr the_activator (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void the_activator (
-        PortableServer::AdapterActivator_ptr the_activator,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::AdapterActivator_ptr the_activator
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual PortableServer::ServantManager_ptr get_servant_manager (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
       )) = 0;
 
     virtual void set_servant_manager (
-        PortableServer::ServantManager_ptr imgr,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::ServantManager_ptr imgr
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
       )) = 0;
 
     virtual PortableServer::Servant get_servant (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::NoServant,
@@ -2912,10 +2853,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       )) = 0;
 
     virtual void set_servant (
-        PortableServer::Servant p_servant,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::Servant p_servant
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
@@ -2924,10 +2864,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
     virtual PortableServer::ObjectId * activate_object (
-        PortableServer::Servant p_servant,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::Servant p_servant
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::ServantAlreadyActive,
@@ -2936,10 +2875,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 
     virtual void activate_object_with_id (
         const PortableServer::ObjectId & id,
-        PortableServer::Servant p_servant,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::Servant p_servant
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::ServantAlreadyActive,
@@ -2948,10 +2886,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       )) = 0;
 
     virtual void deactivate_object (
-        const PortableServer::ObjectId & oid,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const PortableServer::ObjectId & oid
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::ObjectNotActive,
@@ -2959,10 +2896,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Object_ptr create_reference (
-        const char * intf,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const char * intf
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
@@ -2970,20 +2906,18 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
 
     virtual CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId & oid,
-        const char * intf,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const char * intf
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::WrongPolicy
       )) = 0;
 
     virtual PortableServer::ObjectId * servant_to_id (
-        PortableServer::Servant p_servant,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::Servant p_servant
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::ServantNotActive,
@@ -2991,10 +2925,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Object_ptr servant_to_reference (
-        PortableServer::Servant p_servant,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        PortableServer::Servant p_servant
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::ServantNotActive,
@@ -3002,10 +2935,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       )) = 0;
 
     virtual PortableServer::Servant reference_to_servant (
-        CORBA::Object_ptr reference,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr reference
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::ObjectNotActive,
@@ -3014,10 +2946,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       )) = 0;
 
     virtual PortableServer::ObjectId * reference_to_id (
-        CORBA::Object_ptr reference,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        CORBA::Object_ptr reference
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::WrongAdapter,
@@ -3025,10 +2956,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       )) = 0;
 
     virtual PortableServer::Servant id_to_servant (
-        const PortableServer::ObjectId & oid,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const PortableServer::ObjectId & oid
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::ObjectNotActive,
@@ -3036,10 +2966,9 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::Object_ptr id_to_reference (
-        const PortableServer::ObjectId & oid,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        const PortableServer::ObjectId & oid
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::POA::ObjectNotActive,
@@ -3047,9 +2976,8 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
       )) = 0;
 
     virtual CORBA::OctetSeq * id (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -3109,7 +3037,7 @@ class TAO_PortableServer_Export POA : public virtual CORBA_Object
     static Current_ptr tao_duplicate (Current_ptr);
     static void tao_release (Current_ptr);
     static Current_ptr tao_nil (void);
-    static Current_ptr tao_narrow (CORBA::Object *, CORBA::Environment &);
+    static Current_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -3163,15 +3091,13 @@ class TAO_PortableServer_Export Current: public virtual CORBA::Current
     // the static operations
     static Current_ptr _duplicate (Current_ptr obj);
     static Current_ptr _narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static Current_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        CORBA::Object_ptr obj
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
     static Current_ptr _nil (void)
       {
         return (Current_ptr)0;
@@ -3199,13 +3125,13 @@ class TAO_PortableServer_Export Current: public virtual CORBA::Current
       virtual void _raise (void);
 
       virtual void _tao_encode (
-          TAO_OutputCDR &,
-          CORBA::Environment &
+          TAO_OutputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         ) const;
 
       virtual void _tao_decode (
-          TAO_InputCDR &,
-          CORBA::Environment &
+          TAO_InputCDR &
+          TAO_ENV_ARG_DECL_NOT_USED
         );
 
       static NoContext *_downcast (CORBA::Exception *);
@@ -3219,18 +3145,16 @@ class TAO_PortableServer_Export Current: public virtual CORBA::Current
 #endif /* end #if !defined */
 
     virtual PortableServer::POA_ptr get_POA (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::Current::NoContext
       )) = 0;
 
     virtual PortableServer::ObjectId * get_object_id (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableServer::Current::NoContext

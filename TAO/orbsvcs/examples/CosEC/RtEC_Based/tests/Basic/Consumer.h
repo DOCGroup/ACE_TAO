@@ -33,29 +33,29 @@ class Consumer : public POA_CosEventComm::PushConsumer
 
 public:
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-             CORBA::ORB_ptr orb,
-             CORBA::Environment& ACE_TRY_ENV);
+             CORBA::ORB_ptr orb
+             TAO_ENV_ARG_DECL);
   // This method connects the consumer to the EC.
 
-  void close (CORBA::Environment &ACE_TRY_ENV);
+  void close (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the EC.
 
-  void connect (CORBA::Environment &ACE_TRY_ENV);
+  void connect (TAO_ENV_SINGLE_ARG_DECL);
   // Connect the Consumer to the EventChannel.
 
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
   // Disconnect from the supplier, but do not forget about it or close
   // it.
 
-  virtual void push (const CORBA::Any &data,
-                     CORBA::Environment &ACE_TRY_ENV)
+  virtual void push (const CORBA::Any &data
+                     TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosEventComm::Disconnected
       ));
   // push the event to the consumer.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));

@@ -80,16 +80,16 @@ void IORTable::AlreadyBound::_raise ()
 }
 
 void IORTable::AlreadyBound::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void IORTable::AlreadyBound::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -154,16 +154,16 @@ void IORTable::NotFound::_raise ()
 }
 
 void IORTable::NotFound::_tao_encode (
-    TAO_OutputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_OutputCDR &
+    TAO_ENV_ARG_DECL
   ) const
 {
   ACE_THROW (CORBA::MARSHAL ());
 }
 
 void IORTable::NotFound::_tao_decode (
-    TAO_InputCDR &,
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_InputCDR &
+    TAO_ENV_ARG_DECL
   )
 {
   ACE_THROW (CORBA::MARSHAL ());
@@ -227,7 +227,7 @@ IORTable::Table_var::operator const ::IORTable::Table_ptr &() const // cast
   return this->ptr_;
 }
 
-IORTable::Table_var::operator ::IORTable::Table_ptr &() // cast 
+IORTable::Table_var::operator ::IORTable::Table_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -287,11 +287,11 @@ IORTable::Table_var::tao_nil (void)
 
 ::IORTable::Table_ptr
 IORTable::Table_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::IORTable::Table::_narrow (p, ACE_TRY_ENV);
+  return ::IORTable::Table::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -372,16 +372,16 @@ IORTable::Table::~Table (void)
 {}
 
 IORTable::Table_ptr IORTable::Table::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return Table::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return Table::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 IORTable::Table_ptr IORTable::Table::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -419,7 +419,7 @@ void *IORTable::Table::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -480,7 +480,7 @@ IORTable::Locator_var::operator const ::IORTable::Locator_ptr &() const // cast
   return this->ptr_;
 }
 
-IORTable::Locator_var::operator ::IORTable::Locator_ptr &() // cast 
+IORTable::Locator_var::operator ::IORTable::Locator_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -540,11 +540,11 @@ IORTable::Locator_var::tao_nil (void)
 
 ::IORTable::Locator_ptr
 IORTable::Locator_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::IORTable::Locator::_narrow (p, ACE_TRY_ENV);
+  return ::IORTable::Locator::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -625,16 +625,16 @@ IORTable::Locator::~Locator (void)
 {}
 
 IORTable::Locator_ptr IORTable::Locator::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return Locator::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return Locator::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 IORTable::Locator_ptr IORTable::Locator::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -672,7 +672,7 @@ void *IORTable::Locator::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;

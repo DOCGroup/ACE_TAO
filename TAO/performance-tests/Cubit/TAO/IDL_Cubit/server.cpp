@@ -46,13 +46,13 @@ main (int argc, char *argv[])
               "\n\tIDL_Cubit: server\n\n"));
   ACE_TRY_NEW_ENV
     {
-      int ret = cubit_server.init (argc, argv, ACE_TRY_ENV);
+      int ret = cubit_server.init (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ret == -1)
         return -1;
 
-      cubit_server.run (ACE_TRY_ENV);
+      cubit_server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::sleep (5);

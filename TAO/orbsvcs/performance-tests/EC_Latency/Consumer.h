@@ -32,11 +32,11 @@ public:
   ECL_Consumer (int iterations);
 
   /// Connect to the event channel
-  void connect (RtecEventChannelAdmin::EventChannel_ptr ec,
-                CORBA::Environment &ACE_TRY_ENV);
+  void connect (RtecEventChannelAdmin::EventChannel_ptr ec
+                TAO_ENV_ARG_DECL);
 
   /// Disconnect from the event channel
-  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  void disconnect (TAO_ENV_SINGLE_ARG_DECL);
 
   /// Access the history of samples
   ACE_Sample_History &sample_history (void);
@@ -44,10 +44,10 @@ public:
   //@{
   /** @name The RtecEventComm::PushConsumer methods
    */
-  virtual void push (const RtecEventComm::EventSet& events,
-                     CORBA::Environment &_env)
+  virtual void push (const RtecEventComm::EventSet& events
+                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_push_consumer (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
   //@}
 

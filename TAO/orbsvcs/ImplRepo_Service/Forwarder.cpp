@@ -17,7 +17,7 @@
 #include "tao/PortableServer/Object_Adapter.h"
 
 /**
- * This constructor takes in orb and ImplRepo_i pointers to store for later 
+ * This constructor takes in orb and ImplRepo_i pointers to store for later
  * use.  It also grabs a reference to the POACurrent object for use in
  * preinvoke.
  */
@@ -31,11 +31,11 @@ ImR_Forwarder::ImR_Forwarder (ImplRepo_i *imr_impl)
   ACE_TRY_NEW_ENV
     {
       CORBA::Object_var tmp =
-        orb->resolve_initial_references ("POACurrent", ACE_TRY_ENV);
+        orb->resolve_initial_references ("POACurrent" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->poa_current_var_ =
-        PortableServer::Current::_narrow (tmp.in (), ACE_TRY_ENV);
+        PortableServer::Current::_narrow (tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -60,7 +60,7 @@ ImR_Forwarder::ImR_Forwarder (ImplRepo_i *imr_impl)
  * @todo Should we base the name on the entire POA hierarchy?
  * @todo Use ACE_TString for the IOR?  Can it always be a char?
  */
-PortableServer::Servant 
+PortableServer::Servant
 ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
                           PortableServer::POA_ptr poa,
                           const char *,
@@ -68,8 +68,6 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
                           TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException, PortableServer::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   CORBA::ORB_var orb = OPTIONS::instance ()->orb ();
 
   ACE_TString ior;
@@ -78,10 +76,10 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
   ACE_TRY
     {
       // Activate.
-  
+
       ior = this->imr_impl_->activate_server_i (poa->the_name (),
-                                                1,
-                                                ACE_TRY_ENV);
+                                                1
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Add the key
@@ -89,7 +87,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       char *key_str = 0;
 
       // Unlike POA Current, this implementation cannot be cached.
-      TAO_POA_Current *tao_current = 
+      TAO_POA_Current *tao_current =
         ACE_dynamic_cast(TAO_POA_Current*, this->poa_current_var_.in ());
       TAO_POA_Current_Impl *impl = tao_current->implementation ();
       TAO_ObjectKey::encode_sequence_to_string (key_str,
@@ -101,7 +99,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
       if (OPTIONS::instance()->debug () >= 2)
         ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", ior.c_str ()));
 
-      forward_obj = orb->string_to_object (ior.c_str (), ACE_TRY_ENV);
+      forward_obj = orb->string_to_object (ior.c_str () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }
@@ -132,7 +130,7 @@ ImR_Forwarder::preinvoke (const PortableServer::ObjectId &,
 /**
  * The postinvoke method just deletes the passed in servant.
  */
-void 
+void
 ImR_Forwarder::postinvoke (const PortableServer::ObjectId &,
                            PortableServer::POA_ptr ,
                            const char * ,

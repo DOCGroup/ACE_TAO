@@ -34,25 +34,25 @@ static const CORBA::Long _oc_BiDirPolicy_BidirectionalPolicyValue[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x42694469), 
-  ACE_NTOHL (0x72506f6c), 
-  ACE_NTOHL (0x6963792f), 
-  ACE_NTOHL (0x42696469), 
-  ACE_NTOHL (0x72656374), 
-  ACE_NTOHL (0x696f6e61), 
-  ACE_NTOHL (0x6c506f6c), 
-  ACE_NTOHL (0x69637956), 
-  ACE_NTOHL (0x616c7565), 
-  ACE_NTOHL (0x3a312e30), 
+  ACE_NTOHL (0x49444c3a),
+  ACE_NTOHL (0x42694469),
+  ACE_NTOHL (0x72506f6c),
+  ACE_NTOHL (0x6963792f),
+  ACE_NTOHL (0x42696469),
+  ACE_NTOHL (0x72656374),
+  ACE_NTOHL (0x696f6e61),
+  ACE_NTOHL (0x6c506f6c),
+  ACE_NTOHL (0x69637956),
+  ACE_NTOHL (0x616c7565),
+  ACE_NTOHL (0x3a312e30),
   ACE_NTOHL (0x0),  // repository ID = IDL:BiDirPolicy/BidirectionalPolicyValue:1.0
   25,
-  ACE_NTOHL (0x42696469), 
-  ACE_NTOHL (0x72656374), 
-  ACE_NTOHL (0x696f6e61), 
-  ACE_NTOHL (0x6c506f6c), 
-  ACE_NTOHL (0x69637956), 
-  ACE_NTOHL (0x616c7565), 
+  ACE_NTOHL (0x42696469),
+  ACE_NTOHL (0x72656374),
+  ACE_NTOHL (0x696f6e61),
+  ACE_NTOHL (0x6c506f6c),
+  ACE_NTOHL (0x69637956),
+  ACE_NTOHL (0x616c7565),
   ACE_NTOHL (0x0),  // name = BidirectionalPolicyValue
   CORBA::tk_ushort,
 
@@ -134,7 +134,7 @@ BiDirPolicy::BidirectionalPolicy_var::operator const ::BiDirPolicy::Bidirectiona
   return this->ptr_;
 }
 
-BiDirPolicy::BidirectionalPolicy_var::operator ::BiDirPolicy::BidirectionalPolicy_ptr &() // cast 
+BiDirPolicy::BidirectionalPolicy_var::operator ::BiDirPolicy::BidirectionalPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -194,11 +194,11 @@ BiDirPolicy::BidirectionalPolicy_var::tao_nil (void)
 
 ::BiDirPolicy::BidirectionalPolicy_ptr
 BiDirPolicy::BidirectionalPolicy_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::BiDirPolicy::BidirectionalPolicy::_narrow (p, ACE_TRY_ENV);
+  return ::BiDirPolicy::BidirectionalPolicy::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -279,16 +279,16 @@ BiDirPolicy::BidirectionalPolicy::~BidirectionalPolicy (void)
 {}
 
 BiDirPolicy::BidirectionalPolicy_ptr BiDirPolicy::BidirectionalPolicy::_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL
   )
 {
-  return BidirectionalPolicy::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return BidirectionalPolicy::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 BiDirPolicy::BidirectionalPolicy_ptr BiDirPolicy::BidirectionalPolicy::_unchecked_narrow (
-    CORBA::Object_ptr obj,
-    CORBA::Environment &
+    CORBA::Object_ptr obj
+    TAO_ENV_ARG_DECL_NOT_USED
   )
 {
   if (CORBA::is_nil (obj))
@@ -338,7 +338,7 @@ void *BiDirPolicy::BidirectionalPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;

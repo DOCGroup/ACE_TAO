@@ -45,16 +45,16 @@ public:
   /// Add all the dependencies between <supplier> and <consumer>
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
-      TAO_EC_ProxyPushConsumer *consumer,
-      CORBA::Environment &ACE_TRY_ENV);
+      TAO_EC_ProxyPushConsumer *consumer
+      TAO_ENV_ARG_DECL);
 
   /// Initializes <qos_info> based on the QoS information for
   /// <consumer> and the event header.
   virtual void init_event_qos (
       const RtecEventComm::EventHeader& header,
       TAO_EC_ProxyPushConsumer *consumer,
-      TAO_EC_QOS_Info& qos_info,
-      CORBA::Environment &ACE_TRY_ENV);
+      TAO_EC_QOS_Info& qos_info
+      TAO_ENV_ARG_DECL);
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_EC_Priority_Scheduling
@@ -63,7 +63,7 @@ private:
                               (const TAO_EC_Priority_Scheduling&))
 
   /// Initialize our RT_Info handle and dependencies
-  void init_rt_info (CORBA::Environment& env);
+  void init_rt_info (TAO_ENV_SINGLE_ARG_DECL);
 
 private:
   /// The scheduler we are going to use

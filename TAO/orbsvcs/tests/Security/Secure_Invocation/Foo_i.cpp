@@ -16,7 +16,7 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 }
 
 void
-Foo_i::baz (CORBA::Environment &ACE_TRY_ENV)
+Foo_i::baz (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Foo::Bar::NoSecurityAttributes))
 {
@@ -36,8 +36,8 @@ Foo_i::baz (CORBA::Environment &ACE_TRY_ENV)
 
   // Get the desired security attributes
   Security::AttributeList_var attribute_list =
-    this->current_->get_attributes (attribute_type_list,
-                                    ACE_TRY_ENV);
+    this->current_->get_attributes (attribute_type_list
+                                    TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // If the SecurityLevel1::Current::get_attributes() call above
@@ -81,7 +81,7 @@ Foo_i::baz (CORBA::Environment &ACE_TRY_ENV)
           // internal format.
           X509 *peer = ::d2i_X509 (0,
                                    &der_cert,
-                                   attribute.value.length ()); 
+                                   attribute.value.length ());
 
           ::X509_NAME_oneline (::X509_get_issuer_name (peer),
                                buf,
@@ -109,8 +109,8 @@ Foo_i::baz (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-Foo_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
+Foo_i::shutdown (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->orb_->shutdown (0, ACE_TRY_ENV);
+  this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
 }

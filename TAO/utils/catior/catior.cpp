@@ -24,8 +24,8 @@
 
 
 static CORBA::Boolean
-catiiop (char* string,
-         CORBA::Environment &ACE_TRY_ENV)
+catiiop (char* string
+         TAO_ENV_ARG_DECL)
 {
   // NIL objref encodes as just "iiop:" ... which has already been
   // removed, so we see it as an empty string.
@@ -132,8 +132,8 @@ static CORBA::Boolean
 cat_profile_helper(TAO_InputCDR& stream, const char *protocol);
 
 static CORBA::Boolean
-catior (char* str,
-        CORBA::Environment &)
+catior (char* str
+        TAO_ENV_ARG_DECL_NOT_USED)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
@@ -263,12 +263,12 @@ catior (char* str,
             continue_decoding = cat_shmiop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
-	else if (tag == TAO_TAG_UDP_PROFILE)
+        else if (tag == TAO_TAG_UDP_PROFILE)
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
-	    continue_decoding =  cat_profile_helper(stream, "DIOP (GIOP over UDP)");
+            continue_decoding =  cat_profile_helper(stream, "DIOP (GIOP over UDP)");
             ACE_DEBUG ((LM_DEBUG, "%}"));
-	  }
+          }
         else
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
@@ -291,8 +291,8 @@ catior (char* str,
 // : interface_marker
 
 static CORBA::Boolean
-catpoop (char* string,
-        CORBA::Environment &ACE_TRY_ENV)
+catpoop (char* string
+        TAO_ENV_ARG_DECL)
 {
   if (!string || !*string)
     return 0;
@@ -411,8 +411,8 @@ main (int argc, char *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, "f:n:");
 
-  CORBA::Environment env;
-  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO", env);
+  TAO_ENV_DECLARE_NEW_ENV;
+  CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO" TAO_ENV_ARG_PARAMETER);
   CORBA::Boolean b = 0;
   int opt;
 
@@ -476,7 +476,7 @@ main (int argc, char *argv[])
                                          aString.length () - prefixLength);
                     subString[subString.length ()] = '\0';
                     str = subString.rep ();
-                    b = catior (str, env);
+                    b = catior (str TAO_ENV_ARG_PARAMETER);
                   }
                 else if (aString.find ("iiop:") == 0)
                   {
@@ -491,7 +491,7 @@ main (int argc, char *argv[])
                                          aString.length () - prefixLength);
                     //subString[subString.length () - 1] = '\0';
                     str = subString.rep ();
-                    b = catiiop (str, env);
+                    b = catiiop (str TAO_ENV_ARG_PARAMETER);
                   }
                 else if (aString.find (":IR:") > 0)
                   {
@@ -499,7 +499,7 @@ main (int argc, char *argv[])
                                 "decoding an POOP IOR\n"));
 
                     str = aString.rep ();
-                    b = catpoop (str, env);
+                    b = catpoop (str TAO_ENV_ARG_PARAMETER);
                   }
                 else
                   ACE_ERROR ((LM_ERROR,
@@ -603,10 +603,10 @@ static CORBA::Boolean
 cat_tagged_components (TAO_InputCDR& stream)
 {
   // ... and object key.
-  
+
   CORBA::ULong len;
   stream >> len;
-  
+
   for (CORBA::ULong i = 0;
        i != len;
        ++i)
@@ -619,7 +619,7 @@ cat_tagged_components (TAO_InputCDR& stream)
       cat_octet_seq ("Component Value", stream);
       ACE_DEBUG ((LM_DEBUG, "%}%}"));
     }
-  
+
   return 1;
 }
 
@@ -694,16 +694,16 @@ cat_profile_helper (TAO_InputCDR& stream,
 
   if (cat_object_key (str) == 0)
     return 0;
-  
+
   //IIOP 1.0 does not have tagged_components.
   if (iiop_version_minor)
     {
       if (cat_tagged_components (str) == 0)
         return 0;
-      
+
       return 1;
     }
-  else 
+  else
     return 0;
 }
 

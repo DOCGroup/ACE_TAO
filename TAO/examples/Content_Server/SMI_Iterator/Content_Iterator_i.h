@@ -62,13 +62,13 @@ public:
   // Destructor
 
   virtual CORBA::Boolean next_chunk (CORBA::ULong offset,
-                                     Web_Server::Chunk_Type_out chunk,
-                                     CORBA::Environment &ACE_TRY_ENV)
+                                     Web_Server::Chunk_Type_out chunk
+                                     TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // This operation returns the next <chunk> of the file starting at
   // <offset>.  If there are no more bindings, false is returned.
 
-  virtual void destroy (CORBA::Environment &ACE_TRY_ENV)
+  virtual void destroy (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Destroy the iterator.
 

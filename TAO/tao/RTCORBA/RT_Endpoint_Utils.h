@@ -36,11 +36,11 @@ class TAO_GIOP_Invocation;
 class TAO_RTCORBA_Export TAO_RT_Endpoint_Utils
 {
 public:
-  static CORBA::Policy *priority_bands_policy (TAO_GIOP_Invocation *invocation,
-                                               CORBA::Environment &ACE_TRY_ENV);
+  static CORBA::Policy *priority_bands_policy (TAO_GIOP_Invocation *invocation
+                                               TAO_ENV_ARG_DECL);
 
-  static CORBA::Policy *client_protocol_policy (TAO_GIOP_Invocation *invocation,
-                                                CORBA::Environment &ACE_TRY_ENV);
+  static CORBA::Policy *client_protocol_policy (TAO_GIOP_Invocation *invocation
+                                                TAO_ENV_ARG_DECL);
 
 private:
   /// ctor.

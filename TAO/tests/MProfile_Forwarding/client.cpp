@@ -34,18 +34,18 @@ parse_args (int argc, char *argv[])
 }
 
 void
-run_test (Simple_Server_ptr server,
-          CORBA::Environment &ACE_TRY_ENV);
+run_test (Simple_Server_ptr server
+          TAO_ENV_ARG_DECL);
 
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) == -1)
@@ -63,7 +63,7 @@ main (int argc, char *argv[])
         }
 
       Simple_Server_var server =
-        Simple_Server::_narrow (objref.in (), ACE_TRY_ENV);
+        Simple_Server::_narrow (objref.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -73,7 +73,7 @@ main (int argc, char *argv[])
                             -1);
         }
 
-      run_test (server.in (), ACE_TRY_ENV);
+      run_test (server.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -85,8 +85,8 @@ main (int argc, char *argv[])
   return 0;
 }
 
-void run_test (Simple_Server_ptr server,
-               CORBA::Environment &ACE_TRY_ENV)
+void run_test (Simple_Server_ptr server
+               TAO_ENV_ARG_DECL)
 {
   for (int loop = 0; loop < 10; loop++)
     {
@@ -97,7 +97,7 @@ void run_test (Simple_Server_ptr server,
           ACE_OS::sleep (2);
 
           // Make a remote call
-          server->remote_call (ACE_TRY_ENV);
+          server->remote_call (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           /*ACE_DEBUG ((LM_DEBUG,
@@ -106,7 +106,7 @@ void run_test (Simple_Server_ptr server,
           ACE_DEBUG ((LM_DEBUG, " hope you did\n")); */
           ACE_DEBUG ((LM_DEBUG,
                       "I am going to shutdown \n"));
-          server->shutdown (ACE_TRY_ENV);
+          server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_OS::sleep (23);
         }

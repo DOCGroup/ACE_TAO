@@ -19,19 +19,19 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-	ior = get_opts.optarg;
-	break;
+        ior = get_opts.optarg;
+        break;
 
       case 'i':
-	iterations = ACE_OS::atoi (get_opts.optarg);
-	break;
+        iterations = ACE_OS::atoi (get_opts.optarg);
+        break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
-			   "-k <ior> "
-			   "-i <iterations> "
+                           "-k <ior> "
+                           "-i <iterations> "
                            "\n",
                            argv [0]),
                           -1);
@@ -46,18 +46,18 @@ main (int argc, char *argv[])
   ACE_TRY_NEW_ENV
     {
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior, ACE_TRY_ENV);
+        orb->string_to_object(ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Test::Blocking_Sync_None_var blocking_sync_none =
-        Test::Blocking_Sync_None::_narrow(tmp.in (), ACE_TRY_ENV);
+        Test::Blocking_Sync_None::_narrow(tmp.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (blocking_sync_none.in ()))
@@ -67,11 +67,11 @@ main (int argc, char *argv[])
                           1);
 
       CORBA::Object_var object =
-        orb->resolve_initial_references ("PolicyCurrent", ACE_TRY_ENV);
+        orb->resolve_initial_references ("PolicyCurrent" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyCurrent_var policy_current =
-        CORBA::PolicyCurrent::_narrow (object.in (), ACE_TRY_ENV);
+        CORBA::PolicyCurrent::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (policy_current.in ()))
@@ -85,15 +85,15 @@ main (int argc, char *argv[])
       CORBA::PolicyList policies(1); policies.length (1);
       policies[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            scope_as_any,
-                            ACE_TRY_ENV);
+                            scope_as_any
+                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE,
-                                            ACE_TRY_ENV);
+      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      policies[0]->destroy (ACE_TRY_ENV);
+      policies[0]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       const int payload_length = 65536;
@@ -110,8 +110,8 @@ main (int argc, char *argv[])
           ACE_Time_Value start = ACE_OS::gettimeofday ();
 
           blocking_sync_none->slow_operation (payload,
-                                              sleep_microseconds,
-                                              ACE_TRY_ENV);
+                                              sleep_microseconds
+                                              TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday ();
@@ -123,10 +123,10 @@ main (int argc, char *argv[])
             }
         }
 
-      blocking_sync_none->shutdown (ACE_TRY_ENV);
+      blocking_sync_none->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (blocked_calls > iterations / 20)

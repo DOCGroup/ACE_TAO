@@ -30,7 +30,7 @@ class Signal_Handler : public ACE_Event_Handler
   //   Useful to gracefully release the process
 
 public:
-  
+
   Signal_Handler (void);
 
   int handle_signal(int signum, siginfo_t*,ucontext_t*);
@@ -64,7 +64,7 @@ public:
   /// Accessor methods for the flowname of the callback.
   ACE_CString &flowname (void);
   void flowname (const ACE_CString &flowname);
-  
+
 private:
   int frame_count_;
   /// Count of the frames passing through us.
@@ -80,9 +80,9 @@ class Distributer_Sender_Callback : public TAO_AV_Callback
   //    for receiving data.
   //
   // = DESCRIPTION
-  //    This class overides the methods of the TAO_AV_Callback so the 
+  //    This class overides the methods of the TAO_AV_Callback so the
   //    AVStreams can make upcalls to the application.
-  
+
 public:
 
   int handle_destroy (void);
@@ -94,9 +94,9 @@ public:
   void flowname (const ACE_CString &flowname);
 
 private:
-  
+
   ACE_CString flowname_;
-  
+
 };
 
 class Distributer_Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
@@ -110,14 +110,14 @@ public:
   /// Create a receiver application callback.
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
-  
+
   int set_protocol_object (const char *,
-			   TAO_AV_Protocol_Object *object);
+                           TAO_AV_Protocol_Object *object);
   /// Store the reference to the protocol object corresponding
   /// to the transport
 
-  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec,
-                                                      CORBA::Environment &);
+  virtual CORBA::Boolean handle_connection_requested (AVStreams::flowSpec &the_spec
+                                                      TAO_ENV_ARG_DECL_NOT_USED);
   /// Called when a sender makes a connection request.
 
 private:
@@ -139,7 +139,7 @@ public:
                            TAO_AV_Protocol_Object *object);
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
-  
+
 protected:
   Distributer_Sender_Callback callback_;
   /// Application callback.
@@ -173,8 +173,8 @@ public:
   /// Destructor.
 
   int init (int argc,
-            char **argv,
-            CORBA::Environment &);
+            char **argv
+            TAO_ENV_ARG_DECL_NOT_USED);
   /// Initialize data components.
 
   int parse_args (int argc,
@@ -190,11 +190,11 @@ public:
 
   void stream_created (void);
   /// Called when stream created
-  
+
   void stream_destroyed (void);
   /// Called when stream destroyed
 
-  void shut_down (CORBA::Environment &);
+  void shut_down (TAO_ENV_SINGLE_ARG_DECL_NOT_USED);
   ///Unbind the sender and receiver from the Naming Service
 
 protected:
@@ -221,13 +221,13 @@ protected:
 
   int done_;
   /// Flag to know when we are done.
-  
+
   int stream_count_;
-  /// Number of active streams. When a stream is disconnected this 
+  /// Number of active streams. When a stream is disconnected this
   /// count is decremented.
 
   Signal_Handler signal_handler_;
   /// Reference to the signal handler.
-  
+
 };
 

@@ -17,8 +17,8 @@ Callback_i::done (void)
 
 void
 Callback_i::response (Test::TimeStamp time_stamp,
-                      const Test::Payload &,
-                      CORBA::Environment &)
+                      const Test::Payload &
+                      TAO_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t now = ACE_OS::gethrtime ();

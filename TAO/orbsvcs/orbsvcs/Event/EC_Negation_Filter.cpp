@@ -40,15 +40,15 @@ TAO_EC_Negation_Filter::size (void) const
 
 int
 TAO_EC_Negation_Filter::filter (const RtecEventComm::EventSet& event,
-                                TAO_EC_QOS_Info& qos_info,
-                                CORBA::Environment& ACE_TRY_ENV)
+                                TAO_EC_QOS_Info& qos_info
+                                TAO_ENV_ARG_DECL)
 {
   int n =
-    this->child_->filter (event, qos_info, ACE_TRY_ENV);
+    this->child_->filter (event, qos_info TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
   if (this->parent () != 0 && n == 0)
     {
-      this->parent ()->push (event, qos_info, ACE_TRY_ENV);
+      this->parent ()->push (event, qos_info TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
   return 1;
@@ -56,15 +56,15 @@ TAO_EC_Negation_Filter::filter (const RtecEventComm::EventSet& event,
 
 int
 TAO_EC_Negation_Filter::filter_nocopy (RtecEventComm::EventSet& event,
-                                   TAO_EC_QOS_Info& qos_info,
-                                   CORBA::Environment& ACE_TRY_ENV)
+                                   TAO_EC_QOS_Info& qos_info
+                                   TAO_ENV_ARG_DECL)
 {
   int n =
-    this->child_->filter_nocopy (event, qos_info, ACE_TRY_ENV);
+    this->child_->filter_nocopy (event, qos_info TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
   if (this->parent () != 0 && n == 0)
     {
-      this->parent ()->push_nocopy (event, qos_info, ACE_TRY_ENV);
+      this->parent ()->push_nocopy (event, qos_info TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
   return 1;
@@ -72,15 +72,15 @@ TAO_EC_Negation_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 
 void
 TAO_EC_Negation_Filter::push (const RtecEventComm::EventSet&,
-                                 TAO_EC_QOS_Info&,
-                                 CORBA::Environment&)
+                                 TAO_EC_QOS_Info&
+                                 TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
 void
 TAO_EC_Negation_Filter::push_nocopy (RtecEventComm::EventSet&,
-                                        TAO_EC_QOS_Info&,
-                                        CORBA::Environment&)
+                                        TAO_EC_QOS_Info&
+                                        TAO_ENV_ARG_DECL_NOT_USED)
 {
 }
 
@@ -106,8 +106,8 @@ TAO_EC_Negation_Filter::can_match (
 int
 TAO_EC_Negation_Filter::add_dependencies (
       const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &,
-      CORBA::Environment &)
+      const TAO_EC_QOS_Info &
+      TAO_ENV_ARG_DECL_NOT_USED)
 {
   return 0;
 }

@@ -61,14 +61,14 @@ public:
   /// Register an object reference with the table, and map the given
   /// ID to it.
   void register_initial_reference (const char * id,
-                                   CORBA::Object_ptr obj,
-                                   CORBA::Environment &ACE_TRY_ENV);
+                                   CORBA::Object_ptr obj
+                                   TAO_ENV_ARG_DECL);
 
   /// Return the object reference associated with the given ID.
   /// A duplicate is returned.
   CORBA::Object_ptr resolve_initial_references (
-    const char * id,
-    CORBA::Environment &ACE_TRY_ENV);
+    const char * id
+    TAO_ENV_ARG_DECL);
 
   /// Explicitly destroy the contents of the object reference table.
   void destroy (void);

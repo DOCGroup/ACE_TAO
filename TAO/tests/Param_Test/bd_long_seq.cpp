@@ -47,15 +47,15 @@ Test_Bounded_Long_Sequence::opname (void) const
 }
 
 void
-Test_Bounded_Long_Sequence::dii_req_invoke (CORBA::Request *req,
-                                            CORBA::Environment &ACE_TRY_ENV)
+Test_Bounded_Long_Sequence::dii_req_invoke (CORBA::Request *req
+                                            TAO_ENV_ARG_DECL)
 {
   req->add_in_arg ("s1") <<= this->in_.in ();
   req->add_inout_arg ("s2") <<= this->inout_.in ();
   req->add_out_arg ("s3") <<= this->out_.in ();
   req->set_return_type (Param_Test::_tc_Bounded_Long_Seq);
 
-  req->invoke (ACE_TRY_ENV);
+  req->invoke (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   const Param_Test::Bounded_Long_Seq *tmp;
@@ -63,21 +63,21 @@ Test_Bounded_Long_Sequence::dii_req_invoke (CORBA::Request *req,
   this->ret_ = new Param_Test::Bounded_Long_Seq (*tmp);
 
   CORBA::NamedValue_ptr arg2 =
-    req->arguments ()->item (1, ACE_TRY_ENV);
+    req->arguments ()->item (1 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *arg2->value () >>= tmp;
   this->inout_ = new Param_Test::Bounded_Long_Seq (*tmp);
 
   CORBA::NamedValue_ptr arg3 =
-    req->arguments ()->item (2, ACE_TRY_ENV);
+    req->arguments ()->item (2 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   *arg3->value () >>= tmp;
   this->out_ = new Param_Test::Bounded_Long_Seq (*tmp);
 }
 
 int
-Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr,
-                                             CORBA::Environment &)
+Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr
+                                             TAO_ENV_ARG_DECL_NOT_USED)
 {
   // get some sequence length (32 in this case)
   CORBA::ULong len = this->in_->maximum ();
@@ -114,16 +114,16 @@ Test_Bounded_Long_Sequence::reset_parameters (void)
 }
 
 int
-Test_Bounded_Long_Sequence::run_sii_test (Param_Test_ptr objref,
-                                          CORBA::Environment &ACE_TRY_ENV)
+Test_Bounded_Long_Sequence::run_sii_test (Param_Test_ptr objref
+                                          TAO_ENV_ARG_DECL)
 {
   ACE_TRY
     {
       Param_Test::Bounded_Long_Seq_out out (this->out_.out ());
       this->ret_ = objref->test_bounded_long_sequence (this->in_.in (),
                                                        this->inout_.inout (),
-                                                       out,
-                                                       ACE_TRY_ENV);
+                                                       out
+                                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;

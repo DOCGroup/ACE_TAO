@@ -22,7 +22,7 @@ ACE_RCSID(TIE, server, "$Id$")
 int
 main (int argc, char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   char str[256];
 
@@ -31,26 +31,26 @@ main (int argc, char **argv)
       ACE_OS::strcpy (str, "CORBA::ORB_init");
 
       // Initialize the ORB first.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "PortableServer::POA::_narrow");
 
       // Get the POA_var object from Object_var.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "PortableServer::POA::the_POAManager");
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -61,13 +61,13 @@ main (int argc, char **argv)
       ACE_OS::strcpy (str,"PortableServer::POA::create_lifespan_policy");
       // Lifespan policy
       policies[0] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT, ACE_TRY_ENV);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "PortableServer::POA::create_implicit_activation_policy");
       // Implicit activation policy
       policies[1] =
-        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION, ACE_TRY_ENV);
+        root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "PortableServer::POA::create_POA");
@@ -76,8 +76,8 @@ main (int argc, char **argv)
       PortableServer::POA_var first_poa =
         root_poa->create_POA (name.c_str (),
                               poa_manager.in (),
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -89,7 +89,7 @@ main (int argc, char **argv)
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_TRY_ENV);
+          policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -119,34 +119,34 @@ main (int argc, char **argv)
 
       ACE_OS::strcpy (str, "POA_A::_this");
       // Get Object Reference for the a_impl object.
-      A_var a = a_impl._this (ACE_TRY_ENV);
+      A_var a = a_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       ACE_OS::strcpy (str, "POA_Outer::B::_this");
       // Get Object Reference for the b_impl object.
-      Outer::B_var b = b_impl._this (ACE_TRY_ENV);
+      Outer::B_var b = b_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "POA_Outer::Inner::C::_this");
       // Get Object Reference for the c_impl object.
-      Outer::Inner::C_var c = c_impl._this (ACE_TRY_ENV);
+      Outer::Inner::C_var c = c_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #if defined (ACE_HAS_USING_KEYWORD)
       ACE_OS::strcpy (str, "POA_A::_this");
       // Get Object Reference for the a_tie_impl object.
-      A_var a_tie = a_tie_impl._this (ACE_TRY_ENV);
+      A_var a_tie = a_tie_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "POA_Outer::B::_this");
       // Get Object Reference for the a_tie_impl object.
-      Outer::B_var b_tie = b_tie_impl._this (ACE_TRY_ENV);
+      Outer::B_var b_tie = b_tie_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_OS::strcpy (str, "POA_Outer::C::_this");
       // Get Object Reference for the c_tie_impl object.
-      Outer::Inner::C_var c_tie = c_tie_impl._this (ACE_TRY_ENV);
+      Outer::Inner::C_var c_tie = c_tie_impl._this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #endif /* ACE_HAS_USING_KEYWORD */
@@ -154,23 +154,23 @@ main (int argc, char **argv)
       ACE_OS::strcpy (str, "CORBA::ORB::object_to_string");
       // Stringyfy all the object references and print them out.
       CORBA::String_var first_ior =
-        orb->object_to_string (a.in (), ACE_TRY_ENV);
+        orb->object_to_string (a.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var second_ior =
-        orb->object_to_string (b.in (), ACE_TRY_ENV);
+        orb->object_to_string (b.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var third_ior =
-        orb->object_to_string (c.in (), ACE_TRY_ENV);
+        orb->object_to_string (c.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 #if defined (ACE_HAS_USING_KEYWORD)
       // Stringyfy all the object references and print them out.
       CORBA::String_var forth_ior =
-        orb->object_to_string (a_tie.in (), ACE_TRY_ENV);
+        orb->object_to_string (a_tie.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       FILE *output_file_1 = ACE_OS::fopen ("ior_1", "w");
@@ -203,13 +203,13 @@ main (int argc, char **argv)
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var fifth_ior =
-        orb->object_to_string (b_tie.in (), ACE_TRY_ENV);
+        orb->object_to_string (b_tie.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var sixth_ior =
-        orb->object_to_string (c_tie.in (), ACE_TRY_ENV);
+        orb->object_to_string (c_tie.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       FILE *output_file_5 = ACE_OS::fopen ("ior_5", "w");
@@ -229,10 +229,10 @@ main (int argc, char **argv)
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      orb->run (ACE_TRY_ENV);
+      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

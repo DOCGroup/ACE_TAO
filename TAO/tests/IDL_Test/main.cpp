@@ -42,25 +42,25 @@ class aloha_i : public virtual POA_aloha
 {
 };
 
-int 
+int
 main (int argc , char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
-                                            argv, 
-                                            "", 
-                                            ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc,
+                                            argv,
+                                            ""
+                                            TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references ("RootPOA", 
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), 
-                                      ACE_TRY_ENV);
+        PortableServer::POA::_narrow (poa_object.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Test of pragma prefix handling.
@@ -71,7 +71,7 @@ main (int argc , char *argv[])
 
       hello_i h;
 
-      obj = h._this (ACE_TRY_ENV);
+      obj = h._this (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -86,13 +86,13 @@ main (int argc , char *argv[])
 
       goodbye_i g;
 
-      obj = g._this (ACE_TRY_ENV);
+      obj = g._this (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/goodbye:1.0"))
-        {          
+        {
           ACE_DEBUG ((LM_DEBUG,
                       "pragma prefix error in object 'goodbye'\n"));
 
@@ -101,13 +101,13 @@ main (int argc , char *argv[])
 
       sayonara_i s;
 
-      obj = s._this (ACE_TRY_ENV);
+      obj = s._this (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:hammer.com/salutation/sayonara:1.0"))
-        {          
+        {
           ACE_DEBUG ((LM_DEBUG,
                       "pragma prefix error in object 'sayonara'\n"));
 
@@ -116,13 +116,13 @@ main (int argc , char *argv[])
 
       ciao_i c;
 
-      obj = c._this (ACE_TRY_ENV);
+      obj = c._this (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/ciao:1.0"))
-        {          
+        {
           ACE_DEBUG ((LM_DEBUG,
                       "pragma prefix error in object 'ciao'\n"));
 
@@ -131,13 +131,13 @@ main (int argc , char *argv[])
 
       aloha_i a;
 
-      obj = a._this (ACE_TRY_ENV);
+      obj = a._this (TAO_ENV_SINGLE_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (obj->_interface_repository_id (),
                           "IDL:anvil.com/aloha:1.0"))
-        {          
+        {
           ACE_DEBUG ((LM_DEBUG,
                       "pragma prefix error in object 'aloha'\n"));
 
@@ -172,13 +172,13 @@ main (int argc , char *argv[])
                   str));
 
       root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
+                         1
+                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, 
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Unexpected exception in main");
       return 1;
     }

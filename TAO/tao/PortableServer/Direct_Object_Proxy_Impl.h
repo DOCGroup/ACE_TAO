@@ -34,7 +34,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_PortableServer_Export TAO_Direct_Object_Proxy_Impl : 
+class TAO_PortableServer_Export TAO_Direct_Object_Proxy_Impl :
   public virtual TAO_Object_Proxy_Impl
 {
   // = TITLE
@@ -50,17 +50,17 @@ public:
   virtual ~TAO_Direct_Object_Proxy_Impl (void);
 
   virtual CORBA::Boolean _is_a (const CORBA::Object_ptr target,
-                                const CORBA::Char *logical_type_id,
-                                CORBA_Environment &ACE_TRY_ENV);
+                                const CORBA::Char *logical_type_id
+                                TAO_ENV_ARG_DECL);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  virtual CORBA::Boolean _non_existent (const CORBA::Object_ptr target,
-                                        CORBA_Environment &ACE_TRY_ENV);
+  virtual CORBA::Boolean _non_existent (const CORBA::Object_ptr target
+                                        TAO_ENV_ARG_DECL);
 
   virtual CORBA_InterfaceDef_ptr _get_interface (
-      const CORBA::Object_ptr target,
-      CORBA_Environment &ACE_TRY_ENV
+      const CORBA::Object_ptr target
+      TAO_ENV_ARG_DECL
     );
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */

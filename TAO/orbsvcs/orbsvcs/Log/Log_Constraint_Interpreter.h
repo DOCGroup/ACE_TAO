@@ -36,8 +36,8 @@ class TAO_Log_Export TAO_Log_Constraint_Interpreter : public TAO_Interpreter
   //   "TCL" Interpreter for the Log queries.
 public:
   // = Initialization and termination methods.
-  TAO_Log_Constraint_Interpreter (const char* constraints,
-                              CORBA::Environment& ACE_TRY_ENV)
+  TAO_Log_Constraint_Interpreter (const char* constraints
+                              TAO_ENV_ARG_DECL)
     ACE_THROW_SPEC ((DsLogAdmin::InvalidConstraint,
                      CORBA::NO_MEMORY));
   // This constructor builds an expression tree representing the

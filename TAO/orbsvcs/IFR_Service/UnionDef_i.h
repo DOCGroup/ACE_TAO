@@ -34,7 +34,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_UnionDef_i : public virtual TAO_TypedefDef_i, 
+class TAO_UnionDef_i : public virtual TAO_TypedefDef_i,
                        public virtual TAO_Container_i
 {
   // = TITLE
@@ -52,110 +52,94 @@ public:
   // Destructor
 
   virtual CORBA::DefinitionKind def_kind (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Return our definition kind.
 
   virtual void destroy (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Remove the repository entry and its contents.
 
   virtual void destroy_i (
-      CORBA::Environment &ACE_TRY_ENV =
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA::TypeCode_ptr type (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr type_i (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // From IDLType_i's pure virtual function.
 
   virtual CORBA::TypeCode_ptr discriminator_type (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::TypeCode_ptr discriminator_type_i (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_IDLType_ptr discriminator_type_def (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_IDLType_ptr discriminator_type_def_i (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void discriminator_type_def (
-      CORBA_IDLType_ptr discriminator_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      CORBA_IDLType_ptr discriminator_type_def
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void discriminator_type_def_i (
-      CORBA_IDLType_ptr discriminator_type_def,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      CORBA_IDLType_ptr discriminator_type_def
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CORBA_UnionMemberSeq *members (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA_UnionMemberSeq *members_i (
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual void members (
-      const CORBA_UnionMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      const CORBA_UnionMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void members_i (
-      const CORBA_UnionMemberSeq &members,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      const CORBA_UnionMemberSeq &members
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
   void fetch_label (
       const ACE_Configuration_Section_Key member_key,
-      CORBA_UnionMember &member,
-      CORBA::Environment &ACE_TRY_ENV = 
-        TAO_default_environment ()
-    )
+      CORBA_UnionMember &member
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Used by members() to get each member's label value.
 };

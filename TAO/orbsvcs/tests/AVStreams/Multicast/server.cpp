@@ -65,7 +65,7 @@ int
 Server::init (int argc,
               char **argv)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
 
@@ -94,23 +94,23 @@ Server::init (int argc,
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
       server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice1");
-      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (ACE_TRY_ENV);
+      AVStreams::MMDevice_var mmdevice = this->mmdevice_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_TRY_EX (bind)
         {
           // Register the video control object with the naming server.
           this->my_naming_client_->bind (server_mmdevice_name,
-                                         mmdevice.in (),
-                                         ACE_TRY_ENV);
+                                         mmdevice.in ()
+                                         TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (bind);
         }
       ACE_CATCH (CosNaming::NamingContext::AlreadyBound,al_ex)
         {
           server_mmdevice_name [0].id = CORBA::string_dup ("Server_MMDevice2");
           this->my_naming_client_->bind (server_mmdevice_name,
-                                         mmdevice.in (),
-                                         ACE_TRY_ENV);
+                                         mmdevice.in ()
+                                         TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       ACE_ENDTRY;
@@ -129,10 +129,10 @@ Server::init (int argc,
 int
 Server::run (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
-      TAO_AV_CORE::instance ()->orb ()->run (ACE_TRY_ENV);
+      TAO_AV_CORE::instance ()->orb ()->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
     ACE_CATCHANY
@@ -186,20 +186,20 @@ main (int argc,
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       CORBA::Object_var obj
-        = orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+        = orb->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POA_var poa
         = PortableServer::POA::_narrow (obj.in ());
 
       TAO_AV_CORE::instance ()->init (orb.in (),
-                                      poa.in (),
-                                      ACE_TRY_ENV);
+                                      poa.in ()
+                                      TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

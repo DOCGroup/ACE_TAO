@@ -53,12 +53,12 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+        CORBA::ORB_init (argc, argv, "" TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
@@ -66,12 +66,12 @@ main (int argc, char *argv[])
 
       // Get Object Reference using IOR file
       CORBA::Object_var object =
-        orb->string_to_object (ior, ACE_TRY_ENV);
+        orb->string_to_object (ior TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Cast to Appropriate Type
       Simple_Server_var server =
-        Simple_Server::_narrow (object.in (), ACE_TRY_ENV);
+        Simple_Server::_narrow (object.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server.in ()))
@@ -97,12 +97,12 @@ main (int argc, char *argv[])
       // Shut down the server if -x option given in command line
       if (do_shutdown)
         {
-          server->shutdown (ACE_TRY_ENV);
+          server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
       // Destroying the ORB..
-      orb->destroy (ACE_TRY_ENV);
+      orb->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
 

@@ -53,13 +53,13 @@ LifeCycleTest::parse_args(int argc, char *argv[])
 }
 
 void
-LifeCycleTest::init(int argc, char* argv[], CORBA::Environment &ACE_TRY_ENV)
+LifeCycleTest::init(int argc, char* argv[] TAO_ENV_ARG_DECL)
 {
-  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "", ACE_TRY_ENV);
+  CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "" TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Object_var rootObj = orb->resolve_initial_references("NameService",
-                                                              ACE_TRY_ENV);
+  CORBA::Object_var rootObj = orb->resolve_initial_references("NameService"
+                                                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil(rootObj.in()))
@@ -69,20 +69,20 @@ LifeCycleTest::init(int argc, char* argv[], CORBA::Environment &ACE_TRY_ENV)
       return;
     }
   CosNaming::NamingContext_var rootNC =
-    CosNaming::NamingContext::_narrow(rootObj.in(),
-                                      ACE_TRY_ENV);
+    CosNaming::NamingContext::_narrow(rootObj.in()
+                                      TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CosNaming::Name name(1);
   name.length(1);
   name[0].id = CORBA::string_dup("NotifyEventChannelFactory");
 
-  CORBA::Object_var obj = rootNC->resolve(name, ACE_TRY_ENV);
+  CORBA::Object_var obj = rootNC->resolve(name TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow(obj.in(),
-                                                        ACE_TRY_ENV);
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow(obj.in()
+                                                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil(notify_factory_.in()))
@@ -95,32 +95,32 @@ LifeCycleTest::init(int argc, char* argv[], CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-LifeCycleTest::run_test(CORBA::Environment &ACE_TRY_ENV)
+LifeCycleTest::run_test(TAO_ENV_SINGLE_ARG_DECL)
 {
   for (int i = 0; i < this->count_; ++i)
     {
-     this->create_ec(ACE_TRY_ENV);
+     this->create_ec(TAO_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->create_supplier_admin(ACE_TRY_ENV);
+     this->create_supplier_admin(TAO_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->create_consumer_admin(ACE_TRY_ENV);
+     this->create_consumer_admin(TAO_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->destroy_consumer_admin(ACE_TRY_ENV);
+     this->destroy_consumer_admin(TAO_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->destroy_supplier_admin(ACE_TRY_ENV);
+     this->destroy_supplier_admin(TAO_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
 
-     this->destroy_ec(ACE_TRY_ENV);
+     this->destroy_ec(TAO_ENV_SINGLE_ARG_PARAMETER);
      ACE_CHECK;
   }
 }
 
 void
-LifeCycleTest::create_ec(CORBA::Environment &ACE_TRY_ENV)
+LifeCycleTest::create_ec(TAO_ENV_SINGLE_ARG_DECL)
 {
     CosNotifyChannelAdmin::ChannelID id;
     CosNotification::QoSProperties initial_qos;
@@ -128,8 +128,8 @@ LifeCycleTest::create_ec(CORBA::Environment &ACE_TRY_ENV)
 
     ec_ = notify_factory_->create_channel(initial_qos,
                                           initial_admin,
-                                          id,
-                                          ACE_TRY_ENV);
+                                          id
+                                          TAO_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
     if (CORBA::is_nil (ec_.in())) {
@@ -143,13 +143,13 @@ LifeCycleTest::create_ec(CORBA::Environment &ACE_TRY_ENV)
 
 
 void
-LifeCycleTest::create_supplier_admin(CORBA::Environment &ACE_TRY_ENV)
+LifeCycleTest::create_supplier_admin(TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
           CosNotifyChannelAdmin::OR_OP;
 
-  supplier_admin_ = ec_->new_for_suppliers (ifgop, adminid, ACE_TRY_ENV);
+  supplier_admin_ = ec_->new_for_suppliers (ifgop, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (supplier_admin_.in())) {
@@ -162,13 +162,13 @@ LifeCycleTest::create_supplier_admin(CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-LifeCycleTest::create_consumer_admin(CORBA::Environment &ACE_TRY_ENV)
+LifeCycleTest::create_consumer_admin(TAO_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
           CosNotifyChannelAdmin::OR_OP;
 
-  consumer_admin_ = ec_->new_for_consumers (ifgop, adminid, ACE_TRY_ENV);
+  consumer_admin_ = ec_->new_for_consumers (ifgop, adminid TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (consumer_admin_.in())) {
@@ -181,27 +181,27 @@ LifeCycleTest::create_consumer_admin(CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-LifeCycleTest::destroy_supplier_admin(CORBA::Environment &ACE_TRY_ENV)
+LifeCycleTest::destroy_supplier_admin(TAO_ENV_SINGLE_ARG_DECL)
 {
-  supplier_admin_->destroy(ACE_TRY_ENV);
+  supplier_admin_->destroy(TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG((LM_DEBUG, "destroyed supplier admin\n"));
 }
 
 void
-LifeCycleTest::destroy_consumer_admin(CORBA::Environment &ACE_TRY_ENV)
+LifeCycleTest::destroy_consumer_admin(TAO_ENV_SINGLE_ARG_DECL)
 {
-  consumer_admin_->destroy(ACE_TRY_ENV);
+  consumer_admin_->destroy(TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   ACE_DEBUG((LM_DEBUG, "destroyed consumer admin\n"));
 }
 
 void
-LifeCycleTest::destroy_ec(CORBA::Environment &ACE_TRY_ENV)
+LifeCycleTest::destroy_ec(TAO_ENV_SINGLE_ARG_DECL)
 {
-  ec_->destroy(ACE_TRY_ENV);
+  ec_->destroy(TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
   ACE_DEBUG((LM_DEBUG, "destroyed event channel\n"));
 }
@@ -210,17 +210,17 @@ LifeCycleTest::destroy_ec(CORBA::Environment &ACE_TRY_ENV)
 int
 main(int argc, char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       LifeCycleTest test;
 
       test.parse_args (argc, argv);
 
-      test.init(argc, argv, ACE_TRY_ENV);
+      test.init(argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      test.run_test(ACE_TRY_ENV);
+      test.run_test(TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH(CosNotification::UnsupportedAdmin, ex)

@@ -26,8 +26,8 @@ class TAO_ESF_Shutdown_Proxy : public TAO_ESF_Worker<PROXY>
 public:
   TAO_ESF_Shutdown_Proxy (void);
 
-  void work (PROXY *proxy,
-             CORBA::Environment &ACE_TRY_ENV);
+  void work (PROXY *proxy
+             TAO_ENV_ARG_DECL);
 };
 
 // ****************************************************************

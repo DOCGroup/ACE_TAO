@@ -29,8 +29,8 @@ public:
   RT_Properties (void);
   ~RT_Properties (void);
 
-  static RT_Properties * read_from (const char *file_name,
-                                    CORBA::Environment &ACE_TRY_ENV);
+  static RT_Properties * read_from (const char *file_name
+                                    TAO_ENV_ARG_DECL);
 
   // -- Accessor Methods --
   void priority (RTCORBA::Priority priority);

@@ -77,11 +77,11 @@ main (int argc, char *argv[])
   ACE_OS::write (handle, "", 1);
   ACE_OS::close (handle);
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0 TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       int result = parse_args (argc, argv);
@@ -90,17 +90,17 @@ main (int argc, char *argv[])
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
-        orb->resolve_initial_references ("RootPOA",
-                                         ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA"
+                                         TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Narrow the object reference to a POA reference
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
+        root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::PolicyList policies (5);
@@ -108,35 +108,35 @@ main (int argc, char *argv[])
 
       // ID Assignment Policy
       policies[0] =
-        root_poa->create_id_assignment_policy (PortableServer::USER_ID, ACE_TRY_ENV);
+        root_poa->create_id_assignment_policy (PortableServer::USER_ID TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Lifespan Policy
       policies[1] =
-        root_poa->create_lifespan_policy (PortableServer::PERSISTENT, ACE_TRY_ENV);
+        root_poa->create_lifespan_policy (PortableServer::PERSISTENT TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Request Processing Policy
       policies[2] =
-        root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT, ACE_TRY_ENV);
+        root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Servant Retention Policy
       policies[3] =
-        root_poa->create_servant_retention_policy (PortableServer::RETAIN, ACE_TRY_ENV);
+        root_poa->create_servant_retention_policy (PortableServer::RETAIN TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Id Uniqueness Policy
       policies[4] =
-        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID, ACE_TRY_ENV);
+        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_CString name = "firstPOA";
       PortableServer::POA_var first_poa =
         root_poa->create_POA (name.c_str (),
                               poa_manager.in (),
-                              policies,
-                              ACE_TRY_ENV);
+                              policies
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       for (CORBA::ULong i = 0;
@@ -144,7 +144,7 @@ main (int argc, char *argv[])
            ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
-          policy->destroy (ACE_TRY_ENV);
+          policy->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -155,17 +155,17 @@ main (int argc, char *argv[])
         PortableServer::string_to_ObjectId ("FileSystem");
 
       first_poa->activate_object_with_id (file_system_oid.in (),
-                                          &file_system_impl,
-                                          ACE_TRY_ENV);
+                                          &file_system_impl
+                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var file_system =
-        first_poa->id_to_reference (file_system_oid.in (), ACE_TRY_ENV);
+        first_poa->id_to_reference (file_system_oid.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the IOR for the "FileSystem" object
       CORBA::String_var file_system_ior =
-        orb->object_to_string (file_system.in (), ACE_TRY_ENV);
+        orb->object_to_string (file_system.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,"%s\n",
@@ -182,7 +182,7 @@ main (int argc, char *argv[])
 
       // set the state of the poa_manager to active i.e ready to
       // process requests
-      poa_manager->activate (ACE_TRY_ENV);
+      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       Worker worker (orb.in ());
@@ -217,12 +217,12 @@ Worker::Worker (CORBA::ORB_ptr orb)
 int
 Worker::svc (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Run the ORB for atmost 75 seconds
       ACE_Time_Value tv (75, 0);
-      this->orb_->run (tv, ACE_TRY_ENV);
+      this->orb_->run (tv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

@@ -102,7 +102,7 @@ Consumer_Handler::parse_args (void)
     switch (c)
       {
       case 'd':  // debug flag
-	TAO_debug_level++; //****
+        TAO_debug_level++; //****
         break;
 
       case 'k':  // ior provide on command line
@@ -119,8 +119,8 @@ Consumer_Handler::parse_args (void)
         break;
 
       case 's': // don't use the naming service
-	this->use_naming_service_ = 0;
-	break;
+        this->use_naming_service_ = 0;
+        break;
 
       case 'a': // to be given only on using run_test.pl
         this->stock_name_ = get_opts.optarg;
@@ -144,9 +144,9 @@ Consumer_Handler::parse_args (void)
                            " [-f ior-file]"
                            " [-k ior]"
                            " [-x]"
-			   " [-s]"
-			   " [-a stock_name]"
-			   " [-t threshold]"
+                           " [-s]"
+                           " [-a stock_name]"
+                           " [-t threshold]"
                            "\n",
                            this->argv_ [0]),
                           -1);
@@ -161,30 +161,30 @@ Consumer_Handler::parse_args (void)
 int
 Consumer_Handler::via_naming_service (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Initialization of the naming service.
       if (naming_services_client_.init (orb_.in ()) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
 
       CosNaming::Name notifier_ref_name (1);
       notifier_ref_name.length (1);
       notifier_ref_name[0].id = CORBA::string_dup ("Notifier");
 
       CORBA::Object_var notifier_obj =
-	this->naming_services_client_->resolve (notifier_ref_name,
-						ACE_TRY_ENV);
+        this->naming_services_client_->resolve (notifier_ref_name
+                                                TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The CORBA::Object_var object is downcast to Notifier_var using
       // the <_narrow> method.
       this->server_ =
-        Notifier::_narrow (notifier_obj.in (),
-                           ACE_TRY_ENV);
+        Notifier::_narrow (notifier_obj.in ()
+                           TAO_ENV_ARG_PARAMETER);
 
       ACE_TRY_CHECK;
 
@@ -211,21 +211,21 @@ Consumer_Handler::init (int argc, char **argv)
   // Register our <Input_Handler> to handle STDIN events, which will
   // trigger the <handle_input> method to process these events.
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Retrieve the ORB.
       this->orb_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
-                                    0,
-                                    ACE_TRY_ENV);
+                                    0
+                                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "parse_args failed\n"),
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "parse_args failed\n"),
                           -1);
 
       if (this->interactive_ == 1)
@@ -280,8 +280,8 @@ Consumer_Handler::init (int argc, char **argv)
                               -1);
 
           CORBA::Object_var server_object =
-            this->orb_->string_to_object (this->ior_,
-                                          ACE_TRY_ENV);
+            this->orb_->string_to_object (this->ior_
+                                          TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           if (CORBA::is_nil (server_object.in ()))
@@ -291,8 +291,8 @@ Consumer_Handler::init (int argc, char **argv)
                               -1);
           // The downcasting from CORBA::Object_var to Notifier_var is
           // done using the <_narrow> method.
-          this->server_ = Notifier::_narrow (server_object.in (),
-                                             ACE_TRY_ENV);
+          this->server_ = Notifier::_narrow (server_object.in ()
+                                             TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -312,23 +312,23 @@ int
 Consumer_Handler::run (void)
 {
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       // Obtain and activate the RootPOA.
      CORBA::Object_var obj =
-            this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+            this->orb_->resolve_initial_references ("RootPOA" TAO_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+        PortableServer::POA::_narrow (obj.in () TAO_ENV_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
      PortableServer::POAManager_var poa_manager=
-       root_poa->the_POAManager (ACE_TRY_ENV);
+       root_poa->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
-     poa_manager->activate (ACE_TRY_ENV);
+     poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
      ACE_TRY_CHECK;
 
      ACE_NEW_RETURN (this->consumer_servant_,
@@ -339,7 +339,7 @@ Consumer_Handler::run (void)
 
      // Get the consumer stub (i.e consumer object) pointer.
      this->consumer_var_ =
-       this->consumer_servant_->_this (ACE_TRY_ENV);
+       this->consumer_servant_->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (this->interactive_ == 0)
@@ -348,8 +348,8 @@ Consumer_Handler::run (void)
           // Register with the server.
           this->server_->register_callback (this->stock_name_,
                                             this->threshold_value_,
-                                            this->consumer_var_.in (),
-                                            ACE_TRY_ENV);
+                                            this->consumer_var_.in ()
+                                            TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           // Note the registration.
@@ -361,7 +361,7 @@ Consumer_Handler::run (void)
         }
 
       // Run the ORB.
-      this->orb_->run (ACE_TRY_ENV);
+      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
     }

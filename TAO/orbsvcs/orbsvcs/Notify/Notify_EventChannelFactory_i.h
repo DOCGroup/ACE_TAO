@@ -61,14 +61,18 @@ public:
   virtual ~TAO_Notify_EventChannelFactory_i (void);
   // Destructor
 
-  static CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA, CORBA::Environment &ACE_TRY_ENV);
+  static CosNotifyChannelAdmin::EventChannelFactory_ptr create (PortableServer::POA_ptr default_POA TAO_ENV_ARG_DECL);
   // Create a factory servant and activates it with the default POA.
   // Also creates a resource factory and assigns it this default_POA.
 
-  CosNotifyChannelAdmin::EventChannelFactory_ptr get_ref (CORBA::Environment &ACE_TRY_ENV);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr get_ref (TAO_ENV_SINGLE_ARG_DECL);
   // Get the CORBA object.
 
-  void shutdown (CORBA::Environment &ACE_TRY_ENV, CORBA::Boolean destroy_children = 0);
+  void shutdown (TAO_ENV_SINGLE_ARG_DECL
+#if !defined (TAO_HAS_EXCEPTIONS) || defined (TAO_LACKS_SUPPRESS_ENV)
+  ,    // This is ugly -- destroy_children should come BEFORE the env arg.
+#endif
+                 CORBA::Boolean destroy_children = 0);
   // Destroy the factory
   // By default, the factory's lifetime is not coupled with its creations
   // Setting the <destroy_children> flag to 'true' will destory all event_channels that were created by this factory.
@@ -84,8 +88,8 @@ public:
 virtual CosNotifyChannelAdmin::EventChannel_ptr create_channel (
     const CosNotification::QoSProperties & initial_qos,
     const CosNotification::AdminProperties & initial_admin,
-    CosNotifyChannelAdmin::ChannelID_out id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::ChannelID_out id
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -94,15 +98,15 @@ virtual CosNotifyChannelAdmin::EventChannel_ptr create_channel (
   ));
 
 virtual CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (
-    CORBA::Environment &ACE_TRY_ENV
+    TAO_ENV_SINGLE_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException
   ));
 
 virtual CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
-    CosNotifyChannelAdmin::ChannelID id,
-    CORBA::Environment &ACE_TRY_ENV
+    CosNotifyChannelAdmin::ChannelID id
+    TAO_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -113,10 +117,10 @@ virtual CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
   TAO_Notify_EventChannelFactory_i (void);
   // Constructor
 
-  void init_i (PortableServer::POA_ptr default_POA, CORBA::Environment &ACE_TRY_ENV);
+  void init_i (PortableServer::POA_ptr default_POA TAO_ENV_ARG_DECL);
   // Initializes this object.
 
-  CosNotifyFilter::FilterFactory_ptr create_default_filter_factory_i (CORBA::Environment& ACE_TRY_ENV);
+  CosNotifyFilter::FilterFactory_ptr create_default_filter_factory_i (TAO_ENV_SINGLE_ARG_DECL);
   // Create the default filter factory.
 
   // = Data members

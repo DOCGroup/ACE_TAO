@@ -13,8 +13,8 @@ TAO_BiDirGIOP_Loader::TAO_BiDirGIOP_Loader (void)
 int
 TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr,
                                 int,
-                                char *[],
-                                CORBA::Environment &ACE_TRY_ENV)
+                                char *[]
+                                TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_DEF_GIOP_MINOR >= 2)
@@ -35,8 +35,8 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr,
 
       bidir_orb_initializer = tmp_orb_initializer;
 
-      PortableInterceptor::register_orb_initializer (bidir_orb_initializer.in (),
-                                                     ACE_TRY_ENV);
+      PortableInterceptor::register_orb_initializer (bidir_orb_initializer.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -45,14 +45,14 @@ TAO_BiDirGIOP_Loader::activate (CORBA::ORB_ptr,
 
 int
 TAO_BiDirGIOP_Loader::parse_policy (TAO_ORB_Core *orb_core,
-                                    CORBA::Policy_ptr policy,
-                                    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Policy_ptr policy
+                                    TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
   BiDirPolicy::BidirectionalPolicy_var bidir_policy
-    = BiDirPolicy::BidirectionalPolicy::_narrow (policy,
-                                                 ACE_TRY_ENV);
+    = BiDirPolicy::BidirectionalPolicy::_narrow (policy
+                                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   // Bidirectional policy. If we have a BiDirectional policy, we set a

@@ -28,14 +28,12 @@ FOO_ClientRequestInterceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
-  TAO_ENV_ARG_DEFN;
-
   // Verify that the tagged component that was supposed to be embedded
   // into the IOR by the FOO_IORInterceptor is actually in the IOR
   // profile.
   IOP::TaggedComponent_var component =
-    ri->get_effective_component (FOO::COMPONENT_ID,
-                                 ACE_TRY_ENV);
+    ri->get_effective_component (FOO::COMPONENT_ID
+                                 TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // The correct tagged component appears to exist.  Display the

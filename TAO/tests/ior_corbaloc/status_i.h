@@ -9,13 +9,12 @@
 
 class corbaloc_Status_i : public POA_corbaloc::Status {
 public:
-  corbaloc_Status_i (CORBA::Environment & =
-                     TAO_default_environment());
+  corbaloc_Status_i (TAO_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  CORBA::Boolean print_status (CORBA::Environment & = TAO_default_environment()) 
+  CORBA::Boolean print_status (TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     throw (CORBA::SystemException);
 
-  void set_name(const char *name){  server_name_=name; } 
+  void set_name(const char *name){  server_name_=name; }
 private:
   ACE_CString server_name_;
 

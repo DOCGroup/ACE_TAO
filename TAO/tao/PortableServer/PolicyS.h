@@ -63,10 +63,9 @@
 
 
     virtual CORBA::Boolean _is_a (
-        const char* logical_type_id,
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        const char* logical_type_id
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+
 
     virtual void* _downcast (
         const char* logical_type_id
@@ -75,41 +74,39 @@
     static void _is_a_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     static void _non_existent_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     static void _interface_skel (
         TAO_ServerRequest &req,
         void *obj,
-        void *servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     virtual void _dispatch (
         TAO_ServerRequest &req,
-        void *_servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *_servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     ::CORBA::Policy *_this (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      );
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+
 
     virtual const char* _interface_repository_id (void) const;
 
     virtual CORBA::PolicyType policy_type (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -117,14 +114,13 @@
     static void _get_policy_type_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
-        void *_tao_servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *_tao_servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     virtual CORBA::Policy_ptr copy (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -132,14 +128,13 @@
     static void copy_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
-        void *_tao_servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *_tao_servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
     virtual void destroy (
-        CORBA::Environment &ACE_TRY_ENV =
-          TAO_default_environment ()
-      )
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -147,8 +142,8 @@
     static void destroy_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_obj,
-        void *_tao_servant_upcall,
-        CORBA::Environment &ACE_TRY_ENV
+        void *_tao_servant_upcall
+        TAO_ENV_ARG_DECL
       );
 
 
@@ -167,16 +162,16 @@
     virtual ~POA_CORBA_TAO_Policy_Strategized_Proxy_Broker (void);
 
     virtual CORBA_TAO_Policy_Proxy_Impl &select_proxy (
-      ::CORBA::Policy *object,
-      CORBA_Environment &ACE_TRY_ENV
+      ::CORBA::Policy *object
+      TAO_ENV_ARG_DECL
     );
 
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
     void create_proxy (
-      int collocation_strategy,
-      CORBA::Environment &ACE_TRY_ENV
+      int collocation_strategy
+      TAO_ENV_ARG_DECL
     );
 
     // Caches the proxy implementations. The proxy implementation
@@ -214,24 +209,24 @@
     virtual ~POA_CORBA_TAO_Policy_ThruPOA_Proxy_Impl (void) { }
 
     virtual CORBA::PolicyType policy_type (
-        CORBA::Object_ptr _collocated_tao_target_,
-        CORBA::Environment &ACE_TRY_ENV
+        CORBA::Object_ptr _collocated_tao_target_
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
 virtual CORBA::Policy_ptr copy (
-        CORBA::Object_ptr _collocated_tao_target_,
-        CORBA::Environment &ACE_TRY_ENV
+        CORBA::Object_ptr _collocated_tao_target_
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
 
 virtual void destroy (
-        CORBA::Object_ptr _collocated_tao_target_,
-        CORBA::Environment &ACE_TRY_ENV
+        CORBA::Object_ptr _collocated_tao_target_
+        TAO_ENV_ARG_DECL
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
@@ -258,24 +253,24 @@ public:
   virtual ~_TAO_CORBA_Policy_Direct_Proxy_Impl (void) { }
 
   virtual CORBA::PolicyType policy_type (
-    CORBA::Object_ptr _collocated_tao_target_,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object_ptr _collocated_tao_target_
+    TAO_ENV_ARG_DECL
   )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
   virtual CORBA_Policy_ptr copy (
-                                 CORBA::Object_ptr _collocated_tao_target_,
-                                 CORBA::Environment &ACE_TRY_ENV
+                                 CORBA::Object_ptr _collocated_tao_target_
+                                 TAO_ENV_ARG_DECL
                                  )
     ACE_THROW_SPEC ((
                      CORBA::SystemException
                      ));
 
     virtual void destroy (
-                          CORBA::Object_ptr _collocated_tao_target_,
-                          CORBA::Environment &ACE_TRY_ENV
+                          CORBA::Object_ptr _collocated_tao_target_
+                          TAO_ENV_ARG_DECL
                           )
       ACE_THROW_SPEC ((
                        CORBA::SystemException

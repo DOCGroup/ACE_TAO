@@ -17,11 +17,11 @@ TAO_DynAny_i::~TAO_DynAny_i (void)
 }
 
 void
-TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc,
-                              CORBA::Environment &ACE_TRY_ENV)
+TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc
+                              TAO_ENV_ARG_DECL)
 {
   // Check to see if it's a simple type.
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc, ACE_TRY_ENV);
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   switch (tk)
   {
@@ -51,10 +51,10 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc,
 }
 
 void
-TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc,
-                                    CORBA::Environment &ACE_TRY_ENV)
+TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc
+                                    TAO_ENV_ARG_DECL)
 {
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc, ACE_TRY_ENV);
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
   switch (tk)
   {
@@ -148,15 +148,15 @@ TAO_DynAny_i::init_common (void)
 }
 
 void
-TAO_DynAny_i::init (CORBA_TypeCode_ptr tc,
-                    CORBA::Environment &ACE_TRY_ENV)
+TAO_DynAny_i::init (CORBA_TypeCode_ptr tc
+                    TAO_ENV_ARG_DECL)
 {
-  this->check_typecode (tc, 
-                        ACE_TRY_ENV);
+  this->check_typecode (tc
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->set_to_default_value (tc,
-                              ACE_TRY_ENV);
+  this->set_to_default_value (tc
+                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->init_common ();
@@ -165,12 +165,12 @@ TAO_DynAny_i::init (CORBA_TypeCode_ptr tc,
 }
 
 void
-TAO_DynAny_i::init (const CORBA_Any& any,
-                    CORBA::Environment &ACE_TRY_ENV)
+TAO_DynAny_i::init (const CORBA_Any& any
+                    TAO_ENV_ARG_DECL)
 {
   this->type_ = any.type ();
-  this->check_typecode (this->type_.in (), 
-                        ACE_TRY_ENV);
+  this->check_typecode (this->type_.in ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   this->init_common ();
@@ -181,8 +181,8 @@ TAO_DynAny_i::init (const CORBA_Any& any,
 // ****************************************************************
 
 TAO_DynAny_i *
-TAO_DynAny_i::_narrow (CORBA::Object_ptr obj,
-                       CORBA::Environment &)
+TAO_DynAny_i::_narrow (CORBA::Object_ptr obj
+                       TAO_ENV_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (obj))
     {
@@ -212,15 +212,15 @@ TAO_DynAny_i::_tao_QueryInterface (ptr_arith_t type)
       return this;
     }
 
-  return 
+  return
     this->ACE_NESTED_CLASS (DynamicAny, DynAny::_tao_QueryInterface) (type);
 }
 
 // ****************************************************************
 
 void
-TAO_DynAny_i::from_any (const CORBA_Any &any,
-                        CORBA::Environment &ACE_TRY_ENV)
+TAO_DynAny_i::from_any (const CORBA_Any &any
+                        TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch,
@@ -235,8 +235,8 @@ TAO_DynAny_i::from_any (const CORBA_Any &any,
   CORBA::TypeCode_var any_tc = any.type ();
 
   CORBA::Boolean equiv =
-    this->type_->equivalent (any_tc.in (), 
-                             ACE_TRY_ENV);
+    this->type_->equivalent (any_tc.in ()
+                             TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (!equiv)
@@ -245,14 +245,14 @@ TAO_DynAny_i::from_any (const CORBA_Any &any,
     }
 
 // @@@ (JP) Spec also says we should check for illegal Any
-// value here, and throw InvalidValue if we find one. 
+// value here, and throw InvalidValue if we find one.
 // Something like a null string will be caught in the constructor.
 
   this->any_ = any;
 }
 
 CORBA::Any_ptr
-TAO_DynAny_i::to_any (CORBA::Environment &ACE_TRY_ENV)
+TAO_DynAny_i::to_any (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -274,8 +274,8 @@ TAO_DynAny_i::to_any (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::Boolean
-TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
-                     CORBA::Environment &ACE_TRY_ENV)
+TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
+                     TAO_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -286,8 +286,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
                         0);
     }
 
-  TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs,
-                                               ACE_TRY_ENV);
+  TAO_DynAny_i *rhs_n = TAO_DynAny_i::_narrow (rhs
+                                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (rhs_n == 0)
@@ -295,8 +295,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
       return 0;
     }
 
-  CORBA::Boolean equiv = this->type_->equivalent (rhs_n->type_.in (), 
-                                                  ACE_TRY_ENV);
+  CORBA::Boolean equiv = this->type_->equivalent (rhs_n->type_.in ()
+                                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   if (!equiv)
@@ -416,23 +416,23 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
         this->any_ >>= lhs_v;
 
         DynamicAny::DynAny_var rhs_dyn =
-          TAO_DynAnyFactory::make_dyn_any (rhs_v, 
-                                           ACE_TRY_ENV);
+          TAO_DynAnyFactory::make_dyn_any (rhs_v
+                                           TAO_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         DynamicAny::DynAny_var lhs_dyn =
-          TAO_DynAnyFactory::make_dyn_any (lhs_v, 
-                                           ACE_TRY_ENV);
+          TAO_DynAnyFactory::make_dyn_any (lhs_v
+                                           TAO_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::Boolean b = rhs_dyn->equal (lhs_dyn.in (), 
-                                           ACE_TRY_ENV);
+        CORBA::Boolean b = rhs_dyn->equal (lhs_dyn.in ()
+                                           TAO_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        rhs_dyn->destroy (ACE_TRY_ENV);
+        rhs_dyn->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        lhs_dyn->destroy (ACE_TRY_ENV);
+        lhs_dyn->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         return b;
@@ -444,8 +444,8 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
         CORBA::TypeCode_ptr lhs_v;
         this->any_ >>= lhs_v;
         // See CORBA 2.4.2 - must use equal() here.
-        return lhs_v->equal (lhs_v, 
-                             ACE_TRY_ENV);
+        return lhs_v->equal (lhs_v
+                             TAO_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_objref:
       {
@@ -453,17 +453,17 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
         rhs_n->any_ >>= CORBA::Any::to_object (rhs_v);
         CORBA::Object_ptr lhs_v;
         this->any_ >>= CORBA::Any::to_object (lhs_v);
-        return lhs_v->_is_equivalent (lhs_v, 
-                                      ACE_TRY_ENV);
+        return lhs_v->_is_equivalent (lhs_v
+                                      TAO_ENV_ARG_PARAMETER);
       }
     case CORBA::tk_string:
       {
         CORBA::TypeCode_var unaliased_tc =
-          TAO_DynAnyFactory::strip_alias (this->type_.in (),
-                                          ACE_TRY_ENV);
+          TAO_DynAnyFactory::strip_alias (this->type_.in ()
+                                          TAO_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
+        CORBA::ULong bound = unaliased_tc->length (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         const char* rhs_v;
@@ -483,11 +483,11 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
     case CORBA::tk_wstring:
       {
         CORBA::TypeCode_var unaliased_tc =
-          TAO_DynAnyFactory::strip_alias (this->type_.in (),
-                                          ACE_TRY_ENV);
+          TAO_DynAnyFactory::strip_alias (this->type_.in ()
+                                          TAO_ENV_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
-        CORBA::ULong bound = unaliased_tc->length (ACE_TRY_ENV);
+        CORBA::ULong bound = unaliased_tc->length (TAO_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK_RETURN (0);
 
         CORBA::WChar * rhs_v;
@@ -506,7 +506,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs,
 }
 
 void
-TAO_DynAny_i::destroy (CORBA::Environment &ACE_TRY_ENV)
+TAO_DynAny_i::destroy (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -524,7 +524,7 @@ TAO_DynAny_i::destroy (CORBA::Environment &ACE_TRY_ENV)
 
 
 DynamicAny::DynAny_ptr
-TAO_DynAny_i::current_component (CORBA::Environment &ACE_TRY_ENV)
+TAO_DynAny_i::current_component (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       DynamicAny::DynAny::TypeMismatch

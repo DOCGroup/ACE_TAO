@@ -627,14 +627,14 @@ TAO_GIOP_Message_Lite::generate_exception_reply (
 {
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
       // Make the GIOP & reply header. They are version specific.
       this->write_reply_header (cdr,
                                 params);
-      x._tao_encode (cdr, ACE_TRY_ENV);
+      x._tao_encode (cdr TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA_Exception, ex)
@@ -701,7 +701,7 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
 
   int parse_error = 0;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       parse_error =
@@ -720,8 +720,8 @@ TAO_GIOP_Message_Lite::process_request (TAO_Transport *transport,
       // Do this before the reply is sent.
       this->orb_core_->adapter_registry ()->dispatch (request.object_key (),
                                                       request,
-                                                      forward_to,
-                                                      ACE_TRY_ENV);
+                                                      forward_to
+                                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (forward_to.in ()))
@@ -886,7 +886,7 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
 
   CORBA::Boolean response_required = 1;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
   ACE_TRY
     {
       int parse_error =
@@ -938,8 +938,8 @@ TAO_GIOP_Message_Lite::process_locate_request (TAO_Transport *transport,
 
       this->orb_core_->adapter_registry ()->dispatch (server_request.object_key (),
                                                       server_request,
-                                                      forward_to,
-                                                      ACE_TRY_ENV);
+                                                      forward_to
+                                                       TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (!CORBA::is_nil (forward_to.in ()))
@@ -1119,8 +1119,8 @@ TAO_GIOP_Message_Lite::parse_reply (TAO_InputCDR &cdr,
 int
 TAO_GIOP_Message_Lite::write_reply_header (
     TAO_OutputCDR &output,
-    TAO_Pluggable_Reply_Params_Base &reply,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    TAO_Pluggable_Reply_Params_Base &reply
+    TAO_ENV_ARG_DECL_NOT_USED /* TAO_ENV_SINGLE_ARG_PARAMETER */
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -1407,7 +1407,7 @@ TAO_GIOP_Message_Lite::send_reply_exception (
 
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   ACE_TRY
     {
@@ -1424,7 +1424,7 @@ TAO_GIOP_Message_Lite::send_reply_exception (
                                 reply_params);
 
 
-      x->_tao_encode (output, ACE_TRY_ENV);
+      x->_tao_encode (output TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA_Exception, ex)

@@ -61,8 +61,8 @@ Identity_Server::init (int argc,
   ACE_TRY
     {
       result = this->orb_manager_.init (argc,
-                                        argv,
-                                        ACE_TRY_ENV);
+                                        argv
+                                        TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
         return result;
@@ -72,20 +72,20 @@ Identity_Server::init (int argc,
 
       // Lifespan policy
       policies[0] =
-        this->orb_manager_.root_poa()->create_lifespan_policy (PortableServer::PERSISTENT,
-                                                               ACE_TRY_ENV);
+        this->orb_manager_.root_poa()->create_lifespan_policy (PortableServer::PERSISTENT
+                                                               TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       policies[1] =
-        this->orb_manager_.root_poa()->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
-                                                                          ACE_TRY_ENV);
+        this->orb_manager_.root_poa()->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION
+                                                                          TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->persistent_POA_  =
         this->orb_manager_.root_poa()->create_POA ("persistent_server",
                                                    this->orb_manager_.poa_manager (),
-                                                   policies,
-                                                   ACE_TRY_ENV);
+                                                   policies
+                                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -94,7 +94,7 @@ Identity_Server::init (int argc,
            i < policies.length ();
            ++i)
         {
-          policies[i]->destroy (ACE_TRY_ENV);
+          policies[i]->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
 
@@ -112,7 +112,7 @@ Identity_Server::init (int argc,
 }
 
 int
-Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
+Identity_Server::register_groups (TAO_ENV_SINGLE_ARG_DECL)
 {
 
 
@@ -121,13 +121,13 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
   // <Object_Group>s, one random and one rr.
   CORBA::ORB_var orb = orb_manager_.orb ();
   CORBA::Object_var obj =
-    orb->string_to_object (this->group_factory_ior_,
-                           ACE_TRY_ENV);
+    orb->string_to_object (this->group_factory_ior_
+                           TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Load_Balancer::Object_Group_Factory_var factory =
-    Load_Balancer::Object_Group_Factory::_narrow (obj.in (),
-                                                  ACE_TRY_ENV);
+    Load_Balancer::Object_Group_Factory::_narrow (obj.in ()
+                                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (factory.in ()))
@@ -140,8 +140,8 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
   // Unbind the previously registered random group.
   ACE_TRY_EX (UNBIND_RANDOM)
     {
-      factory->unbind_random ("Random group",
-                              ACE_TRY_ENV);
+      factory->unbind_random ("Random group"
+                              TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (UNBIND_RANDOM);
     }
   ACE_CATCHANY
@@ -154,8 +154,8 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
   // Unbind the previously registered round robin group
   ACE_TRY_EX (UNBIND_ROUND)
     {
-      factory->unbind_round_robin ("Round Robin group",
-                                   ACE_TRY_ENV);
+      factory->unbind_round_robin ("Round Robin group"
+                                   TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK_EX (UNBIND_ROUND);
     }
   ACE_CATCHANY
@@ -168,13 +168,13 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
 
   // We want to make two groups Random & Round Robin.
   Load_Balancer::Object_Group_var random_group =
-    factory->make_random ("Random group",
-                          ACE_TRY_ENV);
+    factory->make_random ("Random group"
+                          TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Load_Balancer::Object_Group_var rr_group =
-    factory->make_round_robin ("Round Robin group",
-                               ACE_TRY_ENV);
+    factory->make_round_robin ("Round Robin group"
+                               TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 
@@ -182,14 +182,14 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
   // register them with the random and round robin
   // <Object_Group>s.
   this->create_objects (random_objects_,
-                        random_group.in (),
-                        ACE_TRY_ENV);
+                        random_group.in ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 
   this->create_objects (rr_objects_,
-                        rr_group.in (),
-                        ACE_TRY_ENV);
+                        rr_group.in ()
+                        TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
@@ -197,8 +197,8 @@ Identity_Server::register_groups (CORBA::Environment &ACE_TRY_ENV)
 
 void
 Identity_Server::create_objects (size_t number_of_objects,
-                                 Load_Balancer::Object_Group_ptr group,
-                                 CORBA::Environment &ACE_TRY_ENV)
+                                 Load_Balancer::Object_Group_ptr group
+                                 TAO_ENV_ARG_DECL)
 {
   // Create the specified number of servants, and register each one
   // with the provided <Object_Group>.
@@ -218,23 +218,23 @@ Identity_Server::create_objects (size_t number_of_objects,
       ACE_CHECK;
 
       PortableServer::ServantBase_var s = identity_servant;
-      this->orb_manager_.activate_poa_manager (ACE_TRY_ENV);
+      this->orb_manager_.activate_poa_manager (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA::Object_var obj = identity_servant->_this (ACE_TRY_ENV);
+      CORBA::Object_var obj = identity_servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       Load_Balancer::Member member;
       member.id = CORBA::string_dup (id);
       member.obj =
-        this->orb_manager_.orb ()->object_to_string (obj.in (),
-                                                     ACE_TRY_ENV);
+        this->orb_manager_.orb ()->object_to_string (obj.in ()
+                                                     TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       // Do an unbind and then bind
       ACE_TRY_EX (UNBIND)
         {
-          group->unbind (id, ACE_TRY_ENV);
+          group->unbind (id TAO_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (UNBIND);
         }
       ACE_CATCHANY
@@ -245,18 +245,18 @@ Identity_Server::create_objects (size_t number_of_objects,
       ACE_ENDTRY;
 
       // Bind the servant in the random <Object_Group>.
-      group->bind (member, ACE_TRY_ENV);
+      group->bind (member TAO_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
     }
 }
 
 int
- Identity_Server::run (CORBA::Environment &ACE_TRY_ENV)
+ Identity_Server::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   int result;
 
-  result = this->orb_manager_.run (ACE_TRY_ENV);
+  result = this->orb_manager_.run (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return result;
@@ -282,10 +282,10 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      result = server.register_groups (ACE_TRY_ENV);
+      result = server.register_groups (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      result = server.run (ACE_TRY_ENV);
+      result = server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY

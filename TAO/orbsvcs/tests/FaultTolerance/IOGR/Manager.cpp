@@ -61,7 +61,7 @@ int
 main (int argc,
       char *argv[])
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  TAO_ENV_DECLARE_NEW_ENV;
 
   Manager manager;
 
@@ -69,8 +69,8 @@ main (int argc,
     {
       // Initilaize the ORB, POA etc.
       manager.init (argc,
-                    argv,
-                    ACE_TRY_ENV);
+                    argv
+                    TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // the command line arguments
@@ -78,13 +78,13 @@ main (int argc,
         return -1;
 
       // Merge the different IORS
-      manager.make_merged_iors (ACE_TRY_ENV);
+      manager.make_merged_iors (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       cout << "Merged IORS" <<endl;
       // Set properties. This is the most important portion of the
       // test
-      manager.set_properties (ACE_TRY_ENV);
+      manager.set_properties (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
       cout << "Set prop" <<endl;
 
@@ -94,7 +94,7 @@ main (int argc,
       // Client, who is going to use the merged IOR
       // Construct that with the managers ORB
       Client_i client_imp (manager.orb ());
-      client_imp.init (ACE_TRY_ENV);
+      client_imp.init (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -117,59 +117,59 @@ Manager::Manager (void)
 
 void
 Manager::init (int argc,
-               char *argv[],
-               CORBA::Environment &ACE_TRY_ENV)
+               char *argv[]
+               TAO_ENV_ARG_DECL)
 {
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                0,
-                                ACE_TRY_ENV);
+                                0
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Obtain the RootPOA.
   CORBA::Object_var obj_var =
-    this->orb_->resolve_initial_references ("RootPOA",
-                                            ACE_TRY_ENV);
+    this->orb_->resolve_initial_references ("RootPOA"
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa_var =
-    PortableServer::POA::_narrow (obj_var.in (), ACE_TRY_ENV);
+    PortableServer::POA::_narrow (obj_var.in () TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager_var =
-    root_poa_var->the_POAManager (ACE_TRY_ENV);
+    root_poa_var->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  poa_manager_var->activate (ACE_TRY_ENV);
+  poa_manager_var->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
 
 int
-Manager::make_merged_iors (CORBA::Environment &ACE_TRY_ENV)
+Manager::make_merged_iors (TAO_ENV_SINGLE_ARG_DECL)
 {
   // First  server
   object_primary =
-    this->orb_->string_to_object (first_ior,
-                                  ACE_TRY_ENV);
+    this->orb_->string_to_object (first_ior
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   //Second server
   object_secondary =
-    this->orb_->string_to_object (second_ior,
-                                  ACE_TRY_ENV);
+    this->orb_->string_to_object (second_ior
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Get an object reference for the ORBs IORManipultion object!
   CORBA_Object_ptr IORM =
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                            0,
-                                            ACE_TRY_ENV);
+                                            0
+                                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM, ACE_TRY_ENV);
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 
@@ -181,14 +181,14 @@ Manager::make_merged_iors (CORBA::Environment &ACE_TRY_ENV)
 
   // Create a merged set 1;
   merged_set_ =
-    iorm->merge_iors (iors, ACE_TRY_ENV);
+    iorm->merge_iors (iors TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   return 0;
 }
 
 int
-Manager::set_properties (CORBA::Environment &ACE_TRY_ENV)
+Manager::set_properties (TAO_ENV_SINGLE_ARG_DECL)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
 
@@ -215,8 +215,8 @@ Manager::set_properties (CORBA::Environment &ACE_TRY_ENV)
 
   // Set the property
   CORBA::Boolean retval = iorm->set_property (&iogr_prop,
-                                              this->merged_set_.in (),
-                                              ACE_TRY_ENV);
+                                              this->merged_set_.in ()
+                                              TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   // Set the primary
@@ -225,8 +225,8 @@ Manager::set_properties (CORBA::Environment &ACE_TRY_ENV)
     {
       retval = iorm->set_primary (&iogr_prop,
                                   object_secondary.in (),
-                                  this->merged_set_.in (),
-                                  ACE_TRY_ENV);
+                                  this->merged_set_.in ()
+                                  TAO_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
     }
 
@@ -234,11 +234,11 @@ Manager::set_properties (CORBA::Environment &ACE_TRY_ENV)
 }
 
 int
-Manager::run (CORBA::Environment &ACE_TRY_ENV)
+Manager::run (TAO_ENV_SINGLE_ARG_DECL)
 {
   ACE_TRY
     {
-      this->orb_->run (ACE_TRY_ENV);
+      this->orb_->run (TAO_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -286,11 +286,11 @@ Client_i::Client_i (CORBA::ORB_ptr orb)
 }
 
 void
-run_test (Simple_Server_ptr server,
-          CORBA::Environment &ACE_TRY_ENV);
+run_test (Simple_Server_ptr server
+          TAO_ENV_ARG_DECL);
 
 void
-Client_i::init (CORBA::Environment &ACE_TRY_ENV)
+Client_i::init (TAO_ENV_SINGLE_ARG_DECL)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (ior_output_file,
@@ -314,19 +314,19 @@ Client_i::init (CORBA::Environment &ACE_TRY_ENV)
   char **argv = 0;
   this->orb_ = CORBA::ORB_init (argc,
                                 argv,
-                                0,
-                                ACE_TRY_ENV);
+                                0
+                                TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::Object_var object =
-    this->orb_->string_to_object (data,
-                                  ACE_TRY_ENV);
+    this->orb_->string_to_object (data
+                                  TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Combined IOR stuff
   Simple_Server_var server =
-    Simple_Server::_narrow (object.in (),
-                            ACE_TRY_ENV);
+    Simple_Server::_narrow (object.in ()
+                            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (CORBA::is_nil (server.in ()))
@@ -336,8 +336,8 @@ Client_i::init (CORBA::Environment &ACE_TRY_ENV)
                   data));
     }
 
-  run_test (server.in (),
-            ACE_TRY_ENV);
+  run_test (server.in ()
+            TAO_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   ior_buffer.alloc ()->free (data);
@@ -345,8 +345,8 @@ Client_i::init (CORBA::Environment &ACE_TRY_ENV)
 }
 
 
-void run_test (Simple_Server_ptr server,
-               CORBA::Environment &ACE_TRY_ENV)
+void run_test (Simple_Server_ptr server
+               TAO_ENV_ARG_DECL)
 {
   // We do this twice as we know that there are only two servers.
   for (CORBA::ULong i = 0;
@@ -360,7 +360,7 @@ void run_test (Simple_Server_ptr server,
                j++)
             {
               // Make a remote call
-              server->remote_call (ACE_TRY_ENV);
+              server->remote_call (TAO_ENV_SINGLE_ARG_PARAMETER);
               ACE_TRY_CHECK;
             }
 
@@ -368,7 +368,7 @@ void run_test (Simple_Server_ptr server,
                       ACE_TEXT ("*********************************\n")));
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("I am going to shutdown the server\n")));
-          server->shutdown (ACE_TRY_ENV);
+          server->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
           ACE_OS::sleep (2);
         }

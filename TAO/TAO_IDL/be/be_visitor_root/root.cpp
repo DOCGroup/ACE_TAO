@@ -88,8 +88,8 @@ int be_visitor_root::visit_root (be_root *node)
 
           *os << "extern " << be_global->stub_export_macro () << be_nl
               << i->full_base_proxy_broker_name () << " *" << be_nl
-              << "(*" << i->flat_client_enclosing_scope () 
-              << i->base_proxy_broker_name () 
+              << "(*" << i->flat_client_enclosing_scope ()
+              << i->base_proxy_broker_name ()
               << "_Factory_function_pointer) ("
               << be_idt << be_idt_nl
               << "CORBA::Object_ptr obj" << be_uidt_nl
@@ -107,33 +107,33 @@ int be_visitor_root::visit_root (be_root *node)
 
           *os << be_global->stub_export_macro () << be_nl
               << ifwd->full_name () << "_ptr" << be_nl
-              << "tao_" << ifwd->flat_name () 
-              << "_duplicate (" 
+              << "tao_" << ifwd->flat_name ()
+              << "_duplicate ("
               << be_idt << be_idt_nl
               << ifwd->full_name  () << "_ptr" << be_uidt_nl
               << ");" << be_uidt_nl
               << be_global->stub_export_macro () << be_nl
               << "void" << be_nl
-              << "tao_" << ifwd->flat_name () 
+              << "tao_" << ifwd->flat_name ()
               << "_release (" << be_idt << be_idt_nl
               << ifwd->full_name () << "_ptr" << be_uidt_nl
               << ");" << be_uidt_nl
               << be_global->stub_export_macro () << be_nl
               << ifwd->full_name () << "_ptr" << be_nl
-              << "tao_" << ifwd->flat_name () 
+              << "tao_" << ifwd->flat_name ()
               << "_nil (" << be_idt << be_idt_nl
               << "void" << be_uidt_nl
               << ");" << be_uidt_nl
               << be_global->stub_export_macro () << be_nl
               << ifwd->full_name () << "_ptr" << be_nl
-              << "tao_" << ifwd->flat_name () 
+              << "tao_" << ifwd->flat_name ()
               << "_narrow (" << be_idt << be_idt_nl
-              << "CORBA::Object *," << be_nl
-              << "CORBA::Environment &" << be_uidt_nl
+              << "CORBA::Object *" << be_nl
+              << "TAO_ENV_ARG_DECL_NOT_USED" << be_uidt_nl
               << ");" << be_uidt_nl
               << be_global->stub_export_macro () << be_nl
               << "CORBA::Object *" << be_nl
-              << "tao_" << ifwd->flat_name () 
+              << "tao_" << ifwd->flat_name ()
               << "_upcast (" << be_idt << be_idt_nl
               << "void *" << be_uidt_nl
               << ");" << be_uidt_nl << be_nl;

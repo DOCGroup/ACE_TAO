@@ -29,15 +29,15 @@ public:
   Quoter_Generic_Factory_i (int debug_level = 1);
   ~Quoter_Generic_Factory_i (void);
 
-  CORBA::Boolean supports (const CosLifeCycle::Key &factory_key,
-                           CORBA::Environment &_env_there)
+  CORBA::Boolean supports (const CosLifeCycle::Key &factory_key
+                           TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
   // Returns true if the Generic Factory is able to forward a request
   // for creating an object described by the <factory_key>.
 
   CORBA::Object_ptr create_object (const CosLifeCycle::Key &factory_key,
-                                   const CosLifeCycle::Criteria &the_criteria,
-                                   CORBA::Environment &_env_there)
+                                   const CosLifeCycle::Criteria &the_criteria
+                                   TAO_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosLifeCycle::NoFactory,
                        CosLifeCycle::InvalidCriteria,
@@ -47,8 +47,8 @@ public:
   // request to a more concrete Factory.
 
 private:
-  CosNaming::NamingContext_ptr get_naming_context (const CosLifeCycle::Key &factory_key,
-                                                   CORBA::Environment &);
+  CosNaming::NamingContext_ptr get_naming_context (const CosLifeCycle::Key &factory_key
+                                                   TAO_ENV_ARG_DECL_NOT_USED);
   // a helper to get the proper naming context.
 
   int debug_level_;

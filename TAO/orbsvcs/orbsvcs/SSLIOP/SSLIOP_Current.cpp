@@ -29,7 +29,7 @@ TAO_SSLIOP_Current::~TAO_SSLIOP_Current (void)
 
 SSLIOP::ASN_1_Cert *
 TAO_SSLIOP_Current::get_peer_certificate (
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    SSLIOP::Current::NoContext))
 {
@@ -63,7 +63,7 @@ TAO_SSLIOP_Current::get_peer_certificate (
 
 SSLIOP::SSL_Cert *
 TAO_SSLIOP_Current::get_peer_certificate_chain (
-    CORBA::Environment &ACE_TRY_ENV)
+    TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    SSLIOP::Current::NoContext))
 {
@@ -96,7 +96,7 @@ TAO_SSLIOP_Current::get_peer_certificate_chain (
 }
 
 CORBA::Boolean
-TAO_SSLIOP_Current::no_context (CORBA::Environment &)
+TAO_SSLIOP_Current::no_context (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return (this->implementation () == 0 ? 1 : 0);
@@ -131,16 +131,16 @@ TAO_SSLIOP_Current::teardown (TAO_SSLIOP_Current_Impl *prev_impl,
 
 TAO_SSLIOP_Current_ptr
 TAO_SSLIOP_Current::_narrow (
-  CORBA::Object_ptr obj,
-  CORBA::Environment &ACE_TRY_ENV)
+  CORBA::Object_ptr obj
+  TAO_ENV_ARG_DECL)
 {
-  return TAO_SSLIOP_Current::_unchecked_narrow (obj, ACE_TRY_ENV);
+  return TAO_SSLIOP_Current::_unchecked_narrow (obj TAO_ENV_ARG_PARAMETER);
 }
 
 TAO_SSLIOP_Current_ptr
 TAO_SSLIOP_Current::_unchecked_narrow (
-  CORBA::Object_ptr obj,
-  CORBA::Environment &)
+  CORBA::Object_ptr obj
+  TAO_ENV_ARG_DECL_NOT_USED)
 {
   if (CORBA::is_nil (obj))
     return TAO_SSLIOP_Current::_nil ();
@@ -246,11 +246,11 @@ tao_TAO_SSLIOP_Current_nil (
 
 TAO_SSLIOP_Current_ptr
 tao_TAO_SSLIOP_Current_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return TAO_SSLIOP_Current::_narrow (p, ACE_TRY_ENV);
+  return TAO_SSLIOP_Current::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *
@@ -374,11 +374,11 @@ TAO_SSLIOP_Current_var::tao_nil (void)
 
 ::TAO_SSLIOP_Current_ptr
 TAO_SSLIOP_Current_var::tao_narrow (
-    CORBA::Object *p,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Object *p
+    TAO_ENV_ARG_DECL
   )
 {
-  return ::TAO_SSLIOP_Current::_narrow (p, ACE_TRY_ENV);
+  return ::TAO_SSLIOP_Current::_narrow (p TAO_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object *

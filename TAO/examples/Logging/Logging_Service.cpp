@@ -14,16 +14,16 @@ main (int argc, char *argv[])
 
   Logger_Server log_server;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-   ACE_TRY
+  TAO_ENV_DECLARE_NEW_ENV;
+  ACE_TRY
     {
-      int ret = log_server.init (argc, argv, ACE_TRY_ENV);
+      int ret = log_server.init (argc, argv TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (ret == -1)
         return 1;
       else
         {
-          log_server.run (ACE_TRY_ENV);
+          log_server.run (TAO_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
     }

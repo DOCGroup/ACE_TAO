@@ -34,15 +34,15 @@ public:
   ~Test_Struct_Sequence (void);
   // dtor
 
-  int run_sii_test (Param_Test_ptr objref,
-                    CORBA::Environment &env);
+  int run_sii_test (Param_Test_ptr objref
+                    TAO_ENV_ARG_DECL);
   // run the SII test
 
   const char *opname (void) const;
   // return operation name
 
-  int init_parameters (Param_Test_ptr objref,
-                        CORBA::Environment &env);
+  int init_parameters (Param_Test_ptr objref
+                        TAO_ENV_ARG_DECL);
   // set values for parameters
 
   int reset_parameters (void);
@@ -57,7 +57,7 @@ public:
   void print_values (void);
   // print all the values
 
-  void dii_req_invoke (CORBA::Request *, CORBA::Environment &);
+  void dii_req_invoke (CORBA::Request * TAO_ENV_ARG_DECL_NOT_USED);
   // invoke DII request with appropriate exception handling.
 
 protected:
@@ -97,15 +97,15 @@ public:
   ~Test_Unbounded_Struct_Sequence (void);
   // dtor
 
-  int run_sii_test (Param_Test_ptr objref,
-                    CORBA::Environment &env);
+  int run_sii_test (Param_Test_ptr objref
+                    TAO_ENV_ARG_DECL);
   // run the SII test
 
   const char *opname (void) const;
   // return operation name
 
-  int init_parameters (Param_Test_ptr objref,
-                        CORBA::Environment &env);
+  int init_parameters (Param_Test_ptr objref
+                        TAO_ENV_ARG_DECL);
   // set values for parameters
 
   int reset_parameters (void);
@@ -120,7 +120,7 @@ public:
   void print_values (void);
   // print all the values
 
-  void dii_req_invoke (CORBA::Request *, CORBA::Environment &);
+  void dii_req_invoke (CORBA::Request * TAO_ENV_ARG_DECL_NOT_USED);
   // invoke DII request with appropriate exception handling.
 
 protected:
