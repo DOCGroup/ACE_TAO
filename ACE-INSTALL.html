@@ -2,8 +2,8 @@
 
 <HTML>
 <HEAD>
-  <TITLE>Building and Installing ACE and Its Network Services</TITLE>
-  <link rev=made href="mailto:schmidt@cs.wustl.edu">
+  <TITLE>Building and Installing ACE and Its Auxiliary Libraries and Services</TITLE>
+  <link rev=made href="mailto:schmidt@uci.edu">
 </HEAD>
 
 <BODY text    = "#000000"
@@ -12,7 +12,7 @@
       bgcolor = "#ffffff">
 
 <HR>
-<H3>Building and Installing ACE and Its Network Services</H3>
+<H3>Building and Installing ACE and Its Auxiliary Libraries and Services</H3>
 
 <H4>Synopsis</H4>
 
@@ -29,7 +29,8 @@ process</A>, as well.  And as you start working with ACE, you might
 want to consult the <a href="docs/ACE-FMM.html">ACE Frequently Made
 Mistakes page</a>.  If you encounter any problems or would like to request
 an enhancement, then use our
-<a href="docs/usage-bugzilla.html">bug tracking system</a> to submit a report.<P>
+<a href="docs/usage-bugzilla.html">bug tracking system</a> to submit a
+report.<P>
 
 
 <H4>Document Index</H4>
@@ -41,6 +42,7 @@ an enhancement, then use our
   <LI><A HREF="#egcs">Compiling ACE with egcs</A>
   <LI><A HREF="#aceinstall">Building and Installing ACE</A>
   <LI><A HREF="#svcsinstall">Building and Installing ACE Network Services</A>
+  <LI><A HREF="#sslinstall">Building and Installing The ACE_SSL Library</A>
   <LI><A HREF="#minimum_build">What Do I Need to Build for TAO?</A>
   <LI><A HREF="#resource_requirements">System Resource Requirements</A>
   <LI><A HREF="#advanced">Advanced Topics</A>
@@ -2288,7 +2290,7 @@ Here's what you need to do:<P>
 <P><hr align=left width="50%"><P>
 <H4><A NAME="rtems">Building and Installing ACE on RTEMS</A></H4>
 
-<CODE>
+<PRE>
 export RTEMS_MAKEFILE_PATH=/opt/rtems/CPU-rtems/BSP
 # setup the build structure
 cd ACE_wrappers
@@ -2297,7 +2299,7 @@ cd ACE_wrappers
 ./bin/create_ace_build Linux_g++
 cd build/Linux_g++/ace
 ln -s ../../../ace/config-linux.h config.h
-cd ../include/makeinclude/
+cd ../include/makeinclude
 ln -s ../../../../include/makeinclude/platform_linux.GNU platform_macros.GNU
 cd ../../../..
 
@@ -2308,7 +2310,7 @@ cd build/rtems/TAO
 ln -s ../../Linux_g++/TAO/TAO_IDL .
 cd ../ace
 ln -s ../../../ace/config-rtems.h config.h
-cd ../include/makeinclude/
+cd ../include/makeinclude
 ln -s ../../../../include/makeinclude/platform_rtems.x_g++.GNU platform_macros.GNU
 cd ../../../..
 
@@ -2336,13 +2338,79 @@ make -f  ../include/makeinclude/Makefile.rtems rtems_init.o
 make
 cd ../TAO
 make
-</CODE>
+</PRE>
 
 <P><hr align=left width="50%"><P>
 <H4><A NAME="win32svcs">Building and Installing ACE Network Services on Win32</A></H4>
 
 Once again, there are supplied project for MSVC 5.0 or later for
 the Network Services.<P>
+
+<HR>
+<H3><A NAME="sslinstall">Building and Installing The ACE_SSL Library</A></H3>
+
+<p>The first step for all platforms is to build and install the
+<A HREF="http://www.openssl.org/">OpenSSL</A> distribution.  Then the
+ACE_SSL library must be built according to the instructions
+below.</p>
+<h3>Unix</h3>
+<OL>
+  <LI>Make sure the OpenSSL header file directory is in your compiler's
+      include path, and that OpenSSL libraries are in your library link/load
+      path (e.g.
+      <font face="Courier New, Courier, mono">LD_LIBRARY_PATH</font>). If you
+      installed OpenSSL into a set of directories unknown by the compiler,
+      then set the following variables in your
+      <font face="Courier New, Courier, mono">platform_macros.GNU</font>
+      file:
+    <P><table width="75%" border="0" align="center">
+      <tr> 
+        <td><font face="Courier New, Courier, mono">PLATFORM_SSL_CPPFLAGS</font></td>
+        <td>Platform preprocessor options for OpenSSL (e.g. -I...)</td>
+      </tr>
+      <tr> 
+        <td><font face="Courier New, Courier, mono">PLATFORM_SSL_LDFLAGS</font></td>
+        <td>Platform linker options for OpenSSL (e.g. -L...)</td>
+      </tr>
+      <tr> 
+        <td><font face="Courier New, Courier, mono">PLATFORM_SSL_LIBS</font></td>
+        <td>Platform libraries required with OpenSSL (e.g. -lssl -lcrypto)</td>
+      </tr>
+    </table>
+    <br>
+  </LI>
+  <LI>Build ACE as described above. When building ACE, add
+      &quot;<font face="Courier New, Courier, mono">ssl=1</font>&quot;
+      to your <font face="Courier New, Courier, mono">make</font>
+      command line invocation, or add it to your
+      <font face="Courier New, Courier, mono">platform_macros.GNU</font>
+      file.</LI>
+  <li>Build the ACE_SSL library in the <TT>$ACE_ROOT/ace/SSL</TT>
+      directory. The <TT>ACE_ROOT</TT> environment variable should be set
+      prior to this point.</li>
+</OL>
+<h3>Microsoft Visual Studio</h3>
+<ol>
+  <li>Set the OpenSSL include/header directory path under the
+      <b><i>Directories</i></b> tab - <i><b>Include Files</b></i> setting in
+      the <i><b>Tools-&gt;Options</b></i> dialog. A typical value would be
+      something like: <code>openssl-0.9.6\inc32</code></li>
+  <li>Set the OpenSSL library directory path under the
+      <b><i>Directories</i></b> tab - <i><b>Library Files</b></i> setting in
+      the <i><b>Tools-&gt;Options</b></i> dialog. A typical value would be
+      something like: <code>openssl-0.9.6\out32dll</code></li>
+  <li>Open the <code>ACE.dsw</code> workspace, and refer to the ACE build
+      and installation instructions above for details on creating a
+      <code>config.h</code> configuration header for this platform.  Once
+      the <CODE>config.h</CODE> file has been created, build the
+      <code>ACE_SSL</code> project.</li>
+</ol>
+<h3>Borland C++</h3>
+<p>Support for building TAO's SSLIOP pluggable protocol with Borland C++
+   does exist. E-mail the
+    <a href="mailto:ace-users@cs.wustl.edu">ace-users</a> mailing list to
+    obtain instructions that detail how to build it using Borland C++.
+    These instructions will soon be integrated into this web page.</p>
 
 
 <HR><P>
@@ -2662,6 +2730,7 @@ inline           Enable ACE inlining.  Some platforms enable inlining by
                    default, others do not.
 optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
 orbix            Enable use of Orbix.
+pace             Enable PACE as the underpinnings of ACE_OS.
 probe            Enable ACE_Timeprobes.
 profile          Enable profiling; see PCFLAGS and PCCFLAGS.
 purify           Purify all executables.
@@ -2677,6 +2746,18 @@ shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
 static_libs_only Only build static libraries.
 threads          Build with thread support.
 xt_reactor       Build the XtReactor.
+fl_reactor       Build the FlReactor.
+tk_reactor       Build the TkReactor.
+qt_reactor       Build the QtReactor.
+gtk_reactor      Build the GtkReactor.
+ssl              Build with OpenSSL support.
+rapi             Build with RAPI
+split            Build the library by first splitting up the ACE source
+                   to several files, with one object code entity for each
+                   source file. This allows an application that is linked
+                   with ACE to extract _exactly_ what it needs from the
+                   library, resulting in a smaller executable.  Setting this
+                   to 1 overrides debug to 0.
 
 Usually, users do not need to be concerned with make targets.
 Just enter &quot;make&quot; on the command line to build.  A few notable
