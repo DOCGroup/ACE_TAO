@@ -63,7 +63,7 @@ ACE_Name_Node::dump (void) const
 ACE_Allocator *
 ACE_Allocator::instance (void)
 {
-  ACE_TRACE ("ACE_Allocator::instance");
+  //  ACE_TRACE ("ACE_Allocator::instance");
 
   if (ACE_Allocator::allocator_ == 0)
     {
