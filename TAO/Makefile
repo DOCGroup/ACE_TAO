@@ -69,9 +69,13 @@ CONTROLLED_FILES = ChangeLog \
 		   VERSION
 
 RELEASE_FILES = $(addprefix TAO/,$(CONTROLLED_FILES)) \
-                TAO/INSTALL
+                TAO/INSTALL \
+		TAO/orbsvcs/README
 
 INSTALL: TAO-INSTALL.html
+	lynx -dump $^ > $@; chmod a+r $@
+
+orbsvcs/README: docs/orbsvcs.html
 	lynx -dump $^ > $@; chmod a+r $@
 
 #### If creating the "official" TAO release:
