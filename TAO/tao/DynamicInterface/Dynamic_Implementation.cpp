@@ -1,9 +1,10 @@
-// $Id$
-
 #include "Dynamic_Implementation.h"
 
 
-ACE_RCSID(DynamicInterface, Dynamic_Implementation, "$Id$")
+ACE_RCSID (DynamicInterface,
+           Dynamic_Implementation,
+           "$Id$")
+
 
 #include "Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -45,7 +46,7 @@ TAO_DynamicImplementation::_this (ACE_ENV_SINGLE_ARG_DECL)
   return retval;
 }
 
-CORBA_InterfaceDef_ptr
+CORBA::InterfaceDef_ptr
 TAO_DynamicImplementation::_get_interface (ACE_ENV_SINGLE_ARG_DECL)
 {
   TAO_IFR_Client_Adapter *adapter =
@@ -104,13 +105,13 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  PortableServer::POA_var poa = 
+  PortableServer::POA_var poa =
     poa_current_impl->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CORBA::PolicyList_var client_exposed_policies =
     poa_current_impl->poa ()->client_exposed_policies (
-        poa_current_impl->priority () 
+        poa_current_impl->priority ()
         ACE_ENV_ARG_PARAMETER
       );
   ACE_CHECK_RETURN (0);
@@ -121,7 +122,7 @@ TAO_DynamicImplementation::_create_stub (ACE_ENV_SINGLE_ARG_DECL)
                               ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return 
+  return
     poa_current_impl->poa ()->key_to_stub (poa_current_impl->object_key (),
                                            pinterface.in (),
                                            poa_current_impl->priority ()
@@ -186,7 +187,7 @@ TAO_DynamicImplementation::_dispatch (TAO_ServerRequest &request,
   CORBA::release (dsi_request);
 }
 
-CORBA::RepositoryId 
+CORBA::RepositoryId
 TAO_DynamicImplementation::get_id_from_primary_interface (
     ACE_ENV_SINGLE_ARG_DECL
   )
@@ -206,7 +207,7 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
                         0);
     }
 
-  PortableServer::POA_var poa = 
+  PortableServer::POA_var poa =
     poa_current_impl->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
@@ -214,4 +215,3 @@ TAO_DynamicImplementation::get_id_from_primary_interface (
                                    poa.in ()
                                    ACE_ENV_ARG_PARAMETER);
 }
-

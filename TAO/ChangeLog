@@ -1,3 +1,37 @@
+Thu Feb 20 13:05:36 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DynamicInterface/Context.cpp:
+	* tao/DynamicInterface/Context.h:
+	* tao/DynamicInterface/Context.inl:
+	* tao/DynamicInterface/DII_ClientRequestInfo.cpp:
+	* tao/DynamicInterface/DII_ClientRequestInfo.h:
+	* tao/DynamicInterface/DII_Invocation.cpp:
+	* tao/DynamicInterface/Dynamic_Adapter_Impl.cpp:
+	* tao/DynamicInterface/Dynamic_Implementation.cpp:
+	* tao/DynamicInterface/Dynamic_Implementation.h:
+	* tao/DynamicInterface/ExceptionList.cpp:
+	* tao/DynamicInterface/ExceptionList.h:
+	* tao/DynamicInterface/ExceptionList.inl:
+	* tao/DynamicInterface/Makefile:
+	* tao/DynamicInterface/Request.cpp:
+	* tao/DynamicInterface/Request.h:
+	* tao/DynamicInterface/Request.inl:
+	* tao/DynamicInterface/Server_Request.cpp:
+	* tao/DynamicInterface/Server_Request.h:
+	* tao/DynamicInterface/Server_Request.inl:
+	* tao/DynamicInterface/Unknown_User_Exception.cpp:
+	* tao/DynamicInterface/Unknown_User_Exception.h:
+
+
+	  "CORBA_" -> "CORBA::"
+
+	  Classes that should be in the C++ CORBA namespace are now in
+	  that namespace.
+
+	  Removed some unnecessary includes.
+
+	  Added preliminary DII interceptor support.
+
 Thu Feb 20 12:05:42 2003  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Makefile.tao (MAKEFILE):
