@@ -858,7 +858,13 @@ public:
   friend ACE_OS_Export int operator != (const ACE_Time_Value &tv1,
                                      const ACE_Time_Value &tv2);
 
-  /// Dump the state of an object.
+  /// Dump is a no-op.
+  /**
+   * The dump() method is a no-op.  It's here for backwards compatibility
+   * only, but does not dump anything. Invoking logging methods here
+   * violates layering restrictions in ACE because this class is part
+   * of the OS layer and @c ACE_Log_Msg is at a higher level.
+   */
   void dump (void) const;
 
 # if defined (ACE_WIN32)
