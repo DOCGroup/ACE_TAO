@@ -210,6 +210,7 @@ TAO_GIOP_Invocation::start (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
+
   this->countdown_ = &countdown;
 
   this->endpoint_selector_->select_endpoint (this

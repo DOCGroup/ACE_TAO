@@ -26,7 +26,7 @@
 
 #include "tao/corbafwd.h"
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 #include "ace/Event_Handler.h"
 
@@ -73,7 +73,7 @@ public:
   ACE_Reactor *reactor_;
 };
 
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+#endif /* (TAO_HAS_AMI_CALLBACK == 1)*/
 
 #include "ace/post.h"
 #endif /* TAO_ASYNCH_TIMEOUT_HANDLER_H */

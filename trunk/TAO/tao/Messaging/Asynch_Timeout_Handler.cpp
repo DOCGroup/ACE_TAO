@@ -9,7 +9,7 @@
 
 ACE_RCSID(tao, Asynch_Timeout_Handler, "$Id$")
 
-#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1)
+#if (TAO_HAS_AMI_CALLBACK == 1)
 
 TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
   TAO_Asynch_Reply_Dispatcher_Base *rd,
@@ -67,4 +67,4 @@ TAO_Asynch_Timeout_Handler::cancel ()
     }
 }
 
-#endif /* (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1) == 0 */
+#endif /* (TAO_HAS_AMI_CALLBACK == 1) */
