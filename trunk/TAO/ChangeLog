@@ -1,3 +1,20 @@
+Mon Apr 26 10:06:12 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * examples/mfc/client.mpc:
+        * examples/mfc/client.cpp:
+
+          Removed the mfc base class from this project and fixed some
+          #include path problems.  The client is not an MFC application.
+
+        * examples/mfc/server.mpc:
+
+          Remove the unnecessary 'specific' section.
+
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Removed the 'specific' sections.  They have been moved up into the
+          mfc base project.
+
 Mon Apr 26 06:22:03 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Param_Test/Param_Test.mpc:

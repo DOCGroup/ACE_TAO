@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(MFC client): namingexe, mfc {
+project(MFC client): namingexe {
   Source_Files {
     w32_testC.cpp
     client.cpp
