@@ -1428,7 +1428,21 @@ TAO_Leader_Follower::get_next_follower (void)
     // means set is empty
     return 0;
 
-  return *iterator;
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - next follower is %x\n",
+                *iterator));
+
+  ACE_SYNCH_CONDITION *cond = *iterator;
+
+  // We *must* remove it when we signal it so the same condition is
+  // not signalled for both wake up as a follower and as the next
+  // leader. 
+  // The follower may not be there if the reply is received while the
+  // consumer is not yet waiting for it (i.e. it send the request but
+  // has not blocked to receive the reply yet)
+  (void) this->remove_follower (cond); // Ignore errors..
+
+  return cond;
 }
 
 // ****************************************************************
