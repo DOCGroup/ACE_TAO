@@ -672,7 +672,7 @@ DRV_pre_proc (const char *myfile)
   ACE_OS::strcat (tmp_ifile, tao_idli_template);
 
   int ti_fd = ACE_OS::mkstemp (tmp_ifile);
-  int tf_fd = ACE_OS::mkstemp (tmp_ifile);
+  int tf_fd = ACE_OS::mkstemp (tmp_file);
 
   if (ti_fd == -1 || tf_fd == -1)
     {
