@@ -1,3 +1,9 @@
+Sun Nov 19 23:29:03 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitInfo.cpp (_tao_QueryInterface):
+
+	  Corrected syntax error and incorrect static_cast.
+
 Sun Nov 19 23:46:07 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORBInitInfo.cpp (_tao_QueryInterface):
@@ -11,6 +17,12 @@ Mon Nov 20 01:32:48 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	  Added guard to check weather TAO is has support for
 	  portable incerceptors.
+
+Sun Nov 19 23:29:03 2000  Ossama Othman  <ossama@uci.edu>
+
+        * tao/ORBInitInfo.cpp (_tao_QueryInterface):
+
+          Corrected syntax error and incorrect static_cast.
 
 Mon Nov 20 00:30:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
