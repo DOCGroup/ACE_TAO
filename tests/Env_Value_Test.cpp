@@ -31,7 +31,7 @@ do { \
   ACE_Env_Value<type> val (varname, (defval)); \
   if (val != (expval)) { \
     ACE_ERROR ((LM_ERROR, \
-               "val %d does not match expected value of %d\n", \
+               ASYS_TEXT ("val %d does not match expected value of %d\n"), \
                (int) (type) val, (int) (expval))); \
   } \
   ACE_ASSERT (val == (expval)); \
@@ -46,8 +46,8 @@ int
 main (int argc, ASYS_TCHAR* [])
 {
   ACE_UNUSED_ARG (argc);
-  ACE_OS::putenv ("TEST_VALUE_POSITIVE=10.2");
-  ACE_OS::putenv ("TEST_VALUE_NEGATIVE=-10.2");
+  ACE_OS::putenv (ASYS_TEXT ("TEST_VALUE_POSITIVE=10.2"));
+  ACE_OS::putenv (ASYS_TEXT ("TEST_VALUE_NEGATIVE=-10.2"));
 #else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 main (int argc, LPTSTR [], LPTSTR envp[])
 {
@@ -81,28 +81,28 @@ main (int argc, LPTSTR [], LPTSTR envp[])
 #endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
     {
       // In this case we're the child
-      ACE_START_TEST ("Env_Value_Test");
+      ACE_START_TEST (ASYS_TEXT ("Env_Value_Test"));
 
-      TEST_THIS (int, "TEST_VALUE_POSITIVE", 4, 10);
+      TEST_THIS (int, ASYS_TEXT ("TEST_VALUE_POSITIVE"), 4, 10);
 #if !defined (ACE_LACKS_FLOATING_POINT)
-      TEST_THIS (double, "TEST_VALUE_POSITIVE", -1.0, 10.2);
+      TEST_THIS (double, ASYS_TEXT ("TEST_VALUE_POSITIVE"), -1.0, 10.2);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
-      TEST_THIS (long, "TEST_VALUE_POSITIVE", 0, 10);
-      TEST_THIS (unsigned long, "TEST_VALUE_POSITIVE", 0, 10);
-      TEST_THIS (short, "TEST_VALUE_POSITIVE", 0, 10);
-      TEST_THIS (unsigned short, "TEST_VALUE_POSITIVE", 0, 10);
+      TEST_THIS (long, ASYS_TEXT ("TEST_VALUE_POSITIVE"), 0, 10);
+      TEST_THIS (unsigned long, ASYS_TEXT ("TEST_VALUE_POSITIVE"), 0, 10);
+      TEST_THIS (short, ASYS_TEXT ("TEST_VALUE_POSITIVE"), 0, 10);
+      TEST_THIS (unsigned short, ASYS_TEXT ("TEST_VALUE_POSITIVE"), 0, 10);
 
-      TEST_THIS (int, "TEST_VALUE_NEGATIVE", 4, -10);
+      TEST_THIS (int, ASYS_TEXT ("TEST_VALUE_NEGATIVE"), 4, -10);
 #if !defined (ACE_LACKS_FLOATING_POINT)
-      TEST_THIS (double, "TEST_VALUE_NEGATIVE", -1.0, -10.2);
+      TEST_THIS (double, ASYS_TEXT ("TEST_VALUE_NEGATIVE"), -1.0, -10.2);
 #endif /* ! ACE_LACKS_FLOATING_POINT */
-      TEST_THIS (long, "TEST_VALUE_NEGATIVE", 0, -10L);
-      TEST_THIS (unsigned long, "TEST_VALUE_NEGATIVE", 0, (unsigned long) -10);
-      TEST_THIS (short, "TEST_VALUE_NEGATIVE", 0, -10);
-      TEST_THIS (unsigned short, "TEST_VALUE_NEGATIVE", 0, (unsigned short) -10);
+      TEST_THIS (long, ASYS_TEXT ("TEST_VALUE_NEGATIVE"), 0, -10L);
+      TEST_THIS (unsigned long, ASYS_TEXT ("TEST_VALUE_NEGATIVE"), 0, (unsigned long) -10);
+      TEST_THIS (short, ASYS_TEXT ("TEST_VALUE_NEGATIVE"), 0, -10);
+      TEST_THIS (unsigned short, ASYS_TEXT ("TEST_VALUE_NEGATIVE"), 0, (unsigned short) -10);
 
-      const char *defstr = "Sarah Cleeland is Two!";
-      ACE_Env_Value<const char *> sval ("This_Shouldnt_Be_Set_Hopefully",
+      const ASYS_TCHAR *defstr = ASYS_TEXT ("Sarah Cleeland is Two!");
+      ACE_Env_Value<const ASYS_TCHAR *> sval (ASYS_TEXT ("This_Shouldnt_Be_Set_Hopefully"),
                                   defstr);
       ACE_ASSERT (ACE_OS::strcmp (sval, defstr) == 0);
       ACE_END_TEST;

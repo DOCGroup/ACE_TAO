@@ -81,10 +81,10 @@ ACE_WFMO_Reactor_Handler_Repository::bit_ops (long &existing_masks,
 
   ACE_Reactor_Mask old_masks = ACE_Event_Handler::NULL_MASK;
 
-  if (ACE_BIT_ENABLED (existing_masks, FD_READ) 
+  if (ACE_BIT_ENABLED (existing_masks, FD_READ)
       || ACE_BIT_ENABLED (existing_masks, FD_CLOSE))
     ACE_SET_BITS (old_masks, ACE_Event_Handler::READ_MASK);
-    
+
   if (ACE_BIT_ENABLED (existing_masks, FD_WRITE))
     ACE_SET_BITS (old_masks, ACE_Event_Handler::WRITE_MASK);
 
@@ -204,8 +204,8 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
   for (i = 0; i < this->max_handlep1_ && error == 0; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if ((this->current_handles_[i] == handle 
-         || this->current_info_[i].io_handle_ == handle) 
+    if ((this->current_handles_[i] == handle
+         || this->current_info_[i].io_handle_ == handle)
         && // Make sure that it is not already marked for deleted
         !this->current_info_[i].delete_entry_)
       {
@@ -219,8 +219,8 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
   for (i = 0; i < this->suspended_handles_ && error == 0; i++)
     // Since the handle can either be the event or the I/O handle, we
     // have to check both
-    if ((this->current_suspended_info_[i].io_handle_ == handle 
-         || this->current_suspended_info_[i].event_handle_ == handle) 
+    if ((this->current_suspended_info_[i].io_handle_ == handle
+         || this->current_suspended_info_[i].event_handle_ == handle)
         &&
         // Make sure that it is not already marked for deleted
         !this->current_suspended_info_[i].delete_entry_)
@@ -235,8 +235,8 @@ ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
   for (i = 0; i < this->handles_to_be_added_ && error == 0; i++)
     // Since the handle can either be the event or the I/O handle,
     // we have to check both
-    if ((this->to_be_added_info_[i].io_handle_ == handle 
-         || this->to_be_added_info_[i].event_handle_ == handle) 
+    if ((this->to_be_added_info_[i].io_handle_ == handle
+         || this->to_be_added_info_[i].event_handle_ == handle)
         &&
         // Make sure that it is not already marked for deleted
         !this->to_be_added_info_[i].delete_entry_)
@@ -1727,20 +1727,20 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
     {
       long actual_events = events.lNetworkEvents;
 
-      if ((interested_events & actual_events & FD_READ) 
+      if ((interested_events & actual_events & FD_READ)
           && event_handler->handle_input (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
 
-      if ((interested_events & actual_events & FD_CLOSE) 
-          && !ACE_BIT_ENABLED (problems, ACE_Event_Handler::READ_MASK) 
+      if ((interested_events & actual_events & FD_CLOSE)
+          && !ACE_BIT_ENABLED (problems, ACE_Event_Handler::READ_MASK)
           && event_handler->handle_input (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
 
-      if ((interested_events & actual_events & FD_ACCEPT) 
+      if ((interested_events & actual_events & FD_ACCEPT)
           && event_handler->handle_input (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
 
-      if ((interested_events & actual_events & FD_WRITE) 
+      if ((interested_events & actual_events & FD_WRITE)
           && event_handler->handle_output (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::WRITE_MASK);
 
@@ -1758,7 +1758,7 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
             ACE_SET_BITS (problems, ACE_Event_Handler::CONNECT_MASK);
 	}
 
-      if ((interested_events & actual_events & FD_OOB) 
+      if ((interested_events & actual_events & FD_OOB)
           && event_handler->handle_exception (io_handle) == -1)
         ACE_SET_BITS (problems, ACE_Event_Handler::EXCEPT_MASK);
 
@@ -2049,7 +2049,9 @@ ACE_WFMO_Reactor_Notify::dump (void) const
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::dump");
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->timer_queue_->dump ();
-  ACE_DEBUG ((LM_DEBUG, "Max. iteration: %d\n", this->max_notify_iterations_));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Max. iteration: %d\n"),
+              this->max_notify_iterations_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 

@@ -439,7 +439,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                              &options), -1);
 
   if (ACE_LOG_MSG->op_status ())
-    ACE_ERROR_RETURN ((LM_ERROR, "Allocator::Allocator\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("Allocator::Allocator\n")),
+                      -1);
 
   ACE_NEW_RETURN (this->lock_,
                   ACE_LOCK (lock_name_for_local_name_space),
@@ -449,7 +451,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   // Now check if the backing store has been created successfully
   if (ACE_OS::access (this->context_file_, F_OK) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "create_manager\n"),
+                       ASYS_TEXT ("create_manager\n")),
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
@@ -491,7 +493,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
                           -1);
 
           if (this->allocator_->bind (ACE_NAME_SERVER_MAP, ns_map) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, "create_manager\n"), -1);
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ASYS_TEXT ("create_manager\n")), -1);
         }
 
       if (ACE::debug ())

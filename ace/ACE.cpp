@@ -591,8 +591,8 @@ ACE::strrepl (char *s, char search, char replace)
 }
 
 #if !defined (ACE_HAS_WINCE)
-char *
-ACE::strenvdup (const char *str)
+ASYS_TCHAR *
+ACE::strenvdup (const ASYS_TCHAR *str)
 {
   ACE_TRACE ("ACE::strenvdup");
 
@@ -629,9 +629,15 @@ ACE::ldfind (const ASYS_TCHAR filename[],
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && \
     !defined (ACE_HAS_PHARLAP)
   ASYS_TCHAR expanded_filename[MAXPATHLEN];
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
   if (::ExpandEnvironmentStringsA (filename,
                                    expanded_filename,
                                    sizeof expanded_filename))
+#else
+  if (::ExpandEnvironmentStringsW (filename,
+                                   expanded_filename,
+                                   sizeof expanded_filename))
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
     filename = expanded_filename;
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
 
@@ -681,11 +687,7 @@ ACE::ldfind (const ASYS_TCHAR filename[],
   ASYS_TCHAR *s = ACE_OS::strrchr (searchfilename, '.');
 
   const ASYS_TCHAR *dll_suffix =
-#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
-    ACE_DLL_SUFFIX;
-#else
-    _TEXT (ACE_DLL_SUFFIX);
-#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
+    ASYS_TEXT (ACE_DLL_SUFFIX);
 
   if (s != 0)
     {

@@ -76,8 +76,8 @@ main (int, ASYS_TCHAR *[])
   // conditions, exceptions can be disabled when the port is complete.
 #if (defined (__SUNPRO_CC) || defined (__GNUG__)) && \
     !defined (ACE_HAS_EXCEPTIONS)
-  ACE_DEBUG ((LM_NOTICE, "Out-of-memory will throw an unhandled exception\n"));
-  ACE_DEBUG ((LM_NOTICE, "Rebuild with exceptions=1 to prevent this, but it may impair performance.\n"));
+  ACE_DEBUG ((LM_NOTICE, ASYS_TEXT ("Out-of-memory will throw an unhandled exception\n")));
+  ACE_DEBUG ((LM_NOTICE, ASYS_TEXT ("Rebuild with exceptions=1 to prevent this, but it may impair performance.\n")));
 
   // Use the static function addresses, to prevent warnings about the
   // functions not being used.
@@ -102,14 +102,14 @@ main (int, ASYS_TCHAR *[])
       if (i == MAX_ALLOCS_IN_TEST)
         {
           ACE_ERROR((LM_WARNING,
-                     "Test didn't exhaust all available memory\n"));
+                     ASYS_TEXT ("Test didn't exhaust all available memory\n")));
           --i;    // Back up to valid pointer for deleting
         }
       else
         {
           ACE_ASSERT (blocks[i] == 0);
           ACE_ASSERT (errno == ENOMEM);
-          ACE_DEBUG((LM_DEBUG, "ACE_NEW failed properly at block %d\n", i));
+          ACE_DEBUG((LM_DEBUG, ASYS_TEXT ("ACE_NEW failed properly at block %d\n"), i));
         }
 
       // Free the memory to try ACE_NEW_RETURN
@@ -126,14 +126,14 @@ main (int, ASYS_TCHAR *[])
       if (i == MAX_ALLOCS_IN_TEST)
         {
           ACE_ERROR((LM_WARNING,
-                     "Test didn't exhaust all available memory\n"));
+                     ASYS_TEXT ("Test didn't exhaust all available memory\n")));
           --i;    // Back up to valid pointer
         }
       else
         {
           ACE_ASSERT (blocks[i] == 0);
           ACE_ASSERT (errno == ENOMEM);
-          ACE_DEBUG ((LM_DEBUG, "ACE_NEW_RETURN failed properly at block %d\n",
+          ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("ACE_NEW_RETURN failed properly at block %d\n"),
                       i));
         }
       while (i >= 0)
@@ -145,10 +145,10 @@ main (int, ASYS_TCHAR *[])
   catch (...)
     {
       ACE_ERROR ((LM_ERROR,
-        "Caught exception during test; "
-        "ACE_bad_alloc not defined correctly, or\n"));
+        ASYS_TEXT ("Caught exception during test; ")
+        ASYS_TEXT ("ACE_bad_alloc not defined correctly, or\n")));
       ACE_ERROR ((LM_ERROR,
-        "ACE_NEW_THROWS_EXCEPTIONS is not #defined (and should be).\n"));
+        ASYS_TEXT ("ACE_NEW_THROWS_EXCEPTIONS is not #defined (and should be).\n")));
       status = 1;        // Mark test failure
     }
 #endif /* ACE_HAS_EXCEPTIONS */

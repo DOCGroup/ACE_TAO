@@ -28,12 +28,12 @@ ACE_SV_Message_Queue::~ACE_SV_Message_Queue (void)
   ACE_TRACE ("ACE_SV_Message_Queue::~ACE_SV_Message_Queue");
 }
 
-ACE_SV_Message_Queue::ACE_SV_Message_Queue (key_t external_id, 
-					    int create, 
+ACE_SV_Message_Queue::ACE_SV_Message_Queue (key_t external_id,
+					    int create,
 					    int perms)
 {
   ACE_TRACE ("ACE_SV_Message_Queue::ACE_SV_Message_Queue");
   if (this->open (external_id, create, perms) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", 
-		"ACE_SV_Message_Queue::ACE_SV_Message_Queue"));
+    ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p\n"),
+		ASYS_TEXT ("ACE_SV_Message_Queue::ACE_SV_Message_Queue")));
 }

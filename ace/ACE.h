@@ -440,7 +440,7 @@ public:
 
   // = String functions
 #if !defined (ACE_HAS_WINCE)
-  static char *strenvdup (const char *str);
+  static ASYS_TCHAR *strenvdup (const ASYS_TCHAR *str);
   // Return a dynamically allocated duplicate of <str>, substituting
   // the environment variable if <str[0] == '$'>.  Note that the
   // pointer is allocated with <ACE_OS::malloc> and must be freed by

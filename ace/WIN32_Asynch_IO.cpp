@@ -86,7 +86,9 @@ ACE_WIN32_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor)
                                                          proactor);
 
   if (win32_proactor == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Dynamic cast to WIN32 Proactor failed\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ASYS_TEXT ("Dynamic cast to WIN32 Proactor failed\n")),
+                      -1);
 
   // Post myself.
   return win32_proactor->post_completion (this);
@@ -156,9 +158,9 @@ ACE_WIN32_Asynch_Operation::cancel (void)
 
   // @@ This API returns 0 on failure. So, I am returning -1 in that
   //    case. Is that right? (Alex).
-  
+
   int result = (int) ::CancelIo (this->handle_);
-  
+
   if (result == 0)
     // Couldnt cancel the operations.
     return 2;
@@ -1206,7 +1208,7 @@ ACE_WIN32_Asynch_Accept_Result::~ACE_WIN32_Asynch_Accept_Result (void)
 {
 }
 
-// Base class operations. These operations are here to kill dominance 
+// Base class operations. These operations are here to kill dominance
 // warnings. These methods call the base class methods.
 
 u_long
@@ -1700,6 +1702,6 @@ ACE_Proactor *
 ACE_WIN32_Asynch_Transmit_File::proactor (void) const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
-} 
+}
 
 #endif /* ACE_WIN32 || ACE_HAS_WINCE */
