@@ -1,3 +1,15 @@
+Wed Mar 24 16:41:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* ACE-INSTALL.html: Remove remaining reference to the "soft link"
+	  method of specifying a platform-specific config.h and
+	  platform_macros.GNU file. All instructions regarding these now
+	  use the preferred method - creating a local file and including
+	  the platform-specific one into it. Also cleaned up some old info.
+
+	* PROBLEM-REPORT-FORM: Direct the user to not include an entire
+	  platform-specific config.h or platform_macros.GNU file. This is
+	  an effort to make submitted forms more concise and easy to read.
+
 Wed Mar 24 07:25:19 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
