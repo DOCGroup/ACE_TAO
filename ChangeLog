@@ -1,10 +1,22 @@
+Sat Jan 17 15:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/config/ec_typed_events.mpb:
+	* bin/MakeProjectCreator/config/ec_use_typed_events.mpb:
+	* bin/MakeProjectCreator/config/event.mpb:
+	  The fix for the ec_typed_events feature. Thanks to Chad Elliot for
+	  explaining that MPC inheritance is based on file name. So CosEvent.mpc
+	  inherits from ec_typed_events in the orbsvcs directory, projects using
+	  event inherit from event which inherits from ec_use_typed_events
+	  which then sets the needed compiler flags and adds the needed
+	  libraries to the linker.
+
 Sat Jan 17 00:56:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tests/Proactor_Test_IPV6.cpp
 	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
 	* tests/SOCK_Test_IPv6.cpp:
 
-	  Fixed compilation errors in builds that don't have IPV6 enabled. 
+	  Fixed compilation errors in builds that don't have IPV6 enabled.
 
 Sat Jan 17 00:45:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -15,9 +27,9 @@ Sat Jan 17 00:45:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Proactor_Test_IPV6.dsp:
 	* tests/SOCK_Send_Recv_Test_IPV6.dsp:
 	* tests/SOCK_Test_IPv6.dsp:
-	  
+
 	  New dsp files for the tests
-	
+
 	* tests/tests.dsw:
 
 	  Workspace file with the mods.
@@ -50,12 +62,12 @@ Fri Jan 16 23:25:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri Jan 16 23:21:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/run_test.lst:
-	  
+
 	  Added the new tests to the daily build.
 
 Fri Jan 16 23:19:17 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/tests.mpc: 
+	* tests/tests.mpc:
 
 	  Added the new tests to the MPC.
 
@@ -65,13 +77,13 @@ Fri Jan 16 23:01:11 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Proactor_Test_IPV6.cpp:
 	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
 	* tests/SOCK_Test_IPv6.cpp:
-	  
+
           More IPV6 tests from Brian Bruesker.
-	
+
 	* tests/Makefile.tests:
 
 	  Added these new tests.
-	
+
 Fri Jan 16 21:38:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/INET_Addr_Test_IPV6.cpp:
@@ -79,14 +91,14 @@ Fri Jan 16 21:38:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Multicast_Test_IPV6.cpp:
 	* tests/Multihomed_INET_Addr_Test_IPV6.cpp:
 
-          New test for IPV6. These tests were donated by Brian Bruesker. 
-	
+          New test for IPV6. These tests were donated by Brian Bruesker.
+
 	* tests/SOCK_Dgram_Test.cpp:
 
 	  Cosmetic fix.
 
-	* tests/Makefile.tests:	
-	  
+	* tests/Makefile.tests:
+
 	  Added the new tests.
 
 Fri Jan 16 18:44:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -96,7 +108,7 @@ Fri Jan 16 18:44:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Multicast_Test.cpp:
 	* tests/Multihomed_INET_Addr_Test.cpp:
 	* tests/Proactor_Test.cpp:
-	* tests/SOCK_Send_Recv_Test.cpp:	
+	* tests/SOCK_Send_Recv_Test.cpp:
 	* tests/SOCK_Test.cpp:
 
 	  Reverted changes from "Fri Jan 16 17:25:50 2004  Balachandran
