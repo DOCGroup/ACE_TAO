@@ -1,3 +1,10 @@
+Thu Aug 26 19:55:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Makefile.am:
+
+	  Fixed thinko in last change.  CVS and .svn directories *and*
+	  their contents must be pruned in install-local-data target.
+
 Thu Aug 26 19:37:10 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Makefile.am:
