@@ -221,6 +221,178 @@ SOURCE=.\typecode.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# Begin Source File
+
+SOURCE=.\align.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\any.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\boa.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\cdr.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\connect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\corbacom.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\debug.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\except.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\factories.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\giop.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\iiopobj.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\iioporb.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\marshal.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\nvlist.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\object.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objtable.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\optable.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\orb.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\orbconf.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\orbobj.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\params.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\principa.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\request.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\roa.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\sequence.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\stub.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\svrrqst.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\typecode.h
+# End Source File
+# End Group
+# Begin Group "Include Files"
+
+# PROP Default_Filter "*.i"
+# Begin Source File
+
+SOURCE=.\any.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\boa.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\cdr.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\connect.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\factories.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\iiopobj.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\iioporb.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\marshal.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\object.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\orbobj.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\params.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\roa.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\svrrqst.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\typecode.i
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
