@@ -59,8 +59,7 @@ PortableGroup::ObjectGroup_ptr
 TAO::PG_Object_Group_Manipulator::create_object_group (
   const char * type_id,
   const char * domain_id,
-  const PortableGroup::Criteria & the_criteria,
-    PortableGroup::ObjectGroupId & group_id
+  PortableGroup::ObjectGroupId & group_id
   ACE_ENV_ARG_DECL)
 {
    allocate_ogid(group_id);
@@ -143,6 +142,8 @@ PortableGroup::ObjectGroup_ptr TAO::PG_Object_Group_Manipulator::remove_profiles
 
 void dump_membership (const char * label, PortableGroup::ObjectGroup_ptr member)
 {
+  ACE_UNUSED_ARG (label);
+  ACE_UNUSED_ARG (member);
 #if 0
   PortableGroup::TagFTGroupTaggedComponent ft_tag_component;
   TAO_FT_IOGR_Property prop (ft_tag_component);

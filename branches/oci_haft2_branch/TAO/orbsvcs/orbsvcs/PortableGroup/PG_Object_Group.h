@@ -113,8 +113,11 @@ namespace TAO
 
     /**
      * Private constructor -- use static create method.
+     * NOTE: gcc complains about private constructor so
+     * make it protected.  Now it really should complain
+     * about non-virtual destructor, but it's not that smart.
      */
-  private:
+  protected:
     PG_Object_Group (
       CORBA::ORB_ptr orb,
       TAO::PG_Object_Group_Manipulator * manipulator,
