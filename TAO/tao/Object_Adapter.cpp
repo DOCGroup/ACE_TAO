@@ -942,6 +942,7 @@ TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
       // release it.
       this->object_adapter_.lock ().release ();
 
+    case INITIAL_STAGE:
     default:
       // @@ Keep compiler happy, the states above are the only
       //    possible ones.
