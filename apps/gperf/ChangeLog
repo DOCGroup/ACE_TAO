@@ -1,3 +1,7 @@
+Tue Oct  6 11:51:47 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* src/Key_List.cpp (Key_List): Fixed g++ warnings.
+
 Tue Oct  6 02:48:37 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	Thanks to Vishal the following things have been done to get Binary
