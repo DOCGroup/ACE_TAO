@@ -10,21 +10,23 @@ Sun Oct 26 01:05:36 1997    <nw1@COYOTE>
 	  
 Sun Oct 26 01:47:04 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
+	* TAO_IDL/be/be_codegen.cpp (upcase): 
+	* TAO_IDL/util/utl_string.cpp (canonicalize): 
 	* TAO_IDL/be/be_decl.cpp (tc_name2long): 
 	Added "unsigned" to index variable "i" used in for() loop,
 	to avoid warning "comparison between unsigned and signed"
 
 	* TAO_IDL/be/be_decl.cpp (compute_flatname): 
 	* TAO_IDL/be/be_decl.cpp (compute_repoID): 
+	* TAO_IDL/be/be_interface.cpp (compute_fullskelname): 
 	Fixed error "second - I_FALSE;", should be "second = I_FALSE;"
 
-	* TAO_IDL/be/be_decl.cpp (be_decl): 
-	Reordered member initializers to match declaration order to
-	satisfy the compiler.
-
+	* TAO_IDL/be/be_operation.cpp (gen_server_skeletons): 
 	* TAO_IDL/be/be_state.cpp (gen_code): 
 	Initialized pointers to 0
 	
+	* TAO_IDL/be/be_operation.cpp (gen_server_header): 
+	* TAO_IDL/be/be_operation.cpp (gen_client_header): 
 	* TAO_IDL/be/be_decl.cpp (gen_out_defn): 
 	* TAO_IDL/be/be_decl.cpp (gen_var_defn): 
 	* TAO_IDL/be/be_scope.cpp (gen_client_header): 
@@ -59,23 +61,15 @@ Sun Oct 26 01:47:04 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 	Added ACE_UNUSED_ARG macro to avoid unused variable warning,
 	for variable slen.
 
-	* TAO_IDL/be/be_interface.cpp (compute_fullskelname): 
-	Fixed error "second - I_FALSE;"; should be "second = I_FALSE;"
-
 	* TAO_IDL/be_include/be_helper.h (class TAO_OutStream): 
 	Made destructor virtual; we have virtual member functions.
 
-	* TAO_IDL/util/utl_string.cpp (canonicalize): 
-	Added "unsigned" to index variable "i" used in for() loop,
-	to avoid warning "comparison between unsigned and signed"	
-
+	* TAO_IDL/be/be_codegen.cpp (TAO_CodeGen): 	
+	* TAO_IDL/be/be_decl.cpp (be_decl): 
 	* TAO_IDL/util/utl_stack.cpp (UTL_ScopeStack): 
-	Reordered member initializers to match declaration order to
-	satisfy the compiler.
-	
 	* TAO_IDL/util/utl_scope.cpp (UTL_ScopeActiveIterator): 
 	Reordered member initializers to match declaration order to
-	eliminate warnings from the compiler.	
+	satisfy the compiler.
 	
 	* TAO_IDL/util/utl_scope.cpp (lookup_primitive_type): 
 	Added "default" case to switch to return NULL.
