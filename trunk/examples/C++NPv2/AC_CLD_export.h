@@ -9,6 +9,10 @@
 
 #include "ace/config-all.h"
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (AC_CLD_HAS_DLL)
+#  define AC_CLD_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && ! AC_CLD_HAS_DLL */
+
 #if !defined (AC_CLD_HAS_DLL)
 #  define AC_CLD_HAS_DLL 1
 #endif /* ! AC_CLD_HAS_DLL */
