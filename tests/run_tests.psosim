@@ -113,6 +113,8 @@ run MT_SOCK_Test                        # uses Thread_Manager, Acceptor/Connecto
 #Barrier_Test: threads not supported on this platform
 #run Barrier_Test                        # uses Service_Config, Barrier
 
+#run CDR_Test
+
 #Buffer_Stream_Test: threads not supported on this platform
 #run Buffer_Stream_Test                  # uses Service_Config, Module (Stream,Task, Message_Queue)
 
