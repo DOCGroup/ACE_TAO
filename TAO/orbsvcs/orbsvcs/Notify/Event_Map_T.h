@@ -37,7 +37,7 @@ class TAO_NS_Event_Map_T
 {
 
 public:
-  typedef ACE_TYPENAME TAO_NS_Event_Map_Entry_T<PROXY> ENTRY;
+  typedef  TAO_NS_Event_Map_Entry_T<PROXY> ENTRY;
   
   /// Constuctor
   TAO_NS_Event_Map_T (void);
