@@ -1,3 +1,10 @@
+Tue Jan 20 11:57:24 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile: 
+	  Added several TAO components to the compile list.
+	  The regular expression for make errors was missing several of
+	  them.
+
 Tue Jan 20 03:36:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager.cpp (open): We should call close_i () to
