@@ -1297,7 +1297,7 @@ Command_Handler::connect_to_server (char *address,
 //                      -1);
 // 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
-  CORBA::Short server_port;
+  CORBA::UShort server_port;
   ACE_INET_Addr local_addr;
   CORBA::String client_address_string;
   TAO_TRY
@@ -1306,10 +1306,11 @@ Command_Handler::connect_to_server (char *address,
                       char [BUFSIZ],
                       -1);
       // Get the local UDP address
-      this->dgram_.open (ACE_Addr::sap_any,
-                         ACE_Addr::sap_any);
+      if (this->dgram_.open (ACE_Addr::sap_any) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram open failed %p"),-1);
 
-      this->dgram_.get_local_addr (local_addr);
+      if (this->dgram_.get_local_addr (local_addr) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram get local addr failed %p"),-1);
       // form a string 
       ::sprintf (client_address_string,
                  "%s:%d",
@@ -1327,7 +1328,7 @@ Command_Handler::connect_to_server (char *address,
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t) set_peer failed\n"),
                           -1);
-      ACE_DEBUG ((LM_DEBUG,"(%P|%t) set_peer done\n"));
+      ACE_DEBUG ((LM_DEBUG,"(%P|%t) set_peer done:server port =%d\n",server_port));
     }
   TAO_CATCHANY
     {
@@ -1336,9 +1337,12 @@ Command_Handler::connect_to_server (char *address,
     }
   TAO_ENDTRY;
 
-  //  ACE_INET_Addr server_udp_addr (server_port,
-  //                                 address);
+  ACE_INET_Addr server_udp_addr (server_port,
+                                 address);
 
+  if (ACE_OS::connect (this->dgram_.get_handle (),(sockaddr *) server_udp_addr.get_addr (),
+                       server_udp_addr.get_size ()) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,"(%P|%t)datagram connect failed %p"),-1);
   //  if (this->dgram_.open (server_udp_addr,
   //                         local_addr) == -1)
   //    ACE_ERROR_RETURN ((LM_ERROR,
@@ -1346,19 +1350,18 @@ Command_Handler::connect_to_server (char *address,
   //                       "dgram.open "),
   //                      -1);
   
-  this->dgram_.get_local_addr (local_addr);
-  // form a string 
-  ::sprintf (client_address_string,
-             "%s:%d",
-             local_addr.get_host_name (),
-             local_addr.get_port_number ());
+//   this->dgram_.get_local_addr (local_addr);
+//   // form a string 
+//   ::sprintf (client_address_string,
+//              "%s:%d",
+//              local_addr.get_host_name (),
+//              local_addr.get_port_number ());
   
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Client string is %s\n",
-              client_address_string));
+//   ACE_DEBUG ((LM_DEBUG,
+//               "(%P|%t) Client string is %s\n",
+//               client_address_string));
   // set the pointers to the correct values
 
-  //  *ctr_fd = this->stream_.get_handle ();
   *ctr_fd = *data_fd = this->dgram_.get_handle ();
   // set both the control and data socket the same UDP socket.
   ACE_DEBUG ((LM_DEBUG,

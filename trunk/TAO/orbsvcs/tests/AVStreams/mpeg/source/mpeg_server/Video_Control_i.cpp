@@ -122,17 +122,20 @@ Video_Control_i::stop (CORBA::Long cmdsn,
   return this->state_->stop (cmdsn);
 }
 
-CORBA::Short
+CORBA::UShort
 Video_Control_i::set_peer (const char *peer,
                            CORBA::Environment &_tao_environment)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) set_peer called: %s\n",
-              peer));
-
-  ACE_INET_Addr client_data_addr (peer);
+   ACE_INET_Addr client_data_addr (peer);
   // Data (UDP) Address of the client.
 
+   ACE_DEBUG ((LM_DEBUG,
+               "(%P|%t) set_peer called: %s,%s,%d\n",
+               peer,
+               client_data_addr.get_host_addr (),
+               client_data_addr.get_port_number ()));
+
+ 
   if (VIDEO_SINGLETON::instance ()->dgram.open (client_data_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
                        "(%P|%t) UDP open failed: %p\n"),
@@ -158,6 +161,7 @@ Video_Control_i::set_peer (const char *peer,
 
   VIDEO_SINGLETON::instance ()->videoSocket = VIDEO_SINGLETON::instance ()->dgram.get_handle ();
 
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) set_peer: server port = %d\n",server_data_addr.get_port_number ()));
   return server_data_addr.get_port_number ();
 
 }

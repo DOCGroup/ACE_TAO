@@ -34,7 +34,7 @@
 #include "tao/TAO.h"
 #include "mpeg_shared/Video_ControlC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "ace/SOCK_CODgram.h"
+#include "ace/SOCK_Dgram.h"
 #include "ace/SOCK_Connector.h"
 
 class Command_Handler 
@@ -106,7 +106,7 @@ public:
                          int *max_pkt_size);
 
 private:
-  ACE_SOCK_CODgram dgram_;
+  ACE_SOCK_Dgram dgram_;
   // UDP datagram on which to send/recv data
   
   ACE_SOCK_Stream stream_;

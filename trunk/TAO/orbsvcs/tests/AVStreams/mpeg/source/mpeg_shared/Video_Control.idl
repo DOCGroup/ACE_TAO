@@ -101,7 +101,7 @@ interface Video_Control
   boolean speed (in SPEEDpara para);
   boolean stop (in long cmdsn);
 
-  short set_peer (in string peer);
+  unsigned short set_peer (in string peer);
   // Initializes the server to communicate to the <peer>, which can be
   // "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
   // "128.252.166.57:1234").  If there is no ':' in the <address> it
