@@ -37,7 +37,7 @@ SHFLAGS       = <%shflags%>
 TEMPINCDIR    = <%tempinc%>/<%project_name%>
 <%endif%>
 <%endfor%>
-GENFLAGS      = -g
+GENFLAGS      = <%genflags(-g)%>
 CPPFLAGS      = $(PICFLAGS) $(GENFLAGS)<%if(cppflags)%> <%cppflags%><%endif%><%foreach(configurations)%><%if(tempinc)%> <%tempincopt%>$(TEMPINCDIR)<%endif%><%endfor%><%foreach(platforms)%><%if(extracppflags)%> <%extracppflags%><%endif%><%endfor%><%foreach(configurations)%><%if(compilerflags)%> <%compilerflags%><%endif%><%endfor%><%if(pch_header)%><%foreach(pch_defines)%> -D<%pch_define%><%endfor%><%endif%><%if(includes)%><%foreach(includes)%> -I<%include%><%endfor%><%endif%><%if(macros)%><%foreach(macros)%> -D<%macro%><%endfor%><%endif%>
 <%if(arflags)%>
 ARFLAGS       = <%arflags%>

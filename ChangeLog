@@ -1,3 +1,10 @@
+Thu Oct 30 09:33:15 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/make.mpd:
+
+          Allow the GENFLAGS value to be overriden by MPC when the makefiles
+          are being generated.
+
 Thu Oct 30 14:24:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.mpc:
