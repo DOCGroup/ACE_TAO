@@ -32,8 +32,8 @@ HTTP_Handler::open (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) New connection \n"));
 
-  // James, please define a macro for this (e.g., ACE_MAX_SOCKBUF).
-  int sockbufsize = 64 * 1024;
+  //DONE// James, please define a macro for this (e.g., ACE_MAX_SOCKBUF).
+  int sockbufsize = HTTP_Handler::MAX_SOCKBUFSIZE;
   int result = ACE_OS::setsockopt (handle,
                                    SOL_SOCKET,
                                    SO_RCVBUF,
@@ -43,8 +43,8 @@ HTTP_Handler::open (ACE_HANDLE handle,
   if (result == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "SO_RCVBUF"));
 
-  // James, please define a macro for this (e.g., ACE_MAX_SOCKBUF).
-  sockbufsize = 64 * 1024;
+  //DONE// James, please define a macro for this (e.g., ACE_MAX_SOCKBUF).
+  sockbufsize = HTTP_Handler::MAX_SOCKBUFSIZE;
 
   result = ACE_OS::setsockopt (handle,
                                SOL_SOCKET,
