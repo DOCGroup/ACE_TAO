@@ -1,3 +1,12 @@
+Wed May  2 15:14:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/CDR.h (TAO_InputCDR):
+	* tao/CDR.i: Added a new constructor for TAO_InputCDR
+	  class. It is basically a wrapper for the new constructor added
+	  in ACE_InputCDR class by this ChangeLog entry "Wed May  2
+	  15:10:28 2001 Balachandran Natarajan ". This would make the
+	  construtor usable in TAO.
+
 Wed May  2 11:26:10 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * examples/POA/TIE/Makefile:

@@ -52,6 +52,23 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
   this->init_translators ();
 }
 
+
+ACE_INLINE
+TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
+                            size_t rd_pos,
+                            size_t wr_pos,
+                            int byte_order,
+                            TAO_ORB_Core* orb_core)
+  : ACE_InputCDR (data,
+                  rd_pos,
+                  wr_pos,
+                  byte_order),
+    orb_core_ (orb_core)
+{
+  this->init_translators ();
+}
+
+
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
                             size_t size,
