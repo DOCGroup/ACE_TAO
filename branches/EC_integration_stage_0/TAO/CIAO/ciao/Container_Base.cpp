@@ -39,11 +39,15 @@ CIAO_Events::Consumer_Config_ptr CIAO::Container::_ciao_create_event_consumer_co
       ACE_THROW_SPEC ((
         CORBA::SystemException))
 {
+  // @@ George Why did the exception specification dropped in these places. ?
   return this->events_manager_.create_consumer_config (service_type);
 }
 
 /// Events_Manager creates the appropriate servant for Supplier_Config
-CIAO_Events::Supplier_Config_ptr CIAO::Container::_ciao_create_event_supplier_config (
+// @@ George, Should these pointers be exposed to the glue code at all? I
+//don't see a reason why it should be done.
+CIAO_Events::Supplier_Config_ptr
+CIAO::Container::_ciao_create_event_supplier_config (
         const char * service_type
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((

@@ -1,3 +1,12 @@
+Thu Oct  2 12:19:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * ciao/CIAO_Events.cpp:
+	* ciao/CIAO_Events.h
+	* ciao/CIAO_Events.idl:
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h:
+	* ciao/Cookies.h: Added // @@ George for George in the code. 
+
 Wed Oct 01 16:31:45 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * ciao/CCM_Core.mpc:

@@ -18,16 +18,18 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/ORB.h"
+
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "CCM_ContainerC.h"
 #include "CCM_DeploymentC.h"
 #include "ace/Active_Map_Manager.h"
 #include "CIAO_Events.h"
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 namespace CIAO
 {

@@ -14,8 +14,24 @@
 
 #include "CIAO_Events.h"
 
+// @George, to prevent long lines, you could do
+//
+//
+// namespace CIAO_Events
+// {
+//   RTEventService::RTEventService ()
+// ....
+// }
+//
+// Further please keep things to 80 columns.
+//
+// There seems to be some obvious memory leaks that I think you are
+// already addressing.
+
 /// Initialize the RTEventService object. Will eventually be moved to a separate init ()
 /// method so exceptions can be handled properly.
+
+// @@ George, an init () method in the base class sounds like a better option.
 CIAO_Events::RTEventService::RTEventService (CORBA::ORB_ptr orb, RtecEventChannelAdmin::EventChannel_ptr ec) :
   orb_ (CORBA::ORB::_duplicate (orb)),
   rt_event_channel_ (RtecEventChannelAdmin::EventChannel::_duplicate (ec)),
@@ -33,6 +49,9 @@ CIAO_Events::RTEventService::RTEventService (CORBA::ORB_ptr orb, RtecEventChanne
   ACE_CHECK;
 }
 
+// @@ George, ad these comments to the header file. The CPP file
+// should have code and other comments related to the code. TAO and
+// ACE has code like this which I am cleaning up.
 /// Connect a supplier to the RT event channel.
 void CIAO_Events::RTEventService::connect_event_supplier (
     CIAO_Events::Supplier_Config_ptr supplier_config
@@ -68,7 +87,8 @@ void CIAO_Events::RTEventService::connect_event_supplier (
 }
 
 /// Connect a consumer to the RT event channel.
-CIAO_Events::EventServiceInfo CIAO_Events::RTEventService::connect_event_consumer (
+CIAO_Events::EventServiceInfo
+CIAO_Events::RTEventService::connect_event_consumer (
     CIAO_Events::Consumer_Config_ptr consumer_config
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -100,7 +120,9 @@ CIAO_Events::EventServiceInfo CIAO_Events::RTEventService::connect_event_consume
     consumer_servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  RtecEventChannelAdmin::ConsumerQOS_var qos = consumer_config->get_rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  RtecEventChannelAdmin::ConsumerQOS_var qos =
+    consumer_config->get_rt_event_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+
   ACE_CHECK;
   proxy_supplier->connect_push_consumer (push_consumer.in (),
                                          qos.in ()
@@ -122,10 +144,11 @@ void CIAO_Events::RTEventService::disconnect_event_consumer (
 {
   service_info.disconnect.rtec_push_consumer->disconnect_push_consumer (
     ACE_ENV_SINGLE_ARG_PARAMETER);
-	ACE_CHECK;
+        ACE_CHECK;
 }
 
-void CIAO_Events::RTEventService::disconnect_event_supplier (
+void
+CIAO_Events::RTEventService::disconnect_event_supplier (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
     CORBA::SystemException,
@@ -134,10 +157,11 @@ void CIAO_Events::RTEventService::disconnect_event_supplier (
 {
   this->push_supplier_->disconnect_push_supplier (
     ACE_ENV_SINGLE_ARG_PARAMETER);
-	ACE_CHECK;
+        ACE_CHECK;
 }
 
-void CIAO_Events::RTEventService::push_event (
+void
+CIAO_Events::RTEventService::push_event (
     ::Components::EventBase *ev
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -150,9 +174,12 @@ void CIAO_Events::RTEventService::push_event (
   events[0].header.source = this->source_id_;
   events[0].header.type = this->type_id_;
   events[0].data.any_value <<= ev;
-
+  /**
+   * @@George, a place holder for reliable oneways if we get to
+   * support it.
+   */
   this->proxy_consumer_->push (events ACE_ENV_ARG_PARAMETER);
-	ACE_CHECK;
+  ACE_CHECK;
 }
 
 /// Nothing to do here.
@@ -166,20 +193,24 @@ void CIAO_Events::DirectEventService::connect_event_supplier (
 
 /// Add a consumer to the map.
 CIAO_Events::EventServiceInfo CIAO_Events::DirectEventService::connect_event_consumer (
-        CIAO_Events::Consumer_Config_ptr consumer_config
-        ACE_ENV_ARG_DECL)
-      ACE_THROW_SPEC ((
-        CORBA::SystemException))
+    CIAO_Events::Consumer_Config_ptr consumer_config
+    ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CIAO_Events::EventServiceInfo service_info;
   service_info.type = DIRECT;
   service_info.service = this;
 
-  ACE_NEW_RETURN (service_info.disconnect.consumer_key, ACE_Active_Map_Manager_Key, service_info);
+  // @@ George, Any reason not to use ACE_NEW_THROW_EX (). Exceptions
+  // comes free then.
+  ACE_NEW_RETURN (service_info.disconnect.consumer_key,
+                  ACE_Active_Map_Manager_Key,
+                  service_info);
   Components::EventConsumerBase_var consumer =
     consumer_config->get_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
-  this->consumer_map_.bind (consumer._retn (), *service_info.disconnect.consumer_key);
+  this->consumer_map_.bind (consumer._retn (),
+                            *service_info.disconnect.consumer_key);
 
   return service_info;
 
@@ -402,7 +433,7 @@ void CIAO_Events::CosNotifyService::push_event (
   event.remainder_of_body <<= ev;
 
   this->proxy_consumer_->push_structured_event (event ACE_ENV_ARG_PARAMETER);
-	ACE_CHECK;
+        ACE_CHECK;
 
 }
 
@@ -524,7 +555,7 @@ RtecEventChannelAdmin::SupplierQOS * CIAO_Events::RTEvent_Supplier_Config::get_r
 {
 
   ACE_DEBUG ((LM_DEBUG, "CIAO_Events::RTEvent_Supplier_Config::get_rt_event_qos\n"));
-  
+
   RtecEventChannelAdmin::SupplierQOS * supplier_qos = 0;
   ACE_NEW_RETURN (supplier_qos, RtecEventChannelAdmin::SupplierQOS (this->qos_.get_SupplierQOS ()), 0);
   return supplier_qos;
@@ -829,9 +860,13 @@ CIAO_Events::Consumer_Config_ptr CIAO_Events::Events_Manager::create_consumer_co
 
 }
 
-CIAO_Events::Supplier_Config_ptr CIAO_Events::Events_Manager::create_supplier_config (const char * service_type)
+CIAO_Events::Supplier_Config_ptr
+CIAO_Events::Events_Manager::create_supplier_config (const char * service_type)
 {
 
+  // @@George, at this place we should be able to load from a library.
+  // @@ And oh, BTW, keep direct as default. If there are no strings
+  // for then we should use the direct mode of connection.
   if (ACE_OS::strcmp (service_type, "DIRECT") == 0)
   {
     CIAO_Events::Direct_Supplier_Config * supplier_config = 0;
@@ -926,6 +961,8 @@ RtecEventComm::EventSourceID CIAO_Events::Events_Manager::get_rtec_source_id (CO
   return event_source_id;
 }
 
+// @@ George, not sure how we plan to get the svc.conf file options
+// into the channel. Just a place holder to think about it.
 void CIAO_Events::Events_Manager::create_rt_event_channel (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -969,7 +1006,7 @@ CIAO_Events::RTEventServiceSupplier_impl::RTEventServiceSupplier_impl (CORBA::OR
   orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
-  
+
 void CIAO_Events::RTEventServiceSupplier_impl::disconnect_push_supplier (void)
 {
   CORBA::Object_var poa_object =
@@ -1039,7 +1076,9 @@ CIAO_Events::CosNotifyServiceSupplier_impl::CosNotifyServiceSupplier_impl (CORBA
 {
 }
 
-void CIAO_Events::CosNotifyServiceSupplier_impl::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
+// @@ George, we write like this.
+void
+CIAO_Events::CosNotifyServiceSupplier_impl::disconnect_structured_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
