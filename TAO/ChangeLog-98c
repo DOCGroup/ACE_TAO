@@ -1,3 +1,15 @@
+Tue May  5 15:40:09 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/orbconf.h: Added macros for
+ 	  TAO_SOCK_{STREAM,ACCEPTOR,CONNECTOR}, which can be overridden in
+ 	  an ACE config.h file to select a different set of transport
+ 	  APIs.
+
+	* tao/{ORB_Core,GIOP,Server_Strategy_Factory,ORB}.{h,cpp}: Changed
+ 	  all uses of ACE_SOCK_* to TAO_SOCK_* so we can override this to
+ 	  use a different transport API without changing the code at
+ 	  compile time.
+
 Mon May  4 11:57:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 

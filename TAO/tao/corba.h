@@ -25,6 +25,9 @@
 #if !defined (TAO_MASTER_CORBA_H)
 #define TAO_MASTER_CORBA_H
 
+// Include user-defined and platform-specific ORB configuration stuff.
+#include "tao/orbconf.h"
+
 // ACE specific includes
 #include "ace/OS.h"
 #include "ace/Get_Opt.h"
@@ -73,9 +76,6 @@
 // COM stuff
 #include "tao/compat/objbase.h"
 #include "tao/compat/initguid.h"
-
-// ORB configuration
-#include "tao/orbconf.h"
 
 // For some reason, PC compilers don't implement "natural" alignment,
 // but only use fixed alignment policies.  The following #pragmas

@@ -41,7 +41,7 @@ public:
   // = Server-side factory types.
   typedef ACE_Creation_Strategy<TAO_Server_Connection_Handler>
           CREATION_STRATEGY;
-  typedef ACE_Accept_Strategy<TAO_Server_Connection_Handler, ACE_SOCK_ACCEPTOR>
+  typedef ACE_Accept_Strategy<TAO_Server_Connection_Handler, TAO_SOCK_ACCEPTOR>
           ACCEPT_STRATEGY;
   typedef ACE_Concurrency_Strategy<TAO_Server_Connection_Handler>
           CONCURRENCY_STRATEGY;
