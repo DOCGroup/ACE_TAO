@@ -100,56 +100,22 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
   ACE_TRACE ("ACE_SOCK_Dgram::shared_open");
   int error = 0;
 
-  if (local == ACE_Addr::sap_any && protocol_family == PF_INET)
+  if (local == ACE_Addr::sap_any 
+      && protocol_family == PF_INET)
     {
       if (ACE::bind_port (this->get_handle ()) == -1)
         error = 1;
     }
-  else if (ACE_OS::bind (this->get_handle (), (sockaddr *) local.get_addr (), 
+  else if (ACE_OS::bind (this->get_handle (),
+                         ACE_reinterpret_cast (sockaddr *,
+                                               local.get_addr ()),
                          local.get_size ()) == -1)
     error = 1;
 
-  if (error)
+  if (error != 0)
     this->close ();
 
   return error ? -1 : 0;
-}
-
-// Here's the general-purpose constructor used by a connectionless
-// datagram ``server''...
-
-ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local, 
-                                int protocol_family, 
-                                int protocol,
-                                int reuse_addr)
-  : ACE_SOCK (SOCK_DGRAM, protocol_family, protocol, reuse_addr)
-{
-  ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
-
-  if (this->shared_open (local, protocol_family) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ASYS_TEXT ("%p\n"),
-                ASYS_TEXT ("ACE_SOCK_Dgram")));
-}
-
-ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local, 
-                                const ACE_QoS_Params &qos_params,
-                                int protocol_family, 
-                                int protocol,
-                                ACE_Protocol_Info *protocolinfo,
-                                ACE_SOCK_GROUP g,
-                                u_long flags,
-                                int reuse_addr)
-  : ACE_SOCK (SOCK_DGRAM,
-              protocol_family,
-              protocol,
-              protocolinfo,
-              g,
-              flags,
-              reuse_addr)
-{
-  ACE_UNUSED_ARG (qos_params);
-  ACE_UNUSED_ARG (local);
 }
 
 int
@@ -162,17 +128,24 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       u_long flags,
                       int reuse_addr)
 {
-  ACE_UNUSED_ARG (local);
-  ACE_UNUSED_ARG (qos_params);
-  ACE_UNUSED_ARG (protocol_family);
-  ACE_UNUSED_ARG (protocol);
-  ACE_UNUSED_ARG (protocolinfo);
-  ACE_UNUSED_ARG (g);
-  ACE_UNUSED_ARG (flags);
-  ACE_UNUSED_ARG (reuse_addr);
-
-  // Under construction...
-  ACE_NOTSUP_RETURN (-1);
+  if (ACE_SOCK::open (SOCK_DGRAM,
+                      protocol_family, 
+                      protocol,
+                      protocolinfo,
+                      g,
+                      flags,
+                      reuse_addr) == -1)
+    return -1;
+  else if (this->shared_open (local,
+                              protocol_family) == -1)
+    return -1;
+  else
+    // Pass the QoS parameters.
+    return ACE_OS::join_leaf (this->get_handle (),
+                              ACE_reinterpret_cast (const sockaddr *,
+                                                    local.get_addr ()),
+                              local.get_size (),
+                              qos_params);
 }
 
 // Here's the general-purpose open routine.
@@ -192,6 +165,48 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
   else
     return this->shared_open (local,
                               protocol_family);
+}
+
+// Here's the general-purpose constructor used by a connectionless
+// datagram ``server''...
+
+ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local, 
+                                int protocol_family, 
+                                int protocol,
+                                int reuse_addr)
+{
+  ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
+
+  if (this->open (local,
+                  protocol_family,
+                  protocol,
+                  reuse_addr) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_SOCK_Dgram")));
+}
+
+ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local, 
+                                const ACE_QoS_Params &qos_params,
+                                int protocol_family, 
+                                int protocol,
+                                ACE_Protocol_Info *protocolinfo,
+                                ACE_SOCK_GROUP g,
+                                u_long flags,
+                                int reuse_addr)
+{
+  ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
+  if (this->open (local,
+                  qos_params,
+                  protocol_family,
+                  protocol,
+                  protocolinfo,
+                  g,
+                  flags,
+                  reuse_addr) == -1)
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_SOCK_Dgram")));
 }
 
 #if defined (ACE_HAS_MSG)

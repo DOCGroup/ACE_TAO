@@ -172,12 +172,26 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+  int shared_open (ACE_SOCK_Stream &new_stream,
+                   int protocol_family, 
+                   int protocol,
+                   int reuse_addr);
+  // Perform operations that ensure the socket is opened using
+  // BSD-style semantics (no QoS).
+
+  int shared_open (ACE_SOCK_Stream &new_stream,
+                   int protocol_family,
+                   int protocol,
+                   ACE_Protocol_Info *protocolinfo,
+                   ACE_SOCK_GROUP g,
+                   u_long flags,
+                   int reuse_addr);
+  // Perform operations that ensure the socket is opened using
+  // QoS-enabled semantics.
+
   int shared_connect_start (ACE_SOCK_Stream &new_stream,
 			    ACE_Time_Value *timeout,
-			    const ACE_Addr &local_sap,
-			    int reuse_addr,
-			    int protocol_family, 
-			    int protocol);
+			    const ACE_Addr &local_sap);
   // Perform operations that must be called before <ACE_OS::connect>.
 
   int shared_connect_finish (ACE_SOCK_Stream &new_stream,

@@ -131,6 +131,13 @@ protected:
   // Perform operations that must occur after <ACE_OS::accept> is
   // called.
 
+  int shared_open (const ACE_Addr &local_sap,
+                   int protocol_family,
+                   int backlog);
+  // This method factors out the common <open> code and is called by
+  // both the QoS-enabled <open> method and the BSD-style <open>
+  // method.
+
 private:
   int get_remote_addr (ACE_Addr &) const;
   // Do not allow this function to percolate up to this interface...

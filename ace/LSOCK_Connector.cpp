@@ -1,9 +1,6 @@
 // LSOCK_Connector.cpp
 // $Id$
 
-/* Defines the format and interface for the connector side of the
-   local ACE_SOCK ACE_Stream. */
-
 #define ACE_BUILD_DLL
 #include "ace/LSOCK_Connector.h"
 
@@ -42,9 +39,15 @@ ACE_LSOCK_Connector::ACE_LSOCK_Connector (ACE_LSOCK_Stream &new_stream,
 					  int perms,
 					  int protocol_family, 
 					  int protocol)
-  : ACE_SOCK_Connector (new_stream, remote_sap, timeout,
-			local_sap, reuse_addr, flags, perms,
-			protocol_family, protocol)
+  : ACE_SOCK_Connector (new_stream,
+                        remote_sap,
+                        timeout,
+			local_sap,
+                        reuse_addr,
+                        flags,
+                        perms,
+                        protocol_family,
+                        protocol)
 {
   ACE_TRACE ("ACE_LSOCK_Connector::ACE_LSOCK_Connector");
   // This is necessary due to the weird inheritance relationships of

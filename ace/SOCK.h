@@ -29,15 +29,15 @@
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
   // = TITLE
-  //     An abstract class which forms the basis for more specific
-  //     classes (such as ACE_SOCK_Acceptor and ACE_SOCK_Stream).
+  //     An abstract class that forms the basis for more specific
+  //     classes, such as <ACE_SOCK_Acceptor> and <ACE_SOCK_Stream>.
   //     Do not instantiate this class.
   //
   // = DESCRIPTION
   //    This class provides functions that are common to all of the
-  //    SOCK-type classes. ACE_SOCK provides the ability to get and
-  //    set socket options, get the local and remote addresses, and
-  //    close the socket.
+  //    <ACE_SOCK_*> classes. <ACE_SOCK> provides the ability to get
+  //    and set socket options, get the local and remote addresses,
+  //    and close the socket.
 public:
   ~ACE_SOCK (void);
   // Default ctor/dtor.
@@ -46,24 +46,25 @@ public:
                   int option,
                   void *optval,
                   int optlen) const;
-  // Wrapper around the setsockopt() system call.
+  // Wrapper around the <setsockopt> system call.
 
   int get_option (int level,
                   int option,
                   void *optval,
                   int *optlen) const;
-  // Wrapper around the getsockopt() system call.
+  // Wrapper around the <getsockopt> system call.
 
   int close (void);
   // Close down the socket.
 
   int get_local_addr (ACE_Addr &) const;
-  // Return the local endpoint address in the referenced ACE_Addr.
+  // Return the local endpoint address in the referenced <ACE_Addr>.
   // Returns 0 if successful, else -1.
 
   int get_remote_addr (ACE_Addr &) const;
   // Return the address of the remotely connected peer (if there is
-  // one), in the referenced ACE_Addr. Returns 0 if successful, else -1.
+  // one), in the referenced <ACE_Addr>. Returns 0 if successful, else
+  // -1.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -111,6 +112,6 @@ protected:
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #endif /* ACE_SOCK_H */
