@@ -1,3 +1,19 @@
+Wed Jul 23 18:40:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
+
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connection_Handler.h:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Transport.cpp:
+
+          Please send any questions or comments about this ChangeLog
+          entry to jcohen@atl.lmco.com.
+
+          Corrected interface related build problems caused by changes
+          to some of the abstract protocol classes that have occurred
+          over the last two months.  Future problems should be more easily
+          observed in the RH9_SCTP scoreboard.
+
 Wed Jul 23 18:03:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO/TAO_IDL/tao_idl.cpp:
