@@ -1,3 +1,11 @@
+Tue Jan 12 17:02:11 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SOCK_IO.{h,i} (sendv,recvv,sendv_n,recvv_n): Renamed vector
+	  send/recv.  There were name clashing since these methods have
+	  similar signatures to some send_n/recv_n in ACE_SOCK_Stream,
+	  they got hidden by the derived methods.  Renaming them solve the
+	  problem.
+
 Tue Jan 12 10:59:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus_ghs.GNU: fixed location of
