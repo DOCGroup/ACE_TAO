@@ -9,9 +9,11 @@ unshift @INC, '../../../../../bin';
 require ACEutils;
 
 $iorfile = "test.ior";
-$iterations = 1000;
-$bufsize = 1002;
+$iterations = 4000;
+$bufsize = 4000;
+$nagle = "";
 $type = "";
+$all = 1;
 $other = "";
 
 unlink $iorfile;
@@ -20,10 +22,33 @@ sub run_test
 {
   my $type = shift(@_);
 
+  if ($type == "none") {
+    $nagle = "-ORBNodelay 0"
+  }
+  else {
+    $nagle = "";
+  }
+
   print STDERR "\n***************** STARTING TEST ******************\n";
 
   $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-                         "-t $type -i $iterations -m $bufsize");
+                         "$nagle -t $type -i $iterations -m $bufsize");
+
+  $client = $CL->TimedWait (60);
+  if ($client == -1) {
+    print STDERR "ERROR: client timedout\n";
+    $CL->Kill (); $CL->TimedWait (1);
+  }
+}
+
+sub run_buffered
+{
+  my $bufsize = shift (@_);
+
+  print STDERR "\n***************** STARTING TEST ******************\n";
+
+  $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
+                         "-ORBNodelay 0 -t none -i $iterations -m $bufsize");
 
   $client = $CL->TimedWait (60);
   if ($client == -1) {
@@ -35,6 +60,8 @@ sub run_test
 # Parse the arguments
 
 @types = ("none", "transport", "server", "target", "twoway");
+
+@bufsizes = (10, 40, 100, 400, 1000, 2000);
 
 for ($i = 0; $i <= $#ARGV; $i++)
 {
@@ -65,6 +92,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
     if ($ARGV[$i] eq "-t")
     {
       @types = split (',', $ARGV[$i + 1]);
+      $all = 0;
       $i++;
       last SWITCH;
     }
@@ -80,6 +108,12 @@ if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
   $SV->Kill (); $SV->TimedWait (1);
   exit 1;
+}
+
+if ($all == 1) {
+  foreach $bufsize (@bufsizes) {
+    run_buffered ($bufsize);
+  }
 }
 
 foreach $type (@types) {
