@@ -1,10 +1,9 @@
+//
+// $Id$
+//
 #ifndef SERVER_TASK_H
 #define SERVER_TASK_H
-/**
- * @file
- *
- * $Id$
- */
+
 #include "ace/pre.h"
 
 #include "tao/corba.h"

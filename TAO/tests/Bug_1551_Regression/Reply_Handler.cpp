@@ -1,8 +1,7 @@
-/**
- * @file
- *
- * $Id$
- */
+//
+// $Id$
+//
+
 #include "Reply_Handler.h"
 
 ACE_RCSID(Bug_1XXX_Regression, Reply_Handler, "$Id$")

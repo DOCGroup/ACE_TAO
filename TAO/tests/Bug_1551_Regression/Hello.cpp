@@ -1,8 +1,7 @@
-/**
- * @file
- *
- * $Id$
- */
+//
+// $Id$
+//
+
 #include "Hello.h"
 
 ACE_RCSID(Bug_1XXX_Regression, Hello, "$Id$")
