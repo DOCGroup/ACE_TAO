@@ -26,8 +26,8 @@ Util_Thread::svc (void)
   this->ts_->barrier_->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) Threads have bound, "
-              "utilization test STARTED\n"));
+              "(%t) )))))))) "
+              "utilization test STARTED at %D\n"));
 
   this->ts_->utilization_task_started_ = 1;
 
@@ -38,7 +38,8 @@ Util_Thread::svc (void)
   this->ts_->timer_.stop ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) utilization test ENDED\n"));
+              "(%t) (((((((( " 
+	      "utilization test ENDED at %D\n"));
 
   return 0;
 }
