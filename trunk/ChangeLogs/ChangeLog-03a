@@ -1,4 +1,43 @@
-Sat May 27 20:55:24 2000  Ossama Othman  <ossama@uci.edu>
+Sun May 28 17:26:28 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Timer_Heap_T.cpp:
+	* ace/Timer_Queue_T.cpp:
+	* apps/JAWS/server/HTTP_Helpers.cpp:
+	* apps/JAWS/server/HTTP_Response.cpp:
+	* apps/drwho/BS_Client.cpp:
+	* examples/ASX/Event_Server/Event_Server/Options.cpp:
+	* examples/Logger/simple-server/Logging_Handler.cpp:
+	* examples/Logger/simple-server/server_loggerd.cpp:
+	* examples/Mem_Map/IO-tests/test_io.cpp:
+	* examples/Naming/test_non_existent.cpp:
+	* examples/Naming/test_writers.cpp:
+	* examples/Reactor/Dgram/CODgram.cpp:
+	* examples/Reactor/Dgram/Dgram.cpp:
+	* examples/Reactor/FIFO/server.cpp:
+	* examples/Reactor/Misc/pingpong.cpp:
+	* examples/Reactor/Misc/test_signals_1.cpp:
+	* examples/Reactor/Misc/test_timer_queue.cpp:
+	* examples/Reactor/Multicast/server.cpp:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.h:
+	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.h:
+	* examples/Service_Configurator/IPC-tests/server/server_test.cpp:
+	* examples/Service_Configurator/Misc/Timer_Service.cpp:
+	* examples/Service_Configurator/Misc/main.cpp:
+	* examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+	* examples/Threads/process_mutex.cpp:
+	* examples/Threads/process_semaphore.cpp:
+	* examples/Threads/tss2.cpp:
+	* netsvcs/clients/Naming/Client/main.cpp:
+	* netsvcs/clients/Naming/Dump_Restore/main.cpp:
+	* performance-tests/Misc/test_naming.cpp:
+	* performance-tests/UDP/udp_test.cpp:
+
+	  Added missing "ace/Log_Msg.h" include.  This fixes a series of
+	  compile-time errors with Compaq C++.
+
+Sat May 27 20:55:24 2000  Ossama Othman  <ossama@uci.edu>:
 
 	* tests/test_config.h:
 
