@@ -1,9 +1,15 @@
+Thu Feb 17 14:04:12 UTC 2005 Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Component_Base.idl:
+          Fixed typo in include of orb.idl. Thanks to Roland Schimmack
+          <Roland dot Schimmack at gmx dot de> for reporting this
+
 Tue Feb 15 22:43:34 2005 Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
 
         * DAnCE/examples/BasicSP/BMDisplay_exec.h:
-	 
+
 	  Added missing export file to make things compile on Windows
-	  platforms. Thanks to Diana Ukleja <Diana_Ukleja@raytheon.com> 
+	  platforms. Thanks to Diana Ukleja <Diana_Ukleja@raytheon.com>
 	  for pointing this out.
 
 Mon Feb 14 14:52:32 2005  Gan Deng  <gan.deng@vanderbilt.edu>
