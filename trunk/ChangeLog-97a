@@ -1,8 +1,8 @@
 Sun Jun 15 03:44:21 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* performance-tests/Synch-Benchmarks/svc.conf: 
-
-	* performance-tests/Synch-Benchmarks/*.{h,cpp}: Reworked these
+	* performance-tests/Synch-Benchmarks/{Options,Benchmark}.h:
+	* performance-tests/Synch-Benchmarks/*.cpp: Reworked these
  	  files to have them compiled on NT.
 
 Sat Jun 14 03:53:13 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
