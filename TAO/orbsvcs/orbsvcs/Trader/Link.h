@@ -19,6 +19,7 @@
 #ifndef TAO_LINK_H
 #define TAO_LINK_H
 
+#include "Attributes_T.h"
 #include "Trader.h"
 
 template <class TRADER, class MAP_LOCK_TYPE>

@@ -19,7 +19,7 @@
 #ifndef TAO_PROXY_H
 #define TAO_PROXY_H
 
-#include "Attributes.h"
+#include "Attributes_T.h"
 
 template <class TRADER>
 class TAO_Proxy : 

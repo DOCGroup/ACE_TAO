@@ -19,7 +19,7 @@
 #ifndef TAO_ADMIN_H
 #define TAO_ADMIN_H
 
-#include "Attributes.h"
+#include "Attributes_T.h"
 
 template <class TRADER>
 class TAO_Admin : 
