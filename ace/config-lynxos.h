@@ -19,6 +19,11 @@
 # endif /* __GNUC_MINOR__ == 7 */
 #endif /* __GNUG__ */
 
+#if defined (__x86__)
+# define ACE_HAS_ALLOCA
+# define ACE_HAS_ALLOCA_H
+// ppc libraries don't seem to have alloca ()
+#endif /* x86 */
 
 #define ACE_HAS_STRING_CLASS
 
@@ -74,12 +79,6 @@
 
 // Platform has union semun defined
 #define ACE_HAS_SEMUN
-
-// Compiler/platform supports alloca()
-#define ACE_HAS_ALLOCA
-
-// Compiler/platform has <alloca.h>
-#define ACE_HAS_ALLOCA_H
 
 // Sockets may be called in multi-threaded programs.
 #define ACE_HAS_MT_SAFE_SOCKETS
