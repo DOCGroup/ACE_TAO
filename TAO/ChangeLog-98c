@@ -4,6 +4,9 @@ Wed Apr 29 07:08:18 1998  David L. Levine  <levine@cs.wustl.edu>
           fixed loop indices to follow ANSI scoping rules and avoid
           signed/unsigned comparisons.
 
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (run_tests): cast the
+          entire expression to u_long, not just the first term.
+
 Tue Apr 28 13:02:25 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation.cpp: The tables for Param_Data
