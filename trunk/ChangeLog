@@ -1,3 +1,13 @@
+Tue Aug 29 12:23:41 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/TP_Reactor.(h cpp): Added a new dispatch_i_protected method.
+          This just wraps the call to dispatch_i in ACE_SEH_TRY/EXCEPT.
+          If/when the reactor is rearranged to pluck one dispatchable event
+          to call at a time, this can be removed.
+
+          This fixes the removal of SEH from this entry:
+          Fri Aug 25 16:29:51 2000  Steve Huston  <shuston@riverace.com>
+
 Tue Aug 29 01:32:28 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/Logging_Strategy.h:
