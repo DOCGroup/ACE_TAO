@@ -23,7 +23,11 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core,
     connector_registry_ (0),
     transport_cache_ (0),
     leader_follower_ (0),
-    new_leader_generator_ (new_leader_generator)
+    new_leader_generator_ (new_leader_generator),
+    input_cdr_dblock_allocator_ (0),
+    input_cdr_buffer_allocator_ (0),
+    input_cdr_msgblock_allocator_ (0),
+    transport_message_buffer_allocator_ (0)
 {
   // Create the transport cache.
   ACE_NEW (this->transport_cache_,
@@ -151,6 +155,67 @@ TAO_Thread_Lane_Resources::leader_follower (void)
 }
 
 
+ACE_Allocator*
+TAO_Thread_Lane_Resources::input_cdr_dblock_allocator (void)
+{
+  if (this->input_cdr_dblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->input_cdr_dblock_allocator_ == 0)
+        this->input_cdr_dblock_allocator_ =
+          this->resource_factory ()->input_cdr_dblock_allocator ();
+    }
+
+  return this->input_cdr_dblock_allocator_;
+}
+
+
+ACE_Allocator*
+TAO_Thread_Lane_Resources::input_cdr_buffer_allocator (void)
+{
+  if (this->input_cdr_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->input_cdr_buffer_allocator_ == 0)
+        this->input_cdr_buffer_allocator_ =
+          this->resource_factory ()->input_cdr_buffer_allocator ();
+    }
+
+  return this->input_cdr_buffer_allocator_;
+}
+
+
+ACE_Allocator*
+TAO_Thread_Lane_Resources::input_cdr_msgblock_allocator (void)
+{
+  if (this->input_cdr_msgblock_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->input_cdr_msgblock_allocator_ == 0)
+        this->input_cdr_msgblock_allocator_ =
+          this->resource_factory ()->input_cdr_msgblock_allocator ();
+    }
+
+  return this->input_cdr_msgblock_allocator_;
+}
+
+ACE_Allocator*
+TAO_Thread_Lane_Resources::transport_message_buffer_allocator (void)
+{
+  if (this->transport_message_buffer_allocator_ == 0)
+    {
+      // Double checked locking
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+      if (this->transport_message_buffer_allocator_ == 0)
+        this->transport_message_buffer_allocator_ =
+          this->resource_factory ()->input_cdr_dblock_allocator ();
+    }
+
+  return this->transport_message_buffer_allocator_;
+}
 
 int
 TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
@@ -171,6 +236,12 @@ TAO_Thread_Lane_Resources::open_acceptor_registry (int ignore_address
   return result;
 }
 
+TAO_Resource_Factory *
+TAO_Thread_Lane_Resources::resource_factory (void)
+{
+  return this->orb_core_.resource_factory ();
+}
+
 void
 TAO_Thread_Lane_Resources::finalize (void)
 {
@@ -188,6 +259,22 @@ TAO_Thread_Lane_Resources::finalize (void)
       this->acceptor_registry_->close_all ();
       delete this->acceptor_registry_;
     }
+
+    if (this->input_cdr_dblock_allocator_ != 0)
+    this->input_cdr_dblock_allocator_->remove ();
+  delete this->input_cdr_dblock_allocator_;
+
+  if (this->input_cdr_buffer_allocator_ != 0)
+    this->input_cdr_buffer_allocator_->remove ();
+  delete this->input_cdr_buffer_allocator_;
+
+    if (this->input_cdr_msgblock_allocator_ != 0)
+    this->input_cdr_msgblock_allocator_->remove ();
+  delete this->input_cdr_msgblock_allocator_;
+
+  if (this->transport_message_buffer_allocator_ != 0)
+    this->transport_message_buffer_allocator_->remove ();
+  delete this->transport_message_buffer_allocator_;
 
   // Set of file descriptors corresponding to open connections.  This
   // handle set is used to explicitly deregister the connection event
