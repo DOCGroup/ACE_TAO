@@ -1,3 +1,8 @@
+Thu Dec 16 16:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_Thread.h:
+          Converted some documentation to doxygen style
+
 Thu Dec 16 09:34:02 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS_NS_sys_socket.inl (getsockname):
