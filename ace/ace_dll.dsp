@@ -1628,7 +1628,7 @@ SOURCE=.\High_Res_Timer.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\inc_user_config.h
+SOURCE=.\config-all.h
 # End Source File
 # Begin Source File
 

@@ -125,7 +125,7 @@ option
                                               'Hash_Map_Manager_T.h',
                                               'Hash_Map_With_Allocator_T.h',
                                               'High_Res_Timer.h',
-                                              'inc_user_config.h',
+                                              'config-all.h',
                                               'INET_Addr.h',
                                               'iosfwd.h',
                                               'IOStream.h',
