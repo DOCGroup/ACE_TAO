@@ -169,7 +169,7 @@ public:
   virtual const ACE_Time_Value &earliest_time (void) const;
 
   /**
-   * Schedule <type> that will expire after <delay> amount of time,
+   * Schedule <type> that will expire at <future_time>,
    * which is specified in absolute time.  If it expires then <act> is
    * passed in as the value to the <functor>.  If <interval> is != to
    * <ACE_Time_Value::zero> then it is used to reschedule the <type>
@@ -181,7 +181,7 @@ public:
    */
   virtual long schedule (const TYPE &type,
                          const void *act,
-                         const ACE_Time_Value &delay,
+                         const ACE_Time_Value &future_time,
                          const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /**
