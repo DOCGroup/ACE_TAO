@@ -3,7 +3,7 @@ Thu Jul 20 11:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	* ace/Caching_Utility_T.cpp: To get rid of egcs warnings on Linux,
 	static casted both fields of ACE_MAX in method <clear_cache>.
 	Thanks to David Levine <levine@cs.wustl.edu> for pointing this
-	out.
+	out. Also changed ssize_t to size_t in the cast.
 	
 Thu Jul 20 08:04:13 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
