@@ -21,8 +21,8 @@
 #ifndef TODAY_H
 #define TODAY_H
 
-#include "ace/OS.h"
 #include "Magazine.h"
+#include "ace/os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

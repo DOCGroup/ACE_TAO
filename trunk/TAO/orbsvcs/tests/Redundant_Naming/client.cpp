@@ -22,6 +22,7 @@
 #include "tao/PortableServer/ORB_Manager.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Simple_Naming, client, "$Id$")
 

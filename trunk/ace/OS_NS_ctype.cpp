@@ -1,4 +1,11 @@
 // -*- C++ -*-
 // $Id$
 
-// This is a placeholder.
+#include "ace/OS_NS_ctype.h"
+
+ACE_RCSID(ace, OS_NS_ctype, "$Id$")
+
+#if !defined (ACE_HAS_INLINED_OSCALLS)
+# include "ace/OS_NS_ctype.inl"
+#endif /* ACE_HAS_INLINED_OS_CALLS */
+

@@ -15,13 +15,12 @@
 #define ACE_MALLOC_T_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/Malloc.h"               /* Need ACE_Control_Block */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc.h"               /* Need ACE_Control_Block */
 #include "ace/Malloc_Allocator.h"
 #include "ace/Free_List.h"
 

@@ -1,6 +1,7 @@
 #include "LB_CPU_Monitor.h"
 
 #include "tao/ORB_Constants.h"
+#include "ace/OS_NS_time.h"
 
 #if defined (ACE_HAS_SYS_LOADAVG_H)
 # include <sys/loadavg.h>

@@ -18,7 +18,6 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/OS.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 #include "ace/MEM_Connector.h"
@@ -123,7 +122,7 @@ Echo_Handler::handle_input (ACE_HANDLE)
 
   ACE_TCHAR return_buf[MAXPATHLEN];
   ACE_OS::strcpy (return_buf, this->name_);
-  ACE_OS_String::strcat (return_buf, buf);
+  ACE_OS::strcat (return_buf, buf);
   len = (ACE_OS::strlen (return_buf) + 1) * sizeof (ACE_TCHAR);
 
   if (this->peer ().send (return_buf, len) != len)

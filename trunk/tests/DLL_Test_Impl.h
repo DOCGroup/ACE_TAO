@@ -46,7 +46,7 @@ public:
   // Uses ACE::strnew() to allocate the returned string.
 
   ACE_TCHAR *malloc_info (void);
-  // Uses ACE_OS_Memory::malloc() to allocate the returned string.
+  // Uses ACE_OS::malloc() to allocate the returned string.
 
   // Overload the new/delete opertors so the object will be
   // created/deleted using the memory allocator associated with the

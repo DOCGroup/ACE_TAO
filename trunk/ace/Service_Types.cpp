@@ -1,18 +1,20 @@
 // $Id$
 
 #include "ace/Service_Types.h"
+
+#if !defined (__ACE_INLINE__)
+#include "ace/Service_Types.i"
+#endif /* __ACE_INLINE__ */
+
 #include "ace/Stream_Modules.h"
 #include "ace/Stream.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(ace, Service_Types, "$Id$")
 
 typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 typedef ACE_Module<ACE_SYNCH> MT_Module;
 typedef ACE_Task<ACE_SYNCH> MT_Task;
-
-#if !defined (__ACE_INLINE__)
-#include "ace/Service_Types.i"
-#endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type_Impl)
 
@@ -204,7 +206,7 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
     return -1;
   else
     ACE_OS::strsncpy (*str, buf, len);
-  return ACE_static_cast (int, ACE_OS_String::strlen (buf));
+  return ACE_static_cast (int, ACE_OS::strlen (buf));
 }
 
 void
@@ -288,7 +290,7 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
     return -1;
   else
     ACE_OS::strsncpy (*str, buf, len);
-  return ACE_static_cast (int, ACE_OS_String::strlen (buf));
+  return ACE_static_cast (int, ACE_OS::strlen (buf));
 }
 
 int

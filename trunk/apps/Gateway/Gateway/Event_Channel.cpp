@@ -4,6 +4,7 @@
 
 #include "Connection_Handler_Connector.h"
 #include "Event_Channel.h"
+#include "ace/OS_NS_sys_select.h"
 
 ACE_RCSID(Gateway, Event_Channel, "$Id$")
 

@@ -11,6 +11,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/DLL_Manager.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include "ace/OS_NS_string.h"
 
 ACE_RCSID(ace, Framework_Component, "$Id$")
 
@@ -158,7 +159,7 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
 
   for (i = 0; i < this->current_size_; i++)
     if (this->component_vector_[i] &&
-        ACE_OS_String::strcmp (this->component_vector_[i]->name_, name) == 0)
+        ACE_OS::strcmp (this->component_vector_[i]->name_, name) == 0)
       {
         delete this->component_vector_[i];
         this->component_vector_[i] = 0;
@@ -191,7 +192,7 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
 
   for (i = 0; i < this->current_size_; i++)
     if (this->component_vector_[i] &&
-        ACE_OS_String::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
+        ACE_OS::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
       {
           if (ACE::debug ())
             ACE_DEBUG ((LM_DEBUG,

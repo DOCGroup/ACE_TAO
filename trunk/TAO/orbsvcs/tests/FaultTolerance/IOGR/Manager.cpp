@@ -8,6 +8,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "ace/OS_NS_stdio.h"
 
 
 

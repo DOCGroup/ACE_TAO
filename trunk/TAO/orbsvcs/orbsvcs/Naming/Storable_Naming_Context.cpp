@@ -12,6 +12,7 @@
 #endif  /* _MSC_VER */
 
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_stdio.h"
 
 
 const char * TAO_Storable_Naming_Context::root_name_;

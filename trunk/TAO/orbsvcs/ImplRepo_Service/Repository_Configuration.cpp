@@ -2,6 +2,7 @@
 #include "NT_Service.h"
 
 #include "ace/Configuration.h"
+#include "ace/OS_NS_stdio.h"
 
 
 ACE_RCSID (ImplRepo_Service,

@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/Get_Opt.h"
 #include "ace/Process.h"
 #include "ace/Log_Msg.h"

@@ -4,7 +4,6 @@
 ** Copyright 2002 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/OS.h"
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
@@ -52,7 +51,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   for (;;) {
     char user_input[80];
     gets (user_input);
-    if (ACE_OS_String::strcmp (user_input, "quit") == 0) {
+    if (ACE_OS::strcmp (user_input, "quit") == 0) {
       reactor->notify (quit_handler);
       break;
     }

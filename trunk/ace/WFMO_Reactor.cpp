@@ -7,6 +7,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Thread.h"
+#include "ace/OS_NS_errno.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/WFMO_Reactor.i"

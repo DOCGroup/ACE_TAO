@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "ace/OS.h"
+#include "ace/OS_main.h"
 #if defined (ACE_HAS_WINCE)
 #  include "ace/ACE.h"
 #endif /* ACE_HAS_WINCE */

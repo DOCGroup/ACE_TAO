@@ -3,6 +3,7 @@
 #include "Coordinator.h"
 #include "Session_Control.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_RCSID(Big_Oneways, server, "$Id$")
 

@@ -216,7 +216,7 @@ ACE_Configuration::validate_name (const ACE_TCHAR* name, int allow_path)
     allow_path ? ACE_LIB_TEXT ("][") : ACE_LIB_TEXT ("\\][");
 
   // Position of the first invalid character or terminating null.
-  size_t pos = ACE_OS_String::strcspn (name, reject);
+  size_t pos = ACE_OS::strcspn (name, reject);
 
   // Check if it is an invalid character.
   if (name[pos] != ACE_LIB_TEXT ('\0'))
@@ -1634,7 +1634,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
   result = base;
 
   for (const ACE_TCHAR* separator;
-       (separator = ACE_OS_String::strchr (sub_section, ACE_TEXT ('\\'))) != 0;
+       (separator = ACE_OS::strchr (sub_section, ACE_TEXT ('\\'))) != 0;
        )
     {
       ACE_TString simple_section (sub_section, separator - sub_section);

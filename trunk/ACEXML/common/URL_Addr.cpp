@@ -1,15 +1,16 @@
 // $Id$
 
-#include "ace/Log_Msg.h"
-#include "ace/Auto_Ptr.h"
 #include "ACEXML/common/URL_Addr.h"
-
 
 ACE_RCSID(common, ACEXML_URL_Addr, "$Id$")
 
 #if !defined (__ACEXML_INLINE__)
 #include "ACEXML/common/URL_Addr.inl"
 #endif /* __ACEXML_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_stdio.h"
 
 ACEXML_URL_Addr::ACEXML_URL_Addr (void)
   : path_name_ (0),

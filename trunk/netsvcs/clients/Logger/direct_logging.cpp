@@ -6,6 +6,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Log_Record.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_time.h"
 
 ACE_RCSID(Logger, direct_logging, "$Id$")
 

@@ -2,6 +2,7 @@
 //
 // $Id$
 
+#include "ace/OS_NS_sys_time.h"
 
 // Returns the value of the object as a timeval.
 
@@ -327,3 +328,4 @@ operator - (const ACE_Time_Value &tv1,
   delta.normalize ();
   return delta;
 }
+

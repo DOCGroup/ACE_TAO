@@ -199,3 +199,69 @@ ACE_Time_Value::normalize (void)
       this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
     }
 }
+
+/*****************************************************************************/
+// These need to be moved to another file due unresolvable dependency
+// issues with inlining.
+
+ACE_Countdown_Time::ACE_Countdown_Time (ACE_Time_Value *max_wait_time)
+  : max_wait_time_ (max_wait_time),
+    stopped_ (0)
+{
+  this->start ();
+}
+
+ACE_Countdown_Time::~ACE_Countdown_Time (void)
+{
+  this->stop ();
+}
+
+/*****************************************************************************/
+
+//ACE_INLINE
+int
+ACE_Countdown_Time::start (void)
+{
+  if (this->max_wait_time_ != 0)
+    {
+      this->start_time_ = ACE_OS::gettimeofday ();
+      this->stopped_ = 0;
+    }
+  return 0;
+}
+
+//ACE_INLINE
+int
+ACE_Countdown_Time::stopped (void) const
+{
+  return stopped_;
+}
+
+//ACE_INLINE
+int
+ACE_Countdown_Time::stop (void)
+{
+  if (this->max_wait_time_ != 0 && this->stopped_ == 0)
+    {
+      ACE_Time_Value elapsed_time =
+        ACE_OS::gettimeofday () - this->start_time_;
+
+      if (*this->max_wait_time_ > elapsed_time)
+        *this->max_wait_time_ -= elapsed_time;
+      else
+        {
+          // Used all of timeout.
+          *this->max_wait_time_ = ACE_Time_Value::zero;
+          // errno = ETIME;
+        }
+      this->stopped_ = 1;
+    }
+  return 0;
+}
+
+//ACE_INLINE
+int
+ACE_Countdown_Time::update (void)
+{
+  return this->stop () == 0 && this->start ();
+}

@@ -19,6 +19,8 @@
 # include "tao/Exception.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_NS_stdio.h"
+
 ACE_RCSID (TAO,
            Exception,
            "$Id$")

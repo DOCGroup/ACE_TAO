@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/OS_NS_Thread.h"
 #include "ace/Thread_Adapter.h"
 
 struct cancel_state

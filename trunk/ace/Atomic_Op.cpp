@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/Atomic_Op.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(ace, Atomic_Op, "$Id$")
 

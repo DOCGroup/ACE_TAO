@@ -2,14 +2,18 @@
 
 // Memory_Pool.cpp
 #include "ace/Memory_Pool.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Memory_Pool.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Log_Msg.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/RW_Thread_Mutex.h"
+#include "ace/OS_NS_sys_mman.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_sys_shm.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"

@@ -303,6 +303,33 @@ typedef ptrdiff_t ptr_arith_t;
 #   endif
 # endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
 
+// Byte swapping macros to deal with differences between little endian
+// and big endian machines.  Note that "long" here refers to 32 bit
+// quantities.
+# define ACE_SWAP_LONG(L) ((ACE_SWAP_WORD ((L) & 0xFFFF) << 16) \
+            | ACE_SWAP_WORD(((L) >> 16) & 0xFFFF))
+# define ACE_SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
+
+# if defined (ACE_LITTLE_ENDIAN)
+#   define ACE_HTONL(X) ACE_SWAP_LONG (X)
+#   define ACE_NTOHL(X) ACE_SWAP_LONG (X)
+#   define ACE_IDL_NCTOHL(X) (X)
+#   define ACE_IDL_NSTOHL(X) (X)
+# else
+#   define ACE_HTONL(X) X
+#   define ACE_NTOHL(X) X
+#   define ACE_IDL_NCTOHL(X) (X << 24)
+#   define ACE_IDL_NSTOHL(X) ((X) << 16)
+# endif /* ACE_LITTLE_ENDIAN */
+
+# if defined (ACE_LITTLE_ENDIAN)
+#   define ACE_HTONS(x) ACE_SWAP_WORD(x)
+#   define ACE_NTOHS(x) ACE_SWAP_WORD(x)
+# else
+#   define ACE_HTONS(x) x
+#   define ACE_NTOHS(x) x
+# endif /* ACE_LITTLE_ENDIAN */
+
 #if defined (ACE_LACKS_LONGLONG_T)
   // This throws away the high 32 bits.  It's very unlikely that a
   // pointer will be more than 32 bits wide if the platform does not

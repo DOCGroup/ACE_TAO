@@ -3,6 +3,9 @@
 #include "Options.h"
 #include "Rwho_DB_Manager.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_fcntl.h"
 
 // Change to the RWHO directory to speed up and simplify later
 // processing.  This requires opening the directory for reading with

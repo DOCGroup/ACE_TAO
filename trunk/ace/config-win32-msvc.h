@@ -82,6 +82,17 @@
 #define ACE_LACKS_SYS_WAIT_H
 #define ACE_LACKS_UCONTEXT_H
 
+#define ACE_LACKS_SEMAPHORE_H
+#define ACE_LACKS_STRINGS_H
+#define ACE_LACKS_PWD_H
+#define ACE_LACKS_POLL_H
+#define ACE_LACKS_SYS_SHM_H
+#define ACE_LACKS_SYS_MSG_H
+#define ACE_LACKS_NETINET_TCP_H
+#define ACE_LACKS_TERMIOS_H
+#define ACE_LACKS_REGEX_H
+
+
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)
 // which should be placed after these defines

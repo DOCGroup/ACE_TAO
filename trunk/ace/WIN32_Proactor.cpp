@@ -9,6 +9,7 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/Object_Manager.h"
+#include "ace/OS_NS_errno.h"
 
 /**
  * @class ACE_WIN32_Wakeup_Completion

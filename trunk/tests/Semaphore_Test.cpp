@@ -18,10 +18,13 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Synch.h"
+#include "ace/Thread_Semaphore.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Semaphore_Test, "$Id$")
 

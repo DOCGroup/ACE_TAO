@@ -25,7 +25,7 @@
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
+#include "ace/OS_Memory.h"
 #include "ace/CORBA_macros.h"
 
 ACE_RCSID(tests, New_Fail_Test, "$Id$")

@@ -3,6 +3,7 @@
 // This test program verifies the functionality of the ACE_OS
 // implementation of recursive mutexes on Win32 and Posix pthreads.
 
+#include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"

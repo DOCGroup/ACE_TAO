@@ -3,6 +3,7 @@
 #include "XML_Utils.h"
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_main.h"
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

@@ -3,6 +3,8 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_stat.h"
 
 ACEXML_FileCharStream::ACEXML_FileCharStream (void)
   : filename_ (0), encoding_ (0), size_ (0), infile_ (0), peek_ (0)

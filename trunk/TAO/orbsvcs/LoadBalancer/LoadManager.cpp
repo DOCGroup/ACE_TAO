@@ -5,6 +5,7 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_main.h"
 
 #if defined (linux) && defined (ACE_HAS_THREADS)
 # include "ace/Signal.h"

@@ -2,6 +2,7 @@
 
 #include "ACEXML/common/Transcode.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_main.h"
 
 void dump_utf16 (const ACEXML_UTF16 *data,
                  size_t len)

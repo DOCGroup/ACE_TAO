@@ -1,3 +1,851 @@
+Sat Nov  1 05:40:21 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Cleanup.{h,inl,cpp}:
+        * ace/OS_main.h:
+        * ace/OS_NS_arpa_inet.{h,inl,cpp}:
+        * ace/OS_NS_ctype.{h,inl,cpp}:
+        * ace/OS_NS_dirent.{h,inl,cpp}:
+        * ace/OS_NS_dlfcn.{h,inl,cpp}:
+        * ace/OS_NS_errno.{h,inl,cpp}:
+        * ace/OS_NS_fcntl.{h,inl,cpp}:
+        * ace/OS_NS_macros.h:
+        * ace/OS_NS_math.{h,inl,cpp}:
+        * ace/OS_NS_netdb.{h,inl,cpp}:
+        * ace/OS_NS_poll.{h,inl,cpp}:
+        * ace/OS_NS_pwd.{h,inl,cpp}:
+        * ace/OS_NS_regex.{h,inl,cpp}:
+        * ace/OS_NS_signal.{h,inl,cpp}:
+        * ace/OS_NS_stdio.{h,inl,cpp}:
+        * ace/OS_NS_stdlib.{h,inl,cpp}:
+        * ace/OS_NS_string.{h,inl,cpp}:
+        * ace/OS_NS_strings.{h,inl,cpp}:
+        * ace/OS_NS_stropts.{h,inl,cpp}:
+        * ace/OS_NS_sys_mman.{h,inl,cpp}:
+        * ace/OS_NS_sys_msg.{h,inl,cpp}:
+        * ace/OS_NS_sys_resource.{h,inl,cpp}:
+        * ace/OS_NS_sys_select.{h,inl,cpp}:
+        * ace/OS_NS_sys_shm.{h,inl,cpp}:
+        * ace/OS_NS_sys_socket.{h,inl,cpp}:
+        * ace/OS_NS_sys_stat.{h,inl,cpp}:
+        * ace/OS_NS_sys_time.{h,inl,cpp}:
+        * ace/OS_NS_sys_uio.{h,inl,cpp}:
+        * ace/OS_NS_sys_utsname.{h,inl,cpp}:
+        * ace/OS_NS_sys_wait.{h,inl,cpp}:
+        * ace/OS_NS_Thread.{h,inl,cpp}:
+        * ace/OS_NS_time.{h,inl,cpp}:
+        * ace/OS_NS_unistd.{h,inl,cpp}:
+        * ace/OS_NS_wchar.{h,inl,cpp}:
+        * ace/Object_Manager_Base.{h,inl,cpp}:
+          Added new files.
+
+        * ace/OS.{h,i,cpp}:
+        * ace/OS_Dirent.{h,i,cpp}:
+        * ace/OS_String.{h,i,cpp}:
+        * ace/OS_Memory.{h,inl,cpp}:
+        * ace/OS_TLI.{h,inl}:
+          Converted ACE_OS* classes to ACE_OS namespace and moved all the
+          code to the new files above based on the Single Unix Spec.
+
+        * ace/ace.mpc:
+          Added new files and removed OS.cpp, OS_String.cpp,
+          OS_Dirent.cpp, and OS_Memory.cpp.  Also removed Synch.cpp and
+          added the individual concurrency files that had already been
+          added to the repo a while back..
+
+        * ace/OS.h:
+        * ace/Synch.h:
+          Added DO_NOT_INCLUDE #ifdef to make it easy to remove the entire
+          contents of these files for testing purposes.
+
+        * ace/OS_main.h:
+          Moved the ACE_TMAIN macros here. 
+
+        * ace/Object_Manager_Base.{h,inl,cpp}:
+          Moved the ACE_Object_Manager_Base, ACE_OS_Object_Manager, and
+          ACE_OS_Object_Manager_Manager classes here.
+
+        * ace/config-all.h:
+          MOved ACE_OS_TRACE macro here.
+
+        * ace/config-vxworks5.x.h:
+          Added ACE_LACKS_ARPA_INET_H.
+
+        * ace/config-win32-msvc.h:
+          Added ACE_LACKS_SEMAPHORE_H, ACE_LACKS_STRINGS_H,
+          ACE_LACKS_PWD_H, ACE_LACKS_POLL_H, ACE_LACKS_SYS_SHM_H,
+          ACE_LACKS_SYS_MSG_H, ACE_LACKS_NETINET_TCP_H,
+          ACE_LACKS_TERMIOS_H, and ACE_LACKS_REGEX_H.
+
+        * ace/Time_Value.{h,cpp}:
+          Moved ACE_Countdown_Time here.
+
+        * ace/TTY_IO.h:
+          Moved ACE_VMIN and ACE_VTIME macros here.
+
+        * ace/SOCK.h:
+          Moved ACE_SHUTDOWN* macros here.
+
+        * ace/Mutex.h:
+          Moved ACE_DEFAULT_MUTEX macros here.
+
+        * ace/Log_Msg.cpp:
+          Moved sys_siglist define here.
+
+        * ace/Handle_Set.cpp:
+          Moved ACE_MSB_MASK macro here.
+
+        * ace/Global_Macros.h:
+          Moved PIPE_TYPE_*, NEW_MALLOC*, ACE_SEH*, template typedef
+          macros here.
+
+        * ace/Default_Constants.h:
+          ACE_MAX_USERID out, ACE_DEV_NULL and ACE_SYSCALL_FAILED in.
+
+        * ace/Cleanup.{h,inl,cpp}:
+          Added new file and moved ACE_Cleanup* and ACE_OS_Exit_Info
+          classes here.
+
+        * ace/Basic_Types.h:
+          Moved ACE_HTONL and ACE_NTOHL macros here.
+
+        * ace/os_include/os_dirent.h:
+          Moved ACE_DIR typedef here:
+
+        * ace/os_include/os_dlfcn.h:
+          Moved _dl* function prototypes here.
+
+        * ace/os_include/os_fcntl.h:
+          Moved O_NONBLOCK and F_GETFL defines here.
+
+        * ace/os_include/os_limits.h:
+          Moved ACE_RTSIG_MAX define here.
+
+        * ace/os_include/os_pthread.h:
+          Moved the sun priocntl includes here.
+
+        * ace/os_include/os_regex.h:
+          Moved the regexpr.h include here.
+
+        * ace/os_include/os_signal.h:
+          Moved the rest of the signal defines and includes here.
+
+        * ace/os_include/os_stdio.h:
+          Moved the ACE_MAX_USERID define here.
+
+        * ace/os_include/os_stdlib.h:
+          Moved the mktemp() prototype here.
+
+        * ace/os_include/os_string.h:
+        * ace/OS_NS_stdio.inl:
+          Moved additional string related includes and strerror define
+          to os_string.h.  Moved ACE_SPRINTF_ADAPTER to OS_NS_stdio.inl. 
+
+        * ace/os_include/os_strings.h:
+          Removed ACE_HAS_STRINGS hack.
+
+        * ace/os_include/os_stropts.h:
+          Moved _XOPEN_EXTENDED_SOURCE, SIOCGIFBRDADDR, and SIOCGIFADDR
+          defines, strbuf type, and isastream() prototype here.
+
+        * ace/os_include/os_time.h:
+          Moved timespec typedef and time related std using declaration
+          here.
+
+        * ace/os_include/os_ucontext.h:
+          Moved ucontext_t typedef here.
+
+        * ace/os_include/os_unistd.h:
+          Moved the id related prototypes, *_OK macros, and the
+          read_timedwait() and write_timedwait() prototypes here.
+
+        * ace/os_include/arpa/os_inet.h:
+          Moved the inet_*() prototypes here.
+
+        * ace/os_include/netinet/os_in.h:
+          Moved the multicast types and IP_* defines  here.
+
+        * ace/os_include/netinet/os_tcp.h:
+          Moved the TCP_NODELAY and TCP_MAXSEG defines here.
+
+        * ace/os_include/sys/os_mman.h:
+          Moved the MAP_* defines here.
+
+        * ace/os_include/sys/os_resource.h:
+          Moved the usage and limit defines and prototypes here.
+
+        * ace/os_include/sys/os_select.h:
+          Moved NFDBITS and select() prototype here.
+
+        * ace/os_include/sys/os_sem.h:
+          Moved the GETVAL, SETVAL, GETALL, SETALL, and SEM_UNDO defines
+          here.
+
+        * ace/os_include/sys/os_socket.h:
+          Moved the socket related *_timedwait() prototypes and
+          ACE_SOCKET_LEN typedef here.
+
+        * ace/os_include/sys/os_stat.h:
+          Added /**/ for system include.
+
+        * ace/os_include/sys/os_time.h:
+          Moved gettimeofday() prototype here.
+
+        * ace/os_include/sys/os_times.h:
+          Fixed typo.
+
+        * ace/os_include/sys/os_types.h:
+          Moved ACE_timer_t typedef and types related std using
+          declarations here.
+
+        * ace/os_include/sys/os_uio.h:
+          Moved readv_timedwait() writev_timedwait() prototypes here.
+
+        * ace/os_include/sys/os_wait.h:
+          Moved wait macros, WIFEXITED, etc.., here.
+
+        * ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ACEXML/common/FileCharStream.cpp:
+        * ACEXML/common/NamespaceSupport.{h,cpp}:
+        * ACEXML/common/StrCharStream.cpp:
+        * ACEXML/common/URL_Addr.cpp:
+        * ACEXML/common/XML_Types.h:
+        * ACEXML/examples/SAXPrint/main.cpp:
+        * ACEXML/parser/parser/Entity_Manager.h:
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/tests/ContentHandler_Test.cpp:
+        * ACEXML/tests/HttpCharStream_Test.cpp:
+        * ACEXML/tests/NamespaceSupport_Test.cpp:
+        * ACEXML/tests/Transcoder_Test.cpp:
+        * ASNMP/asnmp/address.{h,cpp}:
+        * ASNMP/asnmp/asn1.{h,cpp}:
+        * ASNMP/asnmp/ctr64.cpp:
+        * ASNMP/asnmp/integer.cpp:
+        * ASNMP/asnmp/octet.cpp:
+        * ASNMP/asnmp/oid.{h,cpp}:
+        * ASNMP/asnmp/pdu.cpp:
+        * ASNMP/asnmp/smi.h:
+        * ASNMP/asnmp/snmp.cpp:
+        * ASNMP/asnmp/timetick.cpp:
+        * ASNMP/asnmp/transaction.cpp:
+        * ASNMP/asnmp/vb.{h,cpp}:
+        * ASNMP/asnmp/wpdu.{h,cpp}:,
+        * ASNMP/tests/Counter64_Test.cpp:
+        * ASNMP/tests/Counter_Test.cpp:
+        * ASNMP/tests/Gauge_Test.cpp:
+        * ASNMP/tests/Integer_Test.cpp:
+        * ASNMP/tests/Octet_Test.cpp:
+        * ASNMP/tests/Oid_Test.cpp:
+        * ASNMP/tests/Target_Test.cpp:
+        * ASNMP/tests/Varbind_Test.cpp:
+        * ASNMP/tests/test_config.h:
+        * Kokyu/Dispatcher_Task.cpp:
+        * Kokyu/tests/DSRT_MIF/MIF.cpp:
+        * Kokyu/tests/EDF/test.cpp:
+        * Kokyu/tests/FIFO/test.cpp:
+        * ace/ACE.{i,cpp}:
+        * ace/ARGV.cpp:
+        * ace/Acceptor.cpp:
+        * ace/Active_Map_Manager.{h,i}:
+        * ace/Addr.cpp:
+        * ace/Arg_Shifter.cpp:
+        * ace/Argv_Type_Converter.cpp:
+        * ace/Asynch_Acceptor.cpp:
+        * ace/Asynch_IO_Impl.cpp:
+        * ace/Asynch_Pseudo_Task.cpp:
+        * ace/Atomic_Op.cpp:
+        * ace/Auto_Event.cpp:
+        * ace/Barrier.cpp:
+        * ace/Base_Thread_Adapter.cpp:
+        * ace/Basic_Types.cpp:
+        * ace/CDR_Base.cpp:
+        * ace/CDR_Stream.i:
+        * ace/CE_Screen_Output.h:
+        * ace/Capabilities.cpp:
+        * ace/Codecs.cpp:
+        * ace/Condition_Thread_Mutex.cpp:
+        * ace/Configuration.cpp:
+        * ace/Configuration_Import_Export.cpp:
+        * ace/DEV.cpp:
+        * ace/DEV_IO.{i,h}:
+        * ace/DLL.cpp:
+        * ace/DLL_Manager.cpp:
+        * ace/Date_Time.i:
+        * ace/Dirent.{i,h}:
+        * ace/Dirent_Selector.{h,cpp}:
+        * ace/Env_Value_T.h:
+        * ace/Event.{h,cpp}:
+        * ace/FIFO.{h,cpp}:
+        * ace/FIFO_Recv.i:
+        * ace/FIFO_Recv_Msg.{i,cpp}:
+        * ace/FIFO_Send.i:
+        * ace/FIFO_Send_Msg.cpp:
+        * ace/FILE.cpp:
+        * ace/FILE_IO.{i,cpp}:
+        * ace/File_Lock.h:
+        * ace/Filecache.{h,cpp}:
+        * ace/Flag_Manip.{h,i,cpp}:
+        * ace/Framework_Component.cpp:
+        * ace/Functor.i:
+        * ace/Future.h:
+        * ace/Guard_T.{h,inl}:
+        * ace/Handle_Gobbler.h:
+        * ace/Handle_Ops.cpp:
+        * ace/Handle_Set.cpp:
+        * ace/High_Res_Timer.{h,i,cpp}:
+        * ace/INET_Addr.{i,cpp}:
+        * ace/IOStream.{h,cpp}:
+        * ace/IOStream_T.h:
+        * ace/IO_Cntl_Msg.h:
+        * ace/IO_SAP.cpp:
+        * ace/IO_SAP.i:
+        * ace/IPC_SAP.{i,cpp}:
+        * ace/LOCK_SOCK_Acceptor.cpp:
+        * ace/Lib_Find.cpp:
+        * ace/Local_Name_Space_T.cpp:
+        * ace/Lock_Adapter_T.cpp:
+        * ace/Log_Msg.cpp:
+        * ace/Log_Msg_NT_Event_Log.cpp:
+        * ace/Log_Msg_UNIX_Syslog.cpp:
+        * ace/Log_Record.cpp:
+        * ace/Log_Record.i:
+        * ace/Logging_Strategy.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MEM_Addr.{i,cpp}:
+        * ace/MEM_IO.i:
+        * ace/Malloc.{h,cpp}:
+        * ace/Malloc_Allocator.i:
+        * ace/Malloc_T.{h,cpp}:
+        * ace/Manual_Event.cpp:
+        * ace/Mem_Map.{h,i,cpp}:
+        * ace/Memory_Pool.cpp:
+        * ace/Message_Block.cpp:
+        * ace/Message_Queue_T.cpp:
+        * ace/Metrics_Cache.{h,cpp}:
+        * ace/Metrics_Cache_T.h:
+        * ace/Module.h:
+        * ace/Mutex.{h,inl,cpp}:
+        * ace/NT_Service.cpp:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Naming_Context.{h,cpp}:
+        * ace/OS_QoS.{h,cpp}:
+        * ace/OS_Thread_Adapter.cpp:
+        * ace/Object_Manager.h:
+        * ace/PI_Malloc.cpp:
+        * ace/POSIX_Asynch_IO.{h,cpp}:
+        * ace/POSIX_Proactor.cpp:
+        * ace/Pipe.{h,i}:
+        * ace/Proactor.h:
+        * ace/Proactor_Impl.h:
+        * ace/Process.{i,cpp}:
+        * ace/Process_Manager.cpp:
+        * ace/Profile_Timer.{h,i,cpp}:
+        * ace/RW_Mutex.{h,cpp}:
+        * ace/RW_Process_Mutex.h:
+        * ace/Reactor_Timer_Interface.h:
+        * ace/Read_Buffer.cpp:
+        * ace/Recursive_Thread_Mutex.{h,cpp}:
+        * ace/Refcounted_Auto_Ptr.h:
+        * ace/Registry.{h,cpp}:
+        * ace/Registry_Name_Space.h:
+        * ace/Remote_Name_Space.cpp:
+        * ace/SOCK.{h,i}:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/SOCK_Dgram.{h,cpp}:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/SOCK_Dgram_Mcast.cpp:
+        * ace/SOCK_IO.cpp:
+        * ace/SOCK_SEQPACK_Acceptor.cpp:
+        * ace/SOCK_SEQPACK_Association.cpp:
+        * ace/SPIPE.cpp:
+        * ace/SPIPE_Acceptor.cpp:
+        * ace/SPIPE_Addr.cpp:
+        * ace/SPIPE_Addr.h:
+        * ace/SPIPE_Connector.cpp:
+        * ace/SPIPE_Stream.i:
+        * ace/SString.{h,cpp}:
+        * ace/SV_Message.{h,i}:
+        * ace/SV_Message_Queue.{h,i}:
+        * ace/SV_Semaphore_Simple.{h,i}:
+        * ace/SV_Shared_Memory.{h,i}:
+        * ace/Sample_History.cpp:
+        * ace/Sched_Params.{h,cpp}:
+        * ace/Select_Reactor_T.cpp:
+        * ace/Semaphore.{h,inl,cpp}:
+        * ace/Service_Config.cpp:
+        * ace/Service_Manager.cpp:
+        * ace/Service_Repository.cpp:
+        * ace/Service_Types.cpp:
+        * ace/Shared_Memory.h:
+        * ace/Shared_Memory_SV.i:
+        * ace/Signal.{h,i}:
+        * ace/Singleton.h:
+        * ace/Sock_Connect.cpp:
+        * ace/Stats.{h,cpp}:
+        * ace/Stream_Modules.cpp:
+        * ace/String_Base.{h,i,cpp}:
+        * ace/System_Time.{h,cpp}:
+        * ace/TLI.{h,cpp}:
+        * ace/TLI_Acceptor.{h,cpp}:
+        * ace/TLI_Connector.cpp:
+        * ace/TLI_Stream.h:
+        * ace/TSS_T.cpp:
+        * ace/TTY_IO.{h.cpp}:
+        * ace/Task_T.i:
+        * ace/Thread.{h,i}:
+        * ace/Thread_Adapter.cpp:
+        * ace/Thread_Control.h:
+        * ace/Thread_Hook.cpp:
+        * ace/Thread_Manager.h:
+        * ace/Thread_Mutex.{h,cpp}:
+        * ace/Time_Value.inl:
+        * ace/Timeprobe.{h,cpp}:
+        * ace/Timeprobe_T.{h,cpp}:
+        * ace/Timer_Heap_T.cpp:
+        * ace/Timer_Queue_Adapters.cpp:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Token.{h,i}:
+        * ace/Trace.cpp:
+        * ace/UNIX_Addr.i:
+        * ace/UUID.{h,cpp}:
+        * ace/Unbounded_Set.h:
+        * ace/WFMO_Reactor.cpp:
+        * ace/WIN32_Asynch_IO.cpp:
+        * ace/WIN32_Asynch_IO.h:
+        * ace/WIN32_Proactor.{h,cpp}:
+        * ace/gethrtime.cpp:
+        * ace/RMCast/RMCast.h:
+        * ace/RMCast/RMCast_Copy_On_Write.{h,i}}:
+        * ace/RMCast/RMCast_IO_UDP.{h,cpp}:
+        * ace/RMCast/RMCast_Membership.{h,cpp}:
+        * ace/RMCast/RMCast_Reassembly.h:
+        * ace/RMCast/RMCast_Reordering.h:
+        * ace/RMCast/RMCast_Sequencer.{h,cpp}:
+        * ace/RMCast/RMCast_UDP_Proxy.cpp:
+        * apps/Gateway/Gateway/Connection_Handler_Connector.cpp:
+        * apps/Gateway/Gateway/Event.h:
+        * apps/Gateway/Gateway/Event_Channel.cpp:
+        * apps/Gateway/Gateway/Event_Forwarding_Discriminator.h:
+        * apps/Gateway/Gateway/File_Parser.{h,cpp}:
+        * apps/Gateway/Gateway/Gateway.h:
+        * apps/Gateway/Gateway/Options.{h,cpp}:
+        * apps/Gateway/Peer/Options.cpp:
+        * apps/JAWS/clients/Blobby/Blob.{h,cpp}:
+        * apps/JAWS/clients/Blobby/Blob_Handler.{h,cpp}:
+        * apps/JAWS/clients/Blobby/blobby.cpp:
+        * apps/JAWS/clients/Caching/URL_Properties.cpp:
+        * apps/JAWS/server/HTTP_Config.cpp:
+        * apps/JAWS/server/HTTP_Handler.cpp:
+        * apps/JAWS/server/HTTP_Helpers.cpp:
+        * apps/JAWS/server/HTTP_Helpers.h:
+        * apps/JAWS/server/HTTP_Request.cpp:
+        * apps/JAWS/server/HTTP_Request.h:
+        * apps/JAWS/server/HTTP_Response.cpp:
+        * apps/JAWS/server/HTTP_Server.h:
+        * apps/JAWS/server/IO.cpp:
+        * apps/JAWS/server/Parse_Headers.{h,cpp}:
+        * apps/JAWS/server/main.cpp:
+        * apps/JAWS/stress_testing/global.h:
+        * apps/JAWS2/HTTP_10_Write.cpp:
+        * apps/JAWS2/HTTPU/http_export.h:
+        * apps/JAWS2/HTTPU/parse_http_request.h:
+        * apps/JAWS2/HTTPU/parse_http_response.cpp:
+        * apps/JAWS2/HTTPU/parse_http_response.h:
+        * apps/JAWS2/HTTPU/parse_url.cpp:
+        * apps/JAWS2/JAWS/Cache_Hash_T.h:
+        * apps/JAWS2/JAWS/Cache_Manager.cpp:
+        * apps/JAWS2/JAWS/Cache_Manager.h:
+        * apps/JAWS2/JAWS/Cache_Object.{h,cpp}:
+        * apps/JAWS2/JAWS/Export.h:
+        * apps/JAWS2/JAWS/FILE.{h,cpp}:
+        * apps/JAWS2/JAWS/Filecache.{h,cpp}:
+        * apps/JAWS2/JAWS/Headers.cpp:
+        * apps/drwho/BS_Client.cpp:
+        * apps/drwho/BS_Server.cpp:
+        * apps/drwho/Binary_Search.cpp:
+        * apps/drwho/CM_Client.{h,cpp}:
+        * apps/drwho/CM_Server.cpp:
+        * apps/drwho/Comm_Manager.h:
+        * apps/drwho/File_Manager.cpp:
+        * apps/drwho/HT_Client.cpp:
+        * apps/drwho/HT_Server.cpp:
+        * apps/drwho/Hash_Table.cpp:
+        * apps/drwho/Multicast_Manager.{h,cpp}:
+        * apps/drwho/Options.h:
+        * apps/drwho/PMC_All.cpp:
+        * apps/drwho/PMC_Flo.cpp:
+        * apps/drwho/PMC_Ruser.cpp:
+        * apps/drwho/PMC_Usr.cpp:
+        * apps/drwho/PMS_All.cpp:
+        * apps/drwho/PMS_Flo.cpp:
+        * apps/drwho/PMS_Ruser.cpp:
+        * apps/drwho/PMS_Usr.cpp:
+        * apps/drwho/PM_Client.cpp:
+        * apps/drwho/PM_Server.cpp:
+        * apps/drwho/Protocol_Manager.{h,cpp}:
+        * apps/drwho/Rwho_DB_Manager.cpp:
+        * apps/drwho/SL_Server.cpp:
+        * apps/drwho/SM_Client.cpp:
+        * apps/drwho/SM_Server.cpp:
+        * apps/drwho/client.cpp:
+        * apps/drwho/global.h:
+        * apps/drwho/server.cpp:
+        * apps/gperf/src/Bool_Array.cpp:
+        * apps/gperf/src/Gen_Perf.cpp:
+        * apps/gperf/src/Hash_Table.cpp:
+        * apps/gperf/src/Hash_Table.h:
+        * apps/gperf/src/Iterator.cpp:
+        * apps/gperf/src/Key_List.cpp:
+        * apps/gperf/src/List_Node.cpp:
+        * apps/gperf/src/Options.cpp:
+        * apps/gperf/src/Options.h:
+        * apps/gperf/src/Vectors.h:
+        * apps/gperf/src/gperf.cpp:
+        * apps/gperf/tests/test.cpp:
+        * apps/mkcsregdb/mkcsregdb.cpp:
+        * apps/soreduce/Library.cpp:
+        * apps/soreduce/Obj_Module.cpp:
+        * apps/soreduce/SO_Group.cpp:
+        * examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp:
+        * examples/ASX/Event_Server/Event_Server/Options.{h,cpp}:
+        * examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp:
+        * examples/ASX/Message_Queue/bounded_buffer.cpp:
+        * examples/ASX/Message_Queue/buffer_stream.cpp:
+        * examples/ASX/UPIPE_Event_Server/Options.{h,cpp}:
+        * examples/C++NPv1/Logging_Client.cpp:
+        * examples/C++NPv1/Logging_Handler.cpp:
+        * examples/C++NPv1/Logging_Server.cpp:
+        * examples/C++NPv1/Reactive_Logging_Server_Ex.h:
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/AIO_Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Client_Logging_Daemon.cpp:
+        * examples/C++NPv2/Configurable_Logging_Server.cpp:
+        * examples/C++NPv2/Logging_Event_Handler.cpp:
+        * examples/C++NPv2/Logging_Handler.cpp:
+        * examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp:
+        * examples/C++NPv2/SR_Configurable_Logging_Server.cpp:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/Server_Shutdown.cpp:
+        * examples/C++NPv2/Service_Reporter.cpp:
+        * examples/C++NPv2/TPC_Logging_Server.cpp:
+        * examples/C++NPv2/TP_Logging_Server.cpp:
+        * examples/C++NPv2/TP_Logging_Server.h:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/WFMO_Reactor_Logging_Server.cpp:
+        * examples/C++NPv2/display_logfile.cpp:
+        * examples/DLL/Newsweek.{h,cpp}:
+        * examples/DLL/Today.{h,cpp}:
+        * examples/IPC_SAP/ATM_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/ATM_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/DEV_SAP/reader/reader.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-server.cpp:
+        * examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+        * examples/IPC_SAP/FILE_SAP/client.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/C-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.h:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/client.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/consumer_read.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_read.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/server.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/shared.h:
+        * examples/IPC_SAP/SSL_SAP/SSL-client-simple.h:
+        * examples/IPC_SAP/SSL_SAP/SSL-client.h:
+        * examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-server.cpp:
+        * examples/IPC_SAP/TLI_SAP/db-client.cpp:
+        * examples/IPC_SAP/TLI_SAP/ftp-client.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex1.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex2.cpp:
+        * examples/IPC_SAP/UPIPE_SAP/ex3.cpp:
+        * examples/Log_Msg/test_callback.cpp:
+        * examples/Log_Msg/test_log_msg.cpp:
+        * examples/Log_Msg/test_ostream.cpp:
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFCDlg.cpp:
+        * examples/Logger/Acceptor-server/server_loggerd.h:
+        * examples/Logger/client/logging_app.cpp:
+        * examples/Logger/simple-server/Logging_Handler.h:
+        * examples/Map_Manager/test_hash_map_manager.cpp:
+        * examples/Mem_Map/IO-tests/IO_Test.cpp:
+        * examples/Mem_Map/IO-tests/test_io.cpp:
+        * examples/Mem_Map/file-reverse/file-reverse.cpp:
+        * examples/Misc/test_XtReactor1.cpp,:
+        * examples/Misc/test_XtReactor2.cpp:
+        * examples/Misc/test_dump.{h,cpp}:
+        * examples/Misc/test_get_opt.cpp:
+        * examples/Misc/test_profile_timer.cpp:
+        * examples/Misc/test_read_buffer.cpp:
+        * examples/Misc/test_set.cpp:
+        * examples/Misc/test_sstring.cpp:
+        * examples/Misc/test_trace.cpp:
+        * examples/NT_Service/ntsvc.cpp:
+        * examples/Naming/test_multiple_contexts.cpp:
+        * examples/Naming/test_non_existent.cpp:
+        * examples/Naming/test_open.cpp:
+        * examples/Naming/test_writers.cpp:
+        * examples/OS/Process/imore.cpp:
+        * examples/OS/Process/process.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.h:
+        * examples/QOS/Change_Receiver_FlowSpec/QoS_Util.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/receiver.cpp:
+        * examples/QOS/Change_Receiver_FlowSpec/sender.cpp:
+        * examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.h:
+        * examples/QOS/Change_Sender_TSpec/QoS_Util.cpp:
+        * examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Change_Sender_TSpec/receiver.cpp:
+        * examples/QOS/Change_Sender_TSpec/sender.cpp:
+        * examples/QOS/Simple/Fill_ACE_QoS.h:
+        * examples/QOS/Simple/QoS_Util.cpp:
+        * examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+        * examples/QOS/Simple/receiver.cpp:
+        * examples/QOS/Simple/sender.cpp:
+        * examples/RMCast/Send_File/Receiver.cpp:
+        * examples/RMCast/Send_File/Sender.cpp:
+        * examples/Reactor/Dgram/CODgram.cpp:
+        * examples/Reactor/Dgram/Dgram.cpp:
+        * examples/Reactor/Misc/pingpong.cpp:
+        * examples/Reactor/Misc/test_early_timeouts.cpp:
+        * examples/Reactor/Misc/test_time_value.cpp:
+        * examples/Reactor/Multicast/Log_Wrapper.cpp:
+        * examples/Reactor/Multicast/client.cpp:
+        * examples/Reactor/Multicast/server.cpp:
+        * examples/Reactor/Ntalker/ntalker.cpp:
+        * examples/Reactor/Proactor/post_completions.cpp:
+        * examples/Reactor/Proactor/test_aiocb_ace.cpp:
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_end_event_loop.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_timeout.cpp:
+        * examples/Reactor/Proactor/test_udp_proactor.cpp:
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * examples/Reactor/WFMO_Reactor/Directory_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Exceptions.cpp:
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Registration.cpp:
+        * examples/Reactor/WFMO_Reactor/Registry_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Suspended_Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/Talker.cpp:
+        * examples/Reactor/WFMO_Reactor/Timeouts.cpp:
+        * examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * examples/Registry/test_registry_iterator.cpp:
+        * examples/Registry/test_registry_update.cpp:
+        * examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_fifo_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_pipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_spipe_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_service_directory_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Broadcast.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i:
+        * examples/Service_Configurator/Misc/main.cpp:
+        * examples/Shared_Malloc/Options.cpp:
+        * examples/Shared_Malloc/Options.h:
+        * examples/Shared_Malloc/test_malloc.cpp:
+        * examples/Shared_Memory/test_MM.cpp:
+        * examples/Shared_Memory/test_SV.cpp:
+        * examples/Smart_Pointers/Widget_Part_Impl.cpp:
+        * examples/Smart_Pointers/gadget_test.cpp:
+        * examples/Smart_Pointers/widget_test.cpp:
+        * examples/Synch/proc_sema.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/test.h:
+        * examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.cpp:
+        * examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.h:
+        * examples/Threads/auto_event.cpp:
+        * examples/Threads/barrier1.cpp:
+        * examples/Threads/barrier2.cpp:
+        * examples/Threads/cancel.cpp:
+        * examples/Threads/future1.cpp:
+        * examples/Threads/future2.cpp:
+        * examples/Threads/manual_event.cpp:
+        * examples/Threads/process_manager.cpp:
+        * examples/Threads/process_mutex.cpp:
+        * examples/Threads/process_semaphore.cpp:
+        * examples/Threads/reader_writer.cpp:
+        * examples/Threads/recursive_mutex.cpp:
+        * examples/Threads/task_five.cpp:
+        * examples/Threads/task_four.cpp:
+        * examples/Threads/task_one.cpp:
+        * examples/Threads/task_three.cpp:
+        * examples/Threads/task_two.cpp:
+        * examples/Threads/thread_manager.cpp:
+        * examples/Threads/thread_pool.cpp:
+        * examples/Threads/thread_specific.cpp:
+        * examples/Threads/token.cpp:
+        * examples/Threads/tss1.cpp:
+        * examples/Threads/tss2.cpp::
+        * examples/Timer_Queue/main_async.cpp:
+        * examples/Timer_Queue/main_reactor.cpp:
+        * examples/Timer_Queue/main_thread.cpp:
+        * examples/Web_Crawler/Options.cpp:
+        * examples/Web_Crawler/Options.h:
+        * examples/Web_Crawler/URL_Addr.cpp:
+        * examples/Web_Crawler/URL_Status.h:
+        * netsvcs/clients/Logger/direct_logging.cpp:
+        * netsvcs/clients/Logger/indirect_logging.cpp:
+        * netsvcs/clients/Naming/Client/Client_Test.cpp:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore.cpp:
+        * netsvcs/clients/Tokens/collection/collection.cpp:
+        * netsvcs/clients/Tokens/collection/rw_locks.cpp:
+        * netsvcs/clients/Tokens/deadlock/deadlock_detection_test.cpp:
+        * netsvcs/clients/Tokens/invariant/invariant.cpp:
+        * netsvcs/clients/Tokens/manual/manual.cpp:
+        * netsvcs/clients/Tokens/mutex/test_mutex.cpp:
+        * netsvcs/clients/Tokens/rw_lock/rw_locks.cpp:
+        * netsvcs/lib/Base_Optimizer.h:
+        * netsvcs/lib/Log_Message_Receiver.h:
+        * netsvcs/lib/Server_Logging_Handler.h:
+        * netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+        * netsvcs/lib/TS_Server_Handler.cpp:
+        * performance-tests/Misc/basic_perf.cpp:
+        * performance-tests/Misc/childbirth_time.cpp:
+        * performance-tests/Misc/context_switch_time.cpp:
+        * performance-tests/Misc/preempt.cpp:
+        * performance-tests/Misc/test_mutex.cpp:
+        * performance-tests/Misc/test_naming.cpp:
+        * performance-tests/Misc/test_singleton.cpp:
+        * performance-tests/SCTP/Options_Manager.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_Association_Test.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
+        * performance-tests/Server_Concurrency/Leader_Follower/leader_follower.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/Performance_Test_Options.h:
+        * performance-tests/Synch-Benchmarks/Synch_Lib/export_mac.h:
+        * performance-tests/TCP/tcp_test.cpp:
+        * performance-tests/UDP/udp_test.cpp:
+        * tests/Aio_Platform_Test.cpp:
+        * tests/Auto_IncDec_Test.cpp:
+        * tests/Barrier_Test.cpp:
+        * tests/Basic_Types_Test.cpp:
+        * tests/Buffer_Stream_Test.cpp:
+        * tests/CE_fostream.h:
+        * tests/Cache_Map_Manager_Test.cpp:
+        * tests/Config_Test.cpp:
+        * tests/Conn_Test.cpp:
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test_Impl.cpp:
+        * tests/DLL_Test_Impl.h:
+        * tests/Dirent_Test.cpp:
+        * tests/Enum_Interfaces_Test.cpp:
+        * tests/Env_Value_Test.cpp:
+        * tests/FIFO_Test.cpp:
+        * tests/Framework_Component_DLL.cpp:
+        * tests/Hash_Map_Bucket_Iterator_Test.cpp:
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/High_Res_Timer_Test.cpp:
+        * tests/INET_Addr_Test.cpp:
+        * tests/Logging_Strategy_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/MEM_Stream_Test.h:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/MT_Reactor_Upcall_Test.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/MT_SOCK_Test.cpp:
+        * tests/Main.cpp:
+        * tests/Map_Test.{h,cpp}:
+        * tests/Max_Default_Port_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Message_Queue_Test.cpp:
+        * tests/Message_Queue_Test_Ex.{h,cpp}:
+        * tests/Multicast_Test.cpp:
+        * tests/Multihomed_INET_Addr_Test.cpp:
+        * tests/Naming_Test.cpp:
+        * tests/New_Fail_Test.cpp:
+        * tests/OS_Test.cpp:
+        * tests/Obstack_Test.cpp:
+        * tests/Pipe_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/RB_Tree_Test.cpp:
+        * tests/Reactor_Notify_Test.cpp:
+        * tests/Reader_Writer_Test.cpp:
+        * tests/Reverse_Lock_Test.cpp:
+        * tests/SOCK_Connector_Test.cpp:
+        * tests/SOCK_Send_Recv_Test.cpp:
+        * tests/SOCK_Test.cpp:
+        * tests/SPIPE_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/Signal_Test.cpp:
+        * tests/Sigset_Ops_Test.cpp:
+        * tests/Simple_Message_Block_Test.cpp:
+        * tests/TP_Reactor_Test.{h,cpp}:
+        * tests/TSS_Test.cpp:
+        * tests/Test_Output.cpp:
+        * tests/Thread_Manager_Test.cpp:
+        * tests/Thread_Mutex_Test.cpp:
+        * tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/Time_Service_Test.cpp:
+        * tests/Timeprobe_Test.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+        * tests/Upgradable_RW_Test.h:
+        * tests/RMCast/Main.cpp:
+        * tests/RMCast/RMCast_Fragment_Test.cpp:
+        * tests/RMCast/RMCast_Membership_Test.cpp:
+        * tests/RMCast/RMCast_Reassembly_Test.cpp:
+        * tests/RMCast/RMCast_Reordering_Test.cpp:
+        * tests/RMCast/RMCast_Retransmission_Test.cpp:
+        * tests/SSL/Main.cpp:
+        * websvcs/lib/URL_Addr.cpp:
+        * websvcs/lib/URL_Addr.i
+          Removed OS.h and refactored #includes due to above subsetting;
+          changed occurances of ACE_OS_String and ACE_OS_Dirent to
+          ACE_OS; changes u_long, etc., to unsigned long to reduce
+          dependencies; reordered includes in *.cpp's to come after the
+          inline file include, reducing the difference between inlined and
+          non-inlined builds. 
+
+        * ace/CLASSIX/CLASSIX_OS.h:
+        * ace/CLASSIX/CLASSIX_Port_Core.h:
+          Removed #include OS.h from these files, but didn't add new
+          headers since it isn't regularly compiled.
+
+        * ACEXML/parser/parser/ParserContext.cpp:
+          Added template instantiation for ACE_Swap.
+
 Fri Oct 31 14:29:07 2003  Edward R. Mulholland  <emulholl@atl.lmco.com>
 
         * performance-tests/SCTP/run_spectrum.pl:
@@ -199,7 +1047,7 @@ Mon Oct 27 11:17:03 2003  Gautam Thaker  <gthaker@atl.lmco.com>
           Fixed a previously made change that was using sizes for tests as
           n**2 rather than 2**n!
 
-Sat Oct 25 10:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Fat Oct 25 10:51:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h: Fixed compile problem in this file
 

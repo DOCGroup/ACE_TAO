@@ -21,6 +21,9 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Mutex.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_time.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Thread_Mutex_Test, "$Id$")
 

@@ -2,6 +2,7 @@
 
 #include "global.h"
 #include "SL_Server.h"
+#include "ace/OS_NS_string.h"
 
 SL_Server::SL_Server (const char *usr_name)
   : Single_Lookup (usr_name)
