@@ -1,3 +1,15 @@
+Thu Aug 30 00:42:41 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/Service_Config.cpp:
+          Service_Object instances are now inserted into the Service_Repository
+          only after they have been successfully initialised, to provide better
+          support for recursive use of the service configurator. With this
+          change, a service loaded from 'inside' another services's init() will
+          be inserted into the repository first and unloaded last. This ensures
+          that any recursively loaded services on which the original service
+          depends still exist when the original service's fini() function is
+          called.
+
 Thu Aug 30 00:27:05 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ChangeLog:
