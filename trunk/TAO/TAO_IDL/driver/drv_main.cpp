@@ -111,6 +111,9 @@ DRV_drive(char *s)
 {
   char	*fn;
 
+  // set the name of the IDL file we are parsing. This is useful to the backend
+  // when it generates C++ headers and files
+  idl_global->idl_src_file(new UTL_String(s));
   /*
    * Pass through CPP
    */
