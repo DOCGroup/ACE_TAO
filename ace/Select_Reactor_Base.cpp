@@ -613,7 +613,10 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
                       -1);
 
       if (this->alloc_queue_.enqueue_head (temp) == -1)
-        return -1;
+        {
+          delete [] temp;
+          return -1;
+        }
 
       for (size_t i = 0; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; i++)
         if (free_queue_.enqueue_head (temp + i) == -1)
@@ -703,7 +706,10 @@ ACE_Select_Reactor_Notify::notify (ACE_Event_Handler *eh,
                         -1);
 
         if (this->alloc_queue_.enqueue_head (temp1) == -1)
-          return -1;
+          {
+            delete [] temp1;
+            return -1;
+          }
 
         // Start at 1 and enqueue only
         // (ACE_REACTOR_NOTIFICATION_ARRAY_SIZE - 1) elements since
