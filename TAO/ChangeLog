@@ -9,6 +9,11 @@ Fri Aug 15 14:32:54 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
         * orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp:
         * orbsvcs/orbsvcsProperty/CosPropertyService_i.cpp:
+	* examples/POA/DSI/Database_i.cpp:
+        * orbsvcs/examples/ORT/Gateway_i.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+        * performance-tests/Latency/DSI/Roundtrip.cpp:
+        * performance-tests/Sequence_Latency/DSI/Roundtrip.cpp:
 
 	  Fixed constructors of CORBA::Any and TAO::Unknown_IDL_Type
 	  to match recent changes to these classes.
