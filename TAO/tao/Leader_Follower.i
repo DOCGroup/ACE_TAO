@@ -141,7 +141,7 @@ TAO_Leader_Follower::set_client_leader_thread (void)
 {
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   ++this->leaders_;
-  this->client_thread_is_leader_ = 1;
+  ++this->client_thread_is_leader_;
   ++tss->client_leader_thread_;
 }
 
@@ -151,7 +151,7 @@ TAO_Leader_Follower::reset_client_leader_thread (void)
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   --tss->client_leader_thread_;
   --this->leaders_;
-  this->client_thread_is_leader_ = 0;
+  --this->client_thread_is_leader_;
 }
 
 ACE_INLINE int
@@ -240,8 +240,7 @@ TAO_LF_Event_Loop_Thread_Helper::TAO_LF_Event_Loop_Thread_Helper (TAO_Leader_Fol
 
 ACE_INLINE
 TAO_LF_Event_Loop_Thread_Helper::~TAO_LF_Event_Loop_Thread_Helper (void)
-{ 
+{
   this->lf_strategy_.reset_event_loop_thread_and_elect_new_leader (this->call_reset_,
                                                                     this->leader_follower_);
 }
-
