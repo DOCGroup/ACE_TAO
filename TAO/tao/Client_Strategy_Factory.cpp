@@ -29,3 +29,9 @@ TAO_Client_Strategy_Factory::create_wait_strategy (TAO_Transport *)
 {
   return 0;
 }
+
+ACE_Lock *
+TAO_Client_Strategy_Factory::create_cached_connector_lock (void)
+{
+  return 0;
+}

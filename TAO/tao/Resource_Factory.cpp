@@ -3,7 +3,7 @@
 #include "tao/Resource_Factory.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
-#include "tao/Server_Strategy_Factory.h"
+#include "tao/Client_Strategy_Factory.h"
 
 ACE_RCSID(tao, Resource_Factory, "$Id$")
 
@@ -11,7 +11,7 @@ ACE_RCSID(tao, Resource_Factory, "$Id$")
 
 TAO_Cached_Connector_Lock::TAO_Cached_Connector_Lock (TAO_ORB_Core *orb_core)
 {
-  this->lock_ = orb_core->server_factory ()->create_cached_connector_lock ();
+  this->lock_ = orb_core->client_factory ()->create_cached_connector_lock ();
 }
 
 TAO_Cached_Connector_Lock::~TAO_Cached_Connector_Lock (void)
