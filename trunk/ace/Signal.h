@@ -19,7 +19,6 @@
 
 #include "ace/Synch.h"
 #include "ace/Event_Handler.h"
-#include "ace/Containers.h"
 
 // This worksaround a horrible bug with HP/UX C++...
 typedef struct sigaction ACE_SIGACTION;
@@ -340,6 +339,8 @@ private:
   // handler...  
 };
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
+
+#include "ace/Containers.h"
 
 #if defined (__ACE_INLINE__)
 #include "ace/Signal.i"
