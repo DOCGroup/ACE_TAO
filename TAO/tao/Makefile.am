@@ -842,7 +842,6 @@ nobase_include_HEADERS = \
   TypeCode_Value_Field.cpp \
   TypeCode_Value_Field.h \
   TypeCode_Value_Field.inl \
-  Typecode_Constants.h \
   Typecode_types.pidl \
   Typecode_typesC.h \
   Typecode_typesC.inl \
