@@ -137,7 +137,17 @@ be_visitor_array::visit_union (be_union *node)
 int
 be_visitor_array::visit_typedef (be_typedef *node)
 {
-  return this->visit_node (node);
+  int result = this->visit_node (node);
+
+  TAO_OutStream *os = this->ctx_->stream ();
+  AST_Decl::NodeType nt = node->primitive_base_type ()->node_type ();
+
+  if (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_interface_fwd)
+    {
+      *os << "_var";
+    }
+
+  return result;
 }
 
 // helper
