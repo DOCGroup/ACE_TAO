@@ -1,3 +1,8 @@
+Thu Apr  1 13:47:56 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input): Fixed a warning
+	  for g++.
+
 Thu Apr  1 12:17:14 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
