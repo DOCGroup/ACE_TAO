@@ -1,5 +1,9 @@
 Sun Jan 16 10:49:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Makefile (Svc_Conf_l.cpp): Fixed the "isatty()" sed hack to
+	  remove the cast to (int) since this is done inside of the
+ 	  ACE_OS::isatty() wrapper.  Thanks to Nanbor for reporting this.
+
 	* etc/Svc_Conf_l.cpp.diff: Added a #define for ACE_YY_NO_UNPUT
 	  to supress an unnecessary warning.
 
