@@ -201,7 +201,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "};" << be_nl;
   *os << "static const TAO_Call_Data_Skel " << node->flatname ()
       << "_non_existent_calldata = " << be_nl
-      << "{\"_non_existent\", 1, 2, " << node->flatname ()
+      << "{\"_non_existent\", 1, 1, " << node->flatname ()
       << "_non_existent_paramdata};" << be_nl;
   *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
   *os << "CORBA::Boolean _tao_retval = CORBA::B_FALSE;" << be_nl;

@@ -31,7 +31,7 @@ TAO_GIOP_Twoway_Invocation (IIOP_Object *data,
 ACE_INLINE void
 TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &env)
 {
-  TAO_GIOP_Invocation::start (CORBA::B_TRUE, env);
+  TAO_GIOP_Invocation::start (CORBA::B_TRUE, TAO_GIOP::Request, env);
 }
 
 ACE_INLINE void
@@ -61,7 +61,7 @@ TAO_GIOP_Oneway_Invocation (IIOP_Object *data,
 ACE_INLINE void
 TAO_GIOP_Oneway_Invocation::start (CORBA::Environment &env)
 {
-  TAO_GIOP_Invocation::start (CORBA::B_FALSE, env);
+  TAO_GIOP_Invocation::start (CORBA::B_FALSE, TAO_GIOP::Request, env);
 }
 
 ACE_INLINE TAO_GIOP_ReplyStatusType
@@ -69,3 +69,22 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &env)
 {
   return TAO_GIOP_Invocation::invoke (CORBA::B_FALSE, env);
 }
+
+// ****************************************************************
+
+ACE_INLINE
+TAO_GIOP_Locate_Request_Invocation::
+TAO_GIOP_Locate_Request_Invocation (IIOP_Object *data)
+  : TAO_GIOP_Invocation (data, 0),
+    inp_stream_ (CDR::DEFAULT_BUFSIZE)
+{
+}
+
+ACE_INLINE void
+TAO_GIOP_Locate_Request_Invocation::start (CORBA::Environment &env)
+{
+  TAO_GIOP_Invocation::start (CORBA::B_TRUE, TAO_GIOP::LocateRequest, env);
+}
+
+
+
