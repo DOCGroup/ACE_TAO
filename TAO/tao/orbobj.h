@@ -123,9 +123,7 @@ public:
   // for certain well-known object references.  TAO supports the
   // "NameService" and "RootPOA" via this method.
 
-  // @@ Chris, can you please make sure that all the methods that are
-  // "above" this comment are truly standard, and all the method below
-  // this comment are TAO-specific?
+
   // = TAO-specific Extensions
 
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,

@@ -1,3 +1,13 @@
+Fri Feb 27 17:57:55 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tests/NestedUpcall/server.cpp: Started integrating the
+ 	TAO_ORB_Manager, but it's untested thus far so it's
+ 	conditionally-compiled out.
+
+	* tao/{any,connect,default_server,except,
+ 	orb_core,orbobj,principa,request}.cpp: Whacked out a bunch of @@
+ 	comments.
+
 Fri Feb 27 16:11:53 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
