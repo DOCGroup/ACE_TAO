@@ -1,3 +1,13 @@
+Fri Apr 30 00:36:23 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+
+	* ace/Get_Opt.cpp: 
+	* ace/TLI_Acceptor.cpp:
+	* ace/TLI_Connector.cpp:  
+
+	  Cast away const from string literals using ACE_const_cast to make
+	  Sun C++ 5.0 happier.
+
 Thu Apr 29 18:32:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.h: Removed ghs from the list of compilers for which
