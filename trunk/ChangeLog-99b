@@ -1,3 +1,12 @@
+Wed Jan 13 23:18:03 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h:
+        * config-g++-common.h:
+        * config-osf1-4.0.h:
+        * config-psos-diab.h:
+        * config-psos-tm.h: Revert my previous change.  Removed the
+	  ChangeLog entry about the change.
+
 Wed Jan 13 22:30:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus_ghs.GNU: removed
@@ -28,22 +37,6 @@ Wed Jan 13 18:48:30 EST 1999  James CE Johnson  <jcej@lads.com>
           docs/tutorials/021/server.cpp:
                 Fixed many NT issues found by Irfan.  Most are related to the
                 fact that NT doesn't have SysV shared memory.
-
-Wed Jan 13 16:40:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-        * ace/OS.h: Reversed the definitions for ACE_DES_FREE_TEMPLATE*
-          for directive ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR.  The default
-          definitions should be the only valid case.  If a compiler need
-          to define ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR, then it is a bug
-          of the compiler and memory leaks may arise if this directive is
-          defined.
-
-        * config-g++-common.h:
-        * config-osf1-4.0.h:
-        * config-psos-diab.h:
-        * config-psos-tm.h: Commented out all occurances of
-          ACE_HAS_BROKEXPLICIT_DESTRUCTOR.  Theoretically, no compiler
-          should have it defined.
 
 Wed Jan 13 04:45:59 1999  James C Hu  <jxh@cs.wustl.edu>
 
