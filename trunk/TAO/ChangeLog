@@ -1,3 +1,20 @@
+Fri Sep 19 07:49:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/RTScheduling/Current/Makefile (SRC):
+
+	  Corrected this Make variable.  It previously listed non-existent
+	  files, which caused the dependency generation step to fail.
+	  This should alleviate some bogus test failures showing up in
+	  some automated builds.
+
+	  (LIBS, TEST_LIBS):
+
+	  Replaced LIBS variable with TEST_LIBS, where the latter only
+	  contains the TAO_RTScheduler library.  There is no need to
+	  explicitly list the core ACE/TAO/RTCORBA libraries since they
+	  already exist in the RT_TAO_CLNT_LIBS variable used during the
+	  link step.
+
 Fri Sep 19 07:30:52 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/PortableServer/ImplRepoC.h:
