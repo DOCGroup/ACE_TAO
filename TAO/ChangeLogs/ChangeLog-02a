@@ -1,3 +1,21 @@
+Fri Oct 13 11:27:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+
+	  Added a check for an imported node along with all the
+	  other checks that are there to decide whether to
+	  generate the ACE_NESTED_CLASS macro or not for the
+	  members of the request info subclasses constructor signature 
+	  and private member declaration. If the member is imported,
+	  the full scoped name should be generated on all platforms.
+	  Thanks to Base V Paul <basev@wiproge.med.ge.com> for
+	  reporting this bug.
+
+	  While I was there, I added the above decision branch to
+	  all the other applicable data types. It had been added
+	  piecemeal up to now, as bugs were reported.
+
 Fri Oct 13 10:06:03 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include/ast_visitor.h:
