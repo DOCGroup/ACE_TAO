@@ -14,6 +14,12 @@ Thu Jul  1 10:45:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
 	  Fixed some more typos that i missed last time.
 
+	* examples/Event_Comm/Event_Comm_i.cpp:
+	* examples/Quoter/Generic_Factory_i.cpp:
+	* orbsvcs/examples/CosEC/Factory/FactoryClient.cpp:
+	  Fixed unreachable statements warnings in DU/CXX, thanks to David 
+	  for reporting this problems.
+
 Thu Jul 01 00:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * examples/Simulator/DOVEMIB/AnyAnalyser.cpp
