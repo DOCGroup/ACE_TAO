@@ -1,13 +1,24 @@
+Fri May 22 10:24:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Quoter/Factory_Finder.cpp,Generic_Factory.cpp,
+          Life_Cycle_Service.cpp,Quoter_Impl.cpp:
+          added explicit int return value to function definition.
+
+        * tests/Quoter/Criteria_Evaluator.cpp (getInitialization):
+          initialized sequence_ptr to 0 to avoid warning about use
+          of uninitialized variable.  It looks like the implementation
+          is incomplete, though.
+
 Fri May 22 10:15:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: 
-	  The -ORBCDRtradeoff option had no effect, thanks to David Levine
-	  (levine@cs.wust.edu) for catching that one.
+        * tao/ORB_Core.cpp:
+          The -ORBCDRtradeoff option had no effect, thanks to David Levine
+          (levine@cs.wust.edu) for catching that one.
 
 1998-05-22  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp
-	  Removed unreached statement
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp
+          Removed unreached statement
 
 Fri May 22 07:34:35 1998  David L. Levine  <levine@cs.wustl.edu>
 
