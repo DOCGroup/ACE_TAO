@@ -21,7 +21,7 @@
 #include "tao/corba.h"
 #include "MT_Object_Impl.h"
 
-#define MAX_HOP_COUNT 4
+#define MAX_HOP_COUNT 20
 
 // CTOR
 MT_Object_Impl::MT_Object_Impl (void)
