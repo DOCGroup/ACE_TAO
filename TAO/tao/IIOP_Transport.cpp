@@ -173,7 +173,7 @@ void
 TAO_IIOP_Client_Transport::
     start_locate (TAO_ORB_Core *orb_core,
                   const TAO_Profile* pfile,
-                  CORBA::ULong request_id,
+                  CORBA::ULong /* request_id */,
                   TAO_OutputCDR &output,
                   CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -219,7 +219,7 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 // @@ This code should go in the TAO_Transport class is repeated for
 //    each transport!!
 int
-TAO_IIOP_Client_Transport::handle_client_input (int block)
+TAO_IIOP_Client_Transport::handle_client_input (int /* block */)
 {
   // When we multiplex several invocations over a connection we need
   // to allocate the CDR stream *here*, but when there is a single

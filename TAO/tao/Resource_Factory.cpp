@@ -104,7 +104,7 @@ TAO_Resource_Factory::output_cdr_buffer_allocator (void)
 }
 
 ACE_Data_Block *
-TAO_Resource_Factory::create_input_cdr_data_block (size_t size)
+TAO_Resource_Factory::create_input_cdr_data_block (size_t)
 {
   return 0;
 }

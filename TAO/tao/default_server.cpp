@@ -127,7 +127,7 @@ TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 }
 
 int
-TAO_Default_Server_Strategy_Factory::open (TAO_ORB_Core *orb_core)
+TAO_Default_Server_Strategy_Factory::open (TAO_ORB_Core *)
 {
   return 0;
 }

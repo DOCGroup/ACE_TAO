@@ -14,7 +14,8 @@ TAO_Protocol_Factory::~TAO_Protocol_Factory (void)
 }
 
 int
-TAO_Protocol_Factory::init (int argc, char *argv[])
+TAO_Protocol_Factory::init (int /* argc */, 
+                            char * /* argv[] */)
 {
  return -1;
 }
@@ -32,7 +33,7 @@ TAO_Protocol_Factory::make_connector (void)
 }
 
 int
-TAO_Protocol_Factory::match_prefix (const ACE_CString &prefix)
+TAO_Protocol_Factory::match_prefix (const ACE_CString & /* prefix */)
 {
   return 0;
 }

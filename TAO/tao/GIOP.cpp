@@ -788,8 +788,8 @@ TAO_GIOP::handle_input (TAO_Transport *transport,
 }
 
 int
-TAO_GIOP::parse_reply (TAO_Transport *transport,
-                       TAO_ORB_Core *orb_core,
+TAO_GIOP::parse_reply (TAO_Transport *,
+                       TAO_ORB_Core *,
                        TAO_GIOP_Message_State &state,
                        TAO_GIOP_ServiceContextList &reply_ctx,
                        CORBA::ULong &request_id,
@@ -1398,7 +1398,7 @@ TAO_GIOP::send_reply_exception (const TAO_GIOP_Version &version,
 }
 
 CORBA::Boolean
-TAO_GIOP::start_message_std (const TAO_GIOP_Version &version,
+TAO_GIOP::start_message_std (const TAO_GIOP_Version &,
                              TAO_GIOP::Message_Type type,
                              TAO_OutputCDR &msg)
 {

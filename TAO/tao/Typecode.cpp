@@ -2109,7 +2109,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &ACE_TRY_ENV) const
 }
 
 CORBA::Any_ptr
-CORBA_TypeCode::parameter (const CORBA::Long slot,
+CORBA_TypeCode::parameter (const CORBA::Long /* slot */,
                            CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
