@@ -1,3 +1,38 @@
+Mon Oct 18 10:11:47 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Bit_Vector.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Persistence_Manager.h:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip_Queue.h:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.h:
+        * orbsvcs/orbsvcs/Notify/Standard_Event_Persistence.cpp:
+          Change export library name
+
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.h:
+        * orbsvcs/orbsvcs/Notify/Delivery_Request.cpp:
+          Change export library name
+          Use 1.4 naming convention for pointers.
+
+
+        * orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.h:
+          Change export library name
+          Use renamed Random_File.
+
+
+        * orbsvcs/orbsvcs/Notify/Find_Worker_T.h:
+        * orbsvcs/orbsvcs/Notify/Find_Worker_T.cpp:
+          Make it const correct.
+
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+          Use V1.4 naming convention for object id.
+
+
+
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.inl:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.inl:
+          .inl's should not include their own .h
+
+
 Tue Oct 12 14:10:43 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Delivery_Request.inl:

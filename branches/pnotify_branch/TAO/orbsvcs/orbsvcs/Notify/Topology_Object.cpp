@@ -123,7 +123,7 @@ namespace TAO_NOTIFY
     id_path.push_back (this->get_id ());
   }
 
-  TAO_Notify_Object_Id
+  TAO_Notify_Object::ID
   Topology_Object::get_id () const
   {
     // If this assert triggers then implement the
@@ -138,11 +138,11 @@ namespace TAO_NOTIFY
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Vector <TAO_Notify_Object_Id>;
-template class ACE_Array_Base <TAO_Notify_Object_Id>;
+template class ACE_Vector <TAO_Notify_Object::ID>;
+template class ACE_Array_Base <TAO_Notify_Object::ID>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Vector <TAO_Notify_Object_Id>
-#pragma instantiate ACE_Array_Base <TAO_Notify_Object_Id>
+#pragma instantiate ACE_Vector <TAO_Notify_Object::ID>
+#pragma instantiate ACE_Array_Base <TAO_Notify_Object::ID>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 } // namespace TAO_NOTIFY

@@ -5,18 +5,17 @@
 #define TAO_NOTIFY_DELIVERY_REQUEST_H
 #include /**/ "ace/pre.h"
 
-#include "notify_export.h"
-#include "Object.h"
+#include "notify_serv_export.h"
+#include "Topology_Object.h"
 #include "Event.h"
 #include <ace/Vector_T.h>
-
+#include <ace/Bound_Ptr.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-// Forward declarations of classes/pointers/collections referenced
-// in this header
+// Forward declarations of referenced classes
 class TAO_Notify_EventChannelFactory;
 
 namespace TAO_NOTIFY
@@ -27,6 +26,8 @@ namespace TAO_NOTIFY
 class Delivery_Request;
 /// A reference-counted smart pointer to a Delivery_Request.
 typedef ACE_Strong_Bound_Ptr<Delivery_Request, TAO_SYNCH_MUTEX> Delivery_Request_Ptr;
+
+typedef ACE_Unbounded_Queue<Delivery_Request_Ptr> Delivery_Request_Queue;
 
 // Forward declarations of TAO_NOTIFY classes/pointers/collections referenced
 // in this header
@@ -41,7 +42,7 @@ typedef ACE_Strong_Bound_Ptr<Routing_Slip, TAO_SYNCH_MUTEX> Routing_Slip_Ptr;
 /// should be lightweight objects because they are copied, queued, and otherwise
 /// passed around while they are waiting to be executed.  The Delivery Request is
 /// more stable.
-class TAO_Notify_Export Delivery_Request
+class TAO_Notify_Serv_Export Delivery_Request
 {
 public:
   /// Normal constructor
@@ -71,7 +72,7 @@ public:
   void complete ();
 
   /// \brief An accessor method for the event associated with the Routing Slip that owns this Delivery request.
-  const TAO_Notify_Event_Ptr & event () const;
+  const TAO_Notify_Event_Copy_var & event () const;
 
   /// \brief An accessor method for the routing slip that owns this request.
   const Routing_Slip_Ptr & routing_slip ()const;
