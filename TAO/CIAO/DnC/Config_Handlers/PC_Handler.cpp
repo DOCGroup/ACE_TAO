@@ -27,16 +27,21 @@ void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration
        node = this->iter_->nextNode())
     {
       XStr node_name (node->getNodeName());
+      ACE_DEBUG ((LM_DEBUG, "node name is %s\n", XMLString::transcode
+(node_name)));
 
       if (node_name == XStr 
           (ACE_TEXT ("Deployment:PackageConfiguration")))
         {
+          ACE_DEBUG ((LM_DEBUG, "i am reading pc now\n"));
         }
       else if (process_string(this->iter_, node_name, "label", pc.label))
         {
+          ACE_DEBUG ((LM_DEBUG, "i am reading label now\n"));
         }
       else if (process_string(this->iter_, node_name, "UUID", pc.UUID))
         {
+          ACE_DEBUG ((LM_DEBUG, "i am reading UUID now\n"));
         }
       else if (process_sequence_remote
                  <Deployment::ComponentPackageDescription,
@@ -72,8 +77,8 @@ void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration
         {
           ACE_THROW (CORBA::INTERNAL());
         }
-      return;
     }
+    return;
 }
 
 END_DEPLOYMENT_NAMESPACE
