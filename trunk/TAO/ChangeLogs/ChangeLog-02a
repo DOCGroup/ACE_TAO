@@ -1,3 +1,14 @@
+Mon Dec 18 19:57:07 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/DomainS.h:
+
+  	  Fixed "initialization re-ordered to match declaration order"
+	  warning.
+
+	* tao/PortableServer/DomainS.cpp:
+
+	  Fixed unused argument warning.
+
 Mon Dec 18 19:37:40 2000  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_result.cpp:
