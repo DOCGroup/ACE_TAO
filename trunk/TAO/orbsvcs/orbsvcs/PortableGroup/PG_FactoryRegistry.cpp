@@ -313,37 +313,40 @@ void TAO::PG_FactoryRegistry::register_factory (
   RoleInfo * role_info;
   auto_ptr<RoleInfo> safe_entry;
   if (this->registry_.find(role, role_info) != 0)
-  {
-    ACE_DEBUG(( LM_DEBUG,
-      "%s: adding new role: %s:%s\n", this->identity_.c_str(), role, type_id
-      ));
-    // Note the 5.  It's a guess about the number of factories
-    // that might exist for any particular role object.
-    // todo: make it a parameter.
-    ACE_NEW_THROW_EX (role_info, RoleInfo(5),
-      CORBA::NO_MEMORY());
-    safe_entry = auto_ptr<RoleInfo>(role_info);
-    role_info->type_id_ = type_id;
-  }
-  else
-  {
-    if (role_info->type_id_ != type_id)
     {
-      ACE_THROW ( PortableGroup::TypeConflict() );
+      ACE_DEBUG(( LM_DEBUG,
+                  "%s: adding new role: %s:%s\n",
+                  this->identity_.c_str(), role, type_id));
+
+      // Note the 5.  It's a guess about the number of factories
+      // that might exist for any particular role object.
+      // todo: make it a parameter.
+      ACE_NEW_THROW_EX (role_info,
+                        RoleInfo(5),
+                        CORBA::NO_MEMORY());
+
+      safe_entry.reset (role_info);
+      role_info->type_id_ = type_id;
     }
-  }
+  else
+    {
+      if (role_info->type_id_ != type_id)
+        {
+          ACE_THROW ( PortableGroup::TypeConflict() );
+        }
+    }
 
   PortableGroup::FactoryInfos & infos = role_info->infos_;;
   size_t length = infos.length();
   for (size_t nInfo = 0; nInfo < length; ++nInfo)
-  {
-    PortableGroup::FactoryInfo & info = infos[nInfo];
-    if (info.the_location == factory_info.the_location)
     {
-      ACE_ERROR(( LM_ERROR,
-        "%s: Attempt to register duplicate location %s for role: %s\n" ,
-          this->identity_.c_str(),
-          ACE_static_cast(const char *, info.the_location[0].id),
+      PortableGroup::FactoryInfo & info = infos[nInfo];
+      if (info.the_location == factory_info.the_location)
+        {
+          ACE_ERROR(( LM_ERROR,
+                      "%s: Attempt to register duplicate location %s for role: %s\n" ,
+                      this->identity_.c_str(),
+                      ACE_static_cast(const char *, info.the_location[0].id),
           role));
       ACE_THROW (PortableGroup::MemberAlreadyPresent() );
     }
