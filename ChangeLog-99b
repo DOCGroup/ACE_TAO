@@ -1,3 +1,9 @@
+Wed Jul 14 10:47:45 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_qnx_neutrino.GNU:
+          added ACE_HAS_GNUG_PRE_2_8 := 0, so that exception
+          handling will be disabled by default.
+
 Wed Jul 14 10:34:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp: fixed typo,

@@ -9,12 +9,14 @@
 
 ifeq (,$(debug))
   debug = 1
-endif
+endif # ! debug
 ifeq (,$(optimize))
   optimize = 0
-endif
+endif # ! optimize
 
 static_libs_only = 1
+
+ACE_HAS_GNUG_PRE_2_8 := 0
 
 CC      = i386-nto-gcc
 CXX     = i386-nto-g++
