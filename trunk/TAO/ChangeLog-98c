@@ -1,3 +1,15 @@
+Mon Oct 12 11:30:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	* orbsvcs/orbsvcs/Event/Memory_Pools.cpp: 
+	  Removed some template instantiations that were not used anymore.
+	  Moved the template instantiations related to memory pool from
+	  Event_Channel.cpp into Memory_Pools.cpp
+	  Added a comparison operator for the TAO_EC_Event class, this is
+	  needed to complete the instantiation of ACE_Array<TAO_EC_Event>.
+
 Mon Oct 12 10:31:35 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/CosNaming_i: Removed the need to allocate
