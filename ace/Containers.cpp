@@ -905,11 +905,13 @@ ACE_Double_Linked_List<T>::remove_element (T *item)
   // Notice that you have to ensure that item is an element of this
   // list.  We can't do much checking here.
 
-  if (item == this->head_ || this->size () == 0)      // Can't remove head
+  if (item == this->head_ || item->next_ == 0
+      || item->prev_ == 0 || this->size () == 0)      // Can't remove head
     return -1;
 
   item->prev_->next_ = item->next_;
   item->next_->prev_ = item->prev_;
+  item->next_ = item->prev_ = 0; // reset pointers to prevent double removal.
   this->size_--;
   return 0;
 }
