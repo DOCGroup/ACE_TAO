@@ -205,7 +205,7 @@ CORBA_DynAny_ptr
 TAO_DynAny_i::current_component (CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA_DynAny_ptr retval = this->_this (ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
 
   return retval;
 }
@@ -744,7 +744,7 @@ TAO_DynAny_i::get_any (CORBA::Environment& ACE_TRY_ENV)
   ACE_NEW_THROW_EX (val.out (),
                     CORBA_Any,
                     CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (CORBA_DynAny::_nil ());
 
   if (!(this->value_ >>= *val.out ()))
     {
