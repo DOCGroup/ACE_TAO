@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : ciao_component_dnc {
+project : ciao_component_dnc, utils {
   after += CIAO_DnC_Server
   libs    += CIAO_DnC_Server CIAO_Deployment_stub CIAO_Deployment_svnt
 }
