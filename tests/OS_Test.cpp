@@ -67,7 +67,7 @@ rename_test (void)
       return -1;
     }
   // Verify that the old file was really renamed.
-  struct stat checking;
+  ACE_stat checking;
   int result = 0;
   if (ACE_OS::stat (new_file, &checking) == -1 || checking.st_size == 0)
     {

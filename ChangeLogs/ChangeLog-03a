@@ -1,3 +1,9 @@
+Fri Jan 26 02:16:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * tests/OS_Test.cpp:
+
+          Changed a use of struct stat to ACE_stat.
+
 Thu Jan 25 19:16:48 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/config-linux.h:
