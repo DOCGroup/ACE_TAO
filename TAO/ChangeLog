@@ -1,3 +1,30 @@
+Fri Aug 23 18:52:46 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.cpp (_tao_get_omg_exception_description):
+
+	  Updated a number of system exception minor code descriptions.
+
+Fri Aug 23 18:49:03 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Core.cpp (init):
+
+	  Updated "-ORBResources" deprecation message so that it says
+	  something useful.  Previously it only stated an option was
+	  deprecated, not which one!
+
+	* tao/Exception.h:
+	* tao/Exception.cpp (STANDARD_EXCEPTION_LIST):
+	* tao/corbafwd.h (TAO_SYSTEM_EXCEPTION_LIST):
+
+	  CORBA 3.0 adds three SystemExceptions to the "CORBA" namespace.
+	  They are INVALID_ACTIVITY, ACTIVITY_COMPLETED,
+	  ACTIVITY_REQUIRED.  All are apparently Transaction Service
+	  related.
+
+	* tao/CORBALOC_Parser.cpp:
+
+	  Nuked trailing whitespace.
+
 Fri Aug 23 16:15:00 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/TAO_PortableServer_Static.dsp:

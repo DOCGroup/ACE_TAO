@@ -660,7 +660,8 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
                 (ACE_LIB_TEXT("-ORBResources"))))
         {
           ACE_DEBUG ((LM_WARNING,
-                      ACE_LIB_TEXT ("This option has been deprecated\n")));
+                      ACE_LIB_TEXT ("\"-ORBResources\" has been ")
+                      ACE_LIB_TEXT ("deprecated.\n")));
 
           arg_shifter.consume_arg ();
         }
