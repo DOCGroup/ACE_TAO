@@ -9,6 +9,19 @@
 #include "ace/Managed_Object.h"
 
 template <class TYPE>
+ACE_Managed_Cleanup<TYPE>::ACE_Managed_Cleanup (void)
+  : object_ ()
+{
+}
+
+template <class TYPE>
+TYPE &
+ACE_Managed_Cleanup::object (void)
+{
+  return this->object_;
+}
+
+template <class TYPE>
 int
 ACE_Managed_Object<TYPE>::get_object (u_int &id, TYPE *&object)
 {

@@ -18,6 +18,16 @@
 #define ACE_MANAGED_OBJECT_H
 
 template <class TYPE>
+class ACE_Managed_Cleanup : public ACE_Cleanup
+{
+public:
+  ACE_Managed_Cleanup (void);
+  TYPE &object (void);
+private:
+  TYPE object_;
+};
+
+template <class TYPE>
 class ACE_Managed_Object
   // = TITLE
   //     Wrapper for interface to allocate an object managed by the
