@@ -24,7 +24,7 @@ enum ACE_Log_Priority
   //
   // = DESCRIPTION
   //     These values are defined using powers of two so that it's
-  //     possible to form a mask to turn the on or off dynamically.
+  //     possible to form a mask to turn them on or off dynamically.
 {
   // = Note, this first argument *must* start at 1! 
 

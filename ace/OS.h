@@ -303,7 +303,7 @@ private:
 // enabled or disabled. 
 
 // Efficiently returns the least power of two >= X...
-#define ACE_POW(X) ((!X)?1:(X-=1,X|=X>>1,X|=X>>2,X|=X>>4,X|=X>>8,X|=X>>16,(++X)))
+#define ACE_POW(X) (((X) == 0)?1:(X-=1,X|=X>>1,X|=X>>2,X|=X>>4,X|=X>>8,X|=X>>16,(++X)))
 #define ACE_EVEN(NUM) (((NUM) & 1) == 0)
 #define ACE_ODD(NUM) (((NUM) & 1) == 1)
 #define ACE_BIT_ENABLED(WORD, BIT) (((WORD) & (BIT)) != 0)
