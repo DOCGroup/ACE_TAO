@@ -429,7 +429,7 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting Consumer: %s\n"),vs->name.c_str()));
-  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),vs->dependants));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer subscriptions at %@\n"),vs->subscriptions));
 
   if (!vs->subscriptions)
     {
@@ -442,12 +442,11 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
   Kokyu_EC::QoSVector subs;
   vs->subscriptions->visit(this,&subs);
 
-  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),vs->dependants));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),vs->dependants));
   SupplierVector dependants; //dependants push_back
   if (vs->dependants)
     vs->dependants->visit(this,&dependants);
 
-  //ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer dependants at %@\n"),vs->dependants));
   // Register Consumer
   Kokyu_EC *ec = static_cast<Kokyu_EC*> (arg);
 
@@ -455,42 +454,67 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
   RtEventChannelAdmin::Time max_exec;
   ECSupplier::EventTypeVector subtypes;
   Kokyu_EC::QoSVector::iterator subiter = subs.begin();
-  for (; subiter != subs.end(); ++subiter)
+  int count;
+  for (count=0; subiter != subs.end(); ++subiter,++count)
     {
       Kokyu_EC::QoSVector::value_type qos = *subiter;
 
-      if (max_exec < qos.wc_time) // find maximum worst-case time
+      if (max_exec < qos.wc_time || !count) // find maximum worst-case time
         max_exec = qos.wc_time;
 
       subtypes.push_back(qos.type);
     }
+
+  // DEBUG
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer subscription types: ")));
+  ECSupplier::EventTypeVector::iterator typeiter;
+  for (typeiter = subtypes.begin(); typeiter != subtypes.end(); ++typeiter)
+    {
+      ECSupplier::EventTypeVector::value_type type = *typeiter;
+
+      ACE_DEBUG ((LM_DEBUG, "%d  ",type));
+    }
+  ACE_DEBUG((LM_DEBUG,"\n"));
+  // END DEBUG
 
   ACE_Time_Value exec_time; // Consumer executes max worst-case time
   ORBSVCS_Time::TimeT_to_Time_Value (exec_time,max_exec);
   ECConsumer *consumer;
   ACE_NEW_RETURN(consumer,
                  ECConsumer(subtypes),-1);
-  //consumer->setWorkTime(exec_time);
+  consumer->setWorkTime(exec_time);
 
   // for each dependant, set up the dependency
-  SupplierVector::iterator siter = dependants.begin();
-  for (; siter != dependants.end(); ++siter)
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Consumer setting up dependencies: %d"), dependants.size()));
+  if (dependants.size())
     {
-      SupplierVector::value_type supplier = *siter;
-      SupplierMap::VALUE ecsupplier;
-      this->suppliermap.find(supplier->name,ecsupplier);
-      ACE_ASSERT(ecsupplier); // shouldn't have got here with no Supplier
+      SupplierVector::iterator siter = dependants.begin();
+      for (; siter != dependants.end(); ++siter)
+        {
+          SupplierVector::value_type supplier = *siter;
+          SupplierMap::VALUE ecsupplier;
+          this->suppliermap.find(supplier->name,ecsupplier);
+          ACE_ASSERT(ecsupplier); // shouldn't have got here with no Supplier
 
-      // if multiple timeouts, this won't reg supplier multiple times
-      consumer->pushDependant(ecsupplier);
-      ec->add_consumer_with_supplier(consumer,
-                                     vs->name.c_str(),
-                                     subs,
-                                     ecsupplier,
-                                     supplier->name.c_str(),
-                                     ecsupplier->getPublishedTypes()
-                                     ACE_ENV_ARG_PARAMETER
-                                     );
+          // if multiple timeouts, this won't reg supplier multiple times
+          consumer->pushDependant(ecsupplier);
+          ec->add_consumer_with_supplier(consumer,
+                                         vs->name.c_str(),
+                                         subs,
+                                         ecsupplier,
+                                         supplier->name.c_str(),
+                                         ecsupplier->getPublishedTypes()
+                                         ACE_ENV_ARG_PARAMETER
+                                         );
+        }
+    }
+  else
+    { // no dependants to register
+      ec->add_consumer(consumer,
+                       vs->name.c_str(),
+                       subs
+                       ACE_ENV_ARG_PARAMETER
+                       );
     }
   this->consumermap.bind(vs->name,consumer);
 

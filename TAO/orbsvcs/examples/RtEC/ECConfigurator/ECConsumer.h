@@ -82,7 +82,7 @@ public:
   void pushDependant (ECSupplier *dep);
 
 protected:
-  ACE_Time_Value worktime_;
+  ACE_Time_Value _worktime;
 
   SupplierVector dependants_;
   InfoHandle rt_info_;
