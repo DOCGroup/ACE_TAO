@@ -1,3 +1,8 @@
+Sun Mar 11 07:04:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Filter_i.cpp: Fixed a warning in
+	  g++. 
+
 Sun Mar 11 04:17:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Acceptor.cpp:
