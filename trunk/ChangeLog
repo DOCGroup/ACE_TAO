@@ -1,3 +1,8 @@
+Fri Nov  7 11:28:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* tests/Vector_Test.cpp: Added tests of the equality and inequality
+	  operators.
+
 Fri Nov  7 06:50:49 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * Kokyu/Makefile.Kokyu:
