@@ -1,3 +1,11 @@
+Mon Oct 25 20:13:07 2004  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Global_Macros.h:
+          Added a new service configuration macro for defining a factory
+          function for classes scoped within namespaces. The new macro is
+          ACE_FACTORY_NAMESPACE_DEFINE. The associated comment block
+          provides usage details.
+
 Mon Oct 25 09:05:02 2004  Steve Totten  <totten_s@ociweb.com>
 
         * ACEXML/common/Transcode.h:
