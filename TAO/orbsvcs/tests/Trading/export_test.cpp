@@ -85,7 +85,7 @@ main (int argc, char** argv)
       TAO_CHECK_ENV;
 
       // Run the Offer Exporter tests
-      ACE_DEBUG ((LM_DEBUG, "Running the Offer Exporter tests.\n"));
+      ACE_DEBUG ((LM_DEBUG, "*** Running the Offer Exporter tests.\n"));
       TAO_Offer_Exporter offer_exporter (lookup_if, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 	    
