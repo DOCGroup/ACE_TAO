@@ -1,3 +1,9 @@
+Thu Aug  6 17:25:27 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/DynSched.cpp: Fixed a typo where
+	  there was a == when there should have been a =. This was
+	  in schedule_threads ();
+
 Thu Aug  6 16:37:55 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* tests/Param_Test/typecode.{h,cpp}:
@@ -39,8 +45,8 @@ Thu Aug 06 12:51:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 Thu Aug  6 09:46:46 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp : Used the new ARGV
-	constructor which creates a new ARGV with 2 argvs. Removed all
-	usages of 3*BUFSIZ.
+	  constructor which creates a new ARGV with 2 argvs. Removed all
+	  usages of 3*BUFSIZ.
 
 Wed Aug  5 22:14:39 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -275,7 +281,7 @@ Tue Aug  4 15:56:34 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 	  3*BUFSIZ to fit the arguments. Made the default base orb port
 	  as 0.
 
-Tue Aug 4 14:52:12 1998 Jeff Parsons <jp4@cs.wustl.edu>
+Tue Aug  4 14:52:12 1998 Jeff Parsons <jp4@cs.wustl.edu>
 
         * TAO/tests/Param_Test/bd_struct_seq.{h,cpp}:
           Same changes as other bounded sequence tests
@@ -297,7 +303,7 @@ Tue Aug 04 11:08:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* TAO_IDL/GenExportH.BAT: Moved it to where it really belong,
  	  $ACE_ROOT/bin/.
 
-Mon Aug 3 19:46:55 1998 Jeff Parsons <jp4@cs.wuslt.edu>
+Mon Aug  3 19:46:55 1998 Jeff Parsons <jp4@cs.wuslt.edu>
 
         * tao_idl/be/be_visitor_sequence/gen_bounded_sequence_ch.cpp:
           moved buffer allocation in default constructor from body to
