@@ -1,3 +1,11 @@
+Thu Oct 12 23:09:17 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/OS.i:
+          Added a !defined (__Lynx__) check for ACE_HAS_PACE in the
+          ACE_OS::mmap function. ACE does some special things for Lynx
+          for mmap since Lynx's mmap is deficient. Probably should
+          move this fix from ACE to PACE at some point.
+
 Thu Oct 12 19:38:00 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/ace_dll.dsp:
