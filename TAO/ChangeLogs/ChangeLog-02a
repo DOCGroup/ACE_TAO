@@ -1,3 +1,15 @@
+Mon Mar 19 16:37:21 2001  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* tao/Transport.cpp:
+	* tao/Transport.h:
+
+	  Added new thread-safe TAO_Synch_Refcountable class (which uses
+ 	  TAO_SYNCH_MUTEX to insure thread-safe reference counting), and
+ 	  changed the private base of TAO_Transport to use it rather than
+ 	  ACE_Refcountable.  Now refcounting of Transport objects should
+ 	  be thread-safe.  Thanks to Carlos O'Ryan for catching this! [Bug
+ 	  814]
+
 Mon Mar 19 15:09:52 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_activator): 

@@ -40,6 +40,23 @@ class TAO_Connection_Handler;
 
 typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
 
+class TAO_Synch_Refcountable : private ACE_Refcountable
+{
+public:
+  virtual ~TAO_Synch_Refcountable (void);
+
+  int increment (void);
+  int decrement (void);
+
+  int refcount (void) const;
+
+protected:
+  TAO_Synch_Refcountable (int refcount);
+
+  TAO_SYNCH_MUTEX mutex_;
+};
+
+
 /**
  * @class TAO_Transport
  *
@@ -126,7 +143,7 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Transport_Buffering_Queue;
  * http://ace.cs.wustl.edu/cvsweb/ace-latest.cgi/ACE_wrappers/TAO/docs/pluggable_protocols/index.html
  *
  */
-class TAO_Export TAO_Transport : private ACE_Refcountable
+class TAO_Export TAO_Transport : private TAO_Synch_Refcountable
 {
 
   friend class TAO_Transport_Sync_Strategy;
