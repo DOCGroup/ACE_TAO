@@ -1,3 +1,8 @@
+Wed Jun 13 09:07:14 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+          Removed unnecessary include for RT_Policy_i.h
+                    
 Wed Jun 13 09:08:57 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynAny_i.cpp:
