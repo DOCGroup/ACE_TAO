@@ -1,3 +1,10 @@
+Tue Mar  8 19:24:57 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * Config_Handlers/IDREF_Base.h:
+        * Config_Handlers/IDREF_Base.cpp:
+
+          Made changes to return the correct index from the map.
+
 Mon Mar  7 20:56:42 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * ciao/Container_Base.cpp:

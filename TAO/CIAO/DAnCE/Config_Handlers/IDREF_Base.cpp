@@ -1,6 +1,7 @@
 // $Id$
 
 #include "IDREF_Base.h"
+#include <iostream>
 
 
 ACE_RCSID (DAnCE,
@@ -18,7 +19,7 @@ namespace CIAO
     {
       int retval =
         idref_map_.bind (id, index);
-      
+
       pos_map_.bind (index,id);
 
       if (retval < 0)
@@ -28,7 +29,7 @@ namespace CIAO
     }
 
     bool
-    IDREF_Base::find_ref (const ACE_CString& id, size_t val)
+    IDREF_Base::find_ref (const ACE_CString& id, size_t& val)
     {
       int retval =
         idref_map_.find (id, val);
