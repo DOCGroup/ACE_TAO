@@ -40,7 +40,7 @@ ACE_Process_Manager::cleanup (void *, void *)
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.
 // See wait() for more info.
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
 static void
 sigchld_nop (int, siginfo_t *, ucontext_t *)
 {
@@ -221,7 +221,7 @@ ACE_Process_Manager::open (size_t size,
   if (r)
     {
       this->reactor (r);
-#if !defined (ACE_WIN32) && !defined (ACE_PSOS)
+#if !defined (ACE_WIN32) && !defined (ACE_PSOS) && !defined (ACE_LACKS_UNIX_SIGNALS)
       // Register signal handler object.
       if (r->register_handler (SIGCHLD, this) == -1)
         return -1;
@@ -264,7 +264,7 @@ ACE_Process_Manager::close (void)
 {
   ACE_TRACE ("ACE_Process_Manager::close");
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
   if (this->reactor ())
     {
       this->reactor ()->remove_handler (SIGCHLD, (ACE_Sig_Action *) 0);
@@ -838,6 +838,23 @@ ACE_Process_Manager::wait (pid_t pid,
         }
       else
         {
+# if defined (ACE_LACKS_UNIX_SIGNALS)
+          pid = 0;
+          ACE_Time_Value sleeptm (1);    // 1 msec
+          if (sleeptm > timeout)         // if sleeptime > waittime
+            sleeptm = timeout;
+          ACE_Time_Value tmo (timeout);  // Need one we can change
+          for (ACE_Countdown_Time time_left (&tmo); tmo > ACE_Time_Value::zero ; time_left.update ())
+            {
+              pid = ACE_OS::waitpid (-1, status, WNOHANG);
+              if (pid > 0 || pid == ACE_INVALID_PID)
+                break;          // Got a child or an error - all done
+
+              // pid 0, nothing is ready yet, so wait.
+              // Do a (very) short sleep (only this thread sleeps).
+              ACE_OS::sleep (sleeptm);
+            }
+# else
           // Force generation of SIGCHLD, even though we don't want to
           // catch it - just need it to interrupt the sleep below.
           // If this object has a reactor set, assume it was given at
@@ -874,6 +891,7 @@ ACE_Process_Manager::wait (pid_t pid,
             {
               old_action.register_action (SIGCHLD);
             }
+# endif /* !ACE_LACKS_UNIX_SIGNALS */
         }
 #endif /* !defined (ACE_WIN32) */
     }
