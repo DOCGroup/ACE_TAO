@@ -1,3 +1,9 @@
+Thu Apr 10 000:08:15 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/TAO_Static.dsp:
+
+          Updated project settings.
+
 Wed Apr  9 23:23:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Param_Test/server.cpp:
