@@ -1,3 +1,10 @@
+Tue Jun 17 15:25:20 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Sock_Connect.cpp (get_windows_version):
+	* ace/WIN32_Asynch_IO.cpp (readv,writev): Fixed compilation errors
+	  when ACE_HAS_WINSOCK2=0.  Thanks to Raymond Hoofman
+	  <raymond@charm.nl> for submitting the patches.
+
 Tue Jun 17 18:34:39 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
