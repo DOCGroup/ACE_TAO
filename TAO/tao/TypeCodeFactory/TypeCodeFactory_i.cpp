@@ -1353,7 +1353,7 @@ TAO_TypeCodeFactory_i::unique_label_values (const CORBA_UnionMemberSeq &members,
             case CORBA::tk_ushort:
               members[i].label >>= s.ushort_val;
 
-              if (checker.insert (s.short_val) != 0)
+              if (checker.insert (s.ushort_val) != 0)
                 {
                   return 0;
                 }
