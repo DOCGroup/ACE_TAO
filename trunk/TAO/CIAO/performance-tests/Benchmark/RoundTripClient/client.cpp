@@ -30,19 +30,6 @@ main (int argc, char *argv[])
       CORBA::Object_var obj
         = orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-/*
-      Benchmark::RoundTripClientHome_var home
-        = Benchmark::RoundTripClientHome::_narrow (obj.in ()
-                                        ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (home.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR, "Unable to acquire TestHome objref\n"), -1);
-
-      Benchmark::RoundTripClient_var test
-        = home->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-*/
       Benchmark::RoundTripClient_var test = 
 	      Benchmark::RoundTripClient::_narrow(obj.in());
       //Get the RoundTrip reference

@@ -11,6 +11,7 @@
 #ifndef CIAO_ROUNDTRIPCLIENT_IDL
 #define CIAO_ROUNDTRIPCLIENT_IDL
 
+#include <Components.idl>
 #include "../Benchmark.idl"
 
 module Benchmark
