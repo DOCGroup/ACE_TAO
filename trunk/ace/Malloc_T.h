@@ -58,6 +58,13 @@ private:
 template <class T, class ACE_LOCK>
 class ACE_Cached_Allocator : public ACE_New_Allocator
 {
+  // = TITLE
+  //   Create a cached memory poll with <n_chunks> chunks each with
+  //   sizeof (TYPE) size.
+  //
+  // = DESCRIPTION
+  //   This class enables caching of dynamically allocated,
+  //   fixed-sized classes.
 public:
   ACE_Cached_Allocator (size_t n_chunks);
   // Create a cached memory poll with <n_chunks> chunks
