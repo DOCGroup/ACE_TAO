@@ -8151,7 +8151,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
                                           symbolname),
                         void *, 0);
-#   else  /* ACE_HAS_WINCE */
+#   else /* ACE_HAS_WINCE */
   ACE_WIN32CALL_RETURN (::GetProcAddress (handle,
                                           ACE_WIDE_STRING (symbolname)),
                         void *, 0);
