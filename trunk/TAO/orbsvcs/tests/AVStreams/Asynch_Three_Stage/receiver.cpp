@@ -3,8 +3,11 @@
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 
-static FILE *output_file = 0;
 // File handle of the file into which received data is written.
+static FILE *output_file = 0;
+
+// Flag to tell us if we are done or not.
+static int done=0;
 
 int
 Receiver_StreamEndPoint::get_callback (const char *,
@@ -63,8 +66,7 @@ Receiver_Callback::handle_destroy (void)
 
   ACE_TRY_NEW_ENV
     {
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0
-                                                  TAO_ENV_ARG_PARAMETER);
+      done=1;
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -244,8 +246,12 @@ main (int argc,
       if (result != 0)
         return result;
 
-      orb->run (TAO_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_Time_Value tv(0, 10000);
+      while(!done)
+      {
+         orb->run (tv TAO_ENV_ARG_PARAMETER);
+         ACE_TRY_CHECK;
+      }
 
       // Hack for now....
       ACE_OS::sleep (1);

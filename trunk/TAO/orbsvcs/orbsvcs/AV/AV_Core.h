@@ -106,6 +106,8 @@ public:
   /// = Get the acceptor registry
   TAO_AV_Acceptor *get_acceptor (const char *flowname);
   TAO_AV_Connector *get_connector (const char *flowname);
+  int remove_acceptor (const char *flowname);
+  int remove_connector (const char *flowname);
   TAO_AV_Connector_Registry *connector_registry (void);
   TAO_FlowSpec_Entry *get_flow_spec_entry (TAO_AV_FlowSpecSet &flow_spec_set,
                                            const char *flowname);
@@ -126,6 +128,7 @@ public:
 
   static int deactivate_servant (PortableServer::Servant servant);
   static char *get_flowname (const char *flow_spec_entry_str);
+  static ACE_CString get_control_flowname(const char *flowname);
 
 protected:
   /// The connector registry which all active connecters must register

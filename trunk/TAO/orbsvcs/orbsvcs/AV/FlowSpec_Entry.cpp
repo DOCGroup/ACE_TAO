@@ -18,7 +18,9 @@
 // constructor.
 TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (void)
   :address_ (0),
+   clean_up_address_ (0),
    control_address_ (0),
+   clean_up_control_address_ (0),
    address_str_ (),
    format_ (),
    direction_ (TAO_AV_INVALID),
@@ -53,7 +55,9 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         ACE_Addr *address,
                                         ACE_Addr *control_address)
   :address_ (address),
+   clean_up_address_ (0),
    control_address_ (control_address),
+   clean_up_control_address_ (0),
    address_str_ (),
    format_ (format_name),
    direction_str_ (direction ),
@@ -86,7 +90,9 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
                                         const char *flow_protocol,
                                         const char *address)
   :address_ (0),
+   clean_up_address_ (0),
    control_address_ (0),
+   clean_up_control_address_ (0),
    address_str_ ( address ),
    format_ ( format_name ),
    direction_str_ ( direction ),
@@ -116,7 +122,12 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
 // Destructor.
 TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry (void)
 {
-
+  if (this->clean_up_address_)
+    delete address_;
+  if (this->clean_up_control_address_)
+    delete control_address_;
+  delete local_addr_;
+  delete local_control_addr_;
 }
 
 int
@@ -242,9 +253,15 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                                 ACE_INET_Addr (addr.c_str() ),
                                 -1);
                 if (flow_comp == TAO_AV_Core::TAO_AV_DATA)
+                  {
+                    this->clean_up_address_ = 1;
                   this->address_ = inet_addr;
+                  }
                 else
+                  {
+                    this->clean_up_control_address_ = 1;
                   this->control_address_ = inet_addr;
+                  }
 
                 if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address %s %x\n", address,inet_addr->get_ip_address () ));
@@ -317,6 +334,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                 ACE_NEW_RETURN (inet_addr,
                                 ACE_INET_Addr (addr.c_str() ),
                                 -1);
+                this->clean_up_address_ = 1;
                 this->address_ = inet_addr;
                 if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address %s %x\n", address,inet_addr->get_ip_address () ));
@@ -327,6 +345,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                     ACE_NEW_RETURN (control_inet_addr,
                                     ACE_INET_Addr (control_addr.c_str() ),
                                     -1);
+                    this->clean_up_control_address_ = 1;
                     this->control_address_ = control_inet_addr;
                     if (TAO_debug_level > 0)
                       ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address %s %x\n", address,control_inet_addr->get_ip_address () ));

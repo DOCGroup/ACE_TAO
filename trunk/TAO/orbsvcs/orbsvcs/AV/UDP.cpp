@@ -22,6 +22,13 @@ TAO_AV_UDP_Flow_Handler::TAO_AV_UDP_Flow_Handler (void)
 
 TAO_AV_UDP_Flow_Handler::~TAO_AV_UDP_Flow_Handler (void)
 {
+  // remove the event handler from the reactor.
+  TAO_AV_CORE::instance()->reactor ()->remove_handler (this->event_handler(),
+                                              ACE_Event_Handler::READ_MASK);
+
+  // close the socket.
+  this->close ();
+
   delete this->transport_;
 }
 
@@ -317,6 +324,10 @@ TAO_AV_UDP_Acceptor::TAO_AV_UDP_Acceptor (void)
 
 TAO_AV_UDP_Acceptor::~TAO_AV_UDP_Acceptor (void)
 {
+  if (this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
+    delete this->entry_->control_handler ();
+  else
+      delete this->entry_->handler ();
 }
 
 int
@@ -345,12 +356,17 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   this->entry_ = entry;
   this->flow_component_ = flow_comp;
   this->flow_protocol_factory_ = factory;
-  this->flowname_ = entry->flowname ();
   ACE_INET_Addr *inet_addr;
-  if (flow_comp == TAO_AV_Core::TAO_AV_DATA)
-    inet_addr = (ACE_INET_Addr *) entry->address ();
-  else
+  if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
+    {
+      this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
     inet_addr = (ACE_INET_Addr *) entry->control_address ();
+    }
+  else
+    {
+      this->flowname_ = entry->flowname ();
+      inet_addr = (ACE_INET_Addr *) entry->address ();
+    }
 
   char buf[BUFSIZ];
   inet_addr->addr_to_string (buf,
@@ -380,12 +396,20 @@ TAO_AV_UDP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   this->entry_ = entry;
   this->flow_component_ = flow_comp;
   this->flow_protocol_factory_ = factory;
-  this->flowname_ = entry->flowname ();
   ACE_INET_Addr *address = 0;
-  if (flow_comp == TAO_AV_Core::TAO_AV_DATA)
+  if (flow_comp == TAO_AV_Core::TAO_AV_CONTROL)
+    {
+      this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname ());
+    }
+  else
+    {
+      this->flowname_ = entry->flowname ();
+      // TODO: FIX MEMORY LEAK !!
     ACE_NEW_RETURN (address,
                     ACE_INET_Addr ("0"),
                     -1);
+    }
+
   int result = this->open_i (address, 1);
   if (result < 0)
     return result;
@@ -456,6 +480,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                       ACE_INET_Addr *control_inet_addr;
                       TAO_AV_Flow_Handler *control_flow_handler = 0;
 
+                      // TODO: FIX THIS MEMORY LEAK !!
                       ACE_NEW_RETURN (control_inet_addr,
                                       ACE_INET_Addr ("0"),
                                       -1);
@@ -539,6 +564,14 @@ TAO_AV_UDP_Connector::TAO_AV_UDP_Connector (void)
 
 TAO_AV_UDP_Connector::~TAO_AV_UDP_Connector (void)
 {
+  if (this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
+    {
+      delete this->entry_->control_handler ();
+    }
+  else
+    {
+      delete this->entry_->handler ();
+    }
 }
 
 int
@@ -562,15 +595,20 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
   ACE_INET_Addr *local_addr;
 
   this->entry_ = entry;
-  this->flowname_ = entry->flowname ();
   this->flow_component_ = flow_component;
 
   ACE_INET_Addr *inet_addr;
 
-  if (flow_component == TAO_AV_Core::TAO_AV_DATA)
-    inet_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->address ());
-  else
+  if (flow_component == TAO_AV_Core::TAO_AV_CONTROL)
+    {
+      this->flowname_ = TAO_AV_Core::get_control_flowname (entry->flowname());
     inet_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->control_address ());
+    }
+  else
+    {
+      this->flowname_ = entry->flowname ();
+      inet_addr = ACE_dynamic_cast (ACE_INET_Addr*, entry->address ());
+    }
 
   TAO_AV_Flow_Handler *flow_handler = 0;
 
@@ -625,6 +663,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                                              entry->control_address ()) ;
 
                   else
+                      // TODO: FIX THIS MEMORY LEAK !!
                       ACE_NEW_RETURN (control_inet_addr,
                                       ACE_INET_Addr ("0"),
                                       -1);
@@ -760,7 +799,6 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
             perror("SO_RCVBUF");
         }
       ACE_NEW_RETURN (local_addr,
-//                      ACE_INET_Addr ((u_short) 0),
                       ACE_INET_Addr ("0"),
                       -1);
 
@@ -933,6 +971,8 @@ int
 TAO_AV_UDP_Object::destroy (void)
 {
   this->callback_->handle_destroy ();
+  delete this;
+
   return 0;
 }
 
