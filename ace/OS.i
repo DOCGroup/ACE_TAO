@@ -9313,8 +9313,6 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #if defined (ACE_WIN32)
   ::Sleep (tv.msec ());
   return 0;
-#elif defined (ACE_HAS_POLL) && !defined (ACE_POLL_IS_BROKEN)
-  ACE_OSCALL_RETURN (::poll (0, 0, tv.msec ()), int, -1);
 #else
 # if defined (linux)
   // Copy the timeval, because Linux modifies it!  It's strange that

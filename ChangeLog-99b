@@ -1,3 +1,12 @@
+Wed May  5 13:58:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.i:
+	  Don't use poll() for the implementation of ACE_OS::sleep(), it
+	  has bad resolution and it gives wrong results on Linux.
+
+	* tests/High_Res_Timer_Test.cpp:
+	  Added new option to run several iterations of each interval.
+
 Wed May 05 13:14:52 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: Removed DllMain - Win32 does not have the gusto to
