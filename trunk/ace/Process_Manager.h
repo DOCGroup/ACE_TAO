@@ -111,25 +111,24 @@ class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
   //    think the "single <Process_Manager>" pattern will be
   //    sufficient in most cases.)
   //
-  //    Incidentally, here's how the auto-reaping works on unix when
-  //    you register your <Process_Manager> with a <Reactor>:
+  //    Incidentally, when you register your <Process_Manager> with a
+  //    <Reactor> its notification pipe is used to help "reap" the
+  //    available exit statuses.  Therefore, you must not use a
+  //    <Reactor> whose notify pipe has been disabled.  Here's the
+  //    sequence of steps used to reap the exit statuses in this case:
   //
-  //    * the <Process_Manager> opens ACE_DEV_NULL to get a dummy
-  //      <HANDLE>.
-  //
-  //    * the dummy <HANDLE> is registered with the <Reactor>, but
-  //      with a NULL_MASK so that it's never normally active.
-  //
-  //    * the <Process_Manager> also registers a signal handler for
+  //    * The <Process_Manager> registers a signal handler for
   //      SIGCHLD.
   //
-  //    * the SIGCHLD handler, when invoked, marks the dummy <HANDLE>
-  //      as ready for input.
+  //    * The SIGCHLD handler, when invoked, uses the <Reactor>'s
+  //      <notify> method to inform the <Reactor> to wake up.
   //
-  //    * the <Reactor> calls the <Process_Manager>'s <handle_input>
-  //      (this happens synchronously, not in sighandler-space).
+  //    * Next, the <Reactor> calls the <Process_Manager>'s
+  //      <handle_input>, this happens synchronously, not in
+  //      sighandler-space.
   //
-  //    * <handle_input> collects all available exit statuses.
+  //    * The <handle_input> method collects all available exit
+  //      statuses.
 public:
   friend class ACE_Process_Control;
 
