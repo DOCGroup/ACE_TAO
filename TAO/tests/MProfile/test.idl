@@ -1,9 +1,0 @@
-/*
- * $Id$
- */
-
-interface Simple_Server
-{
-  long remote_call ();
-  oneway void shutdown ();
-};
