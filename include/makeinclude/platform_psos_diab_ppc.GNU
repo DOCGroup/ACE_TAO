@@ -108,7 +108,7 @@ CFLAGS += -D__DIAB -D__DIAB_42a -Xkill-opt=0x400 -Xno-old-style -Xlint $(PSOSINC
 #    -Xstop-on-warning treats warnings like errors and stops compilation
 #    -Xinit-locals[=<mask>] initializes memory pattern for local variables
 #    -Xno-optimized-debug turns off optimizations for debugging
-DCFLAGS         += -w -Ws 
+DCFLAGS         += -g -w -Ws 
 
 # These cause internal compiler errors for some ACE tests, because of the
 # debug information embedded by the -g and -g1 switches (see above).
