@@ -38,7 +38,7 @@ module CORBA
 {
   local interface PollableSet;
 
-  local interface Pollable 
+  local interface Pollable
   {
     boolean is_ready (in unsigned long timeout);
     PollableSet create_pollable_set ();
@@ -48,7 +48,7 @@ module CORBA
   {
   };
 
-  local interface PollableSet 
+  local interface PollableSet
   {
     exception NoPossiblePollable {};
     exception UnknownPollable {};
