@@ -38,6 +38,20 @@ static TCHAR shm_key[] = ACE_TEMP_FILE_NAME ACE_TEXT ("XXXXXX");
 
 #if defined (ACE_LACKS_FORK)
 typedef ACE_Thread_Semaphore SYNCHRONIZER;
+#elif defined (ACE_HAS_POSIX_SEM)
+class SYNCHRONIZER : public ACE_SV_Semaphore_Simple
+{
+  // = TITLE
+  //   If the platform has native cross-process POSIX semaphores, we
+  //   must *force* this test to use the System V Semaphores in order
+  //   to get the right semantics.
+public:
+  SYNCHRONIZER (int initial_value)
+    : ACE_SV_Semaphore_Simple ((const char *) 0,
+                               ACE_SV_Semaphore_Complex::ACE_CREATE,
+                               initial_value)
+  {}
+};
 #else
 typedef ACE_Process_Semaphore SYNCHRONIZER; 
 #endif /* !defined (ACE_LACKS_FORK) */

@@ -10,7 +10,7 @@
 //    SV_Semaphore_Simple.h
 //
 // = AUTHOR
-//    Doug Schmidt
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 
