@@ -69,8 +69,8 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
-private:
 
+private:
   int create_new_instance (int perms = 0);
   // Create a new instance of an SPIPE.
 };
