@@ -8,7 +8,6 @@ Thu Apr 11 17:26:21 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/DIOP_Connector.cpp: Cleaned up left over
 	  preconnect code.
 	
-
 Thu Apr 11 14:36:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	This checkin does the following 
