@@ -122,7 +122,7 @@ int
 main (int argc, char *argv[])
 {
 
-  ds_control ds_cntrl ("DT_Oneway", "dt_oneway_enable.dsui");
+  ds_control ds_cntrl ("DT_Oneway_Server", "dt_oneway_enable.dsui");
 
   ACE_DEBUG((LM_DEBUG,"FISRT LINE\n"));
   EDF_Scheduler* scheduler = 0;
