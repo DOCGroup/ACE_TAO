@@ -1,7 +1,3 @@
-Mon Mar 23 02:50:30 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
-
-        * ACE version 4.4.35, released Mon Mar 23 02:50:30 1998.
-
 Mon Mar 23 00:03:37 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/Reactor/ReactorEx/test_abandoned.cpp: Tests the
