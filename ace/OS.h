@@ -703,7 +703,7 @@ typedef char TCHAR;
 
 #define ACE_SEH_TRY if (1)
 #define ACE_SEH_EXCEPT(X) while (0)
-#define ACE_SEH_FINALLY while (0)
+#define ACE_SEH_FINALLY if (1)
 
 #if !defined (LPSECURITY_ATTRIBUTES)
 #define LPSECURITY_ATTRIBUTES int
