@@ -423,7 +423,9 @@ ACE_OS_String::strcasecmp (const char *s, const char *t)
 # else
   return ::strcasecmp (s, t);
 # endif /* ACE_LACKS_STRCASECMP */
-#else /* ACE_WIN32 */
+#elif defined(__BORLANDC__)
+  return ::stricmp (s, t);
+#else /* !ACE_WIN32 && !__BORLANDC__ */
   return ::_stricmp (s, t);
 #endif /* ACE_WIN32 */
 }
@@ -496,7 +498,9 @@ ACE_OS_String::strncasecmp (const char *s, const char *t, size_t len)
 # else
   return ::strncasecmp (s, t, len);
 # endif /* ACE_LACKS_STRCASECMP */
-#else /* ACE_WIN32 */
+#elif defined(__BORLANDC__)
+  return ::strnicmp (s, t, len);
+#else /* !ACE_WIN32 && !__BORLANDC__ */
   return ::_strnicmp (s, t, len);
 #endif /* ACE_WIN32 */
 }
