@@ -21,7 +21,6 @@
 #include "ace/ACE.h"
 #endif /* !ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/Object_Manager.h"
 #include "ace/Thread.h"
 #include "ace/Synch_T.h"
 #include "ace/Signal.h"
@@ -128,17 +127,6 @@ ACE_Log_Msg_Manager::close (WIND_TCB *tcb)
     }
 }
 #else
-
-// delete_log_msg() is registered as the cleanup function for Log_Msg
-// instances.  Will be called by ACE_Object_Manager at shutdown.
-
-static void
-delete_log_msg (void *log_msg_instance,
-		void *param)
-{
-  delete (ACE_Log_Msg *) log_msg_instance;
-  ACE_UNUSED_ARG (param);
-}
 
 void
 ACE_Log_Msg_Manager::close (void)
@@ -275,15 +263,16 @@ ACE_Log_Msg::instance (void)
       // Allocate memory off the heap and store it in a pointer in
       // thread-specific storage (on the stack...).
       // Stop heap checking, the memory will always be freed by the
-      // ACE_Object_Manager. This prevents from getting these blocks
+      // thread rundown because of the TSS callback set up when the key
+      // was created. This prevents from getting these blocks
       // reported as memory leaks.
       {
 	ACE_NO_HEAP_CHECK;
 
 	ACE_NEW_RETURN_I (tss_log_msg, ACE_Log_Msg, 0);
 	// Store the dynamically allocated pointer in thread-specific
-	// storage.  Register with Object_Manager to come back at program
-	// exit to delete the memory.
+	// storage.  It gets deleted via the ACE_TSS_cleanup function
+	// when the thread terminates.
 	if (ACE_OS::thr_setspecific (key_, (void *) tss_log_msg) != 0)
 	  return 0; // Major problems, this should *never* happen!
       }
@@ -347,7 +336,8 @@ ACE_Log_Msg::sync (const char *prog_name)
       // Must free if already allocated!!!
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
 
-      // Stop heap checking, block will be freed by the ACE_Object_Manager.
+      // Stop heap checking, block will be freed by the destructor when
+      // the last ACE_Log_Msg instance is deleted.
       // Heap checking state will be restored when the block is left.
       {
 	ACE_NO_HEAP_CHECK;
@@ -500,7 +490,7 @@ ACE_Log_Msg::open (const char *prog_name,
     {
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
 
-      // Stop heap checking, block will be freed by the ACE_Object_Manager.
+      // Stop heap checking, block will be freed by the destructor.
       {
 	ACE_NO_HEAP_CHECK;
 
