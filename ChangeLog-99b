@@ -1,3 +1,8 @@
+Mon Dec 13 16:23:22 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.{h,cpp}: Made print_alignment_info available for all
+	  configuration.
+
 Mon Dec 13 02:49:04 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Memory_Pool.cpp (remap): Commented out the printout of remap
