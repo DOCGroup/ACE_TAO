@@ -64,11 +64,12 @@ main (int argc, char *argv[])
                   "(%P|%t) server - shutting down the ORB\n"));
 
       orb->shutdown (1
-                     ACE_ENV_SINGLE_ARG_PARAMETER);
+                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Finished shutting down the ORB\n"));
+
       root_poa->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
