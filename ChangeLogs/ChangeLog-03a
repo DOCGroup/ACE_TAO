@@ -1,3 +1,10 @@
+Wed May  3 17:16:12 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Log_Msg.h (log_priority_enabled):
+
+	  Corrected use of "ASYS_TCHAR."  "ACE_TCHAR" should be used
+	  instead.
+
 Wed May  3 18:07:16 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Log_Msg: Added the new log_priority_enabled() method.  Thanks
