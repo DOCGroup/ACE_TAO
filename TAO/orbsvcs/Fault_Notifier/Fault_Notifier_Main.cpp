@@ -32,7 +32,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TRY_NEW_ENV
   {
     // Create an object that manages all the
-    // details of being a server.  It, too, gets to see the command line.
+    // details of being a server.  I
     TAO_ORB_Manager orbManager;
 
     result = orbManager.init (argc, asciiArgv
@@ -41,19 +41,23 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ACE_CHECK_RETURN (-1);
 
-      // create an instance of the notifier and give it the first
-      // chance at the arguments.
+      // create an instance of the notifier and let it
+      // see the arguments.
       FT_FaultNotifier_i notifier;
       result = notifier.parse_args (argc, asciiArgv);
       if (result == 0)
       {
         //////////////////////////////////
         // let the notifier register itself
+        ACE_ERROR ((LM_ERROR,
+          "%n\n%T: Fault Notifier: Registering\n"
+          ));
+
         result = notifier.self_register(orbManager);
         if (result == 0)
         {
           ACE_ERROR ((LM_ERROR,
-            "%n\n%T: FaultNotifier Ready %s\n", notifier.identity()
+            "%n\n%T: Fault Notifier Ready %s\n", notifier.identity()
             ));
 
           //////////////////////////////////
@@ -62,18 +66,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (result == -1)
           {
             ACE_ERROR_RETURN (
-              (LM_ERROR, "%n\n%T: FT_Replica_i::run error"),
+              (LM_ERROR, "%n\n%T: Fault Notifier::main: run returned error"),
               -1);
           }
           ACE_TRY_CHECK;
           ACE_ERROR ((LM_ERROR,
-            "%n\n%T: Terminated normally. %s\n", notifier.identity()
+            "%n\n%T: Fault Notifier Terminated normally. %s\n", notifier.identity()
             ));
         }
         else
         {
           ACE_ERROR ((LM_ERROR,
-            "%n\n%T: FaultNotifier registration failed: %p\n"
+            "%n\n%T: Fault Notifier registration failed: %p\n"
             ));
           result = -1;
         }
@@ -81,13 +85,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
       {
         // error found parsing arguments
-        // we've already complained...
+        // we've already complained and set return != 0...
       }
     }
     else
     {
       ACE_ERROR ((LM_ERROR,
-        "%n\n%T: ORB manager init failed\n"
+        "%n\n%T: Fault Notifier ORB manager init failed\n"
       ));
       result = -1;
     }

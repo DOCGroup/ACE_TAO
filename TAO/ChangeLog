@@ -1,3 +1,139 @@
+Wed Aug 27 13:45:45 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * TAOACE.dsw:
+
+        * examples/Event_Comm/Notifier.dsp:
+
+        * examples/Logging/Logging_Service.dsp:
+        * examples/Logging/Logging_Test.dsp:
+
+        * examples/RTCORBA/Activity/activity.dsp:
+
+        * examples/ior_corbaloc/ior_corbaloc_client.dsp:
+        * examples/ior_corbaloc/ior_corbaloc_server.dsp:
+
+        * orbsvcs/Concurrency_Service/Concurrency_Service.dsp:
+
+        * orbsvcs/CosEvent_Service/CosEvent_Service.dsp:
+
+        * orbsvcs/Dump_Schedule/Dump_Schedule.dsp:
+
+        * orbsvcs/Event_Service/Event_Service.dsp:
+
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/Fault_Notifier/Fault_Notifier_Main.cpp:
+
+        * orbsvcs/IFR_Service/IFR_Service.dsp:
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.dsp:
+        * orbsvcs/ImplRepo_Service/tao_imr.dsp:
+
+        * orbsvcs/LifeCycle_Service/LifeCycle_Service.dsp:
+
+        * orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+
+        * orbsvcs/Scheduling_Service/Scheduling_Service.dsp:
+
+        * orbsvcs/TAO_Service/TAO_Service.dsp:
+
+        * orbsvcs/Time_Service/Time_Service_Clerk.dsp:
+        * orbsvcs/Time_Service/Time_Service_Server.dsp:
+
+        * orbsvcs/Trading_Service/Trading_Service.dsp:
+
+        * orbsvcs/examples/Notify/Lanes/Consumer.dsp:
+        * orbsvcs/examples/Notify/Lanes/Supplier.dsp:
+
+        * orbsvcs/orbsvcs/CosConcurrency.dsp:
+        * orbsvcs/orbsvcs/CosEvent.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle.dsp:
+        * orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosProperty.dsp:
+        * orbsvcs/orbsvcs/CosTime.dsp:
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+        * orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp:
+        * orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+        * orbsvcs/orbsvcs/IFRService.dsp:
+        * orbsvcs/orbsvcs/PortableGroup.dsp:
+        * orbsvcs/orbsvcs/RTCORBAEvent.dsp:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTKokyuEvent.dsp:
+        * orbsvcs/orbsvcs/RTOLDEvent.dsp:
+        * orbsvcs/orbsvcs/RTSched.dsp:
+        * orbsvcs/orbsvcs/RTSchedEvent.dsp:
+        * orbsvcs/orbsvcs/RT_Notification.dsp:
+        * orbsvcs/orbsvcs/Security.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils.dsp:
+
+        * orbsvcs/tests/Concurrency/CC_client.dsp:
+
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.dsp:
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.dsp:
+
+        * orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:
+
+        * orbsvcs/tests/ImplRepo/airplane_client.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_client.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
+
+        * orbsvcs/tests/Notify/Destroy/Notify_Test_Destroy.dsp:
+
+        * orbsvcs/tests/Notify/Test_Filter/TAO_RT_NotifyTests_Filter.dsp:
+
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
+
+        * orbsvcs/tests/tests.dsw:
+
+        * performance-tests/POA/Create_Reference/create_reference.dsp:
+
+        * performance-tests/POA/Object_Creation_And_Registration/registration.dsp:
+
+        * performance-tests/RTCorba/Multiple_Endpoints/Common/RTCORBA_Common.dsp:
+
+        * tao/SmartProxies/SmartProxies.dsp:
+
+        * tao/TAO.dsp:
+
+        * tao/TypeCodeFactory/TypeCodeFactory.dsp:
+
+        * tests/DSI_Gateway/DSI_Gateway_Client.dsp:
+        * tests/DSI_Gateway/DSI_Gateway_Server.dsp:
+
+        * tests/FT_App/FTAPP_Notifier_Main.cpp:
+        * tests/FT_App/FT_Client.cpp:
+
+        * tests/MT_Timeout/MT_Timeout_Client.dsp:
+        * tests/MT_Timeout/MT_Timeout_Server.dsp:
+
+        * tests/ORB_destroy/ORB_destroy.dsp:
+
+        * tests/ORB_init/ORB_init.dsp:
+
+        * tests/POA/Nested_Non_Servant_Upcalls/Nested_Non_Servant_Upcalls.dsp:
+
+        * tests/POA/POA_Destruction/POA_Destruction.dsp:
+
+        * tests/Queued_Message_Test/Queued_Message_Test.dsp:
+
+        * utils/catior/catior.dsp:
+
+        * utils/nslist/nsadd.dsp:
+        * utils/nslist/nsdel.dsp:
+        * utils/nslist/nslist.dsp:
+
 Mon Aug 25 16:28:22 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/Fault_Notifier/.cvsignore:

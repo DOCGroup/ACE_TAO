@@ -525,80 +525,87 @@ int FTClientMain::run ()
   // Initialize the ft_server.
   result = ft_server.init ("FT_TEST",argc_, argv_);
 
-  long counter = ft_server->get(ACE_ENV_SINGLE_ARG_PARAMETER);
-
-  // retry information
-  ACE_CString command;
-  int retry = 0;
-
-  ACE_TRY_CHECK;
-  if (verbose_ >= NORMAL)
+  if ( result == 0)
   {
-    std::cout << "FT Client: Initial counter " << counter << std::endl;
-  }
-  if (ACE_OS::isatty(stdin))
-  {
-    std::cout << "FT Client: Commands(? for help):" << std::endl;
-  }
+    long counter = ft_server->get(ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  int more = 1;
-  while (more && result == 0 &&  ! commandIn_->eof())
-  {
-    ACE_TRY_NEW_ENV
+    // retry information
+    ACE_CString command;
+    int retry = 0;
+
+    ACE_TRY_CHECK;
+    if (verbose_ >= NORMAL)
     {
-      result = pass(ft_server, counter, more, command, retry);
-      ACE_TRY_CHECK;
+      std::cout << "FT Client: Initial counter " << counter << std::endl;
     }
-    ACE_CATCH (CORBA::SystemException, sysex)
+    if (ACE_OS::isatty(stdin))
     {
-      std::cout << "FT Client: Caught system exception: " << std::endl;
-      ACE_PRINT_EXCEPTION (sysex, "FT Client");
+      std::cout << "FT Client: Commands(? for help):" << std::endl;
+    }
 
-      retry = 0;
-      int handled = 0;
-      if(fargPos_ != 0 && fargPos_ != fargEnd_)
+    int more = 1;
+    while (more && result == 0 &&  ! commandIn_->eof())
+    {
+      ACE_TRY_NEW_ENV
       {
-        handled = ! ft_server.reconnect_file(fargPos_);
-        if (handled)
-        {
-          std::cout << "FT Client: Recovering from fault." << std::endl;
-          std::cout << "FT Client:   Activate " << fargPos_ << std::endl;
-          if (command.length () == 0)
-          {
-            std::cout << "FT Client:   No command to retry." << std::endl;
-          }
-          else if (command[0] == 'd')
-          {
-            std::cout << "FT Client:   Not retrying \"die\" command." << std::endl;
-          }
-          else if (sysex.completed () == CORBA::COMPLETED_YES)
-          {
-            std::cout << "FT Client:   Last command completed.  No retry needed." << std::endl;
-          }
-          else
-          {
-            if (sysex.completed () == CORBA::COMPLETED_MAYBE)
-            {
-              std::cout << "FT Client:   Last command may have completed.  Retrying anyway." << std::endl;
-            }
-            retry = 1;
-            std::cout << "FT Client:   Retrying command: " << command << std::endl;
-          }
+        result = pass(ft_server, counter, more, command, retry);
+        ACE_TRY_CHECK;
+      }
+      ACE_CATCH (CORBA::SystemException, sysex)
+      {
+        std::cout << "FT Client: Caught system exception: " << std::endl;
+        ACE_PRINT_EXCEPTION (sysex, "FT Client");
 
-          // advance fargPos to next filename
-          fargPos_ += ACE_OS::strlen(fargPos_);
-          if (fargPos_ != fargEnd_)
+        retry = 0;
+        int handled = 0;
+        if(fargPos_ != 0 && fargPos_ != fargEnd_)
+        {
+          handled = ! ft_server.reconnect_file(fargPos_);
+          if (handled)
           {
-            fargPos_ += 1;
+            std::cout << "FT Client: Recovering from fault." << std::endl;
+            std::cout << "FT Client:   Activate " << fargPos_ << std::endl;
+            if (command.length () == 0)
+            {
+              std::cout << "FT Client:   No command to retry." << std::endl;
+            }
+            else if (command[0] == 'd')
+            {
+              std::cout << "FT Client:   Not retrying \"die\" command." << std::endl;
+            }
+            else if (sysex.completed () == CORBA::COMPLETED_YES)
+            {
+              std::cout << "FT Client:   Last command completed.  No retry needed." << std::endl;
+            }
+            else
+            {
+              if (sysex.completed () == CORBA::COMPLETED_MAYBE)
+              {
+                std::cout << "FT Client:   Last command may have completed.  Retrying anyway." << std::endl;
+              }
+              retry = 1;
+              std::cout << "FT Client:   Retrying command: " << command << std::endl;
+            }
+
+            // advance fargPos to next filename
+            fargPos_ += ACE_OS::strlen(fargPos_);
+            if (fargPos_ != fargEnd_)
+            {
+              fargPos_ += 1;
+            }
           }
         }
+        if (! handled)
+        {
+          ACE_RE_THROW;
+        }
       }
-      if (! handled)
-      {
-        ACE_RE_THROW;
-      }
+      ACE_ENDTRY;
     }
-    ACE_ENDTRY;
+  }
+  else
+  {
+    std::cerr << "FT Client: Can't connect to replica." << endl;
   }
   return result;
 }
