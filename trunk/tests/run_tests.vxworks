@@ -6,21 +6,21 @@
 # These tests are not run because VxWorks doesn't
 # support their functionality:
 #
-#  Naming_Test
-#  Mem_Map_Test
+#  Naming_Test (uses mmap?)
+#  Mem_Map_Test (ENOTSUP: mmap)
 #  SV_Shared_Memory_Test
-#  MM_Shared_Memory_Test
+#  MM_Shared_Memory_Test (ENOTSUP)
 #  Reactor_Exceptions_Test
 #  Reactor_Performance_Test (unknown? doesn't appear to do anything)
-#  Notify_Performance_Test (fcntl)
+#  Notify_Performance_Test (ENOTSUP: fcntl)
 #  SPIPE_Test
 #  UPIPE_SAP_Test
-#  Time_Service_Test
+#  Time_Service_Test (requires fork)
 #  Tokens_Test
-#  Pipe_Test
-#  Process_Mutex_Test
-#  Process_Strategy_Test
-#  Service_Config_Test
+#  Pipe_Test (requires fork)
+#  Process_Mutex_Test (requires fork)
+#  Process_Strategy_Test (/tmp/ace_temp_file not found)
+#  Service_Config_Test (page fault)
 #  Enum_Interfaces_Test
 #
 # TSS_Test sometimes issues a memPartFree message during shutdown.
@@ -58,6 +58,7 @@ ld < Sigset_Ops_Test
 write 2, "Sigset_Ops_Test ", 16
 ace_main; unld "Sigset_Ops_Test"
 
+#### ENOTSUP (unknown)
 #### ld < Mutex_Test
 #### write 2, "Mutex_Test ", 11
 #### ace_main; unld "Mutex_Test"
@@ -106,6 +107,7 @@ ld < SOCK_Test
 write 2, "SOCK_Test ", 10
 ace_main; unld "SOCK_Test"
 
+#### Cause of failure unknown:
 #### ld < Conn_Test
 #### write 2, "Conn_Test ", 10
 #### ace_main; unld "Conn_Test"
