@@ -1,9 +1,18 @@
+Mon May 15 12:28:32 2000  Aviad Eden  <Aviad_Eden@icomverse.com>
+
+        * ace/Object_Manager.h:  In the paragraph that describes the
+          behavior of ::exit function (starting with the words "NOTE
+          on the use of ::exit --"). The first sentence states that
+          using ::exit "does not destroy static objects" while it
+          should be "does not destroy automatic objects".
+
 Mon May 15 12:25:59 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.i (thr_join): removed comments about possible
           implementation using ::taskSafe ()/::taskUnsafe () on
           VxWorks.  Join functionality is better implemented
-          in the Thread_Manager.
+          in the Thread_Manager.  Thanks to Umar for asking about
+          this comment.
 
 Mon May 15 09:09:49 2000  Darrell Brunsch <brunsch@uci.edu>
 
