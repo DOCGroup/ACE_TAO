@@ -199,6 +199,12 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
           // If not an EOF, then fall through to "default" case.
 
+#ifdef WIN32
+          // OpenSSL does not store the last error in errno so
+          // explicitly do so.
+          errno = ::GetLastError ();
+#endif  /* WIN32 */
+
         default:
 #ifndef ACE_NDEBUG
           ERR_print_errors_fp (stderr);
