@@ -9,16 +9,31 @@ FP_DT_Creator::FP_DT_Creator (void)
   DT_TEST::instance ()->dt_creator (this);
 }
 
-Task*
-FP_DT_Creator::task (void)
+Thread_Task* 
+FP_DT_Creator::create_thr_task (int importance,
+				int start_time,
+				int load)
 {
-  FP_Task *fp_task;
-  ACE_NEW_RETURN (fp_task,
-		  FP_Task,
-		  0);
-  return fp_task;
-
+  FP_Task* task;
+  ACE_NEW_RETURN (task, 
+		  FP_Task (importance,
+			   start_time,
+			   load,
+			   this),
+			   0);
+  return task;
 }
+
+//  Task*
+//  FP_DT_Creator::task (void)
+//  {
+//    FP_Task *fp_task;
+//    ACE_NEW_RETURN (fp_task,
+//  		  FP_Task,
+//  		  0);
+//    return fp_task;
+
+//  }
 
 CORBA::Policy_ptr
 FP_DT_Creator::sched_param (int importance)
@@ -29,9 +44,9 @@ FP_DT_Creator::sched_param (int importance)
 void
 FP_DT_Creator::yield (int suspend_time)
 {
-//    ACE_DEBUG ((LM_DEBUG,
-//  	      "%d\n",
-//  	      suspend_time));
+  //    ACE_DEBUG ((LM_DEBUG,
+  //  	      "%d\n",
+  //  	      suspend_time));
   
   ACE_OS::sleep (suspend_time);
 }

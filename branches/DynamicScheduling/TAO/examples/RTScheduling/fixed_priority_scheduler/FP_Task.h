@@ -2,13 +2,17 @@
 #ifndef FP_TASK_H
 #define FP_TASK_H
 
-#include "../Task.h"
+#include "../Thread_Task.h"
 
-class FP_Task : public Task
+class FP_Task : public Thread_Task
 {
 public:
-  virtual int perform_task (int load,
-			    int thr_id);
+  FP_Task (int importance,
+	   int start_time,
+	   int load,
+	   DT_Creator *dt_creator);
+
+  virtual int perform_task (void);
 };
 
 #endif /*FP_TASK_H*/

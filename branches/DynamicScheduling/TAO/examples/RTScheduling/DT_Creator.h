@@ -20,15 +20,18 @@ class DT_Creator : public ACE_Service_Object
 
   int init (int argc, char *argv []);
   
-  void create_distributable_threads (CORBA::ORB_ptr orb,
-				     RTScheduling::Current_ptr  current
-				     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+  virtual void create_distributable_threads (CORBA::ORB_ptr orb,
+					     RTScheduling::Current_ptr  current
+					     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
   
   virtual void yield (int suspend_time) = 0;
 
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
-
-  virtual Task* task (void) = 0;
+  
+  virtual Thread_Task* create_thr_task (int importance,
+					int start_time,
+					int load) = 0;
+  //  virtual Task* task (void) = 0;
 
   int dt_count (void);
 

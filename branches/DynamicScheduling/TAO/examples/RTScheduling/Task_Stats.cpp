@@ -91,6 +91,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg,
       
       val_2  = this->thr_count_[i];
 
+      // ACE_OS::fprintf (output_file, "%d\n",val_2);
       ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,val_2);
       
     }

@@ -14,7 +14,10 @@ public:
 
   virtual CORBA::Policy_ptr sched_param (int importance);
 
-  virtual Task* task (void);
+  //virtual Task* task (void);
+  virtual Thread_Task* create_thr_task (int importance,
+					int start_time,
+					int load);
   
   virtual void yield (int suspend_time);
 };

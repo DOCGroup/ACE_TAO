@@ -36,6 +36,13 @@ DT_Creator::init (int argc, char *argv [])
           dt_count_ = ACE_OS::atoi (current_arg);
           ACE_NEW_RETURN (dt_list_, Thread_Task*[dt_count_], -1);
 	  active_dt_count_ = dt_count_;
+//  	  char msg [BUFSIZ];
+//  	  ACE_OS::sprintf (msg, "DT_Count %d\n", dt_count_);
+//  	  log [log_index++] = ACE_OS::strdup (msg);
+	  ACE_DEBUG ((LM_DEBUG,
+		      "DT Count %d\n",
+		      dt_count_));
+
           arg_shifter.consume_arg ();
         }
       if (arg_shifter.cur_arg_strncasecmp ("-DT_Task") == 0)
@@ -60,15 +67,10 @@ DT_Creator::init (int argc, char *argv [])
 	      total_load += load;
 	      arg_shifter.consume_arg ();
 	    }
-	  
-	  ACE_NEW_RETURN (task, 
-			  Thread_Task (importance,
-				       start_time,
-				       load,
-				       this,
-				       this->task ()), -1);
-	  
-	  dt_list_ [dt_index++] = task;
+
+	  dt_list_ [dt_index++] = this->create_thr_task (importance,
+							 start_time,
+							 load);
 	}
     }
   
@@ -104,32 +106,34 @@ DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
 				     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-  ACE_Time_Value base_time (ACE_OS::gettimeofday ());
+  ACE_Time_Value* base_time;
+  ACE_NEW (base_time,
+	   ACE_Time_Value (ACE_OS::gettimeofday ()));
 
   for (int i = 0; i < this->dt_count_; i++)
     {
       ACE_Time_Value now (ACE_OS::gettimeofday ());
       
-      ACE_Time_Value elapsed_time = now - base_time;
+      ACE_Time_Value elapsed_time = &now - base_time;
       
       char buf [BUFSIZ];
       ACE_OS::sprintf (buf, "elapsed time = %d\n now = %d\n base_time = %d\n",
 		       elapsed_time.sec (),
 		       now.sec (),
-		       base_time.sec());
+		       base_time->sec());
       
       log [log_index++] = ACE_OS::strdup (buf) ; 
       
       ACE_hthread_t curr_thr;
       ACE_Thread::self (curr_thr);
-     
+      
       /*
 	int priority;
 	if (ACE_Thread::getprio (curr_thr, priority) == -1)
 	{
 	}
       */
-
+      
       if (dt_list_ [i]->start_time () != 0 && (elapsed_time.sec () < dt_list_[i]->start_time ()))
 	{
 	  int suspension_time = dt_list_[i]->start_time () - elapsed_time.sec ();
@@ -143,6 +147,7 @@ DT_Creator::create_distributable_threads (CORBA::ORB_ptr orb,
       dt_list_ [i]->activate_task (current,
 				   sched_param.in (),
 				   flags,
+				   base_time,
 				   barrier_
 				   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
@@ -182,7 +187,8 @@ DT_Creator::dt_ended (void)
 void
 DT_Creator::check_ifexit (void)
 {
-  static shutdown = 0;
+  static int shutdown = 0;
+
   {
     ACE_GUARD (ACE_Lock, ace_mon, *shutdown_lock_); 
 
@@ -195,8 +201,8 @@ DT_Creator::check_ifexit (void)
 	
 	    ACE_DEBUG ((LM_DEBUG, "Shutdown in progress ...\n"));
 	
-	    TASK_STATS::instance ()->dump_samples ("schedule",
-						   "Schedule Output",
+	    TASK_STATS::instance ()->dump_samples ("schedule.dat",
+						   "#Schedule Output",
 						   ACE_High_Res_Timer::global_scale_factor ());
 
 	    shutdown = 1;
