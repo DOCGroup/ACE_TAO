@@ -158,7 +158,14 @@ client (void *arg = 0)
   ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
 #endif /* ACE_HAS_THREADS */
 
-  ACE_SOCK_IOStream server;
+  // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
+  // But if we don't, it doesn't get destroyed on some platforms, e.g.,
+  // g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does work on
+  // Linux, so the code seems fine.)  If we manage the
+  // storage ourselves, we _will_ destroy it at the end of this function.
+  ACE_SOCK_IOStream *server_p = new ACE_SOCK_IOStream;
+  ACE_SOCK_IOStream &server = *server_p;
+
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
   ACE_INET_Addr addr (remote_addr->get_port_number (), 
 		      ACE_DEFAULT_SERVER_HOST);
@@ -228,6 +235,8 @@ client (void *arg = 0)
   // Shut down the test.
   server.close();
 
+  delete server_p;
+
   return 0;
 }
 
@@ -239,9 +248,16 @@ server (void *arg = 0)
 {
   ACE_NEW_THREAD;
 
-  ACE_SOCK_Acceptor *acceptor = (ACE_SOCK_Acceptor *) arg;
-  ACE_SOCK_IOStream client_handler;
+  // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
+  // But if we don't, it doesn't get destroyed on some platforms, e.g.,
+  // g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does work on
+  // Linux, so the code seems fine.)  If we manage the
+  // storage ourselves, we _will_ destroy it at the end of this function.
+  ACE_SOCK_IOStream *client_handler_p = new ACE_SOCK_IOStream;
+  ACE_SOCK_IOStream &client_handler = *client_handler_p;
+
   ACE_INET_Addr server_addr;
+  ACE_SOCK_Acceptor *acceptor = (ACE_SOCK_Acceptor *) arg;
 
   if (acceptor->get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), 0);
@@ -323,6 +339,9 @@ server (void *arg = 0)
   ACE_ASSERT (i == -1  && (f1 >= -0.13 && f1 <= -0.11)
 	      && l == -666555444  &&  (f2 >= -24.0 && f2 <= -22.0)  
 	      && (d >= -45e+9 && d <= 47e+9));
+
+  delete client_handler_p;
+
   return 0;
 }
 
@@ -344,6 +363,7 @@ spawn (void)
 
   // Wait for the client and server thread to exit.
   ACE_Thread_Manager::instance ()->wait ();
+
 #elif !defined (ACE_LACKS_EXEC)
 
   switch (ACE_OS::fork ("child"))
