@@ -226,10 +226,9 @@ TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
           this->transport (0);
 
           this->peer ().cleanup (1);
-          this->peer ().close ();
         }
 
-      delete this;
+      this->destroy ();
     }
 
   return 0;

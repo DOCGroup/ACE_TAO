@@ -1,3 +1,12 @@
+Tue Apr 17 15:48:20 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Connection_Handler.cpp (handle_close):
+	* tao/Strategies/UIOP_Connection_Handler.cpp (handle_close):
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp (handle_close): The
+	  handle_close methods were not closing these Svc_Handler's down
+	  properly.  Removed "this->peer ()->close ()" calls and use
+	  "this->destroy () instead of calling "delete this."
+
 Tue Apr 17 15:43:45 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/POA/TIE/client.dsp: Removed FooS.* from project.
