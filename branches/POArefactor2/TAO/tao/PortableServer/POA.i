@@ -235,12 +235,6 @@ TAO_POA::get_adapter_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return this->adapter_state_;
 }
 
-ACE_INLINE TAO::Portable_Server::Cached_Policies &
-TAO_POA::cached_policies (void)
-{
-  return this->cached_policies_;
-}
-
 ACE_INLINE void *
 TAO_POA::thread_pool (void) const
 {

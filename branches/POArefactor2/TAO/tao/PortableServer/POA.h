@@ -350,10 +350,6 @@ public:
   /// Accessor for POA policies.
   TAO_POA_Policy_Set &policies (void);
 
-  /// Accessor for cached POA policies.
-  /// @todo, remove this, everything should just use the strategies, not peeking atthe policies
-  TAO::Portable_Server::Cached_Policies &cached_policies (void);
-
   /// This method gives the policies that are exposed to the client.
   /// These policies are shipped within the IOR.
   virtual CORBA::PolicyList *client_exposed_policies (
