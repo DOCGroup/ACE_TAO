@@ -295,9 +295,9 @@ static void SaveBuf(void)
   for (i = 0; i < items; i++)
   {
     Fputs(prog[i].title);
-    Fputs(prog[i].vh);
+    //    Fputs(prog[i].vh);
     Fputs(prog[i].vf);
-    Fputs(prog[i].ah);
+    //    Fputs(prog[i].ah);
     Fputs(prog[i].af);
   }
   fclose(fp);
@@ -504,15 +504,15 @@ static void modifyCB(Widget w, XtPointer closure, XtPointer call_data)
   strcat(buf, LINE1);
   strcat(buf, prog[i].title);
   strcat(buf, "\n");
-  strcat(buf, LINE2);
-  strcat(buf, prog[i].vh);
-  strcat(buf, "\n");
+  //  strcat(buf, LINE2);
+  //  strcat(buf, prog[i].vh);
+  //  strcat(buf, "\n");
   strcat(buf, LINE3);
   strcat(buf, prog[i].vf);
   strcat(buf, "\n");
-  strcat(buf, LINE4);
-  strcat(buf, prog[i].ah);
-  strcat(buf, "\n");
+  //  strcat(buf, LINE4);
+  //  strcat(buf, prog[i].ah);
+  //  strcat(buf, "\n");
   strcat(buf, LINE5);
   strcat(buf, prog[i].af);
   strcat(buf, "\n\n");
@@ -538,7 +538,7 @@ static void playCB(Widget w, XtPointer closure, XtPointer call_data)
     if (i >= items || i < 0)
       return;
     cerr << "PlayCB\n";
-    cerr << prog[i].title << " " << prog[i].vh << " " <<prog[i].vf << " " << prog[i].ah << " " << prog[i].af << endl;
+    cerr << prog[i].title << " " << " " <<prog[i].vf << " " << " " << prog[i].af << endl;
     StartProgram(prog[i].title, prog[i].vh, prog[i].vf, prog[i].ah, prog[i].af);
   }
 }

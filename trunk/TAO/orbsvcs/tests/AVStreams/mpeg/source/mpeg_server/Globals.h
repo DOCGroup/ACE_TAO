@@ -156,6 +156,8 @@ public:
   ACE_SOCK_CODgram dgram;
   // the UDP data socket
 
+  char *data_host;
+  // name of the host to bind to.
   int live_source;
   int video_format;
 
@@ -342,6 +344,7 @@ public:
 
   public:
 
+    char *data_host;
     enum audio_state {AUDIO_WAITING = 0,AUDIO_PLAY =1};
 
     audio_state state;

@@ -39,6 +39,7 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 #include "include/common.h"
 #include "newproto.h"
 #include "global.h"
+#include "ace/OS.h"
 
 ACE_RCSID(mpeg_client, ui, "$Id$")
 
@@ -98,12 +99,14 @@ static void infoclose_callback(Widget, XtPointer, XmAnyCallbackStruct *);
 
 static void CmdWrite(char * buf, int size)
 {
-  while (write(cmdSocket, (buf), (size)) == -1)
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t)before writing cmd\n"));
+  while (ACE_OS::write(cmdSocket, (buf), (size)) == -1)
   {
     if (errno == EINTR) continue;
     perror("UI write to cmdSocket");
     exit(1);
   }
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t)After writing cmd\n"));
 }
 
 /*****************************************************************************
@@ -130,9 +133,9 @@ static void UICreate()
   int			n, depth;
 
   static String		fallbacks[] = {
-   "*Foreground:  gray20",
+   "*Foreground:  black",
   "*BorderWidth: 0",
-  "*Background:  gray70",
+  "*Background:  lavender",
   "*XmToggleButton.selectColor:         yellow",
   "*XmToggleButton.indicatorSize:       16",
   "*XmToggleButtonGadget.selectColor:   yellow",
@@ -652,6 +655,7 @@ static void step_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cbs)
 
 static void play_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cbs)
 {
+  ACE_DEBUG ((LM_DEBUG,"(%P)play_callback:cmdbusy= %d,playtag=%d\n",cmdBusy,playtag));
   if (playtag && !cmdBusy)
   {
     char cmd = CmdPLAY;
@@ -777,6 +781,7 @@ static void cmdSocket_callback(Widget w, XtPointer data, XmAnyCallbackStruct *cb
     perror("UI by callback read from CmdSocket");
     exit(1);
   }
+  //  ACE_DEBUG ((LM_DEBUG,"(%P)cmdSocket_callback:cmd= %d",cmd));
   if (cmd == CmdDONE || cmd == CmdFAIL)
   {
     cmdBusy = 0;

@@ -20,6 +20,7 @@ module TAO_VR
     string name_;
     string filename_;
     string description_;
+    //    string video_filename_;      
     //    string movie_format_;
     //    unsigned long filesize_;
     //    unsigned long duration_;
