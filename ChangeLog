@@ -1,3 +1,9 @@
+Wed Sep 13 14:01:57 2000  Luther J Baker  <luther@maxixe.doc.wustl.edu>
+
+	* ace/OS.i (umask):
+
+	  Missing punctuation.
+
 Tue Sep 12 22:00:31 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/config-win32-common.h: Added missing 'FD_SETSIZE' to #undef
