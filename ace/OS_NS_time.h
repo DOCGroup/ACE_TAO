@@ -142,8 +142,13 @@ inline long ace_timezone()
   TIME_ZONE_INFORMATION tz;
   GetTimeZoneInformation (&tz);
   return tz.Bias * 60;
-# elif defined (ACE_WIN32)
+# elif defined (ACE_WIN32) && !defined (ACE_HAS_DINKUM_STL)
   return _timezone;  // For Win32.
+# elif defined (ACE_WIN32) && defined (ACE_HAS_DINKUM_STL)
+  time_t tod = time(0);   // get current time
+  time_t t1 = mktime(gmtime(&tod));   // convert without timezone
+  time_t t2 = mktime(localtime(&tod));   // convert with timezone
+  return difftime(t1, t2); // compute difference in seconds
 # elif ( defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY) ) && ( !defined (__linux__) )
   long result = 0;
   struct timeval time;
