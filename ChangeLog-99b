@@ -1,5 +1,9 @@
 Sun Sep 19 10:39:30 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
+	* tests/Signal_Test.cpp: Changed the type of the lock used in ACE_Atomic_Op<>
+	  from ACE_SYNCH_MUTEX to ACE_SYNCH_RECURSIVE_MUTEX.  This should
+ 	  prevent some nasty deadlocks.
+
 	* tests/run_tests.lst: Reenabled Signal_Test so we can see if it's
 	  still working.
 
