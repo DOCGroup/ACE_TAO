@@ -16,12 +16,8 @@
 #include "ace/Log_Msg.h"
 
 #include "Property_Handler.h"
-#include "Requirement_Handler.h"
-#include "PCI_Handler.h"
 #include "CompIntrDesc_Handler.h"
-#include "CompPropDesc_Handler.h"
-#include "CompPortDesc_Handler.h"
-
+#include "DT_Handler.h"
 #include <iostream>
 
 using std::cerr;
@@ -107,9 +103,15 @@ namespace CIAO
             }
           else if (node_name == XStr (ACE_TEXT ("property")))
             {
+              this->process_property_element (node, this->doc_,
+                                          this->iter_,
+                                          ccd);
             }
           else if (node_name == XStr (ACE_TEXT ("port")))
             {
+              this->process_port_element (node, this->doc_,
+                                          this->iter_,
+                                          ccd);
             }
           else
             {
@@ -191,6 +193,32 @@ namespace CIAO
         }
     }
 
+    // handle property element
+    void CCD_Handler::process_property_element (DOMNode* node,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          Deployment::ComponentInterfaceDescription& ccd)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+          CORBA::ULong i (ccd.property.length ());
+          ccd.property.length (i + 1);
+          if (length == 1)
+            {
+              this->process_comp_property
+                 (doc, iter, ccd.property[i]);
+            }
+          else if (length > 1)
+            {
+              this->process_attributes_for_comp_property
+                (named_node_map, doc,
+                 iter, i, ccd.property[i]);
+            }
+        }
+    }
+
     // handle info property element
     void CCD_Handler::process_info_property_element (DOMNode* node,
           DOMDocument* doc,
@@ -215,6 +243,351 @@ namespace CIAO
                  iter, i, ccd.infoProperty[i]);
             }
         }
+    }
+
+    // handle component port desc element
+    void CCD_Handler::process_port_element (DOMNode* node,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          Deployment::ComponentInterfaceDescription& ccd)
+    {
+      if (node->hasAttributes ())
+        {
+          DOMNamedNodeMap* named_node_map = node->getAttributes ();
+          int length = named_node_map->getLength ();
+          CORBA::ULong i (ccd.port.length ());
+          ccd.port.length (i + 1);
+          if (length == 1)
+            {
+              this->process_port
+                 (doc, iter, ccd.port[i]);
+            }
+          else if (length > 1)
+            {
+              this->process_attributes_for_port
+                (named_node_map, doc,
+                 iter, i, ccd.port[i]);
+            }
+        }
+    }
+
+    /// process component property element
+    void CCD_Handler::process_comp_property (DOMDocument*,
+           DOMNodeIterator* iter,
+           Deployment::ComponentPropertyDescription& property)
+    {
+      for (DOMNode* node = iter->nextNode();
+           node != 0;
+           node = iter->nextNode ())
+        {
+          XStr node_name (node->getNodeName());
+          if (node_name == XStr (ACE_TEXT ("name")))
+            {
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_pro_name (text->getNodeValue(), property);
+            }
+          else if (node_name == XStr (ACE_TEXT ("type")))
+            {
+              int argc = 0;
+              char ** argv = 0;
+              CORBA::ORB_ptr orb = CORBA::ORB_init (argc, argv, "");
+              DT_Handler::process_DataType (iter, property.type.in (),
+                                            orb);
+            }
+          else
+            {
+              iter->previousNode();
+              return;
+            }
+        }
+    }
+
+    void CCD_Handler::process_pro_name (const XMLCh* name,
+       Deployment::ComponentPropertyDescription& property)
+    {
+      if (name)
+        {
+          property.name = XMLString::transcode (name);
+        }
+    }
+
+    void CCD_Handler::process_attributes_for_comp_property
+         (DOMNamedNodeMap* named_node_map,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          int value,
+          Deployment::ComponentPropertyDescription& property)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              this->process_comp_property
+                 (doc, iter, property);
+              id_map_.bind (aceattrnodevalue, value);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              this->process_comp_property
+                 (href_doc, href_iter, property);
+            }
+        }
+
+      return;
+    }
+
+    /// process port element
+    void CCD_Handler::process_port (DOMDocument*,
+           DOMNodeIterator* iter,
+           Deployment::ComponentPortDescription& port)
+    {
+      for (DOMNode* node = iter->nextNode();
+           node != 0;
+           node = iter->nextNode ())
+        {
+          XStr node_name (node->getNodeName());
+          if (node_name == XStr (ACE_TEXT ("name")))
+            {
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_port_name (text->getNodeValue(), port);
+            }
+          else if (node_name == XStr (ACE_TEXT ("specificType")))
+            {
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_port_name (text->getNodeValue(), port);
+            }
+          else if (node_name == XStr (ACE_TEXT ("supportedType")))
+            {
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_port_type (text->getNodeValue(), port);
+            }
+          else if (node_name == XStr (ACE_TEXT ("provider")))
+            {
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_port_provider (text->getNodeValue(), port);
+            }
+          else if (node_name == XStr (ACE_TEXT ("exclusiveProvider")))
+            {
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_port_exprovider (text->getNodeValue(), port);
+            }
+          else if (node_name == XStr (ACE_TEXT ("exclusiveUser")))
+            {
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_port_exuser (text->getNodeValue(), port);
+            }
+          else if (node_name == XStr (ACE_TEXT ("optional")))
+            {
+              node = this->iter_->nextNode();
+              DOMText* text = ACE_reinterpret_cast (DOMText*, node);
+              this->process_port_optional (text->getNodeValue(), port);
+            }
+          else
+            {
+              iter->previousNode();
+              return;
+            }
+        }
+    }
+
+    void CCD_Handler::process_port_name (const XMLCh* name,
+       Deployment::ComponentPortDescription& port)
+    {
+      if (name)
+        {
+          port.name = XMLString::transcode (name);
+        }
+    }
+
+    void CCD_Handler::process_port_type (const XMLCh* type,
+       Deployment::ComponentPortDescription& port)
+    {
+      if (type)
+        {
+          port.specificType = XMLString::transcode (type);
+        }
+    }
+
+    void CCD_Handler::process_port_provider (const XMLCh* provider,
+       Deployment::ComponentPortDescription& port)
+    {
+      XStr true_val ("true");
+      XStr true_cap_val ("TRUE");
+      XStr value (provider);
+
+      if (value == true_val || value == true_cap_val)
+        {
+          port.provider = 1;
+        }
+      else
+        {
+          port.provider = 0;
+        }
+    }
+
+    void CCD_Handler::process_port_exprovider (const XMLCh* provider,
+       Deployment::ComponentPortDescription& port)
+    {
+      XStr true_val ("true");
+      XStr true_cap_val ("TRUE");
+      XStr value (provider);
+
+      if (value == true_val || value == true_cap_val)
+        {
+          port.exclusiveProvider = 1;
+        }
+      else
+        {
+          port.exclusiveProvider = 0;
+        }
+    }
+
+    void CCD_Handler::process_port_exuser (const XMLCh* user,
+       Deployment::ComponentPortDescription& port)
+    {
+      XStr true_val ("true");
+      XStr true_cap_val ("TRUE");
+      XStr value (user);
+
+      if (value == true_val || value == true_cap_val)
+        {
+          port.exclusiveUser = 1;
+        }
+      else
+        {
+          port.exclusiveUser = 0;
+        }
+    }
+
+    void CCD_Handler::process_port_optional (const XMLCh* optional,
+       Deployment::ComponentPortDescription& port)
+    {
+      XStr true_val ("true");
+      XStr true_cap_val ("TRUE");
+      XStr value (optional);
+
+      if (value == true_val || value == true_cap_val)
+        {
+          port.optional = 1;
+        }
+      else
+        {
+          port.optional = 0;
+        }
+    }
+
+    void CCD_Handler::process_attributes_for_port
+         (DOMNamedNodeMap* named_node_map,
+          DOMDocument* doc,
+          DOMNodeIterator* iter,
+          int value,
+          Deployment::ComponentPortDescription& port)
+    {
+      int length = named_node_map->getLength ();
+
+      for (int j = 0; j < length; j++)
+        {
+          DOMNode* attribute_node = named_node_map->item (j);
+          XStr strattrnodename
+             (attribute_node->getNodeName ());
+          ACE_TString aceattrnodevalue =  XMLString::transcode
+             (attribute_node->getNodeValue ());
+
+          if (strattrnodename == XStr (ACE_TEXT ("xmi:id")))
+            {
+              this->process_port
+                 (doc, iter, port);
+              id_map_.bind (aceattrnodevalue, value);
+            }
+          else if (strattrnodename == XStr (ACE_TEXT ("href")))
+            {
+              XMLURL xml_url (aceattrnodevalue.c_str ());
+              XMLURL result (aceattrnodevalue.c_str ());
+              std::string url_string = aceattrnodevalue.c_str ();
+              ACE_TString doc_path =
+               XMLString::transcode ( doc->getDocumentURI ());
+              result.makeRelativeTo
+                 (XMLString::transcode (doc_path.c_str ()));
+              ACE_TString final_url =
+               XMLString::transcode (result.getURLText ());
+
+              DOMDocument* href_doc;
+
+              if (xml_url.isRelative ())
+                {
+                  href_doc = this->create_document
+                       (final_url.c_str ());
+                }
+              else
+                {
+                  href_doc = this->create_document
+                       (url_string.c_str ());
+                }
+
+              DOMDocumentTraversal* traverse (href_doc);
+              DOMNode* root = (href_doc->getDocumentElement ());
+              unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
+                                     DOMNodeFilter::SHOW_TEXT;
+              DOMNodeIterator* href_iter = traverse->createNodeIterator
+                                              (root,
+                                               filter,
+                                               0,
+                                               true);
+              href_iter->nextNode ();
+              this->process_port
+                 (href_doc, href_iter, port);
+            }
+        }
+
+      return;
     }
 
     void CCD_Handler::process_attributes_for_property
