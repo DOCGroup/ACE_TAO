@@ -1,10 +1,3 @@
-Thu Aug 13 18:05:00 1998  David L. Levine  <levine@cs.wustl.edu>
-
-        * tao/ORB_Core.i (hash_i): suppress the specialization with
-          non-egcs g++.  Older versions of g++, such as 2.7.2.3,
-          can't compile it.
-
-
 Thu Aug 13 17:45:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.cpp: changed dump_schedule
@@ -24,11 +17,20 @@ Thu Aug 13 17:45:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 Thu Aug 13 15:20:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * tao/ORB_Core.i (hash_i): suppress the specialization with
+          non-egcs g++.  Older versions of g++, such as 2.7.2.3,
+          can't compile it.
+
         * orbsvcs/orbsvcs/Sched/Scheduler.cpp (dispatch_configuration):
           made int return type explicit.
 
         * orbsvcs/orbsvcs/Sched/DynSched.cpp: added
           ACE_Unbounded_Set<RtecScheduler::Config_Info> template instatiations.
+
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp (supplier_task),
+          orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp (supplier_task):
+          cast event_count_ to CORBA::Long instead of CORBA::ULong,
+          to avoid signed/unsigned comparison.
 
 Thu Aug 13 15:16:38 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
