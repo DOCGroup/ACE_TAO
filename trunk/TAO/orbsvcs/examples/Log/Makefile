@@ -8,10 +8,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  =	CosEC \
-	RtEC \
-	Notify \
-	Log
+DIRS  =	Client \
+	test
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

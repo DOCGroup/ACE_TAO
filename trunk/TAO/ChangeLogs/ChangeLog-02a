@@ -1,3 +1,30 @@
+Fri Mar 31 21:01:59 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/examples/Notify/Filter/Makefile:
+        * orbsvcs/examples/Notify/Subscribe/Makefile:
+          Fixed typo in LDLIBS macro.
+
+        * orbsvcs/orbsvcs/Makefile:
+        * orbsvcs/orbsvcs/Makefile.av:
+          AV does not require the trading service
+
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+          Fixed warning about unused ACE_TRY block
+
+        * orbsvcs/examples/Makefile:
+        * orbsvcs/examples/Log/Makefile:
+        * orbsvcs/examples/Log/Client/Makefile:
+        * orbsvcs/examples/Log/test/Makefile:
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/Sched/Makefile:
+        * orbsvcs/tests/Concurrency/Makefile:
+          Several Makefiles did not list all the directories or there was
+          no Makefile for some templates.
+
+        * orbsvcs/examples/Log/test/BasicLog_Test.cpp:
+          Fixed several minor problems, they had not been detected before
+          because the code was not beign compiled.
+
 Sat Apr  1 22:10:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
@@ -9,87 +36,87 @@ Sat Apr  1 22:10:41 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Added patches submitted by Larry Peacock <larry@appsmiths.com> to
           finish the Environment Variable support in the Implementation
-          Repository.  
+          Repository.
 
           [Bug 196]
 
 Sat Apr  1 12:50:33 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Server_Request.cpp: Fixed compiler errors in Minimum
-	  CORBA build. 
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Server_Request.cpp: Fixed compiler errors in Minimum
+          CORBA build.
 
 Sat Apr  1 12:09:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp (write_reply_header): Fixed a warning
-	  in Linux EGCS build.
+        * tao/GIOP_Message_Lite.cpp (write_reply_header): Fixed a warning
+          in Linux EGCS build.
 
 Sat Apr  1 10:20:12 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/Notify_Service/Notify_Service.cpp:
-	  Moved the call to <resolve_naming_service> in the correct place
-	  to detect if the naming service is available or not.
+        * orbsvcs/Notify_Service/Notify_Service.cpp:
+          Moved the call to <resolve_naming_service> in the correct place
+          to detect if the naming service is available or not.
 
 Fri Mar 31 20:59:31 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Object_Adapter.cpp (activate_poa): AdapterNonExistent
-	  exceptions raised while processing a request should be caught
-	  and converted into OBJECT_NOT_EXIST.  Remember that
-	  AdapterNonExistent is a server side exception and the client
-	  does not know about this exception.  If this conversion does not
-	  take place, it will get handled as a UNKNOWN exception on the
-	  client.  Thanks to Carlos for pointing this out.
+        * tao/Object_Adapter.cpp (activate_poa): AdapterNonExistent
+          exceptions raised while processing a request should be caught
+          and converted into OBJECT_NOT_EXIST.  Remember that
+          AdapterNonExistent is a server side exception and the client
+          does not know about this exception.  If this conversion does not
+          take place, it will get handled as a UNKNOWN exception on the
+          client.  Thanks to Carlos for pointing this out.
 
 Fri Mar 31 20:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
-	  Added a <_proxy_> member per TAO_interface_Smart_PRoxy_Base
-	  so that the <base_proxy_> got be narrowed and stored for future
-	  invocations. Also added generation of export macros for the
-	  smart proxy classes. Thanks to Aniruddha Gokhale
-	  <gokhale@research.bell-labs.com> for pointing this out.
-	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp (get_proxy):
-	  Changed the implmentation of this method to overcome the problem
-	  faced when using ACE_dynamic_cast on some compilers. Now
-	  <_unchecked_narrow> is used for the downcasting. Also it was
-	  necessary to unregister the smart proxy factory so it into get
-	  into an infinite loop of creating smart proxies. This doesnt
-	  harm the design in any way because the factory is unregistered
-	  only during the first invocation of the smart proxy. And
-	  anyways, to use create a smart proxy its necessary to create a
-	  smart proxy factory.
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added Smart_Proxies.{i,h,cpp} to both these workspaces.
-	* docs/Smart_Proxies.html: Updated the documentation.
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+          Added a <_proxy_> member per TAO_interface_Smart_PRoxy_Base
+          so that the <base_proxy_> got be narrowed and stored for future
+          invocations. Also added generation of export macros for the
+          smart proxy classes. Thanks to Aniruddha Gokhale
+          <gokhale@research.bell-labs.com> for pointing this out.
+        * TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp (get_proxy):
+          Changed the implmentation of this method to overcome the problem
+          faced when using ACE_dynamic_cast on some compilers. Now
+          <_unchecked_narrow> is used for the downcasting. Also it was
+          necessary to unregister the smart proxy factory so it into get
+          into an infinite loop of creating smart proxies. This doesnt
+          harm the design in any way because the factory is unregistered
+          only during the first invocation of the smart proxy. And
+          anyways, to use create a smart proxy its necessary to create a
+          smart proxy factory.
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Added Smart_Proxies.{i,h,cpp} to both these workspaces.
+        * docs/Smart_Proxies.html: Updated the documentation.
 
 Fri Mar 31 18:36:34 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Accept_State.cpp (write_reply_header):
-	* tao/GIOP_Message_Accept_State.h:
-	* tao/GIOP_Message_Accept_State.i:
-	* tao/GIOP_Message_Acceptors.cpp:
-	* tao/GIOP_Message_Acceptors.h:
-	* tao/GIOP_Message_Acceptors.i:
-	* tao/GIOP_Message_Base.h:
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_Connectors.cpp:
-	* tao/GIOP_Message_Connectors.h:
-	* tao/GIOP_Message_Lite.cpp:
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/GIOP_Utils.cpp:
-	* tao/GIOP_Utils.h:
-	* tao/IIOP_Connect.h:
-	* tao/Pluggable_Messaging.h:
-	* tao/Pluggable_Messaging_Utils.h:
-	* tao/Pluggable_Messaging_Utils.i: Added a new method by name
-	  write_reply_header () to the pluggable messaging
-	  interface. Changes in other files are for implementation and
-	  proper usage of this method within our GIOP
-	  implementation. This is in line with Carlos's suggestion. I have
-	  not got around to address his other comments.
+        * tao/GIOP_Message_Accept_State.cpp (write_reply_header):
+        * tao/GIOP_Message_Accept_State.h:
+        * tao/GIOP_Message_Accept_State.i:
+        * tao/GIOP_Message_Acceptors.cpp:
+        * tao/GIOP_Message_Acceptors.h:
+        * tao/GIOP_Message_Acceptors.i:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Connectors.cpp:
+        * tao/GIOP_Message_Connectors.h:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/GIOP_Utils.cpp:
+        * tao/GIOP_Utils.h:
+        * tao/IIOP_Connect.h:
+        * tao/Pluggable_Messaging.h:
+        * tao/Pluggable_Messaging_Utils.h:
+        * tao/Pluggable_Messaging_Utils.i: Added a new method by name
+          write_reply_header () to the pluggable messaging
+          interface. Changes in other files are for implementation and
+          proper usage of this method within our GIOP
+          implementation. This is in line with Carlos's suggestion. I have
+          not got around to address his other comments.
 
 Fri Mar 31 08:15:39 2000  David L. Levine  <levine@cs.wustl.edu>
 

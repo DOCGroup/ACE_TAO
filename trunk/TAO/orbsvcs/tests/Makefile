@@ -21,10 +21,8 @@ DIRS  = Simple_Naming \
         Sched_Conf \
         Time \
         Event \
-	CosEvent
-
-# Not compiled by default
-#       Concurrency \
+	CosEvent \
+	Concurrency
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -46,8 +44,7 @@ ifeq ($(minimum_corba),0)
 # Trader uses DynAny which is disabled when compiling with minimum
 # CORBA support.  LifeCycle and AV depend on Trader so don't build
 # them either.
-  DIRS += Trading
-#AVStreams
+  DIRS += Trading #AVStreams
 
 endif # minimum_corba
 

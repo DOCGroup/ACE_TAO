@@ -23,7 +23,7 @@ override TAO_IDLFLAGS += \
 
 VPATH=.:AV
 
-ACE_SHLIBS = -lTAO_CosProperty -lTAO_CosTrading -lTAO_CosNaming -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets

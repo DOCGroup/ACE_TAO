@@ -16,12 +16,9 @@ DIRS  = orbsvcs \
         Notify_Service \
         Time_Service \
         CosEvent_Service \
+        Concurrency_Service \
         tests \
         examples
-
-# Not compiled by default
-#       Concurrency_Service \
-
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -63,11 +63,11 @@ endif
 ifneq (,$(findstring  Property, $(TAO_ORBSVCS)))
   MKLIST += Makefile.CosProperty
 endif
-ifneq (,$(findstring  LifeCycle, $(TAO_ORBSVCS)))
-  MKLIST += Makefile.CosLifeCycle
-endif
 ifneq (,$(findstring  AV, $(TAO_ORBSVCS)))
   MKLIST += Makefile.av
+endif
+ifneq (,$(findstring  LifeCycle, $(TAO_ORBSVCS)))
+  MKLIST += Makefile.CosLifeCycle
 endif
 ifneq (,$(findstring  Sched, $(TAO_ORBSVCS)))
   MKLIST += Makefile.RTSched

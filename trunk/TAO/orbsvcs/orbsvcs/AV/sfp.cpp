@@ -113,7 +113,7 @@ TAO_SFP_Base::TAO_SFP_Base (void)
   credit.magic_number [2] = 'R';
   credit.magic_number [3] = 'E';
   output_cdr.reset ();
-  
+
   if (!(output_cdr << credit))
     {
       ACE_ERROR ((LM_ERROR, "TAO_SFP constructor\n"));
@@ -191,166 +191,173 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
 {
   ACE_Message_Block *message_block = 0;
   int result = -1;
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"Reading simple frame\n"));
-      // Check to see what the length of the message is.
-      int byte_order = frame_header.flags & 0x1;
-      int message_len = frame_header.message_size;
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,"Reading simple frame\n"));
+  // Check to see what the length of the message is.
+  int byte_order = frame_header.flags & 0x1;
+  int message_len = frame_header.message_size;
 
 //       ACE_NEW_RETURN (message_block,
 //                       ACE_Message_Block (message_len),
 //                       0);
-      state.static_frame_.rd_ptr (state.static_frame_.base ());
-      state.static_frame_.wr_ptr (state.static_frame_.base ());
-      int n = transport->recv (state.static_frame_.rd_ptr (),message_len);
-      if (n == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
-      else if (n==0)
-        ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
-      else if (n != message_len)
-        ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame:message truncated\n"),0);
-      message_block = &state.static_frame_;
-      // print the buffer.
-      //      this->dump_buf (message,n);
-      // skip over the frame header.
-      message_block->rd_ptr (frame_header_len);
-      message_block->wr_ptr (n);
-      CORBA::ULong ssrc = 0;
-      TAO_SFP_Fragment_Table_Entry *fragment_entry = 0;
-      if (frame_header.flags & 0x2)
+  state.static_frame_.rd_ptr (state.static_frame_.base ());
+  state.static_frame_.wr_ptr (state.static_frame_.base ());
+  int n = transport->recv (state.static_frame_.rd_ptr (),message_len);
+  if (n == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
+  else if (n==0)
+    ACE_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
+  else if (n != message_len)
+    ACE_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame:message truncated\n"),0);
+  message_block = &state.static_frame_;
+  // print the buffer.
+  //      this->dump_buf (message,n);
+  // skip over the frame header.
+  message_block->rd_ptr (frame_header_len);
+  message_block->wr_ptr (n);
+  CORBA::ULong ssrc = 0;
+  TAO_SFP_Fragment_Table_Entry *fragment_entry = 0;
+  if (frame_header.flags & 0x2)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,"fragmented frame:0th fragment\n"));
+      state.more_fragments_ = 1;
+      ACE_Message_Block *data = 0;
+      switch (frame_header.message_type)
         {
-          if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"fragmented frame:0th fragment\n"));
-          state.more_fragments_ = 1;
-          ACE_Message_Block *data = 0;
-          switch (frame_header.message_type)
-            {
-            case flowProtocol::Frame_Msg:
-              {
-                // read the frame info.
-                ACE_Message_Block frame_info_mb (message_len-frame_header_len+ACE_CDR::MAX_ALIGNMENT);
-                ACE_CDR::mb_align (&frame_info_mb);
-                frame_info_mb.copy (message_block->rd_ptr (),
-                                    message_block->length ());
-                // print the buffer.
-                //          this->dump_buf (message_block->rd_ptr (),16);
-                TAO_InputCDR frame_info_cdr (&frame_info_mb,byte_order);
-                frame_info_cdr >> state.frame_;
-                if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"frame.timestamp = %d, frame.synchsource = %d, frame.sequence_num = %d\n",
-                            state.frame_.timestamp,
-                            state.frame_.synchSource,
-                            state.frame_.sequence_num));
-                ssrc = state.frame_.synchSource;
-                // The remaining message in the CDR stream is the fragment data for frag.0
-                data = frame_info_cdr.start ()->clone ();
-                break;
-              }
-            case flowProtocol::SimpleFrame_Msg:
-              {
-                data = message_block->clone ();
-                break;
-              }
-            case flowProtocol::SequencedFrame_Msg:
-              break;
-            case flowProtocol::SpecialFrame_Msg:
-              break;
-            }
-          if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"Length of 0th fragment= %d\n",data->length ()));
-          TAO_SFP_Fragment_Table *fragment_table = 0;
-          result = state.fragment_table_map_.find (ssrc,fragment_table);
+        case flowProtocol::Frame_Msg:
+          {
+            // read the frame info.
+            ACE_Message_Block frame_info_mb (message_len-frame_header_len+ACE_CDR::MAX_ALIGNMENT);
+            ACE_CDR::mb_align (&frame_info_mb);
+            frame_info_mb.copy (message_block->rd_ptr (),
+                                message_block->length ());
+            // print the buffer.
+            //          this->dump_buf (message_block->rd_ptr (),16);
+            TAO_InputCDR frame_info_cdr (&frame_info_mb,byte_order);
+            frame_info_cdr >> state.frame_;
+            if (TAO_debug_level > 0)
+              ACE_DEBUG ((LM_DEBUG,
+                          "frame.timestamp = %d, "
+                          "frame.synchsource = %d, "
+                          "frame.sequence_num = %d\n",
+                          state.frame_.timestamp,
+                          state.frame_.synchSource,
+                          state.frame_.sequence_num));
+            ssrc = state.frame_.synchSource;
+            // The remaining message in the CDR stream is the fragment
+            // data for frag.0
+            data = frame_info_cdr.start ()->clone ();
+            break;
+          }
+        case flowProtocol::SimpleFrame_Msg:
+          {
+            data = message_block->clone ();
+            break;
+          }
+        case flowProtocol::SequencedFrame_Msg:
+          break;
+        case flowProtocol::SpecialFrame_Msg:
+          break;
+        }
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,"Length of 0th fragment= %d\n",data->length ()));
+      TAO_SFP_Fragment_Table *fragment_table = 0;
+      result = state.fragment_table_map_.find (ssrc,fragment_table);
+      if (result != 0)
+        {
+          ACE_NEW_RETURN (fragment_table,
+                          TAO_SFP_Fragment_Table,
+                          -1);
+          result = state.fragment_table_map_.bind (ssrc,fragment_table);
+          if (result < 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "TAO_SFP_Base::read_frame: "
+                               "fragment_table_map:bind failed\n"),-1);
+        }
+
+      TAO_SFP_Fragment_Node *new_node;
+      ACE_NEW_RETURN (new_node,
+                      TAO_SFP_Fragment_Node,
+                      0);
+      new_node->fragment_info_.frag_sz = data->length ();
+      new_node->fragment_info_.frag_number = 0;
+      if (state.frame_.source_ids.length () > 0)
+        new_node->fragment_info_.source_id = state.frame_.source_ids [0];
+      else
+        new_node->fragment_info_.source_id = 0;
+      new_node->data_ = data;
+      //          TAO_SFP_Base::dump_buf (data->rd_ptr (),data->length ());
+      if (fragment_table->find (state.frame_.sequence_num,fragment_entry) == 0)
+        {
+          // This case can happen where a nth (n > 0)fragment is
+          // received before the 0th fragment.
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "fragment table entry found for 0th fragment:\n"));
+          result = fragment_entry->fragment_set_.insert (*new_node);
           if (result != 0)
-            {
-              ACE_NEW_RETURN (fragment_table,
-                              TAO_SFP_Fragment_Table,
-                              -1);
-              result = state.fragment_table_map_.bind (ssrc,fragment_table);
-              if (result < 0)
-                ACE_ERROR_RETURN ((LM_ERROR,"TAO_SFP_Base::read_frame: fragment_table_map:bind failed\n"),-1);
-            }
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "insert for 0th fragment failed\n"),0);
+          //  enter the frame info.
 
-          TAO_SFP_Fragment_Node *new_node;
-          ACE_NEW_RETURN (new_node,
-                          TAO_SFP_Fragment_Node,
-                          0);
-          new_node->fragment_info_.frag_sz = data->length ();
-          new_node->fragment_info_.frag_number = 0;
-          if (state.frame_.source_ids.length () > 0)
-            new_node->fragment_info_.source_id = state.frame_.source_ids [0];
-          else
-            new_node->fragment_info_.source_id = 0;
-          new_node->data_ = data;
-          //          TAO_SFP_Base::dump_buf (data->rd_ptr (),data->length ());
-          if (fragment_table->find (state.frame_.sequence_num,fragment_entry) == 0)
-            {
-              // This case can happen where a nth (n > 0)fragment is received before the 0th fragment.
-              if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"fragment table entry found for 0th fragment:\n"));
-              result = fragment_entry->fragment_set_.insert (*new_node);
-              if (result != 0)
-                ACE_ERROR_RETURN ((LM_ERROR,"insert for 0th fragment failed\n"),0);
-              //  enter the frame info.
-
-              // check if all the fragments have been received.
-              state.frame_block_ = TAO_SFP_Base::check_all_fragments (fragment_entry);
-              if (state.frame_block_ != 0)
-                state.more_fragments_ = 0;
-            }
-          else
-            {
-              if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"fragment table entry not found for 0th fragment\n"));
-              TAO_SFP_Fragment_Table_Entry *new_entry;
-              ACE_NEW_RETURN (new_entry,
-                              TAO_SFP_Fragment_Table_Entry,
-                              0);
-              result = new_entry->fragment_set_.insert (*new_node);
-              if (result != 0)
-                ACE_ERROR_RETURN ((LM_ERROR,"insert for 0th fragment failed\n"),0);
-              fragment_entry = new_entry;
-              // not found. so bind a new entry.
-              result = fragment_table->bind (state.frame_.sequence_num,new_entry);
-              if (result != 0)
-                ACE_ERROR_RETURN ((LM_ERROR,"fragment table bind failed\n"),0);
-              if (frame_header.message_type & 4 )
-                fragment_entry->frame_info.boundary_marker = 1;
-              switch (frame_header.message_type)
-                {
-                case flowProtocol::Frame_Msg:
-                  fragment_entry->frame_info.ssrc = state.frame_.synchSource;
-                  fragment_entry->frame_info.timestamp = state.frame_.timestamp;
-                  fragment_entry->frame_info.sequence_num = state.frame_.sequence_num;
-                  break;
-                case flowProtocol::SimpleFrame_Msg:
-                  fragment_entry->frame_info.ssrc =
-                    fragment_entry->frame_info.timestamp =
-                    fragment_entry->frame_info.sequence_num = 0;
-                  break;
-                }
-              return 0;
-            }
+          // check if all the fragments have been received.
+          state.frame_block_ =
+            TAO_SFP_Base::check_all_fragments (fragment_entry);
+          if (state.frame_block_ != 0)
+            state.more_fragments_ = 0;
         }
       else
         {
-          state.more_fragments_ = 0;
-          state.frame_block_ = message_block;
-        }
-      if (state.more_fragments_ == 0)
-        {
-          if (fragment_entry != 0)
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        "fragment table entry not found for 0th fragment\n"));
+          TAO_SFP_Fragment_Table_Entry *new_entry;
+          ACE_NEW_RETURN (new_entry,
+                          TAO_SFP_Fragment_Table_Entry,
+                          0);
+          result = new_entry->fragment_set_.insert (*new_node);
+          if (result != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,"insert for 0th fragment failed\n"),0);
+          fragment_entry = new_entry;
+          // not found. so bind a new entry.
+          result = fragment_table->bind (state.frame_.sequence_num,new_entry);
+          if (result != 0)
+            ACE_ERROR_RETURN ((LM_ERROR,"fragment table bind failed\n"),0);
+          if (frame_header.message_type & 4 )
+            fragment_entry->frame_info.boundary_marker = 1;
+          switch (frame_header.message_type)
             {
-              ACE_NEW_RETURN (frame_info,
-                              TAO_AV_frame_info,
-                              -1);
-              *frame_info = fragment_entry->frame_info;
+            case flowProtocol::Frame_Msg:
+              fragment_entry->frame_info.ssrc = state.frame_.synchSource;
+              fragment_entry->frame_info.timestamp = state.frame_.timestamp;
+              fragment_entry->frame_info.sequence_num = state.frame_.sequence_num;
+              break;
+            case flowProtocol::SimpleFrame_Msg:
+              fragment_entry->frame_info.ssrc =
+                fragment_entry->frame_info.timestamp =
+                fragment_entry->frame_info.sequence_num = 0;
+              break;
             }
+          return 0;
         }
     }
-  ACE_CATCHANY
+  else
     {
-      ACE_TRY_ENV.print_exception ("read_simple_frame");
-      return 0;
+      state.more_fragments_ = 0;
+      state.frame_block_ = message_block;
     }
-  ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  if (state.more_fragments_ == 0)
+    {
+      if (fragment_entry != 0)
+        {
+          ACE_NEW_RETURN (frame_info,
+                          TAO_AV_frame_info,
+                          -1);
+          *frame_info = fragment_entry->frame_info;
+        }
+    }
   return 0;
 }
 

@@ -12,7 +12,7 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
-LDLIBS = -lTAO_Notify -lTAO_CosTrading -lTAO_CosNaming -TAO_Svc_Utils -lTAO
+LDLIBS = -lTAO_CosNotification -lTAO_CosTrading -lTAO_CosNaming -lTAO_Svc_Utils -lTAO
 
 LSRC = Subscribe.cpp main.cpp
 
@@ -46,7 +46,7 @@ include $(TAO_ROOT)/taoconfig.mk
 #----------------------------------------------------------------------------
 
 
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/Naming_Service
+LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 
 override TAO_IDLFLAGS += -I$(TAO_ROOT)/orbsvcs -Ge 1
