@@ -177,7 +177,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "CORBA::Exception *" << be_nl
       << node->name () << "::_tao_duplicate (void) const" << be_nl
       << "{" << be_idt_nl
-      << "CORBA::Exception *result;" << be_nl
+      << "CORBA::Exception *result = 0;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "result," << be_nl
       << "::" << node->name () << " (*this)," << be_nl

@@ -411,14 +411,14 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << ")" << be_nl
       << "{" << be_idt_nl
-      << "return 1; // success using local knowledge" << be_uidt_nl
+      << "return true; // success using local knowledge" << be_uidt_nl
       << "}" << be_uidt_nl
       << "else" << be_idt_nl
       << "{" << be_idt_nl;
 
   if (node->is_abstract () || node->is_local ())
     {
-      *os << "return 0;" << be_uidt_nl;
+      *os << "return false;" << be_uidt_nl;
     }
   else
     {
@@ -447,7 +447,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << node->name () << "::marshal (TAO_OutputCDR &)" << be_nl
           << "{" << be_idt_nl
-          << "return 0;" << be_uidt_nl
+          << "return false;" << be_uidt_nl
           << "}";
     }
   else

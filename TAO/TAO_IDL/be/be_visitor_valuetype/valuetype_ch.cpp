@@ -57,6 +57,14 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
   // Now the valuetype definition itself.
   os->gen_ifdef_macro (node->flat_name ());
+  
+  if (node->node_type () == AST_Decl::NT_eventtype)
+    {
+      *os << be_nl << be_nl
+          << "class " << node->local_name () << "Consumer;" << be_nl
+          << "typedef " << node->local_name () << "Consumer *"
+          << node->local_name () << "Consumer_ptr;";
+    }
 
   // Now generate the class definition.
   *os << be_nl << be_nl << "class " << be_global->stub_export_macro ()
