@@ -398,6 +398,10 @@ private:
   int open (void);
   // Initialize the Malloc pool.
 
+  void init_malloc_header_ptr (void *);
+  // Helper function to initialize a null malloc header (position
+  // independent) pointer.
+
   int shared_bind (const char *name,
                    void *pointer);
   // Associate <name> with <pointer>.  Assumes that locks are held by
@@ -451,7 +455,7 @@ public:
   // Pass back the next <entry> in the set that hasn't yet been
   // visited.  Returns 0 when all items have been seen, else 1.
 
-  int next (void *&next_entry, 
+  int next (void *&next_entry,
             const char *&name);
   // Pass back the next <entry> (and the <name> associated with it) in
   // the set that hasn't yet been visited.  Returns 0 when all items
@@ -507,7 +511,7 @@ public:
   // Pass back the next <entry> in the set that hasn't yet been
   // visited.  Returns 0 when all items have been seen, else 1.
 
-  int next (void *&next_entry, 
+  int next (void *&next_entry,
             const char *&name);
   // Pass back the next <entry> (and the <name> associated with it) in
   // the set that hasn't yet been visited.  Returns 0 when all items

@@ -67,6 +67,22 @@ ACE_Local_Memory_Pool::release (void)
   return 0;
 }
 
+#if defined (ACE_WIN32)
+int
+ACE_Local_Memory_Pool::seh_selector (void *)
+{
+  return 0;
+  // Continue propagate the structural exception up.
+}
+#endif /* ACE_WIN32 */
+
+int
+ACE_Local_Memory_Pool::remap (void *)
+{
+  return 0;
+  // Not much can be done.
+}
+
 ACE_ALLOC_HOOK_DEFINE(ACE_MMAP_Memory_Pool)
 
 void
@@ -336,7 +352,7 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
       // Reopen file *without* using O_EXCL...
       if (this->mmap_.map (this->backing_store_name_,
 #if defined (CHORUS)
- 			   nbytes,
+                           nbytes,
 #else
                            -1,
 #endif /* CHORUS */
@@ -360,6 +376,25 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
                        ASYS_TEXT ("open")),
                       0);
 }
+
+#if defined (ACE_WIN32)
+int
+ACE_MMAP_Memory_Pool::seh_selector (void *ep)
+{
+  int ecode = ((LPEXCEPTION_POINTERS) ep)->ExceptionRecord->ExceptionCode;
+
+  if (ecode == EXCEPTION_ACCESS_VIOLATION)
+    {
+      void * fault_addr = (void *)
+        ((LPEXCEPTION_POINTERS) ep)->ExceptionRecord->ExceptionInformation[1];
+
+      if (this->remap (fault_addr) == 0)
+        return 1;
+    }
+
+  return 0;
+}
+#endif /* ACE_WIN32 */
 
 int
 ACE_MMAP_Memory_Pool::remap (void *addr)
@@ -448,14 +483,14 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
       off_t current_map_size = ACE_OS::filesize (this->mmap_.handle ());
 
       if (ACE_static_cast (size_t, current_map_size) == this->mmap_.size ())
-	{
-	  // The mapping is up to date so this really is a bad
-	  // address.  Thus, remove current signal handler so process
-	  // will fail with default action and core file will be
-	  // written.
+        {
+          // The mapping is up to date so this really is a bad
+          // address.  Thus, remove current signal handler so process
+          // will fail with default action and core file will be
+          // written.
           this->signal_handler_.remove_handler (SIGSEGV);
           return 0;
-	}
+        }
 
       // Extend the mapping to cover the size of the backing store.
       return this->map_file (current_map_size);
@@ -973,8 +1008,8 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (LPCTSTR backing_store_name,
     backing_store_name = ACE_DEFAULT_PAGEFILE_POOL_NAME;
 
   ACE_OS::strncpy (this->backing_store_name_,
-		   backing_store_name,
-		   (sizeof this->backing_store_name_ / sizeof (TCHAR)));
+                   backing_store_name,
+                   (sizeof this->backing_store_name_ / sizeof (TCHAR)));
 }
 
 void *

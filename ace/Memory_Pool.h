@@ -304,6 +304,18 @@ public:
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
 
+#if defined (ACE_WIN32)
+  virtual int seh_selector (void *);
+  // Win32 Structural exception selector.  The return value decides
+  // how to handle memory pool related structural exceptions.  Returns
+  // 1, 0, or , -1.
+#endif /* ACE_WIN32 */
+
+  virtual int remap (void *addr);
+  // Try to extend the virtual address space so that <addr> is now
+  // covered by the address mapping.  Always returns 0 since we can't
+  // remap a local memory pool.
+
   virtual void dump (void) const;
   // Dump the state of an object.
 
@@ -410,6 +422,13 @@ public:
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
   // Change the protection of the pages of the mapped region to <prot>
   // starting at <addr> up to <len> bytes.
+
+#if defined (ACE_WIN32)
+  virtual int seh_selector (void *);
+  // Win32 Structural exception selector.  The return value decides
+  // how to handle memory pool related structural exceptions.  Returns
+  // 1, 0, or , -1.
+#endif /* ACE_WIN32 */
 
   virtual int remap (void *addr);
   // Try to extend the virtual address space so that <addr> is now
