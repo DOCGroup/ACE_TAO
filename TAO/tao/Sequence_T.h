@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Objref_VarOut_T.h"
+
 /**
  * @class TAO_Unbounded_Sequence
  *
@@ -254,8 +256,6 @@ template<typename T,
          size_t MAX>
   class TAO_Bounded_Object_Sequence;
 template<size_t MAX> class TAO_Bounded_String_Sequence;
-
-// *************************************************************
 
   /**
    * @class TAO_Object_Manager
@@ -585,10 +585,6 @@ public:
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
-  virtual void _downcast (void * target,
-                          CORBA::Object_ptr src
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  virtual CORBA::Object_ptr _upcast (void * src) const;
 };
 
 // *************************************************************
@@ -656,10 +652,6 @@ public:
   virtual void _deallocate_buffer (void);
   virtual void _shrink_buffer (CORBA::ULong new_length,
                                CORBA::ULong old_length);
-  virtual void _downcast (void * target,
-                          CORBA::Object_ptr src
-                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-  virtual CORBA::Object_ptr _upcast (void * src) const;
 };
 
 // *************************************************************

@@ -1,3 +1,8 @@
+Mon Jun 30 22:29:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Merged with the main trunk and created a new branch
+	  refactor-stage4. 
+
 Fri Jun 27 14:42:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_traits.cpp:

@@ -5,11 +5,11 @@
 NAME = TAO
 
 DIRS = \
-   Valuetype \
-   ObjRefTemplate \
-   IORInterceptor \
+  Valuetype \
+  ObjRefTemplate \
+  IORInterceptor \
 	PortableServer \
-   Messaging \
+  Messaging \
 	DynamicAny \
 	DynamicInterface \
 	BiDir_GIOP \
@@ -29,10 +29,12 @@ OBJFILES = \
 	$(OBJDIR)\Acceptor_Registry.obj \
 	$(OBJDIR)\Adapter.obj \
 	$(OBJDIR)\Any.obj \
+	$(OBJDIR)\Argument.obj \
 	$(OBJDIR)\Asynch_Invocation.obj \
 	$(OBJDIR)\Asynch_Queued_Message.obj \
-   $(OBJDIR)\Asynch_Reply_Dispatcher_Base.obj \
+  $(OBJDIR)\Asynch_Reply_Dispatcher_Base.obj \
 	$(OBJDIR)\Base_Transport_Property.obj \
+	$(OBJDIR)\Basic_Arguments.obj \
 	$(OBJDIR)\BiDir_Adapter.obj \
 	$(OBJDIR)\Bind_Dispatcher_Guard.obj \
 	$(OBJDIR)\Block_Flushing_Strategy.obj \
@@ -53,8 +55,8 @@ OBJFILES = \
 	$(OBJDIR)\Client_Strategy_Factory.obj \
 	$(OBJDIR)\CodecFactory.obj \
 	$(OBJDIR)\CodecFactory_ORBInitializer.obj \
-   $(OBJDIR)\Codeset_Manager.obj \
-   $(OBJDIR)\Codeset_Translator_Factory.obj \
+  $(OBJDIR)\Codeset_Manager.obj \
+  $(OBJDIR)\Codeset_Translator_Factory.obj \
 	$(OBJDIR)\Collocation_Resolver.obj \
 	$(OBJDIR)\Connect_Strategy.obj \
 	$(OBJDIR)\Default_Collocation_Resolver.obj \
@@ -97,8 +99,8 @@ OBJFILES = \
 	$(OBJDIR)\GIOP_Utils.obj \
 	$(OBJDIR)\IFR_Client_Adapter.obj \
 	$(OBJDIR)\IIOPC.obj \
-   $(OBJDIR)\IOP_CodecC.obj \
-   $(OBJDIR)\IOP_IORC.obj \
+  $(OBJDIR)\IOP_CodecC.obj \
+  $(OBJDIR)\IOP_IORC.obj \
 	$(OBJDIR)\IIOP_Acceptor.obj \
 	$(OBJDIR)\IIOP_Connection_Handler.obj \
 	$(OBJDIR)\IIOP_Connector.obj \
@@ -133,8 +135,8 @@ OBJFILES = \
 	$(OBJDIR)\Managed_Types.obj \
 	$(OBJDIR)\Marshal.obj \
 	$(OBJDIR)\MCAST_Parser.obj \
-   $(OBJDIR)\Messaging_PolicyValueC.obj \
-   $(OBJDIR)\Messaging_SyncScopeC.obj \
+  $(OBJDIR)\Messaging_PolicyValueC.obj \
+  $(OBJDIR)\Messaging_SyncScopeC.obj \
 	$(OBJDIR)\Muxed_TMS.obj \
 	$(OBJDIR)\NVList.obj \
 	$(OBJDIR)\ORB.obj \
@@ -179,7 +181,7 @@ OBJFILES = \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
 	$(OBJDIR)\RequestInfo_Util.obj \
-        $(OBJDIR)\Request_Dispatcher.obj \
+  $(OBJDIR)\Request_Dispatcher.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\Resume_Handle.obj \
 	$(OBJDIR)\Sequence.obj \
@@ -188,6 +190,7 @@ OBJFILES = \
 	$(OBJDIR)\Service_Context.obj \
 	$(OBJDIR)\ServicesC.obj \
 	$(OBJDIR)\Services_Activate.obj \
+	$(OBJDIR)\Special_Basic_Arguments.obj \
 	$(OBJDIR)\StringSeqC.obj \
 	$(OBJDIR)\Stub.obj \
 	$(OBJDIR)\Stub_Factory.obj \
@@ -214,6 +217,7 @@ OBJFILES = \
 	$(OBJDIR)\TypeCodeFactory_Adapter.obj \
 	$(OBJDIR)\Typecode.obj \
 	$(OBJDIR)\Typecode_Constants.obj \
+	$(OBJDIR)\UB_String_Arguments.obj \
 	$(OBJDIR)\Valuetype_Adapter.obj \
 	$(OBJDIR)\Wait_On_Leader_Follower.obj \
 	$(OBJDIR)\Wait_On_Reactor.obj \

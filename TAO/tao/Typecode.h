@@ -27,6 +27,8 @@
 
 #include "tao/Exception.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/Object_Argument_T.h"
+#include "tao/Arg_Traits_T.h"
 
 // Forward declarations
 class TAO_InputCDR;
@@ -542,6 +544,15 @@ namespace CORBA
 
 namespace TAO
 {
+  /// Used in generated code if CORBA::TypeCode is an argument or return type.
+  template<>
+  class TAO_Export Arg_Traits<CORBA::TypeCode>
+    : public Object_Arg_Traits_T<CORBA::TypeCode_ptr, 
+                                 CORBA::TypeCode_var, 
+                                 CORBA::TypeCode_out>
+  {
+  };
+
   /**
    * @class TC_Private_State
    *
