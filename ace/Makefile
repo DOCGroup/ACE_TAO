@@ -138,7 +138,13 @@ IPC_FILES = \
   UNIX_Addr \
   UPIPE_Acceptor \
   UPIPE_Connector \
-  UPIPE_Stream
+  UPIPE_Stream \
+  MEM_Acceptor \
+  MEM_Addr \
+  MEM_Connector \
+  MEM_IO \
+  MEM_SAP \
+  MEM_Stream
 SVCCONF_FILES = \
   DLL \
   Parse_Node \

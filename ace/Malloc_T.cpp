@@ -61,7 +61,7 @@ ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter (void)
 template <class MALLOC> void
 ACE_Allocator_Adapter<MALLOC>::print_stats (void) const
 {
-  ACE_TRACE ("ACE_Malloc_T<MALLOC>::print_stats");
+  ACE_TRACE ("ACE_Allocator_Adaptor<MALLOC>::print_stats");
   this->allocator_.print_stats ();
 }
 #endif /* ACE_HAS_MALLOC_STATS */
@@ -666,7 +666,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *
 
           if (curr->next_)
             curr->next_->prev_ = prev;
-              
+
           // This will free up both the node and the name due to our
           // clever trick in <bind>!
           this->shared_free (curr);

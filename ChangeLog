@@ -1,3 +1,55 @@
+Thu Feb 10 13:49:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_SAP.h:
+	* ace/MEM_SAP.i:
+	* ace/MEM_SAP.cpp: Implemented the adaptation layer for managing
+	  shared memory in shared memory transport.
+
+	* ace/MEM_Addr.h:
+	* ace/MEM_Addr.i:
+	* ace/MEM_Addr.cpp: Implemented the "endpoint" addressing
+	  mechanism for shared memory transport.  The ACE_MEM_Addr make
+	  sure the "endpoint" is not on an interface that is accessable
+	  outside of the running host.  It also serves as endpoint
+	  identification and provides the <same_host> checking method.
+
+	* ace/MEM_IO.h:
+	* ace/MEM_IO.i:
+	* ace/MEM_IO.cpp: Implemented the IO routines for shared memory
+	  transport.  Currently, these IO routines treat shared memory
+	  transport as a streaming devide and copy the data into its own
+	  buffer before sending the data over.  We'll add method for
+	  acquiring and sending the internal buffer later.
+
+	* ace/MEM_Acceptor.h:
+	* ace/MEM_Acceptor.i:
+	* ace/MEM_Acceptor.cpp:
+	* ace/MEM_Connector.h:
+	* ace/MEM_Connector.i:
+	* ace/MEM_Connector.cpp:
+	* ace/MEM_Stream.h:
+	* ace/MEM_Stream.i:
+	* ace/MEM_Stream.cpp: These classes emulate SOCK_* classes but use
+	  shared memory as their transport mechanism.
+
+	* ace/Malloc_T.cpp: Fixed a mis-matched ACE_TRACE message.
+
+	* ace/OS.h: Added definitions of ACE_MEM_ACCEPTOR,
+	  ACE_MEM_CONNECTOR and, ACE_MEM_STREAM.
+
+	* ace/Makefile: Aded MEM_* files and updated dependencies.
+
+	* tests/Malloc_Test.cpp: Removed explicit template instantiations
+	  for ACE_Malloc[_T] as they are taken care of in MEM_SAP.cpp
+	  now.
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP-memserver.cpp:
+	* examples/IPC_SAP/SOCK_SAP/CPP_memclient.dsp:
+	* examples/IPC_SAP/SOCK_SAP/CPP_memserver.dsp:
+	* examples/IPC_SAP/SOCK_SAP/SOCK_SAP.dsw: Added a simple example
+	  on how to use the shared-memory transport.
+
 Thu Feb 10 10:18:00 2000  Ossama Othman  <ossama@uci.edu>
 
 	* THANKS:
