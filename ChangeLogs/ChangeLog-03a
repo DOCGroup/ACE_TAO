@@ -1,8 +1,14 @@
+Sun Dec  3 15:23:50 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * performance-tests/Misc/childbirth_time.cpp:
+          Use 'extern "C"' for the thread entry point, this should make
+          Sun/CC 5.0 (and other compilers) happy.
+
 Sun Dec  3 08:50:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS.i: Fixed a cut and paste error. This was from the BUG#
-	  734 in bugzilla. Thanks to Martin Krumpolec <krumpolec@pobox.sk>
-	  for reporting this.  
+        * ace/OS.i: Fixed a cut and paste error. This was from the BUG#
+          734 in bugzilla. Thanks to Martin Krumpolec <krumpolec@pobox.sk>
+          for reporting this.
 
 Sat Dec  2 05:58:37 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -18,9 +24,9 @@ Sat Dec  2 05:58:37 2000  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Sat Dec  2 00:19:38 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-	* bin/auto_run_tests.lst:
+        * bin/auto_run_tests.lst:
 
-	  Added RTCORBA/Explicit_Binding test.
+          Added RTCORBA/Explicit_Binding test.
 
 Fri Dec 01 21:17:35 2000  Carlos O'Ryan  <coryan@uci.edu>
 
