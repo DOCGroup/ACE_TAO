@@ -73,7 +73,7 @@ pace_ctime_r (const time_t * clock, char * buf)
 # if defined (PACE_HAS_POSIX_PTHREAD_SEMANTICS)
   return ctime_r (clock, buf);
 # else /* !PACE_HAS_POSIX_PTHREAD_SEMANTICS */
-  PACE_SETERNNO (PACE_ERRNO_LACKS_POSIX_PTHREAD_SEMANTICS);
+  PACE_SET_ERRNO (PACE_ERRNO_LACKS_POSIX_PTHREAD_SEMANTICS);
   return 0;
 # endif /* !PACE_HAS_POSIX_PTHREAD_SEMANTICS */
 }
