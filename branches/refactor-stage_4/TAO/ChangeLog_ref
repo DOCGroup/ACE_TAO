@@ -1,3 +1,11 @@
+Tue Jul 22 17:44:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
+        * tao/Invocation_Adapter.cpp:
+
+          Cosmetic changes.
+
 Tue Jul 22 13:02:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:

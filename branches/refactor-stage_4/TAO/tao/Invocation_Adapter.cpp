@@ -202,7 +202,6 @@ namespace TAO
                  EINVAL),
                CORBA::COMPLETED_NO));
           }
-
       }
   }
 
