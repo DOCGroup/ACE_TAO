@@ -37,7 +37,7 @@ namespace TAO
     static void tao_copy (T_slice * _tao_to,
                           const T_slice * _tao_from);
   };
-};
+}
 
 /**
  * @class TAO_Array_Var_Base_T

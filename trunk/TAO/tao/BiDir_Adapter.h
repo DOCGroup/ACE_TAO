@@ -28,7 +28,7 @@ namespace CORBA
 {
   class ORB;
   typedef ORB *ORB_ptr;
-};
+}
 
 /**
  * @class TAO_BiDir_Adapter
