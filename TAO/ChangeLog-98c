@@ -1,3 +1,9 @@
+Mon Oct 06 22:11:40 1997    <nw1@CHA-CHA>
+
+	* tests/Cubit/TAO/cubit_i.cpp (Cubit_please_exit): 
+	* tests/Cubit/TAO/cubitS.cpp (_skel_Cubit): Changed to use the new
+	  TAO_ORB_CORE_instance () global function.
+
 Mon Oct  6 20:06:05 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/{boa.h,connect.cpp,giop.cpp,giop.h,roa.cpp,roa.h}:
