@@ -1,3 +1,12 @@
+Wed Aug 22 17:20:06 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+          The factory now owns the memory for its orbid_ field, some
+          applications pass temporary data in the argc/argv arguments.
+          Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+          for pointing this out.
+
 Wed Aug 22 14:12:33 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
@@ -14,7 +23,7 @@ Wed Aug 22 10:35:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * TAOACE_Static.dsw:
 
           Added dependencies to projects so the entire workspace
-          can be batch built. Thanks to Frank Wolf <fwolf@gum.de> 
+          can be batch built. Thanks to Frank Wolf <fwolf@gum.de>
           for pointing out some of these.
 
 Wed Aug 22 08:16:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
@@ -23,9 +32,9 @@ Wed Aug 22 08:16:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
         * orbsvcs/orbsvcs/AV/AVStreams_i.i:
         * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
             Remove TAO_String_Hash_Key class, replace all uses
-            with ACE_CString.  Only reason for keeping the 
+            with ACE_CString.  Only reason for keeping the
             TAO_String_Hash_Key class was to have a string class
-            with a hash function so it could be put in an 
+            with a hash function so it could be put in an
             ACE_Hash_Map_Manager container.  ACE_CString already has this.
 
         * orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:
@@ -33,15 +42,15 @@ Wed Aug 22 08:16:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
 Tue Aug 21 22:58:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Sequence_T.cpp: Fixed a place where nil () was not made as
-	  tao_nil (). This should fix many of our build problems.
+        * tao/Sequence_T.cpp: Fixed a place where nil () was not made as
+          tao_nil (). This should fix many of our build problems.
 
 Tue Aug 21 13:55:31 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:
 
           Added prefix "tao_" to the recently added static
-          methods in the generated interface _var class, to 
+          methods in the generated interface _var class, to
           avoid possible name clashes.
 
         * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
@@ -161,57 +170,57 @@ Mon Aug 20 08:37:00 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Sun Aug 19 13:41:07 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/DLL_ORB/Test_i.cpp (shutdown):
+        * tests/DLL_ORB/Test_i.cpp (shutdown):
 
-	  Do not wait for completion when shutting down the ORB since
-	  ORB::shutdown() is being called in the context of an upcall.
-	  Thanks to Craig Rodrigues <crodrigu@bbn.com> for finding the
-	  problem and providing the fix.
+          Do not wait for completion when shutting down the ORB since
+          ORB::shutdown() is being called in the context of an upcall.
+          Thanks to Craig Rodrigues <crodrigu@bbn.com> for finding the
+          problem and providing the fix.
 
 Sat Aug 18 08:59:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORBInitInfo.cpp: Fixed a compiler error in the static
-	  builds. 
+        * tao/ORBInitInfo.cpp: Fixed a compiler error in the static
+          builds.
 
 Sat Aug 18 07:09:09 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* Removed the "announcement" file since it was hopelessly
-	  out of date!  Thanks to Kitty for noticing this.
+        * Removed the "announcement" file since it was hopelessly
+          out of date!  Thanks to Kitty for noticing this.
 
 Fri Aug 17 19:26:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
        * orbsvcs/orbsvcs/Property/CosPropertyService_i.h
 
-         Add default values for CORBA::Environment variables. 
+         Add default values for CORBA::Environment variables.
 
 Fri Aug 17 13:01:36 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h (TAO_SSLIOP_Endpoint):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.h (TAO_SSLIOP_Endpoint):
 
-	  Corrected class documentation.
+          Corrected class documentation.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
-	  (TAO_SSLIOP_Endpoint):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp
+          (TAO_SSLIOP_Endpoint):
 
-	  Initialize the SSL port to zero instead of the IANA assigned
-	  port of 684 if one wasn't provided.  This is necessary to allow
-	  INS over plain IIOP to function properly.  Thanks to Dmitry
-	  Goldshtain <dmitry.goldshtain@iname.com> for providing the fix.
+          Initialize the SSL port to zero instead of the IANA assigned
+          port of 684 if one wasn't provided.  This is necessary to allow
+          INS over plain IIOP to function properly.  Thanks to Dmitry
+          Goldshtain <dmitry.goldshtain@iname.com> for providing the fix.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (connect):
 
-	  Verify that the SSL port is non-zero before attempting to
-	  establish trust in the target.  Otherwise, throw an
-	  exception.  It is not possible to establish trust in the target
-	  without first retrieving the certificate from the target during
-	  SSLIOP session establishment.
+          Verify that the SSL port is non-zero before attempting to
+          establish trust in the target.  Otherwise, throw an
+          exception.  It is not possible to establish trust in the target
+          without first retrieving the certificate from the target during
+          SSLIOP session establishment.
 
-	  If the SSL port is zero and protection is desired, then do not
-	  attempt to make a secure invocation since it is not possible to
-	  make one.  Instead throw an exception.
+          If the SSL port is zero and protection is desired, then do not
+          attempt to make a secure invocation since it is not possible to
+          make one.  Instead throw an exception.
 
-	  In both of the above cases, the SSL port will be zero if no
-	  SSLIOP tagged component was available in the IOR.
+          In both of the above cases, the SSL port will be zero if no
+          SSLIOP tagged component was available in the IOR.
 
 Fri Aug 17 14:57:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -242,25 +251,25 @@ Fri Aug 17 10:59:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Thu Aug 16 10:40:56 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/ORBInitInfo.h (TAO_ORBInitInfo):
+        * tao/ORBInitInfo.h (TAO_ORBInitInfo):
 
-	  The CodecFactory reference is now a "_var" since the
-	  CodecFactory is now reference counted.
+          The CodecFactory reference is now a "_var" since the
+          CodecFactory is now reference counted.
 
-	* tao/ORBInitInfo.cpp (register_initial_reference,
-	  resolve_initial_references):
+        * tao/ORBInitInfo.cpp (register_initial_reference,
+          resolve_initial_references):
 
-	  Removed the restriction that prevented
-	  register_initial_reference() and resolve_initial_references()
-	  from being called in ORBInitializer::post_init() and
-	  ORBInitializer::pre_init(), respectively.  The Portable
-	  Interceptors FTF relaxed those restrictions.
+          Removed the restriction that prevented
+          register_initial_reference() and resolve_initial_references()
+          from being called in ORBInitializer::post_init() and
+          ORBInitializer::pre_init(), respectively.  The Portable
+          Interceptors FTF relaxed those restrictions.
 
-	  (codec_factory):
+          (codec_factory):
 
-	  Since the CodecFactory is now reference counted, create a new
-	  CodecFactory on the heap and cache it.  Fixes a seg fault
-	  reported by Greg J. Hall <Greg.Hall@Australia.Boeing.com>.
+          Since the CodecFactory is now reference counted, create a new
+          CodecFactory on the heap and cache it.  Fixes a seg fault
+          reported by Greg J. Hall <Greg.Hall@Australia.Boeing.com>.
 
 Thu Aug 16 11:38:02 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -289,31 +298,31 @@ Thu Aug 16 10:04:33 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Aug 15 11:37:24 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/GIOP_Message_Lite.cpp (process_request):
+        * tao/GIOP_Message_Lite.cpp (process_request):
 
-	  Removed statement that initialized a reference to a
-	  CORBA::Environment from TAO_default_environment().
-	  TAO_default_environment() incurs a TSS access.  This removes a
-	  TSS access from the critical path when using TAO's GIOPlite
-	  implementation.
+          Removed statement that initialized a reference to a
+          CORBA::Environment from TAO_default_environment().
+          TAO_default_environment() incurs a TSS access.  This removes a
+          TSS access from the critical path when using TAO's GIOPlite
+          implementation.
 
-	  Verify that forward object reference was successfully marshaled
-	  into the CDR stream before continuing.
+          Verify that forward object reference was successfully marshaled
+          into the CDR stream before continuing.
 
-	* tao/GIOP_Message_Base.cpp (process_request):
+        * tao/GIOP_Message_Base.cpp (process_request):
 
-	  Verify that forward object reference was successfully marshaled
-	  into the CDR stream before continuing.
+          Verify that forward object reference was successfully marshaled
+          into the CDR stream before continuing.
 
-	* tao/Object.cpp (operator>>):
+        * tao/Object.cpp (operator>>):
 
-	  Fixed improper emulated exception code.  It unnecessarily
-	  introduced a TSS access by using TAO_default_environment().
+          Fixed improper emulated exception code.  It unnecessarily
+          introduced a TSS access by using TAO_default_environment().
 
 Wed Aug 15 14:26:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Single_Threaded_Latency/svc.conf: Add the
-	  exclusive Transport_Mux_Strategy to this test.
+        * performance-tests/Single_Threaded_Latency/svc.conf: Add the
+          exclusive Transport_Mux_Strategy to this test.
 
 Wed Aug 15 12:11:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -330,22 +339,22 @@ Wed Aug 15 12:11:04 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Aug 15 12:06:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_State.cpp:
-	* tao/GIOP_Message_State.h: Cosmetic changes to the debug
-	  statements and comments.
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.h: Cosmetic changes to the debug
+          statements and comments.
 
 Wed Aug 15 11:35:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Transport.cpp: Added a debugging statement that is going to
-	  create noise if TAO receives a ERROR message on a connection.
+        * tao/Transport.cpp: Added a debugging statement that is going to
+          create noise if TAO receives a ERROR message on a connection.
 
-	* tao/GIOP_Message_Base.cpp:
-	* tao/GIOP_Message_State.cpp: Added debugging statments to inform
-	  the user, that TAO got a GIOP_ERROR_MESSAGE on a
-	  connection. Looks like some ORB's send ERROR messages if the
-	  size of the data exceeded a limit. In such cases it is better
-	  that the user knows why the test fails or hangs instead of
-	  digging around the ORB code.
+        * tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_State.cpp: Added debugging statments to inform
+          the user, that TAO got a GIOP_ERROR_MESSAGE on a
+          connection. Looks like some ORB's send ERROR messages if the
+          size of the data exceeded a limit. In such cases it is better
+          that the user knows why the test fails or hangs instead of
+          digging around the ORB code.
 
 Wed Aug 15 11:25:15 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -358,26 +367,26 @@ Wed Aug 15 11:25:15 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Tue Aug 14 15:16:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/SmartProxies/SmartProxies.dsp (CFG): Fixed a problem with
-	  MFC configuration.
+        * tao/SmartProxies/SmartProxies.dsp (CFG): Fixed a problem with
+          MFC configuration.
 
 Tue Aug 14 14:50:32 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/SmartProxies/SmartProxies.dsp (RSC): Added MFC
-	  configurations. Thanks to Garry Shammis <Garry.Shamis@kbcfp.com>
-	  for giving us the patch.
+        * tao/SmartProxies/SmartProxies.dsp (RSC): Added MFC
+          configurations. Thanks to Garry Shammis <Garry.Shamis@kbcfp.com>
+          for giving us the patch.
 
-	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp (dispatch_reply):
-	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/Asynch_Reply_Dispatcher.cpp: Made some cosmetic changes.
+        * tao/DynamicInterface/DII_Reply_Dispatcher.cpp (dispatch_reply):
+        * tao/Synch_Reply_Dispatcher.cpp:
+        * tao/Asynch_Reply_Dispatcher.cpp: Made some cosmetic changes.
 
 Tue Aug 14 12:29:08 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (recv_i):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp (recv_i):
 
-	  Use the timeout value when attempting to read from the SSL
-	  connection.  Fixes some thread-per-connection problems.  Thanks
-	  to Bala for pointing out the problem.
+          Use the timeout value when attempting to read from the SSL
+          connection.  Fixes some thread-per-connection problems.  Thanks
+          to Bala for pointing out the problem.
 
 Tue Aug 14 14:18:36 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
