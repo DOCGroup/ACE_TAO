@@ -2,7 +2,7 @@
 
 #include "Options_Parser.h"
 
-ACE_RCSID(lib, TAO_Options_Parser, "$id$")
+ACE_RCSID(lib, TAO_Options_Parser, "$Id$")
 
 #include "tao/debug.h"
 #include "orbsvcs/NotifyExtC.h"

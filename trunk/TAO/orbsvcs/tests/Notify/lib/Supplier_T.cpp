@@ -8,7 +8,7 @@
 #include "Supplier_T.inl"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Notify, TAO_Notify_Tests_Supplier_T, "$id$")
+ACE_RCSID(Notify, TAO_Notify_Tests_Supplier_T, "$Id$")
 
 template <class Supplier_Traits>
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::TAO_Notify_Tests_Supplier_T (void)
