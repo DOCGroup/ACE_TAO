@@ -1177,16 +1177,16 @@ TAO_Resource_Factory::parse_args (int argc, char **argv)
               local_poa_source = TAO_TSS;
           }
       }
-    else if (ACE_OS::strcmp (argv[curarg], "-ORBlockfreedreactor") == 0)
+    else if (ACE_OS::strcmp (argv[curarg], "-ORBreactorlock") == 0)
       {
         curarg++;
         if (curarg < argc)
           {
             char *name = argv[curarg];
 
-            if (ACE_OS::strcasecmp (name, "yes") == 0)
+            if (ACE_OS::strcasecmp (name, "null") == 0)
               use_lock_freed_reactor_ = 1;
-            else if (ACE_OS::strcasecmp (name, "no") == 0)
+            else if (ACE_OS::strcasecmp (name, "token") == 0)
               use_lock_freed_reactor_= 0;
           }
       }
