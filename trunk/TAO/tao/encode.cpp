@@ -443,17 +443,17 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
                           continue_encoding = stream->write_wchar (*(CORBA::WChar *) data);
                           break;
                         case CORBA::tk_any:
-                        case CORBA::tk_TypeCode:
                         case CORBA::tk_Principal:
-                        case CORBA::tk_objref:
                         case CORBA::tk_struct:
                         case CORBA::tk_union:
-                        case CORBA::tk_string:
                         case CORBA::tk_sequence:
                         case CORBA::tk_array:
                         case CORBA::tk_alias:
                         case CORBA::tk_except:
+                        case CORBA::tk_string:
                         case CORBA::tk_wstring:
+                        case CORBA::tk_TypeCode:
+                        case CORBA::tk_objref:
                           retval = stream->encode (param, data, 0, env);
                           break;
                         default:
