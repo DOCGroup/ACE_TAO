@@ -15,52 +15,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_INET_Addr)
 
 // Transform the current address into string format.
 
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-
-// Process-wide Protocol Family
-#include "ace/Synch.h"
-#include "ace/Object_Manager.h"
-int ACE_INET_Addr::protocol_family_ = -1;
-
-int
-ACE_INET_Addr::protocol_family (void)
-{
-  ACE_TRACE ("ACE_INET_Addr::protocol_family");
-
-  if (ACE_INET_Addr::protocol_family_ == -1)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-                                *ACE_Static_Object_Lock::instance (), 0));
-
-      if (ACE_INET_Addr::protocol_family_ == -1)
-        {
-          int s = socket(PF_INET6,SOCK_DGRAM,0);
-          if(s == -1) {
-//          printf("Setting protocol_family_ to PF_INET\n");
-            ACE_INET_Addr::protocol_family_ = PF_INET;
-          } else {
-//          printf("Setting protocol_family_ to PF_INET6\n");
-            ACE_INET_Addr::protocol_family_ = PF_INET6;
-            close(s);
-          }
-        }
-    }
-//    printf("returning protocol_family %d %s from ACE_INET_Addr\n",ACE_INET_Addr::protocol_family_, ACE_INET_Addr::protocol_family_ == PF_INET ? "PF_INET" : "PF_INET6");
-  return ACE_INET_Addr::protocol_family_;
-}
-
-int
-ACE_INET_Addr::address_family (void)
-{
-  if(ACE_INET_Addr::protocol_family() == PF_INET6)
-    return AF_INET6;
-  else
-    return AF_INET;
-}
-
-#endif /* ACE_USES_IPV4_IPV6_MIGRATION */
-
 int
 ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
                                size_t size,
@@ -68,14 +22,16 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
 {
   ACE_TRACE ("ACE_INET_Addr::addr_to_string");
 
-  // XXXXXXXX modify for IPv6 formatting.  Be sure to include
-  // the scope identifier in the full address.
+  // XXX Can we (should we) include the scope id for IPv6 addresses?
 
   size_t total_len = (ipaddr_format == 0 ?
                       ACE_OS::strlen (this->get_host_name ()) :
                       ACE_OS::strlen (this->get_host_addr ()))
     + ACE_OS::strlen ("65536") // Assume the max port number.
     + sizeof (':')
+#if defined ACE_HAS_IPV6
+    + ACE_OS::strlen ("[]")
+#endif
     + sizeof ('\0'); // For trailing '\0'.
 
   if (size < total_len)
@@ -83,7 +39,11 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   else
     {
       ACE_OS::sprintf (s,
+#if defined ACE_HAS_IPV6
+                       ACE_LIB_TEXT ("[%s]:%d"),
+#else
                        ACE_LIB_TEXT ("%s:%d"),
+#endif
                        ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
                                                ? this->get_host_name ()
                                                : this->get_host_addr ()),
@@ -100,9 +60,7 @@ ACE_INET_Addr::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACE_TCHAR s[ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16];
-  ACE_OS::sprintf (s, ACE_LIB_TEXT ("%s:%d"),
-                   this->get_host_addr (),
-                   this->get_port_number ());
+  this->addr_to_string(s, ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 16);
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("%s"), s));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -123,10 +81,11 @@ ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_INET_Addr::operator ==");
 
-  return this->get_port_number() == sap.get_port_number()
-      && ACE_OS::memcmp (this->ip_addr_pointer(),
-                         sap.ip_addr_pointer(),
-                         this->ip_addr_size()) == 0;
+  // XXX should we check to make sure the sizes are the same?
+
+  return (ACE_OS::memcmp ((void*)this->get_addr(),
+                          sap.get_addr(),
+                          this->get_size()) == 0);
 }
 
 ACE_INET_Addr::ACE_INET_Addr (void)
@@ -140,6 +99,8 @@ int
 ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 {
   ACE_TRACE ("ACE_INET_Addr::set");
+
+  // XXX should we check to make sure the sizes are the same?
 
   this->ACE_Addr::base_set (sa.get_type (),
                             sa.get_size ());
@@ -168,7 +129,10 @@ ACE_INET_Addr::string_to_addr (const char s[])
   ACE_ALLOCATOR_RETURN (t,
                         ACE_OS::strdup (s),
                         -1);
-  char *ip_addr = ACE_OS::strchr (t, ':');
+  // We use strrchr because of IPv6 addresses.
+  char *ip_addr = ACE_OS::strrchr (t, ':');
+
+  // XXX this still needs to be fixed for IPv6 addresses
 
   if (ip_addr == 0) // Assume it's a port number.
     {
@@ -235,7 +199,7 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
   this->set (sa);
 }
 
-// Initializes a ACE_INET_Addr from a PORT_NUMBER and an Internet
+// Initializes a ACE_INET_Addr from a PORT_NUMBER and a 32 bit Internet
 // address.
 
 int
@@ -267,7 +231,7 @@ ACE_INET_Addr::set (u_short port_number,
 
 #if defined (ACE_HAS_IPV6)
   return this->set_usinggetaddrinfo (port_number,host_name,PF_UNSPEC,encode);
-#else
+#else /* ACE_HAS_IPV6 */
 
   ACE_UINT32 addrv4;
 
@@ -386,7 +350,7 @@ ACE_INET_Addr::set (const char port_name[],
 #endif /* VXWORKS */
 }
 
-// Initializes a ACE_INET_Addr from a <port_name> and an Internet
+// Initializes a ACE_INET_Addr from a <port_name> and a 32 bit Internet
 // address.
 
 int
@@ -486,8 +450,10 @@ ACE_INET_Addr::set_addr (void *addr, int len)
 {
   ACE_TRACE ("ACE_INET_Addr::set_addr");
 
+  // XXX Should we check that len == this->get_size() ?
+
   this->ACE_Addr::base_set (ACE_ADDRESS_FAMILY_INET, len);
-  ACE_OS::memcpy ((void *) this->ip_addr_pointer(),
+  ACE_OS::memcpy ((void *) this->get_addr(),
                   (void *) addr, len);
 }
 
@@ -701,12 +667,12 @@ ACE_INET_Addr::set_port_number (u_short port_number,
   if(ACE_INET_Addr::protocol_family() == PF_INET)
     this->inet_addr4_.sin_port = port_number;
   else
-#endif
+#endif /* ACE_USES_IPV4_IPV6_MIGRATION */
     this->inet_addr6_.sin6_port = port_number;
 
 #else
   this->inet_addr4_.sin_port = port_number;
-#endif
+#endif /* ACE_HAS_IPV6 */
 }
 
 int ACE_INET_Addr::set_address (const char *ip_addr,
@@ -722,12 +688,12 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
   if(ACE_INET_Addr::protocol_family() == PF_INET)
     this->inet_addr4_.sin_family = ACE_ADDRESS_FAMILY_INET;
   else
-#endif
+#endif /* ACE_USES_IPV4_IPV6_MIGRATION */
     this->inet_addr6_.sin6_family = ACE_ADDRESS_FAMILY_INET;
 
 #else
   this->inet_addr4_.sin_family = ACE_ADDRESS_FAMILY_INET;
-#endif
+#endif /* ACE_HAS_IPV6 */
 
   if(len == 4)
     {
@@ -736,33 +702,48 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
         ip4 = htonl(ip4);
       }
 #if defined (ACE_HAS_IPV6)
-      if(ip4 == INADDR_ANY) {
-        in6_addr ip6 = in6addr_any;
-        memcpy(this->ip_addr_pointer(),(void*)&ip6,this->ip_addr_size());
-        return 0;
-      }
 
-      /* Build up a 128 bit address.  An IPv4-mapped IPv6 address is
-         defined as 0:0:0:0:0:ffff:IPv4_address.  This id defined in RFC 1884 */
-      struct {
-        ACE_UINT16 prefix[5];
-        ACE_UINT16 ffff;
-        ACE_UINT32 addr;
-      } newaddress = {
-        { 0,0,0,0,0 },
-          0xffff,
+#if defined (ACE_HAS_IPV4_IPV6_MIGRATION)
+      if(ACE_INET_Addr::protocol_family() == PF_INET)
+        {
+          memcpy(this->ip_addr_pointer(),(void*)&ip4,this->ip_addr_size());
+        }
+      else
+#endif /* ACE_HAS_IPV4_IPV6_MIGRATION */
+        {
+          if(ip4 == INADDR_ANY) {
+            in6_addr ip6 = in6addr_any;
+            memcpy(this->ip_addr_pointer(),(void*)&ip6,this->ip_addr_size());
+            return 0;
+          }
+
+          /* Build up a 128 bit address.  An IPv4-mapped IPv6 address is
+             defined as 0:0:0:0:0:ffff:IPv4_address.  This id defined in RFC 1884 */
+          struct {
+            ACE_UINT16 prefix[5];
+            ACE_UINT16 ffff;
+            ACE_UINT32 addr;
+          } newaddress = {
+            { 0,0,0,0,0 },
+            0xffff,
             ip4
-            };
+          };
 
-      memcpy(this->ip_addr_pointer(),(void*)&newaddress,this->ip_addr_size());
-#else /* ACE_HAS_IPV6 */
+          memcpy(this->ip_addr_pointer(),(void*)&newaddress,this->ip_addr_size());
+        }
+#else
       memcpy(this->ip_addr_pointer(),(void*)&ip4,this->ip_addr_size());
-#endif
+#endif /* ACE_HAS_IPV6 */
 
       return 0;
     }
 #if defined (ACE_HAS_IPV6)
-  else
+
+#if defined (ACE_HAS_IPV4_IPV6_MIGRATION)
+  if(ACE_INET_Addr::protocol_family() == PF_INET)
+    return -1
+#endif /* ACE_HAS_IPV4_IPV6_MIGRATION */
+  else if(len == 16)
     {
       if(encode)
         printf("It doesn't make sense to encode for IPv6 addresses.\n");
@@ -777,15 +758,26 @@ const char *
 ACE_INET_Addr::get_host_addr (char *dst, int size) const
 {
 #if defined (ACE_HAS_IPV6)
-// XXXX This won't work with the ACE_USES_IPV4_IPV6_MIGRATION turned on
-  if(IN6_IS_ADDR_V4MAPPED(&this->inet_addr6_.sin6_addr)) {
-    ACE_UINT32 addr;
-    addr = this->get_ip_address();
-    addr = htonl(addr);
-    return ACE_OS::inet_ntop (AF_INET, (const void*)&addr,dst,size);
-  }
-  const char *ch = ACE_OS::inet_ntop (AF_INET6, (const void*)&this->inet_addr6_.sin6_addr,dst,size);
-  return dst;
+
+#if defined (ACE_HAS_IPV4_IPV6_MIGRATION)
+  if(ACE_INET_Addr::protocol_family() == PF_INET)
+    {
+      char *ch = ACE_OS::inet_ntoa (this->inet_addr4_.sin_addr);
+      ACE_OS::strncpy(dst,ch,size);
+      return ch;
+    }
+  else
+#endif /* ACE_HAS_IPV4_IPV6_MIGRATION */
+    {
+      if(IN6_IS_ADDR_V4MAPPED(&this->inet_addr6_.sin6_addr)) {
+        ACE_UINT32 addr;
+        addr = this->get_ip_address();
+        addr = htonl(addr);
+        return ACE_OS::inet_ntop (AF_INET, (const void*)&addr,dst,size);
+      }
+      const char *ch = ACE_OS::inet_ntop (AF_INET6, (const void*)&this->inet_addr6_.sin6_addr,dst,size);
+      return ch;
+    }
 
 #elif defined (VXWORKS)
   // It would be nice to be able to encapsulate this into
@@ -797,7 +789,9 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
   inet_ntoa_b (this->inet_addr4_.sin_addr, ncthis->buf_);
   return &buf_[0];
 #else /* VXWORKS */
-  return ACE_OS::inet_ntoa (this->inet_addr4_.sin_addr);
+  char *ch = ACE_OS::inet_ntoa (this->inet_addr4_.sin_addr);
+  ACE_OS::strncpy(dst,ch,size);
+  return ch;
 #endif
 }
 
@@ -807,7 +801,6 @@ ACE_INET_Addr::get_host_addr (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_addr");
 #if defined (ACE_HAS_IPV6)
-  // XXX check this with IPV4_IPV6_MIGRATION
   static char buf[INET6_ADDRSTRLEN];
   return this->get_host_addr(buf,INET6_ADDRSTRLEN);
 #else
@@ -822,59 +815,36 @@ ACE_INET_Addr::get_ip_address (void) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_ip_address");
 #if defined (ACE_HAS_IPV6)
-  // XXX check with IPV4_IPV6_MIGRATION
-  if(IN6_IS_ADDR_V4MAPPED (&this->inet_addr6_.sin6_addr) ||
-     IN6_IS_ADDR_V4COMPAT (&this->inet_addr6_.sin6_addr)    )
+
+#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
+  if(ACE_INET_Addr::protocol_family() == PF_INET)
     {
-      ACE_UINT32 addr;
-      // Return the last 32 bits of the address
-      char *thisaddrptr = (char*)this->ip_addr_pointer ();
-      thisaddrptr += 128/8 - 32/8;
-      memcpy ((void*)&addr, (void*)(thisaddrptr), sizeof(addr));
-      return ntohl (addr);
+      return ntohl (ACE_UINT32 (this->inet_addr4_.sin_addr.s_addr));
     }
   else
+#endif /* ACE_USES_IPV4_IPV6_MIGRATION */
     {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_LIB_TEXT ("ACE_INET_Addr::get_ip_address: address is a IPv6 address not IPv4\n")));
-      errno = EAFNOSUPPORT;
-      return 0;
+      if(IN6_IS_ADDR_V4MAPPED (&this->inet_addr6_.sin6_addr) ||
+         IN6_IS_ADDR_V4COMPAT (&this->inet_addr6_.sin6_addr)    )
+        {
+          ACE_UINT32 addr;
+          // Return the last 32 bits of the address
+          char *thisaddrptr = (char*)this->ip_addr_pointer ();
+          thisaddrptr += 128/8 - 32/8;
+          memcpy ((void*)&addr, (void*)(thisaddrptr), sizeof(addr));
+          return ntohl (addr);
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("ACE_INET_Addr::get_ip_address: address is a IPv6 address not IPv4\n")));
+          errno = EAFNOSUPPORT;
+          return 0;
+        }
     }
 #else
   return ntohl (ACE_UINT32 (this->inet_addr4_.sin_addr.s_addr));
-#endif
-}
-
-// For now keep this in INET_Addr.cpp for easy compiling.  Move them
-// into INET_Addr.i for inlining later.
-void *ACE_INET_Addr::ip_addr_pointer(void) const
-{
-#if defined (ACE_HAS_IPV6)
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  if(ACE_INET_Addr::protocol_family() == PF_INET)
-    return (void*)&this->inet_addr4_.sin_addr;
-  else
-#endif
-    return (void*)&this->inet_addr6_.sin6_addr;
-#else
-  return (void*)&this->inet_addr4_.sin_addr;
-#endif
-}
-
-size_t ACE_INET_Addr::ip_addr_size(void) const
-{
-#if defined (ACE_HAS_IPV6)
-
-#if defined (ACE_USES_IPV4_IPV6_MIGRATION)
-  if(ACE_INET_Addr::protocol_family() == PF_INET)
-    return sizeof this->inet_addr4_.sin_addr;
-  else
-#endif
-    return sizeof this->inet_addr6_.sin6_addr;
-
-#else
-  return sizeof this->inet_addr4_.sin_addr;
-#endif
+#endif /* ACE_HAS_IPV6 */
 }
 
 void ACE_INET_Addr::initialize(void)
@@ -887,10 +857,10 @@ void ACE_INET_Addr::initialize(void)
   if(ACE_INET_Addr::protocol_family() == PF_INET)
     this->inet_addr4_.sin_family = ACE_ADDRESS_FAMILY_INET;
   else
-#endif
+#endif /* ACE_USES_IPV4_IPV6_MIGRATION */
   this->inet_addr6_.sin6_family = ACE_ADDRESS_FAMILY_INET;
 
 #else
   this->inet_addr4_.sin_family = ACE_ADDRESS_FAMILY_INET;
-#endif
+#endif /* ACE_HAS_IPV6 */
 }
