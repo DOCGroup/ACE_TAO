@@ -34,11 +34,39 @@ namespace {
 namespace Kokyu
 {
 
+Dispatch_Deferrer::Dispatch_Deferrer (void)
+  : msg_strat_()
+  , timers_()
+  , react_()
+  , task_(0)
+{
+}
+
+Dispatch_Deferrer::~Dispatch_Deferrer (void)
+{
+  //remove all timers and delete all qitems
+  Timer_Map::iterator iter = this->timers_.begin();
+  for(; iter != this->timers_.end(); ++iter)
+    {
+      Timer_Map::ENTRY entry = *iter;
+      ACE_DEBUG((LM_DEBUG,"Dispatch_Deferrer destructor cancelling timer with id %d\n",entry.int_id_));
+      this->react_->cancel_timer(entry.int_id_);
+      Dispatch_Queue_Item *qitem = entry.ext_id_;
+      ACE_Message_Block::release (qitem);
+    }
+  this->timers_.unbind_all();
+
+  //Don't close reactor since it may still be in use
+  //and we don't own it!
+
+  this->timers_.close();
+}
+
 int
 Dispatch_Deferrer::init(const Dispatch_Deferrer_Attributes& attr)
 {
-  //TODO: We assume that the ORB Reactor
-  //is the singleton Reactor, so we don't have to run the Reactor's
+  //We assume that the singleton Reactor
+  //has its own thread, so we don't have to run the Reactor's
   //event loop ourselves!
   this->react_ = ACE_Reactor::instance();
 
