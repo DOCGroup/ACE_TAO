@@ -1,3 +1,7 @@
+Sat Apr 12 22:50:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/examples/ORT/Makefile: Updated dependencies.
+
 Sat Apr 12 22:42:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Profile.cpp:
