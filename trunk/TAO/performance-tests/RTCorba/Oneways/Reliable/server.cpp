@@ -58,9 +58,9 @@ set_rt_mode (void)
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "client (%P|%t): sched_params failed\n"),
-                          1);
+        ACE_ERROR ((LM_ERROR,
+		    "client (%P|%t): sched_params failed %p\n",
+		    "set_rt_mode"));
     }
 
   // Get our thread handle.
@@ -69,10 +69,10 @@ set_rt_mode (void)
 
   // Set our thread priority.
   if (ACE_OS::thr_setprio (self, priority) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "server (%P|%t):thr_setprio failed\n"),
-                      1);
-
+    ACE_ERROR ((LM_ERROR,
+		"server (%P|%t):thr_setprio failed %p\n",
+		"set_rt_mode"));
+  
   // Do a sanity check.
   if (ACE_OS::thr_getprio (self, priority) == 0)
     ACE_DEBUG ((LM_DEBUG,
