@@ -58,8 +58,8 @@ ACE_Process_Manager::dump (void) const
 
 ACE_Process_Descriptor::ACE_Process_Descriptor (void)
   : delete_process_ (0),
-        process_ (0),
-        exit_notify_ (0)
+    process_ (0),
+    exit_notify_ (0)
 {
   ACE_TRACE ("ACE_Process_Descriptor::ACE_Process_Descriptor");
 }
@@ -130,13 +130,14 @@ ACE_Process_Manager::resize (size_t size)
 // Create and initialize the table to keep track of the process pool.
 
 int
-ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
+ACE_Process_Manager::open (size_t size,
+                           ACE_Reactor *r)
 {
   ACE_TRACE ("ACE_Process_Manager::open");
 
   if (r) 
     {       
-      ACE_Event_Handler::reactor( r );
+      ACE_Event_Handler::reactor (r);
 #if !defined(ACE_WIN32)
       // (No signals for child-exited on Win32) Assign the
       // Process_Manager a dummy I/O descriptor.  Note that even
@@ -182,7 +183,7 @@ ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 ACE_Process_Manager::ACE_Process_Manager (size_t size,
                                           ACE_Reactor *r)
   : ACE_Event_Handler (),
-        process_table_ (0),
+    process_table_ (0),
     max_process_table_size_ (0), 
     current_count_ (0),
 #if !defined(ACE_WIN32)
@@ -233,6 +234,10 @@ ACE_Process_Manager::close (void)
       this->current_count_ = 0;
     }
 
+  if (this->default_exit_handler_ != 0)
+      this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE,0);
+  this->default_exit_handler_ = 0;
+
   return 0;
 }
 
@@ -255,7 +260,7 @@ ACE_Process_Manager::handle_input (ACE_HANDLE proc)
   ACE_TRACE ("ACE_Process_Manager::handle_input");
 
 #if defined(ACE_WIN32)
-  DWORD status = 0;
+  ACE_exitcode status = 0;
   BOOL result = ::GetExitCodeProcess (proc, 
                                       &status);
 
@@ -273,17 +278,19 @@ ACE_Process_Manager::handle_input (ACE_HANDLE proc)
             this->notify_proc_handler (proc, pid, status);
             this->remove_proc (pid);
           }
-          ACE_Reactor *r = reactor ();
+          ACE_Reactor *r = this->reactor ();
 
           if (r)
             r->remove_handler (proc, 0);
         } 
       else 
-        ; // Huh?  Process still active -- shouldn't have been called yet!
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("Process still active -- shouldn't have been called yet!\n")),
+                          -1);
     } 
   else 
     {
-      // GetExitCodeProcess failed
+      // <GetExitCodeProcess> failed.
       ACE_ERROR ((LM_ERROR,
                   "%p\n%a",
                   "handle_input: GetExitCodeProcess failed",
@@ -391,7 +398,8 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options)
 // Create a new process.
 
 pid_t
-ACE_Process_Manager::spawn (ACE_Process *process, ACE_Process_Options &options)
+ACE_Process_Manager::spawn (ACE_Process *process,
+                            ACE_Process_Options &options)
 {
   ACE_TRACE ("ACE_Process_Manager::spawn");
 
@@ -470,7 +478,7 @@ ACE_Process_Manager::append_proc (ACE_Process *proc)
       // automagically.  Get a handle to this new Process and tell the
       // Reactor we're interested in <handling_input> on it.
 
-      ACE_Reactor *r = reactor ();
+      ACE_Reactor *r = this->reactor ();
       if (r != 0)
         r->register_handler (proc->gethandle (),
                              this,
@@ -663,13 +671,14 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
 // process started by some other means.
 
 pid_t
-ACE_Process_Manager::wait (pid_t pid, int *status)
+ACE_Process_Manager::wait (pid_t pid, 
+                           ACE_exitcode *status)
 {
   ACE_TRACE ("ACE_Process_Manager::wait");
 
-  return wait (pid,
-               ACE_Time_Value::max_time,
-               status);
+  return this->wait (pid,
+                     ACE_Time_Value::max_time,
+                     status);
 }
 
 // Collect a single child processes' exit status, unless <timeout>
@@ -679,7 +688,7 @@ ACE_Process_Manager::wait (pid_t pid, int *status)
 pid_t
 ACE_Process_Manager::wait (pid_t pid,
                            const ACE_Time_Value &timeout,
-                           int *status)
+                           ACE_exitcode *status)
 {
   ACE_TRACE ("ACE_Process_Manager::wait");
 
@@ -705,7 +714,7 @@ ACE_Process_Manager::wait (pid_t pid,
   else
     {
       // Wait for any Process spawned by this Process_Manager.
-#if defined(ACE_WIN32)
+#if defined (ACE_WIN32)
 
       HANDLE *handles;
 
@@ -738,18 +747,15 @@ ACE_Process_Manager::wait (pid_t pid,
 
           if (i != -1)
             {
-              DWORD ulstat = 0;
               pid = process_table_[i].process_->getpid ();
               result = ::GetExitCodeProcess (handles[result - WAIT_OBJECT_0],
-                                             &ulstat);
+                                             status);
               if (result == 0) 
                 {
-                  // GetExitCodeProcess failed!
+                  // <GetExitCodeProcess> failed!
                   this->remove_proc (pid);
                   pid = ACE_INVALID_PID;
                 } 
-              else
-                *status = ulstat;
             }
           else
             // uh oh...handle removed from process_table_, even though
@@ -761,21 +767,22 @@ ACE_Process_Manager::wait (pid_t pid,
 #else /* !defined(ACE_WIN32) */
       if (timeout == ACE_Time_Value::max_time)
         pid = ACE_OS::waitpid (-(ACE_OS::getpid ()),
-                               status, 0 );
+                               status,
+                               0);
       else if (timeout == ACE_Time_Value::zero)
         pid = ACE_OS::waitpid (-(ACE_OS::getpid ()),
                                status,
                                WNOHANG);
       else 
         {
-          ACE_Time_Value wait_until = timeout + ACE_OS::gettimeofday();
+          ACE_Time_Value wait_until =
+            timeout + ACE_OS::gettimeofday();
 
           for (;;)
             {
               pid = ACE_OS::waitpid (-(ACE_OS::getpid()),
                                      status,
                                      WNOHANG);
-
               if (pid != 0) 
                 // "no such children" error, or got one!
                 break;
@@ -788,7 +795,7 @@ ACE_Process_Manager::wait (pid_t pid,
               ACE_Time_Value time_left = wait_until - ACE_OS::gettimeofday ();
 
               // if ACE_OS::ualarm doesn't have sub-second resolution:
-              time_left += ACE_Time_Value (0,500000);
+              time_left += ACE_Time_Value (0, 500000);
               time_left.usec (0);
 
               if (time_left <= ACE_Time_Value::zero) {
@@ -808,10 +815,13 @@ ACE_Process_Manager::wait (pid_t pid,
       if (proc == 0) 
         {
           ssize_t i = this->find_proc (pid);
-          if (i == -1)
+          if (i == -1) {
             // oops, reaped an unmanaged process!
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) oops, reaped unmanaged %d\n",
+                        pid));
             return pid;
-          else
+          } else
             proc = process_table_[i].process_;
         }
       notify_proc_handler (proc->gethandle (),
@@ -824,6 +834,7 @@ ACE_Process_Manager::wait (pid_t pid,
 }
 
 // Legacy method:
+
 int 
 ACE_Process_Manager::reap (pid_t pid,
                            int *stat_loc,
@@ -843,7 +854,9 @@ ACE_Process_Manager::reap (pid_t pid,
 // if process found, 0 if not.  Must be called with locks held.
 
 int
-ACE_Process_Manager::notify_proc_handler (ACE_HANDLE h, pid_t pid, int)
+ACE_Process_Manager::notify_proc_handler (ACE_HANDLE h,
+                                          pid_t pid,
+                                          int exit_code)
 {
   ssize_t i = this->find_proc (pid);
 
@@ -852,15 +865,21 @@ ACE_Process_Manager::notify_proc_handler (ACE_HANDLE h, pid_t pid, int)
       ACE_Process_Descriptor &proc_desc =
         this->process_table_[i];
 
+      proc_desc.process_->exit_code (exit_code);
+
       if (proc_desc.exit_notify_ != 0) 
         {
-          proc_desc.exit_notify_->handle_input (h);
+          proc_desc.exit_notify_->handle_exit (proc_desc.process_);
           proc_desc.exit_notify_->handle_close (h, 0);
           proc_desc.exit_notify_ = 0;
         }
       else if (this->default_exit_handler_ != 0
-               && this->default_exit_handler_->handle_input (h) < 0)
-        this->register_handler (0);
+               && this->default_exit_handler_->handle_exit
+               (proc_desc.process_) < 0) {
+          this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE,
+                                                     0);
+          this->default_exit_handler_ = 0;
+      }
     } 
   else
     ACE_DEBUG ((LM_DEBUG,

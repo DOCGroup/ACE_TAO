@@ -110,6 +110,15 @@ ACE_Event_Handler::handle_timeout (const ACE_Time_Value &, const void *)
   return -1;
 }
 
+// Called when a monitored Process exits
+
+int
+ACE_Event_Handler::handle_exit (ACE_Process *)
+{
+  ACE_TRACE ("ACE_Event_Handler::handle_exit");
+  return -1;
+}
+
 // Called when a registered signal occurs.
 
 int 

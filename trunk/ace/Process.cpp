@@ -14,9 +14,11 @@
 ACE_RCSID (ace, Process, "$Id$")
 
 ACE_Process::ACE_Process (void)
+  :
 #if !defined (ACE_WIN32)
-  : child_id_ (ACE_INVALID_PID)
+  child_id_ (ACE_INVALID_PID),
 #endif /* !defined (ACE_WIN32) */
+  exit_code_ (0)
 {
 #if defined (ACE_WIN32)
   ACE_OS::memset ((void *) &this->process_info_,
@@ -188,9 +190,25 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #endif /* ACE_WIN32 */
 }
 
+int
+ACE_Process::running (void) const
+{
+#if defined (ACE_WIN32)
+    DWORD code;
+
+    BOOL result = ::GetExitCodeProcess (this->gethandle (), 
+                                        &code);
+    return result && code == STILL_ACTIVE;
+#else
+    return ACE_OS::kill (this->getpid (), 
+                         0) == 0 
+      || errno != ESRCH;
+#endif /* ACE_WIN32 */
+}
+
 pid_t
 ACE_Process::wait (const ACE_Time_Value &tv,
-                   int *status)
+                   ACE_exitcode *status)
 {
 #if defined (ACE_WIN32)
   // Don't try to get the process exit status if wait failed so we can
@@ -203,8 +221,8 @@ ACE_Process::wait (const ACE_Time_Value &tv,
         // The error status of <GetExitCodeProcess> is nonetheless not
         // tested because we don't know how to return the value.
         ::GetExitCodeProcess (process_info_.hProcess,
-                              (LPDWORD) status);
-      return 0;
+                              status);
+      return this->getpid ();
     case WAIT_TIMEOUT:
       errno = ETIME;
       return 0;
@@ -363,12 +381,10 @@ ACE_Process_Options::command_line_argv (void)
 
       int x = 0;
       do
-        {
-          command_line_argv_[x] = parser.next ();
-        }
-      while (command_line_argv_[x] != 0 &&
+        command_line_argv_[x] = parser.next ();
+      while (command_line_argv_[x] != 0 
              // substract one for the ending zero.
-             ++x < MAX_COMMAND_LINE_OPTIONS-1);
+             && ++x < MAX_COMMAND_LINE_OPTIONS - 1);
 
       command_line_argv_[x] = 0;
     }
@@ -390,7 +406,8 @@ ACE_Process_Options::setenv (LPTSTR envp[])
   int i = 0;
   while (envp[i])
     {
-      if (this->setenv_i (envp[i], ACE_OS::strlen (envp[i])) == -1)
+      if (this->setenv_i (envp[i],
+                          ACE_OS::strlen (envp[i])) == -1)
         return -1;
       i++;
     }
@@ -413,13 +430,15 @@ ACE_Process_Options::setenv (LPCTSTR format, ...)
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  ACE_OS::vsprintf (stack_buf, format, argp);
-
+  ACE_OS::vsprintf (stack_buf,
+                    format,
+                    argp);
   // End varargs.
   va_end (argp);
 
   // Append the string to are environment buffer.
-  if (this->setenv_i (stack_buf, ACE_OS::strlen (stack_buf)) == -1)
+  if (this->setenv_i (stack_buf,
+                      ACE_OS::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -437,7 +456,10 @@ ACE_Process_Options::setenv (LPCTSTR variable_name,
   TCHAR newformat[DEFAULT_COMMAND_LINE_BUF_LEN];
 
   // Add in the variable name.
-  ACE_OS::sprintf (newformat, ACE_TEXT ("%s=%s"), variable_name, format);
+  ACE_OS::sprintf (newformat,
+                   ACE_TEXT ("%s=%s"),
+                   variable_name,
+                   format);
 
   TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
@@ -452,7 +474,8 @@ ACE_Process_Options::setenv (LPCTSTR variable_name,
   va_end (argp);
 
   // Append the string to our environment buffer.
-  if (this->setenv_i (stack_buf, ACE_OS::strlen (stack_buf)) == -1)
+  if (this->setenv_i (stack_buf,
+                      ACE_OS::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -478,7 +501,8 @@ ACE_Process_Options::setenv_i (LPTSTR assignment,
 
   // Copy the new environment string.
   ACE_OS::memcpy (environment_buf_ + environment_buf_index_,
-                  assignment, len * sizeof (TCHAR));
+                  assignment,
+                  len * sizeof (TCHAR));
 
   // Update the argv array.
   environment_argv_[environment_argv_index_++] =
@@ -580,8 +604,10 @@ ACE_Process_Options::command_line (LPCTSTR const argv[])
       ACE_OS::strcat (command_line_buf_, argv[i]);
       while (argv[++i])
         {
-          ACE_OS::strcat (command_line_buf_, ACE_TEXT (" "));
-          ACE_OS::strcat (command_line_buf_, argv[i]);
+          ACE_OS::strcat (command_line_buf_,
+                          ACE_TEXT (" "));
+          ACE_OS::strcat (command_line_buf_,
+                          argv[i]);
         }
     }
 
@@ -596,7 +622,9 @@ ACE_Process_Options::command_line (LPCTSTR format, ...)
   va_start (argp, format);
 
   // sprintf the format and args into command_line_buf__.
-  ACE_OS::vsprintf (command_line_buf_, format, argp);
+  ACE_OS::vsprintf (command_line_buf_,
+                    format,
+                    argp);
 
   // Useless macro.
   va_end (argp);

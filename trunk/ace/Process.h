@@ -303,6 +303,7 @@ class ACE_Export ACE_Process
   //    then, the <spawn> is using the <execvp> which searches for the
   //    program file in the PATH variable.
 public:
+
   ACE_Process (void);
   // Default construction.  Must use <ACE_Process::spawn> to start.
 
@@ -314,7 +315,7 @@ public:
   // process id of the newly spawned child on success or -1 on
   // failure.
 
-  pid_t wait (int *status = 0,
+  pid_t wait (ACE_exitcode *status = 0,
               int wait_options = 0);
   // Wait for the process we've created to exit.  If <status> != 0, it
   // points to an integer where the function store the exit status of
@@ -324,7 +325,7 @@ public:
   // the child process id is returned.
 
   pid_t wait (const ACE_Time_Value &tv,
-              int *status = 0);
+              ACE_exitcode *status = 0);
   // Timed wait for the process we've created to exit.  A return value
   // of -1 indicates that the something failed; 0 indicates that a
   // timeout occurred.  Otherwise, the child's process id is returned.
@@ -346,11 +347,21 @@ public:
   // This call doesn't give the process a chance to cleanup, so use it
   // with caution...
 
-  pid_t getpid (void);
+  pid_t getpid (void) const;
   // Return the process id of the new child process.
 
-  ACE_HANDLE gethandle (void);
+  ACE_HANDLE gethandle (void) const;
   // Return the handle of the process, if it has one.
+
+  int running (void) const;
+  // Return 1 if running; 0 otherwise.
+
+  int exit_code (void) const;
+  // Return the Process' exit code
+
+  void exit_code (int code);
+  // Set the Process' exit code (completely unrelated to whether the
+  // Process has actually exited)!
 
 #if defined (ACE_WIN32)
   PROCESS_INFORMATION process_info (void);
@@ -363,6 +374,7 @@ protected:
   pid_t child_id_;
   // Process id of the child.
 #endif /* ACE_WIN32 */
+  int exit_code_;
 };
 
 #include "ace/SString.h"
