@@ -1,3 +1,62 @@
+Wed Nov  4 06:15:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        The following list of changes fixes build errors in the Borland builds
+
+        * ace/Object_Manager_Base.cpp:
+          Added #include of OS_NS_stdio.h
+
+        * ace/OS_NS_dirent.inl:
+          Added #include of OS_Memory.h
+
+        * ace/OS_NS_fcntl.cpp:
+          Added #include of OS_NS_stdio.h, OS_NS_Thread.h, OS_NS_macros.h and
+          Object_Manager_Base.h
+
+        * ace/OS_NS_fcntl.inl:
+          Added #include of OS_NS_errno.h
+
+        * ace/OS_NS_signal.h:
+          Added #include of os_include/os_signal.h, ACE_export.h and OS_export.h
+
+        * ace/OS_NS_stdio.inl:
+          Added #include OS_NS_macros.h
+
+        * ace/OS_NS_stropts.inl:
+          Added #include of OS_NS_macros.h and OS_QoS.h
+
+        * ace/OS_NS_sys_mman.inl:
+          Added #include of OS_NS_stdio.h, OS_NS_macros.h and OS_NS_errno.h
+
+        * ace/OS_NS_sys_resource.inl:
+          Added #include of OS_NS_macros.h
+
+        * ace/OS_NS_sys_select.inl:
+          Added #include of os_include/os_errno.h
+
+        * ace/OS_NS_sys_socket.inl:
+          Added #include of OS_NS_stdio.h, OS_QoS.h and Global_Macros.h
+
+        * ace/OS_NS_sys_stat.inl:
+          Added OS_NS_errno.h
+
+        * ace/OS_NS_sys_uio.cpp:
+          Added #include OS_Memory.h, OS_NS_string.h and OS_NS_unistd.h
+
+        * ace/OS_NS_sys_utsname.cpp
+          Added #include OS_NS_string.h, OS_NS_stdio.h and OS_NS_unistd.h
+
+        * ace/OS_NS_sys_wait.inl:
+          Added #include of OS_NS_errno.h and Global_Macros.h
+
+        * ace/OS_NS_Thread.cpp:
+          Added #include of Object_Manager_Base.h
+
+        * ace/OS_NS_Thread.inl:
+          Added #include of OS_NS_stdio.h and OS_NS_errno.h
+
+        * ace/OS_NS_unistd.inl:
+          Added #include of OS_NS_macros., OS_NS_fcntl.h and Default_Constants.h
+
 Tue Nov  4 04:55:40 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/CDR_Stream.h:
@@ -22,12 +81,12 @@ Mon Nov  3 22:11:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Mon Nov  3 20:35:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/config-sunos5.5.h: 
+	* ace/config-sunos5.5.h:
 
 	  Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION, since
 	  CC 5.3 seems to be doing the right thing for class member
 	  specializations. We will soon check things out on other
-	  compilers. 
+	  compilers.
 
 Mon Nov  3 19:38:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -35,12 +94,12 @@ Mon Nov  3 19:38:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Added a new #define, ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 	  which defines template <>  for definitions of member functions
-	  of a class that is specialized. 
-	
+	  of a class that is specialized.
+
 	* ace/config-g++-common.h:
 
           Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION, since
-	  g++ is doing the right thing for class member specializations. 
+	  g++ is doing the right thing for class member specializations.
 
 Mon Nov  3 17:02:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -120,7 +179,7 @@ Mon Nov  3 04:43:43 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon Nov  3 04:12:12 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* include/makeinclude/platform_freebsd.GNU:  
+	* include/makeinclude/platform_freebsd.GNU:
 	  Overhaul the OS version tests so that they actually work.
 	  The "-pthread" gcc flag was recently deprecated in FreeBSD's gcc, so
 	  use the correct pthread flags for gcc, based on the OS version.
