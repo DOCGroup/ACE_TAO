@@ -164,14 +164,14 @@ CIAO::ServerActivator_Impl::init_svcconf_map (const char *filename)
             case 0:
               // All is fine.
               // Debug info:
-              if (CIAO::debug_level () > 0)
+              if (CIAO::debug_level () > 10)
                 ACE_DEBUG ((LM_DEBUG,
                             "Bound svc.conf hint \"%s\" successfully\n",
                             hint.c_str ()));
               break;
 
             case 1:
-              if (CIAO::debug_level () > 0)
+              if (CIAO::debug_level () > 10)
                 ACE_DEBUG ((LM_DEBUG,
                             "Duplication svc.conf hint \"%s\" found - ignore\n",
                             hint.c_str ()));
@@ -265,7 +265,7 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  if (CIAO::debug_level () > 0)
+  if (CIAO::debug_level () > 10)
     ACE_DEBUG ((LM_DEBUG, "CIAO::ServerActivator_Impl::create_component_server\n"));
 
   Components::Deployment::ComponentServer_var retval;
@@ -318,7 +318,7 @@ CIAO::ServerActivator_Impl::create_component_server (const Components::ConfigVal
 
       if (svcconf_path != 0)
         {
-          if (CIAO::debug_level () > 0)
+          if (CIAO::debug_level () > 10)
             ACE_DEBUG((LM_DEBUG, "Using svcconf file: %s\n",
                        svcconf_path));
           additional_options += ACE_CString (" -ORBSvcConf ");

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Assembly_Handlers.h"
+#include "CIAO_common.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Assembly_Handlers.inl"
@@ -28,7 +29,8 @@ CIAO::Assembly_Handler::startElement (const ACEXML_Char *namespaceURI,
     case START:
       if (ACE_OS::strcmp (qName, "componentfiles") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Start componentfiles\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "Start componentfiles\n"));
           CIAO::XMLHelpers::Cascadable_DocHandler *new_handler;
 
           ACE_NEW (new_handler,
@@ -52,7 +54,8 @@ CIAO::Assembly_Handler::startElement (const ACEXML_Char *namespaceURI,
     case COMPONENTFILES_DONE:
       if (ACE_OS::strcmp (qName, "partitioning") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Start partitioning\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "Start partitioning\n"));
           CIAO::XMLHelpers::Cascadable_DocHandler *new_handler;
 
           ACE_NEW (new_handler,
@@ -77,7 +80,8 @@ CIAO::Assembly_Handler::startElement (const ACEXML_Char *namespaceURI,
     case PLACEMENT_DONE:
       if (ACE_OS::strcmp (qName, "connections") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Start connections\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "Start connections\n"));
           CIAO::XMLHelpers::Cascadable_DocHandler *new_handler;
 
           ACE_NEW (new_handler,
@@ -101,7 +105,8 @@ CIAO::Assembly_Handler::startElement (const ACEXML_Char *namespaceURI,
     case CONNECTION_DONE:
       if (ACE_OS::strcmp (qName, "extension") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "Start skipping extension\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "Start skipping extension\n"));
           CIAO::XMLHelpers::Cascadable_DocHandler *new_handler;
 
           ACE_NEW (new_handler,
@@ -143,7 +148,8 @@ CIAO::Assembly_Handler::endElement (const ACEXML_Char *,
     case START:
       if (ACE_OS::strcmp (qName, "componentfiles") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "End componentfiles\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "End componentfiles\n"));
           this->state_ = COMPONENTFILES_DONE;
         }
       return;
@@ -151,7 +157,8 @@ CIAO::Assembly_Handler::endElement (const ACEXML_Char *,
     case COMPONENTFILES_DONE:
       if (ACE_OS::strcmp (qName, "partitioning") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "End partitioning\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "End partitioning\n"));
           this->state_ = PLACEMENT_DONE;
         }
       return;
@@ -159,7 +166,8 @@ CIAO::Assembly_Handler::endElement (const ACEXML_Char *,
     case PLACEMENT_DONE:
       if (ACE_OS::strcmp (qName, "connections") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "End connections\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "End connections\n"));
           this->state_ = CONNECTION_DONE;
         }
       return;
@@ -167,7 +175,8 @@ CIAO::Assembly_Handler::endElement (const ACEXML_Char *,
     case CONNECTION_DONE:
       if (ACE_OS::strcmp (qName, "extension") == 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "End skipping extension\n"));
+          if (CIAO::debug_level () > 10)
+            ACE_DEBUG ((LM_DEBUG, "End skipping extension\n"));
           this->state_ = DONE;
         }
       return;

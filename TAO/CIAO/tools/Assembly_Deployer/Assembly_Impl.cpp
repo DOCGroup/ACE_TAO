@@ -150,9 +150,10 @@ CIAO::Assembly_Impl::~Assembly_Impl ()
 {
   // @@ tearing down everything?
 
-  ACE_DEBUG ((LM_DEBUG,
-              "CIAO::Assembly_Impl::~Assembly_Impl %d\n",
-              this->serial_number_));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG,
+                "CIAO::Assembly_Impl::~Assembly_Impl %d\n",
+                this->serial_number_));
 
   delete this->assembly_spec_;
 }
@@ -181,13 +182,15 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CreateFailure))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "CIAO::Assembly_Impl::build %d\n",
-              this->serial_number_));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG,
+                "CIAO::Assembly_Impl::build %d\n",
+                this->serial_number_));
   if (this->state_ == Components::Deployment::INSERVICE)
     return;                     // We are running already.
 
-  ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));
 
   // Installing homes and instantiating components
 
@@ -199,7 +202,8 @@ CIAO::Assembly_Impl::build (ACE_ENV_SINGLE_ARG_DECL)
                                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "------------------------------------\n"));
 
   if (build_result != 0)
     {
@@ -269,9 +273,10 @@ CIAO::Assembly_Impl::tear_down (ACE_ENV_SINGLE_ARG_DECL)
       }
   }
 
-  ACE_DEBUG ((LM_DEBUG,
-              "CIAO::Assembly_Impl::tear_down %d\n",
-              this->serial_number_));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG,
+                "CIAO::Assembly_Impl::tear_down %d\n",
+                this->serial_number_));
   this->state_ = ::Components::Deployment::INACTIVE;
 }
 
@@ -279,9 +284,10 @@ CIAO::Assembly_Impl::tear_down (ACE_ENV_SINGLE_ARG_DECL)
 CIAO::Assembly_Impl::get_state (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "CIAO::Assembly_Impl::get_state %d\n",
-              this->serial_number_));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG,
+                "CIAO::Assembly_Impl::get_state %d\n",
+                this->serial_number_));
   return this->state_;
 }
 

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RTServer_Impl.h"
+#include "CIAO_common.h"
 
 #if !defined (__ACE_INLINE__)
 # include "RTServer_Impl.inl"
@@ -44,7 +45,8 @@ CIAO::RTServer::RTComponentServer_Impl::create_container
                    Components::CreateFailure,
                    Components::InvalidConfiguration))
 {
-  ACE_DEBUG ((LM_DEBUG, "RTComponentServer_Impl::create_container\n"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "RTComponentServer_Impl::create_container\n"));
 
   CIAO::RTServer::RTContainer_Impl *container_servant = 0;
 
@@ -97,11 +99,14 @@ parse_server_config_values (const Components::ConfigValues &options
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidConfiguration))
 {
-  ACE_DEBUG ((LM_DEBUG, "RTComponentServer_Impl::parse_server_config_values\n"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "RTComponentServer_Impl::parse_server_config_values\n"));
 
   for (CORBA::ULong i = 0; i < options.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "parse_server_options: %s\n", options[i]->name ()));
+      if (CIAO::debug_level () > 10)
+        ACE_DEBUG ((LM_DEBUG, "parse_server_options: %s\n",
+                    options[i]->name ()));
 
       if (ACE_OS::strcmp (options[i]->name (), "CIAO-RTResources") == 0)
         {
@@ -148,7 +153,8 @@ CIAO::RTServer::RTContainer_Impl::init (const Components::ConfigValues &options,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidConfiguration))
 {
-  ACE_DEBUG ((LM_DEBUG, "RTContainer_Impl::init\n"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "RTContainer_Impl::init\n"));
 
   this->config_ = options;
   this->parse_container_config_values (options
@@ -184,20 +190,23 @@ parse_container_config_values (const Components::ConfigValues &options
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::InvalidConfiguration))
 {
-  ACE_DEBUG ((LM_DEBUG, "parse_container_config_values"));
+  if (CIAO::debug_level () > 10)
+    ACE_DEBUG ((LM_DEBUG, "parse_container_config_values"));
 
   for (CORBA::ULong i = 0; i < options.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "options.name= %s\n", options[i]->name ()));
+      if (CIAO::debug_level () > 10)
+        ACE_DEBUG ((LM_DEBUG, "options.name= %s\n", options[i]->name ()));
 
       if (ACE_OS::strcmp (options[i]->name (), "CIAO-RTPolicySet") == 0)
         {
           const char *ps_name;
           if (options[i]->value () >>= ps_name)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "-Using RTPolicySet named: %s\n",
-                          ps_name));
+              if (CIAO::debug_level () > 10)
+                ACE_DEBUG ((LM_DEBUG,
+                            "-Using RTPolicySet named: %s\n",
+                            ps_name));
               CORBA::PolicyList_var policies =
               // initialize the policyset manager with policy set defintions.
                 this->policyset_manager_.find_policies_by_name (ps_name
@@ -205,9 +214,10 @@ parse_container_config_values (const Components::ConfigValues &options
               ACE_CHECK;
 
               this->Policies_ = policies;
-              ACE_DEBUG ((LM_DEBUG,
-                          "Found RTPolicySet named: %s\n",
-                          ps_name));
+              if (CIAO::debug_level () > 10)
+                ACE_DEBUG ((LM_DEBUG,
+                            "Found RTPolicySet named: %s\n",
+                            ps_name));
             }
         }
       else
