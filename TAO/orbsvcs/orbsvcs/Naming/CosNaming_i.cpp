@@ -19,7 +19,7 @@
 NS_NamingContext::NS_NamingContext (void)
 {
   // Deal with faults.
-  if (context_.open (NS_MAP_SIZE) == -1)
+  if (context_.open () == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "NS_NamingContext"));
 
   // Get the lock from the orb that knows what type is appropriate.
@@ -616,8 +616,8 @@ NS_BindingIterator::next_one (CosNaming::Binding_out b,
 
   if (hash_iter_->done ())
     {
-      // @@ Marina, why would we want to allocate a binding when the
-      //    iteration is done?
+      // We are allocating a binding here because it's an out parameter
+      // and the server will try to free the memory
 
       // check for memory failure.
       // if allocation fails, the environment must be set to indicate error.
