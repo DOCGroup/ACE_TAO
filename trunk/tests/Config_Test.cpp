@@ -30,8 +30,6 @@ test (ACE_Configuration *config,
       ACE_Configuration_Section_Key &testsection)
 {
   ACE_TString stvalue;
-  const ACE_Configuration_Section_Key &root =
-    config->root_section ();
 
   // Set some values.
   if (config->set_string_value (testsection,
