@@ -1,3 +1,7 @@
+Tue Jul 17 13:48:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/UIOP_Transport.cpp: Fixed a warning.
+	
 Tue Jul 17 13:44:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/POA/Demux/Makefile: Updated dependencies. This
