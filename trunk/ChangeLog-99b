@@ -1,23 +1,48 @@
+Mon Mar 01 13:04:53 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.*,Object_Manager.{h,cpp},ACE.cpp: added class
+          ACE_OS_Object_Manager.  It manages the three preallocated
+          locks that ACE_OS uses.
+
+        * ace/ACE.{i,cpp},OS.*: moved ACE::strecpy () and
+          ACE::unique_name () from class ACE to ACE_OS.  That
+          allows ACE_OS to be self-contained.  The ACE versions
+          were left for backward compatibility; they now just
+          wrap the ACE_OS versions.
+
+          With these changes, a stand-alone ACE OS adaptation layer
+          can now be built.  The ace/config-minimal.h config file
+          should be included in ace/config.h if you want to build
+          the ACE OS adaptation layer.
+
+        * ace/Synch.{i,cpp} (~ACE_Recursive_Thread_Mutex): added
+          a call to this->remove ().  Without it, the mutex wasn't
+          being destroyed.  Uninlined both the destructor to avoid
+          code bloat if there are multiple returns in a function
+          that instantiates an ACE_Recursive_Thread_Mutex locally.
+          And, uninlined the remove () function, to save code space,
+          because it's non-trivial and not expected to be time critical.
+
 Sun Feb 28 20:21:05 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/Makefile.DLL (realclean): Added the realclean target to
-	  the makefile.
+        * tests/Makefile.DLL (realclean): Added the realclean target to
+          the makefile.
 
-	* tests/run_tests.sh (ace_version): Disabled DLL_Test for chorus,
-	  LynxOS, Unicos platforms as they dont support shared libraries.
+        * tests/run_tests.sh (ace_version): Disabled DLL_Test for chorus,
+          LynxOS, Unicos platforms as they dont support shared libraries.
 
 Sun Feb 28 20:08:54 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/POSIX_Proactor.cpp: 
-	* ace/POSIX_Asynch_IO.h: 
-	* ace/POSIX_Asynch_IO.cpp: 
-	Fixed to pass <ACE_POSIX_Asynch_Result *> wherever <aiocb *> is being
-	passed, since it is ok to pass the derived class pointer in place of
-	base class pointer.
-	Defined the fields <bytes_transferred_> and <error_> in
-	<ACE_POSIX_Asynch_Result> so that they can be used instead of
-	<AIO_SYSERROR> and <AIO_SYSRETURN>. Because <aiocb:;aio_return> and
-	<aiocb::aio_error> fields  are not supported on HP yet. 
+        * ace/POSIX_Proactor.cpp:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/POSIX_Asynch_IO.cpp:
+        Fixed to pass <ACE_POSIX_Asynch_Result *> wherever <aiocb *> is being
+        passed, since it is ok to pass the derived class pointer in place of
+        base class pointer.
+        Defined the fields <bytes_transferred_> and <error_> in
+        <ACE_POSIX_Asynch_Result> so that they can be used instead of
+        <AIO_SYSERROR> and <AIO_SYSRETURN>. Because <aiocb:;aio_return> and
+        <aiocb::aio_error> fields  are not supported on HP yet.
 
 Sun Feb 28 14:22:38 1999  David L. Levine  <levine@cs.wustl.edu>
 
