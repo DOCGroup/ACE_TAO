@@ -1,3 +1,23 @@
+Mon Mar 31 14:04:22 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/CDR_Stream.cpp:
+        * ace/CDR_Stream.h (ACE_OutputCDR): Provide an accessor method,
+          ACE_OutputCDR::wchar_maxbytes() for getting the stream size for
+          wide characters when no translator is involved.
+
+          There was a problem reading wstrings when the maxbytes is less
+          than the size of a wchar_t. When the maxbytes value was 1, I was
+          using a static cast from a char to a wchar, which caused sign
+          propogation. Changing to assignment from an octet solved that.
+
+        * ace/Codeset_Registry_db.cpp: Added entries for common 2 byte and
+          4 byte wchar codesets, UTF-16 and UCS-4.
+
+        * ace/Codeset_Registry.cpp:
+        * ace/Codeset_Registry.h:
+        * ace/Codeset_Registry.inl: Retyped validation methods to return
+          int rather than CORBA::Boolean as a result code.
+
 Mon Mar 31 14:03:35 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
