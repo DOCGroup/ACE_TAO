@@ -1,3 +1,11 @@
+Fri Jul 17 18:30:10 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Strategies_T.cpp (connect_svc_handler): The activation of
+ 	  the newly created handler is moved outside the scope of the lock
+ 	  of the cached connector.  This is necessary to avoid subtle
+ 	  deadlock conditions with this lock and the Reactor lock.  Thanks
+ 	  to Micheal for finding this race condition.
+
 Fri Jul 17 13:53:54 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Threads/barrier2.cpp (ACE_MT_SYNCH>): Cleaned up the
