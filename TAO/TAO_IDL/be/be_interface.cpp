@@ -515,7 +515,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
             }
 
           *os << "," << be_nl
-              << "CORBA::AbstractBase (objref, _tao_collocated, servant)"
+              << "ACE_NESTED_CLASS (CORBA, AbstractBase) (objref, _tao_collocated, servant)"
               << be_uidt << be_uidt;
         }
       else
