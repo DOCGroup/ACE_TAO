@@ -29,8 +29,6 @@
 // TAO_IDL - Generated from
 // be\be_visitor_interface/tie_si.cpp:96
 
-#if defined (ACE_HAS_USING_KEYWORD)
-
 template <class T> ACE_INLINE
 POA_CORBA::DomainManager_tie<T>::DomainManager_tie (T &t)
 	: ptr_ (&t),
@@ -126,7 +124,7 @@ POA_CORBA::DomainManager_tie<T>::_default_POA (ACE_ENV_SINGLE_ARG_DECL)
 
 template <class T> ACE_INLINE
 ::CORBA::Policy_ptr POA_CORBA::DomainManager_tie<T>::get_domain_policy  (
-    CORBA::PolicyType policy_type
+    ::CORBA::PolicyType policy_type
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -139,12 +137,8 @@ template <class T> ACE_INLINE
   );
 }
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
 // TAO_IDL - Generated from
 // be\be_visitor_interface/tie_si.cpp:96
-
-#if defined (ACE_HAS_USING_KEYWORD)
 
 template <class T> ACE_INLINE
 POA_CORBA::ConstructionPolicy_tie<T>::ConstructionPolicy_tie (T &t)
@@ -289,8 +283,8 @@ void POA_CORBA::ConstructionPolicy_tie<T>::destroy  (
 
 template <class T> ACE_INLINE
 void POA_CORBA::ConstructionPolicy_tie<T>::make_domain_manager  (
-    CORBA::InterfaceDef_ptr object_type,
-    CORBA::Boolean constr_policy
+    ::CORBA::InterfaceDef_ptr object_type,
+    ::CORBA::Boolean constr_policy
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -303,6 +297,4 @@ void POA_CORBA::ConstructionPolicy_tie<T>::make_domain_manager  (
     ACE_ENV_ARG_PARAMETER
   );
 }
-
-#endif /* ACE_HAS_USING_KEYWORD */
 

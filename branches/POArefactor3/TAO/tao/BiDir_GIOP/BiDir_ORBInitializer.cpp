@@ -8,12 +8,9 @@
 
 #include "tao/ORB_Constants.h"
 
-ACE_RCSID (BiDir_GIOP, 
+ACE_RCSID (BiDir_GIOP,
            BiDir_ORBInitializer,
            "$Id$")
-
-
-
 
 void
 TAO_BiDir_ORBInitializer::pre_init (
