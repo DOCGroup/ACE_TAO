@@ -39,16 +39,18 @@
 #   define ACE_SPRINTF_ADAPTER(X) X
 # endif /* ACE_HAS_CHARPTR_SPRINTF */
 
-// This is defined by XOPEN to be a minimum of 16.  POSIX.1g
-// also defines this value.  platform-specific config.h can
-// override this if need be.
-# if !defined (IOV_MAX)
-#   define IOV_MAX 16
-# endif /* IOV_MAX */
+#if !defined (L_cuserid)
+#   if !defined (ACE_L_CUSERID)
+#     define ACE_L_CUSERID  9
+      // 8 character user ID + NULL
+#   endif /* !ACE_L_CUSERID */
+#   define L_cuserid ACE_L_CUSERID
+# endif /* L_cuserid */
 
-# if !defined (ACE_IOV_MAX)
-#   define ACE_IOV_MAX IOV_MAX
-# endif /* ACE_IOV_MAX */
+// need to fix this?
+# if !defined ACE_MAX_USERID
+#   define ACE_MAX_USERID L_cuserid
+# endif /* !ACE_MAX_USERID */
 
 #if !defined (ACE_WIN32)
 // Honestly don't know where these should go.

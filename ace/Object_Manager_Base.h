@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ace_sys_types.h"
+#include "ace/ace_signal.h"
 #include "ace/OS_Export.h"
 #include "ace/Global_Macros.h"
 
