@@ -1,0 +1,24 @@
+# file      : CCF/IDL2/SyntaxTree/Makefile.alt
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $id$
+
+root = ../../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Object.pre.rules)
+
+cxx_translation_units := BuiltIn.cpp      \
+                         Elements.cpp     \
+                         Interface.cpp    \
+                         Module.cpp       \
+                         Operation.cpp    \
+                         Translation.cpp  \
+                         ValueType.cpp
+
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Object.post.rules)

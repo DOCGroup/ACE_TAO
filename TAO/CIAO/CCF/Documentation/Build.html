@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+file      : Documentation/Build.html
+author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+cvs-id    : $id$
+-->
+
+<html>
+
+<head>
+
+  <title>Building CCF</title>
+
+  <meta name="author" content="Boris Kolpackov"/>
+  <meta name="keywords" content="build,compile,make,CCF,CORBA,compiler,framework,library"/>
+  <meta name="description" content="CCF building instructions"/>
+  <meta http-equiv="Content-Language" content="en"/>
+
+  <style type="text/css">
+    body {
+      font-family  : arial,sans-serif;
+      font-size    : 10pt;
+    }
+
+    h1 {
+      font-size    : 12pt;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div align="center">
+<table width="700" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+
+<h1>Note: This document is somewhat outdated</h1>
+
+<h1>Prerequisites</h1>
+
+<p>
+In order to build CCF you will need a standard-conformant C++ compiler.
+Currently you can expect CCF to compile fine with
+<a href="http://gcc.gnu.org">GCC</a> and having work-around
+patch<sup><a href="#sup-1">1</a></sup> applied with
+<a href="http://microsoft.com">MS VC7.1</a>.
+<p>
+
+<p>
+CCF uses a number of libraries from <a href="http://boost.org">boost</a>.
+So if you don't have it installed yet then you will need to
+<a href="http://boost.org/more/download.html">download and build boost</a>.
+In particular <code>boost::filesystem</code> and <code>boost::regex</code>
+are used by CCF and require building. So if you don't want to build what
+you don't need then you may just build those two libraries.
+</p>
+
+<p>
+If you are going to use a Makefile build then you will also need
+<a href="http://gnu.org/software/make">GNU make</a>.
+</p>
+
+<h1>Building with VC7.1</h1>
+<p>
+In order to build CCF with VC7.1 you will need to add boost include and
+library paths to your search path. After having that done you can open
+MSVC solution file in <code>CCF/CCF/</code> and proceed as usual.
+</p>
+
+<h1>Building with Makefiles</h1>
+<p>
+Before you run <code>make</code> you will need to create a soft link in
+<code>CCF/External/</code> with name <code>boost</code> to point to
+your boost directory. Also inside the boost distribution you will need
+to create directory <code>lib</code> and copy (or soft link)
+<code>libboost_filesystem.a</code> and <code>libboost_regex.a</code> into it.
+After having all this set you can run <code>make</code> in <code>CCF/</code>
+to build all libraries, tests and examples. By default compiler with name
+<code>g++</code> will be used. You can change this by setting environment
+variable <code>CXX</code> to whatever compiler you prefer.
+</p>
+
+<hr size="1" />
+<a name="sup-1">1.</a> If you got CCF as part of ACE+TAO source code then
+all compatibility patches are already applied.
+
+</td>
+</tr>
+</table>
+</div>
+</body>
+</html>
