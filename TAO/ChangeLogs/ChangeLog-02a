@@ -1,3 +1,11 @@
+Mon May 29 09:56:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	  Put a date back into the 'current status:' line. The
+	  section itself is up to date - it's only the date that's
+	  out of date ;-). Thanks to William Horn
+ 	  <whorn1984@my-deja.com> for bringing this to our attention.
+
 Sun May 28 16:46:19 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/Basic/Updates.cpp:
