@@ -9,7 +9,7 @@ Thu Sep 11 08:32:00 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 Wed Sep 10 17:49:10 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         Added files:
-        
+
         * tests/OBV/Supports/Supports_Test.mpc:
         * tests/OBV/Supports/client.cpp:
         * tests/OBV/Supports/server.cpp:
@@ -116,7 +116,7 @@ Tue Sep  9 14:30:13 MST 2003 Trevor Fields <fields_t@ociweb.com>
 
         * TAO/orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.cpp:
 
-          Changed array constructor to use a temporary variable 
+          Changed array constructor to use a temporary variable
           instead of the direct funtion call.  gcc 2.95 on Solaris
           cant handle function call as length in initialization.
 
