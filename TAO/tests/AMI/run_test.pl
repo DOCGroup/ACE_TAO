@@ -26,8 +26,8 @@ foreach $i (@ARGV) {
 
 $iorfile = "server.ior";
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-			  " -ORBsvcconf server.conf  -ORBdebuglevel $debug_level"
-			  . " -o $iorfile");
+			  " -ORBdebuglevel $debug_level"
+			  . "-d -o $iorfile");
 
 if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
   print STDERR "ERROR: cannot find file <$iorfile>\n";
@@ -39,7 +39,7 @@ $CL = Process::Create ($EXEPREFIX."$client_process$EXE_EXT ",
 			  " -ORBsvcconf $client_conf "
 			  . "-ORBdebuglevel $debug_level"
 			  . " -k file://$iorfile "
-			  . " -i $iterations");
+			  . " -i $iterations -d");
 
 $client = $CL->TimedWait (60);
 if ($client == -1) {

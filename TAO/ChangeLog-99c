@@ -1,4 +1,36 @@
-Thu Sep  3 01:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+Thu Sep 03 05:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* tao/Reply_Dispatcher.cpp:
+	  Changed the method TAO_Synch_Reply_Dispatcher::dispatch_reply
+	  to not release the old service context buffer.
+	  This needs to be verified by Carlos to see if it is the right 
+	  thing to do. Releasing it caused an access violation.
+	  This passage of the source code needs to be documented.
+
+	* tests/AMI/run_test.pl,
+	  tests/AMI/simple_client.cpp:
+	  Enhanced the example to fully support attributes. 
+
+	* TAO_IDL/be/be_visitor_factory.cpp,
+	  TAO_IDL/be/be_visitor_operation.cpp,
+	  TAO_IDL/be_include/be_visitor_operation.h,
+	  TAO_IDL/be_include/be_visitor_operation\ami_handler_operation_ss.h
+	  TAO_IDL/be_include/be_visitor_operation\ami_handler_operation_ss.cpp:
+	  Cleaned up the naming conventions to make AMI code
+	  generation more readable. The ami_handler_operation_ss files
+	  were introduced to support this.
+
+	* TAO_IDL/be_include/be_visitor_operation\ami_handler_servant_operation_ss.h
+	  TAO_IDL/be_include/be_visitor_operation\ami_handler_servant_operation_ss.cpp:
+	  These files got replaced by ones with different names. See comment above.
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_sh.cpp
+	  TAO_IDL/be/be_visitor_operation/ami_handler_thru_poa_collocated_ss.cpp:
+	  Fixed a the generation of the names for attributes.
+	  AMI works now fine with attributes! 
+
+
+Thu Sep 03 01:30:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 	* tests/NestedUpcall/Triangle_Test/Object_A_i.cpp
 	  tests/NestedUpcall/Triangle_Test/Object_A_i.h

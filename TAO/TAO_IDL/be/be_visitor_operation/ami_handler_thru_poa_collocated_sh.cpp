@@ -70,7 +70,19 @@ int be_visitor_operation_ami_handler_thru_poa_collocated_sh::visit_operation (be
     }
 
   // STEP 2: generate the operation name
-  *os << "void " << node->local_name ();
+  *os << "void ";
+
+    // check if we are an attribute node in disguise
+  if (this->ctx_->attribute ())
+    {
+      // now check if we are a "get" or "set" operation
+      if (node->nmembers () == 1) // set
+        *os << "set_";
+      else
+        *os << "get_";
+    }  
+
+  *os << node->local_name ();
 
   // STEP 3: generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing

@@ -903,7 +903,7 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_compiled_visitor_operation_ami_handler_operation_cs (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_SS:
-      return new be_compiled_visitor_operation_ami_handler_servant_operation_ss (new_ctx);
+      return new be_compiled_visitor_operation_ami_handler_operation_ss (new_ctx);
 
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CH:
     case TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARGLIST_CS:
