@@ -8,7 +8,7 @@ project (Config_Handlers) : ciao_deployment_stub {
   macros   += XML_USE_PTHREADS
   includes += $(XERCESCROOT)/include 
   libpaths += $(XERCESCROOT)/lib
-  libs     += xerces-c
+  libs     += xerces-c CIAO_Server
 
   Source_Files {
     Any_Handler.cpp

@@ -1,3 +1,10 @@
+Mon May 31 13:35:15 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/Config_Handlers/Config_Handlers.mpc:
+
+	  Added the missing dependency library to the mpc file, which
+          is CIAO_Server library.
+
 Mon May 31 13:10:15 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager.mpc:
