@@ -173,6 +173,7 @@ libACE_Utils_la_SOURCES = \
   Registry.cpp \
   SString.cpp \
   Stats.cpp \
+  Sample_History.cpp \
   System_Time.cpp \
   Time_Request_Reply.cpp \
   Timeprobe.cpp \
@@ -705,6 +706,7 @@ HEADER_FILES = \
   Singleton.h \
   Sock_Connect.h \
   Stats.h \
+  Sample_History.h \
   Strategies.h \
   Strategies_T.h \
   Stream.h \
@@ -927,6 +929,7 @@ INLINE_FILES = \
   Singleton.i \
   Sock_Connect.i \
   Stats.i \
+  Sample_History.inl \
   Strategies.i \
   Strategies_T.i \
   Stream.i \

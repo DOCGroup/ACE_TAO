@@ -1,3 +1,26 @@
+Fri Oct 27 15:02:56 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Makefile:
+        * ace/Makefile.am:
+        * ace/Makefile.bor:
+        * ace/Sample_History.h:
+        * ace/Sample_History.inl:
+        * ace/Sample_History.cpp:
+          Add new class to keep a full history of all the samples in a
+          performance test.
+
+        * ace/Basic_Stats.h:
+        * ace/Basic_Stats.inl:
+        * ace/Basic_Stats.cpp:
+        * ace/Stats.h:
+        * ace/Stats.cpp:
+          Refactor code to compute minimum, maximum, average and jitter
+          into its own class.  It used to be part of ACE_Througthput_Stats
+
+        * performance-tests/TCP/Makefile:
+        * performance-tests/TCP/tcp_test.cpp:
+          Use the new ACE_Sample_History class.
+
 Fri Oct 27 12:04:17 2000  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * platform_chorus.GNU:
