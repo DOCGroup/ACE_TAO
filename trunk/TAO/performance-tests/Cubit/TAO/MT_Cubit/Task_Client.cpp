@@ -659,7 +659,7 @@ Client::get_cubit (CORBA::ORB_ptr orb, CORBA::Environment &ACE_TRY_ENV)
     orb->object_to_string (this->cubit_,
                            ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-      
+
   ACE_DEBUG ((LM_DEBUG,
               "(%t) CUBIT OBJECT connected to <%s>\n",
               str.in ()));
@@ -722,6 +722,9 @@ Client::svc (void)
 
       CORBA::release (this->cubit_);
       this->cubit_ = 0;
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

@@ -1,3 +1,9 @@
+Fri Sep 24 21:18:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* performance-tests/Cubit/TAO/MT_Cubit/Cubit_Task.cpp:
+	  Call the ORB::destroy() method to avoid crashes on shutdown.
+
 Fri Sep 24 16:16:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/UIOP_Transport.cpp:
