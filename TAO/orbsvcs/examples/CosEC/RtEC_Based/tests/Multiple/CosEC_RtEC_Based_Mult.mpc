@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Cons) : orbsvcsexe, event, rtevent, rtsched {
+project(*Cons) : orbsvcsexe, event, event_skel, rtevent, rtsched {
   after += CosEC_RtEC_Based_lib
   includes += ../../lib
   libs += CosEC_RtEC_Based
@@ -12,7 +12,7 @@ project(*Cons) : orbsvcsexe, event, rtevent, rtsched {
   }
 }
 
-project(*Supp) : orbsvcsexe, event, rtevent, rtsched {
+project(*Supp) : orbsvcsexe, event, event_skel, rtevent, rtsched {
   after += CosEC_RtEC_Based_lib
   includes += ../../lib
   libs += CosEC_RtEC_Based

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(MFC client): namingexe {
+project(MFC client): namingexe, portableserver {
   idlflags += -Wb,pch_include=StdAfx.h
 
   Source_Files {

@@ -1,6 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-project : orbsvcsexe, core, concurrency, naming {
+project : orbsvcsexe, core, concurrency, naming_serv {
   exename  = Concurrency_Service
 }

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*client) : orbsvcsexe, portableserver, event, naming, minimum_corba  {
+project(*client) : orbsvcsexe, portableserver, event, event_skel, naming, minimum_corba  {
   requires += exceptions
   source_files {
     client.cpp
@@ -9,7 +9,7 @@ project(*client) : orbsvcsexe, portableserver, event, naming, minimum_corba  {
   }
 }
 
-project(*server) : orbsvcsexe, portableserver, event, naming, minimum_corba {
+project(*server) : orbsvcsexe, portableserver, event, event_skel, naming, minimum_corba {
   requires += exceptions
   source_files {
     server.cpp

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*Server): namingexe {
+project(*Server): namingexe, portableserver {
   Source_Files {
     Content_Iterator_i.cpp
     Iterator_Factory_i.cpp
