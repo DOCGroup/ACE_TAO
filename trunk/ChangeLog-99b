@@ -1,3 +1,16 @@
+Sun May  9 18:07:24 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+	* configure.in:
+
+	  Added support/tests for ACE_LACKS_CHAR_RIGHT_SHIFTS and
+	  ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS.
+
+	* ace/README: 
+
+	  Fixed typo.  ACE_LACKS_LINEBUFFERED_STREAMBUF was used twice.
+	  Corrected the appropriate one to ACE_LACKS_UNBUFFERED_STREAMBUF.
+
 Sun May 09 11:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.cpp  added explicit scoping to RB_SearchResult
