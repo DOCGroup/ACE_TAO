@@ -1,3 +1,10 @@
+Wed Jun 06 10:16:39 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: Fixed the settings for ACE_MALLOC_*
+          and ACE_PI_MALLOC_* so that both the malloc header and the
+          control block are multiples of 8 bytes (required alignment for
+          larger datatypes, i.e double). Malloc_Test now runs clean.
+
 Wed Jun  6 07:04:57 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: Removed all the AVStream tests from the
