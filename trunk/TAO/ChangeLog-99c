@@ -5,6 +5,8 @@ Tue Sep 14 11:57:46 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  Hills 1.8.9 compiler (PPC target).  Thanks to Bill Tovrea
 	  <gwtovrea@west.raytheon.com> for reporting this.
 
+	  Bug 325 fixed.
+
 Tue Sep 14 11:32:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* examples/Evnet_Comm.idl:
