@@ -33,6 +33,15 @@ sub get_type_append {
       $type = " DLL";
     }
   }
+  else {
+    ## Set the type_append preserving whitespace
+    if ($self->get_writing_type() == 1) {
+      $type = " Static EXE";
+    }
+    else {
+      $type = " EXE";
+    }
+  }
   return $type;
 }
 
@@ -44,12 +53,17 @@ sub translate_value {
 
   if ($key eq 'depends' && $val ne "") {
     my($arr) = $self->create_array($val);
-    my($app) = "";
+    my($app) = "DLL";
     $val = "";
 
     ## Only write dependencies for non-static projects
-    if ($self->get_writing_type() == 0) {
-      $app = "DLL";
+    ## and static exe projects
+    my($wt) = $self->get_writing_type();
+    if ($wt == 0 || $self->exe_target()) {
+      if ($wt == 1) {
+        $app = "LIB";
+      }
+
       foreach my $entry (@$arr) {
         $val .= "\"$entry $app\" ";
       }
@@ -139,9 +153,15 @@ sub override_exclude_component_extensions {
 }
 
 
-sub get_exe_template_input_file {
+sub get_dll_exe_template_input_file {
   my($self) = shift;
-  return "vc6dspexe";
+  return "vc6dspdllexe";
+}
+
+
+sub get_lib_exe_template_input_file {
+  my($self) = shift;
+  return "vc6dsplibexe";
 }
 
 

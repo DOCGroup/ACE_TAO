@@ -1,0 +1,32 @@
+type_description      = "Console Application"
+type_code             = 0x0103
+configurations        = "Static Release" "Static Debug"
+default_configuration = "Static Debug"
+type_is_binary        = 1
+common_defines        = WIN32 _CONSOLE
+subsystem             = console
+pch_defines           = ACE_USING_PCH
+ssl_libs              = libeay32 ssleay32
+
+Static Release {
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  lib_modifier          = s
+  need_libflags         = 1
+  output_dir            = Static_Release
+  intermediate_dir      = Static_Release
+  debug_switch          =
+}
+
+Static Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /GR /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /YX
+  lib_modifier          = sd
+  need_libflags         = 1
+  output_dir            = Static_Debug
+  intermediate_dir      = Static_Debug
+}

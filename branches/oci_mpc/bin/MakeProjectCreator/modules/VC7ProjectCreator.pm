@@ -96,7 +96,7 @@ sub project_file_name {
 }
 
 
-sub get_exe_template_input_file {
+sub get_dll_exe_template_input_file {
   my($self) = shift;
   return "vc7exe";
 }

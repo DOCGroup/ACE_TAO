@@ -42,7 +42,7 @@ sub usageAndExit {
   print STDERR "$base v$self->{'version'}\n" .
                "Usage: $base [-global <file>] [-include <directory>]\n" .
                (" " x (length($base) + 8)) . "[-template <file>] " .
-               "[-ti <dll | exe | lib>:<file>]\n" .
+               "[-ti <dll | lib | dll_exe | lib_exe>:<file>]\n" .
                (" " x (length($base) + 8)) . "[-type <";
   my($t)    = $self->{'types'};
   my(@keys) = sort keys %$t;
@@ -62,7 +62,7 @@ sub usageAndExit {
 "                   option can be used multiple times to add directories.\n" .
 "       -ti         Specifies the template input file (with no extension)\n" .
 "                   for the specific type as shown above\n" .
-"                   (ex. -ti exe:vc8exe)\n" .
+"                   (ex. -ti dll_exe:vc8exe)\n" .
 "       -type       Specifies the type of project file to generate.  This\n" .
 "                   option can be used multiple times to generate multiple\n" .
 "                   types.\n";
@@ -75,8 +75,8 @@ sub completion_command {
   my($self) = shift;
   my($str)  = "complete $self->{'name'} " .
               "'c/-/(global include type template ti)/' " .
-              "'c/dll:/f/' 'c/exe:/f/' 'c/lib:/f/' " .
-              "'n/-ti/(dll exe lib)/:' 'n/-type/(";
+              "'c/dll:/f/' 'c/dll_exe:/f/' 'c/lib_exe:/f/' 'c/lib:/f/' " .
+              "'n/-ti/(dll lib dll_exe lib_exe)/:' 'n/-type/(";
   my($t)    = $self->{'types'};
   my(@keys) = sort keys %$t;
   for(my $i = 0; $i <= $#keys; $i++) {
@@ -165,7 +165,7 @@ sub run {
         $self->usageAndExit("-ti requires a template input argument");
       }
       else {
-        if ($tmpi =~ /(dll|exe|lib):(.*)/) {
+        if ($tmpi =~ /(dll|lib|dll_exe|lib_exe):(.*)/) {
           my($key)  = $1;
           my($name) = $2;
           $ti{$key} = $name;
