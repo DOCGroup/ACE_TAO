@@ -1,3 +1,10 @@
+Tue Aug 26 16:33:07 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Transport.h:
+	* tao/Transport.cpp: Changed the signatures of idle_after_reply ()
+	  and idle_after_send () to return a bool instead of an int. With
+	  these sets of changes simple multi-threaded tests work.
+
 Tue Aug 26 16:42:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Asynch_Reply_Dispatcher_Base.cpp: Removed the call to
