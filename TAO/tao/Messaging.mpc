@@ -1,0 +1,25 @@
+//$Id$
+project(TAO_Messaging): taolib, core, portableserver {
+  sharedname   = TAO_Messaging
+  dynamicflags = TAO_MESSAGING_BUILD_DLL
+
+  Source_Files {
+    Messaging
+  }
+
+  Header_Files {
+    Messaging
+  }
+
+  Inline_Files {
+    Messaging
+  }
+
+  Template_Files {
+    Messaging
+  }
+
+  Resource_Files {
+    Messaging
+  }
+}

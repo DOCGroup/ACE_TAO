@@ -1,3 +1,48 @@
+Sun Aug  1 09:48:46 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/BiDir_GIOP/BiDir_GIOP.mpc:
+	* tao/Domain/Domain.mpc:
+	* tao/DynamicAny/DynamicAny.mpc:
+	* tao/DynamicInterface/DynamicInterface.mpc:
+	* tao/IFR_Client/IFR_Client.mpc:
+	* tao/IORInterceptor/IORInterceptor.mpc:
+	* tao/IORManipulation/IORManipulation.mpc:
+	* tao/IORTable/IORTable.mpc:
+	* tao/Messaging/Messaging.mpc:
+	* tao/ObjRefTemplate/ObjRefTemplate.mpc:
+	* tao/PortableServer/PortableServer.mpc:
+	* tao/RTCORBA/RTCORBA.mpc:
+	* tao/RTPortableServer/RTPortableServer.mpc:
+	* tao/RTScheduling/RTScheduler.mpc:
+	* tao/SmartProxies/SmartProxies.mpc:
+	* tao/Strategies/Strategies.mpc:
+	* tao/TypeCodeFactory/TypeCodeFactory.mpc:
+	* tao/Utils/Utils.mpc:
+	* tao/Valuetype/Valuetype.mpc:
+	  Move from here...
+
+	* tao/BiDir_GIOP.mpc:
+	* tao/Domain.mpc:
+	* tao/DynamicAny.mpc:
+	* tao/DynamicInterface.mpc:
+	* tao/IFR_Client.mpc:
+	* tao/IORInterceptor.mpc:
+	* tao/IORManipulation.mpc:
+	* tao/IORTable.mpc:
+	* tao/Messaging.mpc:
+	* tao/ObjRefTemplate.mpc:
+	* tao/PortableServer.mpc:
+	* tao/RTCORBA.mpc:
+	* tao/RTPortableServer.mpc:
+	* tao/RTScheduler.mpc:
+	* tao/SmartProxies.mpc:
+	* tao/Strategies.mpc:
+	* tao/TypeCodeFactory.mpc:
+	* tao/Utils.mpc:
+	* tao/Valuetype.mpc:
+	  ...to here.  Adapt as necessary to find source, inline, and
+	  template files.
+
 Sun Aug  1 17:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/QtTests/server.cpp:
