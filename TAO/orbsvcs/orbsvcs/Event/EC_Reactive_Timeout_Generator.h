@@ -18,7 +18,6 @@
 #include /**/ "ace/pre.h"
 
 #include "EC_Timeout_Generator.h"
-#include "ace/TP_Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,7 +37,7 @@ class TAO_RTEvent_Export TAO_EC_Reactive_Timeout_Generator
 {
 public:
   /// Constructor.
-  /// If <reactor> is 0 then we create a new reactor.
+  /// If <reactor> is 0 then we use the reactor in the ORB singleton.
   TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor = 0);
 
   /// destructor
@@ -54,11 +53,8 @@ public:
                             int id);
 
 private:
-  static void run_svc(void *arg);
-
   /// The reactor
   ACE_Reactor *reactor_;
-  ACE_TP_Reactor *reactor_impl_;
 
   /// An adapter to receive the timeout events.
   TAO_EC_Timeout_Adapter event_handler_;
