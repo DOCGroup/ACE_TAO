@@ -1,3 +1,14 @@
+2002-09-25  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* /orbsvcs/Logging_Service/Makefile, README:
+
+	  Updated to reflect Logging_Service division into 4 services
+
+	  Basic_Logging_Service
+	  Event_Logging_Service
+	  Notify_Logging_Service
+	  RTEvent_Logging_Service
+
 Sat Sep 21 12:49:41 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAOACE.dsw:
