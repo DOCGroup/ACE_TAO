@@ -15,6 +15,13 @@ Wed Mar 04 09:32:32 1998  David L. Levine  <levine@cs.wustl.edu>
           svc_location.  Thanks to Tom Arbuckle
           <arbuckle@uran.informatik.uni-bonn.de> for reporting this.
 
+        * include/makeinclude/platform_linux_lxpthreads.GNU: separated
+          SOBUILD into compile and link steps because the
+          Service_Configurator/server/* examples are unable to
+          use files compiled with -fPIC and just labeled as .so as shared
+          ELF objects.  Thanks to Tom Arbuckle
+          <arbuckle@uran.informatik.uni-bonn.de> for reporting this.
+
 Tue Mar 03 22:15:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Remote_Name_Space.cpp: Replaced a bunch of usages of
