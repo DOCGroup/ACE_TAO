@@ -1,3 +1,37 @@
+Tue Nov  3 17:14:35 1998  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.{h,cpp}: 
+          Bind to the mpeg client receiver to push the audio and video
+	  device references to the AV mpeg client in load_movie (). The
+	  references to the audio and video mmdevice are obtained from the
+	  mmdevice exporter through the trading service. Added code to
+	  hash the MMDevice_Exporter reference.
+  	
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery.cpp:
+	  Change the method names corresponding to the names generated in
+	  the Server_0005fDiscovery_0005fUtil.h.Declare the jobject array
+  	  server_names as a class member and not within the get_server
+	  method. Initilaize the _movie_class in the get_movie_info method
+	  before allocation of buffer. Added code in load_movie ().
+
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Selection.java:		 
+	  Changed the way the movie tree was created and accessed. Do an
+	  updateUI() on the table to display it.
+
+	* orbsvcs/tests/AVStreams/server_discovery/Server_Discovery_Util.java:
+	  Change the second parameter passed to load_movie() from
+	  movie_name of String type to movie of Movie class type to pass
+	  the movie info
+	
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.{h,cpp}: 
+	  Write a wrapper MMDevice_Exporter to export the audio and video
+	  references and the machine and movie info properties.Add
+	  AV_Video_MMDevice and AV_Audio_MMDevice.
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Video_Repository.idl:
+	  Replace the member filename_ with audio_filename_ and
+	  video_filename_.
+	
 Tue Nov  3 16:10:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs/configurations.html: The macro
