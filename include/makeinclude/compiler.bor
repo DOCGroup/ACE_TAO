@@ -6,6 +6,7 @@
 # STATIC - if defined means creating a static library or executable
 # PASCAL - if defined means link dll against pascal run-time library
 # DEBUG - if defined means building with debug information
+# UNICODE - if defined means building unicode
 #
 # Outputs:
 # ~~~~~~~~
@@ -63,6 +64,10 @@ STATIC_LFLAGS =
 CODEGUARD_CFLAGS = -vG
 !endif
 
+!ifdef UNICODE
+UNICODE_CFLAGS = -DACE_USES_WCHAR -WU -DUNICODE -D_UNICODE
+!endif
+
 THREAD_CFLAGS = -D_MT -tWM
 WARNINGS_CFLAGS = -w-rvl -w-rch -w-ccc -w-obs -w-aus -w-pia -w-inl
 DEFINES_CFLAGS = -DWIN32;_NO_VCL
@@ -71,7 +76,7 @@ MISC_CFLAGS = -a8 -b
 
 COMMON_CFLAGS = $(QUIET_CFLAGS) $(DEBUG_CFLAGS) $(THREAD_CFLAGS) \
 	$(STATIC_CFLAGS) $(WARNINGS_CFLAGS) $(DEFINES_CFLAGS) \
-	$(MISC_CFLAGS) $(CODEGUARD_CFLAGS)
+        $(MISC_CFLAGS) $(CODEGUARD_CFLAGS) $(UNICODE_CFLAGS)
 
 COMMON_LFLAGS = $(DEBUG_LFLAGS) $(STATIC_LFLAGS) -x -w-dup -Gn
 
@@ -82,9 +87,17 @@ COMMON_LFLAGS = $(DEBUG_LFLAGS) $(STATIC_LFLAGS) -x -w-dup -Gn
 DLL_CFLAGS = -tWD
 DLL_LFLAGS = -Tpd -Gi
 !ifdef PASCAL
+!ifdef UNICODE
+DLL_STARTUP_OBJ = c0d32w.obj sysinit.obj
+!else
 DLL_STARTUP_OBJ = c0d32.obj sysinit.obj
+!endif
+!else
+!ifdef UNICODE
+DLL_STARTUP_OBJ = c0d32w.obj
 !else
 DLL_STARTUP_OBJ = c0d32.obj
+!endif
 !endif
 
 #
@@ -94,9 +107,17 @@ DLL_STARTUP_OBJ = c0d32.obj
 EXE_CFLAGS =
 EXE_LFLAGS = -Tpe
 !ifdef PASCAL
+!ifdef UNICODE
+EXE_STARTUP_OBJ = c0x32w.obj sysinit.obj
+!else
 EXE_STARTUP_OBJ = c0x32.obj sysinit.obj
+!endif
+!else
+!ifdef UNICODE
+EXE_STARTUP_OBJ = c0x32w.obj
 !else
 EXE_STARTUP_OBJ = c0x32.obj
+!endif
 !endif
 
 #
