@@ -8,7 +8,7 @@ ACE_RCSID(ace, Filecache, "$Id$")
 
 #if defined (ACE_WIN32)
 // Specifies no sharing flags.
-#define R_MASK 0
+#define R_MASK ACE_DEFAULT_OPEN_PERMS
 #define W_MASK 0
 #else
 #define R_MASK S_IRUSR|S_IRGRP|S_IROTH
