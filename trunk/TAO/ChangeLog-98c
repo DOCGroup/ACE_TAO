@@ -1,3 +1,8 @@
+Mon Nov 10 15:56:58 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
+
+	* tao/orbconf.h: NetBSD has a long double of size 12, as does
+	FreeBSD. Fixed SIZEOF_LONG_DOUBLE to fix this.
+
 Mon Nov 10 12:21:12 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server/svr.cpp (main): Removed cerr's
