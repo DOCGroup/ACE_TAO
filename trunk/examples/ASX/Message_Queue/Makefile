@@ -12,8 +12,6 @@ BIN     = buffer_stream \
 	  bounded_buffer \
 	  priority_buffer
 	  
-LSRC	= $(addsuffix .cpp,$(BIN))
-
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD   = $(VBIN)
@@ -26,7 +24,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/macros.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(WRAPPER_ROOT)/include/makeinclude/rules.lib.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
