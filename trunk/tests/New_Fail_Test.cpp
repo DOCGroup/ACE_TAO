@@ -45,6 +45,9 @@ static const int BIG_BLOCK = 1024*1024;
 // about 4GB max in the test
 static const int MAX_ALLOCS_IN_TEST = 4096;
 
+#if (defined (__SUNPRO_CC) || defined (__GNUG__)) && \
+  !defined (ACE_HAS_EXCEPTIONS)
+
 static void
 try_ace_new (char **p)
 {
@@ -59,6 +62,9 @@ try_ace_new_return (void)
   ACE_NEW_RETURN (p, char[BIG_BLOCK], 0);
   return p;
 }
+
+#endif /**/
+
 
 int
 main (int, ACE_TCHAR *[])
@@ -77,14 +83,6 @@ main (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Out-of-memory will throw an unhandled exception\n")));
   ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Rebuild with exceptions=1 to prevent this, but it may impair performance.\n")));
 
-  // Use the static function addresses, to prevent warnings about the
-  // functions not being used.
-  // if (&try_ace_new)
-  ///* NULL */;
-  //if (&try_ace_new_return)
-  ///* NULL */;
-  ACE_UNUSED_ARG (try_ace_new);
-  ACE_UNUSED_ARG (try_ace_new_return);
 #else
 
   char *blocks[MAX_ALLOCS_IN_TEST];
