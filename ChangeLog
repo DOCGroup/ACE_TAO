@@ -1,3 +1,9 @@
+Tue Feb 24 17:22:45 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Message_Block.h: Fixed up some of the documentation; clarified
+	  that the data buffer given to a constructor is not copied anywhere,
+	  but referenced.
+
 Tue Feb 24 18:57:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/msvc_static_order.lst:
