@@ -36,6 +36,7 @@
 //---------[ external C libaries used ]--------------------------------
 
 #include "asnmp/oid.h"                  // include def for oid class
+#include "ace/os_include/ctype.h"
 
 ACE_RCSID(asnmp, oid, "$Id$")
 

@@ -387,8 +387,8 @@ int operator==( const Vb &lhs, const Vb &rhs)
        return 0;
 
   if (lhs.iv_vb_value_ != 0 && rhs.iv_vb_value_ != 0) {
-     int val = strcmp(lhs.iv_vb_value_->to_string(),
-              rhs.iv_vb_value_->to_string());
+     int val = ACE_OS_String::strcmp(lhs.iv_vb_value_->to_string(),
+                                     rhs.iv_vb_value_->to_string());
      return !val;
    }
   else

@@ -35,6 +35,7 @@
 
 #include "ace/OS.h"
 #include "asnmp/octet.h"    // include definition for octet class
+#include "ace/os_include/ctype.h"
 
 ACE_RCSID(asnmp, octet, "$Id$")
 
@@ -587,7 +588,7 @@ char *OctetStr::to_string_hex()
 #endif // _WIN32
 
     ACE_OS::sprintf(line_ptr, fmt, char_buf);
-    line_ptr += 3 + strlen(char_buf);
+    line_ptr += 3 + ACE_OS_String::strlen(char_buf);
   }
 
   return output_buffer;

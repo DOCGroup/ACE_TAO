@@ -1,3 +1,24 @@
+Fri May 10 13:58:47 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* examples/Web_Crawler/URL_Addr.{cpp,h}:
+
+	  cpp: Added includes of OS.h and ACE.h.
+	  h: Added include of Default_Constants.h.
+	
+	* examples/DLL/Newsweek.cpp:
+	* examples/DLL/Today.cpp:
+
+	  Added include of svc_export.h.
+	
+	* ASNMP/asnmp/address.cpp:
+	* ASNMP/asnmp/octet.cpp:
+	* ASNMP/asnmp/oid.cpp:
+	* ASNMP/examples/set/set.cpp:
+
+	  Added include of OS_String.h and os_include/ctype.h.  Prefaced
+	  some string calls with ACE_OS_String, as needed, and fixed other
+	  minor compile errors.
+
 Fri May 10 12:42:03 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.cpp:
