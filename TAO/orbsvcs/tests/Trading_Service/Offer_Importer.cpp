@@ -26,6 +26,7 @@ TAO_Offer_Importer::perform_queries (CORBA::Environment& _env)
       TAO_Policy_Manager policies;
       CosTrading::Lookup::SpecifiedProps desired_props;
 
+      desired_props._d (CosTrading::Lookup::all);
       policies.exact_type_match (CORBA::B_FALSE);
       policies.search_card (4*NUM_OFFERS);
       policies.match_card (4*NUM_OFFERS);
