@@ -30,7 +30,7 @@ ACE_RCSID(AMI, client, "$Id$")
 
 const char *ior = "file://test.ior";
 unsigned int msec = 500;
-unsigned int iterations = 500;
+unsigned int iterations = 10;
 
 int
 parse_args (int argc, char *argv[])
