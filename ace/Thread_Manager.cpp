@@ -50,7 +50,7 @@ ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
 }
 
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-void ACE_Thread_Descriptor::at_pop(int apply)
+void ACE_Thread_Descriptor::at_pop (int apply)
 
 {
   ACE_TRACE ("ACE_Thread_Descriptor::at_pop");
@@ -61,39 +61,39 @@ void ACE_Thread_Descriptor::at_pop(int apply)
   // Apply if required
   if (apply)
    {
-     at->apply();
+     at->apply ();
      // Do the apply method
-     at->was_applied(1);
+     at->was_applied (1);
      // Mark at has been applied to avoid double apply from
      // at destructor
    }
   // If at is not owner delete at.
-  if (!at->is_owner())
+  if (!at->is_owner ())
    delete at;
 }
 
 void
-ACE_Thread_Descriptor::at_push(ACE_At_Thread_Exit* cleanup, int is_owner)
+ACE_Thread_Descriptor::at_push (ACE_At_Thread_Exit* cleanup, int is_owner)
 
 {
   ACE_TRACE ("ACE_Thread_Descriptor::at_push");
-  cleanup->is_owner(is_owner);
+  cleanup->is_owner (is_owner);
   cleanup->td_ = this;
   cleanup->next_ = at_exit_list_;
   at_exit_list_ = cleanup;
 }
 
 int
-ACE_Thread_Descriptor::at_exit(ACE_At_Thread_Exit& cleanup)
+ACE_Thread_Descriptor::at_exit (ACE_At_Thread_Exit& cleanup)
 
 {
-  ACE_TRACE("ACE_Thread_Descriptor::at_exit");
-  at_push(&cleanup, 1);
+  ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
+  at_push (&cleanup, 1);
   return 0;
 }
 
 int
-ACE_Thread_Descriptor::at_exit(ACE_At_Thread_Exit* cleanup)
+ACE_Thread_Descriptor::at_exit (ACE_At_Thread_Exit* cleanup)
 
 {
   ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
@@ -101,22 +101,22 @@ ACE_Thread_Descriptor::at_exit(ACE_At_Thread_Exit* cleanup)
    return -1;
   else
    {
-     this->at_push(cleanup);
+     this->at_push (cleanup);
      return 0;
    }
 }
 
 void
-ACE_Thread_Descriptor::do_at_exit()
+ACE_Thread_Descriptor::do_at_exit ()
 
 {
   ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
   while (at_exit_list_!=0)
-    this->at_pop();
+    this->at_pop ();
 }
 
 void
-ACE_Thread_Descriptor::terminate()
+ACE_Thread_Descriptor::terminate ()
 
 {
   ACE_TRACE ("ACE_Thread_Descriptor::terminate");
@@ -125,45 +125,49 @@ ACE_Thread_Descriptor::terminate()
    {
      terminated_ = 1;
      // Run at_exit hooks
-     this->do_at_exit();
+     this->do_at_exit ();
      // We must remove Thread_Descriptor from Thread_Manager list
-     if (this->tm_!=0)
+     if (this->tm_ != 0)
       {
          int close_handle = 0;
 
 #if !defined (VXWORKS)
-        // Threads created with THR_DAEMON shouldn't exist here, but
-        // just to be safe, let's put it here.
+         // Threads created with THR_DAEMON shouldn't exist here, but
+         // just to be safe, let's put it here.
 
-        if (ACE_BIT_DISABLED (this->flags_, (THR_DETACHED | THR_DAEMON))
-            || (ACE_BIT_ENABLED (this->flags_, THR_JOINABLE)))
-          {
-            // Mark thread as terminated.
-            this->thr_state_ = ACE_THR_TERMINATED;
-            tm_->register_as_terminated (this);
-            // Must copy the information here because td will be "freed" below.
-          }
+         if (this->thr_state_ != ACE_THR_JOINING)
+           {
+             if (ACE_BIT_DISABLED (this->flags_, (THR_DETACHED | THR_DAEMON))
+                 || (ACE_BIT_ENABLED (this->flags_, THR_JOINABLE)))
+               {
+                 // Mark thread as terminated.
+                 this->thr_state_ = ACE_THR_TERMINATED;
+                 tm_->register_as_terminated (this);
+                 // Must copy the information here because td will be
+                 // "freed" below.
+               }
 #if defined (ACE_WIN32)
-        else
-          {
-            close_handle = 1;
-          }
+             else
+               {
+                 close_handle = 1;
+               }
 #endif /* ACE_WIN32 */
+           }
 #endif /* ! VXWORKS */
-
-        // Remove thread descriptor from the table.
-        if (this->tm_!=0)
-         tm_->remove_thr (this, close_handle);
+         
+         // Remove thread descriptor from the table.
+         if (this->tm_ != 0)
+           tm_->remove_thr (this, close_handle);
       }
 
      // Check if we need delete ACE_Log_Msg instance
      ACE_Log_Msg* log_msg = this->log_msg_;
-     // If ACE_TSS_cleanup was not executed first log_msg==0
-     if (log_msg==0)
+     // If ACE_TSS_cleanup was not executed first log_msg == 0
+     if (log_msg == 0)
       {
         // Only inform to ACE_TSS_cleanup that it must delete the log instance
         // setting ACE_LOG_MSG thr_desc to 0.
-        ACE_LOG_MSG->thr_desc(0);
+        ACE_LOG_MSG->thr_desc (0);
       }
      else
       {
@@ -190,16 +194,16 @@ ACE_Thread_Descriptor::at_exit (void *object,
 #else
   // To keep compatibility, when cleanup_hook is null really is a at_pop
   // without apply.
-  if (cleanup_hook==0)
+  if (cleanup_hook == 0)
    {
-     if (this->at_exit_list_!=0)
+     if (this->at_exit_list_!= 0)
       this->at_pop(0);
    }
   else
    {
      ACE_At_Thread_Exit* cleanup;
-     ACE_NEW_RETURN (cleanup, ACE_At_Thread_Exit_Func(object,cleanup_hook,param), -1);
-     this->at_push(cleanup);
+     ACE_NEW_RETURN (cleanup, ACE_At_Thread_Exit_Func (object,cleanup_hook,param), -1);
+     this->at_push (cleanup);
    }
 #endif /* ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
   return 0;
@@ -224,9 +228,9 @@ ACE_Thread_Descriptor::dump (void) const
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
   :
 #if !defined(ACE_USE_ONE_SHOT_AT_THREAD_EXIT)
-    log_msg_(0),
-    at_exit_list_(0),
-    terminated_(0)
+    log_msg_ (0),
+    at_exit_list_ (0),
+    terminated_ (0)
 #endif /* !ACE_USE_ONE_SHOT_AT_THREAD_EXIT */
 {
   ACE_TRACE ("ACE_Thread_Descriptor::ACE_Thread_Descriptor");
@@ -1657,7 +1661,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
             {
               // Mark thread as terminated.
               td->thr_state_ = ACE_THR_TERMINATED;
-              this->register_as_terminated.insert_tail (td);
+              this->register_as_terminated (td);
               // Must copy the information here because td will be "freed" below.
             }
 #if defined (ACE_WIN32)
