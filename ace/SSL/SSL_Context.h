@@ -275,6 +275,27 @@ public:
   /// Print the last SSL error for the current thread.
   static void report_error (void);
 
+  /**
+   * @name Diffie-Hellman (DH) Parameters
+   *
+   * When using DSS-based certificates, Diffie-Hellman keys need to be
+   * exchanged.  These must be provided in the form of DH key
+   * generation parameters loaded in, or as fixed keys hardcoded into
+   * the code itself.  ACE_SSL supports loaded parameters.
+   * 
+   */
+  //@{
+  /**
+   * Load Diffie-Hellman parameters from file_name.  The specified file can be
+   * a standalone file containing only DH parameters (e.g., as created
+   * by <code>openssl dhparam</code>), or it can be a certificate which has
+   * a PEM-encoded set of DH params concatenated on to i.
+   */
+  int dh_params (const char *file_name, int type = SSL_FILETYPE_PEM);
+  const char *dh_params_file_name () const;
+  int dh_params_file_type () const;
+  //@}
+
 private:
 
   /// Verify if the context has been initialized or not.
@@ -303,9 +324,10 @@ private:
   /// Cache the mode so we can answer fast
   int mode_;
 
-  /// The private key and certificate file
+  /// The private key, certificate, and Diffie-Hellman paramters files
   ACE_SSL_Data_File private_key_;
   ACE_SSL_Data_File certificate_;
+  ACE_SSL_Data_File dh_params_;
 
   /// The default verify mode.
   int default_verify_mode_;

@@ -1,3 +1,10 @@
+Thu Feb 21 13:12:44 2002  Chris Cleeland  <cleeland_c@ociweb.com>
+
+	* ace/SSL/SSL_Context.* (ACE_SSL_Context): Added new methods to
+	specify Diffie-Hellman parameters.  These parameters are required
+	when using DSA certificates/keys.  The new methods are dh_params,
+	dh_params_file_name, and dh_params_file_type.
+
 Thu Feb 21 09:32:56 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/TTY_IO.cpp (control): Use the appropriate B* macros to set all
