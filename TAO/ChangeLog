@@ -1,3 +1,12 @@
+Wed Mar 24 22:45:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_interface.cpp (gen_operation_table):
+
+	  Reset the skel_count to be zero for dynamic hash. This is
+	  essential so that we don't count the previous operations when
+	  generating new tables like say for example having two interfaces
+	  in the same IDL file.
+
 Wed Mar 24 20:58:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/Callback.cpp:
