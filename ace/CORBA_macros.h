@@ -385,7 +385,7 @@
 
 // Print out a TAO exception.  This is not CORBA compliant.
 # define ACE_PRINT_TAO_EXCEPTION(EX,INFO) \
-  EX.print_exception (INFO)
+  EX._tao_print_exception (INFO)
 
 // Print out a CORBA exception.  There is not portable way to
 // dump a CORBA exception.  If you are using other ORB implementation,
