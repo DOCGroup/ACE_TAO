@@ -1761,7 +1761,6 @@ ACE_Thread_Adapter::invoke (void)
             ::_endthreadex ((DWORD) status);
         }
       else
-#  endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
         {
           // Not spawned by ACE_Thread_Manager, use the old buggy version.
           // You should seriously consider using ACE_Thread_Manager to spawn threads.
@@ -1772,6 +1771,11 @@ ACE_Thread_Adapter::invoke (void)
           else
             ::AfxEndThread ((DWORD)status);
         }
+#  else
+      ::_endthreadex ((DWORD) status);
+#  endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
+
+
 # endif /* ACE_WIN32 */
 
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
@@ -2593,7 +2597,6 @@ ACE_OS::thr_exit (void *status)
           ::_endthreadex ((DWORD) status);
       }
     else
-#  endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
       {
         // Not spawned by ACE_Thread_Manager, use the old buggy version.
         // You should seriously consider using ACE_Thread_Manager to spawn threads.
@@ -2604,6 +2607,9 @@ ACE_OS::thr_exit (void *status)
         else
           ::AfxEndThread ((DWORD)status);
       }
+#  else
+          ::_endthreadex ((DWORD) status);
+#  endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
 # elif defined (VXWORKS)
     ACE_hthread_t tid;
