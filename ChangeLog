@@ -1,3 +1,9 @@
+Mon May 17 16:48:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/C++NPv2/AIO_Client_Logging_Daemon.cpp: Add #include
+	  "AIO_CLD_export.h" to the non-AIO section so it will at least
+	  build and load on non-AIO systems.
+
 Mon May 17 15:46:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* apps/JAWS3/jaws3/Templates.cpp: Added missing ACE_Atomic_Op_Ex
