@@ -30,8 +30,8 @@ sub name_server
 {
   my $args = "@_ "."-ORBnameserviceport $ns_multicast_port -o $iorfile";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR".
-      "Naming_Service".$DIR_SEPARATOR.
-          "Naming_Service".$EXE_EXT;
+      "Naming_Server".$DIR_SEPARATOR.
+          "Naming_Server".$EXE_EXT;
 
   unlink $iorfile;
   $NS = Process::Create ($prog, $args);

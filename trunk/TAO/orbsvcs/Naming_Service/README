@@ -1,18 +1,17 @@
 // $Id$
 
-This directory contains the files that implement the TAO
-Naming server.
-
+This directory contains the files that implement a server for the TAO
+Naming Service.
 
 To Run:
 ======
 
-% Naming_Service [-ORBnameserviceport nsport]
-                 [-o ior_output_file]
-                 [-p pid_file_name]
-                 [-s context_size]
-                 [-t time]
-                 [-f persitence_file_name]
+% Naming_Server [-ORBnameserviceport nsport]
+                [-o ior_output_file]
+                [-p pid_file_name]
+                [-s context_size]
+                [-t time]
+                [-f persitence_file_name]
 
 Optional Command-line Arguments:
 ===============================
@@ -25,7 +24,7 @@ Optional Command-line Arguments:
                 The name of the file, in which to store the IOR of the
                 root Naming Service context.
 
-       pid_file_name
+        pid_file_name
                 The name of the file, in which to store the process id
                 of the Naming Service server.
 
@@ -52,9 +51,9 @@ Environment Variables:
                 clients trying to bootstrap to a Naming Service
                 through the use of multicast.
 
-
 Persistence:
 ===========
+
 TAO Naming Service has an optional persistence capability.  By
 default, the Naming Service is started in a non-persistent mode.
 Supplying "-f" command-line option to the server causes a persistent

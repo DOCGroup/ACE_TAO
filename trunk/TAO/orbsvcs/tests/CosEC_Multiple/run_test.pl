@@ -30,8 +30,8 @@ sub cosec_multiple_test1
     # first start the Naming service..
     $SV1 = Process::Create ("..".$DIR_SEPARATOR
 			    ."..".$DIR_SEPARATOR
-			    ."Naming_Service".$DIR_SEPARATOR
-			    ."Naming_Service".$EXE_EXT, "");
+			    ."Naming_Server".$DIR_SEPARATOR
+			    ."Naming_Server".$EXE_EXT, "");
 
     sleep 10;
 

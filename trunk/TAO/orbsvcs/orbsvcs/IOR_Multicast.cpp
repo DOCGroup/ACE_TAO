@@ -46,18 +46,29 @@ TAO_IOR_Multicast::init (const char *ior,
                          TAO_Service_ID service_id)
 {
   this->service_id_ = service_id;
-  this->mcast_addr_.set (port, mcast_addr);
   this->ior_ = ior;
-  this->response_addr_.set ((u_short) 0);
-  this->response_.open (this->response_addr_);
-
+  if (this->mcast_addr_.set (port,
+                             mcast_addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "set"),
+                      -1);
+  else if (this->response_addr_.set ((u_short) 0) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "set"),
+                      -1);
+  else if (this->response_.open (this->response_addr_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "set"),
+                      -1);
   // Use ACE_SOCK_Dgram_Mcast factory to subscribe to multicast group.
-  if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
+  else if (this->mcast_dgram_.subscribe (this->mcast_addr_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "subscribe"),
                       -1);
-
   return 0;
 }
 
@@ -86,7 +97,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   // Take a peek at the header to find out how long is the service
   // name string we should receive.
   ssize_t n = this->mcast_dgram_.recv (&header,
-                                       sizeof(header),
+                                       sizeof (header),
 				       remote_addr,
                                        MSG_PEEK);
   if (n <= 0)
@@ -94,7 +105,6 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                        "TAO_IOR_Multicast::handle_input - peek %d\n",
 		       n),
 		      0);
-
   else if (ACE_NTOHS (header) <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Header value < 1\n"),
@@ -105,7 +115,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   iovec iov[iovcnt];
 
   iov[0].iov_base = (char *) &header;
-  iov[0].iov_len  = sizeof(header);
+  iov[0].iov_len  = sizeof (header);
   iov[1].iov_base = (char *) &remote_port;
   iov[1].iov_len  = sizeof (ACE_UINT16);
   iov[2].iov_base = (char *) service_name;
@@ -183,7 +193,6 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   ssize_t result = stream.sendv_n (iovp,
                                    cnt);
-
   // Close the stream.
   stream.close ();
 

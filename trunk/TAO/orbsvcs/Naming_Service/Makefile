@@ -14,7 +14,9 @@ LDLIBS  = -lorbsvcs -lTAO
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BIN2 = Naming_Service
+FILES = Naming_Service
+
+BIN2 = Naming_Server
 
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
