@@ -1,3 +1,11 @@
+Thu May 18 10:11:20 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/streams.h:
+
+          For !ACE_HAS_STANDARD_CPP_LIBRARY, iomanip wasn't being included
+          (except for MSVC).  So I moved it outside of the _MSC_VER block
+          so platforms like IRIX will now include it.
+
 Thu May 18 09:49:12 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/Configuration.h:
