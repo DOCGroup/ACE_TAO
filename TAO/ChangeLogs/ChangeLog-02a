@@ -1,3 +1,10 @@
+Mon Apr 30 22:50:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/CORBALOC_Parser.h: 
+	* tao/CORBALOC_Parser.cpp: 
+	  Fixed the blocker bug 849. Included some parsing code so as to
+	  check if the protocol used by the application is a known protocol.
+
 Mon Apr 30 19:17:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
