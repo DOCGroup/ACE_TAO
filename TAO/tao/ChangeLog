@@ -1,3 +1,36 @@
+Fri Mar 21 17:07:11 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Adapter.h:
+	* tao/Adapter.cpp: Added a method initialize_collocated_object ()
+	  in the TAO_Adapter_Factory and TAO_Adapter.
+
+	* tao/ORB_Core.pp: Implemented the initialize_collocated_object ()
+	  which basically calls the
+	  TAO_Adapter_Registry::initialize_collocated_object (). 
+
+	* tao/PortableServer/Object_Adapter.cpp:
+	* tao/PortableServer/Object_Adapter.h: Added a new method
+	  initialize_collocated_object (). The implementation is pretty
+	  much similar to the create_collocated_object (), but instead of
+	  creating a new object, initializes an existing object. 
+
+	* tao/Object.h: 
+	* tao/Object.cpp:
+	* tao/Object.i:
+
+	  Added the following methods 
+	  
+	  - set_collocated_servant () which helps to initialize the
+	    CORBA::Object with TAO_Abstract_ServantBase
+
+	  - Accessors for orb_core () and IOP::IOR
+
+	  Added initialization of collocated objects in
+	  tao_initialize_object (). 
+
+	  The above checkin has lots of duplicated code. Need to refactor
+	  them in the next round. 
+	  
 Fri Mar 21 16:37:12 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* TAO_IDL/be/be_interface.cpp: Added a new argument to the

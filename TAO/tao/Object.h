@@ -255,6 +255,28 @@ namespace CORBA
     /// Accessor to the flag..
     CORBA::Boolean is_evaluated (void) const;
 
+    /// Mutator for setting the servant in collocated cases.
+    /**
+     * This is used by the Object_Adapter to set the servant for
+     * collocated cases and only when the object is initialized. The
+     * object initialization takes place when IOR's are lazily
+     * evaluated.
+     */
+    void set_collocated_servant (TAO_Abstract_ServantBase *);
+
+    /// Accessor for the ORB_Core..
+    TAO_ORB_Core *orb_core (void) const;
+
+    /// Accessors for the underlying IOP::IOR's.
+    /**
+     * The steal_ior () call basically relinquishes the ownership of
+     * the IOR. This is useful for cases when one wants to initialize
+     * a new CORBA Object
+     */
+    IOP::IOR *steal_ior (void);
+
+    const IOP::IOR &ior (void) const;
+
   protected:
 
     /// Initializing a local object.
