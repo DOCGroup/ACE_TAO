@@ -1,6 +1,25 @@
 Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/FILE_Connector.h: Updated the comments.
+	* ace/Mem_Map.cpp: mmap() will fail if the length of the file
+ 	  mapping is 0, which will be the case if we've just created the
+ 	  file.  Therefore, don't even bother trying to mmap() in this
+ 	  case and return a successful result.
+
+	* ace/FILE: Moved the get_remote_addr() and get_local_addr()
+ 	  methods from the FILE_IO class to the FILE class since that's
+ 	  more properly where they belong.  Also added a new remove()
+ 	  method that unlinks the file.
+
+	* tests/Priority_Reactor_Test.cpp,
+	  tests/Conn_Test.cpp,
+	  tests/Notify_Performance_Test.cpp,
+	  Priority_Reactor_Test.cpp,
+	  Reactor_Performance_Test.cpp: Since the default is to skip argv0
+ 	  there's no sense explicitly saying this in the constructor of
+ 	  ACE_Get_Opt.
+
+	* ace/FILE_Connector.h: Updated the comments to reflect recent
+	  changes.
 
 	* ace/FILE.h: Added a new get_info() method that takes a reference
  	  to an ACE_FILE_Info rather than a pointer.  This is a cleaner
@@ -8,8 +27,11 @@ Sun Jan  3 14:39:49 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/FILE_Connector.cpp (connect): When the <remote_sap> argument
  	  is ACE_Addr::sap_any, then connect will select a temporary
- 	  filename using the new ACE_DEFAULT_TEMP_FILE macro and
- 	  ACE_OS::mktemp().
+ 	  filename using the new feature of ACE_FILE_Addr described below.
+
+	* ace/FILE_Addr.cpp (set): When the address is ACE_Addr::sap_any,
+ 	  then we'll select a new temporary filename using the new
+ 	  ACE_DEFAULT_TEMP_FILE macro and ACE_OS::mktemp().
 
 	* ace/OS.h: Added a new ACE_DEFAULT_TEMP_FILE macro that defaults
  	  to "/tmp/ace-file-XXXXXX" and is used by the ACE_FILE_Connector

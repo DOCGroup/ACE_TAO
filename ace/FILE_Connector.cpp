@@ -43,14 +43,9 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
   if (ACE_reinterpret_cast (const ACE_Addr &,
                             ACE_const_cast (ACE_FILE_Addr &, 
                                             remote_sap)) == ACE_Addr::sap_any)
-    {
-      ACE_FILE_Addr temp_sap (ACE_DEFAULT_TEMP_FILE);
-
-      // Create a temporary file.
-      ACE_OS::mktemp (ACE_const_cast (TCHAR *,
-                                      temp_sap.get_path_name ()));
-      new_io.addr_ = temp_sap; // class copy.
-    }
+    // Create a new temporary file.
+    new_io.addr_ =
+      ACE_FILE_Addr (ACE_sap_any_cast (ACE_FILE_Addr &)); // class copy.
   else
     new_io.addr_ = remote_sap; // class copy.
 

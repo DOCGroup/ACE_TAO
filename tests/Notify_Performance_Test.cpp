@@ -147,7 +147,7 @@ main (int argc, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("Notify_Performance_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("swdc:l:"), 1);
+  ACE_Get_Opt getopt (argc, argv, ASYS_TEXT ("swdc:l:"));
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
