@@ -1,3 +1,17 @@
+Wed Jan  5 14:28:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/RMCast/RMCast.{h,cpp,i}:
+        * ace/RMCast/RMCast_Worker.{h,cpp,i}:
+        * ace/RMCast/RMCast_Module_Factory.{h,cpp,i}:
+        * ace/RMCast/RMCast_Reassembly.{h,cpp,i}:
+          Removed i file, update h/cpp
+
+        * ace/RMCast/*.cpp:
+          Updated module name to RMCast in ACE_RCSID tag
+
+        * ace/RMCast/Makefile.am:
+          Updated
+
 Wed Jan  5 13:21:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/fuzz.pl:
