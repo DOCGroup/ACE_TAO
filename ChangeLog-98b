@@ -1,43 +1,50 @@
+Thu Sep 24 12:48:58 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Containers_T.cpp (ACE_{Bounded,Fixed}_Set_Iterator::done):
+          added ACE_CAST_CONST to the static cast.  Thanks to Ossama for
+          reporting a compilation failure on Sun C++ 4.2/Solaris 2.6
+          without it.
+
 Thu Sep 24 09:17:32 1998  Steve Huston  <shuston@riverace.com>
 
-	* ace/Containers_T.h: Added #include "ace/Containers.h" - AIX xlC
-	  needs this when instantiating templates.
+        * ace/Containers_T.h: Added #include "ace/Containers.h" - AIX xlC
+          needs this when instantiating templates.
 
-	* ace/Dirent.cpp: Do the HP check using only compiler-defined
-	  preprocessor macros since config.h isn't included.
+        * ace/Dirent.cpp: Do the HP check using only compiler-defined
+          preprocessor macros since config.h isn't included.
 
-	* ace/OS.i: Fixed comments that referenced DCE threads.
-	  Changed readdir_r #ifdefs to handle pthreads drafts 4 and 6
-	  the same, and split HP-UX 10.x off as a non-conformant player.
-	  Thanks to David Levine for sorting this out with LynxOS.
+        * ace/OS.i: Fixed comments that referenced DCE threads.
+          Changed readdir_r #ifdefs to handle pthreads drafts 4 and 6
+          the same, and split HP-UX 10.x off as a non-conformant player.
+          Thanks to David Levine for sorting this out with LynxOS.
 
-	* ace/Thread_Manager.cpp: Changed occurrences of
-	  ACE_HAS_DCE_DRAFT4_THREADS to ACE_HAS_PTHREADS_DRAFT4.  Corrected
-	  a call to pthread_detach.  Changed a couple of calls to
-	  pthread_detach on HP-UX 10.x to duplicate the thread handle before
-	  the call because pthread_detach on HP-UX 10.x clears the handle
-	  and it was still needed.
-	  On AIX, xlC doesn't match the call to
-	  ACE_Thread::join(ACE_hthread_t, void ** = 0) correctly when the
-	  second arg is specified.  So call the 3-arg variety on AIX, knowing
-	  that the second arg is ignored underneath on pthreads.
+        * ace/Thread_Manager.cpp: Changed occurrences of
+          ACE_HAS_DCE_DRAFT4_THREADS to ACE_HAS_PTHREADS_DRAFT4.  Corrected
+          a call to pthread_detach.  Changed a couple of calls to
+          pthread_detach on HP-UX 10.x to duplicate the thread handle before
+          the call because pthread_detach on HP-UX 10.x clears the handle
+          and it was still needed.
+          On AIX, xlC doesn't match the call to
+          ACE_Thread::join(ACE_hthread_t, void ** = 0) correctly when the
+          second arg is specified.  So call the 3-arg variety on AIX, knowing
+          that the second arg is ignored underneath on pthreads.
 
 Wed Sep 23 22:13:04 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/006/server.cpp: 
-	Wrapped !defined(ACE_HAS_GNU_REPO) around the explicit template
-	instantiation.
+        * docs/tutorials/006/server.cpp:
+        Wrapped !defined(ACE_HAS_GNU_REPO) around the explicit template
+        instantiation.
 
-	* docs/tutorials/005/client_handler.cpp (handle_input):
-	* docs/tutorials/006/client_handler.cpp (svc): 
-	* docs/tutorials/006/client_handler.cpp (handle_input): 
-	* docs/tutorials/007/client_handler.cpp (svc): 
-	* docs/tutorials/007/client_handler.cpp (handle_input): 
-	Use ACE_OS::memset() instead of direct call to memset()
+        * docs/tutorials/005/client_handler.cpp (handle_input):
+        * docs/tutorials/006/client_handler.cpp (svc):
+        * docs/tutorials/006/client_handler.cpp (handle_input):
+        * docs/tutorials/007/client_handler.cpp (svc):
+        * docs/tutorials/007/client_handler.cpp (handle_input):
+        Use ACE_OS::memset() instead of direct call to memset()
 
-	* docs/tutorials/005/Makefile: 
-	* docs/tutorials/007/Makefile: 
-	Touch .depend if it does not exist.
+        * docs/tutorials/005/Makefile:
+        * docs/tutorials/007/Makefile:
+        Touch .depend if it does not exist.
 
 Wed Sep 23 22:03:19 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
