@@ -1,3 +1,17 @@
+Thu Apr 17 19:33:29 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Get_Opt.cpp: Added #include "ace/ACE.h" to pick up ACE::gcd().
+
+	* ace/Logging_Strategy.cpp: Added #include "ace/ACE.h" and
+	  "ace/Lib_Find.h" to pick up needed method declarations.
+
+	* ace/Process.i:
+	* ace/Process_Manager.cpp:Added #include "ace/ACE.h" to pick up
+	  ACE::terminate_process ().
+
+	* ace/FILE_Addr.cpp: Added #include "ace/Lib_Find.h" to pick up
+	  ACE_Lib_Find::get_temp_dir ().
+
 Thu Apr 17 16:37:05 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* m4/acinclude.m4 (ACE_CHECK_FUNC):
