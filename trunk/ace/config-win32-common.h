@@ -8,7 +8,7 @@
 #define ACE_WIN32_COMMON_H
 
 // Complain if WIN32 if not already defined.
-#ifndef WIN32
+#if !defined (WIN32) && !defined (ACE_HAS_WINCE)
 #error Please define WIN32 in your project settings.
 #endif /* WIN32 */
 
@@ -251,7 +251,7 @@ typedef unsigned __int64 ACE_UINT64;
         #endif /* _MT */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if defined(ACE_HAS_DLL) && (ACE_HAS_DLL != 0)
+#if defined(ACE_HAS_DLL) && (ACE_HAS_DLL != 0) && !defined (_UNDER_CE)
         #if !defined(_DLL)
                 #error You must link against (Debug) Multithreaded DLL run-time libraries.
         #endif /* !_DLL */
