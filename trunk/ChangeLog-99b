@@ -1,3 +1,15 @@
+Tue Jan 26 12:01:19 1999  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ACE_wrappers/tests/CDR_Test.dsp:
+        * ACE_wrappers/tests/CDR_Test.cpp:
+          Added lines to the test code to send the output to
+          the log file, and deleted the unnecessary Header
+          Files folder in the project.
+        * ace/CDR.{i,cpp}:
+          Relocated the longdouble comparison operators'
+          definitions, and moved a misplaced '}', which
+          were causing build errors.
+
 Tue Jan 26 10:55:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Active_Map_Manager.h: 

@@ -18,8 +18,7 @@ CFG=CDR_Test - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "CDR_Test - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "CDR_Test - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE "CDR_Test - Win32 Alpha Debug" (based on\
  "Win32 (ALPHA) Console Application")
 !MESSAGE 
@@ -100,7 +99,7 @@ SOURCE=.\CDR_Test.cpp
 
 !ELSEIF  "$(CFG)" == "CDR_Test - Win32 Alpha Debug"
 
-DEP_CPP_BARRI=\
+DEP_CPP_CDR_T=\
 	"..\ace\ACE.h"\
 	"..\ace\ACE.i"\
 	"..\ace\Atomic_Op.i"\
@@ -142,7 +141,6 @@ DEP_CPP_BARRI=\
 	"..\ace\Signal.i"\
 	"..\ace\SString.h"\
 	"..\ace\SString.i"\
-	"..\ace\stdcpp.h"\
 	"..\ace\SV_Semaphore_Complex.h"\
 	"..\ace\SV_Semaphore_Complex.i"\
 	"..\ace\SV_Semaphore_Simple.h"\
@@ -161,22 +159,13 @@ DEP_CPP_BARRI=\
 	"..\ace\ws2tcpip.h"\
 	".\test_config.h"\
 	
+NODEP_CPP_CDR_T=\
+	"..\ace\stdcpp.h"\
+	
 
 !ENDIF 
 
 # End Source File
-# End Group
-# Begin Group "Header Files"
-
-# PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
-# Begin Source File
-
-SOURCE=.\test_config.h
-# End Source File
-# End Group
-# Begin Group "Resource Files"
-
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 # End Group
 # End Target
 # End Project
