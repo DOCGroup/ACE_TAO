@@ -1,6 +1,18 @@
+Fri Jun 25 17:28:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/default_resource.cpp (get_reactor): Made sure the reactor
+	  get cleaned up if any error occured (ACE_LOG_MSG->errnum () !=
+	  0) during initialization.
+
+	* tao/ORB_Core.cpp (init): Return -1 if we failed to initialize
+	  the reactor.
+
+	  Thanks to Irfan for helping this out and Oleg Orlov
+	  <orlov@diasoft.ru> for reporting the problem.
+
 Fri Jun 25 16:30:41 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* examples/POA/DSI/Database_i.cpp (find_entry): Fixed a 
+	* examples/POA/DSI/Database_i.cpp (find_entry): Fixed a
 	  mistaken exception -- it should be Not_Found rather than
  	  Unknown_Key.  Thanks to Steve Huston for reporting this.  Also
  	  tidied up the code and added proper exception checking for

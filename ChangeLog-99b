@@ -1,3 +1,13 @@
+Fri Jun 25 17:22:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Select_Reactor_T.cpp (close): Don't call close() on the
+	  <notify_handler_> if there isn't one.
+
+	* ace/SOCK_Acceptor.cpp (open): The error status was not set
+	  correctly if listen() failed.
+
+	Thanks to Irfan for helping with this.
+
 Fri Jun 25 16:48:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: don't #include <signal.h> directly on VxWorks.
