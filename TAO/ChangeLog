@@ -1,3 +1,12 @@
+Sat Dec 27 12:43:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAOACE.dsw:
+	* orbsvcs/orbsvcs/FaultTolerance.dsp:
+
+	  Fixed some of the link errors that show up in the daily
+	  builds. It doesn't make me too proud on how this is
+	  structured. We need to rip this apart after x.4.
+
 Sat Dec 27 12:03:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
