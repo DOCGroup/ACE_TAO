@@ -81,16 +81,14 @@ Client_i::init (int argc, char *argv[])
   if (this->parse_args (argc, argv) == -1)
     return -1;
 
-  CORBA::Environment TAO_TRY_ENV;
-
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Retrieve the ORB.
       this->orb_manager_.init (argc,
                                argv,
                                0,
-                               TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -106,8 +104,8 @@ Client_i::init (int argc, char *argv[])
 
       CORBA::Object_var server_object =
 	orb->string_to_object (this->ior_,
-                               TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (server_object.in ()))
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -116,15 +114,16 @@ Client_i::init (int argc, char *argv[])
 			  -1);
 
       this->server_ = Broadcaster::_narrow (server_object.in (),
-					    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+					    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("client_i::init\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "client_i::init\n");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   // Register our <Input_Handler> to handle STDIN events, which will
   // trigger the <handle_input> method to process these events.
@@ -147,34 +146,34 @@ Client_i::run (void)
 	      "\n============= Simple Chat =================\n"
 	      "========== type 'quit' to exit  ===========\n"));
 
-  CORBA::Environment TAO_TRY_ENV;
-
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
-      PortableServer::POAManager_var poa_manager = this->orb_manager_.poa_manager ();
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      PortableServer::POAManager_var poa_manager =
+        this->orb_manager_.poa_manager ();
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       this->receiver_var_ =
-	this->receiver_i_._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+	this->receiver_i_._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Register ourselves with the server.
       server_->add (this->receiver_var_.in (),
 		    this->nickname_,
-		    TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+		    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Run the ORB.
-      this->orb_manager_.run (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->orb_manager_.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Client_i::run ()");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Client_i::run ()");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }
@@ -187,9 +186,7 @@ Client_i::handle_input (ACE_HANDLE)
   if (ACE_OS::fgets (buf, BUFSIZ, stdin) == 0)
     return 0;
 
-  CORBA::Environment TAO_TRY_ENV;
-
-  TAO_TRY
+  ACE_TRY_NEW_ENV
     {
       // Check if the user wants to quit.
       if (ACE_OS::strncmp (buf,
@@ -198,9 +195,9 @@ Client_i::handle_input (ACE_HANDLE)
 	{
 	  // Remove ourselves from the server.
 	  this->server_->remove (this->receiver_var_.in ());
-	  this->receiver_i_.shutdown (TAO_TRY_ENV);
+	  this->receiver_i_.shutdown (ACE_TRY_ENV);
 
-	  TAO_CHECK_ENV;
+	  ACE_TRY_CHECK;
 	  return 0;
 	}
 
@@ -208,15 +205,16 @@ Client_i::handle_input (ACE_HANDLE)
       // the server.
       this->server_->say (this->receiver_var_.in (),
 			  buf,
-			  TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+			  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Input_Handler::init");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Input_Handler::init");
       return -1;
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
 
   return 0;
 }

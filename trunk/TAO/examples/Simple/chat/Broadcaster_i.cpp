@@ -43,7 +43,7 @@ Broadcaster_i::~Broadcaster_i (void)
 void
 Broadcaster_i::add (Receiver_ptr receiver,
                     const char *nickname,
-                    CORBA::Environment &TAO_TRY_ENV)
+                    CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotAdd
@@ -57,7 +57,7 @@ Broadcaster_i::add (Receiver_ptr receiver,
 
   // Insert the Receiver reference to the set
   if (receiver_set_.insert (receiver_data) == -1)
-    TAO_TRY_ENV.exception (new Broadcaster::CannotAdd
+    ACE_TRY_ENV.exception (new Broadcaster::CannotAdd
                            ("failed to add to the receiver set\n"));
 
   // Tell everyone which person just joined the chat.
@@ -66,22 +66,24 @@ Broadcaster_i::add (Receiver_ptr receiver,
     + ACE_CString (nickname)
     + ACE_CString (" has joined the chat ****\n");
 
-  TAO_TRY
+  ACE_TRY
     {
       this->broadcast (broadcast_string.fast_rep (),
-		       TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+		       ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Broadcaster_i::add\t\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Broadcaster_i::broadcast failed.\t\n");
     }
-  TAO_ENDTRY;
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 void
 Broadcaster_i::remove (Receiver_ptr receiver,
-                       CORBA::Environment &TAO_TRY_ENV)
+                       CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
       Broadcaster::CannotRemove
@@ -108,7 +110,7 @@ Broadcaster_i::remove (Receiver_ptr receiver,
 
   // Remove the reference from our list.
   if (this->receiver_set_.remove (receiver_data_to_remove) == -1)
-    TAO_TRY_ENV.exception(new Broadcaster::CannotRemove
+    ACE_TRY_ENV.exception(new Broadcaster::CannotRemove
                           ("failed to remove from receiver set\n"));
 
   // Tell everyone, which person left the chat.
@@ -118,7 +120,8 @@ Broadcaster_i::remove (Receiver_ptr receiver,
     + " ****\n";
 
   this->broadcast (broadcast_string.fast_rep (),
-                   TAO_TRY_ENV);
+                   ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -160,11 +163,12 @@ Broadcaster_i::say (Receiver_ptr receiver,
                            "Broadcaster_i::say\t\n");
     }
   ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 void
 Broadcaster_i::broadcast (const char *text,
-                          CORBA::Environment &)
+                          CORBA::Environment &ACE_TRY_ENV)
 {
   // Broadcast the message to all registered clients.
 
@@ -172,17 +176,18 @@ Broadcaster_i::broadcast (const char *text,
        iter != this->receiver_set_.end ();
        iter++)
     {
-      TAO_TRY
+      ACE_TRY
         {
           (*iter).receiver_->message (text,
-                                      TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+                                      ACE_TRY_ENV);
+	  ACE_TRY_CHECK;
         }
-      TAO_CATCHANY
+      ACE_CATCHANY
         {
-          TAO_TRY_ENV.print_exception ("Failed to send a message\n");
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"Failed to send a message\n");
         }
-      TAO_ENDTRY;
+      ACE_ENDTRY;
+      ACE_CHECK;
     }
 }
 
