@@ -291,7 +291,7 @@ Cubit_Task::initialize_orb (void)
           GLOBALS::instance ()->ready_cnd_.broadcast ();
           ready_mon.release ();
           if (GLOBALS::instance ()->barrier_ == 0)
-            return -1;
+            ACE_ERROR_RETURN ((LM_ERROR,"(%t)Unable to create barrier\n"),-1);
         }
 
       if (GLOBALS::instance ()->use_name_service == 0)
@@ -493,18 +493,6 @@ Server::initialize (int argc, char **argv)
 #endif /* defined (FORCE_ARGS) */
 #endif /* defined (VXWORKS) */
 
-   if (GLOBALS::instance ()->hostname == 0 || GLOBALS::instance ()->base_port == 0)
-     ACE_ERROR_RETURN ((LM_ERROR,
-                        "usage:  %s"
-                        " [-s Means NOT to use the name service] "
-                        " [-p port]"
-                        " [-h my_hostname]"
-                        " [-t num_objects]"
-                        " [-f <ior_file>]"
-                        " [-r Use thread per rate]"
-                        "\n", argv [0]),
-                       1);
-
    // Make sure we've got plenty of socket handles.  This call will use
    // the default maximum.
    ACE::set_handle_limit ();
@@ -531,13 +519,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                   -1);
   int i;
 
-  // Create an array to hold pointers to the Cubit objects.
-  CORBA::String *cubits;
-
-  ACE_NEW_RETURN (cubits,
-                  CORBA::String [GLOBALS::instance ()->num_of_objs],
-                  -1);
-
 
   for (i = 0; i < this->argc_ ; i++)
     {
@@ -545,7 +526,16 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
         GLOBALS::instance ()->base_port = ACE_OS::atoi (this->argv_[i+1]);
       else if ((ACE_OS::strcmp (this->argv_[i],"-h") == 0) && (i-1 < this->argc_))
         ACE_OS::strcpy (GLOBALS::instance ()->hostname,this->argv_[i+1]);
+      else if ((ACE_OS::strcmp (this->argv_[i],"-t") == 0) && (i-1 < this->argc_))
+        GLOBALS::instance ()->num_of_objs = ACE_OS::atoi (this->argv_ [i+1]);
     }
+  // Create an array to hold pointers to the Cubit objects.
+  CORBA::String *cubits;
+
+  ACE_NEW_RETURN (cubits,
+                  CORBA::String [GLOBALS::instance ()->num_of_objs],
+                  -1);
+
   ACE_OS::sprintf (args1,
                    "-ORBport %d "
                    "-ORBhost %s "
@@ -554,7 +544,6 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr, ACE_Barrier &start_bar
                    "-ORBrcvsock 32768 ",
                    GLOBALS::instance ()->base_port,
                    GLOBALS::instance ()->hostname);
-
 
   ACE_OS::strcat (high_thread_args,args1);
   Cubit_Task *high_priority_task;
@@ -1207,13 +1196,6 @@ int
 main (int argc, char *argv[])
 {
 #endif
-  int _argc = 3;
-  char *_argv[] = {"server",
-                  "-t",
-                  "1"};
-
-  Task_State ts ( _argc, _argv);
-
   // Dummy code to create the GLOBALS object in the global memory
   // instead of TSS.
   GLOBALS::instance ();
@@ -1248,6 +1230,16 @@ main (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error in Initialization\n"),
                       1);
+  int _argc = 3;
+  char *_argv[] = {"server",
+                  "-t",
+                  "1"};
+
+  Task_State ts ( _argc, _argv);
+
+  // parse the arguments to set the global task state.
+  ts.parse_args (_argc,_argv);
+
   if (GLOBALS::instance ()->run_utilization_test == 1)
     {
       ts.run_server_utilization_test_ = 1;
