@@ -253,11 +253,11 @@ public:
     // application can cope with the loss of range, it can define
     // conversion operators itself.
 #   define NONNATIVE_LONGLONG
-#   if defined (TAO_WORDS_BIGENDIAN)
+#   if defined (ACE_BIG_ENDIAN)
       struct LongLong { Long h, l; };
 #   else
       struct LongLong { Long l, h; };
-#   endif /* !TAO_WORDS_BIGENDIAN */
+#   endif /* ! ACE_BIG_ENDIAN */
 # endif /* no native 64 bit integer type */
 
   typedef LongLong &LongLong_out;  // out type for long long
