@@ -301,7 +301,6 @@ TAO_GIOP_Message_Lite::
                            ASYS_TEXT ("TAO (%P|%t) %N:%l parse_reply: ")
                            ASYS_TEXT ("wrong message.\n")),
                           -1);
-        break;
     case TAO_GIOP_LOCATEREPLY:
       // Handle after the switch
       break;
