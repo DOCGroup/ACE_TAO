@@ -1,3 +1,9 @@
+Tue Feb 24 07:14:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Event.h (class Subscription): Moved the
+ 	  htonl of total_consumers_ to *after* the loop that uses it!
+  	  Thanks to Jorn Jensen <jornj@funcom.com> for reporting this.
+
 Tue Feb 24 05:08:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Asynch_Acceptor.i: Filled in some missing keywords.
