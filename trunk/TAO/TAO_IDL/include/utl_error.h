@@ -135,6 +135,9 @@ public:
   // Report a syntax error in IDL input
   void  syntax_error(IDL_GlobalData::ParseState ps);
 
+  // Report clash of declared and referenced indentifiers
+  void redef_error (char *n, char *t);
+
   // Report a name being used with different spellings
   void  name_case_error(char *n, char *t);
 

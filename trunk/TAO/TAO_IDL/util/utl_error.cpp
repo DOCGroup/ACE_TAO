@@ -670,9 +670,20 @@ UTL_Error::enum_val_lookup_failure(AST_Union *u,
   idl_global->set_err_count(idl_global->err_count() + 1);
 }
 
+// Report clash between declared and referenced indentifiers
+void
+UTL_Error::redef_error (char *b, char *n)
+{
+  idl_error_header(EIDL_REDEF,
+                   idl_global->lineno(),
+                   idl_global->filename());
+  cerr << "\"" << b << GTDEVEL("\" and ") << "\"" << n << "\"\n";
+  idl_global->set_err_count(idl_global->err_count() + 1);
+}
+
 // Report two or more spellings for an identifier
 void
-UTL_Error::name_case_error(char *b, char *n)
+UTL_Error::name_case_error (char *b, char *n)
 {
   idl_error_header(EIDL_NAME_CASE_ERROR,
                    idl_global->lineno(),
@@ -682,7 +693,7 @@ UTL_Error::name_case_error(char *b, char *n)
 }
 
 void
-UTL_Error::name_case_warning(char *b, char *n)
+UTL_Error::name_case_warning (char *b, char *n)
 {
   idl_error_header(EIDL_NAME_CASE_WARNING,
                    idl_global->lineno(),
