@@ -1,27 +1,27 @@
-# Microsoft Developer Studio Project File - Name="MsgQueue_Notifications_Test" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Message_Queue_Notifications_Test.cpp" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 # TARGTYPE "Win32 (ALPHA) Console Application" 0x0603
 
-CFG=MsgQueue_Notifications_Test - Win32 Debug
+CFG=Message_Queue_Notifications_Test.cpp - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "MsgQueue_Notifications_Test.mak".
+!MESSAGE NMAKE /f "Message_Queue_Notifications_Test.cpp.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "MsgQueue_Notifications_Test.mak"\
- CFG="MsgQueue_Notifications_Test - Win32 Debug"
+!MESSAGE NMAKE /f "Message_Queue_Notifications_Test.cpp.mak"\
+ CFG="Message_Queue_Notifications_Test.cpp - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "MsgQueue_Notifications_Test - Win32 Debug" (based on\
+!MESSAGE "Message_Queue_Notifications_Test.cpp - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "MsgQueue_Notifications_Test - Win32 Alpha Debug" (based on\
+!MESSAGE "Message_Queue_Notifications_Test.cpp - Win32 Alpha Debug" (based on\
  "Win32 (ALPHA) Console Application")
 !MESSAGE 
 
@@ -29,7 +29,7 @@ CFG=MsgQueue_Notifications_Test - Win32 Debug
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 
-!IF  "$(CFG)" == "MsgQueue_Notifications_Test - Win32 Debug"
+!IF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -56,7 +56,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\ace"
 
-!ELSEIF  "$(CFG)" == "MsgQueue_Notifications_Test - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Alpha Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -88,18 +88,18 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "MsgQueue_Notifications_Test - Win32 Debug"
-# Name "MsgQueue_Notifications_Test - Win32 Alpha Debug"
+# Name "Message_Queue_Notifications_Test.cpp - Win32 Debug"
+# Name "Message_Queue_Notifications_Test.cpp - Win32 Alpha Debug"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=.\MsgQueue_Notifications_Test.cpp
+SOURCE=.\Message_Queue_Notifications_Test.cpp.cpp
 
-!IF  "$(CFG)" == "MsgQueue_Notifications_Test - Win32 Debug"
+!IF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Debug"
 
-!ELSEIF  "$(CFG)" == "MsgQueue_Notifications_Test - Win32 Alpha Debug"
+!ELSEIF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Alpha Debug"
 
 DEP_CPP_MESSA=\
 	"..\ace\ACE.h"\

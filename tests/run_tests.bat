@@ -34,7 +34,7 @@ call %0 %dopure% IOStream_Test
 call %0 %dopure% Map_Manager_Test
 call %0 %dopure% Mem_Map_Test
 call %0 %dopure% Message_Block_Test
-call %0 %dopure% MsgQueue_Notifications_Test
+call %0 %dopure% Message_Queue_Notifications_Test.cpp
 call %0 %dopure% Message_Queue_Test
 call %0 %dopure% MM_Shared_Memory_Test
 call %0 %dopure% MT_SOCK_Test

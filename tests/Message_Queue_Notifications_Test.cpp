@@ -39,7 +39,7 @@
 #include "ace/Strategies.h"
 #include "ace/Task.h"
 
-ACE_RCSID(tests, MsgQueue_Notifications_Test, "$Id$")
+ACE_RCSID(tests, Message_Queue_Notifications_Test.cpp, "$Id$")
 
 #if defined(__BORLANDC__) && __BORLANDC__ >= 0x0530
 USELIB("..\ace\aced.lib");
@@ -284,7 +284,7 @@ Watermark_Test::svc (void)
 int
 main (int, ASYS_TCHAR *[])
 {
-  ACE_START_TEST (ASYS_TEXT ("MsgQueue_Notifications_Test"));
+  ACE_START_TEST (ASYS_TEXT ("Message_Queue_Notifications_Test.cpp"));
 
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Starting message queue reactive notification test...\n")));
   ACE_Reactor reactor;

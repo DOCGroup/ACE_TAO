@@ -13,8 +13,8 @@ BCB = $(MAKEDIR)\..
 
 VERSION = BCB.03
 # ---------------------------------------------------------------------------
-PROJECT = MsgQueue_Notifications_Test.exe
-OBJFILES = objs\MsgQueue_Notifications_Test.obj
+PROJECT = Message_Queue_Notifications_Test.cpp.exe
+OBJFILES = objs\Message_Queue_Notifications_Test.cpp.obj
 RESFILES =
 RESDEPEN = $(RESFILES)
 LIBFILES = ..\ace\aced.lib

@@ -13,7 +13,7 @@ PROJECTS = Aio_Platform_Test Atomic_Op_Test Barrier_Test Basic_Types_Test \
   Buffer_Stream_Test Conn_Test Dynamic_Priority_Test Enum_Interfaces_Test Env_Value_Test Future_Test \
   Handle_Set_Test Hash_Map_Manager_Test Map_Manager_Test MM_Shared_Memory_Test \
   MT_Reactor_Timer_Test MT_SOCK_Test Mem_Map_Test Message_Block_Test \
-  MsgQueue_Notifications_Test Message_Queue_Test Naming_Test \
+  Message_Queue_Notifications_Test.cpp Message_Queue_Test Naming_Test \
   Notify_Performance_Test OrdMultiSet_Test Pipe_Test Priority_Buffer_Test \
   Priority_Reactor_Test Priority_Task_Test Process_Mutex_Test \
   Process_Strategy_Test Reactor_Exceptions_Test Reactor_Notify_Test \
@@ -81,7 +81,7 @@ Mem_Map_Test: Mem_Map_Test.bpr
 Message_Block_Test: Message_Block_Test.bpr
   $(MAKE)
 
-MsgQueue_Notifications_Test: MsgQueue_Notifications_Test.bpr
+Message_Queue_Notifications_Test.cpp: Message_Queue_Notifications_Test.cpp.bpr
   $(MAKE)
 
 Message_Queue_Test: Message_Queue_Test.bpr
