@@ -1,3 +1,10 @@
+Fri Jul 24 15:16:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Concurrency/CC_command.tab.cpp,
+ 	  orbsvcs/tests/Concurrency/CC_command.tab.y: Fixed a couple of
+ 	  minor inconsistencies that showed up on HP/UX 11.  Thanks to
+ 	  John Mulhern <9107@mn3.lawson.lawson.com> for reporting this.
+
 Fri Jul 24 09:56:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/Simple/client_impl.cpp: 

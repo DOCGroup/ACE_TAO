@@ -281,7 +281,7 @@ pathname
 // messages.
 
 void
-yyerror (char *s)
+yyerror (const char *s)
 {
   ACE_ERROR ((LM_ERROR, ASYS_TEXT ("[error %d] on line %d: %s\n"),
               ++yyerrno, yylineno, ASYS_WIDE_STRING (s)));

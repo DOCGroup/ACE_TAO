@@ -62,7 +62,7 @@ extern FILE *ace_yyin;
     && ferror( ace_yyin ) ) \
     ACE_YY_FATAL_ERROR( "input in flex scanner failed" );
 
-void ace_yyerror (char *);
+void ace_yyerror (const char *);
 // Error handling routine required by YACC or BISON 
 
 extern int ace_yylineno;
