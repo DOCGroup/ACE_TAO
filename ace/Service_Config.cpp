@@ -532,7 +532,7 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
                             LPCTSTR logger_key,
                             int ignore_default_svc_conf_file)
 {
-  int retval = 0;
+  int result = 0;
   ACE_TRACE ("ACE_Service_Config::open");
 
   if (ACE_Service_Config::is_initialized_ != 0)
@@ -555,8 +555,9 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
                        "enqueue_tail"),
                       -1);
 
-  // Clear the LM_DEBUG bit from log messages if appropriate
-  if (ACE::debug () == 0)
+  // Clear the LM_DEBUG bit from log messages if appropriate.  This
+  // will be reset at the bottom of this function.
+  if (ACE::debug ())
     ACE_Log_Msg::disable_debug_messages ();
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
@@ -579,7 +580,7 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
   if (ACE_LOG_MSG->open (program_name,
                          flags,
                          key) == -1)
-    retval = -1;
+    result = -1;
   else
     {
       if (ACE::debug ())
@@ -597,11 +598,11 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
       // See if we need to load the static services.
       if (ACE_Service_Config::no_static_svcs_ == 0
           && ACE_Service_Config::load_static_svcs () == -1)
-        retval = -1;
+        result = -1;
       else
         {
           int result = ACE_Service_Config::process_commandline_directives ();
-          retval = ACE_Service_Config::process_directives () + result;
+          result = ACE_Service_Config::process_directives () + result;
         }
 
       // There's no point in dealing with this on NT since it doesn't really
@@ -622,7 +623,7 @@ ACE_Service_Config::open_i (const ASYS_TCHAR program_name[],
   if (ACE::debug ())
     ACE_Log_Msg::enable_debug_messages ();
 
-  return retval;
+  return result;
 }
 
 ACE_Service_Config::ACE_Service_Config (const ASYS_TCHAR program_name[],
