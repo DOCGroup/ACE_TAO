@@ -1921,7 +1921,10 @@ ACE_WFMO_Reactor::update_state (void)
               monitor.acquire ();
             }
 
-          if (this->handler_rep_.changes_required ())
+          // Note that make_changes() calls into user code which can
+          // request other changes.  So keep looping until all
+          // requested changes are completed.
+          while (this->handler_rep_.changes_required ())
             // Make necessary changes to the handler repository
             this->handler_rep_.make_changes ();
           if (this->new_owner ())
