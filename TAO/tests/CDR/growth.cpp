@@ -72,31 +72,31 @@ main (int argc, char *argv[])
     {
       switch (opt)
         {
-	case 'n':
-	  n = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 'l':
-	  low = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 'h':
-	  hi = ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 's':
-	  s = ACE_OS::atoi (get_opt.optarg);
-	  break;
+        case 'n':
+          n = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 'l':
+          low = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 'h':
+          hi = ACE_OS::atoi (get_opt.optarg);
+          break;
+        case 's':
+          s = ACE_OS::atoi (get_opt.optarg);
+          break;
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
                       "Usage: %s "
                       "-l low "
                       "-h high "
-		      "-s step "
-		      "-n n "
-		      "\n"
-		      "Writes and then reads longs to a CDR stream "
-		      "starting from <low> up to <high> incrementing "
-		      "by <step>, at each step run <n> iterations to "
-		      "average."
+                      "-s step "
+                      "-n n "
+                      "\n"
+                      "Writes and then reads longs to a CDR stream "
+                      "starting from <low> up to <high> incrementing "
+                      "by <step>, at each step run <n> iterations to "
+                      "average."
                       "\n",
                       argv[0]));
           return -1;
@@ -109,42 +109,42 @@ main (int argc, char *argv[])
       ACE_High_Res_Timer reading;
 
       for (int i = 0; i < n; ++i)
-	{
-	  writing.start_incr ();
-	  TAO_OutputCDR output;
+        {
+          writing.start_incr ();
+          TAO_OutputCDR output;
 
-	  if (test_write (output, x) != 0)
-	    {
-	      return 1;
-	    }
-	  writing.stop_incr ();
+          if (test_write (output, x) != 0)
+            {
+              return 1;
+            }
+          writing.stop_incr ();
 
-	  reading.start_incr ();
-	  TAO_InputCDR input (output);
-	  if (test_read (input, x) != 0)
-	    {
-	      return 1;
-	    }
-	  reading.stop_incr ();
-	}
+          reading.start_incr ();
+          TAO_InputCDR input (output);
+          if (test_read (input, x) != 0)
+            {
+              return 1;
+            }
+          reading.stop_incr ();
+        }
       double m = n * x;
 
       ACE_Time_Value wtv;
       writing.elapsed_time_incr (wtv);
       ACE_hrtime_t wusecs = wtv.sec ();
-      wusecs *= ACE_ONE_SECOND_IN_USECS;
+      wusecs *= ACE_static_cast (ACE_UINT32, ACE_ONE_SECOND_IN_USECS);
       wusecs += wtv.usec ();
 
       ACE_Time_Value rtv;
       reading.elapsed_time_incr (rtv);
       ACE_hrtime_t rusecs = rtv.sec ();
-      rusecs *= ACE_ONE_SECOND_IN_USECS;
+      rusecs *= ACE_static_cast (ACE_UINT32, ACE_ONE_SECOND_IN_USECS);
       rusecs += rtv.usec ();
 
       double write_average = wusecs / m;
       double read_average = rusecs / m;
       ACE_OS::printf ("AVE: %d %f %f\n",
-		      x, write_average, read_average);
+                      x, write_average, read_average);
     }
   return 0;
 }
