@@ -1,3 +1,22 @@
+Sat Aug 14 20:21:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h (OpenSSL_traits):
+
+	  Replaced primary template definition with a forward declaration.
+	  OpenSSL data structure-specific traits should always
+	  define/specialize their own traits template.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h (OpenSSL_traits):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_SSL.h (OpenSSL_traits):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.h (OpenSSL_traits):
+
+	  More MSVC++ 6 brain damage.  MSVC++ 6 cannot handle
+	  initialization of a static constant variable in the structure
+	  declaration.  It considers non-zero initialization to be an
+	  improper pure function specifier despite the fact no function is
+	  declared in this case.  Define the constant inside an
+	  enumeration instead to work around the problem.
+
 Sat Aug 14 18:17:59 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:

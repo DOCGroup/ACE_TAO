@@ -37,7 +37,7 @@ namespace TAO
     {
       /// OpenSSL lock ID for use in OpenSSL CRYPTO_add() reference
       /// count manipulation function.
-      static const long LOCK_ID = CRYPTO_LOCK_X509;
+      enum { LOCK_ID = CRYPTO_LOCK_X509 };
 
       /// Perform deep copy of the given OpenSSL structure.
       static ::X509 * copy (::X509 const & st)
