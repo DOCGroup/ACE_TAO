@@ -1,3 +1,17 @@
+Fri Jan  9 16:17:37 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/orb_core.*: Changed ORB parameters, OA parameters, and the
+ 	endpoint address to be switchable btw. global and tss resources.
+  	I also cleaned up the redundant accessor methods by using macros
+ 	to define them.  Thanks to Keith Nicewarner <knicewar@sanders.com>
+ 	for his bug reports which led to this solution.
+
+	* tao/orbobj.cpp (run,perform_work): Added code to set the
+ 	Reactor's owner to the current thread prior to calling
+ 	handle_events().  Thanks to Keith Nicewarner
+ 	<knicewar@sanders.com> for his bug reports which led to this
+ 	solution.
+
 Fri Jan  9 16:00:21 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp: Removed a Release statement that
