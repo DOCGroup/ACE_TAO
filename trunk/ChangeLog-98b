@@ -1,3 +1,7 @@
+Wed Jul 22 17:58:27 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ace/OS.h: Updated the comments.
+
 Wed Jul 22 17:55:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* performance-tests/Synch-Benchmarks/token_test.cpp: A new test.
