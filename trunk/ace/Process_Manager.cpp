@@ -353,11 +353,13 @@ ACE_Process_Manager::handle_close (ACE_HANDLE handle,
                                    ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Process_Manager::handle_close");
-#if !defined(ACE_WIN32)
-  ACE_ASSERT (handle==this->dummy_handle_);
+#if !defined (ACE_WIN32)
+  ACE_ASSERT (handle == this->dummy_handle_);
 
   ACE_OS::close (dummy_handle_);
-#endif
+#else
+  ACE_UNSED_ARG (handle);
+#endif /* ACE_WIN32 */
   return 0;
 }
         
