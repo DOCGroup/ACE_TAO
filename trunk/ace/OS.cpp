@@ -1643,8 +1643,8 @@ ACE_Thread_Adapter::inherit_log_msg (void)
       new_log->trace_depth (this->trace_depth_);
     }
 
-  // @@ Now the TSS Log_Meg has been created, cache
-  // my thread descriptor in.
+  // @@ Now the TSS Log_Mesg has been created, cache my thread
+  // descriptor in.
 
   if (this->thr_desc_ != 0)
     ACE_LOG_MSG->thr_desc (this->thr_desc_, this->thr_mgr_);
