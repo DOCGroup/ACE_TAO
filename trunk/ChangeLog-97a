@@ -1,8 +1,8 @@
 Wed Jan 22 09:05:31 1997  David L. Levine  <levine@cs.wustl.edu>
 
-	* Makefile: modified top-level Makefile to add a timestamp
-	  to the VERSION file if creating a release from the
-	  /project/adaptive/ACE_wrappers directory.
+	* Makefile,VERSION: modified top-level Makefile (and VERSION)
+	  to add a timestamp to the VERSION file if creating a release
+	  from the /project/adaptive/ACE_wrappers directory.
 
 	* ace/Local_Tokens.cpp (dump): replaced "ACE_TSS<ACE_TPQ_Entry>"
 	  with "ACE_TPQ_ENTRY" so that ACE_NO_TSS_TOKENS is supported.
