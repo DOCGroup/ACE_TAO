@@ -1,3 +1,17 @@
+Fri Jun 02 16:55:10 2000    <luther@cs.wustl.edu>
+
+	* ACE_wrappers/pace/pace/paces.dsp
+	* ACE_wrappers/pace/pace/pacesd.dsp
+
+	  Added to repository. Naming consistency with other
+	  ACE libraries. Also removed pre-compiled header
+	  option as well as separate directories for debug
+	  and release versions of software. 
+	
+	* ACE_wrappers/pace/pace/pace_lib.dsp
+
+	  Removed from repository. Naming consistency.
+
 Thu Jun  1 17:41:04 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* ACE_wrappers/pace/pace/emulation
