@@ -113,7 +113,7 @@ public:
   // allocated for that request.
 
   virtual TAO_GIOP_Message_State *get_message_state (void);
-  // Return the message state.
+  // Return the pre-allocated message state.
 
   virtual void destroy_message_state (TAO_GIOP_Message_State *);
   // No op in this strategy.
@@ -145,7 +145,7 @@ class TAO_Export TAO_Muxed_TMS : public  TAO_Transport_Mux_Strategy
   //
 
 public:
-  TAO_Muxed_TMS (void);
+  TAO_Muxed_TMS (TAO_ORB_Core *orb_core);
   // Constructor.
 
   virtual ~TAO_Muxed_TMS (void);
@@ -186,6 +186,16 @@ protected:
 
   REQUEST_DISPATCHER_TABLE dispatcher_table_;
   // Table of <Request ID, Reply Dispatcher> pairs.
+
+  TAO_ORB_Core *orb_core_;
+  // Keep track of the orb core pointer. We need to this to create the
+  // Reply Dispatchers.
+
+  TAO_GIOP_Message_State *message_state_;
+  // Message state where the current input message is being read. This
+  // is created at start of each incoming message. When that message
+  // is read, the message is processed and for the next message a new
+  // message state is created.
 };
 
 // *********************************************************************
