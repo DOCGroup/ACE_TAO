@@ -12,12 +12,11 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-
 IDL_FILES = Quoter
 IDL_SRC = QuoterC QuoterS
 BIN = client server
 
-LDLIBS = -lTAO -lTAO_PortableServer
+LDLIBS = -lTAO_PortableServer -lTAO 
 
 SRC = $(addsuffix .cpp, $(BIN) $(IDL_SRC) Handler_i Stock_i Stock_Factory_i)
 
