@@ -99,6 +99,41 @@ TAO_Priority_Mapping_Manager_var::_retn (void)
   return val;
 }
 
+ACE_INLINE ::TAO_Priority_Mapping_Manager_ptr
+TAO_Priority_Mapping_Manager_var::duplicate (TAO_Priority_Mapping_Manager_ptr p)
+{
+  return ::TAO_Priority_Mapping_Manager::_duplicate (p);
+}
+
+ACE_INLINE void
+TAO_Priority_Mapping_Manager_var::release (TAO_Priority_Mapping_Manager_ptr p)
+{
+  CORBA::release (p);
+}
+
+ACE_INLINE ::TAO_Priority_Mapping_Manager_ptr
+TAO_Priority_Mapping_Manager_var::nil (void)
+{
+  return ::TAO_Priority_Mapping_Manager::_nil ();
+}
+
+ACE_INLINE ::TAO_Priority_Mapping_Manager_ptr
+TAO_Priority_Mapping_Manager_var::narrow (
+    CORBA::Object *p,
+    CORBA::Environment &ACE_TRY_ENV
+  )
+{
+  return ::TAO_Priority_Mapping_Manager::_narrow (p, ACE_TRY_ENV);
+}
+
+ACE_INLINE CORBA::Object *
+TAO_Priority_Mapping_Manager_var::upcast (void *src)
+{
+  TAO_Priority_Mapping_Manager **tmp =
+    ACE_static_cast (TAO_Priority_Mapping_Manager **, src);
+  return *tmp;
+}
+
 
 // *************************************************************
 // Inline operations for class TAO_Priority_Mapping_Manager_out
