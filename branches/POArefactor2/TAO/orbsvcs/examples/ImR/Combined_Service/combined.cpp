@@ -7,6 +7,7 @@
 
 #include <ace/Service_Config.h>
 #include <ace/streams.h>
+#include <tao/PortableServer/PortableServer.h>
 
 using namespace CORBA;
 using namespace PortableServer;
