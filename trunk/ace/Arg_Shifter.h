@@ -54,7 +54,26 @@ public:
   char* get_current (void) const;
   // Get the current head of the vector.
 
-  int cur_arg_strncasecmp(const char* flag);
+  char* get_current_parameter (int offset = 0);
+  // After checking for a flag, use this method return the parameter
+  // Safe to call without checking for current argument
+  //
+  // If offset > 0, returns current argument + offset
+  //     if (offset == 2) ... "value" returns pointer to "lue"
+  //     if (offset == 7) ... "value" returns 0
+  //
+  // If offset == 0
+  //     consumes current argument
+  //     if (is_parameter_next ()) is true
+  //     then returns a pointer to the new current argument
+  //     else returns 0
+  //
+  // If offset < 0, returns current argument with offset
+  //     but offset counts from the back
+  //     if (offset == -2) ... "value" returns pointer to "ue"
+  //     if (offset == -9) ... "value" returns 0
+
+  int cur_arg_strncasecmp (const char* flag);
   // Check if the current argument matches (case insensitive) <flag>
   //
   // ------------------------------------------------------------
