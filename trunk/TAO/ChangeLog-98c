@@ -1,3 +1,10 @@
+Thu Jun 11 13:01:11 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/DynSched.cpp:
+
+          Changed ACE_Thread_Mutex to ACE_SYNCH_MUTEX in
+          template instantiation statements and pragmas
+
 Thu Jun 11 12:40:11 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tao/Exception.cpp: Method Release created an any, named
