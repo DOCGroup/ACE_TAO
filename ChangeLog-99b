@@ -1,4 +1,6 @@
-Sun Aug 22 12:10:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sun Aug 22 12:18:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.i (wait): Fixed a typo.
 
 	* ace/Process.cpp (ACE_Process): Removed an extra underscore.
 
