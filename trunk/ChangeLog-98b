@@ -1,3 +1,7 @@
+Thu Aug 20 05:12:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.5.31 released.
+
 Thu Aug 20 03:10:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/UPIPE_SAP_Test.cpp (main): Reverted back to use
