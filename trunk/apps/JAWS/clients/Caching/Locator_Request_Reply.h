@@ -20,7 +20,7 @@
 
 #include "URL_Properties.h"
 
-class ACE_SVC_Export ACE_URL_Locator_Request
+class ACE_Svc_Export ACE_URL_Locator_Request
   // = TITLE
   //     A URL request message formater/wrapper.
   //
@@ -133,7 +133,7 @@ protected:
   // Buffer to store encoded data.
 };
 
-class ACE_SVC_Export ACE_URL_Locator_Reply
+class ACE_Svc_Export ACE_URL_Locator_Reply
   // = TITLE
   //     A URL reply message formater/wrapper.
   //

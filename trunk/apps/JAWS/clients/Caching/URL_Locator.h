@@ -20,7 +20,7 @@
 
 #include "URL_Properties.h"
 
-class ACE_SVC_Export ACE_URL_Locator
+class ACE_Svc_Export ACE_URL_Locator
   // = TITLE
   //     Abstract Base class designates what interfaces a URL_Locator
   //     should provide.

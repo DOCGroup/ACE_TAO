@@ -26,7 +26,7 @@
 
 #include "ace/Containers.h"
 
-class ACE_SVC_Export ACE_WString_Helper
+class ACE_Svc_Export ACE_WString_Helper
   // = TITLE
   //     Some helper functions for manipulate ACE_WString.
   //
@@ -49,7 +49,7 @@ public:
   // byte order to host byte order.  Returns size of the string.
 };
 
-class ACE_SVC_Export ACE_URL_Property
+class ACE_Svc_Export ACE_URL_Property
   // = TITLE
   //     Defines a property of a URL.
   //
@@ -125,7 +125,7 @@ protected:
 typedef ACE_Array<ACE_URL_Property> ACE_URL_Property_Seq;
 // type of URL_Property collections.
 
-class ACE_SVC_Export ACE_URL_Offer
+class ACE_Svc_Export ACE_URL_Offer
   // = TITLE
   //     Defines a URL offer.
   //

@@ -27,7 +27,7 @@
 
 #include "ID_Generator.h"
 
-class ACE_SVC_Export ACE_URL_Record
+class ACE_Svc_Export ACE_URL_Record
   // = TITLE
   //     A URL Record.
   //
@@ -68,7 +68,7 @@ private:
   // Offer (and its properties).
 };
 
-class ACE_SVC_Export ACE_URL_Local_Locator
+class ACE_Svc_Export ACE_URL_Local_Locator
   // = TITLE
   //     A simple URL repository to store URL offer locally.
   //
