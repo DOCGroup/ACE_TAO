@@ -1,3 +1,9 @@
+Mon May 12 16:35:16 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+	* include/makeinclude/build_example.bor:
+
+	  Added missing libraries to fix static build link errors.
+
 Mon May 12 08:56:27 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:
