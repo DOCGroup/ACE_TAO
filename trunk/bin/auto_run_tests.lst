@@ -21,6 +21,7 @@ TAO/tests/Leader_Followers/run_test.pl: ST
 TAO/tests/Multiple_Inheritance/run_test.pl
 TAO/tests/RTCORBA/Client_Propagated/run_test.pl: MINIMUM linux
 TAO/tests/RTCORBA/Server_Declared/run_test.pl: MINIMUM ST linux
+TAO/tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl: MINIMUM ST linux
 TAO/tests/RTCORBA/Banded_Connections/run_test.pl: MINIMUM ST linux
 TAO/tests/RTCORBA/Server_Protocol/run_test.pl: MINIMUM
 TAO/tests/RTCORBA/Client_Protocol/run_test.pl: MINIMUM
