@@ -172,7 +172,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << "if (cdr << *this)" << be_nl
               << "  return;" << be_nl;
           if (idl_global->use_raw_throw ())
-            *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl;
+            *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
           else
             *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
           *os << "}\n\n";
@@ -184,7 +184,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << be_uidt << be_uidt_nl
               << "{" << be_idt_nl;
           if (idl_global->use_raw_throw ())
-            *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl;
+            *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
           else
             *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
           *os << "}\n\n";
@@ -203,7 +203,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << "if (cdr >> *this)" << be_nl
               << "  return;" << be_nl;
           if (idl_global->use_raw_throw ())
-            *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl;
+            *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
           else
             *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
           *os << "}\n\n";
@@ -215,7 +215,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << be_uidt << be_uidt_nl
               << "{" << be_idt_nl;
           if (idl_global->use_raw_throw ())
-            *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl;
+            *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
           else
             *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
           *os << "}\n\n";
