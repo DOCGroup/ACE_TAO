@@ -205,6 +205,11 @@ sub Spawn ()
                          "> failed to create start_test.cmd\n";
             return -1;
         }
+
+        # The device was soft-reset at the end of the test. Wait a few seconds
+        # for it to come back up.
+        sleep (10);
+
         my $testname = basename($executable,'.EXE');
         my $here = getcwd();
         $here =~ s/\//\\/g;
@@ -365,9 +370,6 @@ sub TimedWait ($)
             $log_name =~ s/\.txt$/.log/i;
             rename($log_name_txt, $log_name);
         }
-        # The device was soft-reset at the end of the test. Wait a few seconds
-        # for it to come back up.
-        sleep (10);
     }
 
     return $status;

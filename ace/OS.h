@@ -6767,96 +6767,50 @@ ACE_MAIN ()   /* user's entry point, e.g., "main" w/out argc, argv */ \
 } \
 int \
 ace_main_i
+
 #   elif defined (ACE_HAS_WINCE)
-/**
- * @class ACE_CE_ARGV
- *
- * @brief This class is to hash input parameters, argc and argv, for
- * WinCE platform.
- *
- * Since WinCE only supports wchar_t as an input from OS, some
- * implementation detail, especially for CORBA spec, will not support
- * ACE_TCHAR (wchar_t) type parameter. Moreover, WinCE's input parameter
- * type is totally different than any other OS; all command line
- * parameters will be stored in a single wide-character string with
- * each unit parameter divided by blank space, and it does not provide
- * the name of executable (generally known as argv[0]).
- * This class is to convert CE's command line parameters and simulate as
- * in the same manner as other general platforms, adding 'root' as a
- * first argc, which is for the name of executable in other OS.
- */
-class ACE_OS_Export ACE_CE_ARGV
-{
-public:
-    /**
-     * Ctor accepts CE command line as a paramter.
-     */
-    ACE_CE_ARGV(ACE_TCHAR* cmdLine);
 
-    /**
-     * Default Dtor that deletes any memory allocated for the converted string.
-     */
-    ~ACE_CE_ARGV(void);
-
-    /**
-     * Returns the number of command line paramters, same as argc on Unix.
-     */
-    int argc(void);
-
-    /**
-     * Returns the char** that contains the converted command line parameters.
-     */
-    ACE_TCHAR** const argv(void);
-
-private:
-    /**
-     * Copy Ctor is not allowed.
-     */
-    ACE_CE_ARGV(void);
-
-    /**
-     * Copy Ctor is not allowed.
-     */
-    ACE_CE_ARGV(ACE_CE_ARGV&);
-
-    /**
-     * Pointer of converted command line paramters.
-     */
-    ACE_TCHAR** ce_argv_;
-
-    /**
-     * Integer that is same as argc on other OS's.
-     */
-    int ce_argc_;
-};
 #     if defined (ACE_TMAIN)  // Use WinMain on CE; others give warning/error.
 #       undef ACE_TMAIN
 #     endif  // ACE_TMAIN
 
-// Support for ACE_TMAIN, which is a recommended way.
+// CE only gets a command line string;  no argv. So we need to convert it
+// when the main entrypoint expects argc/argv. ACE_ARGV supports this.
+#     include "ace/ARGV.h"
+
+// Support for ACE_TMAIN, which is a recommended way. It would be nice if
+// CE had CommandLineToArgvW()... but it's only on NT3.5 and up.
+
 #     define ACE_TMAIN \
 ace_main_i (int, ACE_TCHAR *[]);  /* forward declaration */ \
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
-  ACE_CE_ARGV ce_argv(lpCmdLine); \
-  ACE::init(); \
+  ACE_TCHAR cmdline[1024]; \
+  ACE_OS::strcpy (cmdline, ACE_LIB_TEXT ("program ")); \
+  ACE_OS::strcat (cmdline, lpCmdLine); \
+  ACE_ARGV ce_argv (cmdline); \
+  ACE::init (); \
   ACE_MAIN_OBJECT_MANAGER \
-  int i = ace_main_i (ce_argv.argc(), ce_argv.argv()); \
-  ACE::fini(); \
+  int i = ace_main_i (ce_argv.argc (), ce_argv.argv ()); \
+  ACE::fini (); \
   return i; \
 } \
 int ace_main_i
 
-// Support for wchar_t but still can't fit to CE because of the command line parameters.
+// Support for wchar_t but still can't fit to CE because of the command
+// line parameters.
 #     define wmain \
 ace_main_i (int, ACE_TCHAR *[]);  /* forward declaration */ \
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
-  ACE_CE_ARGV ce_argv(lpCmdLine); \
-  ACE::init(); \
+  ACE_TCHAR cmdline[1024]; \
+  ACE_OS::strcpy (cmdline, ACE_LIB_TEXT ("program ")); \
+  ACE_OS::strcat (cmdline, lpCmdLine); \
+  ACE_ARGV ce_argv (cmdline); \
+  ACE::init (); \
   ACE_MAIN_OBJECT_MANAGER \
-  int i = ace_main_i (ce_argv.argc(), ce_argv.argv()); \
-  ACE::fini(); \
+  int i = ace_main_i (ce_argv.argc (), ce_argv.argv ()); \
+  ACE::fini (); \
   return i; \
 } \
 int ace_main_i
@@ -6869,7 +6823,10 @@ int ace_main_i
 ace_main_i (int, char *[]);  /* forward declaration */ \
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow) \
 { \
-  ACE_CE_ARGV ce_argv (lpCmdLine); \
+  ACE_TCHAR cmdline[1024]; \
+  ACE_OS::strcpy (cmdline, ACE_LIB_TEXT ("program ")); \
+  ACE_OS::strcat (cmdline, lpCmdLine); \
+  ACE_ARGV ce_argv (cmdline); \
   ACE::init (); \
   ACE_MAIN_OBJECT_MANAGER \
   ACE_Argv_Type_Converter command_line (ce_argv.argc (), ce_argv.argv ()); \
