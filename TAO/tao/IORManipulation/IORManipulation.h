@@ -36,7 +36,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Manip_Export TAO_IOR_Manipulation_impl
+class TAO_IORManip_Export TAO_IOR_Manipulation_impl
   : public TAO_IOP::TAO_IOR_Manipulation,
     public CORBA::LocalObject
 {
