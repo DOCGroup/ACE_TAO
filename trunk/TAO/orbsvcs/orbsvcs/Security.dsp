@@ -103,10 +103,6 @@ SOURCE=.\Security\InvocationCredentialsPolicy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Security\MechanismPolicy.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Security\PrincipalAuthenticator.cpp
 # End Source File
 # Begin Source File
@@ -160,10 +156,6 @@ SOURCE=.\Security\EstablishTrustPolicy.h
 # Begin Source File
 
 SOURCE=.\Security\InvocationCredentialsPolicy.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Security\MechanismPolicy.h
 # End Source File
 # Begin Source File
 
