@@ -1,3 +1,50 @@
+Thu Jan  1 17:56:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_sys_socket.inl (closesocket): On HP-UX, use
+	  shutdown() rather than close() to close a socket. shutdown()
+	  will abort an in-progress operation in another thread, while
+	  close() won't. This fixes the hang in the
+	  MT_Reference_Counted_Event_Handler_Test and will make the Proactor
+	  stuff more easy to work with as well.
+
+	* ace/Time_Value.h: Don't include <time.h> (or <sys/time.h>) directly;
+	  use ace/os_include/sys/os_time.h to get what's needed. This
+	  prevents HP-UX from pulling in <time.h> before <sys/time.h> and
+	  picking up the wrong declaration for select(). Fixes gcc builds.
+
+	* ace/Name_Space.h: Replace forward declarations of ACE_Unbounded_Set
+	  with #include "ace/Unbounded_Set.h". Needed to generate template
+	  specializations.
+
+	* examples/APG/Logging/Callback-2.h:
+	* examples/APG/Logging/LogManager.h:
+	* examples/APG/Naming/Thermometer.h:
+	* examples/APG/Naming/Temperature_Monitor.cpp:
+	* examples/APG/Naming/Temperature_Monitor2.cpp:
+	* examples/APG/Proactor/HA_Proactive_Status.h:
+	* examples/APG/Processes/Process_Manager_Death.cpp:
+	* examples/APG/Reactor/HAStatus.cpp:
+	* examples/APG/Reactor/Reschedule.cpp:
+	* examples/APG/Reactor/Schedule_Timers.cpp:
+	* examples/APG/Reactor/Timer_Cancel.cpp:
+	* examples/APG/Reactor/Timer_State_Data.cpp:
+	* examples/APG/Shared_Memory/Malloc.cpp:
+	* examples/APG/Shared_Memory/PI_Malloc.cpp:
+	* examples/APG/Signals/SigInfo.cpp:
+	* examples/APG/Streams/RecordingDevice.h:
+	* examples/APG/ThreadManagement/Coop_Cancel.cpp:
+	* examples/APG/ThreadPools/Futures.cpp:
+	* examples/APG/ThreadPools/Task_ThreadPool.cpp:
+	* examples/APG/ThreadPools/ThreadPool.cpp:
+	* examples/APG/ThreadSafety/Barrier.cpp:
+	  Added #includes for "ace/OS_NS_*.h" as needed to convert from
+	  5.3 OS.h usage to refactored OS_NS_*.h headers. Added missing
+	  header includes that worked by accident in ACE 5.3.
+
+	* examples/APG/Timers/Upcall.h: Added registration () method that
+	  is now required for a timer queue upcall functor class. This is
+	  also new at ACE 5.4.
+
 Thu Jan  1 16:23:17 2004  Steve Huston  <shuston@riverace.com>
 
 	* bin/make_release: Add VC6 to files that generate_makefiles() makes.

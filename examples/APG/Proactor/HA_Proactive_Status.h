@@ -9,6 +9,7 @@
 #ifndef __HA_PROACTIVE_STATUS_H
 #define __HA_PROACTIVE_STATUS_H
 
+#include "ace/OS_NS_sys_socket.h"
 #include "ace/Service_Object.h"
 // Listing 1 code/ch08
 #include "ace/Asynch_IO.h"

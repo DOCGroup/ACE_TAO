@@ -1,5 +1,6 @@
 // $Id$
 
+#include "ace/OS_NS_time.h"
 #include "ace/Task.h"
 #include "ace/Synch.h"
 #include "ace/SString.h"

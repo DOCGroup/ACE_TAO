@@ -2,6 +2,7 @@
 
 // Listing 1 code/ch17
 #include "ace/Malloc_T.h"
+#include "ace/Null_Mutex.h"
 
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>
   ALLOCATOR;

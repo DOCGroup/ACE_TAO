@@ -3,6 +3,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
+#include "ace/Signal.h"
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
