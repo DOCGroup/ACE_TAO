@@ -2714,6 +2714,8 @@ public:
   static char *asctime_r (const struct tm *tm, char *buf, int buflen);
   static char *ctime (const time_t *t);
   static char *ctime_r (const time_t *clock, char *buf, int buflen);
+  static size_t strftime (const char *s, size_t maxsize, const char *format,
+                          const struct tm *timeptr);
 
   // = A set of wrappers for memory managment.
   static void *sbrk (int brk);
