@@ -1,6 +1,7 @@
 // $Id$
 
 #include "EC_ProxyPushSupplier_Set.h"
+#include "EC_Defaults.h"
 #include "EC_ProxySupplier.h"
 #include "EC_Command.h"
 
@@ -12,8 +13,8 @@ ACE_RCSID(Event, EC_ProxyPushSupplier_Set, "$Id$")
 
 TAO_EC_ProxyPushSupplier_Set::TAO_EC_ProxyPushSupplier_Set (void)
   :  busy_lock_ (this),
-     busy_hwm_ (1),
-     max_write_delay_ (1)
+     busy_hwm_ (TAO_EC_DEFAULT_BUSY_HWM),
+     max_write_delay_ (TAO_EC_DEFAULT_MAX_WRITE_DELAY)
 {
 }
 

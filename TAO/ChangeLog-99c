@@ -1,3 +1,29 @@
+Sun May 23 16:06:05 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile:
+	* orbsvcs/orbsvcs/Event/EC_Defaults.h:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.h:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+	  Added a new header file where the default configuration of the
+	  EC is defined.  The current values provide an MT-safe
+	  configuration, which allows delayed operations to wait for a
+	  long time.  This works best in most cases, but hard real-time
+	  applications may wish to fine tune the algorithm to avoid
+	  starvations of delayed changes.
+
+	* orbsvcs/tests/Event/Basic/run_test.pl:
+	* orbsvcs/tests/Event/Performance/ec.st.conf:
+	* orbsvcs/tests/Event/Performance/run_test.pl:
+	  The configuration file now sets the configuration for a single
+	  threaded event channel, without any locks. The default settings
+	  are MT-safe so there is no need to use a file anymore.
+
+	* orbsvcs/tests/Event/lib/Driver.cpp:
+	  Some fields where unitiliazed, fixed.
+
 Sun May 23 10:06:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/Event/lib/README:
