@@ -1,0 +1,28 @@
+
+#
+# Makefile for building the poa default servant example
+#
+
+NAME = client
+
+OBJFILES = \
+        $(OBJDIR)\FileC.obj \
+        $(OBJDIR)\FileS.obj \
+	$(OBJDIR)\client.obj
+
+IDLFILES = \
+        $(IDLDIR)\File.idl
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\FileC.cpp $(IDLDIR)\FileS.cpp: $(IDLDIR)\File.idl
+	$(TAO_IDL) $**
+

@@ -1,0 +1,38 @@
+Notification MT Dispatching Test
+================================
+
+Description
+-----------
+This test exercises multi-threaded aspects of the Notification service.
+Dispatching, consumer filter evaluation and supplier filter evaluation.  It
+also runs the notifcation service in single-threaded mode.
+
+Usage
+-----
+
+The test consists of a Structured_Supplier and Structured_Consumer.  The
+usage for each as is follows:
+
+$ Structured_Supplier -\?
+usage:  Structured_Supplier -o <iorfile> -e <# of events> -f
+
+$ Structured_Consumer -\?
+usage:  Structured_Consumer -k <ior> -c <# of consumers> -e <expected events>
+                            -f
+
+To run this test, just run the run_test.pl perl script.  It will run both
+structured and sequence tests with each of the implemented discard policies.
+
+
+Expected Results
+----------------
+********* Running multi-threaded dispatching test *******
+
+********* Running multi-threaded consumer filter evaluation *******
+
+********* Running multi-threaded supplier filter evaluation *******
+
+********* Running single-threaded notification service *******
+
+
+If an error is encountered, the perl script will exit with an error status.

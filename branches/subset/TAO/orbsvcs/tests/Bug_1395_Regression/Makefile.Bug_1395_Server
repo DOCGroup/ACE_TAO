@@ -1,0 +1,73 @@
+#----------------------------------------------------------------------------
+#       GNU Makefile
+#----------------------------------------------------------------------------
+MAKEFILE        = Makefile.Bug_1395_Server
+DEPENDENCY_FILE = .depend.Makefile.Bug_1395_Server
+BIN_UNCHECKED   = server
+
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
+IDL_FILES = Test
+IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext)))
+
+
+
+FILES = \
+  TestC \
+  TestS \
+  Test_i \
+  server
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+
+BIN    = $(BIN_UNCHECKED)
+
+OBJS   = $(addsuffix .o, $(notdir $(FILES)))
+SRC    = $(addsuffix .cpp, $(FILES))
+ACELIB = -lACE
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+include $(TAO_ROOT)/taoconfig.mk
+
+CPPFLAGS     += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao -I$(ACE_ROOT)
+ifeq ($(static_libs),1)
+ifneq ($(LIB),)
+CPPFLAGS     += -DTAO_AS_STATIC_LIBS -DACE_AS_STATIC_LIBS
+endif
+endif
+
+
+LDFLAGS      += -L$(TAO_ROOT)/tao/PortableServer -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
+TAO_IDLFLAGS += -Ge 1 -Sc
+
+LDLIBS = -lTAO_PortableServer -lTAO
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+ADDITIONAL_IDL_TARGETS =
+
+# IDL File Directory: .
+
+idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+
+all: idl_stubs
+
+.PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+
+$(BIN): $(addprefix $(VDIR), $(OBJS))
+	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
+
+realclean: clean 
+	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
+

@@ -1,0 +1,40 @@
+// $Id$
+
+//
+//   This file was used to generate the code in
+//   BiDirPolicy*.* The command used to generate code
+//   is:
+//
+//     tao_idl -o orig -Ge 1 -Sa -St \
+//          -Wb,export_macro=TAO_BiDirGIOP_Export \
+//          -Wb,export_include="bidirgiop_export.h" \
+//          -Wb,pre_include="ace/pre.h" \
+//          -Wb,post_include="ace/post.h" \
+//          BiDirPolicy.pidl
+//
+//   This is from the GIOP 1.2 spec for Bi Dir IIOP.
+
+#ifndef TAO_BIDIR_POLICY_PIDL
+#define TAO_BIDIR_POLICY_PIDL
+
+#pragma prefix "omg.org"
+
+#include <Policy.pidl>
+
+// Self contained module for Bi-directional GIOP policy
+module BiDirPolicy
+{
+  typedef unsigned short BidirectionalPolicyValue;
+  const BidirectionalPolicyValue NORMAL = 0;
+  const BidirectionalPolicyValue BOTH = 1;
+  const CORBA::PolicyType BIDIRECTIONAL_POLICY_TYPE = 37;
+
+  // @@ This has ben made local. It was not so in the spec. Any reason
+  //    that this shouldn't be a local interface ?
+  local interface BidirectionalPolicy : CORBA::Policy
+  {
+    readonly attribute BidirectionalPolicyValue value;
+  };
+};
+
+#endif  /* TAO_BIDIR_POLICY_PIDL*/
