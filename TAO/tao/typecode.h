@@ -20,7 +20,7 @@
 #if !defined (TAO_TYPECODE_H)
 #  define TAO_TYPECODE_H
 
-struct CDR;
+class CDR;
 
 // Two "user exceptions" are defined for manipulating TypeCodes. These two
 // classes are really to be defined inside the TypeCode class
