@@ -1,13 +1,30 @@
+Thu Jul 03 18:53:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/lib/Consumer.h:
+        * orbsvcs/tests/Event/lib/Supplier.h:
+        * orbsvcs/tests/Event/lib/Counting_Consumer.h:
+        * orbsvcs/tests/Event/lib/Counting_Supplier.h:
+          Converted documentation to doxygen.
+
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+        * orbsvcs/tests/Event/lib/Driver.h:
+          Added modify_attributes() method to the driver as virtual again and
+          call it before creating the event channel. This method is overruled
+          in the reconnect test and because I removed the calling of this
+          method the reconnect test failed in the daily builds. The removal
+          was done in the checkin of Thu Jun 26 17:35:11 UTC 2003. Now the
+          RTEvent reconnect with connect test works again.
+
 Thu Jul 03 13:20:16 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/tests/Notify/lib/Makefile.bor:
-	  
+
 	  Added TAO_DYNAMICANY to the EXTERNAL_LIBS to fix Borland static
 	  build problems.
 
 	* orbsvcs/tests/Notify/lib/Makefile:
 	* orbsvcs/tests/Notify/RT_lib/Makefile:
-	  
+
 	  Added BUILD_DLL option to CPPFLAGS. These are needed
 	  for the cygwin/mingw compiler to export the symbols from the DLL.
 
@@ -932,7 +949,7 @@ Wed Jun 25 09:40:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/TAO_Static.dsp:
 	* tao/IORInterceptor/TAO_IORInterceptor_Static.dsp: Added missing
 	  files into the project. Thanks to Tommy Andreasen
-	  <Tommy.Andreasen@Radiometer.dk> for providing the patches. 
+	  <Tommy.Andreasen@Radiometer.dk> for providing the patches.
 
 Tue Jun 25 11:26:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
