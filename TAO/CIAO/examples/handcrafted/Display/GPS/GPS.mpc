@@ -1,0 +1,27 @@
+project (GPS_stub) : ciao_client {
+  depends += HUD_stub
+  sharedname = GPS_stub
+  dllflags  = GPS_STUB_BUILD_DLL
+  idlflags  += -I ../../../.. -I ../../../../.. -I ../../../../../orbsvcs/orbsvcs -Wb,stub_export_macro=GPS_STUB_Export -Wb,stub_export_include=GPS_stub_export.h -Wb,skel_export_macro=GPS_SKEL_Export -Wb,skel_export_include=GPS_skel_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+
+  IDL_Files {
+    GPS.idl
+  }
+
+  Source_Files {
+    GPSC.cpp
+  }
+}
+
+project (GPS_skel) : ciao_component {
+  depends += HUD_skel
+  sharedname = GPS_skel
+  dllflags  = GPS_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    GPSS.cpp
+  }
+}

@@ -1,0 +1,27 @@
+project (NavDisplay_stub) : ciao_client {
+  depends += HUD_stub
+  sharedname = NavDisplay_stub
+  dllflags  = NAVDISPLAY_STUB_BUILD_DLL
+  idlflags  += -I ../../../.. -I ../../../../.. -I ../../../../../orbsvcs/orbsvcs -Wb,stub_export_macro=NAVDISPLAY_STUB_Export -Wb,stub_export_include=NavDisplay_stub_export.h -Wb,skel_export_macro=NAVDISPLAY_SKEL_Export -Wb,skel_export_include=NavDisplay_skel_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
+
+  IDL_Files {
+    NavDisplay.idl
+  }
+
+  Source_Files {
+    NavDisplayC.cpp
+  }
+}
+
+project (NavDisplay_skel) : ciao_component {
+  depends += HUD_skel
+  sharedname = NavDisplay_skel
+  dllflags  = NAVDISPLAY_SKEL_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    NavDisplayS.cpp
+  }
+}
