@@ -583,6 +583,10 @@ typedef unsigned long long ACE_UINT64;
 #  define ACE_HAS_LOG_MSG_NT_EVENT_LOG
 #endif /* !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
 
+#if !defined (ACE_HAS_WINCE)
+# define ACE_HAS_LLSEEK
+#endif /* !ACE_HAS_WINCE */
+
 // Needed for obtaining the MAC address
 // I dont believe this will work under CE, notice the
 // check for ACE_HAS_WINCE.
