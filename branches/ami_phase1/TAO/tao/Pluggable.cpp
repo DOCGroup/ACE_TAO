@@ -11,14 +11,6 @@
 #include "tao/Request_Mux_Strategy.h"
 #include "tao/Reply_Dispatcher.h"
 
-// @@ Alex: the strategies should be allocated from the ORB_Core,
-//    which in turn may use the Resource_Factory. Just allocate them
-//    from the heap because they should be allocated just once.
-
-// @@ Alex: i think you are right, but the strategies should be
-//    provided by the ORB, potentially allocated using the resource
-//    factory.
-
 // Constructor.
 TAO_Transport::TAO_Transport (TAO_ORB_Core *orb_core)
   : message_size_ (0),
