@@ -81,14 +81,26 @@ public:
   /// Remove the element at the end of the list
   T *pop_back (void);
 
+  /// Get the element at the head of the queue
+  T *head (void) const;
+
+  /// Get the element at the tail of the queue
+  T *tail (void) const;
+
+  /// Remove a element from the list
+  /**
+   * Verify that the element is still in the list before removing it.
+   */
+  void remove (T *node);
+
+private:
   /// Remove a element from the list
   /**
    * No attempts are performed to check if T* really belongs to the
    * list.  The effects of removing an invalid element are unspecified
    */
-  void remove (T *node);
+  void remove_i (T *node);
 
-private:
   /** @name Disallow copying
    *
    */

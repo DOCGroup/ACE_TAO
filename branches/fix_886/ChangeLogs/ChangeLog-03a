@@ -1,3 +1,15 @@
+Tue Jul 31 09:17:49 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/Intrusive_List.h:
+        * ace/Intrusive_List.inl:
+          Add new methods to access the head and tail of the list.
+
+        * ace/Intrusive_List.cpp:
+          Fixed the implementation of remove(), if the element to be
+          removed was the last on the list it wasn't removed at all.
+          Left some code to check invariants, have to find a way to keep
+          that code around with some optional compilation flags.
+
 Thu Jul 26 16:50:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/Makefile:
@@ -14,7 +26,7 @@ Thu Jul 26 16:50:54 2001  Carlos O'Ryan  <coryan@uci.edu>
         * ace/Intrusive_List_Node.cpp:
           Helper class to add the requirements of ACE_Intrusive_List to
           any other class, simply do:
-	  class Foo : public ACE_Intrusive_List_Node<Foo>
+          class Foo : public ACE_Intrusive_List_Node<Foo>
 
 Wed Jul 25 23:49:43 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
