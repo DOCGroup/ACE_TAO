@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_ID_ASSIGNMENT_STRATEGY_H
-#define TAO_ID_ASSIGNMENT_STRATEGY_H
+#ifndef TAO_SERVANT_RETENTION_STRATEGY_H
+#define TAO_SERVANT_RETENTION_STRATEGY_H
 #include /**/ "ace/pre.h"
 
 #include "portableserver_export.h"
@@ -94,4 +94,4 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_ID_ASSIGNMENT_STRATEGY_H */
+#endif /* TAO_SERVANT_RETENTION_STRATEGY_H */

@@ -17,13 +17,25 @@
 #include "portableserver_export.h"
 #include "PolicyFactory.h"
 #include "PortableServerC.h"
+#include "Policy_Strategy.h"
 #include "ace/Service_Config.h"
+
+// zap this for creation time
+#include "POA.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+namespace TAO
+{
+//  class ObjectKey;
+
+//  typedef ObjectKey *ObjectKey_ptr;
+//  typedef TAO_Objref_Var_T<ObjectKey> ObjectKey_var;
+}
 
 namespace CORBA
 {
@@ -52,7 +64,7 @@ namespace TAO
       /**
        * Validate the passed object key if it belongs to this POA.
        */
-      bool validate (TAO::ObjectKey_var& key)
+      bool validate (TAO::ObjectKey_var& key);
 
       /**
        * Returns the key type the says which specific policy we have
@@ -69,7 +81,7 @@ namespace TAO
     };
 
     class TAO_PortableServer_Export Transient_Lifespan_Strategy :
-       public virtual Transient_Lifespan_Strategy
+       public virtual Policy_Strategy
     {
     public:
       virtual ~Transient_Lifespan_Strategy (void);

@@ -1,3 +1,12 @@
+Thu Oct  7 08:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/*Policy.{h,cpp}:
+        * tao/PortableServer/*PolicyFactory.{h,cpp}:
+          Moved _tao_cached_type and _tao_scope from the factory to the
+          policy, these methods are called on the policy from within TAO and
+          the default implementation within Policy itself must be overruled by
+          our derived classes.
+
 Tue Oct  5 14:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Policy_Strategy.h:

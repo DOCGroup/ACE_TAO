@@ -9,12 +9,11 @@
  */
 //=============================================================================
 
+#include "Servant_Retention_Strategy.h"
 
 ACE_RCSID (PortableServer,
            Servant_Retention_Strategy,
            "$Id$")
-
-#include "Servant_Retention_Strategy.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -27,7 +26,7 @@ namespace TAO
       const PortableServer::ObjectId &id
       ACE_ENV_ARG_DECL)
     {
-      TAO_Active_Object_Map::Map_Entry *active_object_map_entry = 0;
+/*      TAO_Active_Object_Map::Map_Entry *active_object_map_entry = 0;
       int result = this->active_object_map_->
         find_servant_and_system_id_using_user_id (id,
                                                   active_object_map_entry);
@@ -41,7 +40,7 @@ namespace TAO
 
       this->deactivate_map_entry (active_object_map_entry
                                   ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK;*/
     }
 
     void
@@ -80,7 +79,7 @@ namespace TAO
       TAO_Active_Object_Map::Map_Entry *active_object_map_entry
       ACE_ENV_ARG_DECL)
     {
-      // If a servant manager is associated with the POA,
+/*      // If a servant manager is associated with the POA,
       // ServantLocator::etherealize will be invoked with the oid and the
       // servant. (The deactivate_object operation does not wait for the
       // etherealize operation to complete before deactivate_object
@@ -102,7 +101,7 @@ namespace TAO
       if (active_object_map_entry->servant_)
         {
 
-    #if (TAO_HAS_MINIMUM_POA == 0)
+//    #if (TAO_HAS_MINIMUM_POA == 0)
 
           if (this->etherealize_objects_ &&
               this->cached_policies_.request_processing () == PortableServer::USE_SERVANT_MANAGER &&
@@ -139,7 +138,7 @@ namespace TAO
             }
           else
 
-    #endif /* TAO_HAS_MINIMUM_POA == 0 */
+//    #endif
 
             {
               // A recursive thread lock without using a recursive thread
@@ -167,7 +166,7 @@ namespace TAO
       if (result != 0)
         {
           ACE_THROW (CORBA::OBJ_ADAPTER ());
-        }
+        }*/
     }
   }
 }
@@ -188,5 +187,3 @@ namespace TAO
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#include /**/ "ace/post.h"
-#endif /* TAO_ID_ASSIGNMENT_STRATEGY_H */

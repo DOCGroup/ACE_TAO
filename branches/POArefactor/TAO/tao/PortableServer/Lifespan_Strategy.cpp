@@ -9,15 +9,15 @@
  */
 //=============================================================================
 
+#include "Lifespan_Strategy.h"
 
 ACE_RCSID (PortableServer,
            Lifespan_Strategy,
            "$Id$")
 
-#include "Lifespan_Strategy.h"
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
+#include "tao/debug.h"
 
 namespace TAO
 {
@@ -26,7 +26,7 @@ namespace TAO
     void
     Persistent_Lifespan_Strategy::imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL)
     {
-      if (TAO_debug_level > 0)
+/*      if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Notifying ImR of startup\n"));
 
       CORBA::Object_var imr = this->orb_core ().implrepo_service ();
@@ -135,13 +135,13 @@ namespace TAO
       ACE_CHECK;
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Successfully notified ImR of Startup\n"));
+        ACE_DEBUG ((LM_DEBUG, "Successfully notified ImR of Startup\n"));*/
     }
 
     void
     Persistent_Lifespan_Strategy::imr_notify_shutdown (void)
     {
-      if (TAO_debug_level > 0)
+/*      if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Notifing IMR of Shutdown\n"));
 
       char host_name[MAXHOSTNAMELEN + 1];
@@ -172,7 +172,7 @@ namespace TAO
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Server_i::init");
           // Ignore exceptions
         }
-      ACE_ENDTRY;
+      ACE_ENDTRY;*/
     }
   } /* namespace Portable_Server */
 } /* namespace TAO */

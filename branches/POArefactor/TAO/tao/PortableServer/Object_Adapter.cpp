@@ -34,12 +34,23 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Protocols_Hooks.h"
 
+#include "Policy_Creator_T.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_string.h"
 
+#include "ThreadPolicyFactory.h"
+#include "LifespanPolicyFactory.h"
+#include "IdAssignmentPolicyFactory.h"
+#include "IdUniquenessPolicyFactory.h"
+#include "ImplicitActivationPolicyFactory.h"
+#include "RequestProcessingPolicyFactory.h"
+#include "ServantRetentionPolicyFactory.h"
+
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
            Object_Adapter,
@@ -222,73 +233,96 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     new_transient_poa_map.release ();
 }
 
-#include "ThreadPolicyFactory.h"
-#include "ace/Dynamic_Service.h"
-
 void
 TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies
                                            ACE_ENV_ARG_DECL)
 {
   // Initialize the default policies.
-// @@Johnny, update this
 #if (TAO_HAS_MINIMUM_POA == 0)
 
-  // Thread policy.
-  TAO::Portable_Server::ThreadPolicyFactory *policy =
-    ACE_Dynamic_Service<TAO::Portable_Server::ThreadPolicyFactory>::instance (
-           "ThreadPolicyFactory");
-
-  if (policy == 0)
-    {
-      ACE_Service_Config::process_directive (
-        ::TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory);
-
-      policy =
-        ACE_Dynamic_Service<TAO::Portable_Server::ThreadPolicyFactory>::instance (
-           "ThreadPolicyFactory");
-    }
-
-  if (policy != 0)
-    {
-      CORBA::Policy_ptr thread_policy = policy->create(PortableServer::ORB_CTRL_MODEL);
-
-      policies.merge_policy (thread_policy ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }
+  CORBA::Policy_ptr thread_policy =
+          TAO::Portable_Server::Policy_Creator<
+            TAO::Portable_Server::ThreadPolicyFactory,
+            CORBA::Policy,
+            PortableServer::ThreadPolicyValue>::create (
+              "ThreadPolicyFactory",
+              TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory,
+              PortableServer::ORB_CTRL_MODEL);
+  policies.merge_policy (thread_policy ACE_ENV_ARG_PARAMETER);
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
-/*
+
   // Lifespan policy.
-  TAO_Lifespan_Policy lifespan_policy (PortableServer::TRANSIENT);
-  policies.merge_policy (&lifespan_policy ACE_ENV_ARG_PARAMETER);
+  CORBA::Policy_ptr lifespan_policy =
+          TAO::Portable_Server::Policy_Creator<
+            TAO::Portable_Server::LifespanPolicyFactory,
+            CORBA::Policy,
+            PortableServer::LifespanPolicyValue>::create (
+              "LifespanPolicyFactory",
+              TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactory,
+              PortableServer::TRANSIENT);
+  policies.merge_policy (lifespan_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // ID uniqueness policy.
-  TAO_Id_Uniqueness_Policy id_uniqueness_policy (PortableServer::UNIQUE_ID);
-  policies.merge_policy (&id_uniqueness_policy ACE_ENV_ARG_PARAMETER);
+  CORBA::Policy_ptr id_uniqueness_policy =
+          TAO::Portable_Server::Policy_Creator<
+            TAO::Portable_Server::IdUniquenessPolicyFactory,
+            CORBA::Policy,
+            PortableServer::IdUniquenessPolicyValue>::create (
+              "IdUniquenessPolicyFactory",
+              TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyFactory,
+              PortableServer::UNIQUE_ID);
+  policies.merge_policy (id_uniqueness_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // ID assignment policy.
-  TAO_Id_Assignment_Policy id_assignment_policy (PortableServer::SYSTEM_ID);
-  policies.merge_policy (&id_assignment_policy ACE_ENV_ARG_PARAMETER);
+  CORBA::Policy_ptr id_assignment_policy =
+          TAO::Portable_Server::Policy_Creator<
+            TAO::Portable_Server::IdAssignmentPolicyFactory,
+            CORBA::Policy,
+            PortableServer::IdAssignmentPolicyValue>::create (
+              "IdAssignmentPolicyFactory",
+              TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyFactory,
+              PortableServer::SYSTEM_ID);
+  policies.merge_policy (id_assignment_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
   // Implicit activation policy.
-  TAO_Implicit_Activation_Policy implicit_activation_policy
-                           (PortableServer::NO_IMPLICIT_ACTIVATION);
-  policies.merge_policy (&implicit_activation_policy ACE_ENV_ARG_PARAMETER);
+  CORBA::Policy_ptr implicit_activation_policy =
+          TAO::Portable_Server::Policy_Creator<
+            TAO::Portable_Server::ImplicitActivationPolicyFactory,
+            CORBA::Policy,
+            PortableServer::ImplicitActivationPolicyValue>::create (
+              "ImplicitActivationPolicyFactory",
+              TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactory,
+              PortableServer::NO_IMPLICIT_ACTIVATION);
+  policies.merge_policy (implicit_activation_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Servant retention policy.
-  TAO_Servant_Retention_Policy servant_retention_policy (PortableServer::RETAIN);
-  policies.merge_policy (&servant_retention_policy ACE_ENV_ARG_PARAMETER);
+  CORBA::Policy_ptr servant_retention_policy =
+          TAO::Portable_Server::Policy_Creator<
+            TAO::Portable_Server::ServantRetentionPolicyFactory,
+            CORBA::Policy,
+            PortableServer::ServantRetentionPolicyValue>::create (
+              "ServantRetentionPolicyFactory",
+              TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactory,
+              PortableServer::RETAIN);
+  policies.merge_policy (servant_retention_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Request processing policy.
-  TAO_Request_Processing_Policy request_processing_policy
-                            (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
-  policies.merge_policy (&request_processing_policy ACE_ENV_ARG_PARAMETER);
+  CORBA::Policy_ptr request_processing_policy =
+          TAO::Portable_Server::Policy_Creator<
+            TAO::Portable_Server::RequestProcessingPolicyFactory,
+            CORBA::Policy,
+            PortableServer::RequestProcessingPolicyValue>::create (
+              "RequestProcessingPolicyFactory",
+              TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyFactory,
+              PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
+  policies.merge_policy (request_processing_policy ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
