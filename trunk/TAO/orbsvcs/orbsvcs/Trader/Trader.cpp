@@ -936,9 +936,6 @@ template class TAO_Proxy<ACE_Null_Mutex, ACE_Null_Mutex>;
 template class ACE_Node<char*>;
 template class ACE_Unbounded_Queue<char*>;
 template class ACE_Unbounded_Queue_Iterator<char*>;
-template class ACE_Node<CosTrading::Admin::OctetSeq>;
-template class ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq>;
-template class ACE_Unbounded_Queue_Iterator<CosTrading::Admin::OctetSeq>;
 template class ACE_Node<CosTrading::Admin::OctetSeq *>;
 template class ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq *>;
 template class ACE_Unbounded_Queue_Iterator<CosTrading::Admin::OctetSeq *>;
@@ -1018,9 +1015,6 @@ template class ACE_Hash_Map_Iterator_Base<TAO_String_Hash_Key,TAO_Offer_Database
 #pragma instantiate ACE_Node<char*>
 #pragma instantiate ACE_Unbounded_Queue<char*>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<char*>
-#pragma instantiate ACE_Node<CosTrading::Admin::OctetSeq>
-#pragma instantiate ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq>
-#pragma instantiate ACE_Unbounded_Queue_Iterator<CosTrading::Admin::OctetSeq>
 #pragma instantiate ACE_Node<CosTrading::Admin::OctetSeq *>
 #pragma instantiate ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CosTrading::Admin::OctetSeq *>
