@@ -60,10 +60,14 @@ namespace FTRTEC
       ++argv; --argc;
     }
 
-    if (ami)
+    if (ami) {
       replication_strategy.reset(new AMI_Replication_Strategy(threads() > 1) );
-    else
+      TAO_FTRTEC::Log(3, "AMI replication strategy\n");
+    }
+    else {
       replication_strategy.reset(new Basic_Replication_Strategy(threads() > 1) );
+      TAO_FTRTEC::Log(3, "Basic replication strategy\n");
+    }
 
       ACE_TRY_NEW_ENV
       {

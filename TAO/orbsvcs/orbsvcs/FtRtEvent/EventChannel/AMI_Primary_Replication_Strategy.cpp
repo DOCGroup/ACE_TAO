@@ -47,7 +47,6 @@ int  AMI_Primary_Replication_Strategy::release (void)
 
 int AMI_Primary_Replication_Strategy::init()
 {
-  TAO_FTRTEC::Log(3, "AMI_Primary_Replication_Strategy::init\n");
   return RT_Task::activate(this);
 }
 
