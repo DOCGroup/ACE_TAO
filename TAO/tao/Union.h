@@ -26,25 +26,25 @@ class TAO_Export TAO_Base_Union
   // = DESCRIPTION
   //   This class provides a common interface for all IDL unions,
   //   hence the interpreted marshal engine can manipulate them in a
-  //   type safe manner.
+  //   type-safe manner.
 public:
   friend class TAO_Marshal_Union;
-  // We give access to TAO_Marshal_Union, this allows a safe implementation of
-  // the marshal engine.
+  // We give access to TAO_Marshal_Union, this allows a safe
+  // implementation of the marshal engine.
 
   virtual ~TAO_Base_Union (void);
   // destructor.
 
   virtual void *_discriminant (void) = 0;
-  // return pointer to the discriminant
+  // Return pointer to the discriminant.
 
   virtual void *_access (CORBA::Boolean flag) = 0;
-  // Provides access to the right data member at the right offset. If the flag
-  // is TRUE, we allocate the necessary storage. This will be required for the
-  // decoding side.
+  // Provides access to the right data member at the right offset. If
+  // the flag is TRUE, we allocate the necessary storage. This will be
+  // required for the decoding side.
 
   virtual void _reset (void) = 0;
-  // free existing storage
+  // Free existing storage.
 
 protected:
   TAO_Base_Union (void);
