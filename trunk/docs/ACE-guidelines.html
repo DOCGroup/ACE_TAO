@@ -215,6 +215,86 @@ bgcolor="#ffffff">
         <strong>No</strong> code can appear after the final
         <code>#endif</code> for the optimization to be effective and
         correct.<p>
+
+    <li><P>Files that contain parametric classes should follow this style:
+      <PRE>
+      #ifndef FOO_T_H
+      #define FOO_T_H
+
+      #include "ace/ACE.h"
+      #if !defined (ACE_LACKS_PRAGMA_ONCE)
+      # pragma once
+      #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+      // Put your template declarations here...
+
+      #if defined (__ACE_INLINE__)
+      #include "Foo_T.i"
+      #endif /* __ACE_INLINE__ */
+
+      #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+      #include "Foo_T.cpp"
+      #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+
+      #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
+      #pragma implementation "Foo_T.cpp"
+      #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+
+      #endif /* FOO_T_H */
+</PRE></P>
+      <P>
+      Notice that some compilers need to see the code of the template,
+      hence the <CODE>.cpp</CODE> file must be included from the
+      header file. 
+      </P>
+      <P>
+      To avoid multiple inclusions of the <CODE>.cpp</CODE> file it
+      should also be protected as in:
+      <pre>
+      #ifndef FOO_T_C
+      #define FOO_T_C
+
+      #include "Foo_T.h"
+      #if !defined (ACE_LACKS_PRAGMA_ONCE)
+      # pragma once
+      #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+      #if !defined (__ACE_INLINE__)
+      #include "ace/Active_Map_Manager_T.i"
+      #endif /* __ACE_INLINE__ */
+
+      ACE_RCSID(lib, Foo_T, "$<!-- -->Id$")
+
+      // put your template code here
+
+      #endif /* FOO_T_H */
+</pre></p>
+      <P>
+      Finally you may want to include the template header file from a
+      non-template header file (check
+      <CODE>$ACE_ROOT/ace/Synch.h</CODE>); in such a case the template
+      header should be included <strong>after</strong> the inline
+      function definitions, as in:</P>
+      <P><PRE>
+      #ifndef FOO_H
+      #define FOO_H
+
+      #include "ace/ACE.h"
+      #if !defined (ACE_LACKS_PRAGMA_ONCE)
+      # pragma once
+      #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+      // Put your non-template declarations here...
+
+      #if defined (__ACE_INLINE__)
+      #include "Foo.i"
+      #endif /* __ACE_INLINE__ */
+
+      #include "Foo_T.h"
+
+      #endif /* FOO_H */
+</PRE></P>
+    </li>
   </ul>
 
   <li><strong>C++ Syntax and Constructs</strong><p>
@@ -490,6 +570,13 @@ bgcolor="#ffffff">
 
     <li>Functions should always return -1 to indicate failure, and
         0 or greater to indicate success.<p>
+
+    <li><P>Separate the code of your templates from the code for
+        non-parametric classes: some compilers get confused when
+        template and non-template code is mixed in the same file.
+      </P>
+    </li>
+
   </ul>
 
   <li><strong>I/O</strong><p>

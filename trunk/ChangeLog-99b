@@ -1,3 +1,9 @@
+Wed Jan 27 10:16:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/ACE-guidelines.html: 
+	  Added an entry for the creation of files containing template
+	  code.
+
 Tue Jan 26 20:44:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/SOCK_IO.cpp (send,recv): Changed to use sendv/recvv to
