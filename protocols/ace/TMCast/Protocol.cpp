@@ -8,13 +8,13 @@ namespace TMCast
 {
   namespace Protocol
   {
-    namespace
-    {
-      char const* labels[] = {
-        "NONE", "BEGIN", "COMMIT", "ABORT", "COMMITED", "ABORTED"};
-    }
-
     /*
+      namespace
+      {
+      char const* labels[] = {
+      "NONE", "BEGIN", "COMMIT", "ABORT", "COMMITED", "ABORTED"};
+      }
+
       std::string
       tslabel (Protocol::TransactionStatus s)
       {
