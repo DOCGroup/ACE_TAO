@@ -24,10 +24,14 @@ struct Navigation {
 	// common part
 	double utilization;
 	double overhead;
-	unsigned long arrival_time;
-	unsigned long deadline_time;
-	unsigned long completion_time;	
-	unsigned long computation_time;
+	unsigned long arrival_time_secs;
+	unsigned long arrival_time_usecs;
+	unsigned long deadline_time_secs;
+	unsigned long deadline_time_usecs;
+	unsigned long completion_time_secs;	
+	unsigned long completion_time_usecs;	
+	unsigned long computation_time_secs;
+	unsigned long computation_time_usecs;
 };
 
 
@@ -47,8 +51,13 @@ struct Weapons {
 	// common part
 	double utilization;
 	double overhead;
-	unsigned long arrival_time;
-	unsigned long deadline_time;
-	unsigned long completion_time;		
-	unsigned long computation_time;
+	unsigned long arrival_time_secs;
+	unsigned long arrival_time_usecs;
+	unsigned long deadline_time_secs;
+	unsigned long deadline_time_usecs;
+	unsigned long completion_time_secs;		
+	unsigned long completion_time_usecs;		
+	unsigned long computation_time_secs;
+	unsigned long computation_time_usecs;
 }; 
+

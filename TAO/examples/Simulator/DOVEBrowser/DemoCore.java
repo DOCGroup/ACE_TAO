@@ -93,7 +93,10 @@ public class DemoCore extends Frame {
     visCompFactory_ = new VisCompFactory ();
     
     // in here the factory is needed
-    addConnection ("Cpu_UsageObservable");
+    //    addConnection ("NavigationObservable");
+    addConnection ("JitterObservable");
+    addConnection ("LatencyObservable");
+    addConnection ("DeadlinesObservable");
   }
   
   public boolean addConnection (String selected) {	
