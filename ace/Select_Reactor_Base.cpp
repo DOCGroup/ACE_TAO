@@ -607,7 +607,7 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
                              ACE_LIB_TEXT ("enqueue_head")),
                             -1);
 
-          ACE_Event_Handler *event_handler = buffer->eh_;
+          ACE_Event_Handler *event_handler = temp->eh_;
 
           int requires_reference_counting =
             event_handler->reference_counting_policy ().value () ==
