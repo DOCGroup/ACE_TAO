@@ -106,7 +106,9 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       else
         // return a NO_OP visitor
         return new be_visitor_decl (new_ctx);
+
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CI:
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
       // this is the starting point for generation of all CDR operators. If we
       // do not use compiled marshaling, we do not need these operators
@@ -166,6 +168,8 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
       return new be_visitor_interface_fwd_ch (new_ctx);
     case TAO_CodeGen::TAO_INTERFACE_FWD_CI:
       return new be_visitor_interface_fwd_ci (new_ctx);
+    case TAO_CodeGen::TAO_INTERFACE_FWD_CDR_OP_CI:
+      return new be_visitor_interface_fwd_cdr_op_ci (new_ctx);
 
     case TAO_CodeGen::TAO_STRUCT_CH:
       return new be_visitor_structure_ch (new_ctx);

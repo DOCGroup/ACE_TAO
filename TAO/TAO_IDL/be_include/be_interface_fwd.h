@@ -10,8 +10,8 @@
 //    be_interface.h
 //
 // = DESCRIPTION
-//    Extension of class AST_Interface_Fwd that provides additional means for C++
-//    mapping of an interface.
+//    Extension of class AST_Interface_Fwd that provides additional
+//    means for C++ mapping of an interface.
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.

@@ -1,3 +1,26 @@
+Thu Oct 29 16:25:50 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/Makefile: 
+	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ci.cpp: 
+	* TAO_IDL/be_include/be_visitor_interface_fwd/cdr_op_ci.h: 
+	  A forward declaration of an interface also generates the forward
+	  declaration of its << and >> operators.
+
+	* TAO_IDL/be_include/be_visitor_interface_fwd.h: 
+	* TAO_IDL/be_include/be_interface_fwd.h: 
+	* TAO_IDL/be_include/be_decl.h: 
+	* TAO_IDL/be_include/be_codegen.h: 
+	* TAO_IDL/be/be_visitor_root/root.cpp: 
+	* TAO_IDL/be/be_visitor_root/cdr_op.cpp: 
+	* TAO_IDL/be/be_visitor_module/module.cpp: 
+	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp: 
+	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp: 
+	* TAO_IDL/be/be_visitor_scope.cpp: 
+	* TAO_IDL/be/be_visitor_interface_fwd.cpp: 
+	* TAO_IDL/be/be_visitor_factory.cpp: 
+	* TAO_IDL/be/be_decl.cpp: 
+	  Some cleanup and added support for the new additions above.
+
 Thu Oct 29 07:49:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/DynUnion_i.cpp: added a bunch of .in () dereferences
