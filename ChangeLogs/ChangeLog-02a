@@ -1,3 +1,52 @@
+Tue Oct  3 14:25:09 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS.cpp:
+        * ace/OS.h:
+        * ace/OS.i:
+
+          Expanded TCHAR versions of some string macros to have
+          both _A and _W versions.  Moved many of these 
+          definitions around, since a lot of the same code was
+          being repeated.  The macros changed are:  
+          ACE_DIRECTORY_SEPARATOR_STR, ACE_DIRECTORY_SEPARATOR_CHAR,
+          ACE_PLATFORM, ACE_PLATFORM_EXE_SUFFIX, 
+          ACE_DEFAULT_LOCALNAME, ACE_DEFAULT_GLOBALNAME and
+          ACE_DEFAULT_MUTEX.  [Bug 674]
+
+          Split TCHAR versions of atoi, hostname, access,
+          open, and chdir into char and wchar_t versions.
+
+        * ace/Process_Mutex.cpp:
+        * ace/Process_Mutex.h:
+
+          Changed the ACE_Process_Mutex constructor to take a
+          char as a argument instead of TCHAR.  Also added a 
+          version that takes in wchar_t.
+
+        * ace/Synch.cpp:
+        * ace/Synch.h:
+
+          Changed the ACE_Auto_Event constructor to take a
+          char as a argument instead of TCHAR.  Just like above,
+          added a version that takes in wchar_t also.
+
+        * ace/ace_wchar.h:
+        * ace/ace_wchar.inl: (added)
+
+          Moved the method definitions from inlined in the 
+          class definition to the .inl file.
+
+          Added typedefs for ACE_OS_C/WString to the 
+          ACE_Wide_To_Ascii/Asci_To_Wide classes for legacy
+          support.  [Bug 675]
+
+          Added ACE_TEXT_WCHAR_TO_TCHAR macro that acts similar
+          to ACE_TEXT_CHAR_TO_WCHAR (except converts wchar_t's)
+
+          Added ACE_TEXT_WIDE macro, which is used to make literal
+          strings wide.  (We were just directly using L"" in most
+          cases)
+
 Tue Oct  3 13:27:13 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * ace/OS.i:

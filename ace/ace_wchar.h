@@ -9,7 +9,7 @@
 // = FILENAME
 //    unicode.h
 //
-// = AUTHORcd 
+// = AUTHOR
 //    Darrell Brunsch
 //
 // ============================================================================
@@ -46,7 +46,8 @@
 # if defined (ACE_USES_WCHAR)
 #   define ASYS_ONLY_WIDE_STRING(STRING) STRING
 # else /* ACE_USES_WCHAR */
-#   define ASYS_ONLY_WIDE_STRING(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
+#   define ASYS_ONLY_WIDE_STRING(STRING) \
+           ACE_Ascii_To_Wide (STRING).wchar_rep ()
 # endif /* ACE_USES_WCHAR */
 
 # define ACE_TEXT_STRING ACE_TString
@@ -98,16 +99,22 @@ using std::size_t;
 
 // Define the unicode/wchar related macros correctly
 
+# if !defined (ACE_TEXT_WIDE)
+#  define ACE_TEXT_WIDE(STRING) L##STRING
+# endif /* ACE_TEXT_WIDE */
+
 #if defined (ACE_USES_WCHAR)
 typedef wchar_t ACE_TCHAR;
-# define ACE_TEXT(STRING) L##STRING
+# define ACE_TEXT(STRING) ACE_TEXT_WIDE (STRING)
 # define ACE_TEXT_ALWAYS_CHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
+# define ACE_TEXT_WCHAR_TO_TCHAR(STRING) STRING
 #else /* ACE_USES_WCHAR */
 typedef char ACE_TCHAR;
 # define ACE_TEXT(STRING) STRING
 # define ACE_TEXT_ALWAYS_CHAR(STRING) STRING
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) STRING
+# define ACE_TEXT_WCHAR_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 #endif /* ACE_USES_WCHAR */
 
 #if defined ACE_HAS_WCHAR
@@ -121,48 +128,17 @@ class ACE_Wide_To_Ascii
   //     wchar* to char* strings.  It is not intended for general
   //     purpose use.
 public:
-  ACE_Wide_To_Ascii (const wchar_t *s) : s_ (ACE_Wide_To_Ascii::convert (s)) {}
+  ACE_Wide_To_Ascii (const wchar_t *s);
   // Ctor must take a wchar string.
 
-  ~ACE_Wide_To_Ascii (void) { delete [] this->s_; }
+  ~ACE_Wide_To_Ascii (void);
   // Dtor will free up the memory.
 
-  char *char_rep (void) { return this->s_; }
+  char *char_rep (void);
   // Return the internal char* representation.
 
-  static char *convert (const wchar_t *wstr)
+  static char *convert (const wchar_t *wstr);
   // Converts an wchar_t string to ascii and returns a new string.
-  {
-# if defined (ACE_WIN32)
-    size_t len = ::WideCharToMultiByte (CP_OEMCP, 0, wstr, -1, 
-                                        NULL, 0, NULL, NULL);
-# elif defined (VXWORKS)
-    // @@ we should use a different macro than VXWORKS here, ACE_LACKS_WCSLEN?
-
-    const wchar_t *wtemp = wstr;
-    while (wtemp != 0)
-      ++wtemp;
-
-    size_t len = wtemp - wstr + 1;
-# else
-    size_t len = ::wcslen (wstr) + 1;
-# endif
-
-    char *str = new char[len];
-
-# if defined (ACE_WIN32)
-    ::WideCharToMultiByte (CP_OEMCP, 0, wstr, -1, str, len, NULL, NULL);
-# elif defined (VXWORKS)
-    ::wcstombs (str, wstr, len);
-# else /* ACE_WIN32 */
-    for (size_t i = 0; i < len; i++)
-      {
-        wchar_t *t = ACE_const_cast (wchar_t *, wstr);
-        str[i] = ACE_static_cast (char, *(t + i));
-      }
-# endif /* ACE_WIN32 */
-    return str;
-  }
 
 private:
   char *s_;
@@ -184,39 +160,18 @@ class ACE_Ascii_To_Wide
   //     char* to wchar* strings.  It is not intended for general
   //     purpose use.
 public:
-  ACE_Ascii_To_Wide (const char *s) : s_ (ACE_Ascii_To_Wide::convert (s)) {}
+  ACE_Ascii_To_Wide (const char *s);
   // Ctor must take a wchar string.
 
-  ~ACE_Ascii_To_Wide (void) { delete [] this->s_; }
+  ~ACE_Ascii_To_Wide (void);
   // Dtor will free up the memory.
 
-  wchar_t *wchar_rep (void) { return this->s_; }
+  wchar_t *wchar_rep (void);
   // Return the internal wchar* representation.
 
-  static wchar_t *convert (const char *str)
+  static wchar_t *convert (const char *str);
   // Converts an char string to unicode/wide and returns a new string.
-  {
-# if defined (ACE_WIN32)
-    size_t len = ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, NULL, 0);
-# else /* ACE_WIN32 */
-    size_t len = strlen (str) + 1;
-# endif /* ACE_WIN32 */
-    
-    wchar_t *wstr = new wchar_t[len];
 
-# if defined (ACE_WIN32)
-    ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, wstr, len);
-# elif defined (VXWORKS)
-    ::mbstowcs (wstr, str, len);
-# else /* ACE_WIN32 */
-    for (size_t i = 0; i < len; i++)
-      {
-        char *t = ACE_const_cast (char *, str);
-        wstr[i] = ACE_static_cast (wchar_t, *(t + i));
-      }
-# endif /* ACE_WIN32 */
-    return wstr;
-  }
 private:
   wchar_t *s_;
   // Internal pointer to the converted string.
@@ -226,6 +181,11 @@ private:
   ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &);
   // Disallow these operation.
 };
+
+#if defined (ACE_LEGACY_MODE)
+typedef ACE_Ascii_To_Wide ACE_OS_CString;
+typedef ACE_Wide_To_Ascii ACE_OS_WString;
+#endif /* ACE_LEGACY_MODE */
 
 #endif /* ACE_HAS_WCHAR */
 
@@ -303,5 +263,7 @@ private:
 #define ACE_TEXT_StartService             ::StartServiceA
 #endif /* ACE_USES_WCHAR */
 #endif /* ACE_WIN32 */
+
+#include "ace/ace_wchar.inl"
 
 #endif /* ACE_WCHAR_H */

@@ -33,11 +33,11 @@ ACE_Process_Mutex::unique_name (void)
 }
 #endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
 
-ACE_Process_Mutex::ACE_Process_Mutex (const ACE_TCHAR *name, void *arg)
+ACE_Process_Mutex::ACE_Process_Mutex (const char *name, void *arg)
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
-  : lock_ (USYNC_PROCESS, name, (ACE_mutexattr_t *) arg)
+  : lock_ (USYNC_PROCESS, ACE_TEXT_CHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
 #else
-  : lock_ (name ? name : ACE_Process_Mutex::unique_name ())
+  : lock_ (name ? ACE_TEXT_CHAR_TO_TCHAR (name) : ACE_Process_Mutex::unique_name ())
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
 {
 #if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
@@ -45,6 +45,19 @@ ACE_Process_Mutex::ACE_Process_Mutex (const ACE_TCHAR *name, void *arg)
 #endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name, void *arg)
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
+  : lock_ (USYNC_PROCESS, ACE_TEXT_WCHAR_TO_TCHAR (name), (ACE_mutexattr_t *) arg)
+#else
+  : lock_ (name ? ACE_TEXT_WCHAR_TO_TCHAR (name): ACE_Process_Mutex::unique_name ())
+#endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM || ACE_PSOS */
+{
+#if !defined (ACE_WIN32) && !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_PSOS)
+  ACE_UNUSED_ARG (arg);
+#endif /* !ACE_WIN32 && !ACE_HAS_POSIX_SEM && !ACE_PSOS */
+}
+#endif /* ACE_HAS_WCHAR */
 ACE_Process_Mutex::~ACE_Process_Mutex (void)
 {
 }
