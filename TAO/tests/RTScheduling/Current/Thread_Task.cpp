@@ -148,7 +148,7 @@ Thread_Task::svc (void)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "%s\n",
-                        CORBA::string_dup ((*segment_name_list) [i])));
+                        (*segment_name_list)[i].in ()));
           }
       }
 
