@@ -12,7 +12,8 @@ Client_i::Client_i (void)
   : ior_ (0),
     loop_count_ (10),
     shutdown_ (0),
-    server_ ()
+    server_ (),
+    use_naming_service_ (1)
 {
 }
 
@@ -79,7 +80,7 @@ Client_i::parse_args (void)
         break;
 
       case 's': // don't use the naming service
-	this->use_naming_srv_ = 0;
+	this->use_naming_service_ = 0;
 	break;
 
       case 'x':
@@ -170,7 +171,7 @@ Client_i::via_naming_service(void)
   TAO_TRY
    {
       // Initialization of the naming service.
-      if (naming_srvs_client_.init (orb_.in (), argc_, argv_) != 0)
+      if (naming_services_client_.init (orb_.in (), argc_, argv_) != 0)
       ACE_ERROR_RETURN ((LM_ERROR,
 			 " (%P|%t) Unable to initialize "
 			 "the TAO_Naming_Client. \n"),
@@ -180,7 +181,7 @@ Client_i::via_naming_service(void)
       echo_ref_name[0].id = CORBA::string_dup ("Echo");
 
       CORBA::Object_var echo_obj =
-	this->naming_srvs_client_->resolve (echo_ref_name,
+	this->naming_services_client_->resolve (echo_ref_name,
 					    TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
@@ -224,7 +225,7 @@ Client_i::init (int argc, char **argv)
 
       TAO_debug_level = 1; //****
 
-       if (this->use_naming_srv_)
+       if (this->use_naming_service_)
         return via_naming_service ();
 
       if (this->ior_ == 0)

@@ -1,30 +1,35 @@
+1998-09-16  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Simple/echo/Client_i.cpp:
+	changed the names of the variables needed for the naming_service.
+
 Wed Sep 16 20:39:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: 
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
 	  Fixed template instantiation problem on IRIX, thanks to
 	  Margherita Vittone Wiersma <vittone@fndaub.fnal.gov> for
 	  reminding me of this.
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h: 
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
 	  Removed TAO_Register<>::find_property() it wasn't defined or
 	  used in any place and it caused problems on IRIX.
 
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp: 
+	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
 	  Use the new ACE_OS::rand_r() interface.
 
-	* orbsvcs/orbsvcs/Sched/Scheduler.cpp: 
-	* orbsvcs/orbsvcs/Sched/DynSched.cpp: 
+	* orbsvcs/orbsvcs/Sched/Scheduler.cpp:
+	* orbsvcs/orbsvcs/Sched/DynSched.cpp:
 	  Changed some debug messages so it would be easier to recognize
 	  the source.
 
 Wed Sep 16 20:30:53 1998  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	 * examples/Simple/bank/run_test.pl: Added this script 
+	 * examples/Simple/bank/run_test.pl: Added this script
 	  with proper sleep time between server and client.
 
 1998-09-16  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/Simple/echo/run_test.pl: 
+	* examples/Simple/echo/run_test.pl:
 	modified the script so that it works for the test
 	example with Naming service.
 
@@ -48,22 +53,22 @@ Wed Sep 16 12:21:20 1998  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
 	* TAO/orbsvcs/tests/Simple_Naming/client.cpp
 	  Updated Tree_Test to provide output in case a test is successful.
-	
+
 Wed Sep 16 09:14:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Connect.cpp: 
+	* tao/Connect.cpp:
 	  Fixed several portability problems, some ACE_thread_t variables
 	  were initialized to 0 instead of ACE_OS::NULL_thread and == was
 	  used to compare them, instead of ACE_OS::thr_equal.
 
-	* tao/CDR.cpp: 
+	* tao/CDR.cpp:
 	  A faster implementation of read_array() for the case were
 	  byteswapping is required. Thanks to "Anders W. Tell"
 	  <anderst@toolsmiths.se> for this patch.
 
 Tue Sep 15 21:37:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Object.cpp: 
+	* tao/IIOP_Object.cpp:
 	  Fixed Sun/CC warning, a local variable named <host> was hiding
 	  the class field with the same name in IIOP::Profile::set()
 

@@ -79,11 +79,11 @@ private:
   CORBA::Environment env_;
   // Environment variable.
 
-  TAO_Naming_Client naming_srvs_client_;
+  TAO_Naming_Client naming_services_client_;
   // An instance of the name client used for resolving the factory
   // objects.
 
-  int use_naming_srv_;
+  int use_naming_service_;
   // This variable denotes whether the naming service
   // is used or not.
 
