@@ -3,7 +3,7 @@ Sun Apr  7 04:22:19 2002  Krishnakumar B  <kitty@cs.wustl.edu>
         * include/makeinclude/wrapper_macros.GNU(templates):
 
           Added option templates which can be used to specify the
-          instantiation policy desired. Allowable values are explicit,
+          instantiation policy desired. Allowed values are explicit,
           automatic and used. Added flag TEMPLATE_FLAGS which should be
           set to the proper value in each of the platform config files.
 
