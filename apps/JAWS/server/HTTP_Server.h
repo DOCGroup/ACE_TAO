@@ -103,9 +103,6 @@ public:
   virtual int close (u_long);
   virtual int svc (void);
 
-  static void * DEBUG_TPR (void *task);
-  static void * REAPER (void *task);
-
 private:
   ACE_HANDLE handle_;
 };
