@@ -1,3 +1,10 @@
+Sun Apr  6 18:03:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_helper.cpp:
+
+	  Added ISIS info to Wash U and Irvine info displayed at the top
+	  of each generated IDL file.
+
 Sun Apr  6 17:37:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tests/Portable_Interceptors/AMI/client.cpp:
