@@ -13,6 +13,7 @@
 #include "tao/Messaging/Messaging.h"
 
 #include "ace/ARGV.h"
+#include "ace/OS_NS_sys_time.h"
 
 static const int DEFAULT_START_LIMIT = 1;
 static const int IS_ALIVE_RETRY_COUNT = 60;

@@ -32,6 +32,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
+#include "ace/SString.h"
 
 class TAO_Svc_Utils_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
