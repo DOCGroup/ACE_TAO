@@ -1,3 +1,7 @@
+Wed Mar 18 20:50:09 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* TAO version 0.1.8, released Wed Mar 18 20:50:09 1998.
+
 Wed Mar 18 20:36:46 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/CDR/basic_types.cpp: Rearranged this test file a bit to
