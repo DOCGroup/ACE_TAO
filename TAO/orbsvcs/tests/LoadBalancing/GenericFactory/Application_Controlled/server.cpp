@@ -1,7 +1,7 @@
 #include "LB_server.h"
 #include "Basic.h"
 
-ACE_RCSID (GenericFactory,
+ACE_RCSID (Application_Controlled,
            server,
            "$Id$")
 
