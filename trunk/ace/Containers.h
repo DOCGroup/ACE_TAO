@@ -507,6 +507,7 @@ protected:
   // Allocation Strategy of the queue.
 };
 
+#if defined (NANBOR_DISABLED_EXP_CODES)
 template <class T>
 class ACE_Unbounded_Stack_Iterator
   // = TITLE
@@ -543,7 +544,6 @@ private:
   // Pointer to the Stack we're iterating over.
 };
 
-#if defined (NANBOR_DISABLED_EXP_CODES)
 template <class T>
 class ACE_Double_Linked_List;
 
