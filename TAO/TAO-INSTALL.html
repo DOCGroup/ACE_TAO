@@ -151,6 +151,24 @@ bundle as a single piece instead of trying to mix and match things up.<P>
 
 </OL>
 
+<h3><strong><a name="sun_g++_notes">Note About g++ On
+Solaris for x86 Target</a></strong></h3> 
+
+If you install g++/gcc from <a href="www.blastwave.org"> blastwave
+</a> then this note is applicable for you. If you are in the habit of
+building g++/gcc from sources directly, please feel free to skip this
+section. 
+
+The distribution from <a href="www.blastwave.org">  blastwave</a> has,
+as we believe, a bug in it. This bug manifests as compilation errors
+when you try to build the orbsvcs when debugging is enabled. Please
+remember that debugging is enabled in your platform_macros.GNU if you
+haven't specifically disabled it. The easiest way to address this
+issue is to set debug=0 in platform_macros.GNu file or build a g++
+compiler for your target platform. A bug has been registered with
+blastwave. If you have more questions please feel to contact <a
+mailto="bala at dre.vanderbilt.edu"> Bala Natarajan </a>. 
+
 <h2><strong><a name="makenotes">A Note On Make</a></strong></h2>
 
 Since TAO is built atop ACE, TAO re-uses ACE's Makefile structure as
