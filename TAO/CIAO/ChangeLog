@@ -1,6 +1,6 @@
 Tue Mar 04 20:40:21 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/handcrafted/Display/RateGen/RateGen.idl: Fixed a typo.
+	* examples/handcrafted/Display/RateGen/RateGenE.idl: Fixed a typo.
 	  Thanks to Jeff Gray <gray@cis.uab.edu> for pointing it out.
 
 Thu Feb 27 22:15:48 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
