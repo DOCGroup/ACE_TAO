@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="POA DSI Server" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 6.00
+# Microsoft Developer Studio Generated Build File, Format Version 5.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
@@ -168,7 +168,7 @@ InputPath=.\Database.idl
 InputName=Database
 
 BuildCmds= \
-	..\..\..\tao_idl\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
