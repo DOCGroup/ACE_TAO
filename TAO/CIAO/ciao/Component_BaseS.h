@@ -19,6 +19,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:433
+
 #ifndef _TAO_IDL_COMPONENT_BASES_H_
 #define _TAO_IDL_COMPONENT_BASES_H_
 
@@ -50,14 +54,20 @@
 #pragma option push -w-rvl -w-rch -w-ccc -w-inl
 #endif /* __BORLANDC__ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:46
+
 TAO_NAMESPACE  POA_Components
 {
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class Navigation;
   typedef Navigation *Navigation_ptr;
   // Forward Classes Declaration
   class _TAO_Navigation_ThruPOA_Proxy_Impl;
   class _TAO_Navigation_Strategized_Proxy_Broker;
-  
+
   class  Navigation
     : public virtual PortableServer::ServantBase
   {
@@ -118,6 +128,9 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual CORBA::Object_ptr provide_facet (
         const char * name
       )
@@ -125,27 +138,31 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       )) = 0;
-    
-        static void provide_facet_skel (
+
+    static void provide_facet_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::FacetDescriptions * get_all_facets (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_all_facets_skel (
+
+    static void get_all_facets_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::FacetDescriptions * get_named_facets (
         const Components::NameList & names
@@ -154,13 +171,15 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       )) = 0;
-    
-        static void get_named_facets_skel (
+
+    static void get_named_facets_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual CORBA::Boolean same_component (
         CORBA::Object_ptr object_ref
@@ -168,8 +187,8 @@ TAO_NAMESPACE  POA_Components
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void same_component_skel (
+
+    static void same_component_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
@@ -179,23 +198,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_Navigation_Strategized_Proxy_Broker : public virtual ::Components::_TAO_Navigation_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_Navigation_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_Navigation_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_Navigation_Proxy_Impl &select_proxy (
       ::Components::Navigation *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -203,41 +225,44 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_Navigation_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_Navigation_Strategized_Proxy_Broker *the_TAO_Navigation_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_Navigation_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_Navigation_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_Navigation_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
     _TAO_Navigation_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_Navigation_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual CORBA::Object_ptr provide_facet (
         CORBA_Object *_collocated_tao_target_,
         const char * name
@@ -246,14 +271,14 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       ));
-    
+
     virtual ::Components::FacetDescriptions * get_all_facets (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual ::Components::FacetDescriptions * get_named_facets (
         CORBA_Object *_collocated_tao_target_,
         const Components::NameList & names
@@ -262,7 +287,7 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       ));
-    
+
     virtual CORBA::Boolean same_component (
         CORBA_Object *_collocated_tao_target_,
         CORBA::Object_ptr object_ref
@@ -270,21 +295,24 @@ TAO_NAMESPACE  POA_Components
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class Receptacles;
   typedef Receptacles *Receptacles_ptr;
   // Forward Classes Declaration
   class _TAO_Receptacles_ThruPOA_Proxy_Impl;
   class _TAO_Receptacles_Strategized_Proxy_Broker;
-  
+
   class  Receptacles
     : public virtual PortableServer::ServantBase
   {
@@ -345,6 +373,9 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual ::Components::Cookie * connect (
         const char * name,
         CORBA::Object_ptr connection
@@ -356,13 +387,15 @@ TAO_NAMESPACE  POA_Components
         , Components::AlreadyConnected
         , Components::ExceededConnectionLimit
       )) = 0;
-    
-        static void connect_skel (
+
+    static void connect_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual void disconnect (
         const char * name,
@@ -375,13 +408,15 @@ TAO_NAMESPACE  POA_Components
         , Components::CookieRequired
         , Components::NoConnection
       )) = 0;
-    
-        static void disconnect_skel (
+
+    static void disconnect_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::ConnectionDescriptions * get_connections (
         const char * name
@@ -390,27 +425,31 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       )) = 0;
-    
-        static void get_connections_skel (
+
+    static void get_connections_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::ReceptacleDescriptions * get_all_receptacles (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_all_receptacles_skel (
+
+    static void get_all_receptacles_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::ReceptacleDescriptions * get_named_receptacles (
         const Components::NameList & names
@@ -419,8 +458,8 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       )) = 0;
-    
-        static void get_named_receptacles_skel (
+
+    static void get_named_receptacles_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
@@ -430,23 +469,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_Receptacles_Strategized_Proxy_Broker : public virtual ::Components::_TAO_Receptacles_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_Receptacles_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_Receptacles_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_Receptacles_Proxy_Impl &select_proxy (
       ::Components::Receptacles *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -454,41 +496,44 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_Receptacles_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_Receptacles_Strategized_Proxy_Broker *the_TAO_Receptacles_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_Receptacles_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_Receptacles_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_Receptacles_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
     _TAO_Receptacles_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_Receptacles_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual ::Components::Cookie * connect (
         CORBA_Object *_collocated_tao_target_,
         const char * name,
@@ -501,7 +546,7 @@ TAO_NAMESPACE  POA_Components
         , Components::AlreadyConnected
         , Components::ExceededConnectionLimit
       ));
-    
+
     virtual void disconnect (
         CORBA_Object *_collocated_tao_target_,
         const char * name,
@@ -514,7 +559,7 @@ TAO_NAMESPACE  POA_Components
         , Components::CookieRequired
         , Components::NoConnection
       ));
-    
+
     virtual ::Components::ConnectionDescriptions * get_connections (
         CORBA_Object *_collocated_tao_target_,
         const char * name
@@ -523,14 +568,14 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       ));
-    
+
     virtual ::Components::ReceptacleDescriptions * get_all_receptacles (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual ::Components::ReceptacleDescriptions * get_named_receptacles (
         CORBA_Object *_collocated_tao_target_,
         const Components::NameList & names
@@ -539,21 +584,24 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class EventConsumerBase;
   typedef EventConsumerBase *EventConsumerBase_ptr;
   // Forward Classes Declaration
   class _TAO_EventConsumerBase_ThruPOA_Proxy_Impl;
   class _TAO_EventConsumerBase_Strategized_Proxy_Broker;
-  
+
   class  EventConsumerBase
     : public virtual PortableServer::ServantBase
   {
@@ -614,6 +662,9 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual void push_event (
         Components::EventBase * evt
       )
@@ -621,8 +672,8 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::BadEventType
       )) = 0;
-    
-        static void push_event_skel (
+
+    static void push_event_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
@@ -632,23 +683,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_EventConsumerBase_Strategized_Proxy_Broker : public virtual ::Components::_TAO_EventConsumerBase_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_EventConsumerBase_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_EventConsumerBase_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_EventConsumerBase_Proxy_Impl &select_proxy (
       ::Components::EventConsumerBase *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -656,41 +710,44 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_EventConsumerBase_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_EventConsumerBase_Strategized_Proxy_Broker *the_TAO_EventConsumerBase_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_EventConsumerBase_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_EventConsumerBase_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_EventConsumerBase_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
     _TAO_EventConsumerBase_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_EventConsumerBase_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual void push_event (
         CORBA_Object *_collocated_tao_target_,
         Components::EventBase * evt
@@ -699,21 +756,24 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::BadEventType
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class Events;
   typedef Events *Events_ptr;
   // Forward Classes Declaration
   class _TAO_Events_ThruPOA_Proxy_Impl;
   class _TAO_Events_Strategized_Proxy_Broker;
-  
+
   class  Events
     : public virtual PortableServer::ServantBase
   {
@@ -774,6 +834,9 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual ::Components::EventConsumerBase_ptr get_consumer (
         const char * sink_name
       )
@@ -781,13 +844,15 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       )) = 0;
-    
-        static void get_consumer_skel (
+
+    static void get_consumer_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::Cookie * subscribe (
         const char * publisher_name,
@@ -799,13 +864,15 @@ TAO_NAMESPACE  POA_Components
         , Components::AlreadyConnected
         , Components::InvalidConnection
       )) = 0;
-    
-        static void subscribe_skel (
+
+    static void subscribe_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual void unsubscribe (
         const char * publisher_name,
@@ -816,13 +883,15 @@ TAO_NAMESPACE  POA_Components
         , Components::InvalidName
         , Components::InvalidConnection
       )) = 0;
-    
-        static void unsubscribe_skel (
+
+    static void unsubscribe_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual void connect_consumer (
         const char * emitter_name,
@@ -834,13 +903,15 @@ TAO_NAMESPACE  POA_Components
         , Components::AlreadyConnected
         , Components::InvalidConnection
       )) = 0;
-    
-        static void connect_consumer_skel (
+
+    static void connect_consumer_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::EventConsumerBase_ptr disconnect_consumer (
         const char * source_name
@@ -850,27 +921,31 @@ TAO_NAMESPACE  POA_Components
         , Components::InvalidName
         , Components::NoConnection
       )) = 0;
-    
-        static void disconnect_consumer_skel (
+
+    static void disconnect_consumer_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::ConsumerDescriptions * get_all_consumers (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_all_consumers_skel (
+
+    static void get_all_consumers_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::ConsumerDescriptions * get_named_consumers (
         const Components::NameList & names
@@ -879,27 +954,31 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       )) = 0;
-    
-        static void get_named_consumers_skel (
+
+    static void get_named_consumers_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::EmitterDescriptions * get_all_emitters (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_all_emitters_skel (
+
+    static void get_all_emitters_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::EmitterDescriptions * get_named_emitters (
         const Components::NameList & names
@@ -908,27 +987,31 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       )) = 0;
-    
-        static void get_named_emitters_skel (
+
+    static void get_named_emitters_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::PublisherDescriptions * get_all_publishers (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_all_publishers_skel (
+
+    static void get_all_publishers_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::PublisherDescriptions * get_named_publishers (
         const Components::NameList & names
@@ -937,8 +1020,8 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       )) = 0;
-    
-        static void get_named_publishers_skel (
+
+    static void get_named_publishers_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
@@ -948,23 +1031,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_Events_Strategized_Proxy_Broker : public virtual ::Components::_TAO_Events_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_Events_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_Events_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_Events_Proxy_Impl &select_proxy (
       ::Components::Events *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -972,41 +1058,44 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_Events_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_Events_Strategized_Proxy_Broker *the_TAO_Events_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_Events_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_Events_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_Events_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
     _TAO_Events_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_Events_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual ::Components::EventConsumerBase_ptr get_consumer (
         CORBA_Object *_collocated_tao_target_,
         const char * sink_name
@@ -1015,7 +1104,7 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       ));
-    
+
     virtual ::Components::Cookie * subscribe (
         CORBA_Object *_collocated_tao_target_,
         const char * publisher_name,
@@ -1027,7 +1116,7 @@ TAO_NAMESPACE  POA_Components
         , Components::AlreadyConnected
         , Components::InvalidConnection
       ));
-    
+
     virtual void unsubscribe (
         CORBA_Object *_collocated_tao_target_,
         const char * publisher_name,
@@ -1038,7 +1127,7 @@ TAO_NAMESPACE  POA_Components
         , Components::InvalidName
         , Components::InvalidConnection
       ));
-    
+
     virtual void connect_consumer (
         CORBA_Object *_collocated_tao_target_,
         const char * emitter_name,
@@ -1050,7 +1139,7 @@ TAO_NAMESPACE  POA_Components
         , Components::AlreadyConnected
         , Components::InvalidConnection
       ));
-    
+
     virtual ::Components::EventConsumerBase_ptr disconnect_consumer (
         CORBA_Object *_collocated_tao_target_,
         const char * source_name
@@ -1060,14 +1149,14 @@ TAO_NAMESPACE  POA_Components
         , Components::InvalidName
         , Components::NoConnection
       ));
-    
+
     virtual ::Components::ConsumerDescriptions * get_all_consumers (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual ::Components::ConsumerDescriptions * get_named_consumers (
         CORBA_Object *_collocated_tao_target_,
         const Components::NameList & names
@@ -1076,14 +1165,14 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       ));
-    
+
     virtual ::Components::EmitterDescriptions * get_all_emitters (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual ::Components::EmitterDescriptions * get_named_emitters (
         CORBA_Object *_collocated_tao_target_,
         const Components::NameList & names
@@ -1092,14 +1181,14 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       ));
-    
+
     virtual ::Components::PublisherDescriptions * get_all_publishers (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual ::Components::PublisherDescriptions * get_named_publishers (
         CORBA_Object *_collocated_tao_target_,
         const Components::NameList & names
@@ -1108,21 +1197,24 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidName
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class CCMHome;
   typedef CCMHome *CCMHome_ptr;
   // Forward Classes Declaration
   class _TAO_CCMHome_ThruPOA_Proxy_Impl;
   class _TAO_CCMHome_Strategized_Proxy_Broker;
-  
+
   class  CCMHome
     : public virtual PortableServer::ServantBase
   {
@@ -1183,33 +1275,40 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual ::CORBA::IRObject_ptr get_component_def (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_component_def_skel (
+
+    static void get_component_def_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::CORBA::IRObject_ptr get_home_def (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_home_def_skel (
+
+    static void get_home_def_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual void remove_component (
         Components::CCMObject_ptr comp
@@ -1218,8 +1317,8 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::RemoveFailure
       )) = 0;
-    
-        static void remove_component_skel (
+
+    static void remove_component_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
@@ -1229,23 +1328,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_CCMHome_Strategized_Proxy_Broker : public virtual ::Components::_TAO_CCMHome_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_CCMHome_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_CCMHome_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_CCMHome_Proxy_Impl &select_proxy (
       ::Components::CCMHome *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -1253,55 +1355,58 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_CCMHome_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_CCMHome_Strategized_Proxy_Broker *the_TAO_CCMHome_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_CCMHome_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_CCMHome_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_CCMHome_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
     _TAO_CCMHome_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_CCMHome_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual ::CORBA::IRObject_ptr get_component_def (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual ::CORBA::IRObject_ptr get_home_def (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual void remove_component (
         CORBA_Object *_collocated_tao_target_,
         Components::CCMObject_ptr comp
@@ -1310,21 +1415,24 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::RemoveFailure
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class KeylessCCMHome;
   typedef KeylessCCMHome *KeylessCCMHome_ptr;
   // Forward Classes Declaration
   class _TAO_KeylessCCMHome_ThruPOA_Proxy_Impl;
   class _TAO_KeylessCCMHome_Strategized_Proxy_Broker;
-  
+
   class  KeylessCCMHome
     : public virtual PortableServer::ServantBase
   {
@@ -1385,15 +1493,18 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual ::Components::CCMObject_ptr create_component (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , Components::CreateFailure
       )) = 0;
-    
-        static void create_component_skel (
+
+    static void create_component_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
@@ -1403,23 +1514,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_KeylessCCMHome_Strategized_Proxy_Broker : public virtual ::Components::_TAO_KeylessCCMHome_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_KeylessCCMHome_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_KeylessCCMHome_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_KeylessCCMHome_Proxy_Impl &select_proxy (
       ::Components::KeylessCCMHome *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -1427,41 +1541,44 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_KeylessCCMHome_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_KeylessCCMHome_Strategized_Proxy_Broker *the_TAO_KeylessCCMHome_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_KeylessCCMHome_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_KeylessCCMHome_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_KeylessCCMHome_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
     _TAO_KeylessCCMHome_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_KeylessCCMHome_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual ::Components::CCMObject_ptr create_component (
         CORBA_Object *_collocated_tao_target_
       )
@@ -1469,21 +1586,24 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::CreateFailure
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class HomeFinder;
   typedef HomeFinder *HomeFinder_ptr;
   // Forward Classes Declaration
   class _TAO_HomeFinder_ThruPOA_Proxy_Impl;
   class _TAO_HomeFinder_Strategized_Proxy_Broker;
-  
+
   class  HomeFinder
     : public virtual PortableServer::ServantBase
   {
@@ -1544,6 +1664,9 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual ::Components::CCMHome_ptr find_home_by_component_type (
         const char * comp_repid
       )
@@ -1551,13 +1674,15 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::HomeNotFound
       )) = 0;
-    
-        static void find_home_by_component_type_skel (
+
+    static void find_home_by_component_type_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::CCMHome_ptr find_home_by_home_type (
         const char * home_repid
@@ -1566,13 +1691,15 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::HomeNotFound
       )) = 0;
-    
-        static void find_home_by_home_type_skel (
+
+    static void find_home_by_home_type_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::CCMHome_ptr find_home_by_name (
         const char * home_name
@@ -1581,8 +1708,8 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::HomeNotFound
       )) = 0;
-    
-        static void find_home_by_name_skel (
+
+    static void find_home_by_name_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
@@ -1592,23 +1719,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_HomeFinder_Strategized_Proxy_Broker : public virtual ::Components::_TAO_HomeFinder_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_HomeFinder_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_HomeFinder_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_HomeFinder_Proxy_Impl &select_proxy (
       ::Components::HomeFinder *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -1616,41 +1746,44 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_HomeFinder_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_HomeFinder_Strategized_Proxy_Broker *the_TAO_HomeFinder_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_HomeFinder_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_HomeFinder_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_HomeFinder_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
     _TAO_HomeFinder_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_HomeFinder_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual ::Components::CCMHome_ptr find_home_by_component_type (
         CORBA_Object *_collocated_tao_target_,
         const char * comp_repid
@@ -1659,7 +1792,7 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::HomeNotFound
       ));
-    
+
     virtual ::Components::CCMHome_ptr find_home_by_home_type (
         CORBA_Object *_collocated_tao_target_,
         const char * home_repid
@@ -1668,7 +1801,7 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::HomeNotFound
       ));
-    
+
     virtual ::Components::CCMHome_ptr find_home_by_name (
         CORBA_Object *_collocated_tao_target_,
         const char * home_name
@@ -1677,21 +1810,24 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::HomeNotFound
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class Configurator;
   typedef Configurator *Configurator_ptr;
   // Forward Classes Declaration
   class _TAO_Configurator_ThruPOA_Proxy_Impl;
   class _TAO_Configurator_Strategized_Proxy_Broker;
-  
+
   class  Configurator
     : public virtual PortableServer::ServantBase
   {
@@ -1752,6 +1888,9 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual void configure (
         Components::CCMObject_ptr comp
       )
@@ -1759,8 +1898,8 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::WrongComponentType
       )) = 0;
-    
-        static void configure_skel (
+
+    static void configure_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
@@ -1770,23 +1909,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_Configurator_Strategized_Proxy_Broker : public virtual ::Components::_TAO_Configurator_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_Configurator_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_Configurator_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_Configurator_Proxy_Impl &select_proxy (
       ::Components::Configurator *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -1794,41 +1936,44 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_Configurator_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_Configurator_Strategized_Proxy_Broker *the_TAO_Configurator_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_Configurator_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_Configurator_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_Configurator_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl
   {
   public:
     _TAO_Configurator_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_Configurator_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual void configure (
         CORBA_Object *_collocated_tao_target_,
         Components::CCMObject_ptr comp
@@ -1837,21 +1982,24 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::WrongComponentType
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class StandardConfigurator;
   typedef StandardConfigurator *StandardConfigurator_ptr;
   // Forward Classes Declaration
   class _TAO_StandardConfigurator_ThruPOA_Proxy_Impl;
   class _TAO_StandardConfigurator_Strategized_Proxy_Broker;
-  
+
   class  StandardConfigurator
     : public virtual POA_Components::Configurator
   {
@@ -1912,22 +2060,28 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual void set_configuration (
         const Components::ConfigValues & descr
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void set_configuration_skel (
+
+    static void set_configuration_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
     static void configure_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -1936,23 +2090,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_StandardConfigurator_Strategized_Proxy_Broker : public virtual ::Components::_TAO_StandardConfigurator_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_StandardConfigurator_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_StandardConfigurator_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_StandardConfigurator_Proxy_Impl &select_proxy (
       ::Components::StandardConfigurator *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -1960,43 +2117,45 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_StandardConfigurator_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_StandardConfigurator_Strategized_Proxy_Broker *the_TAO_StandardConfigurator_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_StandardConfigurator_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_StandardConfigurator_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_StandardConfigurator_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::POA_Components::_TAO_Configurator_ThruPOA_Proxy_Impl
-    
   {
   public:
     _TAO_StandardConfigurator_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_StandardConfigurator_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual void set_configuration (
         CORBA_Object *_collocated_tao_target_,
         const Components::ConfigValues & descr
@@ -2004,21 +2163,24 @@ TAO_NAMESPACE  POA_Components
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class HomeConfiguration;
   typedef HomeConfiguration *HomeConfiguration_ptr;
   // Forward Classes Declaration
   class _TAO_HomeConfiguration_ThruPOA_Proxy_Impl;
   class _TAO_HomeConfiguration_Strategized_Proxy_Broker;
-  
+
   class  HomeConfiguration
     : public virtual POA_Components::CCMHome
   {
@@ -2079,19 +2241,24 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual void set_configurator (
         Components::Configurator_ptr cfg
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void set_configurator_skel (
+
+    static void set_configurator_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual void set_configuration_values (
         const Components::ConfigValues & config
@@ -2099,13 +2266,15 @@ TAO_NAMESPACE  POA_Components
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void set_configuration_values_skel (
+
+    static void set_configuration_values_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual void complete_component_configuration (
         CORBA::Boolean b
@@ -2113,44 +2282,55 @@ TAO_NAMESPACE  POA_Components
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void complete_component_configuration_skel (
+
+    static void complete_component_configuration_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual void disable_home_configuration (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void disable_home_configuration_skel (
+
+    static void disable_home_configuration_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
     static void get_component_def_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_home_def_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
     static void remove_component_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2159,23 +2339,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_HomeConfiguration_Strategized_Proxy_Broker : public virtual ::Components::_TAO_HomeConfiguration_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_HomeConfiguration_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_HomeConfiguration_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_HomeConfiguration_Proxy_Impl &select_proxy (
       ::Components::HomeConfiguration *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -2183,43 +2366,45 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_HomeConfiguration_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_HomeConfiguration_Strategized_Proxy_Broker *the_TAO_HomeConfiguration_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_HomeConfiguration_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_HomeConfiguration_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_HomeConfiguration_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::POA_Components::_TAO_CCMHome_ThruPOA_Proxy_Impl
-    
   {
   public:
     _TAO_HomeConfiguration_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_HomeConfiguration_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual void set_configurator (
         CORBA_Object *_collocated_tao_target_,
         Components::Configurator_ptr cfg
@@ -2227,7 +2412,7 @@ TAO_NAMESPACE  POA_Components
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual void set_configuration_values (
         CORBA_Object *_collocated_tao_target_,
         const Components::ConfigValues & config
@@ -2235,7 +2420,7 @@ TAO_NAMESPACE  POA_Components
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual void complete_component_configuration (
         CORBA_Object *_collocated_tao_target_,
         CORBA::Boolean b
@@ -2243,28 +2428,31 @@ TAO_NAMESPACE  POA_Components
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual void disable_home_configuration (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
   class CCMObject;
   typedef CCMObject *CCMObject_ptr;
   // Forward Classes Declaration
   class _TAO_CCMObject_ThruPOA_Proxy_Impl;
   class _TAO_CCMObject_Strategized_Proxy_Broker;
-  
+
   class  CCMObject
     : public virtual POA_Components::Navigation,
       public virtual POA_Components::Receptacles,
@@ -2327,228 +2515,301 @@ TAO_NAMESPACE  POA_Components
 
     virtual const char* _interface_repository_id (void) const;
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
     virtual ::CORBA::IRObject_ptr get_component_def (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_component_def_skel (
+
+    static void get_component_def_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::CCMHome_ptr get_ccm_home (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_ccm_home_skel (
+
+    static void get_ccm_home_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::PrimaryKeyBase * get_primary_key (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , Components::NoKeyAvailable
       )) = 0;
-    
-        static void get_primary_key_skel (
+
+    static void get_primary_key_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual void configuration_complete (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , Components::InvalidConfiguration
       )) = 0;
-    
-        static void configuration_complete_skel (
+
+    static void configuration_complete_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual void remove (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , Components::RemoveFailure
       )) = 0;
-    
-        static void remove_skel (
+
+    static void remove_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
     virtual ::Components::ComponentPortDescription * get_all_ports (
-        
+
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
-    
-        static void get_all_ports_skel (
+
+    static void get_all_ports_skel (
         TAO_ServerRequest &_tao_req,
         void *_tao_servant,
         void *_tao_servant_upcall
         ACE_ENV_ARG_DECL
       );
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
     static void provide_facet_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_all_facets_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_named_facets_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void same_component_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void connect_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void disconnect_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_connections_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_all_receptacles_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_named_receptacles_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_consumer_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void subscribe_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void unsubscribe_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void connect_consumer_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void disconnect_consumer_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_all_consumers_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_named_consumers_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_all_emitters_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_named_emitters_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
 
     static void get_all_publishers_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
     static void get_named_publishers_skel (
-        TAO_ServerRequest &req, 
+        TAO_ServerRequest &req,
         void *obj,
         void *context
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
@@ -2557,23 +2818,26 @@ TAO_NAMESPACE  POA_Components
 
   };
 
-  
+
   ///////////////////////////////////////////////////////////////////////
-  //               Strategized Proxy Broker Declaration 
+  //               Strategized Proxy Broker Declaration
   //
-  
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
   class  _TAO_CCMObject_Strategized_Proxy_Broker : public virtual ::Components::_TAO_CCMObject_Proxy_Broker
   {
-  public: 
+  public:
     _TAO_CCMObject_Strategized_Proxy_Broker (void);
-    
+
     virtual ~_TAO_CCMObject_Strategized_Proxy_Broker (void);
-    
+
     virtual ::Components::_TAO_CCMObject_Proxy_Impl &select_proxy (
       ::Components::CCMObject *object
       ACE_ENV_ARG_DECL
     );
-  
+
   private:
     // Helper methods that takes care to create the proxy
     // as soon as their use is necessary.
@@ -2581,59 +2845,61 @@ TAO_NAMESPACE  POA_Components
       int collocation_strategy
       ACE_ENV_ARG_DECL
     );
-    
+
     // Caches the proxy implementations. The proxy implementation
     // are totally stateless, and those can be shared by all the
     // instances of a given IDL interface type.
     ::Components::_TAO_CCMObject_Proxy_Impl
     *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-    
+
     TAO_SYNCH_MUTEX mutex_;
     // This funxtion is used to get an handle to the unique instance
     // of the Strategized Proxy Broker that is available for a given
     // interface.
-  
+
   public:
     static _TAO_CCMObject_Strategized_Proxy_Broker *the_TAO_CCMObject_Strategized_Proxy_Broker (void);
   };
-  
-  
+
+
   //
-  //            End Strategized Proxy Broker Declaration 
+  //            End Strategized Proxy Broker Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
+
+
   ///////////////////////////////////////////////////////////////////////
   //                    ThruPOA  Impl. Declaration
   //
-  
-  class  _TAO_CCMObject_ThruPOA_Proxy_Impl : 
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+  class  _TAO_CCMObject_ThruPOA_Proxy_Impl :
     public virtual ::Components::_TAO_CCMObject_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
-    public virtual ::POA_Components::_TAO_Navigation_ThruPOA_Proxy_Impl, 
-    public virtual ::POA_Components::_TAO_Receptacles_ThruPOA_Proxy_Impl, 
+    public virtual ::POA_Components::_TAO_Navigation_ThruPOA_Proxy_Impl,
+    public virtual ::POA_Components::_TAO_Receptacles_ThruPOA_Proxy_Impl,
     public virtual ::POA_Components::_TAO_Events_ThruPOA_Proxy_Impl
-    
   {
   public:
     _TAO_CCMObject_ThruPOA_Proxy_Impl (void);
-    
+
     virtual ~_TAO_CCMObject_ThruPOA_Proxy_Impl (void) { }
-    
+
     virtual ::CORBA::IRObject_ptr get_component_def (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual ::Components::CCMHome_ptr get_ccm_home (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
+
     virtual ::Components::PrimaryKeyBase * get_primary_key (
         CORBA_Object *_collocated_tao_target_
       )
@@ -2641,7 +2907,7 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::NoKeyAvailable
       ));
-    
+
     virtual void configuration_complete (
         CORBA_Object *_collocated_tao_target_
       )
@@ -2649,7 +2915,7 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::InvalidConfiguration
       ));
-    
+
     virtual void remove (
         CORBA_Object *_collocated_tao_target_
       )
@@ -2657,35 +2923,48 @@ TAO_NAMESPACE  POA_Components
         CORBA::SystemException
         , Components::RemoveFailure
       ));
-    
+
     virtual ::Components::ComponentPortDescription * get_all_ports (
         CORBA_Object *_collocated_tao_target_
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-    
-    
+
+
   };
-  
+
   //
   //                ThruPOA  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
-  
-  
-  TAO_NAMESPACE  Transaction
+
+
+// TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:46
+
+    TAO_NAMESPACE  Transaction
   {
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:81
+
   }
   TAO_NAMESPACE_CLOSE // module Components::Transaction
 
-  TAO_NAMESPACE  Deployment
+// TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:46
+
+    TAO_NAMESPACE  Deployment
   {
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
     class ComponentInstallation;
     typedef ComponentInstallation *ComponentInstallation_ptr;
     // Forward Classes Declaration
     class _TAO_ComponentInstallation_ThruPOA_Proxy_Impl;
     class _TAO_ComponentInstallation_Strategized_Proxy_Broker;
-    
+
     class  ComponentInstallation
       : public virtual PortableServer::ServantBase
     {
@@ -2746,6 +3025,9 @@ TAO_NAMESPACE  POA_Components
 
       virtual const char* _interface_repository_id (void) const;
 
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
       virtual void install (
           const char * implUUID,
           const char * component_loc
@@ -2755,13 +3037,15 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InvalidLocation
           , Components::Deployment::InstallationFailure
         )) = 0;
-      
-            static void install_skel (
+
+      static void install_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual void replace (
           const char * implUUID,
@@ -2772,13 +3056,15 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InvalidLocation
           , Components::Deployment::InstallationFailure
         )) = 0;
-      
-            static void replace_skel (
+
+      static void replace_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual void remove (
           const char * implUUID
@@ -2788,13 +3074,15 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::UnknownImplId
           , Components::RemoveFailure
         )) = 0;
-      
-            static void remove_skel (
+
+      static void remove_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual char * get_implementation (
           const char * implUUID
@@ -2804,8 +3092,8 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::UnknownImplId
           , Components::Deployment::InstallationFailure
         )) = 0;
-      
-            static void get_implementation_skel (
+
+      static void get_implementation_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
@@ -2815,23 +3103,26 @@ TAO_NAMESPACE  POA_Components
 
     };
 
-    
+
     ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
+    //               Strategized Proxy Broker Declaration
     //
-    
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
     class  _TAO_ComponentInstallation_Strategized_Proxy_Broker : public virtual ::Components::Deployment::_TAO_ComponentInstallation_Proxy_Broker
     {
-    public: 
+    public:
       _TAO_ComponentInstallation_Strategized_Proxy_Broker (void);
-      
+
       virtual ~_TAO_ComponentInstallation_Strategized_Proxy_Broker (void);
-      
+
       virtual ::Components::Deployment::_TAO_ComponentInstallation_Proxy_Impl &select_proxy (
         ::Components::Deployment::ComponentInstallation *object
         ACE_ENV_ARG_DECL
       );
-    
+
     private:
       // Helper methods that takes care to create the proxy
       // as soon as their use is necessary.
@@ -2839,41 +3130,44 @@ TAO_NAMESPACE  POA_Components
         int collocation_strategy
         ACE_ENV_ARG_DECL
       );
-      
+
       // Caches the proxy implementations. The proxy implementation
       // are totally stateless, and those can be shared by all the
       // instances of a given IDL interface type.
       ::Components::Deployment::_TAO_ComponentInstallation_Proxy_Impl
       *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-      
+
       TAO_SYNCH_MUTEX mutex_;
       // This funxtion is used to get an handle to the unique instance
       // of the Strategized Proxy Broker that is available for a given
       // interface.
-    
+
     public:
       static _TAO_ComponentInstallation_Strategized_Proxy_Broker *the_TAO_ComponentInstallation_Strategized_Proxy_Broker (void);
     };
-    
-    
+
+
     //
-    //            End Strategized Proxy Broker Declaration 
+    //            End Strategized Proxy Broker Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
     ///////////////////////////////////////////////////////////////////////
     //                    ThruPOA  Impl. Declaration
     //
-    
-    class  _TAO_ComponentInstallation_ThruPOA_Proxy_Impl : 
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+    class  _TAO_ComponentInstallation_ThruPOA_Proxy_Impl :
       public virtual ::Components::Deployment::_TAO_ComponentInstallation_Proxy_Impl,
       public virtual TAO_ThruPOA_Object_Proxy_Impl
     {
     public:
       _TAO_ComponentInstallation_ThruPOA_Proxy_Impl (void);
-      
+
       virtual ~_TAO_ComponentInstallation_ThruPOA_Proxy_Impl (void) { }
-      
+
       virtual void install (
           CORBA_Object *_collocated_tao_target_,
           const char * implUUID,
@@ -2884,7 +3178,7 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InvalidLocation
           , Components::Deployment::InstallationFailure
         ));
-      
+
       virtual void replace (
           CORBA_Object *_collocated_tao_target_,
           const char * implUUID,
@@ -2895,7 +3189,7 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InvalidLocation
           , Components::Deployment::InstallationFailure
         ));
-      
+
       virtual void remove (
           CORBA_Object *_collocated_tao_target_,
           const char * implUUID
@@ -2905,7 +3199,7 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::UnknownImplId
           , Components::RemoveFailure
         ));
-      
+
       virtual char * get_implementation (
           CORBA_Object *_collocated_tao_target_,
           const char * implUUID
@@ -2915,21 +3209,24 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::UnknownImplId
           , Components::Deployment::InstallationFailure
         ));
-      
-      
+
+
     };
-    
+
     //
     //                ThruPOA  Proxy Impl. Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
     class Assembly;
     typedef Assembly *Assembly_ptr;
     // Forward Classes Declaration
     class _TAO_Assembly_ThruPOA_Proxy_Impl;
     class _TAO_Assembly_Strategized_Proxy_Broker;
-    
+
     class  Assembly
       : public virtual PortableServer::ServantBase
     {
@@ -2990,43 +3287,50 @@ TAO_NAMESPACE  POA_Components
 
       virtual const char* _interface_repository_id (void) const;
 
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
       virtual void build (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
-      
-            static void build_skel (
+
+      static void build_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual void tear_down (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
           , Components::RemoveFailure
         )) = 0;
-      
-            static void tear_down_skel (
+
+      static void tear_down_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual ::Components::Deployment::AssemblyState get_state (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
-      
-            static void get_state_skel (
+
+      static void get_state_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
@@ -3036,23 +3340,26 @@ TAO_NAMESPACE  POA_Components
 
     };
 
-    
+
     ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
+    //               Strategized Proxy Broker Declaration
     //
-    
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
     class  _TAO_Assembly_Strategized_Proxy_Broker : public virtual ::Components::Deployment::_TAO_Assembly_Proxy_Broker
     {
-    public: 
+    public:
       _TAO_Assembly_Strategized_Proxy_Broker (void);
-      
+
       virtual ~_TAO_Assembly_Strategized_Proxy_Broker (void);
-      
+
       virtual ::Components::Deployment::_TAO_Assembly_Proxy_Impl &select_proxy (
         ::Components::Deployment::Assembly *object
         ACE_ENV_ARG_DECL
       );
-    
+
     private:
       // Helper methods that takes care to create the proxy
       // as soon as their use is necessary.
@@ -3060,48 +3367,51 @@ TAO_NAMESPACE  POA_Components
         int collocation_strategy
         ACE_ENV_ARG_DECL
       );
-      
+
       // Caches the proxy implementations. The proxy implementation
       // are totally stateless, and those can be shared by all the
       // instances of a given IDL interface type.
       ::Components::Deployment::_TAO_Assembly_Proxy_Impl
       *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-      
+
       TAO_SYNCH_MUTEX mutex_;
       // This funxtion is used to get an handle to the unique instance
       // of the Strategized Proxy Broker that is available for a given
       // interface.
-    
+
     public:
       static _TAO_Assembly_Strategized_Proxy_Broker *the_TAO_Assembly_Strategized_Proxy_Broker (void);
     };
-    
-    
+
+
     //
-    //            End Strategized Proxy Broker Declaration 
+    //            End Strategized Proxy Broker Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
     ///////////////////////////////////////////////////////////////////////
     //                    ThruPOA  Impl. Declaration
     //
-    
-    class  _TAO_Assembly_ThruPOA_Proxy_Impl : 
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+    class  _TAO_Assembly_ThruPOA_Proxy_Impl :
       public virtual ::Components::Deployment::_TAO_Assembly_Proxy_Impl,
       public virtual TAO_ThruPOA_Object_Proxy_Impl
     {
     public:
       _TAO_Assembly_ThruPOA_Proxy_Impl (void);
-      
+
       virtual ~_TAO_Assembly_ThruPOA_Proxy_Impl (void) { }
-      
+
       virtual void build (
           CORBA_Object *_collocated_tao_target_
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       virtual void tear_down (
           CORBA_Object *_collocated_tao_target_
         )
@@ -3109,28 +3419,31 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::RemoveFailure
         ));
-      
+
       virtual ::Components::Deployment::AssemblyState get_state (
           CORBA_Object *_collocated_tao_target_
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
-      
+
+
     };
-    
+
     //
     //                ThruPOA  Proxy Impl. Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
     class AssemblyFactory;
     typedef AssemblyFactory *AssemblyFactory_ptr;
     // Forward Classes Declaration
     class _TAO_AssemblyFactory_ThruPOA_Proxy_Impl;
     class _TAO_AssemblyFactory_Strategized_Proxy_Broker;
-    
+
     class  AssemblyFactory
       : public virtual PortableServer::ServantBase
     {
@@ -3191,6 +3504,9 @@ TAO_NAMESPACE  POA_Components
 
       virtual const char* _interface_repository_id (void) const;
 
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
       virtual ::Components::Cookie * create (
           const char * assembly_loc
         )
@@ -3199,13 +3515,15 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InvalidLocation
           , Components::CreateFailure
         )) = 0;
-      
-            static void create_skel (
+
+      static void create_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual ::Components::Deployment::Assembly_ptr lookup (
           Components::Cookie * c
@@ -3214,13 +3532,15 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::Deployment::InvalidAssembly
         )) = 0;
-      
-            static void lookup_skel (
+
+      static void lookup_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual void destroy (
           Components::Cookie * c
@@ -3230,8 +3550,8 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InvalidAssembly
           , Components::RemoveFailure
         )) = 0;
-      
-            static void destroy_skel (
+
+      static void destroy_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
@@ -3241,23 +3561,26 @@ TAO_NAMESPACE  POA_Components
 
     };
 
-    
+
     ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
+    //               Strategized Proxy Broker Declaration
     //
-    
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
     class  _TAO_AssemblyFactory_Strategized_Proxy_Broker : public virtual ::Components::Deployment::_TAO_AssemblyFactory_Proxy_Broker
     {
-    public: 
+    public:
       _TAO_AssemblyFactory_Strategized_Proxy_Broker (void);
-      
+
       virtual ~_TAO_AssemblyFactory_Strategized_Proxy_Broker (void);
-      
+
       virtual ::Components::Deployment::_TAO_AssemblyFactory_Proxy_Impl &select_proxy (
         ::Components::Deployment::AssemblyFactory *object
         ACE_ENV_ARG_DECL
       );
-    
+
     private:
       // Helper methods that takes care to create the proxy
       // as soon as their use is necessary.
@@ -3265,41 +3588,44 @@ TAO_NAMESPACE  POA_Components
         int collocation_strategy
         ACE_ENV_ARG_DECL
       );
-      
+
       // Caches the proxy implementations. The proxy implementation
       // are totally stateless, and those can be shared by all the
       // instances of a given IDL interface type.
       ::Components::Deployment::_TAO_AssemblyFactory_Proxy_Impl
       *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-      
+
       TAO_SYNCH_MUTEX mutex_;
       // This funxtion is used to get an handle to the unique instance
       // of the Strategized Proxy Broker that is available for a given
       // interface.
-    
+
     public:
       static _TAO_AssemblyFactory_Strategized_Proxy_Broker *the_TAO_AssemblyFactory_Strategized_Proxy_Broker (void);
     };
-    
-    
+
+
     //
-    //            End Strategized Proxy Broker Declaration 
+    //            End Strategized Proxy Broker Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
     ///////////////////////////////////////////////////////////////////////
     //                    ThruPOA  Impl. Declaration
     //
-    
-    class  _TAO_AssemblyFactory_ThruPOA_Proxy_Impl : 
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+    class  _TAO_AssemblyFactory_ThruPOA_Proxy_Impl :
       public virtual ::Components::Deployment::_TAO_AssemblyFactory_Proxy_Impl,
       public virtual TAO_ThruPOA_Object_Proxy_Impl
     {
     public:
       _TAO_AssemblyFactory_ThruPOA_Proxy_Impl (void);
-      
+
       virtual ~_TAO_AssemblyFactory_ThruPOA_Proxy_Impl (void) { }
-      
+
       virtual ::Components::Cookie * create (
           CORBA_Object *_collocated_tao_target_,
           const char * assembly_loc
@@ -3309,7 +3635,7 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InvalidLocation
           , Components::CreateFailure
         ));
-      
+
       virtual ::Components::Deployment::Assembly_ptr lookup (
           CORBA_Object *_collocated_tao_target_,
           Components::Cookie * c
@@ -3318,7 +3644,7 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::Deployment::InvalidAssembly
         ));
-      
+
       virtual void destroy (
           CORBA_Object *_collocated_tao_target_,
           Components::Cookie * c
@@ -3328,21 +3654,24 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InvalidAssembly
           , Components::RemoveFailure
         ));
-      
-      
+
+
     };
-    
+
     //
     //                ThruPOA  Proxy Impl. Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
     class ServerActivator;
     typedef ServerActivator *ServerActivator_ptr;
     // Forward Classes Declaration
     class _TAO_ServerActivator_ThruPOA_Proxy_Impl;
     class _TAO_ServerActivator_Strategized_Proxy_Broker;
-    
+
     class  ServerActivator
       : public virtual PortableServer::ServantBase
     {
@@ -3403,6 +3732,9 @@ TAO_NAMESPACE  POA_Components
 
       virtual const char* _interface_repository_id (void) const;
 
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
       virtual ::Components::Deployment::ComponentServer_ptr create_component_server (
           const Components::ConfigValues & config
         )
@@ -3411,13 +3743,15 @@ TAO_NAMESPACE  POA_Components
           , Components::CreateFailure
           , Components::InvalidConfiguration
         )) = 0;
-      
-            static void create_component_server_skel (
+
+      static void create_component_server_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual void remove_component_server (
           Components::Deployment::ComponentServer_ptr server
@@ -3426,22 +3760,24 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::RemoveFailure
         )) = 0;
-      
-            static void remove_component_server_skel (
+
+      static void remove_component_server_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual ::Components::Deployment::ComponentServers * get_component_servers (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
-      
-            static void get_component_servers_skel (
+
+      static void get_component_servers_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
@@ -3451,23 +3787,26 @@ TAO_NAMESPACE  POA_Components
 
     };
 
-    
+
     ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
+    //               Strategized Proxy Broker Declaration
     //
-    
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
     class  _TAO_ServerActivator_Strategized_Proxy_Broker : public virtual ::Components::Deployment::_TAO_ServerActivator_Proxy_Broker
     {
-    public: 
+    public:
       _TAO_ServerActivator_Strategized_Proxy_Broker (void);
-      
+
       virtual ~_TAO_ServerActivator_Strategized_Proxy_Broker (void);
-      
+
       virtual ::Components::Deployment::_TAO_ServerActivator_Proxy_Impl &select_proxy (
         ::Components::Deployment::ServerActivator *object
         ACE_ENV_ARG_DECL
       );
-    
+
     private:
       // Helper methods that takes care to create the proxy
       // as soon as their use is necessary.
@@ -3475,41 +3814,44 @@ TAO_NAMESPACE  POA_Components
         int collocation_strategy
         ACE_ENV_ARG_DECL
       );
-      
+
       // Caches the proxy implementations. The proxy implementation
       // are totally stateless, and those can be shared by all the
       // instances of a given IDL interface type.
       ::Components::Deployment::_TAO_ServerActivator_Proxy_Impl
       *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-      
+
       TAO_SYNCH_MUTEX mutex_;
       // This funxtion is used to get an handle to the unique instance
       // of the Strategized Proxy Broker that is available for a given
       // interface.
-    
+
     public:
       static _TAO_ServerActivator_Strategized_Proxy_Broker *the_TAO_ServerActivator_Strategized_Proxy_Broker (void);
     };
-    
-    
+
+
     //
-    //            End Strategized Proxy Broker Declaration 
+    //            End Strategized Proxy Broker Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
     ///////////////////////////////////////////////////////////////////////
     //                    ThruPOA  Impl. Declaration
     //
-    
-    class  _TAO_ServerActivator_ThruPOA_Proxy_Impl : 
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+    class  _TAO_ServerActivator_ThruPOA_Proxy_Impl :
       public virtual ::Components::Deployment::_TAO_ServerActivator_Proxy_Impl,
       public virtual TAO_ThruPOA_Object_Proxy_Impl
     {
     public:
       _TAO_ServerActivator_ThruPOA_Proxy_Impl (void);
-      
+
       virtual ~_TAO_ServerActivator_ThruPOA_Proxy_Impl (void) { }
-      
+
       virtual ::Components::Deployment::ComponentServer_ptr create_component_server (
           CORBA_Object *_collocated_tao_target_,
           const Components::ConfigValues & config
@@ -3519,7 +3861,7 @@ TAO_NAMESPACE  POA_Components
           , Components::CreateFailure
           , Components::InvalidConfiguration
         ));
-      
+
       virtual void remove_component_server (
           CORBA_Object *_collocated_tao_target_,
           Components::Deployment::ComponentServer_ptr server
@@ -3528,28 +3870,31 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::RemoveFailure
         ));
-      
+
       virtual ::Components::Deployment::ComponentServers * get_component_servers (
           CORBA_Object *_collocated_tao_target_
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
-      
+
+
     };
-    
+
     //
     //                ThruPOA  Proxy Impl. Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
     class ComponentServer;
     typedef ComponentServer *ComponentServer_ptr;
     // Forward Classes Declaration
     class _TAO_ComponentServer_ThruPOA_Proxy_Impl;
     class _TAO_ComponentServer_Strategized_Proxy_Broker;
-    
+
     class  ComponentServer
       : public virtual PortableServer::ServantBase
     {
@@ -3610,33 +3955,40 @@ TAO_NAMESPACE  POA_Components
 
       virtual const char* _interface_repository_id (void) const;
 
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
       virtual ::Components::ConfigValues * configuration (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
-      
-            static void _get_configuration_skel (
+
+      static void _get_configuration_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual ::Components::Deployment::ServerActivator_ptr get_server_activator (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
-      
-            static void get_server_activator_skel (
+
+      static void get_server_activator_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual ::Components::Deployment::Container_ptr create_container (
           const Components::ConfigValues & config
@@ -3646,13 +3998,15 @@ TAO_NAMESPACE  POA_Components
           , Components::CreateFailure
           , Components::InvalidConfiguration
         )) = 0;
-      
-            static void create_container_skel (
+
+      static void create_container_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual void remove_container (
           Components::Deployment::Container_ptr cref
@@ -3661,37 +4015,41 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::RemoveFailure
         )) = 0;
-      
-            static void remove_container_skel (
+
+      static void remove_container_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual ::Components::Deployment::Containers * get_containers (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
-      
-            static void get_containers_skel (
+
+      static void get_containers_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual void remove (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
           , Components::RemoveFailure
         )) = 0;
-      
-            static void remove_skel (
+
+      static void remove_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
@@ -3701,23 +4059,26 @@ TAO_NAMESPACE  POA_Components
 
     };
 
-    
+
     ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
+    //               Strategized Proxy Broker Declaration
     //
-    
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
     class  _TAO_ComponentServer_Strategized_Proxy_Broker : public virtual ::Components::Deployment::_TAO_ComponentServer_Proxy_Broker
     {
-    public: 
+    public:
       _TAO_ComponentServer_Strategized_Proxy_Broker (void);
-      
+
       virtual ~_TAO_ComponentServer_Strategized_Proxy_Broker (void);
-      
+
       virtual ::Components::Deployment::_TAO_ComponentServer_Proxy_Impl &select_proxy (
         ::Components::Deployment::ComponentServer *object
         ACE_ENV_ARG_DECL
       );
-    
+
     private:
       // Helper methods that takes care to create the proxy
       // as soon as their use is necessary.
@@ -3725,55 +4086,58 @@ TAO_NAMESPACE  POA_Components
         int collocation_strategy
         ACE_ENV_ARG_DECL
       );
-      
+
       // Caches the proxy implementations. The proxy implementation
       // are totally stateless, and those can be shared by all the
       // instances of a given IDL interface type.
       ::Components::Deployment::_TAO_ComponentServer_Proxy_Impl
       *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-      
+
       TAO_SYNCH_MUTEX mutex_;
       // This funxtion is used to get an handle to the unique instance
       // of the Strategized Proxy Broker that is available for a given
       // interface.
-    
+
     public:
       static _TAO_ComponentServer_Strategized_Proxy_Broker *the_TAO_ComponentServer_Strategized_Proxy_Broker (void);
     };
-    
-    
+
+
     //
-    //            End Strategized Proxy Broker Declaration 
+    //            End Strategized Proxy Broker Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
     ///////////////////////////////////////////////////////////////////////
     //                    ThruPOA  Impl. Declaration
     //
-    
-    class  _TAO_ComponentServer_ThruPOA_Proxy_Impl : 
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+    class  _TAO_ComponentServer_ThruPOA_Proxy_Impl :
       public virtual ::Components::Deployment::_TAO_ComponentServer_Proxy_Impl,
       public virtual TAO_ThruPOA_Object_Proxy_Impl
     {
     public:
       _TAO_ComponentServer_ThruPOA_Proxy_Impl (void);
-      
+
       virtual ~_TAO_ComponentServer_ThruPOA_Proxy_Impl (void) { }
-      
+
       virtual ::Components::ConfigValues * configuration (
           CORBA_Object *_collocated_tao_target_
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       virtual ::Components::Deployment::ServerActivator_ptr get_server_activator (
           CORBA_Object *_collocated_tao_target_
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       virtual ::Components::Deployment::Container_ptr create_container (
           CORBA_Object *_collocated_tao_target_,
           const Components::ConfigValues & config
@@ -3783,7 +4147,7 @@ TAO_NAMESPACE  POA_Components
           , Components::CreateFailure
           , Components::InvalidConfiguration
         ));
-      
+
       virtual void remove_container (
           CORBA_Object *_collocated_tao_target_,
           Components::Deployment::Container_ptr cref
@@ -3792,14 +4156,14 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::RemoveFailure
         ));
-      
+
       virtual ::Components::Deployment::Containers * get_containers (
           CORBA_Object *_collocated_tao_target_
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       virtual void remove (
           CORBA_Object *_collocated_tao_target_
         )
@@ -3807,21 +4171,24 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::RemoveFailure
         ));
-      
-      
+
+
     };
-    
+
     //
     //                ThruPOA  Proxy Impl. Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_sh.cpp:82
+
     class Container;
     typedef Container *Container_ptr;
     // Forward Classes Declaration
     class _TAO_Container_ThruPOA_Proxy_Impl;
     class _TAO_Container_Strategized_Proxy_Broker;
-    
+
     class  Container
       : public virtual PortableServer::ServantBase
     {
@@ -3882,33 +4249,40 @@ TAO_NAMESPACE  POA_Components
 
       virtual const char* _interface_repository_id (void) const;
 
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
+
       virtual ::Components::ConfigValues * configuration (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
-      
-            static void _get_configuration_skel (
+
+      static void _get_configuration_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual ::Components::Deployment::ComponentServer_ptr get_component_server (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
-      
-            static void get_component_server_skel (
+
+      static void get_component_server_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual ::Components::CCMHome_ptr install_home (
           const char * id,
@@ -3922,13 +4296,15 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InstallationFailure
           , Components::InvalidConfiguration
         )) = 0;
-      
-            static void install_home_skel (
+
+      static void install_home_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual void remove_home (
           Components::CCMHome_ptr href
@@ -3937,37 +4313,41 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::RemoveFailure
         )) = 0;
-      
-            static void remove_home_skel (
+
+      static void remove_home_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual ::Components::CCMHomes * get_homes (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         )) = 0;
-      
-            static void get_homes_skel (
+
+      static void get_homes_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
           ACE_ENV_ARG_DECL
         );
+      // TAO_IDL - Generated from
+      // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_operation/operation_sh.cpp:47
 
       virtual void remove (
-          
+
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
           , Components::RemoveFailure
         )) = 0;
-      
-            static void remove_skel (
+
+      static void remove_skel (
           TAO_ServerRequest &_tao_req,
           void *_tao_servant,
           void *_tao_servant_upcall
@@ -3977,23 +4357,26 @@ TAO_NAMESPACE  POA_Components
 
     };
 
-    
+
     ///////////////////////////////////////////////////////////////////////
-    //               Strategized Proxy Broker Declaration 
+    //               Strategized Proxy Broker Declaration
     //
-    
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/strategized_proxy_broker_sh.cpp:39
+
     class  _TAO_Container_Strategized_Proxy_Broker : public virtual ::Components::Deployment::_TAO_Container_Proxy_Broker
     {
-    public: 
+    public:
       _TAO_Container_Strategized_Proxy_Broker (void);
-      
+
       virtual ~_TAO_Container_Strategized_Proxy_Broker (void);
-      
+
       virtual ::Components::Deployment::_TAO_Container_Proxy_Impl &select_proxy (
         ::Components::Deployment::Container *object
         ACE_ENV_ARG_DECL
       );
-    
+
     private:
       // Helper methods that takes care to create the proxy
       // as soon as their use is necessary.
@@ -4001,55 +4384,58 @@ TAO_NAMESPACE  POA_Components
         int collocation_strategy
         ACE_ENV_ARG_DECL
       );
-      
+
       // Caches the proxy implementations. The proxy implementation
       // are totally stateless, and those can be shared by all the
       // instances of a given IDL interface type.
       ::Components::Deployment::_TAO_Container_Proxy_Impl
       *proxy_cache_[TAO_Collocation_Strategies::CS_LAST];
-      
+
       TAO_SYNCH_MUTEX mutex_;
       // This funxtion is used to get an handle to the unique instance
       // of the Strategized Proxy Broker that is available for a given
       // interface.
-    
+
     public:
       static _TAO_Container_Strategized_Proxy_Broker *the_TAO_Container_Strategized_Proxy_Broker (void);
     };
-    
-    
+
+
     //
-    //            End Strategized Proxy Broker Declaration 
+    //            End Strategized Proxy Broker Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
     ///////////////////////////////////////////////////////////////////////
     //                    ThruPOA  Impl. Declaration
     //
-    
-    class  _TAO_Container_ThruPOA_Proxy_Impl : 
+
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/thru_poa_proxy_impl_sh.cpp:37
+
+    class  _TAO_Container_ThruPOA_Proxy_Impl :
       public virtual ::Components::Deployment::_TAO_Container_Proxy_Impl,
       public virtual TAO_ThruPOA_Object_Proxy_Impl
     {
     public:
       _TAO_Container_ThruPOA_Proxy_Impl (void);
-      
+
       virtual ~_TAO_Container_ThruPOA_Proxy_Impl (void) { }
-      
+
       virtual ::Components::ConfigValues * configuration (
           CORBA_Object *_collocated_tao_target_
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       virtual ::Components::Deployment::ComponentServer_ptr get_component_server (
           CORBA_Object *_collocated_tao_target_
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       virtual ::Components::CCMHome_ptr install_home (
           CORBA_Object *_collocated_tao_target_,
           const char * id,
@@ -4063,7 +4449,7 @@ TAO_NAMESPACE  POA_Components
           , Components::Deployment::InstallationFailure
           , Components::InvalidConfiguration
         ));
-      
+
       virtual void remove_home (
           CORBA_Object *_collocated_tao_target_,
           Components::CCMHome_ptr href
@@ -4072,14 +4458,14 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::RemoveFailure
         ));
-      
+
       virtual ::Components::CCMHomes * get_homes (
           CORBA_Object *_collocated_tao_target_
         )
         ACE_THROW_SPEC ((
           CORBA::SystemException
         ));
-      
+
       virtual void remove (
           CORBA_Object *_collocated_tao_target_
         )
@@ -4087,20 +4473,32 @@ TAO_NAMESPACE  POA_Components
           CORBA::SystemException
           , Components::RemoveFailure
         ));
-      
-      
+
+
     };
-    
+
     //
     //                ThruPOA  Proxy Impl. Declaration
     ///////////////////////////////////////////////////////////////////////
-    
-    
+
+
+
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:81
+
   }
   TAO_NAMESPACE_CLOSE // module Components::Deployment
 
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:81
+
 }
 TAO_NAMESPACE_CLOSE // module Components
+
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1038
 
 #include "Component_BaseS_T.h"
 

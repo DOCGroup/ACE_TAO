@@ -19,6 +19,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:597
+
 #ifndef _TAO_IDL_COMPONENT_BASES_T_H_
 #define _TAO_IDL_COMPONENT_BASES_T_H_
 
@@ -32,6 +36,9 @@
 #if defined (ACE_HAS_USING_KEYWORD)
 TAO_NAMESPACE  POA_Components
 {
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  Navigation_tie : public Navigation
@@ -104,6 +111,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const Navigation_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  Receptacles_tie : public Receptacles
@@ -193,6 +203,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const Receptacles_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  EventConsumerBase_tie : public EventConsumerBase
@@ -243,6 +256,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const EventConsumerBase_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  Events_tie : public Events
@@ -379,6 +395,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const Events_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  CCMHome_tie : public CCMHome
@@ -443,6 +462,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const CCMHome_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  KeylessCCMHome_tie : public KeylessCCMHome
@@ -493,6 +515,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const KeylessCCMHome_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  HomeFinder_tie : public HomeFinder
@@ -559,6 +584,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const HomeFinder_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  Configurator_tie : public Configurator
@@ -609,6 +637,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const Configurator_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  StandardConfigurator_tie : public StandardConfigurator
@@ -666,6 +697,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const StandardConfigurator_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  HomeConfiguration_tie : public HomeConfiguration
@@ -758,6 +792,9 @@ TAO_NAMESPACE  POA_Components
     void operator= (const HomeConfiguration_tie &);
   };
 
+  // TAO_IDL - Generated from
+  // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+  
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
   template <class T>
   class  CCMObject_tie : public CCMObject
@@ -1022,6 +1059,9 @@ TAO_NAMESPACE  POA_Components
   TAO_NAMESPACE_CLOSE // module Components::Transaction
   TAO_NAMESPACE  Deployment
   {
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+    
     // TIE class: Refer to CORBA v2.2, Section 20.34.4
     template <class T>
     class  ComponentInstallation_tie : public ComponentInstallation
@@ -1102,6 +1142,9 @@ TAO_NAMESPACE  POA_Components
       void operator= (const ComponentInstallation_tie &);
     };
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+    
     // TIE class: Refer to CORBA v2.2, Section 20.34.4
     template <class T>
     class  Assembly_tie : public Assembly
@@ -1166,6 +1209,9 @@ TAO_NAMESPACE  POA_Components
       void operator= (const Assembly_tie &);
     };
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+    
     // TIE class: Refer to CORBA v2.2, Section 20.34.4
     template <class T>
     class  AssemblyFactory_tie : public AssemblyFactory
@@ -1234,6 +1280,9 @@ TAO_NAMESPACE  POA_Components
       void operator= (const AssemblyFactory_tie &);
     };
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+    
     // TIE class: Refer to CORBA v2.2, Section 20.34.4
     template <class T>
     class  ServerActivator_tie : public ServerActivator
@@ -1300,6 +1349,9 @@ TAO_NAMESPACE  POA_Components
       void operator= (const ServerActivator_tie &);
     };
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+    
     // TIE class: Refer to CORBA v2.2, Section 20.34.4
     template <class T>
     class  ComponentServer_tie : public ComponentServer
@@ -1388,6 +1440,9 @@ TAO_NAMESPACE  POA_Components
       void operator= (const ComponentServer_tie &);
     };
 
+    // TAO_IDL - Generated from
+    // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_sh.cpp:89
+    
     // TIE class: Refer to CORBA v2.2, Section 20.34.4
     template <class T>
     class  Container_tie : public Container
@@ -1485,6 +1540,11 @@ TAO_NAMESPACE  POA_Components
 }
 TAO_NAMESPACE_CLOSE // module Components
 #endif /* ACE_HAS_USING_KEYWORD */
+
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1135
+
 
 #if defined (__ACE_INLINE__)
 #include "Component_BaseS_T.i"

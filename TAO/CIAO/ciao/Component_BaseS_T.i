@@ -19,7 +19,13 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Navigation_tie<T>::Navigation_tie (T &t)
@@ -154,7 +160,13 @@ object_ref
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Receptacles_tie<T>::Receptacles_tie (T &t)
@@ -314,7 +326,13 @@ names
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::EventConsumerBase_tie<T>::EventConsumerBase_tie (T &t)
@@ -409,7 +427,13 @@ evt
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Events_tie<T>::Events_tie (T &t)
@@ -653,7 +677,13 @@ names
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::CCMHome_tie<T>::CCMHome_tie (T &t)
@@ -774,7 +804,13 @@ comp
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::KeylessCCMHome_tie<T>::KeylessCCMHome_tie (T &t)
@@ -869,7 +905,13 @@ template <class T> ACE_INLINE
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::HomeFinder_tie<T>::HomeFinder_tie (T &t)
@@ -992,7 +1034,13 @@ home_name
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Configurator_tie<T>::Configurator_tie (T &t)
@@ -1087,7 +1135,13 @@ comp
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::StandardConfigurator_tie<T>::StandardConfigurator_tie (T &t)
@@ -1195,7 +1249,13 @@ comp
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::HomeConfiguration_tie<T>::HomeConfiguration_tie (T &t)
@@ -1368,7 +1428,13 @@ comp
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::CCMObject_tie<T>::CCMObject_tie (T &t)
@@ -1826,7 +1892,13 @@ names
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Deployment::ComponentInstallation_tie<T>::ComponentInstallation_tie (T &t)
@@ -1971,7 +2043,13 @@ implUUID
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Deployment::Assembly_tie<T>::Assembly_tie (T &t)
@@ -2092,7 +2170,13 @@ template <class T> ACE_INLINE
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Deployment::AssemblyFactory_tie<T>::AssemblyFactory_tie (T &t)
@@ -2217,7 +2301,13 @@ c
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Deployment::ServerActivator_tie<T>::ServerActivator_tie (T &t)
@@ -2340,7 +2430,13 @@ template <class T> ACE_INLINE
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Deployment::ComponentServer_tie<T>::ComponentServer_tie (T &t)
@@ -2503,7 +2599,13 @@ void POA_Components::Deployment::ComponentServer_tie<T>::remove  (
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:95
+
 #if defined (ACE_HAS_USING_KEYWORD)
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/tie_si.cpp:105
+
 
 template <class T> ACE_INLINE
 POA_Components::Deployment::Container_tie<T>::Container_tie (T &t)
