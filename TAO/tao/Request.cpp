@@ -2,6 +2,10 @@
 
 #include "tao/corba.h"
 
+#if !defined (__ACE_INLINE__)
+# include "tao/Request.i"
+#endif /* ! __ACE_INLINE__ */
+
 CORBA::ULong
 CORBA_Request::AddRef (void)
 {
@@ -39,10 +43,10 @@ CORBA::is_nil (CORBA::Request_ptr req)
 // DII Request class implementation
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
-			      const CORBA::Char *op,
-			      CORBA::NVList_ptr args,
-			      CORBA::NamedValue_ptr result,
-			      CORBA::Flags flags)
+                              const CORBA::Char *op,
+                              CORBA::NVList_ptr args,
+                              CORBA::NamedValue_ptr result,
+                              CORBA::Flags flags)
   : args_ (args),
     result_ (result),
     flags_ (flags),
@@ -53,7 +57,7 @@ CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
 }
 
 CORBA_Request::CORBA_Request (CORBA::Object_ptr obj,
-			      const CORBA::Char *op)
+                              const CORBA::Char *op)
   : flags_ (0),
     refcount_ (1)
 {
@@ -93,12 +97,12 @@ CORBA_Request::invoke (void)
   stub->AddRef ();
 
   stub->do_dynamic_call ((char *) opname_,
-			 CORBA::B_TRUE,
-			 args_,
-			 result_,
-			 flags_,
-			 exceptions_,
-			 env_);
+                         CORBA::B_TRUE,
+                         args_,
+                         result_,
+                         flags_,
+                         exceptions_,
+                         env_);
   stub->Release ();
 }
 
@@ -109,11 +113,11 @@ CORBA_Request::send_oneway (void)
   stub->AddRef ();
 
   stub->do_dynamic_call ((char *) opname_,
-			 CORBA::B_TRUE,
-			 args_,
-			 result_,
-			 flags_,
-			 exceptions_,
-			 env_);
+                         CORBA::B_TRUE,
+                         args_,
+                         result_,
+                         flags_,
+                         exceptions_,
+                         env_);
   stub->Release ();
 }

@@ -224,10 +224,9 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 #include "tao/GIOP.i"
 #include "tao/IIOP_ORB.i"
 #include "tao/IIOP_Object.i"
-#endif /* 0 */
-
 #include "tao/Server_Request.i"
 #include "tao/Request.i"
+#endif /* 0 */
 
 #  if defined (do_undef_on_ACE_INLINE)
 #    undef do_undef_on_ACE_INLINE
