@@ -32,16 +32,13 @@ BasicLog_Test::~BasicLog_Test (void)
 int
 BasicLog_Test::init (int argc, char *argv[])
 {
-  this->argc_ = argc;
-  this->argv_ = argv;
-
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialize the ORB
       orb_ = CORBA::ORB_init (argc,
-                              argv,
-                              "internet" ACE_ENV_ARG_PARAMETER);
+                              argv
+                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (TAO_debug_level > 0)
@@ -49,7 +46,7 @@ BasicLog_Test::init (int argc, char *argv[])
                     "\nOrb initialized successfully\n"));
 
       // Parse command line and verify parameters.
-      if (this->parse_args () == -1)
+      if (this->parse_args (argc, argv) == -1)
         return -1;
 
       // Initialize the factory
@@ -544,9 +541,9 @@ BasicLog_Test::test_query(CORBA::ULong numberOfRecordsToWrite)
 
 
 int
-BasicLog_Test::parse_args (void)
+BasicLog_Test::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "di");
+  ACE_Get_Opt get_opts (argc, argv, "di");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -562,7 +559,7 @@ BasicLog_Test::parse_args (void)
                            " [-d]"
                            "\n"
                            "    -d: increase debug level\n",
-                           this->argv_ [0]),
+                           argv[0]),
                           -1);
       }
 
