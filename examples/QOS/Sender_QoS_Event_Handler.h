@@ -20,7 +20,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
-#include "ace/SOCK_Dgram_Mcast_QoS.h"
+#include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
 #include "ace/QoS_Session.h"
 
 //#define MY_DEFPORT 5001

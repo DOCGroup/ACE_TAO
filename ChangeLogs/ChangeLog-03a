@@ -1,3 +1,15 @@
+Thu Feb  8 02:09:05 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* examples/QOS/Makefile:
+	* examples/QOS/client.dsp:
+	* examples/QOS/server.dsp:
+	  Modified to use the ACE_QoS lib. 
+	* Receiver_QoS_Event_Handler.cpp:
+	* Sender_QoS_Event_Handler.cpp:
+	  Added missing Log_Msg.h for ACE_DEBUG.
+	  Other files were modified to reflect changed directory location
+	  of AQosA imclude files.
+	
 Thu Feb  8 00:17:43 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* ace/QoS_Decorator.cpp:

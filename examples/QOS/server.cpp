@@ -18,9 +18,9 @@
 
 #include "ace/OS.h"
 #include "ace/QoS_Session.h"
-#include "ace/QoS_Session_Factory.h"
-#include "ace/QoS_Decorator.h"
-#include "ace/SOCK_Dgram_Mcast_QoS.h"
+#include "ace/QoS/QoS_Session_Factory.h"
+#include "ace/QoS/QoS_Decorator.h"
+#include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
 
 #include "QoS_Util.h"
 #include "Fill_ACE_QoS.h"
