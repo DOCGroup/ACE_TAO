@@ -541,6 +541,7 @@ TAO_ORB_Core::preconnect (const char* the_preconnections)
             {
               handlers[index]->idle ();
               successes++;
+              this->orb ()->_register_collocation (remote_addrs[index]);
             }
         }
     }
