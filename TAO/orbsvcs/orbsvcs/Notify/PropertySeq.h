@@ -22,6 +22,7 @@
 #include "orbsvcs/CosNotificationC.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"
+#include "ace/Null_Mutex.h"
 
 /**
  * @class TAO_Notify_PropertySeq

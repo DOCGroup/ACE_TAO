@@ -6,7 +6,7 @@
  *
  * $Id$
  *
- * @author 
+ * @author
  */
 //=============================================================================
 
@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 #include "tao/corba.h"
 #include "orbsvcs/Trader/trading_export.h"
 

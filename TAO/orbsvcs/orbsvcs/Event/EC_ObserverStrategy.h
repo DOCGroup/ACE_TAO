@@ -1,4 +1,5 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
+
 /**
  *  @file   EC_ObserverStrategy.h
  *
@@ -16,6 +17,7 @@
 
 #ifndef TAO_EC_OBSERVERSTRATEGY_H
 #define TAO_EC_OBSERVERSTRATEGY_H
+
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
@@ -24,6 +26,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Null_Mutex.h"
 #include "ace/RB_Tree.h"
 #include "ace/Map_Manager.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
@@ -348,4 +351,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_EC_OBSERVERSTRATEGY_H */

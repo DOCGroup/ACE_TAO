@@ -1,3 +1,47 @@
+Sun Aug 17 23:41:22 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+	* orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.h:
+	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.h: 
+	* orbsvcs/orbsvcs/Log/LogRecordStore.h: 
+	* orbsvcs/orbsvcs/Notify/PropertySeq.h:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.h:
+	* orbsvcs/orbsvcs/Trader/Offer_Database.h:
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.h:
+	* orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+
+	  Include "ace/Null_Mutex.h" to pull in ACE_Null_Mutex class
+	  declaration.
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+
+	  Include "ace/Reverse_Lock_T.h" to pull in ACE_Reverse_Lock<>
+	  template.
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.h:
+	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.h:
+	* orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+	* orbsvcs/orbsvcs/Trader/Trader_T.h:
+
+	  Include "ace/Lock_Adapter_T.h" to pull in ACE_Lock_Adapter<>
+	  template.
+
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+
+	  Include "ace/Thread_Mutex.h" and "ace/RW_Thread_Mutex.h" to pull
+	  in ACE_{RW_}Thread_Mutex class declarations.
+
+	* orbsvcs/orbsvcs/Log/PersistStore.h:
+
+	  Include "ace/Mutex.h" to pull in ACE_Mutex class declaration.
+
 Sun Aug 17 17:22:03 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Cleanup_Func_Registry.h:

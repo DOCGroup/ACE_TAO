@@ -7,11 +7,15 @@
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 
+#include "ace/Reverse_Lock_T.h"
+
 #if ! defined (__ACE_INLINE__)
 #include "CEC_ProxyPushSupplier.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(CosEvent, CEC_ProxyPushSupplier, "$Id$")
+ACE_RCSID (CosEvent,
+           CEC_ProxyPushSupplier,
+           "$Id$")
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 

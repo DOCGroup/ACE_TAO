@@ -24,6 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/DsLogAdminC.h"
+#include "ace/Mutex.h"
 
 #define PERSIST_LOG_DEFAULT_MAX_REC_LIST_LEN 250
 
