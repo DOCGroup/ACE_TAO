@@ -1191,9 +1191,30 @@ ACE_OS::cuserid (LPTSTR user, size_t maxlen)
     ACE_FAIL_RETURN (0);
   else
     return user;
+#elif defined (linux) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
+  // POSIX.1 dropped the cuserid() function.
+  // GNU GLIBC correctly deprecates the cuserid() function.
+
+  struct passwd *pw = 0;
+  
+  // Make sure the file pointer is at the beginning of the password file
+  ::setpwent ();
+  // Should use ACE_OS::setpwent() but I didn't want to move this
+  // method after it.
+
+  // Use the effective user ID to determine the user name.
+  pw = ::getpwuid (::geteuid ());
+
+  // Make sure the password file is closed.
+  ::endpwent ();
+
+  // Extract the user name from the passwd structure.
+  if (::strlen (pw->pw_name) <= maxlen)
+    return ::strcpy (user, pw->pw_name);
+  else
+    return 0;
 #else
   // Hackish because of missing buffer size!
-  ACE_UNUSED_ARG (maxlen);
   ACE_OSCALL_RETURN (::cuserid (user), char *, 0);
 #endif /* VXWORKS */
 }
@@ -10215,6 +10236,12 @@ ACE_OS::getpgid (pid_t pid)
   // getpgid() is not supported, only one process anyway.
   ACE_UNUSED_ARG (pid);
   return 0;
+#elif defined (linux) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0
+  // getpgid() is from SVR4, which appears to be the reason why GLIBC
+  // doesn't enable its prototype by default.
+  // Rather than create our own extern prototype, just use the one
+  // that is visible (ugh).
+  ACE_OSCALL_RETURN (::__getpgid (pid), pid_t, -1);
 #else
   ACE_OSCALL_RETURN (::getpgid (pid), pid_t, -1);
 #endif /* ACE_WIN32 */
@@ -10273,12 +10300,12 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
       break;
     default:
       errno = EINVAL;
-      return -1; // rather safe than sorry
+      return ACE_static_cast (off_t, -1); // rather safe than sorry
     }
 # endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
   DWORD result = ::SetFilePointer (handle, offset, NULL, whence);
   if (result == ACE_SYSCALL_FAILED)
-    ACE_FAIL_RETURN (-1);
+    ACE_FAIL_RETURN (ACE_static_cast (off_t, -1));
   else
     return result;
 #elif defined (ACE_PSOS)
@@ -10286,7 +10313,7 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (offset);
   ACE_UNUSED_ARG (whence);
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (ACE_static_cast (off_t, -1));
 # else
   unsigned long oldptr, newptr, result;
   // seek to the requested position
@@ -10306,7 +10333,7 @@ ACE_OS::lseek (ACE_HANDLE handle, off_t offset, int whence)
   return ACE_static_cast (off_t, newptr);
 # endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
-  ACE_OSCALL_RETURN (::lseek (handle, offset, whence), int, -1);
+  ACE_OSCALL_RETURN (::lseek (handle, offset, whence), off_t, -1);
 #endif /* ACE_WIN32 */
 }
 
@@ -10319,8 +10346,15 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
 #if ACE_SIZEOF_LONG == 8
   /* The native lseek is 64 bit, use it. */
   return ACE_OS::lseek (handle, offset, whence);
-#elif defined (__sgi) || defined (linux)
-  ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T, -1);
+#elif defined (__sgi) \
+      || (defined (linux) && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 0 && defined (_LARGEFILE64_SOURCE))
+  ACE_OSCALL_RETURN (::lseek64 (handle, offset, whence), ACE_LOFF_T,
+                     -1);
+#elif defined (linux)
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (offset);
+  ACE_UNUSED_ARG (whence);
+  ACE_NOTSUP_RETURN (ACE_static_cast (ACE_LOFF_T, -1));
 #else
   ACE_OSCALL_RETURN (::llseek (handle, offset, whence), ACE_LOFF_T, -1);
 #endif
