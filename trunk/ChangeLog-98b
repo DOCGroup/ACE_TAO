@@ -1,3 +1,8 @@
+Sun Nov 22 14:36:26 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor.cpp (open): Updated the
+	test to show the correct way to 'fake' <complete> call. 
+
 Sun Nov 22 13:57:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Makefile: Added Env_Value_T to the TEMPLATE_FILES macro in
