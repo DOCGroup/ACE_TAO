@@ -138,7 +138,7 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 
   // Now activate the high priority client.
 #if defined (VXWORKS)
-  priority = 101;
+  priority = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
   priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
@@ -323,12 +323,6 @@ do_priority_inversion_test (ACE_Thread_Manager &thread_manager,
 #endif
     }
 
-#if 0 // Disable the calculation of context switch time.  It seems to
-      // hang the machine, when running on single-processor machines.
-      // Instead, to find the context switch time, run $ACE/performance-tests/Misc/context_switch_time
-    csw = context_switch_time ();
-#endif
-
 #if defined (VXWORKS)
   ACE_DEBUG ((LM_DEBUG, "Test done.\n"
               "High priority client latency : %f msec, jitter: %f msec\n"
@@ -492,7 +486,7 @@ do_thread_per_rate_test (ACE_Thread_Manager &thread_manager,
     ACE_Sched_Priority priority;
 
 #if defined (VXWORKS)
-  priority = 101;
+  priority = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
   priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);

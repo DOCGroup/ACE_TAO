@@ -22,6 +22,7 @@ static char *ior_file = 0;
 static int base_port = ACE_DEFAULT_SERVER_PORT;
 static int num_of_objs = 2;
 static u_int use_name_service = 1;
+static u_int thread_per_rate = 0;
  
 Cubit_Task::Cubit_Task (void)
 {
@@ -350,7 +351,7 @@ Cubit_Task::create_servants ()
 static int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt opts (argc, argv, "sh:p:t:f:");
+  ACE_Get_Opt opts (argc, argv, "sh:p:t:f:r");
   int c;
 
   if (ACE_OS::hostname (hostname, BUFSIZ) != 0)
@@ -362,6 +363,9 @@ parse_args (int argc, char *argv[])
   while ((c = opts ()) != -1)
     switch (c)
       {
+      case 'r':
+	thread_per_rate = 1;
+	break;
       case 's':
         use_name_service = 0;
         break;
@@ -388,9 +392,13 @@ parse_args (int argc, char *argv[])
                            " [-h <my_hostname>]"
                            " [-t <num_objects>]"
                            " [-f <ior_file>]"
+                           " [-r Use thread per rate]"
                            "\n", argv [0]),
                           1);
       }
+
+  if (thread_per_rate == 1)
+    num_of_objs = 5;
 
   // Indicates successful parsing of command line
   return 0;
@@ -436,6 +444,7 @@ initialize (int argc, char **argv)
                         " [-h my_hostname]"
                         " [-t num_objects]"
                         " [-f <ior_file>]"
+			" [-r Use thread per rate]"
                         "\n", argv [0]),
                        1);
 
@@ -488,7 +497,7 @@ start_servants (ACE_Barrier &start_barrier)
                   -1);
 
 #if defined (VXWORKS)
-  ACE_Sched_Priority priority = 101;
+  ACE_Sched_Priority priority = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
   ACE_Sched_Priority priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                                                 ACE_SCOPE_THREAD);
@@ -559,6 +568,12 @@ start_servants (ACE_Barrier &start_barrier)
           ACE_ERROR ((LM_ERROR, "(%P|%t; %p\n",
                       "low_priority_task[i]->activate"));
         }
+
+      // use different priorities on thread per rate.
+      if (thread_per_rate == 1)
+	priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
+							priority,
+							ACE_SCOPE_THREAD);
 
       ACE_DEBUG ((LM_DEBUG,
 		  "Created servant %d\n",
