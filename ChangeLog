@@ -1,5 +1,9 @@
 Tue Apr 24 06:28:00 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* docs/ACE-guidelines.html: Updated the discussion of using
+	  open() rather than constructors.  Thanks to Stan Pinte
+ 	  <spinte@latinia.com> for motivating this.
+
 	* ace/ace_wchar.h: Fixed some code for VxWorks.  Thanks to
 	  Albert Wijnja <Albert.Wijnja@meco.nl> for reporting this.
 
