@@ -15,6 +15,7 @@
 
 #include "QuoterS.h"
 
+
 #if !defined (QUOTER_GENERIC_FACTORY_IMPL_H)
 #define QUOTER_GENERIC_FACTORY_IMPL_H
 
@@ -39,6 +40,7 @@ public:
   // Returns an object reference to a newly created object, though the
   // Generic Factory itself cannot create objects, it will forward the
   // request to a more concrete Factory.
+
 };
 
 #endif /* QUOTER_GENERIC_FACTORY_IMPL_H */

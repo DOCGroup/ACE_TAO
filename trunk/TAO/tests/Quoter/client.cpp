@@ -244,8 +244,11 @@ Quoter_Client::init_naming_service (void)
     // The name of the Quoter Factory
     CosLifeCycle::Key factoryName (1);  // max = 1 
     factoryName.length(1);
-    factoryName[0].id =
-    CORBA::string_dup ("Quoter_Generic_Factory");
+
+    // to use directly a Quoter_Generic_Factory
+    // factoryName[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
+    // or to use the life cycle service
+    factoryName[0].id = CORBA::string_dup ("Quoter_Life_Cycle_Service");
     
     // Find an appropriate factory over there.
     CosLifeCycle::Factories_ptr factories_ptr = 

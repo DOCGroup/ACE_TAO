@@ -41,6 +41,7 @@ Quoter_Generic_Factory_Impl::supports (const CosLifeCycle::Key &factory_key,
   return 0;
 }
 
+
 CORBA::Object_ptr
 Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key, 
                                             const CosLifeCycle::Criteria &the_criteria,
@@ -173,4 +174,8 @@ Quoter_Generic_Factory_Impl::create_object (const CosLifeCycle::Key &factory_key
 
       return CORBA::Object::_duplicate (quoter_var.ptr());
     }
-}
+} 
+
+ 
+
+

@@ -15,54 +15,22 @@
 
 #include "Criteria_Evaluator.h"
 
-// default constructor
-Criteria_Evaluator::NotAvailable::NotAvailable (void)
-  : CORBA_UserException (0) // no type code available
-{
-}
-
-Criteria_Evaluator::NotAvailable::NotAvailable(const char * reason)
-  : CORBA_UserException  (0) // no type code available
-{
-    this->reason_ = CORBA::string_dup (reason);
-}
-
-// copy constructor
-Criteria_Evaluator::NotAvailable::NotAvailable (const NotAvailable &_tao_excp)
-  :CORBA_UserException (0)
-{
-    this->reason_ = CORBA::string_dup (_tao_excp.reason_.in ());
-}
-
-Criteria_Evaluator::NotAvailable::~NotAvailable (void)
-{
-}
-
-// assignment operator
-Criteria_Evaluator::NotAvailable&
-Criteria_Evaluator::NotAvailable::operator= (const NotAvailable &_tao_excp)
-{
-  this->type_ = 0;
-  this->reason_ = CORBA::string_dup (_tao_excp.reason_.in ());
-  return *this;
-}
-
-
-Criteria_Evaluator::Criteria_Evaluator (CosLifeCycle::Criteria &criteria)
+Quoter_Criteria_Evaluator::Quoter_Criteria_Evaluator (const CosLifeCycle::Criteria criteria)
 : criteria_ (criteria)
 {
 }
  
-Criteria_Evaluator::~Criteria_Evaluator ()
+Quoter_Criteria_Evaluator::~Quoter_Criteria_Evaluator ()
 {
 }
 
 
-  
-TAO_Unbounded_Object_Sequence<CosLifeCycle::NVP> *
-Criteria_Evaluator::getInitialization (CORBA::Environment &env)
+
+Stock::Criteria_Evaluator::SeqNamedValuePair *
+Quoter_Criteria_Evaluator::getInitialization (CORBA::Environment &env)
 {
-  TAO_Unbounded_Object_Sequence<CosLifeCycle::NVP> *sequence_ptr;
+  
+  SeqNamedValuePair *sequence_ptr;
 
   CORBA::Any_ptr any_ptr = getCriteriaMember ("initialization");
 
@@ -77,8 +45,8 @@ Criteria_Evaluator::getInitialization (CORBA::Environment &env)
 }
   
   
-CORBA::String
-Criteria_Evaluator::getFilter (CORBA::Environment &env)
+char *
+Quoter_Criteria_Evaluator::getFilter (CORBA::Environment &env)
 {
   CORBA::String string;
   CORBA::Any_ptr any_ptr = getCriteriaMember ("filter");
@@ -94,7 +62,7 @@ Criteria_Evaluator::getFilter (CORBA::Environment &env)
 
 
 CORBA::Any_ptr
-Criteria_Evaluator::getCriteriaMember (const CORBA::String member_name)
+Quoter_Criteria_Evaluator::getCriteriaMember (const CORBA::String member_name)
 {
   if (!ACE_OS::strcmp(member_name, "initialization") 
     && !ACE_OS::strcmp(member_name, "filter")
@@ -111,4 +79,23 @@ Criteria_Evaluator::getCriteriaMember (const CORBA::String member_name)
   }
   return 0;  
 }
+
+
+
+void 
+Quoter_Criteria_Evaluator::setCriteria (const CosLifeCycle::Criteria & criteria,
+					CORBA::Environment &_tao_environment)
+{
+  criteria_ = criteria;
+}
+
+
+
+
+
+
+
+
+
+
 
