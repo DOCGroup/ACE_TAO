@@ -1,3 +1,8 @@
+Thu Jun 14 15:42:57 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Obstack_T.cpp (release): Forgot to reset the <block_> in
+	  Obchunk.
+
 Thu Jun 14 14:35:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * bin/msvc_auto_compile.pl:
@@ -13,9 +18,9 @@ Thu Jun 14 08:24:03 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Thu Jun 14 03:10:11 2001  Krishnakumar B <kitty@danzon.cs.wustl.edu>
 
-	* tests/TSS_Test.cpp: 
+	* tests/TSS_Test.cpp:
 
-	  Fixed a error in the compile caused due to ACE_reinterpret_cast 
+	  Fixed a error in the compile caused due to ACE_reinterpret_cast
 	  applied to a const int.
 
 Wed Jun 13 21:50:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
