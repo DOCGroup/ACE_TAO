@@ -355,17 +355,11 @@ DWORD
 ACE_NT_Service::state (ACE_Time_Value *wait_hint)
 {
 
-  SC_HANDLE svc = this->svc_sc_handle();
-  if (svc == 0)
+DWORD curr_state;
+
+  if (this->state (&curr_state, wait_hint) == -1)
     return 0;
-
-  QueryServiceStatus (svc, &this->svc_status_);
-  if (wait_hint != 0)
-    {
-      wait_hint->msec(this->svc_status_.dwWaitHint);
-    }
-
-  return this->svc_status_.dwCurrentState;
+  return curr_state;
 
 }
 
@@ -374,10 +368,21 @@ int
 ACE_NT_Service::state (DWORD *pstate, ACE_Time_Value *wait_hint)
 {
 
-  DWORD curr_state = state (wait_hint);
-  if (curr_state > 0)
-    *pstate = curr_state;
-  return curr_state == 0 ? -1 : 0;
+  SC_HANDLE svc = this->svc_sc_handle();
+  if (svc == 0)
+    return -1;
+
+  if (QueryServiceStatus (svc, &this->svc_status_) == 0)
+    return -1;
+
+  if (wait_hint != 0)
+    {
+      wait_hint->msec(this->svc_status_.dwWaitHint);
+    }
+
+  *pstate = this->svc_status_.dwCurrentState;
+
+  return 0;
 
 }
 
