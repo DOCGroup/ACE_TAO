@@ -52,7 +52,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::ACE_Timer_Heap_T (size_t size,
   ACE_TRACE ("ACE_Timer_Heap::ACE_Timer_Heap");
 
   // Create the heap array.
-  ACE_NEW (this->heap_, NODE *[size]);
+  ACE_NEW (this->heap_, (ACE_Timer_Node_T<TYPE, FUNCTOR> *[size]));
 
   // Create the parallel 
   ACE_NEW (this->timer_ids_, int[size]);
@@ -66,7 +66,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::ACE_Timer_Heap_T (size_t size,
   if (preallocate)
     {
       ACE_NEW (this->preallocated_nodes_,
-	       NODE[size]);
+	       (ACE_Timer_Node_T<TYPE, FUNCTOR>[size]));
 
       // Add allocated array to set of such arrays for deletion
       // on cleanup.
@@ -96,10 +96,10 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::~ACE_Timer_Heap_T (void)
   // clean up any preallocated timer nodes
   if (preallocated_nodes_ != 0)
     {
-      ACE_Unbounded_Set_Iterator<NODE *> 
+      ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<TYPE, FUNCTOR> *>
 	set_iterator (this->preallocated_node_set_);
 
-      for (NODE **entry = 0;
+      for (ACE_Timer_Node_T<TYPE, FUNCTOR> **entry = 0;
 	   set_iterator.next (entry) !=0;
 	   set_iterator.advance ())
 	delete [] *entry;
@@ -208,7 +208,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::copy (int index, ACE_Timer_Node_T<TYPE, FUNCTOR
 template <class TYPE, class FUNCTOR> ACE_Timer_Node_T<TYPE, FUNCTOR> *
 ACE_Timer_Heap_T<TYPE, FUNCTOR>::remove (size_t index)
 {
-  NODE *removed_node = this->heap_[index];
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *removed_node = this->heap_[index];
 
   // Return this timer id to the freelist.
   this->push_freelist (removed_node->timer_id_);
@@ -221,7 +221,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::remove (size_t index)
   
   if (index < this->cur_size_)
     {
-      NODE *moved_node = this->heap_[this->cur_size_];
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *moved_node = this->heap_[this->cur_size_];
       
       // Move the end node to the location being removed and update
       // the corresponding slot in the parallel <timer_ids> array.
@@ -317,8 +317,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::grow_heap (void)
 
    // First grow the heap itself.
 
-  NODE **new_heap = 0;
-  ACE_NEW (new_heap, NODE *[new_size]);
+  ACE_Timer_Node_T<TYPE, FUNCTOR> **new_heap = 0;
+  ACE_NEW (new_heap, (ACE_Timer_Node_T<TYPE, FUNCTOR> *[new_size]));
   ACE_OS::memcpy (new_heap, this->heap_, 
 		  max_size_ * sizeof *new_heap);
   delete [] this->heap_;
@@ -347,7 +347,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::grow_heap (void)
       // Create a new array with max_size elements to link in
       // to existing list.
       ACE_NEW (this->preallocated_nodes_, 
-	       NODE[this->max_size_]);
+	       (ACE_Timer_Node_T<TYPE, FUNCTOR>[this->max_size_]));
 
       // Add it to the set for later deletion
       this->preallocated_node_set_.insert (this->preallocated_nodes_);      
@@ -365,9 +365,9 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::grow_heap (void)
 	this->preallocated_nodes_freelist_ = &preallocated_nodes_[0];
       else
 	{
-	  NODE *previous = this->preallocated_nodes_freelist_;
+	  ACE_Timer_Node_T<TYPE, FUNCTOR> *previous = this->preallocated_nodes_freelist_;
 	
-	  for (NODE *current = this->preallocated_nodes_freelist_->next_;
+	  for (ACE_Timer_Node_T<TYPE, FUNCTOR> *current = this->preallocated_nodes_freelist_->next_;
 	       current != 0;
 	       current = current->next_)
 	    previous = current;
@@ -400,7 +400,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::alloc_node (void)
   // Only allocate a node if we are *not* using the preallocated heap.
   if (this->preallocated_nodes_ == 0)
     ACE_NEW_RETURN (temp,
-		    NODE,
+		    (ACE_Timer_Node_T<TYPE, FUNCTOR>),
 		    0);
   else
     {
@@ -451,17 +451,17 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::schedule (const TYPE &type,
       int timer_id = this->timer_id ();
       
       // Obtain the memory to the new node.
-      NODE *temp = this->alloc_node ();
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *temp = this->alloc_node ();
 
       if (temp)
 	{
 	  // Use operator placement new.
-	  new (temp) NODE (type, 
-			   act, 
-			   future_time,
-			   interval, 
-			   0,
-			   timer_id);
+	  new (temp) ACE_Timer_Node_T<TYPE, FUNCTOR> (type, 
+						      act, 
+						      future_time,
+						      interval, 
+						      0,
+						      timer_id);
 	  this->insert (temp);
 	  return timer_id;
 	}
@@ -493,7 +493,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::cancel (int timer_id,
     }
   else
     {
-      NODE *temp = this->remove (timer_node_slot);
+      ACE_Timer_Node_T<TYPE, FUNCTOR> *temp = this->remove (timer_node_slot);
 
       if (dont_call == 0)
 	// Call the close hook.
@@ -523,7 +523,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR>::cancel (const TYPE &type,
     {
       if (this->heap_[i]->type_ == type)
         {
-          NODE *temp = this->remove (i);
+          ACE_Timer_Node_T<TYPE, FUNCTOR> *temp = this->remove (i);
 
           number_of_cancellations++;
 

@@ -36,7 +36,7 @@ public:
   ACE_Timer_List_Iterator_T (ACE_Timer_List_T<TYPE, FUNCTOR> &);
   // Constructor.
 
-  virtual int next (NODE *&timer_node, 
+  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR> *&timer_node, 
                     const ACE_Time_Value &cur_time);
   // Pass back the next <timer_node> that hasn't been seen yet, if its
   // <time_value_> <= <cur_time>.  In addition, moves the timer queue
@@ -131,10 +131,10 @@ public:
   // Dump the state of an object.
 
 protected:
-  virtual NODE *alloc_node (void);
+  virtual ACE_Timer_Node_T<TYPE, FUNCTOR> *alloc_node (void);
   // Factory method that allocates a new node (uses operator new).
 
-  virtual void free_node (NODE *);
+  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
   // Factory method that frees a previously allocated node (uses
   // operator delete).
 
@@ -145,13 +145,13 @@ private:
   // timer id returned from this method will never == -1 to avoid
   // conflicts with other failure return values.
 
-  virtual void reschedule (NODE *);
+  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
   // Reschedule an "interval" <ACE_Timer_Node>.
 
-  virtual ITERATOR &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> &iter (void);
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
-  NODE *head_; 
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *head_; 
   // Pointer to linked list of <ACE_Timer_Handles>.
 
   LIST_ITERATOR iterator_;

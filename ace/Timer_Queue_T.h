@@ -59,15 +59,12 @@ class ACE_Timer_Node_T
   friend class ACE_Timer_Wheel_T<TYPE, FUNCTOR>;
   friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR>;
 
-  typedef ACE_Timer_Node_T<TYPE, FUNCTOR> NODE;
-  // Typedef for self
-
   // = Initialization methods.
   ACE_Timer_Node_T (const TYPE &type, 
 		    const void *a, 
 		    const ACE_Time_Value &t, 
 		    const ACE_Time_Value &i, 
-		    NODE *n, 
+		    ACE_Timer_Node_T<TYPE, FUNCTOR> *n, 
 		    int timer_id);
   // Constructor.
 
@@ -75,8 +72,8 @@ class ACE_Timer_Node_T
 		    const void *a, 
 		    const ACE_Time_Value &t, 
 		    const ACE_Time_Value &i, 
-		    NODE *p,
-                    NODE *n, 
+		    ACE_Timer_Node_T<TYPE, FUNCTOR> *p,
+                    ACE_Timer_Node_T<TYPE, FUNCTOR> *n, 
 		    int timer_id);
   // Constructor for the doubly linked list version.
 
@@ -97,10 +94,10 @@ class ACE_Timer_Node_T
   // If this is a periodic timer this holds the time until the next
   // timeout.
 
-  NODE *prev_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *prev_;
   // Pointer to previous timer.
 
-  NODE *next_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *next_;
   // Pointer to next timer.
   
   int timer_id_;
@@ -124,14 +121,14 @@ class ACE_Timer_Queue_Iterator_T
   //     the head of the timer queue up by one every time.
 {
 public:
-
-  typedef ACE_Timer_Node_T<TYPE, FUNCTOR> NODE;
-  // Type of the Node
-
+  // = Initialization and termination methods.
   ACE_Timer_Queue_Iterator_T (void);
-  virtual ~ACE_Timer_Queue_Iterator_T (void);
+  // Constructor.
 
-  virtual int next (NODE *&timer_node, 
+  virtual ~ACE_Timer_Queue_Iterator_T (void);
+  // Destructor.
+
+  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR> *&timer_node,
 		    const ACE_Time_Value &cur_time) = 0;
   // Pass back the next <timer_node> that hasn't been seen yet, if its
   // <time_value_> <= <cur_time>.  In addition, moves the timer queue
@@ -150,9 +147,6 @@ class ACE_Timer_Queue_T
   //      and <ACE_Timer_Heap>.
 {
 public: 
-  typedef ACE_Timer_Node_T<TYPE, FUNCTOR> NODE;
-  // Type of Node
-
   typedef ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> ITERATOR;
   // Type of Iterator
 
@@ -255,16 +249,16 @@ protected:
   // This method will call the <functor> with the <type>, <act> and
   // <time>
 
-  virtual void reschedule (NODE *) = 0;
+  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *) = 0;
   // Reschedule an "interval" <ACE_Timer_Node>.
 
   virtual ITERATOR &iter (void) = 0;
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
-  virtual NODE *alloc_node (void) = 0;
+  virtual ACE_Timer_Node_T<TYPE, FUNCTOR> *alloc_node (void) = 0;
   // Factory method that allocates a new node.
 
-  virtual void free_node (NODE *) = 0;
+  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *) = 0;
   // Factory method that frees a previously allocated node.
 
 #if defined (ACE_MT_SAFE)

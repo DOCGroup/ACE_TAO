@@ -35,7 +35,7 @@ public:
   ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_T<TYPE, FUNCTOR> &);
   // Constructor.
 
-  virtual int next (NODE *&timer_node, 
+  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR> *&timer_node, 
                     const ACE_Time_Value &cur_time);
   // Pass back the next <timer_node> that hasn't been seen yet, if its
   // <time_value_> <= <cur_time>.  In addition, moves the timer queue
@@ -129,24 +129,24 @@ public:
   // Dump the state of an object.
 
 protected:
-  virtual NODE *alloc_node (void);
+  virtual ACE_Timer_Node_T<TYPE, FUNCTOR> *alloc_node (void);
   // Factory method that allocates a new node (uses operator new).
 
-  virtual void free_node (NODE *);
+  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
   // Factory method that frees a previously allocated node (uses
   // operator delete).
 
 private:
-  NODE *remove (void);
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *remove (void);
   // Removes the earliest node and returns a pointer to it.
 
-  virtual void reschedule (NODE *);
+  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
   // Reschedule an "interval" node
 
-  virtual ITERATOR &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> &iter (void);
   // Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
 
-  NODE **wheel_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR> **wheel_;
   // Timing Wheel.
 
   size_t wheel_size_;
@@ -167,8 +167,8 @@ private:
   ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR> iterator_;
   // Iterator used to expire timers.
 
-  NODE *freelist_;
-  // Pointer to the freelist of <NODE>.
+  ACE_Timer_Node_T<TYPE, FUNCTOR> *freelist_;
+  // Pointer to the freelist of <ACE_Timer_Node_T<TYPE, FUNCTOR>>.
 
   // = Don't allow these operations for now.
   ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T &);
