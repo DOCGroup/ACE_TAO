@@ -428,8 +428,10 @@ deep_free (CORBA::TypeCode_ptr tc,
                              0,
                              env);
       // @@ This better be allocated via new[].
-      // @@ (ANDY) I'm not sure what to do here...should I delete the value?  It seems
-      // that the DTOR for the sequence will insure that this buffer goes away.
+      //
+      // @@ (ANDY) I'm not sure what to do here...should I delete the
+      // value?  It seems that the DTOR for the sequence will insure
+      // that this buffer goes away.
       delete [] ((CORBA::OctetSeq *) value)->buffer;
       break;
 

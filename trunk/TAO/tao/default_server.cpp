@@ -103,13 +103,13 @@ TAO_Default_Server_Strategy_Factory::create_object_table (void)
       // it is assumed that the user would have used the hooks to
       // supply a user-defined instance of the object table
       //
-      // @@ Note that the usage below doesn't really fit very well
-      // now.  We need for the userdef stuff to provide a creation
-      // hook--IF we decide to keep the whole demultiplexing strategy
-      // creation the way it is.  IMHO, the way that userdef stuff
-      // should be done is to create the User_Server_Strategy_Factory
-      // and just link it in.  The default server would only encompass
-      // the strategies that are "shipped", so to speak. --cjc
+      // Note that the usage below doesn't really fit very well now.
+      // We need for the userdef stuff to provide a creation hook--IF
+      // we decide to keep the whole demultiplexing strategy creation
+      // the way it is.  IMHO, the way that userdef stuff should be
+      // done is to create the User_Server_Strategy_Factory and just
+      // link it in.  The default server would only encompass the
+      // strategies that are "shipped", so to speak. --cjc
       objtable = TAO_ORB_Core_instance()->oa_params()->userdef_lookup_strategy ();
       break;
     case TAO_ACTIVE_DEMUX:

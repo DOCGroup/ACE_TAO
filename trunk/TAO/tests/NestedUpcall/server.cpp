@@ -24,6 +24,7 @@ main (int argc, char* argv[])
 
   TAO_TRY
     {
+#if !defined(USE_ORBMGR)
       // @@ Chris, can you please try to replace most of this boiler
       // plate code with the TAO_Object_Manager stuff that Sumedh has
       // devised?  If we need to generalize his implementation to
@@ -68,17 +69,31 @@ main (int argc, char* argv[])
                               policies,
                               TAO_TRY_ENV);  
       TAO_CHECK_ENV;
+#else
+      TAO_ORB_Manager om;
+
+      om.init_child_poa (argc, argv, "Persistent_POA", TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      CORBA_ORB_var orb = om.orb ();
+#endif      
+      
 
       // Now that we've got all that done, we need to create our impl
       // and register!
-      PortableServer::ObjectId_var id =
-        PortableServer::string_to_ObjectId ("Reactor");
       Reactor_i *reactor_impl = 0;
       ACE_NEW_RETURN (reactor_impl, Reactor_i, -1);
+#if !defined(USE_ORBMGR)
+      PortableServer::ObjectId_var id =
+        PortableServer::string_to_ObjectId ("Reactor");
 
       poa->activate_object_with_id (id.in (),
                                     reactor_impl, TAO_TRY_ENV);
+#else
+      om.activate_under_child_poa ("Reactor", reactor_impl, TAO_TRY_ENV);
+#endif
       TAO_CHECK_ENV;
+      
 
       // Stringify the object
       Reactor_var reactor = reactor_impl->_this (TAO_TRY_ENV);

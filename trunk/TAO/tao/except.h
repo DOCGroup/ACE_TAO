@@ -34,7 +34,7 @@ class TAO_Export CORBA_Exception : public TAO_IUnknown
   CORBA_Exception (const CORBA_Exception &src);
   CORBA_Exception &operator = (const CORBA_Exception &src);
 
-  // @@ All these inline methods should be split off into a *.i file.
+  // Inlined here for efficiency and simplicity
   void *operator new (size_t, const void *p)
   { return (void *) p; }
   void *operator new (size_t s)

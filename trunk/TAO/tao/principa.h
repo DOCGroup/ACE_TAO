@@ -54,7 +54,8 @@ private:
   CORBA_Principal (const CORBA::Principal_ptr &);
 
 #if defined (__GNUG__)
-  // @@ Fix this to use the ACE "NAMESPACE" macro?
+  // Maybe this should be fixed to use the ACE_CLASS_IS_NAMESPACE()
+  // macro?
   //
   // No, the intent of that macro is to state that there's no way to
   // instantiate that type.  However, we can definitely instantiate
