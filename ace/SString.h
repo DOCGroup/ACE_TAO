@@ -40,8 +40,8 @@ class ACE_Export ACE_CString
   //   Instead, its internal representation is set equal to a global
   //   empty string.
 public:
-  friend ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
-  friend ostream &operator<< (ostream &, const ACE_CString &);
+  friend ACE_Export ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
+  friend ACE_Export ostream &operator<< (ostream &, const ACE_CString &);
 
   static const int npos;
   // No position constant
@@ -157,8 +157,8 @@ private:
   // Represents the "NULL" string to simplify the internal logic.
 };
 
-ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
-ostream &operator<< (ostream &, const ACE_CString &);
+ACE_Export ACE_CString operator+ (const ACE_CString &, const ACE_CString &);
+ACE_Export ostream &operator<< (ostream &, const ACE_CString &);
 
 class ACE_Export ACE_SString
   // = TITLE
@@ -175,7 +175,7 @@ class ACE_Export ACE_SString
   //   ACE_Allocator with a persistable memory pool
 {
 public:
-  friend ostream &operator<< (ostream &, const ACE_SString &);
+  friend ACE_Export ostream &operator<< (ostream &, const ACE_SString &);
 
   static const int npos;
   // No position constant
@@ -280,6 +280,8 @@ private:
   // Pointer to data.
 };
 
+ACE_Export ostream &operator<< (ostream &, const ACE_SString &);
+
 class ACE_Export ACE_WString
   // = TITLE
   //   A persistent wide string class.
@@ -293,7 +295,7 @@ class ACE_Export ACE_WString
   //   memory The user can make this a persistant class by providing
   //   an ACE_Allocator with a persistable memory pool
 {
-  friend ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
+  friend ACE_Export ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
 public:
   static const int npos;
   // No position constant
@@ -426,7 +428,7 @@ private:
   // Pointer to data.
 };
 
-ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
+ACE_Export ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
 
 #if defined (__ACE_INLINE__)
 #include "ace/SString.i"
