@@ -26,79 +26,79 @@ CIAO::NodeApplication_Impl::finishLaunch (
 
       // For every connection struct we finish the connection.
       for (CORBA::ULong i = 0; i < length; ++i)
-	{
-	  ACE_CString name = providedReference[i].instanceName.in ();
-	  Components::CCMObject_ptr comp;
+        {
+          ACE_CString name = providedReference[i].instanceName.in ();
+          Components::CCMObject_ptr comp;
 
-	  if (this->component_map_.find (name, comp) != 0)
-	    {
-	      ACE_TRY_THROW (Deployment::InvalidConnection ());
-	    }
+          if (this->component_map_.find (name, comp) != 0)
+            {
+              ACE_TRY_THROW (Deployment::InvalidConnection ());
+            }
 
-	  Components::EventConsumerBase_var consumer;
-	  //Since we know CCMObject inherits from navigation/event/receptacle, no need
-	  //to narrow here.
-	  switch (providedReference[i].kind)
-	    {
-	    case Deployment::SimplexReceptacle:
-	      comp->connect (providedReference[i].portName.in (),
-			     providedReference[i].endpoint.in ()
-			     ACE_ENV_ARG_PARAMETER);
-	      ACE_TRY_CHECK;
-	      break;
+          Components::EventConsumerBase_var consumer;
+          //Since we know CCMObject inherits from navigation/event/receptacle, no need
+          //to narrow here.
+          switch (providedReference[i].kind)
+            {
+            case Deployment::SimplexReceptacle:
+              comp->connect (providedReference[i].portName.in (),
+                             providedReference[i].endpoint.in ()
+                             ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+              break;
 
-	    case Deployment::MultiplexReceptacle:
-	      comp->connect(providedReference[i].portName.in (),
-			    providedReference[i].endpoint.in ()
-			    ACE_ENV_ARG_PARAMETER);
-	      ACE_TRY_CHECK;
-	      break;
+            case Deployment::MultiplexReceptacle:
+              comp->connect(providedReference[i].portName.in (),
+                            providedReference[i].endpoint.in ()
+                            ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+              break;
 
-	    case Deployment::EventEmitter:
-	      consumer = Components::EventConsumerBase::
-		_narrow (providedReference[i].endpoint.in ()
-			 ACE_ENV_ARG_PARAMETER);
-	      ACE_TRY_CHECK;
+            case Deployment::EventEmitter:
+              consumer = Components::EventConsumerBase::
+                _narrow (providedReference[i].endpoint.in ()
+                         ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
 
-	      if (CORBA::is_nil (consumer.in ()))
-		{
-		  ACE_THROW (Deployment::InvalidConnection ());
-		}
+              if (CORBA::is_nil (consumer.in ()))
+                {
+                  ACE_THROW (Deployment::InvalidConnection ());
+                }
 
-	      comp->connect_consumer(providedReference[i].portName.in (),
-				     consumer.in ()
-				     ACE_ENV_ARG_PARAMETER);
-	      ACE_TRY_CHECK;
-	      break;
+              comp->connect_consumer(providedReference[i].portName.in (),
+                                     consumer.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+              break;
 
-	    case Deployment::EventPublisher:
-	      consumer = Components::EventConsumerBase::
-		_narrow (providedReference[i].endpoint.in ()
-			 ACE_ENV_ARG_PARAMETER);
-	      ACE_TRY_CHECK;
-	      if (CORBA::is_nil (consumer.in ()))
-		ACE_THROW (Deployment::InvalidConnection ());
+            case Deployment::EventPublisher:
+              consumer = Components::EventConsumerBase::
+                _narrow (providedReference[i].endpoint.in ()
+                         ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+              if (CORBA::is_nil (consumer.in ()))
+                ACE_THROW (Deployment::InvalidConnection ());
 
-	      comp->subscribe (providedReference[i].portName.in (),
-			       consumer.in ()
-			       ACE_ENV_ARG_PARAMETER);
-	      ACE_TRY_CHECK;
-	      break;
+              comp->subscribe (providedReference[i].portName.in (),
+                               consumer.in ()
+                               ACE_ENV_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+              break;
 
-	    default:
-	      ACE_TRY_THROW (Deployment::InvalidConnection ());
-	    }
-	}
+            default:
+              ACE_TRY_THROW (Deployment::InvalidConnection ());
+            }
+        }
       if (start)
-	{
-	  this->start (ACE_ENV_SINGLE_ARG_PARAMETER);
-	  ACE_TRY_CHECK;
-	}
+        {
+          this->start (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "NodeApplication_Impl::finishLaunch\t\n");
+                           "NodeApplication_Impl::finishLaunch\t\n");
       ACE_RE_THROW;
     }
 
@@ -149,8 +149,8 @@ CIAO::NodeApplication_Impl::properties (ACE_ENV_SINGLE_ARG_DECL)
   Deployment::Properties * tmp;
 
   ACE_NEW_THROW_EX (tmp,
-		    Deployment::Properties (this->properties_),
-		    CORBA::NO_MEMORY ());
+                    Deployment::Properties (this->properties_),
+                    CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
   return tmp;
@@ -171,8 +171,8 @@ CIAO::NodeApplication_Impl::install (
    {
      Deployment::ComponentInfos * tmp;
      ACE_NEW_THROW_EX (tmp,
-		       Deployment::ComponentInfos,
-		       CORBA::NO_MEMORY ());
+                       Deployment::ComponentInfos,
+                       CORBA::NO_MEMORY ());
      ACE_TRY_CHECK;
 
      retv = tmp;
@@ -190,65 +190,65 @@ CIAO::NodeApplication_Impl::install (
 
      for (CORBA::ULong i = 0; i < len; ++i)
        {
-	 home = this->install_home (impl_infos[i]
-				    ACE_ENV_ARG_PARAMETER);
-	 ACE_TRY_CHECK;
+         home = this->install_home (impl_infos[i]
+                                    ACE_ENV_ARG_PARAMETER);
+         ACE_TRY_CHECK;
 
-	 Components::KeylessCCMHome_var kh =
-	   Components::KeylessCCMHome::_narrow (home.in ()
-						ACE_ENV_ARG_PARAMETER);
-	 ACE_TRY_CHECK;
+         Components::KeylessCCMHome_var kh =
+           Components::KeylessCCMHome::_narrow (home.in ()
+                                                ACE_ENV_ARG_PARAMETER);
+         ACE_TRY_CHECK;
 
-	 if (CORBA::is_nil (kh.in ()))
-	   ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+         if (CORBA::is_nil (kh.in ()))
+           ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
 
-	 // @@ Note, here we are missing the CreateFailure.
-	 // Sometime I will come back to add exception rethrow.
-	 comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
-	 ACE_TRY_CHECK;
+         // @@ Note, here we are missing the CreateFailure.
+         // Sometime I will come back to add exception rethrow.
+         comp = kh->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
+         ACE_TRY_CHECK;
 
-	 if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
-					Components::CCMObject::_duplicate (comp.in ())))
-	   ACE_TRY_THROW (Deployment::InstallationFailure ());
+         if (this->component_map_.bind (impl_infos[i].component_instance_name.in (),
+                                        Components::CCMObject::_duplicate (comp.in ())))
+           ACE_TRY_THROW (Deployment::InstallationFailure ());
 
-	 // Set the return value.
-	 (*retv)[i].component_instance_name
-	   = impl_infos[i].component_instance_name.in ();
+         // Set the return value.
+         (*retv)[i].component_instance_name
+           = impl_infos[i].component_instance_name.in ();
 
-	 (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
+         (*retv)[i].component_ref = Components::CCMObject::_duplicate (comp.in ());
 
-	 // Deal with Component instance related Properties.
-	 // Now I am only concerning about the COMPOENTIOR and here is only
-	 // the hardcoded version of the configuration. Hopefully we will
-	 // reach an agreement after the RTWS about how the configuration
-	 // should be done.
+         // Deal with Component instance related Properties.
+         // Now I am only concerning about the COMPOENTIOR and here is only
+         // the hardcoded version of the configuration. Hopefully we will
+         // reach an agreement after the RTWS about how the configuration
+         // should be done.
 
          const CORBA::ULong clen = impl_infos[i].component_config.length ();
          for (CORBA::ULong prop_len = 0; prop_len < clen; ++prop_len)
-	   {
-	     if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
-				 "ComponentIOR") == 0)
-	       {
-		 if (CIAO::debug_level () > 1)
-		   ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
-		 const char * path;
-		 impl_infos[i].component_config[prop_len].value >>= path;
+           {
+             if (ACE_OS::strcmp (impl_infos[i].component_config[prop_len].name.in (),
+                                 "ComponentIOR") == 0)
+               {
+                 if (CIAO::debug_level () > 1)
+                   ACE_DEBUG ((LM_DEBUG, "Found property to write the IOR.\n"));
+                 const char * path;
+                 impl_infos[i].component_config[prop_len].value >>= path;
 
-		 CORBA::String_var ior =
-		   this->orb_->object_to_string (comp.in ()
+                 CORBA::String_var ior =
+                   this->orb_->object_to_string (comp.in ()
                                                  ACE_ENV_ARG_PARAMETER);
-		 ACE_TRY_CHECK;
+                 ACE_TRY_CHECK;
 
-		 if (write_IOR (path, ior.in ()) != 0)
-		   {
-		     if (CIAO::debug_level () > 1)
-		       ACE_DEBUG ((LM_DEBUG, "Failed to write the IOR.\n"));
+                 if (write_IOR (path, ior.in ()) != 0)
+                   {
+                     if (CIAO::debug_level () > 1)
+                       ACE_DEBUG ((LM_DEBUG, "Failed to write the IOR.\n"));
 
-		     ACE_TRY_THROW (CORBA::INTERNAL ());
-		   }
+                     ACE_TRY_THROW (CORBA::INTERNAL ());
+                   }
 
-	       }
-	   }
+               }
+           }
        }
    }
   ACE_CATCHANY
@@ -316,7 +316,7 @@ CIAO::NodeApplication_Impl::remove (ACE_ENV_SINGLE_ARG_DECL)
        ++iter)
     {
       this->container_->ciao_uninstall_home ( (*iter).int_id_
-					      ACE_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       CORBA::release ( (*iter).int_id_);
