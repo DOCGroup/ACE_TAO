@@ -482,8 +482,6 @@ Test_String_Sequence::Test_String_Sequence (void)
 
 Test_String_Sequence::~Test_String_Sequence (void)
 {
-  CORBA::string_free (this->opname_);
-  // the other data members will be freed as they are "_var"s
 }
 
 const char *
