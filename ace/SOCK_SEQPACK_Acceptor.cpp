@@ -324,7 +324,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
 
 #if defined (ACE_HAS_LKSCTP)
       
-              sockaddr_storage *local_sockaddr = 0;
+              sockaddr_in *local_sockaddr = 0;
 
 	      // bind the primary first
               if (ACE_OS::bind (this->get_handle (),
@@ -339,7 +339,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
               if (num_addresses > 1)
               {
                 ACE_NEW_NORETURN(local_sockaddr,
-                               sockaddr_storage[num_addresses - 1]);
+                               sockaddr_in[num_addresses - 1]);
 
                 // all of the secondary addresses need the local port set
                 for (size_t i = 1; i < num_addresses; i++)
@@ -347,7 +347,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                   local_inet_addrs[i].sin_port = local_inet_addrs[0].sin_port;
                 }
 		
-		// copy the sockaddr_in's to sockaddr_storage
+		// copy only the sockaddrs that we need to bindx
                 for (size_t i = 0; i < num_addresses - 1; i++)
                 {
                   ACE_OS::memcpy(&(local_sockaddr[i]),
@@ -355,9 +355,10 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                                  sizeof(sockaddr_in));
                 }
                 
-                // now call bindx
+                // now call bindx 
                 if (!error && sctp_bindx(this->get_handle (), 
-                                         local_sockaddr, 
+                                         ACE_reinterpret_cast(sockaddr *, 
+                                                              local_sockaddr), 
                                          num_addresses - 1, 
                                          SCTP_BINDX_ADD_ADDR)) 
                 {

@@ -36,11 +36,12 @@ ACE_SOCK_SEQPACK_Association::close (void)
   return ACE_SOCK::close ();
 }
 
-#if defined (ACE_HAS_LKSCTP)
 int
 ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &size) const
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::get_local_addrs");
+
+#if defined (ACE_HAS_LKSCTP)
   /* 
     The size of ACE_INET_Addr must be large enough to hold the number of
     local addresses on the machine.  If the array is too small, the function
@@ -52,17 +53,17 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
     1. a socket fd
     2. a sctp association_id which will be ignored since we are using 
        tcp sockets    
-    3. a pointer to a sockaddr_storage
+    3. a pointer to sockaddr
 
     lksctp/draft will allocate memory and we are responsible for freeing
     it by calling sctp_freeladdrs().  
   */
 
   sockaddr_in *si = 0;
-  sockaddr_storage *laddrs = 0;
+  sockaddr *laddrs = 0;
   int err = 0;
   size_t len = 0;
-  
+ 
   err = sctp_getladdrs(this->get_handle(), 0, &laddrs);
   if (err > 0)
   {
@@ -78,7 +79,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
       
     for (size_t i = 0; i < len; i++)
     {
-      // first we cast the sockaddr_storage to sockaddr_in
+      // first we cast the sockaddr to sockaddr_in
       // since we only support ipv4 at this time.
       si = (sockaddr_in *) (&(laddrs[i]));
 
@@ -99,15 +100,8 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
 
   // make sure we free the struct using the system function
   sctp_freeladdrs(laddrs);
-  return 0;
-}
 
 #else
-
-int
-ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &size) const
-{
-  ACE_TRACE ("ACE_SOCK_SEQPACK_Association::get_local_addrs");
 
   /*
     We will be calling ACE_OS::getsockname, which accepts (and
@@ -169,17 +163,16 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
     addrs[i].set_type(addr_structs[i].sin_family);
     addrs[i].set_size(sizeof(sockaddr_in));
   }
-
+#endif /* ACE_HAS_LKSCTP */
   return 0;
 }
-#endif
 
 
-#if defined (ACE_HAS_LKSCTP)
 int 
 ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &size) const
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::get_remote_addrs");
+#if defined (ACE_HAS_LKSCTP)
   /*
     The size of ACE_INET_Addr must be large enough to hold the number of
     remotes addresses in the association.  If the array is too small, the 
@@ -191,14 +184,14 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
     1. a socket fd
     2. a sctp association_id which will be ignored since we are using
        tcp sockets
-    3. a pointer to a sockaddr_storage
+    3. a pointer to a sockaddr
 
     lksctp/draft will allocate memory and we are responsible for freeing
     it by calling sctp_freepaddrs().
   */
 
   sockaddr_in *si = 0;
-  sockaddr_storage *paddrs = 0;
+  sockaddr *paddrs = 0;
   int err = 0;
   size_t len = 0;
 
@@ -217,7 +210,7 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
 
     for (size_t i = 0; i < len; i++)
     {
-      // first we cast the sockaddr_storage to sockaddr_in
+      // first we cast the sockaddr to sockaddr_in
       // since we only support ipv4 at this time.
       si = (sockaddr_in *) (&(paddrs[i]));
 
@@ -238,15 +231,8 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
 
   // make sure we free the struct using the system function
   sctp_freepaddrs(paddrs);
-  return 0;
-}
 
 #else
-
-int
-ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &size) const
-{
-  ACE_TRACE ("ACE_SOCK_SEQPACK_Association::get_remote_addrs");
 
   /*
     We will be calling ACE_OS::getpeername, which accepts (and
@@ -308,10 +294,9 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
     addrs[i].set_type(addr_structs[i].sin_family);
     addrs[i].set_size(sizeof(sockaddr_in));
   }
-
+#endif /* ACE_HAS_LKSCTP */
   return 0;
 }
-#endif
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Auto_Array_Ptr<sockaddr_in>;

@@ -283,7 +283,7 @@ int main(int argc, char **argv){
     printbuf_remaining_size -= substring_length;
 
     // Get secondary addresses
-    ACE_INET_Addr* secondaries;
+    ACE_INET_Addr* secondaries = 0;
     if (optsMgr.num_secondary_accept_addrs) {
       ACE_NEW_NORETURN(secondaries,
                        ACE_INET_Addr[optsMgr.num_secondary_accept_addrs]);
