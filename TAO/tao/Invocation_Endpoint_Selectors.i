@@ -47,6 +47,8 @@ TAO_Default_Endpoint_Selector::TAO_Default_Endpoint_Selector (void)
 
 // ****************************************************************
 
+#if (TAO_HAS_RT_CORBA == 1)
+
 ACE_INLINE
 TAO_Priority_Endpoint_Selector::TAO_Priority_Endpoint_Selector (void)
 {
@@ -73,4 +75,4 @@ TAO_Priority_Protocol_Selector::TAO_Priority_Protocol_Selector (void)
 {
 }
 
-
+#endif /* TAO_HAS_RT_CORBA == 1 */
