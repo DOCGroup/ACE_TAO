@@ -15,8 +15,8 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use Getopt::Std;
 
-$opt_k = 'REMOTE';
-$opt_r = 1000;
+$opt_k = 'LCL';
+$opt_r = 10;
 
 getopts ('k:r:');
 
@@ -50,16 +50,19 @@ while (<>) {
 	$sum2 += $f[1] * $f[1];
 	$n++;
     }
-    $i = int ($f[1] / $opt_r);
+    $i = int ($f[1] * $opt_r);
     $histo{"$i"}++;
 }
 
 print "Latency results for $opt_k:\n";
-print "Minimum: $min, Maximum: $max, Average: ", int($sum / $n),
+print "Minimum: $min,",
+    " Maximum: $max,",
+    " Average: ", int($sum / $n),
     " Deviation: ",
     int(sqrt (($sum2/$n - ($sum/$n)*($sum/$n)))), "\n";
 
 while ( ($key,$value) = each %histo ) {
-    print $key * $opt_r, " $value\n";
+    $t = ($key / $opt_r);
+    print $t, " ", $value / $n, "\n";
 }
 

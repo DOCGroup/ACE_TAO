@@ -1,3 +1,29 @@
+Fri Apr 24 14:08:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	  The test creates its own scheduling service now, so all the
+	  invocations are collocated.
+	  Added support for overhead test, but it is still untested.
+
+	* orbsvcs/tests/EC_Multiple/Makefile: 
+	  Updated dependencies.
+
+	* orbsvcs/tests/EC_Multiple/latency.pl: 
+	  The program generates number in usecs now, less need for
+	  conversion here.
+
+	* orbsvcs/tests/EC_Multiple/gen_data: 
+	  Improved the graphs, include titles, the time is in usecs, the
+	  EPS files are generated (for LaTeX) and then converted to JPEG
+	  (for HTML).
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  Added Event/EC_Gateway.{h,cpp} and updated dependencies.
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp: 
+	  Removed obsolete options from usage message.
+
 Fri Apr 24 10:15:37 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tests/Quoter/Generic_Factory.{h,cpp,dsp}: server for a 
