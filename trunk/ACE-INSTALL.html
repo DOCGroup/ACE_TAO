@@ -361,7 +361,7 @@ make: *** [libACE.so] Error 8
 
       If you run out of memory, it's easy to add virtual memory on
       Linux.  Please see the <code>mkswap</code> man page.  You'll
-      need around 256 to 300 Mb of virtual memory (RAM + swap) to
+      need at least 256 to 300 Mb of virtual memory (RAM + swap) to
       compile all of ACE+TAO.  The <a href="#resource_requirements">System
       Resource Requirements section</a> has some suggestions on how
       to reduce the memory requirement.<p>
@@ -2483,15 +2483,15 @@ in $ACE_ROOT/include/makeinclude/platform_macros.GNU also.  See
 library customization instructions</a> for more information.<p>
 
 
-<HR><P>
-<H3><A NAME="resource_requirements">System Resource Requirements</A></H3>
-The amount of system resources required to build ACE and TAO varies
-greatly.  Platform, build options, and components built primarily
-influence the required system resources.  As a rough guide, the
-typical peak memory requirement could be well over 256 Mb (notably,
-for TAO's orbsvcs).  An <strong>entire</strong> build of ACE and TAO
-can use well over 1300 Mb of disk space.  It's usually not necessary
-to build <strong>all</strong> of ACE and TAO, though.<p>
+<HR><P> <H3><A NAME="resource_requirements">System Resource
+Requirements</A></H3> The amount of system resources required to build
+ACE and TAO varies greatly.  The required system resources are
+influenced by OS and compiler platform, build options, and component
+configurations.  As a rough guide, the typical peak memory requirement
+can be well over 256 MB (notably, for TAO's orbsvcs).  Depending on
+your OS and compiler configuration, an <strong>entire</strong> build
+of ACE and TAO can use well over 2 MB of disk space.  It's usually not
+necessary to build <strong>all</strong> of ACE and TAO, though.<p>
 
 Much less disk space is required for just the libraries.  For example,
 see the <a href="docs/ACE-subsets.html#ACE Library Size Breakdown">ACE
@@ -2530,8 +2530,10 @@ used for MSVC++ and files named '*.bor' are for Borland C++
 Builder.)<p>
 
 Finally, to save space, may want to run 'make clean' after 'make'.  It
-removes generated object files and leaves libraries/exectables
-intact.<p>
+removes generated object files and leaves libraries/executables
+intact.  If you want to remove any of the libraries/executables, as
+well, try 'make realclean'.<p>
+
 </ul>
 
 
