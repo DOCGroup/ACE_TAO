@@ -74,6 +74,7 @@ typedef char TCHAR;
 # elif defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #   include /**/ <cwchar>
+#   include /**/ <cwctype>
 # elif !defined (__BORLANDC__) && !defined (ACE_HAS_WINCE)
 #   include /**/ <wchar.h>
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
@@ -86,6 +87,14 @@ typedef char TCHAR;
 using std::size_t;
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
+// Since MSVC uses ushort16 = wchar_t, it is the only one
+// that does not need this defined
+
+#if defined (ACE_HAS_WCHAR) && !defined (_MSC_VER)
+# if !defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
+#  define ACE_WSTRING_HAS_USHORT_SUPPORT
+# endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
+#endif /* ACE_HAS_WCHAR && !_MSC_VER */
 
 // Define the unicode/wchar related macros correctly
 
