@@ -1,3 +1,12 @@
+Fri Jul 23 23:43:01 2004  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+        I didn't get around to send the following to Venkita before he
+	left for vacation so I'm checking them in here.
+
+	* tests/RTCCM/Priority_Test/README:
+	* tests/RTCCM/Priority_Test/descriptors/README: Documentation for
+	  running the simple Priority tests applications.
+
 Tue Jul 20 16:03:14 2004  Krishnakumar B  <kitty@nospam.invalid.domain>
 
         * docs/releasenotes/dance.html: Updated the release notes for
