@@ -12,8 +12,8 @@ Mon Sep 21 21:44:39 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Sep 21 21:32:31 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp,
-          Removed the extra args after init().
+        * orbsvcs: Removed the extra args after all the
+ 	  TAO_Naming_Client::init() calls.
 
 Mon Sep 21 18:20:35 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
