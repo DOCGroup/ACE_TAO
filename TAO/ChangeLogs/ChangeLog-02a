@@ -1,3 +1,29 @@
+Thu Sep 21 11:01:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/ImplRepo_Service/ImplRepo.dsw:
+
+	  New project added.
+
+	* orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.dsp:
+	* orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.cpp:
+	* orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.h:
+	* orbsvcs/ImplRepo_Service/NT_ImplRepo_Server.dsp:
+
+	  New files which build the Implementation Repository
+	  as an NT service.
+
+	* orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+
+	  Minor change to catch block eroor output message.
+
+	* orbsvcs/tests/Implrepo/run_test.pl:
+
+	  Added tests for persistent ImR and ImR as NT service.
+
+	* docs/implrepo/usersguide.html:
+
+	  Added section about persistent ImR.
+
 Thu Sep 21 08:33:18 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/CosEvent_Service/Makefile:
