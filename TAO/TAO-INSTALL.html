@@ -24,6 +24,7 @@ linking TAO with a version of ACE that is also linked against another
 ORB vendor's library, <EM>e.g.</EM>, liborbix.so, will produce
 undefined and most likely unpredictable and erroneous results. <P>
 
+
 <HR><P>
 <H3>On UNIX platforms</H3>
 
@@ -63,12 +64,65 @@ Since TAO is built atop ACE, TAO re-uses ACE's Makefile structure as
 well.  Thus, just like ACE requires GNU Make, so too does TAO.  More
 exactly, versions of <code>make</code> which are known to <em>not</em>
 work include those from Solaris 4.x and 5.x, HP-UX, the latest BSD,
-etc.  <p>
+etc.<p>
 
-GNU Make can be obtained from various places in source form. <P>
+GNU Make can be obtained from various places in source form.<P>
+
 
 <HR><P>
+<h3>For Cross-Compiled Targets, such as VxWorks and LynxOS</h3>
 
+If you are building TAO for a VxWorks target, please see the detailed
+instructions for building and installing ACE and TAO in <a
+href="../ACE-INSTALL.html#vxworks">../ACE-INSTALL.html</a>.<p>
+
+Cross-compiling TAO is not much different than building it for
+self-host.  The one major difference is that TAO's IDL compiler must
+be built and run on the host; it's not necessary to run it on the
+target.  It's easiest to set this up by using a symlink (Unix) or copy
+of <code>tao_idl</code> (NT).  By way of example, here is how I setup
+my Unix (SunOS5, using g++) workspace to support cross-compilation
+(for VxWorks).  It assumes that the ACE+TAO distribution has been
+unpacked, with TAO below ACE_wrappers.  It uses the
+ACE_wrappers/bin/create_ace_build script to create a shadow build
+tree:<p>
+<ol>
+  <li><code>cd ACE_wrappers</code>
+  <li><code>bin/create_ace_build SunOS5_g++</code>
+  <li><code>bin/create_ace_build vxworks</code>
+  <li><code>cd build/vxworks/TAO</code>
+  <li><code>/bin/rm -r TAO_IDL</code>
+  <li><code>ln -s ../../SunOS5_g++/TAO/TAO_IDL</code>
+</ol><p>
+
+To build, first on the host, then on the target:<p>
+<ol>
+  <li><code>cd build/SunOS5_g++</code>
+  <li><code>export ACE_ROOT=`pwd`;
+    export LD_LIBRARY_PATH=`pwd`/ace:$LD_LIBRARY_PATH</code>
+  <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
+    make.log 2&gt;&1</code>
+  <li><code>cd ../vxworks</code>
+  <li><code>export ACE_ROOT=`pwd`</code>
+  <li><code>(cd ace; make && cd ../tests; make && cd ../TAO; make) &gt;
+    make.log 2&gt;&1</code>
+</ol><p>
+
+For NT host, please see the detailed instructions for building and
+installing ACE and TAO in <a
+href="../ACE-INSTALL.html#vxworks">../ACE-INSTALL.html</a>.<p>
+
+Please note that dynamic loading of libraries is not supported by TAO
+for any cross-compiled target.  Therefore, dynamic service
+configuration of the TAO ORB is not supported.<p>
+
+NOTE: TAO_IDL currently needs gperf to be built on the host.  It's in
+the <code>ACE_wrappers/apps/gperf/src/</code> directory.  Then, a
+symlink or copy must be added to the <code>bin/</code> directory for
+the target.  This restriction should be removed in the near future.<p>
+
+
+<HR><P>
 <H3>On Windows NT</H3>
 
 <P><CODE>TAO_IDL</CODE> on NT will look for the Microsoft Visual C++ 
@@ -90,19 +144,19 @@ sure you change the project files to look for the include and library
 files in the correct place.</P>
 
 <OL>
-  <LI> Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or 
-       ace-vc50.dsw, whichever is in your copy of ACE). <P>
+  <LI>Make sure ACE is built (For Visual C++ 5.0, use ace.dsw or 
+      ace-vc50.dsw, whichever is in your copy of ACE). <P>
   
-  <LI> Make sure <CODE>ACE_wrappers\ace</CODE> is listed in the Executable 
-       Directories in Tools|Options.  This is needed if using the TAO_IDL
-	   compiler under MSVC.<P>
+  <LI>Make sure <CODE>ACE_wrappers\ace</CODE> is listed in the Executable 
+      Directories in Tools|Options.  This is needed if using the TAO_IDL
+	  compiler under MSVC.<P>
 
-  <LI> Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO 
-       library. <P>
+  <LI>Load the workspace <CODE>tao\TAO.dsw</CODE> and build the TAO 
+      library. <P>
 
-  <LI> To build the Cubit test, load the workspace 
-       <CODE>tests\Cubit\TAO\test.dsw</CODE> and build both client 
-       and server. <P>
+  <LI>To build the Cubit test, load the workspace 
+      <CODE>tests\Cubit\TAO\test.dsw</CODE> and build both client 
+      and server. <P>
 </OL>
 
 <H4><A NAME="taoace">TAOACE.dsw</A></H4>
@@ -117,15 +171,17 @@ version of the Naming Service.</P>
 <H4>Visual C++ 4.x</H4>
 
 <OL>
-  <LI> In Tools|Options, go to the Directories page and make sure that include
-       files paths includes ACE_wrappers\ and the root directory of TAO (which
-       can be <CODE>ACE_wrappers\TAO</CODE> if installed there).  The library files 
-       paths should include <CODE>ACE_wrappers\ace</CODE>. <P>
+  <LI>In Tools|Options, go to the Directories page and make sure that
+      include files paths includes ACE_wrappers\ and the root directory of
+      TAO (which can be <CODE>ACE_wrappers\TAO</CODE> if installed there).
+      The library files paths should include <CODE>ACE_wrappers\ace</CODE>.<P>
 
-  <LI> Load the project file <CODE>tao\TAO.mdp</CODE> and build the TAO library. <P>
+  <LI>Load the project file <CODE>tao\TAO.mdp</CODE> and build the TAO
+      library.<P>
 
-  <LI> To build the Cubit test, load the project file <CODE>tests\Cubit\TAO\test.mdp</CODE>
-       and build both client and server. <P>
+  <LI>To build the Cubit test, load the project file
+      <CODE>tests\Cubit\TAO\test.mdp</CODE> and build both client and
+      server.<P>
 </OL>
 
 <H4>Changing Include Paths</H4>
@@ -144,17 +200,18 @@ libraries in a project, make sure to the following settings are used in
 the Project Settings.</P>
 
 <UL>
-  <LI><B>C/C++ | General:</B> Add the Preprocessor Definitions 
+  <LI><strong>C/C++ | General:</strong> Add the Preprocessor Definitions 
       <CODE>TAO_HAS_DLL=0</CODE>, <CODE>ACE_HAS_DLL=0</CODE> and 
       <CODE>__ACE_INLINE__=0</CODE>
-  <LI><B>C/C++ | Code Generation:</B> Change Run-time library to <CODE>Debug
-      Multithreaded</CODE> (or <CODE>Multithreaded</CODE> for Release)
-  <LI><B>Link:</B> Link with the static libs, such as TAOs.lib or TAOsd.lib
+  <LI><strong>C/C++ | Code Generation:</strong> Change Run-time
+      library to <CODE>Debug Multithreaded</CODE> (or
+      <CODE>Multithreaded</CODE> for Release)
+  <LI><strong>Link:</strong> Link with the static libs, such as
+      TAOs.lib or TAOsd.lib
 </UL>
       
 <HR>
-<H3>
-<A NAME="#VC"></A>How to add IDL files into your Visual C++ projects</H3>
+<H3><A NAME="#VC">How to add IDL files into your Visual C++ projects</A></H3>
 Point of contact: <A HREF="mailto:nanbor@cs.wustl.edu">Nanbor Wang</A>.
 
 <P>Each IDL file generates .h, .i and .cpp files. Here is an example of
@@ -168,17 +225,17 @@ adding an IDL file named foobar.idl into a VC project.
       foobarS.cpp into the server project and foobarC.h, foobarC.i, and 
 	  foobarC.cpp into the client project.</LI>
 
-  <LI>Now open the project setting window (Project -> Setting... or just 
+  <LI>Now open the project setting window (Project -&gt; Setting... or just 
       press Alt-F7.) Select the IDL files in both client and server projects. 
 	  Choose to set the setting for "All Configuration." Make sure the 
-	  "Always use custom build step" is checked and "Exclude from build" is 
+	  "Always use custom build step" is checked and "Exclude from build" is
 	  unchecked.</LI>
 
   <LI>Click on the "Custom Build" tab. Add this entry as the build command 
       for IDL files:<BR><BR>
 
       <PRE>..\..\..\TAO_IDL\tao_idl $(InputName).idl</PRE>
-      Notice that your absolute path to TAO_IDL may vary. </LI>
+      Notice that your absolute path to TAO_IDL may vary.</LI>
 
   <LI>Now add the following entries as "Output file(s)."<BR><BR>
 
@@ -193,7 +250,7 @@ adding an IDL file named foobar.idl into a VC project.
       $(InputName)S_T.i
       $(InputName)S_T.cpp
       </PRE>
-      Add only one entry in each line. </LI>
+      Add only one entry in each line.</LI>
   
   <LI>You might also want to add the TAO_IDL compiler in as a dependency here
       if you update TAO often.  That way, if the compiler is changed, the
@@ -211,6 +268,7 @@ correctly. </p>
 <P>P.S. If anyone knows how to set a default setting in VC so we don't
 need to perform these procedures every time a new project gets set up,
 please let us know. Thanks.
+
 
 <P>
 <HR>
