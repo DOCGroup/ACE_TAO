@@ -141,10 +141,10 @@ IIOP_Object::use_locate_requests (CORBA::Boolean use_it)
       this->use_locate_request_ = 1;
     }
   else 
-    // don't use it
     {
-      this->first_locate_request_ = 1;
-      this->use_locate_request_ = 1;
+      // Don't use it.
+      this->first_locate_request_ = 0;
+      this->use_locate_request_ = 0;
     }   
 } 
 
