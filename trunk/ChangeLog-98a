@@ -1,3 +1,7 @@
+Sun Jan 11 16:18:15 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.4.18, released Sun Jan 11 16:18:15 1998.
+
 Sun Jan 11 00:00:26 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Gateway.cpp (parse_connection_config_file):
