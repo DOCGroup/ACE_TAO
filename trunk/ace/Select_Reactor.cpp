@@ -104,7 +104,7 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
   for (size_t h = 0; h < size; h++)
     ACE_SELECT_REACTOR_EVENT_HANDLER (this, h) = 0;
 #endif /* ACE_WIN32 */
-  
+
   // Check to see if the user is asking for too much and fail in this
   // case.
   if (size > FD_SETSIZE)
@@ -115,7 +115,7 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
 #if defined (RLIMIT_NOFILE)
   // Increase the number of handles if <size> is greater than the
   // current limit.
-  if (size < ACE::max_handles ())
+  if (size < (size_t) ACE::max_handles ())
     return ACE::set_handle_limit (size);
   else
 #endif /* RLIMIT_NOFILE */
@@ -608,7 +608,7 @@ ACE_Select_Reactor_Token::select_reactor (void)
   return *this->select_reactor_;
 }
 
-void 
+void
 ACE_Select_Reactor_Token::select_reactor (ACE_Select_Reactor &select_reactor)
 {
   this->select_reactor_ = &select_reactor;
@@ -1075,7 +1075,7 @@ ACE_Select_Reactor::close (void)
 
   this->notify_handler_.close ();
   this->initialized_ = 0;
-  
+
   return 0;
 }
 
@@ -1295,7 +1295,7 @@ ACE_Select_Reactor::bit_ops (ACE_HANDLE handle,
 #if defined (ACE_WIN32)
           || ACE_BIT_ENABLED (mask, ACE_Event_Handler::CONNECT_MASK)
 #endif /* ACE_WIN32 */
-          )        
+          )
         {
           (handle_set.ex_mask_.*ptmf) (handle);
           ACE_SET_BITS (omask, ACE_Event_Handler::EXCEPT_MASK);
@@ -1379,7 +1379,7 @@ ACE_Select_Reactor::resume_i (ACE_HANDLE handle)
       this->suspend_set_.rd_mask_.clr_bit (handle);
     }
   if (this->suspend_set_.wr_mask_.is_set (handle))
-    {  
+    {
       this->wait_set_.wr_mask_.set_bit (handle);
       this->suspend_set_.wr_mask_.clr_bit (handle);
     }
@@ -1463,7 +1463,7 @@ ACE_Select_Reactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &dis
       do
         {
           if (this->timer_queue_->calculate_timeout (max_wait_time,
-                                                     this_timeout) == 0) 
+                                                     this_timeout) == 0)
             this_timeout = 0;
 
           width = (u_long) this->handler_rep_.max_handlep1 ();
