@@ -1,3 +1,11 @@
+Wed Feb  2 14:14:52 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/tests/EC_Custom_Marshal/ECM_Supplier.cpp:
+	  Fixed race condition during shutdown.  The EC can die before the
+	  supplier has a chance to disconnect.  In that case when trying
+	  to disconnect the supplier receives an exception that should be
+	  ignored.
+
 Wed Feb  2 13:12:07 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * docs/releasenotes/ec.html:
