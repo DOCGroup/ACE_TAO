@@ -1,3 +1,23 @@
+Wed May 26 13:44:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any_Impl.cpp:
+        * tao/Any_Impl.h:
+        
+          Added comments to the void* value() method saying that
+          it no longer appears in the CORBA C++ mapping, is
+          deprecated by the OMG, and is no longer used in TAO.
+          
+        * tao/append.cpp (TAO_Marshal_Union::append):
+        * tao/skip.cpp (TAO_Marshal_Union::skip):
+        
+          In finding the value of an enum discriminator, replace the
+          call to the Any::value() with the creation of an ACE
+          Message Block and the marshaling of the Any's contents
+          into it. This removes the last remaining uses of the
+          Any's void* value() in TAO.
+
 Mon May 24 22:48:44 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:

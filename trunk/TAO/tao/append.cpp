@@ -25,7 +25,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Typecode.h"
 #include "tao/Marshal.h"
-#include "tao/Any.h"
+#include "tao/Any_Impl.h"
 #include "tao/CDR.h"
 #include "ace/Dynamic_Service.h"
 
@@ -554,33 +554,38 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr tc,
         case CORBA::tk_enum:
           {
             ACE_Message_Block *mb = any->_tao_get_cdr ();
+            CORBA::ULong d;
+            bool type_known = false;
 
-            if (mb != 0)
+            if (mb == 0)
               {
-                CORBA::ULong d = 0;
-                TAO_InputCDR cdr (mb->data_block (),
-                                  ACE_Message_Block::DONT_DELETE,
-                                  mb->rd_ptr () - mb->base (),
-                                  mb->wr_ptr () - mb->base (),
-                                  ACE_CDR_BYTE_ORDER,
-                                  TAO_DEF_GIOP_MAJOR,
-                                  TAO_DEF_GIOP_MINOR);
-                cdr.read_ulong (d);
-
-                if (d == enum_v)
-                  {
-                    current_member = i;
-                  }
+                ACE_NEW_RETURN (mb,
+                                ACE_Message_Block,
+                                TAO::TRAVERSE_STOP);
+                TAO_OutputCDR out;
+                any->impl ()->marshal_value (out);
+                ACE_CDR::consolidate (mb, out.begin ());
+                type_known = true;
               }
-            else
+              
+            TAO_InputCDR cdr (mb->data_block (),
+                              ACE_Message_Block::DONT_DELETE,
+                              mb->rd_ptr () - mb->base (),
+                              mb->wr_ptr () - mb->base (),
+                              any->_tao_byte_order (),
+                              TAO_DEF_GIOP_MAJOR,
+                              TAO_DEF_GIOP_MINOR);
+
+            cdr.read_ulong (d);
+            
+            if (type_known)
               {
-                const CORBA::ULong *d =
-                  ACE_reinterpret_cast (const CORBA::ULong *,
-                                        any->value ());
-                if (*d == enum_v)
-                  {
-                    current_member = i;
-                  }
+                mb->release ();
+              }
+
+            if (d == enum_v)
+              {
+                current_member = i;
               }
           }
           break;

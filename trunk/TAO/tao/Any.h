@@ -164,7 +164,10 @@ namespace CORBA
     ACE_Message_Block *_tao_get_cdr (void) const;
     int _tao_byte_order (void) const;
 
-    /// Spec-required method - not type safe.
+    /// Deprecated by the OMG. This no longer appears in
+    /// the C++ mapping. It is here only for backward
+    /// compatibility. It is no longer (as of 5/26/04)
+    /// used anywhere in TAO.
     const void *value (void) const;
 
   private:
