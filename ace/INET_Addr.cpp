@@ -43,7 +43,7 @@ ACE_INET_Addr::dump (void) const
 // Compare two addresses for inequality.
 
 int
-ACE_INET_Addr::operator != (const ACE_Addr &sap) const
+ACE_INET_Addr::operator != (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_INET_Addr::operator !=");
   return !((*this) == sap);
@@ -52,15 +52,13 @@ ACE_INET_Addr::operator != (const ACE_Addr &sap) const
 // Compare two addresses for equality.
 
 int
-ACE_INET_Addr::operator == (const ACE_Addr &sap) const
+ACE_INET_Addr::operator == (const ACE_INET_Addr &sap) const
 {
   ACE_TRACE ("ACE_INET_Addr::operator ==");
-  const sockaddr_in &inet_sap = ((const ACE_INET_Addr &) sap).inet_addr_;
 
-  return this->ACE_Addr::operator == (sap)
-    && this->inet_addr_.sin_port == inet_sap.sin_port
-    && ACE_OS::memcmp ((void *) &this->inet_addr_.sin_addr,
-		       (void *) &inet_sap.sin_addr,
+  return this->inet_addr_.sin_port == sap.inet_addr_.sin_port
+      && ACE_OS::memcmp ((void *) &this->inet_addr_.sin_addr,
+		       (void *) &sap.inet_addr_.sin_addr,
 		       sizeof (this->inet_addr_.sin_addr)) == 0;
 }
 

@@ -27,7 +27,7 @@ class ACE_Export ACE_Addr
 public:
   // = Initialization method.
 
-  ACE_Addr (int type = 0, int size = 0);
+  ACE_Addr (int type = -1, int size = -1);
   // Initializes instance variables. 
 
   // = Get/set the size of the address. 
@@ -53,10 +53,10 @@ public:
   // Set a pointer to the address.
 
   // = Equality/inequality tests
-  virtual int operator == (const ACE_Addr &sap) const;
+  int operator == (const ACE_Addr &sap) const;
   // Check for address equality.
 
-  virtual int operator != (const ACE_Addr &sap) const;
+  int operator != (const ACE_Addr &sap) const;
   // Check for address inequality.
 
   void base_set (int type, int size);
