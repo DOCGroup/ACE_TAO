@@ -212,6 +212,31 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
   //use the same Dispatch_Queue_Item as Dispatcher_Task without any
   //more memory allocation and it doesn't break the interface.
 
+#ifdef KOKYU_HAS_RELEASE_GUARD
+  //if current release time < (last release time + period) then defer dispatch
+  ACE_Time_Value now(ACE_OS::gettimeofday());
+  ACE_Time_Value last_release;
+  if (this->releases_.find(qos_info,last_release) < 0)
+    {
+      //new QosDescriptor, so just simulate last release as now minus period
+      last_release.set(0,0);
+      last_release += now - qos_info.period_;
+    }
+  /*
+  //TODO WARNING! This is a hack for EDF only to drop events
+  //check that we have time to run the event; otherwise, drop it!
+  ACE_Time_Value finish_time = now + qos_info.execution_time_;
+  //ACE_Time_Value abs_deadline = last_release + qos_info.period_ + qos_info.deadline_; //expected release plus deadline
+  if (finish_time > qos_info.deadline_) { //qos_info deadline is absolute
+    //won't be able to finish executing before deadline so drop the event
+    if (command->can_be_deleted ()) {
+      command->destroy ();
+    }
+    return 0;
+  }
+  */
+#endif // KOKYU_HAS_RELEASE_GUARD
+
   void* buf = this->allocator_->malloc (sizeof (Dispatch_Queue_Item));
 
   if (buf == 0)
@@ -229,22 +254,15 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
 #endif // ACE_HAS_DSUI
 
 #ifdef KOKYU_HAS_RELEASE_GUARD
-  //if current release time < last release time + period then defer dispatch
-  ACE_Time_Value now(ACE_OS::gettimeofday());
-  long rel_msec;
-  if (this->releases_.find(qos_info,rel_msec) < 0)
-    {
-      //new QosDescriptor, so just set last release to zero
-      rel_msec = 0;
-    }
-  ACE_Time_Value release;
-  release.msec(rel_msec);
-  release += qos_info.deadline_;
-
-  if (now < release)
+  //Should I set now here rather than above?
+  //TODO DEBUG! Making always defer!
+  ACE_Time_Value expected_release(last_release);
+  expected_release += qos_info.period_;
+  if (//1 ||
+      now < expected_release )
     {
       //defer until last release time + period
-      this->deferrer_.dispatch(qitem);
+      this->deferrer_.dispatch(qitem,last_release);
 
 #if defined (ACE_HAS_DSUI)
       //@BT INSTRUMENT with event ID: EVENT_DEFERRED Measure delay
@@ -252,12 +270,14 @@ Dispatcher_Task::enqueue (const Dispatch_Command* cmd,
       DSUI_EVENT_LOG (DISP_TASK_FAM, EVENT_DEFERRED, 0, sizeof(Object_ID), (char*)&oid);
 
       ACE_Time_Value tv = ACE_OS::gettimeofday();
-      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event deferred at %u\n",tv.msec()));
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : event deferred at %i\n",tv.msec()));
 #endif //ACE_HAS_DSUI
     }
   else
     {
       //release!
+      //ACE_Time_Value tv = ACE_OS::gettimeofday();
+      ACE_DEBUG ((LM_DEBUG, "Dispatcher_Task::enqueue() (%t) : RG passed; enqueueing at %u\n",ACE_OS::gettimeofday().msec()));
 #endif //KOKYU_HAS_RELEASE_GUARD
 
       this->enqueue_i (qitem);

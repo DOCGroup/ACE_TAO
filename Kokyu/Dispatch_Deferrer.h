@@ -25,9 +25,8 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_T.h"
 #include "ace/Message_Block.h"
-#include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
-#include "ace/Map.h"
+#include "ace/Map_Manager.h"
 
 namespace Kokyu
 {
@@ -56,7 +55,7 @@ class Dispatch_Deferrer : public ACE_Event_Handler
 
   int init(const Dispatch_Deferrer_Attributes& attr);
 
-  int dispatch (Dispatch_Queue_Item *qitem);
+  int dispatch (Dispatch_Queue_Item *qitem, ACE_Time_Value last_release);
 
   virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *act = 0);
@@ -64,15 +63,6 @@ class Dispatch_Deferrer : public ACE_Event_Handler
 
  private:
   ACE_Deadline_Message_Strategy msg_strat_;
-
-  ///Stores the Dispatch_Commands in earliest-release-time order,
-  ///until they are dispatched. I decided to use an
-  ///ACE_Dynamic_Message_Queue because it supports deadline
-  ///ordering. This decision is also good because we can simply store
-  ///the Dispatch_Queue_Item given to us by the
-  ///Default_Dispatcher_Impl rather than allocate some structure to
-  ///hold the Dispatch_Command and QoSDescriptor.
-  ACE_Dynamic_Message_Queue<ACE_SYNCH> rgq_;
 
   //Stores timer_ids from the Reactor (longs) using the
   //Dispatch_Queue_Item the timer is for as the key. Used to
@@ -83,7 +73,10 @@ class Dispatch_Deferrer : public ACE_Event_Handler
   Timer_Map timers_;
 
   ///Manages timers for the Dispatch_Commands
-  ACE_Reactor react_;
+  //TODO How should I start this reactor's event loop?
+  // Perhaps I could somehow get the ORB's Reactor?
+  // We could assume that the ACE_Reactor::instance() is the ORB's Reactor
+  ACE_Reactor *react_;
 
   Dispatcher_Task* task_;
 };

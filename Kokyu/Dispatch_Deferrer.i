@@ -1,12 +1,10 @@
 // $Id$
 
-namespace Kokyu
-{
+namespace Kokyu {
 
 ACE_INLINE
 Dispatch_Deferrer::Dispatch_Deferrer (void)
   : msg_strat_()
-  , rgq_(this->msg_strat_)
   , timers_()
   , react_()
   , task_(0)
@@ -16,9 +14,10 @@ Dispatch_Deferrer::Dispatch_Deferrer (void)
 ACE_INLINE
 Dispatch_Deferrer::~Dispatch_Deferrer (void)
 {
-  //TODO: remove all timers before closing reactor
+  //TODO: remove all timers
 
-  this->react_.close();
+  //Don't close reactor since it may still be in use
+  //and we don't own it!
 
   this->timers_.close();
 }
