@@ -44,7 +44,7 @@ ACE_PI_Control_Block::print_alignment_info (void)
               ACE_LIB_TEXT ("Sizeof ACE_MALLOC_HEADER_SIZE: %d\n")
               ACE_LIB_TEXT ("Sizeof ACE_PI_MALLOC_PADDING_SIZE: %d\n")
               ACE_LIB_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_SIZE: %d\n")
-              ACE_LIB_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_ALIGN_LONGS: %d\n")
+              ACE_LIB_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_ALIGN_BYTES: %d\n")
               ACE_LIB_TEXT ("Sizeof (MALLOC_HEADER): %d\n")
               ACE_LIB_TEXT ("Sizeof (CONTROL_BLOCK): %d\n"),
               sizeof (char *),
@@ -56,7 +56,7 @@ ACE_PI_Control_Block::print_alignment_info (void)
               ACE_MALLOC_HEADER_SIZE,
               ACE_PI_MALLOC_PADDING_SIZE,
               ACE_PI_CONTROL_BLOCK_SIZE,
-              ACE_PI_CONTROL_BLOCK_ALIGN_LONGS,
+              ACE_PI_CONTROL_BLOCK_ALIGN_BYTES,
               sizeof (ACE_Malloc_Header),
               sizeof (ACE_PI_Control_Block)
               ));

@@ -1,3 +1,47 @@
+Tue Feb 25 22:26:30 2003  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ace/Malloc.h:
+        * ace/Malloc.cpp:
+        * ace/Malloc.h:
+        * ace/Malloc_T.cpp:
+        * ace/PI_Malloc.cpp:
+        * ace/PI_Malloc.h:
+
+          Teach ACE_Control_Block and friends to do alignment on 64-bit
+          platforms. The previous code was buggy and caused a lot of bus
+          errors on platforms with greater than 4-byte alignment. We no
+          longer multiply and divide by sizeof (long) and do the alignment
+          based on sizeof (union ACE_max_align_info). This change also
+          makes the default alignment to be at 8-byte boundary (which is
+          ofcourse overridable) and errs in favour of safe code by default
+          vs optimization for code size. This should get rid of bug
+          reports on SGI IRIX, Solaris 64-bit etc related to
+          ACE_*_Allocator and friends.
+
+          Also fixed a couple of rounding errors which result in core
+          dumps, in ACE_Cached_Allocator and ACE_Dynamic_Cached_Allocator
+          where we happily traverse memory irrespective of alignment of
+          the chunk_size.
+
+          Thanks to Dave Mercer <mercer@itgssi.com> for reporting the
+          problem.
+
+          One of the items from the long list of pending items post-5.3.1.
+
+        * ace/OS_Memory.h:
+
+          Removed the definition of ACE_MALLOC_ALIGN from this file.
+          ACE_MALLOC_ALIGN is an internal definition of Malloc.h and
+          should have no business in OS_Memory.h.
+
+        * include/makeinclude/rules.lib.GNU:
+
+          Use echo on VLOBJS instead of find with *.o. This fixes build
+          problems on lame platforms like MacOS X  where ar doesn't
+          generate an index and need to use ranlib. Probably the right
+          thing to do even otherwise since there might be more objects in
+          .{sh,}obj than needed for a library.
+
 Tue Feb 25 10:00:54 2003  Ossama Othman  <ossama@uci.edu>
 
 	* ace/CDR_Base.h (LongLong):
