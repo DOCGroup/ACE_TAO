@@ -61,10 +61,6 @@ sub write_comps {
     my($deps) = $self->get_validated_ordering($project);
     if (defined $names{$name}) {
       ## Having duplicate project names is an error in a VC6 Workspace.
-      ## We will create the project, but we will warn the user that
-      ## the project has duplicate names and will not load properly.
-      print "WARNING: A project with the following name " .
-            "has already been added: '$name'\n";
       ++$dupfound;
     }
     else {
