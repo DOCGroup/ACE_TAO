@@ -1152,6 +1152,8 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
               break;
             } // end of switch
         } // length is > 0
+      else
+        return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   ACE_THROW_RETURN (CORBA::MARSHAL (),
                     CORBA::TypeCode::TRAVERSE_STOP);
