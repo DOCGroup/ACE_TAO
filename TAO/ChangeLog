@@ -9,10 +9,10 @@ Mon Jul 28 16:12:15 2003  Gan Deng  <gan.deng@vanderbilt.edu>
           However, due to the problem of MS VC++ 6.0 compiler, not all
           specification for Exception type has been fulfilled. Some
           constructors, copy constructors and assignment operators which
-          should be put into the "protected" section in class declaration
-          has been remained in the "public" section. These changes will
-          be made later when we full migrate to MS VC++ 7.0 or later
-          version.
+          are supposed be be put into the "protected" section in class
+	  declaration still remained in the "public" section. These 
+	  changes will be made later when we full migrate to MS VC++
+	  7.0 or later version.
 
           See the "NOTE" section in the Exception.h file for details.
 
