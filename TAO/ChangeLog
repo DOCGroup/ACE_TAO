@@ -1,3 +1,9 @@
+Wed Sep 29 07:31:34 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Updated.
+
 Wed Sep 29 10:52:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/FT_App/FT_TestReplica_i.h:
