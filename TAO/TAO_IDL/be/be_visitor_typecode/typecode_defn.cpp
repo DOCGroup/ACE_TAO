@@ -404,6 +404,16 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
+  if (node->node_type () == AST_Decl::NT_string
+      || node->node_type () == AST_Decl::NT_wstring
+      || node->node_type () == AST_Decl::NT_sequence)
+    {
+      // Don't bother generating a TypeCode_ptr for these types.  They
+      // are only accessible through an alias TypeCode.
+
+      return 0;
+    }
+
   // Is our enclosing scope a module? We need this check because for
   // platforms that support namespaces, the typecode must be declared
   // extern.
@@ -452,6 +462,58 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
 
       os << ";" << be_uidt;
     }
+
+  return 0;
+}
+
+
+int
+be_visitor_typecode_defn::gen_base_typecode_name (be_type * base)
+{
+  TAO_OutStream & os = *this->ctx_->stream ();
+
+  if (base->is_nested ()
+      && base->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
+      if (base->node_type () != AST_Decl::NT_string
+          && base->node_type () != AST_Decl::NT_wstring
+          && base->node_type () != AST_Decl::NT_sequence)
+        {
+          // Only generate scope names if types other than the ones
+          // listed above since the corresponding TypeCodes are at the
+          // file scope.
+
+//           be_module * const module =
+//             be_module::narrow_from_scope (base->defined_in ());
+
+//           ACE_ASSERT (module);
+
+//           for (UTL_IdListActiveIterator i (module->name ());
+//                !i.is_done ();
+//                i.next ())
+//             {
+//               char * const module_name  = i.item ()->get_string ();
+
+//               if (ACE_OS::strcmp (module_name, "") != 0)
+//                 {
+//                   os << "::";
+//                 }
+
+//               os << module_name;
+//             }
+
+          os << base->tc_name ();
+        }
+      else
+        {
+          // Internally used TypeCodes.
+
+          os << "::_tao_tc_" << base->tc_name ();
+        }
+    }
+  else
+    os << "::_tao_tc_"
+      << base->tc_name ();
 
   return 0;
 }
@@ -681,15 +743,34 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
      << "// TAO_IDL - Generated from" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
+  // generate typecode for the base type
+  this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+
+  if (!base || base->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%N:%l) be_visitor_typecode_defn")
+                         ACE_TEXT ("::visit_sequence) - ")
+                         ACE_TEXT ("failed to generate base typecode\n")),
+                        -1);
+    }
+
   // Generate the TypeCode instantiation.
-  os
-    << "static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy> const"
-    << be_idt_nl
-    << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
-    << "CORBA::tk_sequence," << be_nl
-    << "&" << base->tc_name () << "," << be_nl
-    << node->max_size () << ");" << be_uidt_nl
-    << be_uidt_nl;
+  os << "static TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy> const"
+     << be_idt_nl
+     << "_tao_tc_"
+//      << node->flat_name () << "_" << node->max_size()
+     << node->tc_name ()
+     << " (" << be_idt_nl
+     << "CORBA::tk_sequence," << be_nl
+     << "&";
+
+  int const success = this->gen_base_typecode_name (base);
+  ACE_ASSERT (success == 0);
+
+  os << "," << be_nl
+     << node->max_size () << ");" << be_uidt_nl
+     << be_uidt_nl;
 
   return this->gen_typecode_ptr (node);
 }
@@ -697,14 +778,17 @@ be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 int
 be_visitor_typecode_defn::visit_string (be_string * node)
 {
+  if (node->max_size ()->ev()->u.ulval == 0)
+    {
+      // No need to generate a TypeCode for unbounded strings.  Just
+      // use the {w}string TypeCode constant.
+      return 0;
+    }
+
   TAO_OutStream & os = *this->ctx_->stream ();
 
   os << be_nl << be_nl
      << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
-
-  os << be_nl << be_nl
-     << "// WORK DAMN IT!" << be_nl
      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
   // Generate the TypeCode instantiation.
