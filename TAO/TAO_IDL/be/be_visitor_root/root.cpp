@@ -538,6 +538,9 @@ be_visitor_root::visit_interface (be_interface *node)
       }
     }
 
+  // Change the state depending on the kind of node strategy
+  ctx.state (node->next_state (ctx.state ()));
+
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor)
     {
@@ -558,6 +561,39 @@ be_visitor_root::visit_interface (be_interface *node)
                          ),  -1);
     }
   delete visitor;
+  visitor = 0;
+
+  // Do additional code generation is necessary.
+  // Note, this call is delegated to the strategy connected to
+  // the node.
+  if (node->has_extra_code_generation (ctx.state ()))
+    {
+      // Change the state depending on the kind of node strategy
+      ctx.state (node->next_state (ctx.state (), 1));
+
+      be_visitor *visitor = tao_cg->make_visitor (&ctx);
+      if (!visitor)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_interface - "
+                             "NUL visitor\n"
+                             ),  -1);
+        }
+
+      // let the node accept this visitor
+      if (node->accept (visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root::"
+                             "visit_interface - "
+                             "failed to accept visitor\n"
+                             ),  -1);
+        }
+      delete visitor;
+      visitor = 0;
+    }
+  
   return 0;
 }
 

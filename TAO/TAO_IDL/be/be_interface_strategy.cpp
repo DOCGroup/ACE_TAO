@@ -358,6 +358,59 @@ be_interface_ami_exception_holder_strategy::has_extra_code_generation (TAO_CodeG
     return 0;
 }
 
+
+// ****************************************************************
+// AMI Strategy
+
+be_interface_ami_strategy::be_interface_ami_strategy (be_interface *node)
+  : be_interface_default_strategy (node, 
+                                   AMI_INTERFACE)
+
+{
+}
+
+be_interface_ami_strategy::~be_interface_ami_strategy ()
+{
+}
+
+
+TAO_CodeGen::CG_STATE
+be_interface_ami_strategy::next_state (TAO_CodeGen::CG_STATE current_state,
+                                       int is_extra_state)
+{
+  if (is_extra_state)
+    { 
+      switch (current_state)
+        {
+      case TAO_CodeGen::TAO_AMI_INTERFACE_CH:
+        return TAO_CodeGen::TAO_INTERFACE_CH;
+      default:
+        return current_state;
+        }
+    }
+  else
+    { 
+      switch (current_state)
+        {
+      case TAO_CodeGen::TAO_INTERFACE_CH:
+        return TAO_CodeGen::TAO_AMI_INTERFACE_CH;
+      default:
+        return current_state;
+        }
+    }
+}
+
+
+int 
+be_interface_ami_strategy::has_extra_code_generation (TAO_CodeGen::CG_STATE current_state)
+{
+  if (current_state == TAO_CodeGen::TAO_AMI_INTERFACE_CH)
+    return 1;
+  else
+    return 0;
+}
+
+
 // ****************************************************************
 // Default Strategy
 

@@ -1,3 +1,46 @@
+Fri Oct 08 10:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* TAO_IDL/be/be_interface_strategy.cpp: Added a new strategy
+	  to suppor the generation of AMI interfaces. A forward declaration
+	  of the AMI Handler is generated.
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp: The visit_scope () method
+	  now makes a copy of the list to have it not be influenced by
+	  newly added nodes.
+
+	* TAO_IDL/be/be_visitor_interface.cpp,
+	  TAO_IDL/be/be_visitor_factory.cpp: Added new interface visitor.
+
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
+	  TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	  Removed AMI dependencies.
+
+	* TAO_IDL/be/be_visitor_module/module.cpp,
+	  TAO_IDL/be/be_visitor_root/root.cpp:
+	  Added hooks, which trigger additional code generation.
+
+	* TAO_IDL/be_include/be_interface_strategy.h:
+	  New strategy to trigger the generation of forward declarations.
+
+	* TAO_IDL/be_include/be_codegen.h: Added a new state 
+	  and removed old AMI states.
+
+	* TAO_IDL/be_include/be_visitor_interface.h: Added a visitor
+	  for AMI interfaces to generate forward declarations.
+
+	* TAO_IDL/include/ast_module.h: Changed the behavior of the 
+	  be_add_interface () method to insert the new node *after*
+	  the given node and not *before* it.
+
+	* TAO_IDL/include/utl_scope.h,
+	  TAO_IDL/util/utl_scope.cpp:
+	  Changed the behavior of the add_referenced () and add_decl ()
+	  method to add the new reference/decl *after* the given
+	  decl, instead of inserting it *before* it. 
+
+	* tests/AMI/ami_test.idl: Activated the the shutdown () 
+	  operation.
+
 Thu Oct  7 14:54:01 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/Logging_Service/Logging_Service.h:

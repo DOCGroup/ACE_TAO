@@ -1249,7 +1249,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
           pd_referenced[i] = pd_referenced[i-1];
           if (pd_referenced[i-1] == ex)
             {
-              pd_referenced[i-1] = e;
+              pd_referenced[i] = e;
               break;
             }
         }
@@ -1416,7 +1416,7 @@ UTL_Scope::add_to_scope(AST_Decl *e, AST_Decl *ex)
           pd_decls[i] = pd_decls[i-1];
           if (pd_decls[i-1] == ex)
             {
-              pd_decls[i-1] = e;
+              pd_decls[i] = e;
               break;
             }
         }

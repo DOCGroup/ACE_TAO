@@ -101,11 +101,6 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  char *flat_name = 0;
-  node->compute_flat_name ("AMI_", 
-                           "Handler", 
-                           flat_name);
-
   // reset the queue
   this->queue_reset (this->tc_queue_);
   this->tc_offset_ = 0;
@@ -257,7 +252,6 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       *os << ";\n\n";
     }
 
-  delete [] flat_name;
   return 0;
 }
 
@@ -2823,11 +2817,6 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
   TAO_OutStream *os = this->ctx_->stream ();
   int flag = 0;
 
-  char *repoID = 0;
-  node->compute_repoID ("AMI_", 
-                        "Handler", 
-                        repoID);
-
   // check if we want to generate optimized typecodes. In such a case, there is
   // no need to generate the repoID (unless we are an object reference or an
   // exception in which case it is mandatory to have the repository ID)
@@ -2893,8 +2882,6 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
       this->tc_offset_ += (arrlen + 1) * sizeof (ACE_CDR::ULong);
     }
   *os << "\n";
-
-  delete repoID;
 
   return;
 }

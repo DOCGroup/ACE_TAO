@@ -102,6 +102,8 @@ public:
   idl_bool has_nested_valuetype ();
 
   // Allows adding an interface to a later point
+  // The interface i is inserted after interface ix, if
+  // ix is not null.
   int be_add_interface (AST_Interface *i, AST_Interface *ix = 0);
 
 private:
