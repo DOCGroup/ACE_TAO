@@ -1,3 +1,26 @@
+Wed Jun 30 10:59:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* CIAO.mwc:
+	* CIAOTAO.mwc:
+
+	  Added the new DnC directories. 
+
+	* DnC/ciao/CCM_Core.mpc:
+	
+	  Changed the name of the libraries generated. We should not
+	  overwrite the original ones. 
+	
+	* DnC/Config_Handlers/Config_Handlers.mpc:
+	* DnC/DomainApplicationManager/DomainApplicationManager.mpc:
+	* DnC/ExecutionManager/ExecutionManager.mpc:
+	* DnC/NodeApplication/NodeApplication.mpc:
+	* DnC/NodeApplicationManager/NodeApplicationManager.mpc:
+	* DnC/NodeManager/NodeDaemon.mpc:
+	* DnC/RepositoryManager/RepositoryManager.mpc:
+	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
+
+	  Use the new libraries. 
+
 Wed Jun 30 09:26:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Sender/starter.cpp:
