@@ -7,7 +7,6 @@
 
 ACE_RCSID(Log, Logger_i, "$Id$")
 
-
 #if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
 #define TAO_Logger_Hash \
   ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex>
@@ -30,8 +29,7 @@ Logger_Factory_i::~Logger_Factory_i (void)
 Logger_ptr
 Logger_Factory_i::make_logger (const char *name,
                                CORBA::Environment &_env)
-  TAO_THROW_SPEC ((CORBA::SystemException,
-		   Logger_Factory::MAKE_FAILURE))
+  TAO_THROW_SPEC ((CORBA::SystemException)
 {
   Logger_i *result;
   // If name is already in the map, <find> will assign <result> to the
@@ -46,36 +44,35 @@ Logger_Factory_i::make_logger (const char *name,
       // This attempts to create a new Logger_i and throws an
       // exception and returns a null value if it fails
       ACE_NEW_THROW_RETURN (result,
-			    Logger_i(name),
-			    Logger_Factory::MAKE_FAILURE(),
-			    Logger::_nil());
+			    Logger_i (name),
+			    CORBA::NO_MEMORY (CORBA::COMPLETED_NO),
+			    Logger::_nil ());
     } 
 
-  // Enter the new logger into the hash map. Check if the bind
-  // fails and if so, throw a MAKE_FAILURE. <result> may be valid, 
-  // but since it would not be properly bound, its behavior my be
-  // off, so delete it to be safe. 
-  if (hash_map_.bind (name, result) < 0)
+  // Enter the new logger into the hash map.  Check if the <bind>
+  // fails and if so, throw an UNKNOWN exception.  <result> may be
+  // valid, but since it would not be properly bound, its behavior my
+  // be off, so delete it to be safe.
+  if (hash_map_.bind (name, result) == -1)
     {
-      delete (result);
-      TAO_THROW_RETURN (Logger_Factory::MAKE_FAILURE,
+      delete result;
+      TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO),
 			Logger::_nil ());  
     }
   else
-    {
-      // Logger of name <name> already bound. <result> is set
-      // appropriatly by find (). So do nothing.
+    // Logger of name <name> already bound.  <result> is set
+    // appropriately by <find>.  So do nothing.
+    if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG,
                   "\nLogger name already bound"));
-    }
   
-  // _this is an performance hit here, but apparently if the
-  // object is already registered with the POA, it will ignore the 
-  // second registration attempt
+  // <_this> is an performance hit here, but apparently if the object
+  // is already registered with the POA, it will ignore the second
+  // registration attempt.
+  // @@ Matt, this code doesn't seem right.  Can you please check with
+  // Irfan and Carlos about whether this is the right thing to do?
   return result->_this (_env);
 }
-
-
 
 Logger_i::Logger_i (const char *name)
   : name_ (ACE_OS::strdup (name)),
@@ -88,7 +85,6 @@ Logger_i::~Logger_i (void)
 {
   ACE_OS::free (this->name_);
 }
-
 
 ACE_Log_Priority
 Logger_i::priority_conversion (Logger::Log_Priority priority)

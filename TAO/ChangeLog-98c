@@ -1,3 +1,9 @@
+Wed Sep  2 14:48:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO/orbsvcs/Logger.idl,
+	  TAO/orbsvcs/orbsvcs/Log/Logger_i: Added some minor fixes to get
+ 	  rid of the special-purpose exception and use system exceptions.
+
 Wed Sep  2 14:30:46 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/Param_Test/Param_Test.dsw:

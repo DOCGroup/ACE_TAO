@@ -82,7 +82,7 @@ public:
 
   virtual Logger_ptr make_logger (const char *name,
                                   CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException, Logger_Factory::MAKE_FAILURE));
+    TAO_THROW_SPEC ((CORBA::SystemException));
   // This function returns a logger with name <name>. If <name> is
   // unique, a new logger is created; else, a previously created
   // logger of name <name> is returned
