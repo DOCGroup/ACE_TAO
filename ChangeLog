@@ -1,3 +1,10 @@
+Tue Aug 24 19:32:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-netbsd.h:
+
+	  Removed extraneous cruft left over from autoheader generated
+	  file.  Added conditional support for NetBSD/AMD64.
+
 Tue Aug 24 14:07:22 2004  Steve Huston  <shuston@riverace.com>
 
 	Changes to improve the functionality of wide-char operation on
@@ -221,7 +228,7 @@ Tue Aug 24 10:22:18 2004  Steve Huston  <shuston@riverace.com>
 	  ACE_OS string methods. Fixes compile error on inline=0 build.
 
 Tue Aug 24 11:16:00 2004  Jules White   <jules@dre.vanderbilt.edu>
-        
+
         * ACE-INSTALL.html: Added a section on using ACE within Eclipse
 
 Tue Aug 24 10:10:22 2004  Steve Huston  <shuston@riverace.com>
