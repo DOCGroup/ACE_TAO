@@ -1,3 +1,8 @@
+Mon May 12 15:27:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-aix-4.[12].x.h: Added ACE_HAS_EXCEPTIONS to
+	  the AIX 4.* config files.  Thanks to Chris Lahey for this.
+
 Mon May 12 13:49:54 1997    <irfan@TWOSTEP>
 
 	* ace/Thread_Manager.cpp (wait): We have to make sure that while

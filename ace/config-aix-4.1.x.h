@@ -11,7 +11,7 @@
 #define AIX
 // Use BSD 4.4 socket definitions
 #define _BSD 44
-
+#define ACE_HAS_EXCEPTIONS
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 
