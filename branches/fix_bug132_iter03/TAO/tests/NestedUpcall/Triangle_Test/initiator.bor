@@ -1,0 +1,49 @@
+#
+# Makefile for building the Triangle_Test example
+#
+
+NAME = initiator
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+OBJFILES = \
+        $(OBJDIR)\Triangle_TestC.obj \
+        $(OBJDIR)\Triangle_TestS.obj \
+        $(OBJDIR)\initiator.obj \
+        $(OBJDIR)\initiator_i.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB)
+
+IDLFILES = \
+        Triangle_Test.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\Triangle_TestC.cpp $(IDLDIR)\Triangle_TestS.cpp: $(IDLDIR)\Triangle_Test.idl
+	$(TAO_IDL) $**
+
+
+
+
+
+
+
+
+
+

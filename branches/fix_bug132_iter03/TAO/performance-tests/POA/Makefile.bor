@@ -1,0 +1,9 @@
+
+#
+# Makefile for building the POA performance-tests
+#
+
+DIRS = \
+        Object_Creation_And_Registration
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

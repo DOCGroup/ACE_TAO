@@ -1,0 +1,24 @@
+#!build
+default:
+	nobuild
+	:cx_template_option=noautomatic
+	:optimize=standard
+	:optimize=memory
+	:optimize=loop
+	:debuglevel=multi
+	:cx_template=never
+	:defines=TAO_PLATFORM_SVC_CONF_FILE_NOTSUP
+tao.bld
+	library
+	:cx_e_option=msgnumbers
+	:dependency=nodepend
+	:object_dir=./.obj
+	:cx_silent=21
+	:cx_silent=191
+	:cx_silent=610
+	:sourcedirs=/home/ace/ACE_wrappers.latest
+	:sourcedirs=..
+	:sourcedirs=./compat
+	:libraries=/appl/newgreen/vxppc603/ghsbltin.o
+	:libraries=/appl/newgreen/vxppc603/ghsmath.o
+	:defines=DEBUG

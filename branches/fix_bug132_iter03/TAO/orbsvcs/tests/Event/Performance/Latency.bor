@@ -1,0 +1,33 @@
+#
+# $Id$
+#
+
+NAME = Latency
+
+OBJFILES = $(OBJDIR)\Latency.obj
+
+CFLAGS = \
+	$(TAO_RTEVENT_TEST_CFLAGS) \
+	$(TAO_RTEVENT_CFLAGS) \
+	$(TAO_NAMING_CFLAGS) \
+	$(TAO_SVC_UTILS_CFLAGS) \
+	$(TAO_IORTABLE_CFLAGS) \
+	$(TAO_PORTABLESERVER_CFLAGS) \
+	$(TAO_STRATEGIES_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(ACE_CFLAGS)
+
+LIBFILES = \
+	$(TAO_RTEVENT_TEST_LIB) \
+	$(TAO_RTEVENT_LIB) \
+        $(TAO_NAMING_LIB) \
+        $(TAO_SVC_UTILS_LIB) \
+	$(TAO_IORTABLE_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_STRATEGIES_LIB) \
+        $(TAO_LIB) \
+        $(ACE_LIB)
+
+CPPDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
