@@ -276,10 +276,11 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPA
 
 // sends the test information to the server and calls the correct test
 // function.
-HIST runTest(ACE_SOCK_SEQPACK_Association & stream){
-
+HIST runTest(ACE_SOCK_SEQPACK_Association & stream)
+{
   size_t msgLen =
-    static_cast<int>(pow(2.0, Options_Manager::payload_size_power_of_2));
+    Options_Manager::payload_size_power_of_2 *
+    Options_Manager::payload_size_power_of_2;
 
   // send a header to the server that contains test parameters
   if (sendHeader(stream) < 0)
