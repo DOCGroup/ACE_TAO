@@ -143,7 +143,7 @@ TAO_IIOP_Connection_Handler::activate (long flags,
                  THR_BOUND));
 
   // Set the id in the transport now that we're active.
-  this->transport ()->id (ACE_static_cast(int,this->get_handle ()));
+  this->transport ()->id (ACE_reinterpret_cast(int,this->get_handle ()));
 
   return TAO_IIOP_SVC_HANDLER::activate (flags,
                                          n_threads,
@@ -318,6 +318,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
 
 int
 TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
+
 {
   return this->handle_input_i (h);
 }
@@ -347,7 +348,7 @@ TAO_IIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
   if (result == -1)
     return result;
   else if (result == 0)
-    // Requires another call to handle_input ()
+    // Requires another call to handle_input  ()
     return 1;
 
   return 0;
