@@ -1,3 +1,12 @@
+Fri Sep 28 12:33:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.cpp (handle_close): 
+	* tao/Strategies/UIOP_Connection_Handler.cpp:
+	* tao/Strategies/DIOP_Connection_Handler.cpp:
+	* tao/Strategies/SHMIOP_Connection_Handler.cpp: Added some debug
+	  statements.
+
 Fri Sep 28 11:41:50 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/File_IO/server.cpp (main): Made the program create a big

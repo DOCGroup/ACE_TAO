@@ -219,11 +219,11 @@ void
 TAO_IIOP_Connection_Handler::handle_close_i (void)
 {
   if (TAO_debug_level)
-  ACE_DEBUG  ((LM_DEBUG,
-               ACE_TEXT ("TAO (%P|%t) ")
-               ACE_TEXT ("IIOP_Connection_Handler::handle_close_i ")
-               ACE_TEXT ("(%d)\n"),
-               this->transport ()->id ()));
+    ACE_DEBUG  ((LM_DEBUG,
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("IIOP_Connection_Handler::handle_close_i ")
+                 ACE_TEXT ("(%d)\n"),
+                 this->transport ()->id ()));
 
   if (this->transport ()->wait_strategy ()->is_registered ())
     {
@@ -344,10 +344,6 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
   // Increase the reference count on the upcall that have passed us.
   long upcalls = this->incr_pending_upcalls ();
 
-  if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Refcount on handle [%d] incremented to [%d]\n",
-                h, upcalls));
   TAO_Resume_Handle  resume_handle (this->orb_core (),
                                     this->get_handle ());
 
@@ -358,16 +354,12 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 
   ACE_ASSERT (upcalls >= 0);
 
-  if (TAO_debug_level)
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Refcount on handle [%d] decremented to [%d]\n",
-              h, upcalls));
-
   if (upcalls == 0)
     {
       this->handle_close_i ();
       retval = -1;
     }
+
 
   if (retval == -1)
     {
@@ -391,6 +383,7 @@ TAO_IIOP_Connection_Handler::handle_input (ACE_HANDLE h)
       // bad happenin and so let us stick with it...
       resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
     }
+
   return retval;
 }
 

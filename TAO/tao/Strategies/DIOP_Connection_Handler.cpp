@@ -226,9 +226,7 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
-    {
-      this->handle_close_i ();
-    }
+    this->handle_close_i ();
 
   return 0;
 }
@@ -236,6 +234,13 @@ TAO_DIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 void
 TAO_DIOP_Connection_Handler::handle_close_i (void)
 {
+  if (TAO_debug_level)
+    ACE_DEBUG  ((LM_DEBUG,
+                 ACE_TEXT ("TAO (%P|%t) ")
+                 ACE_TEXT ("DIOP_Connection_Handler::handle_close_i ")
+                 ACE_TEXT ("(%d)\n"),
+                 this->transport ()->id ()));
+
   // @@ Why are we doing checks for is_registered flags here if the
   // handlers are not registered with the reactor? - Bala
   if (this->transport ()->wait_strategy ()->is_registered ())
