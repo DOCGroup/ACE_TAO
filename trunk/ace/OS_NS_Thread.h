@@ -994,8 +994,7 @@ public:
 
   /// Constructor
   ACE_TSS_Info (ACE_thread_key_t key,
-                Destructor dest = 0,
-                void *tss_inst = 0);
+                Destructor dest = 0);
 
   /// Default constructor
   ACE_TSS_Info (void);
@@ -1022,9 +1021,6 @@ private:
 
   /// "Destructor" that gets called when the item is finally released.
   Destructor destructor_;
-
-  /// Pointer to ACE_TSS<xxx> instance that has/will allocate the key.
-  void *tss_inst_;
 
   /// Count of threads that are using this key.  Contains -1 when the
   /// key is not in use.
