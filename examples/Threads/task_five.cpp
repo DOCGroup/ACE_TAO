@@ -22,7 +22,7 @@ static size_t default_stack_size =      // Default stack size
   u_int loop_count = 0;
   u_int error_count = 0;
 
-class Test_Task : public ACE_Task<ACE_MT_SYNCH>
+class Test_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   Test_Task (ACE_Thread_Manager *thrmgr = ACE_Service_Config::thr_mgr ());
@@ -36,7 +36,7 @@ public:
 };
 
 Test_Task::Test_Task (ACE_Thread_Manager *thrmgr)
-  : ACE_Task<ACE_MT_SYNCH> (thrmgr)
+  : ACE_Task<ACE_SYNCH> (thrmgr)
 {
 }
 

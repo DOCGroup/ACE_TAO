@@ -76,7 +76,7 @@ ACE_hrtime_t starttime;
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-class High_Priority_Task : public ACE_Task<ACE_MT_SYNCH>
+class High_Priority_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   High_Priority_Task (void);
@@ -94,7 +94,7 @@ private:
 };
 
 High_Priority_Task::High_Priority_Task (void)
-  : ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
+  : ACE_Task<ACE_SYNCH> (ACE_Thread_Manager::instance ()),
     priority_ (ACE_Sched_Params::next_priority (
                  ACE_SCHED_FIFO,
                  ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
@@ -189,7 +189,7 @@ High_Priority_Task::print_times () const
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-class Low_Priority_Task : public ACE_Task<ACE_MT_SYNCH>
+class Low_Priority_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   Low_Priority_Task (const High_Priority_Task &);
@@ -204,7 +204,7 @@ private:
 
 Low_Priority_Task::Low_Priority_Task (
   const High_Priority_Task &high_priority_task)
-  : ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
+  : ACE_Task<ACE_SYNCH> (ACE_Thread_Manager::instance ()),
     priority_ (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                                ACE_SCOPE_THREAD)),
     high_priority_task_ (high_priority_task)
