@@ -238,6 +238,8 @@
 
 #define ACE_LACKS_MALLOC_H
 
+#define ACE_PSOS_DIAB
+
 #define ACE_PSOS_DIAB_MIPS
 
 #endif /* ACE_CONFIG_H */

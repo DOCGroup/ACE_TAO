@@ -236,7 +236,13 @@ Options::parse_args (int argc, char *argv[])
                       -1);
       break;
 #else
+#  if defined (ACE_PSOS_DIAB)
+      // Workaround for compiler confusion with strings in assertions.
+      const int PROCESS_INVALID_ON_THIS_PLATFORM = 1;
+      ACE_ASSERT (PROCESS_INVALID_ON_THIS_PLATFORM == 0);
+#  else /* ! defined (ACE_PSOS_DIAB) */
       ACE_ASSERT ("PROCESS invalid on this platform" == 0);
+#  endif /* defined (ACE_PSOS_DIAB) */
 #endif /* !defined (ACE_LACKS_FORK) */
     case Options::THREAD:
 #if defined (ACE_HAS_THREADS)
@@ -618,7 +624,7 @@ main (int argc, char *argv[])
 
 #if !defined (ACE_LACKS_FORK)
       // We're running the client and serve as separate processes.
-      pid_t pid = ACE::fork ("child", 
+      pid_t pid = ACE::fork ("child",
                              1); // Avoid zombies.
 
       switch (pid)

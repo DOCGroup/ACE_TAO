@@ -227,8 +227,8 @@
 #define ACE_PSOS
 #endif /* ACE_PSOS */
 
-#if !defined (ACE_PSOS_TBD)
-#define ACE_PSOS_TBD
-#endif /* ACE_PSOS_TBD */
+#if !defined (ACE_PSOS_DIAB)
+#define ACE_PSOS_DIAB
+#endif /* ACE_PSOS_DIAB */
 #define ACE_LACKS_MKFIFO
 #endif /* ACE_CONFIG_H */

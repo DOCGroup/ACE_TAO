@@ -1,3 +1,15 @@
+Tue Apr 20 18:22:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Map_T.i
+          ace/config-psos-diab-mips.h
+          ace/config-psos-diab-ppc.h
+          ace/config-psos-diab.h
+          include/makeinclude/platform_psos_deab_ppc.GNU
+          tests/Handle_Set_Test.cpp
+          tests/Process_Strategy_Test.cpp: fixed the remaining tests
+          for which compiler bug workarounds were available for pSOS
+          PPC with the Diab 4.2b compiler.
+
 Tue Apr 20 16:41:39 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (num_tasks_in_group): Make sure we are
@@ -222,7 +234,8 @@ Wed Apr 14 18:56:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
           ace/config-psos-diab-ppc.h
           include/makeinclude/platform_psos_diab_ppc.GNU: changes to adapt
           the pSOS Diab 68k/MIPS port to PPC.  Many thanks to Sarmeesha
-          Reddy <sreddy@tr.comm.mot.com> for contributing these changes.
+          Reddy <sreddy@tr.comm.mot.com> and Steven Tine
+          <stevent@tr.comm.mot.com> for contributing these changes.
 
 Wed Apr 14 17:06:22 1999  David L. Levine  <levine@cs.wustl.edu>
 

@@ -140,8 +140,8 @@
 #define ACE_LACKS_SIGINFO_H
 #define ACE_SIGINFO_IS_SIGINFO_T
 #define ACE_LACKS_SIGSET_DEFINITIONS
-#define ACE_LACKS_SIGSET //sandass
-#define ACE_LACKS_SIGACTION //sandass
+#define ACE_LACKS_SIGSET
+#define ACE_LACKS_SIGACTION
 
 #define ACE_HAS_SIGWAIT
 
@@ -238,7 +238,8 @@
 
 #define ACE_LACKS_MKFIFO
 
-//sandass
+#define ACE_PSOS_DIAB
+
 #define ACE_PSOS_DIAB_PPC
 
 #endif /* ACE_CONFIG_H */
