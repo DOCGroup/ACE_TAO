@@ -98,12 +98,11 @@ class Task_State
   //     This class maintains state which is common to the potentially
   //     multiple concurrent clients.
 public:
-  int parse_args (int argc,char **argv);
-  // parses the arguments
+  Task_State (void);
+  // Constructor. 
 
-  Task_State (int argc, char **argv);
-  // Constructor. Takes the command line arguments, which are later
-  // passed into ORB_init.
+  int parse_args (int argc,char **argv);
+  // parses the arguments with the provided argc and argv.
 
   ~Task_State (void);
   // Destructor
@@ -133,10 +132,6 @@ public:
 
   ACE_SYNCH_MUTEX lock_;
   // Lock to protect access to this object.
-
-  // = Command line arguments.
-  u_int argc_;
-  char **argv_;
 
   u_int thread_per_rate_;
   // Flag for the thread_per_rate test.
@@ -245,20 +240,36 @@ class Client : public ACE_Task<ACE_SYNCH>
 public:
   Client (ACE_Thread_Manager *,
           Task_State *ts,
+          int argc,
+          char **argv,
           u_int id);
   // Constructor, with a pointer to the common task state.
+
+  ~Client (void);
+  // destructor.
 
   virtual int svc (void);
   // The thread function.
 
   ACE_timer_t get_high_priority_latency (void);
-  ACE_timer_t get_low_priority_latency (void);
-  ACE_timer_t get_high_priority_jitter (void);
-  ACE_timer_t get_low_priority_jitter (void);
-  ACE_timer_t get_latency (u_int thread_id);
-  ACE_timer_t get_jitter (u_int id);
-  // Accessors to get the various measured quantities.
+  // Returns the latency of the high priority thread in usecs.
 
+  ACE_timer_t get_low_priority_latency (void);
+  // Returns the average latency found for the low 
+  // priority threads in usecs.
+
+  ACE_timer_t get_high_priority_jitter (void);
+  // Returns the high priority jitter in usecs.
+
+  ACE_timer_t get_low_priority_jitter (void);
+  // Returns the jitter for all the low priority 
+  // thread request in usecs.
+
+  ACE_timer_t get_latency (u_int thread_id);
+  // gets the average latency for that thread.
+
+  ACE_timer_t get_jitter (u_int id);
+  // gets the jitter for this thread.
 
   static int func (u_int i);
   // Arbitrary generator used by the client to create the numbers to be
@@ -346,7 +357,8 @@ private:
   // Naming Client intermediary to naming service stuff.
 
   JITTER_ARRAY *my_jitter_array_;
-  // Array holding the jitter values for the latencies.
+  // ACE Unbounded set holding the latency values for all the
+  // requests of this thread.
 
   MT_Cubit_Timer *timer_;
   // Timer using pccTimer for chorus and ACE_Timer for other platforms.
@@ -362,6 +374,10 @@ private:
 
   ACE_timer_t latency_;
   // aggregate latency of the requests.
+
+  // command-line arguments.
+  int argc_;
+  char **argv_;
 };
 
 #endif /* !defined (TASK_CLIENT_H) */
