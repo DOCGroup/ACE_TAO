@@ -485,7 +485,7 @@ ACE_DLList_Iterator<T>::remove (void)
 {
   ACE_DLList_Node *temp = this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::next ();
   this->ACE_Double_Linked_List_Iterator <ACE_DLList_Node>::advance ();
-  return dllist_.remove (temp);
+  return dllist_->remove (temp);
 }
 
 template <class T> ACE_INLINE
@@ -520,7 +520,7 @@ ACE_DLList_Reverse_Iterator<T>::remove (void)
 {
   ACE_DLList_Node *temp = ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
   this->ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::advance ();
-  return dllist_.remove (temp);
+  return dllist_->remove (temp);
 }
 
 template <class T> ACE_INLINE
