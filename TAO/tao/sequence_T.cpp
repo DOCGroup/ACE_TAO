@@ -10,7 +10,7 @@
 template <class T>
 TAO_Unbounded_Sequence<T>::TAO_Unbounded_Sequence
 (const TAO_Unbounded_Sequence<T> &rhs)
-  : TAO_Base_Sequence (rhs)
+  : TAO_Unbounded_Base_Sequence (rhs)
 {
   this->buffer_ = TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
   T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
@@ -58,9 +58,9 @@ void TAO_Unbounded_Sequence<T>::_allocate_buffer (CORBA::ULong length)
 }
 
 template<class T>
-void TAO_Unbounded_Sequence<T>::_deallocate_buffer (void)
+TAO_Unbounded_Sequence<T>::~TAO_Unbounded_Sequence (void)
 {
-  if (this->buffer_ == 0)
+  if (this->buffer_ == 0 || this->release_ == 0)
     return;
   T* tmp = ACE_reinterpret_cast (T*,this->buffer_);
   delete[] tmp;
@@ -77,9 +77,9 @@ void TAO_Bounded_Sequence<T,MAX>::_allocate_buffer (CORBA::ULong)
 }
 
 template<class T, CORBA::ULong MAX>
-void TAO_Bounded_Sequence<T,MAX>::_deallocate_buffer (void)
+TAO_Bounded_Sequence<T,MAX>::~TAO_Bounded_Sequence (void)
 {
-  if (this->buffer_ == 0)
+  if (this->buffer_ == 0 || this->release_ == 0)
     return;
   T* tmp = ACE_reinterpret_cast (T*,this->buffer_);
   delete[] tmp;
@@ -168,12 +168,13 @@ void TAO_Unbounded_Managed_Sequence<T,Manager>::_allocate_buffer (CORBA::ULong l
 }
 
 template<class T, class Manager>
-void TAO_Unbounded_Managed_Sequence<T,Manager>::_deallocate_buffer (void)
+TAO_Unbounded_Managed_Sequence<T,Manager>::~TAO_Unbounded_Managed_Sequence (void)
 {
-  if (this->buffer_ == 0)
+  if (this->buffer_ == 0 || this->release_ == 0)
     return;
   T* *tmp = ACE_reinterpret_cast (T**,this->buffer_);
   // XXXASG: Do we release each object here?
+  // @@ TODO add static methods to Manager to release each object.
   delete[] tmp;
   this->buffer_ = 0;
 }
@@ -182,7 +183,7 @@ void TAO_Unbounded_Managed_Sequence<T,Manager>::_deallocate_buffer (void)
 template <class T, class Manager>
 TAO_Unbounded_Managed_Sequence<T,Manager>::TAO_Unbounded_Managed_Sequence
 (const TAO_Unbounded_Managed_Sequence<T,Manager> &seq)
-  : TAO_Base_Sequence (seq)
+  : TAO_Unbounded_Base_Sequence (seq)
 {
   this->buffer_ = TAO_Unbounded_Managed_Sequence<T,Manager>::
     allocbuf (this->maximum_);
@@ -190,18 +191,6 @@ TAO_Unbounded_Managed_Sequence<T,Manager>::TAO_Unbounded_Managed_Sequence
   T* *tmp2 = ACE_reinterpret_cast(T* *,seq.buffer_);
   for (CORBA::ULong i=0; i < seq.length_; i++)
     tmp [i] = T::_duplicate (tmp2 [i]);
-}
-
-// destructor
-template <class T, class Manager>
-TAO_Unbounded_Managed_Sequence<T,Manager>::~TAO_Unbounded_Managed_Sequence (void)
-{
-  if (this->release_) // we own the buffer
-  {
-    T* *tmp = ACE_reinterpret_cast (T* *,this->buffer_);
-    TAO_Unbounded_Managed_Sequence<T,Manager>::freebuf (tmp,
-                                                    this->maximum_);
-  }
 }
 
 // assignment operator
@@ -266,12 +255,13 @@ TAO_Bounded_Managed_Sequence<T,Manager,MAX>::_allocate_buffer (CORBA::ULong leng
 }
 
 template<class T, class Manager, CORBA::ULong MAX>
-void TAO_Bounded_Managed_Sequence<T,Manager,MAX>::_deallocate_buffer (void)
+TAO_Bounded_Managed_Sequence<T,Manager,MAX>::~TAO_Bounded_Managed_Sequence (void)
 {
-  if (this->buffer_ == 0)
+  if (this->buffer_ == 0 || this->release_ == 0)
     return;
   T* *tmp = ACE_reinterpret_cast (T**,this->buffer_);
   // XXXASG: Do we release each object here?
+  // @@ TODO add static methods to Manager to release each object here.
   delete[] tmp;
   this->buffer_ = 0;
 }
@@ -280,7 +270,7 @@ void TAO_Bounded_Managed_Sequence<T,Manager,MAX>::_deallocate_buffer (void)
 template <class T, class Manager, CORBA::ULong MAX>
 TAO_Bounded_Managed_Sequence<T,Manager,MAX>::TAO_Bounded_Managed_Sequence
 (const TAO_Bounded_Managed_Sequence<T,Manager,MAX> &seq)
-  : TAO_Base_Sequence (seq)
+  : TAO_Unbounded_Base_Sequence (seq)
 {
   this->buffer_ = TAO_Bounded_Managed_Sequence<T,Manager,MAX>::
     allocbuf (this->maximum_);
@@ -288,18 +278,6 @@ TAO_Bounded_Managed_Sequence<T,Manager,MAX>::TAO_Bounded_Managed_Sequence
   T* *tmp2 = ACE_reinterpret_cast(T* *,seq.buffer_);
   for (CORBA::ULong i=0; i < seq.length_; i++)
     tmp [i] = T::_duplicate (tmp2 [i]);
-}
-
-// destructor
-template <class T, class Manager, CORBA::ULong MAX>
-TAO_Bounded_Managed_Sequence<T,Manager,MAX>::~TAO_Bounded_Managed_Sequence (void)
-{
-  if (this->release_) // we own the buffer
-  {
-    T* *tmp = ACE_reinterpret_cast (T* *,this->buffer_);
-    TAO_Bounded_Managed_Sequence<T,Manager,MAX>::freebuf (tmp,
-                                                    this->maximum_);
-  }
 }
 
 // assignment operator

@@ -280,6 +280,10 @@ SOURCE=.\be\be_interface_fwd.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_interpretive.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_module.cpp
 # End Source File
 # Begin Source File
@@ -381,6 +385,18 @@ SOURCE=.\be\be_union_branch.cpp
 # Begin Source File
 
 SOURCE=.\be\be_union_label.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_root.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_visitor_sequence.cpp
 # End Source File
 # Begin Source File
 
@@ -696,6 +712,10 @@ SOURCE=.\be_include\be_interface_fwd.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\be_include\be_interpretive.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\be_include\be_module.h
 # End Source File
 # Begin Source File
@@ -757,6 +777,18 @@ SOURCE=.\be_include\be_union_branch.h
 # Begin Source File
 
 SOURCE=.\be_include\be_union_label.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_root.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_sequence.h
 # End Source File
 # Begin Source File
 
