@@ -273,7 +273,7 @@ ACE_Proactor::~ACE_Proactor (void)
 }
 
 ACE_Proactor *
-ACE_Proactor::instance (size_t threads)
+ACE_Proactor::instance (size_t /* threads */)
 {
   ACE_TRACE ("ACE_Proactor::instance");
 
