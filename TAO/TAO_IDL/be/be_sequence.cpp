@@ -333,16 +333,15 @@ be_sequence::instance_name ()
     }
 
   // generate the class name
-  be_type  *prim_type; // base types
-  if (bt->node_type () == AST_Decl::NT_typedef)
-  {
-    // get the primitive base type of this typedef node
-    be_typedef *t = be_typedef::narrow_from_decl (bt);
-    prim_type = t->primitive_base_type ();
-  }
-  else
-    prim_type = bt;
 
+  // the base type after removing all the aliases
+  be_type  *prim_type = bt;
+  if (bt->node_type () == AST_Decl::NT_typedef)
+    {
+      // get the primitive base type of this typedef node
+      be_typedef *t = be_typedef::narrow_from_decl (bt);
+      prim_type = t->primitive_base_type ();
+    }
 
   // generate the appropriate sequence type
   switch (this->managed_type ())
@@ -369,33 +368,23 @@ be_sequence::instance_name ()
       break;
     default: // not a managed type
       if (this->unbounded ())
-      {
-        // @@ This needs to be fixed. (Michael)
-        //determine if it is a primitive type, if yes do all of that
-        be_predefined_type * bpt = 
-          be_predefined_type::narrow_from_decl (this->base_type());
-        if (bpt)
-        {
-          /*ACE_DEBUG ((LM_ERROR,
-                      "(%N:%l) be_visitor_sequence_ch::"
-                      "gen_instantiate_name - "
-                      "Bad element type\n"));
-          return 0;*/
-          if (bpt->pt() == AST_PredefinedType::PT_octet)
-              ACE_OS::sprintf (namebuf, 
-                               "TAO_Unbounded_Sequence<CORBA::Octet>");
-          else
+	{
+	  // TAO provides extensions for octet sequences, first find out
+	  // if the base type is an octet (or an alias for octet)
+	  be_predefined_type *predef =
+	    be_predefined_type::narrow_from_decl (prim_type);
+	  if (predef != 0 && 
+	      predef->pt() == AST_PredefinedType::PT_octet)
+	    ACE_OS::sprintf (namebuf, 
+			     "TAO_Unbounded_Sequence<CORBA::Octet>");
+	  else
             ACE_OS::sprintf (namebuf, 
                              "_TAO_Unbounded_Sequence_%s",
                              this->flatname());
                              // or prim_type->flatname ());
-        }        
-        else
-          ACE_OS::sprintf (namebuf, 
-                           "_TAO_Unbounded_Sequence_%s",
-                           this->flatname());
-                           // or prim_type->flatname ());
-      }
+	  // ACE_DEBUG ((LM_DEBUG, "testing.... %d, %d = <%s>\n",
+	  // predef, predef->pt (), namebuf));
+	}        
       else
         ACE_OS::sprintf (namebuf, 
                          "_TAO_Bounded_Sequence_%s_%d",
