@@ -269,9 +269,14 @@ DRV_parse_args(long ac, char **av)
             }
           break;
     
-          // Dynamic hashing-operation lookup strategy.
+          // Operation lookup strategy.
+          // <perfect> or <dynamic>
+          // Default is perfect.
         case 'H':
-          cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
+          if (ACE_OS::strcmp (av[i+1], "dynamic") == 0)
+            cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
+          // else Perfect Hash, the default strategy.
+          i++;
           break;
      
           // Path for the perfect hash generator(gperf) program. Default
@@ -427,12 +432,14 @@ DRV_parse_args(long ac, char **av)
       int return_value = DRV_check_gperf ();
       if (return_value == -1)
         {
+#if 0
           ACE_DEBUG ((LM_DEBUG,
                       "%p"
                       "GPERF program couldn't be executed"
                       "Perfect Hashed Operation Lookup strategy can not be used\n"
                       "Using Dynamic_Hashed Operation Lookup strategy\n",
                       "TAO_IDL:"));
+#endif /* 0 */
           
           // Switching over to Dynamic Hashing.
           cg->lookup_strategy (TAO_CodeGen::TAO_DYNAMIC_HASH);
