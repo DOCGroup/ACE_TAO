@@ -185,9 +185,8 @@ be_sequence::gen_name (void)
   else
     {
       ACE_OS::sprintf (namebuf,
-                       "_tao_seq_%s_%s",
-                       bt->local_name ()->get_string (),
-                       fn ? fn->local_name ()->get_string () : "");
+                       "_tao_seq_%s_",
+                       bt->flat_name ());
     }
 
   // Append the size (if any).

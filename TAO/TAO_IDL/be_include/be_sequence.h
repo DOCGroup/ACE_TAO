@@ -63,7 +63,7 @@ public:
                idl_bool abstract);
   // Constructor.
 
-  virtual int create_name (be_typedef *node = 0);
+  virtual int create_name (be_typedef *node);
   // Create a name for ourselves. If we are typedefed, then we get the name of
   // the typedef node, else we generate a name for ourselves.
 
