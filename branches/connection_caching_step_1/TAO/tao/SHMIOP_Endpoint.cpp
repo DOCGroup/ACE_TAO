@@ -142,4 +142,43 @@ TAO_SHMIOP_Endpoint::next (void)
   return this->next_;
 }
 
+TAO_Endpoint *
+TAO_SHMIOP_Endpoint::duplicate (void)
+{
+  TAO_SHMIOP_Endpoint *endpoint = 0;
+  ACE_NEW_RETURN (endpoint,
+                  TAO_SHMIOP_Endpoint (this->host_.in (),
+                                       this->port_,
+                                       this->object_addr_),
+                  0);
+
+  return endpoint;
+}
+
+
+CORBA::Boolean
+TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+{
+  TAO_Endpoint *endpt = ACE_const_cast (TAO_Endpoint *,
+                                        other_endpoint);
+
+  TAO_SHMIOP_Endpoint *endpoint = ACE_dynamic_cast (TAO_SHMIOP_Endpoint *,
+                                                    endpt);
+
+  if (endpoint == 0)
+    return 0;
+
+  return
+    this->port_ == endpoint->port_
+    && ACE_OS::strcmp (this->host_.in (), endpoint->host_.in ()) == 0;
+}
+
+CORBA::ULong
+TAO_SHMIOP_Endpoint::hash (void)
+{
+  return
+    ACE::hash_pjw (this->host_.in ())
+    + this->port_;
+}
+
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

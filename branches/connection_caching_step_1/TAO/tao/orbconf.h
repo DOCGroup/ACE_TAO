@@ -692,7 +692,7 @@ enum MCAST_SERVICEID
 
 // CLIENT_PRIORITY_POLICY has been deprecated!  It is disabled by
 // default.  It's functionality is replaced by RTCORBA policies, see
-// TAO's RTCORBA documentation for more details.  
+// TAO's RTCORBA documentation for more details.
 //
 //To explicitly enable CLIENT_PRIORITY_POLICY support uncomment the
 //following #define TAO_HAS_CLIENT_PRIORITY_POLICY 1

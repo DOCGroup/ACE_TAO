@@ -78,6 +78,15 @@ public:
   virtual TAO_Endpoint *next (void);
   virtual int addr_to_string (char *buffer, size_t length);
   virtual void reset_hint (void);
+  virtual TAO_Endpoint *duplicate (void);
+  // Return a copy of <this>
+
+  CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
+  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
+  // endpoints are equivalent iff their port and host are the same.
+
+  CORBA::ULong hash (void);
+  // Return a hash value for this object.
 
   // = SHMIOP_Endpoint-specific methods.
 
@@ -100,13 +109,6 @@ public:
 
   TAO_SHMIOP_Client_Connection_Handler *&hint (void);
   // Access to our <hint_>.
-
-  CORBA::Boolean is_equivalent (const TAO_SHMIOP_Endpoint *other_endpoint);
-  // Return true if this endpoint is equivalent to <other_endpoint>.  Two
-  // endpoints are equivalent iff their port and host are the same.
-
-  CORBA::ULong hash (void);
-  // Return a hash value for this object.
 
 private:
   int set (const ACE_INET_Addr &addr,

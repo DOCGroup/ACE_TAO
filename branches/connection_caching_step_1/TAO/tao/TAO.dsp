@@ -385,6 +385,25 @@ SOURCE=.\Asynch_Reply_Dispatcher.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -424,6 +443,25 @@ SOURCE=.\BoundsC.cpp
 # Begin Source File
 
 SOURCE=.\Buffering_Constraint_Policy.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Entries.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -500,6 +538,44 @@ SOURCE=.\Client_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
 
@@ -3537,6 +3613,10 @@ SOURCE=.\Asynch_Reply_Dispatcher.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.h
 # End Source File
 # Begin Source File
@@ -3546,6 +3626,10 @@ SOURCE=.\BoundsC.h
 # Begin Source File
 
 SOURCE=.\Buffering_Constraint_Policy.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Cache_Entries.h
 # End Source File
 # Begin Source File
 
@@ -3562,6 +3646,14 @@ SOURCE=.\Client_Strategy_Factory.h
 # Begin Source File
 
 SOURCE=.\ClientRequestInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.h
 # End Source File
 # Begin Source File
 
@@ -3685,10 +3777,6 @@ SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Connectors.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Headers.h
 # End Source File
 # Begin Source File
@@ -3734,10 +3822,6 @@ SOURCE=.\iiop_endpoints.h
 # Begin Source File
 
 SOURCE=.\IIOP_Factory.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\IIOP_Lite_Factory.h
 # End Source File
 # Begin Source File
 
@@ -3894,14 +3978,6 @@ SOURCE=.\Parser_Registry.h
 # Begin Source File
 
 SOURCE=.\Pluggable.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pluggable_Messaging.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pluggable_Messaging_Utils.h
 # End Source File
 # Begin Source File
 
@@ -4249,6 +4325,10 @@ SOURCE=.\Asynch_Invocation.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Base_Connection_Property.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Bind_Dispatcher_Guard.i
 # End Source File
 # Begin Source File
@@ -4261,11 +4341,27 @@ SOURCE=.\Buffering_Constraint_Policy.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Cache_Entries.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\cdr.i
 # End Source File
 # Begin Source File
 
 SOURCE=.\Client_Priority_Policy.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Cache_Manager.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Connection_Handler.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Context.i
 # End Source File
 # Begin Source File
 

@@ -43,7 +43,8 @@
 # include "tao/Interceptor_List.h"
 #endif  /* TAO_HAS_INTERCEPTORS */
 
-#include "ace/Hash_Map_Manager.h"
+#include "tao/Connection_Cache_Manager.h"
+
 
 // Forward declarations
 class TAO_Acceptor;
@@ -692,6 +693,9 @@ public:
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
+  TAO_Connection_Cache_Manager &connection_cache (void);
+  // Return the underlying connection cache
+
 protected:
 
   ~TAO_ORB_Core (void);
@@ -967,13 +971,6 @@ protected:
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
 
-  ACE_Handle_Set handle_set_;
-  // Set of file descriptors corresponding to open connections.  This
-  // handle set is used to explicitly deregister the connection event
-  // handlers from the Reactor.  This is particularly important for
-  // dynamically loaded ORBs where an application level reactor, such
-  // as the Singleton reactor, is used instead of an ORB created one.
-
   TAO_PolicyFactory_Registry policy_factory_registry_;
   ///< Registry containing all registered policy factories.
 
@@ -986,6 +983,8 @@ protected:
   TAO_Parser_Registry parser_registry_;
   // The IOR parser registry
 
+  TAO_Connection_Cache_Manager connection_cache_;
+  // The connection cache for TAO
 };
 
 // ****************************************************************

@@ -2,9 +2,10 @@
 // $Id$
 
 ACE_INLINE
-TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag)
+TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag,
+                            CORBA::Short priority)
   : tag_ (tag),
-    priority_ (-1)
+    priority_ (priority)
 {
 }
 

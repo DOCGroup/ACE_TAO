@@ -25,115 +25,33 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Acceptor.h"
-#include "ace/SOCK_Stream.h"
-#include "ace/Synch.h"
-#include "ace/Svc_Handler.h"
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
-
+#include "tao/Connection_Handler.h"
 #include "tao/IIOP_Transport.h"
 
 // Forward Decls
-class TAO_ORB_Core;
-class TAO_ORB_Core_TSS_Resources;
-class Pluggable_Messaging;
-
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-        TAO_SVC_HANDLER;
-
+class TAO_Pluggable_Messaging;
 
 // ****************************************************************
 
-class TAO_IIOP_Handler_Base : public TAO_SVC_HANDLER
-{
-public:
-  TAO_IIOP_Handler_Base (ACE_Thread_Manager *t);
-  TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core);
-
-  struct TCP_Properties
-  {
-    // = TITLE
-    //   TCP protocol properties specification for a set of
-    //   connections.
-    //
-    int send_buffer_size;
-    int recv_buffer_size;
-    int no_delay;
-  };
-};
-
-class TAO_Export TAO_IIOP_Client_Connection_Handler : public TAO_IIOP_Handler_Base
+class TAO_IIOP_Properties
 {
   // = TITLE
-  //      <Svc_Handler> used on the client side and returned by the
-  //      <TAO_CONNECTOR>.
+  //   TCP protocol properties specification for a set of
+  //   connections.
+  //
 public:
-  // = Intialization method.
-
-  TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager* t = 0);
-  // This constructor should *never* get called, it is just here to
-  // make the compiler happy: the default implementation of the
-  // Creation_Strategy requires a constructor with that signature, we
-  // don't use that implementation, but some (most?) compilers
-  // instantiate it anyway.
-
-  TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
-                                      TAO_ORB_Core* orb_core,
-                                      CORBA::Boolean flag,
-                                      void *arg);
-  // Constructor. <arg> parameter is used by the Connector to pass the
-  // protocol configuration properties for this connection.
-
-  virtual ~TAO_IIOP_Client_Connection_Handler (void);
-
-  // = <Connector> hook.
-  virtual int open (void *);
-  // Activation template method.
-
-  // = Event Handler overloads
-
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Called when a response from a twoway invocation is available.
-
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-  // Called when buffering timer expires.
-
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-  // Perform appropriate closing.
-
-  virtual int handle_close_i (ACE_HANDLE = ACE_INVALID_HANDLE,
-                              ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-  // Perform appropriate closing but without grabbing any locks.
-
-  virtual int close (u_long flags = 0);
-  // Object termination hook.
-
-  virtual TAO_Transport *transport (void);
-  // Return the transport objects
-
-protected:
-  int handle_cleanup (void);
-  // This method deregisters the handler from the reactor and closes it.
-
-  TAO_IIOP_Client_Transport transport_;
-  // Reference to the transport object, it is owned by this class.
-
-  TAO_ORB_Core *orb_core_;
-  // Cached ORB Core.
-
-  CORBA::Boolean lite_flag_;
-  // Are we using GIOP lite?
-
-  TCP_Properties *tcp_properties_;
-  // TCP configuration for this connection.
+  int send_buffer_size;
+  int recv_buffer_size;
+  int no_delay;
 };
 
 // ****************************************************************
 
-class TAO_Export TAO_IIOP_Server_Connection_Handler : public TAO_IIOP_Handler_Base
+class TAO_Export TAO_IIOP_Server_Connection_Handler : public TAO_IIOP_SVC_HANDLER,
+                                                      public TAO_Connection_Handler
 {
   // = TITLE
   //   Handles requests on a single connection in a server.
@@ -173,6 +91,9 @@ public:
 
   TAO_Transport *transport (void);
 
+  virtual ACE_HANDLE fetch_handle (void);
+  // Return the underlying handle
+
 protected:
 
   // = Event Handler overloads
@@ -191,30 +112,100 @@ protected:
   // Perform appropriate closing.
 
 protected:
+
   TAO_IIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
   TAO_Pluggable_Messaging *acceptor_factory_;
   // Messaging acceptor factory
 
-  TAO_ORB_Core *orb_core_;
-  // Cached ORB Core.
-
-  TAO_ORB_Core_TSS_Resources *tss_resources_;
-  // Cached tss resources of the ORB that activated this object.
-
   u_long refcount_;
-  // Reference count.  It is used to count nested upcalls on this
+  // Reference count.It is used to count nested upcalls on this
   // svc_handler i.e., the connection can close during nested upcalls,
   // you should not delete the svc_handler until the stack unwinds
   // from the nested upcalls.
 
-  CORBA::Boolean lite_flag_;
-  // Should we use GIOP or GIOPlite
-
-  TCP_Properties *tcp_properties_;
+  TAO_IIOP_Properties *tcp_properties_;
   // TCP configuration for this connection.
 };
+
+/*************************************************************************/
+class TAO_Export TAO_IIOP_Client_Connection_Handler: public TAO_IIOP_SVC_HANDLER,
+                                                     public TAO_Connection_Handler
+{
+  // = TITLE
+  //      <Svc_Handler> used on the client side and returned by the
+  //      <TAO_CONNECTOR>.
+public:
+  // = Intialization method.
+
+  TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager* t = 0);
+  // This constructor should *never* get called, it is just here to
+  // make the compiler happy: the default implementation of the
+  // Creation_Strategy requires a constructor with that signature, we
+  // don't use that implementation, but some (most?) compilers
+  // instantiate it anyway.
+
+  TAO_IIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
+                                      TAO_ORB_Core* orb_core,
+                                      CORBA::Boolean flag,
+                                      void *arg);
+  // Constructor. <arg> parameter is used by the Connector to pass the
+  // protocol configuration properties for this connection.
+
+  virtual ~TAO_IIOP_Client_Connection_Handler (void);
+
+  // = <Connector> hook.
+  virtual int open (void *);
+  // Activation template method.
+
+  // = Event Handler overloads
+
+  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  // Called when a response from a twoway invocation is available.
+
+
+  virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg = 0);
+  // Called when buffering timer expires.
+
+  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  // Perform appropriate closing.
+
+  virtual int handle_close_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
+  // Perform appropriate closing but without grabbing any locks.
+
+  virtual int close (u_long flags = 0);
+  // Object termination hook.
+
+  virtual TAO_Transport *transport (void);
+  // Return the transport objects
+
+  virtual ACE_HANDLE fetch_handle (void);
+  // Return the underlying handle
+
+protected:
+
+  int handle_cleanup (void);
+  // This method deregisters the handler from the reactor and closes it.
+
+  TAO_IIOP_Client_Transport transport_;
+  // Reference to the transport object, it is owned by this class.
+
+  TAO_IIOP_Properties *tcp_properties_;
+  // TCP configuration for this connection.
+
+private:
+
+  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Time_Value *max_wait_time = 0);
+  // Will not be called at all. As a matter of fact should not be
+  // called. This is just to override the pure virtual function in the
+  // TAO_Connection_Handler class
+};
+
 
 #if defined (__ACE_INLINE__)
 #include "tao/IIOP_Connect.i"
