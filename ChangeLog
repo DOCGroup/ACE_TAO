@@ -1,7 +1,17 @@
+Fri Aug 11 11:06:30 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_4.0.GNU: moved
+          -hidden /usr/lib/cmplrs/cxx/libcxxstd.a -non_hidden to end
+          of link line by moving it from SOFLAGS to the end of LIBS.
+          This allows links to succeed with -D__USE_STD_IOSTREAM.  Thanks
+          to Jorn Jensen <jornj@funcom.com> for finding this solution to
+          the link problem, and to Michael Kramer <kramer@ave.ac.agit.de>
+          for verifying that it works.
+
 Fri Aug 11 07:40:10 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp (open): Removed an unnecessary ACE_UNUSED_ARG(sh).
-	  Thanks to Pedro Brandao <pbrandao@inescn.pt> for reporting this.
+        * ace/WFMO_Reactor.cpp (open): Removed an unnecessary ACE_UNUSED_ARG(sh).
+          Thanks to Pedro Brandao <pbrandao@inescn.pt> for reporting this.
 
 Thu Aug 10 12:22:31 2000  Steve Huston  <shuston@riverace.com>
 
