@@ -112,7 +112,7 @@ be_state_array::gen_code (be_type *bt, be_decl *d, be_type *type)
         // make a recursive call
         return this->gen_code (t, d, temp);
       } // end of switch
-      break;
+      //break; unreachable statement!
     }
   return 0;
 }

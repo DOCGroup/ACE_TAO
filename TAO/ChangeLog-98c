@@ -1,3 +1,26 @@
+Tue Nov 18 18:53:57 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* TAO_IDL/be/be_state_typedef.cpp (gen_code): 
+	* TAO_IDL/be/be_state_structure.cpp (gen_code): 
+	* TAO_IDL/be/be_state_sequence.cpp (gen_code): 
+	* TAO_IDL/be/be_state_operation.cpp (gen_code): 
+	* TAO_IDL/be/be_state_array.cpp (gen_code): Comment out
+ 	unreachable break statements.
+
+	* TAO_IDL/ast/ast_array.cpp (n_dims): 
+	* TAO_IDL/include/ast_array.h (AST_Array::n_dims): 
+	* TAO_IDL/ast/ast_attribute.cpp (readonly): 
+	* TAO_IDL/include/ast_attribute.h (AST_Attribute::readonly): 
+	* TAO_IDL/ast/ast_argument.cpp (direction): 
+	* TAO_IDL/include/ast_argument.h (AST_Argument::direction): 
+	* tao/nvlist.h (CORBA_NamedValue::name): 
+	* TAO_IDL/include/utl_scope.h (UTL_Scope::scope_node_type): 
+	* TAO_IDL/ast/ast_predefined_type.cpp (pt): 
+	* TAO_IDL/include/ast_predefined_type.h (AST_PredefinedType::pt):
+ 	removed const from declarations that it didn't have a meaning for.
+  	Also from return statements.  These changes were suggested by
+ 	James Hu and the SGI compiler.
+
 Tue Nov 18 18:34:16 1997  Sumedh Mungee  <sumedh@lindy.cs.wustl.edu>
 
 	* tests/Cubit/COOL/client.cpp: ORB_init is now called in
