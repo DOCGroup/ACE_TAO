@@ -413,14 +413,14 @@ ACE_UINT32
 ACE_Name_Reply::status (void) const
 {
   ACE_TRACE ("ACE_Name_Reply::status");
-  return this->transfer_.type_ == ACE_Name_Reply::ACE_SUCCESS ? 0 : -1;
+  return this->transfer_.type_ == ACE_Name_Reply::SUCCESS ? 0 : -1;
 }
 
 void 
 ACE_Name_Reply::status (ACE_UINT32 s)
 {
   ACE_TRACE ("ACE_Name_Reply::status");
-  this->transfer_.type_ = s == (ACE_UINT32) -1 ? ACE_Name_Reply::ACE_FAILURE : ACE_Name_Reply::ACE_SUCCESS;
+  this->transfer_.type_ = s == (ACE_UINT32) -1 ? ACE_Name_Reply::FAILURE : ACE_Name_Reply::SUCCESS;
 }
 
 // = Set/get the errno of a failed reply.
@@ -479,10 +479,10 @@ ACE_Name_Reply::dump (void) const
 
   switch (this->msg_type ())
     {
-    case ACE_Name_Reply::ACE_SUCCESS:
+    case ACE_Name_Reply::SUCCESS:
       ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("SUCCESS\n")));
       break;
-    case ACE_Name_Reply::ACE_FAILURE:
+    case ACE_Name_Reply::FAILURE:
       ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("FAILURE\n")));
       break;
     default:
