@@ -1,3 +1,10 @@
+Tue Oct 21 11:00:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Select_Reactor_Base.cpp (notify): Release memory from the
+	  Event_Handler_var after adding messages to the notify queue
+	  without adding any messages to the pipe. Thanks to the daily
+	  builds for catching this.
+
 Mon Oct 20 13:31:36 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/nmake.mpd:
