@@ -7,41 +7,40 @@ Thu Feb  4 21:33:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Thu Feb  4 19:18:51 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
-    * Multiple Profiles (MP).
-      This required the modification of several files, deleting others as well as
-      adding and removing classes.
+        * Multiple Profiles (MP).
+	  This required the modification of several files, deleting others
+	  as well as adding and removing classes.
     
-    * removed the files IIOP_Object.{h,i,cpp} and object IIOP_Object.  All
-      functionality now resided in the old base class STUB_Object. 
+        * Removed the files IIOP_Object.{h,i,cpp} and object IIOP_Object.
+  	  All functionality now resided in the old base class STUB_Object.
     
-    * Changed many files and classes to multiple profiles or to account for
-      removing the IIOP_Object class.
-       1) IIOP_Connector.cpp
-       2) IIOP_ORB.{h,cpp}
-          IIOP_ORB.cpp changed references from IIOP_Object and
-          Client_Handler to STUB_Object and TAO_Transport.  Also
-          moved much of the IIOP specific marsheling code to IIOP_Profile.
-       3) Invocation.{h,i,cpp}
-          Changed references from IIOP_Object to STUB_Object.
-       4) ORB.{h,i,cpp}
-       5) ORB_Core.{h,i,cpp}
-       6) Object.{i,cpp}
-       7) Servant_Base.cpp
-       8) Server_Request.cpp
-       9) Stub.{h,i,cpp}
-          All logic from IIOP_Object (minus transport specific stuff) moved to
-          the STUB_Object.  Also the MProfile class is used for storing all
-          profiles.
-      10) decode.cpp
-          Changed IIOP_Object ref to STUB_Object
-      11) encode.cpp
-          Changed IIOP_Object ref to STUB_Object
-      12) Any.h
-          Changed "friend class IIOP_Object" to "friend class STUB_Object"
-      13) corba.h
-          Added #include's for the Multiple Profile header files.
+        * Changed many files and classes to multiple profiles or to
+ 	  account for removing the IIOP_Object class.
 
-
+	   1) IIOP_Connector.cpp
+	   2) IIOP_ORB.{h,cpp}
+	      IIOP_ORB.cpp changed references from IIOP_Object and
+	      Client_Handler to STUB_Object and TAO_Transport.  Also
+	      moved much of the IIOP specific marsheling code to IIOP_Profile.
+	   3) Invocation.{h,i,cpp}
+	      Changed references from IIOP_Object to STUB_Object.
+	   4) ORB.{h,i,cpp}
+	   5) ORB_Core.{h,i,cpp}
+	   6) Object.{i,cpp}
+	   7) Servant_Base.cpp
+	   8) Server_Request.cpp
+	   9) Stub.{h,i,cpp}
+	      All logic from IIOP_Object (minus transport specific stuff) moved to
+	      the STUB_Object.  Also the MProfile class is used for storing all
+	      profiles.
+	  10) decode.cpp
+	      Changed IIOP_Object ref to STUB_Object
+	  11) encode.cpp
+	      Changed IIOP_Object ref to STUB_Object
+	  12) Any.h
+	      Changed "friend class IIOP_Object" to "friend class STUB_Object"
+	  13) corba.h
+	      Added #include's for the Multiple Profile header files.
 
 Thu Feb  4 15:07:29 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
