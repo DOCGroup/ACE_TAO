@@ -1,3 +1,20 @@
+Wed Dec  8 15:41:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TimeBaseC.{h,cpp,i,inl}:
+        * tao/TimeBaseS.{h,cpp,i,inl}:
+        * tao/TimeBaseS_T.{h,cpp,i,inl}:
+        * tao/TimeBaseA.cpp:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
+        * tao/diffs/TimeBase.*.diff:
+          Removed these files, no diffs are needed anymore
+
+        * tao/TimeBase.pidl:
+          Removed instructions about applying patches, not needed anymore
+
 Wed Dec  8 15:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/TAOC.{h,cpp,i,inl}:
