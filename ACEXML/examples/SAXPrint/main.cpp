@@ -53,7 +53,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   if (str == 0 && filename == 0 && url == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "No filename/url specified\n"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Usage: %s [-sl] [-f <filename> | -u <url>]\n%s"),
+                       argv[0],
+                       ACE_TEXT ("  -s: Use SAXPrint_Handler (Default is Print_Handler\n")
+                       ACE_TEXT ("  -l: Parse the internal strings (test the StrCharStream class\n")
+                       ACE_TEXT ("  -f: Specify the filename when -l is not specified\n")
+                       ACE_TEXT ("  -u: URL specifying the path to the file\n")),
+                      -1);
+
 
   ACEXML_DefaultHandler *handler = 0;
   {
