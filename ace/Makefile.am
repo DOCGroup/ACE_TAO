@@ -323,7 +323,8 @@ libACE_Svcconf_la_SOURCES = \
   Service_Templates.cpp \
   Shared_Object.cpp \
   Svc_Conf_l.cpp \
-  Svc_Conf_y.cpp
+  Svc_Conf_y.cpp \
+  Svc_Conf_Lexer_Guard.cpp
 
 libACE_Streams_la_SOURCES = \
   CDR_Base.cpp \

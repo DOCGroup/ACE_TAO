@@ -184,6 +184,7 @@ OBJFILES = \
 	$(OBJDIR)\SV_Shared_Memory.obj \
 	$(OBJDIR)\Svc_Conf_l.obj \
 	$(OBJDIR)\Svc_Conf_y.obj \
+	$(OBJDIR)\Svc_Conf_Lexer_Guard.obj \
 	$(OBJDIR)\Svc_Handler.obj \
 	$(OBJDIR)\Synch.obj \
 	$(OBJDIR)\Process_Semaphore.obj \
