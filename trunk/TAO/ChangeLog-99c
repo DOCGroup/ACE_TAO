@@ -1,3 +1,21 @@
+Tue Jun  1 18:00:23 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_State.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Globals.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_i.cpp:
+	  Added missing template instantiation pragmas.		
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/as.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/vs.cpp:
+	  Added missing template instantiation pragmas. 
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+	 Fixed a Any reference to CORBA::Any.
+	
 Tue Jun  1 17:27:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
