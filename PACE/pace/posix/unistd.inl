@@ -65,7 +65,7 @@ pace_chown (const char * path, uid_t owner, pace_gid_t group)
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 int
-pace_close (int fildes)
+pace_close (PACE_HANDLE fildes)
 {
   return close (fildes);
 }
@@ -74,7 +74,7 @@ pace_close (int fildes)
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 int
-pace_dup (int fildes)
+pace_dup (PACE_HANDLE fildes)
 {
   return dup (fildes);
 }
@@ -83,7 +83,7 @@ pace_dup (int fildes)
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 int
-pace_dup2 (int fildes, int fildes2)
+pace_dup2 (PACE_HANDLE fildes, int fildes2)
 {
   return dup2 (fildes, fildes2);
 }
@@ -126,7 +126,7 @@ pace_execvp (const char * file,
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_fdatasync (int fildes)
+pace_fdatasync (PACE_HANDLE fildes)
 {
   return fdatasync (fildes);
 }
@@ -144,7 +144,7 @@ pace_fork ()
 #if (PACE_HAS_POSIX_FS_UOF)
 PACE_INLINE
 long
-pace_fpathconf (int fildes, int name)
+pace_fpathconf (PACE_HANDLE fildes, int name)
 {
   return fpathconf (fildes, name);
 }
@@ -153,7 +153,7 @@ pace_fpathconf (int fildes, int name)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_fsync (int fildes)
+pace_fsync (PACE_HANDLE fildes)
 {
   return fildes;
 }
@@ -162,7 +162,7 @@ pace_fsync (int fildes)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_ftruncate (int fildes, pace_off_t length)
+pace_ftruncate (PACE_HANDLE fildes, pace_off_t length)
 {
   return ftruncate (fildes, length);
 }
@@ -276,7 +276,7 @@ pace_getuid ()
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 int
-pace_isatty (int fildes)
+pace_isatty (PACE_HANDLE fildes)
 {
   return isatty (fildes);
 }
@@ -294,7 +294,7 @@ pace_link (const char * existing, const char * new_link)
 #if (PACE_HAS_POSIX_FM_UOF)
 PACE_INLINE
 pace_off_t
-pace_lseek (int fildes, pace_off_t offset, int whence)
+pace_lseek (PACE_HANDLE fildes, pace_off_t offset, int whence)
 {
   return lseek (fildes, offset, whence);
 }
@@ -321,7 +321,7 @@ pace_pause ()
 #if (PACE_HAS_POSIX_P_UOF)
 PACE_INLINE
 int
-pace_pipe (int fildes[2])
+pace_pipe (PACE_HANDLE fildes[2])
 {
   return pipe (fildes);
 }
@@ -330,7 +330,7 @@ pace_pipe (int fildes[2])
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 ssize_t
-pace_read (int fildes, void * buf, size_t nbyte)
+pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte)
 {
   return read (fildes, buf, nbyte);
 }
@@ -402,7 +402,7 @@ pace_sysconf (int name)
 #if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
 pid_t
-pace_tcgetpgrp (int fildes)
+pace_tcgetpgrp (PACE_HANDLE fildes)
 {
   return tcgetpgrp (fildes);
 }
@@ -411,7 +411,7 @@ pace_tcgetpgrp (int fildes)
 #if (PACE_HAS_POSIX_JC_UOF)
 PACE_INLINE
 int
-pace_tcsetpgrp (int fildes, pid_t pgrp_id)
+pace_tcsetpgrp (PACE_HANDLE fildes, pid_t pgrp_id)
 {
   return tcsetpgrp (fildes, pgrp_id);
 }
@@ -420,7 +420,7 @@ pace_tcsetpgrp (int fildes, pid_t pgrp_id)
 #if (PACE_HAS_POSIX_DS_UOF)
 PACE_INLINE
 char *
-pace_ttyname (int fildes)
+pace_ttyname (PACE_HANDLE fildes)
 {
   return ttyname (fildes);
 }
@@ -429,7 +429,7 @@ pace_ttyname (int fildes)
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
 PACE_INLINE
 int
-pace_ttyname_r (int fildes,
+pace_ttyname_r (PACE_HANDLE fildes,
                 char * name,
                 size_t namesize)
 {
@@ -456,7 +456,7 @@ pace_unlink (const char * path)
 #if (PACE_HAS_POSIX_DI_UOF)
 PACE_INLINE
 ssize_t
-pace_write (int fildes, const void * buf, size_t nbyte)
+pace_write (PACE_HANDLE fildes, const void * buf, size_t nbyte)
 {
   return write (fildes, buf, nbyte);
 }

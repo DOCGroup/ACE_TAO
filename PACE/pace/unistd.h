@@ -82,7 +82,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.3.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE int pace_close (int fildes);
+  PACE_INLINE int pace_close (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -91,7 +91,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.2.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE int pace_dup (int fildes);
+  PACE_INLINE int pace_dup (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -100,7 +100,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.2.1.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE int pace_dup2 (int fildes, int fildes2);
+  PACE_INLINE int pace_dup2 (PACE_HANDLE fildes, int fildes2);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -167,7 +167,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.6.2.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_fdatasync (int fildes);
+  PACE_INLINE int pace_fdatasync (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -185,7 +185,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.7.1.
      */
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE long pace_fpathconf (int fildes, int name);
+  PACE_INLINE long pace_fpathconf (PACE_HANDLE fildes, int name);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
   /**
@@ -194,7 +194,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.6.1.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_fsync (int fildes);
+  PACE_INLINE int pace_fsync (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -203,7 +203,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 5.6.7.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_ftruncate (int fildes, pace_off_t length);
+  PACE_INLINE int pace_ftruncate (PACE_HANDLE fildes, pace_off_t length);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
   /**
@@ -312,7 +312,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.7.2.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE int pace_isatty (int fildes);
+  PACE_INLINE int pace_isatty (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -330,7 +330,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.5.3.
      */
 #if (PACE_HAS_POSIX_FM_UOF)
-  PACE_INLINE pace_off_t pace_lseek (int fildes, off_t offset, int whence);
+  PACE_INLINE pace_off_t pace_lseek (PACE_HANDLE fildes, off_t offset, int whence);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
   /**
@@ -357,7 +357,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.1.1.
      */
 #if (PACE_HAS_POSIX_P_UOF)
-  PACE_INLINE int pace_pipe (int fildes[2]);
+  PACE_INLINE int pace_pipe (PACE_HANDLE fildes[2]);
 #endif /* PACE_HAS_POSIX_P_UOF */
 
   /**
@@ -366,7 +366,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.4.1.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE ssize_t pace_read (int fildes, void * buf, size_t nbyte);
+  PACE_INLINE ssize_t pace_read (PACE_HANDLE fildes, void * buf, size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
   /**
@@ -438,7 +438,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.3.1.
      */
 #if (PACE_HAS_POSIX_JC_UOF)
-  PACE_INLINE pid_t pace_tcgetpgrp (int fildes);
+  PACE_INLINE pid_t pace_tcgetpgrp (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_JC_UOF */
 
   /**
@@ -447,7 +447,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 7.2.3.1.
      */
 #if (PACE_HAS_POSIX_JC_UOF)
-  PACE_INLINE int pace_tcsetpgrp (int fildes, pid_t pgrp_id);
+  PACE_INLINE int pace_tcsetpgrp (PACE_HANDLE fildes, pid_t pgrp_id);
 #endif /* PACE_HAS_POSIX_JC_UOF */
 
   /**
@@ -456,7 +456,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.7.2.
      */
 #if (PACE_HAS_POSIX_DS_UOF)
-  PACE_INLINE char * pace_ttyname (int fildes);
+  PACE_INLINE char * pace_ttyname (PACE_HANDLE fildes);
 #endif /* PACE_HAS_POSIX_DS_UOF */
 
   /**
@@ -465,7 +465,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 4.7.2.
      */
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_ttyname_r (int fildes, char * name, size_t namesize);
+  PACE_INLINE int pace_ttyname_r (PACE_HANDLE fildes, char * name, size_t namesize);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
@@ -484,7 +484,7 @@ extern "C" {
      IEEE Std 1003.1, 1996 Edition), Section 6.4.2.
      */
 #if (PACE_HAS_POSIX_DI_UOF)
-  PACE_INLINE ssize_t pace_write (int fildes, const void * buf, size_t nbyte);
+  PACE_INLINE ssize_t pace_write (PACE_HANDLE fildes, const void * buf, size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
 #if defined (PACE_HAS_INLINE)
