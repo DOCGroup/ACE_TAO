@@ -1,3 +1,10 @@
+Wed Nov 12 14:51:14 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/orbsvcs/Makefile:
+          Reverted the change to this file in Wed Nov 12 07:40:27 UTC 2003
+          Don Hinton  <dhinton@dresystems.com>, and added back the
+          ORBSVCS_COMPONENTS_realclean target.
+
 Wed Nov 12 09:26:48 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/AMI/FL_Callback/Makefile:
