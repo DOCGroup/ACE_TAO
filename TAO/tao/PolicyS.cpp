@@ -331,9 +331,9 @@ void POA_CORBA::_tao_collocated_Policy::destroy  (
 }
 
 CORBA::Policy*
-POA_CORBA::Policy::_this (CORBA_Environment &TAO_IN_ENV)
+POA_CORBA::Policy::_this (CORBA_Environment &ACE_TRY_ENV)
 {
-  TAO_Stub *stub = this->_create_stub (TAO_IN_ENV);
+  TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
   return new POA_CORBA::_tao_collocated_Policy (this, stub);
 }
