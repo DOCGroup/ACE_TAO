@@ -30,6 +30,7 @@
 #define TAO_IOP_IOR_PIDL
 
 #include <orb.idl>
+#include <OctetSeq.pidl>
 
 #pragma prefix "omg.org"
 
@@ -41,7 +42,7 @@ module IOP
 
   struct TaggedProfile {
     ProfileId       tag;
-    sequence<octet> profile_data;
+    CORBA::OctetSeq profile_data;
   };
 
   struct IOR {
@@ -52,7 +53,7 @@ module IOP
   typedef unsigned long ComponentId;
   struct TaggedComponent {
     ComponentId     tag;
-    sequence<octet> component_data;
+    CORBA::OctetSeq component_data;
   };
   typedef sequence<TaggedComponent> MultipleComponentProfile;
   typedef sequence<TaggedComponent> TaggedComponentList;
