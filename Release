@@ -85,6 +85,10 @@ CONTROLLED_FILES = \
 RELEASE_FILES = \
         $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
         ACE_wrappers/ACE-INSTALL \
+        ACE_wrappers/GNUmake* \
+        ACE_wrappers/*.dsw \
+        ACE_wrappers/*.sln \
+        ACE_wrappers/Makefile*\
         ACE_wrappers/man
 
 AUTOCONF_RELEASE_FILES = \
