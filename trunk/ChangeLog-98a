@@ -1,3 +1,7 @@
+Fri Jan 16 01:42:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/SString.h: Added the correct export macros.
+
 Thu Jan 15 15:45:48 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* etc/ACE-guidelines.html: Reformatted this page a bit.
