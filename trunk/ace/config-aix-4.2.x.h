@@ -14,6 +14,7 @@
 // Use BSD 4.4 socket definitions
 #define _BSD 44
 
+#define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
 #define ACE_HAS_AIX_HI_RES_TIMER
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #define ACE_HAS_UNION_WAIT
@@ -21,6 +22,7 @@
 #define ACE_HAS_TID_T
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_H_ERRNO
+#define ACE_LACKS_TCP_H
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 #define ACE_LACKS_THREAD_STACK_ADDR
 #define ACE_LACKS_CONDATTR_PSHARED
@@ -100,6 +102,7 @@
 // EYE assume it does for now.
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 #define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREAD_T
 #define ACE_PTHREADS_MAP
 
 // include there
