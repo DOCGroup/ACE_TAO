@@ -3,7 +3,6 @@
 #include "ace/Reactor.h"
 #include "Fault_Detector.h"
 #include "ace/Select_Reactor.h"
-#include "../Utils/RT_Task.h"
 
 ACE_RCSID (EventChannel,
            Fault_Detector,
@@ -48,7 +47,7 @@ int Fault_Detector::init(int argc, char** argv)
     this->init_acceptor() ==0)
   {
     if (!reactor_task_.thr_count() &&
-      RT_Task::activate(&reactor_task_) != 0)
+      reactor_task_.activate() != 0)
       ACE_ERROR_RETURN ((LM_ERROR,"Cannot activate reactor thread\n"),
       -1);
     return 0;
