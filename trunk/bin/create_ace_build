@@ -32,7 +32,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # Taken from perlrun man page.
 
 $usage = "usage: $0 -? | [-a] [-d <directory mode>] [-v] <build name>\n";
-$directory_mode = 042755;   #### fine on Suns, but maybe not all Unix platforms
+$directory_mode = 0777;   #### Will be modified by umask, also.
 $verbose = 0;
 
 $source='.';
