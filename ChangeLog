@@ -1,3 +1,9 @@
+Mon Feb 17 15:21:18 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* bin/auto_run_tests.lst: The Server_Protocol and the ORB_init
+	  test in RTCORBA will not run in ST builds since the operations
+	  ACE_OS::thr_getprio () are not supported.
+
 Fri Feb 14 09:53:43 2003  Rich Seibel <seibel_r@ociweb.com>
 
         * ace/config-osf1-4.0.h: Tru64 lacks the clearerr
