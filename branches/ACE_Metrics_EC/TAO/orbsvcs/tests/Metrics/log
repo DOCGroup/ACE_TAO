@@ -1,0 +1,304 @@
+g++ -W -Wall -Wpointer-arith -pipe -g   -fno-exceptions -fcheck-new -DACE_USE_RCSID=0 -D_REENTRANT -DACE_HAS_AIO_CALLS  -I/u/storri/ACE_CVS -I/u/storri/ACE_CVS/TAO    -I/u/storri/ACE_CVS/TAO/orbsvcs  -c  -o .obj/Metrics_Local_Cache_Test.o Metrics_Local_Cache_Test.cpp
+Metrics_Local_Cache_Test.cpp:12:37: orbsvcs/Rate_Group_Info.h: No such file or directory
+Metrics_Local_Cache_Test.h: In constructor 
+   `TAO_Metrics_Local_Cache_Test::TAO_Metrics_Local_Cache_Test(int, int)':
+Metrics_Local_Cache_Test.h:131: warning: member initializers for `
+   TAO_Metrics_ReportingUpcallMonitorAdapter<ACE_Thread_Mutex, 
+   ACE_New_Allocator>*TAO_Metrics_Local_Cache_Test::S01_push_consumer_adapter_'
+Metrics_Local_Cache_Test.h:100: warning:   and `
+   TAO_Metrics_Logger*TAO_Metrics_Local_Cache_Test::logger_impl_'
+Metrics_Local_Cache_Test.cpp:103: warning:   will be re-ordered to match 
+   declaration order
+Metrics_Local_Cache_Test.h: In constructor 
+   `TAO_Metrics_Local_Cache_Test::TAO_Metrics_Local_Cache_Test(int, char**, 
+   int, int)':
+Metrics_Local_Cache_Test.h:131: warning: member initializers for `
+   TAO_Metrics_ReportingUpcallMonitorAdapter<ACE_Thread_Mutex, 
+   ACE_New_Allocator>*TAO_Metrics_Local_Cache_Test::S01_push_consumer_adapter_'
+Metrics_Local_Cache_Test.h:100: warning:   and `
+   TAO_Metrics_Logger*TAO_Metrics_Local_Cache_Test::logger_impl_'
+Metrics_Local_Cache_Test.cpp:131: warning:   will be re-ordered to match 
+   declaration order
+Metrics_Local_Cache_Test.cpp: In member function `void 
+   TAO_Metrics_Local_Cache_Test::generate_orb_args(char*&)':
+Metrics_Local_Cache_Test.cpp:146: `RTCORBA' undeclared (first use this 
+   function)
+Metrics_Local_Cache_Test.cpp:146: (Each undeclared identifier is reported only 
+   once for each function it appears in.)
+Metrics_Local_Cache_Test.cpp:146: parse error before `::' token
+Metrics_Local_Cache_Test.cpp:154: no method `TAO_Rate_Group_Info::
+   set_num_rate_groups'
+Metrics_Local_Cache_Test.cpp:157: no method `TAO_Rate_Group_Info::
+   set_corba_base_priority'
+Metrics_Local_Cache_Test.cpp:160: no method `TAO_Rate_Group_Info::
+   set_priority_spacing'
+Metrics_Local_Cache_Test.cpp:166: no method `TAO_Rate_Group_Info::
+   set_priorities_contiguous'
+Metrics_Local_Cache_Test.cpp:172: invalid use of undefined type `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.h:16: forward declaration of `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.cpp:182: invalid use of undefined type `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.h:16: forward declaration of `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.cpp:197: invalid use of undefined type `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.h:16: forward declaration of `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.cpp:205: invalid use of undefined type `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.h:16: forward declaration of `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.cpp:217: invalid use of undefined type `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.h:16: forward declaration of `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.cpp:220: `TAO_Multi_Priority_Mapping' undeclared 
+   (first use this function)
+Metrics_Local_Cache_Test.cpp:220: parse error before `(' token
+Metrics_Local_Cache_Test.cpp:268: `priorityMapping' undeclared (first use this 
+   function)
+Metrics_Local_Cache_Test.cpp:268: invalid use of undefined type `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.h:16: forward declaration of `struct 
+   TAO_Rate_Group_Info'
+Metrics_Local_Cache_Test.cpp:268: `the_corba_priority' undeclared (first use 
+   this function)
+Metrics_Local_Cache_Test.cpp: In member function `int 
+   TAO_Metrics_Local_Cache_Test::parse_args(int, char**)':
+Metrics_Local_Cache_Test.cpp:306: invalid conversion from `const ACE_TCHAR*' to 
+   `char*'
+Metrics_Local_Cache_Test.cpp:306: warning: suggest parentheses around 
+   assignment used as truth value
+Metrics_Local_Cache_Test.cpp:311: invalid conversion from `const ACE_TCHAR*' to 
+   `char*'
+Metrics_Local_Cache_Test.cpp:311: warning: suggest parentheses around 
+   assignment used as truth value
+Metrics_Local_Cache_Test.cpp:316: invalid conversion from `const ACE_TCHAR*' to 
+   `char*'
+Metrics_Local_Cache_Test.cpp:316: warning: suggest parentheses around 
+   assignment used as truth value
+Metrics_Local_Cache_Test.cpp: In member function `int 
+   TAO_Metrics_Local_Cache_Test::init(int, char**)':
+Metrics_Local_Cache_Test.cpp:468: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:468: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `CORBA_Object*'
+Metrics_Local_Cache_Test.cpp:468: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:490: `TAO' undeclared (first use this function)
+Metrics_Local_Cache_Test.cpp:490: parse error before `::' token
+Metrics_Local_Cache_Test.cpp:491: `ps' undeclared (first use this function)
+Metrics_Local_Cache_Test.cpp:491: parse error before `::' token
+Metrics_Local_Cache_Test.cpp:497: parse error before `::' token
+Metrics_Local_Cache_Test.cpp:529: warning: choosing `
+   Metrics::ReportingQoSMonitor_var::operator Metrics::ReportingQoSMonitor*&()' 
+   over `Metrics::ReportingQoSMonitor_var::operator 
+   Metrics::ReportingQoSMonitor* const&() const'
+Metrics_Local_Cache_Test.cpp:529: warning:   for conversion from `
+   Metrics::ReportingQoSMonitor_var' to `CORBA_Object*'
+Metrics_Local_Cache_Test.cpp:529: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:542: warning: choosing `
+   Metrics::ReportingQoSMonitor_var::operator Metrics::ReportingQoSMonitor*&()' 
+   over `Metrics::ReportingQoSMonitor_var::operator 
+   Metrics::ReportingQoSMonitor* const&() const'
+Metrics_Local_Cache_Test.cpp:542: warning:   for conversion from `
+   Metrics::ReportingQoSMonitor_var' to `CORBA_Object*'
+Metrics_Local_Cache_Test.cpp:542: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:552: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:552: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:552: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:560: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:560: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:560: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:568: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:568: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:568: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:576: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:576: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:576: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:584: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:584: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:584: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:592: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:592: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:592: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:600: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:600: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:600: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:608: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:608: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:608: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:616: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:616: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:616: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:624: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:624: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:624: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:636: `TAO_Metrics_Utils::Base_Metrics_Type' is not 
+   an aggregate type
+Metrics_Local_Cache_Test.cpp:639: `TAO_Metrics_Utils::Base_Metrics_Type' is not 
+   an aggregate type
+Metrics_Local_Cache_Test.cpp:642: `TAO_Metrics_Utils::Base_Metrics_Type' is not 
+   an aggregate type
+Metrics_Local_Cache_Test.cpp:646: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:646: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:646: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp: In member function `int 
+   TAO_Metrics_Local_Cache_Test::run(CORBA_Environment&)':
+Metrics_Local_Cache_Test.cpp:695: no matching function for call to `ACE_OS::
+   gettimeofday(ACE_Time_Value&)'
+/u/storri/ACE_CVS/ace/OS.i:617: candidates are: static ACE_Time_Value 
+   ACE_OS::gettimeofday()
+Metrics_Local_Cache_Test.cpp:728: no matching function for call to `ACE_OS::
+   gettimeofday(ACE_Time_Value&)'
+/u/storri/ACE_CVS/ace/OS.i:617: candidates are: static ACE_Time_Value 
+   ACE_OS::gettimeofday()
+Metrics_Local_Cache_Test.cpp:732: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:732: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:732: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp:735: `QoSParameter_t_ptr' undeclared in namespace 
+   `Metrics'
+Metrics_Local_Cache_Test.cpp:735: parse error before `;' token
+Metrics_Local_Cache_Test.cpp:736: `QoSParameter_Set_ptr' undeclared in 
+   namespace `Metrics'
+Metrics_Local_Cache_Test.cpp:736: parse error before `;' token
+Metrics_Local_Cache_Test.cpp:745: `qos_ptr' undeclared (first use this 
+   function)
+Metrics_Local_Cache_Test.cpp:757: `qos_set_ptr' undeclared (first use this 
+   function)
+Metrics_Local_Cache_Test.cpp:771: warning: choosing `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger*&()' over `
+   Metrics::QoSLogger_var::operator Metrics::QoSLogger* const&() const'
+Metrics_Local_Cache_Test.cpp:771: warning:   for conversion from `
+   Metrics::QoSLogger_var' to `Metrics::QoSLogger*'
+Metrics_Local_Cache_Test.cpp:771: warning:   because conversion sequence for 
+   the argument is better
+Metrics_Local_Cache_Test.cpp: In member function `virtual void 
+   TAO_Metrics_Local_Cache_Test_PushConsumer::push(const 
+   RtecEventComm::EventSet&, CORBA_Environment&)':
+Metrics_Local_Cache_Test.cpp:872: warning: unused parameter `
+   CORBA_Environment&_ACE_CORBA_Environment_variable'
+Metrics_Local_Cache_Test.cpp: In member function `virtual void 
+   TAO_Metrics_Local_Cache_Test_PushConsumer::disconnect_push_consumer(CORBA_Environment&)':
+Metrics_Local_Cache_Test.cpp:907: warning: unused parameter `
+   CORBA_Environment&_ACE_CORBA_Environment_variable'
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i: In member 
+   function `void TAO_Metrics_ReportingLocalCache<ACE_LOCK, 
+   ALLOCATOR>::output_statistics(Metrics::QoSLogger*) [with ACE_LOCK = 
+   ACE_Thread_Mutex, ALLOCATOR = ACE_New_Allocator]':
+Metrics_Local_Cache_Test.cpp:771:   instantiated from here
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:1289: cannot
+   dynamic_cast `*this->ACE_Metrics_Cache<ACE_Thread_Mutex, 
+   ACE_New_Allocator>::enqueue_probes_[j]' (of type `class 
+   ACE_Metrics_Timeprobe<ACE_Thread_Mutex, ACE_New_Allocator>*') to type `class 
+   TAO_Metrics_LocalTimeprobe<ACE_Thread_Mutex, ACE_New_Allocator>*' (source 
+   type is not polymorphic)
+Metrics_Local_Cache_Test.cpp:771:   instantiated from here
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:1345: `
+   TAO_Metrics_Cache_Data' is not a member of type `
+   TAO_Metrics_LocalCache<ACE_Thread_Mutex, 
+   ACE_New_Allocator>::TAO_Metrics_Cache_Data_Base'
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:1345: `
+   data' undeclared (first use this function)
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp: In 
+   member function `void TAO_Metrics_LocalTimeprobe<ACE_LOCK, 
+   ALLOCATOR>::report_intervals(int) [with ACE_LOCK = ACE_Thread_Mutex, 
+   ALLOCATOR = ACE_New_Allocator]':
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:1296:   instantiated from `void TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics(Metrics::QoSLogger*) [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = ACE_New_Allocator]'
+Metrics_Local_Cache_Test.cpp:771:   instantiated from here
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:105: request
+   for member `sec' in `(this->ACE_Timeprobe_Ex<ACE_LOCK, 
+   ALLOCATOR>::timeprobes() [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = 
+   ACE_New_Allocator]() + (+(start_evt_ndx * 32)))->ACE_timeprobe_t::time_', 
+   which is of non-aggregate type `long unsigned int'
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:1296:   instantiated from `void TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics(Metrics::QoSLogger*) [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = ACE_New_Allocator]'
+Metrics_Local_Cache_Test.cpp:771:   instantiated from here
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:105: request
+   for member `usec' in `(this->ACE_Timeprobe_Ex<ACE_LOCK, 
+   ALLOCATOR>::timeprobes() [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = 
+   ACE_New_Allocator]() + (+(start_evt_ndx * 32)))->ACE_timeprobe_t::time_', 
+   which is of non-aggregate type `long unsigned int'
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:1296:   instantiated from `void TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics(Metrics::QoSLogger*) [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = ACE_New_Allocator]'
+Metrics_Local_Cache_Test.cpp:771:   instantiated from here
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:111: request
+   for member `sec' in `(this->ACE_Timeprobe_Ex<ACE_LOCK, 
+   ALLOCATOR>::timeprobes() [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = 
+   ACE_New_Allocator]() + (+(start_evt_ndx * 32)))->ACE_timeprobe_t::time_', 
+   which is of non-aggregate type `long unsigned int'
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:1296:   instantiated from `void TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics(Metrics::QoSLogger*) [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = ACE_New_Allocator]'
+Metrics_Local_Cache_Test.cpp:771:   instantiated from here
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:111: request
+   for member `usec' in `(this->ACE_Timeprobe_Ex<ACE_LOCK, 
+   ALLOCATOR>::timeprobes() [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = 
+   ACE_New_Allocator]() + (+(start_evt_ndx * 32)))->ACE_timeprobe_t::time_', 
+   which is of non-aggregate type `long unsigned int'
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:1296:   instantiated from `void TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics(Metrics::QoSLogger*) [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = ACE_New_Allocator]'
+Metrics_Local_Cache_Test.cpp:771:   instantiated from here
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:165: request
+   for member `sec' in `(this->ACE_Timeprobe_Ex<ACE_LOCK, 
+   ALLOCATOR>::timeprobes() [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = 
+   ACE_New_Allocator]() + (+(stop_or_suspend_evt_ndx * 
+   32)))->ACE_timeprobe_t::time_', which is of non-aggregate type `long 
+   unsigned int'
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.i:1296:   instantiated from `void TAO_Metrics_ReportingLocalCache<ACE_LOCK, ALLOCATOR>::output_statistics(Metrics::QoSLogger*) [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = ACE_New_Allocator]'
+Metrics_Local_Cache_Test.cpp:771:   instantiated from here
+/u/storri/ACE_CVS/TAO/orbsvcs/orbsvcs/Metrics/Metrics_LocalCache_T.cpp:165: request
+   for member `usec' in `(this->ACE_Timeprobe_Ex<ACE_LOCK, 
+   ALLOCATOR>::timeprobes() [with ACE_LOCK = ACE_Thread_Mutex, ALLOCATOR = 
+   ACE_New_Allocator]() + (+(stop_or_suspend_evt_ndx * 
+   32)))->ACE_timeprobe_t::time_', which is of non-aggregate type `long 
+   unsigned int'
+make: *** [.obj/Metrics_Local_Cache_Test.o] Error 1

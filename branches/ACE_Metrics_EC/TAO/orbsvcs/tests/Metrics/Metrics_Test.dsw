@@ -1,0 +1,170 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "ACE DLL"=..\..\..\..\ace\ace_dll.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ACE LIB (No DTE)"=..\..\..\..\ace\ace_lib_no_DTE.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Metrics_Local_Cache_Test"=.\Metrics_Local_Cache.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ORB Services Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Metrics_Test"=.\Metrics_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name Remote_Metrics_Logger
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Metrics_Local_Cache_Test
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ORB Services Static"=..\..\orbsvcs\orbsvcs_static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO LIB
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Remote_Metrics_Logger"=.\Remote_Metrics_Logger.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ORB Services Static
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO LIB"=..\..\..\tao\TAO_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ACE LIB (No DTE)
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL Compiler"=..\..\..\TAO_IDL\tao_idl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "gperf"=..\..\..\..\apps\gperf\src\gperf.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name gperf_lib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "gperf_lib"=..\..\..\..\apps\gperf\src\gperf_lib.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+
