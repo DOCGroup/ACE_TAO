@@ -1,3 +1,17 @@
+Sun Jan  9 19:36:24 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Generate pkg-config *.pc files from templates.
+
+	* orbsvcs/orbsvcs/TAO_CosConcurrency.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosLifeCycle.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosLoadBalancing.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosProperty.pc.in:
+	* orbsvcs/orbsvcs/TAO_CosTime.pc.in:
+
+	  New files, pkg-config *.pc templates.
+
 Sun Jan  9 12:00:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Object_Adapter.h:
