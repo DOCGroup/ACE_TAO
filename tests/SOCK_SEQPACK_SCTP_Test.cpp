@@ -62,7 +62,7 @@ ACE_THR_FUNC_RETURN
 Server (void *arg)
 {
   ACE_SOCK_SEQPACK_Acceptor *AcceptorSocket =
-    ACE_reinterpret_cast (ACE_SOCK_SEQPACK_Acceptor *, arg);
+    reinterpret_cast<ACE_SOCK_SEQPACK_Acceptor *> (arg);
 
   ACE_SOCK_SEQPACK_Association Stream;
 
@@ -186,7 +186,7 @@ ACE_THR_FUNC_RETURN
 Client(void *arg)
 {
   ACE_Multihomed_INET_Addr *ServerAddr =
-    ACE_reinterpret_cast (ACE_Multihomed_INET_Addr *, arg);
+    reinterpret_cast<ACE_Multihomed_INET_Addr *> (arg);
 
   ACE_SOCK_SEQPACK_Connector Connector;
 
@@ -317,14 +317,14 @@ spawn_test(bool ipv6_test)
     exit (0);
     break;
   default:
-    Server (ACE_reinterpret_cast(void *, &AcceptorSocket));
+    Server (reinterpret_cast<void *> (&AcceptorSocket));
     ACE_OS::wait ();
     break;
   }
 #elif defined (ACE_HAS_THREADS)
   if (-1 == ACE_Thread_Manager::instance ()->spawn
       (Server,
-       ACE_reinterpret_cast(void *, &AcceptorSocket),
+       reinterpret_cast<void *> (&AcceptorSocket),
        THR_NEW_LWP | THR_DETACHED))
   {
     ACE_ERROR ((LM_ERROR,
@@ -334,7 +334,7 @@ spawn_test(bool ipv6_test)
 
   if (-1 == ACE_Thread_Manager::instance ()->spawn
       (Client,
-       ACE_reinterpret_cast(void *, &ServerAddr),
+       reinterpret_cast<void *> (&ServerAddr),
        THR_NEW_LWP | THR_DETACHED))
   {
     ACE_ERROR ((LM_ERROR,

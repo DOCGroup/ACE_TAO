@@ -31,8 +31,7 @@ int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record)
   // know that no members are modified here, we can safely const_cast
   // the log_record parameter without violating the interface
   // contract.
-  ACE_Log_Record &nonconst_record = (ACE_const_cast (ACE_Log_Record&,
-                                                     log_record));
+  ACE_Log_Record &nonconst_record = (const_cast<ACE_Log_Record&> (log_record));
   // Insert each field from <log_record> into the output CDR stream.
   cdr << ACE_CDR::Long (log_record.type ());
   cdr << ACE_CDR::Long (log_record.pid ());

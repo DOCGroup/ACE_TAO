@@ -70,7 +70,7 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
       ((LM_ERROR,
         ACE_TEXT ("HAStatus ListenPort does not exist\n")),
        -1);
-  this->listen_addr_.set (ACE_static_cast (u_short, status_port));
+  this->listen_addr_.set (static_cast<u_short> (status_port));
   // Listing 2
 
   return 0;

@@ -165,8 +165,7 @@ HTML_Body_Validation_Strategy::execute (void)
           HTTP_URL *http_url;
           ACE_NEW_RETURN (http_url,
                           HTTP_URL (**url_addr_ptr,
-                                    ACE_dynamic_cast (HTTP_URL *,
-                                                      &this->url_)),
+                                    dynamic_cast<HTTP_URL *> (&this->url_)),
                           0);
           URL_Command *url_command;
           ACE_NEW_RETURN (url_command,

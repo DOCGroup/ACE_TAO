@@ -182,7 +182,7 @@ static void *
 client (void *arg)
 {
   ACE_INET_Addr *connection_addr =
-    ACE_reinterpret_cast (ACE_INET_Addr *, arg);
+    reinterpret_cast<ACE_INET_Addr *> (arg);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) running client\n")));
   CONNECTOR connector;

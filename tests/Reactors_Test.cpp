@@ -94,8 +94,7 @@ Test_Task::~Test_Task (void)
 int
 Test_Task::open (void *args)
 {
-  this->reactor (ACE_reinterpret_cast (ACE_Reactor *,
-                                       args));
+  this->reactor (reinterpret_cast<ACE_Reactor *> (args));
   return this->activate (THR_NEW_LWP);
 }
 
@@ -174,8 +173,7 @@ Test_Task::handle_input (ACE_HANDLE)
 static void *
 worker (void *args)
 {
-  ACE_Reactor *reactor = ACE_reinterpret_cast (ACE_Reactor *,
-                                               args);
+  ACE_Reactor *reactor = reinterpret_cast<ACE_Reactor *> (args);
 
   // Make this thread the owner of the Reactor's event loop.
   reactor->owner (ACE_Thread::self ());

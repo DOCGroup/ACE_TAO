@@ -143,7 +143,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
 
   if (result > 0
       && this->peer ().recv_n (buffer, len * sizeof (ACE_TCHAR))
-          == ACE_static_cast (ssize_t, len * sizeof (ACE_TCHAR)))
+          == static_cast<ssize_t> (len * sizeof (ACE_TCHAR)))
     {
       ++this->nr_msgs_rcvd_;
 
@@ -215,7 +215,7 @@ cli_worker (void *arg)
   ACE_SSL_SOCK_Stream stream;
   ACE_SSL_SOCK_Connector connect;
   ACE_Time_Value delay (0, req_delay);
-  size_t len = * ACE_reinterpret_cast (ACE_TCHAR *, arg);
+  size_t len = * reinterpret_cast<ACE_TCHAR *> (arg);
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {

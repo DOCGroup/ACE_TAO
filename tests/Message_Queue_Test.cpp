@@ -301,8 +301,7 @@ static void *
 receiver (void *arg)
 {
   Queue_Wrapper *queue_wrapper =
-    ACE_reinterpret_cast (Queue_Wrapper *,
-                          arg);
+    reinterpret_cast<Queue_Wrapper *> (arg);
   int i;
 
   ACE_Message_Block **receive_block_p = 0;
@@ -349,7 +348,7 @@ static void *
 sender (void *arg)
 {
   Queue_Wrapper *queue_wrapper =
-    ACE_reinterpret_cast (Queue_Wrapper *, arg);
+    reinterpret_cast<Queue_Wrapper *> (arg);
   int i;
 
   timer->start ();

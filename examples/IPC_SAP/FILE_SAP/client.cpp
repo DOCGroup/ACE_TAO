@@ -52,7 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else
     ACE_OS::printf ("fileinfo : mode = %o\nno of links = %lu\nsize = %lu\n",
                     (u_int) fileinfo.mode_ & 0777,
-                    ACE_static_cast(u_long ,fileinfo.nlink_),
+                    static_cast<u_long > (fileinfo.nlink_),
                     (u_long) fileinfo.size_);
 
   off_t fpos = cli_file.tell ();

@@ -45,8 +45,7 @@ static void *
 consumer (void *args)
 {
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
-    ACE_reinterpret_cast (ACE_Message_Queue<ACE_MT_SYNCH> *,
-                          args);
+    reinterpret_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
   u_long cur_priority = 27;
   ACE_UNUSED_ARG (cur_priority);
@@ -103,8 +102,7 @@ static void *
 producer (void *args)
 {
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
-    ACE_reinterpret_cast (ACE_Message_Queue<ACE_MT_SYNCH> *,
-                          args);
+    reinterpret_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
   ACE_Message_Block *mb;
 

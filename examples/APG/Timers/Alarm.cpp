@@ -20,7 +20,7 @@ public:
   {
     ACE_TRACE (ACE_TEXT ("CB::handle_timeout"));
 
-    const int *val = ACE_static_cast (const int*, arg);
+    const int *val = static_cast<const int*> (arg);
     ACE_ASSERT ((*val) == id_);
 
     ACE_UNUSED_ARG (val);

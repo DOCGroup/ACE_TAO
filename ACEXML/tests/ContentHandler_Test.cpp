@@ -55,7 +55,7 @@ Basic_Content_Tester::characters (const ACEXML_Char *ch,
     }
   already_called = 1;
 
-  int expected_len = ACE_static_cast (int, ACE_OS::strlen (expect));
+  int expected_len = static_cast<int> (ACE_OS::strlen (expect));
   if (length != expected_len)
     {
       ACE_ERROR ((LM_ERROR,

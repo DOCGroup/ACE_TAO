@@ -301,8 +301,7 @@ child (void)
     }
 
   print ("child",
-         ACE_reinterpret_cast (Test_Data *,
-                               bar));
+         reinterpret_cast<Test_Data *> (bar));
   return 0;
 }
 

@@ -15,7 +15,7 @@ public:
       cerr << "Log Message Received:" << endl;
       unsigned long msg_severity = log_record.type ();
       ACE_Log_Priority prio =
-        ACE_static_cast (ACE_Log_Priority, msg_severity);
+        static_cast<ACE_Log_Priority> (msg_severity);
       const ACE_TCHAR *prio_name =
         ACE_Log_Record::priority_name (prio);
       cerr << "\tType:        "

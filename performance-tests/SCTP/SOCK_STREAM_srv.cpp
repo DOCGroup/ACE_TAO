@@ -43,7 +43,7 @@ struct ArgStruct {
 static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
 
   // unbundle the arguments
-  ArgStruct * args = ACE_reinterpret_cast(ArgStruct *,arg);
+  ArgStruct * args = reinterpret_cast<ArgStruct *> (arg);
   ACE_SOCK_Stream * dataModeStream = args->stream;
   ACE_CDR::ULong numIterations = args->numIters;
   delete args;
@@ -210,13 +210,13 @@ static void run_server (ACE_HANDLE handle)
   // Spawn a new thread and run the new connection in that thread of
   // control using the <server> function as the entry point.
   if (ACE_Thread_Manager::instance ()->spawn (unmarshalledOctetServer,
-                                              ACE_reinterpret_cast(void *,args),
+                                              reinterpret_cast<void *> (args),
                                               THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("spawn")));
 #else
-  (*unmarshalledOctetServer) (ACE_reinterpret_cast(void *, args));
+  (*unmarshalledOctetServer) (reinterpret_cast<void *> (args));
 #endif /* ACE_HAS_THREADS */
 
 }

@@ -109,7 +109,7 @@ int addRecords(MAP *map, ALLOCATOR *shmem_allocator)
   ACE_TRACE ("addRecords");
 
   char buf[32];
-  int mapLength = ACE_static_cast (int, map->current_size ());
+  int mapLength = static_cast<int> (map->current_size ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Map has %d entries; adding 20 more\n"),
               mapLength));

@@ -240,9 +240,9 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Strea
 
 
     ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
-    iov[0].iov_base = ACE_reinterpret_cast(char *, &msgLenExpressed);
+    iov[0].iov_base = reinterpret_cast<char *> (&msgLenExpressed);
     iov[0].iov_len = ACE_CDR::LONG_SIZE;
-    iov[1].iov_base = ACE_reinterpret_cast(char *, buf);
+    iov[1].iov_base = reinterpret_cast<char *> (buf);
     iov[1].iov_len = msgLen;
 
     if (-1 == stream.sendv_n (iov, 2))
@@ -270,10 +270,8 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_Strea
     // compute the message latency in micro-seconds
     messageLatency_usec =
 
-      (ACE_static_cast(double,
-                       ACE_UINT64_DBLCAST_ADAPTER(endTime)) -
-       ACE_static_cast(double,
-                       ACE_UINT64_DBLCAST_ADAPTER(startTime)))
+      (static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER(endTime)) -
+       static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER(startTime)))
 
       / microsec_clock_scale_factor;
 

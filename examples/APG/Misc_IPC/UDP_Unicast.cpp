@@ -14,7 +14,7 @@
 int send_unicast (const ACE_INET_Addr &to)
 {
   const char *message = "this is the message!\n";
-  ACE_INET_Addr my_addr (ACE_static_cast (u_short, 10101));
+  ACE_INET_Addr my_addr (static_cast<u_short> (10101));
   ACE_SOCK_Dgram udp (my_addr);
   ssize_t sent = udp.send (message,
                            ACE_OS::strlen (message) + 1,
@@ -30,14 +30,14 @@ int send_unicast (const ACE_INET_Addr &to)
 // Listing 2 code/ch09
 void echo_dgram (void)
 {
-  ACE_INET_Addr my_addr (ACE_static_cast (u_short, 10102));
+  ACE_INET_Addr my_addr (static_cast<u_short> (10102));
   ACE_INET_Addr your_addr;
   ACE_SOCK_Dgram udp (my_addr);
   char buff[BUFSIZ];
   size_t buflen = sizeof (buff);
   ssize_t recv_cnt = udp.recv (buff, buflen, your_addr);
   if (recv_cnt > 0)
-    udp.send (buff, ACE_static_cast (size_t, buflen), your_addr);
+    udp.send (buff, static_cast<size_t> (buflen), your_addr);
   udp.close ();
   return;
 }

@@ -278,7 +278,7 @@ run_main (int, ACE_TCHAR *[])
 
     const char *str = "What_a_day_it_has_been";
 
-    sstr.rep (ACE_const_cast (char *, str));
+    sstr.rep (const_cast<char *> (str));
 
     ACE_SString tmp =
       sstr.substring (2, 300);

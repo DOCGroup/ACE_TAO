@@ -1758,8 +1758,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'x':  // xfer limit
-        xfer_limit = ACE_static_cast (size_t,
-				      ACE_OS::atoi (get_opt.opt_arg ()));
+        xfer_limit = static_cast<size_t> (ACE_OS::atoi (get_opt.opt_arg ()));
         if (xfer_limit == 0)
 	  xfer_limit = 1;          // Bare minimum.
         break;

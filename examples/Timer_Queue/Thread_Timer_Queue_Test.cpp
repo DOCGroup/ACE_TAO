@@ -141,7 +141,7 @@ Input_Task::svc (void)
 int
 Input_Task::add_timer (void *argument)
 {
-  u_long useconds = *ACE_reinterpret_cast (int *, argument);
+  u_long useconds = *reinterpret_cast<int *> (argument);
   ACE_Time_Value interval (useconds / usecs_,
                            useconds % usecs_);
   ACE_Time_Value expire_at = ACE_OS::gettimeofday () + interval;
@@ -174,8 +174,7 @@ Input_Task::add_timer (void *argument)
 int
 Input_Task::cancel_timer (void *argument)
 {
-  return this->queue_->cancel (*ACE_reinterpret_cast (int *,
-                                                      argument));
+  return this->queue_->cancel (*reinterpret_cast<int *> (argument));
 }
 
 // Lists the timers in the queue.  Ignores the argument. This method
