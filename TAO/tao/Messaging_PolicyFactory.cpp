@@ -26,10 +26,14 @@ TAO_Messaging_PolicyFactory::create_policy (
   switch (type)
     {
 
-    case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
+#if (TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
+  case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
       return TAO_RelativeRoundtripTimeoutPolicy::create (
                value
                TAO_ENV_ARG_PARAMETER);
+
+#endif /* TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 

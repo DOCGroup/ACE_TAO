@@ -10,6 +10,8 @@
 
 ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
 
+#if (TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1)
+
 TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (const TimeBase::TimeT& relative_expiry)
   :  relative_expiry_ (relative_expiry)
 {
@@ -161,6 +163,8 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
                   msecs));
     }
 }
+
+#endif /* TAO_HAS_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 // ****************************************************************
 
