@@ -1,3 +1,10 @@
+Fri Jan 02 13:09:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Smart_Proxies/Collocation/Collocation.dsp:
+	* tests/Smart_Proxies/Collocation/Smart_Proxies.dsp:
+
+	  Fixed the release and debug build configurations.
+
 Fri Jan  2 12:39:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.av:
