@@ -1,3 +1,12 @@
+Wed May 30 00:37:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Singleton.cpp (instance):
+
+	  Fixed memory leak that occured due to the singleton instance not
+	  being registered with the ACE_Object_Manager when built without
+	  thread support.  Thanks to Kitty and David for helping with
+	  this problem.
+
 Tue May 29 15:06:48 2001  Ossama Othman  <ossama@uci.edu>
 
 	* include/makeinclude/platform_linux.GNU (CFLAGS, CPPFLAGS):
