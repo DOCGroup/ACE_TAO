@@ -157,10 +157,6 @@ public:
   virtual int resume_handler (ACE_Reactor *reactor);
   // Resume the connection handler.
 
-  virtual int send_request (TAO_ORB_Core* orb_core,
-                            TAO_OutputCDR &stream);
-  // Send the request in <stream>.
-
 protected:
   ACE_SYNCH_CONDITION* cond_response_available (void);
   // Return the cond_response_available, initializing it if necessary.

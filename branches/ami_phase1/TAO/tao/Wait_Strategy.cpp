@@ -215,8 +215,8 @@ TAO_Wait_On_Leader_Follower::wait (void)
       //    should be one per-connection.  I think the first case is
       //    the "Right Thing"[tm]
       ACE_SYNCH_CONDITION* cond =
-        this->cond_response_available ();
-
+        this->cond_response_available ()
+;
       // Add ourselves to the list, do it only once because we can
       // wake up multiple times from the CV loop
       if (orb_core->add_follower (cond) == -1)
@@ -361,8 +361,6 @@ TAO_Wait_On_Leader_Follower::handle_input (void)
   return 0;
 }
 
-// ****************************************************************
-
 // Register the handler.
 int
 TAO_Wait_On_Leader_Follower::register_handler (void)
@@ -375,22 +373,6 @@ int
 TAO_Wait_On_Leader_Follower::resume_handler (ACE_Reactor *reactor)
 {
   return this->transport_->resume_handler ();
-}
-
-// Send the request in <stream>.
-// @@ Why do I need <orb_core> here, when I have <transport>.
-int
-TAO_Wait_On_Leader_Follower::send_request (TAO_ORB_Core* /* orb_core */,
-                                           TAO_OutputCDR &stream)
-{
-  // Send the request.
-  int success  = (int) TAO_GIOP::send_request (this->transport_,
-                                               stream,
-                                               this->transport_->orb_core ());
-  if (!success)
-    return -1;
-  else
-    return 0;
 }
 
 ACE_SYNCH_CONDITION *
