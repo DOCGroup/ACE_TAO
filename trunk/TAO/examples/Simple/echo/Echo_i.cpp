@@ -18,7 +18,8 @@ Echo_i::~Echo_i (void)
 
 // Set the ORB pointer.
 
-void Echo_i::orb (CORBA::ORB_ptr o)
+void
+Echo_i::orb (CORBA::ORB_ptr o)
 {
   this->orb_ = CORBA::ORB::_duplicate (o);
 }
@@ -49,7 +50,7 @@ Echo_i::echo_list (const char *message,
 
 char *
 Echo_i::echo_string (const char *mesg,
-                     CORBA::Environment &env)
+                     CORBA::Environment &ACE_TRY_ENV)
 {
   // The pointer mesg was NULL, return.
   if (mesg == 0)
@@ -61,8 +62,10 @@ Echo_i::echo_string (const char *mesg,
   // raised.
 
   if (str.in () == 0)
-    env.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+    ACE_TRY_ENV.exception (new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
+  //if (str.in () == 0)
+  //ACE_THROW_RETURN (CORBA::NO_MEMORY (CORBA::COMPLETED_NO),0);
   // Got thru! now, make a deep copy of the mesg string and send it
   // back to the client.
 
@@ -73,7 +76,8 @@ Echo_i::echo_string (const char *mesg,
 
 // Shutdown the server application.
 
-void Echo_i::shutdown (CORBA::Environment &)
+void 
+Echo_i::shutdown (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n%s\n",
