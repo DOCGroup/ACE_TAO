@@ -1,3 +1,10 @@
+Fri Mar  9 22:44:55 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/RT_ORBInitializer.cpp:
+          Use the ACE_Service_Config::new process_directive() call to
+          insert static services into the Service Repository, this
+          approach is cleaner than what I did on Feb 20th.
+
 Fri Mar  9 18:27:08 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Crashed_Callback/Crashed_Callback.h:
