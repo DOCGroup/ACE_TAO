@@ -11,7 +11,8 @@
 DIRS  = IFR_Test \
 	Persistence_Test \
         Application_Test \
-        Latency_Test
+        Latency_Test \
+        IDL3_Test
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
