@@ -10,7 +10,7 @@ Notify_Push_Consumer::Notify_Push_Consumer (const char* name)
 }
 
 void
-Notify_Push_Consumer::connect (
+Notify_Push_Consumer::_connect (
        CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
        CosNotifyChannelAdmin::EventChannel_ptr notify_channel,
        CORBA::Boolean isFilter

@@ -215,7 +215,7 @@ static void create_supplier (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   supplier->init (poa ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
-  supplier->connect (admin, ec, isFilter ACE_ENV_ARG_PARAMETER);
+  supplier->_connect (admin, ec, isFilter ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 

@@ -138,7 +138,7 @@ TAO_NS_ConsumerAdmin_Command::init (ACE_Arg_Shifter& arg_shifter)
           TAO_NS_Options_Parser options_parser;
           options_parser.execute (this->added_, this->removed_, arg_shifter);
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS ec_name [Qos Options]
+      else if (arg_shifter.cur_arg_strncasecmp ("-Set_QoS") == 0) // -Set_QoS admin_name [Qos Options]
         {
           this->command_ = SET_QOS;
 

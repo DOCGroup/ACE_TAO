@@ -8,7 +8,7 @@
 class Notify_Push_Supplier: public TAO_Notify_StructuredPushSupplier
 {
 public:
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
+  void _connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 CosNotifyChannelAdmin::EventChannel_ptr notify_channel,
                 CORBA::Boolean isFilter
                 ACE_ENV_ARG_DECL)

@@ -142,7 +142,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
       consumer->init (client->root_poa () ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      consumer->connect (admin ACE_ENV_ARG_PARAMETER);
+      consumer->_connect (admin ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }

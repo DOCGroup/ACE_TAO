@@ -21,7 +21,7 @@ Notify_Structured_Push_Consumer::~Notify_Structured_Push_Consumer ()
 
 
 void
-Notify_Structured_Push_Consumer::connect (
+Notify_Structured_Push_Consumer::_connect (
                 CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin
                 ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -61,4 +61,3 @@ Notify_Structured_Push_Consumer::push_structured_event(
       this->done_ = 1;
     }
 }
-
