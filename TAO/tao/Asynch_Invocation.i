@@ -13,9 +13,12 @@ TAO_GIOP_Twoway_Asynch_Invocation (TAO_Stub *stub,
   : TAO_GIOP_Invocation (stub, operation, orb_core),
     rd_ (0)
 {
-  // New Reply Dispatcher.
+  // New reply dispatcher on the heap, because
+  // we will go out of scope and hand over the 
+  // reply dispatcher to the ORB.
+  // So this->rd_ is 0, because we do not need to 
+  // hold a pointer to it.
   ACE_NEW (rd_,
            TAO_Asynch_Reply_Dispatcher (reply_handler_skel,
-                                        reply_handler_ptr,
-                                        this->service_info_));
+                                        reply_handler_ptr));
 }
