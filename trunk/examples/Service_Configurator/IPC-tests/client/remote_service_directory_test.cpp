@@ -29,7 +29,7 @@ print_usage_and_die (void)
 void
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "p:h:r:");
+  ACE_Get_Opt get_opt (argc, argv, "p:h:r");
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)
