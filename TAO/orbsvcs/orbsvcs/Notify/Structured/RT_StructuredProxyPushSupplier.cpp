@@ -35,6 +35,13 @@ TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ser
   return object._retn ();
 }
 
+CORBA::Object_ptr
+TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ,
+                                                     CORBA::Long ACE_ENV_ARG_DECL)
+{
+   return CORBA::Object::_nil ();
+}
+
 void
 TAO_Notify_RT_StructuredProxyPushSupplier::deliver (TAO_Notify_Method_Request_Dispatch & request ACE_ENV_ARG_DECL)
 {

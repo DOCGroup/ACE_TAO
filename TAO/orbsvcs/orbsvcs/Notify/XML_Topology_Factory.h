@@ -71,9 +71,8 @@ namespace TAO_Notify
     bool timestamp_;
   };
 
+  ACE_FACTORY_DECLARE (TAO_Notify_Persist, XML_Topology_Factory)
 } // namespace TAO_Notify
-
-ACE_FACTORY_DECLARE (TAO_Notify_Persist, XML_Topology_Factory)
 
 #include /**/ "ace/post.h"
 #endif /* XML_TOPOLOGY_FACTORY_H */
