@@ -330,10 +330,12 @@ CORBA_TypeCode::discriminator_type (CORBA::Environment &ACE_TRY_ENV) const
     return CORBA_TypeCode::_duplicate (
                this->private_state_->tc_discriminator_type_
              );
-  else
-    return CORBA_TypeCode::_duplicate (
-               this->private_discriminator_type (ACE_TRY_ENV)
-             );
+
+  CORBA::TypeCode_ptr type =
+    this->private_discriminator_type (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+  return CORBA_TypeCode::_duplicate (type);
 }
 
 // only applicable to CORBA::tk_unions
@@ -381,9 +383,13 @@ CORBA_TypeCode::content_type (CORBA::Environment &ACE_TRY_ENV) const
                    this->private_state_->tc_content_type_
                  );
       else
-        return CORBA_TypeCode::_duplicate (
-                   this->private_content_type (ACE_TRY_ENV)
-                 );
+        {
+          CORBA::TypeCode_ptr tmp =
+            this->private_content_type (ACE_TRY_ENV);
+          ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
+
+          return CORBA_TypeCode::_duplicate (tmp);
+        }
     }
   else
     ACE_THROW_RETURN (CORBA::TypeCode::BadKind (), 0);
@@ -635,8 +641,9 @@ CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
           ACE_CHECK_RETURN (0);
         }
 
-      status = (tc->kind (ACE_TRY_ENV) == CORBA::tk_alias);
+      CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
+      status = (kind == CORBA::tk_alias);
 
       // Added by Bala to check for leaks as content_type duplicates the
       // pointers
@@ -649,30 +656,36 @@ CORBA_TypeCode::equ_common (CORBA::TypeCode_ptr tc,
           tcvar = tcvar->content_type (ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
 
-          status = (tcvar->kind (ACE_TRY_ENV) == CORBA::tk_alias);
+          kind = tcvar->kind (ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
+          status = (kind == CORBA::tk_alias);
         }
 
-      if (rcvr->kind (ACE_TRY_ENV) != tcvar->kind (ACE_TRY_ENV))
+      kind = rcvr->kind (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+      CORBA::TCKind other_kind = tcvar->kind (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (0);
+
+      if (kind != other_kind)
         // simple case
         return 0;
-      else
-        // typecode kinds are same
-        return rcvr->private_equal (tcvar.in (),
-                                    equiv_only,
-                                    ACE_TRY_ENV);
+
+      // typecode kinds are same
+      return rcvr->private_equal (tcvar.in (),
+                                  equiv_only,
+                                  ACE_TRY_ENV);
     }
-  else
-    {
-      if (this->kind_ != tc->kind (ACE_TRY_ENV))
-        // simple case
-        return 0;
-      else
-        // typecode kinds are same
-        return this->private_equal (tc,
-                                    equiv_only,
-                                    ACE_TRY_ENV);
-    }
+
+  CORBA::TCKind kind = tc->kind (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  if (this->kind_ != kind)
+    // simple case
+    return 0;
+
+  // typecode kinds are same
+  return this->private_equal (tc,
+                              equiv_only,
+                              ACE_TRY_ENV);
 }
 
 // check if typecodes are equal. Equality is based on a mix of structural
@@ -1939,7 +1952,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
 
       // If we are computing the label for the default index,
       // the label must contain an octet value of 0.
-      if (i == (ACE_static_cast (CORBA::ULong, 
+      if (i == (ACE_static_cast (CORBA::ULong,
                                  this->private_default_index_i ())))
         {
           label_tc = CORBA::_tc_octet;
