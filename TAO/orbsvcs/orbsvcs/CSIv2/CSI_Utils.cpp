@@ -10,7 +10,7 @@ ACE_RCSID (CSIv2,
 
 
 void
-TAO::CSI_Utils:create_sas_service_context (
+TAO::CSI_Utils::create_sas_service_context (
   const CSI::SASContextBody & sas_context,
   IOP::ServiceContext & sc)
 {

@@ -31,19 +31,32 @@ TAO::CSS_RequestInterceptor::send_request (
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ForwardRequest))
 {
+  CSI::AuthorizationToken at;
 
-  CSI::SASContextBody sas_context;
-
-  const CORBA::Boolean context_created =
-    this->get_sas_context_body (info,
-                                sas_context
-                                ACE_ENV_ARG_PARAMETER);
+  this->get_authorization_token (at
+                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  CSI::IdentityToken it;
+
+  this->get_identity_token (it
+                            ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CSI::GSSToken gt;
+
+  this->get_gss_token (gt
+                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CSI::EstablishContext ec;
+
   ec.client_context_id = 0;  // Stateless CSS
-  ec.authorization_token = /* Retrieve from ATLAS */;
-  ec.identity_token = /* A discriminated union. */;
-  ec.client_authentication_token = /* */;
+  ec.authorization_token = at;
+  ec.identity_token = it;
+  ec.client_authentication_token = gt;
+
+  CSI::SASContextBody sas_context;
 
   sas_context.establish_msg (ec);
 
@@ -52,11 +65,11 @@ TAO::CSS_RequestInterceptor::send_request (
 
   TAO::CSI_Utils::create_sas_service_context (sas_context, sc);
 
-  const CORBA::boolean replace = 0;
+  const CORBA::Boolean replace = 0;
 
-  ri->add_request_service_context (service_context,
-                                   replace
-                                   ACE_ENV_ARG_PARAMETER);
+  info->add_request_service_context (sc,
+                                     replace
+                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
@@ -77,7 +90,7 @@ TAO::CSS_RequestInterceptor::receive_reply (
   CSI::SASContextBody sas_context;
 
   // Extract CSI::ContextError structure from CSI::SASContextBody.
-  const CORBA::Boolean found_context_error =
+  const bool found_sas_context =
     this->extract_sas_context (info,
                                sas_context
                                ACE_ENV_ARG_PARAMETER);
@@ -92,13 +105,14 @@ TAO::CSS_RequestInterceptor::receive_reply (
       switch (msg_type)
         {
         case CSI::MTCompleteEstablishContext:  // Stateful CSS only.
+          {
+            const CSI::CompleteEstablishContext & cec =
+              sas_context.complete_msg ();
 
-          const CSI::CompleteEstablishContext & cec =
-            sas_context.complete_msg ();
-
-          this->complete_context (cec.client_context_id,
-                                  cec.context_stateful);
-
+            this->complete_context (cec
+                                    ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+          }
           break;
 
         default:
@@ -135,7 +149,7 @@ TAO::CSS_RequestInterceptor::receive_exception (
       CSI::SASContextBody sas_context;
 
       // Extract CSI::ContextError structure from CSI::SASContextBody.
-      const CORBA::Boolean found_sas_context =
+      const bool found_sas_context =
         this->extract_sas_context (info,
                                    sas_context
                                    ACE_ENV_ARG_PARAMETER);
@@ -150,36 +164,37 @@ TAO::CSS_RequestInterceptor::receive_exception (
           switch (msg_type)
             {
             case CSI::MTContextError:
+              {
+                const CSI::ContextError & ce = sas_context.error_msg ();
 
-              const CSI::ContextError & ce = sas_context.error_msg ();
+                if (ce.minor_status == 1)
+                  {
+                    if (ce.major_status == 1)       // Invalid evidence
+                      {
+                        // Re-collect authentication evidence and try
+                        // again.
+                      }
+                    else if (ce.major_status == 3)  // Conflicting evidence
+                      {
+                        // Stateful CSS only
+                        this->invalidate_context (ce);
 
-              if (ce.minor == 1)
-                {
-                  if (ce.major == 1)       // Invalid evidence
-                    {
-                      // Re-collect authentication evidence and try
-                      // again.
-                    }
-                  else if (ce.major == 3)  // Conflicting evidence
-                    {
-                      // Stateful CSS only
-                      this->invalidate_context (ce.client_context_id);
+                        // Done.  Allow the exception to propagate to
+                        // the caller.
+                      }
+                    else if (ce.major_status == 4)  // No context
+                      {
+                        // Stateful CSS only
+                        this->invalidate_context (ce);
 
-                      // Done.  Allow the exception to propagate to
-                      // the caller.
-                    }
-                  else if (ce.major == 4)  // No context
-                    {
-                      // Stateful CSS only
-                      this->invalidate_context (ce.client_context_id);
+                        // @@ Restart invocation with new context.
+                      }
 
-                      // @@ Restart invocation with new context.
-                    }
-
-                  // Don't do anything for the "invalid mechanism"
-                  // case (i.e. major == 2).  Just allow the exception
-                  // to propagate to the caller.
-                }
+                    // Don't do anything for the "invalid mechanism"
+                    // case (i.e. major == 2).  Just allow the exception
+                    // to propagate to the caller.
+                  }
+              }
 
               break;
 
@@ -203,9 +218,9 @@ TAO::CSS_RequestInterceptor::receive_other (
   // No need to anything for the oneway and LOCATION_FORWARD case.
 }
 
-CORBA::Boolean
-TAO::TSS_RequestInterceptor::extract_sas_context (
-  PortableInterceptor::ServerRequestInfo_ptr info,
+bool
+TAO::CSS_RequestInterceptor::extract_sas_context (
+  PortableInterceptor::ClientRequestInfo_ptr info,
   CSI::SASContextBody & sas_context
   ACE_ENV_ARG_DECL)
 {
@@ -220,12 +235,12 @@ TAO::TSS_RequestInterceptor::extract_sas_context (
   ACE_CATCH (CORBA::BAD_PARAM, ex)
     {
       if (ex.minor () == (CORBA::OMGVMCID | 26))
-        return 0;
+        return false;
       else
         ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (sc->context_id != IOP::SecurityAttributeService)
     {
@@ -233,13 +248,53 @@ TAO::TSS_RequestInterceptor::extract_sas_context (
       // ServiceContext corresponding to the CSI::SASContextBody.
       //
       // @@ Correct exception?
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), false);
     }
 
   // Extract CSI::SASContextBody from given IOP::ServiceContext.
   if (!TAO::CSI_Utils::extract_sas_service_context (sc.in (),
                                                     sas_context))
-    ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), false);
 
-  return 1;  // Successfully extracted CSI::SASContextBody.
+  return true;  // Successfully extracted CSI::SASContextBody.
+}
+
+void
+TAO::CSS_RequestInterceptor::get_authorization_token (
+  CSI::AuthorizationToken & /* t */
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  ACE_ASSERT (0);  // Fill in the blanks!
+}
+
+void
+TAO::CSS_RequestInterceptor::get_identity_token (
+  CSI::IdentityToken & /* t */
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  ACE_ASSERT (0);  // Fill in the blanks!
+}
+
+void
+TAO::CSS_RequestInterceptor::get_gss_token (
+  CSI::GSSToken & /* t */
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  ACE_ASSERT (0);  // Fill in the blanks!
+}
+
+void
+TAO::CSS_RequestInterceptor::complete_context (
+  const CSI::CompleteEstablishContext & /* cec */
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  ACE_ASSERT (0);  // Fill in the blanks!
+}
+
+void
+TAO::CSS_RequestInterceptor::invalidate_context (
+  const CSI::ContextError & /* ce */
+  ACE_ENV_ARG_DECL_NOT_USED)
+{
+  ACE_ASSERT (0);  // Fill in the blanks!
 }

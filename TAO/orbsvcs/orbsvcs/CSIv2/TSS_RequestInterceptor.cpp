@@ -1,6 +1,8 @@
 #include "TSS_RequestInterceptor.h"
 #include "CSI_Utils.h"
 
+#include "orbsvcs/CSIC.h"
+
 
 ACE_RCSID (CSIv2,
            TSS_RequestInterceptor,
@@ -30,7 +32,7 @@ TAO::TSS_RequestInterceptor::receive_request_service_contexts (
   CSI::SASContextBody sas_context;
 
   // Extract CSI::SASContextBody union from IOP::ServiceContext.
-  const CORBA::Boolean found_sas_context =
+  const bool found_sas_context =
     this->extract_sas_context (info,
                                sas_context
                                ACE_ENV_ARG_PARAMETER);
@@ -48,30 +50,35 @@ TAO::TSS_RequestInterceptor::receive_request_service_contexts (
       switch (msg_type)
         {
         case CSI::MTEstablishContext:
-          CORBA::Boolean stateful;
+          {
+            bool stateful;
 
-          if (!this->accept_context (info,
-                                     oneway,
-                                     sas_context.establish_msg (),
-                                     stateful))
-            ACE_THROW (CORBA::NO_PERMISSION ());
+            const CSI::EstablishContext & ec = sas_context.establish_msg ();
 
-          // Success!
+            if (!this->accept_context (info,
+                                       oneway,
+                                       ec,
+                                       stateful))
+              ACE_THROW (CORBA::NO_PERMISSION ());
 
-          // Only add CSI::CompleteEstablishContext to
-          // ServiceContextList for twoway calls, i.e those that
-          // expect a response.  Don't bother for oneway calls.  This
-          // is merely an optimization.
-          if (!oneway)
-            {
-              this->add_complete_establish_context (info,
-                                                    ec.client_context_id,
-                                                    stateful,
-                                                    final_context_token
-                                                    ACE_ENV_ARG_PARAMETER);
-              ACE_CHECK;
-            }
+            // Success!
 
+            CSI::GSSToken final_context_token;
+
+            // Only add CSI::CompleteEstablishContext to
+            // ServiceContextList for twoway calls, i.e those that
+            // expect a response.  Don't bother for oneway calls.  This
+            // is merely an optimization.
+            if (!oneway)
+              {
+                this->add_complete_establish_context (info,
+                                                      ec.client_context_id,
+                                                      stateful,
+                                                      final_context_token
+                                                      ACE_ENV_ARG_PARAMETER);
+                ACE_CHECK;
+              }
+          }
           break;
 
         case CSI::MTMessageInContext:
@@ -162,23 +169,23 @@ TAO::TSS_RequestInterceptor::send_other (
 {
 }
 
-CORBA::Boolean
+bool
 TAO::TSS_RequestInterceptor::accept_transport_context (void)
 {
   /**
    * @todo Query the transport layer.
    */
 
-  return 1; // Context accepted.
+  return true; // Context accepted.
 }
 
-CORBA::Boolean
+bool
 TAO::TSS_RequestInterceptor::accept_context (
   PortableInterceptor::ServerRequestInfo_ptr info,
   CORBA::Boolean oneway,
   const CSI::EstablishContext & ec,
-  CORBA::Boolean & stateful
-  ACE_ENV_ARG_PARAMETER)
+  bool & stateful
+  ACE_ENV_ARG_DECL)
 {
   ErrorCode error_code = /**/;
 
@@ -214,7 +221,7 @@ TAO::TSS_RequestInterceptor::accept_context (
       else if (error_code == POLICY_CHANGE)
         {
           ACE_THROW_RETURN (PortableInterceptor::ForwardRequest (),
-                            0);
+                            false);
         }
 
       this->add_context_error (ec.client_context_id,
@@ -222,18 +229,18 @@ TAO::TSS_RequestInterceptor::accept_context (
                                minor,
                                error_token
                                ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
+      ACE_CHECK_RETURN (false);
 
-      return 0;
+      return false;
     }
 
   if (ec.client_context_id == 0)
-    stateful = 0;  // Do not establish stateful context for clients
-                   // that request a stateless one.
+    stateful = false;  // Do not establish stateful context for clients
+                       // that request a stateless one.
   else
-    stateful = 0;  // TAO TSS isn't stateful yet.
+    stateful = false;  // TAO TSS isn't stateful yet.
 
-  return 1; // Context accepted.
+  return true; // Context accepted.
 }
 
 void
@@ -247,7 +254,7 @@ TAO::TSS_RequestInterceptor::discard_context (CSI::ContextId context_id)
 {
 }
 
-CORBA::Boolean
+bool
 TAO::TSS_RequestInterceptor::extract_sas_context (
   PortableInterceptor::ServerRequestInfo_ptr info,
   CSI::SASContextBody & sas_context
@@ -264,12 +271,12 @@ TAO::TSS_RequestInterceptor::extract_sas_context (
   ACE_CATCH (CORBA::BAD_PARAM, ex)
     {
       if (ex.minor () == (CORBA::OMGVMCID | 26))
-        return 0;
+        return false;
       else
         ACE_RE_THROW;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (false);
 
   if (sc->context_id != IOP::SecurityAttributeService)
     {
@@ -278,15 +285,15 @@ TAO::TSS_RequestInterceptor::extract_sas_context (
       //
       // @@ Correct exception? If so, should ContextError be added to
       //    the exception reply ServiceContextList.
-      ACE_THROW_RETURN (CORBA::NO_PERMISSION (), 0);
+      ACE_THROW_RETURN (CORBA::NO_PERMISSION (), false);
     }
 
   // Extract CSI::SASContextBody from given IOP::ServiceContext.
   if (!TAO::CSI_Utils::extract_sas_service_context (sc.in (),
                                                     sas_context))
-    ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+    ACE_THROW_RETURN (CORBA::MARSHAL (), false);
 
-  return 1;  // Successfully extracted CSI::SASContextBody.
+  return true;  // Successfully extracted CSI::SASContextBody.
 }
 
 void
@@ -368,7 +375,7 @@ TAO::TSS_RequestInterceptor::add_sas_context (
   // Create IOP::ServiceContext containing CSI::SASContextBody union.
   IOP::ServiceContext sc;
 
-  TAO::CSI_Util::create_sas_service_context (sas, sc);
+  TAO::CSI_Utils::create_sas_service_context (sas, sc);
 
   // Another IOP::SecurityAttributeService ServiceContext should not
   // exist in the reply's ServiceContextList.

@@ -31,7 +31,7 @@ namespace CSI
 
 namespace TAO
 {
-  namespace CSI_Util
+  namespace CSI_Utils
   {
     /// Populate given IOP::ServiceContext with given CSI::SASContextBody.
     void create_sas_service_context (const CSI::SASContextBody & sas_context,
