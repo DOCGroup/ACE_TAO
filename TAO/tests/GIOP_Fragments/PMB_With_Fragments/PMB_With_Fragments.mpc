@@ -1,5 +1,5 @@
 // -*- MPC -*-
 // $Id$
 
-project: taoexe, portableserver {
+project: taoserver {
 }
