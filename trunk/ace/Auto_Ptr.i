@@ -3,20 +3,6 @@
 
 // Auto_Ptr.i
 
-#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
-	    (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
-
-template<class X> ACE_INLINE void
-ACE_Auto_Basic_Ptr<X>::operator= (ACE_Auto_Basic_Ptr<X> &rhs)
-{
-  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::operator=");
-  if (this != &rhs) 
-    {
-      ACE_Auto_Basic_Ptr<X>::remove (p_);
-      p_ = rhs.release ();
-    }
-}
-
 template<class X> ACE_INLINE
 ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (X *p)
   : p_ (p)
@@ -25,10 +11,22 @@ ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (X *p)
 }
 
 template<class X> ACE_INLINE
-ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> &ap)
+ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr (const ACE_Auto_Basic_Ptr<X> &ap)
   : p_ (ap.release ()) 
 {
   ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr");
+}
+
+template<class X> ACE_INLINE ACE_Auto_Basic_Ptr<X> &
+ACE_Auto_Basic_Ptr<X>::operator= (const ACE_Auto_Basic_Ptr<X> &rhs)
+{
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::operator=");
+  if (this != &rhs) 
+    {
+      delete this->p_;
+      this->p_ = rhs.release ();
+    }
+  return *this;
 }
 
 template<class X> ACE_INLINE
@@ -41,6 +39,7 @@ ACE_Auto_Basic_Ptr<X>::~ACE_Auto_Basic_Ptr (void)
 template<class X> ACE_INLINE X &
 ACE_Auto_Basic_Ptr<X>::operator *() const 
 {
+  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::operator *()");
   return *p_;
 }
 
@@ -52,26 +51,23 @@ ACE_Auto_Basic_Ptr<X>::get (void) const
 }
 
 template<class X> ACE_INLINE X *
-ACE_Auto_Basic_Ptr<X>::release (void) 
+ACE_Auto_Basic_Ptr<X>::release (void) const
 {
   ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::release");
-  return this->reset (0);
+  X *old = this->p_;
+  ACE_Auto_Basic_Ptr<X> *fake_this = (ACE_Auto_Basic_Ptr<X> *) this;
+  fake_this->p_ = 0;
+  return old;
 }
 
-template<class X> ACE_INLINE X *
-ACE_Auto_Basic_Ptr<X>::reset (X *p) 
-{
-  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::reset");
-  X *tp = p_; 
-  p_ = p; 
-  return tp;
-}
+#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
+             (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
 
 template<class X> ACE_INLINE
 auto_ptr<X>::auto_ptr (X *p)
   : ACE_Auto_Basic_Ptr<X> (p)
 {
-  ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::ACE_Auto_Basic_Ptr");
+  ACE_TRACE ("auto_ptr<X>::auto_ptr");
 }
 
 template<class X> ACE_INLINE X *
@@ -91,10 +87,22 @@ ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (X *p)
 }
 
 template<class X> ACE_INLINE
-ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> &ap) 
+ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr (const ACE_Auto_Basic_Array_Ptr<X> &ap) 
   : p_ (ap.release ()) 
 {
   ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::ACE_Auto_Basic_Array_Ptr");
+}
+
+template<class X> ACE_INLINE ACE_Auto_Basic_Array_Ptr<X> &
+ACE_Auto_Basic_Array_Ptr<X>::operator= (const ACE_Auto_Basic_Array_Ptr<X> &rhs)
+{
+  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::operator=");
+  if (this != &rhs) 
+    {
+      delete [] this->p_;
+      this->p_ = rhs.release ();
+    }
+  return *this;
 }
 
 template<class X> ACE_INLINE
@@ -105,19 +113,13 @@ ACE_Auto_Basic_Array_Ptr<X>::~ACE_Auto_Basic_Array_Ptr (void)
 }
 
 template<class X> ACE_INLINE X &
-ACE_Auto_Basic_Array_Ptr<X>::operator*() 
+ACE_Auto_Basic_Array_Ptr<X>::operator *() const
 {
   return *p_;
 }
 
 template<class X> ACE_INLINE X &
-ACE_Auto_Basic_Array_Ptr<X>::operator[](int i) 
-{
-  return p_[i];
-}
-
-template<class X> ACE_INLINE X 
-ACE_Auto_Basic_Array_Ptr<X>::operator[](int i) const 
+ACE_Auto_Basic_Array_Ptr<X>::operator[](int i) const
 {
   return p_[i];
 }
@@ -130,30 +132,13 @@ ACE_Auto_Basic_Array_Ptr<X>::get (void) const
 }
 
 template<class X> ACE_INLINE X *
-ACE_Auto_Basic_Array_Ptr<X>::release (void) 
+ACE_Auto_Basic_Array_Ptr<X>::release (void) const 
 {
   ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::release");
-  return this->reset (0);
-}
-
-template<class X> ACE_INLINE X *
-ACE_Auto_Basic_Array_Ptr<X>::reset (X *p) 
-{
-  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::reset");
-  X *tp = p_; 
-  p_ = p; 
-  return tp;
-}
-
-template<class X> ACE_INLINE void 
-ACE_Auto_Basic_Array_Ptr<X>::operator= (ACE_Auto_Basic_Array_Ptr<X> &rhs)
-{
-  ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::operator=");
-  if (this != &rhs) 
-    {
-      ACE_Auto_Basic_Array_Ptr<X>::remove (p_);
-      p_ = rhs.release ();
-    }
+  X *old = this->p_;
+  ACE_Auto_Basic_Array_Ptr<X> *fake_this = (ACE_Auto_Basic_Array_Ptr<X> *) this;
+  fake_this->p_ = 0;
+  return old;
 }
 
 template<class X> ACE_INLINE
