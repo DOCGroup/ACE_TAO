@@ -1,3 +1,7 @@
+Tue Aug 24 11:16:00 2004  Jules White   <jules@dre.vanderbilt.edu>
+        
+        * ACE-INSTALL.html: Added a section on using ACE within Eclipse
+
 Tue Aug 24 10:10:22 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/config-all.h: Moved #include "ace/OS_main.h" down to the bottom
