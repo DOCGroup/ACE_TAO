@@ -249,7 +249,6 @@ ACE_Sched_Params::previous_priority (const Policy policy,
                                      const int scope)
 {
 #if defined (VXWORKS)
-  ACE_UNUSED_ARG (policy);
   return priority < priority_min (policy, scope)
            ?  priority + 1
            :  priority_min (policy, scope);
