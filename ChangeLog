@@ -1,3 +1,12 @@
+Tue Jul 30 06:50:26 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Dynamic_Service.cpp: Moved ACE_Dynamic_Service::instance()
+	  from the .i file into the .cpp file and added a #include of
+ 	  "ace/Service_Object.h" to the .cpp file so the complete type of
+ 	  ACE_Service_Object would be available to the HP/UX C++ compiler.
+  	  Thanks to Torsten Kuepper <Torsten.Kuepper@nokia.com> for
+ 	  reporting this.
+
 Tue Jul 30 07:51:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace.doxygen:
