@@ -1,6 +1,35 @@
-Mon Nov 18 10:44:19 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+Wed Dec 11 14:39:08 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ciao/CCM
+	  A lot have changed since last ChangeLog entry.  Most of the
+	  changes are intermediate so I didn't even try to record them.
+
+	* ciao/CCMCore.dsw:
+	* ciao/CIAO_Container.dsp:
+	* ciao/CIAO_Server.dsp: Moved Container_Base.* from CIAO_Container
+	  library to CIAO_Server library.  These classes in Container_Base
+	  are really run-time container management interfaces than
+	  container interfaces themselves.
+
+	* ciao/Container_Base.cpp:
+	* ciao/Container_Base.h: Added _ciao_install_home which enable
+	  installing a component home from relevant DLL named and entry
+	  points.  We are not managing the lifecycle of DLL objects in the
+	  implementation yet (we just never unlink DLL. :)  This will have
+	  to be changed in the future.
+
+	* examples/handcrafted/Hello/hello_servants.cpp:
+	* examples/handcrafted/Hello/hello_servants.h: Added an entry
+	  point "create_HelloWorld_Servant" so we can use the glue code
+	  with the new "generic server."
+
+	* examples/handcrafted/Hello/server.cpp:
+	* examples/handcrafted/Hello/server.dsp: Reworked the server
+	  implementation so that it is no longer tied to a specific
+	  component implementation.  I.e., we can use the same server to
+	  host any *one* component now.
+
+	* examples/handcrafted/Hello/client.dsp: Added a missing link
+	  directory.
 
 Tue Nov 05 23:42:04 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 

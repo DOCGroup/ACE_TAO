@@ -516,3 +516,24 @@ CIAO_HelloHome_Servant::remove_component (Components::CCMObject_ptr comp
   this->container_->uninstall (comp
                                ACE_ENV_ARG_PARAMETER);
 }
+
+
+
+extern "C" HELLO_SERVANT_Export ::PortableServer::Servant
+createHelloHome_Servant (::Components::HomeExecutorBase_ptr p,
+                         CIAO::Session_Container *c
+                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+{
+  if (p == 0)
+    return 0;
+
+  CCM_HelloHome_var x = CCM_HelloHome::_narrow (p
+                                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (CORBA::is_nil (x.in ()))
+    return 0;
+
+  return new CIAO_HelloHome_Servant (x.in (),
+                                     c);
+}

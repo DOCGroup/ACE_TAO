@@ -1,8 +1,6 @@
 // $Id$
 
 #include "ciao/Container_Base.h"
-#include "hello_executors.h"
-#include "hello_servants.h"
 #include "ace/Get_Opt.h"
 
 char *ior_file_name_ = 0;
@@ -87,6 +85,8 @@ main (int argc, char *argv[])
 
       CIAO::Session_Container container (orb);
       container.init ();
+
+#if 0
       CORBA::Object_var home;
 
       {
@@ -107,6 +107,15 @@ main (int argc, char *argv[])
                                           ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
       }
+#else
+      Components::CCMHome_var home =
+        container._ciao_install_home ("hello_executors",
+                                      "createHelloHome_Impl",
+                                      "hello_servants",
+                                      "createHelloHome_Servant"
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+#endif /* 0 */
 
       // Start Home registration part
       CORBA::String_var str = orb->object_to_string (home.in ()
