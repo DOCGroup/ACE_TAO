@@ -1,3 +1,9 @@
+Tue Jun 18 12:41:15 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Stream.i (adjust): Added a check for pointer overflow
+	  befor setting the write pointer. thanks to Rich Siebel and Byron
+	  Harris for pointing this out. 
+
 Tue Jun 18 07:50:14 2002  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Env_Value_T.h:

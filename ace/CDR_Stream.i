@@ -406,7 +406,8 @@ ACE_OutputCDR::adjust (size_t size,
   buf = this->current_->wr_ptr () + offset;
   char *end = buf + size;
 
-  if (end <= this->current_->end ())
+  if (end <= this->current_->end () &&
+      end >= buf)
     {
       this->current_alignment_ += offset + size;
       this->current_->wr_ptr (end);
