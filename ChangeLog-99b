@@ -1,3 +1,5 @@
+Thu Jul 08 18:47:23 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
 Thu Jul 08 18:47:23 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/Cache_Map_Manager_Test.cpp: Simplified code and output.
