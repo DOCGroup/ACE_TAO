@@ -2790,12 +2790,12 @@ Sat Feb 14 18:28:19 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Sat Feb 14 03:29:50 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-        * ace/ACE.cpp (set_handle_limit): Fixed a couple of bugs setting
-          the maximum number of file descriptors.  If we use setrlimit, we
-          should first get the hard limit before calling it, or we get an
-          EINVAL for trying to set a hard limit of 0 and a soft limit
-          greater than that.  Also, for -1 the call was not setting the
-          limit to the maximum allowable.
+        * ace/ACE.cpp (set_handle_limit): Fixed a couple of bugs
+          setting the maximum number of file descriptors.  If we use
+          setrlimit, we should first get the hard limit before calling
+          it, or we get an EINVAL for trying to set a hard limit of 0
+          and a soft limit greater than that.  Also, for -1 the call
+          was not setting the limit to the maximum allowable.
 
         * ace/OS.h (ACE_MAX_DGRAM_SIZE): Moved the #define
           ACE_MAX_DGRAM_SIZE from the PSOS specific part of OS.h.
