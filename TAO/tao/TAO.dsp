@@ -2255,6 +2255,10 @@ SOURCE=.\ObjectReferenceTemplateC.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Objref_VarOut_T.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\OctetSeqC.i
 # End Source File
 # Begin Source File
