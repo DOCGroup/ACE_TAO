@@ -1,4 +1,8 @@
-Tue Oct 21 00:07:47 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+Tue Oct 21 01:01:12 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
+
+	* ace/Thread_Manager.h: Added more comments.
+
+Tue Oct 21 00:37:15 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,cpp}:  Added a parameter <size> to
 	  Thread_Manager's constructor with default value 0.  This
@@ -6,6 +10,7 @@ Tue Oct 21 00:07:47 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	  compatibility.
 	  (open):  Putting back this method for backward compatibility.
 	  This is currently a no-op.  Thanks to David for reporting this.
+	  Also modify some mis-inform comments.
 
 Mon Oct 20 22:34:46 1997    <irfan@TWOSTEP>
  
