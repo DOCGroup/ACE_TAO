@@ -44,7 +44,7 @@ public:
   be_expression (long l,
                  AST_Expression::ExprType t);
 
-  be_expression (unsigned long l);
+  be_expression (ACE_UINT64 l);
 
   be_expression (UTL_String *s);
 
