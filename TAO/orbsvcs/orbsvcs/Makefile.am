@@ -2121,7 +2121,6 @@ noinst_HEADERS += \
   Notify/XML_Topology_Factory.h \
   Channel_Clients_T.i \
   Event_Utilities.i \
-  Runtime_Scheduler.i \
   Scheduler_Factory.i \
   Scheduler_Utilities.i \
   Time_Utilities.i
@@ -4486,7 +4485,6 @@ nobase_include_HEADERS += \
   RtecSchedulerC.inl \
   RtecSchedulerS.inl \
   RtecSchedulerS_T.inl \
-  Runtime_Scheduler.i \
   Sched/DynSched.i \
   Sched/SchedEntry.i \
   Scheduler_Factory.i \
