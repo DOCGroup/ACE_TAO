@@ -1,5 +1,9 @@
 Tue Oct 01 07:10:28 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
+        * orbsvcs/tests/Log/Makefile.bor:
+        * orbsvcs/tests/Log/Basic_Log_Test/Makefile.bor:
+          Added Borland makefiles for the new Log test.
+
         * orbsvcs/orbsvcs/DsLogAdmin.bor:
           Added missing files.
 
