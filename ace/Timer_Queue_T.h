@@ -125,7 +125,7 @@ public:
   /// deleting data along the criticl path.
   /// @@TODO: We may want to have a copying version too, so that our
   /// interface will be complete..
-  void get_dispatch_info (DISPATCH_INFO &info);
+  void get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T <TYPE> &info);
 
 
   /// Dump the state of an TYPE.
