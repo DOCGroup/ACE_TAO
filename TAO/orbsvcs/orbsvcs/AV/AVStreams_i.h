@@ -26,6 +26,14 @@
 #include "ace/Process.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "orbsvcs/Null_MediaCtrlS.h"
+
+class TAO_ORBSVCS_Export AV_Null_MediaCtrl
+  : public virtual POA_Null_MediaCtrl
+{
+public:
+  AV_Null_MediaCtrl (void);
+};
 
 class TAO_ORBSVCS_Export TAO_Basic_StreamCtrl 
   : public virtual POA_AVStreams::Basic_StreamCtrl
