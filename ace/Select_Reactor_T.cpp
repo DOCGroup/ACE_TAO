@@ -347,7 +347,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> ACE_Event_Handler *
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::find_handler
   (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Select_Reactor_T::handler");
+  ACE_TRACE ("ACE_Select_Reactor_T::find_handler");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, 0));
   return this->find_handler_i (handle);
 }
@@ -906,7 +906,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> ACE_Event_Handler *
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::find_handler_i
   (ACE_HANDLE handle)
 {
-  ACE_TRACE ("ACE_Select_Reactor_T::handler_i");
+  ACE_TRACE ("ACE_Select_Reactor_T::find_handler_i");
 
   ACE_Event_Handler *event_handler =
     this->handler_rep_.find (handle);

@@ -30,8 +30,8 @@
  *
  * An active object that dispatches timers from its own ReactorEx.
  */
-{
 class TAO_RTOLDEvent_Export ACE_ES_Reactor_Task : public ACE_RT_Task
+{
 public:
   // BBM, added this.
 #if defined (ACE_OLD_STYLE_REACTOR)
