@@ -9,15 +9,13 @@ The collocation_test demonstrates how the performance improves when
 objects are collocated.  The test runs both server and client in
 different threads.  To run it, simply run collocation_test.  It
 accepts any command line arguments for the client side, but there is
-not way to specify command line arguments for the server side at this
-moment.  This may be changed in the future.  At this moment, the
-collocation_test must use Naming_Service to resolve object
-references.  This may be changed later, also.
+currently no way to specify command line arguments for the server
+side.
 
 NOTES: The IDL_Cubit server used to run a Naming Service so the client
         could easily locate it.  This proved too problematic, the test
         required a complete compilation of the orbsvcs library and was
-        not reliable. The preferred method is to use a file to pass
+        not reliable.  The preferred method is to use a file to pass
         the factory IOR between the server and the client.
 
 server:
@@ -95,10 +93,10 @@ collocation_test:
 -----------------
 
         This test demonstrates how collocation optimization improve
-performance of collocated objects.  Run the test without any argument
+performance of collocated objects.  Run the test without any arguments
 to see results with collocation optimization.  Run it with
 <-ORBCollocation no> to perform the same test without the
-optimization.  Notice that the executable of collocation_test is
+optimization.  Please note that the executable of collocation_test is
 generated in the subdirectory ./collocation/.
 
 
