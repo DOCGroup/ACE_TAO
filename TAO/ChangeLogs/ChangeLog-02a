@@ -8,7 +8,9 @@ Mon Nov 26 15:01:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * docs/compiler.html:
 
           Added to table the overlooked -Wb command line options
-          obv_opt_accessor, pre_include and post_include.
+ 	  obv_opt_accessor, pre_include and post_include.  Thanks to
+ 	  Praphul Menon <praphul@icmg.nu> for noticing these weren't
+ 	  documented.
 
 Fri Nov 23 13:45:52 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
