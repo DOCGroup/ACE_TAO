@@ -282,7 +282,7 @@ ACE_Future<T>::operator = (const ACE_Future<T> &rhs)
   // This will work if &r == this, by first increasing the ref count
   ACE_Future<T> &r = ( ACE_Future<T> &) rhs;
   FUTURE_REP::assign (this->future_rep_,
-		      FUTURE_REP::attach (r.future_rep_));
+                      FUTURE_REP::attach (r.future_rep_));
 }
 
 template <class T> void
@@ -310,17 +310,6 @@ template <class T> void
 ACE_Future<T>::operator &()
 {
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-// This should probably be moved elsewhere now that ACE_Atomic_Op<>
-// isn't used.
-template class ACE_Atomic_Op<ACE_Thread_Mutex, int>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-// This should probably be moved elsewhere now that ACE_Atomic_Op<>
-// isn't used.
-#pragma instantiate ACE_Atomic_Op<ACE_Thread_Mutex, int>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_FUTURE_CPP */
