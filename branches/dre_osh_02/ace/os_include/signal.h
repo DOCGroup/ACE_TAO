@@ -37,7 +37,7 @@
 // This must come after signal.h is #included.
 #if defined (SCO)
 #  define SIGIO SIGPOLL
-#  include /**/ <sys/regset.h>  
+#  include /**/ <sys/regset.h>
 #endif /* SCO */
 
 #if defined (ACE_HAS_SIGINFO_T)
@@ -163,7 +163,7 @@ extern "C"
 # define ACE_SIGURG -2
 # define ACE_CLOEXEC -3
 
-#if defined (ACE_PSOS) 
+#if defined (ACE_PSOS)
 #  if !defined (ACE_PSOSIM)
      typedef void (* ACE_SignalHandler) (void);
      typedef void (* ACE_SignalHandlerV) (void);
