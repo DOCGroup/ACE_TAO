@@ -57,7 +57,7 @@ public:
   idl_bool opt_accessor ();
   // should generate optimized form ?
 
-  virtual int gen_var_defn (void);
+  virtual int gen_var_defn (char *local_name = 0);
   // generate the _var class definition
 
   // virtual void gen_def_ctors (TAO_OutStream* os);
@@ -68,13 +68,15 @@ public:
   // virtual void gen_copy_ctors (TAO_OutStream* os);
   //call the copy constructors of all the base classes
 
-  virtual int gen_var_impl (void);
+  virtual int gen_var_impl (char *local_name = 0,
+                            char *full_name = 0);
   // generate the implementation for the _var class
 
-  virtual int gen_out_defn (void);
+  virtual int gen_out_defn (char *local_name = 0);
   // generate the _out class definition
 
-  virtual int gen_out_impl (void);
+  virtual int gen_out_impl (char *local_name = 0,
+                            char *full_name = 0);
   // generate the _out implementation
 
   const char *full_obv_skel_name (void);
