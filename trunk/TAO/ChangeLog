@@ -1,3 +1,9 @@
+Wed Jan 14 14:55:18 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* Makefile:
+
+	  Removed orbsvcs/README from the release process.
+
 Wed Jan 14 11:41:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/releasenotes/index.html: 
