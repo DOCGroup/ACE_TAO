@@ -146,10 +146,6 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 {
   ACE_OS::free (this->orbid_);
 
-  delete this->poa_current_;
-
-  delete this->object_adapter_;
-
   delete this->from_iso8859_;
   delete this->to_iso8859_;
 
@@ -176,6 +172,11 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
       this->svc_config_argc_ = 0;
       delete [] this->svc_config_argv_;
     }
+
+  // Make sure these two objects are deleted last (other objects may
+  // depend on this).
+  delete this->poa_current_;
+  delete this->object_adapter_;
 }
 
 int
