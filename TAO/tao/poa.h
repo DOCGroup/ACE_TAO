@@ -50,6 +50,9 @@
 // Active Object Table
 #include "tao/objtable.h"
 
+// This is the maximum space require to convert a ulong into a string
+static const int TAO_POA_max_space_required_for_ulong = 24;
+
 class TAO_POA;
 class TAO_POA_Manager;
 
@@ -224,6 +227,31 @@ protected:
   PortableServer::RequestProcessingPolicyValue request_processing_;
 };
 
+class TAO_Creation_Time
+{
+public:
+
+  TAO_Creation_Time (const ACE_Time_Value &creation_time);
+
+  TAO_Creation_Time (void);
+
+  virtual void creation_time (const char *creation_time);
+  
+  virtual const char *creation_time (void) const;
+  
+  virtual int creation_time_length (void) const;
+  
+  int operator== (const TAO_Creation_Time &rhs) const;
+
+  int operator!= (const TAO_Creation_Time &rhs) const;
+
+private:
+  
+  char time_stamp_[TAO_POA_max_space_required_for_ulong * 2];
+
+  int time_stamp_length_;
+};
+
 class TAO_POA_Current;
 
 class TAO_Export TAO_POA : public POA_PortableServer::POA
@@ -334,6 +362,9 @@ public:
   static CORBA::WString ObjectId_to_wstring (const PortableServer::ObjectId &id);
 
   static PortableServer::ObjectId *string_to_ObjectId (const char *id);
+
+  static PortableServer::ObjectId *string_to_ObjectId (const char *string, 
+                                                       int size);
 
   static PortableServer::ObjectId *wstring_to_ObjectId (const CORBA::WChar *id);
 
@@ -477,7 +508,7 @@ protected:
                          String &poa_name,
                          PortableServer::ObjectId_out id,
                          CORBA::Boolean &persistent,
-                         ACE_Time_Value &poa_creation_time);
+                         TAO_Creation_Time &poa_creation_time);
 
   virtual int locate_servant_i (const TAO_ObjectKey &key,
                                 CORBA::Environment &env);
@@ -508,19 +539,15 @@ protected:
 
   virtual CORBA::Boolean persistent (void);
 
-  virtual const ACE_Time_Value &creation_time (void);
+  virtual const TAO_Creation_Time &creation_time (void);
 
-  virtual const String &object_key_type (void);
+  virtual char object_key_type (void);
 
-  static const String &persistent_key_type (void);
+  static char persistent_key_type (void);
 
-  static const String &transient_key_type (void);
-
-  static const char *ObjectId_to_const_string (const PortableServer::ObjectId &id);
-
-  static const CORBA::WChar *ObjectId_to_const_wstring (const PortableServer::ObjectId &id);
-
-  static const char *ObjectKey_to_const_string (const TAO_ObjectKey &key);
+  static char transient_key_type (void);
+  
+  static CORBA::ULong object_key_type_length (void);
 
   String name_;
 
@@ -554,9 +581,7 @@ protected:
 
   CORBA::ULong counter_;
 
-  ACE_Time_Value creation_time_;
-
-  static const int max_space_required_for_ulong;
+  TAO_Creation_Time creation_time_;
 };
 
 class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager

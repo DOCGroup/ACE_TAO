@@ -20,9 +20,6 @@ extern "C"
 }
 #endif /* ACE_HAS_WCHAR_TYPEDEFS_CHAR */
 
-// This is the maximum space require to convert the ulong into a string
-const int TAO_POA::max_space_required_for_ulong = 24;
-
 TAO_Thread_Policy::TAO_Thread_Policy (PortableServer::ThreadPolicyValue value)
   : value_ (value)
 {
@@ -559,6 +556,54 @@ void
 TAO_POA_Policies::request_processing (PortableServer::RequestProcessingPolicyValue value)
 {
   this->request_processing_ = value;
+}
+
+TAO_Creation_Time::TAO_Creation_Time (const ACE_Time_Value &creation_time)
+{
+  // Convert seconds and micro seconds into string
+  ACE_OS::sprintf (this->time_stamp_,
+                   "%ld%ld",
+                   creation_time.sec (),
+                   creation_time.usec ());
+
+  this->time_stamp_length_ = ACE_OS::strlen (this->time_stamp_);
+}
+
+TAO_Creation_Time::TAO_Creation_Time (void)
+{
+  this->time_stamp_[0] = '\0';
+  this->time_stamp_length_ = ACE_OS::strlen (this->time_stamp_);
+}
+
+void
+TAO_Creation_Time::creation_time (const char *creation_time)
+{
+  ACE_OS::strcpy (this->time_stamp_, creation_time);
+  this->time_stamp_length_ = ACE_OS::strlen (this->time_stamp_);
+}
+  
+const char *
+TAO_Creation_Time::creation_time (void) const
+{
+  return this->time_stamp_;
+}
+  
+int
+TAO_Creation_Time::creation_time_length (void) const
+{
+  return this->time_stamp_length_;
+}
+  
+int 
+TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
+{
+  return ACE_OS::strcmp (this->time_stamp_, rhs.time_stamp_) == 0;
+}
+
+int 
+TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
+{
+  return ACE_OS::strcmp (this->time_stamp_, rhs.time_stamp_) != 0;
 }
 
 TAO_POA::TAO_POA (const TAO_POA::String &adapter_name,
@@ -1708,7 +1753,7 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
       PortableServer::ObjectId_out id_out (id);
       TAO_POA::String poa_name;
       CORBA::Boolean persistent = CORBA::B_FALSE;
-      ACE_Time_Value poa_creation_time;
+      TAO_Creation_Time poa_creation_time;
 
       int result = this->parse_key (key.in (),
                                     poa_name,
@@ -1771,7 +1816,7 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
   PortableServer::ObjectId_out id_out (id);
   TAO_POA::String poa_name;
   CORBA::Boolean persistent = CORBA::B_FALSE;
-  ACE_Time_Value poa_creation_time;
+  TAO_Creation_Time poa_creation_time;
 
   int result = this->parse_key (key.in (),
                                 poa_name,
@@ -1914,7 +1959,7 @@ TAO_POA::locate_poa_i (const TAO_ObjectKey &key,
 {
   TAO_POA::String poa_name;
   CORBA::Boolean persistent = CORBA::B_FALSE;
-  ACE_Time_Value poa_creation_time;
+  TAO_Creation_Time poa_creation_time;
 
   int result = this->parse_key (key,
                                 poa_name,
@@ -2271,7 +2316,7 @@ TAO_POA::post_invoke (PortableServer::Servant servant,
   //  poa_current->clear ();
 }
 
-const ACE_Time_Value &
+const TAO_Creation_Time &
 TAO_POA::creation_time (void)
 {
   return this->creation_time_;
@@ -2282,54 +2327,31 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
                     TAO_POA::String &poa_name,
                     PortableServer::ObjectId_out id,
                     CORBA::Boolean &persistent,
-                    ACE_Time_Value &poa_creation_time)
+                    TAO_Creation_Time &poa_creation_time)
 {
   // Grab the id buffer
-  const char *cs = TAO_POA::ObjectKey_to_const_string (key);
-  TAO_POA::String object_key (cs);
-  delete[] (char*)cs;
+  TAO_POA::String object_key ((const char *) key.buffer (), 
+                              key.length ());
 
   // Try to find the first separator
   int first_token_position = object_key.find (TAO_POA::name_separator (),
-                                              0);
+                                              TAO_POA::object_key_type_length ());
   // If not found, the name is not correct
   if (first_token_position == TAO_POA::String::npos)
     return -1;
   else
-    first_token_position += 0;
-
-  // Try to find the second separator
-  int second_token_position = object_key.find (TAO_POA::name_separator (),
-                                               first_token_position + 1);
-  // If not found, the name is not correct
-  if (second_token_position == TAO_POA::String::npos)
-    return -1;
-  else
-    second_token_position += first_token_position + 1;
-
-  // Try to find the third separator
-  int third_token_position = object_key.find (TAO_POA::name_separator (),
-                                              second_token_position + 1);
-  // If not found, the name is not correct
-  if (third_token_position == TAO_POA::String::npos)
-    return -1;
-  else
-    third_token_position += second_token_position + 1;
+    first_token_position += TAO_POA::object_key_type_length ();
 
   // Try to find the last separator
   int last_token_position = object_key.rfind (TAO_POA::name_separator ());
 
-  // If not found or the token are not distinct, the name is not correct
+  // If not found or the tokens are not distinct, the name is not correct
   if (last_token_position == TAO_POA::String::npos ||
-      third_token_position == last_token_position)
+      first_token_position == last_token_position)
     return -1;
 
-  // Take the substring from 0 to first_token_position for the
-  // object_key_type.
-  int starting_at = 0;
-  int now_many = first_token_position - starting_at;
-  TAO_POA::String object_key_type = object_key.substr (starting_at,
-                                                       now_many);
+  // Check the first byte (persistence indicator)
+  char object_key_type = object_key[0];
   if (object_key_type == this->persistent_key_type ())
     persistent = 1;
   else if (object_key_type == this->transient_key_type ())
@@ -2338,38 +2360,27 @@ TAO_POA::parse_key (const TAO_ObjectKey &key,
     // Incorrect key
     return -1;
 
+  // Take the substring from object_key_type_length to first_token_position for the seconds
+  int starting_at = TAO_POA::object_key_type_length ();
+  int how_many = first_token_position - starting_at;
+  TAO_POA::String creation_time = object_key.substr (starting_at,
+                                                     how_many);
+
   // Take the substring from (first_token_position + separator_length)
-  // to second_token_position for the seconds
-  starting_at = first_token_position + TAO_POA::name_separator_length ();
-  now_many = second_token_position - starting_at;
-  TAO_POA::String seconds = object_key.substr (starting_at,
-                                               now_many);
-
-  // Take the substring from (second_token_position + separator_length)
-  // to third_token_position for the micro_seconds
-  starting_at = second_token_position + TAO_POA::name_separator_length ();
-  now_many = third_token_position - starting_at;
-  TAO_POA::String micro_seconds = object_key.substr (starting_at,
-                                                     now_many);
-
-  // Take the substring from (third_token_position + separator_length)
   // to last_token_position for the POA name
-  starting_at = third_token_position + TAO_POA::name_separator_length ();
-  now_many = last_token_position - starting_at;
+  starting_at = first_token_position + TAO_POA::name_separator_length ();
+  how_many = last_token_position - starting_at;
   poa_name = object_key.substr (starting_at,
-                                now_many);
+                                how_many);
 
-  // Take the substring from (last_token_position +
-  // separator_length) to length for the objectId
+  // Take the substring from (last_token_position + separator_length)
+  // to length for the objectId
   starting_at = last_token_position + TAO_POA::name_separator_length ();
-  now_many = object_key.length () - starting_at;
-  TAO_POA::String objectId = object_key.substr (starting_at,
-                                                now_many);
+  how_many = object_key.length () - starting_at;
+  id = TAO_POA::string_to_ObjectId (&object_key[starting_at],
+                                    how_many);
 
-  id = TAO_POA::string_to_ObjectId (objectId.c_str ());
-
-  poa_creation_time.sec (::atol (seconds.c_str ()));
-  poa_creation_time.usec (::atol (micro_seconds.c_str ()));
+  poa_creation_time.creation_time (creation_time.c_str ());
 
   // Success
   return 0;
@@ -2381,29 +2392,6 @@ TAO_POA::persistent (void)
   return this->policies ().lifespan () == PortableServer::PERSISTENT;
 }
 
-const TAO_POA::String &
-TAO_POA::object_key_type (void)
-{
-  if (this->persistent ())
-    return TAO_POA::persistent_key_type ();
-  else
-    return TAO_POA::transient_key_type ();
-}
-
-const TAO_POA::String &
-TAO_POA::persistent_key_type (void)
-{
-  static TAO_POA::String persistent = "Persistent";
-  return persistent;
-}
-
-const TAO_POA::String &
-TAO_POA::transient_key_type (void)
-{
-  static TAO_POA::String transient = "Transient";
-  return transient;
-}
-
 PortableServer::ObjectId *
 TAO_POA::create_object_id (void)
 {
@@ -2412,12 +2400,14 @@ TAO_POA::create_object_id (void)
   // 2. Size of octet == size of string element
 
   // Buffer for counter
-  char counter[TAO_POA::max_space_required_for_ulong];
+  char counter[TAO_POA_max_space_required_for_ulong];
 
   // Convert counter into string
   ACE_OS::sprintf (counter,
                    "%ld",
                    this->counter_);
+
+#if defined (POA_NAME_IN_POA_GENERATED_ID)
 
   // Calculate the required buffer size.
   // Note: 1 is for the null terminator
@@ -2426,70 +2416,55 @@ TAO_POA::create_object_id (void)
     TAO_POA::id_separator () +
     counter;
 
+  char *result = id.c_str ();
+
+#else /* POA_NAME_IN_POA_GENERATED_ID */
+  
+  char *result = counter;
+  
+#endif /* POA_NAME_IN_POA_GENERATED_ID */
+
   // Increment counter
   this->counter_++;
 
   // Create the sequence
-  return TAO_POA::string_to_ObjectId (id.c_str ());
+  return TAO_POA::string_to_ObjectId (result);
 }
 
 TAO_ObjectKey *
 TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 {
-  // Buffer for seconds
-  char seconds[TAO_POA::max_space_required_for_ulong];
-  // Buffer for micro seconds
-  char micro_seconds[TAO_POA::max_space_required_for_ulong];
-
-  // Convert seconds into string
-  ACE_OS::sprintf (seconds,
-                   "%ld",
-                   this->creation_time_.sec ());
-
-  // Convert micro seconds into string
-  ACE_OS::sprintf (micro_seconds,
-                   "%ld",
-                   this->creation_time_.usec ());
-
-  // Calculate the required buffer size.
-  int buffer_size =
-    this->object_key_type ().length () +
-    TAO_POA::name_separator_length () +
-    ACE_OS::strlen (seconds) +
-    TAO_POA::name_separator_length () +
-    ACE_OS::strlen (micro_seconds) +
+  // Calculate the space required for the POA information
+  int poa_info_size =
+    this->object_key_type_length () +
+    this->creation_time_.creation_time_length () +
     TAO_POA::name_separator_length () +
     this->complete_name_.length () +
-    TAO_POA::name_separator_length () +
-    id.length () +
-    1 /* for the zero terminator that sprintf appends */;
+    TAO_POA::name_separator_length ();
+  
+  // Total space required 
+  int buffer_size = poa_info_size + id.length ();
 
   // Create the buffer for the key
   CORBA::Octet *buffer = TAO_ObjectKey::allocbuf (buffer_size);
 
-  // Grab the id buffer
-  const char *id_buffer = TAO_POA::ObjectId_to_const_string (id);
-
-  // Make an object key
+  // Put the POA info into the buffer
   ACE_OS::sprintf ((CORBA::String) buffer,
-                   "%s%c%s%c%s%c%s%c%s",
-                   this->object_key_type ().c_str (),
-                   TAO_POA::name_separator (),
-                   seconds,
-                   TAO_POA::name_separator (),
-                   micro_seconds,
+                   "%c%s%c%s%c",
+                   this->object_key_type (),
+                   this->creation_time_.creation_time (),
                    TAO_POA::name_separator (),
                    this->complete_name_.c_str (),
-                   TAO_POA::name_separator (),
-                   id_buffer);
-  delete [] (char*)id_buffer;
+                   TAO_POA::name_separator ());
+
+  // Then copy the ID into the key, ingoring the EOS placed by the
+  // sprintf
+  ACE_OS::memcpy (&buffer[poa_info_size], id.buffer (), id.length ());
 
   // Create the key, giving the ownership of the buffer to the
-  // sequence.  Must specify the length as one less than the buffer
-  // size so that the terminating zero from sprintf() doesn't
-  // get used as part of the key.
+  // sequence.
   return new TAO_ObjectKey (buffer_size,
-                            buffer_size - 1,
+                            buffer_size,
                             buffer,
                             CORBA::B_TRUE);
 }
@@ -2497,32 +2472,39 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
 int
 TAO_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 {
+
+#if defined (POA_NAME_IN_POA_GENERATED_ID)
+
   // Grab the buffer
-  const char *id_buffer = TAO_POA::ObjectId_to_const_string (id);
+  const char *id_buffer = (const char *) id.buffer ();
 
   // Check to see if the POA name is the first part of the id
-  int ret = 0;
-  if (ACE_OS::strncmp (id_buffer,
-                       this->name_.c_str (),
-                       this->name_.length ()) == 0)
-    ret = 1;
-  delete [] (char*)id_buffer;
-  return ret;
+  return 
+    this->name_.length () < id.length () &&
+    ACE_OS::strncmp (id_buffer,
+                     this->name_.c_str (),
+                     this->name_.length ()) == 0;
+
+#else /* POA_NAME_IN_POA_GENERATED_ID */
+  
+  return 1;
+
+#endif /* POA_NAME_IN_POA_GENERATED_ID */
 }
 
 int
 TAO_POA::is_poa_generated_key (const TAO_ObjectKey &key)
 {
   // Grab the buffer
-  const char *id_buffer = TAO_POA::ObjectKey_to_const_string (key);
+  const char *key_buffer = (const char *) key.buffer ();
 
-  // Check to see if the POA name is the first part of the id
-  if (ACE_OS::strncmp (id_buffer,
-                       this->complete_name_.c_str (),
-                       this->complete_name_.length ()) == 0)
-    return 1;
-  else
-    return 0;
+  // Check to see if the complete POA name is the first part of the
+  // key
+  return 
+    this->complete_name_.length () < key.length () &&
+    ACE_OS::strncmp (key_buffer,
+                     this->complete_name_.c_str (),
+                     this->complete_name_.length ()) == 0;
 }
 
 int
@@ -2561,16 +2543,16 @@ TAO_POA::parse_poa_name (const TAO_POA::String &adapter_name,
     {
       // If found, take the substring from 0 to token_position
       int starting_at = 0;
-      int now_many = token_position - starting_at;
+      int how_many = token_position - starting_at;
       topmost_poa_name = adapter_name.substr (starting_at,
-                                              now_many);
+                                              how_many);
 
       // Take the substring from (token_position + separator_length)
       // to length
       starting_at = token_position + TAO_POA::name_separator_length ();
-      now_many = adapter_name.length () - starting_at;
+      how_many = adapter_name.length () - starting_at;
       tail_poa_name = adapter_name.substr (starting_at,
-                                           now_many);
+                                           how_many);
     }
 }
 
@@ -2599,176 +2581,105 @@ TAO_POA::set_complete_name (void)
   this->complete_name_ += this->name_;
 }
 
-void
-TAO_POA::encode_sequence_to_string (CORBA::String &str,
-                                    const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
+PortableServer::ObjectId *
+TAO_POA::string_to_ObjectId (const char *string)
 {
-  // We must allocate a buffer which is (gag) 3 times the length
-  // of the sequence, which is the length required in the worst-case
-  // scenario of all non-printable characters.
+  // Size of string
   //
-  // There are two strategies here...we could allocate all that space here,
-  // fill it up, then copy-allocate new space of just the right length.
-  // OR, we could just return this space.  The classic time-space tradeoff,
-  // and for now we'll let time win out, which means that we only do the
-  // allocation once.
-  u_int len = 3 * seq.length() + 1 /* for zero termination */;
-  str = CORBA::string_alloc (len);
+  // We DO NOT include the zero terminator, as this is simply an
+  // artifact of the way strings are stored in C.
+  //
+  CORBA::ULong buffer_size = ACE_OS::strlen (string);
 
-  char *cp = str;
+  // Create the buffer for the Id
+  CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
-  for (u_int i = 0;
-       cp < (cp+len) && i < seq.length();
-       i++)
-    {
-      u_char byte = seq[i];
-      if (isascii (byte) && isprint (byte) && byte != '\\')
-        {
-          *cp++ = (char) byte;
-          continue;
-        }
+  // Copy the contents
+  ACE_OS::memcpy (buffer, string, buffer_size);
 
-      *cp++ = '\\';
-      *cp++ = ACE::nibble2hex (byte & 0x0f);
-      *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
-    }
-  // Zero terminate
-  *cp = '\0';
+  // Create and return a new ID
+  return new PortableServer::ObjectId (buffer_size,
+                                       buffer_size,
+                                       buffer,
+                                       CORBA::B_TRUE);
+}
+
+PortableServer::ObjectId *
+TAO_POA::string_to_ObjectId (const char *string, 
+                             int size)
+{
+  // Create the buffer for the Id
+  CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (size);
+
+  // Copy the contents
+  ACE_OS::memcpy (buffer, string, size);
+
+  // Create and return a new ID
+  return new PortableServer::ObjectId (size,
+                                       size,
+                                       buffer,
+                                       CORBA::B_TRUE);
+}
+
+PortableServer::ObjectId *
+TAO_POA::wstring_to_ObjectId (const CORBA::WChar *string)
+{
+  // Size of Id
+  //
+  // We DO NOT include the zero terminator, as this is simply an
+  // artifact of the way strings are stored in C.
+  //
+#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
+  CORBA::ULong string_length = wslen (string);
+#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+  CORBA::ULong string_length = ACE_OS::strlen (string);
+#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
+
+  size_t buffer_size = string_length * sizeof (CORBA::WChar);
+
+  // Create the buffer for the Id
+  CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
+
+  // Copy contents
+  ACE_OS::memcpy (buffer, string, buffer_size);
+
+  // Create a new ID
+  return new PortableServer::ObjectId (buffer_size,
+                                       buffer_size,
+                                       buffer,
+                                       CORBA::B_TRUE);
 }
 
 CORBA::String
 TAO_POA::ObjectId_to_string (const PortableServer::ObjectId &id)
 {
-  CORBA::String s = 0;
-  encode_sequence_to_string (s, id);
-  return s;
-}
+  // Create space
+  CORBA::String string = CORBA::string_alloc (id.length ());
+  
+  // Copy the data
+  ACE_OS::memcpy (string, id.buffer (), id.length ());
 
-const char *
-TAO_POA::ObjectId_to_const_string (const PortableServer::ObjectId &id)
-{
-  return ObjectId_to_string (id);
-}
+  // Null terminate the string
+  string[id.length ()] = '\0';  
 
-const char *
-TAO_POA::ObjectKey_to_const_string (const TAO_ObjectKey &key)
-{
-  CORBA::String s;
-  encode_sequence_to_string (s, key);
-  return s;
-}
-
-void
-TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
-                                    CORBA::String str)
-{
-  if (str == 0)
-    {
-      seq.length (0);
-      return;
-    }
-
-  u_int length = ACE_OS::strlen (str);
-  char *eos = str + length;
-  char *cp = str;
-
-  // Set the length of the sequence to be as long as
-  // we'll possibly need...we'll reset it to the actual
-  // length later.
-  seq.length (length);
-
-  u_int i = 0;
-  for (;
-       cp < eos && i < seq.length ();
-       i++)
-    {
-      if (*cp == '\\')
-        {
-          // This is an escaped non-printable,
-          // so we decode the hex values into
-          // the sequence's octet
-          seq[i] = (u_char) (ACE::hex2byte (cp[1]) << 4);
-          seq[i] |= (u_char) ACE::hex2byte (cp[2]);
-          cp += 3;
-        }
-      else
-        {
-          // Copy it in
-          seq[i] = *cp++;
-        }
-    }
-
-  // Set the length appropriately
-  seq.length (i);
-}
-
-PortableServer::ObjectId *
-TAO_POA::string_to_ObjectId (const char *id)
-{
-  // Size of Id
-  // We DO NOT include the zero terminator, as this is simply an
-  // artifact of the way strings are stored in C.
-  CORBA::ULong id_length = ACE_OS::strlen (id);
-
-  // Create an empty sequence.
-  PortableServer::ObjectId *newid =
-    new PortableServer::ObjectId (id_length);
-
-  // Decode the contents
-  decode_string_to_sequence (*newid, (CORBA::String)id);
-
-  // Return the id
-  return newid;
-}
-
-PortableServer::ObjectId *
-TAO_POA::wstring_to_ObjectId (const CORBA::WChar *id)
-{
-  // Size of Id
-  // We DO NOT include the zero terminator, as this is simply an
-  // artifact of the way strings are stored in C.
-#if defined (ACE_HAS_WCHAR_TYPEDEFS_CHAR)
-  CORBA::ULong id_length = wslen (id) + 1;
-#else  /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-  CORBA::ULong id_length = ACE_OS::strlen (id) + 1;
-#endif /* ! ACE_HAS_WCHAR_TYPEDEFS_CHAR */
-
-  size_t bufsize = id_length * sizeof(CORBA::WChar);
-
-  // Create the buffer for the Id
-  CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (bufsize);
-
-  // Copy contents
-  ACE_OS::memcpy (buffer, id, bufsize);
-
-  // Create a new ID
-  return new PortableServer::ObjectId (id_length,
-                                       id_length,
-                                       buffer,
-                                       CORBA::B_TRUE);
+  // Return string
+  return string;
 }
 
 CORBA::WChar *
 TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
 {
-  // This method assumes that the id was initially placed in the octet
-  // sequence as a wchar string
+  // Create space
+  CORBA::WString string = CORBA::wstring_alloc (id.length ());
+  
+  // Copy the data
+  ACE_OS::memcpy (string, id.buffer (), id.length () * sizeof (CORBA::WChar));
 
-  // Grab the id buffer
-  CORBA::WString id_buffer = (CORBA::WString) id.buffer ();
+  // Null terminate the string
+  string[id.length ()] = '\0';  
 
-  // Create space and copy the contents
-  return CORBA::wstring_dup (id_buffer);
-}
-
-const CORBA::WChar *
-TAO_POA::ObjectId_to_const_wstring (const PortableServer::ObjectId &id)
-{
-  // This method assumes that the id was initially placed in the octet
-  // sequence as a wchar string
-
-  // Grab the id buffer
-  return (CORBA::WString) id.buffer ();
+  // Return string
+  return string;
 }
 
 char
@@ -2791,6 +2702,33 @@ TAO_POA::name_separator_length (void)
 
 CORBA::ULong
 TAO_POA::id_separator_length (void)
+{
+  return sizeof (char);
+}
+
+char
+TAO_POA::object_key_type (void)
+{
+  if (this->persistent ())
+    return TAO_POA::persistent_key_type ();
+  else
+    return TAO_POA::transient_key_type ();
+}
+
+char
+TAO_POA::persistent_key_type (void)
+{
+  return 'P';
+}
+
+char
+TAO_POA::transient_key_type (void)
+{
+  return 'T';
+}
+
+CORBA::ULong
+TAO_POA::object_key_type_length (void)
 {
   return sizeof (char);
 }
@@ -2912,6 +2850,87 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
       new_policy.release ();
       return result._retn ();
     }
+}
+
+void
+TAO_POA::encode_sequence_to_string (CORBA::String &str,
+                                    const TAO_Unbounded_Sequence<CORBA::Octet> &seq)
+{
+  // We must allocate a buffer which is (gag) 3 times the length
+  // of the sequence, which is the length required in the worst-case
+  // scenario of all non-printable characters.
+  //
+  // There are two strategies here...we could allocate all that space here,
+  // fill it up, then copy-allocate new space of just the right length.
+  // OR, we could just return this space.  The classic time-space tradeoff,
+  // and for now we'll let time win out, which means that we only do the
+  // allocation once.
+  u_int len = 3 * seq.length() + 1 /* for zero termination */;
+  str = CORBA::string_alloc (len);
+
+  char *cp = str;
+
+  for (u_int i = 0;
+       cp < (cp+len) && i < seq.length();
+       i++)
+    {
+      u_char byte = seq[i];
+      if (isascii (byte) && isprint (byte) && byte != '\\')
+        {
+          *cp++ = (char) byte;
+          continue;
+        }
+
+      *cp++ = '\\';
+      *cp++ = ACE::nibble2hex (byte & 0x0f);
+      *cp++ = ACE::nibble2hex ((byte >> 4) & 0x0f);
+    }
+  // Zero terminate
+  *cp = '\0';
+}
+
+void
+TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
+                                    CORBA::String str)
+{
+  if (str == 0)
+    {
+      seq.length (0);
+      return;
+    }
+
+  u_int length = ACE_OS::strlen (str);
+  char *eos = str + length;
+  char *cp = str;
+
+  // Set the length of the sequence to be as long as
+  // we'll possibly need...we'll reset it to the actual
+  // length later.
+  seq.length (length);
+
+  u_int i = 0;
+  for (;
+       cp < eos && i < seq.length ();
+       i++)
+    {
+      if (*cp == '\\')
+        {
+          // This is an escaped non-printable,
+          // so we decode the hex values into
+          // the sequence's octet
+          seq[i] = (u_char) (ACE::hex2byte (cp[1]) << 4);
+          seq[i] |= (u_char) ACE::hex2byte (cp[2]);
+          cp += 3;
+        }
+      else
+        {
+          // Copy it in
+          seq[i] = *cp++;
+        }
+    }
+
+  // Set the length appropriately
+  seq.length (i);
 }
 
 CORBA::Boolean
