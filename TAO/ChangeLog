@@ -1,3 +1,10 @@
+Fri Mar 14 16:55:00 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/PortableServerC.i:
+
+          Added some missing TAO_HAS_MINIMUM_POA guards.
+
 Fri Mar 14 14:48:53 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/examples/ORT/Gateway_i.cpp:
