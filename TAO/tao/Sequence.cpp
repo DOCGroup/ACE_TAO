@@ -199,6 +199,45 @@ TAO_Unbounded_String_Sequence::freebuf (char* *buffer)
   delete[] buffer;
 }
 
+char**
+TAO_Unbounded_String_Sequence::get_buffer (CORBA::Boolean orphan)
+{
+  char* *result = 0;
+  if (orphan == 0)
+    {
+      // We retain ownership.
+      if (this->buffer_ == 0)
+        {
+          result = allocbuf (this->length_);
+          this->buffer_ = result;
+        }
+      else
+        {
+          result = ACE_reinterpret_cast (char**, this->buffer_);
+        }
+    }
+  else // if (orphan == 1)
+    {
+      if (this->release_ != 0)
+        {
+          // We set the state back to default and relinquish
+          // ownership.
+          result = ACE_reinterpret_cast (char**, this->buffer_);
+          this->maximum_ = 0;
+          this->length_ = 0;
+          this->buffer_ = 0;
+          this->release_ = 0;
+        }
+    }
+  return result;
+}
+
+const char**
+TAO_Unbounded_String_Sequence::get_buffer (void) const
+{
+  return ACE_reinterpret_cast (const char** ACE_CAST_CONST, this->buffer_);
+}
+
 void
 TAO_Unbounded_String_Sequence::_allocate_buffer (CORBA::ULong length)
 {
