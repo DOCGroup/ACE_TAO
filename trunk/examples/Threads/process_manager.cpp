@@ -74,7 +74,8 @@ ExitHandler::handle_exit (ACE_Process *proc)
 }
 
 int
-ExitHandler::handle_timeout(const ACE_Time_Value &tv, const void *)
+ExitHandler::handle_timeout(const ACE_Time_Value &,
+                            const void *)
 {
   static int tick_tock = 0;
 
@@ -87,8 +88,8 @@ ExitHandler::handle_timeout(const ACE_Time_Value &tv, const void *)
 }
 
 int
-ExitHandler::handle_close (ACE_HANDLE handle,
-                           ACE_Reactor_Mask close_mask)
+ExitHandler::handle_close (ACE_HANDLE,
+                           ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t@%T) ExitHandler \"%s\" handle_close\n",
@@ -263,7 +264,7 @@ main (int argc, char *argv[])
 #endif /* ACE_WIN32 */
 
   ExitHandler *main_thread_work;
-  ACE_NEW_RETURN (main_thread_wor,
+  ACE_NEW_RETURN (main_thread_work,
                   ExitHandler ("main thread worker"),
                   1);
 

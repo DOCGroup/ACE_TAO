@@ -1,5 +1,8 @@
 Mon Sep  6 08:45:31 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Threads/process_manager.cpp (main): Fixed some warnings
+	  and errors.  Thanks to David for reporting this.
+
 	* ace/OS.i: Fixed ACE_UNUSED_ARG(options) to be
  	  ACE_UNUSED_ARG(wait_options).  Thanks to David's build logs for
  	  reporting this.
