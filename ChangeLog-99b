@@ -1,3 +1,11 @@
+<<<<<<< ChangeLog
+Tue Jul  6 17:34:52 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-aix-4.x.h: Enabled ACE_HAS_PTHREADS_UNIX98_EXT and
+          removed ACE_LACKS_RWLOCK_T for AIX 4.3. Moved some other ACE_LACKS
+          settings to the pre-4.3 threads section to allow taking advantage
+          of more capability on AIX 4.3.
+
 Tue Jul 06 16:29:32 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h: Moved the string conversion macros before including
