@@ -177,8 +177,18 @@
 # define ACE_INT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64d")
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_LIB_TEXT ("%I64u")
 
-# if !defined (ACE_LD_DECORATOR_STR) && defined (_DEBUG)
-#  define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
+# if !defined (ACE_LD_DECORATOR_STR)
+#  if defined (_DEBUG)
+#   if ACE_HAS_MFC == 1
+#    define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("mfcd")
+#   else
+#    define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("d")
+#   endif //ACE_HAS_MFC
+#  else // _NDEBUG
+#   if ACE_HAS_MFC == 1
+#    define ACE_LD_DECORATOR_STR ACE_LIB_TEXT ("mfc")
+#   endif //ACE_HAS_MFC
+#  endif // _DEBUG
 # endif
 
 # define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
