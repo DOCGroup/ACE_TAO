@@ -150,6 +150,8 @@ realclean: clean
   $(TAO_ROOT)/tao/varbase.h \
   $(TAO_ROOT)/tao/TAO_Export.h \
   $(TAO_ROOT)/tao/corbafwd.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/Queued_Message.inl
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

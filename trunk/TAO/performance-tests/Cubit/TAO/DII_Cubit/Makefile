@@ -308,7 +308,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/Read_Buffer.h \
-  $(ACE_ROOT)/ace/Read_Buffer.i ../IDL_Cubit/cubitC.h \
-  ../IDL_Cubit/cubitC.i
+  $(ACE_ROOT)/ace/Read_Buffer.i \
+  ../IDL_Cubit/cubitC.h ../IDL_Cubit/cubitC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

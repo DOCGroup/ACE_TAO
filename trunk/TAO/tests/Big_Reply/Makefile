@@ -521,8 +521,7 @@ realclean: clean
 
 .obj/Big_Reply_i.o .obj/Big_Reply_i.so .shobj/Big_Reply_i.o .shobj/Big_Reply_i.so: Big_Reply_i.cpp Big_Reply_i.h \
   $(ACE_ROOT)/ace/pre.h TestS.h \
-  TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1253,6 +1252,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \

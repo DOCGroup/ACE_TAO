@@ -57,8 +57,9 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Factory.h $(ACE_ROOT)/ace/pre.h \
-  TestS.h TestC.h $(TAO_ROOT)/tao/corba.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Factory.h \
+  $(ACE_ROOT)/ace/pre.h TestS.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -241,7 +242,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -259,7 +261,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Sched_Params.h \
   $(ACE_ROOT)/ace/Sched_Params.i
 
-.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp TestC.h $(TAO_ROOT)/tao/corba.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -443,8 +446,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  TestC.i $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Get_Opt.i \
   $(ACE_ROOT)/ace/High_Res_Timer.h \
   $(ACE_ROOT)/ace/High_Res_Timer.i \
@@ -458,8 +461,8 @@ realclean: clean
   $(ACE_ROOT)/ace/Sample_History.inl
 
 .obj/collocated.o .obj/collocated.so .shobj/collocated.o .shobj/collocated.so: collocated.cpp Simple.h \
-  $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
-  $(TAO_ROOT)/tao/corba.h \
+  $(ACE_ROOT)/ace/pre.h TestS.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -642,7 +645,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -668,8 +672,9 @@ realclean: clean
   $(ACE_ROOT)/ace/Sample_History.h \
   $(ACE_ROOT)/ace/Sample_History.inl
 
-.obj/Factory.o .obj/Factory.so .shobj/Factory.o .shobj/Factory.so: Factory.cpp Factory.h $(ACE_ROOT)/ace/pre.h \
-  TestS.h TestC.h $(TAO_ROOT)/tao/corba.h \
+.obj/Factory.o .obj/Factory.so .shobj/Factory.o .shobj/Factory.so: Factory.cpp Factory.h \
+  $(ACE_ROOT)/ace/pre.h TestS.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -852,7 +857,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -866,8 +872,9 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   TestS_T.h TestS_T.i TestS_T.cpp TestS.i Simple.h
 
-.obj/Simple.o .obj/Simple.so .shobj/Simple.o .shobj/Simple.so: Simple.cpp Simple.h $(ACE_ROOT)/ace/pre.h \
-  TestS.h TestC.h $(TAO_ROOT)/tao/corba.h \
+.obj/Simple.o .obj/Simple.so .shobj/Simple.o .shobj/Simple.so: Simple.cpp Simple.h \
+  $(ACE_ROOT)/ace/pre.h TestS.h \
+  TestC.h $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -1050,7 +1057,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1064,7 +1072,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   TestS_T.h TestS_T.i TestS_T.cpp TestS.i
 
-.obj/TestC.o .obj/TestC.so .shobj/TestC.o .shobj/TestC.so: TestC.cpp TestC.h $(TAO_ROOT)/tao/corba.h \
+.obj/TestC.o .obj/TestC.so .shobj/TestC.o .shobj/TestC.so: TestC.cpp TestC.h \
+  $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -1248,8 +1257,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
-  $(TAO_ROOT)/tao/Stub.h \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  TestC.i $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -1337,6 +1346,8 @@ realclean: clean
   $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.h \
   $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+  $(TAO_ROOT)/tao/LF_Event.h \
+  $(TAO_ROOT)/tao/LF_Event.inl \
   $(TAO_ROOT)/tao/TAOC.h \
   $(TAO_ROOT)/tao/TAOC.i \
   $(TAO_ROOT)/tao/operation_details.h \
@@ -1540,7 +1551,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
-  $(TAO_ROOT)/tao/PortableInterceptorC.i TestC.i \
+  $(TAO_ROOT)/tao/PortableInterceptorC.i \
+  TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \

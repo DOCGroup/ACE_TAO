@@ -1,3 +1,9 @@
+Tue Sep  4 07:53:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* */Makefile: Updated dependencies. We wantde this done before
+	  1.2. I dont think we should be having anymore big changes to
+	  regenerate this again.
+
 Tue Sep  4 07:22:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/performance-tests/EC_Federated_Latency/Servant_var.inl:
