@@ -7,7 +7,7 @@
 //   TAO services
 //
 // = FILENAME
-//   SupplierAdmin_i
+//   SupplierAdmin_i.h
 //
 // = AUTHOR
 //   Pradeep Gore <pradeep@cs.wustl.edu>
@@ -18,27 +18,27 @@
 //
 // ============================================================================
 
-#if !defined (_SUPPLIERADMIN_I_H)
-#define _SUPPLIERADMIN_I_H
+#if !defined (SUPPLIER_ADMIN_I_H)
+#define SUPPLIER_ADMIN_I_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "orbsvcs/CosEvent/ProxyPushConsumer_i.h"
 
-class TAO_ORBSVCS_Export SupplierAdmin_i : public POA_CosEventChannelAdmin::SupplierAdmin
+class TAO_ORBSVCS_Export TAO_CosEC_SupplierAdmin_i : public POA_CosEventChannelAdmin::SupplierAdmin
 {
   // = TITLE
-  //   class SupplierAdmin_i implements the SupplierAdmin interface.
+  //   class TAO_CosEC_SupplierAdmin_i implements the SupplierAdmin interface.
   //
   // = DESCRIPTION
   //   This COS-compliant implementation of the SupplierAdmin uses
   //   TAO's RtecEventChannelAdmin::SupplierAdmin.
 public:
   // = Initialization and termination methods.
-  SupplierAdmin_i (void);
+  TAO_CosEC_SupplierAdmin_i (void);
   // Constructor.
 
-  ~SupplierAdmin_i (void);
+  ~TAO_CosEC_SupplierAdmin_i (void);
   // Destructor.
 
   int init (const RtecEventChannelAdmin::SupplierQOS &supplierqos,
@@ -58,9 +58,9 @@ private:
   RtecEventChannelAdmin::SupplierQOS qos_;
   // The SupplierQOS specified by the user of this class.
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin_;
+  RtecEventChannelAdmin::SupplierAdmin_var rtec_supplieradmin_;
   // The RtecEventChannelAdmin::SupplierAdmin specified by the user of
   // this class.
 };
 
-#endif /* _SUPPLIERADMIN_I_H */
+#endif /* SUPPLIER_ADMIN_I_H */

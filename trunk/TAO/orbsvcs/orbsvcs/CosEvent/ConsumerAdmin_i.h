@@ -18,27 +18,27 @@
 //
 // ============================================================================
 
-#if !defined (_CONSUMERADMIN_I_H)
-#define _CONSUMERADMIN_I_H
+#if !defined (CONSUMERADMIN_I_H)
+#define CONSUMERADMIN_I_H
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "orbsvcs/CosEvent/ProxyPushSupplier_i.h"
 
-class TAO_ORBSVCS_Export ConsumerAdmin_i : public POA_CosEventChannelAdmin::ConsumerAdmin
+class TAO_ORBSVCS_Export TAO_CosEC_ConsumerAdmin_i : public POA_CosEventChannelAdmin::ConsumerAdmin
 {
   // = TITLE
-  //   class ConsumerAdmin_i implements the ConsumerAdmin interface.
+  //   class TAO_CosEC_ConsumerAdmin_i implements the ConsumerAdmin interface.
   //
   // = DESCRIPTION
   //   This implementation of the ConsumerAdmin uses the
   //   RtecEventChannelAdmin::ConsumerAdmin.
 public:
   // = Initialization and termination methods.
-  ConsumerAdmin_i (void);
+  TAO_CosEC_ConsumerAdmin_i (void);
   // Constructor.
 
-  ~ConsumerAdmin_i (void);
+  ~TAO_CosEC_ConsumerAdmin_i (void);
   // Destructor.
 
   int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
@@ -56,9 +56,9 @@ private:
   RtecEventChannelAdmin::ConsumerQOS qos_;
   // The ConsumerQOS specified by the user of this class.
 
-  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin_;
+  RtecEventChannelAdmin::ConsumerAdmin_var rtec_consumeradmin_;
   // The RtecEventChannelAdmin::ConsumerAdmin specified by the user of
   // this class.
 };
 
-#endif /* _CONSUMERADMIN_I_H */
+#endif /* CONSUMERADMIN_I_H */
