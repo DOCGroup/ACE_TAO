@@ -187,6 +187,9 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::commit_backing_store_name");
 
+#if defined (CHORUS)
+  file_offset = rounded_bytes;
+#else
   size_t seek_len;
 
   if (this->write_each_page_)
@@ -208,12 +211,15 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
       file_offset = ACE_OS::lseek (this->mmap_.handle () , seek_len - 1, SEEK_END);
 
       if (file_offset == -1 || ACE_OS::write (this->mmap_.handle (), "", 1) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) %p\n"),
-                           this->backing_store_name_), -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("(%P|%t) %p\n"),
+                           this->backing_store_name_),
+                          -1);
     }
 
   // Increment by one to put us at the beginning of the next chunk...
   file_offset++;
+#endif /* CHORUS */
   return 0;
 }
 
@@ -296,7 +302,11 @@ ACE_MMAP_Memory_Pool::init_acquire (size_t nbytes,
       errno = 0;
       // Reopen file *without* using O_EXCL...
       if (this->mmap_.map (this->backing_store_name_,
+#if defined (CHORUS)
+ 			   nbytes,
+#else
                            -1,
+#endif /* CHORUS */
                            O_RDWR,
                            ACE_DEFAULT_FILE_PERMS,
                            PROT_RDWR,

@@ -246,7 +246,9 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h)
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
   if (ACE_OS::flock_init (&this->lock_) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_File_Lock::ACE_File_Lock")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT("%p\n"),
+                ASYS_TEXT("ACE_File_Lock::ACE_File_Lock")));
   this->set_handle (h);
 }
 
@@ -257,7 +259,10 @@ ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
 
   if (this->open (name, flags, perms) == -1)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_File_Lock::ACE_File_Lock")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p %s\n"),
+                ASYS_TEXT("ACE_File_Lock::ACE_File_Lock")),
+               name);
 }
 
 int
@@ -363,7 +368,9 @@ ACE_Mutex::ACE_Mutex (int type, LPCTSTR name, void *arg)
 // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
   if (ACE_OS::mutex_init (&this->lock_, type, name, arg) != 0)
-    ACE_ERROR ((LM_ERROR, ASYS_TEXT("%p\n"), ASYS_TEXT("ACE_Mutex::ACE_Mutex")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Mutex::ACE_Mutex")));
 }
 
 ACE_Mutex::~ACE_Mutex (void)

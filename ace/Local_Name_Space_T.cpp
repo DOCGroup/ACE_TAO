@@ -395,7 +395,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
   ACE_OS::strcat (this->context_file_, ACE_DIRECTORY_SEPARATOR_STR);
   ACE_OS::strcat (this->context_file_, database);
 
+#if !defined (CHORUS)
   ACE_MEM_POOL_OPTIONS options (this->name_options_->base_address ());
+#else
+  // Use base address == 0, don't use a fixed address.
+  ACE_MEM_POOL_OPTIONS options (0,
+                                0,
+                                0,
+                                ACE_CHORUS_LOCAL_NAME_SPACE_T_SIZE); 
+#endif /* CHORUS */
 
   TCHAR lock_name_for_local_name_space [MAXNAMELEN + MAXPATHLEN];
   TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];
@@ -429,10 +437,14 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i (void)
 
   ACE_NEW_RETURN (this->lock_, ACE_LOCK (lock_name_for_local_name_space), -1);
   
+#if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully
   if (ACE_OS::access (this->context_file_, F_OK) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "create_manager\n"), -1);
-  
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "create_manager\n"),
+                      -1);
+#endif /* ACE_LACKS_ACCESS */
+
   void *ns_map = 0;
 
   // This is the easy case since if we find the Name Server Map
