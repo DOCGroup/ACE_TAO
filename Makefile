@@ -22,7 +22,8 @@ DIRS    = ace \
           apps \
           examples \
           performance-tests \
-          websvcs
+          websvcs \
+	  Kokyu
 
 CLONE   = Makefile \
           ace \
@@ -36,7 +37,8 @@ CLONE   = Makefile \
           TAO \
           tests \
           websvcs \
-	  ACEXML
+	  ACEXML \
+	  Kokyu
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
