@@ -7,7 +7,7 @@
 #include "tao/debug.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "testS.h"
-#include "tests/RTCORBA/Linear_Priority/readers.cpp"
+#include "tests/RTCORBA/common_args.cpp"
 #include "fudge_priorities.cpp"
 
 ACE_RCSID(Thread_Pools, server, "$Id$")
@@ -272,7 +272,8 @@ main (int argc, char *argv[])
                                              max_buffered_requests,
                                              max_request_buffer_size,
                                              allow_borrowing,
-                                             policies
+                                             policies,
+                                             1
                                              ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
@@ -289,7 +290,8 @@ main (int argc, char *argv[])
                                 max_buffered_requests,
                                 max_request_buffer_size,
                                 allow_borrowing,
-                                policies
+                                policies,
+                                1
                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -300,7 +302,8 @@ main (int argc, char *argv[])
             get_priority_bands ("server",
                                 bands_file,
                                 rt_orb.in (),
-                                policies
+                                policies,
+                                1
                                 ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
@@ -336,7 +339,8 @@ main (int argc, char *argv[])
                 get_priority_bands ("server",
                                     bands_file,
                                     rt_orb.in (),
-                                    policies
+                                    policies,
+                                    1
                                     ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
