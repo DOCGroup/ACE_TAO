@@ -87,24 +87,34 @@ ACE_SOCK_Dgram_Mcast::subscribe (const ACE_INET_Addr &mcast_addr,
 
   if (net_if == 0)
     {
-      ACE_INET_Addr *if_addrs;
+      ACE_INET_Addr *if_addrs = 0;
       size_t         if_cnt, nr_subscribed;
 
       if (ACE::get_ip_interfaces(if_cnt, if_addrs) != 0)
 	return -1;
 
-      for (nr_subscribed = 0; if_cnt > 0; )
+      if (if_cnt < 2)
 	{
-	  --if_cnt;    // Convert to 0-based for indexing, and next loop check
-	  if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
-	    continue;
 	  if (this->subscribe(mcast_addr,
 			      reuse_addr,
-			      ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
+			      ASYS_WIDE_STRING ("0.0.0.0"),
 			      protocol_family,
 			      protocol) == 0)
 	    ++nr_subscribed;
 	}
+      else
+	for (nr_subscribed = 0; if_cnt > 0; )
+	  {
+	    --if_cnt;    // Convert to 0-based for indexing, next loop check
+	    if (if_addrs[if_cnt].get_ip_address() == INADDR_LOOPBACK)
+	      continue;
+	    if (this->subscribe(mcast_addr,
+				reuse_addr,
+				ASYS_WIDE_STRING (if_addrs[if_cnt].get_host_addr()),
+				protocol_family,
+				protocol) == 0)
+	      ++nr_subscribed;
+	  }
 
       delete [] if_addrs;
 
