@@ -1,3 +1,10 @@
+Wed Feb 19 14:41:18 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
+
+	* STL/bool.h: Changed the defines for type bool.  First, bool is no
+	  longer defined for WIN32 since yvals.h typedefs it already.
+  	  Also, I moved the defines out the namespace.  I'm not sure if
+ 	  that's the right thing to do.
+
 Tue Feb 18 16:41:02 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* include/makeinclude: Added minor enhancements to rules.local.GNU
