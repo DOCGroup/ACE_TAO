@@ -12,13 +12,15 @@ OBJFILES = \
 	$(OBJDIR)\DiamondS.obj \
 	$(OBJDIR)\Diamond_i.obj
 
-CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DDiamond_HAS_DLL=1 -DDiamond_BUILD_DLL=1
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) -DDiamond_HAS_DLL=1 -DDiamond_BUILD_DLL=1 $(TAO_PORTABLESERVER_CFLAGS)
 
-LIBFILES = $(ACE_LIB) $(TAO_LIB) $(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib
+LIBFILES = $(ACE_LIB) $(TAO_LIB) $(BINDIR)\Coll_Test_Stubs$(LIB_DECORATOR).lib $(TAO_PORTABLESERVER_LIB)
 
 CPPDIR = .
 
 IDLDIR = .
+
+IDLFILES = $(IDLDIR)\Diamond.idl
 
 !include <$(ACE_ROOT)\include\makeinclude\build_dll.bor>
 
