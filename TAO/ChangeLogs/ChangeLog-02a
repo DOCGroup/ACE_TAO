@@ -1361,12 +1361,12 @@ Mon Jun 19 14:42:13 2000  Marina Spivak  <marina@cs.wustl.edu>
           Added client portion of the RTCORBA::CLIENT_PROPAGATED priority
           model support.
 
-        * tao/Profile.cpp
+        * tao/Profile.cpp:
         * tao/RT_Policy_i.cpp:
 
           Added @@ comments regarding bugs in the code for Angelo.
 
-        * tao/RT_Policy_i.h
+        * tao/RT_Policy_i.h:
         * tao/RT_Policy_i.i:
           Added TAO_PriorityModelPolicy::get_priority_model () efficient
           accessor.
@@ -1507,23 +1507,23 @@ Sun Jun 18 03:18:08 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 Sun Jun 18 00:01:28 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-        * tao/Encodable.h
-        * tao/Policy_Factory.h
-        * tao/Profile.cpp
-        * tao/RT_Policy_i.cpp
-        * tao/RT_Policy_i.h
-        * tao/Stub.cpp
+        * tao/Encodable.h:
+        * tao/Policy_Factory.h:
+        * tao/Profile.cpp:
+        * tao/RT_Policy_i.cpp:
+        * tao/RT_Policy_i.h:
+        * tao/Stub.cpp:
         * tao/Stub.h:
 
           Code review.  Left a bunch of @@ comments for Angelo.
 
 Sat Jun 17 23:02:34 2000  Marina Spivak  <marina@cs.wustl.edu>
 
-        * tests/Exposed_Policies/Counter.idl
-        * tests/Exposed_Policies/Counter_i.cpp
-        * tests/Exposed_Policies/Counter_i.h
-        * tests/Exposed_Policies/README
-        * tests/Exposed_Policies/client.cpp
+        * tests/Exposed_Policies/Counter.idl:
+        * tests/Exposed_Policies/Counter_i.cpp:
+        * tests/Exposed_Policies/Counter_i.h:
+        * tests/Exposed_Policies/README:
+        * tests/Exposed_Policies/client.cpp:
         * tests/Exposed_Policies/server.cpp:
 
           Code review.  Left a bunch of @@ comments for Angelo.
@@ -1869,33 +1869,24 @@ Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tao/RT_Policy_i.cpp:
 
           Changed <_tao_encode> method implementation for the
-          client exposed policies.
-          // @@ Angelo, changed why? to do what?
-
-        * TAO/tests/Exposed_Policies/client.cpp:
-        * TAO/tests/Exposed_Policies/Client.dsp:
-        * TAO/tests/Exposed_Policies/Counter.idl:
-        * TAO/tests/Exposed_Policies/Counter_i.cpp:
-        * TAO/tests/Exposed_Policies/Counter_i.h:
-        * TAO/tests/Exposed_Policies/Exposed_Policies.dsw:
-        * TAO/tests/Exposed_Policies/Exposed_Policies.ncb:
-        * TAO/tests/Exposed_Policies/Makefile:
-        * TAO/tests/Exposed_Policies/Makefile.bor:
-        * TAO/tests/Exposed_Policies/README:
-        * TAO/tests/Exposed_Policies/server.cpp:
-        * TAO/tests/Exposed_Policies/Server.dsp:
+          client exposed policies, to make it more compact.
+          
+        * tests/Exposed_Policies/client.cpp:
+        * tests/Exposed_Policies/Client.dsp:
+        * tests/Exposed_Policies/Counter.idl:
+        * tests/Exposed_Policies/Counter_i.cpp:
+        * tests/Exposed_Policies/Counter_i.h:
+        * tests/Exposed_Policies/Exposed_Policies.dsw:
+        * tests/Exposed_Policies/Exposed_Policies.ncb:
+        * tests/Exposed_Policies/Makefile:
+        * tests/Exposed_Policies/Makefile.bor:
+        * tests/Exposed_Policies/README:
+        * tests/Exposed_Policies/server.cpp:
+        * tests/Exposed_Policies/Server.dsp:
 
           Added files for testing the client exposed policies.
-          // @@ Angelo,
-          // 1) I do not see an entry/mentioning of removing
-          tests/ExposedPolicies directory (the one you replaced with the files
-          above, nor do I see any entries about removing
-          tests/ExposedPolicies/Client and Server subdirectories (the
-          change you made a while back).  It is important to document not
-          only what you add/change, but also what you remove! 2) when you
-          write the names of files you modified/added/removed in TAO, the
-          pathname must be relative to the ACE_wrappers/TAO directory.
-          Please remove the extra 'TAO' for the files above.
+	  Renamed directory containing the tests from ExposedPolicies
+	  to Exposed_Policies.
 
 Fri Jun 16 08:46:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -2159,9 +2150,12 @@ Thu Jun 15 13:20:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tao/Stub.h:
         * tao/Stub.cpp:
 
-          Added methods to get client exposed policies, and added
-          member variable to cache those client exposed policies.
-          // @@ Angelo, please list the names of methods/variables added.
+          Added methods: 
+	    <exposed_priority_model>, 
+	    <exposed_priority_banded_connection> 
+	    <exposed_client_protocol>
+	  to get client exposed policies, and added member variable 
+	  to cache those client exposed policies.
 
 Thu Jun 15 12:43:44 2000  yamuna  <yamuna@cs.wustl.edu>
 
@@ -2354,11 +2348,11 @@ Mon Jun 12 10:38:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Jun 12 12:00:14 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/MProfile.i
+        * tao/MProfile.i:
+	
+          Moved <create_policy_list> in the proper position, so
+	  that no problem occurs when inlining is enabled.
 
-          Moved <create_policy_list> implementation so that no problem
-          occurs when inlining is enabled.
-          // @@ Angelo, moved <create_policy_list> where?
 
 Sun Jun 11 20:55:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -2368,7 +2362,7 @@ Sun Jun 11 20:55:08 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Sun Jun 11 13:01:27 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/MProfile.i
+        * tao/MProfile.i:
 
           Fixed member initialization order in the constructor.
 
@@ -2376,34 +2370,34 @@ Sun Jun 11 13:01:27 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 Sun Jun 11 01:45:10 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/MProfile.h
-        * tao/MProfile.i
+        * tao/MProfile.h:
+        * tao/MProfile.i:
 
           Added member variable <policy_list_> and its relative acessor
           methods.
 
-        * tao/Profile.h
+        * tao/Profile.h:
 
           Added member variable <mprofile_>, and its relative accessor
           methods.
 
-        * tao/Profile.cpp
+        * tao/Profile.cpp:
 
           Removed attribute <policy_list_>, now the policy list
           is stored and accessed by the TAO_MProfile.
 
-        * tao/ORB_core.cpp
+        * tao/ORB_core.cpp:
 
           Modifies method <create_stub_object> to set the proper
           relationship between TAO_Profiels the TAO_Stubs that
           own them.
 
-        * tao/Stub.h
-        * tao/Stub.i
+        * tao/Stub.h:
+        * tao/Stub.i:
 
           Added method  <TAO_MProfile& base_profiles ()>.
 
-        * tao/POA.cpp
+        * tao/POA.cpp:
 
           Added ACE_UNUSED_ARG to the method <TAO_POA::client_exposed_policies>
           to fix unused argument warning when compiling without
@@ -2522,14 +2516,14 @@ Fri Jun 09 15:18:50 2000  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jun 09 12:49:46 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/Encodable.h
-        * tao/PolicyC.h
-        * tao/Policy_Factory.h
+        * tao/Encodable.h:
+        * tao/PolicyC.h:
+        * tao/Policy_Factory.h:
 
           Coding style and comments rewiew plus code review
           comments for Marina.
 
-        * tao/Policy_Factory.i
+        * tao/Policy_Factory.i:
 
           Added ACE_UNUSED_ARG to fix warning when TAO_HAS_RT_CORBA
           is not enabled.
@@ -2537,9 +2531,9 @@ Fri Jun 09 12:49:46 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
           Coding style and comments rewiew plus code review
           comments for Marina.
 
-        * tao/Profile.h
-        * tao/Profile.i
-        * tao/Profile.cpp
+        * tao/Profile.h:
+        * tao/Profile.i:
+        * tao/Profile.cpp:
 
           Fixed memory management problem related to <policy_list_>.
 
@@ -3039,7 +3033,7 @@ Wed Jun  7 15:28:21 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Jun 07 13:41:17 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/Policy_Factory.cpp
+        * tao/Policy_Factory.cpp:
 
           Added missing ACE_RCSID field.
 
@@ -3060,19 +3054,19 @@ Wed Jun  7 11:35:40 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Jun 07 13:19:56 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/Profile.cpp
-        * tao/Profile.h
-        * tao/PolicyC.cpp
-        * tao/PolicyC.h
-        * tao/Policy_Factory.cpp
-        * tao/Policy_Factory.h
-        * tao/Policy_Factory.i
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/Policy_Factory.cpp:
+        * tao/Policy_Factory.h:
+        * tao/Policy_Factory.i:
 
           TAO-ization, i.e., made some aesthetic changes to make
           the code follow more closely TAO's coding rule.
 
-        * tao/RT_Policy_i.h
-        * tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.h:
+        * tao/RT_Policy_i.cpp:
 
           Renamed class <TAO_ProtocolPropertiesFactory> to
           <TAO_Proto_Properties_Factory>.
@@ -3162,19 +3156,19 @@ Tue Jun 06 21:21:03 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Tue Jun 06 20:59:31 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * TAO/test/ExposedPolicies
-        * TAO/test/ExposedPolicies/Counter.idl
-        * TAO/test/ExposedPolicies/ExposedPolicies.dsw
+        * TAO/test/ExposedPolicies:
+        * TAO/test/ExposedPolicies/Counter.idl:
+        * TAO/test/ExposedPolicies/ExposedPolicies.dsw:
 
-        * TAO/test/ExposedPolicies/Server
-        * TAO/test/ExposedPolicies/Server/Server.cpp
-        * TAO/test/ExposedPolicies/Server/Counter_i.h
-        * TAO/test/ExposedPolicies/Server/Counter_i.cpp
-        * TAO/test/ExposedPolicies/Server/Server.dsp
+        * TAO/test/ExposedPolicies/Server:
+        * TAO/test/ExposedPolicies/Server/Server.cpp:
+        * TAO/test/ExposedPolicies/Server/Counter_i.h:
+        * TAO/test/ExposedPolicies/Server/Counter_i.cpp:
+        * TAO/test/ExposedPolicies/Server/Server.dsp:
 
-        * TAO/test/ExposedPolicies/Client
-        * TAO/test/ExposedPolicies/Client/Client.cpp
-        * TAO/test/ExposedPolicies/Client/Client.dsp
+        * TAO/test/ExposedPolicies/Client:
+        * TAO/test/ExposedPolicies/Client/Client.cpp:
+        * TAO/test/ExposedPolicies/Client/Client.dsp:
 
           Added test for Client Exposed Policies.
 
@@ -3193,9 +3187,9 @@ Tue Jun 06 14:53:34 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 Tue Jun 06 14:47:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/Profile.cpp
-        * tao/Profile.h
-        * tao/Profile.i
+        * tao/Profile.cpp:
+        * tao/Profile.h:
+        * tao/Profile.i:
 
           Changed signature of policy list accessors. Added new
           private method <_create_policy_list> to handle the "lazy"
@@ -3210,8 +3204,8 @@ Tue Jun 06 14:47:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
           TAO_Encodable.  Implemented <ProtocolProperties::_tao_encode>
           and <ProtocolProperties::_tao_encode>.
 
-        * tao/RT_Policy_i.h
-        * tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.h:
+        * tao/RT_Policy_i.cpp:
 
           Added TAO_GIOPProperties class, which implements
           RTCORBA::GIOPProtocolProperties interface.
@@ -3406,7 +3400,7 @@ Sun Jun  4 13:33:43 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 Sun Jun  4 11:07:50 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.cpp:
         Removed (temporarily) unused argument.
 
 Sat Jun  3 20:56:46 2000  Darrell Brunsch <brunsch@uci.edu>
@@ -3446,8 +3440,8 @@ Sat Jun  3 13:30:28 2000  Ossama Othman  <ossama@uci.edu>
 
 Sat Jun 03 11:55:23 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-        * tao/Policy_Factory.h
-        * tao/Policy_Factory.i
+        * tao/Policy_Factory.h:
+        * tao/Policy_Factory.i:
 
           Added ifdefs to protect RT-Corba related stuff.
 
@@ -3475,16 +3469,16 @@ Sat Jun 03 04:17:38 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
 
-        * tao/RT_Policy_i.h
-        * tao/RT_Policy_i.i
-        * tao/RT_Policy_i.cpp
+        * tao/RT_Policy_i.h:
+        * tao/RT_Policy_i.i:
+        * tao/RT_Policy_i.cpp:
 
           Overloaded <write_to> and <read_from> methods in all
           client-exposed RT policies to encode/decode their content into a
           cdr stream.
 
-        * tao/POA.h
-        * tao/POA.cpp
+        * tao/POA.h:
+        * tao/POA.cpp:
 
           Modified TAO_POA class to keep client-exposed policies (added
           <get_client_exposed_policies> accessor and
@@ -3492,21 +3486,21 @@ Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
           method <key_to_object> to pass these policies to the ORB core
           when doing the stub creation.
 
-        * tao/ORB_Core.h
-        * tao/ORB_Core.cpp
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
 
           Modified the signature of the method
           <TAO_ORB_Core::create_stub_object> to receive the PolicyList
           from the POA.
 
-        * tao/Servant_Base.cpp
+        * tao/Servant_Base.cpp:
 
           Changed these methods to support policies propagation:
           <TAO_ServantBase::_create_stub>
           <TAO_DynamicImplementation::_create_stub>
 
-        * tao/GIOP_Server_Request.i
-        * tao/GIOP_Server_Request.cpp
+        * tao/GIOP_Server_Request.i:
+        * tao/GIOP_Server_Request.cpp:
 
           Changed <objref> method to support client exposed policies.
           Also moved this method from GIOP_Server_Request.i to
@@ -3515,8 +3509,8 @@ Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
           Added #include "tao/POA.h" to GIOP_Server_Request.cpp for
           supporting method invocation on POA.
 
-        * tao/Profile.h
-        * tao/Profile.cpp
+        * tao/Profile.h:
+        * tao/Profile.cpp:
 
           Modified TAO_Profile class to store client exposed policies.
           Added the following methods:
@@ -3527,26 +3521,26 @@ Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
           Modified Constructor TAO_Profile::TAO_Profile to
           initialize <policy_list_>.
 
-        * tao/PolicyC.h
-        * tao/PolicyC.cpp
+        * tao/PolicyC.h:
+        * tao/PolicyC.cpp:
 
           Changed CORBA::Policy to inherit from TAO_Encodable.
 
-        * tao/Encodable.h
-        * tao/Encodable.cpp
+        * tao/Encodable.h:
+        * tao/Encodable.cpp:
 
           Interface that defines the methods to encode/decode an object
           into/from a CDR stream.
 
-        * tao/Policy_Factory.h
-        * tao/Policy_Factory.i
-        * tao/Policy_Factory.cpp
+        * tao/Policy_Factory.h:
+        * tao/Policy_Factory.i:
+        * tao/Policy_Factory.cpp:
 
           Factory class for creating client exposed policies, while
           decoding them from the IOR.
 
-        * tao/TAO.dsp
-        * tao/Makefile
+        * tao/TAO.dsp:
+        * tao/Makefile:
 
           Updated Makefile/Project file.
 
