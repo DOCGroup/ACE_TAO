@@ -1,3 +1,13 @@
+Fri Oct 18 11:55:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/POSIX_CB_Proactor.cpp: Removed unneeded argument to
+          application_specific_code(). Thanks to Tommy Persson
+          <tpe@ida.liu.se> for contributing this fix.
+
+          Fixes Bugzilla #1325.
+
+        * THANKS: Added Tommy Persson to the Hall of Fame.
+
 Fri Oct 18 11:39:29 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Process_Per_Connection_Logging_Server.cpp:
