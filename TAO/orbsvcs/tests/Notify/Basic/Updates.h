@@ -36,15 +36,11 @@ public:
   Update_StructuredPushConsumer (Updates *test_client);
   // Contructor.
 
-  virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        TAO_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+  virtual void offer_change (const CosNotification::EventTypeSeq & added,
+                             const CosNotification::EventTypeSeq & removed
+                             TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   CosNotifyComm::InvalidEventType));
   // Offer change is conveyed here.
 
 protected:
@@ -63,14 +59,12 @@ public:
   // Destructor.
 
   virtual void subscription_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-        TAO_ENV_ARG_DECL
-        )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosNotifyComm::InvalidEventType
-      ));
+      const CosNotification::EventTypeSeq & added,
+      const CosNotification::EventTypeSeq & removed
+      TAO_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosNotifyComm::InvalidEventType));
   // Subscription change is conveyed here.
 
 protected:

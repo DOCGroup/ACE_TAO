@@ -23,7 +23,7 @@ static CORBA::Boolean filter = 0;
 static unsigned int consumers = 2;
 static unsigned int expected = 6;
 
-#define GRAMMAR "TCL"
+#define GRAMMAR "ETCL"
 
 // ******************************************************************
 // Subroutine Section

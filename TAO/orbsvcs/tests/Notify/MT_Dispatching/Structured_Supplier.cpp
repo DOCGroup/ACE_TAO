@@ -29,7 +29,7 @@ static CORBA::Boolean filter = 0;
 static int max_events = 12;
 static const char* ior_output_file = "supplier.ior";
 
-#define GRAMMAR "TCL"
+#define GRAMMAR "ETCL"
 
 // ******************************************************************
 // Subroutine Section

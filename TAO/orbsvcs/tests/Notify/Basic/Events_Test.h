@@ -36,15 +36,13 @@ public:
   Event_StructuredPushConsumer (Events_Test *test_client);
   // Contructor.
 
-  // = StructuredPushSupplier methods
+  // = StructuredPushSupplier methods.
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-        TAO_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CosEventComm::Disconnected
-       ));
+      const CosNotification::StructuredEvent & notification
+      TAO_ENV_ARG_DECL
+    )
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     CosEventComm::Disconnected));
 
 protected:
   Events_Test * test_client_;
@@ -58,7 +56,7 @@ public:
   Event_StructuredPushSupplier (Events_Test * test_client);
   // Constructor.
 
-  virtual ~Event_StructuredPushSupplier ();
+  virtual ~Event_StructuredPushSupplier (void);
   // Destructor.
 
 protected:
@@ -70,14 +68,17 @@ protected:
 class Events_Test : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code
+  // Initialization and termination code.
   Events_Test (void);
-  virtual ~Events_Test ();
+  virtual ~Events_Test (void);
 
-  int parse_args(int argc, char *argv[]) ;
+  int parse_args (int argc, 
+                  char *argv[]) ;
 
-  int init (int argc, char *argv [] TAO_ENV_ARG_DECL);
-  // initialization.
+  int init (int argc, 
+            char *argv [] 
+            TAO_ENV_ARG_DECL);
+  // Initialization.
 
   void on_event_received (void);
   // Called when an event is received.
