@@ -1,3 +1,14 @@
+Thu Dec  2 14:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+          Don't include PortableServerC.h, just use a forward declaration
+
+        * orbsvcs/orbsvcs/Event/EC_Lifetime_Utils.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * /tests/ORT/ServerRequestInterceptor.h:
+          Include PortableServer.h instead of PortableServerC.h
+
 Thu Dec  2 12:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup.idl:
