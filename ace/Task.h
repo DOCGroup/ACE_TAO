@@ -176,7 +176,7 @@ public:
   int grp_id_;
   // This maintains the group id of the Task.
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Thread_Mutex lock_;
   // Protect the state of a Task during concurrent operations, but
   // only if we're configured as MT safe...
@@ -229,7 +229,7 @@ private:
   // This is used to make sure that an ACE_Task registers and
   // deregisters with the ACE_Thread_Manager correctly.
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static ACE_Thread_Mutex ace_task_lock_;
   // Lock the creation of the Singleton.
 #endif /* defined (ACE_MT_SAFE) */

@@ -7,12 +7,28 @@
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
 
-#include "ace/Task.h"
+#include "ace/Task_T.h"
 #include "ace/Log_Msg.h"
+#include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Proactor.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// Lock the creation of the Singleton.
+static ACE_Thread_Mutex ace_proactor_lock_;
+#endif /* ACE_MT_SAFE */
+
+// Process-wide ACE_Proactor.
+ACE_Proactor *ACE_Proactor::proactor_ = 0;
+
+// Controls whether the Proactor is deleted when we shut down (we can
+// only delete it safely if we created it!)
+int ACE_Proactor::delete_proactor_ = 0;
+
+// Terminate the eventloop.
+sig_atomic_t ACE_Proactor::end_event_loop_ = 0;
 
 class ACE_Export ACE_Proactor_Timer_Handler : public ACE_Task <ACE_NULL_SYNCH>
   //     
@@ -218,6 +234,113 @@ ACE_Proactor::ACE_Proactor (size_t number_of_threads,
   if (this->timer_handler_->activate () == -1)
     ACE_ERROR ((LM_ERROR, "%p Could not create thread\n", "Task::activate"));
 
+}
+
+ACE_Proactor *
+ACE_Proactor::instance (size_t threads)
+{
+  ACE_TRACE ("ACE_Proactor::instance");
+
+  if (ACE_Proactor::proactor_ == 0)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_proactor_lock_, 0));
+
+      if (ACE_Proactor::proactor_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Proactor::proactor_, ACE_Proactor (threads), 0);
+	  ACE_Proactor::delete_proactor_ = 1;
+	}
+    }
+  return ACE_Proactor::proactor_;
+}
+
+ACE_Proactor *
+ACE_Proactor::instance (ACE_Proactor *r)
+{
+  ACE_TRACE ("ACE_Proactor::instance");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_proactor_lock_, 0));
+
+  ACE_Proactor *t = ACE_Proactor::proactor_;
+  // We can't safely delete it since we don't know who created it!
+  ACE_Proactor::delete_proactor_ = 0;
+
+  ACE_Proactor::proactor_ = r;
+  return t;
+}
+
+void
+ACE_Proactor::close_singleton (void)
+{
+  ACE_TRACE ("ACE_Proactor::close_singleton");
+
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_proactor_lock_));
+
+  if (ACE_Proactor::delete_proactor_)
+    {
+      delete ACE_Proactor::proactor_;
+      ACE_Proactor::proactor_ = 0;
+      ACE_Proactor::delete_proactor_ = 0;
+    }
+}
+
+int
+ACE_Proactor::run_event_loop (void)
+{
+  ACE_TRACE ("ACE_Proactor::run_event_loop");
+
+  while (ACE_Proactor::end_event_loop_ == 0)
+    {
+      int result = ACE_Proactor::instance ()->handle_events ();
+
+      if (ACE_Service_Config::reconfig_occurred ())
+	ACE_Service_Config::reconfigure ();
+
+      else if (result == -1)
+	return -1;
+    }
+  /* NOTREACHED */
+  return 0;
+}
+
+// Handle events for -tv- time.  handle_events updates -tv- to reflect
+// time elapsed, so do not return until -tv- == 0, or an error occurs.
+int
+ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
+{
+  ACE_TRACE ("ACE_Proactor::run_event_loop");
+
+  while (ACE_Proactor::end_event_loop_ == 0 && tv != ACE_Time_Value::zero)
+    {
+      int result = ACE_Proactor::instance ()->handle_events (tv);
+      if (ACE_Service_Config::reconfig_occurred ())
+	ACE_Service_Config::reconfigure ();
+      
+      // An error has occurred.
+      else if (result == -1)
+	return result;
+    }
+  
+  /* NOTREACHED */
+  return 0;
+}
+
+int
+ACE_Proactor::end_event_loop (void)
+{
+  ACE_TRACE ("ACE_Proactor::end_event_loop");
+  ACE_Proactor::end_event_loop_ = 1;
+  //  ACE_Proactor::instance()->notify ();
+  return 0;
+}
+
+/* static */
+sig_atomic_t
+ACE_Proactor::event_loop_done (void)
+{
+  ACE_TRACE ("ACE_Proactor::event_loop_done");
+  return ACE_Proactor::end_event_loop_;
 }
 
 ACE_Proactor::~ACE_Proactor (void)
@@ -454,30 +577,6 @@ ACE_Proactor::application_specific_code (ACE_Asynch_Result *asynch_result,
 }
 
 int 
-ACE_Proactor::run_proactor_event_loop (void)
-{
-  return 0;
-}
-
-int 
-ACE_Proactor::run_event_loop (ACE_Time_Value &)
-{
-  return 0;
-}
-
-int 
-ACE_Proactor::end_event_loop (void)
-{
-  return 0;
-}
-
-sig_atomic_t 
-ACE_Proactor::event_loop_done (void)
-{
-  return 0;
-}
-
-int 
 ACE_Proactor::wake_up_dispatch_threads (void)
 {
   return 0;
@@ -551,4 +650,50 @@ ACE_Proactor::Asynch_Timer::complete (u_long bytes_transferred,
   this->handler_.handle_time_out (this->time_, this->act ());
 }
 
+#else /* ACE_WIN32 */
+
+ACE_Proactor *
+ACE_Proactor::instance (void)
+{
+  return NULL;
+}
+
+ACE_Proactor *
+ACE_Proactor::instance (ACE_Proactor *)
+{
+  return NULL;
+}
+
+void
+ACE_Proactor::close_singleton (void)
+{
+}
+
+int 
+ACE_Proactor::run_event_loop (void)
+{
+  // not implemented
+  return -1;
+}
+
+int 
+ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
+{
+  // not implemented
+  return -1;
+}
+
+int 
+ACE_Proactor::end_event_loop (void)
+{
+  // not implemented
+  return -1;
+}
+
+sig_atomic_t 
+ACE_Proactor::event_loop_done (void)
+{
+  return sig_atomic_t (1);
+}
 #endif /* ACE_WIN32 */
+

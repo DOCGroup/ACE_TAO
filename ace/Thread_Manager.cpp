@@ -2,6 +2,7 @@
 // $Id$
 
 #define ACE_BUILD_DLL
+#include "ace/Synch_T.h"
 #include "ace/Thread_Manager.h"
 
 #if !defined (__ACE_INLINE__)
@@ -10,6 +11,18 @@
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Control)
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Manager)
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// Lock the creation of the Singletons.
+static ACE_Thread_Mutex ace_thread_manager_lock_;
+#endif /* ACE_MT_SAFE */
+
+// Process-wide Thread Manager.
+ACE_Thread_Manager *ACE_Thread_Manager::thr_mgr_ = 0;
+
+// Controls whether the Thread_Manager is deleted when we shut down
+// (we can only delete it safely if we created it!)
+int ACE_Thread_Manager::delete_thr_mgr_ = 0;
 
 void
 ACE_Thread_Manager::dump (void) const
@@ -151,6 +164,56 @@ ACE_Thread_Manager::ACE_Thread_Manager (size_t size)
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
   if (this->open (size) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_Thread_Manager"));
+}
+
+ACE_Thread_Manager *
+ACE_Thread_Manager::instance (void)
+{
+  ACE_TRACE ("ACE_Thread_Manager::instance");
+
+  if (ACE_Thread_Manager::thr_mgr_ == 0)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_thread_manager_lock_, 0));
+
+      if (ACE_Thread_Manager::thr_mgr_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Thread_Manager::thr_mgr_, ACE_Thread_Manager, 0);
+	  ACE_Thread_Manager::delete_thr_mgr_ = 1;
+	}
+    }
+
+  return ACE_Thread_Manager::thr_mgr_;
+}
+
+ACE_Thread_Manager *
+ACE_Thread_Manager::instance (ACE_Thread_Manager *tm)
+{
+  ACE_TRACE ("ACE_Thread_Manager::instance");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_thread_manager_lock_, 0));
+
+  ACE_Thread_Manager *t = ACE_Thread_Manager::thr_mgr_;
+  // We can't safely delete it since we don't know who created it!
+  ACE_Thread_Manager::delete_thr_mgr_ = 0;
+
+  ACE_Thread_Manager::thr_mgr_ = tm;
+  return t;
+}
+
+void
+ACE_Thread_Manager::close_singleton (void)
+{
+  ACE_TRACE ("ACE_Thread_Manager::close_singleton");
+
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_thread_manager_lock_));
+
+  if (ACE_Thread_Manager::delete_thr_mgr_)
+    {
+      delete ACE_Thread_Manager::thr_mgr_;
+      ACE_Thread_Manager::thr_mgr_ = 0;
+      ACE_Thread_Manager::delete_thr_mgr_ = 0;
+    }
 }
 
 // Close up and release all resources.

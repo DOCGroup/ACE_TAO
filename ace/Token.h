@@ -165,6 +165,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
+#include "ace/Synch_T.h"
 #include "ace/Token.i"
 #endif /* __ACE_INLINE__ */
 #else

@@ -2,6 +2,7 @@
 // $Id$
 
 #define ACE_BUILD_DLL
+#include "ace/Synch_T.h"
 #include "ace/Signal.h"
 
 #if !defined (__ACE_INLINE__)
@@ -39,7 +40,7 @@ static ACE_SignalHandler ace_signal_handlers_dispatcher = ACE_SignalHandler (ACE
 #endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 #endif /* ACE_HAS_SIG_C_FUNC */
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 ACE_Recursive_Thread_Mutex ACE_Sig_Handler::ace_sig_handler_lock_;
 #endif /* ACE_MT_SAFE */
 

@@ -11,6 +11,12 @@
 #include "ace/Service_Record.h"
 #include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
+
+#include "ace/Reactor.h"
+#include "ace/Proactor.h"
+#include "ace/ReactorEx.h"
+#include "ace/Thread_Manager.h"
+
 #include "ace/Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
@@ -18,11 +24,6 @@
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Config)
-
-#if defined (ACE_MT_SAFE)
-// Lock the creation of the Singletons.
-static ACE_Thread_Mutex ace_service_config_lock_;
-#endif /* ACE_MT_SAFE */
 
 void
 ACE_Service_Config::dump (void) const
@@ -41,53 +42,6 @@ ACE_SVC_FACTORY_DEFINE (ACE_Service_Manager)
 
 // Set the signal handler to point to the handle_signal() function.
 ACE_Sig_Adapter ACE_Service_Config::signal_handler_ (&ACE_Service_Config::handle_signal);
-
-// Process-wide Service Repository.
-ACE_Service_Repository *ACE_Service_Config::svc_rep_ = 0;
-
-// Controls whether the Service_Repository is deleted when we shut
-// down (we can only delete it safely if we created it!)
-int ACE_Service_Config::delete_svc_rep_ = 0;
-
-// Process-wide Thread Manager.
-ACE_Thread_Manager *ACE_Service_Config::thr_mgr_ = 0;
-
-// Controls whether the Thread_Manager is deleted when we shut down
-// (we can only delete it safely if we created it!)
-int ACE_Service_Config::delete_thr_mgr_ = 0;
-
-// Process-wide ACE_Allocator.
-ACE_Allocator *ACE_Service_Config::allocator_ = 0;
-
-// Controls whether the Allocator is deleted when we shut down (we can
-// only delete it safely if we created it!)
-int ACE_Service_Config::delete_allocator_ = 0;
-
-// Process-wide ACE_Proactor.
-ACE_Proactor *ACE_Service_Config::proactor_ = 0;
-
-// Controls whether the Proactor is deleted when we shut down (we can
-// only delete it safely if we created it!)
-int ACE_Service_Config::delete_proactor_ = 0;
-
-// Process-wide ACE_Reactor.
-ACE_Reactor *ACE_Service_Config::reactor_ = 0;
-
-// Controls whether the Reactor is deleted when we shut down (we can
-// only delete it safely if we created it!)
-int ACE_Service_Config::delete_reactor_ = 0;
-
-// Process-wide ACE_ReactorEx.
-ACE_ReactorEx *ACE_Service_Config::reactorEx_ = 0;
-
-// Controls whether the ReactorEx is deleted when we shut down (we can
-// only delete it safely if we created it!)
-int ACE_Service_Config::delete_reactorEx_ = 0;
-
-// Terminate the eventloop.
-sig_atomic_t ACE_Service_Config::end_reactor_event_loop_ = 0;
-sig_atomic_t ACE_Service_Config::end_proactor_event_loop_ = 0;
-sig_atomic_t ACE_Service_Config::end_reactorEx_event_loop_ = 0;
 
 // Trigger a reconfiguration.
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
@@ -131,204 +85,84 @@ ACE_Allocator *
 ACE_Service_Config::alloc (void)
 {
   ACE_TRACE ("ACE_Service_Config::allocator");
-
-  if (ACE_Service_Config::allocator_ == 0)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-
-      if (ACE_Service_Config::allocator_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Service_Config::allocator_,
-			  ACE_New_Allocator,
-			  0);
-	  ACE_Service_Config::delete_allocator_ = 1;
-	}
-    }
-  return ACE_Service_Config::allocator_;
+  return ACE_Allocator::instance ();
 }
 
 ACE_Allocator *
 ACE_Service_Config::alloc (ACE_Allocator *r)
 {
   ACE_TRACE ("ACE_Service_Config::allocator");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-  ACE_Allocator *t = ACE_Service_Config::allocator_;
-
-  // We can't safely delete it since we don't know who created it!
-  ACE_Service_Config::delete_allocator_ = 0;
-
-  ACE_Service_Config::allocator_ = r;
-  return t;
+  return ACE_Allocator::instance (r);
 }
 
 ACE_Reactor *
 ACE_Service_Config::reactor (void)
 {
   ACE_TRACE ("ACE_Service_Config::reactor");
-
-  if (ACE_Service_Config::reactor_ == 0)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-
-      if (ACE_Service_Config::reactor_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Service_Config::reactor_, ACE_Reactor, 0);
-	  ACE_Service_Config::delete_reactor_ = 1;
-	}
-    }
-  return ACE_Service_Config::reactor_;
+  return ACE_Reactor::instance ();
 }
 
 ACE_Reactor *
 ACE_Service_Config::reactor (ACE_Reactor *r)
 {
   ACE_TRACE ("ACE_Service_Config::reactor");
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-  ACE_Reactor *t = ACE_Service_Config::reactor_;
-  // We can't safely delete it since we don't know who created it!
-  ACE_Service_Config::delete_reactor_ = 0;
-
-  ACE_Service_Config::reactor_ = r;
-  return t;
+  return ACE_Reactor::instance (r);
 }
 
 ACE_Proactor *
 ACE_Service_Config::proactor (size_t threads)
 {
   ACE_TRACE ("ACE_Service_Config::proactor");
-
-  if (ACE_Service_Config::proactor_ == 0)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-
-      if (ACE_Service_Config::proactor_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Service_Config::proactor_, ACE_Proactor (threads), 0);
-	  ACE_Service_Config::delete_proactor_ = 1;
-	}
-    }
-  return ACE_Service_Config::proactor_;
+  return ACE_Proactor::instance (threads);
 }
 
 ACE_Proactor *
 ACE_Service_Config::proactor (ACE_Proactor *r)
 {
   ACE_TRACE ("ACE_Service_Config::proactor");
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-
-  ACE_Proactor *t = ACE_Service_Config::proactor_;
-  // We can't safely delete it since we don't know who created it!
-  ACE_Service_Config::delete_proactor_ = 0;
-
-  ACE_Service_Config::proactor_ = r;
-  return t;
+  return ACE_Proactor::instance (r);
 }
 
 ACE_ReactorEx *
 ACE_Service_Config::reactorEx (void)
 {
   ACE_TRACE ("ACE_Service_Config::reactorEx");
-
-  if (ACE_Service_Config::reactorEx_ == 0)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-
-      if (ACE_Service_Config::reactorEx_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Service_Config::reactorEx_, ACE_ReactorEx, 0);
-	  ACE_Service_Config::delete_reactorEx_ = 1;
-	}
-    }
-
-  return ACE_Service_Config::reactorEx_;
+  return ACE_ReactorEx::instance ();
 }
 
 ACE_ReactorEx *
 ACE_Service_Config::reactorEx (ACE_ReactorEx *r)
 {
   ACE_TRACE ("ACE_Service_Config::reactorEx");
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-  ACE_ReactorEx *t = ACE_Service_Config::reactorEx_;
-  // We can't safely delete it since we don't know who created it!
-  ACE_Service_Config::delete_reactorEx_ = 0;
-
-  ACE_Service_Config::reactorEx_ = r;
-  return t;
+  return ACE_ReactorEx::instance (r);
 }
 
 ACE_Service_Repository *
-ACE_Service_Config::svc_rep (void)
+ACE_Service_Config::svc_rep ()
 {
   ACE_TRACE ("ACE_Service_Config::svc_rep");
-
-  if (ACE_Service_Config::svc_rep_ == 0)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-
-      if (ACE_Service_Config::svc_rep_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Service_Config::svc_rep_, ACE_Service_Repository, 0);
-	  ACE_Service_Config::delete_svc_rep_ = 1;
-	}
-    }
-  return ACE_Service_Config::svc_rep_;
+  return ACE_Service_Repository::instance();
 }
 
 ACE_Service_Repository *
 ACE_Service_Config::svc_rep (ACE_Service_Repository *s)
 {
   ACE_TRACE ("ACE_Service_Config::svc_rep");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-
-  ACE_Service_Repository *t = ACE_Service_Config::svc_rep_;
-  // We can't safely delete it since we don't know who created it!
-  ACE_Service_Config::delete_svc_rep_ = 0;
-
-  ACE_Service_Config::svc_rep_ = s;
-  return t;
+  return ACE_Service_Repository::instance (s);
 }
 
 ACE_Thread_Manager *
 ACE_Service_Config::thr_mgr (void)
 {
   ACE_TRACE ("ACE_Service_Config::thr_mgr");
-
-  if (ACE_Service_Config::thr_mgr_ == 0)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-
-      if (ACE_Service_Config::thr_mgr_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_Service_Config::thr_mgr_, ACE_Thread_Manager, 0);
-	  ACE_Service_Config::delete_thr_mgr_ = 1;
-	}
-    }
-
-  return ACE_Service_Config::thr_mgr_;
+  return ACE_Thread_Manager::instance ();
 }
 
 ACE_Thread_Manager *
 ACE_Service_Config::thr_mgr (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Service_Config::thr_mgr");
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_service_config_lock_, 0));
-
-  ACE_Thread_Manager *t = ACE_Service_Config::thr_mgr_;
-  // We can't safely delete it since we don't know who created it!
-  ACE_Service_Config::delete_thr_mgr_ = 0;
-
-  ACE_Service_Config::thr_mgr_ = tm;
-  return t;
+  return ACE_Thread_Manager::instance (tm);
 }
 
 // Totally remove <svc_name> from the daemon by removing it from the
@@ -338,7 +172,7 @@ int
 ACE_Service_Config::remove (const char svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::remove");
-  return ACE_Service_Config::svc_rep ()->remove (svc_name);
+  return ACE_Service_Repository::instance ()->remove (svc_name);
 }
 
 // Suspend SVC_NAME.  Note that this will not unlink the service from
@@ -351,7 +185,7 @@ int
 ACE_Service_Config::suspend (const char svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::suspend");
-  return ACE_Service_Config::svc_rep ()->suspend (svc_name);
+  return ACE_Service_Repository::instance ()->suspend (svc_name);
 }
 
 // Resume a SVC_NAME that was previously suspended or has not yet
@@ -361,7 +195,7 @@ int
 ACE_Service_Config::resume (const char svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::resume");
-  return ACE_Service_Config::svc_rep ()->resume (svc_name);
+  return ACE_Service_Repository::instance ()->resume (svc_name);
 }
 
 // Initialize the Service Repository.  Note that this *must*
@@ -378,36 +212,19 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   ACE_Service_Config::signum_ = signum;
 
   // Initialize the Service Repository.
-
-  if (ACE_Service_Config::svc_rep_ == 0)
-    {
-      ACE_NEW (ACE_Service_Config::svc_rep_, 
-	       ACE_Service_Repository (size));
-
-      // We created it, so we own it!
-      ACE_Service_Config::delete_svc_rep_ = 1;
-    }
+  ACE_Service_Repository::instance (size);
 
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
-
-  if (ACE_Service_Config::reactor_ == 0)
-    {
-      ACE_NEW (ACE_Service_Config::reactor_, 
-	       ACE_Reactor (size));
-
-      // We created it, so we own it!
-      ACE_Service_Config::delete_reactor_ = 1;
-    }
+  ACE_Reactor::instance (size);
 
 // There's no point in dealing with this on NT since it doesn't really
 // support signals very well...
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // This really ought to be a Singleton I suspect...
 
-  if (ACE_Service_Config::reactor_->register_handler 
-      (ACE_Service_Config::signum_, 
-       &ACE_Service_Config::signal_handler_) == -1)
+  if (ACE_Reactor::instance ()->register_handler (ACE_Service_Config::signum_, 
+						  &ACE_Service_Config::signal_handler_) == -1)
     ACE_ERROR ((LM_ERROR, "can't register signal handler\n"));
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 }
@@ -443,7 +260,7 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 	  ACE_Service_Config::signum_ = ACE_OS::atoi (getopt.optarg);
 
-	  if (ACE_Service_Config::reactor ()->register_handler 
+	  if (ACE_Reactor::instance()->register_handler 
 	      (ACE_Service_Config::signum_, 
 	       &ACE_Service_Config::signal_handler_) == -1)
 	    ACE_ERROR ((LM_ERROR, "cannot obtain signal handler\n"));
@@ -468,8 +285,8 @@ ACE_Service_Config::initialize (const char svc_name[],
 
   ACE_DEBUG ((LM_DEBUG, "opening static service %s\n", svc_name));
 
-  if (ACE_Service_Config::svc_rep ()->find 
-      (svc_name, (const ACE_Service_Record **) &srp) == -1)
+  if (ACE_Service_Repository::instance()->find (svc_name, 
+						(const ACE_Service_Record **) &srp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%s not found\n", svc_name), -1);    
 
   else if (srp->type ()->init (args.argc (), args.argv ()) == -1)
@@ -494,7 +311,7 @@ ACE_Service_Config::initialize (const ACE_Service_Record *sr,
 
   ACE_DEBUG ((LM_DEBUG, "opening dynamic service %s\n", sr->name ()));
 
-  if (ACE_Service_Config::svc_rep ()->insert (sr) == -1)
+  if (ACE_Service_Repository::instance()->insert (sr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "insertion failed, %p\n", sr->name ()), -1);
 
   else if (sr->type ()->init (args.argc (), args.argv ()) == -1)
@@ -574,7 +391,7 @@ ACE_Service_Config::load_static_svcs (void)
       ACE_NEW_RETURN (sr, ACE_Service_Record (ssd->name_, stp, 
 					      0, ssd->active_), -1);
 
-      if (ACE_Service_Config::svc_rep ()->insert (sr) == -1)
+      if (ACE_Service_Repository::instance()->insert (sr) == -1)
 	return -1;
     }
   return 0;
@@ -600,26 +417,11 @@ ACE_Service_Config::open (const char program_name[])
 
   // Initialize the Service Repository (this will still work if user
   // forgets to define an object of type ACE_Service_Config).
-
-  if (ACE_Service_Config::svc_rep_ == 0)
-    {
-      ACE_NEW_RETURN (ACE_Service_Config::svc_rep_, 
-		      ACE_Service_Repository (ACE_Service_Config::MAX_SERVICES), -1);
-
-      // We created it, so we own it!
-      ACE_Service_Config::delete_svc_rep_ = 1;
-    }
+  ACE_Service_Repository::instance(ACE_Service_Config::MAX_SERVICES);
 
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
-
-  if (ACE_Service_Config::reactor_ == 0)
-    {
-      ACE_NEW_RETURN (ACE_Service_Config::reactor_,
-		      ACE_Reactor (ACE_Service_Config::MAX_SERVICES), -1);
-      // We created it, so we own it!
-      ACE_Service_Config::delete_reactor_ = 1;
-    }
+  ACE_Reactor::instance(ACE_Service_Config::MAX_SERVICES);
 
   // Register ourselves to receive reconfiguration requests via
   // signals!
@@ -688,18 +490,7 @@ ACE_Service_Config::run_reactor_event_loop (void)
 {
   ACE_TRACE ("ACE_Service_Config::run_reactor_event_loop");
 
-  while (ACE_Service_Config::end_reactor_event_loop_ == 0)
-    {
-      int result = ACE_Service_Config::reactor ()->handle_events ();
-
-      if (ACE_Service_Config::reconfig_occurred_)
-	ACE_Service_Config::reconfigure ();
-
-      else if (result == -1)
-	return -1;
-    }
-  /* NOTREACHED */
-  return 0;
+  return ACE_Reactor::run_event_loop ();
 }
 
 // Run the event loop until the <ACE_Reactor::handle_events>
@@ -711,18 +502,23 @@ ACE_Service_Config::run_reactor_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Service_Config::run_reactor_event_loop");
 
-  while (ACE_Service_Config::end_reactor_event_loop_ == 0)
-    {
-      int result = ACE_Service_Config::reactor ()->handle_events (tv);
+  return ACE_Reactor::run_event_loop (tv);
+}
 
-      if (ACE_Service_Config::reconfig_occurred_)
-	ACE_Service_Config::reconfigure ();
-      else if (result <= 0)
-	return result;
-    }
+/* static */
+int
+ACE_Service_Config::end_reactor_event_loop (void)
+{
+  ACE_TRACE ("ACE_Service_Config::end_reactor_event_loop");
+  return ACE_Reactor::end_event_loop ();
+}
 
-  /* NOTREACHED */
-  return 0;
+/* static */
+sig_atomic_t
+ACE_Service_Config::reactor_event_loop_done (void)
+{
+  ACE_TRACE ("ACE_Service_Config::reactor_event_loop_done");
+  return ACE_Reactor::event_loop_done ();
 }
 
 // Tidy up and perform last rites on a terminating ACE_Service_Config.
@@ -731,15 +527,12 @@ ACE_Service_Config::close (void)
 {
   ACE_TRACE ("ACE_Service_Config::close");
 
-  if (ACE_Service_Config::svc_rep_ != 0)
-    {
-      ACE_DEBUG ((LM_SHUTDOWN, "shutting down daemon %n\n"));
+  ACE_DEBUG ((LM_SHUTDOWN, "shutting down daemon %n\n"));
 
-      // ACE_Service_Config must be deleted before the Singletons are
-      // closed so that an object's fini() method may reference a
-      // valid ACE_Reactor.
-      ACE_Service_Config::close_svcs ();
-    }
+  // ACE_Service_Config must be deleted before the Singletons are
+  // closed so that an object's fini() method may reference a
+  // valid ACE_Reactor.
+  ACE_Service_Config::close_svcs ();
 
   // The Singletons can be used independently of the services.
   // Therefore, this call must go out here.
@@ -752,11 +545,7 @@ ACE_Service_Config::close_svcs (void)
 {
   ACE_TRACE ("ACE_Service_Config::close_svcs");
 
-  if (ACE_Service_Config::delete_svc_rep_)
-    {
-      delete ACE_Service_Config::svc_rep_;
-      ACE_Service_Config::svc_rep_ = 0;
-    }
+  ACE_Service_Repository::close_singleton ();
 
   return 0;
 }
@@ -766,35 +555,12 @@ ACE_Service_Config::close_singletons (void)
 {
   ACE_TRACE ("ACE_Service_Config::close_singletons");
 
-  if (ACE_Service_Config::delete_reactor_)
-    {
-      delete ACE_Service_Config::reactor_;
-      ACE_Service_Config::reactor_ = 0;
-    }
+  ACE_Reactor::close_singleton ();
+  ACE_ReactorEx::close_singleton ();
+  ACE_Proactor::close_singleton ();
+  ACE_Thread_Manager::close_singleton ();
+  ACE_Allocator::close_singleton ();
 
-  if (ACE_Service_Config::delete_proactor_)
-    {
-      delete ACE_Service_Config::proactor_;
-      ACE_Service_Config::proactor_ = 0;
-    }
-
-  if (ACE_Service_Config::delete_reactorEx_)
-    {
-      delete ACE_Service_Config::reactorEx_;
-      ACE_Service_Config::reactorEx_ = 0;
-    }
-
-  if (ACE_Service_Config::delete_thr_mgr_)
-    {
-      delete ACE_Service_Config::thr_mgr_;
-      ACE_Service_Config::thr_mgr_ = 0;
-    }
-
-  if (ACE_Service_Config::delete_allocator_)
-    {
-      delete ACE_Service_Config::allocator_;
-      ACE_Service_Config::allocator_ = 0;
-    }
   return 0;
 }
 
@@ -807,44 +573,11 @@ ACE_Service_Config::~ACE_Service_Config (void)
   ACE_Service_Config::close ();
 }
 
-/* static */
-int
-ACE_Service_Config::end_reactor_event_loop (void)
-{
-  ACE_TRACE ("ACE_Service_Config::end_reactor_event_loop");
-  ACE_Service_Config::end_reactor_event_loop_ = 1;
-
-  // Send a notification, but don't block if there's no one to receive
-  // it.
-  return ACE_Service_Config::reactor ()->notify 
-    (0, ACE_Event_Handler::NULL_MASK, (ACE_Time_Value *) &ACE_Time_Value::zero);
-}
-
-/* static */
-sig_atomic_t
-ACE_Service_Config::reactor_event_loop_done (void)
-{
-  ACE_TRACE ("ACE_Service_Config::end_proactor_event_loop");
-  return ACE_Service_Config::end_reactor_event_loop_;
-}
-
 int
 ACE_Service_Config::run_proactor_event_loop (void)
 {
   ACE_TRACE ("ACE_Service_Config::run_proactor_event_loop");
-
-  while (ACE_Service_Config::end_proactor_event_loop_ == 0)
-    {
-      int result = ACE_Service_Config::proactor ()->handle_events ();
-
-      if (ACE_Service_Config::reconfig_occurred_)
-	ACE_Service_Config::reconfigure ();
-
-      else if (result == -1)
-	return -1;
-    }
-  /* NOTREACHED */
-  return 0;
+  return ACE_Proactor::run_event_loop ();
 }
 
 // Handle events for -tv- time.  handle_events updates -tv- to reflect
@@ -853,38 +586,22 @@ int
 ACE_Service_Config::run_proactor_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Service_Config::run_proactor_event_loop");
-
-  while ((ACE_Service_Config::end_proactor_event_loop_ == 0) &&
-	 (tv != ACE_Time_Value::zero))
-    {
-      int result = ACE_Service_Config::proactor ()->handle_events (tv);
-      if (ACE_Service_Config::reconfig_occurred_)
-	ACE_Service_Config::reconfigure ();
-
-      // An error has occurred.
-      else if (result == -1)
-	return result;
-    }
-
-  /* NOTREACHED */
-  return 0;
+  return ACE_Proactor::run_event_loop (tv);
 }
 
 int
 ACE_Service_Config::end_proactor_event_loop (void)
 {
   ACE_TRACE ("ACE_Service_Config::end_proactor_event_loop");
-  ACE_Service_Config::end_proactor_event_loop_ = 1;
-  //  ACE_Service_Config::proactor ()->notify ();
-  return 0;
+  return ACE_Proactor::end_event_loop ();
 }
 
 /* static */
 sig_atomic_t
 ACE_Service_Config::proactor_event_loop_done (void)
 {
-  ACE_TRACE ("ACE_Service_Config::end_proactor_event_loop");
-  return ACE_Service_Config::end_proactor_event_loop_;
+  ACE_TRACE ("ACE_Service_Config::proactor_event_loop_done");
+  return ACE_Proactor::event_loop_done ();
 }
 
 // ************************************************************
@@ -893,19 +610,7 @@ int
 ACE_Service_Config::run_reactorEx_event_loop (void)
 {
   ACE_TRACE ("ACE_Service_Config::run_reactorEx_event_loop");
-
-  while (ACE_Service_Config::end_reactorEx_event_loop_ == 0)
-    {
-      int result = ACE_Service_Config::reactorEx ()->handle_events ();
-
-      if (ACE_Service_Config::reconfig_occurred_)
-	ACE_Service_Config::reconfigure ();
-
-      else if (result == -1)
-	return -1;
-    }
-  /* NOTREACHED */
-  return 0;
+  return ACE_ReactorEx::run_event_loop ();
 }
 
 
@@ -913,35 +618,22 @@ int
 ACE_Service_Config::run_reactorEx_event_loop (ACE_Time_Value &tv)
 {
   ACE_TRACE ("ACE_Service_Config::run_reactorEx_event_loop");
-
-  while ((ACE_Service_Config::end_reactorEx_event_loop_ == 0) &&
-	 (tv != ACE_Time_Value::zero))
-    {
-      int result = ACE_Service_Config::reactorEx ()->handle_events (tv);
-      if (ACE_Service_Config::reconfig_occurred_)
-	ACE_Service_Config::reconfigure ();
-      else if (result == -1)
-	return result;
-    }
-
-  /* NOTREACHED */
-  return 0;
+  return ACE_ReactorEx::run_event_loop (tv);
 }
 
 int
 ACE_Service_Config::end_reactorEx_event_loop (void)
 {
   ACE_TRACE ("ACE_Service_Config::end_reactorEx_event_loop");
-  ACE_Service_Config::end_reactorEx_event_loop_ = 1;
-  return ACE_Service_Config::reactorEx ()->notify ();
+  return ACE_ReactorEx::end_event_loop ();
 }
 
 /* static */
 sig_atomic_t
 ACE_Service_Config::reactorEx_event_loop_done (void)
 {
-  ACE_TRACE ("ACE_Service_Config::end_reactorEx_event_loop");
-  return ACE_Service_Config::end_reactorEx_event_loop_;
+  ACE_TRACE ("ACE_Service_Config::reactorEx_event_loop_done");
+  return ACE_ReactorEx::event_loop_done ();
 }
 
 // ************************************************************

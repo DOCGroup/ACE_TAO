@@ -67,6 +67,9 @@
 // #define ACE_HAS_THREADS
 // #define ACE_HAS_PTHREADS
 // #define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 0
+#endif
 #define ACE_HAS_SIGINFO_T
 #define ACE_HAS_UCONTEXT_T
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK

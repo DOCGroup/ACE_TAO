@@ -28,7 +28,7 @@
 #define ACE_HAS_GETRUSAGE
 
 // Platform contains Orbix CORBA implementation.
-#define ACE_HAS_ORBIX
+#define ACE_HAS_ORBIX 1
 
 // Compiler/platform supports strerror ().
 // #define ACE_HAS_STRERROR

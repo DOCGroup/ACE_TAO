@@ -150,8 +150,10 @@
 
 /* Turn off the following seven defines if you want to disable threading. */
 // Compile using multi-thread libraries.
-#define _REENTRANT
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+	#define _REENTRANT
+#endif
 
 // Platform supports threads.
 #define ACE_HAS_THREADS

@@ -52,7 +52,9 @@
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
 // Compile using multi-thread libraries
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 
 // Platform supports the tid_t type (e.g., AIX and Irix 6.2)
 #define ACE_HAS_TID_T

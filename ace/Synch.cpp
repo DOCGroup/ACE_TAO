@@ -6,6 +6,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Thread.h"
+#include "ace/Synch_T.h"
 #include "ace/Synch.h"
 
 #if !defined (__ACE_INLINE__)

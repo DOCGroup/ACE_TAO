@@ -46,7 +46,9 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_SVR4_TIME
 #define ACE_HAS_THREADS
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 #define ACE_HAS_UTIME
 #define ACE_HAS_SELECT_H
 #define ACE_NEEDS_DEV_IO_CONVERSION

@@ -84,7 +84,9 @@
 // #define ACE_HAS_THREADS
 // #define ACE_HAS_PTHREADS
 // #define ACE_LACKS_RWLOCK_T
-// #define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 0
+#endif
 // #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 // #define ACE_HAS_SETKIND_NP
 // #define ACE_LACKS_CONDATTR_PSHARED

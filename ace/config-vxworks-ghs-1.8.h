@@ -61,7 +61,9 @@
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_UCONTEXT_H
 #define ACE_LACKS_UTSNAME_T
-#define ACE_MT_SAFE
+#if !defined (ACE_MT_SAFE)
+	#define ACE_MT_SAFE 1
+#endif
 #define ACE_NEEDS_SYSTIME_H
 
 // Defines the page size of the system.

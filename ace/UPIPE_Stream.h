@@ -115,7 +115,7 @@ private:
   // Keep track of whether the sender and receiver have both shut
   // down.
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Thread_Mutex lock_;
   // Ensure that we are thread-safe.
 #endif /* ACE_MT_SAFE */
