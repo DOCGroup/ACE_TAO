@@ -1,3 +1,18 @@
+Mon Apr  9 14:52:07 2001  Paul Calabrese <calabrese_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.h:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+
+          Improve the basic (default) filter builder so that it
+          works with logical AND and bitmask filters.  Note that
+          the nesting of filters in the basic filter builder is
+          still limited, but this allows more of the "new" filters
+          to be used with this builder.
+
+          I tested this by running the Complex and Bitmask tests
+          from orbsvcs/tests/Event/Basic using the -ECFiltering basic
+          option.
+
 Mon Apr  9 13:54:15 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/IFR_Client/TAO_IFR_Client_Static.dsp:
