@@ -178,33 +178,6 @@ TAO::Any_Dual_Impl_T<T>::free_value (void)
 }
 
 template<typename T> 
-CORBA::Boolean
-TAO::Any_Dual_Impl_T<T>::demarshal_value (TAO_InputCDR &cdr)
-{
-  CORBA::TCKind kind =
-    ACE_static_cast (CORBA::TCKind, this->type_->kind_);
-
-  if (kind == CORBA::tk_except)
-    {
-      // If we are here, we must deal with the fact that the CDR
-      // operators for exceptions are not symmetrical - the
-      // insertion operator marshals the repository id, but the
-      // extraction operator does not demarshal it (the invocation
-      // class does that). Even if this Any is contained in an
-      // UnknownUserException, the Any was constructed with a
-      // message block that still contains the id string.
-      CORBA::String_var id;
-
-      if ((cdr >> id.out ()) == 0)
-        {
-          return 0;
-        }
-    }
-
-  return (cdr >> *this->value_);
-}
-
-template<typename T> 
 void 
 TAO::Any_Dual_Impl_T<T>::_tao_decode (TAO_InputCDR &cdr
                                       ACE_ENV_ARG_DECL)
