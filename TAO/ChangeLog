@@ -1,3 +1,14 @@
+Fri Feb  4 11:13:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/SystemException.cpp:
+          Added several missing error texts.
+
+        * tao/LocalObject.cpp:
+          Changed _get_component, _get_interface, _get_policy,
+          _set_policy_overrides, _get_policy_overrides, _validate_connection
+          to throw a CORBA::NO_IMPLEMENT system exception with minor code 8
+          as described by the latest corba spec.
+
 Fri Feb  4 01:25:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IIOP_Endpoint.h:
