@@ -14,10 +14,11 @@
 
 #include "tao/corba.h"
 
-#if !defined (ACE_HAS_PTHREADS)         // _POSIX_THREAD_SAFE_FUNCTIONS implied
-#define flockfile(f)
-#define funlockfile(f)
-#endif /* ACE_HAS_PTHREADS */
+#if !defined (ACE_HAS_PTHREADS) && !defined (ACE_HAS_DCE_DRAFT4_THREADS)
+  // _POSIX_THREAD_SAFE_FUNCTIONS implied
+# define flockfile(f)
+# define funlockfile(f)
+#endif /* ! ACE_HAS_PTHREADS && ! ACE_HAS_DCE_DRAFT4_THREADS */
 
 u_int TAO_Export TAO_debug_level        = 0;
 char * TAO_Export TAO_debug_filter      = "l";
@@ -71,7 +72,7 @@ emit_prefix (FILE *stream)
 }
 
 // !defined (ACE_HAS_PTHREADS)
-#else   
+#else
 
 // Without threads, guard initialization so it can be repeated,
 // and don't emit the thread ID in the messages.
@@ -243,7 +244,7 @@ dmsg_opaque (char *_FAR label,
       for (i = 0; i < len; i++)
         if (!isprint (buffer [i]))
           break;
-        
+
       if (i < len)
         {
           if (len >= 20)
