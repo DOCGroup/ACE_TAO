@@ -348,12 +348,12 @@ IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
               delete objkey;
               return 0;
             }
-          TAO_POA *poa = (TAO_POA *) this->resolve_poa ();
+          TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
 
           if (poa != 0)
             {
               PortableServer::Servant servant = poa->find_servant (*objkey,
-                                                                      env);
+                                                                   env);
               if (env.exception ())
                 {
                   delete objkey;
