@@ -315,7 +315,7 @@ CORBA_NVList::_tao_encode (TAO_OutputCDR &cdr,
     {
       if (this->max_ == 0)
         {
-          // The list is empty aggresively reduce copies and just send 
+          // The list is empty aggresively reduce copies and just send
           // the CDR stream, we assume that
           // GIOP_Server_Request::init_reply
           // has inserted appropiated padding already to make this
