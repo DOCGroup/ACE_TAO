@@ -332,7 +332,7 @@ spawn (void)
   ACE_SOCK_Acceptor acceptor;
 
   if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "open"), -1));
+    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "open"), -1);
 #if defined (ACE_HAS_THREADS)
   else if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (server),
 						  &acceptor,
@@ -351,13 +351,15 @@ spawn (void)
       ACE_ERROR ((LM_ERROR, "%p\n%a", "fork failed"));
       ACE_OS::_exit (-1);
     case 0: // In child
-      ACE_INET_Addr server_addr;
+      {
+	ACE_INET_Addr server_addr;
 
-      if (acceptor.get_local_addr (server_addr) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
-      else
-	client ((void *) &server_addr);
-      break;
+	if (acceptor.get_local_addr (server_addr) == -1)
+	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), -1);
+	else
+	  client ((void *) &server_addr);
+	break;
+      }
     default: // In parent
       server (&acceptor);
 
@@ -370,6 +372,7 @@ spawn (void)
 		     "threads *and* processes not supported on this platform\n%"),
 		    -1);
 #endif /* ACE_HAS_THREADS */	
+  return 0;
 }
 
 int
