@@ -1,3 +1,13 @@
+Fri Jul 25 08:53:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/performance_stats.sh: Changed the path to mogrify. On
+	  flamenco.dre it is installed in /usr/local instead of
+	  /usr/bin/X11. This would break the stats pages at UCI. The pages
+	  at UCI havent been updated in a long while. Hence shouldnt be a
+	  big deal. 
+
+	  With this change the thumbnails shold be fine at dre pages. 
+	
 Fri Jul 25 11:10:21 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
