@@ -437,6 +437,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name DynamicInterface
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -475,6 +478,36 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "NT_ImplRepo_Service"=.\orbsvcs\ImplRepo_Service\NT_ImplRepo_Service.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name DynamicInterface
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORTable
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name PortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Svc Utils
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
     End Project Dependency
 }}}
 
