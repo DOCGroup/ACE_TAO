@@ -1,3 +1,8 @@
+Tue Mar  9 16:01:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+          Use ACE_AUTO_PTR_RESET to reset an auto_ptr
+
 Tue Mar  9 15:50:42 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
