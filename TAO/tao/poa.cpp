@@ -279,9 +279,13 @@ void CORBA_POA::dispatch (CORBA::OctetSeq &key,
 	skel (req, obj, env);
       else
 	{
-	  // this may fail in which case, we must try out the default
-	  // operations such as "_is_a", "non_existent", "hash",
-	  // ... At this time, we try the "is_a" method
+	  // Something really bad happened: the operation was not
+	  // found in the object, fortunately there is a standard
+	  // exception for that purpose.
+	  env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));
+	  ACE_ERROR ((LM_ERROR,
+		      "Cannot find operation <%s> in object\n",
+		      opname));
 	}
     }
 
