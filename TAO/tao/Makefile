@@ -840,8 +840,8 @@ realclean:
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
  Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -1103,8 +1103,8 @@ realclean:
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
  Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -1346,8 +1346,8 @@ realclean:
  OctetSeqC.h Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i \
  ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -1576,8 +1576,9 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
- Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
+ PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -2176,9 +2177,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -4033,8 +4034,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PolicyC.h PortableInterceptorC.i \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PolicyC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -6014,9 +6015,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -6269,9 +6270,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -6515,9 +6516,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -7626,9 +7627,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -8098,9 +8099,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -8347,9 +8348,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -8615,9 +8616,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -8862,9 +8863,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -9452,9 +9453,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -9820,9 +9821,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -10092,9 +10093,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -10352,8 +10353,9 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
- Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
+ PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -11088,9 +11090,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -11345,9 +11347,9 @@ realclean:
  ObjectReferenceTemplateC.h \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  PolicyC.h Sequence.h DomainC.i \
  Stub.h \
@@ -11654,9 +11656,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -12297,9 +12299,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -12744,9 +12746,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -13272,9 +13274,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -13889,6 +13891,118 @@ realclean:
  $(ACE_ROOT)/ace/Dynamic_Service.i \
  $(ACE_ROOT)/ace/Dynamic_Service.cpp
 
+.obj/Messaging_SyncScopeC.o .obj/Messaging_SyncScopeC.so .shobj/Messaging_SyncScopeC.o .shobj/Messaging_SyncScopeC.so: Messaging_SyncScopeC.cpp \
+ Messaging_SyncScopeC.h \
+ $(ACE_ROOT)/ace/pre.h corbafwd.h \
+ $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/Time_Value.inl \
+ $(ACE_ROOT)/ace/Default_Constants.h \
+ $(ACE_ROOT)/ace/Global_Macros.h \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Flag_Manip.h \
+ $(ACE_ROOT)/ace/Flag_Manip.i \
+ $(ACE_ROOT)/ace/Handle_Ops.h \
+ $(ACE_ROOT)/ace/Handle_Ops.i \
+ $(ACE_ROOT)/ace/Lib_Find.h \
+ $(ACE_ROOT)/ace/Lib_Find.i \
+ $(ACE_ROOT)/ace/Init_ACE.h \
+ $(ACE_ROOT)/ace/Init_ACE.i \
+ $(ACE_ROOT)/ace/Sock_Connect.h \
+ $(ACE_ROOT)/ace/Sock_Connect.i \
+ $(ACE_ROOT)/ace/ACE.i \
+ $(ACE_ROOT)/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
+ $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
+ $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread_Adapter.inl \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ $(ACE_ROOT)/ace/Malloc_Allocator.h \
+ $(ACE_ROOT)/ace/Malloc_Base.h \
+ $(ACE_ROOT)/ace/Malloc_Allocator.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.cpp \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Unbounded_Set.h \
+ $(ACE_ROOT)/ace/Node.h \
+ $(ACE_ROOT)/ace/Node.cpp \
+ $(ACE_ROOT)/ace/Unbounded_Set.inl \
+ $(ACE_ROOT)/ace/Unbounded_Set.cpp \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Message_Block_T.h \
+ $(ACE_ROOT)/ace/Message_Block_T.i \
+ $(ACE_ROOT)/ace/Message_Block_T.cpp \
+ $(ACE_ROOT)/ace/CDR_Base.inl \
+ $(ACE_ROOT)/ace/CORBA_macros.h \
+ orbconf.h \
+ varbase.h \
+ TAO_Export.h \
+ corbafwd.i \
+ Messaging_SyncScopeC.i \
+ Typecode.h \
+ Exception.h \
+ corbafwd.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/String_Base.h \
+ $(ACE_ROOT)/ace/String_Base_Const.h \
+ $(ACE_ROOT)/ace/String_Base.i \
+ $(ACE_ROOT)/ace/String_Base.cpp \
+ $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.i \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ $(ACE_ROOT)/ace/SString.i \
+ Exception.i \
+ Typecode.i
+
 .obj/Invocation.o .obj/Invocation.so .shobj/Invocation.o .shobj/Invocation.so: Invocation.cpp Invocation.h \
  $(ACE_ROOT)/ace/pre.h CDR.h \
  corbafwd.h \
@@ -14026,8 +14140,8 @@ realclean:
  LF_Event.inl \
  GIOP_Message_Version.h \
  GIOP_Message_Version.inl \
- Messaging_SyncScopeC.h TAO_Export.h IOPC.h Messaging_SyncScopeC.i \
- operation_details.h corbafwd.h Service_Context.h \
+ Messaging_SyncScopeC.h corbafwd.h Messaging_SyncScopeC.i \
+ operation_details.h Service_Context.h \
  Service_Context.inl \
  target_specification.h \
  Object_KeyC.h \
@@ -14164,7 +14278,7 @@ realclean:
  $(ACE_ROOT)/ace/Recyclable.inl \
  Cache_Entries.inl \
  Transport_Cache_Manager.inl \
- Transport_Timer.h \
+ Transport_Timer.h TAO_Export.h \
  $(ACE_ROOT)/ace/Refcountable.h \
  $(ACE_ROOT)/ace/Refcountable.inl \
  Incoming_Message_Queue.h Pluggable_Messaging_Utils.h \
@@ -15035,8 +15149,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Object.h Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
@@ -15184,8 +15298,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Object.h Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i Service_Context.h \
@@ -15572,8 +15686,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Object.h Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i \
@@ -15865,9 +15979,9 @@ realclean:
  DynamicC.i \
  ObjectReferenceTemplateC.h \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -16086,8 +16200,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Object.h Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i \
@@ -16353,8 +16467,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Object.h Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
@@ -16585,9 +16699,9 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h Policy_ForwardC.h \
- Remote_Object_Proxy_Impl.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Any.h IOPC.i PolicyC.h \
+ Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i PICurrent.h \
  $(ACE_ROOT)/ace/Array_Base.h \
@@ -16863,9 +16977,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -17122,8 +17236,8 @@ realclean:
  Any.h DynamicC.i \
  ObjectReferenceTemplateC.h StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
- IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h IOPC.i PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -17484,8 +17598,9 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
- Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
+ PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18203,8 +18318,9 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
- Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
+ PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -18425,9 +18541,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -18681,9 +18797,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -18938,9 +19054,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -19194,9 +19310,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -19477,9 +19593,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -19755,9 +19871,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -20139,9 +20255,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -20506,9 +20622,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -21157,9 +21273,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -21382,8 +21498,8 @@ realclean:
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
  StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PolicyC.h Policy_ForwardC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
@@ -21668,9 +21784,9 @@ realclean:
  ObjectReferenceTemplateC.h \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  DomainC.i \
  PollableC.h \
@@ -22283,9 +22399,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -22542,9 +22658,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -23992,8 +24108,8 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
- IOPC.h \
  Messaging_SyncScopeC.i \
+ IOPC.h \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -24265,9 +24381,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -25188,9 +25304,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -26051,9 +26167,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -26560,9 +26676,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -27257,8 +27373,9 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h Object.h \
- Any.h IOPC.i Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i \
+ PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -27467,8 +27584,8 @@ realclean:
  LF_Event.inl \
  GIOP_Message_Version.h \
  GIOP_Message_Version.inl \
- Messaging_SyncScopeC.h TAO_Export.h IOPC.h Messaging_SyncScopeC.i \
- operation_details.h corbafwd.h Service_Context.h \
+ Messaging_SyncScopeC.h corbafwd.h Messaging_SyncScopeC.i \
+ operation_details.h Service_Context.h \
  Service_Context.inl \
  target_specification.h \
  Object_KeyC.h \
@@ -27754,9 +27871,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -28364,9 +28481,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PolicyC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
@@ -28620,8 +28737,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Object.h Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
@@ -28849,8 +28966,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Object.h Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i TAO_Singleton.h \
@@ -29010,8 +29127,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h Sequence.h OctetSeqC.i \
  StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Object.h Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i \
@@ -30330,8 +30447,8 @@ realclean:
  ObjectReferenceTemplateC.h OctetSeqC.h corbafwd.h Sequence.h \
  OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Object.h Any.h IOPC.i Messaging_SyncScopeC.i PolicyC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h Object.h Any.h IOPC.i PolicyC.h \
  Policy_ForwardC.h Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
@@ -31084,8 +31201,8 @@ realclean:
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h OctetSeqC.h \
  Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -32232,9 +32349,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -32505,9 +32622,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -32780,9 +32897,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -33043,9 +33160,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -33236,8 +33353,8 @@ realclean:
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
  StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PolicyC.h Policy_ForwardC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
@@ -33509,9 +33626,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -34007,9 +34124,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -34255,9 +34372,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -34671,280 +34788,7 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
- IOPC.h \
  Messaging_SyncScopeC.i \
- PortableInterceptorC.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/Map_Manager.cpp \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/Service_Config.i \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Test_and_Set.h \
- $(ACE_ROOT)/ace/Test_and_Set.i \
- $(ACE_ROOT)/ace/Test_and_Set.cpp \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.cpp \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
- Parser_Registry.h \
- Parser_Registry.i \
- Service_Callbacks.h \
- Service_Callbacks.i \
- Fault_Tolerance_Service.h \
- Fault_Tolerance_Service.i \
- Cleanup_Func_Registry.h \
- $(ACE_ROOT)/ace/Array_Base.h \
- $(ACE_ROOT)/ace/Array_Base.inl \
- $(ACE_ROOT)/ace/Array_Base.cpp \
- Cleanup_Func_Registry.inl \
- Object_Ref_Table.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
- $(ACE_ROOT)/ace/Functor.h \
- $(ACE_ROOT)/ace/Functor.i \
- $(ACE_ROOT)/ace/Functor_T.h \
- $(ACE_ROOT)/ace/Functor_T.i \
- $(ACE_ROOT)/ace/Functor_T.cpp \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
- Interceptor_List.h \
- Interceptor_List.inl \
- PICurrent.h \
- PICurrent.inl \
- Protocols_Hooks.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/Containers.i \
- $(ACE_ROOT)/ace/Containers_T.h \
- $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i \
- Stub.i \
- Invocation.h \
- Synch_Reply_Dispatcher.h \
- Reply_Dispatcher.h \
- Reply_Dispatcher.i \
- LF_Event.h \
- LF_Event.inl \
- GIOP_Message_Version.h \
- GIOP_Message_Version.inl \
- operation_details.h \
- Service_Context.h \
- Service_Context.inl \
- target_specification.h \
- Object_KeyC.h \
- Object_KeyC.i \
- target_specification.i \
- operation_details.i \
- Invocation.i \
- PortableInterceptor.h \
- RequestInfo_Util.h \
- ClientRequestInfo_i.h \
- ClientRequestInfo_i.inl \
- ClientInterceptorAdapter.h \
- ClientInterceptorAdapter.inl
-
-.obj/Messaging_SyncScopeC.o .obj/Messaging_SyncScopeC.so .shobj/Messaging_SyncScopeC.o .shobj/Messaging_SyncScopeC.so: Messaging_SyncScopeC.cpp \
- Messaging_SyncScopeC.h \
- $(ACE_ROOT)/ace/pre.h \
- corbafwd.h \
- $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/post.h \
- $(ACE_ROOT)/ace/ace_wchar.h \
- $(ACE_ROOT)/ace/ace_wchar.inl \
- $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ACE_export.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/OS_Dirent.h \
- $(ACE_ROOT)/ace/OS_Export.h \
- $(ACE_ROOT)/ace/OS_Errno.h \
- $(ACE_ROOT)/ace/OS_Errno.inl \
- $(ACE_ROOT)/ace/OS_Dirent.inl \
- $(ACE_ROOT)/ace/OS_String.h \
- $(ACE_ROOT)/ace/OS_String.inl \
- $(ACE_ROOT)/ace/OS_Memory.h \
- $(ACE_ROOT)/ace/OS_Memory.inl \
- $(ACE_ROOT)/ace/OS_TLI.h \
- $(ACE_ROOT)/ace/OS_TLI.inl \
- $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/Time_Value.inl \
- $(ACE_ROOT)/ace/Default_Constants.h \
- $(ACE_ROOT)/ace/Global_Macros.h \
- $(ACE_ROOT)/ace/Min_Max.h \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i \
- $(ACE_ROOT)/ace/Flag_Manip.h \
- $(ACE_ROOT)/ace/Flag_Manip.i \
- $(ACE_ROOT)/ace/Handle_Ops.h \
- $(ACE_ROOT)/ace/Handle_Ops.i \
- $(ACE_ROOT)/ace/Lib_Find.h \
- $(ACE_ROOT)/ace/Lib_Find.i \
- $(ACE_ROOT)/ace/Init_ACE.h \
- $(ACE_ROOT)/ace/Init_ACE.i \
- $(ACE_ROOT)/ace/Sock_Connect.h \
- $(ACE_ROOT)/ace/Sock_Connect.i \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
- $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- $(ACE_ROOT)/ace/Malloc.i \
- $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.h \
- $(ACE_ROOT)/ace/Base_Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread_Adapter.inl \
- $(ACE_ROOT)/ace/Thread.i \
- $(ACE_ROOT)/ace/Synch_T.cpp \
- $(ACE_ROOT)/ace/Malloc_Allocator.h \
- $(ACE_ROOT)/ace/Malloc_Base.h \
- $(ACE_ROOT)/ace/Malloc_Allocator.i \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/Free_List.cpp \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Malloc_T.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Unbounded_Set.h \
- $(ACE_ROOT)/ace/Node.h \
- $(ACE_ROOT)/ace/Node.cpp \
- $(ACE_ROOT)/ace/Unbounded_Set.inl \
- $(ACE_ROOT)/ace/Unbounded_Set.cpp \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/Message_Block_T.h \
- $(ACE_ROOT)/ace/Message_Block_T.i \
- $(ACE_ROOT)/ace/Message_Block_T.cpp \
- $(ACE_ROOT)/ace/CDR_Base.inl \
- $(ACE_ROOT)/ace/CORBA_macros.h \
- orbconf.h \
- varbase.h \
- TAO_Export.h \
- corbafwd.i \
- TAO_Export.h IOPC.h Exception.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/String_Base.h \
- $(ACE_ROOT)/ace/String_Base_Const.h \
- $(ACE_ROOT)/ace/String_Base.i \
- $(ACE_ROOT)/ace/String_Base.cpp \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
- $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- $(ACE_ROOT)/ace/SString.i \
- Exception.i \
- Object.h \
- Policy_ForwardC.h \
- Sequence.h \
- Managed_Types.h \
- Managed_Types.i \
- Sequence.i \
- Sequence_T.h \
- Sequence_T.i \
- Sequence_T.cpp \
- Environment.h \
- Environment.i \
- CDR.h \
- $(ACE_ROOT)/ace/CDR_Stream.h \
- $(ACE_ROOT)/ace/CDR_Stream.i \
- CDR.i \
- Policy_ForwardC.i \
- Object.i Any.h \
- Object.h \
- Typecode.h \
- Exception.h \
- Typecode.i \
- Any.i IOPC.i \
- Messaging_SyncScopeC.i \
- Stub.h \
- MProfile.h \
- PolicyC.h \
- CurrentC.h \
- CurrentC.i \
- Remote_Object_Proxy_Impl.h \
- Object_Proxy_Impl.h \
- Encodable.h \
- PolicyC.i \
- MProfile.i \
- ORB.h \
- Services.h \
- Services.i \
- CORBA_String.h \
- CORBA_String.inl \
- ORB.i \
- ORB_Core.h \
- Policy_Manager.h \
- Policy_Set.h \
- Policy_Set.i \
- LocalObject.h \
- LocalObject.i \
- debug.h \
- Policy_Manager.i \
- Resource_Factory.h \
- $(ACE_ROOT)/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Service_Object.i \
- params.h \
- $(ACE_ROOT)/ace/Unbounded_Queue.h \
- $(ACE_ROOT)/ace/Unbounded_Queue.inl \
- $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
- params.i \
- TAO_Singleton_Manager.h \
- TAO_Singleton_Manager.inl \
- TAO_Singleton.h \
- TAO_Singleton.inl \
- TAO_Singleton.cpp \
- $(ACE_ROOT)/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp \
- Adapter.h \
- Adapter.i \
- PolicyFactory_Registry.h \
- PortableInterceptorC.h \
- DynamicC.h \
- Any.h \
- DynamicC.i \
- ObjectReferenceTemplateC.h \
- OctetSeqC.h \
- OctetSeqC.i \
- StringSeqC.h \
- StringSeqC.i \
- ValueBase.h \
- ValueBase.i \
- ObjectReferenceTemplateC.i \
- Messaging_SyncScopeC.h \
  IOPC.h \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
@@ -35611,8 +35455,8 @@ realclean:
  OctetSeqC.h Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i \
  ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
@@ -36310,8 +36154,8 @@ realclean:
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
  StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PolicyC.h Policy_ForwardC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
@@ -36601,8 +36445,8 @@ realclean:
  DynamicC.h DynamicC.i ObjectReferenceTemplateC.h StringSeqC.h \
  StringSeqC.i ValueBase.h \
  ValueBase.i \
- Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PolicyC.h Policy_ForwardC.h \
+ Exception.h ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PolicyC.h Policy_ForwardC.h \
  Remote_Object_Proxy_Impl.h \
  Object_Proxy_Impl.h \
  Encodable.h PolicyC.i PortableInterceptorC.i LocalObject.h \
@@ -37556,9 +37400,9 @@ realclean:
  ValueBase.i \
  ObjectReferenceTemplateC.i \
  Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i \
  IOPC.h \
  IOPC.i \
- Messaging_SyncScopeC.i \
  PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
@@ -37904,8 +37748,8 @@ realclean:
  OctetSeqC.h Sequence.h OctetSeqC.i StringSeqC.h StringSeqC.i \
  ValueBase.h \
  ValueBase.i \
- ObjectReferenceTemplateC.i Messaging_SyncScopeC.h IOPC.h \
- Messaging_SyncScopeC.i PortableInterceptorC.i \
+ ObjectReferenceTemplateC.i Messaging_SyncScopeC.h \
+ Messaging_SyncScopeC.i IOPC.h PortableInterceptorC.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Map_Manager.cpp \
