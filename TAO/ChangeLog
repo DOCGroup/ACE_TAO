@@ -1,3 +1,12 @@
+Tue Feb 22 19:29:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/Special_Basic_SArgument_T.cpp
+	  (Ret_Special_Basic_SArgument_T::interceptor_result):
+
+	  Corrected argument to Any insertion operator.  Must use the
+	  "Any::from_*" helper type when inserting special types like
+	  boolean, octet, etc.
+
 Tue Feb 22 19:18:57 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp:
