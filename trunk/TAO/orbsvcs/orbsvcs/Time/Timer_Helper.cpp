@@ -130,7 +130,7 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_TRY_ENV, "Exception in the handle_timeout ()\n");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception in the handle_timeout ()\n");
       return -1;
     }
   ACE_ENDTRY;

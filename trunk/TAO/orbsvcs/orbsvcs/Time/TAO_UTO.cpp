@@ -142,7 +142,7 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_TRY_ENV, "Exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CosTime::TCIndeterminate);
@@ -185,7 +185,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_TRY_ENV, "Exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
       return CosTime::TIO::_nil ();
     }
   ACE_ENDTRY;
@@ -220,7 +220,7 @@ TAO_UTO::interval (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_TRY_ENV, "Exception:");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception:");
       return CosTime::TIO::_nil ();
     }
   ACE_ENDTRY;
