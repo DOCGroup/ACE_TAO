@@ -356,7 +356,7 @@ DRV_pre_proc(char *myfile)
   //          temp file properly on Win32.  We should reimplement
   //          ACE_OS::fopen using these lower level APIs to
   //          emulate the behavior.
-  ACE_HANDLE h = ACE_OS::open (tmp_file,  O_RDWR);
+  ACE_HANDLE h = ACE_OS::open (tmp_file,  O_RDONLY);
   int fdx = _open_osfhandle ((long) h, _O_TEXT);
   FILE *yyin = _fdopen (fdx, "r");
 #else
