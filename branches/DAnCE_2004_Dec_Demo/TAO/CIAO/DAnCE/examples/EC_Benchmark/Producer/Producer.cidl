@@ -1,0 +1,21 @@
+//$Id$
+
+#ifndef PRODUCER_CIDL
+#define PRODUCER_CIDL
+
+#include "Producer.idl"
+
+composition session Producer_Impl
+{
+  home executor ProducerHome_Exec
+  {
+    implements EC_Benchmark::ProducerHome;
+    manages Producer_Exec;
+  };
+};
+
+#endif /* PRODUCER_CIDL */
+
+
+
+

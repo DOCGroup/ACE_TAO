@@ -1,0 +1,34 @@
+// $Id$
+//=============================================================================
+/**
+ * @file EC_Benchmark.idl
+ *
+ * Definition of events used in the EC_Benchmark module.
+ *
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef CIAO_EC_BENCHMARK_IDL
+#define CIAO_EC_BENCHMARK_IDL
+
+#include <Components.idl>
+
+module EC_Benchmark
+{
+  /**
+   * @interface Producer component
+   */
+  interface trigger
+    {
+      void start ();
+      //void stop ();
+    };
+
+  /**
+   * @eventtype Events that represent timeouts
+   */
+  eventtype TimeOut {};
+};
+
+#endif /*CIAO_EC_BENCHMARK_IDL*/

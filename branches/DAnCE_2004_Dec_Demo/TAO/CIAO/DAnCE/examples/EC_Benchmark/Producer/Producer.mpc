@@ -1,0 +1,77 @@
+// $Id$
+
+project(Producer_stub): ciao_client_dnc {
+  after += EC_Benchmark_stub
+  sharedname = Producer_stub
+  
+  idlflags += -Wb,stub_export_macro=PRODUCER_STUB_Export -Wb,stub_export_include=Producer_stub_export.h -Wb,skel_export_macro=PRODUCER_SVNT_Export -Wb,skel_export_include=Producer_svnt_export.h
+  libpaths += ..
+  libs += EC_Benchmark_stub
+  dynamicflags   = PRODUCER_STUB_BUILD_DLL
+    
+  IDL_Files {
+    Producer.idl
+  }
+
+  Source_Files {
+    ProducerC.cpp
+  }
+}
+
+project(Producer_svnt) : ciao_servant_dnc {
+  after += EC_Benchmark_svnt Producer_stub
+  sharedname  = Producer_svnt
+  libs    += Producer_stub EC_Benchmark_stub EC_Benchmark_svnt
+  libpaths += ..
+  idlflags +=  -Wb,export_macro=PRODUCER_SVNT_Export -Wb,export_include=Producer_svnt_export.h
+  dynamicflags = PRODUCER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    Producer.cidl
+  }
+
+  IDL_Files {
+    ProducerE.idl
+  }
+
+  Source_Files {
+    ProducerEC.cpp
+    ProducerS.cpp
+    Producer_svnt.cpp
+  }
+}
+
+
+project(Producer_exec) : ciao_component_dnc {
+  after += Producer_svnt
+  sharedname = Producer_exec
+  libs      += Producer_stub EC_Benchmark_stub Producer_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=PRODUCER_EXEC_Export -Wb,export_include=Producer_exec_export.h
+  dynamicflags   = PRODUCER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Producer_exec.cpp
+  }
+}
+
+project (Producer_controller) : ciao_client_dnc, valuetype {
+  exename = controller
+  after += Producer_stub
+  libs += Producer_stub EC_Benchmark_stub
+  libpaths += ..
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    controller.cpp
+  }
+  
+  Header_Files {
+  }  
+}
+

@@ -1,0 +1,60 @@
+// $Id$
+
+project(Consumer_stub): ciao_client_dnc {
+  after += EC_Benchmark_stub
+  sharedname = Consumer_stub
+
+  idlflags += -Wb,stub_export_macro=CONSUMER_STUB_Export -Wb,stub_export_include=Consumer_stub_export.h -Wb,skel_export_macro=CONSUMER_SVNT_Export -Wb,skel_export_include=Consumer_svnt_export.h
+  libpaths += ..
+  libs += EC_Benchmark_stub
+  dynamicflags   = CONSUMER_STUB_BUILD_DLL
+
+  IDL_Files {
+    Consumer.idl
+  }
+
+  Source_Files {
+    ConsumerC.cpp
+  }
+}
+
+project(Consumer_svnt) : ciao_servant_dnc {
+  after += EC_Benchmark_svnt Consumer_stub
+  sharedname  = Consumer_svnt
+  libs    += Consumer_stub EC_Benchmark_stub EC_Benchmark_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=CONSUMER_SVNT_Export -Wb,export_include=Consumer_svnt_export.h
+  dynamicflags = CONSUMER_SVNT_BUILD_DLL
+
+  CIDL_Files {
+    Consumer.cidl
+  }
+
+  IDL_Files {
+    ConsumerE.idl
+  }
+
+  Source_Files {
+    ConsumerEC.cpp
+    ConsumerS.cpp
+    Consumer_svnt.cpp
+  }
+}
+
+
+project(Consumer_exec) : ciao_component_dnc {
+  after += Consumer_svnt
+  sharedname = Consumer_exec
+  libs      += Consumer_stub Consumer_svnt EC_Benchmark_stub EC_Benchmark_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=CONSUMER_EXEC_Export -Wb,export_include=Consumer_exec_export.h
+  dynamicflags   = CONSUMER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Consumer_exec.cpp
+  }
+}
+

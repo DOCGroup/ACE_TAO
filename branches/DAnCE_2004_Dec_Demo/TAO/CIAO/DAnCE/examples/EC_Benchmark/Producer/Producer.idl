@@ -1,0 +1,31 @@
+// $Id$
+//=============================================================================
+/**
+ * @file Producer.idl
+ *
+ * Definition of the Producer component.
+ *
+ * @author Gan Deng <gan.deng@vanderbilt.edu>
+ */
+//=============================================================================
+
+#ifndef CIAO_PRODUCER_IDL
+#define CIAO_PRODUCER_IDL
+
+#include "../EC_Benchmark.idl"
+
+module EC_Benchmark
+{
+  component Producer supports trigger
+    {
+      emits TimeOut timeout;
+    };
+
+  home ProducerHome manages Producer
+  {
+    // Explicit operations
+    //factory new_EC (in long hertz);
+  };
+};
+
+#endif /* CIAO_PRODUCER_IDL */

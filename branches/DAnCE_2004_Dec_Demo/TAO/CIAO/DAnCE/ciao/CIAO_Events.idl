@@ -1,0 +1,178 @@
+// $Id$
+
+/**
+ * @file CIAO_Events.idl
+ *
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ *
+ * @brief Interfaces for configuring CIAO's event mechanism.
+ */
+
+#include "CCM_Event.idl"
+
+module CIAO
+{
+
+  /// A component's UUID + port name.
+  typedef string CONNECTION_ID;
+
+  enum EventServiceType
+  {
+    DIRECT,
+    EC,
+    RTEC,
+    NOTIFY,
+    RTNOTIFY
+  };
+
+  interface Supplier_Config
+  {
+
+    attribute CONNECTION_ID supplier_id;
+    
+    readonly attribute EventServiceType service_type;
+
+    void destroy ();
+
+  };
+
+  interface Consumer_Config : Supplier_Config
+  {
+
+    attribute CONNECTION_ID consumer_id;
+
+    attribute Components::EventConsumerBase consumer;
+
+  };
+
+  interface ContainerEventService
+  {
+
+    Supplier_Config create_supplier_config (in EventServiceType type);
+
+    Consumer_Config create_consumer_config (in EventServiceType type);
+    
+    void connect_event_supplier (in Supplier_Config supplier_conf);
+    
+    void disconnect_event_supplier (in CONNECTION_ID conn_id)
+      raises (Components::InvalidConnection, Components::InvalidName);
+    
+    void connect_event_consumer (in Consumer_Config consumer_conf);
+    
+    void disconnect_event_consumer (in CONNECTION_ID conn_id)
+      raises (Components::InvalidConnection, Components::InvalidName);
+    
+    void push_event (in Components::EventBase ev,
+                     in CONNECTION_ID conn_id);
+  };
+
+  /// An object for setting consumer QoS requirements. This will be expanded to
+  /// allow filtering, correlation, etc. A Consumer_Config object is passed as
+  /// a parameter to CIAO::Container::_ciao_connect_event_consumer ().
+  /// Consumer_Config objects are created via
+  /// CIAO::Container::_ciao_create_event_consumer_config ().
+
+  // @@ George, We may want to define exceptions that would be used if
+  // the operations fail.
+
+  // @@ George, here is one idea to decouple RtEC and
+  // Notification. How about this
+
+  //  interface Consumer_Config
+  //    {
+  //      attribute long supplier_id;
+  //      attribute long consumer_id;
+  //      attribute Components::EventConsumerBase consumer;
+  //      readonly attribute EventServiceType service_type;
+  //    };
+  //
+  // In another IDL file for RTEvents
+  //
+  // interface RTEvent_Consumer_Config : Consumer_config
+  //   {
+  //     readonly attribute RtecEventChannelAdmin::ConsumerQOS rt_event_qos;
+  //   };
+  //
+  // In another IDL file put the Notification stuff.
+  //
+  // This is an idea. Just think over it. This wold give us the
+  // following
+  // 1. Keep RtEvent, Notification etc.  stuff in a different library
+  // that we can  load through the service configurator mechanism.
+  // 2. Decouple different services from polluting the CIAO container
+  // code.
+  //
+  // Please think about this and we can discuss when both of us find
+  // time.
+  //
+  //
+  /*
+  interface Consumer_Config
+    {
+    // @@ George, when you have time, could you please document the
+    // semantics of these methods?
+
+    // Configuring methods.
+    void start_conjunction_group (in long size);
+
+    void start_disjunction_group (in long size);
+
+    // @@ George Can't we call it set_cupplier_id. Please see above.
+    void insert_supplier_id (in CONNECTION_ID connection_id);
+
+    void set_consumer_id (in CONNECTION_ID connection_id);
+
+    void set_consumer (in Components::EventConsumerBase consumer);
+
+    // Access methods.
+    // @@ George, why not use "read only attributes" here? It would be
+    // nice if you have something like this
+    //
+    // readonly attribute consumer_id; // I would put this as an
+    // attribute since I see both read and write access.//
+    // readonly attribute supplier_id;
+    // ...
+    CONNECTION_ID get_consumer_id ();
+
+    CONNECTION_ID get_supplier_id ();
+
+    Components::EventConsumerBase get_consumer ();
+
+    EventServiceType get_service_type ();
+
+    // @@ George, see that this creates a tight coupling between all
+    // the event based services. Need to think of a way to decouple
+    // them and use only what we want ... This is okay for the first
+    // cut.
+    RtecEventChannelAdmin::ConsumerQOS get_rt_event_qos ();
+
+    CosNotifyFilter::Filter get_notify_filter ();
+
+    CosNotification::QoSProperties get_notify_qos ();
+  };
+
+
+  /// An object for setting supplier QoS requirements.
+  /// Passed as a parameter to CIAO::Container::_ciao_connect_event_supplier ().
+  /// Created via CIAO::Container::_ciao_create_event_supplier_config ().
+  interface Supplier_Config
+  {
+
+    // Configuring methods.
+    void set_supplier_id (in CONNECTION_ID connection_id);
+
+    // @@ George same here ie. read only attributes.
+    // Access methods.
+    CONNECTION_ID get_supplier_id ();
+
+    EventServiceType get_service_type ();
+
+    RtecEventChannelAdmin::SupplierQOS get_rt_event_qos ();
+
+    CosNotifyFilter::Filter get_notify_filter ();
+
+    CosNotification::QoSProperties get_notify_qos ();
+  };
+  */
+
+};
