@@ -1139,6 +1139,9 @@
 /* Platform lacks the readlink() function. */
 #undef ACE_LACKS_READLINK
 
+/* Platform lacks the rename() function. */
+#undef ACE_LACKS_RENAME
+
 /* Platform lacks recvmsg() */
 #undef ACE_LACKS_RECVMSG
 
