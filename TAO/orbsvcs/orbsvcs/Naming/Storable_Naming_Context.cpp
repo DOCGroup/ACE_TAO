@@ -210,7 +210,7 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
 
 // Helper function to load a new context into the binding_map
 int
-TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck 
+TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
                                       ACE_ENV_ARG_DECL)
 {
   ACE_TRACE("load_map");
@@ -239,7 +239,7 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
     flck->peer() >> record;
     if( record.type() == TAO_NS_Persistence_Record::NCONTEXT )
     {
-      PortableServer::ObjectId_var id = 
+      PortableServer::ObjectId_var id =
                       PortableServer::string_to_ObjectId(record.ref().c_str());
       const char * intf = interface_->_interface_repository_id();
       CORBA::Object_var objref = poa_->create_reference_with_id (
@@ -266,7 +266,7 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
 
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::File_Open_Lock_and_Check(
-                                 TAO_Storable_Naming_Context * context, 
+                                 TAO_Storable_Naming_Context * context,
                                  const char * mode
                                  ACE_ENV_ARG_DECL)
 :closed_(1),
@@ -275,7 +275,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
   ACE_TRACE("File_Open_Lock_and_Check");
   // We only accept a subset of mode argument, check it
   rwflags_ = 0;
-  for( unsigned int i = 0; i<ACE_OS::strlen(mode); i++ ) 
+  for( unsigned int i = 0; i<ACE_OS::strlen(mode); i++ )
   {
     switch (mode[i])
     {
@@ -288,13 +288,13 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
       default: rwflags_ = -1;
     }
   }
-  if( rwflags_ <= 0 ) 
+  if( rwflags_ <= 0 )
   {
     errno = EINVAL;
     ACE_THROW(CORBA::PERSIST_STORE());
   }
 
-  // build the file name 
+  // build the file name
   ACE_CString file_name(context->persistence_directory_);
   file_name += "/";
   file_name += context->name_;
@@ -307,7 +307,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
       {
         delete fl_;
         ACE_THROW(CORBA::PERSIST_STORE());
-      } 
+      }
 
     // acquire a lock on it
     if (fl_ -> flock(0, 0, 0) != 0)
@@ -342,7 +342,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check(
       {
         delete fl_;
         ACE_THROW(CORBA::PERSIST_STORE());
-      } 
+      }
 
     // now that the file is successfully opened
     // unlocked/closed before we leave this class
@@ -984,7 +984,7 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
   // Open the backing file
   File_Open_Lock_and_Check flck(this, name_len > 1 ? "r" : "rw"
                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CosNamgin::NamingContext::_nil ());
+  ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -1011,7 +1011,7 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n
       ACE_CHECK_RETURN (CosNaming::NamingContext::_nil ());
     }
   // If we received a simple name, we need to bind it in this context.
-  else 
+  else
   {
     // This had been a read on the file so now we are done with it
     flck.release();
