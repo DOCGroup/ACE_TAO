@@ -1,4 +1,10 @@
+Tue Dec 25 15:39:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.av:
+	  Fixed double backslash in dependencies.
+
 Tue Dec 25 12:16:42 2001  Mayur Deshpande  <mayur@ics.uci.edu>
+
 	* TAO/TAO_IDL:
 	  Changes to various files (as documented below) to incorporate
 	the following features of AMH:
@@ -86,6 +92,7 @@ Tue Dec 25 11:27:34 2001  Mayur Deshpande  <mayur@ics.uci.edu>
 	may be needed later.
 
 
+>>>>>>> 1.4593
 Tue Dec 25 12:23:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* Update all dependencies.
