@@ -83,6 +83,8 @@ ASYS_INLINE ssize_t
 ACE_SOCK_IO::recvv_n (iovec iov[], size_t n) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recvv_n");
+  // @@ Carlos, can you please update this to call the
+  // new ACE::recvv_n() method that you write?
   return ACE_OS::recvv (this->get_handle (), iov, n);
 }
 
