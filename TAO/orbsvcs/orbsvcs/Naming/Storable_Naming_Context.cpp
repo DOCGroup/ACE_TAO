@@ -244,19 +244,19 @@ TAO_Storable_Naming_Context::load_map(File_Open_Lock_and_Check *flck
       const char * intf = interface_->_interface_repository_id();
       CORBA::Object_var objref = poa_->create_reference_with_id (
                                            id.in (),
-					   intf );
+                                           intf );
       bindings_map->bind( record.id().c_str(),
                           record.kind().c_str(),
-			  objref.in(),
-			  CosNaming::ncontext );
+                          objref.in(),
+                          CosNaming::ncontext );
     }
     else
     {
       CORBA::Object_var objref = orb_->string_to_object (record.ref().c_str());
       bindings_map->bind( record.id().c_str(),
                           record.kind().c_str(),
-			  objref.in(),
-			  CosNaming::nobject );
+                          objref.in(),
+                          CosNaming::nobject );
     }
   }
   storable_context_ = bindings_map;
@@ -667,7 +667,7 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
                                            CosNaming::NamingContext_ptr nc
                                            ACE_ENV_ARG_DECL)
 {
-  ACE_TRACE("bine_context");
+  ACE_TRACE("TAO_Storable_Naming_Context::bind_context");
   // Get the length of the name.
   CORBA::ULong name_len = n.length ();
 
@@ -1113,7 +1113,7 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
                                CORBA::Object_ptr obj
                                ACE_ENV_ARG_DECL)
 {
-  ACE_TRACE("bine");
+  ACE_TRACE("TAO_Storable_Naming_Context::bind");
   // Get the length of the name.
   CORBA::ULong name_len = n.length ();
 
