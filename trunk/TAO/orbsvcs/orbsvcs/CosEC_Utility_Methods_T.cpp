@@ -76,7 +76,7 @@ CosEC_Utility_Methods<T>::deactivate (PortableServer::POA_ptr poa,
   poa->deactivate_object (oid,
                           ACE_TRY_ENV);
   ACE_CHECK;
-};
+}
 
 template <class T>
 T*

@@ -263,7 +263,7 @@ CosEC_ServantBase::init_SupplierQOS (RtecScheduler::handle_t supp_handle,
   // Something else: please make the EventSourceID for the
   // supplier also an option...
 
-  char c = ' '; // space
+  char *c = " "; // space
   char *tok = 0;
 
  // if nothing was specified on the command line use defaults..
@@ -274,7 +274,7 @@ CosEC_ServantBase::init_SupplierQOS (RtecScheduler::handle_t supp_handle,
                          1);
   else // parse the event types..
     {
-      tok = ACE_OS::strtok (source_type_pairs, &c);
+      tok = ACE_OS::strtok (source_type_pairs, c);
       if (tok == 0) // error
         {
           ACE_DEBUG ((LM_DEBUG, "error parsing source,event pairs for SupplierQOS, defaulting to source id = 1, eventid = ACE_ES_EVENT_ANY"));
@@ -291,7 +291,7 @@ CosEC_ServantBase::init_SupplierQOS (RtecScheduler::handle_t supp_handle,
           int source_val = 0, type_val = 0;
           source_val = ACE_OS::atoi (tok);
 
-          tok = ACE_OS::strtok (0, &c);
+          tok = ACE_OS::strtok (0, c);
 
           if (tok != 0)
             type_val = ACE_OS::atoi (tok);
@@ -320,7 +320,7 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
   // them (just call insert_source() or insert_type() in the
   // parse_args routine).
 
-  char c = ' '; // space
+  char *c = " "; // space
   char *tok = 0;
 
   consumer_qos.start_disjunction_group ();
@@ -338,7 +338,7 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
     }
   else // parse the event types..
     {
-      tok = ACE_OS::strtok (eventTypeIds, &c);
+      tok = ACE_OS::strtok (eventTypeIds, c);
       if (tok == 0) // error
         {
           ACE_DEBUG ((LM_DEBUG, "error parsing eventIds for ConsumerQOS, defaulting to 1"));
@@ -353,7 +353,7 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
                         type_val));
             consumer_qos.insert_type (type_val,
                                       cons_handle);
-            tok = ACE_OS::strtok (0, &c);
+            tok = ACE_OS::strtok (0, c);
           }
         while (tok != 0);
     }
@@ -366,7 +366,7 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
                                 cons_handle);
   else // parse the event types..
     {
-      tok = ACE_OS::strtok (eventSourceIds, &c);
+      tok = ACE_OS::strtok (eventSourceIds, c);
       if (tok == 0) // error
         {
           ACE_DEBUG ((LM_DEBUG, "error parsing sourceIds for ConsumerQOS, defaulting to 1"));
@@ -381,7 +381,7 @@ CosEC_ServantBase::init_ConsumerQOS (RtecScheduler::handle_t cons_handle,
                         source_val));
             consumer_qos.insert_type (source_val,
                                       cons_handle);
-            tok = ACE_OS::strtok (0, &c);
+            tok = ACE_OS::strtok (0, c);
           }
         while (tok != 0);
     }
