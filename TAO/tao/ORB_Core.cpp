@@ -18,9 +18,6 @@
 
 ACE_RCSID(tao, ORB_Core, "$Id$")
 
-typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
-        TAO_ORB_CORE_TSS_RESOURCES;
-
 // ****************************************************************
 
 CORBA_Environment&
@@ -49,8 +46,11 @@ TAO_ORB_Core::TAO_ORB_Core (void)
 #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
     arl_same_port_connect_ (0),
 #endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
-    preconnections_ (0)
+    preconnections_ (0),
+    poa_current_ (0)
 {
+  ACE_NEW (this->poa_current_,
+           TAO_POA_Current);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -62,6 +62,8 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
 
   // Allocated in init()
   delete this->orb_params_;
+
+  delete this->poa_current_;
 }
 
 int
@@ -1120,21 +1122,10 @@ TAO_ORB_Core::reactor (void)
   return tss->reactor_;
 }
 
-TAO_POA_Current *
-TAO_ORB_Core::poa_current (void)
+TAO_POA_Current &
+TAO_ORB_Core::poa_current (void) const
 {
-  return TAO_ORB_CORE_TSS_RESOURCES::instance ()->poa_current_;
-}
-
-TAO_POA_Current *
-TAO_ORB_Core::poa_current (TAO_POA_Current *new_current)
-{
-  TAO_ORB_Core_TSS_Resources *tss =
-    TAO_ORB_CORE_TSS_RESOURCES::instance ();
-
-  TAO_POA_Current *old = tss->poa_current_;
-  tss->poa_current_ = new_current;
-  return old;
+  return *this->poa_current_;
 }
 
 CORBA_Environment*
@@ -1174,7 +1165,7 @@ TAO_ORB_Core::policy_current (TAO_Policy_Current* current)
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources (void)
   :  reactor_ (0),
-     poa_current_ (0),
+     poa_current_impl_ (0),
      default_environment_ (&this->tss_environment_),
 #if defined (TAO_HAS_CORBA_MESSAGING)
      policy_current_ (&this->initial_policy_current_),
@@ -1201,8 +1192,6 @@ TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources (void)
 
 // ****************************************************************
 
-// ****************************************************************
-
 // This function exists because of Win32's proclivity for expanding
 // templates at link time.  Since DLLs are just executables, templates
 // get expanded and instantiated at link time.  Thus, if there are
@@ -1219,6 +1208,8 @@ TAO_ORB_Core_instance (void)
 {
   return CORBA::instance ()->orb_core_;
 }
+
+// ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
