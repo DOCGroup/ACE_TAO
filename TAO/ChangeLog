@@ -1,3 +1,9 @@
+Sun Oct 12 06:31:56 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/server.dsp:
+	  Added TAO_Valuetype to the list of libraries to fix link errors
+	  in MSVC debug build.
+
 Sun Oct 12 00:47:33 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl
