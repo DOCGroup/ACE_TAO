@@ -1,3 +1,12 @@
+Fri Jan  3 17:45:29 2003  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_hpux_gcc.GNU: Use HP's /usr/bin/ar
+          instead of GNU ar (which may be picked up first in PATH). GNU ar
+          crashes - missing libfl.sl.
+
+        * performance-tests/Misc/test_singleton.cpp: Add __hpux to conditions
+          for explicitly instantiating ACE_Singleton::singleton_.
+
 Fri Jan  3 07:49:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/aix_shr:

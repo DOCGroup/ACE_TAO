@@ -65,6 +65,8 @@ DLD		= $(CXX)
 LD		= $(CXX)
 OCFLAGS		+= -O2
 PIC		= -fPIC
+# GNU ar doesn't work (missing libfl.sl?) so use HP ar.
+AR              = /usr/bin/ar
 ARFLAGS		= ruv
 RANLIB		= echo
 LDFLAGS		= -L. -L$(ACE_ROOT)/ace -Wl,+s
