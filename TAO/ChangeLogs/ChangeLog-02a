@@ -1,3 +1,18 @@
+Tue Sep 26 15:14:33 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/PortableServer/PortableServerC.cpp: Made a couple of
+	  formatting changes to reduce diffs. ForwardRequest constructor
+	  should not call CORBA::string_dup.
+
+	* tao/diffs/PortableServerC.cpp.diff: Fixed inclusion of POA.h.
+	  Also one of the MINIMUM_CORBA #defines was out of place because
+	  of the new _type() method.
+
+	* tao/diffs/PortableServerC.h.diff: Many small formatting changes
+	  were necessary for the patch file to work with the better
+	  formatting produced by the idl compiler.  Also, code related to
+	  the iostreams was removed.
+
 Tue Sep 26 12:25:53 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Makefile.CosNotification:
