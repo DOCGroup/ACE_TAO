@@ -2,7 +2,7 @@
 // $Id$
 
 project(kokyu_dsrt_schedulers) : rtcorba, kokyu, rtscheduling {
-  after   += Kokyu_DSRT_Schedulers 
-  libs    += Kokyu_DSRT_Schedulers
+  after   += Kokyu_DSRT_EDF_Scheduler
+  libs    += Kokyu_DSRT_EDF_Scheduler
   includes += $(TAO_ROOT)/examples/Kokyu_dsrt_schedulers
 }
