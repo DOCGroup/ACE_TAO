@@ -1,3 +1,11 @@
+Thu Jan  1 15:40:04 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tao/DynamicInterface/DII_ClientRequestInfo.{h,cpp}:
+	  Removed these files, not needed anymore
+
+	* tao/DynamicInterface/TAO_DynamicInterface_Static.dsp:
+	  Removed DII_ClientRequestInfo files
+
 Thu Jan  1 15:30:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tao/Domain/TAO_Domain_Static.dsp:
