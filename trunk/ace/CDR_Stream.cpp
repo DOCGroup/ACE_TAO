@@ -791,7 +791,7 @@ ACE_InputCDR::read_wchar (ACE_CDR::WChar& x)
       ACE_CDR::Octet len;
 
       if (this->read_1 (&len))
-        return this->read_octet_array 
+        return this->read_octet_array
           (ACE_reinterpret_cast (ACE_CDR::Octet*, &x),
            ACE_static_cast (ACE_CDR::ULong, len));
     }
@@ -983,7 +983,10 @@ ACE_InputCDR::read_boolean_array (ACE_CDR::Boolean *x,
   // Make sure the length of the array isn't greater than the length of
   // the stream.
   if (length > this->length())
-    return 0;
+    {
+      this->good_bit_ = 0;
+      return 0;
+    }
 
   // It is hard to optimize this, the spec requires that on the wire
   // booleans be represented as a byte with value 0 or 1, but in
