@@ -18,6 +18,7 @@
 
 #include "tests/test_config.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
@@ -74,18 +75,32 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   const ACE_TCHAR *test_dir;
 
 #if !defined (ACE_HAS_WINCE)
+#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
+#  else
+  ACE_TCHAR tempenv[MAXPATHLEN];
+  char *test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
+  if (test_dir_n == 0)
+    test_dir = 0;
+  else
+    {
+      ACE_OS::strcpy (tempenv, ACE_TEXT_CHAR_TO_TCHAR (test_dir_n));
+      test_dir = tempenv;
+    }
+#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
   if (test_dir == 0)
 #endif /* ACE_HAS_WINCE */
     test_dir = ACE_TEXT ("");
 
-  ACE_OS::sprintf (temp,
-                   ACE_TEXT ("%s%s%s%s"),
-                   test_dir,
-                   ACE_LOG_DIRECTORY,
-                   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR),
-                   ACE_LOG_FILE_EXT_NAME);
+  // This could be done with ACE_OS::sprintf() but it requires different
+  // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
+  // Easier to keep straight like this.
+  ACE_OS_String::strcpy (temp, test_dir);
+  ACE_OS_String::strcat (temp, ACE_LOG_DIRECTORY);
+  ACE_OS_String::strcat
+    (temp, ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR));
+  ACE_OS_String::strcat (temp, ACE_LOG_FILE_EXT_NAME);
 
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid a console

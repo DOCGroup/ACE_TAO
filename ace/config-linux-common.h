@@ -277,6 +277,10 @@
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T
 
+// Platform supplies scandir()
+#define ACE_HAS_SCANDIR
+#define ACE_SCANDIR_CMP_USES_VOIDPTR
+
 //#define ACE_LACKS_STRRECVFD
 #define ACE_HAS_STRBUF_T
 

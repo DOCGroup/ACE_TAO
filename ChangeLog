@@ -1,3 +1,17 @@
+Tue Aug 24 10:22:18 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-linux-common.h: Added ACE_HAS_SCANDIR and a new
+	  macro, ACE_SCANDIR_CMP_USES_VOIDPTR, saying that scandir()
+	  cmp() function takes void pointers, not dirent pointers.
+
+	* ace/OS_NS_dirent.inl (scandir): When calling native scandir()
+	  with ACE_SCANDIR_CMP_USES_VOIDPTR, cast comparator appropriately.
+	  Also, for native scandir(), ACE_TEXT_ALWAYS_CHAR the dirname.
+
+	* ace/OS_NS_dlfcn.inl:
+	* tests/Test_Output.cpp: Added #include "ace/OS_NS_string.h" to get
+	  ACE_OS string methods. Fixes compile error on inline=0 build.
+
 Tue Aug 24 11:16:00 2004  Jules White   <jules@dre.vanderbilt.edu>
         
         * ACE-INSTALL.html: Added a section on using ACE within Eclipse
