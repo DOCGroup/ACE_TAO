@@ -40,13 +40,13 @@ ACE_Streambuf_T<STREAM>::get_handle (void)
   return peer_ ? peer_->get_handle () : 0;
 }
 
-template <class STREAM> ACE_INLINE
+template <class STREAM> ACE_INLINE int
 ACE_IOStream<STREAM>::eof (void) const
 {
   char c;
   return ACE_OS::recv (this->get_handle (),
                        &c,
-                       sizeof c, 
+                       sizeof c,
                        MSG_PEEK) <= 0;
 }
 
