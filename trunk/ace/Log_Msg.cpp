@@ -129,7 +129,7 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
     {
       ACE_NO_HEAP_CHECK;
 
-#if defined (WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
+#if (defined (WIN32) || !defined (ACE_LACKS_UNIX_SYSLOG)) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
       // Allocate the ACE_Log_Msg_Backend instance.
       if (ACE_BIT_ENABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG))
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
