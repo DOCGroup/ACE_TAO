@@ -21,38 +21,74 @@
 
 ACE_RCSID(DSI, client, "$Id$")
 
-static char *ior = 0;
-static char *iorfile = 0;
+static char *IOR = 0;
+static char *IOR_file = 0;
+
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:d");
+  ACE_Get_Opt get_opts (argc, argv, "k:f:d");
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        iorfile = get_opts.optarg;
+        IOR = ACE_OS::strdup (get_opts.optarg);
         break;
+
+      case 'f':
+        IOR_file = get_opts.optarg;
+        break;
+
       case 'd':
 	TAO_debug_level++;
 	break; 
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
-                           "[-k <iorfile>]"
+                           "-k IOR "
+                           "-f IOR file "
                            "\n",
                            argv [0]),
                           -1);
       }
 
-  if (iorfile == 0)
+  if (IOR == 0 && IOR_file == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant\n"), -1);
+                       "Please specify the IOR or IOR_file for the servant\n"), -1);
 
   // Indicates successful parsing of command line.
+  return 0;
+}
+
+int
+read_IOR_from_file (void)
+{
+  // Open the file for reading.
+  ACE_HANDLE f_handle = ACE_OS::open (IOR_file, 0);
+
+  if (f_handle == ACE_INVALID_HANDLE)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to open %s for reading\n",
+                       IOR_file),
+                      -1);
+
+  ACE_Read_Buffer ior_buffer (f_handle);
+  char *data = ior_buffer.read ();
+
+  if (data == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to read ior\n"),
+                      -1);
+
+  IOR = ACE_OS::strdup (data);
+  ior_buffer.alloc ()->free (data);
+
+  ACE_OS::close (f_handle);
+
   return 0;
 }
 
@@ -73,25 +109,15 @@ main (int argc, char **argv)
   if (parse_args (argc, argv) == -1)
     return -1;
 
-    // Read the file, and get the IOR
-  ACE_HANDLE input_file = ACE_OS::open (iorfile, 0);
-  if (input_file == ACE_INVALID_HANDLE)
-    ACE_ERROR_RETURN ((LM_DEBUG,
-		       "Cannot open input file for reading IOR: %s\n", 
-		       iorfile),
-		      -1);
-  ACE_Read_Buffer ior_buffer (input_file);
-  char *data = ior_buffer.read ();
-  if (data == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       "Unable to read ior\n"),
-		      -1);
-  ior = ACE_OS::strdup (data);
-  ior_buffer.alloc ()-> free (data);
-  ACE_OS::close (input_file);
-  
+  if (IOR == 0)
+    {
+      int result = read_IOR_from_file ();
+      if (result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR, "Cannot read IOR from %s\n", IOR_file), -1);
+    }
+
   // Get the object reference with the IOR
-  CORBA::Object_var object = orb->string_to_object (ior, env);
+  CORBA::Object_var object = orb->string_to_object (IOR, env);
   if (env.exception () != 0)
     {
       env.print_exception ("CORBA::ORB::string_to_object");
@@ -165,5 +191,7 @@ main (int argc, char **argv)
       return -1;
     }
 
+  ACE_OS::free (IOR);
+  
   return 0;
 }
