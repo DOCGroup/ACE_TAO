@@ -48,7 +48,7 @@ template <class CHAR> class ACE_String_Base : public ACE_String_Base_Const
 public:
    /**
     *  Default constructor.
-    *  
+    *
     *  @param alloc ACE_Allocator associated with string
     *  @return Default ACE_String_Base string.
     */
@@ -84,7 +84,7 @@ public:
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR * s,
-                   size_t len, 
+                   size_t len,
                    ACE_Allocator * alloc = 0,
                    int release = 1);
 
@@ -103,7 +103,7 @@ public:
    *  @param alloc ACE_Allocator associated with string
    *  @return ACE_String_Base containing CHAR 'c'
    */
-  ACE_String_Base (CHAR c, 
+  ACE_String_Base (CHAR c,
                    ACE_Allocator * alloc = 0);
 
   /**
@@ -115,8 +115,8 @@ public:
    *  @param alloc ACE_Allocator associated with string
    *  @return ACE_String_Base containing character array 'c'
    */
-  ACE_String_Base (size_t len, 
-                   CHAR c = 0, 
+  ACE_String_Base (size_t len,
+                   CHAR c = 0,
                    ACE_Allocator * alloc = 0);
 
   /**
@@ -153,7 +153,7 @@ public:
   /**
    * Copy @a s into this @a ACE_String_Base.  Memory is _not_
    * allocated/freed if @a release is 0.
-   * 
+   *
    * @param s Null terminated input string
    * @param release Allocator responsible(1)/not reponsible(0) for
    * 	freeing memory.
@@ -187,7 +187,7 @@ public:
    * @param length How many characters to return starting at the offset.
    * @return The string containing the desired substring
    */
-  ACE_String_Base < CHAR > substring (size_t offset, 
+  ACE_String_Base < CHAR > substring (size_t offset,
                                       ssize_t length = -1) const;
 
   /**
@@ -224,13 +224,13 @@ public:
 
   /**
    * Get a copy of the underlying representation.
-   * 
+   *
    * This method allocates memory for a copy of the string and returns
    * a pointer to the new area. The caller is responsible for freeing
    * the memory when finished; use delete []
    *
    * @return Pointer reference to the string data. Returned string is
-   * 	zero terminated. 
+   * 	zero terminated.
    */
   CHAR *rep (void) const;
 
@@ -241,7 +241,7 @@ public:
    *
    * @return Pointer reference to the stored string data. No guarantee is
    * 	that the string is zero terminated.
-   * 	
+   *
    */
   const CHAR *fast_rep (void) const;
 
@@ -263,7 +263,7 @@ public:
   /**
    *  Find <str> starting at pos.  Returns the slot of the first
    *  location that matches (will be >= pos), else npos.
-   *  
+   *
    *  @param str Input ACE_String_Base string to search for in stored string.
    *  @param pos Starting index position to start searching for string @a str.
    *  @return Index value of the first location of string @a str else npos.
@@ -273,8 +273,8 @@ public:
   /**
    *  Find @a s starting at pos.  Returns the slot of the first
    *  location that matches (will be >= pos), else npos.
-   *  
-   *  @param Input non-zero input string to search for in stored string.
+   *
+   *  @param s non-zero input string to search for in stored string.
    *  @param pos Starting index position to start searching for string @a str.
    *  @return Index value of the first location of string @a str else npos.
    */
@@ -312,7 +312,7 @@ public:
    *  Less than comparison operator.
    *
    *  @param s Input ACE_String_Base string to compare against stored string.
-   *  @return Integer value of result (1 = less than, 0 = greater than or 
+   *  @return Integer value of result (1 = less than, 0 = greater than or
    *  equal).
    */
   int operator < (const ACE_String_Base<CHAR> &s) const;
@@ -338,7 +338,7 @@ public:
    *  Performs a strncmp comparison.
    *
    *  @param s Input ACE_String_Base string to compare against stored string.
-   *  @return Integer value of result (less than 0, 0, greater than 0) 
+   *  @return Integer value of result (less than 0, 0, greater than 0)
    *  	depending on how input string @a s is to the stored string.
    */
   int compare (const ACE_String_Base<CHAR> &s) const;

@@ -356,9 +356,9 @@ public:
    * When the function finishes parsing, the input stream points
    * at the first non-whitespace character.
    *
-   * @param publicID returns the unquoted publicID read.  If none
+   * @param publicId returns the unquoted publicId read.  If none
    *        is available, it will be reset to 0.
-   * @param systemID returns the unquoted systemID read.  If none
+   * @param systemId returns the unquoted systemId read.  If none
    *        is available, it will be reset to 0.
    *
    * @retval 0 on success, -1 otherwise.
@@ -414,7 +414,7 @@ protected:
    */
 
   /**
-   * @var simple_parsing_name_
+   * @var simple_parsing_feature_
    *
    * This constant string defines the name of "simple XML parsing"
    * feature.  When this feature is enabled, ACEXML parser is allowed

@@ -46,7 +46,6 @@ public:
    * Encodes a stream of octets to Base64 data
    *
    * @param input Binary data in ACEXML_Char stream.
-   * @param input_len Length of the ACEXML_Char stream.
    * @param output_len Length of the encoded Base64 ACEXML_Char stream.
    * @return Encoded Base64 data in ACEXML_Char stream or NULL if input data
    *         cannot be encoded.
@@ -58,7 +57,6 @@ public:
    * Decodes a stream of Base64 to octets data
    *
    * @param input Encoded Base64 data in ACEXML_Char stream.
-   * @param input_len Length of the ACEXML_Char stream.
    * @param output_len Length of the binary ACEXML_Char stream.
    * @return Binary data in ACEXML_Char stream or NULL if input data cannot
    *         be encoded.
