@@ -37,8 +37,13 @@ project(*Test) : orbsvcsexe {
 }
 
 // A server to use with the imr
+// The gnuace specific portion is to prevent the test.idl from being compiled
+// multiple times and causing invalid object files to be created.
 project(*TestServer) : orbsvcsexe, portableserver, iortable {
   requires += exceptions
+  specific(gnuace) {
+    after += *Test
+  }
   source_files {
     test_server.cpp
     testC.cpp
@@ -51,10 +56,15 @@ project(*TestServer) : orbsvcsexe, portableserver, iortable {
 
 // Another simple server that can be loaded dynamically into the
 // combined_service.
+// The gnuace specific portion is to prevent the test.idl from being compiled
+// multiple times and causing invalid object files to be created.
 project(*DynamicServer) : taolib_with_idl, portableserver, iortable {
   requires    += exceptions
   dynamicflags = DYNSERVER_BUILD_DLL
   sharedname   = DynServer
+  specific(gnuace) {
+    after += *TestServer
+  }
   idl_files {
     test.idl
   }
