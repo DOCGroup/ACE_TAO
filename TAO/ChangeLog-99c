@@ -9,6 +9,9 @@ Tue Aug 24 16:38:16 1999  Mike Moran  <mm4@cs.wustl.edu>
 	  Added code from first four examples from Henning & 
 	  Vinoski's book plus Makefiles, test scripts and readmes.
 
+	* examples/README (examples): 
+          Added description of examples in directory Advanced/.
+
 Tue Aug 24 15:32:43 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/Load_Balancing/Load_Balancer_i.cpp:
