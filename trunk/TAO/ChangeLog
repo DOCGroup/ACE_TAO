@@ -1,3 +1,15 @@
+Sat Aug 16 10:29:54 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IORTable/IORTableC.h (_raise):
+	* tao/IORTable/IORTableC.cpp (_raise):
+	* tao/RTCORBA/RTCORBAC.h (_raise):
+	* tao/RTCORBA/RTCORBAC.cpp (_raise):
+	* tao/RTScheduling/RTSchedulerC.h (_raise):
+	* tao/RTScheduling/RTSchedulerC.cpp (_raise):
+
+	  Made _raise() method "const" in accordance with the changes in
+	  Exception.{h,cpp}.
+
 Sat Aug 16 02:17:49 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Asynch_Reply_Dispatcher_Base.cpp:
