@@ -1,0 +1,25 @@
+This is the cubit example that makes DII requests. It uses the
+server in IDL_Cubit (actually the Cubit factory). A DII request is
+made on the Cubit factory (it's IOR is displayed when the server is run)
+to get the current Cubit object. Then the operations are called on that
+Cubit object usign DII requests.
+
+Open a separate window (in IDL_Cubit) and run the server, then run the 
+client in DII_Cubit. No nameservice functionality yet, so you have to
+manually type in the IOR for now :-(
+
+In another window (on the same machine or a different machine) type in
+client -i <IOR> where IOR is the displayed factory IOR. To make typing
+a little easier, run the server with [-ORBobjrefstyle url] so the 
+displayed string will be shorter and easier to copy.
+
+Default number of loops for the timing tests is 250, but it can be set
+from the command line following [-n <# of loops>]. Other arguments are 
+supported, as shown in parse_args in client.cpp.
+
+On the Unix side, the Makefile will also build IDL_Cubit/server if
+necessary (thanks to David Levine). If the server exits when run on a
+Unix machine, it probbly means that someone else is also running it 
+and the defaults port numbers have collided. Just add the arg
+[-ORBport 0] when running the server and it will get a new port #.
+
