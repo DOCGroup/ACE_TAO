@@ -67,6 +67,25 @@ public:
                            const ACE_UINT32 *secondary_ip_addrs = 0,
                            size_t size = 0);
 
+#if defined (ACE_HAS_WCHAR)
+    /**
+     * WCHAR versions of the methods that take char's as arguments.
+     */
+  ACE_Multihomed_INET_Addr(u_short port_number,
+                           const wchar_t primary_host_name[],
+                           int encode = 1,
+                           int address_family = AF_UNSPEC,
+                           const wchar_t *(secondary_host_names[]) = 0,
+                           size_t size = 0);
+  int set (u_short port_number,
+           const wchar_t primary_host_name[],
+           int encode = 1,
+           int address_family = AF_UNSPEC,
+           const wchar_t *(secondary_host_names[]) = 0,
+           size_t size = 0);
+
+#endif /* ACE_HAS_WCHAR */
+
   /// Use compiler-generated copy constructor.
 
   /// Use compiler-generated assignment operator.
