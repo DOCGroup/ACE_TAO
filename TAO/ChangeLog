@@ -1,7 +1,22 @@
+Thurs Aug 8 11:36:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/PortableServer/POA.h:
+	* tao/PortableServer/POA.cpp:
+
+	  Added the server_portocol method to the base POA class to avoid the cast from TAO_POA to TAO_RT_POA.
+
+	* tao/RTPortableServer/RT_Servant_Dispatcher.cpp
+
+	  Removed the cast from TAO_POA to TAO_RT_POA to avoid compile errors.
+
+	* tao/RTCORBA/Makefile.bor:
+
+	   Added the entries for Linear_Network_Priority_Mapping.obj, Network_Priority_Mapping.obj,Network_Priority_Mapping_Manager.obj to compile with Borland compiler.
+	
 Wed Aug  7 23:23:45 2002  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tao/RTCORBA/TAO_RTCORBA.dsp
-	* tao/RTCORBA/TAO_RTCORBA_Static.dsp	
+	* tao/RTCORBA/TAO_RTCORBA.dsp:
+	* tao/RTCORBA/TAO_RTCORBA_Static.dsp:
 
 	  Added the entries for Linear_Network_Priority_Mapping.{h,cpp,i}, Network_Priority_Mapping.{h,cpp,i},Network_Priority_Mapping_Manager.{h,cpp,i} to compile on windows.
 
