@@ -434,7 +434,9 @@ ACE_DLList_Iterator<T>::remove (void)
 {
   ACE_DLList_Node *temp = ACE_DLList_Iterator_Base::next ();
   ACE_DLList_Iterator_Base::advance ();
-  return this->dllist_.remove (temp);
+  int result = this->dllist_.remove (temp);
+  delete temp;
+  return result;
 }
 
 template <class T> ACE_INLINE void 
