@@ -1,3 +1,10 @@
+Thu Oct 30 09:56:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/giop.h: Added comments to TAO_GIOP class explicitly pointing
+ 	out its use as a namespace.  Concurrently, I also scoped the CTOR,
+ 	Copy CTOR, and DTOR as 'private' so nobody can mistakenly
+ 	instantiate one of these puppies.
+
 Thu Oct 30 03:40:26 1997    <nw1@COYOTE>
 
 	* tests/Cubit/TAO/DII_Cubit/client.dsp:
