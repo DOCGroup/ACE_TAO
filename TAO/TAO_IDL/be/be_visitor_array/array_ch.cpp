@@ -271,7 +271,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       storage_class = "";
     }
 
-  if (this->ctx_->tdef ())
+  if (td != 0)
     {
       // Typedefed array.
       *os << storage_class << node->nested_type_name (scope, "_slice")
