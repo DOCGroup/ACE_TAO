@@ -810,6 +810,7 @@ David Delano <delanod@agcs.com>
 Boris Sukholitko <palisander@hotmail.com>
 Brian Mason <bmason@oresis.com>
 Thomas Groth <groth.th@stn-atlas.de>
+Damien Dufour <damien.dufour@horoquartz.fr>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
