@@ -1,3 +1,9 @@
+Wed Dec  2 17:40:54 1998  Shawn Michael Atkins  <sma1@lambada.cs.wustl.edu>
+
+	* performance-tests/Thruput/TAO/ttcp_decl.h: forgot to add this
+	along with the changes to utils.cpp.  Changed the definition of
+	some of the methods in utils.cpp like prusage.  
+
 Wed Dec  2 14:26:58 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp
