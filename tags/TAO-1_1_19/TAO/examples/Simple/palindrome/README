@@ -1,0 +1,3 @@
+This is a simple example that would take a string and check whether it
+is a palindrome or not. The return argument in the signature of the
+operation should return the result.
