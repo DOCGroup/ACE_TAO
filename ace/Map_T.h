@@ -64,7 +64,7 @@ public:
   int operator () (T &t);
 
   /// Returns the current value.
-  const T& current_value (void) const;
+  T& current_value (void) const;
 
 protected:
 
@@ -258,23 +258,7 @@ class ACE_Map
 {
 public:
 
-  // = ACE style traits.
-  typedef KEY
-          KEY_TYPE;
-  typedef VALUE
-          MAPPED_TYPE;
-  typedef ACE_Reference_Pair<const KEY, VALUE>
-          VALUE_TYPE;
-  typedef ACE_Iterator<VALUE_TYPE>
-          ITERATOR;
-  typedef ACE_Reverse_Iterator<VALUE_TYPE>
-          REVERSE_ITERATOR;
-  typedef ACE_Iterator_Impl<VALUE_TYPE>
-          ITERATOR_IMPLEMENTATION;
-  typedef ACE_Reverse_Iterator_Impl<VALUE_TYPE>
-          REVERSE_ITERATOR_IMPLEMENTATION;
-
-  // = STL style traits.
+  // = Traits.
   typedef KEY
           key_type;
   typedef VALUE
