@@ -45,6 +45,10 @@ ld < Atomic_Op_Test
 write 2, "Atomic_Op_Test ", 15
 ace_main; unld "Atomic_Op_Test"
 
+ld < Semaphore_Test
+write 2, "Semaphore_Test ", 15
+ace_main; unld "Semaphore_Test"
+
 ld < TSS_Test
 write 2, "TSS_Test ", 9
 ace_main; unld "TSS_Test"
