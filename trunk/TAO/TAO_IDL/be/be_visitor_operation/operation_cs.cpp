@@ -103,7 +103,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
     }
 
   // Generate the operation name
-  *os << " " << node->name ();
+  *os << " ::" << node->name ();
 
   // Generate the argument list with the appropriate mapping (same as
   // in the header file)
