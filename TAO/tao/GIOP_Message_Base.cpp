@@ -92,8 +92,10 @@ TAO_GIOP_Message_Base::generate_request_header (
                                     cdr))
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_LIB_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_LIB_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+        }
 
       return -1;
     }

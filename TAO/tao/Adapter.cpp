@@ -57,8 +57,10 @@ TAO_Adapter_Registry::close (int wait_for_completion
   ACE_CATCHANY
     {
       if (TAO_debug_level > 3)
-        ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             "Exception in TAO_Adapter_Registry::close () \n");
+        {
+          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                               "Exception in TAO_Adapter_Registry::close () \n");
+        }
       return;
     }
   ACE_ENDTRY;
@@ -83,8 +85,10 @@ TAO_Adapter_Registry::check_close (int wait_for_completion
   ACE_CATCHALL
     {
       if (TAO_debug_level > 3)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("(%P|%t) Exception in TAO_Adapter_Registry::check_close () \n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("(%P|%t) Exception in TAO_Adapter_Registry::check_close () \n")));
+        }
       return;
     }
   ACE_ENDTRY;

@@ -1149,7 +1149,7 @@ TAO_ORB_Core::fini (void)
 
   CORBA::release (this->ior_table_);
 
-  if (TAO_debug_level >= 3)
+  if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("Destroying ORB <%s>\n"),
@@ -1823,11 +1823,13 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
                    int perform_work
                    ACE_ENV_ARG_DECL_NOT_USED)
 {
-  if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
-                ACE_LIB_TEXT ("start [%s]\n"),
-                perform_work?ACE_LIB_TEXT("perform_work"):ACE_LIB_TEXT("run")));
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
+                  ACE_LIB_TEXT ("start [%s]\n"),
+                  perform_work?ACE_LIB_TEXT("perform_work"):ACE_LIB_TEXT("run")));
+    }
 
   // Fetch the Reactor
   ACE_Reactor *r = this->reactor ();
@@ -1876,18 +1878,22 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
       // strategy
       r->owner (ACE_Thread::self ());
 
-      if (TAO_debug_level >= 3)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
-                    ACE_LIB_TEXT ( "calling handle_events()\n")));
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
+                      ACE_LIB_TEXT ( "calling handle_events()\n")));
+        }
 
       result = r->handle_events (tv);
 
-      if (TAO_debug_level >= 3)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
-                    ACE_LIB_TEXT ("handle_events() returns %d\n"),
-                    result));
+      if (TAO_debug_level > 2)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
+                      ACE_LIB_TEXT ("handle_events() returns %d\n"),
+                      result));
+        }
 
       if (result == -1)
         {
@@ -1910,11 +1916,13 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
       // Otherwise just continue..
     }
 
-  if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
-                ACE_LIB_TEXT ("ends with result = %d\n"),
-                result));
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("TAO (%P|%t) - ORB_Core::run, ")
+                  ACE_LIB_TEXT ("ends with result = %d\n"),
+                  result));
+    }
 
   return result;
 }
@@ -2099,7 +2107,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
       if (TAO_debug_level > 3)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_LIB_TEXT ("(%P|%t) Exception in TAO_ORB_Core")
+                      ACE_LIB_TEXT ("TAO (%P|%t) - Exception in TAO_ORB_Core")
                       ACE_LIB_TEXT ("::destroy_interceptors () \n")));
         }
     }

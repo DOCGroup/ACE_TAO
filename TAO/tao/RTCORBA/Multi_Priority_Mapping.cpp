@@ -54,16 +54,15 @@ TAO_Multi_Priority_Mapping::TAO_Multi_Priority_Mapping (int base_native_priority
   }
 
   if (base_corba_priority_ > RTCORBA::maxPriority)
-  {
-     if (TAO_debug_level > 2)
-     {
-        ACE_DEBUG ((LM_DEBUG,
-           "TAO (%P|%t) - Multi_Priority_Mapping::ctor: "
-           " base_corba_priority %d out of range [%d,%d]\n",
-           base_corba_priority_, RTCORBA::minPriority, RTCORBA::maxPriority));
-     }
-  }
-
+    {
+       if (TAO_debug_level > 2)
+         {
+           ACE_DEBUG ((LM_DEBUG,
+             "TAO (%P|%t) - Multi_Priority_Mapping::ctor: "
+             " base_corba_priority %d out of range [%d,%d]\n",
+             base_corba_priority_, RTCORBA::minPriority, RTCORBA::maxPriority));
+         }
+    }
 }
 
 TAO_Multi_Priority_Mapping::~TAO_Multi_Priority_Mapping (void)

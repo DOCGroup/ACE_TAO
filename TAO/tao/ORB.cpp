@@ -182,7 +182,7 @@ CORBA::ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
                                           CORBA::COMPLETED_NO));
     }
 
-  if (TAO_debug_level >= 3)
+  if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_LIB_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
@@ -1675,10 +1675,12 @@ CORBA::ORB_init (int &argc,
   // PortableInterceptor specification.
   orb_init_info_temp->invalidate ();
 
-  if (TAO_debug_level >= 3)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT("TAO (%P|%t) created new ORB <%s>\n"),
-                ACE_TEXT_CHAR_TO_TCHAR (orbid_string.c_str ())));
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT("TAO (%P|%t) created new ORB <%s>\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR (orbid_string.c_str ())));
+    }
 
   // Before returning remember to store the ORB into the table...
   if (TAO_ORB_Table::instance ()->bind (orbid_string.c_str (),

@@ -105,12 +105,11 @@ namespace TAO
             details.reset_reply_service_info ();
 
             if (TAO_debug_level > 2)
-
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Invocation_Adapter::invoke_i, "
-                "handling forwarded locations \n"));
-            }
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Invocation_Adapter::invoke_i, "
+                  "handling forwarded locations \n"));
+              }
           }
       }
   }

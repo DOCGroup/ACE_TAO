@@ -41,9 +41,11 @@ TAO_Reactive_Connect_Strategy::wait (TAO_Connection_Handler *ch,
                                      ACE_Time_Value *max_wait_time)
 {
   if (TAO_debug_level > 2)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT ("(%P|%t) Waiting in the Reactor for")
-                ACE_LIB_TEXT (" connection completion - wait () \n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_LIB_TEXT ("TAO (%P|%t) - Waiting in the Reactor for ")
+                  ACE_LIB_TEXT ("connection completion - wait ()\n")));
+    }
 
   int result = 0;
 

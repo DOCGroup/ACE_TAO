@@ -289,9 +289,11 @@ namespace TAO
         // Unbind the dispatcher, since its of no use at this point of
         // time
         if (TAO_debug_level > 3)
-          ACE_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply , "
-                      "recovering after an error \n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply , "
+                        "recovering after an error \n"));
+          }
 
         // You the smarty, don't try to moving the unbind_dispatcher
         // () call since it looks like it is repeated twice. That

@@ -3601,8 +3601,10 @@ TAO_POA::key_to_object (const TAO::ObjectKey &key,
           || !imr->_stubobj ()->profile_in_use ())
         {
           if (TAO_debug_level > 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Missing ImR IOR, will not use the ImR\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Missing ImR IOR, will not use the ImR\n"));
+            }
           goto orbkey;
         }
 

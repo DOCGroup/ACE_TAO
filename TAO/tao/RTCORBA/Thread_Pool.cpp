@@ -201,11 +201,13 @@ TAO_Thread_Lane::validate_and_map_priority (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW (CORBA::DATA_CONVERSION ());
 
   if (TAO_debug_level > 3)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - creating thread at ")
-                ACE_TEXT ("(corba:native) priority %d:%d\n"),
-                this->lane_priority_,
-                this->native_priority_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - creating thread at ")
+                  ACE_TEXT ("(corba:native) priority %d:%d\n"),
+                  this->lane_priority_,
+                  this->native_priority_));
+    }
 }
 
 void

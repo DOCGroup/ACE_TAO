@@ -503,16 +503,20 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
         else
           {
             if (TAO_debug_level)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+              }
             return 0;
           }
         break;
       }
     default:
       if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%N |%l) Unable to handle this request \n")));
+        }
       return 0;
     }
 
