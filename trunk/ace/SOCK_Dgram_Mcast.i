@@ -74,3 +74,43 @@ ACE_SOCK_Dgram_Mcast::send (const iovec iov[],
 				     addr, 
                                      flags);
 }
+
+ASYS_INLINE ssize_t
+ACE_SOCK_Dgram_Mcast::send (const iovec buffers[],
+                      int buffer_count,
+                      size_t &number_of_bytes_sent,
+                      int flags,
+                      const ACE_Addr &addr,
+                      ACE_OVERLAPPED *overlapped,
+                      ACE_OVERLAPPED_COMPLETION_FUNC func) const
+{
+  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::send");
+
+  return ACE_SOCK_Dgram::send (buffers,
+ 							   buffer_count,
+							   number_of_bytes_sent,
+							   flags,
+							   addr,
+							   overlapped,
+							   func);
+
+}
+
+ASYS_INLINE ssize_t
+ACE_SOCK_Dgram_Mcast::send (const void *buf, 
+		      size_t n, 
+		      const ACE_Addr &addr, 
+		      int flags,
+                      ACE_OVERLAPPED *overlapped,
+                      ACE_OVERLAPPED_COMPLETION_FUNC func) const
+{
+  ACE_TRACE ("ACE_SOCK_Dgram_Mcast::send");
+
+	return ACE_SOCK_Dgram::send (buf,
+								 n,
+								 addr,
+								 flags,
+								 overlapped,
+								 func);
+}
+

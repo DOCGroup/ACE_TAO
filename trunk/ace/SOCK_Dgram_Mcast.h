@@ -122,6 +122,24 @@ public:
                 int flags = 0) const;
   // Send <n> <iovecs>.
 
+  ssize_t send (const iovec buffers[],
+                int buffer_count,
+                size_t &number_of_bytes_sent,
+                int flags,
+                const ACE_Addr &addr,
+                ACE_OVERLAPPED *overlapped,
+                ACE_OVERLAPPED_COMPLETION_FUNC func) const;
+  // Send <buffer_count> worth of <buffers> to <addr> using overlapped
+  // I/O (uses <WSASentTo>).  Returns 0 on success.
+
+  ssize_t send (const void *buf,
+                size_t n,
+                const ACE_Addr &addr,
+                int flags,
+                ACE_OVERLAPPED *overlapped,
+                ACE_OVERLAPPED_COMPLETION_FUNC func) const;
+  // Send an <n> byte <buf> to the datagram socket (uses <WSASentTo>).
+
   // = Options.
   int set_option (int option, 
 		  char optval);
