@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -14,43 +14,43 @@ endif # ! TAO_ROOT
 
 LDLIBS = -lTAO
 
-IDL_SRC	= Event_TypesC.cpp Event_TypesS.cpp
+IDL_SRC = Event_TypesC.cpp Event_TypesS.cpp
 
 PROG_SRCS = \
-	client.cpp \
-	server.cpp \
-	Server_i.cpp \
-	Client_i.cpp \
-	Event_Types_impl.cpp \
-	../Simple_util.cpp
+        client.cpp \
+        server.cpp \
+        Server_i.cpp \
+        Client_i.cpp \
+        Event_Types_impl.cpp \
+        ../Simple_util.cpp
 
 SRC = $(IDL_SRC) $(PROG_SRCS)
 
 SIMPLE_CLT_OBJS = \
-		Event_TypesC.o \
-		Event_TypesS.o \
-	        Client_i.o \
-		Event_Types_impl.o \
-		../Simple_util.o \
-		client.o
+                Event_TypesC.o \
+                Event_TypesS.o \
+                Client_i.o \
+                Event_Types_impl.o \
+                ../Simple_util.o \
+                client.o
 SIMPLE_SVR_OBJS = \
-		Event_TypesC.o \
-		Event_TypesS.o \
-		Server_i.o \
-		Event_Types_impl.o \
-		../Simple_util.o \
-		server.o
+                Event_TypesC.o \
+                Event_TypesS.o \
+                Server_i.o \
+                Event_Types_impl.o \
+                ../Simple_util.o \
+                server.o
 
 BIN = server \
       client
 
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 VBIN = $(BIN:%=%$(VAR))
 
 TAO_IDLFLAGS += -Ge 1
+
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -62,7 +62,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 LDFLAGS +=  -L$(TAO_ROOT)/tao -L$(ACE_ROOT)/ace
@@ -73,14 +73,19 @@ override TAO_IDLFLAGS += -Gc -Gv
 .PRECIOUS: Event_TypesS.cpp Event_TypesS.i Event_TypesS.h
 .PRECIOUS: Event_TypesS_T.cpp Event_TypesS_T.i Event_TypesS_T.h
 
-server:	$(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
+server: $(addprefix $(VDIR),$(SIMPLE_SVR_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
-client:	$(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
+client: $(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf Event_TypesC.* Event_TypesS.* Event_TypesS_T.*
+	-$(RM) -r Event_TypesC.* Event_TypesS.* Event_TypesS_T.*
+	rm -r Event_TypesC.* Event_TypesS.* Event_TypesS_T.*
+
+#----------------------------------------------------------------------------
+#       Dependencies
+#----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
