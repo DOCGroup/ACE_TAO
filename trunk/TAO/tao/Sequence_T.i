@@ -381,7 +381,7 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::operator[] (CORBA::ULong slot) const
 {
   ACE_ASSERT (slot < this->maximum_);
   T **const tmp = ACE_reinterpret_cast (T ** ACE_CAST_CONST, this->buffer_);
-  return TAO_Object_Manager<T> (tmp + slot, this->release_);
+  return TAO_Object_Manager<T,T_var> (tmp + slot, this->release_);
 }
 
 // *************************************************************
