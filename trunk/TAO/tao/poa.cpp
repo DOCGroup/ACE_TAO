@@ -2197,7 +2197,7 @@ TAO_POA::locate_servant (const TAO_ObjectKey &key,
     case TAO_POA::DEFAULT_SERVANT:
     case TAO_POA::SERVANT_MANAGER:
       return 0;
-      
+
     case TAO_POA::NOT_FOUND:
       return -1;
     }
@@ -2741,7 +2741,7 @@ TAO_POA::create_object_key (const PortableServer::ObjectId &id)
   // Then copy the ID into the key
   starting_at += TAO_POA::name_separator_length ();
   ACE_OS::memcpy (&buffer[starting_at],
-                  id.buffer (),
+                  id.get_buffer (),
                   id.length ());
 
   // Create the key, giving the ownership of the buffer to the
@@ -2759,7 +2759,7 @@ TAO_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
 #if defined (POA_NAME_IN_POA_GENERATED_ID)
 
   // Grab the buffer
-  const char *id_buffer = (const char *) id.buffer ();
+  const char *id_buffer = (const char *) id.get_buffer ();
 
   // Check to see if the POA name is the first part of the id
   return
@@ -2779,7 +2779,7 @@ int
 TAO_POA::is_poa_generated_key (const TAO_ObjectKey &key)
 {
   // Grab the buffer
-  const char *key_buffer = (const char *) key.buffer ();
+  const char *key_buffer = (const char *) key.get_buffer ();
 
   // Check to see if the complete POA name is the first part of the
   // key
@@ -2940,7 +2940,7 @@ TAO_POA::ObjectId_to_string (const PortableServer::ObjectId &id)
   CORBA::String string = CORBA::string_alloc (id.length ());
 
   // Copy the data
-  ACE_OS::memcpy (string, id.buffer (), id.length ());
+  ACE_OS::memcpy (string, id.get_buffer (), id.length ());
 
   // Null terminate the string
   string[id.length ()] = '\0';
@@ -2956,7 +2956,7 @@ TAO_POA::ObjectId_to_wstring (const PortableServer::ObjectId &id)
   CORBA::WString string = CORBA::wstring_alloc (id.length ());
 
   // Copy the data
-  ACE_OS::memcpy (string, id.buffer (), id.length () * sizeof (CORBA::WChar));
+  ACE_OS::memcpy (string, id.get_buffer (), id.length () * sizeof (CORBA::WChar));
 
   // Null terminate the string
   string[id.length ()] = '\0';

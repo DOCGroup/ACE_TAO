@@ -3,9 +3,18 @@ Wed Mar 18 18:41:34 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 	* orbsvcs/tests/CosPropertyService/main.cpp (main): Added testcode
 	for NamesIterator.
 
+Wed Mar 18 18:33:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/any.cpp: There was a bug in the assignment operator whereby
+	a Release was causing the Any object itself getting deleted.
+
+	* tao/poa.cpp: Changed occurrences of "buffer ()" used on the
+	object key (which is a sequence) to use "get_buffer" according to
+	the latest C++ mapping.
+
 Wed Mar 18 18:32:04 1998  Sergio Flores  <sergio@mambo.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: 		
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp:
 	* orbsvcs/orbsvcs/Naming/CosNaming_i.h: Fixed some allocation
  	errors and added synchronization mechanism for static internal
  	data structures.  Also fixed an undefined symbol due to templates
