@@ -9,7 +9,8 @@ ACE_RCSID (LoadBalancing,
            LB_ReplicaLocator,
            "$Id$")
 
-TAO_LB_ReplicaLocator::TAO_LB_ReplicaLocator (TAO_LB_LoadBalancer *lb)
+TAO_LB_ReplicaLocator::TAO_LB_ReplicaLocator (
+  TAO_LoadBalancing_ReplicationManager_i *lb)
   : load_balancer_ (lb)  // Obviously, this pointer shouldn't be zero!
 {
 }

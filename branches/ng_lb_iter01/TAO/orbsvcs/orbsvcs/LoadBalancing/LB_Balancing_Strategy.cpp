@@ -11,8 +11,8 @@ TAO_LB_Balancing_Strategy::~TAO_LB_Balancing_Strategy (void)
 {
 }
 
-void
-TAO_LB_Balancing_Strategy::load_changed (TAO_LB_ReplicaProxy *,
-                                         CORBA::Environment &)
-{
-}
+// void
+// TAO_LB_Balancing_Strategy::load_changed (TAO_LB_ReplicaProxy *,
+//                                          CORBA::Environment &)
+// {
+// }

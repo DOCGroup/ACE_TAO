@@ -4,6 +4,8 @@
 
 #include "LoadBalancingI.h"
 
+#include "LB_Balancing_Strategy.h"
+
 ACE_RCSID (LoadBalancing,
            LoadBalancingI,
            "$Id$")
@@ -22,7 +24,7 @@ TAO_LoadBalancing_ReplicationManager_i::TAO_LoadBalancing_ReplicationManager_i
     object_group_manager_ (this->property_manager_,
                            this->object_group_map_)
 {
-  (void) this->init ();
+  //  (void) this->init ();
 }
 
 // Implementation skeleton destructor
@@ -45,7 +47,8 @@ TAO_LoadBalancing_ReplicationManager_i::get_load_notifier (
   ACE_THROW_SPEC ((CORBA::SystemException,
     LoadBalancing::InterfaceNotFound))
 {
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
+                    LoadBalancing::LoadNotifier::_nil ());
 }
 
 void
@@ -100,7 +103,7 @@ TAO_LoadBalancing_ReplicationManager_i::set_type_properties (
 
 LoadBalancing::Properties *
 TAO_LoadBalancing_ReplicationManager_i::get_type_properties (
-    const char * /* type_id */,
+    const char *type_id,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -148,8 +151,8 @@ TAO_LoadBalancing_ReplicationManager_i::get_properties (
                    LoadBalancing::ObjectGroupNotFound))
 {
   return
-    this->property_manager_.get_properties_dynamically (object_group,
-                                                        ACE_TRY_ENV);
+    this->property_manager_.get_properties (object_group,
+                                            ACE_TRY_ENV);
 }
 
 LoadBalancing::ObjectGroup_ptr
@@ -206,23 +209,6 @@ TAO_LoadBalancing_ReplicationManager_i::remove_member (
     this->object_group_manager_.remove_member (object_group,
                                                the_location,
                                                ACE_TRY_ENV);
-}
-
-LoadBalancing::ObjectGroup_ptr
-TAO_LoadBalancing_ReplicationManager_i::set_primary_member (
-    LoadBalancing::ObjectGroup_ptr object_group,
-    const LoadBalancing::Location &the_location,
-    CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   LoadBalancing::ObjectGroupNotFound,
-                   LoadBalancing::MemberNotFound,
-                   LoadBalancing::PrimaryNotSet,
-                   LoadBalancing::BadReplicationStyle))
-{
-  return
-    this->object_group_manager_.set_primary_member (object_group,
-                                                    the_location,
-                                                    ACE_TRY_ENV);
 }
 
 LoadBalancing::Locations *
@@ -305,7 +291,7 @@ TAO_LoadBalancing_ReplicationManager_i::process_criteria (
   // List of invalid criteria.  If this list has a length greater than
   // zero, then the LoadBalancing::InvalidCriteria exception will
   // be thrown.
-  TAO_Loadbalancing::Criteria invalid_criteria;
+  LoadBalancing::Criteria invalid_criteria;
 
   int found_factory = 0; // If factory was found in the_criteria, then
                          // set to 1.
@@ -336,8 +322,8 @@ TAO_LoadBalancing_ReplicationManager_i::process_criteria (
 
       // Unknown property
       else
-        ACE_THROW (TAO_LoadBalancer::InvalidProperty (the_criteria[i].nam,
-                                                      the_criteria[i].val));
+        ACE_THROW (LoadBalancing::InvalidProperty (the_criteria[i].nam,
+                                                   the_criteria[i].val));
     }
 
   if (invalid_criteria.length () != 0)
@@ -366,10 +352,14 @@ TAO_LoadBalancing_ReplicationManager_i::replica (
   CORBA::Environment &ACE_TRY_ENV)
 {
   TAO_LB_ObjectGroup_Map_Entry *entry = 0;
-  if (this->object_group_map_.find (oid, entry) != 0)
-    ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), CORBA::Object::_nil ());
 
-  return this->balancing_strategy_->replica (entry);
+  if (this->object_group_map_.find (oid, entry) != 0)
+    {
+      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
+                        CORBA::Object::_nil ());
+    }
+
+  return this->balancing_strategy_->replica (entry, ACE_TRY_ENV);
 }
 
 int
@@ -381,8 +371,8 @@ TAO_LoadBalancing_ReplicationManager_i::init (
       // Create a new transient servant manager object in the child
       // POA.
       PortableServer::ServantManager_ptr tmp;
-      ACE_NEW_RETURN (servant_manager,
-                      TAO_LB_ReplicaLocator,
+      ACE_NEW_RETURN (tmp,
+                      TAO_LB_ReplicaLocator (this),
                       -1);
 
       PortableServer::ServantManager_var servant_manager =
@@ -440,6 +430,8 @@ TAO_LoadBalancing_ReplicationManager_i::init (
       this->poa_->set_servant_manager (servant_manager.in (),
                                        ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      this->generic_factory_.poa (this->poa_.in ());
     }
   ACE_CATCHANY
     {

@@ -23,10 +23,17 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/LoadBalancingS.h"
+
+#include "LB_ReplicaLocator.h"
 #include "LB_ObjectGroup_Map.h"
 #include "LB_PropertyManager.h"
 #include "LB_GenericFactory.h"
 #include "LB_ObjectGroupManager.h"
+
+
+/// Forward declarations
+class TAO_LB_Balancing_Strategy;
+
 
 class TAO_LoadBalancing_Export TAO_LoadBalancing_ReplicationManager_i
   : public virtual POA_LoadBalancing::ReplicationManager
@@ -267,6 +274,12 @@ public:
   CORBA::Object_ptr replica (const PortableServer::ObjectId &oid,
                              CORBA::Environment &ACE_TRY_ENV);
 
+
+  /// Initialize the load balancer.  This will cause a child POA to be
+  /// created with the appropriate policies to support ServantLocators
+  /// (i.e. for the ReplicaLocator).
+  int init (PortableServer::POA_ptr root_poa);
+
 private:
 
   /// Extract the value of the InitialNumberReplicas property from
@@ -287,10 +300,6 @@ private:
     const char *type_id,
     const LoadBalancing::Criteria &the_criteria,
     LoadBalancing::FactoryInfos &factory_infos) const;
-
-  /// Create a POA with the appropriate policies to support
-  /// ServantLocators (i.e. the ReplicaLocator).
-  int init (PortableServer::POA_ptr root_poa);
 
   /// Assignment operator for LoadBalancing::FactoryInfo instances.
   void operator= (LoadBalancing::FactoryInfo &lhs,
@@ -322,6 +331,10 @@ private:
   /// The ObjectGroupManager that implements the functionality
   /// necessary for application-controlled object group membership.
   TAO_LB_ObjectGroupManager object_group_manager_;
+
+  /// The load balancing strategy used when making load balancing
+  /// decisions.
+  TAO_LB_Balancing_Strategy *balancing_strategy_;
 
 };
 

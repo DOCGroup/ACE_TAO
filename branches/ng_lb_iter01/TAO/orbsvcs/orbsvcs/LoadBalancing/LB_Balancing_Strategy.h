@@ -23,7 +23,8 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_LB_ReplicaProxy;
+// class TAO_LB_ReplicaProxy;
+class TAO_LB_ObjectGroup_Map_Entry;
 
 
 /**
@@ -46,23 +47,24 @@ public:
   //    that?
   /// Return the object reference to the Replica to which requests should
   /// be redirected.
-  virtual CORBA::Object_ptr replica (CORBA::Environment &ACE_TRY_ENV)
+  virtual CORBA::Object_ptr replica (TAO_LB_ObjectGroup_Map_Entry *entry,
+                                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
-  /// Insert ReplicaProxy servant into the set of replica proxies upon
-  /// which the load balancing algorithm is performed.
-  virtual int insert (TAO_LB_ReplicaProxy *) = 0;
+//   /// Insert ReplicaProxy servant into the set of replica proxies upon
+//   /// which the load balancing algorithm is performed.
+//   virtual int insert (TAO_LB_ReplicaProxy *) = 0;
 
-  /// Remove ReplicaProxy servant from the set of replica proxies.
-  virtual int remove (TAO_LB_ReplicaProxy *) = 0;
+//   /// Remove ReplicaProxy servant from the set of replica proxies.
+//   virtual int remove (TAO_LB_ReplicaProxy *) = 0;
 
   /**
    * The load on one proxy has changed.
    * @@ Ossama: see my comments on LoadBalancing_i about changing the
    * signature of this method.
    */
-  virtual void load_changed (TAO_LB_ReplicaProxy *proxy,
-                             CORBA::Environment &ACE_TRY_ENV);
+//   virtual void load_changed (TAO_LB_ReplicaProxy *proxy,
+//                              CORBA::Environment &ACE_TRY_ENV);
 };
 
 #if !defined (__ACE_INLINE__)
