@@ -149,27 +149,31 @@ CORBA_Exception::_decr_refcnt (void)
   return 0;
 }
 
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+
 // Convenient ostrean operator.
-ostream& operator<< (ostream &os, 
+ostream& operator<< (ostream &os,
                      const CORBA_Exception &e)
 {
   CORBA::Any tmp;
   tmp <<= e;
- 
+
   CORBA::TypeCode_var tc = tmp.type ();
   const char *p = tc->name ();
 
-  if (*p != '\0') 
+  if (*p != '\0')
     {
       os << p << " (" << tc->id () << ')';
     }
-  else 
+  else
     {
       os << tc->id ();
     }
 
   return os;
 }
+
+#endif // (ACE_LACKS_IOSTREAM_TOTALLY)
 
 // Avoid zillions of not-quite-inlined copies of utilities.
 
