@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_HASH_MAP_WITH_ALLOCATOR_T_H
 #define ACE_HASH_MAP_WITH_ALLOCATOR_T_H
 #include "ace/pre.h"
@@ -39,7 +38,6 @@
  *     is meaningful!  That is why we need this wrapper, which
  *     insures that appropriate allocator pointer is in place for
  *     each call.
- *
  */
 template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_With_Allocator :

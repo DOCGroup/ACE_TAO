@@ -1,16 +1,14 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    Shared_Object.h
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_SHARED_OBJECT_H
 #define ACE_SHARED_OBJECT_H
@@ -39,7 +37,7 @@ public:
   /// Terminates object when dynamic unlinking occurs.
   virtual int fini (void);
 
-  /// Returns information on active object.
+  /// Returns information on a service object.
   virtual int info (ACE_TCHAR **info_string, size_t length = 0) const;
 
   virtual ~ACE_Shared_Object (void);
