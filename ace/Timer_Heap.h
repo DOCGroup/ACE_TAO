@@ -143,8 +143,4 @@ private:
   // array.
 };
 
-#if defined (__ACE_INLINE__)
-#include "ace/Timer_Heap.i"
-#endif /* __ACE_INLINE__ */
-
 #endif /* ACE_TIMER_HEAP_H */
