@@ -113,7 +113,7 @@ OBJFILES = \
 	$(OBJDIR)\Reactor_Per_Priority.obj \
 	$(OBJDIR)\Reactor_Registry.obj \
 	$(OBJDIR)\Remote_Object_Proxy_Broker.obj \
-	$(OBJDIR)\Remote_Object_Proxy_Impl \
+	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
 	$(OBJDIR)\Request.obj \
 	$(OBJDIR)\Request_Info.obj \
