@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(*server): taoserver {
+project(*server): taoserver, utils {
   avoids += repo
 
   IDL_Files {

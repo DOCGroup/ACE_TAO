@@ -21,7 +21,7 @@
 #ifndef IDENTITY_SERVER_H_
 #define IDENTITY_SERVER_H_
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/Utils/ORB_Manager.h"
 #include "Load_BalancerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
