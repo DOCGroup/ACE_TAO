@@ -1,3 +1,13 @@
+Fri Aug 06 08:22:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Object_Manager.cpp: with ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK,
+          made the ACE_Static_Object_Lock_lock instance static, to
+          match the non-ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK behavior.
+          Thanks to Jody for this change.
+
+          Also, consolidated the code to alway use the
+          ACE_Static_Object_Lock_Type typedef.
+
 Fri Aug 06 06:55:49 1999  Jody Hagins <jody@atdesk.com>
 
         * include/makeinclude/rules.local.GNU (depend.local): added
