@@ -1,5 +1,8 @@
 Sun Jun 21 00:16:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* ace/OS.i (dlerror): Have to treat UNICODE differently because
+	  FormatMessage takes wchar when UNICODE is defined.
+
 	* ace/WFMO_Reactor.{h,i,cpp}: Changed the parent class of
 	  ACE_WFMO_Reactor_Notify from ACE_Event_Handler to
 	  ACE_Reactor_Notify.
