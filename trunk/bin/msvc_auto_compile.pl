@@ -15,6 +15,7 @@ else {
 @directories = ();
 
 @ace_dirs = ("$ACE_ROOT\\ace",
+             "$ACE_ROOT\\XML",
              "$ACE_ROOT\\apps",
              "$ACE_ROOT\\ASNMP",
              "$ACE_ROOT\\examples",
@@ -111,7 +112,7 @@ sub Build ($$)
   }
   else {
     print "Auto_compiling $project : $config\n";
- 
+
     print "Building $project $config\n" if $verbose;
 
     return system ("msdev.com $project /MAKE \"$config\" $Build_Cmd $useenv");
