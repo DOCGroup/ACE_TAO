@@ -1,3 +1,31 @@
+Tue Mar 16 01:28:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor.cpp:
+	* tests/Portable_Interceptors/PICurrent/ClientRequestInterceptor2.cpp:
+
+	  Clarified some debugging/progress messages.
+
+	* tests/Portable_Interceptors/PICurrent/test_i.cpp (invoke_me):
+
+	  Changed order of one method call (invoke_you).  Invoking it at
+	  its previous location caused the TSC to be clobbered, which
+	  ended up causing the test to fail.  It turns out the TSC
+	  clobbering is the correct behavior, meaning that the new test
+	  failure revealed a bug in the previous TAO PICurrent code.  In
+	  particular, the TSC was previously not clobbered when it should
+	  have.  Reordering the method call in question delays TSC
+	  clobbering until after the test has a chance to extract data
+	  from the TSC.  In that particular case, we're testing data
+	  extraction, not TSC clobbering.
+
+	* tests/Portable_Interceptors/PICurrent/README:
+
+	  Updated expected output.
+
+	* tests/Portable_Interceptors/PICurrent/Makefile:
+
+	  Updated dependencies.
+
 Tue Mar 16 00:49:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	The following changes are an overhaul that address a number of
