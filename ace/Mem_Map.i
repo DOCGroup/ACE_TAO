@@ -93,7 +93,14 @@ ACE_Mem_Map::unmap (int len)
 
   this->file_mapping_ = ACE_INVALID_HANDLE;
 
-  return ACE_OS::munmap (this->base_addr_, len < 0 ? this->length_ : len);
+  if (this->base_addr_ != MAP_FAILED)
+    {
+      int result = ACE_OS::munmap (this->base_addr_, len < 0 ? this->length_ : len);
+      this->base_addr_ = MAP_FAILED;
+      return result;
+    }
+  else
+    return 0;
 }
 
 // Unmap the region starting at <addr_>.

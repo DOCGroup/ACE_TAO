@@ -140,7 +140,9 @@ public:
   // Set underlying <ACE_HANDLE>.  Note that this method assumes
   // ownership of the <handle> and will close it down in <remove>.  If
   // you want the <handle> to stay open when <remove> is called make
-  // sure to call <dup> on the <handle> before closing it.
+  // sure to call <dup> on the <handle> before closing it. You are
+  // responsible for the closing the existing <handle> before
+  // overwriting it.
 
   void dump (void) const;
   // Dump state of the object.
@@ -661,6 +663,14 @@ public:
   ACE_event_t handle (void) const;
   // Underlying handle to event.
 
+  void handle (ACE_event_t new_handle);
+  // Set the underlying handle to event. Note that this method assumes
+  // ownership of the <handle> and will close it down in <remove>.  If
+  // you want the <handle> to stay open when <remove> is called make
+  // sure to call <dup> on the <handle> before closing it.  You are
+  // responsible for the closing the existing <handle> before
+  // overwriting it.
+
   int wait (void);
   // if MANUAL reset 
   //    sleep till the event becomes signaled
@@ -714,8 +724,9 @@ class ACE_Export ACE_Manual_Event : public ACE_Event
   //     Manual Events.
   //
   // = DESCRIPTION
-  //     Specialization of Event mechanism which 
-  //     wakes up all on signal()
+  //
+  //     Specialization of Event mechanism which wakes up all waiting
+  //     threads on signal()
 {
 public:
   ACE_Manual_Event (int initial_state = 0,
@@ -736,8 +747,9 @@ class ACE_Export ACE_Auto_Event : public ACE_Event
   //     Auto Events.
   //
   // = DESCRIPTION
-  //     Specialization of Event mechanism which 
-  //     wakes up all on signal()
+  // 
+  //     Specialization of Event mechanism which wakes up one waiting
+  //     thread on signal()
 {
 public:
   ACE_Auto_Event (int initial_state = 0,
