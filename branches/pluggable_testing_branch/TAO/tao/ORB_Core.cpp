@@ -749,8 +749,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     return -1;
 
   // Have registry parse the preconnects
-  if (this->orb_params ()->endpoints ().is_empty () == 0)
-    this->connector_registry ()->preconnect (this->orb_params ()->endpoints ());
+  if (this->orb_params ()->preconnects ().is_empty () == 0)
+    this->connector_registry ()->preconnect (this->orb_params ()->preconnects ());
 
   return 0;
 }
