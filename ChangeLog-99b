@@ -1,5 +1,12 @@
 Sat Jun 19 10:34:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Acceptor.cpp,
+	  ace/Connector.cpp: Modified the make_svc_handler() hook method
+ 	  in these classes to set the Reactor of the newly created
+ 	  SVC_HANDLER to the same reactor that the Acceptor or Connector
+ 	  is using.  Thanks to John Aughey <jha@FreeBSD.ORG> for
+ 	  this suggestion.
+
 	* man/{html,man3}: Zapped the Ace_Export.* files since
 	  they don't belong here.  Thanks to Zoran Ivanovic
           <zorani@pathcom.com> for reporting this.
