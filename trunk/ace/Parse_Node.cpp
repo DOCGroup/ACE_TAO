@@ -333,7 +333,7 @@ ACE_Location_Node::handle (const ACE_SHLIB_HANDLE h)
   this->handle_ = h;
 }
 
-const ACE_SHLIB_HANDLE
+ACE_SHLIB_HANDLE
 ACE_Location_Node::handle (void) const
 {
   ACE_TRACE ("ACE_Location_Node::handle");
@@ -354,7 +354,7 @@ ACE_Location_Node::dispose (void) const
   return this->must_delete_;
 }
 
-const ACE_SHLIB_HANDLE
+ACE_SHLIB_HANDLE
 ACE_Location_Node::open_handle (void)
 {
   ACE_TRACE ("ACE_Location_Node::open_handle");

@@ -167,7 +167,7 @@ public:
   ACE_Location_Node (void);
   virtual const void *symbol (void) = 0;
   virtual void set_symbol (const void *h);
-  const ACE_SHLIB_HANDLE handle (void) const;
+  ACE_SHLIB_HANDLE handle (void) const;
   void handle (const ACE_SHLIB_HANDLE h);
   const char *pathname (void) const;
   void pathname (const char *h);
@@ -182,7 +182,7 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
-  const ACE_SHLIB_HANDLE open_handle (void);
+  ACE_SHLIB_HANDLE open_handle (void);
 
   ACE_SHLIB_HANDLE handle_;
   const void *symbol_;
