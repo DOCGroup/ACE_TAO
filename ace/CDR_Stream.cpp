@@ -15,11 +15,14 @@ ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
   size_t newsize =
     ACE_CDR::first_size (minsize);
 
-  if (newsize < mb->size ())
+  if (newsize <= mb->size ())
     return 0;
 
-  ACE_Message_Block tmp (newsize);
+  ACE_Data_Block *db =
+    mb->data_block ()->clone_nocopy ();
+  db->size (newsize);
 
+  ACE_Message_Block tmp (db);
   ACE_CDR::mb_align (&tmp);
 
   tmp.copy (mb->rd_ptr (), mb->length());
