@@ -1,6 +1,13 @@
+Mon Nov 01 13:43:39 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Trading_Service/Trading_Server.cpp (main):
+          removed ACE_CHECK_RETURN (1); at end because it wouldn't
+          compile without native exception handling.  The catch
+          block returns 1 if there's an exception, anyways.
+
 Mon Nov  1 12:29:17 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-        * orbsvcs/Trading_Service/Trading_Service.dsp: Added 
+        * orbsvcs/Trading_Service/Trading_Service.dsp: Added
           Trading_Server.cpp to the MSVC project.
 
 Sun Oct 31 22:22:15 1999  Luther J Baker  <ljb1@cs.wustl.edu>
