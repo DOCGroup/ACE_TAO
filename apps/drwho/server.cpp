@@ -1,72 +1,90 @@
 // $Id$
-/* Driver program for the server.  Note that it is easy to reuse the
-   server for other distributed programs.  Pretty much all that must
-   change are the functions registered with the communciations
-   manager. */ 
 
-#include "ace/OS.h"
+// ============================================================================
+//
+// = LIBRARY
+//    drwho
+//
+// = FILENAME
+//    server.cpp
+//
+// = DESCRIPTION
+//   Driver program for the server.  Note that it is easy to reuse the
+//   server for other distributed programs.  Pretty much all that must
+//   change are the functions registered with the communciations
+//   manager.
+//
+// = AUTHOR
+//    Douglas C. Schmidt
+//
+// ============================================================================
+
 #include "Options.h"
-#include "new.h"
 #include "SMR_Server.h"
 
 static char *
 tstamp (void)
 {
-  long    time_now;
-  char   *temp;
+  long time_now;
+  char *temp;
 
-  time_now = time (0);
-  temp = asctime (localtime (&time_now));
+  time_now = ACE_OS::time (0);
+  temp = ACE_OS::asctime (ACE_OS::localtime (&time_now));
   temp[12] = 0;
   return temp;
 }
 
-/* Catch the obvious signals and die with dignity... */
+// Catch the obvious signals and die with dignity...
 
 static void
 exit_server (int sig)
 {
-  char buffer[80];
-  sprintf (buffer, "%s exiting on signal", tstamp ());
-  psignal (sig, buffer);
-  monitor (0);
-  exit (0);
+  ACE_DEBUG ((LM_DEBUG,
+              "%s exiting on signal %S",
+              tstamp (),
+              sig));
+  ACE_OS::exit (0);
 }
 
-/* Returns TRUE if the program was started by INETD. */
+// Returns TRUE if the program was started by INETD.
 
 static int
 started_by_inetd (void)
 {
-  /* SUPPRESS 175 */
-  sockaddr_in 	sin;
-  int 		size = sizeof sin;
+  sockaddr_in sin;
+  int size = sizeof sin;
 
-  return getsockname (0, (sockaddr *) &sin, &size) == 0;
+  return ACE_OS::getsockname (0,
+                              (sockaddr *) &sin,
+                              &size) == 0;
 }
 
-/* Does the drwho service. */
+// Does the drwho service. 
 
 static void
 do_drwho (SMR_Server &smr_server)
 {
   if (smr_server.receive () == -1)
-    perror (Options::program_name);
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                Options::program_name));
 	  
   if (smr_server.send () == -1)
-    perror (Options::program_name);
+    ACE_ERROR ((LM_ERROR,
+                "%p\n",
+                Options::program_name));
 }
 
-/* If the server is started with any argument at all then it doesn't
-   fork off a child process to do the work.  This is useful when
-   debugging! */
+// If the server is started with any argument at all then it doesn't
+// fork off a child process to do the work.  This is useful when
+// debugging!
 
 int
 main (int argc, char *argv[])
 {
-  signal (SIGTERM, SIG_PF (exit_server));
-  signal (SIGINT, SIG_PF (exit_server));
-  signal (SIGQUIT, SIG_PF (exit_server));
+  ACE_OS::signal (SIGTERM, exit_server);
+  ACE_OS::signal (SIGINT, exit_server);
+  ACE_OS::signal (SIGQUIT, exit_server);
 
   Options::set_options (argc, argv);
   Options::set_opt (Options::STAND_ALONE_SERVER);
@@ -74,13 +92,9 @@ main (int argc, char *argv[])
   int inetd_controlled = started_by_inetd ();
 
   if (!inetd_controlled && Options::get_opt (Options::BE_A_DAEMON))
-    daemon_start (1);
-
-  mark_memory ();
+    ACE::daemonize ();
 
   SMR_Server smr_server (Options::port_number);
-
-  /* I'm not sure what this should do yet... */
 
   if (inetd_controlled)
     do_drwho (smr_server);
@@ -92,5 +106,6 @@ main (int argc, char *argv[])
 
       /* NOTREACHED */
     }
-  exit (0);
+
+  return 0;
 }

@@ -21,7 +21,6 @@
 #if defined (_CM_CLIENT_H)
 #define _CM_CLIENT_H
 
-#include "ace/OS.h"
 #include "global.h"
 #include "Comm_Manager.h"
 
@@ -29,7 +28,7 @@ class CM_Client : public Comm_Manager
 {
   // = TITLE
   //   Provides a virtual communcations layer for the client in the
-  //   drwho program.  
+  //   drwho program.
 public:
   // = Initialization and termination.
   CM_Client (void);
