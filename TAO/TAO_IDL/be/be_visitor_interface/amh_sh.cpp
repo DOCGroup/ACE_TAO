@@ -184,7 +184,8 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
     }
 
   delete amh_node;
-  *os << "\n";
+
+  *os << be_uidt_nl << "};\n\n";
   return 0;
 
 }
