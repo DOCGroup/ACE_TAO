@@ -4374,8 +4374,32 @@ ACE_OS::accept (ACE_HANDLE handle, struct sockaddr *addr,
                                  (ACE_SOCKET_LEN *) addrlen),
                        ACE_HANDLE, ACE_INVALID_HANDLE);
 #else
+
+  // On a non-blocking socket with no connections to accept, this system
+  // call will return EWOULDBLOCK or EAGAIN, depending on the platform.
+  // UNIX 98 allows either errno, and they may be the same numeric value.
+  // So to make life easier for upper ACE layers as well as application
+  // programmers, always change EAGAIN to EWOULDBLOCK.  Rather than hack the
+  // ACE_OSCALL_RETURN macro, it's handled explicitly here.  If the ACE_OSCALL
+  // macro ever changes, this function needs to be reviewed.
+  // On Win32, the regular macros can be used, as this is not an issue.
+
+#  if defined (ACE_WIN32)
   ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN *) addrlen),
                        ACE_HANDLE, ACE_INVALID_HANDLE);
+#  else
+
+  ACE_HANDLE ace_result_;
+  do
+    ace_result_ = ::accept ((ACE_SOCKET) handle, addr,
+                            (ACE_SOCKET_LEN *) addrlen) ;
+  while (ace_result_ == ACE_INVALID_HANDLE && errno == EINTR &&
+         ACE_LOG_MSG->restart ());
+  if (ace_result_ == ACE_INVALID_HANDLE && errno == EAGAIN)
+    errno = EWOULDBLOCK;
+  return ace_result_;
+
+#  endif /* defined (ACE_WIN32) */
 #endif /* defined (ACE_PSOS) */
 }
 
@@ -4489,7 +4513,29 @@ ACE_INLINE int
 ACE_OS::recv (ACE_HANDLE handle, char *buf, int len, int flags)
 {
   // ACE_TRACE ("ACE_OS::recv");
-  ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf, len, flags), int, -1);
+
+
+  // On UNIX, a non-blocking socket with no data to receive, this system
+  // call will return EWOULDBLOCK or EAGAIN, depending on the platform.
+  // UNIX 98 allows either errno, and they may be the same numeric value.
+  // So to make life easier for upper ACE layers as well as application
+  // programmers, always change EAGAIN to EWOULDBLOCK.  Rather than hack the
+  // ACE_OSCALL_RETURN macro, it's handled explicitly here.  If the ACE_OSCALL
+  // macro ever changes, this function needs to be reviewed.
+  // On Win32, the regular macros can be used, as this is not an issue.
+
+#if defined (ACE_WIN32)
+  ACE_SOCKCALL_RETURN (::recv ((ACE_SOCKET) handle, buf, len, flags), int, -1);#else
+
+  int ace_result_;
+  do
+    ace_result_ = ::recv ((ACE_SOCKET) handle, buf, len, flags);
+  while (ace_result_ == -1 && errno == EINTR && ACE_LOG_MSG->restart ());
+  if (ace_result_ == -1 && errno == EAGAIN)
+    errno = EWOULDBLOCK;
+  return ace_result_;
+
+#endif /* defined (ACE_WIN32) */
 }
 
 ACE_INLINE int
