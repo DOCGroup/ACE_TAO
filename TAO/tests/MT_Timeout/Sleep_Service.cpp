@@ -26,5 +26,6 @@ void
 Sleep_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));
   this->orb_->shutdown (0, ACE_TRY_ENV);
 }
