@@ -1,3 +1,9 @@
+Sun Aug 22 22:11:49 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+
+	  Fixed redeclaration error in VC6 builds.
+
 Sun Aug 22 20:08:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* CIDLC/ServantSourceGenerator.cpp:
