@@ -1,84 +1,90 @@
+Wed May 02 05:37:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Queued_Message_Test/run_test.pl:
+          Create a dummy run_test.pl to avoid problems on recalcitrant
+          platforms.
+
 Tue May 1 22:42:44 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/GIOP_Message_Generator_Parser_10.cpp (write_reply_header):
+        * tao/GIOP_Message_Generator_Parser_10.cpp (write_reply_header):
 
-	  Silence the false Fuzz error about a missing ACE_CHECK by adding
-	  the awful "// FUZZ: ignore check_for_ace_check" comment hack.
+          Silence the false Fuzz error about a missing ACE_CHECK by adding
+          the awful "// FUZZ: ignore check_for_ace_check" comment hack.
 
 Tue May  1 22:14:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/POA/Etherealization/Makefile: Changed the includes. This
-	  should solve some of the build errors that we have been having. 
+        * tests/POA/Etherealization/Makefile: Changed the includes. This
+          should solve some of the build errors that we have been having.
 
 Tue May 01 19:45:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Buffering_Constraint_Policy.{h,cpp}:
-	* tao/DynamicAny/DynamicAny.{h,cpp}:
+        * tao/Buffering_Constraint_Policy.{h,cpp}:
+        * tao/DynamicAny/DynamicAny.{h,cpp}:
         * tao/IORManipulation/IORManip_Loader.{h,cpp}:
         * tao/Messaging_Policy_i.{h,cpp}:
         * tao/PortableServer/POA.cpp:
         * tao/RT_Policy_i.{h,cpp}: Changed the empty ACE_THROW_SPEC
-	  (()) with ACE_THROW_SPEC ((CORBA::SystemException)) so that
-	  TAO can compile with FORTE 6.1. Thanks to Russ Noseworthy
+          (()) with ACE_THROW_SPEC ((CORBA::SystemException)) so that
+          TAO can compile with FORTE 6.1. Thanks to Russ Noseworthy
           for the patches and to Carlton Teel <teel@signal-analysis.com>
           for motivating these fixes
 
 Tue May 01 19:00:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/MCast/AddrServer.{h,cpp}:
-	* orbsvcs/orbsvcs/Naming/Naming_Loader.{h,cpp}:
-	* orbsvcs/tests/Event/Basic/BCast.{h,cpp}: Changed the empty
-	  ACE_THROW_SPEC (()) with ACE_THROW_SPEC
-	  ((CORBA::SystemException)) so that TAO can compile with FORTE
-	  6.1. Thanks to Russ Noseworthy for the patches. More of the
-	  patches would be checked in the next few hours.
+        * orbsvcs/examples/RtEC/MCast/AddrServer.{h,cpp}:
+        * orbsvcs/orbsvcs/Naming/Naming_Loader.{h,cpp}:
+        * orbsvcs/tests/Event/Basic/BCast.{h,cpp}: Changed the empty
+          ACE_THROW_SPEC (()) with ACE_THROW_SPEC
+          ((CORBA::SystemException)) so that TAO can compile with FORTE
+          6.1. Thanks to Russ Noseworthy for the patches. More of the
+          patches would be checked in the next few hours.
 
 Tue May 01 12:00:11 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* $ACE_ROOT/auto_run_tests.lst: Don't run
-	  tests/POA/Etherealization if we are compiling for minimum CORBA.
+        * $ACE_ROOT/auto_run_tests.lst: Don't run
+          tests/POA/Etherealization if we are compiling for minimum CORBA.
 
 Tue May 01 11:56:58 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/Etherealization/Makefile: This test should only be
-	  complied for non-minimum CORBA cases since it uses Servant
-	  Managers.
+        * tests/POA/Etherealization/Makefile: This test should only be
+          complied for non-minimum CORBA cases since it uses Servant
+          Managers.
 
 Tue May 01 08:50:11 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/GIOP_Message_Generator_Parser.h (write_reply_header):
-	* tao/GIOP_Message_Generator_Parser_10.h (write_reply_header):
-	* tao/GIOP_Message_Generator_Parser_10.cpp (write_reply_header):
-	* tao/GIOP_Message_Generator_Parser_12.h (write_reply_header):
+        * tao/GIOP_Message_Generator_Parser.h (write_reply_header):
+        * tao/GIOP_Message_Generator_Parser_10.h (write_reply_header):
+        * tao/GIOP_Message_Generator_Parser_10.cpp (write_reply_header):
+        * tao/GIOP_Message_Generator_Parser_12.h (write_reply_header):
 
-	  Removed a TSS access from the critical path on the server side
-	  by removing the default CORBA::Environment argument
-	  (i.e. TAO_default_environment()).  TAO_default_environment()
-	  causes a TSS access.
+          Removed a TSS access from the critical path on the server side
+          by removing the default CORBA::Environment argument
+          (i.e. TAO_default_environment()).  TAO_default_environment()
+          causes a TSS access.
 
-	  NOTE: We should never use default CORBA::Environment arguments
-	  (i.e. TAO_default_environment()) in methods that are used
-	  internally by TAO for specifically this reason.
+          NOTE: We should never use default CORBA::Environment arguments
+          (i.e. TAO_default_environment()) in methods that are used
+          internally by TAO for specifically this reason.
 
-	* tao/GIOP_Message_Base.cpp (generate_reply_header):
+        * tao/GIOP_Message_Base.cpp (generate_reply_header):
 
-	  Declare a new CORBA::Environment variable and wrap the
-	  write_reply_header() call within an ACE_TRY block.  That block
-	  was missing for some reason.  These changes are part of the
-	  fixes that remove a TSS access from the critical path on the
-	  server side.
+          Declare a new CORBA::Environment variable and wrap the
+          write_reply_header() call within an ACE_TRY block.  That block
+          was missing for some reason.  These changes are part of the
+          fixes that remove a TSS access from the critical path on the
+          server side.
 
 Tue May  1 09:40:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/AMI_Buffering/Makefile: Made a check for ami instead of
-	  corba_messaging.
+        * tests/AMI_Buffering/Makefile: Made a check for ami instead of
+          corba_messaging.
 
 Mon Apr 30 22:50:27 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.h:
-	* tao/CORBALOC_Parser.cpp:
-	  Fixed the blocker bug 849. Included some parsing code so as to
-	  check if the protocol used by the application is a known protocol.
+        * tao/CORBALOC_Parser.h:
+        * tao/CORBALOC_Parser.cpp:
+          Fixed the blocker bug 849. Included some parsing code so as to
+          check if the protocol used by the application is a known protocol.
 
 Mon Apr 30 19:17:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -105,95 +111,95 @@ Mon Apr 30 19:17:42 2001  Jeff Parsons <parsons@cs.wustl.edu>
 Mon Apr 30 18:49:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_root/root_sth.cpp:
-	* TAO_IDL/be_include/be_visitor_root/root_sth.h:
+        * TAO_IDL/be_include/be_visitor_root/root_sth.h:
 
-	  New files for a new visitor that begins a separate
-	  pass through the AST for generating the tie
-	  classes. Code generation for the tie classes has
- 	  been moved from *S.h to *S_T.h. Some compilers,
-	  notably SunCC 5.2, require that template class
-	  declarations and source be in the same
-	  'compilation unit', or corresponding .h and .cpp files.
-	  This new visitor handles code generation for the
-	  root scope and for modules. Tie class code generation
-	  for the other relevant data types (interfaces, attributes,
-	  and operations) is handled by existing visitors.
+          New files for a new visitor that begins a separate
+          pass through the AST for generating the tie
+          classes. Code generation for the tie classes has
+          been moved from *S.h to *S_T.h. Some compilers,
+          notably SunCC 5.2, require that template class
+          declarations and source be in the same
+          'compilation unit', or corresponding .h and .cpp files.
+          This new visitor handles code generation for the
+          root scope and for modules. Tie class code generation
+          for the other relevant data types (interfaces, attributes,
+          and operations) is handled by existing visitors.
 
-	* TAO_IDL/be/be_codegen.cpp:
-	* TAO_IDL/be/be_produce.cpp:
-	* TAO_IDL/be/be_visitor_decl.cpp:
-	* TAO_IDL/be/be_visitor_root.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/tie_si.cpp:
-	* TAO_IDL/be/be_visitor_module/module_sh.cpp:
-	* TAO_IDL/be/be_visitor_root/root.cpp:
-	* TAO_IDL/be/be_visitor_root/root_sh.cpp:
-	* TAO_IDL/be_include/be_codegen.h:
-	* TAO_IDL/be_include/be_visitor_root.h:
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        * TAO_IDL/be/be_visitor_decl.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+        * TAO_IDL/be/be_visitor_module/module_sh.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_sh.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_visitor_root.h:
 
-	  Modified to support the new location of tie class declaration
-	  code generation.
+          Modified to support the new location of tie class declaration
+          code generation.
 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
-	* TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/proxy_impl_xh.cpp:
+        * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:
 
-	  Cosmetic changes to generated code.
+          Cosmetic changes to generated code.
 
-	* orbsvcs/IFR_Service/IFR_BaseS.h:
-	* orbsvcs/IFR_Service/IFR_BaseS_T.h:
-	* orbsvcs/IFR_Service/IFR_BaseS_T.i:
-	* orbsvcs/IFR_Service/IFR_BasicS.h:
-	* orbsvcs/IFR_Service/IFR_BasicS_T.h:
-	* orbsvcs/IFR_Service/IFR_BasicS_T.i:
-	* orbsvcs/IFR_Service/IFR_ComponentsS.h:
-	* orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
-	* orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
-	* orbsvcs/IFR_Service/IFR_ExtendedS.h:
-	* orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
-	* orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
-	* orbsvcs/IFR_Service/diffs/IFR_BaseS.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BaseS_T.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BaseS_T.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BasicS.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BasicS_T.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BasicS_T.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.i.diff:
-	* tao/Domain/DomainS.h:
-	* tao/Domain/DomainS_T.h:
-	* tao/Domain/DomainS_T.i:
-	* tao/PortableServer/ImplRepoS.h:
-	* tao/PortableServer/ImplRepoS_T.h:
-	* tao/PortableServer/ImplRepoS_T.i:
-	* tao/PortableServer/MessagingS.h:
-	* tao/PortableServer/MessagingS_T.h:
-	* tao/PortableServer/MessagingS_T.i:
-	* tao/PortableServer/PolicyS.h:
-	* tao/PortableServer/PolicyS_T.h:
-	* tao/PortableServer/PolicyS_T.i:
-	* tao/diffs/DomainS.h.diff:
-	* tao/diffs/DomainS_T.h.diff:
-	* tao/diffs/DomainS_T.i.diff:
-	* tao/diffs/ImplRepoS.h.diff:
-	* tao/diffs/ImplRepoS.i.diff:
-	* tao/diffs/ImplRepoS_T.i.diff:
-	* tao/diffs/MessagingS.h.diff:
-	* tao/diffs/MessagingS_T.i.diff:
-	* tao/diffs/PolicyS.h.diff:
+        * orbsvcs/IFR_Service/IFR_BaseS.h:
+        * orbsvcs/IFR_Service/IFR_BaseS_T.h:
+        * orbsvcs/IFR_Service/IFR_BaseS_T.i:
+        * orbsvcs/IFR_Service/IFR_BasicS.h:
+        * orbsvcs/IFR_Service/IFR_BasicS_T.h:
+        * orbsvcs/IFR_Service/IFR_BasicS_T.i:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.h:
+        * orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
+        * orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.h:
+        * orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
+        * orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
+        * orbsvcs/IFR_Service/diffs/IFR_BaseS.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BaseS_T.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BaseS_T.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BasicS.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BasicS_T.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BasicS_T.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ExtendedS.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.i.diff:
+        * tao/Domain/DomainS.h:
+        * tao/Domain/DomainS_T.h:
+        * tao/Domain/DomainS_T.i:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS_T.h:
+        * tao/PortableServer/ImplRepoS_T.i:
+        * tao/PortableServer/MessagingS.h:
+        * tao/PortableServer/MessagingS_T.h:
+        * tao/PortableServer/MessagingS_T.i:
+        * tao/PortableServer/PolicyS.h:
+        * tao/PortableServer/PolicyS_T.h:
+        * tao/PortableServer/PolicyS_T.i:
+        * tao/diffs/DomainS.h.diff:
+        * tao/diffs/DomainS_T.h.diff:
+        * tao/diffs/DomainS_T.i.diff:
+        * tao/diffs/ImplRepoS.h.diff:
+        * tao/diffs/ImplRepoS.i.diff:
+        * tao/diffs/ImplRepoS_T.i.diff:
+        * tao/diffs/MessagingS.h.diff:
+        * tao/diffs/MessagingS_T.i.diff:
+        * tao/diffs/PolicyS.h.diff:
 
-	  Regenerated skeleton files and corresponding .diff files.
+          Regenerated skeleton files and corresponding .diff files.
 
-	* tao/Domain/TAO_Domain.dsp:
-	* tao/Domain/TAO_Domain_Static.dsp:
+        * tao/Domain/TAO_Domain.dsp:
+        * tao/Domain/TAO_Domain_Static.dsp:
 
-	  Added DomainS_T.h and DomainS_T.i to projects.
+          Added DomainS_T.h and DomainS_T.i to projects.
 
 Mon Apr 30 16:53:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -207,44 +213,44 @@ Mon Apr 30 16:53:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Mon Apr 30 11:23:45 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Cache_Entries.h (relinquish_transport):
-	* tao/Cache_Entries.inl (relinquish_transport):
+        * tao/Cache_Entries.h (relinquish_transport):
+        * tao/Cache_Entries.inl (relinquish_transport):
 
-	  New method that causes the given TAO_Cache_IntId to relinquish
-	  ownership of the TAO_Transport associated with it.  This method
-	  exists to get around some inflexibility in the
-	  Transport_Cache_Manager interface.  It should be removed once
-	  the interface is improved.
+          New method that causes the given TAO_Cache_IntId to relinquish
+          ownership of the TAO_Transport associated with it.  This method
+          exists to get around some inflexibility in the
+          Transport_Cache_Manager interface.  It should be removed once
+          the interface is improved.
 
-	* tao/Transport_Cache_Manager.cpp (find_transport):
+        * tao/Transport_Cache_Manager.cpp (find_transport):
 
-	  Do not duplicate the TAO_Transport object after it is found.
-	  It is already duplicated during the find process.  Instead call
-	  the new TAO_Cache_IntId::relinquish_transport() method.  This
-	  change removes two locks from the critical path.  [Bug 878]
+          Do not duplicate the TAO_Transport object after it is found.
+          It is already duplicated during the find process.  Instead call
+          the new TAO_Cache_IntId::relinquish_transport() method.  This
+          change removes two locks from the critical path.  [Bug 878]
 
-	* tao/IIOP_Endpoint.cpp (hash):
+        * tao/IIOP_Endpoint.cpp (hash):
 
-	  Improved the speed of this hash operation by basing the hash on
-	  the IP address of the peer instead of computing a hash that
-	  involves some string operations (ACE::hash_pjw()).  Since this
-	  hash method is called on each invocation, i.e. in the critical
-	  path, a performance improvement should be noticeable.
+          Improved the speed of this hash operation by basing the hash on
+          the IP address of the peer instead of computing a hash that
+          involves some string operations (ACE::hash_pjw()).  Since this
+          hash method is called on each invocation, i.e. in the critical
+          path, a performance improvement should be noticeable.
 
-	* tao/PortableServer/Servant_Base.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
 
-	  Removed unused included header "Collocated_Object.h".
+          Removed unused included header "Collocated_Object.h".
 
-	* tao/CDR_Encaps_Codec.h:
-	* tao/ClientRequestInfo.h:
-	* tao/PortableServer/ServerRequestInfo.h:
+        * tao/CDR_Encaps_Codec.h:
+        * tao/ClientRequestInfo.h:
+        * tao/PortableServer/ServerRequestInfo.h:
 
-	  "Doxygenated" these headers.
+          "Doxygenated" these headers.
 
 Sun Apr 29 08:30:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/IDL_Test/Makefile.bor (CPPDIR): Added a missing
-	  rule. Thanks to Johnny Willemsen for pointing this out.
+        * tests/IDL_Test/Makefile.bor (CPPDIR): Added a missing
+          rule. Thanks to Johnny Willemsen for pointing this out.
 
 Sat Apr 28 10:40:01 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -256,64 +262,64 @@ Sat Apr 28 10:40:01 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Fri Apr 27 22:20:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/IDL_Test/Makefile.bor: Added rules for the new idl file,
-	  full.idl.
+        * tests/IDL_Test/Makefile.bor: Added rules for the new idl file,
+          full.idl.
 
 Fri Apr 27 22:15:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/POA/Etherealization/Etherealization.cpp: Fixed a couple of
-	  compiler warnings.
+        * tests/POA/Etherealization/Etherealization.cpp: Fixed a couple of
+          compiler warnings.
 
 Fri Apr 27 14:34:59 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Exception.cpp (_tao_get_omg_exception_description):
+        * tao/Exception.cpp (_tao_get_omg_exception_description):
 
-	  Always return a valid string.  Previously zero was returned in
-	  the event of an error.  Return "*unknown description*" instead.
+          Always return a valid string.  Previously zero was returned in
+          the event of an error.  Return "*unknown description*" instead.
 
-	  Do not compile the minor code description tables if ACE_NDEBUG
-	  is defined.  This helps reduce the footprint for
-	  release/non-debug builds.
+          Do not compile the minor code description tables if ACE_NDEBUG
+          is defined.  This helps reduce the footprint for
+          release/non-debug builds.
 
 Fri Apr 27 14:11:11 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Invocation.i (location_forward_i):
-	* tao/Invocation.cpp (invoke):
+        * tao/Invocation.i (location_forward_i):
+        * tao/Invocation.cpp (invoke):
 
-	  Set the "restart_flag_" to 1 in the event of a location forward
-	  or a transport retry.  Previously, this was done in the
-	  generated stubs.  However, there was no reason to do it there.
-	  Setting it here saves on footprint.
+          Set the "restart_flag_" to 1 in the event of a location forward
+          or a transport retry.  Previously, this was done in the
+          generated stubs.  However, there was no reason to do it there.
+          Setting it here saves on footprint.
 
-	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
-	  (gen_marshal_and_invoke):
+        * TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp
+          (gen_marshal_and_invoke):
 
-	  Fixed generated stub code so that attempts to demarshal return
-	  values or inout/out arguments will not occur if a
-	  LOCATION_FORWARD reply or a transport retry occurs.  In such
-	  cases, no inout/out and return values will be returned to the
-	  client so there is no point in attempting to demarshal them.
-	  [Bug 887]
+          Fixed generated stub code so that attempts to demarshal return
+          values or inout/out arguments will not occur if a
+          LOCATION_FORWARD reply or a transport retry occurs.  In such
+          cases, no inout/out and return values will be returned to the
+          client so there is no point in attempting to demarshal them.
+          [Bug 887]
 
-	  The receive_other() interception point in the generated code is
-	  now invoked in the event a target initiated LOCATION_FORWARD
-	  reply occurs or a transport retry occurs.
+          The receive_other() interception point in the generated code is
+          now invoked in the event a target initiated LOCATION_FORWARD
+          reply occurs or a transport retry occurs.
 
-	  No longer set the TAO_GIOP_Invocation::restart_flag_ variable in
-	  the generated stub.  The same thing can be done in the
-	  Invocation object itself.
+          No longer set the TAO_GIOP_Invocation::restart_flag_ variable in
+          the generated stub.  The same thing can be done in the
+          Invocation object itself.
 
-	  Check the ReplyStatus after invoking the receive_exception()
-	  interception point.  It may have transformed the caught
-	  exception in to a LOCATION_FORWARD, in which case the caught
-	  exception should not be rethrown.
+          Check the ReplyStatus after invoking the receive_exception()
+          interception point.  It may have transformed the caught
+          exception in to a LOCATION_FORWARD, in which case the caught
+          exception should not be rethrown.
 
 Fri Apr 27 16:01:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/Etherealization: Added new test to check for proper
-	  deactivation and etherealization of reference counted and non
-	  reference counted servants.  The following files were also
-	  modified:
+        * tests/POA/Etherealization: Added new test to check for proper
+          deactivation and etherealization of reference counted and non
+          reference counted servants.  The following files were also
+          modified:
 
           - tests/TAO_Tests.dsw
           - tests/POA/Makefile
@@ -323,15 +329,15 @@ Fri Apr 27 16:01:34 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 Fri Apr 27 11:58:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Synch_Reply_Dispatcher.cpp (dispatch_reply):
-	* tao/Asynch_Reply_Dispatcher.cpp: Changed the steal_from () calls
-	  to steal_data () calls.  This removes the allocations along the
-	  critical path. The call steal_from () spent 48.5% of the time
-	  trying to do a reset_contents () (basically only memory
-	  allocations as per quantify) which should be gone now. We still
-	  see a problem when we transfer data_blocks. The transfer does a
-	  release which seems to occupy 35% of the time which would be
-	  almost impossible to do away with.
+        * tao/Synch_Reply_Dispatcher.cpp (dispatch_reply):
+        * tao/Asynch_Reply_Dispatcher.cpp: Changed the steal_from () calls
+          to steal_data () calls.  This removes the allocations along the
+          critical path. The call steal_from () spent 48.5% of the time
+          trying to do a reset_contents () (basically only memory
+          allocations as per quantify) which should be gone now. We still
+          see a problem when we transfer data_blocks. The transfer does a
+          release which seems to occupy 35% of the time which would be
+          almost impossible to do away with.
 
 Fri Apr 27 11:45:58 2001  Chad Elliott  <elliott_c@ociweb.com>
 
