@@ -41,7 +41,6 @@ SUBDIRS = ace \
 EXTRA_DIST = \
         ACE-INSTALL.html \
         ACE-install.sh \
-        ACE.DSW \
         BIBLIOGRAPHY \
         ChangeLog-93 \
         ChangeLog-94 \
@@ -52,6 +51,7 @@ EXTRA_DIST = \
         ChangeLog-97b \
         ChangeLog-98a \
         ChangeLog-98b \
+	ChangeLog-99a \
         FAQ \
         PROBLEM-REPORT-FORM \
         README.aceconf \

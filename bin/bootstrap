@@ -22,23 +22,52 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 
+set -e
+
+# This script must be run from the top-level ACE source directory
+if test -d m4; then
+
 # Generate an `aclocal.m4' file from all existing m4 macro files
 # including those in the `m4' directory.
+echo Running aclocal
 aclocal -I m4
 
 # Generate a `config.h.in' configuration header template from `acconfig.h'.
+echo 'Running autoheader (expect some "AC_TRY_RUN" warnings)'
 autoheader
 
 # Generate the `configure' script from the `configure.in'.
+echo 'Running autoconf (expect some "AC_TRY_RUN" warnings)'
 autoconf
 
 # Generate all `Makefile.in' templates in the directories listed in
 # `configure.in' and add any missing files that GNU Automake needs so
 # that the distribution and configuration processes will run properly.
+echo Running automake
 automake --add-missing #--verbose
 
 # Update the NEWS file
 # For now just copy the contents of the `VERSION' file to make automake
 # happy.  Eventually, we should start putting real news in to it.
+echo Creating a NEWS file
 cp VERSION NEWS
 
+# Generate the man pages
+if test -f man/man3/ACE.3; then
+  echo ACE man pages have already been generated.
+else
+  echo 'Generating the ACE man pages (this may take several minutes)'
+
+  (cd man/man3; \
+   ACE_ROOT=../..; \
+   export ACE_ROOT; \
+   ACE_HEADERS=`find $ACE_ROOT/ace -name CLASSIX -prune -o \
+               -name '*.h' ! -name 'config*.h' ! -name \
+               'ws2tcpip.h' -print`; \
+   $ACE_ROOT/bin/class2man $ACE_HEADERS > /dev/null)
+fi  # test -f man/man3/ACE.3
+
+else
+  echo ACE must be bootstrapped from the top-level ACE source directory.
+  exit 1;
+fi  # test -d m4
