@@ -1,3 +1,15 @@
+Mon Nov  5 19:23:03 2001  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
+	  Corrected formatting in ACE_DEBUG.	  
+	* orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp: 
+	  Corrected to use prefix++ operation in get() method.
+	* orbsvcs/orbsvcs/Notify/Notify_ProxyPushSupplier_i.cpp: 
+	* orbsvcs/orbsvcs/Notify/Notify_StructuredProxyPushSupplier_i.cpp:
+	  Call shutdown to disconnect from unresponsive consumers.
+	  Thanks to Alex Hornby <alex.anvil.co.uk> for providing the fixes.
+	
 Sun Nov  4 09:43:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Updated dependencies. 
