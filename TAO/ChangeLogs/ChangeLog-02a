@@ -1,3 +1,10 @@
+Sun Jan 13 10:52:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/FaultTolerance/IOGManpulation/Makefile: Updated
+	  dependencies. 
+	* orbsvcs/tests/FaultTolerance/IOGManpulation/IOGRTest.cpp: Fixed
+	  a compilation error.
+
 Sun Jan 13 10:33:18 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Added an FTORB option.
