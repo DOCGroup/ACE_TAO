@@ -31,7 +31,7 @@ module DynAnyTests
   union test_union switch (test_enum)
     {
       case SECOND:
-        TypeCode tc;
+        long l;//TypeCode tc;
       case FIRST:
         short s;
       case THIRD:
