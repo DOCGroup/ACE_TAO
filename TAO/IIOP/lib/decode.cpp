@@ -286,155 +286,163 @@ TAO_Marshal_TypeCode::decode(
       // Typecodes with empty parameter lists all have preallocated
       // constants.  We use those to reduce memory consumption and
       // heap access ... also, to speed things up!
-
-      if (((*tcp) = __tc_consts [(u_int) kind]) != 0) 
+      if ((kind >= 0) && (kind < TC_KIND_COUNT) && (((*tcp) = __tc_consts [(u_int) kind]) != 0))
 	{
 	  *tcp = __tc_consts [(u_int) kind];
 	} 
       else
 	{
-	  switch (kind) 
+	  if ((kind == ~0) || (kind >= 0 && kind < TC_KIND_COUNT))
 	    {
-	      // Need special handling for all kinds of typecodes that have
-	      // nonempty parameter lists ...
-	    default:			// error: missed a case! 
-	      env.exception (new CORBA_INTERNAL (COMPLETED_MAYBE));
-	      return CORBA_TypeCode::TRAVERSE_STOP;
+	      switch (kind) 
+		{
+		  // Need special handling for all kinds of typecodes that have
+		  // nonempty parameter lists ...
+		default:			// error: missed a case! 
+		  env.exception (new CORBA_INTERNAL (COMPLETED_MAYBE));
+		  return CORBA_TypeCode::TRAVERSE_STOP;
 
-	      // Some have "simple" parameter lists ... some of these also
-	      // have preallocated constants that could be used.
-	    case tk_string:
-	    case tk_wstring:
-	      {
-		CORBA_ULong bound;
-
-		continue_decoding = stream->get_ulong (bound);
-		if (continue_decoding) 
+		  // Some have "simple" parameter lists ... some of these also
+		  // have preallocated constants that could be used.
+		case tk_string:
+		case tk_wstring:
 		  {
-		    if (bound == 0) 
+		    CORBA_ULong bound;
+
+		    continue_decoding = stream->get_ulong (bound);
+		    if (continue_decoding) 
 		      {
-			if (kind == tk_string)
-			  *tcp = _tc_CORBA_String;
-			else
-			  *tcp = _tc_CORBA_WString;
-		      } 
-		    else 
-		      {
-			*tcp = new CORBA_TypeCode ((CORBA_TCKind) kind,
-						   bound, 0, CORBA_B_TRUE);
+			if (bound == 0) 
+			  {
+			    if (kind == tk_string)
+			      *tcp = _tc_CORBA_String;
+			    else
+			      *tcp = _tc_CORBA_WString;
+			  } 
+			else 
+			  {
+			    *tcp = new CORBA_TypeCode ((CORBA_TCKind) kind,
+						       bound, 0, CORBA_B_TRUE);
+			  }
 		      }
 		  }
-	      }
-	    break;
+		break;
 
-	    // Indirected typecodes, illegal at "top level" but we
-	    // allow unmarshaling of them here because we use the same
-	    // code to read "off the wire" (where they're illegal) and
-	    // to read out of an encapsulation stream.  We distinguish
-	    // the case where this is legal as described above.
-	    case ~0:
-	      {
-		CORBA_TypeCode_ptr parent;
-
-		if (parent_typecode == 0) 
+		// Indirected typecodes, illegal at "top level" but we
+		// allow unmarshaling of them here because we use the same
+		// code to read "off the wire" (where they're illegal) and
+		// to read out of an encapsulation stream.  We distinguish
+		// the case where this is legal as described above.
+		case ~0:
 		  {
-		    env.exception (new CORBA_INTERNAL (COMPLETED_MAYBE));
-		    return CORBA_TypeCode::TRAVERSE_STOP;
-		  }
-		parent = (CORBA_TypeCode_ptr) parent_typecode;
+		    CORBA_TypeCode_ptr parent;
 
-		// Get the long indicating the encapsulation offset,
-		// then set up indirection stream that's like "stream"
-		// but has space enough only for the typecode and the
-		// length for the encapsulated parameters.
-		CDR indir_stream;
-		CORBA_Long offset;
+		    if (parent_typecode == 0) 
+		      {
+			env.exception (new CORBA_INTERNAL (COMPLETED_MAYBE));
+			return CORBA_TypeCode::TRAVERSE_STOP;
+		      }
+		    parent = (CORBA_TypeCode_ptr) parent_typecode;
 
-		continue_decoding = stream->get_long (offset);
-		if (continue_decoding)
-		  continue_decoding = (offset < 0);
-		if (continue_decoding) 
-		  {
-		    indir_stream.buffer = indir_stream.next
-		      = stream->next + offset;
-		    indir_stream.remaining = indir_stream.length = 8;
+		    // Get the long indicating the encapsulation offset,
+		    // then set up indirection stream that's like "stream"
+		    // but has space enough only for the typecode and the
+		    // length for the encapsulated parameters.
+		    CDR indir_stream;
+		    CORBA_Long offset;
 
-		    // Reject indirections outside parent's scope.
-		    if (indir_stream.next < parent->_buffer)
+		    continue_decoding = stream->get_long (offset);
+		    if (continue_decoding)
+		      continue_decoding = (offset < 0);
+		    if (continue_decoding) 
+		      {
+			indir_stream.buffer = indir_stream.next
+			  = stream->next + offset;
+			indir_stream.remaining = indir_stream.length = 8;
+
+			// Reject indirections outside parent's scope.
+			if (indir_stream.next < parent->_buffer)
+			  continue_decoding = CORBA_B_FALSE;
+		      }
+
+		    // Get "kind" and length of target typecode
+		    //
+		    // XXX this currently assumes the TCKind to which we
+		    // indirect is the same byte order as the "parent"
+		    // typecode -- not the right assumption; see how the
+		    // TypeCode interpreter does it.
+
+		    CORBA_ULong indir_kind;
+		    CORBA_ULong indir_len;
+
+		    if (continue_decoding)
+		      continue_decoding = stream->get_ulong (indir_kind);
+		    if (continue_decoding
+			&& indir_kind >= TC_KIND_COUNT)
 		      continue_decoding = CORBA_B_FALSE;
+		    if (continue_decoding)
+		      continue_decoding = stream->get_ulong (indir_len);
+
+		    // Now construct indirected typecode.  This shares the
+		    // typecode octets with the "parent" typecode,
+		    // increasing the amount of memory sharing and
+		    // reducing the cost of getting typecodes.
+		    if (continue_decoding) 
+		      {
+			*tcp = new CORBA_TypeCode ((CORBA_TCKind) indir_kind,
+						   indir_len,
+						   indir_stream.next,
+						   CORBA_B_FALSE);
+			(*tcp)->_parent = parent;
+			parent->AddRef ();
+		      }
 		  }
+		break;
 
-		// Get "kind" and length of target typecode
-		//
-		// XXX this currently assumes the TCKind to which we
-		// indirect is the same byte order as the "parent"
-		// typecode -- not the right assumption; see how the
-		// TypeCode interpreter does it.
-
-		CORBA_ULong indir_kind;
-		CORBA_ULong indir_len;
-
-		if (continue_decoding)
-		  continue_decoding = stream->get_ulong (indir_kind);
-		if (continue_decoding
-		    && indir_kind >= TC_KIND_COUNT)
-		  continue_decoding = CORBA_B_FALSE;
-		if (continue_decoding)
-		  continue_decoding = stream->get_ulong (indir_len);
-
-		// Now construct indirected typecode.  This shares the
-		// typecode octets with the "parent" typecode,
-		// increasing the amount of memory sharing and
-		// reducing the cost of getting typecodes.
-		if (continue_decoding) 
+		// The rest have "complex" parameter lists that are
+		// encoded as bulk octets ...
+		case tk_objref:
+		case tk_struct:
+		case tk_union:
+		case tk_enum:
+		case tk_sequence:
+		case tk_array:
+		case tk_alias:
+		case tk_except:
 		  {
-		    *tcp = new CORBA_TypeCode ((CORBA_TCKind) indir_kind,
-					       indir_len,
-					       indir_stream.next,
-					       CORBA_B_FALSE);
-		    (*tcp)->_parent = parent;
-		    parent->AddRef ();
+		    u_int len;
+		    u_int i;
+		    CORBA_ULong length;
+		    CORBA_Octet *buffer;
+
+		    continue_decoding = stream->get_ulong (length);
+		    if (!continue_decoding)
+		      break;
+
+		    // if length > MAXUNSIGNED, error ...
+		    len = (u_int) length;
+
+		    buffer = new CORBA_Octet [len];
+
+		    for (i = 0; i < len && continue_decoding; i++)
+		      continue_decoding = stream->get_octet (buffer [i]);
+
+		    if (!continue_decoding) {
+		      delete buffer;
+		      break;
+		    }
+		    *tcp = new CORBA_TypeCode ((CORBA_TCKind) kind,
+					       len,
+					       buffer,
+					       CORBA_B_TRUE);
 		  }
-	      }
-	    break;
-
-	    // The rest have "complex" parameter lists that are
-	    // encoded as bulk octets ...
-	    case tk_objref:
-	    case tk_struct:
-	    case tk_union:
-	    case tk_enum:
-	    case tk_sequence:
-	    case tk_array:
-	    case tk_alias:
-	    case tk_except:
-	      {
-		u_int len;
-		u_int i;
-		CORBA_ULong length;
-		CORBA_Octet *buffer;
-
-		continue_decoding = stream->get_ulong (length);
-		if (!continue_decoding)
-		  break;
-
-		// if length > MAXUNSIGNED, error ...
-		len = (u_int) length;
-
-		buffer = new CORBA_Octet [len];
-
-		for (i = 0; i < len && continue_decoding; i++)
-		  continue_decoding = stream->get_octet (buffer [i]);
-
-		if (!continue_decoding) {
-		  delete buffer;
-		  break;
-		}
-		*tcp = new CORBA_TypeCode ((CORBA_TCKind) kind,
-					   len,
-					   buffer,
-					   CORBA_B_TRUE);
-	      }
+		} // end of switch
+	    }
+	  else // bad _kind value to be decoded
+	    {
+	      env.exception (new CORBA_BAD_TYPECODE(COMPLETED_NO));
+	      dmsg ("TAO_Marshal_TypeCode: Bad _kind value in CDR stream");
+	      return CORBA_TypeCode::TRAVERSE_STOP;
 	    }
 	}
 
