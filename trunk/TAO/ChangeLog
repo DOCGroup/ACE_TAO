@@ -1,10 +1,11 @@
 Wed Sep  4 13:59:14 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tao/Messaging/MessagingC.h: Removed another typedef declaration
-	  for the same data type. This was breaking the builds. We need to
-	  fix this in the IDL compiler, since we cannot have our IDL
-	  compiler generate uncompilable code. But this patch shold help
-	  for the timebeing. 
+	  for the same data type. This was breaking the builds. 
+	  
+	  We need to actually fix this in the IDL compiler, since we
+	  cannot have our IDL compiler generate uncompilable code. But
+	  this patch should help for the timebeing. 
 
 	* tao/Messaging/diffs/Messaging.diff: A new patch necessitated
 	  from the above chage.
