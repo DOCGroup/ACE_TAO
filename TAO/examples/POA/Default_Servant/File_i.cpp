@@ -141,11 +141,8 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer,
                                buffer.length ());
   if (len > 0)
     return len;
-  else
-    {
-      ACE_THROW_RETURN (File::IOError (), 0);
-    }
-  return 0; // Not needed
+
+  ACE_THROW_RETURN (File::IOError (), 0);
 }
 
 File::Descriptor::DataBuffer *
@@ -163,12 +160,9 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes,
                                              length,
                                              buffer,
                                              1);
-  else
-    {
-      File::Descriptor::DataBuffer::freebuf (buffer);
-      ACE_THROW_RETURN (File::IOError (), 0);
-    }
-  return 0;
+
+  File::Descriptor::DataBuffer::freebuf (buffer);
+  ACE_THROW_RETURN (File::IOError (), 0);
 }
 
 CORBA::ULong
@@ -183,12 +177,9 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
                                                     offset,
                                                     whence);
   if (result == -1)
-    {
-     ACE_THROW_RETURN (File::IOError (), 0); 
-    }
-  else
-    return (CORBA::ULong) result;
-  return 0;
+    ACE_THROW_RETURN (File::IOError (), 0);
+
+  return (CORBA::ULong) result;
 }
 
 void
