@@ -102,9 +102,13 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
         lp.decode ();
 
         if (lp.length () == n)
-          // Send the log record to the log message receiver for
-          // processing.
-          receiver ().log_record (this->host_name (), lp);
+          {
+            // Send the log record to the log message receiver for
+            // processing.
+            ostream *orig_ostream = ACE_Log_Msg::instance ()->msg_ostream ();
+            receiver ().log_record (this->host_name (), lp);
+            receiver ().log_output (this->host_name (), lp, orig_ostream);
+          }
         else
           ACE_ERROR ((LM_ERROR, "error, lp.length = %d, n = %d\n",
                       lp.length (), n));
