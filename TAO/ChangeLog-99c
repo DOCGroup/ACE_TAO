@@ -1,3 +1,27 @@
+Tue Jun  1 13:14:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Wait_Strategy.cpp:
+	  More debugging messages, cleaned up the addition and removal of
+	  followers from the follower set.
+
+	* tao/Request_Mux_Strategy.h:
+	* tao/Request_Mux_Strategy.cpp:
+	  Added new method to dispatch the reply and all its data.
+
+	* tao/IIOP_Transport.cpp:
+	  The reply is dispatched in a single operation. The version is
+	  obtained from the stack
+
+	* tao/ORB_Core.cpp:
+	  Followers are removed by the follower thread when they wakeup.
+
+	* tests/MT_Client/client.cpp:
+	  Check that the return value is right
+
+	* tests/MT_Client/test.idl:
+	* tao/Invocation.cpp:
+	  Minor cosmetic fixes
+
 Sun May 30 22:09:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* tao/ tao/* tao/IIOP_Transport.cpp

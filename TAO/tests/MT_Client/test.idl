@@ -5,8 +5,8 @@
 interface Simple_Server
 {
   void test_method ();
-  
+
   long get_number ();
-  
+
   void shutdown ();
 };
