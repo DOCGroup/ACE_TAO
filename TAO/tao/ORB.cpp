@@ -291,10 +291,10 @@ CORBA_ORB::run (const ACE_Time_Value &tv)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_poa (const char *adapter_name,
-                        TAO_POA_Manager *poa_manager,
-                        const TAO_POA_Policies *policies,
-                        TAO_Object_Table *active_object_map)
+CORBA_ORB::resolve_root_poa (const char *adapter_name,
+                             TAO_POA_Manager *poa_manager,
+                             const TAO_POA_Policies *policies,
+                             TAO_Object_Table *active_object_map)
 {
   CORBA::Environment env;
 
@@ -555,7 +555,7 @@ CORBA_ORB::resolve_initial_references (CORBA::String name)
   if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
     return this->resolve_trading_service ();
   else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
-    return this->resolve_poa ();
+    return this->resolve_root_poa ();
   else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
     return this->resolve_poa_current ();
   else
