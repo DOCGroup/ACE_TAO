@@ -1,3 +1,13 @@
+Wed Apr  9 13:39:20 2003  Stuart Jones  <jones_s@ociweb.com>
+
+	* ace/DLL_Manager.cpp:
+
+	  Added check for NULL pointer in close method. The instance
+	  method for the ACE_Framework_Repository class can return 
+	  NULL if the Object Manager is starting up, or shutting down
+	  and the singleton hadn't been created. This was causing a
+	  SEGV in a later pthread_mutex_lock (DOC Bug# 1479)
+	
 Wed Apr  9 17:11:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl
 
         List of changed gathered the last weeks by Mark Drijver
