@@ -1,3 +1,9 @@
+Fri Jun 20 11:26:14 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/EC_Default_ProxySupplier.cpp:
+          The validate_connection can only be done when corba messaging
+          is available.
+
 Fri Jun 20 11:04:58 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/RtEC/MCast/MCast.cpp:
