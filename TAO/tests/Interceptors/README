@@ -1,8 +1,0 @@
-# $Id$
-
-This test allows you to visually check the correct invocation of
-TAO's pseudo-portable interceptors.  To run the test, try:
-
-  server -o test.ior
-
-  client
