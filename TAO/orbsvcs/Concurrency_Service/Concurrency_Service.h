@@ -74,8 +74,11 @@ private:
   int use_naming_service_;
   // Flag to tell wheter the naming service will be used.
 
-  FILE *ior_output_file_;
-  // File to output the concurrency server IOR.
+  const char *ior_file_name_;
+  // The name of the file where we output the IOR.
+
+  const char *pid_file_name_;
+  // The name of a file where the process stores its pid.
 
   TAO_ORB_Manager orb_manager_;
   // The ORB manager

@@ -29,7 +29,8 @@ ACE_RCSID(Concurrency_Service, Concurrency_Service, "$Id$")
 
 Concurrency_Service::Concurrency_Service (void)
   : use_naming_service_ (1),
-    ior_output_file_ (0)
+    ior_file_name_ (0),
+    pid_file_name_ (0)
 {
   ACE_DEBUG ((LM_DEBUG,
              ACE_LIB_TEXT("Concurrency_Service::Concurrency_Service (void)\n")));
@@ -52,7 +53,7 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
   ACE_DEBUG ((LM_DEBUG,
               ACE_LIB_TEXT("Concurrency_Service::parse_args\n")));
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("do:s"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_LIB_TEXT("do:p:s"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -62,11 +63,10 @@ Concurrency_Service::parse_args (int argc, ACE_TCHAR** argv)
         TAO_debug_level++;
         break;
       case 'o': // output the IOR to a file
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, ACE_LIB_TEXT("w"));
-        if (this->ior_output_file_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_LIB_TEXT("Unable to open %s for writing: %p\n"),
-                             get_opts.opt_arg ()), -1);
+        this->ior_file_name_ = get_opts.opt_arg();
+        break;
+      case 'p':
+        this->pid_file_name_ = get_opts.opt_arg();
         break;
       case 's':
         this->use_naming_service_ = 0;
@@ -118,10 +118,31 @@ Concurrency_Service::init (int argc,
               "The IOR is: <%s>\n",
               ACE_TEXT_CHAR_TO_TCHAR(str.in ())));
 
-  if (this->ior_output_file_)
+  if (this->ior_file_name_ != 0) 
     {
-      ACE_OS::fprintf (this->ior_output_file_, "%s", str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      FILE* iorf = ACE_OS::fopen (ior_file_name_, ACE_LIB_TEXT("w"));
+      if (iorf == 0) 
+        {
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "Cannot open output file for writing IOR: %s",
+			     ior_file_name_),
+			    -1);
+        }
+
+      ACE_OS::fprintf (iorf, "%s\n", str.in ());
+      ACE_OS::fclose (iorf);
+    }
+
+  if (this->pid_file_name_ != 0) 
+    {
+      FILE* pidf = ACE_OS::fopen (pid_file_name_, ACE_LIB_TEXT("w"));
+      if (pidf != 0) 
+        {
+	  ACE_OS::fprintf (pidf,
+                           "%ld\n",
+                           static_cast<long> (ACE_OS::getpid ()));
+          ACE_OS::fclose (pidf);
+	}
     }
 
   if (this->use_naming_service_)
