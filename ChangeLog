@@ -1,3 +1,15 @@
+Thu Sep  4 14:21:33 2003  Gautam H. Thaker  <gthaker@atl.lmco.com>
+
+        * performance-tests/SCTP/README.SCTP: 
+        * performance-tests/SCTP/README.LKSCTP: 
+        * performance-tests/SCTP/README.OpenSS7: 
+
+        Slight update to README files. Made more clear how SCTP 
+        capable kernel and ACE/TAO are built. Due to recent
+        changes in LKSCTP API additional changes will be committed
+        in near future as new Linux kernel with the changes is released.
+
+
 Thu Sep  4 09:56:28 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
