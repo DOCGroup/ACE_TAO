@@ -572,8 +572,9 @@
      * [38]Cloning the Source Tree
      * [39]Building CORBA Versions of ACE
      * [40]Additional Build Tips for MVS
-     * [41]Version Control
-     * [42]ACE Makefile hints
+     * [41]Makfile Flags
+     * [42]Version Control
+     * [43]ACE Makefile hints
        
     Cloning the Source Tree
     
@@ -634,11 +635,11 @@
     Additional Build Tips for MVS
     
    For all intents and purpose, MVS OpenEdition (OE) is another flavor of
-   UNIX, therefore, the instructions under [43]Building and Installing
+   UNIX, therefore, the instructions under [44]Building and Installing
    ACE on Unix can be used along with the following additional tips:
    
    You can get a copy of GNU make that has been ported to MVS OpenEdition
-   from the [44]IBM OpenEdition web site. ACE's make scheme generates
+   from the [45]IBM OpenEdition web site. ACE's make scheme generates
    compile commands that have options and operands interspersed. By
    default, the c89/cc/c++ compiler expects all options to precede all
    operands. To get around this, you must set a special compiler
@@ -667,7 +668,40 @@
    platform_mvs.GNU file.
      _________________________________________________________________
    
-   Back to the [45]ACE home page.
+    Makefile Flags
+    
+   ACE supports the following flags. They can be enabled either on the
+   command line, e.g., "make purify=1", or added to your
+   platform_macros.GNU. To disable the option, set the flag to null,
+   e.g., "make debug=". Some flags support setting to 0 disable, e.g.,
+   "make debug=0". debug=1 is enabled in the platform files that are
+   released with ACE.
+   
+   Please note that the effects of a flag may be platform specific. Also,
+   combinations of certain flags may or may not be allowed on specific
+   platforms, e.g., debug=1 opt=1 is supported by g++ but not all other
+   C++ compilers.
+   
+Flag             Description
+----             -----------
+debug            Enable debugging; see DCFLAGS and DCCFLAGS.
+exceptions       Enable exception handling (not supported by all platforms).
+fast             Enable -fast option, e.g., with Sun C++.
+inline           Enable ACE inlining.  Some platforms enable inlining by
+                   default, others do not.
+optimize         Enable optimization; see OCFLAGS and OCCFLAGS.
+orbix            Enable use of Orbix.
+profile          Enable profiling; see PCFLAGS and PCCFLAGS.
+purify           Purify all executables.
+quantify         Quantify all executables.
+shared_libs      Build shared libraries. Ignored if static_libs_only is set.
+static_libs      Build shared libraries. Ignored if shared_libs_only is set.
+shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
+                   specified by the Makefile, as in performance-tests/Misc.
+static_libs_only Only build static libraries.
+     _________________________________________________________________
+   
+   Back to the [46]ACE home page.
 
 References
 
@@ -711,8 +745,9 @@ References
   38. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#cloning
   39. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#corba
   40. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#mvs
-  41. http://www.cs.wustl.edu/~levine/CVS.html
-  42. http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html
-  43. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
-  44. http://www.s390.ibm.com/products/oe/index.html
-  45. http://www.cs.wustl.edu/~schmidt/ACE.html
+  41. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#flags
+  42. http://www.cs.wustl.edu/~levine/CVS.html
+  43. http://www.cs.wustl.edu/~cleeland/ace/makefile-hints.html
+  44. file://localhost/project/adaptive/ACE_wrappers/ACE-INSTALL.html#aceinstall
+  45. http://www.s390.ibm.com/products/oe/index.html
+  46. http://www.cs.wustl.edu/~schmidt/ACE.html
