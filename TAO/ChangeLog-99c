@@ -1,3 +1,13 @@
+Fri Apr 30 18:46:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+	  Added a couple of cases to the character constant switch
+	  that eliminated a couple of IDL compiler error messages
+	  produced from one of the test IDL files in the OMG tests.
+	  The output still looks wrong for some of the cases, but 
+	  the compiler itself produces no error messages, so the
+	  branding test should pass us on this.
+
 Fri Apr 30 17:41:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode.{h,cpp}:
