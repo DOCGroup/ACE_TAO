@@ -1,3 +1,29 @@
+Wed Nov 17 16:33:40 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Makefile.am:
+
+	  Added Auto_IncDec_T.*, Capabilities.* and Configuration.* to
+	  list of sources.
+
+	* tests/Makefile.am:
+
+	  Added Auto_IncDec_Test, Capabilities_Test and
+	  Process_Manager_Test to list of tests.
+	
+	* tests/Capabilities_Test.cpp:
+
+	  Create the config file within the test itself instead of having
+	  a seperate config file.  This makes the test self-contained, and
+	  also allows the test to be run in a build environment where the
+	  sources are in a different directory from the binaries (e.g. a
+	  "VPATH" build.  This change was motivated by a problem that
+	  occurred in an ACE+autoconf VPATH build.
+
+	* tests/Capabilities_Test.cfg:
+
+	  Removed this file.  It is now created at run-time by the
+	  Capablities_Test itself.
+
 Wed Nov 17 13:45:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* acconfig.h:
