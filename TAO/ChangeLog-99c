@@ -1,3 +1,7 @@
+Fri Feb  5 18:11:33 1999 Fred Kuhns <fredk@cs.wustl.edu>
+        * tao/MProfile.cpp
+	  Fixed set () so it would reinitialize the list of profiles.
+
 Fri Feb 05 16:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Simulator/README: Documented DualEC_Sup.
