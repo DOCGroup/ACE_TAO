@@ -9,8 +9,8 @@
 
 template <class ACE_LOCK> ACE_INLINE
 ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l)
-  : lock_ (&l) 
-{ 
+  : lock_ (&l)
+{
   this->acquire ();
 }
 
@@ -27,27 +27,27 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, int block)
 // lock.
 
 template <class ACE_LOCK> ACE_INLINE
-ACE_Guard<ACE_LOCK>::~ACE_Guard (void) 
-{ 
-  this->release (); 
+ACE_Guard<ACE_LOCK>::~ACE_Guard (void)
+{
+  this->release ();
 }
 // Implicitly release the lock.
 
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Guard<ACE_LOCK>::acquire (void) 
-{ 
-  return this->owner_ = this->lock_->acquire (); 
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Guard<ACE_LOCK>::acquire (void)
+{
+  return this->owner_ = this->lock_->acquire ();
 }
 // Explicitly acquire the lock.
 
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Guard<ACE_LOCK>::tryacquire (void) 
-{ 
-  return this->owner_ = this->lock_->tryacquire (); 
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Guard<ACE_LOCK>::tryacquire (void)
+{
+  return this->owner_ = this->lock_->tryacquire ();
 }
 // Conditionally acquire the lock (i.e., won't block).
 
-template <class ACE_LOCK> ACE_INLINE int 
+template <class ACE_LOCK> ACE_INLINE int
 ACE_Guard<ACE_LOCK>::release (void)
 {
   if (this->owner_ != -1)
@@ -60,54 +60,46 @@ ACE_Guard<ACE_LOCK>::release (void)
 }
 // Explicitly release the lock, but only if it is held!
 
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Guard<ACE_LOCK>::locked (void) 
-{ 
-  return this->owner_ != -1; 
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Guard<ACE_LOCK>::locked (void)
+{
+  return this->owner_ != -1;
 }
 // 1 if locked, 0 if couldn't acquire the lock
 // (errno will contain the reason for this).
 
-template <class ACE_LOCK> ACE_INLINE int 
-ACE_Guard<ACE_LOCK>::remove (void) 
-{ 
-  return this->lock_->remove (); 
+template <class ACE_LOCK> ACE_INLINE int
+ACE_Guard<ACE_LOCK>::remove (void)
+{
+  return this->lock_->remove ();
 }
 // Explicitly remove the lock.
 
 #endif /* defined (ACE_LACKS_METHOD_DEFINITIONS_IN_CLASS_TEMPLATE) */
 
-template <class ACE_LOCKING_MECHANISM> ACE_INLINE 
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock)
   : lock_ (&lock),
     delete_lock_ (0)
-{  
+{
 }
 
-template <class ACE_LOCKING_MECHANISM> ACE_INLINE 
-ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
-  : lock_ (0),
-    delete_lock_ (1)
-{  
-  ACE_NEW (this->lock_, ACE_LOCKING_MECHANISM);
-}
-
-template <class ACE_LOCKING_MECHANISM> ACE_INLINE 
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::~ACE_Lock_Adapter (void)
-{  
+{
   if (this->delete_lock_)
     delete this->lock_;
 }
 
 // Explicitly destroy the lock.
-template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::remove (void)
 {
   return this->lock_->remove ();
 }
 
 // Block the thread until the lock is acquired.
-template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire (void)
 {
   return this->lock_->acquire ();
@@ -123,7 +115,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::tryacquire (void)
 
 // Release the lock.
 
-template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::release (void)
 {
   return this->lock_->release ();
@@ -133,7 +125,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::release (void)
 // mechanism doesn't support read locks then this just calls
 // <acquire>.
 
-template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire_read (void)
 {
   return this->lock_->acquire_read ();
@@ -143,7 +135,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire_read (void)
 // mechanism doesn't support read locks then this just calls
 // <acquire>.
 
-template <class ACE_LOCKING_MECHANISM> ACE_INLINE int 
+template <class ACE_LOCKING_MECHANISM> ACE_INLINE int
 ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::acquire_write (void)
 {
   return this->lock_->acquire_write ();
@@ -184,7 +176,7 @@ ACE_Condition<MUTEX>::remove (void)
 
 #if defined (CHORUS)
   // Are we the owner?
-  if (this->process_cond_ && this->condname_) 
+  if (this->process_cond_ && this->condname_)
     {
       // Only destroy the condition if we're the ones who initialized
       // it.
@@ -194,13 +186,13 @@ ACE_Condition<MUTEX>::remove (void)
           ACE_OS::cond_broadcast (this->process_cond_);
           ACE_OS::thr_yield ();
         }
-      ACE_OS::munmap (this->process_cond_, 
+      ACE_OS::munmap (this->process_cond_,
                       sizeof (ACE_cond_t));
       ACE_OS::shm_unlink (this->condname_);
       ACE_OS::free (ACE_static_cast (void *,
                                      ACE_const_cast (LPTSTR,
                                                      this->condname_)));
-    } 
+    }
   else if (this->process_cond_)
     {
       ACE_OS::munmap (this->process_cond_,
@@ -227,7 +219,7 @@ ACE_Condition<MUTEX>::mutex (void)
   return this->mutex_;
 }
 
-template <class MUTEX> ACE_INLINE int 
+template <class MUTEX> ACE_INLINE int
 ACE_Condition<MUTEX>::signal (void)
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::signal");
@@ -260,20 +252,20 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *type)
 
 template <class TYPE> ACE_INLINE TYPE *
 ACE_TSS<TYPE>::ts_object (void) const
-{ 
+{
   return this->type_;
 }
 
 template <class TYPE> ACE_INLINE TYPE *
-ACE_TSS<TYPE>::ts_object (TYPE *type) 
-{ 
+ACE_TSS<TYPE>::ts_object (TYPE *type)
+{
   this->type_ = type;
   return this->type_;
 }
 
 template <class TYPE> ACE_INLINE TYPE *
 ACE_TSS<TYPE>::ts_get (void) const
-{ 
+{
   return this->type_;
 }
 
