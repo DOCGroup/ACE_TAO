@@ -1,12 +1,25 @@
+Fri Apr 16 21:57:20 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Auto_Ptr: Made several changes to bring the implementation
+	  up to the specification:
+
+	  - Made the constructors take non-const parameters.
+	  - Made release() non-const.
+	  - Added reset().
+
+	  Thanks to Simeon Simeonov <simeons@allaire.com>, Rainer Blome
+	  <blome@de.ibm.com>, Jody Hagins <jody@atdesk.com>, and John
+	  Mulhern <John.Mulhern@lawson.com> for helping.
+
 Fri Apr 16 19:36:35 1999 Alexander Babu Arulanthu <alex@cs.wustl.edu>
 
 	* ace/Proactor.h (ACE_Proactor): Switched the order of TIMER_QUEUE
-	and delete_implementation in the constructor. 
+	and delete_implementation in the constructor.
 
 	* examples/Reactor/Proactor/test_multiple_loops.cpp: Fixed to work
 	on the WIN32 correctly. This can work only on WIN32 (combining
 	Proactor with Reactor's event loop). So I have put a #if defined
-	around the file. 
+	around the file.
 
 Fri Apr 16 18:09:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
