@@ -1,3 +1,9 @@
+Mon May  5 16:17:49 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTPortableServer/Makefile:
+
+          Fixed typo.
+
 Mon May  5 14:13:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/PortableGroup.dsp:
