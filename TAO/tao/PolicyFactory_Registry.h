@@ -51,7 +51,7 @@ public:
 
 public:
 
-  TAO_PolicyFactory_Registry (TAO_ORB_Core *orb_core);
+  TAO_PolicyFactory_Registry (void);
   ///< Constructor
 
   ~TAO_PolicyFactory_Registry (void);
@@ -74,11 +74,6 @@ public:
   ///< contained in the CORBA::Any <value>.
 
 private:
-
-  TAO_ORB_Core *orb_core_;
-  // @@ This should go away once the FT team is done switching to
-  //    policy factories.  This attribute is only meant to ease that
-  //    transition.
 
   TABLE factories_;
   ///< The table that maps policy type to policy factory.

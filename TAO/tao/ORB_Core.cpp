@@ -145,7 +145,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     svc_config_argc_ (0),
     svc_config_argv_ (0),
     refcount_ (1),
-    policy_factory_registry_ (this),  // @@ Should not have to pass "this!"
+    policy_factory_registry_ (),
 #if (TAO_HAS_INTERCEPTORS == 1)
     client_request_interceptors_ (),
     server_request_interceptors_ (),
