@@ -1,3 +1,8 @@
+Sun Apr 25 16:16:12 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* mdate-sh: Added this file to the CVS repository.  It will be
+	  used once the auto{conf,make} integrations are in place.
+
 Sun Apr 25 16:13:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* COPYING: Updated to GPL version 2.
