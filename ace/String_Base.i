@@ -212,7 +212,7 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 
   int result = ACE_OS::memcmp (this->rep_,
                                s.rep_,
-                               smaller_length);
+                               smaller_length * sizeof (CHAR));
 
   if (!result)
     result = ACE_static_cast (int, (this->len_ - s.len_));
