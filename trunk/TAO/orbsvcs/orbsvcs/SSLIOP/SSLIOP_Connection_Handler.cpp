@@ -146,6 +146,9 @@ TAO_SSLIOP_Connection_Handler::open (void *)
   // compilers.
   this->transport ()->id ((int) this->get_handle ());
 
+  // @@ Not needed
+  this->state_changed (TAO_LF_Event::LFS_SUCCESS);
+
   return 0;
 }
 
@@ -230,13 +233,13 @@ TAO_SSLIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
 
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
-    this->handle_close_i (handle);
+    this->decr_refcount ();
 
   return 0;
 }
 
 void
-TAO_SSLIOP_Connection_Handler::handle_close_i (ACE_HANDLE)
+TAO_SSLIOP_Connection_Handler::handle_close_i (void)
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
@@ -421,7 +424,7 @@ TAO_SSLIOP_Connection_Handler::handle_input (ACE_HANDLE)
   // Try to clean up things if the upcall count has reached 0
   if (upcalls == 0)
     {
-      this->handle_close_i (this->get_handle ());
+      this->decr_refcount ();
 
       // As we have already performed the handle closing we don't want
       // to return a -1. Doing so would make the reactor call
