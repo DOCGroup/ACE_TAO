@@ -82,10 +82,10 @@ ACE_Asynch_Pseudo_Task::stop (void)
 
     while (finish_count_ > 0)
       {
-        ace_mon.release ();
+        ACE_MT (ace_mon.release ());
         finish_event_.wait ();
 
-        ace_mon.acquire ();
+        ACE_MT (ace_mon.acquire ());
         finish_event_.reset ();
       }
   }
