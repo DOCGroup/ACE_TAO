@@ -1,3 +1,11 @@
+Tue Feb 23 12:15:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Svc_Conf.y:
+	* ace/Svc_Conf_y.cpp:
+	* ace/Parse_Node.cpp (symbol):
+	* ace/OS.cpp (fork_exec):
+	* ace/INET_Addr.cpp (ACE_INET_Addr): More Unicode fixes.
+
 Tue Feb 23 12:00:21 1999  Steve Huston  <shuston@riverace.com>
 
         * examples/NT_Service/main.cpp: Allow -i option without a value, and
