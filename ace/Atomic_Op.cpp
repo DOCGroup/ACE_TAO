@@ -78,8 +78,9 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_decrement (volatile long *valu
 }
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange (volatile long *value,
-                                                            long rhs)
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange (
+  volatile long *value,
+  long rhs)
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
   unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
@@ -87,6 +88,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::single_cpu_exchange (volatile long *value
   return rhs;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
+  ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
 #endif /* __GNUC__ && ACE_HAS_PENTIUM */
 }
@@ -154,8 +156,9 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_decrement (volatile long *value
 }
 
 long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange (volatile long *value,
-                                                           long rhs)
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange (
+  volatile long *value,
+  long rhs)
 {
 #if defined (__GNUC__) && defined (ACE_HAS_PENTIUM)
   unsigned long addr = ACE_reinterpret_cast (unsigned long, value);
@@ -164,6 +167,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::multi_cpu_exchange (volatile long *value,
   return rhs;
 #else /* __GNUC__ && ACE_HAS_PENTIUM */
   ACE_UNUSED_ARG (value);
+  ACE_UNUSED_ARG (rhs);
   ACE_NOTSUP_RETURN (-1);
 #endif /* __GNUC__ && ACE_HAS_PENTIUM */
 }
