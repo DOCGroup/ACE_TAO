@@ -127,6 +127,10 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
+#define ACE_CC_NAME ACE_LIB_TEXT ("g++")
+#define ACE_CC_MAJOR_VERSION __GNUC__
+#define ACE_CC_MINOR_VERSION __GNUC_MINOR__
+//#define ACE_CC_BETA_VERSION 0 /* ??? */
 #elif defined (__KCC)
 # define ACE_HAS_STRING_CLASS
 # undef ACE_HAS_LLSEEK
