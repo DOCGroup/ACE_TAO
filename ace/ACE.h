@@ -24,18 +24,18 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE_Flag_Manip.h"
-#include "ace/ACE_Handle_Ops.h"
-#include "ace/ACE_Lib_Find.h"
-#include "ace/ACE_Init.h"
-#include "ace/ACE_Sock_Connect.h"
+#include "ace/Flag_Manip.h"
+#include "ace/Handle_Ops.h"
+#include "ace/Lib_Find.h"
+#include "ace/Init_ACE.h"
+#include "ace/Sock_Connect.h"
 
 // Forward declarations.
 class ACE_Time_Value;
 class ACE_Message_Block;
 
 class ACE_Export ACE : public ACE_Flag_Manip, public ACE_Handle_Ops,
-                       public ACE_Lib_Find, public ACE_Init, 
+                       public ACE_Lib_Find, public ACE_Init_ACE,
                        public ACE_Sock_Connect
 {
   // = TITLE
