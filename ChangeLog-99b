@@ -1,8 +1,16 @@
 Mon Jan 18 11:23:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/platform_irix6.x-sgic++.GNU: 
-	  Added the -multigot flag when building shared libraries,
-	  otherwise TAO/orbsvcs is too big.
+        * include/makeinclude/platform_irix6.x-sgic++.GNU:
+          Added the -multigot flag when building shared libraries,
+          otherwise TAO/orbsvcs is too big.
+
+        * ace/config-sunos5.5.h: moved ACE_HAS_PRIOCNTL #define so
+          that it's defined even without threads.  Thanks to
+          Russ Noseworthy for reporting this.
+
+        * ace/OS.cpp (lwp_getparams): removed ACE_MT_SAFE check
+          that Doug added Saturday.  It's not necessary with the
+          above fix to config-sunos5.5.h.
 
 Mon Jan 18 09:54:54 1999  David L. Levine  <levine@cs.wustl.ed
         * examples/Log_Msg/test_ostream.cpp: don't try to create the
