@@ -1,3 +1,12 @@
+Fri Jan 23 09:49:00 2004  Gary Maxey <gary.maxey@hp.com>
+
+        * ace/OS_NS_Thread.inl:
+	 
+          Fix for BUGID 1708
+
+          Added #elif in ACE_OS::sigwait to use alternate sigwait() when
+	  compiling for Tandem NSK platform.
+
 Fri Jan 23 09:34:00 2004  Gary Maxey <gary.maxey@hp.com>
 
         * ace/OS_NS_unistd.inl:
