@@ -85,7 +85,8 @@ CPPFLAGS    += -DACE_AIX_VERS=$(AIX_VERS)
 # -qinitauto seems like an interesting option, but some tests (specifically
 # Process_Strategy_Test) hang with it turned on. This should be investigated
 # at some point.
-DCFLAGS     += -g -qcheck=nobounds:div:null
+DCCFLAGS    += -g -qcheck=nobounds:div:null
+DCFLAGS     += -g
 
 # Now sort out the compiler differences here...
 ifeq ($(XLCVERSION),0x0306)

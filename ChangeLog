@@ -1,3 +1,10 @@
+Fri Feb  7 15:37:19 2003  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Define DCCFLAGS with the
+          debugging options for xlC_r; Change DCFLAGS to just -g (for the C
+          compiler). Thanks to Trevor Fields <fields_t@ociweb.com> for
+          reporting this problem.
+
 Fri Feb  7 15:27:40 2003  Heather Drury  <drury_h@ociweb.com>
 
         * ace/config-aix-4.x.h: Restored the defining of
