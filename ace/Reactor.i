@@ -97,6 +97,13 @@ ACE_Reactor::end_event_loop (void)
 }
 
 ACE_INLINE int
+ACE_Reactor::reactor_event_loop_done (void)
+{
+  ACE_TRACE ("ACE_Reactor::reactor_event_loop_done");
+  return this->implementation_->deactivated ();
+}
+
+ACE_INLINE int
 ACE_Reactor::event_loop_done (void)
 {
   ACE_TRACE ("ACE_Reactor::event_loop_done");
@@ -657,10 +664,5 @@ ACE_Reactor::uses_event_associations (void)
   return this->implementation ()->uses_event_associations ();
 }
 
-ACE_INLINE int
-ACE_Reactor::reactor_event_loop_done (void)
-{
-  ACE_TRACE ("ACE_Reactor::reactor_event_loop_done");
-  return this->implementation_->deactivated ();
-}
+
 

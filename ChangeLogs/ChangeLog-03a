@@ -1,3 +1,9 @@
+Sun Dec  2 12:17:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Reactor.i: Fixed a warning in TRU 64. Thanks to
+	  <krumpo@pobox.sk>  which reminded me of the fix in one of my
+	  workspaces. 
+
 Sat Dec  1 19:39:22 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Date_Time.i (update): Use ACE_OS::gettimeofday for the time
