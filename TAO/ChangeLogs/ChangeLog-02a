@@ -7,6 +7,8 @@ Sat Dec 15 10:53:30 2001  Carlos O'Ryan  <coryan@uci.edu>
 Sat Dec 15 12:53:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Objref_Sequence_Test/client.cpp: Fixed a Win2000 warning. 
+	* tests/Objref_Sequence_Test/server.cpp (main):  Fixed a warning
+	  in GCC 3.0.2 builds
 
 Sat Dec 15 09:53:59 2001  Carlos O'Ryan  <coryan@uci.edu>
 
