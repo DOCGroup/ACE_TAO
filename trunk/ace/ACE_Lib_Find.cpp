@@ -529,4 +529,21 @@ ACE_Lib_Find::strsplit_r (wchar_t *str,
 
   return result;
 }
-#endif
+
+size_t
+ACE_Lib_Find::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
+{
+  ACE_TRACE ("ACE::strrepl");
+
+  size_t replaced = 0;
+
+  for (size_t i = 0; s[i] != '\0'; i++)
+    if (s[i] == search)
+      {
+        s[i] = replace;
+        replaced++;
+      }
+
+  return replaced;
+}
+#endif /* ACE_HAS_WCHAR */
