@@ -105,9 +105,8 @@ Sat Jun 20 14:22:22 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Scheduler_Factory.cpp: wrapped
           RtecScheduler::Preemption_Priority (int) with a struct
-          when used with ACE_TSS, to please Sun C++ 4.2.  For unknown
-          reasons, Sunc C++ 4.2 refuses to compile ACE_TSS<TYPE> if
-          TYPE is a built-in type:
+          when used with ACE_TSS.  ACE_TSS<TYPE>::operator-> () returns
+          TYPE *, so it cannot be instantiated with built-in types:
           "ace/Synch_T.h", line 267: Error: Cannot have a return type
             of int* for ACE_TSS<int>::operator->() const.
               Where: While specializing "ACE_TSS<int>".
