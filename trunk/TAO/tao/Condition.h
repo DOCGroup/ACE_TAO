@@ -19,6 +19,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+#include "ace/Synch_T.h"
+#include "ace/Global_Macros.h"
 
 class ACE_Time_Value;
 
