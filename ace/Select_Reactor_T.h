@@ -32,7 +32,7 @@ class ACE_Select_Reactor_Token_T : public ACE_SELECT_REACTOR_MUTEX
   //
   // = DESCRIPTION
   //     This class is used to make the <ACE_Select_Reactor>
-  //     thread-safe. By default, the thread that runs the
+  //     thread-safe.  By default, the thread that runs the
   //     <handle_events> loop holds the token, even when it is blocked
   //     in the <select> call.  Whenever another thread wants to
   //     access the <ACE_Reactor> via its <register_handler>,
@@ -103,13 +103,13 @@ class ACE_Select_Reactor_T : public ACE_Select_Reactor_Impl
   //     dispatcher.
   //
   // = DESCRIPTION
-  //     The ACE_Select_Reactor is an object-oriented event
+  //     The <ACE_Select_Reactor> is an object-oriented event
   //     demultiplexor and event handler dispatcher.  The sources of
-  //     events that the ACE_Select_Reactor waits for and dispatches
+  //     events that the <ACE_Select_Reactor> waits for and dispatches
   //     includes I/O events, signals, and timer events.  All public
-  //     methods acquire the main <Select_Reactor> token lock and call
-  //     down to private or protected methods, which assume that the
-  //     lock is held and so therefore don't (re)acquire the lock.
+  //     methods acquire the main <ACE_Select_Reactor_Token> lock and
+  //     call down to private or protected methods, which assume that
+  //     the lock is held and so therefore don't (re)acquire the lock.
 public:
   // = Initialization and termination methods.
 

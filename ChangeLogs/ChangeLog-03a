@@ -1,3 +1,8 @@
+Mon Jan 10 12:50:10 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Select_Reactor_T.h (class ACE_Select_Reactor_T): Reformatted the
+	  documentation a bit...
+
 Mon Jan 10 15:37:22 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Pair_T: Added const accessors to the pair class.  Also,
