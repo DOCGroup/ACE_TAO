@@ -428,28 +428,28 @@ Admin_Client::enum_test (CORBA::Environment &ACE_TRY_ENV)
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("EnumDef::describe::value::name: %s\n"),
-                td->name));
+                td->name.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (td->name, "my_enum"));
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("EnumDef::describe::value::id: %s\n"),
-                td->id));
+                td->id.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (td->id, "IDL:my_enum:1.0"));
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("EnumDef::describe::value::defined_in: %s\n"),
-                td->defined_in));
+                td->defined_in.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (td->defined_in, ""));
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("EnumDef::describe::value::version: %s\n"),
-                td->version));
+                td->version.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (td->version, "1.0"));
 
@@ -741,14 +741,14 @@ Admin_Client::alias_test (CORBA::Environment &ACE_TRY_ENV)
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nAliasDef::describe::value::name: %s\n"),
-                td->name));
+                td->name.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (td->name, "my_alias"));
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("AliasDef::describe::value::version: %s\n"),
-                td->version));
+                td->version.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (td->version, "1.1"));
 
@@ -960,21 +960,21 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nStructDef::describe::value::name: %s\n"),
-                td->name));
+                td->name.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (td->name, "my_struct"));
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("StructDef::describe::value::id: %s\n"),
-                td->id));
+                td->id.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (td->id, "IDL:my_struct:1.0"));
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("StructDef::describe::value::version: %s\n"),
-                td->version));
+                td->version.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (td->version, "1.0"));
 
@@ -1026,7 +1026,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("StructDef::members[%d]::name: %s\n"),
                     i,
-                    out_members[i].name));
+                    out_members[i].name.in ()));
 
       if (i == length - 1)
         ACE_ASSERT (!ACE_OS::strcmp (out_members[i].name, "my_enum"));
@@ -1532,28 +1532,28 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("\nExceptionDef::describe::value::name: %s\n"),
-                ed->name));
+                ed->name.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (ed->name, "my_exception"));
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ExceptionDef::describe::value::id: %s\n"),
-                ed->id));
+                ed->id.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (ed->id, "IDL:my_exception:1.0"));
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ExceptionDef::describe::value::defined_in: %s\n"),
-                ed->defined_in));
+                ed->defined_in.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (ed->defined_in, ""));
 
   if (this->debug_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ExceptionDef::describe::value::version: %s\n"),
-                ed->version));
+                ed->version.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (ed->version, "1.0"));
 
@@ -1605,7 +1605,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ExceptionDef::members[%d]::name: %s\n"),
                     i,
-                    out_members[i].name));
+                    out_members[i].name.in ()));
 
       if (i == 2)
         ACE_ASSERT (!ACE_OS::strcmp (out_members[i].name, "my_enum"));
@@ -1630,7 +1630,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ExceptionDef::members[%d]::name: %s\n"),
                     i,
-                    out_members[i].name));
+                    out_members[i].name.in ()));
 
       if (i == 1)
         ACE_ASSERT (!ACE_OS::strcmp (out_members[i].name, "my_enum"));
@@ -1785,7 +1785,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
                         ACE_TEXT ("Repository::describe_contents[%d]")
                         ACE_TEXT ("::value::name: %s\n"),
                         i,
-                        ed->name));
+                        ed->name.in ()));
 
           ACE_ASSERT (!ACE_OS::strcmp (ed->name, "my_exception"));
         }
@@ -1811,7 +1811,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
                         ACE_TEXT ("Repository::describe_contents[%d]")
                         ACE_TEXT ("::value::name: %s\n"),
                         i,
-                        td->name));
+                        td->name.in ()));
 
           ACE_ASSERT (!ACE_OS::strcmp (td->name, "my_enum"));
         }
@@ -2173,7 +2173,7 @@ Admin_Client::interface_test (CORBA::Environment &ACE_TRY_ENV)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("OperationDef::describe::value::")
                 ACE_TEXT ("defined_in: %s\n"),
-                od->defined_in));
+                od->defined_in.in ()));
 
   ACE_ASSERT (!ACE_OS::strcmp (od->defined_in, "IDL:p_iface:1.0"));
 
