@@ -731,9 +731,25 @@ class POA_Foo {
         </P>
       </LI>
 
+      <LI><P><B>EC:</B> The reactive event channel can eliminate data
+          copies because the data does not need to survive after the
+          <CODE>push()</CODE> call.
+        </P>
+      </LI>
+
       <LI><P><B>EC:</B>Implement fragmentation and reassembly of UDP
           messages in the <CODE>UDP_Receiver</CODE> and
           <CODE>UDP_Sender</CODE> classes.
+        </P>
+      </LI>
+
+      <LI><P><B>EC:</B>The <CODE>UDP_Receiver</CODE> class has some
+          problems on Win32 platforms because a
+          <CODE>recvfrom()</CODE> call fails if the buffer is to small
+          for the datagram, even if the <CODE>MSG_PEEK</CODE> flag is
+          used.  We may need to modify the
+          <CODE>ACE_OS::recvfrom()</CODE> call to match the unix
+          semantics.
         </P>
       </LI>
 
