@@ -1,7 +1,17 @@
+Fri Nov 28 13:58:58 2003  Tao Lu  <lu@dre.vanderbilt.edu>
+
+        * examples/Hello:
+
+          Added the Hello example to CIAO. Thanks nanbor for the
+          handcrafted examples from which I learned to program do CIAO
+          programming. This example is meant to be used a step-by-step
+          tutorial for CIAO.
+
+
 Wed Nov 26 22:16:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
-        
+
           Changed generated exception list of disconnect_* operation for
           an emits declaration to match the correct exception list
           generated in ServantSourceGenerator.cpp.
@@ -9,12 +19,12 @@ Wed Nov 26 22:16:34 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 Tue Nov 25 19:46:07 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.hpp:
-        
+
           Corrected a comment.
-          
+
         * CIDLC/ServantHeaderGenerator.cpp:
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           Fixed servant code generation to output only for components
           and homes that are used in a CIDL composition. Thanks to
           Gary Duzan <gduzan@bbn.com> for reporting the problem. Also
@@ -24,7 +34,7 @@ Tue Nov 25 15:39:51 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/CompilerElements/FileSystem.hpp:
 
-	  Made normalize() function use 'native' path type when 
+	  Made normalize() function use 'native' path type when
 	  constructing the path.
 
 Tue Nov 25 15:06:02 2003  Boris Kolpackov  <boris@dre.vanderbilt.edu>
