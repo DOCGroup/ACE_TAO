@@ -1276,7 +1276,7 @@ endif
   $(TAO_ROOT)/tao/Object_Argument_T.inl \
   $(TAO_ROOT)/tao/OBV_Constants.h \
   $(ACE_ROOT)/ace/Thread_Mutex.h \
-  Naming/naming_export.h \ Naming/nsconf.h
+  Naming/naming_export.h \ Naming/nsconf.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
