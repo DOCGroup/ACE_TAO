@@ -1785,7 +1785,7 @@ ACE_INLINE ACE_sema_t *
 ACE_OS::sema_open (const char *name, int oflag, 
 		   u_long mode, u_int value)
 {
-#if defined (ACE_HAS_POSIX_SEM) && !defined (CHORUS)
+#if defined (ACE_HAS_POSIX_SEM) && !defined (CHORUS) && !defined (VXWORKS)
   return ::sem_open (name, oflag, mode, value);
 #else
   ACE_UNUSED_ARG(name);
@@ -1807,7 +1807,11 @@ ACE_OS::sema_init (ACE_sema_t *s, u_int count, int type,
   if (name)
     {
       s->name_ = ACE_OS::strdup (name);
+#if defined (VXWORKS)
+      s->sema_ = ::sem_open (s->name_, O_CREAT, ACE_DEFAULT_FILE_PERMS, count);
+#else
       s->sema_ = ACE_OS::sema_open (s->name_, O_CREAT, ACE_DEFAULT_FILE_PERMS, count);
+#endif (VXWORKS)
       return (int) s->sema_ == -1 ? -1 : 0;
     }
   else
