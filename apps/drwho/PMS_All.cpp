@@ -3,6 +3,7 @@
 #include "Options.h"
 #include "HT_Server.h"
 #include "PMS_All.h"
+#include "ace/ACE.h"
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on
@@ -34,7 +35,7 @@ PMS_All::encode (char *packet, int &packet_length)
                                                                          prp->get_login ()),
                                                            prp->get_real ()),
                                              prp->get_drwho_list ());
-  
+
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
 
@@ -77,8 +78,8 @@ PMS_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *prp = PM_Server::insert_protocol_info (protocol_record);
   passwd *pwent = getpwnam (prp->get_login ());
-  char *cp = (char *) ACE_OS::strchr (prp->set_real 
-                                      (pwent == 0 
+  char *cp = (char *) ACE_OS::strchr (prp->set_real
+                                      (pwent == 0
                                        ? prp->get_login () :
                                        ACE::strnew (pwent->pw_gecos)),
                                       ',');

@@ -12,28 +12,28 @@
 RWho_DB_Manager::RWho_DB_Manager (void)
   : number_of_users (0),
     current_user (0),
-    rwho_dir_name (RWHODIR),
-    WHOD_HEADER_SIZE (sizeof host_data - sizeof host_data.wd_we)
+    WHOD_HEADER_SIZE (sizeof host_data - sizeof host_data.wd_we),
+    rwho_dir_name (RWHODIR)
 {
   if (ACE_OS::getcwd (this->original_pathname, MAXPATHLEN + 1) == 0)
     ACE_ERROR ((LM_ERROR,
-                "%p\n%a", 
+                "%p\n%a",
                 Options::program_name,
                 1));
 
   if (ACE_OS::chdir (this->rwho_dir_name) < 0)
     ACE_ERROR ((LM_ERROR,
-                "%p\n%a", 
+                "%p\n%a",
                 this->rwho_dir_name,
                 1));
 
   this->rwho_dir.open (this->rwho_dir_name);
 
-#if 0  
-  // Skip "." and ".." 
+#if 0
+  // Skip "." and ".."
   this->rwho_dir.read ();
   this->rwho_dir.read ();
-#endif 
+#endif
 }
 
 // The destructor cleans up the RWHOD_DIR handle.
@@ -42,7 +42,7 @@ RWho_DB_Manager::~RWho_DB_Manager (void)
 {
   if (ACE_OS::chdir (this->original_pathname) < 0)
     ACE_ERROR ((LM_ERROR,
-                "%p\n%a", 
+                "%p\n%a",
                 Options::program_name,
                 1));
 
@@ -51,16 +51,16 @@ RWho_DB_Manager::~RWho_DB_Manager (void)
                 "disposing the RWho_DB_Manager\n"));
 }
 
-// This procedure looks through the rwhod directory until it finds the next 
-// valid user file.  
-//   
+// This procedure looks through the rwhod directory until it finds the next
+// valid user file.
+//
 // The requirements for user files are:
 //   1) The file is at least MIN_HOST_DATA_SIZE bytes long
 //   2) It was received within the last MAX_HOST_TIMEOUT seconds
 // Return:
 //  Are there any more hosts? */
 
-int 
+int
 RWho_DB_Manager::get_next_host (void)
 {
   time_t current_time;
@@ -75,16 +75,16 @@ RWho_DB_Manager::get_next_host (void)
     {
       ACE_HANDLE user_file =
         ACE_OS::open (dir_ptr->d_name, O_RDONLY);
-	  
+
       if (user_file < 0)
 	return -1;
-	  
+
       int host_data_length =
         ACE_OS::read (user_file,
                       (char *) &this->host_data,
                       sizeof this->host_data);
-	  
-      if (host_data_length > WHOD_HEADER_SIZE 
+
+      if (host_data_length > WHOD_HEADER_SIZE
           && current_time - this->host_data.wd_recvtime < MAX_HOST_TIMEOUT)
 	{
 	  this->current_user = 0;
@@ -97,18 +97,18 @@ RWho_DB_Manager::get_next_host (void)
     }
 
   // There are no more hosts, so return False.
-  return 0; 
+  return 0;
 }
 
 // Returns the next user's information.  Note that for efficiency only
 // pointers are copied, i.e., this info must be used before we call
 // this function again.
 
-int 
+int
 RWho_DB_Manager::get_next_user (Protocol_Record &protocol_record)
 {
-  // Get the next host file if necessary 
-  if (this->current_user >= this->number_of_users 
+  // Get the next host file if necessary
+  if (this->current_user >= this->number_of_users
       && this->get_next_host () == 0)
     return 0;
 

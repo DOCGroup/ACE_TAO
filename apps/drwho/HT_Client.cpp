@@ -1,6 +1,7 @@
 // $Id$
 
 #include "HT_Client.h"
+#include "ace/ACE.h"
 
 // Insert a KEY_NAME into the hash table, if it doesn't already exist
 // there.  What gets returned is a pointer to the node inserted.  Note
@@ -11,7 +12,7 @@ HT_Client::insert (const char *key_name, int max_len)
 {
   Protocol_Record **prpp = 0;
 
-  // This is tricky... 
+  // This is tricky...
 
   for (prpp = &this->hash_table[ACE::hash_pjw (key_name) % this->hash_table_size];
        *prpp != 0
@@ -31,5 +32,3 @@ HT_Client::insert (const char *key_name, int max_len)
 
   return *prpp;
 }
-
-

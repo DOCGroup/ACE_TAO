@@ -28,8 +28,8 @@ Hash_Table::get_next_entry (void)
   if (this->current_ptr == 0)
     {
 
-      for (; 
-	   this->current_index < this->hash_table_size; 
+      for (;
+	   this->current_index < this->hash_table_size;
 	   this->current_index++)
 	if (this->hash_table[this->current_index] != 0)
 	  {
@@ -41,7 +41,7 @@ Hash_Table::get_next_entry (void)
       this->current_index = -1;
       return 0;
     }
-  else 
+  else
     {
       Protocol_Record *prp = this->current_ptr;
       this->current_ptr	 = this->current_ptr->next_;
@@ -67,7 +67,6 @@ Hash_Table::~Hash_Table (void)
     for (Protocol_Record *prp = this->hash_table[i];
          prp != 0; )
       {
-	Protocol_Record *tmp = prp;
 	prp = prp->next_;
       }
 }
