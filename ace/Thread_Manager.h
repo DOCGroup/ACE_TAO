@@ -84,7 +84,7 @@ public:
 
   // = Initialization and termination methods.
   ACE_Thread_Manager (size_t size = ACE_Thread_Manager::DEFAULT_SIZE);
-  ~ACE_Thread_Manager (void);
+  virtual ~ACE_Thread_Manager (void);
 
   int open (size_t size = DEFAULT_SIZE); 
   // Initialize the manager with room for SIZE threads.
