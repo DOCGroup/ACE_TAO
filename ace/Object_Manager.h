@@ -23,6 +23,7 @@
   class ACE_Null_Mutex;
   class ACE_Thread_Mutex;
   class ACE_Recursive_Thread_Mutex;
+  class ACE_RW_Thread_Mutex;
 #endif /* ACE_MT_SAFE */
 
 // Forward declaration.
@@ -168,6 +169,7 @@ public:
       ACE_SIG_HANDLER_LOCK,
       ACE_SINGLETON_NULL_LOCK,
       ACE_SINGLETON_RECURSIVE_THREAD_LOCK,
+      ACE_SINGLETON_RW_THREAD_LOCK,
       ACE_SINGLETON_THREAD_LOCK,
       ACE_SVC_HANDLER_LOCK,
       ACE_THREAD_EXIT_LOCK,
@@ -236,6 +238,10 @@ public:
   static ACE_Recursive_Thread_Mutex *get_singleton_lock
     (ACE_Recursive_Thread_Mutex *);
   // Accesses a recursive lock to be used for construction of ACE_Singletons.
+
+  static ACE_RW_Thread_Mutex *get_singleton_lock (ACE_RW_Thread_Mutex *);
+  // Accesses a readers/writers lock to be used for construction of
+  // ACE_Singletons.
 
 private:
 
