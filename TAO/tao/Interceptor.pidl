@@ -16,6 +16,8 @@
 #include <IOP.pidl>
 
 #pragma prefix "TAO"
+// The prefix should be changed to "omg.org" once the spec. gets
+// finallized.
 
 module PortableInterceptor
 {
@@ -69,8 +71,6 @@ module PortableInterceptor
                                in boolean response_expected,
                                in CORBA::Object objref,
                                in string operation_name,
-                               inout IOP::ServiceContextList sc,
-                               inout CORBA::Exception exc,
                                inout Cookies ck);
       // Exception interception point.
     };
@@ -109,8 +109,6 @@ module PortableInterceptor
                                in boolean response_expected,
                                in CORBA::Object objref,
                                in string operation_name,
-                               inout IOP::ServiceContextList sc,
-                               inout CORBA::Exception exc,
                                inout Cookies ck);
       // Exception occurred.
     };

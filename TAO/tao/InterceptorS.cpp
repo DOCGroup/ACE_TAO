@@ -332,8 +332,6 @@ void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::e
     CORBA::Boolean response_expected,
     CORBA::Object_ptr objref,
     const char * operation_name,
-    IOP::ServiceContextList & sc,
-    CORBA::Exception_ptr & exc,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -343,8 +341,6 @@ void POA_PortableInterceptor::_tao_direct_collocated_ServerRequestInterceptor::e
       response_expected,
       objref,
       operation_name,
-      sc,
-      exc,
       ck,
       ACE_TRY_ENV
     );
@@ -488,8 +484,6 @@ void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::e
     CORBA::Boolean response_expected,
     CORBA::Object_ptr objref,
     const char * operation_name,
-    IOP::ServiceContextList & sc,
-    CORBA::Exception_ptr & exc,
     PortableInterceptor::Cookies & ck,
     CORBA::Environment &ACE_TRY_ENV
   )
@@ -499,8 +493,6 @@ void POA_PortableInterceptor::_tao_direct_collocated_ClientRequestInterceptor::e
       response_expected,
       objref,
       operation_name,
-      sc,
-      exc,
       ck,
       ACE_TRY_ENV
     );

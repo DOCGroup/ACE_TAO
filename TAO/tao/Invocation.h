@@ -93,6 +93,9 @@ public:
   // Accessor to the request ServiceContextList.  Only valid when
   // sending a request message.
 
+  CORBA::ULong request_id (void);
+  // Return the request id of this invocation.
+
   TAO_OutputCDR &out_stream (void);
   // Return the underlying output stream.
 

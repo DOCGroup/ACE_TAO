@@ -14,7 +14,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IOPC.h"
+#include "IOPC.h"
+#include "Any.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -525,8 +526,6 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
         CORBA::Boolean response_expected,
         CORBA::Object_ptr objref,
         const char * operation_name,
-        IOP::ServiceContextList & sc,
-        CORBA::Exception_ptr & exc,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
@@ -672,8 +671,6 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
         CORBA::Boolean response_expected,
         CORBA::Object_ptr objref,
         const char * operation_name,
-        IOP::ServiceContextList & sc,
-        CORBA::Exception_ptr & exc,
         Cookies & ck,
         CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
