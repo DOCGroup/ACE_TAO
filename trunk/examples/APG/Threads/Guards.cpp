@@ -62,7 +62,7 @@ HA_Device_Repository::update_device (int device_id)
 
 // Listing 3 code/ch12
 int
-HA_Device_Repository::update_device (int device_id)
+HA_Device_Repository::update_device (int /* device_id */)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, mon, mutex_, -1);
 
