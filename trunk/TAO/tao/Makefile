@@ -9143,10 +9143,10 @@ realclean:
  ORB_Core.h Server_Strategy_Factory.h debug.h TAO_Internal.h NVList.h \
  NVList.i \
  Dynamic_Adapter.h MProfile.h ORBInitInfo.h PortableInterceptorC.h \
- LocalObject.h StringSeqC.h StringSeqC.i CodecFactory.h IOPC.h \
- ORBInitInfo.inl ORBInitializer_Registry.h TAO_Singleton.h \
+ LocalObject.h StringSeqC.h StringSeqC.i ORBInitInfo.inl \
+ ORBInitializer_Registry.h TAO_Singleton.h \
  ORBInitializer_Registry.inl \
- CodecFactory_ORBInitializer.h TypeCodeFactory_Adapter.h \
+ CodecFactory_ORBInitializer.h IOPC.h TypeCodeFactory_Adapter.h \
  Messaging_ORBInitializer.h ValueFactory_Map.h \
  ValueFactory_Map.i \
  Object_KeyC.h \
@@ -26791,8 +26791,8 @@ realclean:
  CurrentC.i \
  PolicyC.i \
  PollableC.h PollableC.i MessagingC.i PortableInterceptorC.i \
- LocalObject.h LocalObject.i StringSeqC.h StringSeqC.i CodecFactory.h \
- ORBInitInfo.inl ORB_Core.h ORB.h Services.h \
+ LocalObject.h LocalObject.i StringSeqC.h StringSeqC.i ORBInitInfo.inl \
+ ORB_Core.h ORB.h Services.h \
  Services.i \
  CORBA_String.h \
  CORBA_String.inl \
@@ -26870,7 +26870,7 @@ realclean:
  $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- ORB_Core.i
+ ORB_Core.i CodecFactory.h
 
 .obj/ORBInitializer_Registry.o .obj/ORBInitializer_Registry.so .shobj/ORBInitializer_Registry.o .shobj/ORBInitializer_Registry.so: ORBInitializer_Registry.cpp \
  ORBInitializer_Registry.h \
