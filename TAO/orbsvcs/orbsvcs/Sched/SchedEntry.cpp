@@ -22,6 +22,8 @@
 #include "SchedEntry.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Sched, SchedEntry, "$Id$")
+
 //////////////////////
 // Helper Functions //
 //////////////////////

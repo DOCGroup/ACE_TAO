@@ -3,6 +3,8 @@
 #include "Audio_Control_State.h"
 #include "Audio_Control_i.h"
 
+ACE_RCSID(mpeg_server, Audio_Control_i, "$Id$")
+
 Audio_Control_i::Audio_Control_i (void)
   :audio_global_ (AUDIO_GLOBAL::instance ()),
    reactor_ (TAO_ORB_Core_instance ()->reactor ())

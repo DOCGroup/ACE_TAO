@@ -1,8 +1,9 @@
-
 // $Id$
 
 #include "tao/TAO.h"
 #include "Offer_Importer.h"
+
+ACE_RCSID(Trading, import_test, "$Id$")
 
 void
 parse_args (int argc, char *argv[],

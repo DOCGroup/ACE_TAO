@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -31,6 +32,7 @@
    functions, otherwise, it is disabled by default.
    
    ################################################################# */
+
 #include <stdio.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -77,6 +79,8 @@
 #include "include/common.h"
 #include "newproto.h"
 #include "global.h"
+
+ACE_RCSID(mpeg_client, audio, "$Id$")
 
 static int cfd = -1, afd = -1;  /* afd == -1 mean no native device available */
 static long start_time;

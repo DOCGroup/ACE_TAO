@@ -23,6 +23,8 @@
 #include "Naming_Utils.h"
 #include "ace/Arg_Shifter.h"
 
+ACE_RCSID(Naming, Naming_Utils, "$Id$")
+
 // Default constructor
 
 TAO_Naming_Server::TAO_Naming_Server (void)

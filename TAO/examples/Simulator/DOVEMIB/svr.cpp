@@ -17,6 +17,8 @@
 #include "any_test_i.h"
 //#include "Node.h"
 
+ACE_RCSID(DOVEMIB, svr, "$Id$")
+
 // Global Variables
 static int num_of_objs = 1;
 

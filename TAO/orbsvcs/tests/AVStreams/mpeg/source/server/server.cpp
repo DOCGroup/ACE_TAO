@@ -3,6 +3,8 @@
 #include "server.h"
 #include "ace/Process.h"
 
+ACE_RCSID(server, server, "$Id$")
+
 int AV_Server::done_;
 pid_t AV_Server::current_pid_ = -1;
 

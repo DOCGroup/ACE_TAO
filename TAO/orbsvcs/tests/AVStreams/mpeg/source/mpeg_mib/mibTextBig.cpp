@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1994 The Geometry Center; University of Minnesota
    1300 South Second Street;  Minneapolis, MN  55454, USA;
 
@@ -11,6 +12,8 @@ ftp from geom.umn.edu; email: software@geom.umn.edu. */
 
 #include "mibload.h"
 #include "mibwidgets.h"
+
+ACE_RCSID(mpeg_mib, mibTextBig, "$Id$")
 
 extern Display	*dpy;
 extern GC	mib_gc;

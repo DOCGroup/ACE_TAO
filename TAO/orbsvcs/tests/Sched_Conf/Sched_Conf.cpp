@@ -10,6 +10,8 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
+ACE_RCSID(Sched_Conf, Sched_Conf, "$Id$")
+
 const char* service_name = "ScheduleService";
 
 const char* format_string = "{\"%s\", %d, {%d,%d}, {%d,%d}, "

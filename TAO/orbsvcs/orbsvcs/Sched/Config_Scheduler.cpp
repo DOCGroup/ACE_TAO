@@ -13,6 +13,8 @@
 #include "Config_Scheduler.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Sched, Config_Scheduler, "$Id$")
+
 ACE_Config_Scheduler::ACE_Config_Scheduler (void)
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
   : scheduler_strategy_ ((RtecScheduler::Preemption_Priority) TAO_MIN_CRITICAL_PRIORITY)

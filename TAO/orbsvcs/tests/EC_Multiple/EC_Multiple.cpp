@@ -22,6 +22,8 @@
 # include <sys/lwp.h> /* for _lwp_self */
 #endif /* sun */
 
+ACE_RCSID(EC_Multiple, EC_Multiple, "$Id$")
+
 Test_ECG::Test_ECG (void)
   : lcl_name_ ("Test_ECG"),
     rmt_name_ (0),

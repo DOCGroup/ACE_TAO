@@ -16,6 +16,8 @@
 
 #include "DOVE_Supplier.h"
 
+ACE_RCSID(Event_Supplier, DOVE_Supplier, "$Id$")
+
 DOVE_Supplier::DOVE_Supplier ()
   : MIB_name_ (0),
     internal_DOVE_Supplier_ptr_ (new Internal_DOVE_Supplier (this))

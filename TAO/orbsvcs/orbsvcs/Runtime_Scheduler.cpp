@@ -1,8 +1,4 @@
-// ============================================================================
-//
 // $Id$
-//
-// ============================================================================
 
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Runtime_Scheduler.h"
@@ -10,6 +6,8 @@
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/Runtime_Scheduler.i"
 #endif /* __ACE_INLINE__ */
+
+ACE_RCSID(orbsvcs, Runtime_Scheduler, "$Id$")
 
 ACE_Runtime_Scheduler::
 ACE_Runtime_Scheduler (int entry_count,

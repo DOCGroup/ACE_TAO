@@ -1,5 +1,3 @@
-// Constraint_Nodes.cpp
-
 // =====================================================================
 // $Id$
 // 
@@ -17,6 +15,8 @@
 
 #include "Constraint_Nodes.h"
 #include "Constraint_Visitors.h"
+
+ACE_RCSID(Trader, Constraint_Nodes, "$Id$")
 
 const CORBA::Long MAX_SIGNED_INTEGER = (~(CORBA::Long)0) >> 1;
 const CORBA::Long MIN_SIGNED_INTEGER = ~(MAX_SIGNED_INTEGER);

@@ -10,6 +10,8 @@
 // ========================================================================
 #include <jni.h>
 
+ACE_RCSID(server_discovery, main, "$Id$")
+
 #define PATH_SEPARATOR ':'
 #define USER_CLASSPATH "." /* where Prog.class is */
 

@@ -14,6 +14,8 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "EC_Mcast.h"
 
+ACE_RCSID(EC_Mcast, EC_Mcast, "$Id$")
+
 #define ECM_DEFAULT_SEND_MCAST_GROUP "224.9.9.1"
 #define ECM_DEFAULT_RECV_MCAST_GROUP "224.9.9.2"
 

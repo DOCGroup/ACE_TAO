@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -23,6 +24,7 @@
  *         Department of Computer Science and Engineering
  *         email: scen@cse.ogi.edu
  */
+
 #include <stdio.h>
 #include <errno.h>
 #include <signal.h>
@@ -41,6 +43,8 @@
 #include "dither.h"
 #include "video.h"
 #include "proto.h"
+
+ACE_RCSID(mpeg_client, vd, "$Id$")
 
 #define MAX_VDBLOCK_NUM 8
 #define CQUEUE_SIZE	MAX_VDBLOCK_NUM + 2

@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -45,6 +46,8 @@
 #include "mpeg_shared/routine.h"
 #include "mpeg_shared/com.h"
 #include "server_proto.h"
+
+ACE_RCSID(mpeg_server, as, "$Id$")
 
 //extern int Mpeg_Global::session_limit, Mpeg_Global::session_num;
 

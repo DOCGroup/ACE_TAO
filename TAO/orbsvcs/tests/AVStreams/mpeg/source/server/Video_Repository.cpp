@@ -3,6 +3,8 @@
 #include "Video_Repository.h"
 #include "ace/Read_Buffer.h"
 
+ACE_RCSID(server, Video_Repository, "$Id$")
+
 const char* TAO_Video_Repository::MOVIE_INFO = "Movie_Info";
 
 TAO_Video_Repository::TAO_Video_Repository (const char* file_name)

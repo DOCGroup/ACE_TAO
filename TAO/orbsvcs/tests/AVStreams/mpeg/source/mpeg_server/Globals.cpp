@@ -27,6 +27,8 @@
 
 #include "Globals.h"
 
+ACE_RCSID(mpeg_server, Globals, "$Id$")
+
 int Mpeg_Global::parentpid = -1;
 int Mpeg_Global::listenSocketIn = -1;
 int Mpeg_Global::listenSocketUn = -1;

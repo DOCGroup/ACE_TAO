@@ -1,9 +1,10 @@
 // $Id$
-// File: Trading_Service.cpp
 
 #include "ace/OS.h"
 #include "ace/Arg_Shifter.h"
 #include "Trading_Service.h"
+
+ACE_RCSID(Trading_Service, Trading_Service, "$Id$")
 
 Trading_Shutdown::Trading_Shutdown (Trading_Service& trader)
   : trader_ (trader) 

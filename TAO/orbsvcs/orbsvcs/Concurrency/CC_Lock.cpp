@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -20,6 +19,8 @@
 
 #include "CC_Lock.h"
 #include "tao/corba.h"
+
+ACE_RCSID(Concurrency, CC_Lock, "$Id$")
 
 CC_Lock::CC_Lock (void)
   : mode_ (CosConcurrencyControl::intention_read),

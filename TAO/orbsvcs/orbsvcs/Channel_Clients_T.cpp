@@ -9,6 +9,8 @@
 #include "orbsvcs/Channel_Clients_T.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(orbsvcs, Channel_Clients_T, "$Id$")
+
 template<class TARGET> void
 ACE_PushConsumer_Adapter<TARGET>::push (const RtecEventComm::EventSet& events,
 					CORBA::Environment &_env)

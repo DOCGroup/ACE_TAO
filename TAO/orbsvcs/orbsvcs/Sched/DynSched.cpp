@@ -24,6 +24,8 @@
 #include "DynSched.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(Sched, DynSched, "$Id$")
+
 //////////////////////
 // Helper functions //
 //////////////////////

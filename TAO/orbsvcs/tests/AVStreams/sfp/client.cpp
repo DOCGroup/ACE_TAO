@@ -3,6 +3,8 @@
 #include "ace/Message_Block.h"
 #include "orbsvcs/AV/sfp.h"
 
+ACE_RCSID(sfp, client, "$Id$")
+
 const char *buf = "Hello Worldasdasda sda sdasd adasdaddd\n";
 
 main ()

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // $Id$
 
 // ============================================================================
@@ -16,6 +15,8 @@
 
 #include "CC_LockSetFactory.h"
 #include "CC_LockSet.h"
+
+ACE_RCSID(Concurrency, CC_LockSetFactory, "$Id$")
 
 // Default constructor
 CC_LockSetFactory::CC_LockSetFactory (void)

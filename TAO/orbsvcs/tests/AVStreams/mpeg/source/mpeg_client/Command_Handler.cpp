@@ -3,9 +3,9 @@
 #include "Command_Handler.h"
 #include "ctr.cpp"
 
+ACE_RCSID(mpeg_client, Command_Handler, "$Id$")
 
 #define JAVA_CONTROL_PORT 6676
-
 
 Gui_Acceptor::Gui_Acceptor (Command_Handler *handler)
   :command_handler_ (handler)

@@ -21,6 +21,8 @@
 #include "ace/Get_Opt.h"
 #include "test_objectS.h"
 
+ACE_RCSID(Simple_Naming, client, "$Id$")
+
 class My_Test_Object : public POA_Test_Object
 {
 public:

@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /* Copyright (c) 1995 Oregon Graduate Institute of Science and Technology
  * P.O.Box 91000-1000, Portland, OR 97291, USA;
  * 
@@ -48,6 +49,7 @@
 #include "mpeg_shared/sendpt.h"
 #include "server_proto.h"
 
+ACE_RCSID(mpeg_server, vs, "$Id$")
 
 // %% Move all these functions to the VIDEO_SINGLETON class and remove
 // zombie code like VideoServer ()...

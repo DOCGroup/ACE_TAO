@@ -18,6 +18,8 @@
 
 #include "tao/Timeprobe.h"
 
+ACE_RCSID(Event_Latency, Event_Latency, "$Id$")
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 static const char *Event_Latency_Timeprobe_Description[] =

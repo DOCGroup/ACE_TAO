@@ -32,6 +32,8 @@
 #include "Event_Sup.h"
 #include "NavWeapC.h"
 
+ACE_RCSID(Event_Supplier, Event_Sup, "$Id$")
+
 static const char usage [] = 
 "[[-?]\n"
 "                 [-O[RBport] ORB port number]\n"

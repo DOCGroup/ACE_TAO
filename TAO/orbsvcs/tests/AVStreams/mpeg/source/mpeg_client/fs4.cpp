@@ -1,4 +1,5 @@
 /* $Id$ */
+
 /*
  * Copyright (c) 1992 The Regents of the University of California.
  * All rights reserved.
@@ -19,6 +20,7 @@
  * ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
  * PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
  */
+
 /* This file contains C code to do YCrCb -> colormap space. */
 
 #include <stdlib.h>
@@ -27,6 +29,8 @@
 #include "video.h"
 #include "proto.h"
 #include "dither.h"
+
+ACE_RCSID(mpeg_client, fs4, "$Id$")
 
 /* Structures containing precomputed error terms. */
 

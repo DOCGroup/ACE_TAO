@@ -1,6 +1,6 @@
 // $Id$
 
-// =========================================================================================================
+// ======================================================================
 //
 // = FILE  
 //     Program to test the property services.
@@ -13,10 +13,12 @@
 // = AUTHOR
 //     Alexander Babu Arulanthu <alex@cs.wustl.edu>
 //
-// ========================================================================================================= 
+// ====================================================================== 
 
 #include "orbsvcs/CosPropertyServiceS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
+
+ACE_RCSID(Property, main, "$Id$")
 
 class TAO_PropertySet_Tester
 {

@@ -18,6 +18,8 @@
 
 #include "client.h"
 
+ACE_RCSID(Property, client, "$Id$")
+
 Client::Client (void)
 {
 }

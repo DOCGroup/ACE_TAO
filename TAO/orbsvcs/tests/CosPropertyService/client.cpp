@@ -18,6 +18,8 @@
 
 #include "client.h"
 
+ACE_RCSID(CosPropertyService, client, "$Id$")
+
 Client::Client (void)
 {
 }
