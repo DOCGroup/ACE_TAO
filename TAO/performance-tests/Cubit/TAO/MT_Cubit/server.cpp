@@ -47,19 +47,6 @@ Cubit_Task::Cubit_Task (const char *args,
 int
 Cubit_Task::svc (void)
 {
-  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
-  // ACE way to do that . . .
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-  int prio;
-
-  if (ACE_Thread::getprio (thr_handle, prio) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Task::svc; set my priority to %d\n",
-              prio));
-  ACE_OS::thr_setprio (prio);
-
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Beginning Cubit task with args = '%s'\n",
               orbargs_));
@@ -419,19 +406,6 @@ Cubit_Factory_Task::create_factory (void)
 int
 Cubit_Factory_Task::svc (void)
 {
-  // On Solaris 2.5.x, the LWP priority needs to be set.  This is the
-  // ACE way to do that . . .
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-  int prio;
-
-  if (ACE_Thread::getprio (thr_handle, prio) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
-
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Cubit_Factor_Task::svc; set my priority to %d\n",
-              prio));
-  ACE_OS::thr_setprio (prio);
-
   ACE_DEBUG ((LM_DEBUG,
               ">>> (%P|%t) Beginning Cubit Factory task with args = '%s'\n",
               orbargs_));
