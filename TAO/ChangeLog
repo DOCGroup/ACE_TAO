@@ -1,3 +1,9 @@
+Tue Jan 14 20:46:40 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Crashed_Callback/client.dsp:
+	* tests/Crashed_Callback/server.dsp: Fixed the release build
+	  configuration. Thanks to Nanbor for pointing this out.
+
 Tue Jan 14 16:37:15 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Stack_Recursion/server.dsp: Adding this file to the repo.
