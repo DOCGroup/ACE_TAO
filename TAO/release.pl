@@ -1,3 +1,8 @@
+// $Id$
+//
+// Takes over some of the release work rather than having it all
+// inline in the Makefile.
+
 $date = `/usr/bin/date +"%a %b %d %T %Y"`;
 chop $date;
 $VERSION = "VERSION";
@@ -15,13 +20,13 @@ sub inplace {
     my($nfile);
     $ext = '~' if ($ext eq '');
     foreach $file (@files) {
-	$nfile = $file . $ext;
-	if (rename ($file, $nfile)) {
-	    push(@nfiles, $nfile);
-	}
-	else {
-	    warn "Unable to rename $files[$i] for in-place editing: $!\n";
-	}
+        $nfile = $file . $ext;
+        if (rename ($file, $nfile)) {
+            push(@nfiles, $nfile);
+        }
+        else {
+            warn "Unable to rename $files[$i] for in-place editing: $!\n";
+        }
     }
     @nfiles;
 }
@@ -36,26 +41,26 @@ open (VERSIONOUT, ">$VERSION")
 undef $version_number;
 while (<VERSION>) {
     if ($BUMP_WHICH =~ m/major/i) {
-	$bump_expr = 'sprintf("$1%d.0.0", $2+1)';
+        $bump_expr = 'sprintf("$1%d.0.0", $2+1)';
     }
     elsif ($BUMP_WHICH =~ m/beta/i) {
-	$bump_expr = 'sprintf("$1$2.%d.0", $3+1)';
+        $bump_expr = 'sprintf("$1$2.%d.0", $3+1)';
     }
     else {
-	$bump_expr = 'sprintf("$1$2.$3.%d", $4+1)';
+        $bump_expr = 'sprintf("$1$2.$3.%d", $4+1)';
     }
     $subst = 's/(TAO version )(\d+)\.(\d+)\.(\d+)/' . $bump_expr . '/e';
     eval $subst;
     ($version_number = $_) =~ s/.*(\d+\.\d+\.\d+).*/$1/ if (!defined($version_number));
     if (s/(, released ).*/$1$date./) {
-	($TAO_VERSION = $_) =~ s/^This is //;
+        ($TAO_VERSION = $_) =~ s/^This is //;
     }
     print VERSIONOUT $_;
 }
 
 close (VERSIONOUT);
 close (VERSION);
-chmod 0644 $VERSION;
+chmod 0644, $VERSION;
 
 $message = $date."  ".$ENV{"SIGNATURE"}."  <".$ENV{"LOGNAME"}."\@cs.wustl.edu>\n\n\t* ".$TAO_VERSION."\n";
 $message_printed = 0;
@@ -84,5 +89,3 @@ print $COM;
 system $COM;
 
 #unlink @inplace;
-
-
