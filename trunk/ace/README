@@ -162,6 +162,7 @@ ACE_HAS_XLI 				Platform has the XLI version of TLI
 ACE_HAS_XT 				Platform has Xt and Motif
 ACE_HAS_YIELD_VOID_PTR			Platform requires pthread_yield() to take a NULL.
 ACE_LACKS_ACCESS			Platform lacks access() (e.g., VxWorks and Chorus)
+ACE_LACKS_ACE_IOSTREAM			Platform can not build ace/IOStream{,_T}.cpp.  This does not necessarily mean that the platform does not support iostreams.
 ACE_LACKS_CONST_STRBUF_PTR		Platform uses struct strbuf * rather than const struct strbuf * (e.g., HP/UX 10.x)
 ACE_LACKS_CONST_TIMESPEC_PTR		Platform forgot const in cond_timewait (e.g., HP/UX).
 ACE_LACKS_COND_T			Platform lacks condition variables (e.g., Win32 and VxWorks)
