@@ -707,9 +707,12 @@ bgcolor="#ffffff">
 <hr>
 <h3>Script Guidelines</h3>
 <ul>
-  <li>In general, it's best to write scripts in perl.<p>
+  <li>In general, it's best to write scripts in Perl.<p>
 
-  <li>Don't specify a hard-coded path to perl itself.  Use
+  <li>Follow the Perl style guide guide as closely as
+      possible.  <code>man perlstyle</code> to view it.
+
+  <li>Don't specify a hard-coded path to Perl itself.  Use
     the following code at the top of the script to pick up
     perl from the users <code>PATH</code>:<br>
       <pre>
@@ -718,8 +721,8 @@ bgcolor="#ffffff">
       if 0;
       </pre><p>
 
-  <li>If your perl script relies on features only available
-    in never versions of perl, include the a statement similar
+  <li>If your Perl script relies on features only available
+    in newer versions of Perl, include the a statement similar
     to the following:<br>
       <pre>
         require 5.003;
