@@ -1,3 +1,14 @@
+Thu Dec 25 18:43:03 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_state_attribute, be_state_argument}.cpp: Handled
+	teh remaining cases (except Arrays) that use the newly added
+	methiods to class NVList. The Param_Test test suite is being
+	developed to track any memory leaks.
+
+	* TAO/tests/Cubit/TAO/IDL_Cubit/clnt.cpp:  Used sequence_var in
+	the cube_sequence function to avoid memory leaks. However, there
+	still are leaks.
+
 Wed Dec 24 18:44:47 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.48, released Wed Dec 24 18:44:47 1997.
