@@ -1,3 +1,7 @@
+Sun Apr 21 10:07:25 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* TAO_IDL/tao_idl_static.dsp: Add user32.lib and advapi32.lib to link line.
+
 Sat Apr 20 21:12:10 EDT 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp: Instantiate ACE_Node<ACE_INET_Addr>
