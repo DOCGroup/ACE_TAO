@@ -55,5 +55,5 @@ main (int argc, char *argv [])
       return -1;
     }
   TAO_ENDTRY;
-  
+  return 0;
 }
