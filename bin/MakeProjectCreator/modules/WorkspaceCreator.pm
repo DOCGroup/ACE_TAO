@@ -59,24 +59,27 @@ sub new {
   my($progress)  = shift;
   my($toplevel)  = shift;
   my($baseprojs) = shift;
+  my($gfeature)  = shift;
+  my($feature)   = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                'workspace');
+                                $feature, 'workspace');
   my($typecheck) = $self->{'type_check'};
 
-  $self->{'workspace_name'} = undef;
-  $self->{$typecheck}       = 0;
-  $self->{'projects'}       = [];
-  $self->{'project_info'}   = {};
-  $self->{'reading_parent'} = [];
-  $self->{'project_files'}  = [];
-  $self->{'scoped_assign'}  = {};
-  $self->{'cacheok'}        = 1;
-  $self->{'exclude'}        = {};
-  $self->{'wctype'}         = $self->extractType("$self");
-  $self->{'modified_count'} = 0;
+  $self->{'workspace_name'}      = undef;
+  $self->{$typecheck}            = 0;
+  $self->{'projects'}            = [];
+  $self->{'project_info'}        = {};
+  $self->{'reading_parent'}      = [];
+  $self->{'project_files'}       = [];
+  $self->{'scoped_assign'}       = {};
+  $self->{'cacheok'}             = 1;
+  $self->{'exclude'}             = {};
+  $self->{'wctype'}              = $self->extractType("$self");
+  $self->{'modified_count'}      = 0;
+  $self->{'global_feature_file'} = $gfeature;
 
   ## Add a hash reference for our workspace type
   if (!defined $previous_workspace_name{$self->{'wctype'}}) {
@@ -897,7 +900,9 @@ sub project_creator {
                    $parameters{'addproj'},
                    $parameters{'progress'},
                    $parameters{'toplevel'},
-                   $parameters{'baseprojs'});
+                   $parameters{'baseprojs'},
+                   $self->{'global_feature_file'},
+                   $parameters{'feature_file'});
 }
 
 

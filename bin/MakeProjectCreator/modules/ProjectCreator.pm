@@ -19,6 +19,7 @@ use File::Basename;
 use Creator;
 use TemplateInputReader;
 use TemplateParser;
+use FeatureParser;
 
 use vars qw(@ISA);
 @ISA = qw(Creator);
@@ -134,11 +135,13 @@ sub new {
   my($progress)  = shift;
   my($toplevel)  = shift;
   my($baseprojs) = shift;
+  my($gfeature)  = shift;
+  my($feature)   = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
                                 $progress, $toplevel, $baseprojs,
-                                'project');
+                                $feature, 'project');
 
   $self->{$self->{'type_check'}}   = 0;
   $self->{'project_info'}          = [];
@@ -155,7 +158,7 @@ sub new {
   $self->{'pctype'}                = $self->extractType("$self");
   $self->{'defaulted'}             = {};
   $self->{'custom_types'}          = {};
-
+  $self->{'feature_parser'}        = new FeatureParser($gfeature, $feature);
   $self->reset_generating_types();
 
   return $self;
@@ -1707,14 +1710,54 @@ sub get_custom_value {
 }
 
 
+sub check_features {
+  my($self)     = shift;
+  my($requires) = $self->get_assignment('requires');
+  my($status)   = 1;
+
+  if (defined $requires) {
+    foreach my $require (split(/\s+/, $requires)) {
+      my($fval) = $self->{'feature_parser'}->get_value($require);
+
+      ## By default, if the feature is not listed, then it is enabled.
+      if (defined $fval && !$fval) {
+        $status = 0;
+        last;
+      }
+    }
+  }
+
+  ## If it passes the requires, then check the avoids
+  if ($status) {
+    my($avoids) = $self->get_assignment('avoids');
+    if (defined $avoids) {
+      foreach my $avoid (split(/\s+/, $avoids)) {
+        my($fval) = $self->{'feature_parser'}->get_value($avoid);
+
+        ## By default, if the feature is not listed, then it is enabled.
+        if (!defined $fval || $fval) {
+          $status = 0;
+          last;
+        }
+      }
+    }
+  }
+
+  return $status;
+}
+
+
 sub need_to_write_project {
   my($self) = shift;
-  foreach my $key ('source_files', keys %{$self->{'generated_exts'}}) {
-    my($names) = $self->{$key};
-    foreach my $name (keys %$names) {
-      foreach my $key (keys %{$names->{$name}}) {
-        if (defined $names->{$name}->{$key}->[0]) {
-          return 1;
+
+  if ($self->check_features()) {
+    foreach my $key ('source_files', keys %{$self->{'generated_exts'}}) {
+      my($names) = $self->{$key};
+      foreach my $name (keys %$names) {
+        foreach my $key (keys %{$names->{$name}}) {
+          if (defined $names->{$name}->{$key}->[0]) {
+            return 1;
+          }
         }
       }
     }

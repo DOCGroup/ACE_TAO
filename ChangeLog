@@ -1,14 +1,37 @@
+Thu May 22 07:35:23 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/MakeProjectCreator/USAGE:
+
+          Updated the documentation on the new feature files and the
+          -feature_file option.
+
+        * bin/MakeProjectCreator/config/global.features:
+
+          This is the global feature file.  It contains the default feature
+          settings that should be acceptable for most situations.  See
+          comments in this file for more information.
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/FeatureParser.pm:
+        * bin/MakeProjectCreator/modules/Options.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Support has been added for the new feature files.
+
 Thu May 22 07:28:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.cpp: Reverted changes from this "Thu May 22
-	  00:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>". The
-	  right fix for compilers that emit warnings when trying to
-	  override only a few methods from a set of overloaded methods in
-	  the derived class, is to completely declare all the other
-	  overloaded methods. In the definition of the methods that we
-	  dont plan to override we should simply call the base class
-	  implementation.
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp: Reverted changes from this "Thu May 22
+          00:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>". The
+          right fix for compilers that emit warnings when trying to
+          override only a few methods from a set of overloaded methods in
+          the derived class, is to completely declare all the other
+          overloaded methods. In the definition of the methods that we
+          dont plan to override we should simply call the base class
+          implementation.
 
 Thu May 22 11:29:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -32,22 +55,22 @@ Thu May 22 07:51:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed May 21 19:55:54 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	  Thanks to Tongzhe Cui <tonycui@yahoo.com> for motivating the
-	  following changes.
+          Thanks to Tongzhe Cui <tonycui@yahoo.com> for motivating the
+          following changes.
 
-	* ace/MEM_Acceptor.h:
-	* ace/MEM_Acceptor.i (init_buffer_size): Added this new helper
-	  function to set the initial buffer size of the newly created
-	  ACE_MEM_Stream the acceptor creates subsequently.
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.i (init_buffer_size): Added this new helper
+          function to set the initial buffer size of the newly created
+          ACE_MEM_Stream the acceptor creates subsequently.
 
-	* ace/MEM_Connector.h:
-	* ace/MEM_Connector.i:
-	* ace/MEM_Acceptor.h:
-	* ace/MEM_Acceptor.i: Marked the malloc_options accessor function
-	  as deprecated.
+        * ace/MEM_Connector.h:
+        * ace/MEM_Connector.i:
+        * ace/MEM_Acceptor.h:
+        * ace/MEM_Acceptor.i: Marked the malloc_options accessor function
+          as deprecated.
 
-	* tests/MEM_Stream_Test.cpp (test_concurrent): Changed to use the
-	  new init_buffer_size method to set the buffer size.
+        * tests/MEM_Stream_Test.cpp (test_concurrent): Changed to use the
+          new init_buffer_size method to set the buffer size.
 
 Thu May 22 00:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -64,14 +87,14 @@ Thu May 22 00:16:11 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed May 21 16:05:29 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/Containers_T.i (ACE_DLList_Reverse_Iterator<T>::next (T *&ptr)):
-	  If the next() pointer is 0, don't dereference it. Thanks very much
-	  to Ken Kane <kkane@livevault.com> for this fix.
+        * ace/Containers_T.i (ACE_DLList_Reverse_Iterator<T>::next (T *&ptr)):
+          If the next() pointer is 0, don't dereference it. Thanks very much
+          to Ken Kane <kkane@livevault.com> for this fix.
 
-	* tests/DLList_Test.cpp: Added a run_reverse_iterate() test function
-	  to hit the error case above.
+        * tests/DLList_Test.cpp: Added a run_reverse_iterate() test function
+          to hit the error case above.
 
-	* THANKS: Added Ken Kane <kkane@livevault.com> to the Hall of Fame.
+        * THANKS: Added Ken Kane <kkane@livevault.com> to the Hall of Fame.
 
 Wed May 21 21:46:19 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -142,19 +165,19 @@ Tue May 20 18:56:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Tue May 20 12:53:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/TP_Reactor.h:
-	* ace/TP_Reactor.cpp: Do not allow users to register signal
-	  handlers with the TP_Reactor. TP_Reactor does not signals at
-	  present and allowing this is simply confusing. We now return a
-	  value of -1 if users try registering a signal handler with the
-	  reactor. Thanks to Carsten Prescher
-	  <prescher@pcdasa73.vs.dasa.de> for pointing this out.
+        * ace/TP_Reactor.h:
+        * ace/TP_Reactor.cpp: Do not allow users to register signal
+          handlers with the TP_Reactor. TP_Reactor does not signals at
+          present and allowing this is simply confusing. We now return a
+          value of -1 if users try registering a signal handler with the
+          reactor. Thanks to Carsten Prescher
+          <prescher@pcdasa73.vs.dasa.de> for pointing this out.
 
 Tue May 20 10:54:10 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* tests/Proactor_Test.cpp (open): Changed IPPROTO_TCP to
-	  ACE_IPPROTO_TCP.  Thanks to David Ohlemacher
- 	  <ohlemacher@bbn.com> for motivating this.
+        * tests/Proactor_Test.cpp (open): Changed IPPROTO_TCP to
+          ACE_IPPROTO_TCP.  Thanks to David Ohlemacher
+          <ohlemacher@bbn.com> for motivating this.
 
 Tue May 20 01:50:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -221,19 +244,19 @@ Tue May 20 01:10:42 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Mon May 19 11:03:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Only detect alloca() support if explicitly enabled by the user.
+          Only detect alloca() support if explicitly enabled by the user.
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Reenabled bootstrapping of ACE+Autoconf support when creating
-	  ACE beta/release kits.
+          Reenabled bootstrapping of ACE+Autoconf support when creating
+          ACE beta/release kits.
 
-	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
+        * m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
 
-	  Added "--enable-alloca" configure script option.  alloca()
-	  support will be disabled by default.
+          Added "--enable-alloca" configure script option.  alloca()
+          support will be disabled by default.
 
 Mon May 19 16:08:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 

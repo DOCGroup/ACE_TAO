@@ -137,9 +137,16 @@ verbatim        This allows arbitrary information to be place in a generated
                 the generated project.  If you need to preserve white space,
                 the line or lines should be placed inside double quotes.
 
-The Following are GNU only:
-requires        Specifies which tao macros should be set to build the target
-avoids          Specifies which tao macros should not be set to build the target
+requires        Specifies which features should be enabled in order to
+                generate the project file.  Under the GNUACE type, it also
+                specifies which tao macros should be set to build the
+                target.
+avoids          Specifies which features should be disabled in order to
+                generate the project file.  Under the GNUACE type, it also
+                specifies which tao macros should not be set to build the
+                target.
+
+The Following are GNUACE only:
 compname        Specifies the argument to pass to the ace_components script
 comps           Specifies which components are required to build the target
 tagname         Specifies the make macro to check before building the target
