@@ -1,6 +1,6 @@
 Wed May 26 10:14:23 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* DnC/DomainApplicationManager/DomainApplicationManager.*
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.*
 
           Fixed the compiling errors. More functinality will be
           added soon.
@@ -9,6 +9,7 @@ Wed May 26 10:14:23 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
           Added this helper class to deal with deployment topology
           data file.
+
 
 Tue May 25 22:40:23 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
