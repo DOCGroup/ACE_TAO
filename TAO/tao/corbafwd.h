@@ -55,6 +55,12 @@
 #  define TAO_SINGLETON_DECLARATION(T)
 #endif /* TAO_HAS_DLL */
 
+#if defined (_MSC_VER)
+# ifdef   _DEBUG                  // convert from VC++ convention ...
+#  define  DEBUG           // ... to normal convention
+# endif
+#endif /* _MSC_VER */
+
 // Forward declarations of some data types are needed.
 
 class CORBA_Any;

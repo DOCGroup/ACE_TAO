@@ -13,7 +13,9 @@
 //
 // XXX on Windows, make it always use OutputDebugString () instead of stdio. 
 
-#include "tao/corbafwd.h"
+#include "tao/debug.h"
+#include "tao/Environment.h"
+#include "tao/Exception.h"
 
 ACE_RCSID(tao, debug, "$Id$")
 
