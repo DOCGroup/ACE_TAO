@@ -3817,6 +3817,10 @@ struct sigaction
 #   define F_OK    0       /* Test for existence of File. */
 # endif /* F_OK */
 
+# if !defined (ESUCCESS)
+#   define ESUCCESS 0
+# endif /* !ESUCCESS */
+
 # if !defined (EIDRM)
 #   define EIDRM 0
 # endif /* !EIDRM */
