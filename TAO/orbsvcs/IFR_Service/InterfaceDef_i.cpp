@@ -868,7 +868,7 @@ TAO_InterfaceDef_i::create_operation_i (const char *id,
                                                     "name",
                                                     params[i].name.in ());
           PortableServer::ObjectId_var oid = 
-            this->repo_->ir_poa ()->reference_to_id (params[i].type_def,
+            this->repo_->ir_poa ()->reference_to_id (params[i].type_def.in (),
                                                      ACE_TRY_ENV);
 
           ACE_CHECK_RETURN (IR_OperationDef::_nil ());

@@ -963,7 +963,7 @@ TAO_Container_i::create_struct_i (const char *id,
                                                 members[i].name.in ());
 
       PortableServer::ObjectId_var oid =
-        this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
+        this->repo_->ir_poa ()->reference_to_id (members[i].type_def.in (),
                                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (IR_StructDef::_nil ());
 
@@ -1099,7 +1099,7 @@ TAO_Container_i::create_union_i (const char *id,
                                                 members[i].name.in ());
 
       PortableServer::ObjectId_var oid =
-        this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
+        this->repo_->ir_poa ()->reference_to_id (members[i].type_def.in (),
                                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (IR_UnionDef::_nil ());
 
@@ -1645,7 +1645,7 @@ TAO_Container_i::create_exception_i (const char *id,
                                                 members[i].name.in ());
 
       PortableServer::ObjectId_var oid =
-        this->repo_->ir_poa ()->reference_to_id (members[i].type_def,
+        this->repo_->ir_poa ()->reference_to_id (members[i].type_def.in (),
                                                  ACE_TRY_ENV);
       ACE_CHECK_RETURN (IR_ExceptionDef::_nil ());
 
