@@ -1,5 +1,15 @@
 Fri Apr 30 00:40:44 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
+	* examples/POA/On_Demand_Loading/Server_Manager.h: 
+        * examples/POA/On_Demand_Loading/Servant_Activator.h:
+        * examples/POA/On_Demand_Loading/Servant_Loader.h:
+	  Changed TAO_TRY to ACE_TRY macros.
+	* examples/POA/On_Demand_Loading/Server_Manager.cpp:
+	* examples/POA/On_Demand_Loading/Servant_Activator.cpp:
+	* examples/POA/On_Demand_Loading/Servant_Loader.cpp:
+	  Added ACE_NEW_DECLARE_CORBA_ENV instead of ACE_TRY_NEW_ENV
+	  and also changed the CORBA::OBJECT_NOT_EXIST() exception
+	  to fit the current api.
 	* examples/POA/Loader/Server_Manager.h: 
         * examples/POA/Loader/Servant_Activator.h:
         * examples/POA/Loader/Servant_Loader.h:
