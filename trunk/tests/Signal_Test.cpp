@@ -45,7 +45,7 @@ static pid_t parent_pid = 0;
 static int test_number = 0;
 
 // Coordinate the shutdown between threads.
-static ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> shut_down (0);
+static ACE_Atomic_Op<ACE_SYNCH_RECURSIVE_MUTEX, int> shut_down (0);
 
 static int
 handle_signal (int signum)
@@ -465,9 +465,9 @@ main (int argc, ASYS_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>;
+template class ACE_Atomic_Op<ACE_SYNCH_RECURSIVE_MUTEX, int>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_RECURSIVE_MUTEX, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #else
