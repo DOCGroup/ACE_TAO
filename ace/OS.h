@@ -4081,6 +4081,8 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
      if (POINTER == 0) { errno = ENOMEM; return;} \
      else { new (POINTER) CONSTRUCTOR; } \
    } while (0)
+#define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
+   do { POINTER->CLASS::~CLASS (); DEALLOCATOR (POINTER); } while (0)
 
 #if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 // The following two macros ensure that system calls are properly
