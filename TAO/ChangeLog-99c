@@ -1,3 +1,10 @@
+Mon Jun 21 22:56:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event/Event.dsw:
+	* orbsvcs/tests/Event/Basic/Basic.dsw:
+	* orbsvcs/tests/Event/Basic/BCast.dsp:
+	  Added project for the BCast tests
+
 Mon Jun 21 22:25:30 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/ORB.cpp (resolve_initial_references): 
