@@ -32,8 +32,28 @@ template <ACE_SYNCH_DECL> class ACE_Module;
  * @brief Primary interface for application message processing, as well
  * as input and output message queueing.
  *
- * This class serves as the basis for passive and active objects
- * in ACE.
+ * Unlike ACE_Task, these class doesn't have the ability to be a part of
+ * a Stream chain. I.e. You cannot (yet) chain modules based on ACE_Task_Ex.
+ *
+ * @todo: We can merge ACE_Task and ACE_Task_Ex to be one class.
+ * something like that:
+ * template <ACE_SYNCH_DECL, ACE_MESSAGE_TYPE = ACE_Message_Block>
+ * class ACE_Task : public ACE_Task_Base
+ * {
+ * 	// use here the code from ACE_Task_Ex using ACE_Message_Queue_Ex
+ * };
+ *
+ * Now specialized version of ACE_Task with ACE_Message_Block as its
+ * ACE_MESSAGE_TYPE...
+ *
+ * template <ACE_SYNCH_DECL>
+ * class ACE_Task <ACE_SYNCH_USE, ACE_Message_Block> : public ACE_Task_Base
+ * {
+ *   // put here the good old ACE_Task code
+ * };
+ *
+ * When User (and legacy code) write ACE_Task<ACE_MT_SYNCH>, specialized ACE_Task
+ * code is in action.
  */
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE>
 class ACE_Task_Ex : public ACE_Task_Base
@@ -118,8 +138,7 @@ public: // Should be protected:
   /// Set next Task pointer.
   void next (ACE_Task<ACE_SYNCH_USE> *);
 
-  /// Return the Task's sibling if there's one associated with the
-  /// Task's Module, else returns 0.
+  /// Alwasy return 0. @todo FIXME
   ACE_Task<ACE_SYNCH_USE> *sibling (void);
 
   /// Return the Task's Module if there is one, else returns 0.
