@@ -59,7 +59,8 @@ int
 Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                               const char *my_name)
 {
-  ACE_TRY_NEW_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
     {
       // Get a Scheduler.
 
@@ -67,8 +68,8 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
         ACE_Scheduler_Factory::server ();
 
       // Define Real-time information.
-
       rt_info_ = server->create (my_name, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       server->set (rt_info_,
                    RtecScheduler::VERY_LOW_CRITICALITY,
@@ -81,6 +82,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                    1,
                    RtecScheduler::OPERATION,
                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
 
       // Create the event that we're registering for.
@@ -134,7 +136,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                         -1);
     }
   ACE_ENDTRY;
-
+  ACE_CHECK_RETURN (0);
   return 0;
 }
 
@@ -186,28 +188,28 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events,
               ACE_TRY_CHECK;
               cout << "TCKind: " << kind << endl;
 
-              if (_tc_Navigation->equal (events[i].data.any_value.type(), ACE_TRY_ENV))
+              int ret = _tc_Navigation->equal (events[i].data.any_value.type(), ACE_TRY_ENV);
+	      ACE_TRY_CHECK;
+	      if (ret)
                 {
-                  ACE_TRY_CHECK;
                   Navigation *navigation_ = (Navigation*) events[i].data.any_value.value ();
-
                   cout << "Found a Navigation struct in the any: pos_lat = " << navigation_->position_latitude << endl;
                 }
-              else if (_tc_Weapons->equal (events[i].data.any_value.type(), ACE_TRY_ENV))
-                {
-                  ACE_TRY_CHECK;
-                  Weapons *weapons_ = (Weapons*) events[i].data.any_value.value ();
-
-                  cout << "Found a Navigation struct in the any: pos_lat = " << weapons_->number_of_weapons << endl;
+	      else {
+		ret = (_tc_Weapons->equal (events[i].data.any_value.type(), ACE_TRY_ENV));
+		ACE_TRY_CHECK;
+		if (ret) {
+		  Weapons *weapons_ = (Weapons*) events[i].data.any_value.value ();
+		  cout << "Found a Navigation struct in the any: pos_lat = " << weapons_->number_of_weapons << endl;
                 }
-
-
-            }
+	      }
+	    }
           ACE_CATCHANY
             {
               ACE_ERROR ((LM_ERROR, "(%t)Error in extracting the Navigation and Weapons data.\n"));
             }
           ACE_ENDTRY;
+	  ACE_CHECK;
         }
     }
 }

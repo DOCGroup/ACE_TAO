@@ -27,7 +27,7 @@ Identity_i::~Identity_i (void)
 
 void
 Identity_i::get_name (CORBA::String_out name,
-                      CORBA::Environment & /*ACE_TRY_ENV*/)
+                      CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   name = this->name_.in ();

@@ -205,5 +205,7 @@ Grid_Factory_i::make_grid (CORBA::Short width,
   ACE_CHECK_RETURN (Grid::_nil ());
 
   // Register the Grid pointer.
-  return grid_ptr->_this (ACE_TRY_ENV);
+  Grid_ptr gptr = grid_ptr->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+  return gptr;
 }

@@ -22,26 +22,23 @@
 int
 main (int argc, char *argv[])
 {
+  
   ACE_TRY_NEW_ENV
     {
       Server_i server_i;
 
-      if (server_i.init (argc, argv, ACE_TRY_ENV) != 0)
-	{
-	  ACE_TRY_CHECK;
-
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "\n error in init.\n"),
-			    1);
-	}
-      if (server_i.run (ACE_TRY_ENV) != 0)
-	{
-	  ACE_TRY_CHECK;
-
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "\n error in run.\n"),
-			    1);
-	}
+      int ret = server_i.init (argc, argv, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (ret != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "\n error in init.\n"),
+			  1);
+      ret = server_i.run (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (ret != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "\n error in run.\n"),
+			  1);
     }
   ACE_CATCHANY
     {
@@ -50,6 +47,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
-
+  ACE_CHECK_RETURN (0);
   return 0;
 }

@@ -102,9 +102,11 @@ Grid_Client_i::run (const char *name,
       
       ACE_TRY_CHECK;
       
-      if (client.shutdown () == 1)
+      if (client.shutdown () == 1) {
         client->shutdown (ACE_TRY_ENV);
-      //      ACE_UNUSED_ARG (ret_val);
+	ACE_TRY_CHECK;
+      }
+
     }
   ACE_CATCH (CORBA::UserException, range_ex)
     {
