@@ -5,6 +5,8 @@
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
+#include "orbsvcs/FtRtEvent/Utils/RT_Task.h"
+
 /// include this file to statically linked with FT ORB
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 
@@ -120,6 +122,8 @@ FtRtEvent_Test_Base::get_event_channel(ACE_ENV_SINGLE_ARG_DECL)
 int 
 FtRtEvent_Test_Base::run(int argc, ACE_TCHAR** argv)
 {
+  RT_Task::set_current();
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
     orb_ = CORBA::ORB_init(argc, argv, ""

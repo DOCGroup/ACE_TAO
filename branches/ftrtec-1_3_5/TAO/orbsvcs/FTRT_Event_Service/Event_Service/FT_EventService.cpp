@@ -12,11 +12,22 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTRTEC_ServiceActivate.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "orbsvcs/FtRtEvent/Utils/Log.h"
+#include "orbsvcs/FtRtEvent/Utils/RT_Task.h"
+#ifndef WIN32
+#include <sys/time.h>
+#endif
 
 ACE_RCSID (Event_Service,
            FT_EventService,
            "$Id$")
 
+static int time_to_crash;
+
+extern "C" void crash_handler(int)
+{
+    ACE_DEBUG((LM_DEBUG, "FTRT_Event_Service crashed\n"));
+    exit(1);
+}
 
 class Fault_Event_Service  : public TAO_FTEC_Event_Channel
 {
@@ -48,8 +59,20 @@ void Fault_Event_Service::push (const FtRtecEventChannelAdmin::ObjectId & oid,
                                 ACE_THROW_SPEC ((CORBA::SystemException, FtRtecEventComm::InvalidObjectID))
 {
   if (fault_no_ == msg_count_++) {
-    ACE_DEBUG((LM_DEBUG, "FTRT_Event_Service crashing on %d-th message\n", msg_count_-1));
-    exit(1);
+#ifndef WIN32
+    if (time_to_crash > 0) {
+      signal(SIGALRM, &crash_handler);
+      struct itimerval in, out;
+      in.it_value.tv_sec = time_to_crash/1000;
+      in.it_value.tv_usec = (time_to_crash%1000)*1000;
+      setitimer(ITIMER_REAL, &in, &out);
+    }
+    else
+#endif 
+    {  
+      ACE_DEBUG((LM_DEBUG, "FTRT_Event_Service crashing on %d-th message\n", msg_count_-1));
+      exit(1);
+    }
   }
   TAO_FTEC_Event_Channel::push(oid, data ACE_ENV_ARG_PARAMETER);
 }
@@ -58,6 +81,8 @@ void Fault_Event_Service::push (const FtRtecEventChannelAdmin::ObjectId & oid,
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
+  RT_Task::set_current();
+
   FT_EventService event_service;
   return event_service.run (argc, argv);
 }
@@ -176,7 +201,7 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
     }
   }
 
-  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:jps:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:jps:t:"));
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -217,11 +242,14 @@ FT_EventService::parse_args (int argc, ACE_TCHAR* argv [])
         this->global_scheduler_ = 0;
       }
       break;
-
+    case 't':
+      time_to_crash = atoi(get_opt.opt_arg ());
+      break;
     case '?':
     default:
       ACE_DEBUG ((LM_DEBUG,
         ACE_LIB_TEXT("Usage: %s \n")
+        ACE_LIB_TEXT("  -d debug level\n")
         ACE_LIB_TEXT("  -j join the object group\n")
         ACE_LIB_TEXT("  -p set as primary\n")
         ACE_LIB_TEXT("  -s <global|local> \n")

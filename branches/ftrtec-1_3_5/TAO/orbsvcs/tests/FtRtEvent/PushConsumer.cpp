@@ -56,7 +56,7 @@ int PushConsumer_impl::init(CORBA::ORB_ptr orb,
 
   time_val = ACE_OS::gettimeofday () - time_val;
 
-  ACE_DEBUG((LM_DEBUG, "connected to proxy_push_supplier, subscription latency = %d\n", time_val.sec () * 10000000 + time_val.usec ()* 10));
+  ACE_DEBUG((LM_DEBUG, "connected to proxy_push_supplier, subscription latency = %d\n", time_val.sec () * 1000000 + time_val.usec ()));
   return 0;
 }
 

@@ -84,7 +84,7 @@ int PushSupplier_impl::init(CORBA::ORB_ptr orb,
 
     time_val = ACE_OS::gettimeofday () - time_val;
 
-    ACE_DEBUG((LM_DEBUG, "connected to proxy_push_consumer, subscription latency = %d\n", time_val.sec () * 10000000 + time_val.usec ()* 10));
+    ACE_DEBUG((LM_DEBUG, "connected to proxy_push_consumer, subscription latency = %d\n", time_val.sec () * 1000000 + time_val.usec ()));
   }
   ACE_CATCHANY 
   {
@@ -154,7 +154,7 @@ int PushSupplier_impl::handle_timeout (const ACE_Time_Value &current_time,
   ACE_Time_Value time_val = ACE_OS::gettimeofday ();
   TAO_FTRTEC::Log(1, "sending data %d\n", seq_no_);
 
-  event[0].header.ec_send_time = time_val.sec () * 10000000 + time_val.usec ()* 10;
+  event[0].header.ec_send_time = time_val.sec () * 10000000 + time_val.usec ()*10;
   event[0].data.any_value <<= seq_no_;
   bool final = (num_iterations_ == (int) seq_no_++);
 
