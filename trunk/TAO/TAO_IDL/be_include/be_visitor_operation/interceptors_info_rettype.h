@@ -53,7 +53,7 @@ public:
   // visit an interface node
 
   int visit_interface_fwd (be_interface_fwd *node);
-  // visit an interface node
+  // visit a forward declared interface node
 
   int visit_native (be_native *node);
   // visit native type
@@ -76,11 +76,11 @@ public:
   int visit_union (be_union *node);
   // visit a union node
 
-# ifdef IDL_HAS_VALUETYPE
   int visit_valuetype (be_valuetype *node);
-  int visit_valuetype_fwd (be_valuetype_fwd *node);
-# endif /* IDL_HAS_VALUETYPE */
+  // visit a valuetype node
 
+  int visit_valuetype_fwd (be_valuetype_fwd *node);
+  // visit a forward declared valuetype node
 };
 
 #endif /* _BE_VISITOR_OPERATION_INTERCEPTORS_INFO_RETTYPE_H_ */

@@ -79,8 +79,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#define IDL_HAS_VALUETYPE
-
 #include        "TAO_IDL_FE_Export.h"   // Defines export macro
 #include        "idl_narrow.h"          // IDL Narrowing mechanism
 #include        "idl_defines.h"         // Constants for IDL compiler

@@ -339,10 +339,8 @@ public:
   virtual const char *ident_string (void) const;
   // Get the value of the #ident string.
 
-#ifdef IDL_HAS_VALUETYPE
   virtual void obv_support (idl_bool);
   // set enable/disable OBV (Valuetype) support
-#endif /* IDL_HAS_VALUETYPE */
 
   virtual idl_bool obv_support (void);
   // check if OBV (Valuetype) support is enabled

@@ -319,16 +319,14 @@ int be_visitor_args_invoke_cs::visit_interface_fwd (be_interface_fwd *)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
 int be_visitor_args_invoke_cs::visit_valuetype (be_valuetype *)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -364,6 +362,7 @@ int be_visitor_args_invoke_cs::visit_valuetype (be_valuetype *)
                          "Bad substate\n"),
                         -1);
     }
+
   return 0;
 }
 
@@ -410,8 +409,6 @@ be_visitor_args_invoke_cs::visit_valuetype_fwd (be_valuetype_fwd *)
     }
   return 0;
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int be_visitor_args_invoke_cs::visit_predefined_type (be_predefined_type *node)
 {

@@ -80,8 +80,6 @@ be_visitor_operation_rettype_return_cs::visit_interface_fwd (be_interface_fwd *)
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
 int
 be_visitor_operation_rettype_return_cs::visit_valuetype (be_valuetype *)
 {
@@ -99,8 +97,6 @@ be_visitor_operation_rettype_return_cs::visit_valuetype_fwd (be_valuetype_fwd *)
   *os << "_tao_retval._retn ()";
   return 0;
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_operation_rettype_return_cs::visit_predefined_type (be_predefined_type *node)

@@ -104,7 +104,6 @@ visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
 // like be_compiled_visitor_operation_rettype_vardecl_ss
 int
 be_visitor_operation_rettype_vardecl_ss::visit_valuetype (be_valuetype *node)
@@ -124,8 +123,6 @@ visit_valuetype_fwd (be_valuetype_fwd *node)
   *os << "::" << node->name () << "_var _tao_retval;\n";
   return 0;
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_operation_rettype_vardecl_ss::

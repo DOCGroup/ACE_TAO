@@ -307,8 +307,6 @@ be_visitor_operation_rettype::visit_union (be_union *node)
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
 int
 be_visitor_operation_rettype::visit_valuetype (be_valuetype *node)
 {
@@ -351,4 +349,3 @@ be_visitor_operation_rettype::visit_valuetype_fwd (be_valuetype_fwd *node)
   return 0;
 }
 
-#endif /* IDL_HAS_VALUETYPE */

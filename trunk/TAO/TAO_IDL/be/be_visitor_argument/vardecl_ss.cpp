@@ -191,8 +191,6 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (be_interface_fwd *node)
 }
 
 
-#ifdef IDL_HAS_VALUETYPE
-
 int be_visitor_args_vardecl_ss::visit_valuetype (be_valuetype *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
@@ -248,8 +246,6 @@ int be_visitor_args_vardecl_ss::visit_valuetype_fwd (be_valuetype_fwd *node)
     }
   return 0;
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int be_visitor_args_vardecl_ss::visit_predefined_type (be_predefined_type *node)
 {

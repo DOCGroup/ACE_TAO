@@ -134,8 +134,6 @@ be_visitor_args_post_invoke_cs::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
 int
 be_visitor_args_post_invoke_cs::visit_valuetype (be_valuetype *)
 {
@@ -181,8 +179,6 @@ be_visitor_args_post_invoke_cs::visit_valuetype_fwd (be_valuetype_fwd *)
     }
   return 0;
 }
-
-#endif /* IDL_HAS_VALUETYPE */
 
 int
 be_visitor_args_post_invoke_cs::visit_string (be_string *node)
