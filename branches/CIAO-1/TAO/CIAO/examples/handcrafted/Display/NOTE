@@ -13,19 +13,42 @@ situation with CIDL compiler.  It looks like we should be able to pass
 a bunch of IDL definitions thru CIDL compiler and get the equivalent
 executor interfaces automatically.  But we'll have to see.
 
+To try out this example, read the following document taken from a
+short note I wrote for a snapshot release:
 
-To generate mpc files:
+     This is a multiple-component example.  RateGen component
+     subdirectory contains a run_test.pl that you can use to
+     instantiate a component instance, like you would do with the
+     Hello example.  The other components require collaboration with
+     other components and I don't have client programs to test them
+     out individually.
 
-  HUDisplay:
+     This example also lets you compose all the components into a
+     distributed application using the Assembly_Deployer.  Change
+     directory to
 
-   generate_component_mpc.pl -n HUDisplay
+        $CIAO_ROOT/examples/handcrafted/Display/descriptors
 
+     and take a look at the file: NOTE.txt.  This file describes the
+     steps to compose the application using various different
+     configurations and composition specs.
 
-  All others
+* There are MSVC 6 workspaces and projects available in the workspace.
+  Some of them also contain UNIX makefiles.  If you can not find the
+  Makefiles for unix platform you are using, you can use mwc to create
+  them.  For examples, to compile the multi-component example, use the
+  following:
 
-   generate_component_mpc.pl -l .. -p HUDisplay {RateGen|GPS|NavDisplay}
+        $ cd $CIAO_ROOT/examples/handcrafted/Display
+        $ $(ACE_ROOT)/bin/mwc.pl
+        $ make
 
-To generate Makefiles/Projects of your choice, try the following under
-the current directory $(CIAO_ROOT)/examples/handcrafted/Display/:
+  To regenerate VC6 dsp files, do:
 
-  mwc -type <makefile type> -dynamic_only
+        > cd $CIAO_ROOT/examples/handcrafted/Display
+        > $(ACE_ROOT)/bin/mwc.pl -type vc6
+
+  Likewise, to regenerate VC7.NET project files, do:
+
+        > cd $CIAO_ROOT/examples/handcrafted/Display
+        > $(ACE_ROOT)/bin/mwc.pl -type vc7

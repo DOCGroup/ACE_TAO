@@ -9,7 +9,7 @@
       <fileinarchive name="RateGen.csd"/>
     </componentfile>
     <componentfile id="com-GPS">
-      <fileinarchive name="GPS.csd"/>
+      <fileinarchive name="GPS_tracing.csd"/>
     </componentfile>
     <componentfile id="com-NavDisplay">
       <fileinarchive name="NavDisplay.csd"/>

@@ -53,7 +53,18 @@ DetailView::DetailView(QWidget *parent, const char *name)
   grid->addWidget(z_edit, 3, 7);
 
   // Create a label containing a QMovie
-  movie = QMovie("trolltech.gif");
+  QString path_to_movie;
+  char *ace_root = getenv("ACE_ROOT");
+  if(ace_root)
+  {
+    path_to_movie += ace_root;
+    path_to_movie += "/TAO/CIAO/examples/handcrafted/Display/NavDisplayGUI_exec/trolltech.gif";
+  }
+  else
+  {
+    path_to_movie = "../NavDisplayGUI_exec/trolltech.gif";
+  }
+  movie = QMovie(path_to_movie);
   movielabel = new QLabel(this, "label1" );
   movie.connectStatus(this, SLOT(movieStatus(int)));
   movie.connectUpdate(this, SLOT(movieUpdate(const QRect&)));

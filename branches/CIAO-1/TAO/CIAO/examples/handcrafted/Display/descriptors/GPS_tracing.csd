@@ -3,22 +3,22 @@
 <!-- XML doesn't really support the following $(CIAO_ROOT) syntax :) -->
 <!DOCTYPE softpkg SYSTEM "$(CIAO_ROOT)/docs/XML/softpkg.dtd">
 
-<!-- NavDisplay's Software Package Descriptor  -->
-<!-- This file describes various NavDisplay executor -->
+<!-- GPS's Software Package Descriptor  -->
+<!-- This file describes various GPS executor -->
 <!-- implementations. -->
 
 
-<softpkg name="CIAO-NavDisplay" version="1.0">
+<softpkg name="CIAO-GPS" version="1.0">
   <pkgtype>CORBA Component</pkgtype>
-  <title>Rate Generator</title>
+  <title>GPS tracing emulater</title>
   <author>
     <company>Washington University in St. Louis</company>
     <webpage href="http://www.cs.wustl.edu/~doc/"/>
   </author>
-  <description>A NavDisplay executor implementation.</description>
+  <description>A GPS executor implementation that emulate a trace.</description>
   <license href="http://www.cs.wustl.edu/~schmidt/ACE-copying.html"/>
-  <idl id="IDL:HUDisplay/NavDisplay:1.0" homeid="IDL:HUDisplay/NavDisplayHome:1.0">
-    <fileinarchive name="NavDisplay.idl"/>
+  <idl id="IDL:HUDisplay/GPS:1.0" homeid="IDL:HUDisplay/GPSHome:1.0">
+    <fileinarchive name="GPS.idl"/>
   </idl>
 
   <!-- We don't need a property file for this example.  However,         -->
@@ -32,17 +32,17 @@
 <!--   </propertyfile> -->
 
   <descriptor type="CORBA Component">
-    <fileinarchive name="NavDisplayGUI.ccd"/>
+    <fileinarchive name="GPS.ccd"/>
   </descriptor>
 
-  <implementation id="DCE:D7984625-8561-431d-9927-4E498B317C02">
+  <implementation id="DCE:8E92655E-CA07-46C8-B127-0F0872A8CC29">
 
     <!-- CIAO extension -->
     <dependency type="CIAODLL">
       <softpkgref>
         <!-- .ssd stands for Servant Software Descriptors which is a CIAO extension -->
-        <fileinarchive name="NavDisplayGUI.ssd"/>
-        <implref idref="DCE:CDC06FCA-50FC-43ca-8ECC-BEFBD33FEE78"/>
+        <fileinarchive name="GPS.ssd"/>
+        <implref idref="DCE:75309233-0E0A-4cfb-B186-3E99F69B1D40"/>
       </softpkgref>
     </dependency>
 
@@ -51,8 +51,8 @@
 
     <code type="DLL">
       <!-- No need to specify extension below since ACE takes care of that, -->
-      <fileinarchive name="NavDisplayGUI_exec"/>
-      <entrypoint>createNavDisplayHome_Impl</entrypoint>
+      <fileinarchive name="GPS_tracing_exec"/>
+      <entrypoint>createGPSHome_Tracing_Impl</entrypoint>
     </code>
 
   </implementation>

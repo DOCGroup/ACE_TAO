@@ -1,5 +1,5 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -c -i NavDisplay"
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -i NavDisplay"
 
 project(NavDisplay_stub): ciao_client {
   depends += HUDisplay_stub
@@ -55,16 +55,4 @@ project(NavDisplay_exec) : ciao_server {
 }
 
 
-
-project (NavDisplay_client) : ciao_client {
-  exename = client
-  depends += NavDisplay_stub HUDisplay_stub
-
-  IDL_Files {
-  }
-
-  Source_Files {
-    client.cpp
-  }
-}
 

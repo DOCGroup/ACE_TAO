@@ -1,5 +1,6 @@
 // $Id$
-// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -c -i GPS"
+// This file is generated with "generate_component_mpc.pl -l .. -p HUDisplay -i GPS"
+// This file has been manually modified to add a second component implementation.
 
 project(GPS_stub): ciao_client {
   depends += HUDisplay_stub
@@ -54,17 +55,20 @@ project(GPS_exec) : ciao_server {
   }
 }
 
-
-
-project (GPS_client) : ciao_client {
-  exename = client
-  depends += GPS_stub
+project(GPS_tracing_exec) : ciao_server {
+  depends   += GPS_svnt
+  sharedname = GPS_tracing_exec
+  libs      += GPS_stub GPS_svnt HUDisplay_stub HUDisplay_svnt
+  libpaths += ..
+  idlflags  +=  -Wb,export_macro=GPS_EXEC_Export -Wb,export_include=GPS_exec_export.h
+  dllflags   = GPS_EXEC_BUILD_DLL
 
   IDL_Files {
+    GPSEI.idl
   }
 
   Source_Files {
-    client.cpp
+    GPSEIC.cpp
+    GPS_tracing_exec.cpp
   }
 }
-

@@ -1,48 +1,57 @@
 // $Id$
 
 /**
- * @file NavDisplay_exec.h
+ * @file GPS_tracing_exec.h
  *
- * Header file for the actual NavDisplay and NavDisplayHome component
+ * Header file for the actual GPS and GPSHome component
  * implementations.
  *
  * @author Nanbor Wang <nanbor@cse.wustl.edu>
  */
 
-#ifndef NAVDISPLAY_EXEC_H
-#define NAVDISPLAY_EXEC_H
+#ifndef GPS_TRACING_EXEC_H
+#define GPS_TRACING_EXEC_H
 
-#include "NavDisplayEIC.h"
-#include "ace/Synch.h"
+#include "GPSEIC.h"
 #include "tao/LocalObject.h"
-#include "NavUnit.h"
-
-class Worker;
-
 
 namespace MyImpl
 {
   /**
-   * @class NavDisplayGUI_exec_impl
+   * @class GPS_tracing_exec_impl
    *
    * RateGen executor implementation class.
    */
-  class NAVDISPLAY_EXEC_Export NavDisplayGUI_exec_impl :
-    public virtual HUDisplay::NavDisplay_Exec,
+  class GPS_EXEC_Export GPS_tracing_exec_impl :
+    public virtual HUDisplay::GPS_Exec,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default constructor.
-    NavDisplayGUI_exec_impl ();
+    GPS_tracing_exec_impl ();
 
     /// Default destructor.
-    ~NavDisplayGUI_exec_impl ();
+    ~GPS_tracing_exec_impl ();
 
-    // Operations from HUDisplay::NavDisplay
+    // Operations from HUDisplay::GPS
+
+    virtual HUDisplay::CCM_position_ptr
+    get_MyLocation (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
     virtual void
     push_Refresh (HUDisplay::tick_ptr ev
                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // Operations from HUDisplay::position
+
+    virtual CORBA::Long
+    posx (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    virtual CORBA::Long
+    posy (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Operations from Components::SessionComponent
@@ -68,29 +77,30 @@ namespace MyImpl
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CCMException));
   protected:
+    CORBA::Long positionx_;
+    CORBA::Long positiony_;
+    int dx_;
+    int dy_;
+
     /// Copmponent specific context
-    HUDisplay::CCM_NavDisplay_Context_var context_;
-    Worker *worker_;
-    NavUnit unit_;
-    UnitLocation loc_;
-    ACE_Thread_Mutex mutex_;
+    HUDisplay::CCM_GPS_Context_var context_;
   };
 
   /**
-   * @class NavDisplayGUIHome_exec_impl
+   * @class GPSHome_tracing_exec_impl
    *
-   * NavDisplay home executor implementation class.
+   * GPS home executor implementation class.
    */
-  class NAVDISPLAY_EXEC_Export NavDisplayGUIHome_exec_impl :
-    public virtual HUDisplay::CCM_NavDisplayHome,
+  class GPS_EXEC_Export GPSHome_exec_impl :
+    public virtual HUDisplay::CCM_GPSHome,
     public virtual TAO_Local_RefCounted_Object
   {
   public:
     /// Default ctor.
-    NavDisplayGUIHome_exec_impl ();
+    GPSHome_tracing_exec_impl ();
 
     /// Default dtor.
-    ~NavDisplayGUIHome_exec_impl ();
+    ~GPSHome_tracing_exec_impl ();
 
     // Explicit home operations.
 
@@ -104,7 +114,7 @@ namespace MyImpl
 
 }
 
-extern "C" NAVDISPLAY_EXEC_Export ::Components::HomeExecutorBase_ptr
-createNavDisplayHome_Impl (void);
+extern "C" GPS_EXEC_Export ::Components::HomeExecutorBase_ptr
+createGPSHome_Tracing_Impl (void);
 
-#endif /* NAVDISPLAY_EXEC_H */
+#endif /* GPS_TRACING_EXEC_H */
