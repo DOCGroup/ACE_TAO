@@ -1,3 +1,35 @@
+Fri Oct 24 17:11:14 1997  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* Thread_Timer_Queue_Test.cpp (shutdown_timer): added logic to
+	cancel preemptively or voluntarily, the dispatching thread,
+	depending on whether the platoform supports pthread_cancel().
+
+	* Timer_Queue_Adapters.cpp (ACE_Thread_Timer_Queue_Adapter):
+	Added initialization of <active_> flag to 1, active mode.  
+	We assume we start in active mode.
+	Added an internal variable <thr_id_> that stores the thread id of 
+	the currently running thread.  The motivation behind this is to 
+	be able to cancel this thread whenever we are shutting down.  It
+	is initialized to ACE_OS::NULL_thread.
+
+	* Timer_Queue_Adapters.cpp (svc):  Assign the <thr_id_> with the 
+	current running thread ID, using ACE_Thread::self ().
+
+	* Timer_Queue_Adapters.h (ACE_Thread_Timer_Queue_Adapter):
+	Added default <ACE_Thread_Manager> to be ACE_Thread_Manager::instance ()
+
+	* Timer_Queue_Adapters.h (activate):
+	Override the default <activate> method to be able to enforce one thread 
+	of execution per timer queue.  Does make much sense to have more than one 
+	managing the timer queue, and like Doug said too many weird things can happen...
+
+	* Timer_Queue_Adapters.i (thr_id):
+	Added this method to access the thread ID of this task.
+
+	* Timer_Queue_Adapters.i (activate):
+	Call ACE_Task_Base::activate () with n_threafds = 1 to ensure that a 
+	single thread is spawned.
+	
 Fri Oct 24 10:00:02 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (wait_grp):  Fixed a bug.  Should wait on
