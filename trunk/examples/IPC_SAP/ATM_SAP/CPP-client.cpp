@@ -3,6 +3,7 @@
 #include "ace/ATM_Connector.h"
 #include "ace/ATM_Addr.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ATM_SAP, CPP_client, "$Id$")
 

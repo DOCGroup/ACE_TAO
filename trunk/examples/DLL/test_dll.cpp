@@ -6,6 +6,7 @@
 #include "Magazine.h"
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(DLL, test_dll, "$Id$")
 

@@ -3,6 +3,7 @@
 #define ACE_BUILD_SVC_DLL
 
 #include "Today.h"
+#include "ace/Log_Msg.h"
 
 // Implementation of the abstract class method which describes the
 // magazine.
