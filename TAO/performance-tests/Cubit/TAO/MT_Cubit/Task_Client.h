@@ -97,6 +97,9 @@ class Task_State
   //     This class maintains state which is common to the potentially
   //     multiple concurrent clients.
 public:
+  int parse_args (int argc,char **argv);
+  // parses the arguments
+
   ACE_Barrier *barrier_;
   // Barrier for the multiple clients to synchronize after binding to
   // the servants.
@@ -206,6 +209,18 @@ public:
 
   u_int util_time_;
   // the amount of time in seconds that the utilization test will run.
+
+  int ready_;
+  // ready flag used by the high priority thread to wake up the low
+  // priority threads after it's parsed the arguments.
+
+  ACE_SYNCH_MUTEX ready_mtx_;
+  // mutex for the condition variable.
+
+  ACE_Condition<ACE_SYNCH_MUTEX> ready_cnd_;
+  // condition variable for the low priority threads to wait 
+  //until the high priority thread is done with the arguments parsing.
+
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
