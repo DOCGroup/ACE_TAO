@@ -2638,8 +2638,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 #         else
       ::pthread_detach (thr_id);
 #         endif /* HPUX_10 */
-#       endif /* ACE_LACKS_SETDETACH */
     }
+#       endif /* ACE_LACKS_SETDETACH */
 
   ::pthread_attr_delete (&attr);
 
