@@ -15,13 +15,19 @@
 //       Irvine, CA
 //       USA
 //       http://doc.ece.uci.edu/
+// and
+//       Institute for Software Integrated Systems
+//       Vanderbilt University
+//       Nashville, TN
+//       USA
+//       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNANY___CI_)
 #define _DYNAMICANY_DYNANY___CI_
@@ -29,7 +35,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNFIXED___CI_)
 #define _DYNAMICANY_DYNFIXED___CI_
@@ -37,7 +43,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNENUM___CI_)
 #define _DYNAMICANY_DYNENUM___CI_
@@ -45,7 +51,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNSTRUCT___CI_)
 #define _DYNAMICANY_DYNSTRUCT___CI_
@@ -53,7 +59,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNUNION___CI_)
 #define _DYNAMICANY_DYNUNION___CI_
@@ -61,7 +67,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNSEQUENCE___CI_)
 #define _DYNAMICANY_DYNSEQUENCE___CI_
@@ -69,7 +75,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNARRAY___CI_)
 #define _DYNAMICANY_DYNARRAY___CI_
@@ -77,7 +83,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNVALUE___CI_)
 #define _DYNAMICANY_DYNVALUE___CI_
@@ -85,7 +91,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:63
 
 #if !defined (_DYNAMICANY_DYNANYFACTORY___CI_)
 #define _DYNAMICANY_DYNANYFACTORY___CI_
@@ -93,7 +99,7 @@
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:71
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
 
 ACE_INLINE
 CORBA::Boolean operator<< (
@@ -101,17 +107,9 @@ CORBA::Boolean operator<< (
     const DynamicAny::NameValuePair &_tao_aggregate
   )
 {
-  if (
+  return
     (strm << _tao_aggregate.id.in ()) &&
-    (strm << _tao_aggregate.value)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm << _tao_aggregate.value);
 }
 
 ACE_INLINE
@@ -120,21 +118,13 @@ CORBA::Boolean operator>> (
     DynamicAny::NameValuePair &_tao_aggregate
   )
 {
-  if (
+  return
     (strm >> _tao_aggregate.id.out ()) &&
-    (strm >> _tao_aggregate.value)
-   )
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
+    (strm >> _tao_aggregate.value);
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_DynamicAny_NameValuePairSeq_I_
 #define _TAO_CDR_OP_DynamicAny_NameValuePairSeq_I_
@@ -152,7 +142,51 @@ CORBA::Boolean TAO_DynamicAny_Export operator>> (
 #endif /* _TAO_CDR_OP_DynamicAny_NameValuePairSeq_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:84
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const DynamicAny::NameDynAnyPair &_tao_aggregate
+  )
+{
+  return
+    (strm << _tao_aggregate.id.in ()) &&
+    CORBA::Object::marshal (
+        _tao_aggregate.value.in (),
+        strm
+      );
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    DynamicAny::NameDynAnyPair &
+  )
+{
+  return 0;
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+
+#if !defined _TAO_CDR_OP_DynamicAny_NameDynAnyPairSeq_I_
+#define _TAO_CDR_OP_DynamicAny_NameDynAnyPairSeq_I_
+
+CORBA::Boolean TAO_DynamicAny_Export operator<< (
+    TAO_OutputCDR &,
+    const DynamicAny::NameDynAnyPairSeq &
+  );
+
+CORBA::Boolean TAO_DynamicAny_Export operator>> (
+    TAO_InputCDR &,
+    DynamicAny::NameDynAnyPairSeq &
+  );
+
+#endif /* _TAO_CDR_OP_DynamicAny_NameDynAnyPairSeq_I_ */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_DynamicAny_AnySeq_I_
 #define _TAO_CDR_OP_DynamicAny_AnySeq_I_
@@ -168,4 +202,22 @@ CORBA::Boolean TAO_DynamicAny_Export operator>> (
   );
 
 #endif /* _TAO_CDR_OP_DynamicAny_AnySeq_I_ */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+
+#if !defined _TAO_CDR_OP_DynamicAny_DynAnySeq_I_
+#define _TAO_CDR_OP_DynamicAny_DynAnySeq_I_
+
+CORBA::Boolean TAO_DynamicAny_Export operator<< (
+    TAO_OutputCDR &,
+    const DynamicAny::DynAnySeq &
+  );
+
+CORBA::Boolean TAO_DynamicAny_Export operator>> (
+    TAO_InputCDR &,
+    DynamicAny::DynAnySeq &
+  );
+
+#endif /* _TAO_CDR_OP_DynamicAny_DynAnySeq_I_ */
 
