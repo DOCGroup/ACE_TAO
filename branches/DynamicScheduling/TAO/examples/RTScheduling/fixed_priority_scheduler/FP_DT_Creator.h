@@ -5,7 +5,7 @@
 
 #include "../DT_Creator.h"
 #include "fp_dt_creator_export.h"
-#include "../Task.h"
+
 
 class FP_DT_Creator_Export FP_DT_Creator: public DT_Creator
 {
@@ -19,7 +19,8 @@ public:
 					int start_time,
 					int load);
   
-  virtual void yield (int suspend_time);
+  virtual void yield (int suspend_time,
+		      Thread_Task* task);
 };
 
 

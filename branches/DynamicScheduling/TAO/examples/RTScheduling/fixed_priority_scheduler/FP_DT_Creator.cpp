@@ -42,7 +42,8 @@ FP_DT_Creator::sched_param (int importance)
 }
 
 void
-FP_DT_Creator::yield (int suspend_time)
+FP_DT_Creator::yield (int suspend_time,
+		      Thread_Task *)
 {
   //    ACE_DEBUG ((LM_DEBUG,
   //  	      "%d\n",
