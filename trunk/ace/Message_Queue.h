@@ -170,7 +170,7 @@ protected:
   virtual int signal_dequeue_waiters (void);
   // Inform any threads waiting to dequeue that they can procede.
 
-  MSG_Q_ID msgq ();
+  MSG_Q_ID msgq (void);
   // Access the underlying msgQ.
 
 private:
