@@ -202,8 +202,8 @@ be_visitor_interface_strategized_proxy_broker_ss::gen_thru_poa_operations (
 
 void
 be_visitor_interface_strategized_proxy_broker_ss::gen_direct_operations (
-    be_interface *node,
-    TAO_OutStream *os
+    be_interface *,
+    TAO_OutStream *
   )
 {
 }
