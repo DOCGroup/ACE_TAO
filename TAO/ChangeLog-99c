@@ -1,3 +1,11 @@
+Thu Oct 28 14:17:32 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (cube_long):
+          changed %ld output format specifier to %d.  ACE_ERROR doesn't
+          properly handle %ld.  And, CORBA::Long is 32 bits, which can be
+          handled by %d on most platforms.  Thanks to Erik Johannes
+          <ejohannes@oresis.com> for reporting this.
+
 Thu Oct 28 09:27:47 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * rules.tao.GNU: support ComSpec as well as COMSPEC
