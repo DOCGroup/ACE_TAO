@@ -92,6 +92,10 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
+ifdef CHORUS
+  CPPFLAGS += -DTAO_PLATFORM_SVC_CONF_FILE_NOTSUP
+endif
+
 #RLDFLAGS := $(subst -L,-Wl\,-rpath ,$(LDFLAGS))
 #CPPFLAGS += -D__IIOP_BUILD -I$(COMPATDIR) -DDEBUG
 CPPFLAGS += -I$(TAO_ROOT) -I$(COMPATDIR) #-H
