@@ -1,3 +1,10 @@
+Thu Apr 03 12:41:20 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/Bug_1482_regression.dsw:
+	* tests/Bug_1482_Regression/server.dsp: 
+	* tests/Bug_1482_Regression/client.dsp: Win32 project files for the
+	  test.  
+
 Thu Apr  3 11:20:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Bug_1482_Regression/Makefile.bor:
