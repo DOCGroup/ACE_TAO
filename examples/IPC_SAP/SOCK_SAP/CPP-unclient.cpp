@@ -4,6 +4,7 @@
 
 #include "ace/LSOCK_Connector.h"
 #include "ace/UNIX_Addr.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(SOCK_SAP, CPP_unclient, "$Id$")
 
