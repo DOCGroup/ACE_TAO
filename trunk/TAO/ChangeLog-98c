@@ -1,3 +1,7 @@
+Wed Oct 07 23:27:07 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.22 released.
+
 Wed Oct  7 22:27:48 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp
