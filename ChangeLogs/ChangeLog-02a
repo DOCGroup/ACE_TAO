@@ -1,3 +1,9 @@
+Mon Jul  9 15:59:56 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/config-lynxos.h: 
+          Added ACE_LACKS_MKSTEMP since LynxOS doesn't seem to have
+          this.
+
 Mon Jul  9 15:28:29 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/Dirent_Selector.cpp:
