@@ -34,7 +34,7 @@ TAO_DynStruct_i::TAO_DynStruct_i (const CORBA_Any& any)
       CORBA::ULong numfields = this->type_.in ()->member_count (env);
 
       // Resize the array.
-      this->da_members_ = ACE_Array_Base<CORBA_DynAny_var> (numfields);
+      this->da_members_.size (numfields);
 
       // Get the CDR stream of the argument.
       ACE_Message_Block* mb = any._tao_get_cdr ();
@@ -997,5 +997,13 @@ TAO_DynStruct_i::get_any (CORBA::Environment &env)
 
   return val;
 }
+
+//**********************************************************
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Array_Base<CORBA_DynAny_var>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Array_Base<CORBA_DynAny_var>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 
