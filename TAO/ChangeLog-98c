@@ -1,3 +1,43 @@
+Mon Feb  9 12:59:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/RtecEventComm.idl: 
+	* orbsvcs/Event_Service/Event_Channel.cpp: 
+	* orbsvcs/Event_Service/Event_Channel.i: 
+	* orbsvcs/orbsvcs/Event_Utilities.cpp: 
+	* orbsvcs/orbsvcs/Event_Utilities.i: 
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	  Added comments to the EventComm module and a new field (ttl_:
+	  Time-to-Live) to the event data structure.
+
+	* orbsvcs/orbsvcs/Channel_Clients_T.cpp: 
+	* orbsvcs/orbsvcs/Channel_Clients_T.h: 
+	* orbsvcs/orbsvcs/Channel_Clients_T.i: 
+	  I finally needed the TIE classes for PushConsumers and
+	  PushSupplier, they work OK now.
+
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
+	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
+	* orbsvcs/tests/EC_Multiple/README: 
+	* orbsvcs/tests/EC_Multiple/Makefile: 
+	* orbsvcs/tests/Makefile: 
+	  Added a simple example on how to connect multiple event
+	  channels.
+
+	* orbsvcs/Event_Service/Event_Service.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
+	  Added and/or fixed some debug messages.
+
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
+	  Reduce default output level.
+
+	* tao/corba.h: 
+	  Fixed TAO_RETHROW_RETURN macro.
+
+	* docs/releasenotes/ec.html: 
+	* docs/releasenotes/index.html: 
+	  Split the Event Channel release notes to a separate file, the
+	  index.html was growing without control.
+
 Mon Feb  9 09:15:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* docs/releasenotes/orbcore.html: 

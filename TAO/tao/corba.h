@@ -301,7 +301,7 @@ do {\
 _env.exception (TAO_TRY_ENV.exception ()); \
 return
 
-#define TAO_RETHROW_RETURN (RETURN) \
+#define TAO_RETHROW_RETURN(RETURN) \
 _env.exception (TAO_TRY_ENV.exception ()); \
 return RETURN
 

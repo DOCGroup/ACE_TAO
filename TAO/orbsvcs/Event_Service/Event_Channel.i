@@ -89,11 +89,6 @@ ACE_Push_Consumer_Proxy::push (const RtecEventComm::EventSet &events,
       push_consumer_->push (events, TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
-  TAO_CATCH (RtecEventComm::Disconnected, d)
-    {
-      ACE_ERROR ((LM_ERROR, "consumer disconnected.\n"));
-      TAO_RETHROW;
-    }
   TAO_CATCH (CORBA::SystemException, se)
     {
       ACE_ERROR ((LM_ERROR, "system exception.\n"));
@@ -179,7 +174,8 @@ operator == (const RtecEventComm::Event &event1,
 	     const RtecEventComm::Event &event2)
 {
   // Check if the sources are equal.  0 is a wildcard.
-  if ((event1.source_ != 0) && (event2.source_ != 0)
+  if ((event1.source_ != 0)
+      && (event2.source_ != 0)
       && (event1.source_ != event2.source_))
     return 0;
 
@@ -518,7 +514,8 @@ ACE_ES_Subscription_Module::push_source_type (ACE_Push_Supplier_Proxy *source,
     if (supplier_map.find (event->type_, subscribers) == -1)
       {
 	ACE_DEBUG ((LM_ERROR, "ACE_ES_Subscription_Module::push_source_type"
-		    " Warning: event type %d not registered.\n", event->type_));
+		    " Warning: event type %d not registered.\n",
+		    event->type_));
         ACE_TIMEPROBE ("  push_source_type");
 	return 0; // continue anyway
       }
