@@ -1,3 +1,7 @@
+Fri Jul 10 15:32:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* docs/implrepo.html: Another pass.
+
 Fri Jul 10 12:21:18 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Throughput/Makefile: 
@@ -76,7 +80,7 @@ Tue Jul  7 22:11:17 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
 	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
 	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{h,cpp}:
-	Fixed DEC cxx errors, addressed a memory leak.
+	  Fixed DEC cxx errors, addressed a memory leak.
 
 Tue Jul  7 20:48:37 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -177,8 +181,8 @@ Mon Jul  6 15:24:21 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
         * orbsvcs/orbsvcs/Log/Logger_i.cpp
         * orbsvcs/orbsvcs/Logger.idl
 
-        Routine checkin. Ignore the man behind that curtain....
-        Fully working version complete, but not yet Purified.
+          Routine checkin. Ignore the man behind that curtain....
+          Fully working version complete, but not yet Purified.
 
 Mon Jul 06 15:13:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
