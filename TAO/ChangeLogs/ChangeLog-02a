@@ -1,3 +1,15 @@
+Fri Nov 17 01:07:36 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORBInitInfo.cpp (arguments):
+
+	  Made string sequence allocation exception safe by using a
+	  CORBA::StringSeq_var.
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_input_i,
+	  fetch_handle):
+
+	  Added these missing method implementations (client side).
+
 Fri Nov 17 000:46:37 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsw:
@@ -15,8 +27,9 @@ Fri Nov 17 000:46:37 2000  Darrell Brunsch <brunsch@uci.edu>
           to TAO_SSLIOP_Client_Transport.
 
 Fri Nov 17 09:21:00 2000  Johnny Willemsen <jwillemsen@remedy.nl>
-        * tests/*/*.bor:
-          examples/*/*.bor:
+
+	* tests/*/*.bor:
+	* examples/*/*.bor:
           Added to several Borland C++ Builder makefiles the IDLFILES section
           so that the generated client and server stubs are deleted
           when doing a clean
