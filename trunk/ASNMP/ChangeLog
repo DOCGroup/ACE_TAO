@@ -1,3 +1,7 @@
+Tue Jun 22 13:34:54 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * agent/Makefile: replaced rm -f with $(RM).
+
 Thu Apr 29 06:46:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Makefile: changed SRC to PSRC (for make depend).
