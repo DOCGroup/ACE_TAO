@@ -360,7 +360,10 @@ static EC_Factory "-ECFiltering basic ....."
                   the data structure, the system must use other
                   approaches to guarantee that the iterators are not
                   invalidated during event dispatching.  For example,
-                  use a separate dispatching thread.
+                  use a separate dispatching thread.  Using this option
+                  with the reactive values for any of the
+                  -ECSupplierControl, -ECConsumerControl, or 
+                  -ECDispatching options may cause deadlocks.
                 </TD>
                 </tr>
               <TR>
