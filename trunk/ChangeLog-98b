@@ -1,3 +1,8 @@
+Tue Sep 15 09:44:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* apps/gperf/src/gperf_lib.dsp: Enabled c++ exception handling to
+	  avoid warning when compiling with standard c++ libraries.
+
 Mon Sep 14 23:28:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.39 released.
