@@ -1,6 +1,12 @@
 // -*- MPC -*-
 // $Id$
 
+project(*event_handler_t) : aceexe {
+  exename = event_handler_t
+  Source_Files {
+    test_event_handler_t.cpp
+  }
+}
 project(*demuxing) : aceexe {
   exename = demuxing
   Source_Files {
