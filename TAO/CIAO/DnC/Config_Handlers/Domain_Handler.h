@@ -103,45 +103,61 @@ namespace CIAO
       void process_attributes_for_sr (DOMNamedNodeMap* named_node_map,
                                       DOMDocument* doc,
                                       DOMNodeIterator* iter,
+                                      int length,
                                       Deployment::SharedResource& domain_sr);
 
       /// Process the attributes for the Node
       void process_attributes_for_node (DOMNamedNodeMap* named_node_map,
                                         DOMDocument* doc,
                                         DOMNodeIterator* iter,
+                                        int length,
                                         Deployment::Node& domain_node);
 
       /// Process the attributes for the interconnect
       void process_attributes_for_ic (DOMNamedNodeMap* named_node_map,
                                       DOMDocument* doc,
                                       DOMNodeIterator* iter,
+                                      int length,
                                       Deployment::Interconnect& domain_ic);
 
       /// Process the attributes for the bridge
       void process_attributes_for_bridge (DOMNamedNodeMap* named_node_map,
                                           DOMDocument* doc,
                                           DOMNodeIterator* iter,
+                                          int length,
                                           Deployment::Bridge& domain_bridge);
 
-      /// process the node attribute
-      void process_domain_node (DOMDocument* doc,
-                                DOMNodeIterator* iter,
-                                Deployment::Node& domain_node);
+      /// Process the attributes for the resource
+      void process_attributes_for_resource (DOMNamedNodeMap* named_node_map,
+                                            DOMDocument* doc,
+                                            DOMNodeIterator* iter,
+                                            int length,
+                                            Deployment::Resource& res);
 
       /// process the node attribute
-      void process_domain_bridge (DOMDocument* doc,
-                                  DOMNodeIterator* iter,
-                                  Deployment::Bridge& domain_bridge);
+      void process_node (DOMDocument* doc,
+                         DOMNodeIterator* iter,
+                         Deployment::Node& domain_node);
 
       /// process the node attribute
-      void process_domain_interconnect (DOMDocument* doc,
-                                        DOMNodeIterator* iter,
-                                        Deployment::Interconnect& domain_ic);
+      void process_bridge (DOMDocument* doc,
+                           DOMNodeIterator* iter,
+                           Deployment::Bridge& domain_bridge);
 
       /// process the node attribute
-      void process_domain_sr (DOMDocument* doc,
-                              DOMNodeIterator* iter,
-                              Deployment::SharedResource& domain_sr);
+      void process_interconnect (DOMDocument* doc,
+                                 DOMNodeIterator* iter,
+                                 Deployment::Interconnect& domain_ic);
+
+      /// process the resource attribute
+      void process_resource (DOMDocument* doc,
+                             DOMNodeIterator* iter,
+                             Deployment::Resource& domain_resource);
+
+      /// process the node attribute
+      void process_sr (DOMDocument* doc,
+                       DOMNodeIterator* iter,
+                       Deployment::SharedResource& domain_sr);
 
       /// process the Node name attribute
       void process_node_name (const XMLCh* name,
