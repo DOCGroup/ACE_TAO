@@ -1,3 +1,10 @@
+Mon Mar 31 06:57:16 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_ch.cpp:
+	* TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp: Fixed a
+	  warning in BCB builds by generating the other version of
+	  CORBA::_stubobj (). Thanks to Johnny for reporting this.
+
 Mon Mar 31 06:43:20 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/default_resource.h: Fixed a warning in our daily builds. 

@@ -290,8 +290,14 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "_stubobj (void) const"<<be_nl
           << "{" << be_idt_nl
           << "return this->base_proxy_->_stubobj ();"<< be_uidt_nl
-          << "}\n\n";
+          << "}"<< be_nl << be_nl;
 
+
+      *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
+      *os << "_stubobj (void)"<<be_nl
+          << "{" << be_idt_nl
+          << "return this->base_proxy_->_stubobj ();"<< be_uidt_nl
+          << "}" << be_nl << be_nl;
 
       if (this->visit_scope (node) == -1)
         {
