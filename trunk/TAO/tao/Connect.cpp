@@ -190,7 +190,7 @@ TAO_Server_Connection_Handler::svc (void)
 int
 TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
                                                TAO_OutputCDR &output,
-                                               int &response_required,
+                                               CORBA::Boolean &response_required,
                                                CORBA::ULong &request_id,
                                                CORBA::Environment &env)
 {
@@ -243,7 +243,7 @@ TAO_Server_Connection_Handler::handle_message (TAO_InputCDR &input,
 int
 TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
                                               TAO_OutputCDR &output,
-                                              int &response_required,
+                                              CORBA::Boolean &response_required,
                                               CORBA::ULong &request_id,
                                               CORBA::Environment &env)
 {
@@ -273,7 +273,7 @@ TAO_Server_Connection_Handler::handle_locate (TAO_InputCDR &input,
 
   
   IIOP_ServerRequest serverRequest (locateRequestHeader.request_id,
-                                    (unsigned char &) response_required,
+                                    response_required,
                                     locateRequestHeader.object_key,
                                     "_non_existent",
                                     dummy_output,
@@ -498,7 +498,7 @@ TAO_Server_Connection_Handler::handle_input (ACE_HANDLE)
 
   int result = 0;
   int error_encountered = 0;
-  int response_required;
+  CORBA::Boolean response_required;
   TAO_SVC_HANDLER *this_ptr = this;
   CORBA::Environment env;
   CORBA::ULong request_id;

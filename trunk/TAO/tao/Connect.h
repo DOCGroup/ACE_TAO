@@ -119,7 +119,7 @@ public:
 
   virtual int handle_message (TAO_InputCDR &msg,
                               TAO_OutputCDR &response,
-                              int &response_required,
+                              CORBA::Boolean &response_required,
                               CORBA::ULong &request_id,
                               CORBA::Environment &env);
   // Handle processing of the request residing in <msg>, setting
@@ -131,7 +131,7 @@ public:
 protected:
   virtual int handle_locate (TAO_InputCDR &msg,
                              TAO_OutputCDR &response,
-                             int &response_required,
+                             CORBA::Boolean &response_required,
                              CORBA::ULong &request_id,
                              CORBA::Environment &env);
   // Handle processing of the location request residing in <msg>,
