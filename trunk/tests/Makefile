@@ -137,9 +137,11 @@ ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
   endif
 endif
 
-ifneq ($(rmcast),0)
-  DIRS += RMCast
-endif
+ifneq ($(ACE_HAS_GNUG_PRE_2_8),1)
+  ifneq ($(rmcast),0)
+    DIRS += RMCast
+  endif # rmcast
+endif # ACE_HAS_GNUG_PRE_2_8
 
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
