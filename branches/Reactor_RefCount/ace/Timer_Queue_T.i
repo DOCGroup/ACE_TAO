@@ -126,6 +126,8 @@ ACE_Timer_Node_T<TYPE>::get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T<TYPE> 
   // Yes, do a copy
   info.type_ = this->type_;
   info.act_  = this->act_;
+  info.recurring_timer_ = 
+    this->interval_ > ACE_Time_Value::zero;
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
@@ -160,13 +162,41 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dispatch_info (const ACE_Time_Value 
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall (TYPE &type,
-                                                const void *act,
-                                                const ACE_Time_Value &cur_time)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::upcall (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
+                                                    const ACE_Time_Value &cur_time)
 {
-  this->upcall_functor ().timeout (*this, type, act, cur_time);
+  this->upcall_functor ().timeout (*this, 
+                                   info.type_, 
+                                   info.act_, 
+                                   info.recurring_timer_,
+                                   cur_time);
 }
 
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::preinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
+                                                       const ACE_Time_Value &cur_time,
+                                                       const void *&upcall_act)
+{
+  this->upcall_functor ().preinvoke (*this, 
+                                     info.type_, 
+                                     info.act_, 
+                                     info.recurring_timer_,
+                                     cur_time,
+                                     upcall_act);
+}
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE void
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::postinvoke (ACE_Timer_Node_Dispatch_Info_T<TYPE> &info,
+                                                        const ACE_Time_Value &cur_time,
+                                                        const void *upcall_act)
+{
+  this->upcall_functor ().postinvoke (*this, 
+                                      info.type_, 
+                                      info.act_, 
+                                      info.recurring_timer_,
+                                      cur_time,
+                                      upcall_act);
+}
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_INLINE ACE_Time_Value
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::gettimeofday (void)

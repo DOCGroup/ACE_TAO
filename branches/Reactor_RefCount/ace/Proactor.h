@@ -66,15 +66,38 @@ public:
   /// Constructor.
   ACE_Proactor_Handle_Timeout_Upcall (void);
 
+  /// This method is called when a timer is registered.
+  int registration (TIMER_QUEUE &timer_queue,
+                    ACE_Handler *handler,
+                    const void *arg);
+
+  /// This method is called before the timer expires.
+  int preinvoke (TIMER_QUEUE &timer_queue,
+                 ACE_Handler *handler,
+                 const void *arg,
+                 int recurring_timer,
+                 const ACE_Time_Value &cur_time,
+                 const void *&upcall_act);
+
   /// This method is called when the timer expires.
   int timeout (TIMER_QUEUE &timer_queue,
-	       ACE_Handler *handler,
-	       const void *arg,
-	       const ACE_Time_Value &cur_time);
+               ACE_Handler *handler,
+               const void *arg,
+               int recurring_timer,
+               const ACE_Time_Value &cur_time);
+
+  /// This method is called after the timer expires.
+  int postinvoke (TIMER_QUEUE &timer_queue,
+                  ACE_Handler *handler,
+                  const void *arg,
+                  int recurring_timer,
+                  const ACE_Time_Value &cur_time,
+                  const void *upcall_act);
 
   /// This method is called when the timer is canceled.
   int cancellation (TIMER_QUEUE &timer_queue,
-		    ACE_Handler *handler);
+                    ACE_Handler *handler,
+                    int dont_call_handle_close);
 
   /// This method is called when the timer queue is destroyed and the
   /// timer is still contained in it.
@@ -270,7 +293,7 @@ public:
   /// This method adds the <handle> to the I/O completion port. This
   /// function is a no-op function for Unix systems and returns 0;
   virtual int register_handle (ACE_HANDLE handle,
-			       const void *completion_key);
+                               const void *completion_key);
 
   // = Timer management.
   /**
@@ -285,12 +308,12 @@ public:
    * failure (which is guaranteed never to be a valid <timer_id>).
    */
   virtual long schedule_timer (ACE_Handler &handler,
-			       const void *act,
-			       const ACE_Time_Value &time);
+                               const void *act,
+                               const ACE_Time_Value &time);
 
   virtual long schedule_repeating_timer (ACE_Handler &handler,
-					 const void *act,
-					 const ACE_Time_Value &interval);
+                                         const void *act,
+                                         const ACE_Time_Value &interval);
 
   // Same as above except <interval> it is used to reschedule the
   // <handler> automatically.
@@ -298,14 +321,14 @@ public:
   /// This combines the above two methods into one. Mostly for backward
   /// compatibility.
   virtual long schedule_timer (ACE_Handler &handler,
-			       const void *act,
-			       const ACE_Time_Value &time,
-			       const ACE_Time_Value &interval);
+                               const void *act,
+                               const ACE_Time_Value &time,
+                               const ACE_Time_Value &interval);
 
   /// Cancel all timers associated with this <handler>.  Returns number
   /// of timers cancelled.
   virtual int cancel_timer (ACE_Handler &handler,
-			    int dont_call_handle_close = 1);
+                            int dont_call_handle_close = 1);
 
   /**
    * Cancel the single <ACE_Handler> that matches the <timer_id> value
@@ -317,8 +340,8 @@ public:
    * wasn't found.
    */
   virtual int cancel_timer (long timer_id,
-			    const void **act = 0,
-			    int dont_call_handle_close = 1);
+                            const void **act = 0,
+                            int dont_call_handle_close = 1);
 
   /**
    * Dispatch a single set of events, waiting up to a specified time limit
@@ -616,7 +639,7 @@ class ACE_Export ACE_Proactor
 public:
   class Timer_Queue {};
   ACE_Proactor (size_t /* number_of_threads */ = 0,
-		Timer_Queue * /* tq */ = 0) {}
+                Timer_Queue * /* tq */ = 0) {}
   virtual int handle_events (void) { return -1; }
   virtual int handle_events (ACE_Time_Value &) { return -1; }
 

@@ -133,34 +133,33 @@ private:
 /**
  * @class ACE_TP_Reactor
  *
- * @brief Specialization of Select Reactor to support thread-pool based
- * event dispatching.
+ * @brief Specialization of Select Reactor to support thread-pool
+ * based event dispatching.
  *
- * One of the short comings of the Select_Reactor in ACE is that
- * it did not support a thread pool based event dispatching
- * model, similar to the one in WFMO_Reactor.  In
- * Select_Reactor, only thread can be blocked in <handle_events>
- * at any given time.
- * A new Reactor has been added to ACE that removes this
- * short-coming.  TP_Reactor is a specialization of Select
- * Reactor to support thread-pool based event dispatching. This
- * Reactor takes advantage of the fact that events reported by
- * <select> are persistent if not acted upon immediately.  It
- * works by remembering the event handler that just got
- * activated, releasing the internal lock (so that some other
- * thread can start waiting in the event loop) and then
- * dispatching the event handler outside the context of the
- * Reactor lock.
- * This Reactor is best suited for situations when the callbacks
- * to event handlers can take arbitrarily long and/or a number
- * of threads are available to run the event loops.
- * Note that callback code in Event Handlers
- * (e.g. Event_Handler::handle_input) does not have to be
- * modified or made thread-safe for this Reactor.  This is
- * because an activated Event Handler is suspended in the
- * Reactor before the upcall is made and resumed after the
- * upcall completes.  Therefore, one Event Handler cannot be
- * called by multiple threads simultaneously.
+ * One of the short comings of the Select_Reactor in ACE is that it
+ * did not support a thread pool based event dispatching model,
+ * similar to the one in WFMO_Reactor.  In Select_Reactor, only thread
+ * can be blocked in <handle_events> at any given time.
+ *
+ * A new Reactor has been added to ACE that removes this short-coming.
+ * TP_Reactor is a specialization of Select Reactor to support
+ * thread-pool based event dispatching. This Reactor takes advantage
+ * of the fact that events reported by <select> are persistent if not
+ * acted upon immediately.  It works by remembering the event handler
+ * that just got activated, releasing the internal lock (so that some
+ * other thread can start waiting in the event loop) and then
+ * dispatching the event handler outside the context of the Reactor
+ * lock.
+ *
+ * This Reactor is best suited for situations when the callbacks to
+ * event handlers can take arbitrarily long and/or a number of threads
+ * are available to run the event loops.  Note that callback code in
+ * Event Handlers (e.g. Event_Handler::handle_input) does not have to
+ * be modified or made thread-safe for this Reactor.  This is because
+ * an activated Event Handler is suspended in the Reactor before the
+ * upcall is made and resumed after the upcall completes.  Therefore,
+ * one Event Handler cannot be called by multiple threads
+ * simultaneously.
  */
 class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
 {
@@ -212,74 +211,11 @@ public:
 
   virtual int handle_events (ACE_Time_Value &max_wait_time);
 
-
-  /// The following two overloaded methods are necessary as we dont
-  /// want the TP_Reactor to call handle_close () with the token
-  /// held.
-  /**
-   * Removes the <mask> binding of <eh> from the Select_Reactor.  If
-   * there are no more bindings for this <eh> then it is removed from
-   * the Select_Reactor.  Note that the Select_Reactor will call
-   * <ACE_Event_Handler::get_handle> to extract the underlying I/O
-   * handle.
-   */
-  virtual int remove_handler (ACE_Event_Handler *eh,
-                              ACE_Reactor_Mask mask);
-
-  /**
-   * Removes the <mask> bind of <Event_Handler> whose handle is
-   * <handle> from the Select_Reactor.  If there are no more bindings
-   * for this <eh> then it is removed from the Select_Reactor.
-   */
-  virtual int remove_handler (ACE_HANDLE handle,
-                              ACE_Reactor_Mask);
-
-  /**
-   * Removes all the <mask> bindings for handles in the <handle_set>
-   * bind of <Event_Handler>.  If there are no more bindings for any
-   * of these handlers then they are removed from the Select_Reactor.
-   */
-  virtual int remove_handler (const ACE_Handle_Set &handle_set,
-                              ACE_Reactor_Mask);
-
-  /* @todo The following methods are not supported. Support for
-   * signals is not available in the TP_Reactor. These methods will be
-   * supported once signal handling is supported. We have to include
-   * these two methods in the  TP_Reactor to keep some compilers
-   * silent.
-   */
-  /**
-   * Remove the ACE_Event_Handler currently associated with <signum>.
-   * <sigkey> is ignored in this implementation since there is only
-   * one instance of a signal handler.  Install the new disposition
-   * (if given) and return the previous disposition (if desired by the
-   * caller).  Returns 0 on success and -1 if <signum> is invalid.
-   */
-  virtual int remove_handler (int signum,
-                              ACE_Sig_Action *new_disp,
-                              ACE_Sig_Action *old_disp = 0,
-                              int sigkey = -1);
-
-  /// Calls <remove_handler> for every signal in <sigset>.
-  virtual int remove_handler (const ACE_Sig_Set &sigset);
-
   /// Does the reactor allow the application to resume the handle on
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The TP reactor has can allow applications to
   /// resume handles.  So return a +ve value.
   virtual int resumable_handler (void);
-
-  /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the <eh> and
-  /// <mask>.
-  virtual int mask_ops (ACE_Event_Handler *eh,
-                        ACE_Reactor_Mask mask,
-                        int ops);
-
-  /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the <handle>
-  /// and <mask>.
-  virtual int mask_ops (ACE_HANDLE handle,
-                        ACE_Reactor_Mask mask,
-                        int ops);
 
   /// Called from handle events
   static void no_op_sleep_hook (void *);
@@ -297,8 +233,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Internal methods that do the actual work.
 
+  // = Internal methods that do the actual work.
 
   /// Dispatch just 1 signal, timer, notification handlers
   int dispatch_i (ACE_Time_Value *max_wait_time,
@@ -336,7 +272,7 @@ protected:
 private:
 
   /// Get the handle of the notify pipe from the ready set if there is
-  /// an event  in the notify pipe.
+  /// an event in the notify pipe.
   ACE_HANDLE get_notify_handle (void);
 
   /// Get socket event dispatch information.

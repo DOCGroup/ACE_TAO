@@ -559,6 +559,13 @@ public:
   virtual int owner (ACE_thread_t *);
 
   // = Miscellaneous Handler operations.
+
+  /**
+   * Return the Event_Handler associated with <handle>.  Return 0 if
+   * <handle> is not registered.
+   */
+  virtual ACE_Event_Handler *handler (ACE_HANDLE handle);
+
   /**
    * Check to see if <handle> is associated with a valid Event_Handler
    * bound to <mask>.  Return the <eh> associated with this <handler>
@@ -633,6 +640,9 @@ protected:
 
   /// Resume the <Event_Handler> associated with <handle>
   virtual int resume_i (ACE_HANDLE handle);
+
+  /// Implement the public <handler> method.
+  virtual ACE_Event_Handler *handler_i (ACE_HANDLE handle);
 
   /// Implement the public <handler> method.
   virtual int handler_i (ACE_HANDLE handle,
