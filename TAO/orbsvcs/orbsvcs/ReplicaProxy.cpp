@@ -5,12 +5,14 @@
 #include "ReplicaProxy.h"
 #include "LoadBalancer_i.h"
 
+#if !defined(__ACE_INLINE__)
+#include "ReplicaProxy.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_RCSID(orbsvcs, ReplicaProxy, "$Id$")
 
 ReplicaProxy_Impl::ReplicaProxy_Impl (void)
-  : control_ (),
-    replica_ (),
-    balancer_ (0),
+  : balancer_ (0),
     current_load_ (0),
     connected_ (0)
 {
@@ -23,10 +25,11 @@ ReplicaProxy_Impl::current_load (CORBA::Float load,
   ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::InvalidLoad,
                    CORBA::SystemException))
 {
-  if (load >= 0)  // @@ Is zero a valid load?
-      this->current_load_ = load;
-  else
+  if (load < 0)
     ACE_THROW (LoadBalancing::ReplicaProxy::InvalidLoad ());
+
+  this->current_load_ = load;
+  ACE_DEBUG ((LM_DEBUG, "Load[%x] = %f\n", long(this), load));
 }
 
 void

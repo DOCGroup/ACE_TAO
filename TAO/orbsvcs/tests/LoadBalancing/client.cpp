@@ -21,12 +21,12 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       const char *ior = "file://test.ior";
-      long timeout = 50000; // timeout in msecs
+      long timeout = 50; // timeout in msecs
       long iterations = 10000; // iterations
 
       // Parse the application options after the ORB has been
       // initialized.
-      ACE_Get_Opt options (argc, argv, "k:t:");
+      ACE_Get_Opt options (argc, argv, "k:t:i:");
       int c = 0;
 
       while ((c = options ()) != -1)
@@ -38,6 +38,10 @@ main (int argc, char *argv[])
 
           case 't':
             timeout = ACE_OS::atoi (options.optarg);
+            break;
+
+          case 'i':
+            iterations = ACE_OS::atoi (options.optarg);
             break;
 
           default:
@@ -59,6 +63,7 @@ main (int argc, char *argv[])
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      ACE_Time_Value tv (0, timeout * 1000);
       ACE_Throughput_Stats stats;
       ACE_UINT64 test_start = ACE_OS::gethrtime ();
 
@@ -70,6 +75,7 @@ main (int argc, char *argv[])
           ACE_UINT64 end = ACE_OS::gethrtime ();
 
           stats.sample (end - test_start, end - call_start);
+          ACE_OS::sleep (tv);
         }
 
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();

@@ -63,12 +63,10 @@ main (int argc, char *argv[])
       CORBA::Object_var obj =
         orb->string_to_object (balancer_ior);
 
-      LoadBalancing::LoadBalancer_ptr load_balancer =
-        LoadBalancing::LoadBalancer::_unchecked_narrow (obj.in (),
-                                                        ACE_TRY_ENV);
+      LoadBalancing::LoadBalancer_var load_balancer =
+        LoadBalancing::LoadBalancer::_narrow (obj.in (),
+                                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      Hash_ReplicaControl control (load_balancer);
 
       CORBA::Object_var group =
         load_balancer->group_identity (ACE_TRY_ENV);
@@ -78,9 +76,15 @@ main (int argc, char *argv[])
         orb->object_to_string (group.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      FILE *lb_ior = ACE_OS::fopen (ior_output, "w");
-      ACE_OS::fprintf (lb_ior, "%s", str.in ());
-      ACE_OS::fclose (lb_ior);
+      FILE *ior = ACE_OS::fopen (ior_output, "w");
+      ACE_OS::fprintf (ior, "%s", str.in ());
+      ACE_OS::fclose (ior);
+
+      Hash_ReplicaControl control;
+      control.init (orb.in (),
+                    load_balancer.in (),
+                    ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;

@@ -47,7 +47,7 @@ public:
   // balanced, where the definition of "load" is load balancing
   // algorithm specific.
 
-  CORBA::Float current_load (void);
+  CORBA::Float current_load (void) const;
   // Read the stored load of the Object being load balanced from the
   // ReplicaProxy.
 
@@ -71,7 +71,6 @@ private:
   // with the ReplicaProxy.
 
 private:
-
   LoadBalancing::ReplicaControl_var control_;
   // Reference to the ReplicaControl.
 
@@ -89,6 +88,10 @@ private:
   // 1 == currently connected to load balancer
   // 0 == currently disconnected from load balancer
 };
+
+#if defined(__ACE_INLINE__)
+#include "ReplicaProxy.i"
+#endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
