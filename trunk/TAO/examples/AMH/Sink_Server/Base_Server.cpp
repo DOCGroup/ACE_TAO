@@ -21,10 +21,10 @@ Base_Server::~Base_Server ()
 {
   ACE_TRY_NEW_ENV
     {
-      this->root_poa_->destroy (1, 1 TAO_ENV_ARG_PARAMETER);
+      this->root_poa_->destroy (1, 1 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      this->orb_->destroy (TAO_ENV_SINGLE_ARG_PARAMETER);
+      this->orb_->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -109,11 +109,11 @@ Base_Server::start_orb_and_poa (void)
     {
       this->orb_ = CORBA::ORB_init (*(this->argc_),
                                     this->argv_,
-                                    "" TAO_ENV_ARG_PARAMETER);
+                                    "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA" TAO_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -122,14 +122,14 @@ Base_Server::start_orb_and_poa (void)
                           1);
 
       this->root_poa_ = PortableServer::POA::_narrow ( poa_object.in ()
-                                                       TAO_ENV_ARG_PARAMETER);
+                                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       PortableServer::POAManager_var poa_manager =
-        this->root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
+        this->root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
+      poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       return 0;
@@ -140,6 +140,8 @@ Base_Server::start_orb_and_poa (void)
       return -1;
     }
   ACE_ENDTRY;
+
+  return 0;
 }
 
 void
@@ -148,11 +150,11 @@ Base_Server::register_servant (AMH_Servant *servant)
   ACE_TRY_NEW_ENV
     {
       Test::Roundtrip_var roundtrip =
-        servant->_this (TAO_ENV_SINGLE_ARG_PARAMETER);
+        servant->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       CORBA::String_var ior =
-        this->orb_->object_to_string (roundtrip.in () TAO_ENV_ARG_PARAMETER);
+        this->orb_->object_to_string (roundtrip.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       (void) this->write_ior_to_file (ior);

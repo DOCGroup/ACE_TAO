@@ -1,3 +1,16 @@
+Wed Jul 10 15:38:48 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* examples/AMH/Sink_Server/AMH_Servant.h:
+	* examples/AMH/Sink_Server/AMH_Servant.cpp:
+	* examples/AMH/Sink_Server/Base_Server.cpp:
+	* examples/AMH/Sink_Server/client.cpp:
+
+	* examples/AMH/Sink_Server/client.cpp:
+	* examples/AMH/Sink_Server/server.cpp:
+
+	  Changed deprecated TAO_ENV_ exception macros to ACE_ENV_
+	  exception macros.
+
 Wed Jul 10 14:25:14 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/ccm_core/Component_Base.idl:
