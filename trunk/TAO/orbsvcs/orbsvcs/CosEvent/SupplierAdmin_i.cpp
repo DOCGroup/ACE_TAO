@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CosEvent/SupplierAdmin_i.h"
+#include "SupplierAdmin_i.h"
 
 SupplierAdmin_i::SupplierAdmin_i (void)
   : qos_ (),
