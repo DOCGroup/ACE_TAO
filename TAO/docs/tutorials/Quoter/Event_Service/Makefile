@@ -18,13 +18,6 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 IDL_FILES = Quoter
 BIN2 = client server
 
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # CosEvent
-
 SRC = $(IDL_SRC) $(addsuffix .cpp, $(BIN) Stock_Consumer Stock_i Stock_Factory_i)
 
 CLIENT_OBJS = $(addsuffix .o, client Stock_Consumer) $(IDL_SRC:.cpp=.o)
@@ -39,6 +32,13 @@ TAO_IDLFLAGS=-in
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
+  BIN = $(BIN2)
+endif # CosEvent
+
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU

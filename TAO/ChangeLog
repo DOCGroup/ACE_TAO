@@ -1,3 +1,41 @@
+Sun Feb 29 14:58:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Makefile:
+	* docs/tutorials/Quoter/Naming_Service/Makefile:
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
+	* orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile:
+	* orbsvcs/examples/Log/Basic/Makefile:
+	* orbsvcs/examples/Notify/Filter/Makefile:
+	* orbsvcs/examples/Notify/Subscribe/Makefile:
+	* orbsvcs/examples/RtEC/Schedule/Makefile:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
+	* orbsvcs/tests/AVStreams/Component_Switching/Makefile:
+	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Latency/Makefile:
+	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast/Makefile:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+	* orbsvcs/tests/AVStreams/Multiple_Flows/Makefile:
+	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
+	* orbsvcs/tests/Concurrency/Makefile:
+	* orbsvcs/tests/CosEvent/lib/Makefile:
+	* orbsvcs/tests/EC_Custom_Marshal/Makefile:
+	* orbsvcs/tests/EC_Multiple/Makefile:
+	* orbsvcs/tests/Event/lib/Makefile:
+	* orbsvcs/tests/Interoperable_Naming/Makefile:
+	* orbsvcs/tests/Log/Basic_Log_Test/Makefile:
+	* orbsvcs/tests/ior_corbaname/Makefile:
+
+	  Another set of changes to ORBSVCS_COMPONENTS check. This should
+	  get these tests compiling almost on all the platforms. Don't be
+	  surprised if you see link errors in our daily builds. They were
+	  there in the tests, for god knows how long. These set of changes
+	  should get them compiling and throw up errors in our daily
+	  builds. 
+
 Sun Feb 29 17:52:11 UTC 2004  Johnny Willemsen  <jwillemsem@remedy.nl>
 
 	* orbsvcs/performance-tests/LoadBalancing/client.cpp:
