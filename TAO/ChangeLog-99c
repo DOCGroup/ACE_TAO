@@ -1,36 +1,54 @@
+Mon Mar 15 02:27:05 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/POA.{h,cpp} (etherealize_servants): Moved the function out
+	  of destroy method.
+
+	* tao/POAManager.{h,i,cpp} (remove_poa): Removed the POAManager if
+	  there is no more POA under this POAManager's control.  The
+	  current implementation may cause potential race condition when
+	  one thread hold the lock to remove the last POA and another
+	  thread is blocked the POAManager's lock and is trying to add
+	  another POA into this POAManager.  This should be solved by
+	  refcounting the POAMnanger's usage but currently, POA uses
+	  TAO_POA_Manager directly...
+	  (deactivate_i): According to the spec., this function should
+	  etherealize servants in the managing POAs and wait for request
+	  completion instead of destroying the POAs.
+	  (activate_i,hold_requests_i,discard_requests_i,deactivate_i):
+	  Added these no-lock functions.
+
 Sun Mar 14 18:05:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Param_Test/*.h
-	* tests/Param_Test/*.cpp
-	Made  the changes that are necessary because of  the previous
-	changes to the tao/Request.* 
+	* tests/Param_Test/*.cpp: Made the changes that are necessary
+	  because of the previous changes to the tao/Request.*
 
 Sun Mar 14 14:58:51 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Request.i
-	* tao/Request.cpp
-	* tao/Request.h
-	Changed the arguments of two method call in the Request 
-	class. They are send_oneway () and invoke (). They now
-	take in the environment variable ACE_TRY_ENV that should 
-	be passed in from the application. These methods were 
-	using a variable env_ stored in the class itself. The variable
-	env_ has also been removed thus necesitating the users of the 
-	API to send their own environment variables that should be 
-	theoretically in a TRY block.
+	* tao/Request.i:
+	* tao/Request.cpp:
+	* tao/Request.h: Changed the arguments of two method call in the
+	  Request class. They are send_oneway () and invoke (). They now
+	  take in the environment variable ACE_TRY_ENV that should be
+	  passed in from the application. These methods were using a
+	  variable env_ stored in the class itself. The variable env_ has
+	  also been removed thus necesitating the users of the API to send
+	  their own environment variables that should be theoretically in
+	  a TRY block.
 
-	* performance-tests/Cubit/TAO/DII_Cubit/client.cpp
-	Made the changes that is a fallout of the above changes..
-	
+	* performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+	  Made the changes that is a fallout of the above changes..
+
 Sun Mar 14 14:13:22 19	99  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): 
-	Fixed warnings reported by David and Carlos for g++/egcs.
-	Replaced the constant 0xFFFFFFFFFFFFFFFF with 0xFFFFFFFFFFFFFFFFull 
- 	and for	platforms lacking Ulonglong, called the constructor of
-	ACE_U_LongLong.
+	* orbsvcs/orbsvcs/Time/Timer_Helper.cpp (handle_timeout): Fixed
+	  warnings reported by David and Carlos for g++/egcs.  Replaced
+	  the constant 0xFFFFFFFFFFFFFFFF with 0xFFFFFFFFFFFFFFFFull and
+	  for platforms lacking Ulonglong, called the constructor of
+	  ACE_U_LongLong.
 
-	(handle_timeout): Added the ACE_UINT64_LITERAL () to fix an NT warning.
+	  (handle_timeout): Added the ACE_UINT64_LITERAL () to fix an NT
+	  warning.
 
 Sat Mar 13 23:35:01 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
