@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <BODY>
 
-This document describes how to compile/run the HUDisplay example with the new DnC implementation.
+This document describes how to compile/run the BasicSP (HUDisplay) example with the new DnC implementation.
 
 <H3> Installing </H3>
 
@@ -18,6 +18,22 @@ This document describes how to compile/run the HUDisplay example with the new Dn
 
     Copy the file into the <code> $CIAO_ROOT/bin </code> directory.
     Build ACE, TAO, DAnCE before you proceed.
+    
+    <br><br>
+    <em>NOTE</em>:  <br>
+           While buiding DAnCE, we also suggest that you build the tests in the $CIAO_ROOT/test directory and make sure
+           all the tests run OK before you proceed to try out the BasicSP example or any other DAnCE-based
+           applications. To do this, open the file
+    
+          $ACE_ROOT/bin/MakeProjectCreator/config/global.features, 
+          
+         then change the line from "cidl = 0" to "cidl = 1". <br><br>
+          
+          After this, go back to the $CIAO_ROOT/DAnCE directory to generate your workspace/project or makefile by using MPC.<br>
+          After the DAnCE and the tests are build OK, go to the $CIAO_ROOT/DAnCE/tests/NodeApplicationTest directory and make
+          sure all the three perl scripts (run_test.pl, run_test_simple.pl and run_test_ex.pl) run successfully.
+          
+          <br><br>
   </LI>
 
   <LI> Generate the project/make files for the <em> BasicSP </em> example directory:
@@ -35,7 +51,7 @@ This document describes how to compile/run the HUDisplay example with the new Dn
 
 <UL>
 
-  <LI> Change into the $CIAO_ROOT/DAnCE/examples/descriptors directory Start NodeManagers (NodeDameon) by running <code> NodeDaemon.pl </code>
+  <LI> Change into the $CIAO_ROOT/DAnCE/examples/BasicSP/descriptors directory Start NodeManagers (NodeDameon) by running <code> basicNodeDaemon.pl </code>
   
   <LI> Start the execution manager:
   <code>$CIAO_ROOT/DAnCE/ExecutionManager/Execution_Manager -o EM.ior -i basicsp.dat </code>
@@ -45,7 +61,7 @@ This document describes how to compile/run the HUDisplay example with the new Dn
   <code> $CIAO_ROOT/DAnCE/RepositoryManager/executor -p package.tpd -d HUDisplay.cdp -k file://EM.ior </code>
   
   <LI> After this, components should be deployed successfully. You can run the $CIAO_ROOT/DAnCE/examples/BasicSP/EC/controller to start the application.
-       Please make sure that the component IOR file for the EC component is present when you run the client.
+       Please make sure that the component IOR file for the EC component is present when you run this client.
 
   <BR/>
   </LI>
