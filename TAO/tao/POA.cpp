@@ -9,6 +9,9 @@
 // auto_ptr class
 #include "ace/Auto_Ptr.h"
 
+// Forwarding Servant class
+#include "tao/Forwarding_Servant.h"
+
 // This is the maximum space require to convert the ulong into a
 // string.
 const int TAO_POA::max_space_required_for_ulong = 24;
@@ -2149,6 +2152,42 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &oid,
     }
 }
 
+void
+TAO_POA::forward_object (const PortableServer::ObjectId &oid,
+                         CORBA::Object_ptr forward_to,
+                         CORBA::Environment &env)
+{
+  // Lock access to the POA for the duration of this transaction
+  TAO_POA_WRITE_GUARD (ACE_Lock, monitor, this->lock (), env);
+
+  this->forward_object_i (oid,
+                          forward_to,
+                          env);
+}
+
+void
+TAO_POA::forward_object_i (const PortableServer::ObjectId &oid,
+                           CORBA::Object_ptr forward_to,
+                           CORBA::Environment &env)
+{
+  // First, deactivate the object
+  this->deactivate_object_i (oid, env);
+  
+  // If failure 
+  if (env.exception () != 0)
+    return;
+
+  // If success, create a forwarding servant
+  TAO_Forwarding_Servant *forwarding_servant
+    = new TAO_Forwarding_Servant (forward_to, 
+                                  forward_to->_interface_repository_id ());
+
+  // Register the forwarding servant with the same object Id
+  this->activate_object_with_id_i (oid,
+                                   forwarding_servant,
+                                   env);
+}
+
 PortableServer::POA_ptr
 TAO_POA::the_parent (CORBA::Environment &env)
 {
@@ -2549,12 +2588,6 @@ TAO_POA::dispatch_servant_i (const TAO_ObjectKey &key,
   servant->_dispatch (req,
                       context,
                       env);
-
-  if (env.exception () != 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "Servant raised exception: \n"));
-      env.print_exception ("detected in POA::dispatch");
-    }
 
   // Cleanup from upcall
   poa->post_invoke (servant,

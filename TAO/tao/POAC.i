@@ -574,23 +574,6 @@ PortableServer::_tao_seq_Octet_out::operator[] (CORBA::ULong index)
 
 #endif // end #if !defined
 
-// *************************************************************
-// Inline operations for exception PortableServer::ForwardRequest
-// *************************************************************
-
-// default constructor
-ACE_INLINE
-PortableServer::ForwardRequest::ForwardRequest (void)
-	: CORBA_UserException (CORBA::TypeCode::_duplicate (PortableServer::_tc_ForwardRequest))
-{
-}
-
-// destructor - all members are of self managing types
-ACE_INLINE
-PortableServer::ForwardRequest::~ForwardRequest (void)
-{
-}
-
 ACE_INLINE
 PortableServer::ThreadPolicy::ThreadPolicy(
     STUB_Object *objref,

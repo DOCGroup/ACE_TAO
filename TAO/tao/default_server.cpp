@@ -25,7 +25,11 @@ TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory (void)
 TAO_Default_Server_Strategy_Factory::CONCURRENCY_STRATEGY *
 TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
 {
-  return this->concurrency_strategy_;
+  if (this->concurrency_strategy_ == 0)
+    // If no strategy is specified, use the reactive one.
+    return &this->reactive_strategy_;
+  else
+    return this->concurrency_strategy_;
 }
 
 ACE_Lock *

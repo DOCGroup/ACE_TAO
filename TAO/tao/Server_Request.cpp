@@ -203,7 +203,7 @@ IIOP_ServerRequest::set_result (const CORBA::Any &value,
 
   // setting a result when another result already exists or if an exception
   // exists is an error
-  if (!this->params_ || this->retval_ || this->exception_)
+  if (this->retval_ || this->exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
     {
@@ -218,7 +218,7 @@ void
 IIOP_ServerRequest::set_exception (const CORBA::Any &value,
                                    CORBA::Environment &env)
 {
-  if (!this->params_ || this->retval_ || this->exception_)
+  if (this->retval_ || this->exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
     {
