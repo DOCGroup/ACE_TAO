@@ -76,7 +76,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
       break;
     case 'H' :
     case 'h' :
-      if (::scanf ("%s %d", buf1, &port) <= 0)
+      if (::scanf ("%s %hu", buf1, &port) <= 0)
 	break;
       result = set_host (buf1, port);
       break;
