@@ -1205,6 +1205,7 @@ Key_List::output_lookup_array (void)
       delete [] duplicates;
       delete [] lookup_array;
     }
+  return 0;
 }
 
 // Generates C code to perform the keyword lookup.
