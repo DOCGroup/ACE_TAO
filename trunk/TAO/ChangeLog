@@ -1,3 +1,19 @@
+Tue Nov 18 05:12:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * rules.tao.GNU:
+          Made assignments to ACE_MAKE_OPTIONS for each TAO specific make
+          flag, e.g., ami, rt_corba, etc. Added -I$(TAO_ROOT) to INCLDIRS
+          and -L$(TAO_ROOT)/tao to LDFLAGS which keeps us from having to
+          include taoconfig.mk.
+
+        * orbsvcs/orbsvcs/Makefile.RTCosScheduling:
+          Heavily modified this Makefile to use the new makefile scheme,
+          including setting ADDITIONAL_INCLUDE = $(TAO_ROOT)/rules.tao.GNU
+          and REQUIRED_COMPONENTS = interceptors rt_corba RTCosScheduling
+          before including include/makeinclude/all_in_one.GNU.  Assuming
+          this worksout okay, we should be able to use this as a model for
+          modifying the MPC templates.
+
 Mon Nov 17 20:42:06 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h:
