@@ -32,7 +32,7 @@ namespace TAO
 {
   class Collocation_Proxy_Broker;
 
-  typedef 
+  typedef
     Collocation_Proxy_Broker * (* Proxy_Broker_Factory)(CORBA::Object_ptr);
 
   template<typename T>
@@ -51,11 +51,17 @@ namespace TAO
                          Proxy_Broker_Factory
                          ACE_ENV_ARG_DECL);
 
+    // Version used the operators.
     static T_ptr unchecked_narrow (CORBA::Object_ptr,
                                    Proxy_Broker_Factory);
 
-    static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
-                                   Proxy_Broker_Factory);
+    static T_ptr unchecked_narrow (CORBA::Object_ptr,
+                                   const char *repo_id,
+                                   Proxy_Broker_Factory
+                                   ACE_ENV_ARG_DECL);
+
+    // static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr,
+    //                              Proxy_Broker_Factory);
   private:
     // Code for lazily evaluated IORs.
     static T_ptr lazy_evaluation (CORBA::Object_ptr);
