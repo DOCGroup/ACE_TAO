@@ -18,6 +18,8 @@
 #ifndef TAO_SSLIOP_CONNECT_H
 #define TAO_SSLIOP_CONNECT_H
 
+#include "ace/pre.h"
+
 #include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -177,5 +179,7 @@ protected:
 #if defined (__ACE_INLINE__)
 #include "SSLIOP_Connect.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/post.h"
 
 #endif /* TAO_SSLIOP_CONNECT_H */

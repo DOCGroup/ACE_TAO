@@ -7,6 +7,8 @@
 #ifndef ACE_SSL_EXPORT_H
 #define ACE_SSL_EXPORT_H
 
+#include "ace/pre.h"
+
 #include "ace/OS.h"
 
 #if !defined (ACE_SSL_HAS_DLL)
@@ -30,6 +32,8 @@
 #  define ACE_SSL_Export
 #  define ACE_SSL_SINGLETON_DECLARATION(T)
 #endif     /* ACE_SSL_HAS_DLL */
+
+#include "ace/post.h"
 
 #endif     /* ACE_SSL_EXPORT_H */
 

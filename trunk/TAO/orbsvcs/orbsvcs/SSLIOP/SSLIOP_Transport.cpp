@@ -96,7 +96,6 @@ TAO_SSLIOP_Server_Transport::
     TAO_SSLIOP_Server_Transport (TAO_SSLIOP_Server_Connection_Handler *handler,
                                TAO_ORB_Core* orb_core)
   : TAO_SSLIOP_Transport (handler, orb_core),
-    server_handler_ (handler),
     message_state_ (orb_core)
 {
 }
@@ -112,7 +111,6 @@ TAO_SSLIOP_Client_Transport::
                                TAO_ORB_Core *orb_core)
   :  TAO_SSLIOP_Transport (handler,
                          orb_core),
-     client_handler_ (handler),
      client_mesg_factory_ (0),
      orb_core_ (orb_core),
      params_ ()
@@ -121,12 +119,7 @@ TAO_SSLIOP_Client_Transport::
 
 TAO_SSLIOP_Client_Transport::~TAO_SSLIOP_Client_Transport (void)
 {
-}
-
-TAO_SSLIOP_Client_Connection_Handler *
-TAO_SSLIOP_Client_Transport::client_handler (void)
-{
-  return this->client_handler_;
+  delete this->client_mesg_factory_;
 }
 
 void
@@ -232,8 +225,9 @@ TAO_SSLIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - %p\n",
-                    "SSLIOP_Transport::handle_client_input, handle_input"));
+                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                    ACE_TEXT ("SSLIOP_Transport::handle_client_input, ")
+                    ACE_TEXT ("handle_input")));
       return -1;
     }
   if (result == 0)
@@ -248,8 +242,9 @@ TAO_SSLIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - %p\n",
-                    "SSLIOP_Transport::handle_client_input, parse reply"));
+                    ACE_TEXT ("TAO (%P|%t) - %p\n"),
+                    ACE_TEXT ("SSLIOP_Transport::handle_client_input, ")
+                    ACE_TEXT ("parse reply")));
       message_state->reset ();
       return -1;
     }
@@ -265,9 +260,9 @@ TAO_SSLIOP_Client_Transport::handle_client_input (int /* block */,
     {
       if (TAO_debug_level > 0)
         ACE_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) : SSLIOP_Client_Transport::"
-                    "handle_client_input - "
-                    "dispatch reply failed\n"));
+                    ACE_TEXT ("TAO (%P|%t) : SSLIOP_Client_Transport::")
+                    ACE_TEXT ("handle_client_input - ")
+                    ACE_TEXT ("dispatch reply failed\n")));
       message_state->reset ();
       return -1;
     }
@@ -291,10 +286,10 @@ TAO_SSLIOP_Client_Transport::register_handler (void)
   // @@ It seems like this method should go away, the right reactor is
   //    picked at object creation time.
   ACE_Reactor *r = this->orb_core ()->reactor ();
-  if (r == this->client_handler ()->reactor ())
+  if (r == this->handler ()->reactor ())
     return 0;
 
-  return r->register_handler (this->client_handler (),
+  return r->register_handler (this->handler (),
                               ACE_Event_Handler::READ_MASK);
 }
 
@@ -322,6 +317,11 @@ TAO_SSLIOP_Client_Transport::messaging_init (CORBA::Octet major,
             case 1:
               ACE_NEW_RETURN  (this->client_mesg_factory_,
                                TAO_GIOP_Message_Connector_11,
+                               0);
+              break;
+            case 2:
+              ACE_NEW_RETURN  (this->client_mesg_factory_,
+                               TAO_GIOP_Message_Connector_12,
                                0);
               break;
             default:
@@ -435,8 +435,8 @@ TAO_SSLIOP_Transport::send (const ACE_Message_Block *message_block,
               else
                 // @@ No timeouts!!!
                 n = this->handler_->peer ().sendv_n (iov,
-                                                     iovcnt
-                                                     /*, max_wait_time */);
+                                                     iovcnt /*,
+                                                     max_wait_time */);
 
               if (n <= 0)
                 return n;
@@ -468,20 +468,21 @@ TAO_SSLIOP_Transport::send (const u_char *buf,
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_SEND_START);
 
-  return this->handler_->peer ().send_n (buf, len);
+  return this->handler_->peer ().send_n (buf,
+                                         len /*,
+                                         max_wait_time */);
 }
 
 ssize_t
 TAO_SSLIOP_Transport::recv (char *buf,
 			    size_t len,
-			    const ACE_Time_Value * /* max_wait_time */)
+			    const ACE_Time_Value * max_wait_time)
 {
   TAO_FUNCTION_PP_TIMEPROBE (TAO_SSLIOP_TRANSPORT_RECEIVE_START);
 
-  // @@ No timeouts!
   return this->handler_->peer ().recv_n (buf,
-                                         len
-                                         /* , max_wait_time */);
+                                         len /*,
+                                         max_wait_time */);
 }
 
 // Default action to be taken for send request.

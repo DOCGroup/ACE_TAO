@@ -85,6 +85,7 @@ protected:
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 #include "ace/post.h"
+
 #endif /* ACE_SSL_SOCK_H */
 
 

@@ -7,6 +7,8 @@
 #ifndef TAO_SSLIOP_EXPORT_H
 #define TAO_SSLIOP_EXPORT_H
 
+#include "ace/pre.h"
+
 #include "ace/OS.h"
 
 #if !defined (TAO_SSLIOP_HAS_DLL)
@@ -30,6 +32,8 @@
 #  define TAO_SSLIOP_Export
 #  define TAO_SSLIOP_SINGLETON_DECLARATION(T)
 #endif     /* TAO_SSLIOP_HAS_DLL */
+
+#include "ace/post.h"
 
 #endif     /* TAO_SSLIOP_EXPORT_H */
 

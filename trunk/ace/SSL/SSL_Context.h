@@ -4,18 +4,20 @@
 // ============================================================================
 //
 // = LIBRARY
-//   ace
+//    ACE_SSL
 //
 // = FILENAME
-//   SSL_Context.h
+//    SSL_Context.h
 //
 // = AUTHOR
-//   Carlos O'Ryan <coryan@ece.uci.edu>
+//    Carlos O'Ryan <coryan@ece.uci.edu>
 //
 // ============================================================================
 
 #ifndef ACE_SSL_CONTEXT_H
 #define ACE_SSL_CONTEXT_H
+
+#include "ace/pre.h"
 
 #include "ace/SString.h"
 
@@ -217,5 +219,7 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #endif	/* ACE_HAS_SSL */
+
+#include "ace/post.h"
 
 #endif	/* ACE_SSL_CONTEXT_H */
