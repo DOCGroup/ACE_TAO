@@ -1,3 +1,53 @@
+Sat Feb 07 05:51:15 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Synch_T.cpp (ACE_TSS): Changed to use MessageBox on WinCE.
+	  Because there's no console in WinCE, we can't output warning
+	  messages to stderr. 
+
+	* ace/README (ACE_HAS_UNICODE_ONLY): This new directive is used to
+	  removed some char version function definitions because it
+	  doesn't make too much sense to support these function when most,
+	  if not all, strings in the system are wchar strings.
+
+	* ace/OS.{h,i} (ACE_DEFAULT_LOGGER_KEY): Added wchar definition if
+	  we are using UNICODE. 
+	  (ACE_SHE_{TRY,FINALLY,EXCEPT}): WinCE doesn't support Win32
+	  structual exception, so these macros should be defined as on
+	  UNIX platforms.
+	  (mktime): Removed this function from WinCE.  Don't even think
+ 	  about using them.
+	  (ACE_HAS_UNICODE_ONLY): If this directive is defined, the char
+	  version of the following functions are not defined in ACE_OS:
+
+	     chdir
+	     mkdir
+	     mkfifo
+	     mktemp
+	     getcwd
+	     unlink
+	     tempnam
+
+	  Some of them has wchar version.
+
+	  (chdir,mkdir,getcwd): Added wchar version.  Unfortunately, getcwd
+	  still doesn't work for WinCE.
+
+	* ace/OS.cpp (mktemp): Added wchar version of this function.
+	  Other changes added.  Please refer to the entry above.  If
+	  platform/compiler supports this function, then both char and
+	  wchar versions are defined as inline functions in OS.i.
+	  (socket_{init,fini}):  Removed leading :: from WSAStartup and
+	  WSACleanup because these two are implemented as macros on
+	  WinCE.  Changed to use MessageBox instead of cerr for outputing
+	  error messages.
+
+	* ace/config-win32-common.h: Don't defined ACE_HAD_P_READ_WRITE on
+	  WinCE.
+
+	* ace/config-WinCE.h: Defined directive ACE_HAS_UNICODE_ONLY.
+
+	* ace/ace_dll.dsp: Adjusted CE project settings.
+
 Fri Feb 06 15:28:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5-sunc++-4.x.h: disable explicit template
