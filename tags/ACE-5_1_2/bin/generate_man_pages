@@ -1,0 +1,40 @@
+#! /bin/sh
+# $Id$
+#
+# Generates ACE man and html pages from ACE headers.
+#
+# Author: David L. Levine, based on instructions from Douglas C. Schmidt.
+
+umask 022
+
+# 2. I then move all the *.3 man files to $ACE_ROOT/man/man3.
+#    [cd to man/man3 now so we don't have to move the files later.]
+if [ -d man/man3  -a  -d man/html ]; then
+  /bin/rm -f man/man3/*.3 man/html/*.html man/windex man/acewindex.html
+  cd man/man3
+else
+  echo $0': ERROR, man directories not found!' >&2
+  echo 'Are you in an ACE_wrappers directory?' >&2
+  exit 1
+fi
+
+# 1. I use "class2man" to convert the *.h files in $ACE_ROOT/ace
+#    to nroff man files.
+ACE_HEADERS=`find ../../ace -name CLASSIX -prune -o \
+             -name '*.h' ! -name 'config*.h' ! -name 'ws2tcpip.h' -print`
+../../bin/class2man $ACE_HEADERS > /dev/null
+
+# 3. Then I run "man2html" on the *.3 files to produce the *.html files.
+../../bin/man2html *.3 > /dev/null
+
+# 4. I copy [move] the *.html files into $ACE_ROOT/man/html.
+mv -f *.html ../html
+
+# 5. Then I run "catman -w -M ." on $ACE_ROOT/man/
+#    to produce the windex file.
+cd ..
+catman -w -M .
+
+# 6. Finally, I run "html-windex < windex > acewindex.html"
+#    to produce the final HTML index.
+../bin/html-windex < windex > acewindex.html
