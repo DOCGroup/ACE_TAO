@@ -1,3 +1,41 @@
+Wed Jun  3 17:50:09 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	Irfan Pyarali discussed the need to generate *_T.{h, i, cpp} files
+	that hold the generated code for the TIE classes. The *_T.h file
+	uses the ACE_TEMPLATES_REQUIRE_SOURCE and
+	ACE_TEMPLATES_REQUIRE_PRAGMA macros to conditionally include the
+	*_T.cpp files. The following changes were necessary to suport
+	these features.
+
+	* TAO_IDL/be_include/be_codegen.h
+	  TAO_IDL/be/be_codegen.cpp:
+
+	Added more methods and data mebers for the server-side template
+	files that have the code for the TIE classes. The added methods
+	are: start_server_template_header, start_server_template_inline,
+	start_server_template_skeletons, end_server_template_header, and
+	end_server_template_skeletons. The corresponding data members were
+	added.
+
+	* TAO_IDL/be_include/be_helper.h: Added 3 new enumerations for the
+	three newly introduced streams that will hold code for the TIE
+	classes.
+
+	* TAO_IDL/be_visitor_interface.cpp: We now initialize the visitor
+	context of the TIE visitors with the appropriate *_T.{h, i} files.
+
+	* TAO_IDL/be_visitor_root.cpp: Made calls to initialize and close
+	the newly added streams that hold the code for the TIE classes.
+
+	* TAO_IDL/include/idl_global.h:
+	  TAO_IDL/utils/utl_global.cpp:
+
+	Added new methods that generate names for the newly introduced
+	streams that hold the code for TIE classes. These methods are:
+	be_get_server_template_fname, be_get_server_template_inline_fname,
+	be_get_server_template_inline_skeleton_fname and their
+	corresponding helper methods.
+
 Tue Jun  2 18:57:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/{be_visitor_enum, be_visitor_exception,

@@ -76,11 +76,14 @@ int be_visitor_root::visit_root (be_root *node)
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
       (void) tao_cg->end_server_header ();
+      (void) tao_cg->end_server_template_header ();
       return 0;
       break;
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_SI:
+      return 0; // nothing to be done
     case TAO_CodeGen::TAO_ROOT_SS:
+      (void) tao_cg->end_server_template_skeletons ();
       return 0; // nothing to be done
     default:
       {
@@ -853,6 +856,16 @@ be_visitor_root_sh::init (void)
                          "Error opening server header file\n"), -1);
     }
 
+  if (tao_cg->start_server_template_header
+      (idl_global->be_get_server_template_hdr_fname ())
+      == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root_sh::init - "
+                         "Error opening server template header file\n"),
+                        -1);
+    }
+
   // set the stream and the next state
   this->ctx_->stream (tao_cg->server_header ());
   return 0;
@@ -881,6 +894,16 @@ be_visitor_root_si::init (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_si::init - "
                          "server inline open failed\n"), -1);
+    }
+
+  if (tao_cg->start_server_template_inline
+      (idl_global->be_get_server_template_inline_fname ())
+      == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root_si::init - "
+                         "Error opening server template inline file\n"),
+                        -1);
     }
 
   // init stream
@@ -912,6 +935,16 @@ be_visitor_root_ss::init (void)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_ss::init - "
                          "Error opening server skeletons file\n"), -1);
+    }
+
+  if (tao_cg->start_server_template_skeletons
+      (idl_global->be_get_server_template_skeleton_fname ())
+      == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root_ss::init - "
+                         "Error opening server template skeleton file\n"),
+                        -1);
     }
 
   // set stream

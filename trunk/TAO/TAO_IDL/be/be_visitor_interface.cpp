@@ -1196,6 +1196,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // generate the TIE class
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
+  ctx.stream (tao_cg->server_template_header ());
   visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {
@@ -1252,6 +1253,7 @@ be_visitor_interface_si::visit_interface (be_interface *node)
   // generate the TIE class
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
+  ctx.stream (tao_cg->server_template_inline ());
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
   if (!visitor || (node->accept (visitor) == -1))
     {

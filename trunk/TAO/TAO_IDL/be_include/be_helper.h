@@ -84,8 +84,11 @@ public:
       TAO_CLI_INL,
       TAO_CLI_IMPL,
       TAO_SVR_HDR,
+      TAO_SVR_TMPL_HDR,
       TAO_SVR_INL,
-      TAO_SVR_IMPL
+      TAO_SVR_TMPL_INL,
+      TAO_SVR_IMPL,
+      TAO_SVR_TMPL_IMPL
     };
 
   TAO_OutStream (void);
