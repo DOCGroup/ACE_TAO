@@ -1,3 +1,11 @@
+Tue Sep 21 11:25:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/auto_compile:
+	  Print the most recent ChangeLog entries in the log file.
+	  Report successful builds by default.
+	  Reformat email to make Darrell happier, btw, he gave most of
+	  this suggestions.
+
 Tue Sep 21 11:13:21 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/streams.h: Added includes/using to pick up strstream for
