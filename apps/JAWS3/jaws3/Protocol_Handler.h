@@ -2,7 +2,6 @@
 #ifndef JAWS_PROTOCOL_HANDLER_H
 #define JAWS_PROTOCOL_HANDLER_H
 
-#include "ace/OS.h"
 #include "ace/Message_Block.h"
 
 #include "jaws3/Export.h"

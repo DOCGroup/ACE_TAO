@@ -4,7 +4,6 @@
 #ifndef JAWS_TIMER_H
 #define JAWS_TIMER_H
 
-#include "ace/OS.h"
 #include "ace/Singleton.h"
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Queue_Adapters.h"

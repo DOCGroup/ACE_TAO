@@ -6,7 +6,7 @@
  */
 
 // Listing 1 code/ch09
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram.h"
@@ -17,7 +17,7 @@ int send_unicast (const ACE_INET_Addr &to)
   ACE_INET_Addr my_addr (ACE_static_cast (u_short, 10101));
   ACE_SOCK_Dgram udp (my_addr);
   ssize_t sent = udp.send (message,
-                           ACE_OS_String::strlen (message) + 1,
+                           ACE_OS::strlen (message) + 1,
                            to);
   udp.close ();
   if (sent == -1)

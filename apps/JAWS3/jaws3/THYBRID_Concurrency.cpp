@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/OS.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Message_Block.h"
 
 #ifndef JAWS_BUILD_DLL

@@ -4,7 +4,6 @@
 #ifndef JAWS_TIMER_HELPERS_H
 #define JAWS_TIMER_HELPERS_H
 
-#include "ace/OS.h"
 #include "ace/Singleton.h"
 #include "ace/Event_Handler.h"
 
