@@ -1,3 +1,21 @@
+Sun Jan 11 11:33:36 1998    <coryan@MILONGA>
+
+	* tao/connect.cpp: 
+	  On this branch the find() method for POA's require a
+	  PortableServer::Servant parameter.
+
+	* orbsvcs/Scheduling_Service/Scheduling_Service.cpp: 
+	* orbsvcs/Naming_Service/Naming_Service.cpp: 
+	* orbsvcs/Naming_Service/CosNaming_i.cpp: 
+	  Modified to use the new POA mapping for servers.
+
+	* TAO_IDL/tao_idl.dsp: 
+	  Replaced the old drv_main.cpp with tao_idl.cpp.
+
+	* orbsvcs/orbsvcs/orbsvcs_lib.dsp: 
+	  The final library is not generated inside Debug and its name is
+	  orbsvcs.lib, not orbsvcs_lib.lib
+
 Sun Jan 11 10:55:04 CST 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* Merged changes from tag main_to_poa_merge_5 and

@@ -35,18 +35,23 @@ int main (int argc, char *argv[])
 
       // Create an Scheduling service servant...
       ACE_Config_Scheduler *scheduler = new ACE_Config_Scheduler;
-      CORBA::Object::_duplicate(scheduler);
       TAO_CHECK_ENV;
 
+	  RtecScheduler::Scheduler_ptr obj = 
+	    scheduler->_this (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
       CORBA::String str =
-	orb->object_to_string (scheduler, TAO_TRY_ENV);
+	orb->object_to_string (obj, TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
+
       ACE_OS::puts ((char *) str);
 
       // Register the servant with the Naming Context....
       CosNaming::Name schedule_name (1);
       schedule_name[0].id = CORBA::string_dup ("ScheduleService");
       schedule_name.length (1);
-      naming_context->bind (schedule_name, scheduler, TAO_TRY_ENV);
+      naming_context->bind (schedule_name, obj, TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       ACE_DEBUG ((LM_DEBUG, "running scheduling service\n"));
@@ -55,7 +60,8 @@ int main (int argc, char *argv[])
 	  ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
 	}
 
-      CORBA::release (scheduler);
+      CORBA::release (obj);
+	  delete scheduler;
     }
   TAO_CATCHANY
     {

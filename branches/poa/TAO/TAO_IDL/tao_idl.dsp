@@ -412,10 +412,6 @@ SOURCE=.\driver\drv_link.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\driver\drv_main.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\driver\drv_preproc.cpp
 # End Source File
 # Begin Source File
@@ -449,6 +445,10 @@ SOURCE=.\fe\lex.yy.cpp
 # Begin Source File
 
 SOURCE=.\narrow\narrow.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\tao_idl.cpp
 # End Source File
 # Begin Source File
 
