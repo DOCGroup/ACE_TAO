@@ -29,6 +29,7 @@
 
 // TAO includes.
 #include "tao/corba.h"
+#include "tao/TAO.h"
 
 // MT Cubit application includes.
 #include "cubit_i.h"
@@ -55,7 +56,7 @@ class Globals
 {
 public:
   Globals (void);
-  int parse_args (int argc,char **argv);
+  int parse_args (int argc, char **argv);
   char hostname[BUFSIZ];
   char *ior_file;
   int base_port;
@@ -127,15 +128,6 @@ private:
   CORBA::ORB_var orb_;
   // Pointer to the ORB
 
-  PortableServer::POA_var root_poa_;
-  // Pointer to the Root POA
-
-  PortableServer::POA_var poa_;
-  // Pointer to the child POA used on the application.
-
-  PortableServer::POAManager_var poa_manager_;
-  // The POA Manager for both the root POA and the child POA.
-
   Cubit_i **servants_;
   // Array to hold the servants
 
@@ -153,6 +145,9 @@ private:
 
   Task_State *ts_;
   // state for the utilization thread to synchronize with the servants.
+
+  TAO_ORB_Manager orb_manager_;
+  // The TAO ORB Manager
 };
 
 
