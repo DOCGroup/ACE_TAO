@@ -23,7 +23,6 @@
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/Any.h"
-#include "tao/GIOP.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, append, "$Id$")
