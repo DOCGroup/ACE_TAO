@@ -1,3 +1,18 @@
+Thu Apr 27 12:41:42 2000  James C. Hu  <jxh@entera.com>
+
+        * ace/OS.i:
+        * ace/OS.cpp:
+        * ace/config-freebsd-pthread.h:
+        * ace/README:
+
+          Removed ACE_HAS_TIME_R in favor of using existing
+          mechanism of ACE_HAS_REENTRANT_FUNCTIONS, and then
+          adding ACE_LACKS_NETDB_REENTRANT_FUNCTIONS and
+          also ACE_LACKS_PWD_REENTRANT_FUNCTIONS.  Created a
+          new lacks called ACE_LACKS_RAND_REENTRANT_FUNCTIONS
+          to match the previous two.  FreeBSD can now use its
+          native *time_r functions.
+
 Thu Apr 27 10:55:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
         These changes bring the Windows CE port up to date.  It currently
