@@ -1937,15 +1937,24 @@ defines three built-in load balancing strategies. They are:
 
 <li>
 <tt>LeastLoaded</tt> <font color="#0000FF">(adaptive)</font></li>
+
 </ol>
-TAO implements all of these load balancing strategies.
+TAO implements all of these and the following load balancing strategies:
+<ol>
+<li>
+<tt>LoadAverage</tt> <font color="#0000FF">(adaptive)</font></li>
+
+<li>
+<tt>LoadMinimum</tt> <font color="#0000FF">(adaptive)</font></li>
+
+</ol>
 <h4>
 Known Issues:</h4>
 
 <ul>
 <li>
-<i>Adaptive</i> load balancing is currently not working. In particular,
-the load shedding mechanism needs work.</li>
+CPU load monitoring is not working in Windows.
+</li>
 </ul>
 
 <h4>
@@ -1953,15 +1962,13 @@ Recent Work:</h4>
 
 <ul>
 <li>
-Implemented <tt>RoundRobin</tt> load balancing strategy.</li>
+Implemented <tt>LoadAverage</tt> load balancing strategy.</li>
 
 <li>
-Implemented <tt>LeastLoaded</tt> load balancing strategy.</li>
+Implemented <tt>LoadMinimum</tt> load balancing strategy.</li>
 
 <li>
-Implemented preliminary infrastructure-controlled membership support.</li>
-
-<li>
+Implemented a CPU load utilization monitor in Linux.
 </li>
 </ul>
 
@@ -1974,6 +1981,11 @@ Implement cooperative (distributed) load balancing support</li>
 
 <li>
 Integrate multicast support</li>
+<li>
+Implement a middleware load balancing performance measurement toolkit</li>
+<li>
+Implement self adaptive load balancing strategies</li>
+
 </ul>
 
 <hr>

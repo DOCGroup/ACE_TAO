@@ -1,7 +1,13 @@
+Wed Jul  7 15:39:09 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * docs/releasenotes/index.html:
+
+          Updated the TAO Load Balancer release notes.
+
 Tue Jul  6 14:25:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * docs/releasenotes/index.html:
-        
+
           Updated the IDL compiler Current Status list.
 
 Mon Jul  5 13:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
