@@ -1,15 +1,22 @@
+Wed Jun 30 13:14:50 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/ciao/CCM_Core.mpc:
+
+	  Added -St to Deployment_stub probject to reduce the size of
+	  generated code.
+
 Wed Jun 30 10:59:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIAO.mwc:
 	* CIAOTAO.mwc:
 
-	  Added the new DnC directories. 
+	  Added the new DnC directories.
 
 	* DnC/ciao/CCM_Core.mpc:
-	
+
 	  Changed the name of the libraries generated. We should not
-	  overwrite the original ones. 
-	
+	  overwrite the original ones.
+
 	* DnC/Config_Handlers/Config_Handlers.mpc:
 	* DnC/DomainApplicationManager/DomainApplicationManager.mpc:
 	* DnC/ExecutionManager/ExecutionManager.mpc:
@@ -19,7 +26,7 @@ Wed Jun 30 10:59:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* DnC/RepositoryManager/RepositoryManager.mpc:
 	* DnC/tests/NodeApplicationTest/NodeAppTest.mpc:
 
-	  Use the new libraries. 
+	  Use the new libraries.
 
 Wed Jun 30 09:26:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -32,16 +39,16 @@ Wed Jun 30 09:26:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * examples/OEP/Display/NavDisplay/NavDisplay_exec.cpp:
         * examples/OEP/Display/RateGen/RateGen_exec.cpp:
         * examples/OEP/Display/RateGen/controller.cpp:
-        
+
           Changes to eliminate build warnings (mostly assignments of
           const char* to char*) and cosmetic changes.
 
 Wed Jun 30 08:37:15 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * examples/Hello/Receiver/Receiver_exec.cpp:
-        
+
           In Receiver_exec_i::ccm_activate(), changed the construction of
-          the argv argument passed to ORB_init() to eliminate a const 
+          the argv argument passed to ORB_init() to eliminate a const
           char* to char* conversion warning.
 
 Tue Jun 29 15:34:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
