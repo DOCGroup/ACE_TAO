@@ -137,7 +137,7 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name
 
 RTScheduling::DistributableThread_ptr 
 TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id
-				ACE_ENV_ARG_DECL)
+				ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTScheduling::DistributableThread_var DT;
@@ -543,7 +543,6 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
 		  TAO_RTScheduler_Current_i (this->orb_,
 					     this->dt_hash_),
 		  0);
-  ACE_CHECK;
 
   new_current->DT (dt.in ());
 
@@ -558,7 +557,6 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
 			  sched_param,
 			  implicit_sched_param),
 		  0);
-  ACE_CHECK;
  
   if (dttask->activate_task (base_priority,
 			     stack_size) == -1)
@@ -681,7 +679,7 @@ DTTask::svc (void)
 
 
 RTScheduling::Current::IdType * 
-TAO_RTScheduler_Current_i::id (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTScheduler_Current_i::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   
@@ -691,21 +689,21 @@ TAO_RTScheduler_Current_i::id (ACE_ENV_SINGLE_ARG_DECL)
 
 
 CORBA::Policy_ptr 
-TAO_RTScheduler_Current_i::scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTScheduler_Current_i::scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Policy::_duplicate (this->sched_param_);
 }
 
 CORBA::Policy_ptr 
-TAO_RTScheduler_Current_i::implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTScheduler_Current_i::implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return CORBA::Policy::_duplicate (this->implicit_sched_param_);
 }
 
 RTScheduling::Current::NameList * 
-TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL)
+TAO_RTScheduler_Current_i::current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTScheduling::Current::NameList* name_list;

@@ -1,3 +1,13 @@
+Wed Jul 2 00:23:18 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* tao/RTScheduling/Distributable_Thread.cpp:
+	* tao/RTScheduling/Request_Interceptor.cpp:		
+	* tao/RTScheduling/Current.h:
+	* tao/RTScheduling/Current.cpp: 
+
+	  Fixed compile errors and warnings in Red Hat 7.1 Explicit
+	  Template  and RH73 GCC32 NoInterceptorsNoExceptions builds.
+	  
 Tue Jul 1 00:27:35 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* tao/RTScheduling/Current.cpp: 
