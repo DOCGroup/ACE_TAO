@@ -26,7 +26,7 @@ do_child (ACE_FIFO_Recv &fifo_reader)
     return -1;
 
   char *argv[2];
-  argv[0] = EXEC_COMMAND_ARG;
+  argv[0] = (char *) EXEC_COMMAND_ARG;
   argv[1] = 0;
 
   if (ACE_OS::execvp (EXEC_NAME, argv) == -1)
@@ -39,13 +39,14 @@ do_parent (const char fifo_name[],
 	   char input_filename[])
 {
   ACE_FIFO_Send fifo_sender (fifo_name, O_WRONLY | O_CREAT);
-  int len;
+  ssize_t len;
   char buf[BUFSIZ];
 
   if (fifo_sender.get_handle () == ACE_INVALID_HANDLE)
     return -1;
 
-  ACE_HANDLE inputfd = ACE_OS::open (input_filename, O_RDONLY);
+  ACE_HANDLE inputfd =
+    ACE_OS::open (input_filename, O_RDONLY);
 
   if (inputfd == ACE_INVALID_HANDLE)
     return -1;
@@ -70,7 +71,9 @@ main (int argc, char *argv[])
   ACE_LOG_MSG->open (argv[0]);
 
   if (argc != 2)
-    ACE_ERROR ((LM_ERROR, "usage: %n input-file\n%a", 1));
+    ACE_ERROR ((LM_ERROR,
+                "usage: %n input-file\n%a",
+                1));
 
   ACE_FIFO_Recv fifo_reader (FIFO_NAME, O_RDONLY | O_CREAT, PERMS, 0);
 
@@ -82,17 +85,29 @@ main (int argc, char *argv[])
   switch (child_pid)
     {
     case -1:
-      ACE_ERROR ((LM_ERROR, "%n: %p\n%a", "fork", 1));
+      ACE_ERROR ((LM_ERROR,
+                  "%n: %p\n%a",
+                  "fork",
+                  1));
     case 0:
       if (do_child (fifo_reader) == -1)
-        ACE_ERROR ((LM_ERROR, "%n: %p\n%a", "do_child", 1));
+        ACE_ERROR ((LM_ERROR,
+                    "%n: %p\n%a",
+                    "do_child",
+                    1));
     default:
       if (do_parent (FIFO_NAME, argv[1]) == -1)
-        ACE_ERROR ((LM_ERROR, "%n: %p\n%a", "do_parent", 1));
+        ACE_ERROR ((LM_ERROR,
+                    "%n: %p\n%a",
+                    "do_parent",
+                    1));
 
       // wait for child to ACE_OS::exit.
       if (ACE_OS::waitpid (child_pid, (int *) 0, 0) == -1)    
-        ACE_ERROR ((LM_ERROR, "%n: %p\n%a", "waitpid", 1));
+        ACE_ERROR ((LM_ERROR,
+                    "%n: %p\n%a",
+                    "waitpid",
+                    1));
     }
 
   return 0;
