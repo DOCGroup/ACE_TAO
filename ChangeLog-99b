@@ -1,3 +1,7 @@
+Tue Mar 23 22:49:15 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in: Added a test for ACE_NEEDS_DEV_IO_CONVERSION.
+
 Tue Mar 23 22:29:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.7.h: undef ACE_HAS_ONLY_SCHED_OTHER, because
