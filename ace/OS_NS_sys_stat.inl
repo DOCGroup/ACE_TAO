@@ -134,14 +134,12 @@ ACE_OS::fstat (ACE_HANDLE handle, ACE_stat *stp)
 #endif /* WIN32 */
 
 ACE_INLINE int
-ACE_OS::lstat (const char *file, ACE_stat *stp)
+ACE_OS::lstat (const ACE_TCHAR *file, ACE_stat *stp)
 {
   ACE_OS_TRACE ("ACE_OS::lstat");
-# if defined (ACE_LACKS_LSTAT) || \
-     defined (ACE_HAS_WINCE) || defined (ACE_WIN32)
+# if defined (ACE_LACKS_LSTAT)
   return ACE_OS::stat (file, stp);       
-# else
-#   if defined (ACE_HAS_X86_STAT_MACROS)
+# elif defined (ACE_HAS_X86_STAT_MACROS)
    // Solaris for intel uses an macro for lstat(), this macro is a
    // wrapper for _lxstat().
   ACE_OSCALL_RETURN (::_lxstat (_STAT_VER, file, stp), int, -1);
