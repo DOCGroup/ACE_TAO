@@ -3814,10 +3814,6 @@ SOURCE=.\InterfaceC.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\InterfaceS.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\Invocation.i
 # End Source File
 # Begin Source File

@@ -32,10 +32,6 @@
 #include "tao/Request.h"
 #include "tao/MProfile.h"
 
-#if (TAO_HAS_INTERFACE_REPOSITORY == 1)
-#  include "tao/InterfaceC.h"
-#endif /*TAO_HAS_INTERFACE_REPOSITORY */
-
 #if defined (TAO_HAS_VALUETYPE)
 #  include "tao/ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
