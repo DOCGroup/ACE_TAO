@@ -1,50 +1,132 @@
 $Id$
 
-This is a unit test for RTCORBA::CLIENT_PROPAGATED priority model.
+This is a unit test for RTCORBA::PrivateConnectionPolicy.
 
-Scenario:
---------
+Description.  
+-------- 
+The server creates two servants, registers them with the Root POA,
+prints out their IORs and waits for the requests from the client.  The
+client obtains the IORs, makes several invocations on the objects,
+then sets RTCORBA::PrivateConnectionPolicy on PolicyCurrent (i.e.,
+thread-level) and makes a few more invocations on the objects.
 
-Server creates a POA with RTCORBA::CLIENT_PROPAGATED priority model
-policy and registers a servant with it.  Client obtains the object
-reference and verifies that it does have the RTCORBA::CLIENT_PROPAGATED
-priority model set.  Client then performs several invocations on the
-object, changing the priority of its thread before each.  The client
-also passes its thread priority as an argument to each operation.
-For each invocation, the servant checks that it's thread priority is
-equivalent to the priority of the invoking client thread, which we know
-from the operation argument.  In addition, the server verifies that
-it's starting thread priority (before entering ORB event loop) is the
-same as it's ending thread priority (ater ORB shutdown), to insure
-that the thread servicing the requests at client propagated priority
-is always returned to its original priority.
+The goal of the test is to check that new connections are established
+only when expected, and that appropriate connection is used for each
+invocation.  Since what we are trying to verify are the internal
+workings of the ORB, we are relying on ORB debug messages to do it.
+
+Client makes a total of 8 invocations (not counting the shutdown
+request at the end).  A message containing invocation number, whether
+the new connection is to be established, and, if not, which one should
+be reused, is printed out before each invocation.  ORB debug messages
+that follow allow us to verify whether things worked as expected.  See
+Expected output section below for more information.
 
 To run (on Unix):
 -------
-$./server
-$./client
+$./server [-o <ior_output_file1> -p <ior_output_file2>]
+$./client [-o <ior1> -p <ior2>] -ORBdebuglevel 3
+
 
 Options:
 --------
-server [-o ior_output_file]
-client [-k server_ior]
+        Server:
+
+-o <ior_output_file1>      Default: test1.ior
+                           Filename for output of the IOR of the first
+                           testing object.
+
+-p <ior_output_file2>      Default: test2.ior
+                           Filename for output of the IOR of the
+                           second testing object.
+
+        Client:
+
+-o <ior1>                  Default: file://test1.ior
+                           IOR of the first test object.
+
+-p <ior2>                  Default: file://test2.ior
+                           IOR of the second test object.
+
+-ORBdebuglevel 3           Default: none
+                           Recommended debug level is 3 or higher.
 
 Expected output:
 ----------------
-Client executable produces no output (unless there are errors).
-Server should produces the following if there are no errors (the
-priority numbers may differ from platform to platform):
+Below is a sample output from run_test.pl on NT.  Please note that
+since in this test we are relying on ORB debug messages
 
-$server
-Activated as <IOR:010000000d00000049444c3a546573743a312e300000000001000000000000
-00a6000000010102cd15000000636f727269646f2e63732e777573746c2e65647500cde304230000
-0014010f004e5354c5c9a539bd0105000100000001000000000000000100000001000000cd040000
-00000000000800000001cdcdcd004f4154010000001400000001cdcdcd0100010000000000090101
-0000000000004f41540400000001cd0000020000001a00000001cdcdcd01000000020041540a0000
-0001cdcdcd000000000000>
+1) test output may look different from that shown below as ORB debug
+   messages are modified
+2) the output may contain some debug information irrelevant to this
+   test, e.g., parsed header info in the output below
 
-Client priority: 0  Servant thread priority: 0
-Client priority: 1  Servant thread priority: 1
-Client priority: 2  Servant thread priority: 2
+
+********** RTCORBA Private Connection Unit Test
+
+<IOR:010000000d00000049444c3a546573743a312e300000000001000000000000007e00000001
+102cd050000006865726100cdc3051b00000014010f0052535422181a3a88bb0600000000000100
+00001000000cd03000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd01
+00100000000000901010000000000024f41541600000001cdcdcd01000000050000006865726100
+dc305ffff>
+
+<IOR:010000000d00000049444c3a546573743a312e300000000001000000000000007e00000001
+102cd050000006865726100cdc3051b00000014010f0052535422181a3a88bb0600010000000100
+00002000000cd03000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd01
+00100000000000901010000000000024f41541600000001cdcdcd01000000050000006865726100
+dc305ffff>
+
+TAO (976|1072) Loaded default protocol <IIOP_Factory>
+TAO (976|1072) created new ORB <>
+
+  Invocation 1 --> new connection
+(976|1072) IIOP_Connector::connect - making a new connection
+(976|1072) IIOP_Connector::connect - new connection on HANDLE 296
+Server: test_method invoked.
+TAO (976|1072) Parsed header = <1,2,1,1,12>
+
+  Invocation 2 --> use connection from invocation 1
+(976|1072) IIOP_Connector::connect - got an existing connection on HANDLE 296
+Server: test_method invoked.
+TAO (976|1072) Parsed header = <1,2,1,1,12>
+
+  Invocation 3 --> use connection from invocation 1
+(976|1072) IIOP_Connector::connect - got an existing connection on HANDLE 296
+Server: test_method invoked.
+TAO (976|1072) Parsed header = <1,2,1,1,12>
+
+  Invocation 4 --> use connection from invocation 1
+(976|1072) IIOP_Connector::connect - got an existing connection on HANDLE 296
+Server: test_method invoked.
+TAO (976|1072) Parsed header = <1,2,1,1,12>
+
+  Invocation 5 --> new connection
+(976|1072) IIOP_Connector::connect - making a new connection
+(976|1072) IIOP_Connector::connect - new connection on HANDLE 316
+Server: test_method invoked.
+TAO (976|1072) Parsed header = <1,2,1,1,12>
+
+  Invocation 6 --> new connection
+(976|1072) IIOP_Connector::connect - making a new connection
+(976|1072) IIOP_Connector::connect - new connection on HANDLE 328
+Server: test_method invoked.
+TAO (976|1072) Parsed header = <1,2,1,1,12>
+
+  Invocation 7 --> use connection from invocation 5
+(976|1072) IIOP_Connector::connect - got an existing connection on HANDLE 316
+Server: test_method invoked.
+TAO (976|1072) Parsed header = <1,2,1,1,12>
+
+  Invocation 8 --> use connection from invocation 6
+(976|1072) IIOP_Connector::connect - got an existing connection on HANDLE 328
+Server: test_method invoked.
+TAO (976|1072) Parsed header = <1,2,1,1,12>
+
+  Testing over - shutting down
+(976|1072) IIOP_Connector::connect - got an existing connection on HANDLE 316
 Server ORB event loop finished
-Final priority of the servant thread = its initial priority
+Destroying ORB <>
+TAO (976|1072) IIOP_Client_Connection_Handler::handle_close (296, 511)
+TAO (976|1072) IIOP_Client_Connection_Handler::handle_close (328, 511)
+TAO (976|1072) IIOP_Client_Connection_Handler::handle_close (316, 511)
+

@@ -41,3 +41,7 @@ includes the following:
           priorities and different ClientProtocolPolicy Current-level
           overrides] concurrently making invocations on one object
           reference, which has a CLIENT_PROPAGATED priority model.
+
+        . Private_Connection
+
+          Tests RTCORBA::PrivateConnectionPolicy support.
