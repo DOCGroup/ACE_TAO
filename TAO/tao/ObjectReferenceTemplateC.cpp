@@ -486,6 +486,16 @@ void* PortableInterceptor::ObjectReferenceFactory::_tao_obv_narrow (ptr_arith_t 
   return rval;
 }
 
+CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_marshal_v (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+CORBA::Boolean PortableInterceptor::ObjectReferenceFactory::_tao_unmarshal_v (TAO_InputCDR &)
+{
+  return 0;
+}
+
 void
 PortableInterceptor::ObjectReferenceFactory::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -789,6 +799,16 @@ void* PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (ptr_arith_t
   if (rval == 0)
     rval = ACE_NESTED_CLASS (PortableInterceptor,ObjectReferenceFactory)::_tao_obv_narrow (type_id);
   return rval;
+}
+
+CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_marshal_v (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+CORBA::Boolean PortableInterceptor::ObjectReferenceTemplate::_tao_unmarshal_v (TAO_InputCDR &)
+{
+  return 0;
 }
 
 void
