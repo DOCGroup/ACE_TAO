@@ -23,7 +23,7 @@ main (int argc, char *argv[])
 		   O_RDWR|O_APPEND|O_CREAT, 0666) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n to %s", "connect", argv[1]), -1);
 
-  size_t len = ACE_OS::strlen (argv[2]) + 1;
+  ssize_t len = ACE_OS::strlen (argv[2]) + 1;
 
   if (cli_file.send (argv[2], len) != len)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), 1);
