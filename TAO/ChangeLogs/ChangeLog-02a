@@ -1,6 +1,6 @@
 Wed Sep 20 16:04:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ be_include/be.h:
+	* TAO_IDL/be_include/be.h:
 	* TAO_IDL/be_include/be_argument.h:
 	* TAO_IDL/be_include/be_array.h:
 	* TAO_IDL/be_include/be_attribute.h:
