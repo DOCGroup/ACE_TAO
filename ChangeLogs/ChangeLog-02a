@@ -1,98 +1,104 @@
+Sun Jul 15 11:04:26 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/SSL/ACE_SSL.dsp:
+          Removed references to $OPENSSL_ROOT, the user should configure
+          those in the Tools -> Option -> Directories tab.
+
 Fri Jul 13 23:02:46 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Asynch_Stream.h:
-	* ace/SSL/SSL_Asynch_Stream.cpp:
-	* ace/SSL/SSL_Asynch_BIO.h:
-	* ace/SSL/SSL_Asynch_BIO.cpp:
+        * ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Asynch_BIO.h:
+        * ace/SSL/SSL_Asynch_BIO.cpp:
 
-	  Only support asynchronous SSL streams when using OpenSSL >
-	  0.9.5a.  The BIO method signatures changed in OpenSSL 0.9.6.
+          Only support asynchronous SSL streams when using OpenSSL >
+          0.9.5a.  The BIO method signatures changed in OpenSSL 0.9.6.
 
 Fri Jul 13 22:48:56 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Asynch_BIO.cpp (methods_ACE):
+        * ace/SSL/SSL_Asynch_BIO.cpp (methods_ACE):
 
-	  Removed excess element in aggregate initializer.
+          Removed excess element in aggregate initializer.
 
 Fri Jul 13 22:29:01 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Asynch_Stream.cpp (print_error):
+        * ace/SSL/SSL_Asynch_Stream.cpp (print_error):
 
-	  The OpenSSL ERR_error_string_n() function is only supported in
-	  OpenSSL 0.9.6 or better.
+          The OpenSSL ERR_error_string_n() function is only supported in
+          OpenSSL 0.9.6 or better.
 
 Fri Jul 13 14:59:18 2001  Alexander Libman <alexander.libman@baltimore.com>
 
-	* ace/WIN32_Asynch_IO.h (ACE_WIN32_Asynch_Result):
-	* ace/WIN32_Asynch_IO.cpp (set_error, set_bytes_transferred):
+        * ace/WIN32_Asynch_IO.h (ACE_WIN32_Asynch_Result):
+        * ace/WIN32_Asynch_IO.cpp (set_error, set_bytes_transferred):
 
-	  Added new methods set_error() and set_bytes_transferred().
-	  Needed for below changes and new asynchronous SSL stream
-	  implementation.
+          Added new methods set_error() and set_bytes_transferred().
+          Needed for below changes and new asynchronous SSL stream
+          implementation.
 
-	* ace/WIN32_Proactor.cpp (handle_events):
+        * ace/WIN32_Proactor.cpp (handle_events):
 
-	  Fixed error handling semantics so that it is consistent with the
-	  POSIX Proactor error handling semantics.
+          Fixed error handling semantics so that it is consistent with the
+          POSIX Proactor error handling semantics.
 
-	  (post_completion):
+          (post_completion):
 
-	  Pass the amount of bytes transferred and the completion key to
-	  the Win32 PostQueuedCompletionStatus() function.  The error, if
-	  any, will later be extracted in the handle_events() method.
+          Pass the amount of bytes transferred and the completion key to
+          the Win32 PostQueuedCompletionStatus() function.  The error, if
+          any, will later be extracted in the handle_events() method.
 
 Fri Jul 13 15:59:45 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* netsvcs/servers/main.cpp (main): The server was always outputing
-	  LM_DEBUG information, even when the program was not run with the
-	  -d command line argument.  Therefore, changed the following
-	  lines from: 
- 
+        * netsvcs/servers/main.cpp (main): The server was always outputing
+          LM_DEBUG information, even when the program was not run with the
+          -d command line argument.  Therefore, changed the following
+          lines from:
+
           if (ACE::debug () == 0)
-	    ACE_Log_Msg::disable_debug_messages ();
- 
+            ACE_Log_Msg::disable_debug_messages ();
+
           to:
- 
+
           if (ACE::debug () == 0)
-	    ACE_LOG_MSG->priority_mask (~LM_DEBUG, ACE_Log_Msg::PROCESS);
-  
+            ACE_LOG_MSG->priority_mask (~LM_DEBUG, ACE_Log_Msg::PROCESS);
+
           Thanks to Jerry D. De Master <jdemaster@rite-solutions.com> for
-	  reporting this fix.  
-  
+          reporting this fix.
+
 Fri Jul 13 12:16:03 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/SSL/SSL_Asynch_BIO.h:
-	* ace/SSL/SSL_Asynch_BIO.cpp:
-	* ace/SSL/SSL_Asynch_Stream.h:
-	* ace/SSL/SSL_Asynch_Stream.cpp:
+        * ace/SSL/SSL_Asynch_BIO.h:
+        * ace/SSL/SSL_Asynch_BIO.cpp:
+        * ace/SSL/SSL_Asynch_Stream.h:
+        * ace/SSL/SSL_Asynch_Stream.cpp:
 
-	  New asynchrounous SSL stream implementation contributed by
-	  Alexander Libman <alexander.libman@baltimore.com>.
+          New asynchrounous SSL stream implementation contributed by
+          Alexander Libman <alexander.libman@baltimore.com>.
 
-	* ace/SSL/ACE_SSL.dsp:
-	* ace/SSL/Makefile:
-	* ace/SSL/Makefile.bor:
+        * ace/SSL/ACE_SSL.dsp:
+        * ace/SSL/Makefile:
+        * ace/SSL/Makefile.bor:
 
-	  Added new asynchronous SSL stream source files to these
-	  Makefiles and project files.
+          Added new asynchronous SSL stream source files to these
+          Makefiles and project files.
 
 Fri Jul 13 09:40:08 2001  Jerry D. De Master <jdemaster@rite-solutions.com>
 
-	* ace/Log_Msg.*,
-	  ace/Logging_Strategy.*,
-	  ace/Log_Msg_UNIX_Syslog.*:
+        * ace/Log_Msg.*,
+          ace/Logging_Strategy.*,
+          ace/Log_Msg_UNIX_Syslog.*:
           Applied patches to ACE_Log_Msg, ACE_Logging_Strategy, and
- 	  ACE_Log_Msg_UNIX_Syslog that are required to add the program
- 	  name logging strategy option ('n') and to initialize the UNIX
- 	  syslog facility with the program name.  Also included are Boris
- 	  Kolpackov <bosk@ipmce.ru> patches for ACE_LACKS_IOSTREAM_TOTALLY
- 	  to ACE_Logging_Strategy.
+          ACE_Log_Msg_UNIX_Syslog that are required to add the program
+          name logging strategy option ('n') and to initialize the UNIX
+          syslog facility with the program name.  Also included are Boris
+          Kolpackov <bosk@ipmce.ru> patches for ACE_LACKS_IOSTREAM_TOTALLY
+          to ACE_Logging_Strategy.
 
 Thu Jul 12 19:54:27 2001  Ossama Othman  <ossama@uci.edu>
 
-	* examples/Registry/test_registry_update.cpp (main):
+        * examples/Registry/test_registry_update.cpp (main):
 
-	  Fixed unused argument warning.
+          Fixed unused argument warning.
 
 Thu Jul 12 19:57:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
@@ -102,43 +108,43 @@ Thu Jul 12 19:57:12 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 Thu Jul 12 17:11:35 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
-	* bin/nightlybuilds/builds.lst (WEB):
+        * bin/nightlybuilds/builds.lst (WEB):
 
-	  Temporarily removed the IA-64 build till some issues get sorted
+          Temporarily removed the IA-64 build till some issues get sorted
           out.
 
 Thu Jul 12 06:01:03 2001  John Michael Zorko <j.zorko@att.net>
 
         * netsvcs/lib/Server_Logging_Handler.cpp:
-	  Added an an additional #define in config-macosx.h called
- 	  ACE_HAS_MACOSX_DYLIB, and checked to see if this was _not_
- 	  defined before instantiating the offending template in
- 	  Server_Logging_Handler.cpp.  OS X has this thing about .dylibs
- 	  (OS X version of .so) where they can't have any duplicate
- 	  symbols, which is why libnetsvcs wasn't building on OS X
- 	  earlier.  This fixes that.
+          Added an an additional #define in config-macosx.h called
+          ACE_HAS_MACOSX_DYLIB, and checked to see if this was _not_
+          defined before instantiating the offending template in
+          Server_Logging_Handler.cpp.  OS X has this thing about .dylibs
+          (OS X version of .so) where they can't have any duplicate
+          symbols, which is why libnetsvcs wasn't building on OS X
+          earlier.  This fixes that.
 
         * include/makeincludes/platform-macosx.GNU: Added -lACE to the
-	  LIBS line, which fixed the majority of the build problems.
+          LIBS line, which fixed the majority of the build problems.
 
         * ace/config-macosx.h: Added the ACE_HAS_MACOSX_DYLIB #define
-	  mentioned above.
+          mentioned above.
 
 Thu Jul 12 06:01:03 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/TLI_Connector.cpp (complete): Changed ACE_OS::t_rcvconnect()
-	  to simply t_rcvconnect().  Thansk to Andreas Geisler for
- 	  reporting this.
+        * ace/TLI_Connector.cpp (complete): Changed ACE_OS::t_rcvconnect()
+          to simply t_rcvconnect().  Thansk to Andreas Geisler for
+          reporting this.
 
 Thu Jul 12 09:43:36 2001  Ossama Othman  <ossama@uci.edu>
 
-	* ace/FILE_Connector.h (ACE_FILE_Connector, connect):
+        * ace/FILE_Connector.h (ACE_FILE_Connector, connect):
 
-	  Removed the default O_EXCL flag I added a few days ago.  It is
-	  mostly useful for preventing symbolic link attacks in a
-	  directory with global write permissions.  Pass the
-	  responsibility of using the O_EXCL flag when necessary on to the
-	  application developer.
+          Removed the default O_EXCL flag I added a few days ago.  It is
+          mostly useful for preventing symbolic link attacks in a
+          directory with global write permissions.  Pass the
+          responsibility of using the O_EXCL flag when necessary on to the
+          application developer.
 
 Wed Jul 11 22:31:50 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
@@ -536,7 +542,7 @@ Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 =======
 
 =======
-  
+
 >>>>>>> 4.2263
         * ace/Makefile (LOGGING_FILES): Added support for
           Log_Msg_UNIX_Syslog.
@@ -576,7 +582,7 @@ Fri Jul  6 05:44:13 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 >>>>>>> 4.2257
 
 =======
-  
+
 >>>>>>> 4.2263
         * ace/config-macosx.h: Added a new file courtesy of John
           Zorko so that things will work on MacOSX.
