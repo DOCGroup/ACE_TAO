@@ -1,3 +1,11 @@
+Fri Jul  9 20:40:54 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/include/utl_scope.h:
+	* TAO_IDL/util/utl_scope.cpp:
+	  Extensive mods to lookup_by_name(), lookup_by_name_local(), and
+	  iter_lookup_by_name_local() so they will traverse the scope tree
+	  above the starting point and check for reopened modules.
+
 Fri Jul 09 18:54:40 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* version_tests.dsw (Project): Fixed location of POA Deactivation
