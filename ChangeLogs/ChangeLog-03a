@@ -1,3 +1,9 @@
+Sun Jun 18 10:54:59 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/INET_Addr: Added operator < to ACE_INET_Addr so that it
+	  can be used in an STL map.  Thanks to Tomer Amiaz
+ 	  <Tomer@bandwiz.com> for this suggestion.	  
+
 Sun Jun 18 03:18:21 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/CORBA_macros.h: The definition of ACE_RETHORW is flawed
