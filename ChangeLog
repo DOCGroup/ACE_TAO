@@ -1,3 +1,11 @@
+Wed Mar 12 08:59:18 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Log_Msg.cpp (log_hexdump):
+	* tests/Proactor_Test.cpp:
+
+	  Another round of format specifier corrections.  "%lu" instead of
+	  "%u".  Addresses warnings in 64 bit platform builds.
+
 Wed Mar 12 10:42:40 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
