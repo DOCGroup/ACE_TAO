@@ -121,10 +121,9 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "::_tao_any_destructor (void *_tao_void_pointer)" << be_nl
           << "{" << be_idt_nl
           << node->local_name () << " *_tao_tmp_pointer =" << be_idt_nl
-          << "static_cast<" << be_idt << be_idt_nl
-          << node->local_name () << " *> (" << be_nl
-          << "_tao_void_pointer" << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
+          << "static_cast<" << be_idt
+          << node->local_name () << " *> ("
+          << "_tao_void_pointer);" << be_uidt << be_uidt_nl
           << "CORBA::remove_ref (_tao_tmp_pointer);" << be_uidt_nl
           << "}" << be_nl << be_nl;
     }
@@ -137,7 +136,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
     {
       // The virtual _tao_marshal_v method.
       *os << "CORBA::Boolean " << node->name ()
-          << "::_tao_marshal_v (TAO_OutputCDR & strm)"
+          << "::_tao_marshal_v (TAO_OutputCDR & strm) const"
           << be_nl
           << "{" << be_idt_nl
           << "return ";
