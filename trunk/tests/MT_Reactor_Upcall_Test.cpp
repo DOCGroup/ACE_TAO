@@ -327,7 +327,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   test_reactor_upcall (tp_reactor);
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing WFMO Reactor\n")));
 
@@ -336,7 +336,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   test_reactor_upcall (wfmo_reactor);
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 
 #else /* ACE_HAS_THREADS */
   ACE_UNUSED_ARG(argc);

@@ -120,7 +120,7 @@ Handler::handle_input (ACE_HANDLE fd)
 
   ACE_DEBUG ((LM_DEBUG,
               "Handler::handle_input: %s\n",
-              buffer));
+              ACE_TEXT_CHAR_TO_TCHAR (buffer)));
 
   ACE_ASSERT (ACE_OS::strcmp (buffer,
                               message) == 0);
@@ -168,14 +168,15 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   test_reactor_dispatch_order (select_reactor);
 
-#if defined (ACE_WIN32)
+  // WinCE can't do the necessary Winsock 2 things for WFMO_Reactor.
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
   ACE_WFMO_Reactor wfmo_reactor_impl;
   ACE_Reactor wfmo_reactor (&wfmo_reactor_impl);
 
   test_reactor_dispatch_order (wfmo_reactor);
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 
   ACE_END_TEST;
   return 0;

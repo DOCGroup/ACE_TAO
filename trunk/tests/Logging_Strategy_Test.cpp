@@ -424,7 +424,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
     {
       l_argv[0] = argv[0];
       l_argv[1] =
-        (ACE_TCHAR *) ACE_TEXT ("-slog/Logging_Strategy_Test.log");
+        (ACE_TCHAR *) ACE_TEXT ("-slog/Logging_Strategy_Test")
+                      ACE_LOG_FILE_EXT_NAME;
       l_argv[2] = (ACE_TCHAR *) ACE_TEXT ("-o");
       l_argv[3] = 0;
 

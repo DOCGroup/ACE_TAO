@@ -79,6 +79,7 @@
 
 #define ACE_LACKS_IOSTREAM_TOTALLY
 #define ACE_LACKS_ACE_IOSTREAM
+#define ACE_LACKS_AUTO_PTR
 
 #if defined (ACE_HAS_STRICT)
 # undef ACE_HAS_STRICT
@@ -243,12 +244,20 @@ typedef long off_t;
 // @@ This needs to be defined and initialized as a static. (Singleton?)
 #define ACE_DEFAULT_LOG_STREAM 0
 
+// WinCE can't do fixed addresses for memory-mapped files.
+#if defined (ACE_DEFAULT_BASE_ADDR)
+#  undef ACE_DEFAULT_BASE_ADDR
+#endif
+#define ACE_DEFAULT_BASE_ADDR 0
+
 // If you don't use MFC, this doesn't get defined
 #if !defined (ACE_HAS_MFC)
  inline void *operator new (unsigned int, void *p) { return p; }
 #endif  // ACE_HAS_MFC
 
 #define ACE_ENDTHREADEX(STATUS) ExitThread ((DWORD) STATUS)
+
+#define ACE_HAS_TSS_EMULATION
 
 #include "ace/post.h"
 
