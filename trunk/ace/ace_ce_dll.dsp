@@ -85,7 +85,8 @@ EMPFILE=empfile.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /W3 /Gm /Zi /Od /D "UNDER_CE" /D "UNICODE" /D "_UNICODE" /D "WIN32" /D "STRICT" /D _WIN32_WCE=200 /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /YX /c
-# ADD CPP /nologo /MTd /W3 /Gm /Zi /Od /I "..\\" /I "..\STL\\" /D "_UNICODE" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D "UNDER_CE" /D "UNICODE" /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /D ACE_HAS_DLL=1 /YX /c
+# ADD CPP /nologo /G4 /W3 /GR- /Zi /Od /I "..\\" /I "..\STL\\" /D "_UNICODE" /D "WIN32" /D "STRICT" /D "_WIN32_WCE_EMULATION" /D "INTERNATIONAL" /D "USA" /D "INTLMSG_CODEPAGE" /D "_DEBUG" /D "x86" /D "i486" /D "_x86_" /D "UNDER_CE" /D "UNICODE" /D _WIN32_WCE=200 /D ACE_HAS_WINCE=1 /D ACE_HAS_DLL=1 /c
+# SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
 # ADD RSC /l 0x409 /d "UNDER_CE" /d "UNICODE" /d "_UNICODE" /d "WIN32" /d "STRICT" /d _WIN32_WCE=200 /d "_WIN32_WCE_EMULATION" /d "INTERNATIONAL" /d "USA" /d "INTLMSG_CODEPAGE" /d "_DEBUG" /d "x86" /d "i486" /d "_x86_"
@@ -326,7 +327,6 @@ DEP_CPP_ACE_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -338,6 +338,9 @@ DEP_CPP_ACE_C=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACE_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -382,7 +385,6 @@ DEP_CPP_ACE_C=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
@@ -462,7 +464,6 @@ DEP_CPP_ACE_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -474,6 +475,9 @@ DEP_CPP_ACE_C=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACE_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -550,7 +554,6 @@ DEP_CPP_ACE_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -562,6 +565,9 @@ DEP_CPP_ACE_C=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACE_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -638,7 +644,6 @@ DEP_CPP_ACE_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -650,6 +655,9 @@ DEP_CPP_ACE_C=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACE_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -726,7 +734,6 @@ DEP_CPP_ACE_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -738,6 +745,9 @@ DEP_CPP_ACE_C=\
 	".\Trace.h"\
 	".\Version.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACE_C=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -844,7 +854,6 @@ DEP_CPP_ACTIV=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -857,6 +866,9 @@ DEP_CPP_ACTIV=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACTIV=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -956,7 +968,6 @@ DEP_CPP_ACTIV=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -1068,7 +1079,6 @@ DEP_CPP_ACTIV=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -1081,6 +1091,9 @@ DEP_CPP_ACTIV=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACTIV=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -1180,7 +1193,6 @@ DEP_CPP_ACTIV=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -1193,6 +1205,9 @@ DEP_CPP_ACTIV=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACTIV=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -1292,7 +1307,6 @@ DEP_CPP_ACTIV=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -1305,6 +1319,9 @@ DEP_CPP_ACTIV=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACTIV=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -1404,7 +1421,6 @@ DEP_CPP_ACTIV=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -1417,6 +1433,9 @@ DEP_CPP_ACTIV=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ACTIV=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -1460,9 +1479,11 @@ DEP_CPP_ADDR_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ADDR_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -1499,7 +1520,6 @@ DEP_CPP_ADDR_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -1538,9 +1558,11 @@ DEP_CPP_ADDR_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ADDR_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -1577,9 +1599,11 @@ DEP_CPP_ADDR_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ADDR_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -1616,9 +1640,11 @@ DEP_CPP_ADDR_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ADDR_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -1655,9 +1681,11 @@ DEP_CPP_ADDR_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ADDR_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -1730,11 +1758,13 @@ DEP_CPP_ARGV_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ARGV_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -1800,7 +1830,6 @@ DEP_CPP_ARGV_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -1870,11 +1899,13 @@ DEP_CPP_ARGV_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ARGV_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -1940,11 +1971,13 @@ DEP_CPP_ARGV_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ARGV_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -2010,11 +2043,13 @@ DEP_CPP_ARGV_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ARGV_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -2080,252 +2115,13 @@ DEP_CPP_ARGV_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=..\ace/Array.cpp
-
-!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
-
-DEP_CPP_ARRAY=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Array.h"\
-	".\Array.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\Basic_Types.h"\
-	".\Basic_Types.i"\
-	".\config-win32-borland.h"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config-WinCE.h"\
-	".\config.h"\
-	".\inc_user_config.h"\
-	".\iosfwd.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc_Base.h"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\streams.h"\
+NODEP_CPP_ARGV_=\
 	".\sys_conf.h"\
-	".\Trace.h"\
-	".\ws2tcpip.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
-
-DEP_CPP_ARRAY=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Array.h"\
-	".\Array.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\Basic_Types.h"\
-	".\Basic_Types.i"\
-	".\config-win32-borland.h"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config-WinCE.h"\
-	".\config.h"\
-	".\inc_user_config.h"\
-	".\iosfwd.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc_Base.h"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\streams.h"\
-	".\sys_conf.h"\
-	".\Trace.h"\
-	".\ws2tcpip.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
-
-DEP_CPP_ARRAY=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Array.h"\
-	".\Array.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\Basic_Types.h"\
-	".\Basic_Types.i"\
-	".\config-win32-borland.h"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config-WinCE.h"\
-	".\config.h"\
-	".\inc_user_config.h"\
-	".\iosfwd.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc_Base.h"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\streams.h"\
-	".\sys_conf.h"\
-	".\Trace.h"\
-	".\ws2tcpip.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
-
-DEP_CPP_ARRAY=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Array.h"\
-	".\Array.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\Basic_Types.h"\
-	".\Basic_Types.i"\
-	".\config-win32-borland.h"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config-WinCE.h"\
-	".\config.h"\
-	".\inc_user_config.h"\
-	".\iosfwd.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc_Base.h"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\streams.h"\
-	".\sys_conf.h"\
-	".\Trace.h"\
-	".\ws2tcpip.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
-
-DEP_CPP_ARRAY=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Array.h"\
-	".\Array.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\Basic_Types.h"\
-	".\Basic_Types.i"\
-	".\config-win32-borland.h"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config-WinCE.h"\
-	".\config.h"\
-	".\inc_user_config.h"\
-	".\iosfwd.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc_Base.h"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\streams.h"\
-	".\sys_conf.h"\
-	".\Trace.h"\
-	".\ws2tcpip.h"\
-	
-
-!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
-
-DEP_CPP_ARRAY=\
-	".\ACE.h"\
-	".\ACE.i"\
-	".\Array.h"\
-	".\Array.i"\
-	".\Auto_Ptr.cpp"\
-	".\Auto_Ptr.h"\
-	".\Auto_Ptr.i"\
-	".\Basic_Types.h"\
-	".\Basic_Types.i"\
-	".\config-win32-borland.h"\
-	".\config-win32-common.h"\
-	".\config-win32.h"\
-	".\config-WinCE.h"\
-	".\config.h"\
-	".\inc_user_config.h"\
-	".\iosfwd.h"\
-	".\Log_Msg.h"\
-	".\Log_Priority.h"\
-	".\Log_Record.h"\
-	".\Log_Record.i"\
-	".\Malloc_Base.h"\
-	".\Managed_Object.cpp"\
-	".\Managed_Object.h"\
-	".\Managed_Object.i"\
-	".\Object_Manager.h"\
-	".\Object_Manager.i"\
-	".\OS.h"\
-	".\OS.i"\
-	".\SString.h"\
-	".\SString.i"\
-	".\streams.h"\
-	".\sys_conf.h"\
-	".\Trace.h"\
-	".\ws2tcpip.h"\
 	
 
 !ENDIF 
@@ -2420,7 +2216,6 @@ DEP_CPP_ASYNC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -2440,6 +2235,9 @@ DEP_CPP_ASYNC=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ASYNC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -2472,11 +2270,14 @@ DEP_CPP_ASYNC=\
 	".\Free_List.i"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
+	".\Hash_Map_Manager.cpp"\
+	".\Hash_Map_Manager.h"\
 	".\High_Res_Timer.h"\
 	".\High_Res_Timer.i"\
 	".\inc_user_config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
+	".\IO_Cntl_Msg.h"\
 	".\iosfwd.h"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
@@ -2497,6 +2298,14 @@ DEP_CPP_ASYNC=\
 	".\Memory_Pool.i"\
 	".\Message_Block.h"\
 	".\Message_Block.i"\
+	".\Message_Queue.h"\
+	".\Message_Queue.i"\
+	".\Message_Queue_T.cpp"\
+	".\Message_Queue_T.h"\
+	".\Message_Queue_T.i"\
+	".\Module.cpp"\
+	".\Module.h"\
+	".\Module.i"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\OS.h"\
@@ -2510,12 +2319,24 @@ DEP_CPP_ASYNC=\
 	".\Service_Config.i"\
 	".\Service_Object.h"\
 	".\Service_Object.i"\
+	".\Service_Repository.h"\
+	".\Service_Repository.i"\
+	".\Service_Types.h"\
+	".\Service_Types.i"\
 	".\Shared_Object.h"\
 	".\Shared_Object.i"\
 	".\Signal.h"\
 	".\Signal.i"\
 	".\SString.h"\
 	".\SString.i"\
+	".\Strategies.h"\
+	".\Strategies.i"\
+	".\Strategies_T.cpp"\
+	".\Strategies_T.h"\
+	".\Strategies_T.i"\
+	".\Stream_Modules.cpp"\
+	".\Stream_Modules.h"\
+	".\Stream_Modules.i"\
 	".\streams.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
@@ -2524,10 +2345,16 @@ DEP_CPP_ASYNC=\
 	".\Svc_Conf_Tokens.h"\
 	".\Synch.h"\
 	".\Synch.i"\
+	".\Synch_Options.h"\
+	".\Synch_Options.i"\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
+	".\Task.h"\
+	".\Task.i"\
+	".\Task_T.cpp"\
+	".\Task_T.h"\
+	".\Task_T.i"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -2546,6 +2373,8 @@ DEP_CPP_ASYNC=\
 	".\Timer_Wheel_T.cpp"\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
+	".\WFMO_Reactor.h"\
+	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
 	
 
@@ -2634,7 +2463,6 @@ DEP_CPP_ASYNC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -2654,6 +2482,9 @@ DEP_CPP_ASYNC=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ASYNC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -2741,7 +2572,6 @@ DEP_CPP_ASYNC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -2761,6 +2591,9 @@ DEP_CPP_ASYNC=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ASYNC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -2848,7 +2681,6 @@ DEP_CPP_ASYNC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -2868,6 +2700,9 @@ DEP_CPP_ASYNC=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ASYNC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -2955,7 +2790,6 @@ DEP_CPP_ASYNC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -2975,6 +2809,9 @@ DEP_CPP_ASYNC=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_ASYNC=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -3016,9 +2853,11 @@ DEP_CPP_BASIC=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_BASIC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -3026,6 +2865,9 @@ DEP_CPP_BASIC=\
 DEP_CPP_BASIC=\
 	".\ACE.h"\
 	".\ACE.i"\
+	".\Addr.h"\
+	".\Addr.i"\
+	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
 	".\Auto_Ptr.i"\
@@ -3036,25 +2878,172 @@ DEP_CPP_BASIC=\
 	".\config-win32.h"\
 	".\config-WinCE.h"\
 	".\config.h"\
+	".\Containers.cpp"\
+	".\Containers.h"\
+	".\Containers.i"\
+	".\Dynamic.h"\
+	".\Dynamic.i"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\Filecache.h"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
+	".\Hash_Map_Manager.cpp"\
+	".\Hash_Map_Manager.h"\
+	".\High_Res_Timer.h"\
+	".\High_Res_Timer.i"\
 	".\inc_user_config.h"\
+	".\INET_Addr.h"\
+	".\INET_Addr.i"\
+	".\IO_Cntl_Msg.h"\
 	".\iosfwd.h"\
+	".\IPC_SAP.h"\
+	".\IPC_SAP.i"\
+	".\Local_Name_Space.h"\
+	".\Local_Name_Space_T.cpp"\
+	".\Local_Name_Space_T.h"\
+	".\Local_Tokens.h"\
+	".\Local_Tokens.i"\
 	".\Log_Msg.h"\
 	".\Log_Priority.h"\
 	".\Log_Record.h"\
 	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
 	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
 	".\Managed_Object.cpp"\
 	".\Managed_Object.h"\
 	".\Managed_Object.i"\
+	".\Map_Manager.cpp"\
+	".\Map_Manager.h"\
+	".\Map_Manager.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Message_Block.h"\
+	".\Message_Block.i"\
+	".\Message_Queue.h"\
+	".\Message_Queue.i"\
+	".\Message_Queue_T.cpp"\
+	".\Message_Queue_T.h"\
+	".\Message_Queue_T.i"\
+	".\Module.cpp"\
+	".\Module.h"\
+	".\Module.i"\
+	".\Name_Proxy.h"\
+	".\Name_Request_Reply.h"\
+	".\Name_Space.h"\
+	".\Naming_Context.h"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
+	".\Obstack.h"\
+	".\Obstack.i"\
 	".\OS.h"\
 	".\OS.i"\
+	".\Pipe.h"\
+	".\Pipe.i"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
+	".\Remote_Tokens.h"\
+	".\Remote_Tokens.i"\
+	".\Select_Reactor.h"\
+	".\Select_Reactor.i"\
+	".\Select_Reactor_Base.h"\
+	".\Select_Reactor_Base.i"\
+	".\Select_Reactor_T.cpp"\
+	".\Select_Reactor_T.h"\
+	".\Select_Reactor_T.i"\
+	".\Service_Config.h"\
+	".\Service_Config.i"\
+	".\Service_Object.h"\
+	".\Service_Object.i"\
+	".\Service_Repository.h"\
+	".\Service_Repository.i"\
+	".\Service_Types.h"\
+	".\Service_Types.i"\
+	".\Shared_Object.h"\
+	".\Shared_Object.i"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\Singleton.cpp"\
+	".\Singleton.h"\
+	".\Singleton.i"\
+	".\SOCK.h"\
+	".\SOCK.i"\
+	".\SOCK_Connector.h"\
+	".\SOCK_Connector.i"\
+	".\SOCK_IO.h"\
+	".\SOCK_IO.i"\
+	".\SOCK_Stream.h"\
+	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
+	".\Strategies.h"\
+	".\Strategies.i"\
+	".\Strategies_T.cpp"\
+	".\Strategies_T.h"\
+	".\Strategies_T.i"\
+	".\Stream.cpp"\
+	".\Stream.h"\
+	".\Stream.i"\
+	".\Stream_Modules.cpp"\
+	".\Stream_Modules.h"\
+	".\Stream_Modules.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\Svc_Conf_Tokens.h"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_Options.h"\
+	".\Synch_Options.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Task.h"\
+	".\Task.i"\
+	".\Task_T.cpp"\
+	".\Task_T.h"\
+	".\Task_T.i"\
+	".\Template_Instantiations.cpp"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Thread_Manager.h"\
+	".\Thread_Manager.i"\
+	".\Time_Value.h"\
+	".\Timer_Hash.h"\
+	".\Timer_Hash_T.cpp"\
+	".\Timer_Hash_T.h"\
+	".\Timer_Heap.h"\
+	".\Timer_Heap_T.cpp"\
+	".\Timer_Heap_T.h"\
+	".\Timer_List_T.cpp"\
+	".\Timer_List_T.h"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
+	".\Timer_Wheel_T.cpp"\
+	".\Timer_Wheel_T.h"\
+	".\Token.h"\
+	".\Token.i"\
+	".\Token_Invariants.h"\
+	".\Token_Invariants.i"\
+	".\Token_Request_Reply.h"\
+	".\Token_Request_Reply.i"\
 	".\Trace.h"\
+	".\WFMO_Reactor.h"\
+	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
 	
 
@@ -3090,9 +3079,11 @@ DEP_CPP_BASIC=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_BASIC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -3127,9 +3118,11 @@ DEP_CPP_BASIC=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_BASIC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -3164,9 +3157,11 @@ DEP_CPP_BASIC=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_BASIC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -3201,9 +3196,11 @@ DEP_CPP_BASIC=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_BASIC=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -3260,11 +3257,13 @@ DEP_CPP_DUMP_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DUMP_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -3314,7 +3313,6 @@ DEP_CPP_DUMP_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -3368,11 +3366,13 @@ DEP_CPP_DUMP_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DUMP_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -3422,11 +3422,13 @@ DEP_CPP_DUMP_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DUMP_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -3476,11 +3478,13 @@ DEP_CPP_DUMP_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DUMP_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -3530,11 +3534,13 @@ DEP_CPP_DUMP_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DUMP_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -3578,9 +3584,11 @@ DEP_CPP_DYNAM=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DYNAM=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -3632,7 +3640,6 @@ DEP_CPP_DYNAM=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -3673,9 +3680,11 @@ DEP_CPP_DYNAM=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DYNAM=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -3712,9 +3721,11 @@ DEP_CPP_DYNAM=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DYNAM=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -3751,9 +3762,11 @@ DEP_CPP_DYNAM=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DYNAM=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -3790,9 +3803,11 @@ DEP_CPP_DYNAM=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_DYNAM=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -3865,11 +3880,13 @@ DEP_CPP_EVENT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_EVENT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -3940,7 +3957,6 @@ DEP_CPP_EVENT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -4016,11 +4032,13 @@ DEP_CPP_EVENT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_EVENT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -4086,11 +4104,13 @@ DEP_CPP_EVENT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_EVENT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -4156,11 +4176,13 @@ DEP_CPP_EVENT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_EVENT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -4226,11 +4248,13 @@ DEP_CPP_EVENT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_EVENT=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -4274,9 +4298,11 @@ DEP_CPP_GET_O=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_GET_O=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -4313,7 +4339,6 @@ DEP_CPP_GET_O=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -4352,9 +4377,11 @@ DEP_CPP_GET_O=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_GET_O=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -4391,9 +4418,11 @@ DEP_CPP_GET_O=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_GET_O=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -4430,9 +4459,11 @@ DEP_CPP_GET_O=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_GET_O=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -4469,9 +4500,11 @@ DEP_CPP_GET_O=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_GET_O=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -4515,9 +4548,11 @@ DEP_CPP_HANDL=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HANDL=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -4554,7 +4589,6 @@ DEP_CPP_HANDL=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -4593,9 +4627,11 @@ DEP_CPP_HANDL=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HANDL=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -4632,9 +4668,11 @@ DEP_CPP_HANDL=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HANDL=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -4671,9 +4709,11 @@ DEP_CPP_HANDL=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HANDL=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -4710,9 +4750,11 @@ DEP_CPP_HANDL=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HANDL=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -4770,11 +4812,13 @@ DEP_CPP_HIGH_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HIGH_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -4825,7 +4869,6 @@ DEP_CPP_HIGH_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -4880,11 +4923,13 @@ DEP_CPP_HIGH_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HIGH_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -4935,11 +4980,13 @@ DEP_CPP_HIGH_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HIGH_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -4990,11 +5037,13 @@ DEP_CPP_HIGH_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HIGH_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -5045,11 +5094,13 @@ DEP_CPP_HIGH_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_HIGH_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -5095,9 +5146,11 @@ DEP_CPP_INET_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_INET_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -5136,7 +5189,6 @@ DEP_CPP_INET_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -5177,9 +5229,11 @@ DEP_CPP_INET_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_INET_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -5218,9 +5272,11 @@ DEP_CPP_INET_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_INET_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -5259,9 +5315,11 @@ DEP_CPP_INET_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_INET_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -5300,9 +5358,11 @@ DEP_CPP_INET_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_INET_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -5365,9 +5425,11 @@ DEP_CPP_IO_SA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IO_SA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -5404,7 +5466,6 @@ DEP_CPP_IO_SA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -5443,9 +5504,11 @@ DEP_CPP_IO_SA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IO_SA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -5482,9 +5545,11 @@ DEP_CPP_IO_SA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IO_SA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -5521,9 +5586,11 @@ DEP_CPP_IO_SA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IO_SA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -5560,9 +5627,11 @@ DEP_CPP_IO_SA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IO_SA=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -5606,9 +5675,11 @@ DEP_CPP_IPC_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IPC_S=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -5645,7 +5716,6 @@ DEP_CPP_IPC_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -5684,9 +5754,11 @@ DEP_CPP_IPC_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IPC_S=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -5723,9 +5795,11 @@ DEP_CPP_IPC_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IPC_S=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -5762,9 +5836,11 @@ DEP_CPP_IPC_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IPC_S=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -5801,9 +5877,11 @@ DEP_CPP_IPC_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_IPC_S=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -5893,7 +5971,6 @@ DEP_CPP_LOCAL=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -5904,6 +5981,9 @@ DEP_CPP_LOCAL=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOCAL=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -5986,7 +6066,6 @@ DEP_CPP_LOCAL=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -6079,7 +6158,6 @@ DEP_CPP_LOCAL=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -6090,6 +6168,9 @@ DEP_CPP_LOCAL=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOCAL=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -6172,7 +6253,6 @@ DEP_CPP_LOCAL=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -6183,6 +6263,9 @@ DEP_CPP_LOCAL=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOCAL=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -6265,7 +6348,6 @@ DEP_CPP_LOCAL=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -6276,6 +6358,9 @@ DEP_CPP_LOCAL=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOCAL=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -6358,7 +6443,6 @@ DEP_CPP_LOCAL=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -6369,6 +6453,9 @@ DEP_CPP_LOCAL=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOCAL=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -6461,7 +6548,6 @@ DEP_CPP_LOG_M=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -6469,6 +6555,9 @@ DEP_CPP_LOG_M=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -6554,7 +6643,6 @@ DEP_CPP_LOG_M=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -6647,7 +6735,6 @@ DEP_CPP_LOG_M=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -6655,6 +6742,9 @@ DEP_CPP_LOG_M=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -6740,7 +6830,6 @@ DEP_CPP_LOG_M=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -6748,6 +6837,9 @@ DEP_CPP_LOG_M=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -6833,7 +6925,6 @@ DEP_CPP_LOG_M=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -6841,6 +6932,9 @@ DEP_CPP_LOG_M=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -6926,7 +7020,6 @@ DEP_CPP_LOG_M=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -6934,6 +7027,9 @@ DEP_CPP_LOG_M=\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_M=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -6975,9 +7071,11 @@ DEP_CPP_LOG_R=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_R=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -7012,7 +7110,6 @@ DEP_CPP_LOG_R=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -7049,9 +7146,11 @@ DEP_CPP_LOG_R=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_R=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -7086,9 +7185,11 @@ DEP_CPP_LOG_R=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_R=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -7123,9 +7224,11 @@ DEP_CPP_LOG_R=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_R=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -7160,9 +7263,11 @@ DEP_CPP_LOG_R=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_LOG_R=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -7233,11 +7338,13 @@ DEP_CPP_MALLO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MALLO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -7301,7 +7408,6 @@ DEP_CPP_MALLO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -7369,11 +7475,13 @@ DEP_CPP_MALLO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MALLO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -7437,11 +7545,13 @@ DEP_CPP_MALLO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MALLO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -7505,11 +7615,13 @@ DEP_CPP_MALLO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MALLO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -7573,11 +7685,13 @@ DEP_CPP_MALLO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MALLO=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -7621,9 +7735,11 @@ DEP_CPP_MEM_M=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEM_M=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -7660,7 +7776,6 @@ DEP_CPP_MEM_M=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -7699,9 +7814,11 @@ DEP_CPP_MEM_M=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEM_M=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -7738,9 +7855,11 @@ DEP_CPP_MEM_M=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEM_M=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -7777,9 +7896,11 @@ DEP_CPP_MEM_M=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEM_M=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -7816,9 +7937,11 @@ DEP_CPP_MEM_M=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEM_M=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -7889,11 +8012,13 @@ DEP_CPP_MEMOR=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEMOR=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -7957,7 +8082,6 @@ DEP_CPP_MEMOR=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -8025,11 +8149,13 @@ DEP_CPP_MEMOR=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEMOR=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -8093,11 +8219,13 @@ DEP_CPP_MEMOR=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEMOR=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -8161,11 +8289,13 @@ DEP_CPP_MEMOR=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEMOR=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -8229,11 +8359,13 @@ DEP_CPP_MEMOR=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MEMOR=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -8306,11 +8438,13 @@ DEP_CPP_MESSA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MESSA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -8381,7 +8515,6 @@ DEP_CPP_MESSA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timeprobe.h"\
@@ -8455,11 +8588,13 @@ DEP_CPP_MESSA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MESSA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -8525,11 +8660,13 @@ DEP_CPP_MESSA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MESSA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -8595,11 +8732,13 @@ DEP_CPP_MESSA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MESSA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -8665,11 +8804,13 @@ DEP_CPP_MESSA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_MESSA=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -8712,9 +8853,11 @@ DEP_CPP_METHO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_METHO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -8750,7 +8893,6 @@ DEP_CPP_METHO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -8788,9 +8930,11 @@ DEP_CPP_METHO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_METHO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -8826,9 +8970,11 @@ DEP_CPP_METHO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_METHO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -8864,9 +9010,11 @@ DEP_CPP_METHO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_METHO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -8902,9 +9050,11 @@ DEP_CPP_METHO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_METHO=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -8921,9 +9071,7 @@ DEP_CPP_OBJEC=\
 	".\ACE.i"\
 	".\Addr.h"\
 	".\Addr.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -9019,7 +9167,6 @@ DEP_CPP_OBJEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -9032,6 +9179,11 @@ DEP_CPP_OBJEC=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
+NODEP_CPP_OBJEC=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
 
@@ -9040,9 +9192,6 @@ DEP_CPP_OBJEC=\
 	".\ACE.i"\
 	".\Addr.h"\
 	".\Addr.i"\
-	".\Array.cpp"\
-	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -9138,7 +9287,6 @@ DEP_CPP_OBJEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -9159,9 +9307,7 @@ DEP_CPP_OBJEC=\
 	".\ACE.i"\
 	".\Addr.h"\
 	".\Addr.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -9257,7 +9403,6 @@ DEP_CPP_OBJEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -9269,6 +9414,11 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -9278,9 +9428,7 @@ DEP_CPP_OBJEC=\
 	".\ACE.i"\
 	".\Addr.h"\
 	".\Addr.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -9376,7 +9524,6 @@ DEP_CPP_OBJEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -9388,6 +9535,11 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -9397,9 +9549,7 @@ DEP_CPP_OBJEC=\
 	".\ACE.i"\
 	".\Addr.h"\
 	".\Addr.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -9495,7 +9645,6 @@ DEP_CPP_OBJEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -9508,6 +9657,11 @@ DEP_CPP_OBJEC=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
+NODEP_CPP_OBJEC=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
 
@@ -9516,9 +9670,7 @@ DEP_CPP_OBJEC=\
 	".\ACE.i"\
 	".\Addr.h"\
 	".\Addr.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -9614,7 +9766,6 @@ DEP_CPP_OBJEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -9626,6 +9777,11 @@ DEP_CPP_OBJEC=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBJEC=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -9698,11 +9854,13 @@ DEP_CPP_OBSTA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -9768,7 +9926,6 @@ DEP_CPP_OBSTA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -9838,11 +9995,13 @@ DEP_CPP_OBSTA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -9908,11 +10067,13 @@ DEP_CPP_OBSTA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -9978,11 +10139,13 @@ DEP_CPP_OBSTA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -10048,11 +10211,13 @@ DEP_CPP_OBSTA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OBSTA=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -10069,9 +10234,7 @@ DEP_CPP_OS_CP=\
 	".\ACE.i"\
 	".\ARGV.h"\
 	".\ARGV.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -10169,7 +10332,6 @@ DEP_CPP_OS_CP=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -10188,6 +10350,11 @@ DEP_CPP_OS_CP=\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
 	
+NODEP_CPP_OS_CP=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
 
@@ -10196,9 +10363,6 @@ DEP_CPP_OS_CP=\
 	".\ACE.i"\
 	".\ARGV.h"\
 	".\ARGV.i"\
-	".\Array.cpp"\
-	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -10296,7 +10460,6 @@ DEP_CPP_OS_CP=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -10323,9 +10486,7 @@ DEP_CPP_OS_CP=\
 	".\ACE.i"\
 	".\ARGV.h"\
 	".\ARGV.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -10423,7 +10584,6 @@ DEP_CPP_OS_CP=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -10441,6 +10601,11 @@ DEP_CPP_OS_CP=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OS_CP=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -10450,9 +10615,7 @@ DEP_CPP_OS_CP=\
 	".\ACE.i"\
 	".\ARGV.h"\
 	".\ARGV.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -10550,7 +10713,6 @@ DEP_CPP_OS_CP=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -10568,6 +10730,11 @@ DEP_CPP_OS_CP=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OS_CP=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -10577,9 +10744,7 @@ DEP_CPP_OS_CP=\
 	".\ACE.i"\
 	".\ARGV.h"\
 	".\ARGV.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -10677,7 +10842,6 @@ DEP_CPP_OS_CP=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -10696,6 +10860,11 @@ DEP_CPP_OS_CP=\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
 	
+NODEP_CPP_OS_CP=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
 
@@ -10704,9 +10873,7 @@ DEP_CPP_OS_CP=\
 	".\ACE.i"\
 	".\ARGV.h"\
 	".\ARGV.i"\
-	".\Array.cpp"\
 	".\Array.h"\
-	".\Array.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -10804,7 +10971,6 @@ DEP_CPP_OS_CP=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -10822,6 +10988,11 @@ DEP_CPP_OS_CP=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_OS_CP=\
+	".\Array.cpp"\
+	".\Array.i"\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -10933,7 +11104,6 @@ DEP_CPP_PARSE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -10951,6 +11121,9 @@ DEP_CPP_PARSE=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PARSE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -11055,7 +11228,6 @@ DEP_CPP_PARSE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -11177,7 +11349,6 @@ DEP_CPP_PARSE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -11195,6 +11366,9 @@ DEP_CPP_PARSE=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PARSE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -11299,7 +11473,6 @@ DEP_CPP_PARSE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -11317,6 +11490,9 @@ DEP_CPP_PARSE=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PARSE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -11421,7 +11597,6 @@ DEP_CPP_PARSE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -11439,6 +11614,9 @@ DEP_CPP_PARSE=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PARSE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -11543,7 +11721,6 @@ DEP_CPP_PARSE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -11561,6 +11738,9 @@ DEP_CPP_PARSE=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PARSE=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -11620,10 +11800,12 @@ DEP_CPP_PIPE_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -11676,7 +11858,6 @@ DEP_CPP_PIPE_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
@@ -11732,10 +11913,12 @@ DEP_CPP_PIPE_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -11788,10 +11971,12 @@ DEP_CPP_PIPE_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -11844,10 +12029,12 @@ DEP_CPP_PIPE_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -11900,10 +12087,12 @@ DEP_CPP_PIPE_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PIPE_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -11978,11 +12167,13 @@ DEP_CPP_PROCE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -12050,7 +12241,6 @@ DEP_CPP_PROCE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -12122,11 +12312,13 @@ DEP_CPP_PROCE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -12194,11 +12386,13 @@ DEP_CPP_PROCE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -12266,11 +12460,13 @@ DEP_CPP_PROCE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -12338,11 +12534,13 @@ DEP_CPP_PROCE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCE=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -12400,11 +12598,13 @@ DEP_CPP_PROCES=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCES=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -12455,7 +12655,6 @@ DEP_CPP_PROCES=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -12510,11 +12709,13 @@ DEP_CPP_PROCES=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCES=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -12565,11 +12766,13 @@ DEP_CPP_PROCES=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCES=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -12620,11 +12823,13 @@ DEP_CPP_PROCES=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCES=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -12675,11 +12880,13 @@ DEP_CPP_PROCES=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROCES=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -12725,10 +12932,12 @@ DEP_CPP_PROFI=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROFI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -12767,7 +12976,6 @@ DEP_CPP_PROFI=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
@@ -12809,10 +13017,12 @@ DEP_CPP_PROFI=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROFI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -12851,10 +13061,12 @@ DEP_CPP_PROFI=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROFI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -12893,10 +13105,12 @@ DEP_CPP_PROFI=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROFI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -12935,10 +13149,12 @@ DEP_CPP_PROFI=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_PROFI=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -13053,7 +13269,6 @@ DEP_CPP_REACT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -13070,6 +13285,9 @@ DEP_CPP_REACT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REACT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -13145,6 +13363,11 @@ DEP_CPP_REACT=\
 	".\Reactor_Impl.h"\
 	".\Select_Reactor.h"\
 	".\Select_Reactor.i"\
+	".\Select_Reactor_Base.h"\
+	".\Select_Reactor_Base.i"\
+	".\Select_Reactor_T.cpp"\
+	".\Select_Reactor_T.h"\
+	".\Select_Reactor_T.i"\
 	".\Service_Config.h"\
 	".\Service_Config.i"\
 	".\Service_Object.h"\
@@ -13177,11 +13400,13 @@ DEP_CPP_REACT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
+	".\Timer_Heap.h"\
+	".\Timer_Heap_T.cpp"\
+	".\Timer_Heap_T.h"\
 	".\Timer_Queue.h"\
 	".\Timer_Queue_T.cpp"\
 	".\Timer_Queue_T.h"\
@@ -13301,7 +13526,6 @@ DEP_CPP_REACT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -13318,6 +13542,9 @@ DEP_CPP_REACT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REACT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -13425,7 +13652,6 @@ DEP_CPP_REACT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -13442,6 +13668,9 @@ DEP_CPP_REACT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REACT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -13549,7 +13778,6 @@ DEP_CPP_REACT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -13566,6 +13794,9 @@ DEP_CPP_REACT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REACT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -13673,7 +13904,6 @@ DEP_CPP_REACT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -13690,6 +13920,9 @@ DEP_CPP_REACT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_REACT=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -13733,9 +13966,11 @@ DEP_CPP_SCHED=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SCHED=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -13772,7 +14007,6 @@ DEP_CPP_SCHED=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -13811,9 +14045,11 @@ DEP_CPP_SCHED=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SCHED=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -13850,9 +14086,11 @@ DEP_CPP_SCHED=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SCHED=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -13889,9 +14127,11 @@ DEP_CPP_SCHED=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SCHED=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -13928,9 +14168,11 @@ DEP_CPP_SCHED=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SCHED=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -14040,7 +14282,6 @@ DEP_CPP_SELEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -14056,14 +14297,15 @@ DEP_CPP_SELEC=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
+NODEP_CPP_SELEC=\
+	".\sys_conf.h"\
+	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
 
 DEP_CPP_SELEC=\
 	".\ACE.h"\
 	".\ACE.i"\
-	".\Addr.h"\
-	".\Addr.i"\
 	".\Atomic_Op.i"\
 	".\Auto_Ptr.cpp"\
 	".\Auto_Ptr.h"\
@@ -14086,11 +14328,7 @@ DEP_CPP_SELEC=\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
 	".\inc_user_config.h"\
-	".\INET_Addr.h"\
-	".\INET_Addr.i"\
 	".\iosfwd.h"\
-	".\IPC_SAP.h"\
-	".\IPC_SAP.i"\
 	".\Local_Tokens.h"\
 	".\Local_Tokens.i"\
 	".\Log_Msg.h"\
@@ -14124,6 +14362,11 @@ DEP_CPP_SELEC=\
 	".\Reactor_Impl.h"\
 	".\Select_Reactor.h"\
 	".\Select_Reactor.i"\
+	".\Select_Reactor_Base.h"\
+	".\Select_Reactor_Base.i"\
+	".\Select_Reactor_T.cpp"\
+	".\Select_Reactor_T.h"\
+	".\Select_Reactor_T.i"\
 	".\Service_Config.h"\
 	".\Service_Config.i"\
 	".\Service_Object.h"\
@@ -14132,16 +14375,6 @@ DEP_CPP_SELEC=\
 	".\Shared_Object.i"\
 	".\Signal.h"\
 	".\Signal.i"\
-	".\SOCK.h"\
-	".\SOCK.i"\
-	".\SOCK_Acceptor.h"\
-	".\SOCK_Acceptor.i"\
-	".\SOCK_Connector.h"\
-	".\SOCK_Connector.i"\
-	".\SOCK_IO.h"\
-	".\SOCK_IO.i"\
-	".\SOCK_Stream.h"\
-	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
@@ -14157,10 +14390,8 @@ DEP_CPP_SELEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
-	".\Time_Value.h"\
 	".\Timer_Heap.h"\
 	".\Timer_Heap_T.cpp"\
 	".\Timer_Heap_T.h"\
@@ -14274,7 +14505,6 @@ DEP_CPP_SELEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -14289,6 +14519,9 @@ DEP_CPP_SELEC=\
 	".\Token.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SELEC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -14391,7 +14624,6 @@ DEP_CPP_SELEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -14406,6 +14638,9 @@ DEP_CPP_SELEC=\
 	".\Token.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SELEC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -14508,7 +14743,6 @@ DEP_CPP_SELEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -14523,6 +14757,9 @@ DEP_CPP_SELEC=\
 	".\Token.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SELEC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -14625,7 +14862,6 @@ DEP_CPP_SELEC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -14641,6 +14877,128 @@ DEP_CPP_SELEC=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
+NODEP_CPP_SELEC=\
+	".\sys_conf.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Select_Reactor_Base.cpp
+
+!IF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
+
+DEP_CPP_SELECT=\
+	".\ACE.h"\
+	".\ACE.i"\
+	".\Addr.h"\
+	".\Addr.i"\
+	".\Atomic_Op.i"\
+	".\Auto_Ptr.cpp"\
+	".\Auto_Ptr.h"\
+	".\Auto_Ptr.i"\
+	".\Basic_Types.h"\
+	".\Basic_Types.i"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\Containers.cpp"\
+	".\Containers.h"\
+	".\Containers.i"\
+	".\Event_Handler.h"\
+	".\Event_Handler.i"\
+	".\Free_List.cpp"\
+	".\Free_List.h"\
+	".\Free_List.i"\
+	".\Handle_Set.h"\
+	".\Handle_Set.i"\
+	".\inc_user_config.h"\
+	".\INET_Addr.h"\
+	".\INET_Addr.i"\
+	".\iosfwd.h"\
+	".\IPC_SAP.h"\
+	".\IPC_SAP.i"\
+	".\Log_Msg.h"\
+	".\Log_Priority.h"\
+	".\Log_Record.h"\
+	".\Log_Record.i"\
+	".\Malloc.h"\
+	".\Malloc.i"\
+	".\Malloc_Base.h"\
+	".\Malloc_T.cpp"\
+	".\Malloc_T.h"\
+	".\Malloc_T.i"\
+	".\Managed_Object.cpp"\
+	".\Managed_Object.h"\
+	".\Managed_Object.i"\
+	".\Mem_Map.h"\
+	".\Mem_Map.i"\
+	".\Memory_Pool.h"\
+	".\Memory_Pool.i"\
+	".\Object_Manager.h"\
+	".\Object_Manager.i"\
+	".\OS.h"\
+	".\OS.i"\
+	".\Pipe.h"\
+	".\Pipe.i"\
+	".\Reactor.h"\
+	".\Reactor.i"\
+	".\Reactor_Impl.h"\
+	".\Select_Reactor_Base.h"\
+	".\Select_Reactor_Base.i"\
+	".\Signal.h"\
+	".\Signal.i"\
+	".\SOCK.h"\
+	".\SOCK.i"\
+	".\SOCK_Acceptor.h"\
+	".\SOCK_Acceptor.i"\
+	".\SOCK_Connector.h"\
+	".\SOCK_Connector.i"\
+	".\SOCK_IO.h"\
+	".\SOCK_IO.i"\
+	".\SOCK_Stream.h"\
+	".\SOCK_Stream.i"\
+	".\SString.h"\
+	".\SString.i"\
+	".\streams.h"\
+	".\SV_Semaphore_Complex.h"\
+	".\SV_Semaphore_Complex.i"\
+	".\SV_Semaphore_Simple.h"\
+	".\SV_Semaphore_Simple.i"\
+	".\Synch.h"\
+	".\Synch.i"\
+	".\Synch_T.cpp"\
+	".\Synch_T.h"\
+	".\Synch_T.i"\
+	".\Thread.h"\
+	".\Thread.i"\
+	".\Time_Value.h"\
+	".\Timer_Heap.h"\
+	".\Timer_Heap_T.cpp"\
+	".\Timer_Heap_T.h"\
+	".\Timer_Queue.h"\
+	".\Timer_Queue_T.cpp"\
+	".\Timer_Queue_T.h"\
+	".\Timer_Queue_T.i"\
+	".\Token.h"\
+	".\Token.i"\
+	".\Trace.h"\
+	".\ws2tcpip.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
+
+!ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
 
 !ENDIF 
 
@@ -14757,7 +15115,6 @@ DEP_CPP_SERVI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -14778,6 +15135,9 @@ DEP_CPP_SERVI=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -14814,11 +15174,14 @@ DEP_CPP_SERVI=\
 	".\Get_Opt.i"\
 	".\Handle_Set.h"\
 	".\Handle_Set.i"\
+	".\Hash_Map_Manager.cpp"\
+	".\Hash_Map_Manager.h"\
 	".\High_Res_Timer.h"\
 	".\High_Res_Timer.i"\
 	".\inc_user_config.h"\
 	".\INET_Addr.h"\
 	".\INET_Addr.i"\
+	".\IO_Cntl_Msg.h"\
 	".\iosfwd.h"\
 	".\IPC_SAP.h"\
 	".\IPC_SAP.i"\
@@ -14839,6 +15202,16 @@ DEP_CPP_SERVI=\
 	".\Mem_Map.i"\
 	".\Memory_Pool.h"\
 	".\Memory_Pool.i"\
+	".\Message_Block.h"\
+	".\Message_Block.i"\
+	".\Message_Queue.h"\
+	".\Message_Queue.i"\
+	".\Message_Queue_T.cpp"\
+	".\Message_Queue_T.h"\
+	".\Message_Queue_T.i"\
+	".\Module.cpp"\
+	".\Module.h"\
+	".\Module.i"\
 	".\Object_Manager.h"\
 	".\Object_Manager.i"\
 	".\Obstack.h"\
@@ -14876,6 +15249,14 @@ DEP_CPP_SERVI=\
 	".\SOCK_Stream.i"\
 	".\SString.h"\
 	".\SString.i"\
+	".\Strategies.h"\
+	".\Strategies.i"\
+	".\Strategies_T.cpp"\
+	".\Strategies_T.h"\
+	".\Strategies_T.i"\
+	".\Stream_Modules.cpp"\
+	".\Stream_Modules.h"\
+	".\Stream_Modules.i"\
 	".\streams.h"\
 	".\SV_Semaphore_Complex.h"\
 	".\SV_Semaphore_Complex.i"\
@@ -14885,10 +15266,16 @@ DEP_CPP_SERVI=\
 	".\Svc_Conf_Tokens.h"\
 	".\Synch.h"\
 	".\Synch.i"\
+	".\Synch_Options.h"\
+	".\Synch_Options.i"\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
+	".\Task.h"\
+	".\Task.i"\
+	".\Task_T.cpp"\
+	".\Task_T.h"\
+	".\Task_T.i"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -14908,6 +15295,8 @@ DEP_CPP_SERVI=\
 	".\Timer_Wheel_T.cpp"\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
+	".\WFMO_Reactor.h"\
+	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
 	
 
@@ -15019,7 +15408,6 @@ DEP_CPP_SERVI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -15040,6 +15428,9 @@ DEP_CPP_SERVI=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -15150,7 +15541,6 @@ DEP_CPP_SERVI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -15171,6 +15561,9 @@ DEP_CPP_SERVI=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -15281,7 +15674,6 @@ DEP_CPP_SERVI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -15302,6 +15694,9 @@ DEP_CPP_SERVI=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -15412,7 +15807,6 @@ DEP_CPP_SERVI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -15433,6 +15827,9 @@ DEP_CPP_SERVI=\
 	".\Timer_Wheel_T.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVI=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -15554,7 +15951,6 @@ DEP_CPP_SERVIC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -15568,6 +15964,9 @@ DEP_CPP_SERVIC=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVIC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -15682,7 +16081,6 @@ DEP_CPP_SERVIC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -15810,7 +16208,6 @@ DEP_CPP_SERVIC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -15824,6 +16221,9 @@ DEP_CPP_SERVIC=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVIC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -15938,7 +16338,6 @@ DEP_CPP_SERVIC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -15952,6 +16351,9 @@ DEP_CPP_SERVIC=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVIC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -16066,7 +16468,6 @@ DEP_CPP_SERVIC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -16080,6 +16481,9 @@ DEP_CPP_SERVIC=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVIC=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -16194,7 +16598,6 @@ DEP_CPP_SERVIC=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -16208,6 +16611,9 @@ DEP_CPP_SERVIC=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVIC=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -16267,11 +16673,13 @@ DEP_CPP_SERVICE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -16324,7 +16732,6 @@ DEP_CPP_SERVICE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -16381,11 +16788,13 @@ DEP_CPP_SERVICE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -16438,11 +16847,13 @@ DEP_CPP_SERVICE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -16495,11 +16906,13 @@ DEP_CPP_SERVICE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -16552,11 +16965,13 @@ DEP_CPP_SERVICE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -16618,11 +17033,13 @@ DEP_CPP_SERVICE_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -16677,7 +17094,6 @@ DEP_CPP_SERVICE_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -16736,11 +17152,13 @@ DEP_CPP_SERVICE_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -16795,11 +17213,13 @@ DEP_CPP_SERVICE_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -16854,11 +17274,13 @@ DEP_CPP_SERVICE_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -16913,11 +17335,13 @@ DEP_CPP_SERVICE_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -17030,7 +17454,6 @@ DEP_CPP_SERVICE_T=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -17049,6 +17472,9 @@ DEP_CPP_SERVICE_T=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_T=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -17154,7 +17580,6 @@ DEP_CPP_SERVICE_T=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -17278,7 +17703,6 @@ DEP_CPP_SERVICE_T=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -17297,6 +17721,9 @@ DEP_CPP_SERVICE_T=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_T=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -17402,7 +17829,6 @@ DEP_CPP_SERVICE_T=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -17421,6 +17847,9 @@ DEP_CPP_SERVICE_T=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_T=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -17526,7 +17955,6 @@ DEP_CPP_SERVICE_T=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -17545,6 +17973,9 @@ DEP_CPP_SERVICE_T=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_T=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -17650,7 +18081,6 @@ DEP_CPP_SERVICE_T=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -17669,6 +18099,9 @@ DEP_CPP_SERVICE_T=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SERVICE_T=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -17712,9 +18145,11 @@ DEP_CPP_SHARE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SHARE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -17751,7 +18186,6 @@ DEP_CPP_SHARE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -17790,9 +18224,11 @@ DEP_CPP_SHARE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SHARE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -17829,9 +18265,11 @@ DEP_CPP_SHARE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SHARE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -17868,9 +18306,11 @@ DEP_CPP_SHARE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SHARE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -17907,9 +18347,11 @@ DEP_CPP_SHARE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SHARE=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -17980,11 +18422,13 @@ DEP_CPP_SIGNA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SIGNA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -18048,7 +18492,6 @@ DEP_CPP_SIGNA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -18116,11 +18559,13 @@ DEP_CPP_SIGNA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SIGNA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -18184,11 +18629,13 @@ DEP_CPP_SIGNA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SIGNA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -18252,11 +18699,13 @@ DEP_CPP_SIGNA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SIGNA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -18320,11 +18769,13 @@ DEP_CPP_SIGNA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SIGNA=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -18372,9 +18823,11 @@ DEP_CPP_SOCK_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -18415,7 +18868,6 @@ DEP_CPP_SOCK_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -18458,9 +18910,11 @@ DEP_CPP_SOCK_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -18501,9 +18955,11 @@ DEP_CPP_SOCK_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -18544,9 +19000,11 @@ DEP_CPP_SOCK_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -18587,9 +19045,11 @@ DEP_CPP_SOCK_=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -18657,12 +19117,14 @@ DEP_CPP_SOCK_A=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -18723,7 +19185,6 @@ DEP_CPP_SOCK_A=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -18789,12 +19250,14 @@ DEP_CPP_SOCK_A=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -18855,12 +19318,14 @@ DEP_CPP_SOCK_A=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -18921,12 +19386,14 @@ DEP_CPP_SOCK_A=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -18987,12 +19454,14 @@ DEP_CPP_SOCK_A=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_A=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -19044,9 +19513,11 @@ DEP_CPP_SOCK_C=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -19091,7 +19562,6 @@ DEP_CPP_SOCK_C=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -19138,9 +19608,11 @@ DEP_CPP_SOCK_C=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -19185,9 +19657,11 @@ DEP_CPP_SOCK_C=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -19232,9 +19706,11 @@ DEP_CPP_SOCK_C=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -19279,9 +19755,11 @@ DEP_CPP_SOCK_C=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_C=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -19339,10 +19817,12 @@ DEP_CPP_SOCK_CO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_CO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -19393,7 +19873,6 @@ DEP_CPP_SOCK_CO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
@@ -19447,10 +19926,12 @@ DEP_CPP_SOCK_CO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_CO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -19501,10 +19982,12 @@ DEP_CPP_SOCK_CO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_CO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -19555,10 +20038,12 @@ DEP_CPP_SOCK_CO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_CO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -19609,10 +20094,12 @@ DEP_CPP_SOCK_CO=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Time_Value.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_CO=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -19676,11 +20163,13 @@ DEP_CPP_SOCK_D=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -19737,7 +20226,6 @@ DEP_CPP_SOCK_D=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -19798,11 +20286,13 @@ DEP_CPP_SOCK_D=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -19859,11 +20349,13 @@ DEP_CPP_SOCK_D=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -19920,11 +20412,13 @@ DEP_CPP_SOCK_D=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -19981,11 +20475,13 @@ DEP_CPP_SOCK_D=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_D=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -20039,9 +20535,11 @@ DEP_CPP_SOCK_DG=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -20088,7 +20586,6 @@ DEP_CPP_SOCK_DG=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -20137,9 +20634,11 @@ DEP_CPP_SOCK_DG=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -20186,9 +20685,11 @@ DEP_CPP_SOCK_DG=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -20235,9 +20736,11 @@ DEP_CPP_SOCK_DG=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -20284,9 +20787,11 @@ DEP_CPP_SOCK_DG=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DG=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -20340,9 +20845,11 @@ DEP_CPP_SOCK_DGR=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -20389,7 +20896,6 @@ DEP_CPP_SOCK_DGR=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -20438,9 +20944,11 @@ DEP_CPP_SOCK_DGR=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -20487,9 +20995,11 @@ DEP_CPP_SOCK_DGR=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -20536,9 +21046,11 @@ DEP_CPP_SOCK_DGR=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -20585,9 +21097,11 @@ DEP_CPP_SOCK_DGR=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_DGR=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -20637,9 +21151,11 @@ DEP_CPP_SOCK_I=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -20682,7 +21198,6 @@ DEP_CPP_SOCK_I=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -20727,9 +21242,11 @@ DEP_CPP_SOCK_I=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -20772,9 +21289,11 @@ DEP_CPP_SOCK_I=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -20817,9 +21336,11 @@ DEP_CPP_SOCK_I=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -20862,9 +21383,11 @@ DEP_CPP_SOCK_I=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_I=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -20918,9 +21441,11 @@ DEP_CPP_SOCK_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -20967,7 +21492,6 @@ DEP_CPP_SOCK_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -21016,9 +21540,11 @@ DEP_CPP_SOCK_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -21065,9 +21591,11 @@ DEP_CPP_SOCK_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -21114,9 +21642,11 @@ DEP_CPP_SOCK_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -21163,9 +21693,11 @@ DEP_CPP_SOCK_S=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SOCK_S=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -21248,7 +21780,6 @@ DEP_CPP_SSTRI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -21257,6 +21788,9 @@ DEP_CPP_SSTRI=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SSTRI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -21332,7 +21866,6 @@ DEP_CPP_SSTRI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -21416,7 +21949,6 @@ DEP_CPP_SSTRI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -21425,6 +21957,9 @@ DEP_CPP_SSTRI=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SSTRI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -21500,7 +22035,6 @@ DEP_CPP_SSTRI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -21509,6 +22043,9 @@ DEP_CPP_SSTRI=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SSTRI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -21584,7 +22121,6 @@ DEP_CPP_SSTRI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -21593,6 +22129,9 @@ DEP_CPP_SSTRI=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SSTRI=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -21668,7 +22207,6 @@ DEP_CPP_SSTRI=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -21677,6 +22215,9 @@ DEP_CPP_SSTRI=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SSTRI=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -21720,9 +22261,11 @@ DEP_CPP_STATS=\
 	".\Stats.h"\
 	".\Stats.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STATS=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -21759,7 +22302,6 @@ DEP_CPP_STATS=\
 	".\Stats.h"\
 	".\Stats.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -21798,9 +22340,11 @@ DEP_CPP_STATS=\
 	".\Stats.h"\
 	".\Stats.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STATS=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -21837,9 +22381,11 @@ DEP_CPP_STATS=\
 	".\Stats.h"\
 	".\Stats.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STATS=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -21876,9 +22422,11 @@ DEP_CPP_STATS=\
 	".\Stats.h"\
 	".\Stats.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STATS=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -21915,9 +22463,11 @@ DEP_CPP_STATS=\
 	".\Stats.h"\
 	".\Stats.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STATS=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -22021,7 +22571,6 @@ DEP_CPP_STRAT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -22034,6 +22583,9 @@ DEP_CPP_STRAT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STRAT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -22130,7 +22682,6 @@ DEP_CPP_STRAT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -22239,7 +22790,6 @@ DEP_CPP_STRAT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -22252,6 +22802,9 @@ DEP_CPP_STRAT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STRAT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -22348,7 +22901,6 @@ DEP_CPP_STRAT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -22361,6 +22913,9 @@ DEP_CPP_STRAT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STRAT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -22457,7 +23012,6 @@ DEP_CPP_STRAT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -22470,6 +23024,9 @@ DEP_CPP_STRAT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STRAT=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -22566,7 +23123,6 @@ DEP_CPP_STRAT=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -22579,6 +23135,9 @@ DEP_CPP_STRAT=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_STRAT=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -22668,7 +23227,6 @@ DEP_CPP_SVC_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -22677,6 +23235,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -22759,7 +23320,6 @@ DEP_CPP_SVC_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -22850,7 +23410,6 @@ DEP_CPP_SVC_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -22859,6 +23418,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -22941,7 +23503,6 @@ DEP_CPP_SVC_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -22950,6 +23511,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -23032,7 +23596,6 @@ DEP_CPP_SVC_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -23041,6 +23604,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -23123,7 +23689,6 @@ DEP_CPP_SVC_C=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -23132,6 +23697,9 @@ DEP_CPP_SVC_C=\
 	".\Timer_Queue_T.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_C=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -23251,7 +23819,6 @@ DEP_CPP_SVC_CO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -23270,6 +23837,9 @@ DEP_CPP_SVC_CO=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_CO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -23382,7 +23952,6 @@ DEP_CPP_SVC_CO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -23513,7 +24082,6 @@ DEP_CPP_SVC_CO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -23532,6 +24100,9 @@ DEP_CPP_SVC_CO=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_CO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -23644,7 +24215,6 @@ DEP_CPP_SVC_CO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -23663,6 +24233,9 @@ DEP_CPP_SVC_CO=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_CO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -23775,7 +24348,6 @@ DEP_CPP_SVC_CO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -23794,6 +24366,9 @@ DEP_CPP_SVC_CO=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_CO=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -23906,7 +24481,6 @@ DEP_CPP_SVC_CO=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -23925,6 +24499,9 @@ DEP_CPP_SVC_CO=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SVC_CO=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -23978,11 +24555,13 @@ DEP_CPP_SYNCH=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -24029,7 +24608,6 @@ DEP_CPP_SYNCH=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -24080,11 +24658,13 @@ DEP_CPP_SYNCH=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -24131,11 +24711,13 @@ DEP_CPP_SYNCH=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -24182,11 +24764,13 @@ DEP_CPP_SYNCH=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -24233,11 +24817,13 @@ DEP_CPP_SYNCH=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -24281,9 +24867,11 @@ DEP_CPP_SYNCH_=\
 	".\streams.h"\
 	".\Synch_Options.h"\
 	".\Synch_Options.i"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -24320,7 +24908,6 @@ DEP_CPP_SYNCH_=\
 	".\streams.h"\
 	".\Synch_Options.h"\
 	".\Synch_Options.i"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	
@@ -24359,9 +24946,11 @@ DEP_CPP_SYNCH_=\
 	".\streams.h"\
 	".\Synch_Options.h"\
 	".\Synch_Options.i"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -24398,9 +24987,11 @@ DEP_CPP_SYNCH_=\
 	".\streams.h"\
 	".\Synch_Options.h"\
 	".\Synch_Options.i"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -24437,9 +25028,11 @@ DEP_CPP_SYNCH_=\
 	".\streams.h"\
 	".\Synch_Options.h"\
 	".\Synch_Options.i"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -24476,9 +25069,11 @@ DEP_CPP_SYNCH_=\
 	".\streams.h"\
 	".\Synch_Options.h"\
 	".\Synch_Options.i"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYNCH_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -24549,12 +25144,14 @@ DEP_CPP_SYSTE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\System_Time.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYSTE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -24618,7 +25215,6 @@ DEP_CPP_SYSTE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\System_Time.h"\
 	".\Thread.h"\
 	".\Thread.i"\
@@ -24687,12 +25283,14 @@ DEP_CPP_SYSTE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\System_Time.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYSTE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -24756,12 +25354,14 @@ DEP_CPP_SYSTE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\System_Time.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYSTE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -24825,12 +25425,14 @@ DEP_CPP_SYSTE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\System_Time.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYSTE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -24894,12 +25496,14 @@ DEP_CPP_SYSTE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\System_Time.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_SYSTE=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -25009,7 +25613,6 @@ DEP_CPP_TASK_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -25027,6 +25630,9 @@ DEP_CPP_TASK_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TASK_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -25129,7 +25735,6 @@ DEP_CPP_TASK_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -25249,7 +25854,6 @@ DEP_CPP_TASK_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -25267,6 +25871,9 @@ DEP_CPP_TASK_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TASK_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -25369,7 +25976,6 @@ DEP_CPP_TASK_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -25387,6 +25993,9 @@ DEP_CPP_TASK_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TASK_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -25489,7 +26098,6 @@ DEP_CPP_TASK_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -25507,6 +26115,9 @@ DEP_CPP_TASK_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TASK_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -25609,7 +26220,6 @@ DEP_CPP_TASK_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Task.h"\
 	".\Task.i"\
 	".\Task_T.cpp"\
@@ -25627,6 +26237,9 @@ DEP_CPP_TASK_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TASK_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -25668,11 +26281,13 @@ DEP_CPP_THREA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -25707,7 +26322,6 @@ DEP_CPP_THREA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
@@ -25746,11 +26360,13 @@ DEP_CPP_THREA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -25785,11 +26401,13 @@ DEP_CPP_THREA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -25824,11 +26442,13 @@ DEP_CPP_THREA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -25863,11 +26483,13 @@ DEP_CPP_THREA=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREA=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -25943,13 +26565,15 @@ DEP_CPP_THREAD=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREAD=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -26018,7 +26642,6 @@ DEP_CPP_THREAD=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -26093,13 +26716,15 @@ DEP_CPP_THREAD=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREAD=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -26168,13 +26793,15 @@ DEP_CPP_THREAD=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREAD=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -26243,13 +26870,15 @@ DEP_CPP_THREAD=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREAD=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -26318,13 +26947,15 @@ DEP_CPP_THREAD=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
 	".\Thread_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_THREAD=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -26378,13 +27009,15 @@ DEP_CPP_TOKEN=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -26431,7 +27064,6 @@ DEP_CPP_TOKEN=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Token.h"\
@@ -26484,13 +27116,15 @@ DEP_CPP_TOKEN=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -26537,13 +27171,15 @@ DEP_CPP_TOKEN=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -26590,13 +27226,15 @@ DEP_CPP_TOKEN=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -26643,13 +27281,15 @@ DEP_CPP_TOKEN=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Token.h"\
 	".\Token.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -26739,7 +27379,6 @@ DEP_CPP_TOKEN_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -26750,6 +27389,9 @@ DEP_CPP_TOKEN_=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -26832,7 +27474,6 @@ DEP_CPP_TOKEN_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -26925,7 +27566,6 @@ DEP_CPP_TOKEN_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -26936,6 +27576,9 @@ DEP_CPP_TOKEN_=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -27018,7 +27661,6 @@ DEP_CPP_TOKEN_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -27029,6 +27671,9 @@ DEP_CPP_TOKEN_=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -27111,7 +27756,6 @@ DEP_CPP_TOKEN_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -27122,6 +27766,9 @@ DEP_CPP_TOKEN_=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -27204,7 +27851,6 @@ DEP_CPP_TOKEN_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -27215,6 +27861,9 @@ DEP_CPP_TOKEN_=\
 	".\Token_Manager.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TOKEN_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -27308,7 +27957,6 @@ DEP_CPP_TP_RE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -27321,6 +27969,9 @@ DEP_CPP_TP_RE=\
 	".\TP_Reactor.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TP_RE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -27384,6 +28035,11 @@ DEP_CPP_TP_RE=\
 	".\Reactor_Impl.h"\
 	".\Select_Reactor.h"\
 	".\Select_Reactor.i"\
+	".\Select_Reactor_Base.h"\
+	".\Select_Reactor_Base.i"\
+	".\Select_Reactor_T.cpp"\
+	".\Select_Reactor_T.h"\
+	".\Select_Reactor_T.i"\
 	".\Service_Config.h"\
 	".\Service_Config.i"\
 	".\Service_Object.h"\
@@ -27407,9 +28063,11 @@ DEP_CPP_TP_RE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
+	".\Timer_Heap.h"\
+	".\Timer_Heap_T.cpp"\
+	".\Timer_Heap_T.h"\
 	".\Timer_Queue.h"\
 	".\Timer_Queue_T.cpp"\
 	".\Timer_Queue_T.h"\
@@ -27506,7 +28164,6 @@ DEP_CPP_TP_RE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -27519,6 +28176,9 @@ DEP_CPP_TP_RE=\
 	".\TP_Reactor.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TP_RE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -27605,7 +28265,6 @@ DEP_CPP_TP_RE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -27618,6 +28277,9 @@ DEP_CPP_TP_RE=\
 	".\TP_Reactor.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TP_RE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -27704,7 +28366,6 @@ DEP_CPP_TP_RE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -27717,6 +28378,9 @@ DEP_CPP_TP_RE=\
 	".\TP_Reactor.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TP_RE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -27803,7 +28467,6 @@ DEP_CPP_TP_RE=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Timer_Queue.h"\
@@ -27816,6 +28479,9 @@ DEP_CPP_TP_RE=\
 	".\TP_Reactor.i"\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TP_RE=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -27857,10 +28523,12 @@ DEP_CPP_TRACE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\Trace.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TRACE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -27895,7 +28563,6 @@ DEP_CPP_TRACE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\Trace.i"\
 	".\ws2tcpip.h"\
@@ -27933,10 +28600,12 @@ DEP_CPP_TRACE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\Trace.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TRACE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -27971,10 +28640,12 @@ DEP_CPP_TRACE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\Trace.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TRACE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -28009,10 +28680,12 @@ DEP_CPP_TRACE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\Trace.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TRACE=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -28047,10 +28720,12 @@ DEP_CPP_TRACE=\
 	".\SString.h"\
 	".\SString.i"\
 	".\streams.h"\
-	".\sys_conf.h"\
 	".\Trace.h"\
 	".\Trace.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_TRACE=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -28154,7 +28829,6 @@ DEP_CPP_WFMO_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -28170,6 +28844,9 @@ DEP_CPP_WFMO_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_WFMO_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -28266,7 +28943,6 @@ DEP_CPP_WFMO_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -28378,7 +29054,6 @@ DEP_CPP_WFMO_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -28394,6 +29069,9 @@ DEP_CPP_WFMO_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_WFMO_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -28490,7 +29168,6 @@ DEP_CPP_WFMO_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -28506,6 +29183,9 @@ DEP_CPP_WFMO_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_WFMO_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -28602,7 +29282,6 @@ DEP_CPP_WFMO_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -28618,6 +29297,9 @@ DEP_CPP_WFMO_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_WFMO_=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -28714,7 +29396,6 @@ DEP_CPP_WFMO_=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Thread_Manager.h"\
@@ -28730,6 +29411,9 @@ DEP_CPP_WFMO_=\
 	".\WFMO_Reactor.h"\
 	".\WFMO_Reactor.i"\
 	".\ws2tcpip.h"\
+	
+NODEP_CPP_WFMO_=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
@@ -28839,7 +29523,6 @@ DEP_CPP_XTREA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -28852,6 +29535,9 @@ DEP_CPP_XTREA=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	".\XtReactor.h"\
+	
+NODEP_CPP_XTREA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE x86em) Debug"
@@ -28921,6 +29607,11 @@ DEP_CPP_XTREA=\
 	".\Reactor_Impl.h"\
 	".\Select_Reactor.h"\
 	".\Select_Reactor.i"\
+	".\Select_Reactor_Base.h"\
+	".\Select_Reactor_Base.i"\
+	".\Select_Reactor_T.cpp"\
+	".\Select_Reactor_T.h"\
+	".\Select_Reactor_T.i"\
 	".\Service_Config.h"\
 	".\Service_Config.i"\
 	".\Service_Object.h"\
@@ -28954,10 +29645,12 @@ DEP_CPP_XTREA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
+	".\Timer_Heap.h"\
+	".\Timer_Heap_T.cpp"\
+	".\Timer_Heap_T.h"\
 	".\Timer_Queue.h"\
 	".\Timer_Queue_T.cpp"\
 	".\Timer_Queue_T.h"\
@@ -29069,7 +29762,6 @@ DEP_CPP_XTREA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -29082,6 +29774,9 @@ DEP_CPP_XTREA=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	".\XtReactor.h"\
+	
+NODEP_CPP_XTREA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE MIPS) Debug"
@@ -29184,7 +29879,6 @@ DEP_CPP_XTREA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -29197,6 +29891,9 @@ DEP_CPP_XTREA=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	".\XtReactor.h"\
+	
+NODEP_CPP_XTREA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Release"
@@ -29299,7 +29996,6 @@ DEP_CPP_XTREA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -29312,6 +30008,9 @@ DEP_CPP_XTREA=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	".\XtReactor.h"\
+	
+NODEP_CPP_XTREA=\
+	".\sys_conf.h"\
 	
 
 !ELSEIF  "$(CFG)" == "ace_ce_dll - Win32 (WCE SH) Debug"
@@ -29414,7 +30113,6 @@ DEP_CPP_XTREA=\
 	".\Synch_T.cpp"\
 	".\Synch_T.h"\
 	".\Synch_T.i"\
-	".\sys_conf.h"\
 	".\Thread.h"\
 	".\Thread.i"\
 	".\Time_Value.h"\
@@ -29427,6 +30125,9 @@ DEP_CPP_XTREA=\
 	".\Trace.h"\
 	".\ws2tcpip.h"\
 	".\XtReactor.h"\
+	
+NODEP_CPP_XTREA=\
+	".\sys_conf.h"\
 	
 
 !ENDIF 
