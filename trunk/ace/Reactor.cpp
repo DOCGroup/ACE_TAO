@@ -910,7 +910,7 @@ ACE_Reactor::instance (size_t size /* = ACE_Reactor::DEFAULT_SIZE */)
   if (ACE_Reactor::reactor_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
 				*ACE_Static_Object_Lock::instance (), 0));
 
       if (ACE_Reactor::reactor_ == 0)
@@ -927,7 +927,7 @@ ACE_Reactor::instance (ACE_Reactor *r)
 {
   ACE_TRACE ("ACE_Reactor::instance");
 
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
 			    *ACE_Static_Object_Lock::instance (), 0));
   ACE_Reactor *t = ACE_Reactor::reactor_;
   // We can't safely delete it since we don't know who created it!
@@ -942,7 +942,7 @@ ACE_Reactor::close_singleton (void)
 {
   ACE_TRACE ("ACE_Reactor::close_singleton");
 
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
 		     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Reactor::delete_reactor_)

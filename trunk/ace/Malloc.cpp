@@ -68,7 +68,7 @@ ACE_Allocator::instance (void)
   if (ACE_Allocator::allocator_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
 				*ACE_Static_Object_Lock::instance (), 0));
 
       if (ACE_Allocator::allocator_ == 0)
@@ -86,7 +86,7 @@ ACE_Allocator *
 ACE_Allocator::instance (ACE_Allocator *r)
 {
   ACE_TRACE ("ACE_Allocator::instance");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
 			    *ACE_Static_Object_Lock::instance (), 0));
   ACE_Allocator *t = ACE_Allocator::allocator_;
 
@@ -102,7 +102,7 @@ ACE_Allocator::close_singleton (void)
 {
   ACE_TRACE ("ACE_Allocator::close_singleton");
 
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon,
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
 		     *ACE_Static_Object_Lock::instance ()));
 
   if (ACE_Allocator::delete_allocator_)

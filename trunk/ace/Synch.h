@@ -1229,14 +1229,14 @@ class ACE_Export ACE_Static_Object_Lock
   //     static singleton objects.  
 {
 public:
-  static ACE_Thread_Mutex *instance (void);
+  static ACE_Recursive_Thread_Mutex *instance (void);
   // static lock access point
 
   static void atexit (void);
   // clean things up when program exit
 
 private:
-  static ACE_Thread_Mutex *mutex_;
+  static ACE_Recursive_Thread_Mutex *mutex_;
   // pointer to actual lock
 };
 
