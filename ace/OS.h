@@ -1241,11 +1241,9 @@ extern "C" int rand_r (ACE_RANDR_TYPE seed);
 typedef unsigned int *ACE_RANDR_TYPE;
 #endif /* ACE_HAS_BROKEN_RANDR */
 
-#if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 #if !defined(RTLD_LAZY)
 #define RTLD_LAZY 1
 #endif /* !RTLD_LAZY */
-#endif /*ACE_HAS_SVR4_DYNAMIC_LINKING */
 
 #if defined (ACE_HAS_UTIME)
 #include /**/ <utime.h>
