@@ -132,25 +132,6 @@ Quoter_Client::run (void)
       if (this->debug_level_ >= 1)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object: ACE Hardware = %i\n", q));
 
-      // Move the Quoter
-
-      exception_message = "While moving the quoter";
-      this->quoter_var_->move (factory_Finder_var_.in (),
-                               criteria,
-                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Caution, the object reference stays the same
-
-      if (this->debug_level_ >= 2)
-        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Moved object\n"));
-
-      exception_message = "While using get_quote () on moved object";
-      q = this->quoter_var_->get_quote ("ACE Hardware", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (this->debug_level_ >= 1)
-        ACE_DEBUG ((LM_DEBUG, "Quoter Client: Moved object: ACE Hardware = %i\n", q));
     }
   ACE_CATCHANY
     {
