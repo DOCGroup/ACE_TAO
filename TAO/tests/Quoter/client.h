@@ -69,7 +69,7 @@ private:
   int shutdown_;
   // Flag to tell server to shutdown.
 
-  Stock::Quoter_Factory_var factory_;
+  Stock::Quoter_Factory_var factory_var_;
   // factory pointer for cubit.
 
   CORBA::Environment env_;
