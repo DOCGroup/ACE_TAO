@@ -146,6 +146,9 @@
 				RelativePath=".\ServantSourceGenerator.cpp">
 			</File>
 			<File
+				RelativePath=".\SizeTypeCalculator.cpp">
+			</File>
+			<File
 				RelativePath=".\TypeNameEmitter.cpp">
 			</File>
 		</Filter>
@@ -176,6 +179,9 @@
 			</File>
 			<File
 				RelativePath=".\ServantSourceGenerator.hpp">
+			</File>
+			<File
+				RelativePath=".\SizeTypeCalculator.hpp">
 			</File>
 			<File
 				RelativePath=".\TypeNameEmitter.hpp">

@@ -33,7 +33,7 @@ namespace CCF
         traverse (SyntaxTree::NodePtr const& n)
         {
           traverse (n->dynamic_type<SyntaxTree::InterfaceDecl> ());
-	  return true;
+	        return true;
         }
 
         virtual void

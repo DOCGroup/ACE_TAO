@@ -363,7 +363,6 @@ namespace
            << "{" << endl;
       }
 
-      // @@@ (JP) Need export macro.
       os << "class " << export_macro_ << " " << c->name ().simple ()
          << "_Context" << endl
          << ": public virtual " << c->name ().scope () << "::CCM_"
@@ -531,7 +530,7 @@ namespace
          << STRS[ENV_HDR] << ")" << endl
          << STRS[EXCP_SNGL] << ";" << endl << endl;
 
-      os << "virtual " << d->type ()->name () << "_ptr" << endl
+      os << "virtual " << d->type ()->name () << "Consumer_ptr" << endl
          << "disconnect_" << d->name ().simple () << " (" << endl
          << STRS[ENV_SNGL_HDR] << ")" << endl
          << STRS[EXCP_START] << endl

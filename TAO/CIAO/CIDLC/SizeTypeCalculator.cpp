@@ -3,6 +3,7 @@
 // cvs-id    : $Id$
 
 #include "SizeTypeCalculator.hpp"
+#include "Literals.hpp"
 
 #include "CCF/CIDL/SyntaxTree.hpp"
 #include "CCF/CIDL/Traversal.hpp"
@@ -11,18 +12,16 @@
 
 using namespace CCF::CIDL;
 using namespace SyntaxTree;
-
-namespace
-{
-  char const* const
-  variable_size_label = "variable-size";
-}
+using namespace StringLiterals;
 
 namespace
 {
   class Calculator : public Traversal::StringDecl,
-                     public Traversal::StructDecl,
-                     public Traversal::MemberDecl
+                     public Traversal::StructDef,
+                     public Traversal::MemberDecl,
+                     public Traversal::WstringDecl,
+                     public Traversal::SequenceDecl,
+                     public Traversal::InterfaceDecl
   {
   public:
     Calculator ()
@@ -30,7 +29,6 @@ namespace
     {
       push (false);
     }
-
 
   public:
     virtual void
@@ -40,30 +38,48 @@ namespace
     }
 
     virtual void
-    traverse (StructDeclPtr const& s)
+    traverse (WstringDeclPtr const&)
     {
-      if (s->context ().count (variable_size_label))
+      top () = true;
+    }
+
+    virtual void
+    traverse (SequenceDeclPtr const&)
+    {
+      top () = true;
+    }
+
+    virtual void
+    traverse (InterfaceDeclPtr const&)
+    {
+      top () = true;
+    }
+
+    virtual void
+    traverse (StructDefPtr const& s)
+    {
+      if (s->context ().count (STRS[VAR_SIZE]))
       {
-        top () = s->context ().get<bool> (variable_size_label);
+        top () = s->context ().get<bool> (STRS[VAR_SIZE]);
       }
       else
       {
-        Traversal::StructDecl::traverse (s);
+        Traversal::StructDef::traverse (s);
       }
     }
 
     virtual void
-    pre (StructDeclPtr const& s)
+    pre (StructDefPtr const& s)
     {
       push (false);
     }
 
     virtual void
-    post (StructDeclPtr const& s)
+    post (StructDefPtr const& s)
     {
       bool r (top ());
 
-      s->context ().set (variable_size_label, r);
+      s->context ().set (STRS[VAR_SIZE], r);
 
       pop ();
 
