@@ -4,7 +4,7 @@
 
 #include <tao/corba.h>
 #include "IFR_Client/IFR_BasicC.h"
-
+#include "ace/OS_NS_string.h"
 int main( int argc, char* argv[] )
 {
 
@@ -135,7 +135,7 @@ int main( int argc, char* argv[] )
       }
 
       CORBA::NamedValue_ptr nv = opList->item( 0 ) ;
-      if( strcmp( nv->name(), "p1") != 0 )
+      if(ACE_OS::strcmp( nv->name(), "p1") != 0 )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 1 wrong name\n"));
          failed = 1 ;
@@ -153,7 +153,7 @@ int main( int argc, char* argv[] )
       };
 
       nv = opList->item( 1 ) ;
-      if( strcmp( nv->name(), "p2") != 0 )
+      if(ACE_OS::strcmp( nv->name(), "p2") != 0 )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 2 wrong name\n"));
          failed = 1 ;
@@ -170,7 +170,7 @@ int main( int argc, char* argv[] )
       };
 
       nv = opList->item( 2 ) ;
-      if( strcmp( nv->name(), "p3") != 0 )
+      if(ACE_OS::strcmp( nv->name(), "p3") != 0 )
       {
          ACE_DEBUG((LM_DEBUG, "Test failed: param 3 wrong name\n"));
          failed = 1 ;
