@@ -1,3 +1,14 @@
+Wed Apr 17 11:21:52 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/TAOC.cpp:
+	* tao/TAOC.h:
+	* tao/TAOC.i:
+	* tao/diffs/TAOC.cpp.diff:
+	* tao/diffs/TAOC.h.diff:
+	* tao/diffs/TAOC.i.diff:
+
+	  Regenerated these files.
+
 Wed Apr 17 11:15:23 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Messaging/Messaging.h:
