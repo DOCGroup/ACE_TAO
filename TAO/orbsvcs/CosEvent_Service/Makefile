@@ -14,7 +14,9 @@ BIN2 = CosEvent_Service
 #### don't try to build here.
 TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
 ifeq (CosEvent,$(findstring CosEvent,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
+  ifeq (Event2,$(findstring Event2,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # Event2
 endif # CosEvent
 
 #----------------------------------------------------------------------------
