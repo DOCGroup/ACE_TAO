@@ -1,3 +1,11 @@
+Fri Jan 24 07:54:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS.h:
+          VxWorks 5.4 lacks some ANSI prototypes. These are defined by
+          VxWorks 5.5 so we only define these ANSI prototypes when defined
+          ACE_VXWORKS and this is equal or smaller 0x540. Else we just
+          include apra/inet.h.
+
 Thu Jan 23 17:57:05 2003  Heather Drury  <drury_h@ociweb.com>
 
         * ace/README: Deleted non-ascii characters around ACE_HAS_PTHREAD_SETSTACK.
