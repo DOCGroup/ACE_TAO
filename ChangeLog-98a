@@ -1,3 +1,36 @@
+Tue Dec 16 21:00:49 1997  Chris Gill  <cdgill@tango.cs.wustl.edu>
+
+        Single Threaded port of ACE to pSOSim - first checkin
+
+        * psosim/Makefile: (new) make file for new psosim directory - 
+          builds the configured simulator components
+
+        * psosim/drv_conf.c: (new) board driver configuration code for simulator
+
+        * ace/sys_conf.h: (new)    configuration settings for simulator, ACE
+        * ace/config-psosim-g++.h: (new) config file for psosim w/ g++
+
+        * ace/OS.cpp: added psos and psosim specific code
+        * ace/OS.h: added psos and psosim specific code
+        * ace/OS.i: added psos and psosim specific code
+
+        * ace/Mem_Map.cpp: removed function style casts which were killing g++
+        * ace/Message_Block.cpp: removed function style casts which were killing g++
+        * ace/Containers.cpp: removed function style casts which were killing g++
+        * ace/Map_Manager.cpp: removed function style casts which were killing g++
+
+        * tests/Handle_Set_Test.cpp: added PSOS #defines, alongside those for VXWORKS
+        * tests/SOCK_Connector_Test.cpp: added PSOS #defines, alongside those for VXWORKS
+        * tests/Priority_Reactor_Test.cpp: added PSOS #defines, alongside those for VXWORKS
+        * tests/MM_Shared_Memory_Test.cpp: added PSOS #defines, alongside those for VXWORKS
+        * tests/Conn_Test.cpp: added PSOS #defines, alongside those for VXWORKS
+
+        * tests/run_tests.psosim: (new) script to run only those tests that are relevant to
+                                  pSOSim, in its current single threaded state
+
+        * include/makeinclude/platform_psosim_g++.GNU (new) make macros for pSOSim using g++
+
+
 Tue Dec 16 17:23:49 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* tests/Time_Value_Test.cpp: Removed inclusion of "ace/config.h".
