@@ -1,3 +1,21 @@
+Tue Nov  4 16:48:54 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Barrier.cpp:
+        * ace/Condition_Recursive_Thread_Mutex.cpp:
+          Include Log_Msg.h when ACE_HAS_DUMP is defined.
+
+        * ace/OS_NS_stdio.inl:
+        * ace/OS_NS_string.cpp:
+        * ace/OS_NS_strings.inl:
+        * ace/OS_NS_unistd.inl:
+        * ace/OS_NS_wchar.cpp:
+        * ace/OS_NS_wchar.h:
+          Added #includes needed when ACE_HAS_WCHAR is defined.
+
+        * ace/SSL/SSL_SOCK.cpp:
+        * ace/SSL/SSL_SOCK_Stream.cpp:
+          Added #includes needed when ssl=1.
+
 Tue Nov  4 14:29:38 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/CDR_Streams.i:
