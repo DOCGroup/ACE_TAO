@@ -5,6 +5,8 @@
 // CORBA C/C++/COM mapping for Win32
 //
 
+#ifndef CORBACOM_INC
+#  define CORBACOM_INC
 #include <objbase.h>		// Win32 name for "compobj.h"
 
 #if	SIZEOF_BOOL != 0
@@ -106,3 +108,4 @@ CORBA_WString		CORBA_wstring_alloc (CORBA_ULong len);
 CORBA_WString		CORBA_wstring_copy (const CORBA_WChar *const);
 void			CORBA_wstring_free (CORBA_WChar *const);
 
+#endif

@@ -12,6 +12,9 @@
 #ifndef	_TOA_HH
 #define	_TOA_HH
 
+#  include "orb.hh"
+#  include "corbacom.hh"
+
 typedef class TOA *TOA_ptr;
 
 CORBA_Boolean			is_nil (TOA_ptr obj);
