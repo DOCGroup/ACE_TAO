@@ -1,9 +1,0 @@
-/*
- * $Id$
- */
-
-interface Simple_Server {
-  void test_method ();
-
-  void shutdown ();
-};
