@@ -78,7 +78,7 @@ const size_t ACE_MAX_ITERATIONS = 10;
 const size_t ACE_MAX_PROCESSES = 10;
 const size_t ACE_MAX_THREADS = 4;
 
-static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
+static char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 #define ACE_START_TEST(NAME) \
   const ACE_TCHAR *program = NAME; \
