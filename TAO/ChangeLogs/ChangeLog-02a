@@ -1,3 +1,12 @@
+Fri Jun 08 07:30:08 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (ssliop_open_i):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open):
+
+	  Set the reactor in the underlying
+	  ACE_SSL_SOCK_{Acceptor,Connector} to force it to use the one the
+	  ORB was configured to use.
+
 Fri Jun  8 09:14:53 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
@@ -9,7 +18,6 @@ Fri Jun  8 09:14:53 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	  Added the AVStreams tests to the nightly builds.
 
-
 Fri Jun  8 07:38:59 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/Connection_Purging/README:
@@ -19,7 +27,7 @@ Fri Jun  8 07:38:59 2001  Chad Elliott  <elliott_c@ociweb.com>
 Fri Jun  8 06:35:18 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/Simple_Naming/run_test.pl: Removed some extraneous
-	  print statements that was causing our builds to grok.
+	  print statements that was causing our builds to choke.
 
 Mon Jun  4 17:38:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
