@@ -146,6 +146,7 @@ NAMES = \
    Proactor_Test_IPV6 \
    SOCK_Dgram_Test \
    SOCK_Send_Recv_Test_IPV6 \
+   SOCK_Test_IPv6
 
 !ifdef SSL_ROOT
 DIRS =  RMCast \
