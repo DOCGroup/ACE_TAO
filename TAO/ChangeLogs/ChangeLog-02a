@@ -1,3 +1,8 @@
+Tue Jun  6 14:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tao/CurrentC.cpp: Removed smart proxy support since Current is a
+	  local object.
+	
 Tue Jun  6 10:19:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/append.cpp:
