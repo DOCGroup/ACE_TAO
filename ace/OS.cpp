@@ -242,7 +242,7 @@ ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 void ACE_Time_Value::set (const FILETIME &file_time)
 {
   //  Initializes the ACE_Time_Value object from a Win32 FILETIME
-  ULARGE_INTEGER _100ns = 
+  ULARGE_INTEGER _100ns =
   {
     file_time.dwLowDateTime,
     file_time.dwHighDateTime
@@ -4752,7 +4752,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   ACE_UNUSED_ARG (res);
   struct tm * res_ptr;
   ACE_OSCALL (::localtime (t), struct tm *, 0, res_ptr);
-  if (res_ptr == 0) 
+  if (res_ptr == 0)
     return 0;
   else
     {
@@ -6538,7 +6538,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_OS_MONITOR_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, "ACE_OS_MONITOR_LOCK");
+              __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_CLEANUP_LOCK)
           if (ACE_OS::recursive_mutex_init (ACE_reinterpret_cast (
@@ -6546,7 +6546,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_CLEANUP_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, "ACE_TSS_CLEANUP_LOCK");
+              __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
           ACE_OS_PREALLOCATE_OBJECT (ACE_thread_mutex_t,
                                      ACE_LOG_MSG_INSTANCE_LOCK)
           if (ACE_OS::thread_mutex_init (ACE_reinterpret_cast (
@@ -6554,7 +6554,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, "ACE_LOG_MSG_INSTANCE_LOCK");
+              __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK"));
 #   if defined (ACE_HAS_TSS_EMULATION)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_KEY_LOCK)
@@ -6563,7 +6563,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_KEY_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, "ACE_TSS_KEY_LOCK");
+              __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
 #     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_OS_PREALLOCATE_OBJECT (ACE_recursive_thread_mutex_t,
                                      ACE_TSS_BASE_LOCK)
@@ -6572,7 +6572,7 @@ ACE_OS_Object_Manager::init (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_BASE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, "ACE_TSS_BASE_LOCK");
+              __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
 #     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #   endif /* ACE_HAS_TSS_EMULATION */
 # endif /* ACE_MT_SAFE */
@@ -6645,7 +6645,7 @@ ACE_OS_Object_Manager::fini (void)
         ACE_thread_mutex_t *,
         ACE_OS_Object_Manager::preallocated_object[ACE_OS_MONITOR_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
-          __LINE__, "ACE_OS_MONITOR_LOCK");
+          __LINE__, ACE_TEXT ("ACE_OS_MONITOR_LOCK"));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_OS_MONITOR_LOCK)
@@ -6656,7 +6656,7 @@ ACE_OS_Object_Manager::fini (void)
         ACE_OS_Object_Manager::preallocated_object[
           ACE_TSS_CLEANUP_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
-          __LINE__, "ACE_TSS_CLEANUP_LOCK");
+          __LINE__, ACE_TEXT ("ACE_TSS_CLEANUP_LOCK"));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_CLEANUP_LOCK)
@@ -6667,7 +6667,7 @@ ACE_OS_Object_Manager::fini (void)
         ACE_OS_Object_Manager::preallocated_object
             [ACE_LOG_MSG_INSTANCE_LOCK])) != 0)
         ACE_OS_Object_Manager::print_error_message (
-          __LINE__, "ACE_LOG_MSG_INSTANCE_LOCK ");
+          __LINE__, ACE_TEXT ("ACE_LOG_MSG_INSTANCE_LOCK "));
 #   endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_thread_mutex_t,
                                          ACE_LOG_MSG_INSTANCE_LOCK)
@@ -6679,7 +6679,7 @@ ACE_OS_Object_Manager::fini (void)
           ACE_OS_Object_Manager::preallocated_object[
             ACE_TSS_KEY_LOCK])) != 0)
           ACE_OS_Object_Manager::print_error_message (
-            __LINE__, "ACE_TSS_KEY_LOCK");
+            __LINE__, ACE_TEXT ("ACE_TSS_KEY_LOCK"));
 #     endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_KEY_LOCK)
@@ -6691,7 +6691,7 @@ ACE_OS_Object_Manager::fini (void)
             ACE_OS_Object_Manager::preallocated_object[
               ACE_TSS_BASE_LOCK])) != 0)
             ACE_OS_Object_Manager::print_error_message (
-              __LINE__, "ACE_TSS_BASE_LOCK");
+              __LINE__, ACE_TEXT ("ACE_TSS_BASE_LOCK"));
 #       endif /* ! __Lynx__ */
       ACE_OS_DELETE_PREALLOCATED_OBJECT (ACE_recursive_thread_mutex_t,
                                          ACE_TSS_BASE_LOCK)
@@ -6732,11 +6732,32 @@ void
 ACE_OS_Object_Manager::print_error_message (u_int line_number, LPCTSTR message)
 {
   // To avoid duplication of these const strings in OS.o.
-
+#if !defined (ACE_HAS_WINCE)
   fprintf (stderr, "ace/OS.cpp, line %u: %s ",
            line_number,
            message);
   perror ("failed");
+#else
+  // @@ Need to use the following information.
+  ACE_UNUSED_ARG (line_number);
+  ACE_UNUSED_ARG (message);
+
+  LPTSTR lpMsgBuf = 0;
+  ::FormatMessage (FORMAT_MESSAGE_ALLOCATE_BUFFER |
+                   FORMAT_MESSAGE_FROM_SYSTEM,
+                   NULL,
+                   ::GetLastError (),
+                   MAKELANGID (LANG_NEUTRAL,
+                               SUBLANG_DEFAULT),
+                   // Default language
+                   (LPTSTR) &lpMsgBuf,
+                   0,
+                   NULL);
+  ::MessageBox (NULL,
+                lpMsgBuf,
+                ACE_TEXT ("ACE_OS error"),
+                MB_OK);
+#endif
 }
 
 int
@@ -6962,6 +6983,7 @@ ACE_OS::strptime (char *buf,
                   const char *format,
                   struct tm *tm)
 {
+#if !defined (ACE_HAS_WINCE)
 #if defined (ACE_LACKS_NATIVE_STRPTIME)
   int bi = 0;
   int fi = 0;
@@ -7190,5 +7212,12 @@ ACE_OS::strptime (char *buf,
                      format,
                      tm);
 #endif /* ! ACE_LACKS_NATIVE_STRPTIME */
+#else /* ! ACE_HAS_WINCE */
+  ACE_UNUSED_ARG (buf);
+  ACE_UNUSED_ARG (format);
+  ACE_UNUSED_ARG (tm);
+
+  ACE_NOTSUP_RETURN (0);
+#endif /* ! ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_STRPTIME */

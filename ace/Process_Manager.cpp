@@ -108,7 +108,7 @@ ACE_Process_Manager::resize (size_t size)
   ACE_TRACE ("ACE_Process_Manager::resize");
 
   ACE_Process_Descriptor *temp;
-  
+
   ACE_NEW_RETURN (temp,
                   ACE_Process_Descriptor[size],
                   -1);
@@ -117,7 +117,7 @@ ACE_Process_Manager::resize (size_t size)
        i < this->current_count_;
        i++)
     // Structure assignment.
-    temp[i] = this->process_table_[i]; 
+    temp[i] = this->process_table_[i];
 
   this->max_process_table_size_ = size;
 
@@ -135,8 +135,8 @@ ACE_Process_Manager::open (size_t size,
 {
   ACE_TRACE ("ACE_Process_Manager::open");
 
-  if (r) 
-    {       
+  if (r)
+    {
       ACE_Event_Handler::reactor (r);
 #if !defined(ACE_WIN32)
       // (No signals for child-exited on Win32) Assign the
@@ -147,7 +147,7 @@ ACE_Process_Manager::open (size_t size,
       this->dummy_handle_ = ACE_OS::open (ACE_DEV_NULL,
                                           O_WRONLY);
       ACE_ASSERT (this->dummy_handle_ != ACE_INVALID_HANDLE);
-  
+
       // Register signal handler object.  Note that NULL_MASK is used
       // to keep the ACE_Reactor from calling us back on the
       // "/dev/null" descriptor.  NULL_MASK just reserves a "slot" in
@@ -170,7 +170,7 @@ ACE_Process_Manager::open (size_t size,
                     1));
 #endif  // !defined(ACE_WIN32)
     }
-  
+
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
   if (this->max_process_table_size_ < size)
@@ -184,7 +184,7 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size,
                                           ACE_Reactor *r)
   : ACE_Event_Handler (),
     process_table_ (0),
-    max_process_table_size_ (0), 
+    max_process_table_size_ (0),
     current_count_ (0),
 #if !defined(ACE_WIN32)
     dummy_handle_ (ACE_INVALID_HANDLE),
@@ -210,7 +210,7 @@ ACE_Process_Manager::close (void)
 {
   ACE_TRACE ("ACE_Process_Manager::close");
 
-  if (this->reactor ()) 
+  if (this->reactor ())
     {
       this->reactor ()->remove_handler (this, 0);
       this->reactor (0);
@@ -220,7 +220,7 @@ ACE_Process_Manager::close (void)
 
   if (this->process_table_ != 0)
     {
-      for (size_t i = 0; i < this->current_count_; ++i) 
+      for (size_t i = 0; i < this->current_count_; ++i)
         {
           if (this->process_table_[i].exit_notify_ != 0)
             this->process_table_[i].exit_notify_->handle_close
@@ -262,7 +262,7 @@ ACE_Process_Manager::handle_input (ACE_HANDLE)
 
    pid_t pid;
 
-   do 
+   do
      pid = this->wait (0,
                        ACE_Time_Value::zero);
    while (pid != 0 && pid != ACE_INVALID_PID);
@@ -293,11 +293,11 @@ ACE_Process_Manager::handle_signal (int,
 #if defined (ACE_WIN32)
   ACE_HANDLE proc = si->si_handle_;
   ACE_exitcode status = 0;
-  BOOL result = ::GetExitCodeProcess (proc, 
+  BOOL result = ::GetExitCodeProcess (proc,
                                       &status);
-  if (result) 
+  if (result)
     {
-      if (status != STILL_ACTIVE) 
+      if (status != STILL_ACTIVE)
         {
           {
             ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1));
@@ -310,14 +310,14 @@ ACE_Process_Manager::handle_signal (int,
             this->remove_proc (pid);
           }
           return -1; // remove this HANDLE/Event_Handler combination
-        } 
-      else 
+        }
+      else
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("Process still active")
                            ASYS_TEXT (" -- shouldn't have been called yet!\n")),
                           0); // return 0 : stay registered
-    } 
-  else 
+    }
+  else
     {
       // <GetExitCodeProcess> failed.
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -339,11 +339,11 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (pid == ACE_INVALID_PID) 
+  if (pid == ACE_INVALID_PID)
     {
       if (this->default_exit_handler_ != 0)
-        this->default_exit_handler_->handle_close 
-          (ACE_INVALID_HANDLE, 
+        this->default_exit_handler_->handle_close
+          (ACE_INVALID_HANDLE,
            0);
       this->default_exit_handler_ = eh;
       return 0;
@@ -351,7 +351,7 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
 
   ssize_t i = this->find_proc (pid);
 
-  if (i == -1) 
+  if (i == -1)
     // set "process not found" error
     return -1;
   else
@@ -359,7 +359,7 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
       ACE_Process_Descriptor &proc_desc = this->process_table_[i];
 
       if (proc_desc.exit_notify_ != 0)
-        proc_desc.exit_notify_->handle_close 
+        proc_desc.exit_notify_->handle_close
           (ACE_INVALID_HANDLE,
            0);
       proc_desc.exit_notify_ = eh;
@@ -381,7 +381,7 @@ ACE_Process_Manager::handle_close (ACE_HANDLE handle,
 #endif /* ACE_WIN32 */
   return 0;
 }
-        
+
 // Create a new process.
 
 pid_t
@@ -393,7 +393,7 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options)
 
   pid_t pid = spawn (process, options);
 
-  if (pid != ACE_INVALID_PID) 
+  if (pid != ACE_INVALID_PID)
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon,
                                 this->lock_, ACE_INVALID_PID));
@@ -418,15 +418,15 @@ ACE_Process_Manager::spawn (ACE_Process *process,
   pid_t pid = process->spawn (options);
 
   // Only include the pid in the parent's table.
-  if (pid == ACE_INVALID_PID 
-      || pid == 0) 
+  if (pid == ACE_INVALID_PID
+      || pid == 0)
     return pid;
   else
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex,
                                 ace_mon, this->lock_, -1));
 
-      if (this->append_proc (process) == -1) 
+      if (this->append_proc (process) == -1)
         // bad news: spawned, but not registered in table.
         return ACE_INVALID_PID;
       else
@@ -436,7 +436,7 @@ ACE_Process_Manager::spawn (ACE_Process *process,
 
 // Create N new processs.
 
-int 
+int
 ACE_Process_Manager::spawn_n (size_t n,
                               ACE_Process_Options &options,
                               pid_t *child_pids)
@@ -451,7 +451,7 @@ ACE_Process_Manager::spawn_n (size_t n,
 
   for (size_t i = 0;
        i < n;
-       i++) 
+       i++)
     {
       pid_t pid = this->spawn (options);
       if (pid == ACE_INVALID_PID || pid == 0)
@@ -474,16 +474,16 @@ ACE_Process_Manager::append_proc (ACE_Process *proc)
 
   // Try to resize the array to twice its existing size if we run out
   // of space...
-  if (this->current_count_ >= this->max_process_table_size_ 
+  if (this->current_count_ >= this->max_process_table_size_
       && this->resize (this->max_process_table_size_ * 2) == -1)
     return -1;
   else
     {
-      ACE_Process_Descriptor &proc_desc = 
+      ACE_Process_Descriptor &proc_desc =
         this->process_table_[this->current_count_];
 
       // pending better info from caller
-      proc_desc.delete_process_ = 0;    
+      proc_desc.delete_process_ = 0;
       proc_desc.process_ = proc;
       proc_desc.exit_notify_ = 0;
 
@@ -545,7 +545,7 @@ ACE_Process_Manager::remove_proc (pid_t pid)
   // If there's an exit_notify_ <Event_Handler> for this pid, call its
   // <handle_close> method.
 
-  if (this->process_table_[i].exit_notify_ != 0) 
+  if (this->process_table_[i].exit_notify_ != 0)
     {
       this->process_table_[i].exit_notify_->handle_close
         (this->process_table_[i].process_->gethandle(),
@@ -557,7 +557,7 @@ ACE_Process_Manager::remove_proc (pid_t pid)
     delete this->process_table_[i].process_;
 
   this->process_table_[i].process_ = 0;
-  
+
   this->current_count_--;
 
   if (this->current_count_ > 0)
@@ -581,18 +581,18 @@ ACE_Process_Manager::terminate (pid_t pid)
   if (i == -1)
     // set "no such process" error
     return -1;
-  
+
   int result = ACE::terminate_process (pid);
 
-  if (result != -1) 
+  if (result != -1)
     {
       // Save/restore errno.
       ACE_Errno_Guard error (errno);
       this->remove (pid);
-      return 0; 
+      return 0;
     }
-  else 
-    return -1; 
+  else
+    return -1;
 }
 
 int
@@ -640,7 +640,7 @@ ACE_Process_Manager::find_proc (ACE_HANDLE h)
     if (h == this->process_table_[i].process_->gethandle ())
       return i;
 
-  return -1;    
+  return -1;
 }
 #endif /* ACE_WIN32 */
 
@@ -658,7 +658,7 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
   if (until < ACE_Time_Value::max_time)
     until += ACE_OS::gettimeofday ();
 
-  while (current_count_ > 0) 
+  while (current_count_ > 0)
     {
       pid_t pid = this->wait (0, remaining);
 
@@ -670,10 +670,10 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
       remaining = until < ACE_Time_Value::max_time
         ? until - ACE_OS::gettimeofday ()
         : ACE_Time_Value::max_time;
- 
+
       if (remaining <= ACE_Time_Value::zero)
         break;
- 
+
       // else Process terminated...wait for more...
     }
   return current_count_;
@@ -687,7 +687,7 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
 // process started by some other means.
 
 pid_t
-ACE_Process_Manager::wait (pid_t pid, 
+ACE_Process_Manager::wait (pid_t pid,
                            ACE_exitcode *status)
 {
   ACE_TRACE ("ACE_Process_Manager::wait");
@@ -709,14 +709,14 @@ ACE_Process_Manager::wait (pid_t pid,
   ACE_TRACE ("ACE_Process_Manager::wait");
 
   ACE_exitcode local_stat = 0;
-  if (status == 0) 
+  if (status == 0)
     status = &local_stat;
 
   ACE_Process *proc = 0;
-  
+
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
 
-  if (pid != 0) 
+  if (pid != 0)
     {
       ssize_t i = this->find_proc (pid);
       if (i == -1)
@@ -725,7 +725,7 @@ ACE_Process_Manager::wait (pid_t pid,
         proc = process_table_[i].process_;
     }
 
-  if (proc != 0) 
+  if (proc != 0)
     pid = proc->wait (timeout, status);
   else
     {
@@ -755,7 +755,7 @@ ACE_Process_Manager::wait (pid_t pid,
         pid = 0;
       else
         {
-          ACE_ASSERT (result >= WAIT_OBJECT_0 
+          ACE_ASSERT (result >= WAIT_OBJECT_0
                       && result < WAIT_OBJECT_0 + current_count_);
 
           ssize_t i = this->find_proc (handles[result - WAIT_OBJECT_0]);
@@ -765,19 +765,19 @@ ACE_Process_Manager::wait (pid_t pid,
               pid = process_table_[i].process_->getpid ();
               result = ::GetExitCodeProcess (handles[result - WAIT_OBJECT_0],
                                              status);
-              if (result == 0) 
+              if (result == 0)
                 {
                   // <GetExitCodeProcess> failed!
                   this->remove_proc (pid);
                   pid = ACE_INVALID_PID;
-                } 
+                }
             }
           else
             // uh oh...handle removed from process_table_, even though
             // we're holding a lock!
             ;
         }
-      
+
       delete [] handles;
 #else /* !defined(ACE_WIN32) */
       if (timeout == ACE_Time_Value::max_time)
@@ -788,7 +788,7 @@ ACE_Process_Manager::wait (pid_t pid,
         pid = ACE_OS::waitpid (-(ACE_OS::getpid ()),
                                status,
                                WNOHANG);
-      else 
+      else
         {
           ACE_Time_Value wait_until =
             timeout + ACE_OS::gettimeofday();
@@ -798,12 +798,12 @@ ACE_Process_Manager::wait (pid_t pid,
               pid = ACE_OS::waitpid (-(ACE_OS::getpid()),
                                      status,
                                      WNOHANG);
-              if (pid != 0) 
+              if (pid != 0)
                 // "no such children" error, or got one!
                 break;
 
               ACE_Sig_Set alarm_or_child;
-              
+
               alarm_or_child.sig_add (SIGALRM);
               alarm_or_child.sig_add (SIGCHLD);
 
@@ -825,16 +825,16 @@ ACE_Process_Manager::wait (pid_t pid,
 #endif /* !defined (ACE_WIN32) */
     }
 
-  if (pid != ACE_INVALID_PID && pid != 0) 
+  if (pid != ACE_INVALID_PID && pid != 0)
     {
-      if (proc == 0) 
+      if (proc == 0)
         {
           ssize_t i = this->find_proc (pid);
-          if (i == -1) 
+          if (i == -1)
             {
               // oops, reaped an unmanaged process!
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) oops, reaped unmanaged %d\n",
+                          ASYS_TEXT ("(%P|%t) oops, reaped unmanaged %d\n"),
                           pid));
               return pid;
             }
@@ -846,13 +846,13 @@ ACE_Process_Manager::wait (pid_t pid,
                            *status);
       this->remove_proc (pid);
     }
-  
+
   return pid;
 }
 
 // Legacy method:
 
-int 
+int
 ACE_Process_Manager::reap (pid_t pid,
                            ACE_exitcode *stat_loc,
                            int options)
@@ -884,17 +884,17 @@ ACE_Process_Manager::notify_proc_handler (ACE_HANDLE,
 
       proc_desc.process_->exit_code (exit_code);
 
-      if (proc_desc.exit_notify_ != 0) 
+      if (proc_desc.exit_notify_ != 0)
         proc_desc.exit_notify_->handle_exit (proc_desc.process_);
       else if (this->default_exit_handler_ != 0
-               && this->default_exit_handler_->handle_exit (proc_desc.process_) < 0) 
+               && this->default_exit_handler_->handle_exit (proc_desc.process_) < 0)
         {
-          this->default_exit_handler_->handle_close 
+          this->default_exit_handler_->handle_close
             (ACE_INVALID_HANDLE,
              0);
           this->default_exit_handler_ = 0;
         }
-    } 
+    }
   else
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("(%P:%t|%T) ACE_Process_Manager::notify_proc_handler:"),
