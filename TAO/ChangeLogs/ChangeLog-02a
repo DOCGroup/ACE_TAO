@@ -1,3 +1,22 @@
+Fri Jun  9 09:17:46 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LoadBalancer_i.i:
+        * orbsvcs/orbsvcs/LoadBalancing/Minimum_Dispersion.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/ReplicaProxy.h:
+        * orbsvcs/orbsvcs/LoadBalancing/Round_Robin_Strategy.cpp:
+          Fixed throw specs.
+
+        * orbsvcs/orbsvcs/LoadBalancing.idl:
+          Add comment about unused exception.
+
+        * tests/Param_Test/bd_long_seq.cpp:
+        * tests/Param_Test/bd_short_seq.cpp:
+        * tests/Param_Test/ub_long_seq.cpp:
+        * tests/Param_Test/ub_short_seq.cpp:
+          Fixed code that was casting shorts (and longs) to char* and then
+          trying to print those!
+
 Fri Jun  9 09:03:59 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsw:

@@ -55,8 +55,7 @@ public:
 
   virtual void current_load (CORBA::Float load,
                              CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::InvalidLoad,
-                     CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Send the value of the current load on the Object being load
   // balanced, where the definition of "load" is load balancing
   // algorithm specific.
@@ -70,7 +69,8 @@ public:
   // react proactively to those...
 
   virtual void disconnect (CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((LoadBalancing::ReplicaProxy::NotConnected,
+                     CORBA::SystemException));
   // Send a request to disconnect from the LoadBalancer.
 
   // @@ Ossama: could you please fix the mess i left here? it is my
