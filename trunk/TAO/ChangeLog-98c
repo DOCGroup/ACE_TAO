@@ -1,18 +1,23 @@
+Thu Jun 18 09:34:18 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/util/utl_scope.cpp (UTL_Scope ctor): removed
+          extraneous ; following the function definition.
+
 Wed Jun 17 22:03:42 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL: Massive restructuring of directories for be_include and
-	the "be" directories. Since each individual file was getting too big
-	with a large number of visitors, we have now subdivided them and
-	grouped them under individual subdirectories. 
+        * TAO_IDL: Massive restructuring of directories for be_include and
+        the "be" directories. Since each individual file was getting too big
+        with a large number of visitors, we have now subdivided them and
+        grouped them under individual subdirectories.
 
-	The original header files (e.g., be_include/be_visitor_interface.h), 
-	now only include their subdivided header files. This way the rest of
-	the code does not need to "#include" every individual file. They
-	still deal with the higher level include files only. This avoids
-	any modification of existing code.
+        The original header files (e.g., be_include/be_visitor_interface.h),
+        now only include their subdivided header files. This way the rest of
+        the code does not need to "#include" every individual file. They
+        still deal with the higher level include files only. This avoids
+        any modification of existing code.
 
-	The new directory structure for the be_include directory and the
-	newly added files are shown below:
+        The new directory structure for the be_include directory and the
+        newly added files are shown below:
 
 
                 be_visitor_argument/arglist.h
@@ -135,15 +140,15 @@ Wed Jun 17 22:03:42 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
                 be_visitor_union_branch/public_ch.h
                 be_visitor_union_branch/public_ci.h
                 be_visitor_union_branch/public_cs.h
-	
-	The same logic of breaking up individual files and grouping them
-	under individual subdirectories is used for the be_visitor_*.cpp
-	files. Each individual file "#include"s their individual
-	subfiles. This way, we do not have to modify the Makefile to
-	compile individual file. In addition, the Makefile would have
-	required each individual subdirectory in its VPATH. Furthermore,
-	it does not compile files with the same name in different
-	directories. The new structure is shown below.
+
+        The same logic of breaking up individual files and grouping them
+        under individual subdirectories is used for the be_visitor_*.cpp
+        files. Each individual file "#include"s their individual
+        subfiles. This way, we do not have to modify the Makefile to
+        compile individual file. In addition, the Makefile would have
+        required each individual subdirectory in its VPATH. Furthermore,
+        it does not compile files with the same name in different
+        directories. The new structure is shown below.
 
                 be_visitor_argument/arglist.cpp
                 be_visitor_argument/argument.cpp
@@ -265,133 +270,133 @@ Wed Jun 17 22:03:42 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
                 be_visitor_union_branch/public_ci.cpp
                 be_visitor_union_branch/public_cs.cpp
 
-	* TAO_IDL/be_include
-	  TAO_IDL/be
+        * TAO_IDL/be_include
+          TAO_IDL/be
 
-	  Renamed be_visitor_args.{h, cpp} to be_visitor_argument.{h, cpp}
-	  to reflect the correct name used by the AST node.
-	
+          Renamed be_visitor_args.{h, cpp} to be_visitor_argument.{h, cpp}
+          to reflect the correct name used by the AST node.
+
 Wed Jun 17 23:29:06 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.h: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.i: 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Fixed many bugs in the disconnection code. The main ones were
-	  related to memory managment (missing _duplicate() calls for
-	  ES_Consumer_Rep objects) and to agressive memory release
-	  (disconnecting a consumer could result in removing a critical
-	  entry for the map of type consumers in a supplier, rendering the
-	  supplier unusable).
-	  The code more transparent for CORBA exceptions (it just passes
-	  them back); but some places still catch them or create new
-	  CORBA::Environment and/or signal errors using return values.
-	  Looked more carefully at memory managment, but we still need
-	  clean startup and shutdown to really track any problems in this
-	  area.
-	  Some stylistic changes here and there.
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Fixed many bugs in the disconnection code. The main ones were
+          related to memory managment (missing _duplicate() calls for
+          ES_Consumer_Rep objects) and to agressive memory release
+          (disconnecting a consumer could result in removing a critical
+          entry for the map of type consumers in a supplier, rendering the
+          supplier unusable).
+          The code more transparent for CORBA exceptions (it just passes
+          them back); but some places still catch them or create new
+          CORBA::Environment and/or signal errors using return values.
+          Looked more carefully at memory managment, but we still need
+          clean startup and shutdown to really track any problems in this
+          area.
+          Some stylistic changes here and there.
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	  Added an option to connect and disconnect the consumers and/or
-	  suppliers before doing anything else. This was useful to debug
-	  the EC.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          Added an option to connect and disconnect the consumers and/or
+          suppliers before doing anything else. This was useful to debug
+          the EC.
 
-	* orbsvcs/tests/EC_Multiple/Makefile: 
-	  Updated dependencies.
+        * orbsvcs/tests/EC_Multiple/Makefile:
+          Updated dependencies.
 
-	* orbsvcs/tests/EC_Multiple/svc.conf: 
-	  Added more options to control the kind of lock used in the POA
-	  and similar things.
+        * orbsvcs/tests/EC_Multiple/svc.conf:
+          Added more options to control the kind of lock used in the POA
+          and similar things.
 
-	* orbsvcs/orbsvcs/Event/RT_Task.cpp: 
-	  Failing to run in the real-time class is only a warning, added
-	  an explanation to the user in that sense.
+        * orbsvcs/orbsvcs/Event/RT_Task.cpp:
+          Failing to run in the real-time class is only a warning, added
+          an explanation to the user in that sense.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.cpp: 
-	  Added debug messages (now commented out).
+        * orbsvcs/orbsvcs/Event/EC_Gateway.cpp:
+          Added debug messages (now commented out).
 
-	* orbsvcs/orbsvcs/Event/CORBA_Utils_T.i: 
-	  Fixed off-by-one bug in Simple_Array_Iterator.
+        * orbsvcs/orbsvcs/Event/CORBA_Utils_T.i:
+          Fixed off-by-one bug in Simple_Array_Iterator.
 
-	* orbsvcs/orbsvcs/Event_Utilities.cpp: 
-	  Initialize the rt_info field to 0.
+        * orbsvcs/orbsvcs/Event_Utilities.cpp:
+          Initialize the rt_info field to 0.
 
 Wed Jun 17 23:21:45 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
+        * orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
           orbsvcs/orbsvcs/Sched/SchedEntry.{cpp, h, i}
           orbsvcs/orbsvcs/Sched/Strategy_Scheduler.cpp
 
           Several bug fixes for consumers specifying a period
-	  of 0.  Incorrect handle was being used for the
-	  dependency, framing/reframing caused divide-by-zero
- 	  errors, merging was not correctly picking up the
-	  priority information from the supplier.
-	
+          of 0.  Incorrect handle was being used for the
+          dependency, framing/reframing caused divide-by-zero
+          errors, merging was not correctly picking up the
+          priority information from the supplier.
+
         * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
 
-	  Added a -n <Scheduling Service Name> argument,
-	  and command-line argument processing code to the
-	  test so that multiple copies with differently
-	  named scheduling services can run simultaneously
-	  within the context of a single naming service.
+          Added a -n <Scheduling Service Name> argument,
+          and command-line argument processing code to the
+          test so that multiple copies with differently
+          named scheduling services can run simultaneously
+          within the context of a single naming service.
 
 Wed Jun 17 17:07:12 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/README: added new options with
- 	explanations.
-	
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:	
-	* tests/Cubit/TAO/MT_Cubit/client.cpp: Changed the utilization
- 	test to bound the test by time instead of by number of requests.
-	
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
-	* tests/Cubit/TAO/MT_Cubit/client.cpp:	
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:Minor changes to cleanup
- 	code.
+        * tests/Cubit/TAO/MT_Cubit/README: added new options with
+        explanations.
 
-	* tests/Cubit/TAO/MT_Cubit/README: Updated the options and
- 	explanation of the options.
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp: Changed the utilization
+        test to bound the test by time instead of by number of requests.
+
+        * tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+        * tests/Cubit/TAO/MT_Cubit/client.cpp:
+        * tests/Cubit/TAO/MT_Cubit/server.cpp:Minor changes to cleanup
+        code.
+
+        * tests/Cubit/TAO/MT_Cubit/README: Updated the options and
+        explanation of the options.
 
 Wed Jun 17 16:58:26 1998 Michael Kircher <mk1@cs.wustl.edu>
 
-        * orbsvcs/tests/start_services: Moved this file form 
-	  orbsvcs/tests/Simulator/ to this location. David
-	  made it more generic in order to allow it to work
-	  on more Unix platforms.
+        * orbsvcs/tests/start_services: Moved this file form
+          orbsvcs/tests/Simulator/ to this location. David
+          made it more generic in order to allow it to work
+          on more Unix platforms.
 
-	* orbsvcs/tests/Simulator/ss: See comment above.
+        * orbsvcs/tests/Simulator/ss: See comment above.
 
-	* orbsvcs/tests/Simulator/README: Added some comments about
-	  the above mentioned.
+        * orbsvcs/tests/Simulator/README: Added some comments about
+          the above mentioned.
 
 Wed Jun 17 16:14:26 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/Makefile: minor fix for Chorus.
+        * tests/Cubit/TAO/MT_Cubit/Makefile: minor fix for Chorus.
 
 Wed Jun 17 15:05:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Connect.cpp (activate): Set the thr_mgr of the service
- 	  handler so the newly spawned thread is created under the ORB's
- 	  Thread_Manager.
+        * tao/Connect.cpp (activate): Set the thr_mgr of the service
+          handler so the newly spawned thread is created under the ORB's
+          Thread_Manager.
 
-	* tao/ORB_Core.cpp (inherit_from_parent_thread): Inherit more
-	  properties from the parent thread so the spawned thread has a
-	  complete environment to run on.
-	  
-	  (add_to_collocation_table):
-	  (get_collocated_poa): Changed to use the address in the
-	  orb_params. 
+        * tao/ORB_Core.cpp (inherit_from_parent_thread): Inherit more
+          properties from the parent thread so the spawned thread has a
+          complete environment to run on.
+
+          (add_to_collocation_table):
+          (get_collocated_poa): Changed to use the address in the
+          orb_params.
 
 1998-06-17  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/CC_client.{h,cpp}
-	  orbsvcs/tests/Concurrency/CC_command.l
-	  orbsvcs/tests/Concurrency/CC_command.y
-	  orbsvcs/tests/Concurrency/Makefile
-	  Now using yacc. Now patching the generated files like SVC
-	  in order to make them more portable. Patching not used yet.
+        * orbsvcs/tests/Concurrency/CC_client.{h,cpp}
+          orbsvcs/tests/Concurrency/CC_command.l
+          orbsvcs/tests/Concurrency/CC_command.y
+          orbsvcs/tests/Concurrency/Makefile
+          Now using yacc. Now patching the generated files like SVC
+          in order to make them more portable. Patching not used yet.
 
 Wed Jun 17 11:46:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
