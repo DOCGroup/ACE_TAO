@@ -127,7 +127,7 @@ namespace CIAO_GLUE_BasicSP
     BasicSP::BMDevice_var component_;
   };
 
-  class BMDEVICE_STUB_Export BMDevice_Servant
+  class BMDEVICE_SVNT_Export BMDevice_Servant
     : public virtual POA_BasicSP::BMDevice, // full skeleton name here
       public virtual PortableServer::RefCountServantBase
   {
