@@ -190,6 +190,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::open (void)
           // point at the first free block.
           ACE_Malloc_Header *p = ((ACE_Malloc_Header *) (this->cb_ptr_->freep_)) + 1;
 
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+          new ((void *) &p->next_block_) ACE_MALLOC_HEADER_PTR;
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
+
           // Why aC++ in 64-bit mode can't grok this, I have no
           // idea... but it ends up with an extra bit set which makes
           // size_ really big without this hack.
@@ -327,6 +331,9 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
               AMS (++this->cb_ptr_->malloc_stats_.nblocks_);
               currp->size_ -= nunits;
               currp += currp->size_;
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+              new ((void *) &currp->next_block_) ACE_MALLOC_HEADER_PTR;
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
               currp->size_ = nunits;
             }
           this->cb_ptr_->freep_ = prevp;
@@ -350,6 +357,10 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
               AMS (++this->cb_ptr_->malloc_stats_.nblocks_);
               AMS (++this->cb_ptr_->malloc_stats_.nchunks_);
               AMS (++this->cb_ptr_->malloc_stats_.ninuse_);
+
+#if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
+              new ((void *) &currp->next_block_) ACE_MALLOC_HEADER_PTR;
+#endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
 
               // Compute the chunk size in ACE_Malloc_Header units.
               currp->size_ = chunk_bytes / sizeof (ACE_Malloc_Header);
@@ -415,12 +426,12 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_free (void *ap)
   // that addresses are kept in sorted order.
 
   for (;
-       blockp <= currp 
+       blockp <= currp
          || blockp >= (ACE_Malloc_Header *) currp->next_block_;
        currp = currp->next_block_)
     {
       if (currp >= (ACE_Malloc_Header *) currp->next_block_
-          && (blockp > currp 
+          && (blockp > currp
               || blockp < (ACE_Malloc_Header *) currp->next_block_))
         // Freed block at the start or the end of the memory pool.
         break;
