@@ -2,6 +2,7 @@
 
 #include "concrete_classes.h"
 #include "IFR_Service_Utils_T.h"
+#include "ComponentRepository_i.h"
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID (IFRService, 
