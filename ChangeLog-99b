@@ -3,7 +3,7 @@ Tue Aug  3 23:43:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* netsvcs/clients/Naming/Client/Makefile:
 	* netsvcs/clients/Naming/Dump_Restore/Makefile:
 	  Fixed dependencies so parallel compilations (using the -j
-	  option) will work correctly.
+	  option) will work correctly. This fixes [BUGID:187]
 
 Tue Aug  3 23:23:18 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
