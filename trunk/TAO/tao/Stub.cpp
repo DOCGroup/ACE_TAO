@@ -656,7 +656,10 @@ TAO_Stub::sync_scope (void)
   if (this->policies_ != 0)
     result = this->policies_->get_cached_policy (TAO_CACHED_POLICY_SYNC_SCOPE);
 
-  this->orb_core_->stubless_sync_scope (result);
+  // If there are no cached policies, look at the thread or ORB level
+  // for the policy.
+  if (result == 0)
+    this->orb_core_->stubless_sync_scope (result);
 
   return result;
 }
