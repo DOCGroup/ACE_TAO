@@ -29,7 +29,7 @@
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
 
-#define ACE_HAS_UNICODE
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
 // G++ doesn't support template typedefs fully (yet).
 // #define ACE_HAS_TEMPLATE_TYPEDEFS
