@@ -101,7 +101,7 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
   // factor to convert to usec, and multiplying by 1000.)  The cast
   // avoids a MSVC 4.1 compiler warning about narrowing.
   u_long nseconds = (u_long) ((this->end_ - this->start_) %
-                                global_scale_factor_ * 1000 /
+                                global_scale_factor_ * 1000u /
                                 global_scale_factor_);
 
   // Get just the microseconds (dropping any left over nanoseconds).
@@ -110,11 +110,11 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   elapsed_time.tv_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
   // Transforms one second in microseconds into nanoseconds.
-  elapsed_time.tv_nsec = (time_t) ((useconds % ACE_ONE_SECOND_IN_USECS) * 1000 + nseconds);
+  elapsed_time.tv_nsec = (time_t) ((useconds % ACE_ONE_SECOND_IN_USECS) * 1000u + nseconds);
 #else
   elapsed_time.ts_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
   // Transforms one second in microseconds into nanoseconds.
-  elapsed_time.ts_nsec = (time_t) ((useconds % ACE_ONE_SECOND_IN_USECS) * 1000 + nseconds);
+  elapsed_time.ts_nsec = (time_t) ((useconds % ACE_ONE_SECOND_IN_USECS) * 1000u + nseconds);
 #endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
 }
 #endif /* ACE_HAS_POSIX_TIME */
@@ -143,14 +143,14 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
   // factor to convert to usec, and multiplying by 1000.)
   // The cast avoids a MSVC 4.1 compiler warning about narrowing.
   u_long nseconds = (u_long) ((this->end_ - this->start_) %
-                                global_scale_factor_ * 1000 /
+                                global_scale_factor_ * 1000u /
                                 global_scale_factor_);
 
   // Get just the microseconds (dropping any left over nanoseconds).
   ACE_UINT32 useconds = (ACE_UINT32) ((this->end_ - this->start_) / global_scale_factor_);
 
   // Total nanoseconds in a single 64-bit value.
-  nanoseconds = useconds * 1000 + nseconds;
+  nanoseconds = useconds * 1000u + nseconds;
 }
 
 
@@ -164,20 +164,20 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  u_long total_secs  = (u_long) (total_nanoseconds / ACE_ONE_SECOND_IN_NSECS);
+  u_long total_secs  = (u_long) (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
   ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   char buf[100];
   if (count > 1)
     {
-      ACE_hrtime_t avg_nsecs = total_nanoseconds / count;
+      ACE_hrtime_t avg_nsecs = total_nanoseconds / (ACE_UINT32) count;
       ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n",
-             count, total_secs, (extra_nsecs + 500) / 1000,
-             (u_long) ((avg_nsecs + 500) / 1000));
+             count, total_secs, (extra_nsecs + 500u) / 1000u,
+             (u_long) ((avg_nsecs + 500u) / 1000u));
     }
   else
     ACE_OS::sprintf (buf, " total %3lu.%06lu secs\n",
-             total_secs, (extra_nsecs + 500) / 1000);
+             total_secs, (extra_nsecs + 500u) / 1000u);
 
   ACE_OS::write (handle, str, ACE_OS::strlen (str));
   ACE_OS::write (handle, buf, ACE_OS::strlen (buf));
@@ -193,20 +193,20 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  u_long total_secs  = (u_long) (total_nanoseconds / ACE_ONE_SECOND_IN_NSECS);
+  u_long total_secs  = (u_long) (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
   ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   char buf[100];
   if (count > 1)
     {
-      ACE_hrtime_t avg_nsecs   = this->total_ / count;
+      ACE_hrtime_t avg_nsecs   = this->total_ / (ACE_UINT32) count;
       ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n",
-             count, total_secs, (extra_nsecs + 500) / 1000,
-             (u_long) ((avg_nsecs + 500) / 1000));
+             count, total_secs, (extra_nsecs + 500u) / 1000u,
+             (u_long) ((avg_nsecs + 500u) / 1000u));
     }
   else
     ACE_OS::sprintf (buf, " total %3lu.%06u secs\n",
-             total_secs, (extra_nsecs + 500) / 1000);
+             total_secs, (extra_nsecs + 500u) / 1000u);
 
   ACE_OS::write (handle, str, ACE_OS::strlen (str));
   ACE_OS::write (handle, buf, ACE_OS::strlen (buf));
