@@ -280,11 +280,13 @@ public:
    * block sizes.
    */
   virtual size_t message_bytes (void);
+
   /**
    * Number of total length on the queue, i.e., sum of the message
    * block lengths.
    */
   virtual size_t message_length (void);
+
   /**
    * Number of total messages on the queue.
    */
