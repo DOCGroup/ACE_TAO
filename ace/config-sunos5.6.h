@@ -18,7 +18,19 @@
 # error unsupported compiler in ace/config-sunos5.6.h
 #endif /* ! __GNUG__ && ! __KCC */
 
+#if (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE >= 199506L) || \
+    defined (__EXTENSIONS__)
+# undef  ACE_HAS_ONEARG_SIGWAIT
+# define ACE_HAS_PTHREADS_1003_DOT_1C
+# define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+// Hack 'cuz -DPOSIX_SOURCE=199506L and -DEXTENSIONS hides this.
+# include <sys/types.h>
+  extern "C" int madvise(caddr_t, size_t, int);
+#endif /* _POSIX_C_SOURCE >= 199506L  ||  __EXTENSIONS__ */
+
+#define ACE_THREAD_POSIX_SEM
+
 // SunOS 5.6 does support sched_get_priority_{min,max}
 #undef ACE_THR_PRI_FIFO_DEF
-#define ACE_THREAD_POSIX_SEM
+
 #endif /* ACE_CONFIG_H */
