@@ -132,6 +132,8 @@ ORB_CORE_FILES = \
   Reply_Dispatcher \
   IOPC \
   IOPS \
+  PollableC \
+  PollableS \
   CONV_FRAMEC \
   CONV_FRAMES \
   Tagged_Components

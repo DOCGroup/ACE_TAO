@@ -20,6 +20,7 @@
 #define TAO_REPLY_DISPATCHER_H
 
 #include "tao/GIOP.h"
+#include "tao/MessagingC.h"
 
 // Forward Declarations.
 
@@ -117,7 +118,9 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher : public TAO_Reply_Dispatcher
   //
 
 public:
-  TAO_Asynch_Reply_Dispatcher (TAO_GIOP_Message_State* message_state);
+  TAO_Asynch_Reply_Dispatcher (TAO_GIOP_Message_State* message_state,
+                               const TAO_Reply_Handler_Skeleton &reply_handler_skel,
+                               Messaging::ReplyHandler_ptr reply_handler_ptr);
   // Constructor.
 
   virtual ~TAO_Asynch_Reply_Dispatcher (void);
@@ -155,6 +158,12 @@ private:
 
   TAO_GIOP_Message_State *message_state_;
   // CDR stream for reading the input.
+
+  const TAO_Reply_Handler_Skeleton reply_handler_skel_;
+  // Skeleton for the call back method in the Reply Handler.
+
+  Messaging::ReplyHandler_ptr reply_handler_;
+  // Reply Handler passed in the Asynchronous Invocation.
 };
 
 // *********************************************************************
