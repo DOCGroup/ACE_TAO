@@ -1,3 +1,11 @@
+Wed Jan 29 13:27:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/DesignNotes: 
+
+          Added a list of items from the IDL compiler that need redesign and
+          can perhaps be done incrementally in the CIDL compiler, and
+          eventually integrated back into the IDL compiler.
+
 Wed Jan 22 16:05:18 2003  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
 
 	* CIDLC/DesignNotes: added some more ideas.

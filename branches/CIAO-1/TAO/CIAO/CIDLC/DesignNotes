@@ -71,7 +71,159 @@ General Design Ideas/Decision
           - use the same internal representation (syntax tree) in all 
             compilers and IfR. This way at some stage if we will need
             to make one of the compilers IfR-integrated (import keyword?)
-            then it will be a much easier task than it's now.
+            then it will be a much easier task than it's now. This internal
+            representation may also be usable in typecodes.
+
+          - there are a number of mechanisms in IDLC, mostly in the front
+            end, that would benefit from redesign. Hopefully some or all
+            of these can be addressed incrementally in CIDLC, and later
+            integrated back into IDLC.
+
+            symbol lookup: currently lookup is accomplished by AST navigation,
+                           and is probably the biggest single bottleneck in
+                           performance. Perhaps a separate symbol table would
+                           be preferable. Also, lookups could be specialized,
+                           e.g., for declaration, for references, and
+                           perhaps a third type for argument-related lookups.
+
+            expression evaluation: currently the result (not the expression)
+                                   is generated, which may not always be
+                                   necessary. However, for purposes of type
+                                   coercion and other checking (such as for
+                                   positive integer values in string, array
+                                   and sequence bounds) evaluation must be
+                                   done internally. Code could be generated
+                                   for expression evaluation, or perhaps 
+                                   the expression parsing code already
+                                   generated could be reused with different
+                                   actions.
+
+            type coercion: currrently accomplished with an n-squared switch
+                           statement and a reallocation of the entire
+                           expression container class. Tight coupling with the
+                           rest of the front end makes it difficult to
+                           eliminate the extra copies. We should just 
+                           start over.
+
+            included files: currently unwieldy due to legacy code and the
+                            interoperation with several preprocessors. This
+                            issue depends on the choice of a preprocessor
+                            mentioned elsewhere in the document. We also need
+                            to support generation of #include statements
+                            where they occur, rather than always at the top
+                            of the generated file.
+
+            inheritance/supports graphs: these graphs need to be traversed at
+                                         several points in the back end. 
+                                         Currently they are rebuilt for each 
+                                         use, using an n-squared algorithm. We
+                                         could at least build them only once
+                                         for each interface/valuetype,
+                                         perhaps even with a better algorithm.
+                                         It could be integrated into 
+                                         inheritance/supports error checking 
+                                         at node creation time, which also be 
+                                         streamlined.
+
+            AMI/AMH implied IDL: more can be done in the BE preprocessing
+                                 pass, hopefully eliminating a big chunk of
+                                 the huge volume of AMI/AMH visitor code.
+                                 The implied IDL generated for CCM types,
+                                 for example, leaves almost nothing extra
+                                 for the visitors to do.
+
+            global/static stuff: there are way too many variables and 
+                                 functions of this type.
+
+            containers: the IDLC front end has proprietary classes for this. 
+                        Use of these legacy classes should be replaced by 
+                        either ACE containers or C++ runtime containers.
+
+            fwd decl redefinition: forward declaration nodes all initially
+                                   contain a heap-allocated dummy full- 
+                                   definition member, later replaced by a copy 
+                                   of the full definition. This needs to be 
+                                   streamlined.
+
+            memory leaks: inconsistent copying/passing policies make it almost
+                          impossible to eliminate the huge number of leaks. The
+                          front end will be more and more reused, and it may be
+                          desirable to make it executable as a function call,
+                          in which case it will important to eliminate the
+                          leaks. Perhaps copying of AST nodes can be eliminated
+                          with reference counting or just with careful 
+                          management, similarly for string identifiers and 
+                          literals. Destroy() methods have been put in all
+                          the node classes, and are called recursively from
+                          the AST root at destruction time, but they are far
+                          from doing a complete job,
+
+            visitor instantiation: the huge visitor factory has already been 
+                                   much reduced, and the huge enum of context 
+                                   state values is being reduced. However 
+                                   there will still be an abundance of switch 
+                                   statements at nearly every instance of 
+                                   visitor creation at scope nesting. We 
+                                   could make better use of polymorphism 
+                                   to get rid of them.
+
+            node narrowing: instead of the impenetrable macros we use now, we
+                            could either generate valuetype-like downcast
+                            methods for the (C)IDL types, or we could just use
+                            dynamic_cast.
+
+            error reporting: making error messages more informative, and error
+                             recovery could both be a lot better, as they are 
+                             in most other IDL compilers. If a recursive 
+                             descent parser is used (such as Spirit), there 
+                             is a simple generic algorithm for error recovery.
+
+            streams: we can get reuse of code generation streams through 
+                     inheritance. One idea is to have a basic stream code
+                     generation class in ACE, where it can be built upon for
+                     many kinds of code generation (XML, config files, etc.).
+                     A stream class for basic IDL can be inherited by a
+                     stream class for a superset of the language, and so on.
+                     Granted, overloaded operators can't be virtual, but
+                     delegation of each overload is a one-liner, as we do 
+                     with TAO_*putCDR.
+
+            FE/BE node classes: if BE node classes are implemented at all,
+                                there should be a complete separation of
+                                concerns - BE node classes should contain
+                                only info related to code generation, and
+                                FE node classes should contain only info
+                                related to the AST representation. As the
+                                front end becomes more modular and reusable,
+                                this will become more and more necessary.
+
+            undefined fwd decls: now that we have dropped support for
+                                 platforms without namespaces, the code
+                                 generated for fwd declarations not defined
+                                 in the same translation unit can be much
+                                 improved, most likely by the elimination
+                                 of generated flat-name global methods, and
+                                 perhaps other improvements as well.
+
+            strategized code generation: many places now have either lots of
+                                         duplication, or an explosion of
+                                         branching in a single visitor.
+                                         Adding code generation for use cases
+                                         incrementally may give us an
+                                         opportunity to refactor and 
+                                         strategize it better.
+
+            node generator: this class does nothing more than call 'new' and
+                            pass unchanged the arguments it gets to the 
+                            appropriate constructor - it can be eliminated.
+
+            virtual methods: there are many member functions in the IDL 
+                             compiler that are needlessly virtual.
+
+            misc. leveraging: redesign of mechanisms listed above can have
+                              an effect on other mechanisms, such as the
+                              handling of pragma prefix, typeprefix, and
+                              reopened modules.
 
 
 Option Parser
