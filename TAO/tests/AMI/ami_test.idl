@@ -20,9 +20,9 @@
 
 module A 
   {
-    exception DidNotWork {
+    exception DidTheRightThing {
       long id;
-      string whatDidNotWork;
+      string whatDidTheRightThing;
     };
 
     interface AMI_Test
@@ -30,7 +30,7 @@ module A
         long foo (out long out_l, 
                   in long in_l,
                   in string in_str)
-          raises (DidNotWork);
+          raises (DidTheRightThing);
   
         attribute long yadda;
         
