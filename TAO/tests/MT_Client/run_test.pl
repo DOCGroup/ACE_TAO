@@ -13,7 +13,7 @@ $cwd = getcwd();
 $client_conf="$cwd$DIR_SEPARATOR" ."client.global.conf";
 $client_process="client";
 $debug_level='0';
-$threads='10';
+$threads='1';
 $status = 0;
 
 ACE::checkForTarget($cwd);
