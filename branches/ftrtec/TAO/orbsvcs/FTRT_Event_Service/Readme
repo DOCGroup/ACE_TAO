@@ -67,9 +67,12 @@ Is there any adjustable options for FTRTEC?
   -sciop          Use SCIOP for CORBA communication. This requires that the Naming
                   Service and ftec are also started using SCIOP transport protocol.
 
-  -t n            Specify the transaction depth. The transaction depth indicates the
+  -d n            Specify the transaction depth. The transaction depth indicates the
                   number of replicas that must complete the subscription request before
                   the request can return.
+
+  -t f.f          For supplier only. Specify the time interval between event sending
+                  in seconds, this value should be a float point.
 
  If you the naming service are not running at the same machine with above programs,
  you can always set the environmental variables NameServiceIOR before starting the

@@ -93,6 +93,7 @@ FTRT_ClientORB_Interceptor::receive_reply (
 {
   ACE_TRACE("FTRT_ClientORB_Interceptor::receive_reply");
 
+
   IOP::ServiceContext_var service_context;
   ACE_TRY {
     service_context =
@@ -106,7 +107,6 @@ FTRT_ClientORB_Interceptor::receive_reply (
   ACE_ENDTRY;
   ACE_CHECK;
 
-  ACE_DEBUG((LM_DEBUG, "FT_FORWARD Service Context received\n"));
 
   const char * buf =
     ACE_reinterpret_cast (const char *,
@@ -115,21 +115,14 @@ FTRT_ClientORB_Interceptor::receive_reply (
   TAO_InputCDR cdr (buf,
     service_context->context_data.length ());
 
-  /*
-  CORBA::Boolean byte_order;
-
-  if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    ACE_THROW (CORBA::BAD_PARAM ());
-  cdr.reset_byte_order (ACE_static_cast (int,byte_order));
-  */
 
   CORBA::Object_var obj;
 
   if (cdr >> obj) {
     // update the target
      CORBA::Object_var target = ri->target(ACE_ENV_SINGLE_ARG_PARAMETER);
-     TAO_MProfile& base_profiles = target->_stubobj ()->base_profiles ();
-     base_profiles.set( obj->_stubobj()->base_profiles() );
+     target->_stubobj ()->base_profiles ( obj->_stubobj()->base_profiles() );
+     ACE_DEBUG((LM_DEBUG, "target object updated\n"));
   }
 }
 

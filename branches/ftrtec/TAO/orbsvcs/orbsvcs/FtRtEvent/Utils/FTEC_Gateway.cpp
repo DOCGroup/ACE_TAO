@@ -8,6 +8,11 @@ ACE_RCSID (Utils,
            FTEC_Gateway,
            "$Id$")
 
+#if !defined(__ACE_INLINE__)
+#include "FTEC_Gateway.inl"
+#endif /* __ACE_INLINE__ */
+
+
 namespace TAO_FTRTEC {
 class FTEC_Gateway_ConsumerAdmin
   : public POA_RtecEventChannelAdmin::ConsumerAdmin
@@ -130,21 +135,21 @@ FTEC_Gateway::~FTEC_Gateway()
 }
 
 RtecEventChannelAdmin::EventChannel_ptr
-FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
+FTEC_Gateway::activate(PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 {
     PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
-      root_poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
+      poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 
       PortableServer::LifespanPolicy_var lifespan =
-      root_poa->create_lifespan_policy(PortableServer::PERSISTENT
+      poa->create_lifespan_policy(PortableServer::PERSISTENT
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 
     // create a USER_ID IdAssignmentPolicy object
     PortableServer::IdAssignmentPolicy_var assign =
-      root_poa->create_id_assignment_policy(PortableServer::USER_ID
+      poa->create_id_assignment_policy(PortableServer::USER_ID
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 
@@ -161,9 +166,9 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
       PortableServer::IdAssignmentPolicy::_duplicate(assign.in() ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 
-    PortableServer::POAManager_var mgr = root_poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
+    PortableServer::POAManager_var mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
 
-    impl_->poa = root_poa->create_POA("gateway_poa", mgr.in(), policy_list
+    impl_->poa = poa->create_POA("gateway_poa", mgr.in(), policy_list
       ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN(0);
 
@@ -397,6 +402,7 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  /*
   if (CORBA::is_nil(impl_->push_handler.in())) {
     impl_->push_handler = impl_->push_handler_servant._this();
   }
@@ -404,6 +410,8 @@ void FTEC_Gateway_ProxyPushConsumer::push (const RtecEventComm::EventSet & data
   impl_->ftec->sendc_push (impl_->push_handler.in(),
                            **oid_ptr,
                            data ACE_ENV_ARG_PARAMETER);
+ */
+  impl_->ftec->push(**oid_ptr, data);
   ACE_CHECK;
 }
 
