@@ -1,3 +1,9 @@
+Fri Dec 17 15:39:36 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* docs/pluggable_protocols/index.html:
+
+	  Added a brief section on tags.
+
 Fri Dec 17 02:26:25 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/README:
