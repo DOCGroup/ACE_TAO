@@ -1,25 +1,29 @@
+Wed Jul 14 09:29:57 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Makefile (realclean): remove log/compilations.log*.
+
 Tue Jul 13 22:25:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/wrapper_macros.GNU:
-	  Disable the "unitialized" warnings with EGCS+exceptions, it
-	  gives too many bogus warnings to take care of them.
+        * include/makeinclude/wrapper_macros.GNU:
+          Disable the "unitialized" warnings with EGCS+exceptions, it
+          gives too many bogus warnings to take care of them.
 
 Tue Jul 13 22:16:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/ACEutils.pm:
-	  Wait for non empty files, sometimes the process creates the
-	  files but does not have enough time to fill its contents.
+        * bin/ACEutils.pm:
+          Wait for non empty files, sometimes the process creates the
+          files but does not have enough time to fill its contents.
 
 Tue Jul 13 21:32:44 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
-	* ltconfig:
-	* ltmain.sh:
-	* ace/Makefile.am:
-	* tests/Makefile.am:
+        * acconfig.h:
+        * ltconfig:
+        * ltmain.sh:
+        * ace/Makefile.am:
+        * tests/Makefile.am:
 
-	  ACE Configuration Project updates.  Synchronized with current
-	  version of ACE in CVS repository.
+          ACE Configuration Project updates.  Synchronized with current
+          version of ACE in CVS repository.
 
 Tue Jul 13 15:22:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
