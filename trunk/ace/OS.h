@@ -506,15 +506,6 @@ typedef int clockid_t;
 #endif /* CLOCK_REALTIME */
 #endif /* ! ACE_HAS_CLOCK_GETTIME && ! _CLOCKID_T */
 
-// #if (!defined (timespec) && !defined (m88k))
-// #define timestruc_t struct timespec
-// #endif /* timespec */
-
-#if !defined (ACE_HAS_SVR4_TIME)
-// Definition per SVr4.
-typedef struct timespec timestruc_t;	
-#endif /* ACE_HAS_SVR4_TIME */
-
 class ACE_Export ACE_Time_Value
   // = TITLE
   //     Operations on "timeval" structures.
@@ -543,8 +534,8 @@ public:
   ACE_Time_Value (const struct timeval &t);
   // Construct the <ACE_Time_Value> from a <timeval>.
 
-  ACE_Time_Value (const timestruc_t &t);
-  //  Initializes the <ACE_Time_Value> object from a <timestruc_t>.
+  ACE_Time_Value (const timespec_t &t);
+  //  Initializes the <ACE_Time_Value> object from a <timespec_t>.
 
   ACE_Time_Value (const ACE_Time_Value &tv);
   // Copy constructor.
@@ -564,12 +555,12 @@ public:
   void set (const timeval &t);
   // Construct a <Time_Value> from a <timeval>.
 
-  void set (const timestruc_t &t);
-  // Initializes the <Time_Value> object from a <timestruc_t>.
+  void set (const timespec_t &t);
+  // Initializes the <Time_Value> object from a <timespec_t>.
 
 #if defined (ACE_WIN32)
   void set (const FILETIME &ft);
-  //  Initializes the <Time_Value> object from a <timestruc_t>. 
+  //  Initializes the <Time_Value> object from a <timespec_t>. 
 #endif /* ACE_WIN32 */
 
   long msec (void) const;
@@ -578,8 +569,8 @@ public:
   void msec (long);
   // Converts from milli-seconds format into <Time_Value> format.
 
-  operator timestruc_t () const;
-  // Returns the value of the object as a <timestruc_t>. 
+  operator timespec_t () const;
+  // Returns the value of the object as a <timespec_t>. 
 
   operator timeval () const;
   // Returns the value of the object as a <timeval>.

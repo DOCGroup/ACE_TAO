@@ -147,13 +147,13 @@ ACE_Time_Value::set (double d)
   this->normalize ();
 }
 
-// Initializes a timestruc_t.  Note that this approach loses precision
+// Initializes a timespec_t.  Note that this approach loses precision
 // since it converts the nano-seconds into micro-seconds.  But then
 // again, do any real systems have nano-second timer precision
 // anyway?!
 
 ACE_INLINE void
-ACE_Time_Value::set (const timestruc_t &tv)
+ACE_Time_Value::set (const timespec_t &tv)
 {
   // ACE_TRACE ("ACE_Time_Value::set");
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
@@ -233,13 +233,13 @@ operator >= (const ACE_Time_Value &tv1,
     return 0;
 }
 
-// Returns the value of the object as a timestruc_t. 
+// Returns the value of the object as a timespec_t. 
 
 ACE_INLINE 
-ACE_Time_Value::operator timestruc_t () const
+ACE_Time_Value::operator timespec_t () const
 {
-  // ACE_TRACE ("ACE_Time_Value::operator timestruc_t");
-  timestruc_t tv;
+  // ACE_TRACE ("ACE_Time_Value::operator timespec_t");
+  timespec_t tv;
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   tv.tv_sec = this->tv_.tv_sec;
   tv.tv_nsec = this->tv_.tv_usec * 1000;
@@ -250,10 +250,10 @@ ACE_Time_Value::operator timestruc_t () const
   return tv;
 }
 
-// Initializes the ACE_Time_Value object from a timestruc_t.
+// Initializes the ACE_Time_Value object from a timespec_t.
 
 ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (const timestruc_t &tv)
+ACE_Time_Value::ACE_Time_Value (const timespec_t &tv)
 {
   // ACE_TRACE ("ACE_Time_Value::ACE_Time_Value");
   this->set (tv);
@@ -1740,7 +1740,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // ACE_TRACE ("ACE_OS::cond_timedwait");
 #if defined (ACE_HAS_THREADS)
   int result;
-  timestruc_t ts = *timeout; // Calls ACE_Time_Value::operator timestruc_t().
+  timespec_t ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
 
 #if (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_FSU_PTHREADS)
   ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0

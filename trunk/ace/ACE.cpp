@@ -784,7 +784,7 @@ ACE::sendto (ACE_HANDLE handle,
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
-      timestruc_t ts = copy;
+      timespec_t ts = copy;
       return ::sendto_timedwait (handle, buf, len, flags, addr, addrlen, &ts);
     }
 #else
@@ -814,7 +814,7 @@ ACE::sendmsg (ACE_HANDLE handle,
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
-      timestruc_t ts = copy;
+      timespec_t ts = copy;
       return ::sendmsg_timedwait (handle, msg, flags, &ts);
     }
 #else
@@ -843,7 +843,7 @@ ACE::readv (ACE_HANDLE handle,
   else {
      ACE_Time_Value copy = *timeout;
      copy += ACE_OS::gettimeofday ();
-     timestruc_t ts = copy;
+     timespec_t ts = copy;
      return ::readv_timedwait (handle, iov, iovcnt, &ts);
   }
 #else
@@ -872,7 +872,7 @@ ACE::writev (ACE_HANDLE handle,
   else {
      ACE_Time_Value copy = *timeout;
      copy += ACE_OS::gettimeofday ();
-     timestruc_t ts = copy;
+     timespec_t ts = copy;
      return ::writev_timedwait (handle, iov, iovcnt, &ts);
   }
 #else
@@ -1404,7 +1404,7 @@ ACE::send (ACE_HANDLE handle,
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday();
-      timestruc_t ts = copy;
+      timespec_t ts = copy;
       return ::send_timedwait (handle, buf, n, flags, &ts);
     }
 #else
@@ -1435,7 +1435,7 @@ ACE::send (ACE_HANDLE handle,
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
-      timestruc_t ts = copy;
+      timespec_t ts = copy;
       return ::write_timedwait (handle, buf, n, &ts);
     }
 #else
@@ -1495,7 +1495,7 @@ ACE::recvfrom (ACE_HANDLE handle,
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
-      timestruc_t ts = copy;
+      timespec_t ts = copy;
       return ::recvfrom_timedwait (handle, buf, len, flags, addr, addrlen, &ts);
     }
 #else
@@ -1525,7 +1525,7 @@ ACE::recvmsg (ACE_HANDLE handle,
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
-      timestruc_t ts = copy;
+      timespec_t ts = copy;
       return ::recvmsg_timedwait (handle, msg, flags, &ts);
     }
 #else
@@ -1555,7 +1555,7 @@ ACE::recv (ACE_HANDLE handle,
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
-      timestruc_t ts = copy;
+      timespec_t ts = copy;
       return ::read_timedwait (handle, buf, n, &ts);
     }
 #else
@@ -1587,7 +1587,7 @@ ACE::recv (ACE_HANDLE handle,
     {
       ACE_Time_Value copy = *timeout;
       copy += ACE_OS::gettimeofday ();
-      timestruc_t ts = copy;
+      timespec_t ts = copy;
       return ::recv_timedwait (handle, buf, len, flags, &ts);
     }
 #else

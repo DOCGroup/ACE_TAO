@@ -1,26 +1,16 @@
 /* -*- C++ -*- */
 // $Id$
 
-// For IRIX 6.[234] with pthreads support.
-// Note: Exceptions are supported in -n32 mode.
-// You can select between -32 (aka -o32) and -n32 mode by selecting either
-// platform_irix6.x-32_sgic++.GNU or platform_irix6.x-n32_sgic++.GNU
+// NOTE: THIS IS NOT A COMPLETE CONFIG FILE.
 
-// For IRIX 6.2 there are several patches that should be applied to
-// get reliable operation with multi-threading and exceptions.
-// Specifically you should get a reasonable current IRIX, Compiler
-// and POSIX patch-sets.
+// Here we setup the common config for IRIX 6.2, 6.4 and hopefully 6.3
+// but with pthreads enabled.
 
-// For IRIX 6.[34] it's less critical, but it's still recommended
-// that you apply the applicable patch-sets (IRIX and Compiler I believe).
+// This file is automatically included in several irix6.* config
+// files, but is *not* included in the irix6.2-nothreads file.
 
-// These patches are updated frequently, so you should ask your support
-// contact or search SGI's web site (http://www.sgi.com) for the latest
-// version.
-
-// NOTE: We can't call this ACE_CONFIG_H, it's used by an included header file!
-#if !defined (ACE_IRIX6_CONFIG_H)
-#define ACE_IRIX6_CONFIG_H
+#if !defined (ACE_CONFIG_IRIX6X_H)
+#define ACE_CONFIG_IRIX6X_H
 
 // Include basic (non-threaded) configuration
 #include <ace/config-irix6.x-sgic++-nothreads.h>
@@ -64,4 +54,4 @@
   #define ACE_MT_SAFE 1
 #endif /* ACE_MT_SAFE */
 
-#endif /* ACE_IRIX6_CONFIG_H */
+#endif /* ACE_CONFIG_IRIX6X_H */

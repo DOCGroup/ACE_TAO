@@ -106,7 +106,7 @@ private:
   // Keep track of the last rusage for incremental timing.
 
 #if defined (ACE_HAS_PRUSAGE_T)
-  void subtract (timestruc_t &tdiff, timestruc_t &t0, timestruc_t &t1);
+  void subtract (timespec_t &tdiff, timespec_t &t0, timespec_t &t1);
   // Substract two timestructs and store their difference.
 
   ACE_HANDLE proc_handle_;

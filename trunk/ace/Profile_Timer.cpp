@@ -92,7 +92,7 @@ void
 ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
 {
   ACE_TRACE ("ACE_Profile_Timer::compute_times");
-  timestruc_t td;
+  timespec_t td;
 
   ACE_Profile_Timer::Rusage &end = this->end_usage_;
   ACE_Profile_Timer::Rusage &begin = this->begin_usage_;
@@ -108,7 +108,7 @@ ACE_Profile_Timer::compute_times (ACE_Elapsed_Time &et)
 // Determine the difference between T1 and T2. 
 
 void
-ACE_Profile_Timer::subtract (timestruc_t &tdiff, timestruc_t &t1, timestruc_t &t0)
+ACE_Profile_Timer::subtract (timespec_t &tdiff, timespec_t &t1, timespec_t &t0)
 {
   ACE_TRACE ("ACE_Profile_Timer::subtract");
   tdiff.tv_sec  = t1.tv_sec - t0.tv_sec;
