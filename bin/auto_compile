@@ -229,6 +229,10 @@ sub copy_logs {
   local $MAKE_PRETTY="$CHECKOUT/$MODULE/bin/make_pretty.pl";
   system ("perl $MAKE_PRETTY -b $LOGFILE >$DEST_DIR/$LOGBASE"."_brief.html");
   system ("perl $MAKE_PRETTY    $LOGFILE >$DEST_DIR/$LOGBASE".".html");
+
+  chmod 0644, $DEST_DIR.'/'.$LOGBASE.'.txt'
+            , $DEST_DIR.'/'.$LOGBASE.'_brief.html'
+            , $DEST_DIR.'/'.$LOGBASE.'.html' ;
 }
 
 sub report_errors {
