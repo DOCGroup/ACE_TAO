@@ -1,58 +1,13 @@
-Case 1:
-------
 
-With a single name server, the test app is run.  As compiled the test
-app:
-
-	- get the root context
-	- binds a new context ("MyContext"), returning the new
-	  context's pointer.
-	- binds a name ("MyName") into this context.
-	- resolves the compound name ("MyContext;MyName").
-
-This works great.
-
-Case 2:
-------
-
-Again with a single server.  The test app is compiled to:
+Currently the test app is compiled to:
 
 	- binds a new context ("MyContext").
 	- binds the compound name ("MyContext;MyName") into the
 	  root context.
 	- resolves the compount name ("MyContext;MyName").
 
-This fails.  The naming server raises the exception...
+(Functioning of hierarchical test implies functioning of the flat case)
 
-   Servant raised exception: 
-   (8694|1) EXCEPTION, detected in POA::dispatch
-   (8694|1) user exception, ID \
-		'IDL:CosNaming/NamingContext/AlreadyBound:1.0'
 
-Case 3:
-------
-
-Now we have 2 servers running.  One Name Server is the root context
-server.  The other server is the "MyContext" server, and binds its
-context into the root server at startup.  The Name Servers are started
-as follows:
-
-	Naming_Server -ORBport 0 &
-	Naming_Server -ORBport 0 -NScontextname MyContext &
-
-The test app is compiled to:
-
-	- get the root context
-	- resolve the context ("MyContext"), returning the
-	  context's pointer
-	- binds a name ("MyName") into this context.
-	- resolve the compound name ("MyContext;MyName).
-
-This works great.
-
-Case 4:
--------
-
-Same as case 2, but with 2 servers.  As expected, it fails
-identically, raising the same exception.
+A collection of various tests selectable by command line arguments will be available later.
 
