@@ -106,7 +106,7 @@ public:
   // = Initialization and termination methods.
   ACE_Service_Record (const char *n, 
 		      ACE_Service_Type *o, 
-		      const void *handle, 
+		      const ACE_SHLIB_HANDLE handle, 
 		      int active);
   ~ACE_Service_Record (void);
 			 
@@ -117,8 +117,8 @@ public:
   void type (const ACE_Service_Type *, 
 	     int active = 1);
 
-  const void *handle (void) const;
-  void handle (const void *);
+  const ACE_SHLIB_HANDLE handle (void) const;
+  void handle (const ACE_SHLIB_HANDLE);
 
   void suspend (void) const;
   void resume (void) const;
@@ -138,7 +138,7 @@ private:
   const ACE_Service_Type *type_;
   // Pointer to C++ object that implements the svc.
 
-  const void *handle_; 
+  ACE_SHLIB_HANDLE handle_; 
   // Handle to shared object file (non-zero if dynamically linked).
 
   int active_;  
