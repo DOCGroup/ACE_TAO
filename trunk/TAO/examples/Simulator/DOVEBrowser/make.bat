@@ -40,6 +40,6 @@ idl2java RtecEventChannelAdmin.idl
 idl2java RtecScheduler.idl
 idl2java CosNaming.idl
 idl2java CosTimeBase.idl
-jvbc *.java
+vbjc *.java
 
 :end
