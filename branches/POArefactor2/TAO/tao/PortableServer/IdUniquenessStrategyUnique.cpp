@@ -50,6 +50,12 @@ namespace TAO
           return true;
         }
     }
+
+    bool
+    Unique_Id_Uniqueness_Strategy::allow_multiple_activations (void) const
+    {
+      return false;
+    }
   }
 }
 

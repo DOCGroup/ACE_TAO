@@ -34,6 +34,12 @@ namespace TAO
       // another time
       return true;
     }
+
+    bool
+    Multiple_Id_Uniqueness_Strategy::allow_multiple_activations (void) const
+    {
+      return true;
+    }
   }
 }
 

@@ -42,11 +42,9 @@ namespace TAO
       virtual
       void strategy_init (
         TAO_POA *poa,
-        IdUniquenessStrategy* unique_strategy,
+        IdUniquenessStrategy* id_uniqueness_strategy,
         IdAssignmentStrategy* id_assignment_strategy,
         RequestProcessingStrategy* request_processing_strategy);
-
-      virtual TAO_Active_Object_Map* get_aom() const;
 
       CORBA::ULong waiting_servant_deactivation (void) const;
 
@@ -174,6 +172,10 @@ namespace TAO
         const PortableServer::ObjectId &user_id,
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall);
+
+      virtual
+      CORBA::Boolean servant_has_remaining_activations (
+        PortableServer::Servant servant);
 
     protected:
       TAO_POA *poa_;

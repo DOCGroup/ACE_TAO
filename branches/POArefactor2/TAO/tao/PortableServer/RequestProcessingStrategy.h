@@ -43,7 +43,6 @@ namespace TAO
 }
 
 class TAO_POA;
-class TAO_Active_Object_Map;
 
 namespace TAO
 {
@@ -60,7 +59,6 @@ namespace TAO
       virtual
       void strategy_init(
         TAO_POA *poa,
-        TAO_Active_Object_Map* map,
         ServantRetentionStrategy* strategy) = 0;
 
       virtual

@@ -50,7 +50,7 @@ namespace TAO
     void
     Retain_Servant_Retention_Strategy::strategy_init (
       TAO_POA *poa,
-      IdUniquenessStrategy* unique_strategy,
+      IdUniquenessStrategy* id_uniqueness_strategy,
       IdAssignmentStrategy* id_assignment_strategy,
       RequestProcessingStrategy* request_processing_strategy)
     {
@@ -61,7 +61,7 @@ namespace TAO
       TAO_Active_Object_Map *active_object_map = 0;
       ACE_NEW_THROW_EX (active_object_map,
                         TAO_Active_Object_Map (!poa->system_id (),
-                                               poa->cached_policies().id_uniqueness () == PortableServer::UNIQUE_ID,
+                                               !poa->active_policy_strategies().id_uniqueness_strategy()->allow_multiple_activations (),
                                                poa->active_policy_strategies().lifespan_strategy()->persistent (),
                                                poa->orb_core().server_factory ()->active_object_map_creation_parameters ()
                                                ACE_ENV_ARG_PARAMETER),
@@ -226,12 +226,6 @@ namespace TAO
         {
           ACE_THROW (CORBA::OBJ_ADAPTER ());
         }
-    }
-
-    TAO_Active_Object_Map*
-    Retain_Servant_Retention_Strategy::get_aom() const
-    {
-      return active_object_map_;
     }
 
     PortableServer::Servant
@@ -1151,6 +1145,13 @@ namespace TAO
       servant_upcall.active_object_map_entry(entry);
 
       return result;
+    }
+
+    CORBA::Boolean
+    Retain_Servant_Retention_Strategy::servant_has_remaining_activations (
+      PortableServer::Servant servant)
+    {
+      return this->active_object_map_->remaining_activations (servant);
     }
   }
 }

@@ -30,7 +30,6 @@ namespace TAO
   {
     Servant_Activator_Request_Processing_Strategy::Servant_Activator_Request_Processing_Strategy (void) :
       poa_ (0),
-      active_object_map_ (0),
       servant_retention_strategy_ (0)
     {
     }
@@ -42,11 +41,9 @@ namespace TAO
     void
     Servant_Activator_Request_Processing_Strategy::strategy_init(
       TAO_POA *poa,
-      TAO_Active_Object_Map* map,
       ServantRetentionStrategy* servant_retention_strategy)
     {
       poa_ = poa;
-      active_object_map_ = map;
       servant_retention_strategy_ = servant_retention_strategy;
     }
 
@@ -220,7 +217,7 @@ namespace TAO
       ACE_ENV_ARG_DECL)
     {
       CORBA::Boolean remaining_activations =
-        this->active_object_map_->remaining_activations (servant);
+        this->servant_retention_strategy_->servant_has_remaining_activations (servant);
 
       // A recursive thread lock without using a recursive
       // thread lock.  Non_Servant_Upcall has a magic

@@ -44,7 +44,6 @@ namespace TAO
       virtual
       void strategy_init(
         TAO_POA *poa,
-        TAO_Active_Object_Map* map,
         ServantRetentionStrategy* strategy);
 
       PortableServer::ServantManager_ptr

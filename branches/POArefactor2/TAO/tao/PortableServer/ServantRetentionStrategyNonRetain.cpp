@@ -43,11 +43,11 @@ namespace TAO
     void
     Non_Retain_Servant_Retention_Strategy::strategy_init (
       TAO_POA *poa,
-      IdUniquenessStrategy* unique_strategy,
+      IdUniquenessStrategy* id_uniqueness_strategy,
       IdAssignmentStrategy* id_assignment_strategy,
       RequestProcessingStrategy* request_processing_strategy)
     {
-      ACE_UNUSED_ARG (unique_strategy);
+      ACE_UNUSED_ARG (id_uniqueness_strategy);
       ACE_UNUSED_ARG (id_assignment_strategy);
       poa_ = poa;
       request_processing_strategy_ = request_processing_strategy;
@@ -63,12 +63,6 @@ namespace TAO
       ACE_UNUSED_ARG (id);
 
       ACE_THROW (PortableServer::POA::WrongPolicy ());
-    }
-
-    TAO_Active_Object_Map*
-    Non_Retain_Servant_Retention_Strategy::get_aom() const
-    {
-      return 0;
     }
 
     PortableServer::Servant
@@ -490,6 +484,15 @@ namespace TAO
 
       return -1;
     }
+
+    CORBA::Boolean
+    Non_Retain_Servant_Retention_Strategy::servant_has_remaining_activations (
+      PortableServer::Servant servant)
+    {
+      ACE_UNUSED_ARG (servant);
+      return false;
+    }
+
   }
 }
 

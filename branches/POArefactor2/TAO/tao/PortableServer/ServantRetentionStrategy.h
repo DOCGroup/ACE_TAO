@@ -53,11 +53,9 @@ namespace TAO
       virtual
       void strategy_init (
         TAO_POA *poa,
-        IdUniquenessStrategy* unique_strategy,
+        IdUniquenessStrategy* id_uniqueness_strategy,
         IdAssignmentStrategy* id_assignment_strategy,
         RequestProcessingStrategy* request_processing_strategy) = 0;
-
-      virtual TAO_Active_Object_Map* get_aom() const = 0;
 
       virtual
       int is_servant_in_map (PortableServer::Servant servant,
@@ -187,6 +185,9 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall) = 0;
 
+      virtual
+      CORBA::Boolean servant_has_remaining_activations (
+        PortableServer::Servant servant) = 0;
     };
   }
 }

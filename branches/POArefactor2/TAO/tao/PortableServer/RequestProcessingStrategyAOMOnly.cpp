@@ -33,11 +33,9 @@ namespace TAO
     void
     AOM_Only_Request_Processing_Strategy::strategy_init(
       TAO_POA *poa,
-      TAO_Active_Object_Map* map,
       ServantRetentionStrategy* strategy)
     {
       ACE_UNUSED_ARG (poa);
-      ACE_UNUSED_ARG (map);
       ACE_UNUSED_ARG (strategy);
     }
 

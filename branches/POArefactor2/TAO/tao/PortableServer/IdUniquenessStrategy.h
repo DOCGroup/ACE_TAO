@@ -48,6 +48,9 @@ namespace TAO
       bool is_servant_activation_allowed (
         PortableServer::Servant servant,
         int &wait_occurred_restart_call) = 0;
+
+      virtual
+      bool allow_multiple_activations (void) const = 0;
     };
   }
 }

@@ -42,6 +42,9 @@ namespace TAO
         PortableServer::Servant servant,
         int &wait_occurred_restart_call);
 
+      virtual
+      bool allow_multiple_activations (void) const;
+
     private:
       ServantRetentionStrategy* servant_retention_strategy_;
     };

@@ -38,11 +38,9 @@ namespace TAO
     void
     Servant_Locator_Request_Processing_Strategy::strategy_init(
       TAO_POA *poa,
-      TAO_Active_Object_Map* map,
       ServantRetentionStrategy* servant_retention_strategy)
     {
       ACE_UNUSED_ARG (servant_retention_strategy);
-      ACE_UNUSED_ARG (map);
       poa_ = poa;
     }
 
