@@ -1379,6 +1379,7 @@ extern "C" {
     int     h_addrtype;     /* host address type */
     int     h_length;       /* address length */
     char    **h_addr_list;  /* (first, only) address from name server */
+#define	h_addr h_addr_list[0]	/* the first address */
   };
 #else
 #include /**/ <netdb.h>
