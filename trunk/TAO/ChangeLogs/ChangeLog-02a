@@ -1,3 +1,9 @@
+Fri Sep  1 08:32:01 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Leader_Followers/client.cpp:
+          No need to resolve the RootPOA if it is not going to be used.
+          Also it fails because we are not linking the POA library.
+
 Fri Sep  1 08:18:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/DomainC.h:
