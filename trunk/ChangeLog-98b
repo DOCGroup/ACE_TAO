@@ -1,3 +1,9 @@
+Fri Sep 25 22:10:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Map_Manager.cpp: 
+	  Map_Manager::close() did not reset the capacity or current size
+	  of the map.
+
 Fri Sep 25 18:24:17 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Proactor.{h,cpp}: Had to allow the definition of 
