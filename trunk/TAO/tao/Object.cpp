@@ -13,6 +13,7 @@
 #include "tao/GIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
+#include "tao/debug.h"
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
