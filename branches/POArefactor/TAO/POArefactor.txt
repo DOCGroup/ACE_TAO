@@ -1,3 +1,9 @@
+Wed Sep 22 14:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Thread_Strategy.{h,cpp}:
+          New file, contains some classes for the idea to implement the
+          policy behaviour in strategies. Just a checkin to share ideas.
+
 Wed Sep 22 13:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ORT_Adapter_Factory.h:
