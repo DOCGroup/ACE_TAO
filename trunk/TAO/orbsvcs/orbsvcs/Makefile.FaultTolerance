@@ -84,8 +84,6 @@ realclean: clean
  FaultTolerance/FT_Service_Callbacks.h \
  $(ACE_ROOT)/ace/pre.h \
  FaultTolerance/fault_tol_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -196,7 +194,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Sequence_T.cpp \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/Service_Callbacks.i \
- FT_CORBAC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/Environment.h \
  $(TAO_ROOT)/tao/Environment.i \
@@ -227,6 +225,8 @@ realclean: clean
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -243,8 +243,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -354,8 +352,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Parser_Registry.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Interceptor_List.h \
- $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
@@ -364,6 +360,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -404,23 +404,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- FaultTolerance/fault_tol_export.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i \
- CosNotificationC.h \
- Notify/notify_export.h \
- CosNotificationC.i \
- CosNotifyFilterC.h \
- CosNotifyCommC.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosNotifyCommC.i \
- CosNotifyFilterC.i \
- FT_CORBAC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.i \
  FaultTolerance/FT_Service_Callbacks.i FaultTolerance/FT_Policy_i.h \
  FaultTolerance/FT_Policy_i.i
 
@@ -428,8 +429,6 @@ realclean: clean
  FaultTolerance/FT_Service_Activate.h \
  $(ACE_ROOT)/ace/pre.h \
  FaultTolerance/fault_tol_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -576,7 +575,7 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/IORManipulation/IORC.i \
- FT_CORBAC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -596,6 +595,8 @@ realclean: clean
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -614,8 +615,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -706,8 +705,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Interceptor_List.h \
- $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
@@ -716,6 +713,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -756,23 +757,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- FaultTolerance/fault_tol_export.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i \
- CosNotificationC.h \
- Notify/notify_export.h \
- CosNotificationC.i \
- CosNotifyFilterC.h \
- CosNotifyCommC.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosNotifyCommC.i \
- CosNotifyFilterC.i \
- FT_CORBAC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.i \
  FaultTolerance/FT_IOGR_Property.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
@@ -782,8 +784,6 @@ realclean: clean
  FaultTolerance/FT_Service_Activate.h \
  $(ACE_ROOT)/ace/pre.h \
  FaultTolerance/fault_tol_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -930,7 +930,7 @@ realclean: clean
  $(ACE_ROOT)/ace/CDR_Stream.i \
  $(TAO_ROOT)/tao/CDR.i \
  $(TAO_ROOT)/tao/IORManipulation/IORC.i \
- FT_CORBAC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -950,6 +950,8 @@ realclean: clean
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -968,8 +970,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1060,8 +1060,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Interceptor_List.h \
- $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
@@ -1070,6 +1068,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1110,23 +1112,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- FaultTolerance/fault_tol_export.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i \
- CosNotificationC.h \
- Notify/notify_export.h \
- CosNotificationC.i \
- CosNotifyFilterC.h \
- CosNotifyCommC.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosNotifyCommC.i \
- CosNotifyFilterC.i \
- FT_CORBAC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.i \
  FaultTolerance/FT_IOGR_Property.i \
  FaultTolerance/FT_Service_Callbacks.h \
  FaultTolerance/FT_Service_Callbacks.i \
@@ -1139,8 +1142,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1284,7 +1285,7 @@ realclean: clean
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  FaultTolerance/fault_tol_export.h FaultTolerance/FT_PolicyFactory.h \
- FT_CORBAC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -1295,6 +1296,8 @@ realclean: clean
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -1311,8 +1314,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1408,8 +1409,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Interceptor_List.h \
- $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
@@ -1418,6 +1417,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1458,31 +1461,30 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- FaultTolerance/fault_tol_export.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i \
- CosNotificationC.h \
- Notify/notify_export.h \
- CosNotificationC.i \
- CosNotifyFilterC.h \
- CosNotifyCommC.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosNotifyCommC.i \
- CosNotifyFilterC.i \
- FT_CORBAC.i
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.i
 
 .obj/FT_PolicyFactory.o .obj/FT_PolicyFactory.so .shobj/FT_PolicyFactory.o .shobj/FT_PolicyFactory.so: FaultTolerance/FT_PolicyFactory.cpp \
  FaultTolerance/FT_PolicyFactory.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1626,7 +1628,7 @@ realclean: clean
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
  FaultTolerance/FT_Policy_i.h \
- FT_CORBAC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Services.h \
@@ -1637,6 +1639,8 @@ realclean: clean
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -1653,8 +1657,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/Stub.h \
  $(TAO_ROOT)/tao/Pluggable.h \
@@ -1750,8 +1752,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Interceptor_List.h \
- $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
@@ -1760,6 +1760,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -1800,32 +1804,31 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- FaultTolerance/fault_tol_export.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i \
- CosNotificationC.h \
- Notify/notify_export.h \
- CosNotificationC.i \
- CosNotifyFilterC.h \
- CosNotifyCommC.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosNotifyCommC.i \
- CosNotifyFilterC.i \
- FT_CORBAC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.i \
  FaultTolerance/FT_Policy_i.i
 
 .obj/FT_Policy_i.o .obj/FT_Policy_i.so .shobj/FT_Policy_i.o .shobj/FT_Policy_i.so: FaultTolerance/FT_Policy_i.cpp \
  FaultTolerance/FT_Policy_i.h \
  $(ACE_ROOT)/ace/pre.h \
- FT_CORBAC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1961,6 +1964,8 @@ realclean: clean
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -1979,8 +1984,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -2092,8 +2095,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Interceptor_List.h \
- $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
@@ -2102,6 +2103,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -2142,23 +2147,24 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
- FaultTolerance/fault_tol_export.h \
- TimeBaseC.h \
- svc_utils_export.h \
- TimeBaseC.i \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i \
- CosNotificationC.h \
- Notify/notify_export.h \
- CosNotificationC.i \
- CosNotifyFilterC.h \
- CosNotifyCommC.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosNotifyCommC.i \
- CosNotifyFilterC.i \
- FT_CORBAC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBAC.i \
  FaultTolerance/FT_Policy_i.i
 
 .obj/FT_CORBAS.o .obj/FT_CORBAS.so .shobj/FT_CORBAS.o .shobj/FT_CORBAS.so: FT_CORBAS.cpp FT_CORBAS.h \
@@ -2169,8 +2175,6 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2308,6 +2312,8 @@ realclean: clean
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -2326,8 +2332,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -2437,8 +2441,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Interceptor_List.h \
- $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
@@ -2447,6 +2449,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -2498,43 +2504,44 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.h \
  $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
  TimeBaseS_T.h TimeBaseS_T.i TimeBaseS_T.cpp TimeBaseS.i \
- CosNamingS.h \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i \
- CosNamingS_T.h \
- CosNamingS_T.i \
- CosNamingS_T.cpp \
- CosNamingS.i \
- CosNotificationS.h \
- CosNotificationC.h \
- Notify/notify_export.h \
- CosNotificationC.i \
- CosNotificationS_T.h \
- CosNotificationS_T.i \
- CosNotificationS_T.cpp \
- CosNotificationS.i \
- CosNotifyFilterS.h \
- CosNotifyCommS.h \
- CosEventCommS.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosEventCommS_T.h \
- CosEventCommS_T.i \
- CosEventCommS_T.cpp \
- CosEventCommS.i \
- CosNotifyCommC.h \
- CosNotifyCommC.i \
- CosNotifyCommS_T.h \
- CosNotifyCommS_T.i \
- CosNotifyCommS_T.cpp \
- CosNotifyCommS.i \
- CosNotifyFilterC.h \
- CosNotifyFilterC.i \
- CosNotifyFilterS_T.h \
- CosNotifyFilterS_T.i \
- CosNotifyFilterS_T.cpp \
- CosNotifyFilterS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
  $(TAO_ROOT)/tao/IOPS.h \
  $(TAO_ROOT)/tao/IOPS_T.h \
  $(TAO_ROOT)/tao/IOPS_T.i \
@@ -2574,8 +2581,6 @@ realclean: clean
 .obj/FT_CORBAC.o .obj/FT_CORBAC.so .shobj/FT_CORBAC.o .shobj/FT_CORBAC.so: FT_CORBAC.cpp FT_CORBAC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2711,6 +2716,8 @@ realclean: clean
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/NVList.i \
  $(TAO_ROOT)/tao/Principal.h \
+ $(TAO_ROOT)/tao/OctetSeqC.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/Principal.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.h \
  $(TAO_ROOT)/tao/GIOP_Message_Base.h \
@@ -2729,8 +2736,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Object_KeyC.i \
  $(TAO_ROOT)/tao/GIOPC.i \
  $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/LocalObject.h \
  $(TAO_ROOT)/tao/LocalObject.i \
@@ -2842,8 +2847,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Service_Callbacks.i \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.i \
- $(TAO_ROOT)/tao/Interceptor_List.h \
- $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
  $(TAO_ROOT)/tao/Cache_Entries.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
@@ -2852,6 +2855,10 @@ realclean: clean
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
  $(TAO_ROOT)/tao/Cache_Entries.inl \
  $(TAO_ROOT)/tao/Connection_Cache_Manager.inl \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
+ $(TAO_ROOT)/tao/Cleanup_Func_Registry.inl \
+ $(TAO_ROOT)/tao/Interceptor_List.h \
+ $(TAO_ROOT)/tao/Interceptor_List.inl \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Stub.i \
  $(TAO_ROOT)/tao/debug.h \
@@ -2894,18 +2901,19 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
  FaultTolerance/fault_tol_export.h TimeBaseC.h svc_utils_export.h \
  TimeBaseC.i \
- CosNamingC.h \
- Naming/naming_export.h \
- CosNamingC.i \
- CosNotificationC.h \
- Notify/notify_export.h \
- CosNotificationC.i \
- CosNotifyFilterC.h \
- CosNotifyCommC.h \
- CosEventCommC.h \
- CosEventCommC.i \
- CosNotifyCommC.i \
- CosNotifyFilterC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+ $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
  FT_CORBAC.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
