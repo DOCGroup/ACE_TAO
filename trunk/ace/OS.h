@@ -345,7 +345,9 @@ private:
 // Increase the range of "address families".
 #define AF_ANY (-1)
 #define AF_SPIPE (AF_MAX + 1)
-#define AF_FILE (AF_MAX + 2)
+#if !defined (AF_FILE)
+# define AF_FILE (AF_MAX + 2)
+#endif /* ! AF_FILE */
 #define AF_DEV (AF_MAX + 3)
 #define AF_UPIPE (AF_SPIPE)
 
