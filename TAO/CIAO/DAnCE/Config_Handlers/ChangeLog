@@ -1,3 +1,13 @@
+Tue Sep 28 16:08:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/ADD_Handler.cpp:
+	* DAnCE/Config_Handlers/ADD_Handler.h:
+	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+	* DAnCE/Config_Handlers/MDD_Handler.cpp:
+
+	  Made some changes to MDD and ADD handlers to register the
+	  IDREF's  and find the IDREF's.
+
 Tue Sep 28 15:16:03 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/Config_Handlers/XSCRT/Elements.hpp:
