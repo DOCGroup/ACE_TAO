@@ -10,7 +10,6 @@ Thu Oct 31 15:42:04 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	  <bala@isis-server.isis.vanderbilt.edu>" for the remaining
 	  protocols.
 
-
 Thu Oct 31 15:40:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (handle_timeout): Fixed
