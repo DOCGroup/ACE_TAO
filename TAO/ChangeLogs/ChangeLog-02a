@@ -1,3 +1,9 @@
+Wed May 15 16:04:37 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/File_IO/run_test.pl: 
+	  Increased the wait time for the ior file. It was raising an
+	  exception because of insufficient time.
+
 Wed May 15 15:59:42 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Event/rtcorba_event_export.h:
@@ -36,7 +42,6 @@ Wed May 15 15:20:15 2002  Jeff Parsons <parsons@cs.wustl.edu>
           before it was returned. Thanks to Craig Rodrigues 
           <crodrigu@bbn.com> for reporting the bug.
 
->>>>>>> 1.5549
 Wed May 15 11:26:15 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/tests/Security/Big_Request/Makefile: 
