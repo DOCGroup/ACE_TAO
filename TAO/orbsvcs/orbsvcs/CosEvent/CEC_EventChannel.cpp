@@ -227,3 +227,14 @@ TAO_CEC_EventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Hash_Map_Manager_Ex<PortableServer::ServantBase*, unsigned int, ServantBaseHash, ACE_Equal_To<PortableServer::ServantBase*>, TAO_SYNCH_MUTEX>;
+template class ACE_Hash_Map_Entry<PortableServer::ServantBase*, unsigned int>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Hash_Map_Manager_Ex<PortableServer::ServantBase*, unsigned int, ServantBaseHash, ACE_Equal_To<PortableServer::ServantBase*>, TAO_SYNCH_MUTEX>
+#pragma instantiate ACE_Hash_Map_Entry<PortableServer::ServantBase*, unsigned int>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

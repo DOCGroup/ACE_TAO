@@ -158,10 +158,18 @@ static CEC_Factory "-CECDispatching reactive ....."
           <TD><CODE>-CECConsumerControlTimeout</CODE>
             <EM>timeout</EM>
           </TD>
-          <TD>Set the timeout period (in microseconds) used by the reactive
-            consumer control policy to detect a timeout when polling the state
-						of the consumers.
-          </TD>
+          <TD><P>Set the relative roundtrip timeout for push and pull
+                 consumers.  The default is 10000 microseconds.
+                 This relative roundtrip timeout is utilized
+                 when each consumer attached to the supplier is queried.
+                 If querying any one of the consumers times out, it may
+                 be disconnected depending on the
+                 -CECProxyDisconnectRetries setting.
+              </P>
+              <P>This option can also be referenced as
+                 -CECConsumerControlRoundtripTimeout.
+             </P>
+         </TD>
         </TR>
 
         <!-- <TR NAME="CECSupplierControlTimeout"> -->
@@ -169,10 +177,18 @@ static CEC_Factory "-CECDispatching reactive ....."
           <TD><CODE>-CECSupplierControlTimeout</CODE>
             <EM>timeout</EM>
           </TD>
-          <TD>Set the timeout period (in microseconds) used by the reactive
-            supplier control policy to detect a timeout when polling the state
-						of the suppliers.
-          </TD>
+          <TD><P>Set the relative roundtrip timeout for push or pull
+                 suppliers.  The default is 10000 microseconds.
+                 This relative roundtrip timeout is utilized
+                 when each supplier attached to the consumer is queried.
+                 If querying any one of the suppliers times out, it may
+                 be disconnected depending on the
+                 -CECProxyDisconnectRetries setting.
+              </P>
+              <P>This option can also be referenced as
+                 -CECSupplierControlRoundtripTimeout.
+             </P>
+         </TD>
         </TR>
 
         <!-- <TR NAME="CECReactivePullingPeriod"> -->
@@ -281,6 +297,19 @@ static CEC_Factory "-CECDispatching reactive ....."
               and <CODE>ProxyPullSupplier</CODE> objects.
               Use the same arguments as with the
               <CODE>CECProxyConsumerCollection</CODE> option.
+            </P>
+         </TD>
+        </TR>
+
+        <!-- <TR NAME="CECProxyDisconnectRetries"> -->
+        <TR>
+          <TD><CODE>-CECProxyDisconnectRetries</CODE>
+            <EM>number of retries</EM>
+          </TD>
+          <TD><P>This determines the number of times a consumer or
+                 supplier can be "unresponsive" before the supplier or
+                 consumer control will disconnect it.  The default is zero
+                 retries.
             </P>
          </TD>
         </TR>

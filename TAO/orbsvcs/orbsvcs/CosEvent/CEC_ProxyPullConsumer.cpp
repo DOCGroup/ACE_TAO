@@ -28,10 +28,13 @@ TAO_CEC_ProxyPullConsumer::
 
   this->default_POA_ =
     this->event_channel_->consumer_poa ();
+
+  this->event_channel_->get_servant_retry_map ().bind (this, 0);
 }
 
 TAO_CEC_ProxyPullConsumer::~TAO_CEC_ProxyPullConsumer (void)
 {
+  this->event_channel_->get_servant_retry_map ().unbind (this);
   this->event_channel_->destroy_consumer_lock (this->lock_);
 }
 
@@ -110,24 +113,24 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
   }
 
   CORBA::Any_var any;
+  TAO_CEC_SupplierControl *control =
+                 this->event_channel_->supplier_control ();
+
   ACE_TRY
     {
       any = supplier->try_pull (has_event ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+      // Inform the control that we got something from the supplier
+      control->successful_transmission(this);
     }
   ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
     {
-      TAO_CEC_SupplierControl *control =
-        this->event_channel_->supplier_control ();
-
       control->supplier_not_exist (this ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
-      TAO_CEC_SupplierControl *control =
-        this->event_channel_->supplier_control ();
-
       control->system_exception (this,
                                  sysex
                                  ACE_ENV_ARG_PARAMETER);

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
+#include "tao/PortableServer/PortableServerC.h"
 #include "orbsvcs/CosEvent/event_export.h"
 
 class TAO_CEC_EventChannel;
@@ -80,6 +80,15 @@ public:
   virtual void system_exception (TAO_CEC_ProxyPushSupplier *proxy,
                                  CORBA::SystemException &
                                  ACE_ENV_ARG_DECL_NOT_USED);
+
+  /// Do we need to disconnect this supplier?  The parameter type for
+  /// proxy is PortableServer::ServantBase* due to the fact that this
+  /// method will be used for TAO_CEC_ProxyPushSupplier's and
+  /// TAO_CEC_ProxyPullSupplier's.
+  virtual bool need_to_disconnect (PortableServer::ServantBase* proxy);
+
+  /// Allow others to inform us when a send or receive was successful.
+  virtual void successful_transmission (PortableServer::ServantBase* proxy);
 };
 
 #if defined (__ACE_INLINE__)
