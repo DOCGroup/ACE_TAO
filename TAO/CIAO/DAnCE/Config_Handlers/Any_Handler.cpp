@@ -55,7 +55,6 @@ namespace CIAO
         {
           toconfig <<= 
             CORBA::Boolean (static_cast <bool &> (value.boolean ()));
-
         }
       else if (value.double_p ())
         {
