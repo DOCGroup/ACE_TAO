@@ -77,3 +77,9 @@ TAO_Wait_On_Reactor::register_handler (void)
 {
   return this->transport_->register_handler ();
 }
+
+int
+TAO_Wait_On_Reactor::non_blocking (void)
+{
+  return 1;
+}

@@ -98,8 +98,11 @@ TAO_SSLIOP_Connection_Handler::open (void*)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
-  if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    return -1;
+  if (this->transport_.wait_strategy ()->non_blocking ())
+    {
+      if (this->peer ().enable (ACE_NONBLOCK) == -1)
+        return -1;
+    }
 
   // Called by the <Strategy_Acceptor> when the handler is
   // completely connected.
@@ -111,8 +114,6 @@ TAO_SSLIOP_Connection_Handler::open (void*)
   char client[MAXHOSTNAMELEN + 16];
   if (addr.addr_to_string (client, sizeof (client)) == -1)
     return -1;
-
-
 
   if (TAO_debug_level > 0)
     {
