@@ -330,7 +330,7 @@ which is not reentrant.</TD></TR>
 (<em>which</em> = <code>tss</code>) instance for the resources it
               returns.
               <B>NOTE:</B> This option controls the default value for
-	      the ORB option of the same name.</A>.
+              the ORB option of the same name.</A>.
 </TD></TR>
 <TR>
 <TD><CODE>-ORBReactorLock</CODE> <EM>which</EM></TD>
@@ -534,12 +534,14 @@ specifies that no locking be performed.  The default is
 <TH>Option</TH>
 <TH>Description</TH></TR>
 <TR>
-<TD><CODE>-ORBIIOPProfileLock</CODE> <EM>which</EM></TD>
+<TD><CODE>-ORBProfileLock</CODE> <EM>which</EM></TD>
 <TD>
-Specify, whether to use a lock for accessing the IIOP Profile or not.
-Default is <code>thread</code>, which means that a lock is used. The
+Specify the kind of synchronization primitive for the
+Profiles.
+Default is <code>thread</code>, which means that a regular thread
+mutex is used. The
 second option is <code>null</code>, which means a null lock is used.
-This makes sense in case of optiziations and is allowed when
+This makes sense in case of optimizations and is allowed when
 no forwarding is used or only a single threaded client.
 </TD></TR>
 <TR>

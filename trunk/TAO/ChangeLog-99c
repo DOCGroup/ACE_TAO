@@ -1,3 +1,21 @@
+Sun Jul  4 14:43:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/Options.html:
+	* docs/configurations.html:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic:
+	* performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf:
+	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+	* tao/Client_Strategy_Factory.cpp:
+	* tao/Client_Strategy_Factory.h:
+	* tao/Stub.cpp:
+	* tao/default_client.cpp:
+	* tao/default_client.h:
+	* tests/MT_Client/client.conf:
+	  Changed the name of the -ORBIIOPProfileLock option to
+	  -ORBProfileLock, leave the old option there with a warning for
+	  backwards compatibility.
+
 Sat Jul  3 19:06:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/fe/lex.yy.cpp:
