@@ -131,7 +131,9 @@ module Deployment {
 
   struct Requirement {
     string resourceType;
-    Properties property;
+    // property is not in model
+    //    Properties property;
+    string name;
   };
 
   typedef sequence < Requirement > Requirements;
