@@ -1,3 +1,19 @@
+Mon Sep 11 12:57:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/Synch.{h i cpp} (ACE_Lock, ACE_Adaptive_Lock, ACE_File_Lock,
+          ACE_Semaphore, ACE_Process_Semaphore, ACE_Null_Semaphore,
+          ACE_RW_Mutex, ACE_Mutex, ACE_Process_Mutex, ACE_RW_Process_Mutex,
+          ACE_Null_Mutex, ACE_Thread_Mutex, ACE_Recursive_Thread_Mutex):
+          Added tryacquire_write_upgrade method.
+
+        * ace/Synch_T.{h i} (ACE_Lock_Adapter, ACE_Reverse_Lock): Added
+          tryacquire_write_upgrade method.
+
+        * ace/Token.{h i} (ACE_Token): Added tryacquire_write_upgrade
+          method, which is a NOP.
+
+        Thanks to Joseph Weihs <Yossi@bandwiz.com> for these suggestions.
+
 Mon Sep 11 10:08:38 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Service_Manager.cpp (handle_input): Missing semicolon in a
