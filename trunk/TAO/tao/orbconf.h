@@ -242,6 +242,34 @@
 #define TAO_CONST
 #endif /* TAO_CONST */
 
+// The IDL compiler can generate the classes corresponding to IDL
+// sequences in two ways:
+// + Use the TAO templates for sequences,
+//   i.e. TAO_{Unb,B}ounded_Sequence<> 
+// + Explicitly generate code for the sequence.
+//
+// The first approach can (potentially) produce smaller code, because
+// the code for a sequence over a particular type (say sequence<long>) 
+// can be shared across multiple IDL files.
+// Unfortunately it is hard to manage the template instantiations on
+// platforms that do not automatically generate them, mainly because
+// it is hard to decide on which generated file are the templates
+// instantiated.  Thus the second approach is more convenient for most 
+// applications.
+//
+// On platforms that support automatic template instantiation we use
+// the first approach.
+// On platforms that require explicit template instantiations we use
+// explicitly generated code for sequences if the platform does not.
+// If the application requires it (such as embedded systems) the
+// default can be changed, but then the application developer is
+// responsible for instantiating the templates.
+//
+#if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
+    defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
+#define TAO_USE_SEQUENCE_TEMPLATES
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
 // of course, no guarantees are made that the call will return
 // something useful.
