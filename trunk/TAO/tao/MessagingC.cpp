@@ -2231,19 +2231,6 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 #endif /* TAO_POLLER */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<Messaging::RebindPolicy>;
-  template class TAO_Object_Field_T<Messaging::SyncScopePolicy>;
-  template class TAO_Object_Field_T<Messaging::RequestPriorityPolicy>;
-  template class TAO_Object_Field_T<Messaging::ReplyPriorityPolicy>;
-  template class TAO_Object_Field_T<Messaging::RequestStartTimePolicy>;
-  template class TAO_Object_Field_T<Messaging::RequestEndTimePolicy>;
-  template class TAO_Object_Field_T<Messaging::ReplyStartTimePolicy>;
-  template class TAO_Object_Field_T<Messaging::ReplyEndTimePolicy>;
-  template class TAO_Object_Field_T<Messaging::RelativeRequestTimeoutPolicy>;
-  template class TAO_Object_Field_T<Messaging::RelativeRoundtripTimeoutPolicy>;
-  template class TAO_Object_Field_T<Messaging::RoutingPolicy>;
-  template class TAO_Object_Field_T<Messaging::MaxHopsPolicy>;
-  template class TAO_Object_Field_T<Messaging::QueueOrderPolicy>;
 #if defined(TAO_POLLER)
   template class TAO_Object_Field_T<Messaging::ReplyHandler>;
   template class TAO_Object_Field_T<Messaging::Poller>;
@@ -2251,19 +2238,6 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::Poller_ptr &_
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#  pragma instantiate TAO_Object_Field_T<Messaging::RebindPolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::SyncScopePolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::RequestPriorityPolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::ReplyPriorityPolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::RequestStartTimePolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::RequestEndTimePolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::ReplyStartTimePolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::ReplyEndTimePolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::RelativeRequestTimeoutPolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::RelativeRoundtripTimeoutPolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::RoutingPolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::MaxHopsPolicy>
-#  pragma instantiate TAO_Object_Field_T<Messaging::QueueOrderPolicy>
 #if defined(TAO_POLLER)
 #  pragma instantiate TAO_Object_Field_T<Messaging::ReplyHandler>
 #  pragma instantiate TAO_Object_Field_T<Messaging::Poller>

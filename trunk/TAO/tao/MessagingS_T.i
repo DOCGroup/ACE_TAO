@@ -1660,6 +1660,7 @@ void POA_Messaging::QueueOrderPolicy_tie<T>::destroy  (
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
+#if defined(TAO_POLLER)
 #if defined (ACE_HAS_USING_KEYWORD)
 template <class T> ACE_INLINE
 POA_Messaging::ReplyHandler_tie<T>::ReplyHandler_tie (T &t)
@@ -1927,3 +1928,4 @@ CORBA::PollableSet_ptr POA_Messaging::Poller_tie<T>::create_pollable_set  (
 }
 
 #endif /* ACE_HAS_USING_KEYWORD */
+#endif /* TAO_POLLER */
