@@ -328,10 +328,10 @@ extra pass over the internal representation of the IDL file has to be done.<P>
 Point of contact: <a href="mailto:fredk@cs.wustl.edu">Fred Kuhns</a>
 <p>The goal of the pluggable protocol effort is to (1) identify logical
 communication layers in the ORB, (2) abstract out common features, (3)
-define general interfaces, and (4) provide necessary mechanisms for implementing
-different concrete ORB and transport protocols. TAO's pluggable protocol
-framework will allow disparate communication mechanisms to be supported
-transparently, each with its own set of requirements and strategies.
+define general interfaces, and (4) provide necessary mechanisms for
+implementing different concrete ORB and transport protocols. TAO's pluggable
+protocol framework will allow disparate communication mechanisms to be
+supported transparently, each with its own set of requirements and strategies.
 <p>For example, if the ORB is communicating over a system bus, such as
 PCI or VME, and not all the features of GIOP/IIOP are necessary and a simpler,
 optimized ORB and transport protocol can be defined and implemented. Similarly,
@@ -455,7 +455,6 @@ The service configurator is now used to load protocol factories.
 </li><P>
 
 <li>
-
 	    The <code>-ORBHost</code> and <code>-ORBPort</code>
             options are deprecated. The new <code>-ORBEndpoint</code>
             option supercedes them. If the deprecated options are
@@ -469,7 +468,7 @@ The service configurator is now used to load protocol factories.
             <code>-ORBEndpoint</code> does. Note that the old
             <em><code>host:port</code></em> format is supported for
             backwards compatibility, but the user should not depend on 
-            the existence of this old format.
+            the existence of this old format since it is now deprecated.
 </li><P>
 
 <li>
@@ -498,7 +497,7 @@ The service configurator is now used to load protocol factories.
 &lt;uiop&gt; = "uiop://"[&lt;addr_list&gt;]["|"&lt;key_string&gt;]<br>
 &lt;addr_list&gt;= [&lt;address&gt; ","]* &lt;address&gt;<br>
 &lt;address&gt; = [&lt;version&gt; &lt;rendezvous point&gt;]<br>
-&lt;rendezvous point&gt; = &lt;string&gt;<br>
+&lt;rendezvous point&gt; = Valid Filesystem Path<br>
 &lt;version&gt; = &lt;major&gt; "." &lt;minor&gt; "@" |
                 empty_string<br>
 &lt;major&gt; = number<br>
@@ -518,7 +517,9 @@ The service configurator is now used to load protocol factories.
             The <i>rendezvous point</i> for <code>uiop</code> is
             any valid path and filename that the ORB has permission to
             read and write to.  However, UIOP rendezvous points have
-            the same restrictions that local IPC has:
+            the same restrictions that local IPC has.  The following
+            are some guidelines that will help ensure successful use
+            TAO's UIOP pluggable transport protocol:
                 <blockquote><li>
                   To guarantee portability, local IPC rendezvous
                   points (including the path and filename) should not
@@ -548,16 +549,35 @@ The service configurator is now used to load protocol factories.
                   rendezvous point, was not found. On the other
                   hand, if an absolute path was used, the client
                   would know exactly where to find the rendezvous
-                  point.<P>  It is up to the user to make sure that
-                  a given UIOP endpoint is accessible by both the
-                  server and the client.<P>
+                  point.<P>
+
+                  It is up to the user to make sure that a given UIOP
+                  endpoint is accessible by both the server and
+                  the client.<P>
+                </li>
+                <li>
+                  It is important to be consistent in the use of
+                  absolute paths and relative paths for rendezvous
+                  points.  The two types of paths should not be used 
+                  for the same endpoint.  For example, if
+                  <code>uiop:///tmp/foo</code> is specified as the
+                  server endpoint and <code>uiop://foo</code> as a
+                  preconnect for a client in <code>/tmp</code>, then
+                  the preconnection may be established but it is
+                  likely it won't be used since the endpoint and
+                  preconnect are interpreted as different strings,
+                  i.e. <code>/tmp/foo</code> and <code>foo</code> are
+                  not the same, lexicographically.  On the other
+                  hand, if both the endpoint and the preconnect are
+                  the same string then a preconnection will be
+                  established and used successfully.<P>
                 </li></blockquote>
 
             The <code>-ORBEndpoint</code> option uses a syntax similar
             to that of the URL style object reference shown above.
             The only difference is that the object key delimiter and
-            the object key string are not specified.
-</li><P>
+            the object key string are not specified.<P>
+</li>
 
 <p>
 </ul>
