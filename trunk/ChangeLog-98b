@@ -3,16 +3,17 @@ Mon Jul 20 19:35:21 1998  Steve Huston  <shuston@riverace.com>
         * ace/config-aix-4.1.x.h: Added ACE_LACKS_RLIMIT.  Thanks to Zheng
           Han <zhan@glenvan.glenayre.com> for finding this problem.
 
-        * ace/ACE_Library.{mdp mak}: Set up ".." as an include file directory
-          so that $ACE_ROOT doesn't have to be added to MSVC's global options.
-          Allows working on more than one ACE version.
+	* ace/ACE_Library.{mdp mak}: Set up ".." as an include file directory
+	  so that $ACE_ROOT doesn't have to be added to MSVC's global options.
+	  Allows working on more than one ACE version.
 
-        * netsvcs/lib/netsvcs4.{mdp mak}: Made paths to ACE components relative
-          and made Debug build netsvcsd.dll - this will work with Nanbor's new
-          DLL search method (from 19-July).
+	* netsvcs/lib/netsvcs4.{mdp mak}: Made paths to ACE components relative
+	  and made Debug build netsvcsd.dll - this will work with Nanbor's new
+	  DLL search method (from 19-July).
 
-        * netsvcs/servers/servers4.{mdp mak}: Made paths to ACE components
-          relative.
+	* netsvcs/servers/servers4.{mdp mak}:
+ 	* netsvcs/clients/Logger/Logger.{mdp mak}:
+	  Made paths to ACE components relative.
 
 Mon Jul 20 11:12:44 1998  David L. Levine  <levine@cs.wustl.edu>
 
