@@ -1,21 +1,28 @@
+Sun Aug 19 08:17:14 2001  David L. Levine <levine@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: replaced function call in
+          ASSERT with simple comparison of a variable value.  Thanks
+          to Tino Schwarze <tino.schwarze@informatik.tu-chemnitz.de>
+          for suggesting this.
+
 Sat Aug 18 18:26:24 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/ACE.cpp: Removed the ASYS_INLINE macro from the definition
-	  of write_n ().
+        * ace/ACE.cpp: Removed the ASYS_INLINE macro from the definition
+          of write_n ().
 
 Sat Aug 18 13:18:10 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
- 	* ace/ACE.{h,cpp}: Added a new write_n(...ACE_Message_Block *...)
-	  for file transfers that's the dual of
- 	  send_n(...ACE_Message_Block *...).  This helps out the C++NPv1
- 	  book symmetry.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be>
- 	  for motivating this.
+        * ace/ACE.{h,cpp}: Added a new write_n(...ACE_Message_Block *...)
+          for file transfers that's the dual of
+          send_n(...ACE_Message_Block *...).  This helps out the C++NPv1
+          book symmetry.  Thanks to Alain Decamps <Alain.Decamps@PIDPA.be>
+          for motivating this.
 
 Fri Aug 17 18:17:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* bin/clone.cpp: Only use extern char *sys_errlist[] if we're not
-	  compiling on Linux.  Thanks to Thomas Groth
- 	  <groth.th@stn-atlas.de> for reporting this.
+        * bin/clone.cpp: Only use extern char *sys_errlist[] if we're not
+          compiling on Linux.  Thanks to Thomas Groth
+          <groth.th@stn-atlas.de> for reporting this.
 
 Fri Aug 17 19:04:31 2001  Steve Huston  <shuston@riverace.com>
 
@@ -30,7 +37,7 @@ Fri Aug 17 16:56:16 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
           Added wr_ptr() accessor method to ACE_InputCDR, and added its
           use to adjust(), align_read_ptr(), read_1(), skip_string() and
-          skip_bytes() instead of end().  Also added reset of good_bit_ 
+          skip_bytes() instead of end().  Also added reset of good_bit_
           to 0 upon failure in read_string() and read_wstring(). Thanks to
           pphillip@opentext.com for reporting this bug, which was causing
           excessive memory allocation is some cases.
@@ -64,14 +71,14 @@ Fri Aug 17 13:31:45 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Fri Aug 17 09:44:49 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/Map_T.{h,i}: Reverted this change "Fri Aug 17 08:07:12 2001
-	  Johnny Willemsen <jwillemsen@remedy.nl>" as this was giving too
-	  much of warnings in the builds.
+        * ace/Map_T.{h,i}: Reverted this change "Fri Aug 17 08:07:12 2001
+          Johnny Willemsen <jwillemsen@remedy.nl>" as this was giving too
+          much of warnings in the builds.
 
 Fri Aug 17 09:30:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* gperf/apps/tests/Makefile: Fixed the problem that was causing
-	  the builds to fail.
+        * gperf/apps/tests/Makefile: Fixed the problem that was causing
+          the builds to fail.
 
 Fri Aug 17 08:07:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -102,11 +109,11 @@ Thu Aug 16 15:10:42 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Aug 16 10:34:20 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/POSIX_Proactor.cpp (allocate_aio_slot): Added a fix so that
-	  the POSIX Proactor compiles with FreeBSD 4.4.  Thanks to Yev
- 	  Omenzel <omenzel@yahoo.com> for reporting this and to Craig
- 	  Rodrigues <crodrigu@bbn.com> for fixing it and to
-	  John E Hein <jhein@timing.com> for fixing the fix ;-)
+        * ace/POSIX_Proactor.cpp (allocate_aio_slot): Added a fix so that
+          the POSIX Proactor compiles with FreeBSD 4.4.  Thanks to Yev
+          Omenzel <omenzel@yahoo.com> for reporting this and to Craig
+          Rodrigues <crodrigu@bbn.com> for fixing it and to
+          John E Hein <jhein@timing.com> for fixing the fix ;-)
 
 Thu Aug 16 08:09:53 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -119,9 +126,9 @@ Thu Aug 16 08:09:53 2001  Chad Elliott  <elliott_c@ociweb.com>
 
 Wed Aug 15 15:50:38 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/WFMO_Reactor.cpp: Don't try to purge the notifications if
-	  notify_handler_ is 0.  Thanks to Edan Ayal
-	  <edanayal@hotmail.com> for reporting this.
+        * ace/WFMO_Reactor.cpp: Don't try to purge the notifications if
+          notify_handler_ is 0.  Thanks to Edan Ayal
+          <edanayal@hotmail.com> for reporting this.
 
 Wed Aug 15 11:33:26 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -133,17 +140,17 @@ Wed Aug 15 11:10:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: Added $(VDIR) for
           OBJDIRS. This prevents hardcoding the value of OBJDIRS. This has
- 	  been tested for a dynamic and a static library on Linux. If
- 	  there are other platforms that gives problems, please feel free
- 	  to revert the changes to the version 4.114 of the file.
+          been tested for a dynamic and a static library on Linux. If
+          there are other platforms that gives problems, please feel free
+          to revert the changes to the version 4.114 of the file.
 
 Wed Aug 15 09:35:19 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Dirent_Test.cpp:
 
           Added #define's for VXWORKS that allow this test to function
- 	  properly.  Avoid hard-coded relative paths that may not exist on
- 	  VxWorks.
+          properly.  Avoid hard-coded relative paths that may not exist on
+          VxWorks.
 
 Wed Aug 15 09:08:40 2001  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -178,8 +185,8 @@ Tue Aug 14 23:57:42 2001  Steve Huston  <shuston@riverace.com>
 
         * A set of changes to encapsulate passing handles to spawned
           processes. Thanks very much to Eamonn Saunders
- 	  <Esaunders@softricity.com> for suggesting that this could work
- 	  and pointing out the Win32 details!
+          <Esaunders@softricity.com> for suggesting that this could work
+          and pointing out the Win32 details!
 
         * THANKS: Added Eamonn Saunders to the Hall of Fame
 
@@ -279,13 +286,13 @@ Mon Aug 13 14:01:35 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 Sun Aug 12 14:46:07 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/OS.cpp (sched_params): Make sure to set errno for Win32 so
-	  that callers can figure out what's going wrong in a consistent
- 	  way.
+        * ace/OS.cpp (sched_params): Make sure to set errno for Win32 so
+          that callers can figure out what's going wrong in a consistent
+          way.
 
-	* ace/Select_Reactor_Base.i (purge_pending_notifications): Don't
-	  try to purge the notifications if notify_handler_ is 0.  thanks
- 	  to Steve Rahn <SRahn@rim.net> for reporting this.
+        * ace/Select_Reactor_Base.i (purge_pending_notifications): Don't
+          try to purge the notifications if notify_handler_ is 0.  thanks
+          to Steve Rahn <SRahn@rim.net> for reporting this.
 
 Mon Aug 13 20:09:04 2001  Balachandran  <bala@cs.wustl.edu>
 
