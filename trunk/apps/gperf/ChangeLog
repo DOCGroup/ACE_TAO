@@ -6,6 +6,9 @@ Sun Sep 27 00:04:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
  	  -S1 option...  This fixes a nasty bug that's been in gperf for
  	  years....
 
+	* src/Key_List.cpp: (output_lookup_array): Added a "return 0" to
+ 	  make the C++ compiler happy.  Thanks to David for noticing this.
+
 	* tests/c++-res.exp: Added a new test for C++ keywords.
 
 	* tests/corba.gperf: Added a proper test for CORBA keywords.
