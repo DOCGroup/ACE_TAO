@@ -126,18 +126,15 @@ void run_test (Simple_Server_ptr server,
       ACE_TRY
         {
           // Make a remote call
-          server->remote_call (ACE_TRY_ENV);
+          cout << "Remote call "<<endl;
+          CORBA::Long ret=
+            server->remote_call (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          /*ACE_DEBUG ((LM_DEBUG,
-                      "Kill  the primary . . . "));
+          cout << "The retval is .. " << ret << endl;
+          cout << "Kill Primary... " <<endl;
           ACE_OS::sleep (25);
-          ACE_DEBUG ((LM_DEBUG, " hope you did\n")); */
-          ACE_DEBUG ((LM_DEBUG,
-                      "I am going to shutdown \n"));
-          server->shutdown (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-          ACE_OS::sleep (25);
+          cout << "Hope you have .." <<endl;
         }
       ACE_CATCH (CORBA::TRANSIENT, t)
         {
