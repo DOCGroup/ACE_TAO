@@ -152,9 +152,13 @@ void Cubit_i::shutdown (CORBA::Environment &env)
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (env);
 
-  dmsg ("I've been asked to shut down...");
+  ACE_DEBUG ((LM_DEBUG, "%s",
+	      "I have been asked to shut down "
+	      ));
+	      
+  //  dmsg ("I've been asked to shut down...");
+
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
-  dexc (env, "shutdown, shutdown");
 }
 
 
