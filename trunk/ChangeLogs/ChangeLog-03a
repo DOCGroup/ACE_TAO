@@ -1,9 +1,17 @@
+Thu Jan 17 12:13:51 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/SSL/SSL_Context.h (private_key, verify_private_key):
+
+	  Added new documentation.  These methods should only be called
+	  after a certificate has been set since key verification is
+	  performed against the certificate, among other things.
+
 Thu Jan 17 13:11:27 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/Message_Queue.h:
-        * Message_Queue.cpp:
-        * Message_Queue_T.h:
-        * Message_Queue_T.cpp:
+        * ace/Message_Queue.cpp:
+        * ace/Message_Queue_T.h:
+        * ace/Message_Queue_T.cpp:
 
           Provide the ability to enqueue based on the message deadline and
           to dequeue based on priority, deadline and from the end.
