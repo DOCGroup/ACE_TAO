@@ -36,7 +36,8 @@ ARFLAGS         = rsuv
 # so there is no need for ranlib
 RANLIB          = @true
 SOFLAGS         = -shared $(ACELIB) \
-                  `test -f "cxx_repository/*.o" && echo 'cxx_repository/*.o'`
+                  `echo cxx_repository/*.o | fgrep '*' > /dev/null || \
+                  echo 'cxx_repository/*.o'`
 SOBUILD         = $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
                   ln $(VSHDIR)$*.o $@
 
