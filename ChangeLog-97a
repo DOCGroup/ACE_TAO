@@ -1,3 +1,13 @@
+Thu Apr 03 08:52:34 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h,OS.cpp,Sched_Params.cpp: added /**/ to some #include
+	  directives.  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de>
+	  for reporting these.
+
+	* ace/OS.cpp (writev, readv): changed type of local variable "i"
+	  from size_t to int to avoid signed/unsigned mismatch.  Thanks
+	  to Matthias Kerkhoff <make@cs.tu-berlin.de> for reporting this.
+
 Thu Apr  3 01:48:01 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
 	* ace/Malloc.i (malloc): ACE_New_Allocator::malloc only calls new
