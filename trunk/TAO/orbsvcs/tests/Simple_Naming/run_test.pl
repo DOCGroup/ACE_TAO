@@ -10,6 +10,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 unshift @INC, '../../../../bin';
 require Process;
+require ACEutils;
 require Uniqueid;
 
 # amount of delay between running the servers
@@ -34,7 +35,7 @@ sub client
   my $args = $_[0]." "."-ORBnameserviceport $nsmport";
   my $prog = $EXEPREFIX."client".$Process::EXE_EXT;
 
-  system ($prog." ".$args);
+  $CL = Process::Create ($prog, $args);
 }
 
 # Options for all tests recognized by the 'client' program.
@@ -58,8 +59,18 @@ foreach $o (@opts)
   print STDERR "          ".$comments[$test_number];
 
   client ($o);
+  $client = $CL->TimedWait (60);
+  if ($client == -1) {
+    print STDERR "ERROR: client timedout\n";
+    $CL->Kill (); $CL->TimedWait (1);
+  }
 
-  $NS->Kill ();
+
+  $NS->Kill (); $server = $NS->TimedWait (5);
+  if ($server == -1) {
+    print STDERR "ERROR: server timedout\n";
+    $NS->TimedWait (1);
+  }
   $test_number++;
 }
 
@@ -75,12 +86,22 @@ name_server ();
 sleep $sleeptime;
 client ("-m25");
 
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+
 close (STDERR);
 close (STDOUT);
 open (STDOUT, ">&OLDOUT");
 open (STDERR, ">&OLDERR");
 
-$NS->Kill ();
+$NS->Kill (); $server = $NS->TimedWait (5);
+if ($server == -1) {
+  print STDERR "ERROR: server timedout\n";
+  $NS->TimedWait (1);
+}
 
 print STDERR "          Multithreaded Test:\n";
 system ("process-m-output.pl test_run.data 25");
