@@ -60,7 +60,7 @@ project(RoundTrip_exec) : ciao_component {
 
 
 
-project (RoundTrip_client) : ciao_client, valuetype, strategies {
+project (RoundTrip_client) : ciao_client, valuetype, strategies{
   exename = client
   after += RoundTrip_stub
   libs += RoundTrip_stub Benchmark_stub
