@@ -54,9 +54,6 @@
 // We need to setup a very high address or Naming_Test won't run.
 #define ACE_DEFAULT_BASE_ADDR ((char *) (1024U * 1024 * 1024))
 
-// Include XtReactor into the library.
-#define ACE_HAS_XT
-
 #define ACE_LACKS_SIGNED_CHAR
 // Platform supports getpagesize() call.
 #define ACE_HAS_GETPAGESIZE

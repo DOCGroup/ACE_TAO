@@ -4,6 +4,11 @@
 
 debug = 1
 optimize = 1
+xt_reactor = 1
+
+PLATFORM_XT_CPPFLAGS=
+PLATFORM_XT_LIBS=-lXm -lXt -lX11
+PLATFORM_XT_LDFLAGS=
 
 # Instead of setting the ABI here we rely on the the macro SGI_ABI.
 CC		= cc

@@ -34,6 +34,7 @@
 #  shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
 #                     specified by the Makefile, as in performance-tests/Misc.
 #  static_libs_only Only build static libraries.
+#  xt_reactor	    Build the XtReactor
 #
 #  Usually, users do not need to be concerned with make targets.
 #  Just enter "make" on the command line to build.  A few notable
@@ -77,6 +78,9 @@
 #  ORBIX_ROOT   Root of IONA's Orbix CORBA implementation
 #  PCFLAGS      C compilation flags for profiling
 #  PCCFLAGS     C++ compilation flags for profiling
+#  PLATFORM_XT_CPPFLAGS   Platform CPP options for X11 (some require -I...)
+#  PLATFORM_XT_LDFLAGS    Platform LD options for X11 (some require -L...)
+#  PLATFORM_XT_LIBS       Platform libraries require with X11
 #  PRELINK      Executable to precede linking, such as quantify
 #  PURELINK	If set, contains purify executable as well as all options
 #  PURE_CACHE_BASE_DIR
@@ -113,6 +117,10 @@ endif # exceptions
 #### Defined versioned_so = 1 if your platform requires version number
 #### be appended after so library.
 versioned_so = 0
+
+#### The system has X Windows and we want to include the XtReactor in
+#### the library
+xt_reactor = 0
 
 include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 
@@ -180,6 +188,16 @@ ifeq ($(debug),)
 else
   CFLAGS  += $(DCFLAGS)
   CCFLAGS += $(DCCFLAGS)
+endif # debug
+
+ifeq ($(xt_reactor),0)
+  override xt_reactor =
+endif # xt_reactor
+
+ifneq ($(xt_reactor),)
+  CPPFLAGS += -DACE_HAS_XT $(PLATFORM_XT_CPPFLAGS)
+  LIBS += $(PLATFORM_XT_LIBS)
+  LDFLAGS += $(PLATFORM_XT_LDFLAGS)
 endif # debug
 
 ifdef exceptions
