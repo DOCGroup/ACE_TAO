@@ -51,15 +51,13 @@ do_priority_inversion_test (Task_State &ts)
   ACE_Sched_Priority priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
-#if 0
-  // @@ Please finish implementing/testing this feature.
+
   // First activate the Utilization thread.  It will wait until all
   // threads have finished binding.
   util_thread.activate (THR_BOUND,
                         1,
                         0,
                         priority);
-#endif
 
   // Now activate the high priority client.
   priority = ACE_THR_PRI_FIFO_DEF;
@@ -87,8 +85,7 @@ do_priority_inversion_test (Task_State &ts)
       // The first thread starts at min + 1, since the minimum
       // priority thread is the utilization thread.
 
-      // Get the next higher priority.
-      //ACE_OS::sleep (5);
+      // Get the next lower priority.
       priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                       priority,
                                                       ACE_SCOPE_THREAD);
@@ -102,7 +99,7 @@ do_priority_inversion_test (Task_State &ts)
                     priority));
     }
 
-  // Wait for all the threads to exit.
+  // Wait for all the threads to exit (except the utilization thread).
   ACE_Thread_Manager::instance ()->wait ();
 #if defined (VXWORKS)
   ACE_OS::printf ("Test done.\n"
@@ -126,14 +123,21 @@ do_priority_inversion_test (Task_State &ts)
               low_priority_client.get_low_priority_jitter ()));
 #endif /* !defined (VXWORKS) && !defined (CHORUS) */
 
+  // signal the utilization thread to finish with its work..
   util_thread.done_ = 1;
 
-  // @@ Please add comments.
+  // This will wait for the utilization thread to finish.
   thr_mgr.wait ();
 
+#if defined (ACE_LACKS_FLOATING_POINT)
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) utilization task performed %u computations\n",
+              util_thread.get_number_of_computations ()));
+#else
   ACE_DEBUG ((LM_DEBUG,
               "(%t) utilization task performed %g computations\n",
               util_thread.get_number_of_computations ()));
+#endif /* ! ACE_LACKS_FLOATING_POINT */
 
   return 0;
 }

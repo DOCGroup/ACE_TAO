@@ -30,9 +30,14 @@
 #include "cubitC.h"
 
 // @@ Should we put this into a more general file, e.g., OS.h?
+//
+// I will integrate this, together with the sqrt() function when
+// the implementation is complete.  --Sergio.
 #if defined (ACE_LACKS_FLOATING_POINT)
 #define double ACE_UINT32
 #define fabs(X) ((X) >= 0 ? (X) : -(X))
+// the following is just temporal, until we finish the sqrt()  implementation.
+#define sqrt (X) (1)
 #endif /* ACE_LACKS_FLOATING_POINT */
 
 #if !defined (ACE_HAS_THREADS)
@@ -45,15 +50,10 @@ public:
 #define ACE_Barrier NOOP_ACE_Barrier
 #endif /* ACE_HAS_THREADS */
 
-// @@ Make sure not to rely on static constructors being called...  
-// In general, there should be no statics in this program.
-// Please use a Singleton instead...
-static CORBA::String key = CORBA::String ("Cubit");
-
 // Arbitrary generator used by the client to create the numbers to be
 // cubed.
 static inline int 
-func (u_i) 
+func (u_int i) 
 { 
   return i - 117; 
 }
@@ -102,6 +102,9 @@ public:
   // Constructor. Takes the command line arguments, which are later
   // passed into ORB_init.
 
+  CORBA::String key_;
+  // All cubit objects will have this as prefix to its key.
+
   u_int start_count_;
   // Keeps a count of the number of clients started.  This count also
   // serves as a thread-id.  The first thread created gets an ID of 0,
@@ -112,13 +115,6 @@ public:
 
   u_int thread_count_;
   // Number of concurrent clients to create.
-
-  u_int base_port_;
-  // This is the port at which the high priority servant is
-  // listening. lower priority ports begin at base_port_ + 1.
-
-  char *server_host_;
-  // Server hostname.
 
   double *latency_;
   // Array to store the latency for every client, indexed by
@@ -158,10 +154,12 @@ public:
   u_int use_name_service_;
   // Flag that say if we are using the or not the name service.
 
-  // @@ Please document me.  Also, please don't use magic numbers like
-  // 50...
-  char *iors_[50];
+  char **iors_;
+  // Array of pointers used to hold the ior strings read from the ior file
+  // that the server created.
+
   char *ior_file_;
+  // Name of the filename that the server used to store the iors.
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
