@@ -25,32 +25,32 @@ Client_Task::svc (void)
       this->validate_connection (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      if (ACE_OS::strcmp (this->data_type_, "octet") == 0 )
+      if (ACE_OS::strcmp (this->data_type_.in (), "octet") == 0 )
         {
           this->test_octet_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      if (ACE_OS::strcmp (this->data_type_, "long") == 0 )
+      if (ACE_OS::strcmp (this->data_type_.in (), "long") == 0 )
         {
           this->test_long_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      if (ACE_OS::strcmp (this->data_type_, "short") == 0 )
+      if (ACE_OS::strcmp (this->data_type_.in (), "short") == 0 )
         {
           this->test_short_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      if (ACE_OS::strcmp (this->data_type_, "char") == 0 )
+      if (ACE_OS::strcmp (this->data_type_.in (), "char") == 0 )
         {
           this->test_char_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      if (ACE_OS::strcmp (this->data_type_, "longlong") == 0 )
+      if (ACE_OS::strcmp (this->data_type_.in (), "longlong") == 0 )
         {
           this->test_longlong_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
-      if (ACE_OS::strcmp (this->data_type_, "double") == 0 )
+      if (ACE_OS::strcmp (this->data_type_.in (), "double") == 0 )
         {
           this->test_double_seq (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
