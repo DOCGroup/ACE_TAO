@@ -41,22 +41,29 @@ namespace CIAO
   public:
     friend class NodeApplicationManager_Impl;
 
-    // Constructor.
+    /// Constructor.
     NodeApplication_Callback_Impl (CORBA::ORB_ptr o,
 				   PortableServer::POA_ptr p,
 				   Deployment::NodeApplicationManager_ptr s,
 				   const Deployment::Properties &properties
-                 ACE_ENV_ARG_DECL_NOT_USED)
+                                   ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
-    // Destructor.
+
+    // @@ (OO) Since this class is reference counted, please make this
+    //         destructor protected to enforce proper memory managment
+    //         through the reference counting mechanism (i.e. to
+    //         disallow calling operator delete() on an instance of
+    //         this class.
+    /// Destructor.
     ~NodeApplication_Callback_Impl ();
 
-    // Get the containing POA.  This operation does *not*
-    // increase the reference count of the POA.
+    /// Get the containing POA.  This operation does *not* increase
+    /// the reference count of the POA.
     virtual PortableServer::POA_ptr _default_POA (void);
 
-    // Record the NodeApplication reference returned by the newly
-    // spawned NodeApplication and give it back a reference to NodeApplicationManager
+    /// Record the NodeApplication reference returned by the newly
+    /// spawned NodeApplication and give it back a reference to
+    /// NodeApplicationManager
     Deployment::NodeApplicationManager_ptr
     register_node_application (Deployment::NodeApplication_ptr na,
                                Deployment::Properties_out properties

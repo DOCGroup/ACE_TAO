@@ -70,18 +70,24 @@ namespace CIAO
 {
   class RepositoryManager_Impl
     : public virtual POA_CIAO::RepositoryManagerDaemon,
-    public virtual PortableServer::RefCountServantBase
+      public virtual PortableServer::RefCountServantBase
     {
 
     public:
 
       RepositoryManager_Impl ();
-      // Default constructor.
-      RepositoryManager_Impl (CORBA::ORB_ptr orb,
-                            PortableServer::POA_ptr poa
-                            ACE_ENV_ARG_DECL);
 
-      // Default destructor.
+      /// Constructor.
+      RepositoryManager_Impl (CORBA::ORB_ptr orb,
+                              PortableServer::POA_ptr poa
+                              ACE_ENV_ARG_DECL);
+
+      // @@ (OO) Since this class is reference counted, please make this
+      //         destructor protected to enforce proper memory managment
+      //         through the reference counting mechanism (i.e. to
+      //         disallow calling operator delete() on an instance of
+      //         this class.
+      /// Destructor.
       ~RepositoryManager_Impl ();
 
       virtual void installPackage (const char* installation_name,
@@ -131,17 +137,19 @@ namespace CIAO
           ACE_THROW_SPEC ((CORBA::SystemException,
                            Deployment::NoSuchName));
 
-      virtual void 
+      virtual void
         shutdown (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
           ACE_THROW_SPEC ((CORBA::SystemException));
 
     protected:
 
+      // @@ (OO) You may want to change the external ID to an
+      //         ACE_CString to ease memory management.
       typedef ACE_Hash_Map_Manager_Ex<const char *,
         Deployment::PackageConfiguration*,
         ACE_Hash<const char *>, ACE_Equal_To<const char *>,
         TAO_SYNCH_MUTEX> pc_table;
-  
+
       typedef pc_table::iterator pc_iterator;
       // Cached ORB pointer
       CORBA::ORB_var orb_;
@@ -149,6 +157,9 @@ namespace CIAO
       // Cached POA pointer
       PortableServer::POA_var poa_;
 
+      // @@ (OO) Does this really need to be cached?  Can't you just
+      //         keep it local to the installPackage() method, the
+      //         only place where it is used?  Please confirm.
       // Package Configuration element
       Deployment::PackageConfiguration pc_;
 

@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       REF_MAP primary_ref_map;
 
       // traverse the PackageConfiguration IDL data structure and
-      // update the deployment plan IDL data structure. 
+      // update the deployment plan IDL data structure.
       traverse_package (pc, plan, ref_map, primary_ref_map);
 
       Deployment::DnC_Dump::dump (plan);
@@ -215,13 +215,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception& ex)
     {
       ACE_PRINT_EXCEPTION (ex, "Caught CORBA Exception: ");
-	while (true);
+      while (true); // @@ (OO) What purpose does this server?
       return -1;
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "Caught unknown exception\n"));
-	while (true);
+      while (true); // @@ (OO) What purpose does this server?
       return -1;
     }
 

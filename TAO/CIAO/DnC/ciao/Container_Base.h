@@ -118,6 +118,10 @@ namespace CIAO
   class CIAO_SERVER_Export Session_Container : public Container
   {
   public:
+
+    // @@ (OO) Does the static_config_flag really need to be an int?
+    //         It appears to be a boolean value.  Please use bool
+    //         instead.
     Session_Container (CORBA::ORB_ptr o,
                        int static_config_flag =0,
                        const Static_Config_EntryPoints_Maps* static_entrypts_maps =0
@@ -195,6 +199,10 @@ namespace CIAO
 
     static ACE_Atomic_Op <ACE_SYNCH_MUTEX, long> serial_number_;
 
+    // @@ (OO) Does this really need to be an int?  It appears to be a
+    //         boolean value.  Please use bool instead.
+    //
+    //         It looks like it can also be declared const, as well.
     int static_config_flag_;
     const Static_Config_EntryPoints_Maps* static_entrypts_maps_;
   };

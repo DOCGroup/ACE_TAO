@@ -165,6 +165,11 @@ namespace CIAO
 
     protected:
 
+    // @@ (OO) Methods internal to the class, e.g. protected and not
+    //         defined in IDL should not be using default arguments.
+    //         Please drop the "_WITH_DEFAULTS" in all of the below
+    //         protected methods.
+
     // This is a helper method to clean up components
     // should only be called when we are sure that there is no
     // active connection on this component.
@@ -188,7 +193,6 @@ namespace CIAO
 			  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Deployment::StartError));
-
 
     // To store all created CCMHome object
     typedef ACE_Hash_Map_Manager_Ex<ACE_CString,

@@ -10,6 +10,9 @@ namespace CIAO
   bool operator<< (Deployment::ImplementationInfos & info,
 		   const Deployment::DeploymentPlan & plan)
   {
+    // @@ (OO) Since leng is a constant, please declare it as such,
+    //         i.e. "const CORBA::ULong len = ...", to improve "const
+    //         correctness".
     CORBA::ULong len = plan.instance.length ();
     info.length (len);
 
@@ -24,6 +27,9 @@ namespace CIAO
 	const Deployment::MonolithicDeploymentDescription & impl =
 	  plan.implementation[inst.implementationRef];
 
+        // @@ (OO) Since artifact_num is a constant, please declare it
+        //         as such, i.e. "const CORBA::ULong length = ...", to
+        //         improve "const correctness".
 	CORBA::ULong artifact_num = impl.artifactRef.length ();
 
 	// Copy Component instance related Properties if there is any.
@@ -41,8 +47,9 @@ namespace CIAO
 	    ACE_CString tmp = arti.name.in ();
 	    ssize_t pos;
 
-	    //@@ Note: I am not checking for redundancy here. Maybe the modeling
-	    //   tool should make sure of uniqueness.
+	    //@@ Note: I am not checking for redundancy here. Maybe
+	    //         the modeling tool should make sure of
+	    //         uniqueness.
 	    if ((pos  = tmp.find ("_svnt")) != ACE_CString::npos ||
 		(pos  = tmp.find ("_Svnt")) != ACE_CString::npos)
 	      {
@@ -54,6 +61,11 @@ namespace CIAO
 		// Cpoy the servant dll/so name.
 		// @@ Note: I ignore all the other locations except the first one.
 		info[i].servant_dll = CORBA::string_dup (arti.location[0].in ());
+
+                // @@ (OO) The "continue loop" condition portion of
+                //         the for statement is executed during each
+                //         loop iteration.  To improve performance
+                //         execute it only once outside the for-loop.
 
 		// Get the entry point.
 		for (CORBA::ULong prop_num = 0;
@@ -87,6 +99,11 @@ namespace CIAO
 		// Cpoy the servant dll/so name.
 		// @@ Note: I ignore all the other locations except the first one.
 		info[i].executor_dll = CORBA::string_dup (arti.location[0].in ());
+
+                // @@ (OO) The "continue loop" condition portion of
+                //         the for statement is executed during each
+                //         loop iteration.  To improve performance
+                //         execute it only once outside the for-loop.
 
 		// Get the entry point.
 		for (CORBA::ULong prop_num = 0;

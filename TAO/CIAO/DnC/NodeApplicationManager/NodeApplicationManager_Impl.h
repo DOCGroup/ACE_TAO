@@ -39,11 +39,16 @@ namespace CIAO
       public virtual PortableServer::RefCountServantBase
   {
   public:
-    // Constructor
+    /// Constructor
     NodeApplicationManager_Impl (CORBA::ORB_ptr o,
 				 PortableServer::POA_ptr p);
 
-    // Destructor
+      // @@ (OO) Since this class is reference counted, please make this
+      //         destructor protected to enforce proper memory managment
+      //         through the reference counting mechanism (i.e. to
+      //         disallow calling operator delete() on an instance of
+      //         this class.
+    /// Destructor
     virtual ~NodeApplicationManager_Impl (void);
 
     /*===========================================================
@@ -100,7 +105,7 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException,
 		       Deployment::InvalidProperty));
 
-    //@@ Note: This mthod doesn't do duplicate.
+    //@@ Note: This method doesn't do duplicate.
     Deployment::NodeApplicationManager_ptr get_nadeapp_manager (void);
 
   protected:

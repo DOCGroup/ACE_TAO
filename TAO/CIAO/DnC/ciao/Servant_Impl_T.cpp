@@ -9,19 +9,19 @@ namespace CIAO
 {
   template <typename SKEL, typename EXEC, typename CONTEXT>
   Servant_Impl<SKEL, EXEC, CONTEXT>::Servant_Impl (
-      typename EXEC::_ptr_type exe, 
+      typename EXEC::_ptr_type exe,
       Session_Container * c
     )
     : Servant_Impl_Base (c),
       executor_ (EXEC::_duplicate (exe))
   {
   }
-  
+
   template <typename SKEL, typename EXEC, typename CONTEXT>
   Servant_Impl<SKEL, EXEC, CONTEXT>::~Servant_Impl (void)
   {
   }
-  
+
   template <typename SKEL, typename EXEC, typename CONTEXT>
   ::Components::FacetDescriptions *
   Servant_Impl<SKEL, EXEC, CONTEXT>::get_all_facets (
@@ -34,10 +34,17 @@ namespace CIAO
                     ::Components::FacetDescriptions,
                     0);
     ::Components::FacetDescriptions_var retval = fd_ptr;
-                    
+
     retval->length (this->facet_table_.current_size ());
     CORBA::ULong i = 0;
-    
+
+    // @@ (OO) The stop condition portion of the for statement is
+    //         executed during each loop iteration.  To improve
+    //         performance execute it only once outside the for-loop,
+    //         unless of course the end iterator is invalidated during
+    //         a loop iteration.  If the end iterator is invalidated
+    //         during a loop iteration, do not move it outside the
+    //         for-loop statement.
     for (FacetTable::iterator iter = this->facet_table_.begin ();
          iter != this->facet_table_.end ();
          ++iter, ++i)
@@ -45,10 +52,10 @@ namespace CIAO
         FacetTable::ENTRY & entry = *iter;
         retval[i] = entry.int_id_;
       }
-    
+
     return retval._retn ();
   }
-  
+
   template <typename SKEL, typename EXEC, typename CONTEXT>
   ::Components::ConsumerDescriptions *
   Servant_Impl<SKEL, EXEC, CONTEXT>::get_all_consumers (
@@ -61,10 +68,12 @@ namespace CIAO
                     ::Components::ConsumerDescriptions,
                     0);
     ::Components::ConsumerDescriptions_var retval = cd_ptr;
-                    
+
     retval->length (this->consumer_table_.current_size ());
     CORBA::ULong i = 0;
-    
+
+    // @@ (OO) Same here.  Please move end() call outside of the
+    //         loop.
     for (ConsumerTable::iterator iter = this->consumer_table_.begin ();
          iter != this->consumer_table_.end ();
          ++iter, ++i)
@@ -72,7 +81,7 @@ namespace CIAO
         ConsumerTable::ENTRY & entry = *iter;
         retval[i] = entry.int_id_;
       }
-    
+
     return retval._retn ();
   }
 }
