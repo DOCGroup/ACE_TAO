@@ -38,6 +38,7 @@
 // ACE OS Adaption layer
 #include "ace/OS.h"
 #include "asnmp/smival.h"
+#include "asnmp/octet.h"
 
 //----[ enumerated types ] --------------------------------  
 enum address_lengths {
@@ -160,6 +161,7 @@ public:
   virtual unsigned int hashFunction() const { return 0;};
   // return a hash key
 
+
 protected:
   int valid_flag;
   // state of constructed object (TRUE/FALSE)
@@ -239,8 +241,11 @@ public:
   int is_broadcast() const;
   // determine if this a broadcast address 
 
-  int is_arpanet() const;
-  // determine if this is ip network 10.x.x.x 
+  int is_private() const;
+  // per RFC 1597,  private addresses are:: 10, 172.16, and 192.168.0 
+
+  void to_octet(OctetStr& octet) const;
+  // convert address into octet string format in network byte order
 
 protected:
   char output_buffer[MAX_DISPLAY_SZ];           // output buffer
@@ -407,7 +412,7 @@ protected:
 class  ACE_Export NetbiosAddress : public Address 
   // = TITLE
   //     Defines the member functions for the concrete class NetbiosAddress.
-  //     The IBM/Microsoft address for NETBIOS, NETBEUI protocol tranport. 
+  //     The IBM/Microsoft address for NETBIOS, NETBEUI protocol transport. 
 {
 public:
 
