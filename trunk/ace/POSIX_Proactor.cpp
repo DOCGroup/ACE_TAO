@@ -19,6 +19,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/OS_NS_unistd.h"
 
 #if defined (sun)
 #  include "ace/OS_NS_strings.h"
