@@ -29,7 +29,7 @@
 #include "tao/debug.h"
 
 ACE_RCSID (CosEvent,
-           Event_Loader,
+           CEC_Event_Loader,
            "$Id$")
 
 TAO_CEC_Event_Loader::TAO_CEC_Event_Loader (void)
