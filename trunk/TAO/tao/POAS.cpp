@@ -149,10 +149,10 @@ static const TAO_operation_db_entry PortableServer_ThreadPolicy_operations [] = 
   {"_is_a", &POA_PortableServer::ThreadPolicy::_is_a_skel}
 };
 
-static const CORBA::Long _tao_PortableServer_ThreadPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (12);
+static const CORBA::Long _tao_PortableServer_ThreadPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (15);
 static char _tao_PortableServer_ThreadPolicy_optable_pool [_tao_PortableServer_ThreadPolicy_optable_size];
 static ACE_Static_Allocator_Base _tao_PortableServer_ThreadPolicy_allocator (_tao_PortableServer_ThreadPolicy_optable_pool, _tao_PortableServer_ThreadPolicy_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_ThreadPolicy_optable (PortableServer_ThreadPolicy_operations, 4, 8, &_tao_PortableServer_ThreadPolicy_allocator);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_ThreadPolicy_optable (PortableServer_ThreadPolicy_operations, 5, 10, &_tao_PortableServer_ThreadPolicy_allocator);
 
 // skeleton constructor
 POA_PortableServer::ThreadPolicy::ThreadPolicy (void)
@@ -351,10 +351,10 @@ static const TAO_operation_db_entry PortableServer_LifespanPolicy_operations [] 
   {"_is_a", &POA_PortableServer::LifespanPolicy::_is_a_skel}
 };
 
-static const CORBA::Long _tao_PortableServer_LifespanPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (12);
+static const CORBA::Long _tao_PortableServer_LifespanPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (15);
 static char _tao_PortableServer_LifespanPolicy_optable_pool [_tao_PortableServer_LifespanPolicy_optable_size];
 static ACE_Static_Allocator_Base _tao_PortableServer_LifespanPolicy_allocator (_tao_PortableServer_LifespanPolicy_optable_pool, _tao_PortableServer_LifespanPolicy_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_LifespanPolicy_optable (PortableServer_LifespanPolicy_operations, 4, 8, &_tao_PortableServer_LifespanPolicy_allocator);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_LifespanPolicy_optable (PortableServer_LifespanPolicy_operations, 5, 10, &_tao_PortableServer_LifespanPolicy_allocator);
 
 // skeleton constructor
 POA_PortableServer::LifespanPolicy::LifespanPolicy (void)
@@ -552,10 +552,10 @@ static const TAO_operation_db_entry PortableServer_IdUniquenessPolicy_operations
   {"_is_a", &POA_PortableServer::IdUniquenessPolicy::_is_a_skel}
 };
 
-static const CORBA::Long _tao_PortableServer_IdUniquenessPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (12);
+static const CORBA::Long _tao_PortableServer_IdUniquenessPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (15);
 static char _tao_PortableServer_IdUniquenessPolicy_optable_pool [_tao_PortableServer_IdUniquenessPolicy_optable_size];
 static ACE_Static_Allocator_Base _tao_PortableServer_IdUniquenessPolicy_allocator (_tao_PortableServer_IdUniquenessPolicy_optable_pool, _tao_PortableServer_IdUniquenessPolicy_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_IdUniquenessPolicy_optable (PortableServer_IdUniquenessPolicy_operations, 4, 8, &_tao_PortableServer_IdUniquenessPolicy_allocator);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_IdUniquenessPolicy_optable (PortableServer_IdUniquenessPolicy_operations, 5, 10, &_tao_PortableServer_IdUniquenessPolicy_allocator);
 
 // skeleton constructor
 POA_PortableServer::IdUniquenessPolicy::IdUniquenessPolicy (void)
@@ -753,10 +753,10 @@ static const TAO_operation_db_entry PortableServer_IdAssignmentPolicy_operations
   {"_is_a", &POA_PortableServer::IdAssignmentPolicy::_is_a_skel}
 };
 
-static const CORBA::Long _tao_PortableServer_IdAssignmentPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (12);
+static const CORBA::Long _tao_PortableServer_IdAssignmentPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (15);
 static char _tao_PortableServer_IdAssignmentPolicy_optable_pool [_tao_PortableServer_IdAssignmentPolicy_optable_size];
 static ACE_Static_Allocator_Base _tao_PortableServer_IdAssignmentPolicy_allocator (_tao_PortableServer_IdAssignmentPolicy_optable_pool, _tao_PortableServer_IdAssignmentPolicy_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_IdAssignmentPolicy_optable (PortableServer_IdAssignmentPolicy_operations, 4, 8, &_tao_PortableServer_IdAssignmentPolicy_allocator);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_IdAssignmentPolicy_optable (PortableServer_IdAssignmentPolicy_operations, 5, 10, &_tao_PortableServer_IdAssignmentPolicy_allocator);
 
 // skeleton constructor
 POA_PortableServer::IdAssignmentPolicy::IdAssignmentPolicy (void)
@@ -954,10 +954,10 @@ static const TAO_operation_db_entry PortableServer_ImplicitActivationPolicy_oper
   {"_is_a", &POA_PortableServer::ImplicitActivationPolicy::_is_a_skel}
 };
 
-static const CORBA::Long _tao_PortableServer_ImplicitActivationPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (12);
+static const CORBA::Long _tao_PortableServer_ImplicitActivationPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (15);
 static char _tao_PortableServer_ImplicitActivationPolicy_optable_pool [_tao_PortableServer_ImplicitActivationPolicy_optable_size];
 static ACE_Static_Allocator_Base _tao_PortableServer_ImplicitActivationPolicy_allocator (_tao_PortableServer_ImplicitActivationPolicy_optable_pool, _tao_PortableServer_ImplicitActivationPolicy_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_ImplicitActivationPolicy_optable (PortableServer_ImplicitActivationPolicy_operations, 4, 8, &_tao_PortableServer_ImplicitActivationPolicy_allocator);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_ImplicitActivationPolicy_optable (PortableServer_ImplicitActivationPolicy_operations, 5, 10, &_tao_PortableServer_ImplicitActivationPolicy_allocator);
 
 // skeleton constructor
 POA_PortableServer::ImplicitActivationPolicy::ImplicitActivationPolicy (void)
@@ -1155,10 +1155,10 @@ static const TAO_operation_db_entry PortableServer_ServantRetentionPolicy_operat
   {"_is_a", &POA_PortableServer::ServantRetentionPolicy::_is_a_skel}
 };
 
-static const CORBA::Long _tao_PortableServer_ServantRetentionPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (12);
+static const CORBA::Long _tao_PortableServer_ServantRetentionPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (15);
 static char _tao_PortableServer_ServantRetentionPolicy_optable_pool [_tao_PortableServer_ServantRetentionPolicy_optable_size];
 static ACE_Static_Allocator_Base _tao_PortableServer_ServantRetentionPolicy_allocator (_tao_PortableServer_ServantRetentionPolicy_optable_pool, _tao_PortableServer_ServantRetentionPolicy_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantRetentionPolicy_optable (PortableServer_ServantRetentionPolicy_operations, 4, 8, &_tao_PortableServer_ServantRetentionPolicy_allocator);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_ServantRetentionPolicy_optable (PortableServer_ServantRetentionPolicy_operations, 5, 10, &_tao_PortableServer_ServantRetentionPolicy_allocator);
 
 // skeleton constructor
 POA_PortableServer::ServantRetentionPolicy::ServantRetentionPolicy (void)
@@ -1356,10 +1356,10 @@ static const TAO_operation_db_entry PortableServer_RequestProcessingPolicy_opera
   {"_is_a", &POA_PortableServer::RequestProcessingPolicy::_is_a_skel}
 };
 
-static const CORBA::Long _tao_PortableServer_RequestProcessingPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (12);
+static const CORBA::Long _tao_PortableServer_RequestProcessingPolicy_optable_size = sizeof (ACE_Hash_Map_Entry<const char *, TAO_Skeleton>) * (15);
 static char _tao_PortableServer_RequestProcessingPolicy_optable_pool [_tao_PortableServer_RequestProcessingPolicy_optable_size];
 static ACE_Static_Allocator_Base _tao_PortableServer_RequestProcessingPolicy_allocator (_tao_PortableServer_RequestProcessingPolicy_optable_pool, _tao_PortableServer_RequestProcessingPolicy_optable_size);
-static TAO_Dynamic_Hash_OpTable tao_PortableServer_RequestProcessingPolicy_optable (PortableServer_RequestProcessingPolicy_operations, 4, 8, &_tao_PortableServer_RequestProcessingPolicy_allocator);
+static TAO_Dynamic_Hash_OpTable tao_PortableServer_RequestProcessingPolicy_optable (PortableServer_RequestProcessingPolicy_operations, 5, 10, &_tao_PortableServer_RequestProcessingPolicy_allocator);
 
 // skeleton constructor
 POA_PortableServer::RequestProcessingPolicy::RequestProcessingPolicy (void)
