@@ -1237,7 +1237,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
   // Remove all children POAs
   for (CHILDREN::iterator iterator = this->children_.begin ();
        iterator != this->children_.end () && env.exception () == 0;
-       iterator++)
+       ++iterator)
     {
       TAO_POA *child_poa = (*iterator).int_id_;
       child_poa->destroy (etherealize_objects,
@@ -1277,7 +1277,8 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
           while (1)
             {
               TAO_Object_Table::iterator iterator = this->active_object_map ().begin ();
-              if (iterator == this->active_object_map ().end () || env.exception () != 0)
+              if (iterator == this->active_object_map ().end () 
+                  || env.exception () != 0)
                 break;
 
               PortableServer::Servant servant = 0;
@@ -1695,9 +1696,9 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
   // This operation requires the RETAIN and either the UNIQUE_ID or
   // IMPLICIT_ACTIVATION policies; if not present, the WrongPolicy
   // exception is raised.
-  if (!(this->policies ().servant_retention () == PortableServer::RETAIN &&
-        (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID ||
-         this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)))
+  if (!(this->policies ().servant_retention () == PortableServer::RETAIN 
+        && (this->policies ().id_uniqueness () == PortableServer::UNIQUE_ID 
+            || this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)))
     {
       CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
       env.exception (exception);
@@ -1723,8 +1724,8 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant,
   // Id is returned.
   if (this->policies ().implicit_activation () == PortableServer::IMPLICIT_ACTIVATION)
     {
-      if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID ||
-          this->active_object_map ().find (servant) != 0)
+      if (this->policies ().id_uniqueness () == PortableServer::MULTIPLE_ID 
+          || this->active_object_map ().find (servant) != 0)
         {
           PortableServer::ObjectId_var new_id = this->create_object_id (servant, env);
           if (env.exception () != 0)
@@ -1776,8 +1777,8 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
   // This operation requires the RETAIN policy or the
   // USE_DEFAULT_SERVANT policy. If neither policy is present, the
   // WrongPolicy exception is raised.
-  if (!(this->policies ().servant_retention () == PortableServer::RETAIN ||
-        this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT))
+  if (!(this->policies ().servant_retention () == PortableServer::RETAIN 
+        || this->policies ().request_processing () == PortableServer::USE_DEFAULT_SERVANT))
     {
       CORBA::Exception *exception = new PortableServer::POA::WrongPolicy;
       env.exception (exception);
@@ -1805,11 +1806,12 @@ TAO_POA::reference_to_servant (CORBA::Object_ptr reference,
                                     persistent,
                                     system_id,
                                     poa_creation_time);
-      if (result != 0 ||
-          poa_name != this->complete_name () ||
-          persistent != this->persistent () ||
-          system_id != this->system_id () ||
-          !this->persistent () && poa_creation_time != this->creation_time_)
+      if (result != 0 
+          || poa_name != this->complete_name () 
+          || persistent != this->persistent () 
+          || system_id != this->system_id () 
+          || !this->persistent () 
+          && poa_creation_time != this->creation_time_)
         {
           CORBA::Exception *exception = new PortableServer::POA::WrongAdapter;
           env.exception (exception);
@@ -3192,7 +3194,7 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
 
   for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
        iterator != this->poa_collection_.end () && env.exception () == 0;
-       iterator++)
+       ++iterator)
     {
       TAO_POA *poa = *iterator;
       poa->destroy (etherealize_objects,
