@@ -44,6 +44,21 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &time,
 
 	  TAO_CHECK_ENV;
 
+	  #if defined (ACE_LACKS_LONGLONG_T)
+
+	  ACE_DEBUG ((LM_DEBUG,
+		      "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
+		      "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
+		      ACE_U64_TO_U32 (UTO_server->time (TAO_TRY_ENV)),
+		      ACE_U64_TO_U32 (UTO_server->inaccuracy (TAO_TRY_ENV)),
+		      UTO_server->tdf (TAO_TRY_ENV),
+		      ACE_U64_TO_U32 ((UTO_server->utc_time ()).time),
+		      (UTO_server->utc_time ()).inacclo,
+		      (UTO_server->utc_time ()).inacchi,
+		      (UTO_server->utc_time ()).tdf));
+
+          #else
+
 	  ACE_DEBUG ((LM_DEBUG,
 		      "\nTime = %Q\nInaccuracy = %Q\nTimeDiff = %d\nstruct.time = %Q\n"
 		      "struct.inacclo = %d\nstruct.inacchi = %d\nstruct.Tdf = %d\n",
@@ -51,9 +66,10 @@ Timer_Helper::handle_timeout (const ACE_Time_Value &time,
 		      UTO_server->inaccuracy (TAO_TRY_ENV),
 		      UTO_server->tdf (TAO_TRY_ENV),
 		      (UTO_server->utc_time ()).time,
-		      ACE_U64_TO_U32 ((UTO_server->utc_time ()).inacclo),
-		       ACE_U64_TO_U32 ((UTO_server->utc_time ()).inacchi),
+		      (UTO_server->utc_time ()).inacclo,
+		      (UTO_server->utc_time ()).inacchi,
 		      (UTO_server->utc_time ()).tdf));
+          #endif
 
 	  // This is a remote call.
 	  sum += (CORBA::ULongLong) UTO_server->time (TAO_TRY_ENV);
