@@ -167,7 +167,7 @@ ACE_Mutex::acquire_read (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire_read");
 #if defined (CHORUS)
-   if (this->process_lock_) 
+   if (this->process_lock_)
      return ACE_OS::mutex_lock (this->process_lock_);
 #endif /* CHORUS */
   return ACE_OS::mutex_lock (&this->lock_);
@@ -178,7 +178,7 @@ ACE_Mutex::acquire_write (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire_write");
 #if defined (CHORUS)
-   if (this->process_lock_) 
+   if (this->process_lock_)
      return ACE_OS::mutex_lock (this->process_lock_);
 #endif /* CHORUS */
   return ACE_OS::mutex_lock (&this->lock_);
@@ -189,7 +189,7 @@ ACE_Mutex::tryacquire_read (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire_read");
 #if defined (CHORUS)
-   if (this->process_lock_) 
+   if (this->process_lock_)
      return ACE_OS::mutex_trylock (this->process_lock_);
 #endif /* CHORUS */
   return ACE_OS::mutex_trylock (&this->lock_);
@@ -200,7 +200,7 @@ ACE_Mutex::lock (void) const
 {
 // ACE_TRACE ("ACE_Mutex::lock");
 #if defined (CHORUS)
-  if (this->process_lock_) 
+  if (this->process_lock_)
     return *this->process_lock_;
 #endif /* CHORUS */
   return this->lock_;
@@ -211,7 +211,7 @@ ACE_Mutex::tryacquire_write (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire_write");
 #if defined (CHORUS)
-   if (this->process_lock_) 
+   if (this->process_lock_)
      return ACE_OS::mutex_trylock (this->process_lock_);
 #endif /* CHORUS */
   return ACE_OS::mutex_trylock (&this->lock_);
@@ -222,7 +222,7 @@ ACE_Mutex::acquire (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire");
 #if defined (CHORUS)
-   if (this->process_lock_) 
+   if (this->process_lock_)
      return ACE_OS::mutex_lock (this->process_lock_);
 #endif /* CHORUS */
   return ACE_OS::mutex_lock (&this->lock_);
@@ -233,7 +233,7 @@ ACE_Mutex::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire");
 #if defined (CHORUS)
-   if (this->process_lock_) 
+   if (this->process_lock_)
      return ACE_OS::mutex_trylock (this->process_lock_);
 #endif /* CHORUS */
   return ACE_OS::mutex_trylock (&this->lock_);
@@ -244,7 +244,7 @@ ACE_Mutex::release (void)
 {
 // ACE_TRACE ("ACE_Mutex::release");
 #if defined (CHORUS)
-   if (this->process_lock_) 
+   if (this->process_lock_)
      return ACE_OS::mutex_unlock (this->process_lock_);
 #endif /* CHORUS */
   return ACE_OS::mutex_unlock (&this->lock_);
@@ -257,7 +257,7 @@ ACE_Mutex::remove (void)
 #if defined (CHORUS)
    int result = 0;
    // Are we the owner?
-   if (this->process_lock_ && this->lockname_) 
+   if (this->process_lock_ && this->lockname_)
      {
        if (this->removed_ == 0)
          {
@@ -514,6 +514,7 @@ ACE_Thread_Mutex::remove (void)
   return result;
 }
 
+#if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
 ACE_INLINE int
 ACE_Thread_Mutex_Guard::locked (void)
 {
@@ -586,6 +587,7 @@ ACE_Thread_Mutex_Guard::remove (void)
   this->owner_ = -1;
   return this->release ();
 }
+#endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
 ACE_INLINE int
 ACE_Condition_Thread_Mutex::remove (void)
@@ -921,7 +923,7 @@ ACE_Noop_Token::dump (void) const
 
 
 ACE_INLINE
-ACE_Null_Condition::ACE_Null_Condition (const ACE_Null_Mutex &m, 
+ACE_Null_Condition::ACE_Null_Condition (const ACE_Null_Mutex &m,
                                         LPCTSTR,
                                         void*)
   : mutex_ ((ACE_Null_Mutex &) m)
@@ -967,6 +969,7 @@ ACE_Null_Condition::dump (void) const
 {
 }
 
+#if defined (ACE_USES_OBSOLETE_GUARD_CLASSES)
 ACE_INLINE
 ACE_Null_Mutex_Guard::ACE_Null_Mutex_Guard (ACE_Null_Mutex &)
 {
@@ -1011,6 +1014,7 @@ ACE_INLINE void
 ACE_Null_Mutex_Guard::dump (void) const
 {
 }
+#endif /* ACE_USES_OBSOLETE_GUARD_CLASSES */
 
 ACE_INLINE
 ACE_TSS_Adapter::~ACE_TSS_Adapter (void)
