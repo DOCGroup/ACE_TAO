@@ -1,3 +1,10 @@
+Tue Mar 11 18:00:12 2003  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Makefile: Added
+          PLATFORM_SSL_* variables to the CPPFLAGS and LDFLAGS "make"
+          variables in the manner Ossama used to modify the
+          Secure_Invocation and SecurityLevel1 tests makefiles.
+
 Tue Mar 11 11:58:12 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
