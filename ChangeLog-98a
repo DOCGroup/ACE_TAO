@@ -1,5 +1,12 @@
 Wed Feb 25 23:08:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/MT_Reactor_Timer_Test.cpp: Made this test compile on
+ 	  platforms that lack threads and also updated the programming
+ 	  style to be consistent with other parts of ACE.
+
+	* tests/Priority_Task_Test.cpp: Made this test compile on
+	  platforms that lack threads.
+
 	* ace/Svc_Conf.h: Fixed the prototype for
  	  ace_create_service_type() to reflect the elimination of "const
  	  void *".
