@@ -3,16 +3,16 @@
 #ifndef ACE_CACHE_MAP_MANAGER_T_C
 #define ACE_CACHE_MAP_MANAGER_T_C
 
-#include "ace/Cache_Map_Manager_T.h"
+#include "ace/Utils/Templates/Cache_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc.h"
+#include "ace/Memory/Malloc.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Cache_Map_Manager_T.i"
+#include "ace/Utils/Templates/Cache_Map_Manager_T.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Cache_Map_Manager_T, "$Id$")

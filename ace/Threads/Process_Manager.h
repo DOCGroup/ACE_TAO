@@ -15,15 +15,15 @@
 #define ACE_PROCESS_MANAGER_H
 #include "ace/pre.h"
 
-#include "ace/Synch.h"
-#include "ace/Reactor.h"
-#include "ace/Event_Handler.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Demux/Reactor.h"
+#include "ace/Demux/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Process.h"
+#include "ace/Threads/Process.h"
 
 /**
  * @class ACE_Process_Descriptor
@@ -391,7 +391,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Process_Manager.i"
+#include "ace/Threads/Process_Manager.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

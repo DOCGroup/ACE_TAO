@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ace/Token_Request_Reply.h"
+#include "ace/Token/Token_Request_Reply.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Token_Request_Reply.i"
+#include "ace/Token/Token_Request_Reply.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

@@ -15,7 +15,7 @@
 #define ACE_AUTO_INCDEC_T_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,12 +60,12 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Auto_IncDec_T.i"
+#include "ace/Utils/Templates/Auto_IncDec_T.i"
 // On non-Win32 platforms, this code will be inlined
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Auto_IncDec_T.cpp"
+#include "ace/Utils/Templates/Auto_IncDec_T.cpp"
 // On Win32 platforms, this code will be included as template source
 // code and will not be inlined. Therefore, we first turn off
 // ACE_INLINE, set it to be nothing, include the code, and then turn

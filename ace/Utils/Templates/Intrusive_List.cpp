@@ -3,14 +3,14 @@
 #ifndef ACE_INTRUSIVE_LIST_C
 #define ACE_INTRUSIVE_LIST_C
 
-#include "ace/Intrusive_List.h"
+#include "ace/Utils/Templates/Intrusive_List.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Intrusive_List.inl"
+#include "ace/Utils/Templates/Intrusive_List.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Intrusive_List, "$Id$")

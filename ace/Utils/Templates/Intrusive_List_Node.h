@@ -66,11 +66,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Intrusive_List_Node.inl"
+#include "ace/Utils/Templates/Intrusive_List_Node.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Intrusive_List_Node.cpp"
+#include "ace/Utils/Templates/Intrusive_List_Node.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

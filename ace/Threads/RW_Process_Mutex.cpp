@@ -1,13 +1,17 @@
 // $Id$
 
-#include "ace/RW_Process_Mutex.h"
+#include "ace/Threads/RW_Process_Mutex.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
+
 #include "ace/ACE.h"
 
 ACE_RCSID(ace, RW_Process_Mutex, "$Id$")
 
 #if !defined (__ACE_INLINE__)
-#include "ace/RW_Process_Mutex.inl"
+#include "ace/Threads/RW_Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
@@ -36,6 +40,7 @@ ACE_RW_Process_Mutex::~ACE_RW_Process_Mutex (void)
 // ACE_TRACE ("ACE_RW_Process_Mutex::~ACE_RW_Process_Mutex");
 }
 
+#ifdef ACE_SUBSET_0
 void
 ACE_RW_Process_Mutex::dump (void) const
 {
@@ -44,6 +49,7 @@ ACE_RW_Process_Mutex::dump (void) const
   this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 //
 // These are instantiated both with and without ACE_HAS_THREADS.

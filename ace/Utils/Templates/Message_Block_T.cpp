@@ -3,7 +3,6 @@
 #if !defined (ACE_MESSAGE_BLOCK_T_C)
 #define ACE_MESSAGE_BLOCK_T_C
 
-
 ACE_RCSID(ace, Message_Block_T, "$Id$")
 
 #if !defined (__ACE_INLINE__)

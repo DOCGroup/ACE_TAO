@@ -15,17 +15,17 @@
 #define ACE_REMOTE_MUTEX_H
 #include "ace/pre.h"
 
-#include "ace/INET_Addr.h"
+#include "ace/IPC/INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Connector.h"
-#include "ace/SOCK_Stream.h"
-#include "ace/Synch_Options.h"
-#include "ace/Local_Tokens.h"
-#include "ace/Token_Request_Reply.h"
+#include "ace/Sockets/SOCK_Connector.h"
+#include "ace/Sockets/SOCK_Stream.h"
+#include "ace/Threads/Synch_Options.h"
+#include "ace/Token/Local_Tokens.h"
+#include "ace/Token/Token_Request_Reply.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -309,7 +309,7 @@ private:
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Remote_Tokens.i"
+#include "ace/Token/Remote_Tokens.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

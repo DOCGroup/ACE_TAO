@@ -14,7 +14,7 @@
 #define ACE_FILE_LOCK_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/OS/OS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -157,7 +157,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/File_Lock.inl"
+#include "ace/Threads/File_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -1,14 +1,17 @@
 // $Id$
 
-#include "ace/OS.h"
-#include "ace/Process.h"
-#include "ace/ARGV.h"
-#include "ace/Signal.h"
-#include "ace/SString.h"
-#include "ace/Log_Msg.h"
+#include "ace/OS/OS.h"
+#include "ace/Threads/Process.h"
+#include "ace/Utils/ARGV.h"
+#include "ace/IPC/Signal.h"
+#include "ace/Utils/SString.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Process.i"
+#include "ace/Threads/Process.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID (ace, Process, "$Id$")

@@ -1,7 +1,7 @@
 // $Id$
 
-#include "ace/Token_Invariants.h"
-#include "ace/Object_Manager.h"
+#include "ace/Token/Token_Invariants.h"
+#include "ace/Utils/Object_Manager.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 

@@ -1,10 +1,10 @@
 // Thread.cpp
 // $Id$
 
-#include "ace/Thread.h"
+#include "ace/Threads/Thread.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Thread.i"
+#include "ace/Threads/Thread.i"
 #endif /* !defined (__ACE_INLINE__) */
 
 ACE_RCSID(ace, Thread, "$Id$")

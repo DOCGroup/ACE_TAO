@@ -14,7 +14,7 @@
 #define ACE_RW_PROCESS_MUTEX_H
 #include "ace/pre.h"
 
-#include "ace/File_Lock.h"
+#include "ace/Threads/File_Lock.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -107,7 +107,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/RW_Process_Mutex.inl"
+#include "ace/Threads/RW_Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

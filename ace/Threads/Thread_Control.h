@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_LEGACY_MODE)
-#  include "ace/OS.h"
+#  include "ace/OS/OS.h"
 #endif  /* ACE_LEGACY_MODE */
 
 class ACE_Thread_Manager;
@@ -94,7 +94,7 @@ private:
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/Thread_Control.inl"
+#   include "ace/Threads/Thread_Control.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/post.h"

@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
-#include "ace/Thread_Control.h"
+#include "ace/OS/OS.h"
+#include "ace/Threads/Thread_Control.h"
 
 /**
  * @class ACE_Thread_Exit

@@ -3,19 +3,19 @@
 #ifndef CACHED_CONNECT_STRATEGY_T_C
 #define CACHED_CONNECT_STRATEGY_T_C
 
-#include "ace/Cached_Connect_Strategy_T.h"
+#include "ace/Utils/Templates/Cached_Connect_Strategy_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE.h"
-#include "ace/Service_Repository.h"
-#include "ace/Synch.h"
-#include "ace/Service_Types.h"
-#include "ace/Thread_Manager.h"
-#include "ace/WFMO_Reactor.h"
-#include "ace/Pair_T.h"
+#include "ace/Svcconf/Service_Repository.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Svcconf/Service_Types.h"
+#include "ace/Threads/Thread_Manager.h"
+#include "ace/Demux/WFMO_Reactor.h"
+#include "ace/Utils/Templates/Pair_T.h"
 
 ACE_RCSID(ace, Cached_Connect_Strategy_T, "$Id$")
 
