@@ -2,11 +2,12 @@
 
 #include "hello_executors.h"
 
-HelloWorld_Impl::HelloWorld ()
+HelloWorld_Impl::HelloWorld_Impl ()
 {
 }
 
-HelloWorld_Impl::~HelloWorld ()
+HelloWorld_Impl::~HelloWorld_Impl
+ ()
 {
 }
 
@@ -27,11 +28,11 @@ HelloWorld_Impl::sayHello (const char *username
   return str._retn ();
 }
 
-HelloHome_Impl::HelloHome_impl ()
+HelloHome_Impl::HelloHome_Impl ()
 {
 }
 
-HelloHome_Impl::~HelloHome_impl ()
+HelloHome_Impl::~HelloHome_Impl ()
 {
 }
 
