@@ -268,17 +268,10 @@ public:
   //    - exceptions ... list of legal user-defined exceptions
   //    - ACE_TRY_ENV ... used for exception reporting.
 
-#if defined (TAO_HAS_CORBA_MESSAGING)
-
-#  if defined (TAO_HAS_AMI_CALLBACK) || defined (TAO_HAS_AMI_POLLER)
-
+  // Used with DII deferred synchronous requests.
   void do_deferred_call (const CORBA::Request_ptr req,
                          CORBA_Environment &ACE_TRY_ENV =
                               TAO_default_environment ());
-
-#  endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-
-#endif /* TAO_HAS_CORBA_MESSAGING  */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 

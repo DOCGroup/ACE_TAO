@@ -229,6 +229,10 @@ TAO_Asynch_Reply_Dispatcher::message_state (void)
   return this->message_state_;
 }
 
+#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
 // *********************************************************************
 
 // Constructor.
@@ -318,6 +322,3 @@ TAO_DII_Deferred_Reply_Dispatcher::message_state (void)
   return this->message_state_;
 }
 
-#endif /* TAO_HAS_AMI_CALLBACK || TAO_HAS_AMI_POLLER */
-
-#endif /* TAO_HAS_CORBA_MESSAGING */
