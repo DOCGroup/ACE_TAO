@@ -1,3 +1,10 @@
+Wed Sep 25 13:15:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ImR_Activator.pidl:
+        * tests/Bug_1269_Regression/Test.idl:
+        * tests/Bug_1270_Regression/Test.idl:
+          Fixed incorrect filename after @file doxygen command.
+
 Tue Sep 24 23:11:02 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORBInitializer_Registry.h (TAO_ORBInitializer_Registry):
@@ -20,7 +27,7 @@ Tue Sep 24 15:29:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/TypeCodeFactory_Adapter.cpp:
         * tao/TypeCodeFactory_Adapter.h:
 
-          Made the methods in these classes pure virtual and 
+          Made the methods in these classes pure virtual and
           eliminated the empty method bodies.
 
         * tao/corbafwd.h:
@@ -91,15 +98,15 @@ Tue Sep 24 09:36:43 2002  Ossama Othman  <ossama@uci.edu>
 
 Tue Sep 24 08:58:54 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 
-	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run): 
+	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+	* orbsvcs/ImplRepo_Service/tao_imr_i.cpp (run):
 	  Removed unnecessary debug statements.
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp: 
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
  	  Fixed the reregister method implementation to work correctly in
 	  case when the ImR_Activator is locked.
-	
-	* orbsvcs/tests/ImplRepo/locked/run_test.pl: 
+
+	* orbsvcs/tests/ImplRepo/locked/run_test.pl:
 	  Fixed the service name from ImplRepo_Service to ImplRepoService
 	  to get the correct initial references.
 
@@ -120,7 +127,7 @@ Sat Sep 21 14:07:11 2002  Ossama Othman  <ossama@uci.edu>
 Sat Sep 21 11:57:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/fe/idl.ll (stripped_name):
-	* TAO_IDL/fe/lex.yy.cpp (stripped_name): 
+	* TAO_IDL/fe/lex.yy.cpp (stripped_name):
 
 	  Commented out this unused function.  Fixes a warning exhibited
 	  by g++ 3.2.
@@ -156,7 +163,7 @@ Fri Sep 20 12:53:58 2002  Ossama Othman  <ossama@uci.edu>
 
 Wed Sep 18 09:23:44 2002  Priyanka Gontla  <pgontla@ociweb.com>
 
-	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (reregister_server): 
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (reregister_server):
 	  Fix the mismatch throw warning in borland builds.
 
 Wed Sep 18 07:47:43 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
