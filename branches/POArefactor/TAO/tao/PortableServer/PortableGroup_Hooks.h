@@ -14,7 +14,7 @@
 #define TAO_PORTABLEGROUP_HOOKS_H
 #include /**/ "ace/pre.h"
 
-#include "PortableServerC.h"
+#include "GOAC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

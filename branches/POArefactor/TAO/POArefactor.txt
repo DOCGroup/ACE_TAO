@@ -1,3 +1,12 @@
+Thu Sep  9 10:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+          Removed all GOA stuff, will put this in a new GOA class. Will follow
+          later, first get everything building again
+
+        * tao/PortableServer/PortableGroup_Hooks.cpp:
+          Include GOAC.h
+
 Thu Sep  9 09:15:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orb.idl:
