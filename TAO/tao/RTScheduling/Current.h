@@ -10,7 +10,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_RTScheduler_Current;
+class TAO_RTScheduler_Current_i;
 class TAO_TSS_Resources;
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current: 
@@ -73,12 +73,17 @@ public RTScheduling::Current,
   virtual ::RTScheduling::Current::NameList * 
     current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));  
+
+  TAO_RTScheduler_Current_i* implementation (void);
+
+  void implementation (TAO_RTScheduler_Current_i*);
   
 };
 
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 {
+ public:
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
 	   CORBA::ULong stack_size,
