@@ -46,17 +46,7 @@ TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
     }
   this->scheduler_ =
     CORBA::Object::_duplicate (attr.scheduler);
-}
 
-TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
-{
-  if (this->own_factory_)
-    delete this->factory_;
-}
-
-void
-TAO_EC_Event_Channel::activate (CORBA::Environment&)
-{
   this->dispatching_ =
     this->factory_->create_dispatching (this);
   this->filter_builder_ =
@@ -79,7 +69,40 @@ TAO_EC_Event_Channel::activate (CORBA::Environment&)
     this->factory_->create_consumer_control (this);
   this->supplier_control_ =
     this->factory_->create_supplier_control (this);
+}
 
+TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
+{
+  this->factory_->destroy_dispatching (this->dispatching_);
+  this->dispatching_ = 0;
+  this->factory_->destroy_filter_builder (this->filter_builder_);
+  this->filter_builder_ = 0;
+  this->factory_->destroy_supplier_filter_builder (this->supplier_filter_builder_);
+  this->supplier_filter_builder_ = 0;
+  this->factory_->destroy_consumer_admin (this->consumer_admin_);
+  this->consumer_admin_ = 0;
+  this->factory_->destroy_supplier_admin (this->supplier_admin_);
+  this->supplier_admin_ = 0;
+  this->factory_->destroy_timeout_generator (this->timeout_generator_);
+  this->timeout_generator_ = 0;
+  this->factory_->destroy_observer_strategy (this->observer_strategy_);
+  this->observer_strategy_ = 0;
+
+  this->factory_->destroy_scheduling_strategy (this->scheduling_strategy_);
+  this->scheduling_strategy_ = 0;
+
+  this->factory_->destroy_consumer_control (this->consumer_control_);
+  this->consumer_control_ = 0;
+  this->factory_->destroy_supplier_control (this->supplier_control_);
+  this->supplier_control_ = 0;
+
+  if (this->own_factory_)
+    delete this->factory_;
+}
+
+void
+TAO_EC_Event_Channel::activate (CORBA::Environment&)
+{
   this->dispatching_->activate ();
   this->timeout_generator_->activate ();
   this->consumer_control_->activate ();
@@ -118,28 +141,6 @@ TAO_EC_Event_Channel::shutdown (CORBA::Environment& ACE_TRY_ENV)
   this->consumer_admin_->shutdown (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->factory_->destroy_dispatching (this->dispatching_);
-  this->dispatching_ = 0;
-  this->factory_->destroy_filter_builder (this->filter_builder_);
-  this->filter_builder_ = 0;
-  this->factory_->destroy_supplier_filter_builder (this->supplier_filter_builder_);
-  this->supplier_filter_builder_ = 0;
-  this->factory_->destroy_consumer_admin (this->consumer_admin_);
-  this->consumer_admin_ = 0;
-  this->factory_->destroy_supplier_admin (this->supplier_admin_);
-  this->supplier_admin_ = 0;
-  this->factory_->destroy_timeout_generator (this->timeout_generator_);
-  this->timeout_generator_ = 0;
-  this->factory_->destroy_observer_strategy (this->observer_strategy_);
-  this->observer_strategy_ = 0;
-
-  this->factory_->destroy_scheduling_strategy (this->scheduling_strategy_);
-  this->scheduling_strategy_ = 0;
-
-  this->factory_->destroy_consumer_control (this->consumer_control_);
-  this->consumer_control_ = 0;
-  this->factory_->destroy_supplier_control (this->supplier_control_);
-  this->supplier_control_ = 0;
 }
 
 void

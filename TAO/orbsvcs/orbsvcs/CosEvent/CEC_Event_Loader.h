@@ -1,6 +1,6 @@
 // $Id$
 
-// ============================================================================================
+// ================================================================
 // FILENAME
 //   CEC_Event_Loader.h
 //
@@ -9,7 +9,7 @@
 //
 // AUTHOR
 //   Priyanka Gontla <pgontla@ece.uci.edu>
-// ============================================================================================
+// ================================================================
 
 #ifndef TAO_CEC_EVENT_LOADER_H
 #define TAO_CEC_EVENT_LOADER_H
@@ -22,6 +22,7 @@
 
 #include "CEC_EventChannel.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/Service_Config.h"
 
 class TAO_Event_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
 {
@@ -78,7 +79,7 @@ class TAO_Event_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
  private:
   ACE_UNIMPLEMENTED_FUNC (TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &))
   ACE_UNIMPLEMENTED_FUNC (TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &))
-  
+
 };
 
 ACE_FACTORY_DECLARE (TAO_Event, TAO_CEC_Event_Loader)

@@ -5,6 +5,7 @@
 #include "EC_SupplierAdmin.h"
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h" // @@ MSVC 6 bug
+#include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Reactive_SupplierControl.i"

@@ -17,8 +17,9 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
 #include "Object_A_i.h"
+#include "tao/corba.h"
+#include "ace/Reactor.h"
 
 ACE_RCSID(Triangle_Test, Object_A_i, "$Id$")
 
