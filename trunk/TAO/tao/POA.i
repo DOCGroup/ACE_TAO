@@ -108,34 +108,27 @@ TAO_POA_Policies::synchronization (PortableServer::SynchronizationPolicyValue va
 ACE_INLINE int
 TAO_Creation_Time::creation_time_length (void)
 {
-  return TAO_POA::MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX;
+  return 2 * sizeof (CORBA::ULong);
 }
 
 ACE_INLINE
 TAO_Creation_Time::TAO_Creation_Time (const ACE_Time_Value &creation_time)
 {
-  CORBA::ULong sec  = (CORBA::ULong) creation_time.sec ();
-  CORBA::ULong usec = (CORBA::ULong) creation_time.usec ();
-
-  // Convert seconds and micro seconds into string
-  ACE_OS::sprintf (this->time_stamp_,
-                   "%08.8x%08.8x",
-                   sec,
-                   usec);
+  this->time_stamp_[TAO_Creation_Time::SEC_FIELD]  = (CORBA::ULong) creation_time.sec ();
+  this->time_stamp_[TAO_Creation_Time::USEC_FIELD] = (CORBA::ULong) creation_time.usec ();
 }
 
 ACE_INLINE
 TAO_Creation_Time::TAO_Creation_Time (void)
 {
-  ACE_OS::memset (this->time_stamp_,
-                  0,
-                  TAO_Creation_Time::creation_time_length ());
+  this->time_stamp_[TAO_Creation_Time::SEC_FIELD]  = 0;
+  this->time_stamp_[TAO_Creation_Time::USEC_FIELD] = 0;
 }
 
 ACE_INLINE void
 TAO_Creation_Time::creation_time (const void *creation_time)
 {
-  ACE_OS::memcpy (this->time_stamp_,
+  ACE_OS::memcpy (&this->time_stamp_,
                   creation_time,
                   TAO_Creation_Time::creation_time_length ());
 }
@@ -143,7 +136,7 @@ TAO_Creation_Time::creation_time (const void *creation_time)
 ACE_INLINE const void *
 TAO_Creation_Time::creation_time (void) const
 {
-  return &this->time_stamp_[0];
+  return &this->time_stamp_;
 }
 
 ACE_INLINE int
@@ -153,8 +146,8 @@ TAO_Creation_Time::operator== (const TAO_Creation_Time &rhs) const
   ACE_UNUSED_ARG (rhs);
   return 1;
 #else
-  return ACE_OS::memcmp (this->time_stamp_,
-                         rhs.time_stamp_,
+  return ACE_OS::memcmp (&this->time_stamp_,
+                         &rhs.time_stamp_,
                          TAO_Creation_Time::creation_time_length ()) == 0;
 #endif /* POA_NO_TIMESTAMP */
 }
@@ -166,8 +159,8 @@ TAO_Creation_Time::operator!= (const TAO_Creation_Time &rhs) const
   ACE_UNUSED_ARG (rhs);
   return 0;
 #else
-  return ACE_OS::memcmp (this->time_stamp_,
-                         rhs.time_stamp_,
+  return ACE_OS::memcmp (&this->time_stamp_,
+                         &rhs.time_stamp_,
                          TAO_Creation_Time::creation_time_length ()) != 0;
 #endif /* POA_NO_TIMESTAMP */
 }
