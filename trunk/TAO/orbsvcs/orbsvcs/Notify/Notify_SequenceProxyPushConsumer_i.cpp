@@ -7,21 +7,15 @@
 
 ACE_RCSID(Notify, Notify_SequenceProxyPushConsumer_i, "$Id$")
 
-TAO_Notify_SequenceProxyPushConsumer_i::TAO_Notify_SequenceProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplieradmin, TAO_Notify_Resource_Manager* resource_manager)
-  : sequence_proxy_inherited(supplieradmin, resource_manager)
+typedef ACE_Reverse_Lock<ACE_Lock> TAO_Notify_Unlock;
+
+TAO_Notify_SequenceProxyPushConsumer_i::TAO_Notify_SequenceProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplier_admin)
+  : proxy_inherited (supplier_admin)
 {
 }
 
 TAO_Notify_SequenceProxyPushConsumer_i::~TAO_Notify_SequenceProxyPushConsumer_i (void)
 {
-}
-
-void
-TAO_Notify_SequenceProxyPushConsumer_i::cleanup_i (CORBA::Environment& ACE_TRY_ENV)
-{
-  sequence_proxy_inherited::cleanup_i (ACE_TRY_ENV);
-
-  this->is_destroyed_ = 1;
 }
 
 void
@@ -35,16 +29,38 @@ TAO_Notify_SequenceProxyPushConsumer_i::connect_sequence_push_supplier (CosNotif
   // safe, i know you are post-poning the thread safety issues, but it
   // is not that easy!
 
+  ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK;
+
   if (this->is_connected_ == 1)
     ACE_THROW (CosEventChannelAdmin::AlreadyConnected ());
   else
     this->push_supplier_ =
       CosNotifyComm::SequencePushSupplier::_duplicate (push_supplier);
 
-  this->event_manager_->register_for_subscription_updates (this, ACE_TRY_ENV);
-  ACE_CHECK;
-
   this->is_connected_ = 1;
+
+  ACE_TRY
+    {
+      TAO_Notify_Unlock reverse_lock (*this->lock_);
+
+      {
+        ACE_GUARD_THROW_EX (TAO_Notify_Unlock, ace_mon, reverse_lock,
+                            CORBA::INTERNAL ());
+        ACE_CHECK;
+
+        this->event_manager_->register_for_subscription_updates (this, ACE_TRY_ENV);
+        ACE_TRY_CHECK;
+      }
+    }
+  ACE_CATCHALL
+    {
+      this->push_supplier_ = CosNotifyComm::SequencePushSupplier::_nil ();
+      this->is_connected_ = 0;
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
 }
 
 void
@@ -70,19 +86,27 @@ TAO_Notify_SequenceProxyPushConsumer_i::push_structured_events (const CosNotific
                    CosEventComm::Disconnected
                    ))
 {
-  if (this->is_connected_ == 0)
-    ACE_THROW (CosEventComm::Disconnected ());
+  {
+    ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
+                        CORBA::INTERNAL ());
+    ACE_CHECK;
 
+    if (this->is_connected_ == 0)
+      ACE_THROW (CosEventComm::Disconnected ());
+  }
+
+  CosNotification::StructuredEvent *notification_copy;
   for (CORBA::ULong i = 0; i < notifications.length (); ++i)
     {
-      TAO_Notify_StructuredEvent notify_event (notifications[i]);
+      ACE_NEW_THROW_EX (notification_copy,
+                        CosNotification::StructuredEvent (notifications[i]),
+                        CORBA::NO_MEMORY ());
 
-      CORBA::Boolean bval =
-        this->check_filters_i (notify_event, ACE_TRY_ENV);
-      ACE_CHECK;
+      TAO_Notify_StructuredEvent* notify_event =
+        new TAO_Notify_StructuredEvent(notification_copy);
 
-      if (bval == 1)
-        this->event_manager_->push (notify_event, ACE_TRY_ENV);
+      this->event_manager_->process_event (notify_event, this, ACE_TRY_ENV);
+      notify_event->_decr_refcnt ();
     }
 }
 
@@ -92,13 +116,9 @@ TAO_Notify_SequenceProxyPushConsumer_i::disconnect_sequence_push_consumer (CORBA
                    CORBA::SystemException
                    ))
 {
-  this->is_destroyed_ = 1;
-
   // ask our parent to deaactivate us.
-  this->myadmin_->
+  this->supplier_admin_->
     deactivate_proxy_pushconsumer (this, ACE_TRY_ENV);
-
-  this->cleanup_i (ACE_TRY_ENV);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

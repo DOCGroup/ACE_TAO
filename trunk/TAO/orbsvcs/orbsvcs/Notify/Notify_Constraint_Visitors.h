@@ -18,9 +18,14 @@
 
 #ifndef NOTIFY_CONSTRAINT_VISITORS_H
 #define NOTIFY_CONSTRAINT_VISITORS_H
-#include "ace/pre.h"
 
+#include "ace/pre.h"
 #include "ace/Hash_Map_Manager.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "orbsvcs/orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/CosNotificationC.h"
 #include "notify_export.h"

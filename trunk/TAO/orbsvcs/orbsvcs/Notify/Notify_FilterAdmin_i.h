@@ -20,7 +20,7 @@
 #include "ace/pre.h"
 
 #include "Notify_ID_Pool_T.h"
-#include "Notify_Types.h"
+#include "Notify_Event.h"
 #include "orbsvcs/CosNotifyFilterS.h"
 #include "ace/Hash_Map_Manager.h"
 #include "notify_export.h"

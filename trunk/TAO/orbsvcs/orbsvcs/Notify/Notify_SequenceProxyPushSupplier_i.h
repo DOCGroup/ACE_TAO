@@ -23,7 +23,6 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 
 class TAO_Notify_ConsumerAdmin_i;
-class TAO_Notify_Resource_Manager;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -32,7 +31,7 @@ class TAO_Notify_Resource_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier_i : public TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier_i : public TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
 {
   // = TITLE
   //   TAO_Notify_SequenceProxyPushSupplier_i
@@ -42,7 +41,7 @@ class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier_i : public TAO_Noti
   //
 
  public:
-  TAO_Notify_SequenceProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager);
+  TAO_Notify_SequenceProxyPushSupplier_i (TAO_Notify_ConsumerAdmin_i* consumer_admin);
   // Constructor
 
   virtual ~TAO_Notify_SequenceProxyPushSupplier_i (void);
@@ -66,6 +65,10 @@ class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier_i : public TAO_Noti
     CORBA::SystemException
   ));
 
+
+  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  // Shutdown.
+
   // @@ Pradeep: please setup your editor to start 'protected',
   // 'public' and 'private' on the first column
 
@@ -76,15 +79,12 @@ class TAO_Notify_Export TAO_Notify_SequenceProxyPushSupplier_i : public TAO_Noti
   virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
   // Deliver the update to the consumer.
 
-  // = Helper methods
-  virtual void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
-  // Cleanup all resources used by this object.
-
   CosNotifyComm::SequencePushConsumer_var push_consumer_;
   // The consumer that we're connect to.
 
+ private:
   typedef TAO_Notify_ProxySupplier<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
-    sequence_proxy_inherited;
+    proxy_inherited;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

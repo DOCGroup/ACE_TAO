@@ -26,13 +26,18 @@
 #include "Notify_ID_Pool_T.h"
 #include "Notify_QoSAdmin_i.h"
 #include "Notify_FilterAdmin_i.h"
-#include "Notify_Types.h"
+#include "Notify_Event.h"
 #include "Notify_Listeners.h"
+#include "Notify_Collection.h"
 #include "notify_export.h"
 
 class TAO_Notify_EventChannel_i;
-class TAO_Notify_Resource_Manager;
 class TAO_Notify_Event_Manager;
+class TAO_Notify_CO_Factory;
+class TAO_Notify_POA_Factory;
+class TAO_Notify_EMO_Factory;
+class TAO_Notify_Collection_Factory;
+class TAO_Notify_Worker_Task;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -41,7 +46,7 @@ class TAO_Notify_Event_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public POA_CosNotifyChannelAdmin::ConsumerAdmin, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public TAO_Notify_EventListener, public POA_CosNotifyChannelAdmin::ConsumerAdmin, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_ConsumerAdmin_i
@@ -51,13 +56,32 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public POA_CosNotifyChannel
   //
 
  public:
-  TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_i* myChannel, TAO_Notify_Resource_Manager* resource_manager);
+  TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_i* myChannel);
   // Constructor
   // <myChannel> is this objects parent.
 
   virtual ~TAO_Notify_ConsumerAdmin_i (void);
   // Destructor
 
+  // = TAO_Notify_RefCounted
+  virtual CORBA::ULong _incr_refcnt (void);
+  virtual CORBA::ULong _decr_refcnt (void);
+
+  // = The Servant methods
+  virtual void _add_ref (CORBA_Environment &ACE_TRY_ENV);
+  virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV);
+
+  //= TAO_Notify_EventListener methods
+  virtual void dispatch_event (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV);
+  // Callback methods to supply the event to the listener.
+
+  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent, CORBA::Environment &ACE_TRY_ENV);
+  // Evaluates true if this event is acceptable by the listener.
+
+  virtual void shutdown (CORBA::Environment &ACE_TRY_ENV);
+  // Ask the listener to relinqish any bindings and prepare to be disposed.
+
+  //= Admin Methods.
   void init (CosNotifyChannelAdmin::AdminID myID,
              CosNotifyChannelAdmin::InterFilterGroupOperator myOperator,
              PortableServer::POA_ptr my_POA,
@@ -80,7 +104,7 @@ class TAO_Notify_Export TAO_Notify_ConsumerAdmin_i : public POA_CosNotifyChannel
   // Register with parent for subscription updates.
 
   void unregister_listener (TAO_Notify_EventListener *listener, CORBA::Environment &ACE_TRY_ENV);
-  // Unregister with parent for subscription updates.
+  // Unregister with parent from subscription updates.
 
   void proxy_pushsupplier_destroyed (CosNotifyChannelAdmin::ProxyID proxyID);
   // This id is no longer in use.It can be reused by <proxy_pushsupplier_ids_>
@@ -278,9 +302,9 @@ virtual CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
   ));
 
  protected:
-// = Helper methods
- void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
- // Cleanup all resources used by this object.
+  // = Helper methods
+  void destroy_i (CORBA::Environment &ACE_TRY_ENV);
+  // Destroy CA
 
  CORBA::Object_ptr obtain_struct_proxy_pushsupplier_i (CosNotifyChannelAdmin::ProxyID proxy_id, CORBA::Environment &ACE_TRY_ENV);
  // Obtain a proxy pushsupplier object
@@ -292,47 +316,114 @@ virtual CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
  // Obtain a sequence proxy pushsupplier object.
 
  // = Data members
-  TAO_Notify_EventChannel_i* my_channel_;
-  // The channel to which we belong.
+ ACE_Lock* lock_;
+ // The locking strategy.
 
-  TAO_Notify_Resource_Manager* resource_manager_;
-  // The resource factory that we use.
+ CORBA::ULong refcount_;
+ // The reference count.
 
-  TAO_Notify_Event_Manager* event_manager_;
-  // The event manager to use.
+ CORBA::Boolean destory_child_POAs_;
+ // Flag to tell if the child poa's should be destroyed.
 
-  CosNotifyChannelAdmin::InterFilterGroupOperator myOperator_;
-  // The inter filter operator to use.
+ TAO_Notify_EventChannel_i* event_channel_;
+ // The channel to which we belong.
 
-  CosNotifyChannelAdmin::AdminID myID_;
-  // My ID.
+ TAO_Notify_CO_Factory* channel_objects_factory_;
+ // The factory for channel objects.
 
-  PortableServer::POA_var my_POA_;
-  // The POA in which we live.
+ TAO_Notify_POA_Factory* poa_factory_;
+ // The factory for POA based containers.
 
-  PortableServer::POA_var proxy_pushsupplier_POA_;
-  // The POA in which all our push suppliers live.
-  // We create and own this POA.
+ TAO_Notify_EMO_Factory* event_manager_objects_factory_;
+ // Event manager objects factory,
 
-  TAO_Notify_EventType_List subscription_list_;
-  // The list of event types that all our interested in receiving.
+ TAO_Notify_Collection_Factory* collection_factory_;
+ // Collection objects factory
 
-  TAO_Notify_EventListener_List event_listener_list_;
-  // The list of event listeners that have registered with us
+ TAO_Notify_Event_Manager* event_manager_;
+ // The event manager to use.
 
-  TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
-    CosNotifyChannelAdmin::ProxyIDSeq> proxy_pushsupplier_ids_;
-  // Id generator for proxy push suppliers.
+ CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator_;
+ // The inter filter operator to use.
 
-  CORBA::Boolean is_destroyed_;
-  // Are we dead?
+ CosNotifyChannelAdmin::AdminID my_id_;
+ // My ID.
 
-  TAO_Notify_QoSAdmin_i qos_admin_;
-  // Handle QoS admin methods.
+ PortableServer::POA_var my_POA_;
+ // The POA in which we live.
+
+ PortableServer::POA_var proxy_pushsupplier_POA_;
+ // The POA in which all our push suppliers live.
+ // We create and own this POA.
+
+ TAO_Notify_EventType_List subscription_list_;
+ // The list of event types that all our proxys are interested in receiving.
+
+ TAO_Notify_EventListener_List* event_listener_list_;
+ // The list of event listeners that have registered with us
+
+ TAO_Notify_ID_Pool_Ex<CosNotifyChannelAdmin::ProxyID,
+   CosNotifyChannelAdmin::ProxyIDSeq> proxy_pushsupplier_ids_;
+ // Id generator for proxy push suppliers.
+
+ TAO_Notify_QoSAdmin_i qos_admin_;
+ // Handle QoS admin methods.
 
   TAO_Notify_FilterAdmin_i filter_admin_;
   // Handles the Filter Admin methods.
+
+  TAO_Notify_Worker_Task* filter_eval_task_;
+  // The task to forward filter evaluation commands to.
+
+  TAO_Notify_Worker_Task* dispatching_task_;
+  // The task to forward event dispatching commands to.
 };
+
+/****************************************************************************************************/
+
+class TAO_Notify_Export TAO_Notify_Filter_Command_Worker : public TAO_ESF_Worker<TAO_Notify_EventListener>
+{
+  // = TITLE
+  //   TAO_Notify_Filter_Command_Worker
+  //
+  // = DESCRIPTION
+  //   Enqueue each listener for the filter evaluation command.
+  //
+public:
+  TAO_Notify_Filter_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Worker_Task* task, CORBA::Boolean eval_parent);
+
+  // = TAO_ESF_Worker method
+  void work (TAO_Notify_EventListener* listener, CORBA::Environment &ACE_TRY_ENV);
+
+protected:
+  TAO_Notify_Event* event_;
+  TAO_Notify_Worker_Task* task_;
+  CORBA::Boolean eval_parent_;
+};
+
+/****************************************************************************************************/
+
+class TAO_Notify_Export TAO_Notify_Dispatch_Command_Worker : public TAO_ESF_Worker<TAO_Notify_EventListener>
+{
+  // = TITLE
+  //   TAO_Notify_Dispatch_Command_Worker
+  //
+  // = DESCRIPTION
+  //   Worker to invoke the dispatch command for each member of the collection.
+  //
+public:
+  TAO_Notify_Dispatch_Command_Worker (TAO_Notify_Event* event, TAO_Notify_Worker_Task* task);
+  ~TAO_Notify_Dispatch_Command_Worker ();
+
+  // = TAO_ESF_Worker method
+  void work (TAO_Notify_EventListener* listener, CORBA::Environment &ACE_TRY_ENV);
+
+protected:
+  TAO_Notify_Event* event_;
+  TAO_Notify_Worker_Task* task_;
+};
+
+/****************************************************************************************************/
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)
