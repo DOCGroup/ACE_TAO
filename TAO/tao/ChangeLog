@@ -1,3 +1,15 @@
+Mon Apr 22 17:53:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Connection_Handler.cpp:
+	* tao/Connection_Handler.h:
+	* tao/Connection_Handler.inl: Added reference count to check the
+	  life time of the handlers. Added a method shutdown_object () for
+	  memory management.
+	
+	* tao/IIOP_Connection_Handler.cpp:
+	* tao/IIOP_Connection_Handler.h: Implement concrete
+	  implementations for shutdown_object ().
+
 Mon Apr 22 13:21:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Connect_Strategy.h:

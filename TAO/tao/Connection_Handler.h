@@ -63,6 +63,11 @@ public:
   /// Was the non-blocking connection initialization successful?
   int is_connect_successful (void) const;
 
+  /// Increment and decrement the refcount. The object is deleted when
+  /// the refcount reaches zero.
+  int incr_refcount (void);
+  void decr_refcount (void);
+
 protected:
 
   /// Return our TAO_ORB_Core pointer
@@ -90,6 +95,9 @@ protected:
   /// Query the upcall count
   int pending_upcalls (void) const;
 
+  /// Shutdown the object
+  virtual void shutdown_object (void) = 0;
+
 private:
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core *orb_core_;
@@ -105,6 +113,16 @@ private:
   /// you should not delete the svc_handler until the stack unwinds
   /// from the nested upcalls.
   long pending_upcalls_;
+
+  /* Have a count of the number of references to the
+   * handler. Theoretically this should be in the reactor. As we dont
+   * have this in the reactor we are providing it here.
+   *
+   * NOTE: Please dont try to combine this with the pending
+   * upcalls. They are for two completely different things.
+   * @@todo: Need to be moved into the reactor at a later date
+   */
+  long reference_count_;
 
   /// Lock for the <pending_upcalls_>. We can have more than one
   /// thread trying to access.

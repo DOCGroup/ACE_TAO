@@ -57,6 +57,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
 {
+  cout << " I am going " << endl;
 }
 
 int
@@ -193,6 +194,7 @@ int
 TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                                            ACE_Reactor_Mask rm)
 {
+  ACE_OS::abort ();
   // @@ Alex: we need to figure out if the transport decides to close
   //    us or something else.  If it is something else (for example
   //    the cached connector trying to make room for other
@@ -263,12 +265,17 @@ TAO_IIOP_Connection_Handler::handle_close_i (void)
   // TAO_Transport::release ().
   this->transport (0);
 
+  // Decrement the refcount for automatic memory management
+  this->decr_refcount ();
+}
+
+void
+TAO_IIOP_Connection_Handler::shutdown_object (void)
+{
   // Follow usual Reactor-style lifecycle semantics and commit
   // suicide.
   this->destroy ();
 }
-
-
 
 int
 TAO_IIOP_Connection_Handler::resume_handler (void)
