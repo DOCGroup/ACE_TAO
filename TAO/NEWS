@@ -10,12 +10,6 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 
 - (Ossama) Typecode refactoring fixes
 
-- (DOC-ISIS) Changes to DAnCE
-
-- (Boris) Addition of XSC
-
-- (Jeff/Boris) CIDL compiler generates dummy implementation code
-
 - (Ossama/JTC) autoconf support for TAO
 
 - (OCI) Naming Service implementation fixes
@@ -29,9 +23,6 @@ PLANNED MAJOR CHANGES TARGETED FOR TAO-1.4.3
 - (OCI) [hopeful] Notification Service EventReliability and ConnectionReliability QoS
 
 - (OCI) better compatibility with JDK orb
-
-
-
 
 USER VISIBLE CHANGES BETWEEN TAO-1.4.1 and TAO-1.4.2
 ====================================================

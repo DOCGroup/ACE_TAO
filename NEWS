@@ -4,6 +4,8 @@ PLANNED MAJOR CHANGES TARGETED FOR ACE-5.4.3
 - (Bala) Bug 1890-Select_Reactor and Priority_Reactor performance can
   be improved
 
+- (Boris) Addition of XSC
+
 
 USER VISIBLE CHANGES BETWEEN ACE-5.4.1 and ACE-5.4.2
 ====================================================
