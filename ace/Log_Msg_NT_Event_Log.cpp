@@ -85,7 +85,8 @@ ACE_Log_Msg_NT_Event_Log::reset (void)
 int
 ACE_Log_Msg_NT_Event_Log::close (void)
 {
-  if (DeregisterEventSource (this->evlog_handle_))
+  if (this->evlog_handle_ == 0 
+      || DeregisterEventSource (this->evlog_handle_))
     {
       this->evlog_handle_ = 0;
       return 0;

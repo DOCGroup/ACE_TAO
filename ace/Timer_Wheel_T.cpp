@@ -90,32 +90,36 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Wheel_T
   this->open_i (prealloc, spoke_count, resolution);
 }
 
-namespace {
-  int power2bits(int n, int min_bits, int max_bits) {
-    int max = (1 << max_bits) - 1;
-    if (n > max) {
-      return max_bits;
-    }
-    // count the bits in n.
-    int i = 0;
-    int tmp = n;
-    do {
+template <class TYPE, class FUNCTOR, class ACE_LOCK> int
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::power2bits (int n,
+                                                        int min_bits, 
+                                                        int max_bits)
+{
+  int max = (1 << max_bits) - 1;
+  if (n > max) 
+    return max_bits;
+
+  // count the bits in n.
+  int i = 0;
+  int tmp = n;
+  do 
+    {
       tmp >>= 1;
       ++i;
-    } while (tmp != 0);
+    } 
+  while (tmp != 0);
 
-    if (i <= min_bits) {
-      return min_bits;
-    }
-    // Which is nearest?
-    int a = (1 << i) - n;
-    int b = (1 << (i - 1)) - n;
-    if (b < 0)
-      b = -b;
-    if (b < a)
-      return i - 1;
-    return i;
-  }
+  if (i <= min_bits) 
+    return min_bits;
+
+  // Which is nearest?
+  int a = (1 << i) - n;
+  int b = (1 << (i - 1)) - n;
+  if (b < 0)
+    b = -b;
+  if (b < a)
+    return i - 1;
+  return i;
 }
 
 /**
