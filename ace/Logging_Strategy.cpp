@@ -493,8 +493,3 @@ ACE_Logging_Strategy::log_msg (ACE_Log_Msg *log_msg)
 
 ACE_FACTORY_DEFINE (ACE, ACE_Logging_Strategy)
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array_Base<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Array_Base<ACE_Get_Opt::ACE_Get_Opt_Long_Option *>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
