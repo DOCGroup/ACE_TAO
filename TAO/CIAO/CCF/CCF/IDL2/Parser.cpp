@@ -56,6 +56,7 @@ namespace CCF
           RAISES      ("raises"     ),
           READONLY    ("readonly"   ),
           SEQUENCE    ("sequence"   ),
+          STRING      ("string"     ),
           STRUCT      ("struct"     ),
           SUPPORTS    ("supports"   ),
           SWITCH      ("switch"     ),
@@ -65,6 +66,7 @@ namespace CCF
           TYPEPREFIX  ("typeprefix" ),
           UNION       ("union"      ),
           VALUETYPE   ("valuetype"  ),
+          WSTRING     ("wstring"    ),
 
           COLON  (":"),
           COMMA  (","),
@@ -270,6 +272,12 @@ namespace CCF
 
           act_typedef_begin_seq (
             f.typedef_ (), &SemanticAction::Typedef::begin_seq),
+
+          act_typedef_begin_bounded_string (
+            f.typedef_ (), &SemanticAction::Typedef::begin_bounded_string),
+
+          act_typedef_begin_bounded_wstring (
+            f.typedef_ (), &SemanticAction::Typedef::begin_bounded_wstring),
 
           act_typedef_declarator (
             f.typedef_ (), &SemanticAction::Typedef::declarator),
@@ -973,7 +981,27 @@ namespace CCF
 
       typedef_type_spec =
           identifier[act_typedef_begin]
-        | SEQUENCE >> LT >> identifier[act_typedef_begin_seq] >> GT
+        |
+          (
+               SEQUENCE
+            >> LT
+            >> identifier[act_typedef_begin_seq]
+            >> GT
+          )
+        |
+          (
+               STRING
+            >> LT
+            >> integer_const_expr[act_typedef_begin_bounded_string]
+            >> GT
+          )
+        |
+          (
+               WSTRING
+            >> LT
+            >> integer_const_expr[act_typedef_begin_bounded_wstring]
+            >> GT
+          )
         ;
 
       // union

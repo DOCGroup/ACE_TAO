@@ -168,7 +168,7 @@ main (int argc, char* argv[])
     //@@ bad token comparison
     for (TokenPtr token = lexer.next ();; token = lexer.next ())
     {
-      // cerr << token << endl;
+      // cerr << typeid(*(token.in ())).name () << " : " << token << endl;
       token_stream.push_back (token);
       if (ReferenceCounting::strict_cast<EndOfStream> (token) != 0) break;
     }
