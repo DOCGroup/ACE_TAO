@@ -1,3 +1,27 @@
+Wed Feb 26 18:42:33 2003  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * ace/Makefile.bor:
+
+          Removed ACE_LD_DECORATOR_STR definition from CFLAGS, as this
+          macro is now defined by the common included makefiles.
+
+        * ace/Synch.h:
+
+          Added missing constructor overload and disown member function
+          to the ACE_Guard<ACE_Null_Mutex> template specialization.
+
+        * ace/Atomic_Op.cpp:
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op.i:
+        * tests/Atomic_Op_Test.cpp:
+
+          Use InterlockedExchange (or the XCHG instruction) to provide
+          strong memory-ordering when assigning to an atomic integer.
+
+        * bin/MakeProjectCreator/Creator.pm:
+
+          Added support for line continuation using backslash in .mpc files.
+
 Wed Feb 26 11:55:20 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:

@@ -393,4 +393,40 @@ sub read_global_configuration {
 }
 
 
+sub read_file {
+  my($self)        = shift;
+  my($input)       = shift;
+  my($ih)          = new FileHandle();
+  my($status)      = 1;
+  my($errorString) = '';
+
+  $self->{'line_number'} = 0;
+  my($line) = "";
+  if (open($ih, $input)) {
+    while(<$ih>) {
+      $line .= $self->strip_line($_);
+
+      if ($line =~ /\\$/) {
+        $line =~ s/\\$/ /;
+      }
+      else {
+        ($status, $errorString) = $self->parse_line($ih, $line);
+        $line = "";
+
+        if (!$status) {
+          last;
+        }
+      }
+    }
+    close($ih);
+  }
+  else {
+    $errorString = 'ERROR: Unable to open for reading';
+    $status = 0;
+  }
+
+  return $status, $errorString;
+}
+
+
 1;
