@@ -41,15 +41,20 @@ include		$(ACE_ROOT)/include/makeinclude/macros.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include		$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
-include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
+# The contents of rules.bin.GNU are expanded in Local targets, below.
+# include		$(ACE_ROOT)/include/makeinclude/rules.bin.GNU
+# include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
 
-main: .obj/main.o
-	$(LINK.cc) -o $@ .obj/main.o $(LDFLAGS) $(VLDLIBS) $(POSTLINK)
+# Expand rules.bin.GNU, but without the $(VOBJS) dependencies.
+VBIN    = $(BIN:%=%$(VAR))
+
+$(BIN): %: $(VDIR)%.o
+	$(LINK.cc) -o $@ $^ $(LDFLAGS) $(VLDLIBS) $(POSTLINK)
+include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #	Dependencies
