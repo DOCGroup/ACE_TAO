@@ -27,7 +27,6 @@
 #define ACE_DEFAULT_MAX_LOGFILE_SIZE 16384 /* KB */
 #endif /* ACE_DEFAULT_MAX_LOGFILE_SIZE */
 
-
 class ACE_Logging_Strategy : public ACE_Service_Object
 {
   // = TITLE
