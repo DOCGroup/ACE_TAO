@@ -1,3 +1,9 @@
+2003-12-17  Tao Lu  <lu@tango.dre.vanderbilt.edu>
+
+	* examples/Hello/step-by-step.html:
+
+	Added this html file for explaination of the step by step tutorial.
+
 Tue Dec  16 18:25:01 2003  Tao Lu  <lu@tango.dre.vanderbilt.edu>
 
 	* docs/tutorial/Hello/README:
