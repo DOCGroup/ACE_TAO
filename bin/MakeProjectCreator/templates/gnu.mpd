@@ -5,13 +5,13 @@
 MAKEFILE        = <%project_file%>
 DEPENDENCY_FILE = .depend.<%project_file%>
 <%if(exename)%>
-BIN             = <%exename%>
+BIN_UNCHECKED   = <%exename%>
 <%endif%>
 <%if(staticname)%>
-LIB             = lib<%staticname%>.a
+LIB_UNCHECKED   = lib<%staticname%>.a
 <%endif%>
 <%if(sharedname)%>
-SHLIB           = lib<%sharedname%>.$(SOEXT)
+SHLIB_UNCHECKED = lib<%sharedname%>.$(SOEXT)
 <%endif%>
 <%if(tao)%>
 
@@ -26,6 +26,43 @@ IDL_SRC = $(foreach ext, C.cpp S.cpp, $(foreach file, $(IDL_FILES), $(file)$(ext
 <%endif%>
 
 <%gnu_source_files%>
+<%if(comps)%>
+
+<%if(compname)%>
+CURRENT_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components <%compname%>)
+<%endif%>
+<%foreach(comps)%>
+ifeq (<%comp%>, $(findstring <%comp%>, $(CURRENT_COMPONENTS)))
+<%endfor%>
+<%if(exename)%>
+BIN = $(BIN_UNCHECKED)
+<%else%>
+LIB   = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
+<%endif%>
+<%foreach(comps)%>
+endif
+<%endfor%>
+<%else%>
+
+<%if(tagname)%>
+ifeq (,$(<%tagname%>))
+<%endif%>
+LIB   = $(LIB_UNCHECKED)
+SHLIB = $(SHLIB_UNCHECKED)
+<%if(tagname)%>
+else
+<%foreach(tagchecks)%>
+  ifeq (<%tagcheck%>, $(findstring <%tagcheck%>, $(<%tagname%>)))
+<%endfor%>
+    LIB   = $(LIB_UNCHECKED)
+    SHLIB = $(SHLIB_UNCHECKED)
+<%foreach(tagchecks)%>
+  endif
+<%endfor%>
+endif
+<%endif%>
+<%endif%>
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -34,6 +71,21 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
 <%endif%>
+<%if(!comps)%>
+
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifeq ($(<%avoid%>),0)
+<%endfor%>
+<%if(exename)%>
+BIN    = $(BIN_UNCHECKED)
+<%endif%>
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
+<%endif%>
 
 <%if(exename)%>
 OBJS   = $(addsuffix .o, $(notdir $(FILES)))
@@ -41,6 +93,23 @@ SRC    = $(addsuffix .cpp,$(FILES))
 <%endif%>
 <%if(sharedname)%>
 LSRC   = $(addsuffix .cpp,$(FILES))
+<%endif%>
+<%if(!comps)%>
+<%if(tagname)%>
+ifeq (,$(<%tagname%>))
+<%endif%>
+<%build%>
+<%if(tagname)%>
+else
+<%foreach(tagchecks)%>
+  ifeq (<%tagcheck%>, $(findstring <%tagcheck%>, $(<%tagname%>)))
+<%endfor%>
+    <%build%>
+<%foreach(tagchecks)%>
+  endif
+<%endfor%>
+endif
+<%endif%>
 <%endif%>
 ACELIB =<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 
@@ -99,6 +168,7 @@ TAO_IDLFLAGS += <%idlflags%>
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
+<%comptarget%>
 <%if(idl_files)%>
 
 all: idl_stubs
@@ -112,7 +182,7 @@ $(BIN): $(addprefix $(VDIR), $(OBJS))
 <%endif%>
 <%if(idl_files)%>
 
-realclean: clean
+realclean: clean <%compclean%>
 	-$(RM) $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))
 <%endif%>
 

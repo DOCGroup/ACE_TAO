@@ -43,9 +43,20 @@ else
 fi
 
 set_components=0
+append_components=0
 if [ $# -ge 1 ]; then
   if [ $1 = '--set' ]; then
     set_components=1
+    shift
+    if [ $# -eq 1 ]; then
+      components=$1
+      shift
+    else
+      echo $usage
+      exit -1
+    fi
+  elif [ $1 = '--append' ]; then
+    append_components=1
     shift
     if [ $# -eq 1 ]; then
       components=$1
@@ -71,6 +82,20 @@ if [ $set_components -eq 1 ]; then
       :
     else
       echo "$components" > $components_file
+    fi
+  else
+    echo "$components" > $components_file
+  fi
+elif [ $append_components -eq 1 ]; then
+  ####
+  #### Update the components file, if it has changed since last set.
+  ####
+  if [ -f $components_file ]; then
+    if cat $components_file | grep "$components" > /dev/null; then
+      :
+    else
+      (cat $components_file; echo "$components") | tr ' ' '\012' | sort -u > $components_file.$$
+      mv -f $components_file.$$ $components_file
     fi
   else
     echo "$components" > $components_file
