@@ -35,3 +35,13 @@ union Selecter switch (ObjectType)
     case THAT: Object that_object;
   };
 
+// Test stub code for generic object parameters.
+interface generic
+  {
+    Object op (in Object inarg, 
+               inout Object inoutarg, 
+               out Object outarg);
+  };
+
+// Definition of interface forward declared in interface.idl.
+interface forward {};
