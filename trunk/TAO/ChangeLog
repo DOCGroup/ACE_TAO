@@ -1,3 +1,9 @@
+Wed Oct 29 21:10:08 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/Multi_Priority_Mapping.cpp:
+
+	  Added ace/Log_Msg.h to get this compiling on one of RH8 builds.
+
 Wed Oct 29 20:39:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp:
