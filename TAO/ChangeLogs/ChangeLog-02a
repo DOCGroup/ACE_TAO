@@ -1,3 +1,13 @@
+Mon Apr 10 16:11:31 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/Object_Loader/Makefile:
+	  Fixed dependencies
+
+	* tests/Object_Loader/Loader.cpp:
+	* tests/Object_Loader/driver.cpp:
+	  Fixed several hacks for NT.  Will have to do more fixing to get
+	  NT to work again, but i think I know how to do it now.
+
 Mon Apr 10 17:00:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tao/orbconf.h: Diabled smart proxies by default.
