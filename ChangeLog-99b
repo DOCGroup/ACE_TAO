@@ -1,3 +1,21 @@
+Sat Jun  5 22:57:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h:
+	  Added new macro (ACE_TEMPLATE_SPECIALIZATION) to handle the
+	  differences between compilers supporting the standard way to
+	  specialize a template (i.e. template<> class Foo<int>) vs. the
+	  old style (just saying class Foo<int>).
+	  Also added new macro ACE_HAS_STD_TEMPLATE_SPECIALIZATION that
+	  platforms must define if they want the new style.
+
+	* ace/Filecache.cpp:
+	* ace/Functor.h:
+	  Use the new ACE_TEMPLATE_SPECIALIZATION macro
+
+	* ace/config-sunos5.5.h:
+	  Define the new ACE_HAS_STD_TEMPLATE_SPECIALIZATION for Sun/CC
+	  5.0
+
 Sat Jun  5 16:48:47 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/config-irix6.x-common.h
