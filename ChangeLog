@@ -1,3 +1,9 @@
+Tue Mar  1 07:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Also HP aCC 3.60 has a bug when having private constructors and
+          creating an instance from the friend class
+
 Mon Feb 28 17:10:41 2005  Steve Huston  <shuston@riverace.com>
 
 	* ace/Asynch_Pseudo_Task.{h cpp}: Removed all the flg_active_ and
