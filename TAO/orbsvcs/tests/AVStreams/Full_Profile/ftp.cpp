@@ -11,9 +11,24 @@ FTP_Client_Callback::FTP_Client_Callback (void)
 int
 FTP_Client_Callback::handle_end_stream (void)
 {
+  printf ("Within handle_end_stream\n");
   TAO_AV_CORE::instance ()->stop_run ();
   return 0;
 }
+
+/*
+int
+FTP_Client_Callback::handle_stop (void)
+{
+  ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
+  AVStreams::flowSpec stop_spec (1);
+  ACE_DECLARE_NEW_CORBA_ENV;
+  CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+  return 0;
+}
+*/
 
 void
 FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
@@ -25,14 +40,30 @@ FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
   tv = timeout;
 }
 
-int
-FTP_Client_Callback::handle_timeout (void *)
-{
-  ACE_Message_Block mb (BUFSIZ);
+count++;
+  ACE_Message_Block mb;
+  mb.size (message_size);
+  mb.wr_ptr (message_size);
+  if (count == 10)
+    {
+      AVStreams::flowSpec stop_spec (1);
+      ACE_DECLARE_NEW_CORBA_ENV;
+      CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
+      ACE_CHECK_RETURN (-1);
+      CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
+      TAO_AV_CORE::instance ()->stop_run ();
+      return 0;
+    }
+  ACE_hrtime_t stamp = ACE_OS::gethrtime ();
+  //  ACE_Message_Block mb (BUFSIZ);
+  ACE_OS::memcpy (mb.rd_ptr (), &stamp, sizeof(stamp));
+  //  ACE_OS::memcpy (this->frame_.rd_ptr (), &stamp, sizeof(stamp));
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame"));
-  char *buf = mb.rd_ptr ();
-  cerr << "message block size" << mb.size () << endl;
-  int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
+  //char *buf = mb.rd_ptr ();
+  //cerr << "message block size" << mb.size () << endl;
+  //  int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
+  //int n = ACE_OS::fread(buf,1,mb.size (),stamp);
+  /*
   if (n < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
@@ -45,6 +76,8 @@ FTP_Client_Callback::handle_timeout (void *)
           this->count_++;
           if (this->count_ == 2)
             {
+              //@@coryan: Remove these code from this method. 
+              //Should be called when the user wants to stop the stream.
               ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
               AVStreams::flowSpec stop_spec (1);
               ACE_DECLARE_NEW_CORBA_ENV;
@@ -52,6 +85,7 @@ FTP_Client_Callback::handle_timeout (void *)
               ACE_CHECK_RETURN (-1);
               CLIENT::instance ()->streamctrl ()->destroy (stop_spec,ACE_TRY_ENV);
               TAO_AV_CORE::instance ()->stop_run ();
+              
             }
           else
             return 0;
@@ -60,13 +94,16 @@ FTP_Client_Callback::handle_timeout (void *)
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
     }
   cerr << "read bytes = " << n << endl;
-  mb.wr_ptr (n);
+  */
+  //mb.wr_ptr (n);
   int result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send \n"),-1);
   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent succesfully\n"));
   return 0;
 }
+
+
 
 FTP_Client_Producer::FTP_Client_Producer (void)
   :TAO_FlowProducer ("Data",CLIENT::instance ()->protocols (),CLIENT::instance ()->format ())
@@ -335,8 +372,8 @@ Client::run (void)
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
       AVStreams::flowSpec start_spec (1);
-//       start_spec.length (1);
-//       start_spec [0] = CORBA::string_dup (this->flowname_);
+      //       start_spec.length (1);
+      //start_spec [0] = CORBA::string_dup (this->flowname_);
       this->streamctrl_.start (start_spec,ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // Schedule a timer for the for the flow handler.
@@ -356,6 +393,8 @@ int
 main (int argc,
       char **argv)
 {
+  TAO_debug_level++;
+    
   int result = 0;
   result = CLIENT::instance ()->init (argc,argv);
   if (result < 0)
@@ -370,6 +409,7 @@ main (int argc,
 template class ACE_Singleton <Client,ACE_Null_Mutex>;
 template class TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
 template class TAO_AV_Endpoint_Reactive_Strategy<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl>;
+template class TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint>;
 template class TAO_FDev <FTP_Client_Producer,TAO_FlowConsumer>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Singleton <Client,ACE_Null_Mutex>
