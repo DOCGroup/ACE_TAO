@@ -32,9 +32,6 @@ struct Tester_Args
 static void *
 tester (Tester_Args *args)
 {
-  // Keeps track of thread exit.
-	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-
   for (int iterations = 1; 
        iterations <= args->n_iterations_;
        iterations++)

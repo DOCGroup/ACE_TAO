@@ -56,7 +56,6 @@ Pseudo_Barrier::wait (void)
 static void *
 worker (void *arg)
 {
-	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   Pseudo_Barrier &barrier = *(Pseudo_Barrier *) arg;
   
   // work

@@ -14,8 +14,6 @@ static ACE_Process_Manager proc_mgr;
 void *
 sig_handler (void *)
 {
-	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-
   ACE_Sig_Set sigset;
 
   // Register a dummy signal handler so that our disposition isn't

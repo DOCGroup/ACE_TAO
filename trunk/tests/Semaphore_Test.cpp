@@ -106,7 +106,6 @@ test_timeout (void)
 static void *
 worker (void *)
 {
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
   
   for (size_t iterations = 1;

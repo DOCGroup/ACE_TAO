@@ -32,8 +32,6 @@ static void *
 client (void *arg)
 {
 #if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  // Insert thread into thr_mgr
-  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());  
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
@@ -96,8 +94,6 @@ static void *
 server (void *arg)
 {
 #if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  // Insert thread into thr_mgr
-  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());  
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 

@@ -19,7 +19,6 @@
 // 
 // ============================================================================
 
-
 #include "ace/Message_Queue.h"
 #include "ace/Service_Config.h"
 #include "test_config.h"
@@ -89,7 +88,6 @@ producer (void *args)
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
 
   // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   ACE_Message_Block *mb = 0;
@@ -124,8 +122,6 @@ producer (void *args)
   // the size of the lines!).
   consumer (msg_queue);
 
-  // The destructor of ACE_Thread_Control removes the exiting thread
-  // from the thr_mgr automatically.
   return 0; 
 }
 

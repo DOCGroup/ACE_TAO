@@ -23,8 +23,6 @@ int iterations = 0;
 static void *
 supplier (void *)
 {
-  // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr);
   ACE_UPIPE_Stream s_stream;
 
   ACE_UPIPE_Addr c_addr ("pattern");
@@ -73,8 +71,6 @@ supplier (void *)
 static void *
 consumer (void *)
 {
-  // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (&thr_mgr);
   ACE_UPIPE_Stream c_stream;
 
   // Set the high water mark to size to achieve optimum performance.

@@ -78,7 +78,6 @@ parse_args (int argc, char *argv[])
 static void *
 reader (void *)
 {
-  ACE_Thread_Control tc (&thr_mgr);
   ACE_DEBUG ((LM_DEBUG, "(%t) reader starting\n"));
 
   for (int iterations = 1;
@@ -116,7 +115,6 @@ reader (void *)
 static void *
 writer (void *)
 {
-  ACE_Thread_Control tc (&thr_mgr);
   ACE_DEBUG ((LM_DEBUG, "(%t) writer starting\n"));
 
   for (int iterations = 1;

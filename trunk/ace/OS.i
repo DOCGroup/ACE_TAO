@@ -1658,13 +1658,12 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 #endif /* ACE_HAS_THREADS */		     
 }
 
-#if ! defined (ACE_WIN32) && ! defined (VXWORKS)
-//
+#if !defined (ACE_LACKS_COND_T)
 // NOTE: The ACE_OS::cond_* functions for Unix platforms are defined
-//       here because the ACE_OS::sema_* functions below need them.
-//       However, ACE_WIN32 and VXWORKS define the ACE_OS::cond_* functions
-//       using the ACE_OS::sema_* functions.  So, they appear after
-//       the ACE_OS::sema_* functions.
+// here because the ACE_OS::sema_* functions below need them.
+// However, ACE_WIN32 and VXWORKS define the ACE_OS::cond_* functions
+// using the ACE_OS::sema_* functions.  So, they appear after the
+// ACE_OS::sema_* functions.
 ACE_INLINE int 
 ACE_OS::cond_destroy (ACE_cond_t *cv)
 {
@@ -1856,7 +1855,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
-#endif /* ! ACE_WIN32 && ! VXWORKS */
+#endif /* !ACE_LACKS_COND_T */
 
 ACE_INLINE int 
 ACE_OS::sema_destroy (ACE_sema_t *s)
@@ -2237,13 +2236,13 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 #endif /* ACE_HAS_POSIX_SEM */
 }
 
-#if defined (ACE_WIN32) || defined (VXWORKS)
-//
-// NOTE: The ACE_OS::cond_* functions for some non-Unix platforms are defined
-//       here because they need the ACE_OS::sema_* functions above.
-//       However, some Unix platforms define the ACE_OS::sema_* functions
-//       using the ACE_OS::cond_* functions.  So, they appear before
-//       the ACE_OS::sema_* functions above.
+#if defined (ACE_LACKS_COND_T)
+
+// NOTE: The ACE_OS::cond_* functions for some non-Unix platforms are
+// defined here because they need the ACE_OS::sema_* functions above.
+// However, some Unix platforms define the ACE_OS::sema_* functions
+// using the ACE_OS::cond_* functions.  So, they appear before the
+// ACE_OS::sema_* functions above.
 ACE_INLINE int 
 ACE_OS::cond_destroy (ACE_cond_t *cv)
 {
@@ -2447,10 +2446,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 {
   // ACE_TRACE ("ACE_OS::cond_timedwait");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_WTHREADS)
   // Handle the easy case first.
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
+#if defined (ACE_HAS_WTHREADS)
 
   // It's ok to increment this because the <external_mutex> must be
   // locked by the caller.
@@ -2550,10 +2549,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // POSIX semaphores don't have a timed wait.  Should implement conds
   // with VxWorks semaphores instead, they do have a timed wait.  But
   // all of the other cond operations would have to be modified.
-  ACE_UNUSED_ARG (cv);
-  ACE_UNUSED_ARG (external_mutex);
-  ACE_UNUSED_ARG (timeout);
-  ACE_NOTSUP_RETURN (-1);
+  else
+    return ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_WTHREADS */
 #else
   ACE_UNUSED_ARG (cv);
@@ -2571,7 +2568,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 {
   // ACE_TRACE ("ACE_OS::cond_timedwait");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_WTHREADS)
   // Handle the easy case first.
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
@@ -2640,7 +2636,6 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_OS::thread_mutex_lock (external_mutex);
   errno = error;
   return result;
-#endif /* ACE_HAS_WTHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
@@ -2652,7 +2647,6 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 {
   // ACE_TRACE ("ACE_OS::cond_wait");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_WTHREADS)
   // It's ok to increment this because the <external_mutex> must be
   // locked by the caller.
   cv->waiters_++;
@@ -2702,13 +2696,12 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // Reset errno in case mutex_lock() also fails...
   errno = error;
   return result;
-#endif /* ACE_HAS_WTHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */		     
 }
 #endif /* ACE_HAS_WTHREADS */
-#endif /* ACE_WIN32 || VXWORKS */
+#endif /* ACE_LACKS_COND_T */
 
 ACE_INLINE int 
 ACE_OS::rw_rdlock (ACE_rwlock_t *rw)

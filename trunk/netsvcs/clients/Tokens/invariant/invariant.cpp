@@ -32,9 +32,6 @@ static char * mutexname = "mutex";
 static void *
 run_reader_writer (void *vp)
 {
-  ACE_Thread_Manager *thr_mgr = (ACE_Thread_Manager*) vp;
-  ACE_Thread_Control tc (thr_mgr);
-
   for (int x = 0; x < 50; x++)
     {
       int y = 0;
@@ -81,9 +78,6 @@ run_reader_writer (void *vp)
 static void *
 run_mutex (void *vp)
 {
-  ACE_Thread_Manager *thr_mgr = (ACE_Thread_Manager*) vp;
-  ACE_Thread_Control tc (thr_mgr);
-
   for (int x = 0; x < 50; x++)
     {
       if (ACE_TOKEN_INVARIANTS::instance ()->mutex_acquired (mutexname) == 0)
@@ -169,7 +163,8 @@ main (int /* argc */, char* /* argv */ [])
 
   // Run reader/writer test
   if (mgr.spawn_n (2, ACE_THR_FUNC (run_reader_writer),
-		   (void *) &mgr, THR_NEW_LWP | THR_DETACHED) == -1)
+		   (void *) 0,
+		   THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 
   mgr.wait ();
@@ -178,7 +173,8 @@ main (int /* argc */, char* /* argv */ [])
 
   // Run mutex test.
   if (mgr.spawn_n (2, ACE_THR_FUNC (run_mutex),
-		   (void *) &mgr, THR_NEW_LWP | THR_DETACHED) == -1)
+		   (void *) 0, 
+		   THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 
   mgr.wait ();

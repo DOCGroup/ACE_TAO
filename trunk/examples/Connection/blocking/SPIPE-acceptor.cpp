@@ -123,7 +123,6 @@ IPC_Server::parse_args (int argc, char *argv[])
 static void *
 run_reactor_event_loop (void *)
 {
-	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_DEBUG ((LM_DEBUG, "(%t) worker thread starting\n"));
 
   ACE_Proactor::run_event_loop ();
@@ -157,7 +156,7 @@ IPC_Server::svc (void)
 	    {
 	      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
-		  ACE_Thread_Manager::instance ()->wait ();
+	      ACE_Thread_Manager::instance ()->wait ();
 	    }
 
 	  ACE_DEBUG ((LM_DEBUG, "(%t) main thread exiting.\n"));

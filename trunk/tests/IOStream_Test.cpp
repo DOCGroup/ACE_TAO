@@ -154,10 +154,6 @@ client (void *arg = 0)
   ACE_NEW_THREAD;
   ACE_UNUSED_ARG (arg);
 
-#if defined (ACE_HAS_THREADS)
-  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
-#endif /* ACE_HAS_THREADS */
-
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms, e.g.,
   // g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1.  (It does work on
@@ -265,8 +261,6 @@ server (void *arg = 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), 0);
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
-
   if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
 					     (void *) &server_addr,
 					     THR_NEW_LWP | THR_DETACHED) == -1)

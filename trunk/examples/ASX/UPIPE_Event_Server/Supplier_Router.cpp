@@ -34,7 +34,6 @@ Supplier_Router::svc (void)
 {
   ACE_ASSERT (this->is_writer ());
 
-  ACE_Thread_Control tc (this->thr_mgr ());
   ACE_Message_Block *message_block = 0;
 
   if (options.debug ())
@@ -47,7 +46,6 @@ Supplier_Router::svc (void)
   }
 
   return 0;
-  // Note the implicit ACE_OS::thr_exit() via ACE_Thread_Control's destructor.
 }
 
 // Initialize the Router..

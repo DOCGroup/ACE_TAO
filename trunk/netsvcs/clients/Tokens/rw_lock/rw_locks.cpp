@@ -46,9 +46,6 @@ static int renew = 0;
 static void *
 run_thread (void *vp)
 {
-  ACE_Thread_Manager *thr_mgr = (ACE_Thread_Manager*) vp;
-  ACE_Thread_Control tc (thr_mgr);
-
   for (int x = 0; x < iterations; x++)
     {
       int y = 0;
@@ -231,7 +228,8 @@ main (int argc, char* argv[])
   ACE_Thread_Manager mgr;
 
   if (mgr.spawn_n (threads, ACE_THR_FUNC (run_thread),
-		   (void *) &mgr, THR_BOUND | SUSPEND) == -1)
+		   (void *) 0, 
+		   THR_BOUND | SUSPEND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn failed"), -1);
 
 #if ! defined (ACE_HAS_PTHREADS)

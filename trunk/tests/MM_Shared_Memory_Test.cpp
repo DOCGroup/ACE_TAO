@@ -29,15 +29,10 @@
 const int SHMSZ = 27;
 static TCHAR shm_key[] = ACE_TEMP_FILE_NAME __TEXT ("XXXXXX");
 
-// Global thread manager.
-static ACE_Thread_Manager thr_mgr;
-
 static void *
 client (void *)
 {
 #if defined (ACE_WIN32) || defined (VXWORKS)
-  // Insert thread into thr_mgr
-  ACE_Thread_Control thread_control (&thr_mgr);  
   ACE_NEW_THREAD;
 #endif /* ACE_WIN32 */
 
@@ -62,8 +57,6 @@ static void *
 server (void *)
 {
 #if defined (ACE_WIN32) || defined (VXWORKS)
-  // Insert thread into thr_mgr
-  ACE_Thread_Control thread_control (&thr_mgr);  
   ACE_NEW_THREAD;
 #endif /* ACE_WIN32 */
 
@@ -103,16 +96,16 @@ spawn (void)
       server (0);
     }
 #elif defined (ACE_HAS_THREADS)
-  if (thr_mgr.spawn (ACE_THR_FUNC (client),
-		     (void *) 0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
+					      (void *) 0,
+					      THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
-  if (thr_mgr.spawn (ACE_THR_FUNC (server),
-		     (void *) 0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
+					      (void *) 0,
+					      THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
-  thr_mgr.wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR, "only one thread may be run in a process on this platform\n%a", 1));
 #endif /* ACE_HAS_THREADS */	

@@ -48,10 +48,6 @@ tester (Tester_Args *args)
 {
   ACE_NEW_THREAD;
 
-#if defined (VXWORKS)
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-#endif /* VXWORKS */
-
   for (int iterations = 1; 
        iterations <= args->n_iterations_;
        iterations++)

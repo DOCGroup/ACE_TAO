@@ -32,14 +32,10 @@
 // pipe name to use
 static const char *PIPE_NAME = "ace_pipe_name";
 
-// Global thread manager.
-static ACE_Thread_Manager thr_mgr;
-
 static void *
 client (void *)
 {
 #if defined (ACE_WIN32)
-  ACE_Thread_Control thread_control (&thr_mgr);  // Insert thread into thr_mgr
   ACE_NEW_THREAD;
 #endif
   const char *rendezvous = PIPE_NAME;
@@ -68,7 +64,6 @@ static void *
 server (void *)
 {
 #if defined (ACE_WIN32)
-  ACE_Thread_Control thread_control (&thr_mgr);  // Insert thread into thr_mgr
   ACE_NEW_THREAD;
 #endif
   ACE_SPIPE_Acceptor acceptor;
@@ -118,16 +113,17 @@ main (int, char *[])
       server (0);
     }
 #elif defined (ACE_HAS_THREADS)
-  if (thr_mgr.spawn (ACE_THR_FUNC (client),
-		     (void *) 0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
+					      (void *) 0,
+					      THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
-  if (thr_mgr.spawn (ACE_THR_FUNC (server),
-		     (void *) 0,
-		     THR_NEW_LWP | THR_DETACHED) == -1)
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
+					      (void *) 0,
+					      THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
-  thr_mgr.wait ();
+
+  ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_DEBUG ((LM_DEBUG, 
 	      "SPIPE is not supported on this platform\n"));

@@ -56,8 +56,6 @@ Consumer_Router::svc (void)
 {
   assert (this->is_writer ());
 
-  ACE_Thread_Control tc (this->thr_mgr ());
-
   ACE_DEBUG ((LM_DEBUG, 
 	      "(%t) starting svc in Consumer_Router\n"));
 

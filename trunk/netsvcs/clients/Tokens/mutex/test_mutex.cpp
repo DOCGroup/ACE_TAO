@@ -35,9 +35,6 @@ static int spawn_count = 2;
 static void *
 run_test (void *vp)
 {
-  ACE_Thread_Manager *thr_mgr = (ACE_Thread_Manager*) vp;
-  ACE_Thread_Control tc (thr_mgr);
-
   int count = iterations;
   // test recursive acquisition of a global proxy
   while (count--)
@@ -110,7 +107,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-main (int argc, char* argv[])
+main (int argc, char *argv[])
 {
   ACE_Thread_Manager thread_mgr;
 
@@ -129,7 +126,8 @@ main (int argc, char* argv[])
 
   if (thread_mgr.spawn_n (spawn_count,
 			  ACE_THR_FUNC (run_test),
-			  (void *) &thread_mgr, THR_BOUND) == -1)
+			  0, 
+			  THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", "spawn"), -1);
 
   thread_mgr.wait ();

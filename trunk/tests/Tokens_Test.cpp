@@ -55,7 +55,6 @@ public:
 static void *
 run_thread (void *vp)
 {
-	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
   Test_Params *tp = (Test_Params *) vp;
   ACE_Token_Collection collection (1, tp->collection_name_);

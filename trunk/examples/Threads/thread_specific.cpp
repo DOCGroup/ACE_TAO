@@ -79,7 +79,6 @@ cleanup (void *ptr)
 static void *
 worker (void *c)
 {
-	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   int count = int (c);
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
@@ -178,7 +177,7 @@ main (int argc, char *argv[])
 {
   // The Service_Config must be the first object defined in main...
   ACE_Service_Config daemon (argv[0]);
-  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
+
   int threads = argc > 1 ? ACE_OS::atoi (argv[1]) : 4;
   int count = argc > 2 ? ACE_OS::atoi (argv[2]) : 10000;
 

@@ -410,7 +410,8 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
       ACE_Node<T> *temp = curr;
       curr = curr->next_;
 
-      ACE_DES_FREE_TEMPLATE (temp, this->allocator_->free,
+      ACE_DES_FREE_TEMPLATE (temp,
+			     this->allocator_->free,
 			     ACE_Node, <T>);
       this->cur_size_--;
     }

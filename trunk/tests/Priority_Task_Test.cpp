@@ -37,7 +37,7 @@ private:
 };
 
 Priority_Task::Priority_Task (void)
-: ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
+  : ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
     priority_ (0)
 {
 }
@@ -55,10 +55,10 @@ Priority_Task::open (void *arg)
   // Become an active object.
   if (this->activate (flags, 1, 0, this->priority_) == -1)
     {
-      // On Linux, only the superuser can set the policy to other
-      // than ACE_SCHED_OTHER.  But with ACE_SCHED_OTHER, there is
-      // only 1 thread priority value, 0.  So, let the superuser
-      // run an interesting test, but for other users use priority 0.
+      // On Linux, only the superuser can set the policy to other than
+      // ACE_SCHED_OTHER.  But with ACE_SCHED_OTHER, there is only 1
+      // thread priority value, 0.  So, let the superuser run an
+      // interesting test, but for other users use priority 0.
 
       ACE_DEBUG ((LM_DEBUG, "(%t) task activation at priority %d with flags "
                             "%ld failed; retry at priority 0 with with flags "
@@ -69,9 +69,7 @@ Priority_Task::open (void *arg)
       this->priority_ = 0;
 
       if (this->activate (flags, 1, 1, this->priority_) == -1)
-        {
-          ACE_DEBUG ((LM_ERROR, "(%t) task activation at priority 0 failed, exiting!\n%a", -1));
-        }
+	ACE_DEBUG ((LM_ERROR, "(%t) task activation at priority 0 failed, exiting!\n%a", -1));
     }
 
   return 0;

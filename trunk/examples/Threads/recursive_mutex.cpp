@@ -74,9 +74,8 @@ recursive_worker (size_t nesting_level,
 static void *
 worker (void *arg)
 {
-	ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
-
-  ACE_Recursive_Thread_Mutex *rm = (ACE_Recursive_Thread_Mutex *) arg;
+  ACE_Recursive_Thread_Mutex *rm 
+    = (ACE_Recursive_Thread_Mutex *) arg;
 
   recursive_worker (0, rm);
   return 0;

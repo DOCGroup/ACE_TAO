@@ -13,8 +13,6 @@ ACE_Thread_Manager thr_mgr;
 void *
 lookup_name (ACE_HANDLE handle)
 {
-  ACE_Thread_Control tc (&thr_mgr);
-
   enum
   {
     MAXLINE = 255,
