@@ -71,6 +71,7 @@
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_LACKS_GETPGID_PROTOTYPE
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
+#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform supports alloca().
 // Although ACE does have alloca() on this compiler/platform combination, it is
@@ -133,23 +134,8 @@
 
 #define ACE_HAS_SNPRINTF
 
-#if (((CYGWIN_VERSION_API_MAJOR == 0 && CYGWIN_VERSION_API_MINOR >= 108)) || (CYGWIN_VERSION_API_MAJOR > 0))
 # define ACE_HAS_SIGWAIT
 # define ACE_HAS_SIGINFO_T
-#else
-# define ACE_HAS_BROKEN_MAP_FAILED
-# define ACE_LACKS_FCNTL
-# define ACE_LACKS_SYSV_SHMEM
-# define ACE_LACKS_TIMESPEC_T
-# define ACE_LACKS_STDINT_H
-# define ACE_LACKS_INTTYPES_H
-# define ACE_LACKS_SYS_IPC_H
-# define ACE_LACKS_SYS_SEM_H
-# define ACE_LACKS_SETREUID
-# define ACE_LACKS_SETREGID
-# define ACE_LACKS_SEMBUF_T
-# define ACE_LACKS_UNIX_SIGNALS
-#endif
 
 // Cygwin DLL suffix is .dll
 #define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
