@@ -1,3 +1,7 @@
+Tue May 06 11:31:49 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.cpp (mktime): added time_t cast of -1 (error) return to avoid compiler warning.
+
 Tue May  6 07:39:25 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp (main): 
