@@ -1,3 +1,17 @@
+Fri Sep  1 18:16:47 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+          Moved the declaration and use of the _tao_retval_info variable
+          to code protected by TAO_HAS_INTERCEPTORS==1.
+          This was important because sometimes the initialization of the
+          variable had side-effects (like clearing the real return
+          argument), normally the side-effects would be compesated by the
+          interceptors code, but sometimes the code is not there !
+          Several annoying "unused variable" warnings were hinting at this
+          problem, another lesson into "why listening to warnings is
+          important".
+
 Fri Sep 01 16:15:52 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tao/PortableServer/Collocated_Object.cpp:

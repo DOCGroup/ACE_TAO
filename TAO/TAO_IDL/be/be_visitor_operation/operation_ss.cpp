@@ -322,6 +322,8 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   // type.
   if (!this->void_return_type (bt))
     {
+      *os <<"\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+
       // Heres what we are going to do to have a uniform way of getting the
       // return value updated for the Request Info:
       // declare a operation_retval type object and assign the
@@ -347,21 +349,18 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
                             -1);
         }
       delete visitor;
-      *os << "  _tao_retval_info = ";
       if (bt->size_type () == be_decl::VARIABLE
           || bt->base_node_type () == AST_Decl::NT_array)
         {
-          *os << "_tao_retval._retn ();\n";
-          *os <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
-          *os << be_nl << " ri.result (_tao_retval_info);"
-              << be_nl << "_tao_retval = _tao_retval_info;\n"
+          *os << "  _tao_retval_info = _tao_retval._retn ();" << be_nl
+              << "  ri.result (_tao_retval_info);" << be_nl
+              << "  _tao_retval = _tao_retval_info;\n"
               << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
         }
       else
         {
-          *os << "_tao_retval;\n";
-          *os <<"#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
-              << "ri.result (_tao_retval_info);\n"
+          *os << "  _tao_retval_info = _tao_retval;" << be_nl
+              << "  ri.result (_tao_retval_info);\n"
               << "#endif /* TAO_HAS_INTERCEPTORS */\n\n";
         }
 #if 0
@@ -384,7 +383,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
         *os << ");"<< be_nl;
 #endif /* 0 */
     }
-  *os << "TAO_INTERCEPTOR_CHECK;\n\n";
+  *os << be_nl << "TAO_INTERCEPTOR_CHECK;\n\n";
 
   // do postinvoke, and check for exception.
   *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
