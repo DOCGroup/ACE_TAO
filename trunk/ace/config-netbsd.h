@@ -19,7 +19,7 @@
 // ********************************************************
 #define ACE_NETBSD
 
-#define ACE_HAS_BROKEN_NETBSD_MSYNC
+// #define ACE_HAS_BROKEN_NETBSD_MSYNC
 
 // Platform specific directives
 #define ACE_LACKS_GETPGID
