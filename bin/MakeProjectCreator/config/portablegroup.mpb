@@ -1,8 +1,0 @@
-// -*- MPC -*-
-// $Id$
-
-project : naming, messaging, minimum_corba, iormanip {
-  libs      += TAO_PortableGroup
-  after     += PortableGroup
-  tagchecks += PortableGroup
-}
