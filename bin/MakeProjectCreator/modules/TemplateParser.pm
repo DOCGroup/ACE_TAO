@@ -164,7 +164,7 @@ sub relative {
   my(@keys)  = keys %$rel;
 
   if (defined $value && defined $keys[0] && $value =~ /\$/) {
-    if (UNIVERSAL::isa($value, 'ARRAY')) {  
+    if (UNIVERSAL::isa($value, 'ARRAY')) {
       my(@built) = ();
       foreach my $val (@$value) {
         push(@built, $self->relative($val));
@@ -174,17 +174,23 @@ sub relative {
     else {
       my($cwd)   = getcwd();
       my($start) = 0;
+      my($fixed) = 0;
+
+      if ($cwd =~ /[a-z]:[\/\\]/) {
+        substr($cwd, 0, 1) = uc(substr($cwd, 0, 1));
+      }
       while(substr($value, $start) =~ /(\$\(([^)]+)\))/) {
         my($whole)  = $1;
         my($name)   = $2;
         my($val)    = $$rel{$name};
         if (defined $val) {
-          if ($^O eq 'cygwin' &&
+          if ($^O eq 'cygwin' && !$fixed &&
               $cwd !~ /[A-Za-z]:/ && $val =~ /[A-Za-z]:/) {
             my($cyg) = `cygpath -w $cwd`;
             if (defined $cyg) {
               $cyg =~ s/\\/\//g;
               chop($cwd = $cyg);
+              $fixed = 1;
             }
           }
 

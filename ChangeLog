@@ -1,3 +1,11 @@
+Wed Aug 21 11:15:11 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+
+          Fixed a problem dealing with Windows, NMake and idl files.
+
 Wed Aug 21 11:04:09 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Object_Manager.cpp (init): Changed to return failure (-1) if
