@@ -89,11 +89,11 @@ LINK32=link.exe
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\consumerC.cpp
+SOURCE=.\ConsumerC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\consumerS.cpp
+SOURCE=.\ConsumerS.cpp
 # End Source File
 # Begin Source File
 
@@ -121,7 +121,7 @@ SOURCE=.\NotifierS.cpp
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\consumerC.i
+SOURCE=.\ConsumerC.i
 # End Source File
 # Begin Source File
 
