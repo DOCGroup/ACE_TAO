@@ -1,3 +1,8 @@
+Thu May  6 17:52:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Simple/echo/README (client): 
+          Updated Naming Service option from -s to -n.
+
 Thu May  6 15:46:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_args.cpp:
