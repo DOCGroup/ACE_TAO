@@ -107,4 +107,5 @@ private:
 # include "tao/Fault_Tolerance_Service.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/post.h"
 #endif /*TAO_FAULT_TOLERANCE_SERVICE_H*/

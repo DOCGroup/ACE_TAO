@@ -1,3 +1,7 @@
+Fri Sep 29 14:20:33 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Fault_Tolerance_Service.h: Added missing post.h.
+
 Fri Sep 29 14:06:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB.cpp: Removed ACE_INLINE keywords from two methods. It
