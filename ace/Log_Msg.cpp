@@ -804,7 +804,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
 
                 case 'I': // Indent with nesting_depth*width spaces
                   type = SKIP_SPRINTF;
-                  if (!wpc) 
+                  if (!wpc)
                     w[wpc++] = 1;
                   w[wpc-1] *= this->trace_depth_;
                   ACE_OS::memset (bp, ' ', w[wpc-1]);
@@ -1032,6 +1032,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
   if (ACE_BIT_DISABLED (ACE_Log_Msg::flags_,
                         ACE_Log_Msg::SILENT))
     {
+      int tracing = this->tracing_enabled ();
       this->stop_tracing ();
 
 #if !defined (ACE_WIN32)
@@ -1088,7 +1089,9 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 #else
                           this->msg_ostream ());
 #endif /* !ACE_HAS_WINCE */
-      this->start_tracing ();
+
+      if (tracing)
+        this->start_tracing ();
     }
 
   return result;
