@@ -9,7 +9,8 @@ Sat Jul 13 09:26:53 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Stack_Recursion/Server_Task.h:
 	* tests/Stack_Recursion/Server_Task.cpp: 
 	* tests/Stack_Recursion/Test.idl:
-	* tests/Stack_Recursion/run_test.pl: 
+	* tests/Stack_Recursion/run_test.pl: A stress test for [BUG
+	  1125], the infamous stack recursion problem.
 
 Fri Jul 12 13:52:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
