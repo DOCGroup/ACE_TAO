@@ -1,3 +1,8 @@
+Tue Apr 03 09:30:10 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/MEM_IO.cpp (write): Fixed a compilation error for Borland
+	  compiler.  Thanks to Johnny Willensen for reporting this.
+
 Mon Apr 02 23:41:34 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/MEM_SAP.cpp:

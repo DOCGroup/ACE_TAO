@@ -104,7 +104,7 @@ ACE_MT_MEM_IO::Simple_Queue::write (ACE_MEM_SAP_Node *new_node)
 
   // Here, we assume we already have acquired the lock necessary.
   // And we are allowed to write.
-  if (this->mq_->tail_ == (void *) 0)     // nothing in the queue.
+  if (this->mq_->tail_ == ACE_MEM_SAP_Node::ACE_MEM_SAP_NODE_PTR (0))     // nothing in the queue.
     {
       this->mq_->head_ = new_node;
       this->mq_->tail_ = new_node;
