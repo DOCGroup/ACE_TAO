@@ -75,7 +75,7 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
       << "TAO_ServerRequest &sr" << be_uidt_nl
       << ")" << be_nl
       << ": TAO_AMH_Response_Handler (sr)," << be_idt_nl
-      << node->full_name () << " ()" << be_uidt << be_uidt_nl
+      << "::" << node->full_name () << " ()" << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "}" << be_nl << be_nl;
 
