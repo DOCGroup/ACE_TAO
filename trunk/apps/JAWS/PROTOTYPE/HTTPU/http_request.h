@@ -36,6 +36,7 @@ protected:
 
   virtual void parse_line (void);
   virtual int espouse_line (void);
+  virtual void set_status (int);
 
 private:
   Parse_HTTP_Request request_;

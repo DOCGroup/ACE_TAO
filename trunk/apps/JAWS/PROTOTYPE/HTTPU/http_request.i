@@ -33,3 +33,9 @@ HTTP_Request::url (void)
 {
   return &(this->url_);
 }
+
+ACE_INLINE void
+HTTP_Request::set_status (int s)
+{
+  this->status_ = s;
+}
