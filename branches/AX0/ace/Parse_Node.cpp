@@ -7,7 +7,7 @@
 
 // Provide the class hierarchy that defines the parse tree of Service
 // Nodes.
-#if defined (ACE_HAS_LEGACY_SERVICE_CONFIG)
+#if defined (ACE_HAS_CLASSIC_SVC_CONF) && (ACE_HAS_CLASSIC_SVC_CONF == 1)
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Parse_Node.i"
@@ -651,4 +651,4 @@ ACE_Static_Function_Node::~ACE_Static_Function_Node (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-#endif /* ACE_HAS_LEGACY_SERVICE_CONFIG */
+#endif /* ACE_HAS_CLASSIC_SVC_CONF && ACE_HAS_CLASSIC_SVC_CONF == 1 */
