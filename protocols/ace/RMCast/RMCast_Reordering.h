@@ -25,8 +25,8 @@
 
 class ACE_RMCast_Proxy;
 
-//! Pass messages up in sent order
-/*!
+/// Pass messages up in sent order
+/**
  * Some applications require receivers to process messages in the same
  * order that messages are sent.  This module buffers out of order
  * messages and only delivers a message if:
@@ -44,45 +44,47 @@ class ACE_RMCast_Proxy;
 class ACE_RMCast_Export ACE_RMCast_Reordering : public ACE_RMCast_Module
 {
 public:
-  //! Constructor
+  /// Constructor
   ACE_RMCast_Reordering (void);
 
-  //! Destructor
+  /// Destructor
   virtual ~ACE_RMCast_Reordering (void);
 
-  //! Use a Red-Black Tree to keep the queue of messages
+  /// Use a Red-Black Tree to keep the queue of messages
+  //@{
   typedef ACE_RB_Tree<ACE_UINT32,ACE_RMCast::Data,ACE_Less_Than<ACE_UINT32>,ACE_Null_Mutex> Messages;
   typedef ACE_RB_Tree_Iterator<ACE_UINT32,ACE_RMCast::Data,ACE_Less_Than<ACE_UINT32>,ACE_Null_Mutex> Messages_Iterator;
+  //@}
 
-  //! Remove messages still pending
+  /// Remove messages still pending
   virtual int close (void);
 
-  //! Process a Data message.
-  /*!
+  /// Process a Data message.
+  /**
    * Process a Data message, sending the right Ack message back.
    * The message is passed up only if it is in order.
    */
   virtual int data (ACE_RMCast::Data &);
 
-  //! During the join process the server informs us of the next
-  //! expected message
+  /// During the join process the server informs us of the next
+  /// expected message
   virtual int ack_join (ACE_RMCast::Ack_Join &);
 
 private:
-  //! Push any messages that are pending in the queue
-  void push_queued_messages (void);
+  /// Push any messages that are pending in the queue
+  int push_queued_messages (void);
 
 protected:
-  //! The reordering buffer
+  /// The reordering buffer
   Messages messages_;
 
-  //! The smallest value of \param next_expected for all the proxies
+  /// The smallest value of \param next_expected for all the proxies
   ACE_UINT32 next_expected_;
 
-  //! The highest value of \param highest_received for all the proxies
+  /// The highest value of \param highest_received for all the proxies
   ACE_UINT32 highest_received_;
 
-  //! Synchronization
+  /// Synchronization
   ACE_SYNCH_MUTEX mutex_;
 };
 

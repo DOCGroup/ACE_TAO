@@ -91,7 +91,7 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
   if (r == -1)
     {
       // @@ LOG??
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "RMCast_IO_UDP::handle_input () - "
                   "error in recv %p\n", ""));
       return -1;
@@ -127,7 +127,10 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
   ACE_RMCast_UDP_Proxy *proxy;
   if (this->map_.find (from_address, proxy) != 0)
     {
-      // State == RS_NON_EXISTENT
+      //ACE_DEBUG ((LM_DEBUG,
+      //            "IO_UDP::handle_input - new proxy from <%s:%d>\n",
+      //            from_address.get_host_addr (),
+      //            from_address.get_port_number ()));
 
       // @@ We should validate the message *before* creating the
       // object, all we need is some sort of validation strategy, a
@@ -145,8 +148,6 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
         }
 #endif /* 0 */
 
-      // The message type is valid, we must create a new proxy,
-      // initially in the JOINING state...
       ACE_RMCast_Module *module = this->factory_->create ();
       if (module == 0)
         {
@@ -170,7 +171,14 @@ ACE_RMCast_IO_UDP::handle_input (ACE_HANDLE)
     }
 
   // Have the proxy process the message and do the right thing.
-  return proxy->receive_message (buffer, r);
+  if (proxy->receive_message (buffer, r) != 0)
+    {
+      (void) this->map_.unbind (from_address);
+      this->factory_->destroy (proxy->next ());
+      delete proxy;
+    }
+
+  return 0;
 }
 
 ACE_HANDLE
@@ -225,6 +233,11 @@ int
 ACE_RMCast_IO_UDP::send_data (ACE_RMCast::Data &data,
                               const ACE_INET_Addr &to)
 {
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "IO_UDP::send_data - pushing out to <%s:%d>\n",
+  //            to.get_host_addr (),
+  //            to.get_port_number ()));
+
   // The first message block contains the header
   // @@ TODO: We could keep the header pre-initialized, and only
   // update the portions that do change...
@@ -283,6 +296,11 @@ int
 ACE_RMCast_IO_UDP::send_poll (ACE_RMCast::Poll &,
                               const ACE_INET_Addr &to)
 {
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "IO_UDP::send_poll - pushing out to <%s:%d>\n",
+  //            to.get_host_addr (),
+  //            to.get_port_number ()));
+
   // @@ TODO: We could keep the header pre-initialized, and only
   // update the portions that do change...
   char header[16];
@@ -301,6 +319,11 @@ int
 ACE_RMCast_IO_UDP::send_ack_join (ACE_RMCast::Ack_Join &ack_join,
                                   const ACE_INET_Addr &to)
 {
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "IO_UDP::send_ack_join - pushing out to <%s:%d>\n",
+  //            to.get_host_addr (),
+  //            to.get_port_number ()));
+
   // @@ TODO: We could keep the header pre-initialized, and only
   // update the portions that do change...
   char header[16];
@@ -322,6 +345,11 @@ int
 ACE_RMCast_IO_UDP::send_ack_leave (ACE_RMCast::Ack_Leave &,
                                    const ACE_INET_Addr &to)
 {
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "IO_UDP::send_ack_leave - pushing out to <%s:%d>\n",
+  //            to.get_host_addr (),
+  //            to.get_port_number ()));
+
   // @@ TODO: We could keep the header pre-initialized, and only
   // update the portions that do change...
   char header[16];
@@ -340,6 +368,13 @@ int
 ACE_RMCast_IO_UDP::send_ack (ACE_RMCast::Ack &ack,
                               const ACE_INET_Addr &to)
 {
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "IO_UDP::send_ack - pushing (%d:%d) out to <%s:%d>\n",
+  //            ack.next_expected,
+  //            ack.highest_received,
+  //            to.get_host_addr (),
+  //            to.get_port_number ()));
+
   // @@ TODO: We could keep the header pre-initialized, and only
   // update the portions that do change...
   char header[16];
@@ -365,6 +400,11 @@ int
 ACE_RMCast_IO_UDP::send_join (ACE_RMCast::Join &,
                               const ACE_INET_Addr &to)
 {
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "IO_UDP::send_join - pushing out to <%s:%d>\n",
+  //            to.get_host_addr (),
+  //            to.get_port_number ()));
+
   // @@ TODO: We could keep the header pre-initialized, and only
   // update the portions that do change...
   char header[16];
@@ -383,6 +423,11 @@ int
 ACE_RMCast_IO_UDP::send_leave (ACE_RMCast::Leave &,
                                const ACE_INET_Addr &to)
 {
+  //ACE_DEBUG ((LM_DEBUG,
+  //            "IO_UDP::send_leave - pushing out to <%s:%d>\n",
+  //            to.get_host_addr (),
+  //            to.get_port_number ()));
+
   // @@ TODO: We could keep the header pre-initialized, and only
   // update the portions that do change...
   char header[16];

@@ -19,17 +19,26 @@ ACE_RMCast_Reordering::~ACE_RMCast_Reordering (void)
 int
 ACE_RMCast_Reordering::close (void)
 {
-  // @@
-  return 0;
+  Messages_Iterator i = this->messages_.begin ();
+  Messages_Iterator end = this->messages_.end ();
+
+  while (i != end)
+    {
+      ACE_Message_Block::release ((*i).item ().payload);
+      this->messages_.unbind ((*i).key ());
+      i = this->messages_.begin ();
+    }
+  return this->ACE_RMCast_Module::close ();
 }
 
 int
 ACE_RMCast_Reordering::data (ACE_RMCast::Data &data)
 {
   int must_ack = 0;
+  int result = 0;
   ACE_RMCast::Ack ack;
 
-  // ACE_DEBUG ((LM_DEBUG, "Received message (%d)\n", data.sequence_number));
+  //ACE_DEBUG ((LM_DEBUG, "Received message (%d)\n", data.sequence_number));
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
@@ -39,12 +48,12 @@ ACE_RMCast_Reordering::data (ACE_RMCast::Data &data)
         // of this block).
         must_ack = 1;
 
-        // ACE_DEBUG ((LM_DEBUG, ".... old message is ignored\n"));
+        //ACE_DEBUG ((LM_DEBUG, ".... old message is ignored\n"));
       }
 
     else if (data.sequence_number == this->next_expected_)
       {
-        // ACE_DEBUG ((LM_DEBUG, ".... message is in order, received\n"));
+        //ACE_DEBUG ((LM_DEBUG, ".... message is in order, received\n"));
 
         // Accept the message, the current thread will dispatch it, so
         // it is marked as accepted (using the <next_expected> field).
@@ -61,11 +70,14 @@ ACE_RMCast_Reordering::data (ACE_RMCast::Data &data)
         // delivering messages out of order?  I.E. what if the
         // next thread receives the next message?
         if (this->next () != 0)
-          (void) this->next ()->data (data);
+          {
+            result = this->next ()->data (data);
+          }
 
         // After delivering one message there may be more messages
         // pending
-        this->push_queued_messages ();
+        if (result == 0)
+          result = this->push_queued_messages ();
 
         //@@ This should be strategized, for example, only Ack if
         //   there is a message out of order or something, otherwise
@@ -76,7 +88,7 @@ ACE_RMCast_Reordering::data (ACE_RMCast::Data &data)
 
     else
       {
-        // ACE_DEBUG ((LM_DEBUG, ".... message out of sequence, saved\n"));
+        //ACE_DEBUG ((LM_DEBUG, ".... message out of sequence, saved\n"));
 
         // Out of sequence.
         if (this->highest_received_ < data.sequence_number)
@@ -93,14 +105,19 @@ ACE_RMCast_Reordering::data (ACE_RMCast::Data &data)
     ack.highest_received = this->highest_received_;
   }
 
-  if (!must_ack || data.source == 0)
-    return 0;
-  return data.source->reply_ack (ack);
+  if (must_ack && data.source != 0)
+    (void) data.source->reply_ack (ack);
+
+  return result;
 }
 
 int
 ACE_RMCast_Reordering::ack_join (ACE_RMCast::Ack_Join &ack_join)
 {
+  //ACE_DEBUG ((LM_DEBUG, "RMCast_Reordering::ack_join - <%d,%d>\n",
+  //            this->next_expected_,
+  //            ack_join.next_sequence_number));
+
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
     if (this->next_expected_ >= ack_join.next_sequence_number)
@@ -130,7 +147,7 @@ ACE_RMCast_Reordering::ack_join (ACE_RMCast::Ack_Join &ack_join)
   return 0;
 }
 
-void
+int
 ACE_RMCast_Reordering::push_queued_messages (void)
 {
   Messages_Iterator i = this->messages_.begin ();
@@ -139,17 +156,21 @@ ACE_RMCast_Reordering::push_queued_messages (void)
   while (i != end
          && (*i).key () == this->next_expected_)
     {
+      int r = 0;
       if (this->next () != 0)
         {
           ACE_RMCast::Data data = (*i).item ();
-          this->next ()->data (data);
+          r = this->next ()->data (data);
         }
 
       ACE_Message_Block::release ((*i).item ().payload);
       this->messages_.unbind ((*i).key ());
       i = this->messages_.begin ();
       this->next_expected_++;
+      if (r != 0)
+        return r;
     }
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

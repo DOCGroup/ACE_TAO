@@ -16,18 +16,27 @@ ACE_RMCast_UDP_Reliable_Sender::ACE_RMCast_UDP_Reliable_Sender (ACE_RMCast_Modul
   // We use a singleton factory, all proxys send their messages to the
   // retransmission module.  There should be only control messages
   // coming back, so this is OK.
-  , factory_ (&retransmission_)
+  , factory_ (&membership_)
   , io_udp_ (&factory_)
 {
-  // Messages are passed down to the retransmission module.
-  this->next (&this->retransmission_);
+  // Control messages are received by the membership module and passed
+  // up to the both the retransmission and user modules, we use a fork
+  // module to do that
+  this->membership_.next (&this->fork_);
 
-  // Then to the splitter, at this point control messages are sent
+  this->fork_.next (&this->retransmission_);
+  this->fork_.secondary (user_control);
+
+  // Messages are passed down to the sequencer module
+  this->next (&this->sequencer_);
+
+  // then to the retransmission module
+  this->sequencer_.next (&this->retransmission_);
+
+  // Then fork the messages, at this point control messages are sent
   // back to the user, other messages continue down to the
   // fragmentation layer.
-  this->retransmission_.next (&this->splitter_);
-  this->splitter_.next (&this->fragment_);
-  this->splitter_.control_module (this->user_control_);
+  this->retransmission_.next (&this->fragment_);
 
   // The fragmentation layer delegates all messages to the UDP I/O
   // module, that sends every message back to the application.
@@ -57,10 +66,4 @@ ACE_RMCast_UDP_Reliable_Sender::reactive_resends (ACE_Reactor *reactor,
 
   /// @@ TODO make sure it is removed from the Reactor at some point
   (void) reactor->schedule_timer (eh, 0, period, period);
-}
-
-int
-ACE_RMCast_UDP_Reliable_Sender::has_data (void)
-{
-  return this->retransmission_.has_data ();
 }

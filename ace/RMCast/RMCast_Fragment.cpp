@@ -36,7 +36,7 @@ ACE_RMCast_Fragment::data (ACE_RMCast::Data &received_data)
   ACE_Message_Block *mb = data.payload;
 
   // @@ We should keep the total size precomputed
-  data.total_size = mb->total_size ();
+  data.total_size = mb->total_length ();
 
   // We must leave room for the header
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)

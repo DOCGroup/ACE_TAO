@@ -35,12 +35,15 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
   if (type == ACE_RMCast::MT_POLL)
     {
       ACE_RMCast::Poll poll;
-      return this->next ()->poll (poll);
+      poll.source = this;
+      return this->poll (poll);
     }
 
   else if (type == ACE_RMCast::MT_ACK_JOIN)
     {
       ACE_RMCast::Ack_Join ack_join;
+      ack_join.source = this;
+
       const size_t header_size = 1 + sizeof(ACE_UINT32);
       if (size < header_size)
         {
@@ -53,18 +56,20 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
       ACE_OS::memcpy (&tmp, buffer + 1,
                       sizeof(tmp));
       ack_join.next_sequence_number = ACE_NTOHL (tmp);
-      return this->next ()->ack_join (ack_join);
+      return this->ack_join (ack_join);
     }
 
   else if (type == ACE_RMCast::MT_ACK_LEAVE)
     {
       ACE_RMCast::Ack_Leave ack_leave;
-      return this->next ()->ack_leave (ack_leave);
+      ack_leave.source = this;
+      return this->ack_leave (ack_leave);
     }
 
   else if (type == ACE_RMCast::MT_DATA)
     {
       ACE_RMCast::Data data;
+      data.source = this;
       const size_t header_size = 1 + 3 * sizeof(ACE_UINT32);
       if (size < header_size)
         {
@@ -93,24 +98,27 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
       mb->copy (buffer + header_size, size - header_size);
 
       data.payload = mb;
-      return this->next ()->data (data);
+      return this->data (data);
     }
 
   else if (type == ACE_RMCast::MT_JOIN)
     {
       ACE_RMCast::Join join;
-      return this->next ()->join (join);
+      join.source = this;
+      return this->join (join);
     }
 
   else if (type == ACE_RMCast::MT_LEAVE)
     {
       ACE_RMCast::Leave leave;
-      return this->next ()->leave (leave);
+      leave.source = this;
+      return this->leave (leave);
     }
 
   else if (type == ACE_RMCast::MT_ACK)
     {
       ACE_RMCast::Ack ack;
+      ack.source = this;
 
       const size_t header_size = 1 + sizeof(ACE_UINT32);
       if (size < header_size)
@@ -128,7 +136,7 @@ ACE_RMCast_UDP_Proxy::receive_message (char *buffer, size_t size)
                       sizeof(tmp));
       ack.highest_received = ACE_NTOHL (tmp);
 
-      return this->next ()->ack (ack);
+      return this->ack (ack);
     }
 
   return 0;

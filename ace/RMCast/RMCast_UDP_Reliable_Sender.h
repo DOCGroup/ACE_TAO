@@ -7,9 +7,11 @@
 
 #include "RMCast_Singleton_Factory.h"
 #include "RMCast_IO_UDP.h"
+#include "RMCast_Sequencer.h"
 #include "RMCast_Retransmission.h"
+#include "RMCast_Membership.h"
 #include "RMCast_Fragment.h"
-#include "RMCast_Control_Splitter.h"
+#include "RMCast_Fork.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,9 +41,15 @@ public:
   /// Check if there is still some messages to send, return 0 if not.
   int has_data (void);
 
+  /// Check if there are any members still connected
+  int has_members (void);
+
 private:
   /// The application-level control module
   ACE_RMCast_Module *user_control_;
+
+  /// Assign sequence numbers
+  ACE_RMCast_Sequencer sequencer_;
 
   /// The retransmission module
   ACE_RMCast_Retransmission retransmission_;
@@ -52,11 +60,14 @@ private:
   /// Handle all the UDP I/O
   ACE_RMCast_IO_UDP io_udp_;
 
+  /// The membership module
+  ACE_RMCast_Membership membership_;
+
   /// The fragmentation module
   ACE_RMCast_Fragment fragment_;
 
   /// Redirect control messages to the user supplied module
-  ACE_RMCast_Control_Splitter splitter_;
+  ACE_RMCast_Fork fork_;
 };
 
 #if defined (__ACE_INLINE__)
