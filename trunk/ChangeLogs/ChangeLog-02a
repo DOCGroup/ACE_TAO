@@ -1,3 +1,18 @@
+Wed Jul 05 12:06:17 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.h: make the pSOS section adapt better to different pSOS
+          versions which seem to define different sets of errno values.
+          Also merge in some additions supplied by Matt Emerson
+          <memerson@escient.com> to define needed types based on the
+          ACE_PSOS_CANT_USE_SYS_TYPES config macro. (I think this macro
+          may have been added a while back by someone else working on the
+          pSOS port, but was not noted in this ChangeLog).
+
+Wed Jul 05 11:24:51 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-psos-diab-ppc.h: Added ACE_HAS_EXCEPTIONS in the
+          non-g++ section.
+
 Tue Jul  4 10:12:12 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/SUN_Proactor: Added a new method with the name/signature
@@ -248,7 +263,7 @@ Wed Jun 28 11:20:08 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Wed Jun 28 11:42:53 2000  Steve Huston  <shuston@riverace.com>
 
-        * ace.config-psos-diab-ppc.h: Added ACE_LACKS_PRAGMA_ONCE for the
+        * ace/config-psos-diab-ppc.h: Added ACE_LACKS_PRAGMA_ONCE for the
           non-g++ situation. The newer Diab compiler (at least) needs this.
           Corrected a '#defined' directive to '#define'.
 
