@@ -101,6 +101,23 @@ test_functionality (ACE_Timer_Queue *tq)
 
   ACE_ASSERT (tq->expire () == 2);
 
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 007, 
+			    tq->gettimeofday ()) != -1);
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 42,
+			   tq->gettimeofday () + ACE_Time_Value (100)) != -1);
+  ACE_ASSERT (tq->schedule (&eh, (const void *) 42,
+			   tq->gettimeofday () + ACE_Time_Value (100)) != -1);
+
+  // The following will trigger a call to <handle_close> when 
+  // it cancels the second timer.  This happens because the first
+  // timer has an <act> of 007, which causes eh.handle_timeout () to 
+  // return -1.  Since -1 is returned, all timers that use <eh> will
+  // be cancelled (and <handle_close> will only be called on the first 
+  // timer that is cancelled).  
+  ACE_ASSERT (tq->expire () == 1);
+  ACE_ASSERT (tq->is_empty () != 0);
+
+
   ACE_ASSERT (tq->schedule (&eh, (const void *) 4, 
 			    tq->gettimeofday ()) != -1);
   ACE_ASSERT (tq->schedule (&eh, (const void *) 5, 
@@ -124,7 +141,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_ASSERT (tq->cancel (timer_id) == 1);
   ACE_ASSERT (tq->cancel (&eh) == 1);
   ACE_ASSERT (tq->expire () == 0);
-  ACE_ASSERT (eh.close_count_ == 2);
+  ACE_ASSERT (eh.close_count_ == 3);
 }
 
 static void
