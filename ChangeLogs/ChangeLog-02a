@@ -1,3 +1,8 @@
+Wed Dec  5 15:41:08 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/OS.h:
+          Corrected doxygen docu of ACE_Countdown_Time::max_wait_time_
+
 Wed Dec  5 14:14:32 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/String_Base.h:
