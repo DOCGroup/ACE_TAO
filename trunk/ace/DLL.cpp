@@ -135,7 +135,7 @@ ACE_DLL::get_handle (int become_owner)
   // Since the caller is becoming the owner of the handle we lose
   // rights to close it on destruction.  The new controller has to do
   // it explicitly.
-  if (become_owner == 0)
+  if (become_owner)
     this->close_on_destruction_ = 0;
 
   // Return the handle requested by the user.
