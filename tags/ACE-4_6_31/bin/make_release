@@ -1,0 +1,469 @@
+eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+#
+# Creates an ACE or TAO kit.  Intended to be called from the
+# ACE or TAO top-level Makefiles.
+#
+# The first three lines above let this script run without specifying the
+# full path to perl, as long as it is in the user's PATH.
+# Taken from perlrun man page.
+
+$usage="usage: $0 [-?] [-k <kit>] [-n] [-t <type>] " .
+         "[-c <controlled files>] [-r <release files>] " .
+         "[-l <release lib files]\n";
+$long_usage="   -? option prints this message\n" .
+            "   -k <kit>, where <kit> is ace, tao, or ace+tao\n" .
+            "   -n option prints what would be done, but doesn't do it\n" .
+            "   -t <type>, where <type> is major, minor, or beta (default)\n" .
+            "   -c <controlled files> lists the CVS-controlled files\n" .
+            "   -r <release files> lists the files to be released\n" .
+            "   -l <release lib files> list the files to put in the lib kit\n";
+
+
+########
+######## Configuration parameters.
+########
+if (-d '/pkg/gnu/bin') {
+  $gnu = '/pkg/gnu/bin/';
+  #### Insert it at head of PATH, so that cvs diff uses GNU diff.
+  $ENV{'PATH'} = "/pkg/gnu/bin:" . $ENV{'PATH'};
+} else {
+  #### The default utilities had better be GNU.
+  $gnu = '';
+}
+
+$exec_prefix = $exec_suffix = '';
+$kit = '';
+$release_type = 'beta';
+$controlled_files = '';
+$release_files = '';
+$release_filter = '\\( -name CVS -o -name build \\) -prune -o ' .
+                  '! -name \'.\#*\' ! -name \'\#*\' ! -name \'*~\' ' .
+                  '! -name \'*.MAK\' -print';
+
+
+########
+######## Process command line args.
+########
+while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
+  if ($ARGV[0] eq '-k') {
+    if ($ARGV[1] =~ /^[^-]+/  &&
+        ($ARGV[1] eq 'ace' || $ARGV[1] eq 'tao' || $ARGV[1] eq 'ace+tao')) {
+      $kit = $ARGV[1]; shift;
+    } else {
+      print STDERR "$0:  must provide argument for -k option\n";
+      die "$usage$long_usage";
+    }
+  } elsif ($ARGV[0] eq '-n') {
+    $exec_prefix = 'echo \'';
+    $exec_suffix = '\'';
+  } elsif ($ARGV[0] eq '-t') {
+    if ($ARGV[1] =~ /^[^-]+/  &&
+        ($ARGV[1] eq 'major' || $ARGV[1] eq 'minor' ||
+         $ARGV[1] eq 'beta')) {
+      $release_type = $ARGV[1]; shift;
+    } else {
+      print STDERR "$0:  must provide argument for -t option\n";
+      die "$usage$long_usage";
+    }
+  } elsif ($ARGV[0] eq '-c') {
+    if ($ARGV[1] =~ /^[^-]+/) {
+      $controlled_files = $ARGV[1]; shift;
+    } else {
+      print STDERR "$0:  must provide argument for -c option\n";
+      die "$usage$long_usage";
+    }
+  } elsif ($ARGV[0] eq '-r') {
+    if ($ARGV[1] =~ /^[^-]+/) {
+      $release_files = $ARGV[1]; shift;
+    } else {
+      print STDERR "$0:  must provide argument for -r option\n";
+      die "$usage$long_usage";
+    }
+  } elsif ($ARGV[0] eq '-l') {
+    if ($ARGV[1] =~ /^[^-]+/) {
+      $release_lib_files = $ARGV[1]; shift;
+    } else {
+      print STDERR "$0:  must provide argument for -l option\n";
+      die "$usage$long_usage";
+    }
+  } elsif ($ARGV[0] eq '-?') {
+    print "$usage$long_usage";
+    exit;
+  } else {
+    print STDERR "$0:  unknown option $ARGV[0]\n";
+    die "$usage$long_usage";
+  }
+  shift;
+}
+
+die "must specify a -k option\n" unless "$kit";
+$update_versions = 0;
+if ($kit eq 'ace') {
+  $KIT = 'ACE';
+  $update_versions = (`pwd` eq "/project/adaptive/ACE_wrappers\n");
+} elsif ($kit eq 'tao') {
+  $KIT = 'TAO';
+  $update_versions = (`pwd` eq "/project/adaptive/ACE_wrappers/TAO\n");
+} else {
+  #### Creating combined ACE+TAO kit.  Don't use $KIT.
+};
+
+$chmod = '/bin/chmod';
+$cpio = "${gnu}cpio";
+$cvs = "${exec_prefix}${gnu}cvs";
+$date = "${gnu}date";
+$egrep = "${gnu}egrep";
+$find = "${gnu}find";
+$gzip = "${gnu}gzip";
+$mv = '/bin/mv';
+chop ($now = `$date +"%a %b %d %T %Y"`);
+
+
+########
+######## Setup signal handlers.
+########
+$status = 1;  #### Must get set to 0 explicitly to indicate success.
+$SIG{'HUP'} = $SIG{'INT'} = $SIG{'QUIT'} = $SIG{'TERM'} = 'cleanup';
+
+
+########
+######## Defend against fascist umasks.
+########
+umask 022;
+
+
+########
+######## Main execution thread.
+########
+if ($update_versions  &&  "$kit" ne 'ace+tao') {
+  $major_version = $minor_version = $beta_version = 0;
+  $previous_version = $version = '';
+
+  $status =
+    &check_workspace ()  ||
+    &get_versions ()  ||
+    &update_version_files ()  ||
+    &update_changelog ()  ||
+    &tag ()  ||
+    &diff ()  ||
+    &create_kit ();
+} else {
+  &create_kit ();
+}
+&cleanup;
+
+
+########
+######## Clean up when done or on signal.
+########
+sub cleanup {
+  exit $status;
+}
+
+
+########
+######## Check that the workspace is up-to-date, if releasing from
+######## the official release directory.
+########
+sub check_workspace () {
+  my $module;
+
+  if ($kit =~ /^ace/) {
+    chdir '..'  ||  die "$0: unable to chdir ..\n";
+    $module = 'ACE_wrappers';
+  } elsif ($kit =~ /tao/) {
+    chdir '../..'  ||  die "$0: unable to chdir ../..\n";
+    $module = 'ACE_wrappers/TAO';
+  }
+
+  my @out_of_date = ();
+  open (CVS, "$cvs -nq checkout -P $module |")  ||
+    die "$0: unable to open $cvs\n";
+  while (<CVS>) {
+    next if m%^U %;    #### Allow others to update the repository.
+    push (@out_of_date, $_) if "$_";
+  }
+  close CVS;
+
+  if ($kit =~ /^ace/) {
+    chdir 'ACE_wrappers'  ||  die "$0: unable to chdir ACE_wrappers\n";
+  } elsif ($kit =~ /tao/) {
+    chdir 'ACE_wrappers/TAO'  ||  die "$0: unable to chdir ACE_wrappers/TAO\n";
+  }
+
+  if (! "$exec_prefix"  &&  @out_of_date) {
+    warn "ERROR: workspace must be updated (with cvs -q up -d) or " .
+         "cleaned:\n  " .
+         join ("\n  ", @out_of_date) . "\n";
+    return 1;
+  }
+
+  0;
+}
+
+
+########
+######## Retrieve version information from VERSION file(s).
+########
+sub get_versions () {
+  open (VERSION, '< VERSION')  ||
+    die "$0: unable to open VERSION\n";
+  while (<VERSION>) {
+    if (/$KIT version (\d+)\.(\d+)\.(\d+)/o) {
+      $major_version = $1;
+      $minor_version = $2;
+      $beta_version = $3;
+      last;
+    } elsif (/$KIT version (\d+)\.(\d+)[^\.]/o) {
+      #### Previous release was a minor.
+      $major_version = $1;
+      $minor_version = $2;
+      last;
+    } elsif (/$KIT version (\d+)[^\.]/o) {
+      #### Previous release was a major.
+      $major_version = $1;
+      last;
+    }
+  }
+  close VERSION;
+
+  if ($release_type eq 'beta') {
+    if ($beta_version > 0) {
+      $previous_version = "$major_version.$minor_version.$beta_version";
+    } else {
+      $previous_version = "$major_version.$minor_version";
+    }
+
+    ++$beta_version;
+    $version = "$major_version.$minor_version.$beta_version";
+  } elsif ($release_type eq 'minor' ) {
+    $beta_version = 0;
+    ++$minor_version;
+    $version = "$major_version.$minor_version";
+  } elsif ($release_type eq 'major' ) {
+    $minor_version = $beta_version = 0;
+    ++$major_version;
+    $version = "$major_version.$minor_version";
+  }
+
+  print "new $KIT version: $version\n";
+
+  if ($kit =~ /tao/) {
+    $ace_minor_version = $ace_beta_version = 0;
+    open (ACE_VERSION, '< ../VERSION')  ||
+      die "$0: unable to open ../VERSION\n";
+    while (<ACE_VERSION>) {
+      if (/ACE version (\d+)\.(\d+)\.(\d+)/o) {
+        $ace_major_version = $1;
+        $ace_minor_version = $2;
+        $ace_beta_version = $3;
+        last;
+      } elsif (/ACE version (\d+)\.(\d+)[^\.]/o) {
+        #### ACE release was a minor.
+        $ace_major_version = $1;
+        $ace_minor_version = $2;
+        last;
+      } elsif (/ACE version (\d+)[^\.]/o) {
+        #### ACE release was a major.
+        $ace_major_version = $1;
+        last;
+      }
+    }
+    close ACE_VERSION;
+
+    if ($ace_beta_version == 0) {
+      $ace_version = "$ace_major_version.$ace_minor_version";
+    } else {
+      $ace_version = "$ace_major_version.$ace_minor_version.$ace_beta_version";
+    }
+  }
+
+  0;
+}
+
+
+########
+######## Update VERSION file(s).
+########
+sub update_version_files () {
+  system ("$exec_prefix" .
+    "perl -pi -e 's/$KIT version .*/$KIT version $version, released $now./' " .
+    "VERSION $exec_suffix");
+  return 1 if $? >> 8;
+
+  system ("$exec_prefix" .
+    "perl -pi -e 's/$KIT VERSION:.*/$KIT VERSION: $version/' " .
+    "BUG-REPORT-FORM $exec_suffix");
+  return 1 if $? >> 8;
+
+  if ($kit =~ /^tao/) {
+    system ("$exec_prefix" .
+      "perl -pi -e 's/ACE VERSION:.*/ACE VERSION: $ace_version/' " .
+      "BUG-REPORT-FORM $exec_suffix");
+    return 1 if $? >> 8;
+  }
+
+  if (! "$exec_prefix"  &&  $kit =~ /^ace/) {
+    open (ACE_VERSION_H, "> ace/Version.h")  ||
+      die "$0: unable to open ace/Version.h\n";
+
+    print ACE_VERSION_H
+      "// \$Id\$\n" .
+      "// This is an automatically generated file.\n\n" .
+      "\#define ACE_MAJOR_VERSION (${major_version}u)\n" .
+      "\#define ACE_MINOR_VERSION (${minor_version}u)\n" .
+      "\#define ACE_BETA_VERSION (${beta_version}u)\n" .
+      "\#define ACE_VERSION \"${version}\\0\"\n";
+
+    close ACE_VERSION_H;
+  }
+
+  0;
+}
+
+
+########
+######## Add ChangeLog entries, and make sure that they have proper
+######## permissions.
+########
+sub update_changelog () {
+  my $logname = $ENV{'LOGNAME'};
+  my $signature = $ENV{'SIGNATURE'} || $logname;
+  my $message = "$now  $signature  <$logname\\\@cs.wustl.edu>\n\n" .
+                "        * $KIT version $version released.\n\n";
+  my $message_insert =
+    "perl -pi -e 'BEGIN {\$message_printed = 0;}
+      if (! \$message_printed) {
+        print \"$message\";
+        ++\$message_printed; }' ChangeLog";
+
+  if ("$exec_prefix") {
+    print "$message_insert\n";
+  } else {
+    system ($message_insert);
+  }
+
+  if ($kit =~ /^ace/) {
+    system ("$cvs commit -m'$version' " .
+            "VERSION BUG-REPORT-FORM ChangeLog ace/Version.h " .
+            "&& chmod 0644 VERSION BUG-REPORT-FORM ChangeLog ace/Version.h");
+  } elsif ($kit =~ /tao/) {
+    system ("$cvs commit -m'$version' VERSION BUG-REPORT-FORM ChangeLog " .
+            "&& chmod 0644 VERSION BUG-REPORT-FORM ChangeLog");
+  }
+  return 1 if $? >> 8;
+
+  0;
+}
+
+
+########
+######## Tag the release.
+########
+sub tag () {
+  my $tag = "$KIT-$version";
+  #### cvs tag does not allow dots.
+  $tag =~ tr/./_/;
+
+  print "start tagging $tag\n";
+  system ("$cvs -q tag $tag $controlled_files > /dev/null");
+  return 1 if $? >> 8;
+  print "finished tagging $tag\n";
+
+  0;
+}
+
+
+########
+######## If building a beta, create a diff from the previous version.
+########
+sub diff () {
+  if ("$previous_version") {
+    #### Only create a diff for a beta version.
+
+    my $previous_tag = "$KIT-$previous_version";
+    my $tag = "$KIT-$version";
+    my $diffs_dir = "$kit" eq 'ace'  ?  'diffs'  :  '../diffs';
+
+    #### cvs tag does not allow dots.
+    $previous_tag =~ tr/./_/;
+    $tag =~ tr/./_/;
+
+    my $module = "$kit" eq 'ace'  ?  'ACE_wrappers'  :  'ACE_wrappers/TAO';
+
+    if ("$exec_prefix") {
+      print "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
+              "$module 2>/dev/null | " .
+            "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
+            "nice -15 $gzip -9 > $diffs_dir/$previous_tag-$tag.diff.gz &";
+    } else {
+      system ("sleep 60; " .
+              "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag " .
+                "$module 2>/dev/null | " .
+              "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
+              "nice -15 $gzip -9 > $diffs_dir/$previous_tag-$tag.diff.gz &");
+    }
+  }
+
+  #### Ignore return value.  No promises on diffs.
+  0;
+}
+
+
+########
+######## Create the tar file(s) and move to their proper location.
+########
+sub create_kit () {
+  if ("$exec_prefix") {
+    print "chdir '..'\n";
+  } else {
+    chdir '..'  ||  die "$0: unable to chdir ..\n";
+  }
+
+  # These files don't get LF->CRLF conversions done when making the zip.
+  $bin_files =
+    "\"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\|\\.gz\|\\.zip\|\\.gif\"";
+
+  if ($kit eq 'ace') {
+    system ("$exec_prefix" .
+            "/bin/rm -f ACE.zip ACE-lib.zip; " .
+            "$find $release_files $release_filter | " .
+            "$egrep $bin_files | " .
+            "zip ACE.zip -q9@ &&" .
+            "$find $release_files $release_filter | " .
+            "$egrep -v $bin_files | " .
+            "zip ACE.zip -qlg9@ &&" .
+            "$find $release_lib_files $release_filter | " .
+            "$egrep $bin_files | " .
+            "zip ACE-lib.zip -q9@ &&" .
+            "$find $release_lib_files $release_filter | " .
+            "$egrep -v $bin_files | " .
+            "zip ACE-lib.zip -qlg9@ &&" .
+            "$find $release_files $release_filter | $cpio -o -H tar | " .
+            "$gzip -9 > ACE.tar.gz && " .
+            "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
+            "$gzip -9 > ACE-lib.tar.gz && " .
+            "$chmod a+r ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip && " .
+            "$mv ACE.zip ACE-lib.zip ACE_wrappers/ &&" .
+            "$mv ACE.tar.gz ACE-lib.tar.gz ACE_wrappers/ $exec_suffix");
+  } elsif ($kit eq 'ace+tao') {
+    system ("$exec_prefix" .
+            "/bin/rm -f ACE+TAO.zip; " .
+            "$find $release_files $release_filter | " .
+            "$egrep \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\" | " .
+            "zip ACE+TAO.zip -q9@ &&" .
+            "$find $release_files $release_filter | " .
+            "$egrep -v \"\\.dsp|\\.dsw|\\.mak|\\.mdp|\\.ide|\\.exe\" | " .
+            "zip ACE+TAO.zip -qlg9@ &&" .
+            "$find $release_files $release_filter | $cpio -o -H tar | " .
+            "$gzip -9 > ACE+TAO.tar.gz && " .
+            "$chmod a+r ACE+TAO.tar.gz ACE+TAO.zip && " .
+            "$mv ACE+TAO.tar.gz ACE+TAO.zip ACE_wrappers/ $exec_suffix");
+  }
+
+  0;
+}
