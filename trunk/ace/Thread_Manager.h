@@ -127,6 +127,15 @@ public:
   long flags (void) const;
   // Get the thread creation flags.
 
+  void acquire_release (void);
+  // Do nothing but to acquire the thread descriptor's lock and
+  // release.  This will first check if the thread is registered or
+  // not.  If it is already registered, there's no need to reacquire
+  // the lock again.  This is used mainly to get newly spawned thread
+  // in synch with thread manager and prevent it from accessing its
+  // thread descriptor before it gets fully built.  This function is
+  // only called from ACE_Log_Msg::thr_desc.
+
   ACE_INLINE void set_next (ACE_Thread_Descriptor *td);
   ACE_INLINE ACE_Thread_Descriptor *get_next (void);
   // Set/get the <next_> pointer.  These are required by the
@@ -456,12 +465,6 @@ public:
   // array) to be destroyed.  "cleanup_hook", for example, may delete
   // the object (or array).
 
-  int acquire_release (void);
-  // Do nothing but to acquire the thread manager's lock and release.
-  // This is used mainly to get newly spawned thread in synch with
-  // thread manager and prevent it from accessing its thread
-  // descriptor before it gets fully built.
-
   void wait_on_exit (int dowait);
   int  wait_on_exit (void);
   // Access function to determine whether the Thread_Manager will
@@ -639,7 +642,7 @@ public:
   // Remove this thread from its associated <Thread_Manager> and exit
   // the thread if <do_thr_exit> is enabled.
 
-  int insert (ACE_Thread_Manager *tm);
+  int insert (ACE_Thread_Manager *tm, int insert = 0);
   // Store the <Thread_Manager> and use it to register ourselves for
   // correct shutdown.
 

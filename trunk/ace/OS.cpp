@@ -72,7 +72,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 
 // Static constant to remove time skew between FILETIME and POSIX
 // time.
-// 
+//
 // In the beginning (Jan. 1, 1601), there was no time and no computer.
 // And Bill said: "Let there be time," and there was time....
 const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew = 0x19db1ded53e8000i64;
@@ -107,7 +107,7 @@ ACE_Time_Value::operator FILETIME () const
   FILETIME file_time;
   file_time.dwLowDateTime = _100ns.LowPart;
   file_time.dwHighDateTime = _100ns.HighPart;
-  
+
   return file_time;
 }
 
@@ -1800,7 +1800,7 @@ ACE_Thread_Adapter::inherit_log_msg (void)
   // descriptor in.
 
   if (this->thr_desc_ != 0)
-    ACE_LOG_MSG->thr_desc (this->thr_desc_, this->thr_mgr_);
+    ACE_LOG_MSG->thr_desc (this->thr_desc_);
   // Block the thread from proceeding until
   // thread manager has thread descriptor ready.
 #endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG */

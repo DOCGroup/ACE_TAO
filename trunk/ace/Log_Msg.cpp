@@ -737,7 +737,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                   type = SKIP_NUL_LOCATE;
                   (void) this->inc ();
                   break;
-                  
+
                 case '}': // indent, then decrement trace_depth
                   type = SKIP_NUL_LOCATE;
                   (void) this->dec ();
@@ -747,7 +747,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
                           // according to %I
                   *bp++ = '\n';
                   /* fallthrough */
-                  
+
                 case 'I': // Indent with nesting_depth*width spaces
                   type = SKIP_SPRINTF;
                   if (!wpc) w[wpc++] = 1;
@@ -914,7 +914,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
 
   // Write the <log_record> to the appropriate location.
   ssize_t result = this->log (log_record, abort_prog);
- 
+
   if (abort_prog)
     {
       // *Always* print a message to stderr if we're aborting.  We
@@ -923,7 +923,7 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
       log_record.print (ACE_Log_Msg::local_host_, 0);
       ACE_OS::exit (exit_value);
     }
-   
+
    return result;
 }
 
@@ -1173,13 +1173,12 @@ ACE_Log_Msg::thr_desc (void) const
 }
 
 void
-ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td,
-                       ACE_Thread_Manager *thr_mgr)
+ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
 {
   this->thr_desc_ = td;
 
-  if (thr_mgr != 0)
-    thr_mgr->acquire_release ();
+  if (td != 0)
+    td->acquire_release ();
 }
 
 // Enable the tracing facility on a per-thread basis.
