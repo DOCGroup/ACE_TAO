@@ -1,7 +1,6 @@
 /* Simple multi-threaded database server example. */
 // $Id$
 
-
 #include "ace/TLI_Acceptor.h"
 #include "ace/Thread_Manager.h"
 
@@ -19,7 +18,7 @@ lookup_name (ACE_HANDLE handle)
     EMPNAMELEN = 512
   };
 
-  static struct 
+  static struct
     {
       int emp_id;
       const char *emp_name;
@@ -38,7 +37,6 @@ lookup_name (ACE_HANDLE handle)
 
   int n;
   int flags;
-  int len;
   int employee_id;
   int index;
   int found;
@@ -65,7 +63,7 @@ lookup_name (ACE_HANDLE handle)
   if (found == 0)
     n = ACE_OS::sprintf (sendline, "%s", "ERROR");
 
-  if ((len = stream.send (sendline, n + 1, 0)) == -1)
+  if (stream.send (sendline, n + 1, 0) == -1)
     ACE_OS::t_error ("stream.send error");
 
   if (stream.sndrel () == -1)
@@ -77,7 +75,7 @@ lookup_name (ACE_HANDLE handle)
   return 0;
 }
 
-int 
+int
 main (int argc, char *argv[])
 {
   u_short port = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
@@ -94,7 +92,7 @@ main (int argc, char *argv[])
         ::t_error ("server.accept error");
 
       if (thr_mgr.spawn (ACE_THR_FUNC (lookup_name),
-                         (void *) new_stream.get_handle (), 
+                         (void *) new_stream.get_handle (),
                          THR_DETACHED) == -1)
         ACE_DEBUG ((LM_ERROR, "server: can't create worker thread %d\n"));
     }
@@ -105,6 +103,6 @@ main (int argc, char *argv[])
 #include <stdio.h>
 int main (int, char *[])
 {
-  ACE_ERROR_RETURN ((LM_ERROR, "your platform must support ACE_TLI\n"), 1);
+  ACE_ERROR_RETURN ((LM_ERROR, "platform does not support ACE_TLI\n"), 1);
 }
 #endif /* ACE_HAS_THREADS */
