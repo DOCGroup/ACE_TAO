@@ -298,29 +298,31 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::cre
   ACE_NEW_RETURN (vdev,
                   T_VDev,
                   -1);
-
+  
   T_MediaCtrl *media_ctrl;
   ACE_NEW_RETURN (media_ctrl,
                   T_MediaCtrl,
                   -1);
 
-  this->orb_manager_.activate ("Stream_Endpoint_A",
-                               stream_endpoint,
-                               env);
+  this->orb_manager_->activate_under_child_poa ("Stream_Endpoint_A",
+                                                stream_endpoint,
+                                                env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
-  this->orb_manager_.activate ("VDev",
-                               vdev,
-                               env);
+  this->orb_manager_->activate_under_child_poa ("VDev",
+                                                vdev,
+                                                env);
   TAO_CHECK_ENV_RETURN (env, -1);
-
-  this->orb_manager_.activate ("MediaCtrl",
-                               media_ctrl,
-                               env);
+  
+  this->orb_manager_->activate_under_child_poa ("MediaCtrl",
+                                                media_ctrl,
+                                                env);
   TAO_CHECK_ENV_RETURN (env, -1);
-
+  
   CORBA::Any anyval;
-  anyval <<= media_ctrl->_this ();
+  anyval <<= this->orb_manager_->orb ()->object_to_string (media_ctrl->_this (env));
+  TAO_CHECK_ENV_RETURN (env, -1);
+  
   vdev->define_property ("Related_MediaCtrl",
                          anyval,
                          env);
@@ -391,6 +393,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::cre
 
 template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process ()
+  :stream_endpoint_name_ (0)
 {
 }
 
@@ -437,20 +440,25 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
 {
   this->orb_manager_.init_child_poa (argc,
                                      argv,
+                                     "child_poa",
                                      env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
   this->orb_manager_.activate_under_child_poa ("Stream_Endpoint",
-                                               this->stream_endpoint_,
+                                               &this->stream_endpoint_,
                                                env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
 
   this->orb_manager_.activate_under_child_poa ("VDev",
-                                               this->vdev_,
+                                               &this->vdev_,
                                                env);
   TAO_CHECK_ENV_RETURN (env, -1);
 
+  this->orb_manager_.activate_under_child_poa ("MediaCtrl",
+                                               &this->media_control_,
+                                               env);
+  TAO_CHECK_ENV_RETURN (env, -1);
   return 0;
 
 }
@@ -481,21 +489,27 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (CO
   CosNaming::Name vdev_name (1);
   vdev_name.length (1);
   vdev_name [0].id = CORBA::string_dup ("VDev");
+
+  CORBA::Any media_ctrl_property;
+  media_ctrl_property <<= this->orb_manager_.orb ()->object_to_string (this->media_ctrl_->_this (env));
+  this->vdev_->define_property ("Related_MediaCtrl",
+                                media_ctrl_property,
+                                env);
+  TAO_CHECK_ENV_RETURN (env,-1);
   
   // Register the vdev with the naming server.
-  naming_context->bind (vdev_name,
-                        this->vdev_._this (env),
-                        env);
-
+  this->naming_context_->bind (vdev_name,
+                               this->vdev_._this (env),
+                               env);
+  
   if (env.exception () != 0)
     {
       env.clear ();
-      naming_context->rebind (vdev_name,
-                              this->vdev_._this (env),
-                              env);
+      this->naming_context_->rebind (vdev_name,
+                                     this->vdev_._this (env),
+                                     env);
       TAO_CHECK_ENV_RETURN (env, -1);
     }
-  
   
   return 0;
 }
@@ -573,19 +587,19 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_stream_e
   CosNaming::Name Stream_Endpoint_Name (1);
   
   Stream_Endpoint_Name.length (1);
-  Stream_Endpoint_Name [0].id = CORBA::string_dup
-    this->stream_endpoint_name_;
+  Stream_Endpoint_Name [0].id = CORBA::string_dup (this->stream_endpoint_name_);
+
   
   // Register the stream endpoint object with the naming server.
   this->naming_context_->bind (Stream_Endpoint_Name,
-                               this->stream_endpoint__._this (env),
+                               this->stream_endpoint_._this (env),
                                env);
 
   if (env.exception () != 0)
     {
       env.clear ();
-      this->naming_context_->rebind (Stream_Endpoint_B_Name,
-                                     this->stream_endpoint_b_._this (env),
+      this->naming_context_->rebind (Stream_Endpoint_Name,
+                                     this->stream_endpoint_._this (env),
                                      env);
       TAO_CHECK_ENV_RETURN (env, -1);
     }
@@ -608,6 +622,6 @@ TAO_AV_Child_Process_A  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Pr
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process_B  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process_B ()
-  :  stream_endpoint_name_ ("Stream_Endpoint_B")
 {  
+  this->stream_endpoint_name_ = "Stream_Endpoint_B";
 }

@@ -184,7 +184,7 @@ public:
   int run (ACE_Time_Value *tv = 0);
 
  protected:
-  char *stream_endpoint_name_;
+  const char *stream_endpoint_name_;
 
   int activate_objects (int argc, 
                         char **argv,
@@ -202,11 +202,14 @@ public:
   CosNaming::NamingContext_var naming_context_;
   // The root Naming Context of the TAO naming service
 
-  T_StreamEndPoint stream_endpoint_;
+  T_StreamEndpoint stream_endpoint_;
   // The stream endpoint member
 
   T_VDev vdev_;
   // The virtual device
+
+  T_MediaCtrl media_control_;
+  // Media controller
 };
 
 // ----------------------------------------------------------------------
