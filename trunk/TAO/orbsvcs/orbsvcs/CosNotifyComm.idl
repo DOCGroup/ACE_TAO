@@ -17,10 +17,11 @@
 
 #ifndef _COS_NOTIFY_COMM_IDL_
 #define _COS_NOTIFY_COMM_IDL_
-#pragma prefix "omg.org"
 
 #include "CosNotification.idl"
 #include "CosEventComm.idl"
+
+#pragma prefix "omg.org"
 
 module CosNotifyComm {
 
