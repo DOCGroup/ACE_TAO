@@ -274,8 +274,9 @@ ACE_Scheduler_Factory::preemption_priority ()
   // Return whatever we've got.  The application or Event Channel is
   // responsible for making sure that it was set.
   return ace_scheduler_factory_data->preemption_priority_.ts_object () == 0  ?
-    (RtecScheduler::Preemption_Priority) -1  :
-    *ace_scheduler_factory_data->preemption_priority_;
+    ACE_static_cast (RtecScheduler::Preemption_Priority, -1)  :
+    ACE_static_cast (RtecScheduler::Preemption_Priority,
+                     *ace_scheduler_factory_data->preemption_priority_);
 }
 
 void
