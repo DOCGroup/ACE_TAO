@@ -12,7 +12,8 @@ ACE_RCSID(Latency, test_i, "$Id$")
 
 void
 Test_i::test_method (CORBA::Long id,
-                     CORBA::Environment&) ACE_THROW_SPEC (())
+                     CORBA::Environment&)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,

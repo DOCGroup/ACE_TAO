@@ -1,3 +1,11 @@
+Sun May 20 12:30:52 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* performance-tests/Callback/Server_i.{h,cpp}:
+	* performance-tests/Callback/Callback_i.{h,cpp}:
+	* performance-tests/Latency/test_i.{h,cpp}:
+	* performance-tests/RTCorba/Multiple_Endpoints/Common/test_i.{h,cpp}:
+	  Fixed compile errors in Forte update 1.
+
 Sun May 20 10:43:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/OctetSeq/test_i.{h,cpp}:

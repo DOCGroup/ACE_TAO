@@ -19,7 +19,7 @@ void
 Callback_i::response (Test::TimeStamp time_stamp,
                       const Test::Payload &,
                       CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_hrtime_t now = ACE_OS::gethrtime ();
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
