@@ -1,6 +1,0 @@
-repeat 100;
-lock fork5 write;
-lock fork1 write;
-print "Phil 5 eating";
-unlock fork5 write;
-unlock fork1 write;
