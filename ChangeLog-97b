@@ -1,15 +1,22 @@
+Mon Oct 27 11:36:39 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * (exit_cleanup_i): removed protection against recursive calls.
+          This protection no longer is necessary, because ACE_TSS_Cleanup ()
+          is only called by ACE_Thread_Adapter::invoke ().  It was
+          problematic because it used the ACE_Allocator instance.
+
 Mon Oct 27 06:40:18 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Synch_T.h: Make sure that ACE_Guard::remove() calls
- 	  this->lock_->remove() rather than this->lock_->release().
-  	  Thanks to Johannes Gutleber <Johannes.Gutleber@cern.ch> for
- 	  reporting this.
+        * ace/Synch_T.h: Make sure that ACE_Guard::remove() calls
+          this->lock_->remove() rather than this->lock_->release().
+          Thanks to Johannes Gutleber <Johannes.Gutleber@cern.ch> for
+          reporting this.
 
 Mon Oct 27 00:20:13 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
-	* ace/config-hpux-10.x-hpc++.h: Added directive
-	  ACE_HAS_TEMPLATE_SPECIALIZATION.  Thanks to Stephen Coy
-	  <stevec@wsa.com.au> for reporting this.
+        * ace/config-hpux-10.x-hpc++.h: Added directive
+          ACE_HAS_TEMPLATE_SPECIALIZATION.  Thanks to Stephen Coy
+          <stevec@wsa.com.au> for reporting this.
 
 Sun Oct 26 22:17:57 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -17,24 +24,24 @@ Sun Oct 26 22:17:57 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Sun Oct 26 20:03:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/IPC_SAP.cpp,
-	  ace/IO_SAP.cpp: Make sure that we don't use fcntl() when
-	  we're compiling on VXWORKS since it's not defined...
+        * ace/IPC_SAP.cpp,
+          ace/IO_SAP.cpp: Make sure that we don't use fcntl() when
+          we're compiling on VXWORKS since it's not defined...
 
-	* examples/Connection/non_blocking/CPP-connector.cpp: Changed the
- 	  method named idle() to uninitialized() since idle() is now
- 	  defined on ACE_Svc_Handler.
+        * examples/Connection/non_blocking/CPP-connector.cpp: Changed the
+          method named idle() to uninitialized() since idle() is now
+          defined on ACE_Svc_Handler.
 
-	* ace/OS.h: Added the TAO_DEFAULT_SERVER_PORT to OS.h.
+        * ace/OS.h: Added the TAO_DEFAULT_SERVER_PORT to OS.h.
 
-	* tests/Conn_Test.cpp (cached_connect): Added a new variable
- 	  called "n_client_iterations" to control how many times each
- 	  client thread tries to connect with the Cached_Connector.
+        * tests/Conn_Test.cpp (cached_connect): Added a new variable
+          called "n_client_iterations" to control how many times each
+          client thread tries to connect with the Cached_Connector.
 
 Sun Oct 26 16:56:32 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* include/makeinclude/platform_linux_lxpthread.GNU (CFLAGS): Added
- 	-pipe to the compile options.
+        * include/makeinclude/platform_linux_lxpthread.GNU (CFLAGS): Added
+        -pipe to the compile options.
 
 Sun Oct 26 11:04:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
