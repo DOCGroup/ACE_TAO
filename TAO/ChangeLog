@@ -1,3 +1,10 @@
+Fri Mar 25 12:35:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Pollable.pidl:
+          Renamed PollableSet::poll to get_ready_pollable to be compliant with
+          the latest corba spec. We will regenerate the files in the repo later
+          today
+
 Fri Mar 25 11:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Services.pidl:
