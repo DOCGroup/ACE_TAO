@@ -1,3 +1,8 @@
+Mon May  7 07:14:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* bin/auto_run_tests.lst: Commented out OctetSeq test from running
+	  in static configurations. 
+
 Sat May  5 08:51:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/nightlybuilds/builds.lst: Just commented the HP_UX
