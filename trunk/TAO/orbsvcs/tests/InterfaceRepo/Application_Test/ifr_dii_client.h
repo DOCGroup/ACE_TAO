@@ -61,12 +61,8 @@ private:
   CORBA::TypeCode_var result_;
   // Type of the return value, if any.
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
   CORBA::Request_var req_;
   // DII request holder.
-
-#endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
   CORBA::String_var namespace_name;
   CORBA::String_var interface_name;
