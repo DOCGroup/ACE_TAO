@@ -1363,15 +1363,6 @@ TAO_GIOP_Message_Base::send_reply_exception (
     CORBA::Exception *x
   )
 {
-  // Create a new output CDR stream
-  char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
-#if defined(ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (repbuf,
-                         '\0',
-                         sizeof repbuf);
-#endif /* ACE_HAS_PURIFY */
-
-
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = request_id;
   reply_params.svc_ctx_.length (0);
