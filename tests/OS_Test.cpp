@@ -816,6 +816,8 @@ cpu_info_test (void)
                   ACE_TEXT ("This system has %d processors online\n"),
                   number_processors));
     }
+
+  return 0;
 }
 
 int
