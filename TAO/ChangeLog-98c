@@ -11,6 +11,10 @@ Wed May 13 06:58:38 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * many *.{h,i,cpp,idl} files:  inserted RCS keyword string.
 
+        * tests/Param_Test/tests.cpp:  moved some return statements
+          out of loops, and changed some loop indexes to CORBA::ULong
+          to avoid signed/unsigned comparison.
+
 Wed May 13 00:05:52 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tao/ORB.i (orb_free_resources): This should return
