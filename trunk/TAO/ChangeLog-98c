@@ -1,43 +1,48 @@
+Thu May 07 11:19:25 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: added
+          ACE_Condition<ACE_Thread_Mutex> instantiation.
+
 Thu May  7 00:44:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Reverted a bunch of s/_env/env/g changes...  Thanks to Sumedh
- 	  for reporting these.
+        * Reverted a bunch of s/_env/env/g changes...  Thanks to Sumedh
+          for reporting these.
 
 Wed May  6 23:58:22 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_visitor.h: 
-	  Added missing int in method declaration.
+        * TAO_IDL/be_include/be_visitor.h:
+          Added missing int in method declaration.
 
 Wed May 06 23:51:37 1998  Carlos O'Ryan  <coryan@JIG>
 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsp: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.dsw: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.h: 
-	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
-	  The test now compiles on NT, it lacked a project file and we had
-	  to workaround some MSVC++ bugs.
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsp:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.dsw:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.h:
+        * orbsvcs/tests/EC_Multiple/EC_Multiple.cpp:
+          The test now compiles on NT, it lacked a project file and we had
+          to workaround some MSVC++ bugs.
 
-	* orbsvcs/orbsvcs.dsw: 
-	  Added the tests to the main workspace.
+        * orbsvcs/orbsvcs.dsw:
+          Added the tests to the main workspace.
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp: 
-	* orbsvcs/orbsvcs/Event/EC_Gateway.h: 
-	  The export macro was wrong and Event/EC_Gateway files were not
-	  in the project file.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway.h:
+          The export macro was wrong and Event/EC_Gateway files were not
+          in the project file.
 
 Wed May  6 18:16:42 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/NestedUpcall: Added the new "one-button" features for the
- 	  nested upcalls test so that it can run with a single file, just
- 	  like IDL_Cubit.  Thanks to Rob Thornton <ret1@cec.wustl.edu> for
- 	  this enhancement.
+        * tests/NestedUpcall: Added the new "one-button" features for the
+          nested upcalls test so that it can run with a single file, just
+          like IDL_Cubit.  Thanks to Rob Thornton <ret1@cec.wustl.edu> for
+          this enhancement.
 
 Wed May  6 08:46:18 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* rules.tao.GNU: Added dependency of the generated files on the
-	TAO_IDL compiler (in addition to the source IDL files). Thanks to
-	Jim Penny <jpenny@universal-fasteners.com> for suggesting this
-	modification.
+        * rules.tao.GNU: Added dependency of the generated files on the
+        TAO_IDL compiler (in addition to the source IDL files). Thanks to
+        Jim Penny <jpenny@universal-fasteners.com> for suggesting this
+        modification.
 
 Wed May 06 06:36:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
