@@ -1,3 +1,18 @@
+Thu Nov 16 11:16:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Asynch_Invocation.cpp:
+	* tao/Asynch_Invocation.h:
+	* tao/Asynch_Invocation.i:
+	* tao/Asynch_Reply_Dispatcher.cpp:
+	* tao/Asynch_Reply_Dispatcher.h:
+	* tao/Asynch_Reply_Dispatcher.i:
+
+	  Changed the logic of the #if preprocessor directives to
+	  avoid build errors on old g++, where CORBA messaging
+	  code is not compiled. Base classes have been added to the
+	  above files recently that are not used by messaging, but
+	  are used by DII.
+
 Thu Nov 16 08:13:42 2000  Ossama Othman  <ossama@uci.edu>
 
 	* VERSION:
