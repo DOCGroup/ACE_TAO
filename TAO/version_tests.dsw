@@ -1428,6 +1428,48 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Nested Upcall Simple Client"=.\tests\NestedUpcall\Simple\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Nested Upcall Simple Server"=.\tests\NestedUpcall\Simple\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name gperf
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Nested Upcall MT_Client Client"=.\tests\NestedUpcall\MT_Client_Test\client.dsp - Package Owner=<4>
 
 Package=<5>
@@ -3566,4 +3608,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-
