@@ -1,10 +1,10 @@
 // $Id$
 
+#include "worker.h"
+#include "Object_Factory_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/streams.h"
 #include "ace/Task.h"
-#include "Object_Factory_i.h"
-#include "worker.h"
 
 ACE_RCSID(Test, server, "$Id$")
 
