@@ -1,3 +1,10 @@
+Fri Nov 14 15:55:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/sys/os_select.h:
+          Rolled back change from Thu Nov 13 23:22:21 UTC 2003  Don Hinton
+          <dhinton@dresystems.com> which was incorrect.  The
+          ACE_HAS_SELECT_H refers to <sys/select.h>.
+
 Fri Nov 14 10:50:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_wait.inl:
