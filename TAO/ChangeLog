@@ -1,3 +1,11 @@
+Tue Jun  1 23:20:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/interceptors.html:
+
+	  Updated Portable Interceptor release notes.  Thanks to Trina
+	  Wisler <trina.wisler@hp.com> for raising questions that revealed
+	  obsolete comments in these notes.
+
 Sat May 29 12:21:17 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp (DRV_check_for_include):
