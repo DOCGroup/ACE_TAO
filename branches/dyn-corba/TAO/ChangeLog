@@ -1,3 +1,30 @@
+Fri Jan 10 11:30:08 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_T.inl:
+
+          Removed unnecessary forward declaration.
+
+        * tao/Exception.cpp:
+        * tao/Exception.h:
+
+          Added missing stuff related to new Any implementation.
+
+        * tao/GIOPC.cpp:
+
+          Removed bodies of TAO::ObjectKey CDR operators. They are
+          now in Object_KeyC.cpp.
+
+        * tao/Object_KeyC.cpp:
+        * tao/Object_KeyC.i:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+
+          Fixed hand-crafting oversights.
+
+        * tao/Typecode_Constants.cpp:
+
+          Removed ObjectId typecode, since it is now in ObjectIdListC.cpp.
+
 Fri Jan 10 09:53:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/ORB.cpp:

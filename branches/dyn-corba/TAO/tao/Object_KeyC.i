@@ -20,6 +20,48 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
+// *************************************************************
+// Inline operations for class TAO::ObjectKey
+// *************************************************************
+
+ACE_INLINE
+TAO::ObjectKey::ObjectKey (void)
+{
+}
+
+ACE_INLINE
+TAO::ObjectKey::ObjectKey (CORBA::ULong max)
+  :  TAO_Unbounded_Sequence<CORBA::Octet> (max)
+{
+}
+
+ACE_INLINE
+TAO::ObjectKey::ObjectKey (CORBA::ULong max,
+                           CORBA::ULong length,
+                           CORBA::Octet *data,
+                           CORBA::Boolean release)
+  :  TAO_Unbounded_Sequence<CORBA::Octet> (max, length, data, release)
+{
+}
+
+ACE_INLINE
+TAO::ObjectKey::ObjectKey (const TAO::ObjectKey &rhs)
+  :  TAO_Unbounded_Sequence<CORBA::Octet> (rhs)
+{
+}
+
+ACE_INLINE TAO::ObjectKey &
+TAO::ObjectKey::operator= (const TAO::ObjectKey &rhs)
+{
+  if (this == &rhs)
+    {
+        return *this;
+    }
+
+  TAO_Unbounded_Sequence<CORBA::Octet>::operator= (rhs);
+  return *this;
+}
+
 #if !defined (_TAO_OBJECTKEY_CI_)
 #define _TAO_OBJECTKEY_CI_
 

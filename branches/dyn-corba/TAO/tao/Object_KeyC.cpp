@@ -25,6 +25,8 @@
 
 #include "Object_KeyC.h"
 #include "tao/Typecode.h"
+#include "tao/CDR.h"
+#include "tao/ORB_Core.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -33,62 +35,6 @@
 #if !defined (__ACE_INLINE__)
 #include "Object_KeyC.i"
 #endif /* !defined INLINE */
-
-#if !defined (_TAO_OBJECTKEY_CS_)
-#define _TAO_OBJECTKEY_CS_
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// TAO::ObjectKey
-// *************************************************************
-
-TAO::ObjectKey::ObjectKey (void)
-{}
-
-TAO::ObjectKey::ObjectKey (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
-{}
-
-TAO::ObjectKey::ObjectKey (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::Octet *buffer,
-    CORBA::Boolean release
-  )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
-{}
-
-TAO::ObjectKey::ObjectKey (const ObjectKey &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
-{}
-
-#endif /* end #if !defined */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
@@ -132,6 +78,94 @@ TAO_NAMESPACE_DEFINE (
     &_tc_TAO_tc_TAO_ObjectKey
   )
 TAO_NAMESPACE_END
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:125
+
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const TAO::ObjectKey &_tao_sequence
+  )
+{
+  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
+  
+  if (strm << _tao_seq_len)
+    {
+      // Encode all elements.
+      
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+      {
+        TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+          ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (TAO::ObjectKey *)&_tao_sequence);
+        if (oseq->mb ())
+          return strm.write_octet_array_mb (oseq->mb ());
+        else
+          return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+      }
+      
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+      return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+    
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+    }
+  
+  return 0;
+}
+
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    TAO::ObjectKey &_tao_sequence
+  )
+{
+  CORBA::ULong _tao_seq_len;
+  
+  if (strm >> _tao_seq_len)
+    {
+      // Add a check to the length of the sequence
+      // to make sure it does not exceed the length
+      // of the stream. (See bug 58.)
+      if (_tao_seq_len > strm.length ())
+        {
+          return 0;
+        }
+      
+      // Set the length of the sequence.
+      _tao_sequence.length (_tao_seq_len);
+      
+      // If length is 0 we return true.
+      if (0 >= _tao_seq_len) 
+        {
+          return 1;
+        }
+      
+      // Retrieve all the elements.
+      
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+      if (ACE_BIT_DISABLED (strm.start ()->flags (),
+      ACE_Message_Block::DONT_DELETE))
+      {
+        TAO_ORB_Core* orb_core = strm.orb_core ();
+        if (orb_core != 0 &&
+        strm.orb_core ()->resource_factory ()->
+        input_cdr_allocator_type_locked () == 1)
+        {
+          TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+            ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
+          oseq->replace (_tao_seq_len, strm.start ());
+          oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
+          strm.skip_bytes (_tao_seq_len);
+          return 1;
+        }
+      }
+      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
+#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
+    
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+    }
+  
+  return 0;
+}
 
 // ****************************************************************
 

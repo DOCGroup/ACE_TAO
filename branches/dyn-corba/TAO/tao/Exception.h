@@ -147,9 +147,6 @@ TAO_Export ostream& operator<< (ostream &os,
 
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &,
-                                      CORBA_Exception &);
-
 /**
  * @class CORBA_UserException
  *

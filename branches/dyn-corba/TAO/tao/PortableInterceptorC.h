@@ -2279,7 +2279,18 @@ TAO_NAMESPACE  PortableInterceptor
         CORBA::SystemException
         , CORBA::PolicyError
       )) = 0;
+
+    // Hand-crafted addition.
     
+    virtual ::CORBA::Policy_ptr _create_policy (
+        CORBA::PolicyType type
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+        , CORBA::PolicyError
+      ));
+
     // TAO_IDL - Generated from
     // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ch.cpp:267
     
@@ -2682,6 +2693,14 @@ TAO_NAMESPACE  PortableInterceptor
   
   class ORBInitializer;
   typedef ORBInitializer *ORBInitializer_ptr;
+
+  /// Hand-crafted addition.   
+  /// Register an ORBInitializer with the global ORBInitializer
+  /// table.
+  TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
+      ORBInitializer_ptr init
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
 #endif /* end #if !defined */
 
