@@ -16,7 +16,7 @@
 # There should be no other warnings from Sun C++ when building ACE.
 #
 CC              = cc
-CXX             = CC +w -mt # -noex
+CXX             = CC +w -mt -noex  # -D__ACE_INLINE__
 DLD             = $(CXX) 
 LD		= $(CXX)
 LDFLAGS         += -R $(WRAPPER_ROOT)/ace 
