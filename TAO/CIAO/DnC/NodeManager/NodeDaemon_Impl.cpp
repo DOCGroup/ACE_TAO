@@ -1,7 +1,7 @@
 // $Id$
 
 #include "NodeDaemon_Impl.h"
-#include "NodeApplicationManager_Impl.h"
+#include "../NodeApplicationManager/NodeApplicationManager_Impl.h"
 
 CIAO::NodeDaemon_Impl::NodeDaemon_Impl (const char *name,
                                         CORBA::ORB_ptr orb,

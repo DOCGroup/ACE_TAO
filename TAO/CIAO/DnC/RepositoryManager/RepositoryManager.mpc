@@ -4,10 +4,9 @@
 project(Repository_Manager): ciao_deployment_svnt, ciao_deployment_stub, taoexe {
   requires += dnc
   exename = rep
-  idlflags += -I ../Core
   macros   += XML_USE_PTHREADS
-  includes += $(XERCESCROOT)/include
-  libpaths += $(XERCESCROOT)/lib
+  includes += /usr/include $(XERCESCROOT)/include
+  libpaths += /usr/lib $(XERCESCROOT)/lib
   libs     += xerces-c Config_Handlers
 
   IDL_Files {

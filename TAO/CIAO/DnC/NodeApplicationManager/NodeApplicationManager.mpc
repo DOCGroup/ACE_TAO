@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(NodeApplicationManager): ciao_server, ciao_deployment_svnt, ciao_deployment_stub {
+project(NodeApplicationManager): ciao_server_dnc, ciao_deployment_svnt, ciao_deployment_stub {
   requires    += dnc
   sharedname   = NodeApplicationManager
   idlflags    += -Wb,export_include=CIAO_NAM_Export.h -Wb,export_macro=CIAO_NAM_Export
