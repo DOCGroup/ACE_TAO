@@ -93,6 +93,7 @@ CONTROLLED_FILES = ACE-INSTALL.html \
                 examples \
                 include \
                 netsvcs \
+	        os-patches \
                 performance-tests \
                 tests \
 		WindozeCE
