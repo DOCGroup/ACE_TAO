@@ -58,7 +58,7 @@ TAO_ORB_Manager::init (int &argc,
     {
       // Get the POA from the ORB.
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references ("RootPOA");
+        this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -87,9 +87,9 @@ TAO_ORB_Manager::init (int &argc,
 
 int
 TAO_ORB_Manager::init_child_poa (int& argc,
-				 char **argv,
-				 const char *poa_name,
-				 CORBA_Environment &ACE_TRY_ENV)
+                                 char **argv,
+                                 const char *poa_name,
+                                 CORBA_Environment &ACE_TRY_ENV)
 {
   return this->init_child_poa (argc,
                                argv,
@@ -100,10 +100,10 @@ TAO_ORB_Manager::init_child_poa (int& argc,
 
 int
 TAO_ORB_Manager::init_child_poa (int& argc,
-				 char **argv,
-				 const char *poa_name,
+                                 char **argv,
+                                 const char *poa_name,
                                  const char *orb_name,
-				 CORBA_Environment &ACE_TRY_ENV)
+                                 CORBA_Environment &ACE_TRY_ENV)
 {
   int init_result;
 
