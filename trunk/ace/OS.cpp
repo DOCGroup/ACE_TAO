@@ -7684,7 +7684,7 @@ ACE_OS::accept (ACE_HANDLE handle,
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-ACE_INLINE ACE_HANDLE
+ACE_HANDLE
 ACE_OS::join_leaf (ACE_HANDLE socket,
                    const sockaddr *name,
                    int namelen,

@@ -56,7 +56,6 @@ ACE_Flow_Spec::ACE_Flow_Spec (u_long token_rate,
 #endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
 }
 
-ACE_INLINE
 ACE_Flow_Spec::ACE_Flow_Spec (void)
 {
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && \
@@ -298,7 +297,6 @@ ACE_Flow_Spec::priority (int p)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-ACE_INLINE
 ACE_QoS::ACE_QoS (void)
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #else
@@ -368,7 +366,6 @@ ACE_QoS::provider_specific (const iovec &ps)
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
-ACE_INLINE
 ACE_QoS_Params::ACE_QoS_Params (iovec *caller_data,
                                 iovec *callee_data,
                                 ACE_QoS *socket_qos,
@@ -442,7 +439,6 @@ ACE_QoS_Params::flags (u_long f)
   this->flags_ = f;
 }
 
-ACE_INLINE
 ACE_Accept_QoS_Params::ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback,
                                               u_long callback_data)
   : qos_condition_callback_ (qos_condition_callback),

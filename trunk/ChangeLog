@@ -1,3 +1,9 @@
+Thu Dec 13 21:36:15 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/OS.cpp: Remove ACE_INLINE from join_leaf().
+	* ace/OS_QoS.cpp: Remove ACE_INLINE.
+	* ace/OS_QoS.h: Add include for pre.h.
+
 Thu Dec 13 16:53:00 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:
