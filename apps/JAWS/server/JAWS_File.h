@@ -35,7 +35,7 @@ class JAWS_File_Handle
   //     E.g. 1,
   //       {
   //         JAWS_File_Handle foo("foo.html");
-  //         this->peer ().send (foo.file ().map (), foo.file ().size ());
+  //         this->peer ().send (foo.address (), foo.size ());
   //       }
 
   //     E.g. 2,
@@ -47,7 +47,7 @@ class JAWS_File_Handle
   //     E.g. 3,
   //       {
   //         JAWS_File_Handle foo("foo.html", content_length);
-  //         this->peer ().recv (foo.map (), content_length);
+  //         this->peer ().recv (foo.address (), content_length);
   //       }
 {
 public:
@@ -142,7 +142,8 @@ private:
 class JAWS_File
   // = TITLE
   //     Abstraction over a real file.  This is what the Virtual Filesystem
-  //     contains.
+  //     contains.  This class is not intended for general consumption.
+  //     Please consult a physician before attempting to use this class.
 {
 public:
 
