@@ -41,15 +41,22 @@ IDL_CFE_VERSION	= \"1.3.0\"
 CPPFLAGS += -Iinclude -Ibe_include -DCPP_LOCATION=\"$(CXX)\" \
             -DIDL_CFE_VERSION=$(IDL_CFE_VERSION)
 
+clean:
 	rm -f tao_idl
 
+realclean:
 	rm -f tao_idl TAGS
+
 endif # VXWORKS
 
+clean:
 	rm -f TAGS
+
+tags:
 	etags -C include/*.h be_include/*.h
 	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
 		driver/*.cpp fe/*.cpp be/*.cpp
+
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
