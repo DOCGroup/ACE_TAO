@@ -206,12 +206,21 @@ extern "C" { char * cuserid (char *s); }
 #define ACE_HAS_SOCKLEN_T
 #endif
 
-#if (__FreeBSD_version > 440000)
-# define _P1003_1B_VISIBLE
-# define ACE_HAS_AIO_CALLS
-# define SIGRTMIN 32
-# define SIGRTMAX (_SIG_MAXSIG - 1)
-#endif
+#include <unistd.h>
+#include <signal.h>
+/* POSIX Realtime signals are not fully implemented in FreeBSD.
+   When they are implemented, then _POSIX_REALTIME_SIGNALS will be
+   defined, as specified in the POSIX standard.
+   Refer to e-mail thread on freebsd-hackers mailing list, March 2002. */
+#ifdef _POSIX_REALTIME_SIGNALS
+#    define ACE_HAS_AIO_CALLS
+#    ifndef SIGRTMIN
+#       define SIGRTMIN 32
+#    endif /* SIGRTMIN */
+#    ifndef SIGRTMAX
+#       define SIGRTMAX (_SIG_MAXSIG - 1)
+#    endif /* SIGRTMAX */
+#endif  /* _POSIX_REALTIME_SIGNALS */
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_H */
