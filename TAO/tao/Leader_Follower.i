@@ -104,6 +104,12 @@ TAO_Leader_Follower::reset_event_loop_thread (void)
     this->reset_event_loop_thread_i (tss);
 }
 
+ACE_INLINE ACE_SYNCH_MUTEX &
+TAO_Leader_Follower::lock (void)
+{
+  return this->lock_;
+}
+
 ACE_INLINE void
 TAO_Leader_Follower::set_upcall_thread (void)
 {
@@ -204,12 +210,6 @@ ACE_INLINE int
 TAO_Leader_Follower::remove_follower (ACE_SYNCH_CONDITION *follower_ptr)
 {
   return this->follower_set_.remove (follower_ptr);
-}
-
-ACE_INLINE ACE_SYNCH_MUTEX &
-TAO_Leader_Follower::lock (void)
-{
-  return this->lock_;
 }
 
 ACE_INLINE ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &
