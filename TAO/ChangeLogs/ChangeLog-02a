@@ -15,6 +15,9 @@ Sun Jan 23 14:09:30 2000  Ossama Othman  <ossama@uci.edu>
 	  under the 'nobody' user via System V style initialization
 	  scripts.
 
+	  Note that these options are only supported if the platform
+	  implements the setuid() and setgid() POSIX system calls.
+
 	  In general, it is a good idea to only run the ORB with
 	  super-user privileges when necessary, e.g. when performing
 	  benchmarking experiments, and when access to the real-time
