@@ -74,6 +74,7 @@ ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
   BIN = $(BIN2)
 endif # Naming
 
+TAO_IDLFLAGS += -Ge 1
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
