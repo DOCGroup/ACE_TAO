@@ -139,6 +139,7 @@ public:
                               const TAO_Profile *profile,
                               const char* opname,
                               CORBA::ULong request_id,
+                              const IOP::ServiceContextList &ctx,
                               CORBA::Boolean is_twoway,
                               TAO_OutputCDR &output,
                               CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())

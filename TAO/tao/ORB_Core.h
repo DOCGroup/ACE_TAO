@@ -294,9 +294,6 @@ public:
   ACE_WChar_Codeset_Translator *to_unicode (void) const;
   // Convert from the native wide character set to UNICODE
 
-  TAO_GIOP_ServiceContextList& service_context (void);
-  // Obtain the service context list used to send requests...
-
   // @@ This is just note on how could the translator database be
   //    implemented: use the service configurator to load the
   //    translator, and then use the CodesetId (an unsigned long) to
@@ -578,12 +575,6 @@ protected:
   TAO_ORB_Core_TSS_Resources orb_resources_;
   // If the resources are per-ORB (as opposed to per-ORB-per-thread)
   // then they are stored here...
-
-  // @@ TODO: the service context list may need to be in TSS
-  //    storage...
-  // NOTE: this is only used to *send* requests, not to store the
-  // service context list of a reply...
-  TAO_GIOP_ServiceContextList service_context_;
 
   TAO_Leader_Follower leader_follower_;
   // Information about the leader follower model

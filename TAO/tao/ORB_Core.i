@@ -114,12 +114,6 @@ TAO_ORB_Core::to_unicode (void) const
   return this->to_unicode_;
 }
 
-ACE_INLINE TAO_GIOP_ServiceContextList&
-TAO_ORB_Core::service_context (void)
-{
-  return this->service_context_;
-}
-
 #if defined (TAO_HAS_CORBA_MESSAGING)
 ACE_INLINE TAO_Policy_Manager*
 TAO_ORB_Core::policy_manager (void)

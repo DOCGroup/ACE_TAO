@@ -89,6 +89,10 @@ public:
   // Encodes the value into the undelying CDR stream based on the
   // TypeCode parameter.
 
+  IOP::ServiceContextList& request_service_info (void);
+  // Accessor to the request ServiceContextList.  Only valid when
+  // sending a request message.
+
   TAO_OutputCDR &out_stream (void);
   // Return the underlying output stream.
 
@@ -155,6 +159,10 @@ protected:
   TAO_Profile *profile_;
   // This invocation is using this transport, may change...
 
+  IOP::ServiceContextList request_service_info_;
+  // The ServiceContextList sent to the server side.  Only valid
+  // when sending a request.
+
   ACE_Time_Value max_wait_time_value_;
   ACE_Time_Value *max_wait_time_;
   // The timeout remaining for this request, it is initialized in
@@ -210,6 +218,9 @@ public:
                   CORBA_Environment &ACE_TRY_ENV =
                         TAO_default_environment ());
   // No CORBA::Context support (deprecated).
+
+  const IOP::ServiceContextList& reply_service_info (void) const;
+  // Accessor to the reply ServiceContextList.
 
   TAO_InputCDR &inp_stream (void);
   // return the underlying input stream
