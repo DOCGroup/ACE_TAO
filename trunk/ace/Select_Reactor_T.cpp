@@ -70,7 +70,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i (int signum,
 
   if (handler == 0)
     return -1;
-  else if (*eh != 0)
+  else if (eh != 0 && *eh != 0)
     *eh = handler;
   return 0;
 }
