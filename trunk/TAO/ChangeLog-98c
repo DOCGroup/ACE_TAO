@@ -1,3 +1,11 @@
+Mon Oct 13 23:30:16 1997    <irfan@TWOSTEP>
+
+	* tao/connect.h: If we are using TSS, there is no reason to use
+ 	  locking in the connector. Therefore, I added a new typedef that
+ 	  defines the type of lock that should be used for the
+ 	  cached_connect_strategy.  It is ACE_SYNCH_RW_MUTEX in the
+ 	  non-TSS case, and ACE_SYNCH_NULL_MUTEX in the TSS case.
+
 Mon Oct 13 21:34:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/svrrqst.cpp (oa): Cleaned up the coding style a bit.
