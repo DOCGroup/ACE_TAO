@@ -20,9 +20,13 @@
 
 #include "tao/Sequence_T.h"
 #include "tao/Any.h"
+#include "ValueBase.h"
+#include "AbstractBase.h"
+#include "Sequence_T.h"
+#include "ValueFactory.h"
 
-ACE_RCSID (tao, 
-           Seq_Tmplinst, 
+ACE_RCSID (tao,
+           Seq_Tmplinst,
            "$Id$")
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -30,11 +34,17 @@ ACE_RCSID (tao,
 template class TAO_Valuetype_Manager<CORBA::ValueBase,
                                      CORBA::ValueBase_var,
                                      CORBA::tao_ValueBase_life>;
-template class TAO_Unbounded_Valuetype_Sequence<CORBA::ValueBase, 
-                                                CORBA::ValueBase_var, 
+template class TAO_Unbounded_Valuetype_Sequence<CORBA::ValueBase,
+                                                CORBA::ValueBase_var,
                                                 CORBA::tao_ValueBase_life>;
-template class TAO_Unbounded_Pseudo_Sequence<CORBA::AbstractBase, 
+template class TAO_Unbounded_Pseudo_Sequence<CORBA::AbstractBase,
                                              CORBA::AbstractBase_var>;
+
+template class TAO_Value_Var_T <CORBA::ValueFactoryBase,
+                                CORBA::tao_ValueFactoryBase_life>;
+
+template class TAO_Value_Var_T <CORBA::ValueBase,
+                                CORBA::tao_ValueBase_life>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -47,5 +57,10 @@ template class TAO_Unbounded_Pseudo_Sequence<CORBA::AbstractBase,
 #pragma instantiate TAO_Unbounded_Pseudo_Sequence<CORBA::AbstractBase, \
                                                   CORBA::AbstractBase_var>
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#pragma instantiate TAO_Value_Var_T <CORBA::ValueFactoryBase,
+                                      CORBA::tao_ValueFactoryBase_life>
 
+#pragma instantiate TAO_Value_Var_T <CORBA::ValueBase,
+                                      CORBA::tao_ValueBase_life>
+
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

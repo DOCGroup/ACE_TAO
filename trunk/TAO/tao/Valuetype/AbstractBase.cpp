@@ -35,7 +35,7 @@ CORBA::is_nil (CORBA::AbstractBase_ptr obj)
 }
 
 // ************************************************************
- 
+
 int CORBA::AbstractBase::_tao_class_id = 0;
 
 CORBA::AbstractBase::AbstractBase (void)
@@ -372,3 +372,15 @@ CORBA::AbstractBase::_tao_to_value (void)
   return 0;
 }
 
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class TAO::Any_Impl_T<CORBA::AbstractBase>;
+template class TAO::Any_Impl_T<CORBA::ValueBase>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate TAO::Any_Impl_T<CORBA::AbstractBase>
+#pragma instantiate TAO::Any_Impl_T<CORBA::ValueBase>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

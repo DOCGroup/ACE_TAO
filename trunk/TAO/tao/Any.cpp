@@ -1184,8 +1184,6 @@ template class TAO::Any_Dual_Impl_T<CORBA::Exception>;
 template class TAO::Any_Impl_T<char>;
 template class TAO::Any_Impl_T<CORBA::WChar>;
 template class TAO::Any_Impl_T<CORBA::Object>;
-template class TAO::Any_Impl_T<CORBA::AbstractBase>;
-template class TAO::Any_Impl_T<CORBA::ValueBase>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
