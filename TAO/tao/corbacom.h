@@ -130,7 +130,7 @@ typedef class CORBA_InterfaceDef *
 
 // =Forward declarations
 struct TAO_Dispatch_Context;
-class TAO_Object_Table;
+class TAO_Object_Table_Impl;
 class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
@@ -139,15 +139,6 @@ struct CDR;
 
 // The new (POA) base class for servants.
 class TAO_ServantBase;
-class PortableServer
-{
-  // = TITLE
-  //   Portable Server (POA) name space.
-public:
-  
-  typedef TAO_ServantBase ServantBase;
-  typedef ServantBase *Servant;
-};
 
 // enum values defined in nvlist.h, bitwise ORed.
 typedef u_int CORBA_Flags;
@@ -681,7 +672,7 @@ public:
   };
 };  // end of class (namespace) CORBA
 
-typedef CORBA::OctetSeq TAO_opaque;
+// typedef CORBA::OctetSeq TAO_opaque;
 extern CORBA::TypeCode TC_opaque;
 
 typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,

@@ -88,6 +88,26 @@
 #include "tao/corbacom.h"
 #include "tao/objkeyC.h"
 
+class TAO_Export PortableServer
+{
+  // = TITLE
+  //   Portable Server (POA) name space.
+public:
+  
+  typedef TAO_ServantBase ServantBase;
+  typedef ServantBase *Servant;
+
+  typedef TAO::ObjectKey ObjectId;
+  typedef TAO::ObjectKey_ptr ObjectId_ptr;
+  typedef TAO::ObjectKey_out ObjectId_out;
+  typedef TAO::ObjectKey_var ObjectId_var;
+};
+
+typedef TAO::ObjectKey TAO_opaque;
+
+extern TAO_Export int operator== (const PortableServer::ObjectId &l,
+				  const PortableServer::ObjectId &r);
+
 // individual CORBA classes
 #include "tao/sequence.h"
 #include "tao/varout.h"

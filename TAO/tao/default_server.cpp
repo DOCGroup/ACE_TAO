@@ -79,12 +79,12 @@ TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
   return this->concurrency_strategy_;
 }
 
-TAO_Object_Table *
+TAO_Object_Table_Impl *
 TAO_Default_Server_Strategy_Factory::create_object_table (void)
 {
   // Create the appropriate-sized object table based on passed
   // arguments.
-  TAO_Object_Table *objtable = 0;
+  TAO_Object_Table_Impl *objtable = 0;
 
   switch (this->object_lookup_strategy_)
     {

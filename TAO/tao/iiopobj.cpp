@@ -58,14 +58,13 @@ IIOP::Profile::set (const char *h,
       key = buffer;
     }
 
-  this->object_key.length = ACE_OS::strlen (key);
-  this->object_key.maximum = this->object_key.length;
+  int l = ACE_OS::strlen (key);
+  this->object_key.length (l + 1);
 
-  ACE_NEW_RETURN (this->object_key.buffer,
-                  CORBA::Octet[this->object_key.maximum + 1],
-                  -1);
-
-  (void) ACE_OS::strcpy ((char *) this->object_key.buffer, key);
+  for (int i = 0; i < l; ++i)
+    {
+      this->object_key[i] = buffer[i];
+    }
   return 0;
 }
 
@@ -78,18 +77,8 @@ IIOP::Profile::set (const char *h,
   if (this->set (h, p, addr) == -1)
     return -1;
 
-  this->object_key.length = key.length;
-  this->object_key.maximum = key.length;
+  this->object_key = key;
 
-  ACE_NEW_RETURN (this->object_key.buffer,
-                  CORBA::Octet[key.maximum + 1],
-                  -1);
-
-  (void) ACE_OS::memcpy ((char *) this->object_key.buffer,
-                         key.buffer,
-                         key.length);
-  // NUL-terminate this guy...
-  this->object_key.buffer[key.length] = '\0';
   return 0;
 }
 
@@ -212,13 +201,13 @@ IIOP_Object::hash (CORBA::ULong max,
   // more (hostname, full key, exponential hashing) but no real need
   // to do so except if performance requires a more costly hash.
 
-  hashval = profile.object_key.length * profile.port;
+  hashval = profile.object_key.length () * profile.port;
   hashval += profile.iiop_version.minor;
 
-  if (profile.object_key.length >= 4)
+  if (profile.object_key.length () >= 4)
     {
-      hashval += profile.object_key.buffer [1];
-      hashval += profile.object_key.buffer [3];
+      hashval += profile.object_key [1];
+      hashval += profile.object_key [3];
     }
 
   return hashval % max;
@@ -251,12 +240,9 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
   body = &profile;
   body2 = &other_iiop_obj->profile;
 
-  ACE_ASSERT (body->object_key.length < UINT_MAX);
+  ACE_ASSERT (body->object_key.length () < UINT_MAX);
 
-  return body->object_key.length == body2->object_key.length
-    && ACE_OS::memcmp (body->object_key.buffer,
-                       body2->object_key.buffer,
-                       (size_t) body->object_key.length) == 0
+  return body->object_key ==  body2->object_key
     && body->port == body2->port
     && ACE_OS::strcmp (body->host, body2->host) == 0
     && body->iiop_version.minor == body2->iiop_version.minor
@@ -327,7 +313,9 @@ IIOP_Object::QueryInterface (REFIID riid,
 TAO::ObjectKey_ptr
 IIOP_Object::key (CORBA::Environment &e)
 {
-  register CORBA::ULong len = this->profile.object_key.length;
+  return new TAO::ObjectKey (this->profile.object_key);
+#if 0
+  register CORBA::ULong len = this->profile.object_key.length ();
   
   CORBA::Octet *buf = TAO::ObjectKey::allocbuf (len);
   if (buf == 0)
@@ -341,6 +329,7 @@ IIOP_Object::key (CORBA::Environment &e)
   // Create a new instance and transfer ownership and responsibility
   // to the caller
   return new TAO::ObjectKey (len, len, buf, CORBA::B_TRUE);
+#endif
 }
 
 // It will usually be used by the _bind call.

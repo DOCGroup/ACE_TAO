@@ -48,15 +48,12 @@ CORBA_POA::CORBA_POA (CORBA::ORB_ptr owning_orb,
     call_count_ (0),
     skeleton_ (0)
 {
-  TAO_ORB_Core* p = TAO_ORB_Core_instance ();
-  TAO_Server_Strategy_Factory *f = p->server_factory ();
-
-  this->objtable_ = f->create_object_table ();
-
   // @@ What is this doing here?  Why is it setting the root poa based
   // on whether objtable_ is non-zero?  (cjc)
-  if (this->objtable_ != 0)
-    p->root_poa (this);
+  // @@ Don't know, but now its gone ;-) (coryan)
+  // if (this->objtable_ != 0)
+  TAO_ORB_Core* p = TAO_ORB_Core_instance ();
+  p->root_poa (this);
 }
 
 CORBA_POA::~CORBA_POA (void)
@@ -205,7 +202,7 @@ CORBA_POA::get_poa (CORBA::ORB_ptr orb,
 }
 
 void
-CORBA_POA::dispatch (CORBA::OctetSeq &key,
+CORBA_POA::dispatch (PortableServer::ObjectId &key,
                      CORBA::ServerRequest &req,
                      void *context,
                      CORBA::Environment &env)
@@ -259,17 +256,17 @@ CORBA_POA::dispatch (CORBA::OctetSeq &key,
 }
 
 int
-CORBA_POA::find (const CORBA::OctetSeq &key,
+CORBA_POA::find (const PortableServer::ObjectId &key,
 		 PortableServer::Servant &obj)
 {
-  return objtable_->find (key, obj);
+  return objtable_.find (key, obj);
 }
 
 int
-CORBA_POA::bind (const CORBA::OctetSeq &key,
+CORBA_POA::bind (const PortableServer::ObjectId &key,
 		 PortableServer::Servant obj)
 {
-  return objtable_->bind (key, obj);
+  return objtable_.bind (key, obj);
 }
 
 // IUnknown calls

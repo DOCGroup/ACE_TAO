@@ -63,7 +63,7 @@ public:
   virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   // Return the scheduling strategy used.
 
-  virtual TAO_Object_Table *create_object_table (void);
+  virtual TAO_Object_Table_Impl *create_object_table (void);
   // Return a new key-->object table
 };
 
