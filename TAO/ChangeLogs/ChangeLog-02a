@@ -1,5 +1,6 @@
 Sun Sep 17 06:32:15 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* tao/IOR.pidl:
 	* tao/IORManipulation/IORManipulation.cpp:
 	* tao/IORManipulation/IORManipulation.h:
 	* tao/IORManipulation/IORC.h:
