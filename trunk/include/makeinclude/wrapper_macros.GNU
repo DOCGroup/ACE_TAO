@@ -157,7 +157,7 @@ CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
 IDL             = idl
 IDLFLAGS        = -A -B -s S.cpp -c C.cpp
 ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
-  INCLDIRS        += -I. -I$(ACE_ROOT)
+  INCLDIRS        += -I$(ACE_ROOT)
 endif
 INSBIN          = $(ACE_ROOT)/bin
 INSINC          = $(ACE_ROOT)/ace
