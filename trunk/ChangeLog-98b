@@ -1,18 +1,31 @@
+Sun Oct 25 14:13:31 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * ace/OS.i: Changed ACE_OS::sigaction to work with a null value 
+          for <nsa> on Windows.  
+
+        * examples/Reactor/Misc/reactors.dsp:
+        * examples/Reactor/Misc/signals_1.dsp:
+        * examples/Reactor/Misc/signals_2.dsp:
+          Corrected the include and library paths.
+
+        * ChangeLog: Removed all the trailing spaces and tab characters so
+          CVS's commit-check will be happy.
+
 Sun Oct 25 10:59:21 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-sunos5.5.h: Added 
-	
-	  #if defined (i386)
-	  #define ACE_HAS_X86_STAT_MACROS
-	  #endif /* i386 */
+        * ace/config-sunos5.5.h: Added
 
-	  to check for the [f]stat macros on Solaris for Intel.  Thanks to
- 	  Daniel Nieten <dnieten@bellsouth.net> for reporting this.
+          #if defined (i386)
+          #define ACE_HAS_X86_STAT_MACROS
+          #endif /* i386 */
+
+          to check for the [f]stat macros on Solaris for Intel.  Thanks to
+          Daniel Nieten <dnieten@bellsouth.net> for reporting this.
 
 Sun Oct 25 00:15:03 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (process_directives): We should use
-	  ASYS_WIDE_STRING to convert a <char *> to a UNICODE string.
+        * ace/Service_Config.cpp (process_directives): We should use
+          ASYS_WIDE_STRING to convert a <char *> to a UNICODE string.
 
 Sat Oct 24 18:39:11 1998  Steve Huston  <shuston@riverace.com>
 
@@ -24,78 +37,78 @@ Sat Oct 24 18:39:11 1998  Steve Huston  <shuston@riverace.com>
 
 Sat Oct 24 18:07:00 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (ACE_TEXT): Consolidated various ACE_TEXT definitions
-	  into one and place it near the beginning of the file.
-	  Re-indented macros.
+        * ace/OS.h (ACE_TEXT): Consolidated various ACE_TEXT definitions
+          into one and place it near the beginning of the file.
+          Re-indented macros.
 
 Sat Oct 24 17:47:15 1998  Arturo Montes <mitosys@colomsat.com.co>
 
-	* ace/OS.i (sigwait):  Sigwait is little different with FSU
-	  pthreads, sigwait take two arguments and return -1 if error, 0
-	  in otherwise.
+        * ace/OS.i (sigwait):  Sigwait is little different with FSU
+          pthreads, sigwait take two arguments and return -1 if error, 0
+          in otherwise.
 
 Sat Oct 24 17:26:41 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ace/OS.h (ACE_TEXT): Moved Nanbor's changes outside of
-	  ACE_PSOS block.
+        * ace/OS.h (ACE_TEXT): Moved Nanbor's changes outside of
+          ACE_PSOS block.
 
-	* ace/config-win32.h: Defined ACE_HAS_TEXT_MACRO_CONFLICT,
-	  seeing that MSVC already defines __TEXT.
+        * ace/config-win32.h: Defined ACE_HAS_TEXT_MACRO_CONFLICT,
+          seeing that MSVC already defines __TEXT.
 
 Sat Oct 24 15:21:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (ACE_TEXT): Changed the macro __TEXT to ACE_TEXT to
-	  avoid conflicting with OS/390.  __TEXT is still available for
-	  backward compatibility unless ACE_HAS_TEXT_MACRO_CONFLICT is
-	  defined.  However, using ACE_TEXT is prefered for obvious
-	  reason.  Thanks to Paul K. Fisher <pfisher@plexware.com> for
-	  reporting this.
+        * ace/OS.h (ACE_TEXT): Changed the macro __TEXT to ACE_TEXT to
+          avoid conflicting with OS/390.  __TEXT is still available for
+          backward compatibility unless ACE_HAS_TEXT_MACRO_CONFLICT is
+          defined.  However, using ACE_TEXT is prefered for obvious
+          reason.  Thanks to Paul K. Fisher <pfisher@plexware.com> for
+          reporting this.
 
-	* ace/README: Added documentation for ACE_HAS_TEXT_MACRO_CONFLICT.
+        * ace/README: Added documentation for ACE_HAS_TEXT_MACRO_CONFLICT.
 
-	* *.cpp: Replaced a bunch of __TEXT to ACE_TEXT.
+        * *.cpp: Replaced a bunch of __TEXT to ACE_TEXT.
 
 Sat Oct 24 08:34:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: Updated the fstat() and stat() calls to work properly
- 	  on the Solaris for Intel platform, which does weird things to
- 	  the fstat() and stat() functions to handle 32 and 64 bit file
- 	  offsets.  Thanks to Daniel Nieten <dnieten@bellsouth.net> for
- 	  reporting this.
+        * ace/OS.i: Updated the fstat() and stat() calls to work properly
+          on the Solaris for Intel platform, which does weird things to
+          the fstat() and stat() functions to handle 32 and 64 bit file
+          offsets.  Thanks to Daniel Nieten <dnieten@bellsouth.net> for
+          reporting this.
 
 Sat Oct 24 02:13:11 1998  Detlef Backer <Detlef.Becker@med.siemens.de>
 
-	* ace/OS.cpp (invoke): ACE_Thread_Adapter::invoke() swapped the
- 	  nesting level of __except() and __finally() because if the
- 	  selector returns EXCEPTION_EXECUTE_HANDLER a global unwind takes
- 	  place, activating nested __finally blocks and in this case
- 	  terminating the thread before having a chance to execute the
- 	  handler. After reversing the logic, now the exception handler
- 	  gets called first before the termination handler is invoked.
+        * ace/OS.cpp (invoke): ACE_Thread_Adapter::invoke() swapped the
+          nesting level of __except() and __finally() because if the
+          selector returns EXCEPTION_EXECUTE_HANDLER a global unwind takes
+          place, activating nested __finally blocks and in this case
+          terminating the thread before having a chance to execute the
+          handler. After reversing the logic, now the exception handler
+          gets called first before the termination handler is invoked.
 
-	  Furthermore I added the call to GetExceptionInformation(),
- 	  passing the result as a void* into the selector function. This
- 	  allows a case sensitive handling startegy of the exception in
- 	  the selector function.
+          Furthermore I added the call to GetExceptionInformation(),
+          passing the result as a void* into the selector function. This
+          allows a case sensitive handling startegy of the exception in
+          the selector function.
 
-	  (inherit_log_msg): In ACE_Thread_Adapter::inherit_log_msg() I
-	  moved the copy operation from the selector and handler
-	  attributes outside of the "if (this->ostream_)" condition,
-	  because I don't think this condition is related to the SEH.
+          (inherit_log_msg): In ACE_Thread_Adapter::inherit_log_msg() I
+          moved the copy operation from the selector and handler
+          attributes outside of the "if (this->ostream_)" condition,
+          because I don't think this condition is related to the SEH.
 
-	  (thr_create): In ACE_OS::thr_create() I "inherit" the current
-	  selector handler into the newly created ACE_Thread_Adapter in
-	  case that the caller did not specify one at invocation.
+          (thr_create): In ACE_OS::thr_create() I "inherit" the current
+          selector handler into the newly created ACE_Thread_Adapter in
+          case that the caller did not specify one at invocation.
 
-	* ace/Thread_Manager.cpp (spawn_i): In
-	  ACE_Thread_Manager::spawn_i() I added the initialization of
-	  selector and handler at the creation time of
-	  ACE_Thread_Adapter.
+        * ace/Thread_Manager.cpp (spawn_i): In
+          ACE_Thread_Manager::spawn_i() I added the initialization of
+          selector and handler at the creation time of
+          ACE_Thread_Adapter.
 
 Fri Oct 23 21:11:03 1998  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* ace/OS.h: Changed a comment to be consistent.  Thanks to Serge
- 	  Kolgan <skolgan@cisco.com> for reporting this.
+        * ace/OS.h: Changed a comment to be consistent.  Thanks to Serge
+          Kolgan <skolgan@cisco.com> for reporting this.
 
 Fri Oct 23 11:37:38 1998  Steve Huston  <shuston@riverace.com>
 
@@ -109,12 +122,12 @@ Fri Oct 23 00:27:11 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Oct 22 21:32:14 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Since we've been successfully using MSVC 6.0
-	  for a while, might as well mention it here in the documentation.
+        * ACE-INSTALL.html: Since we've been successfully using MSVC 6.0
+          for a while, might as well mention it here in the documentation.
 
 Thu Oct 22 19:48:20 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/index.html
+        * docs/index.html
         Reformatted it via emacs to make it more readable when editing.
         Added a comment pointing to Bob McWhirter's original FMM document
         to make it easier to update the repository in the future.
@@ -125,15 +138,15 @@ Thu Oct 22 19:48:20 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
         * docs/tutorials/015/Server.cpp
 
         Since Windows just *pretends* to have mixed-case names the cpp
-	files conflict with client.cpp and server.cpp.  I renamed these
-	files to:
+        files conflict with client.cpp and server.cpp.  I renamed these
+        files to:
 
         * docs/tutorials/015/Client_i.h
         * docs/tutorials/015/Client_i.cpp
         * docs/tutorials/015/Server_i.h
         * docs/tutorials/015/Server_i.cpp
 
-	Which necessitated changes to
+        Which necessitated changes to
         * docs/tutorials/015/client.cpp
         * docs/tutorials/015/server.cpp
         * docs/tutorials/015/Makefile.client
@@ -648,8 +661,8 @@ Fri Oct 16 15:45:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
             // ...
           }
 
-	  Note that as a general rule, it's better to use ++i rather than
- 	  i++ to avoid unnecessary copies.
+          Note that as a general rule, it's better to use ++i rather than
+          i++ to avoid unnecessary copies.
 
 Fri Oct 16 14:57:58 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
