@@ -1,3 +1,14 @@
+Sat Nov  1 11:55:05 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/config-irix5.3-g++.h,
+	  ace/config-irix5.3-sgic++.h: Removed the ACE_HAS_SYS_SIGLIST
+ 	  macro since it doesn't seem to be working.  Thanks to Laura
+ 	  Paterno <lpaterno@d0chb.fnal.gov> for reporting this.
+
+	* include/makeinclude/platform_chorus.GNU: Tidied up
+ 	  platform_chorus.GNU a bit.  Thanks to Wei Chiang
+ 	  <chiang@tele.nokia.fi> for this.
+
 Fri Oct 31 14:35:37 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (thr_create): on Chorus, double the stack size to

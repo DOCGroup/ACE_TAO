@@ -108,7 +108,7 @@ public:
   // be called from within ACE_Task::module_closed()
 
   ACE_Task<ACE_SYNCH_2> *sibling (ACE_Task<ACE_SYNCH_2> *orig); 
-  // Set and get pointer to sibling ACE_Task in ACE_Module.
+  // Set and get pointer to sibling <ACE_Task> in an <ACE_Module>
 
   // = Identify the module 
   const char *name (void) const;

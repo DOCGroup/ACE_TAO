@@ -103,7 +103,7 @@
 #define ACE_HAS_IRIX_53_SIGNALS 
 
 // Compiler/platform supports sys_siglist array.
-#define ACE_HAS_SYS_SIGLIST 
+// #define ACE_HAS_SYS_SIGLIST 
 
 // Platform provides <sys/filio.h> header.
 #define ACE_HAS_SYS_FILIO_H 
