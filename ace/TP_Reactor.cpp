@@ -141,6 +141,7 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
     this->get_event_for_dispatching (max_wait_time);
 
 
+
   // Dispatch signals
   if (event_count == -1)
     {
@@ -417,6 +418,7 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   // dispatch information is recorded in dispatch_info.
   int result =
     this->get_socket_event_info (dispatch_info);
+
 
   if (result)
     {
