@@ -1,3 +1,24 @@
+Fri Mar 22 10:31:33 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+          Changed code to eliminate generation of throw spec
+          if the operation is defined in a valuetype. Thanks to
+          Boris Kolpackov for clarifying the behavior of valuetype
+          operations.
+
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+
+          Eliminated the copying of the exception list when creating
+          an exception holder operation, since an exception holder is
+          a valuetype (see above).
+
+        * Examples/OBV/Typed_Events/Event_Types_Impl.cpp:
+        * Examples/OBV/Typed_Events/Event_Types_Impl.h:
+
+          Removed the throw specs from the impl class operations, since
+          the impl classes are derived from value types.
+
 Thu Mar 21 15:45:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Any.cpp:
