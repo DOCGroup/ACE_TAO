@@ -191,7 +191,10 @@ public:
   int get_addr_size(void) const;
 
   /// Set a pointer to the address.
-  virtual void set_addr (void *, int len, int map = 0);
+  virtual void set_addr (void *, int len);
+
+  /// Set a pointer to the address.
+  virtual void set_addr (void *, int len, int map);
 
   /**
    * Transform the current <ACE_INET_Addr> address into string format.

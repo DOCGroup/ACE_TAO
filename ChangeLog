@@ -1,3 +1,11 @@
+Thu Nov  6 17:53:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/INET_Addr.{h,i} (set_addr):
+          Removed the default parameter for map and added back the
+          original set_addr method that matches the one in ACE_Addr, and
+          have it call the new method with the default value under the
+          covers. This silences warnings about hidden methods.
+
 Thu Nov  6 16:40:35 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ACEXML/common/FileCharStream.h:
