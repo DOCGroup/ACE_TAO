@@ -28,6 +28,8 @@ TAO_PSDL_Code_Gen::~TAO_PSDL_Code_Gen (void)
 int
 TAO_PSDL_Code_Gen::set_codec (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   // Obtain a reference to the CodecFactory.
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("CodecFactory"

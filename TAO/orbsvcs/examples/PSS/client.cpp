@@ -85,7 +85,7 @@ int main (int argc, char *argv [])
       ACE_TRY_CHECK;
 
       CORBA::String_var status =
-        server->get_status (ACE_ENV_ARG_PARAMETER);
+        server->get_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ACE_OS::strcmp (status.in (), "active") != 0)
