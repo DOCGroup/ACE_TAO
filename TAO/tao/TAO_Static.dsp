@@ -323,6 +323,10 @@ SOURCE=.\Flushing_Strategy.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Follower_Auto_Adder.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\giop.h
 # End Source File
 # Begin Source File
@@ -1047,6 +1051,10 @@ SOURCE=.\FILE_Parser.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Follower_Auto_Adder.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\giop.i
 # End Source File
 # Begin Source File
@@ -1696,6 +1704,10 @@ SOURCE=.\FILE_Parser.cpp
 # Begin Source File
 
 SOURCE=.\Flushing_Strategy.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Follower_Auto_Adder.cpp
 # End Source File
 # Begin Source File
 
