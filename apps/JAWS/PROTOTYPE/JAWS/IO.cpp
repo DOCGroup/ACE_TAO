@@ -165,19 +165,19 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
       int iovcnt = 0;
       if (header_size > 0)
         {
-          iov[iovcnt].iov_base = (char*)header;
+          iov[iovcnt].iov_base = ACE_const_cast(char*,header);
           iov[iovcnt].iov_len =  header_size;
           iovcnt++;
         }
       if (handle.size () > 0)
         {
-          iov[iovcnt].iov_base = handle.address ();
+          iov[iovcnt].iov_base = ACE_reinterpret_cast(char*,handle.address ());
           iov[iovcnt].iov_len = handle.size ();
           iovcnt++;
         }
       if (trailer_size > 0)
         {
-          iov[iovcnt].iov_base = (char*)trailer;
+          iov[iovcnt].iov_base = ACE_const_cast(char*,trailer);
           iov[iovcnt].iob_len = trailer_size;
           iovcnt++;
         }
