@@ -35,13 +35,4 @@ typedef ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *,
                                    ACE_SYNCH_RECURSIVE_MUTEX> 
 	ACE_Timer_Queue_Iterator;
 
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Timer_Queue.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_Queue.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #endif /* ACE_TIMER_QUEUE_H */
