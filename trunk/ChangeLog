@@ -1,3 +1,7 @@
+Fri Jul  6 13:40:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Log_Msg_UNIX_Syslog.cpp: Fixed a warning in g++. 
+
 Fri Jul 06 11:39:41 2001  Steve Huston  <shuston@riverace.com>
   
         * ace/INET_Addr.h: Clarified (and improved doxygenation) of

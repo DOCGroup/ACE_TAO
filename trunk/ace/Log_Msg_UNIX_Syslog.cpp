@@ -30,7 +30,7 @@ ACE_Log_Msg_UNIX_Syslog::~ACE_Log_Msg_UNIX_Syslog (void)
 }
 
 int
-ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR *logger_key)
+ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * /*logger_key*/)
 {
   // Initialize the UNIX syslog facility.  Default the ID to "ACE", as
   // the ACE_DEBUG statement can insert a more unique id in its string
