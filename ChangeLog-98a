@@ -1,3 +1,8 @@
+Tue Apr 21 18:38:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ace_ce_dll.dsp: Removing a deprecated /windowsce:noconvert
+ 	  linker flag.
+
 Mon Apr 20 15:39:42 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/Handle_Set.cpp: Access fds_bits elements using an fd_mask
