@@ -8,17 +8,9 @@ TAO_Transport::read (char *buf,
                      size_t len,
                      const ACE_Time_Value * /*max_wait_time*/)
 {
-  int val = 0;
-
-  // Set it to blocking mode
-  ACE::record_and_set_non_blocking_mode (this->handle (),
-                                         val);
-  ssize_t ret =  ACE::recv (this->handle (),
-                            (void *) buf,
-                            len);
-  ACE::restore_non_blocking_mode (this->handle (),
-                                  val);
-  return ret;
+  return ACE::recv (this->handle (),
+                    (void *) buf,
+                    len);
 }
 
 // @@ One of the orb_core () methods should be done away. Will visit
