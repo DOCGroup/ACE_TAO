@@ -21,7 +21,7 @@
 
 module Security {
 
-//#pragma version Security 1.7
+#pragma version Security 1.7
 
     typedef string SecurityName;
     typedef sequence <octet> Opaque;

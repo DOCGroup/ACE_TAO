@@ -14,7 +14,7 @@
 
 module SecurityReplaceable {
 
-//#   pragma version SecurityReplacable 1.7
+#   pragma version SecurityReplacable 1.7
 
     local interface SecurityContext;
     local interface ClientSecurityContext;
@@ -22,7 +22,7 @@ module SecurityReplaceable {
 
     local interface Vault {   // Locality Constrained
 
-//#   pragma version Vault 1.7
+#   pragma version Vault 1.7
 
         Security::AuthenticationMethodList
         get_supported_authen_methods(
@@ -80,7 +80,7 @@ module SecurityReplaceable {
 
     local interface SecurityContext {   // Locality Constrained
 
-//#    pragma version SecurityContext 1.5
+#    pragma version SecurityContext 1.5
 
         readonly attribute Security::SecurityContextType
           context_type;

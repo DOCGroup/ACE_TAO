@@ -1,3 +1,16 @@
+Fri Sep 22 17:40:09 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Security.idl:
+	* orbsvcs/orbsvcs/SecurityAdmin.idl:
+	* orbsvcs/orbsvcs/SecurityLevel1.idl:
+	* orbsvcs/orbsvcs/SecurityLevel2.idl:
+	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
+
+	  Uncommented IDL version pragmas.  They are currently ignored by
+	  TAO_IDL so there is no harm in uncommenting.  This will be
+	  useful In the event that TAO_IDL begins to support IDL version
+	  pragmas.
+
 Fri Sep 22 14:22:47 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/locate_request.html:
