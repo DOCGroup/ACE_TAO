@@ -24,6 +24,8 @@
 
 class TAO_Export TAO_ObjectId_Hash
 {
+  // = TITLE
+  //     @@ Irfan, please fill in here...
 public:
   u_long operator () (const PortableServer::ObjectId &id) const;
   // Returns hash value.
@@ -37,9 +39,7 @@ extern TAO_Export int operator== (const PortableServer::ObjectId &l,
 class TAO_Export TAO_Active_Object_Map_Entry
 {
   // = TITLE
-  //
   //     Common entry for all maps
-  //
 public:
   TAO_Active_Object_Map_Entry (void);
   // Constructor
@@ -63,14 +63,11 @@ class TAO_Active_Object_Map_Iterator_Impl;
 class TAO_Export TAO_Active_Object_Map_Iterator
 {
   // = TITLE
-  //
   //   Bridge for abstract iterator.
   //
   // = DESCRIPTION
-  //
   //   This class provides the "abstraction" for iteration over the
   //   active object maps.
-  //
 public:
   TAO_Active_Object_Map_Iterator (TAO_Active_Object_Map_Iterator_Impl *impl);
   // Constructor taking an implementation.
@@ -104,10 +101,8 @@ class TAO_Reverse_Active_Object_Map_Impl;
 class TAO_Export TAO_Active_Object_Map
 {
   // = TITLE
-  //
   //     Interface class for maintaining a mapping of object ids to
   //     pointers to servants.
-  //
 public:
   TAO_Active_Object_Map (int user_id_policy,
                          int unique_id_policy);
@@ -178,11 +173,9 @@ protected:
 class TAO_Export TAO_Active_Object_Map_Iterator_Impl
 {
   // = TITLE
-  //
   //   Abstract iterator for all active object maps.
   //
   // = DESCRIPTION
-  //
   //   We want to provide an common interface for the different active
   //   object maps and their iterators.  Active object maps are
   //   handled using base classes and virtual methods; but we must
@@ -196,7 +189,6 @@ class TAO_Export TAO_Active_Object_Map_Iterator_Impl
   //     TAO_Active_Object_Map_Iterator, here we use external
   //     polymorphism to adapt all the iterators to this common
   //     interface.
-  //
 public:
   virtual ~TAO_Active_Object_Map_Iterator_Impl (void);
   // Dtor
@@ -218,17 +210,12 @@ public:
 class TAO_Export TAO_Active_Object_Map_Impl
 {
   // = TITLE
-  //
   //   Abstract class for maintaining a mapping from object ids to
   //   servants.
   //
-  // = DESCRIPTION
-  //
   // = NOTES
-  //
   //   Iterators may return free entries, whose "int_id" (the servant)
   //   is 0.
-  //
 public:
   virtual ~TAO_Active_Object_Map_Impl (void);
   // Destructor.
@@ -256,7 +243,6 @@ public:
 class TAO_Export TAO_Reverse_Active_Object_Map_Impl
 {
   // = TITLE
-  //
   //     Abstract base class for maintaining a mapping of servant to
   //     object ids.
 public:
@@ -289,7 +275,6 @@ private:
 class TAO_Export TAO_Reverse_Active_Object_Map_For_Unique_Id_Policy : public TAO_Reverse_Active_Object_Map_Impl
 {
   // = TITLE
-  //
   //     Table for maintaining a mapping of servant to object ids (for
   //     the UNIQUE_ID POA_Policy)
 public:
@@ -330,7 +315,6 @@ protected:
 class TAO_Export TAO_Reverse_Active_Object_Map_For_Multiple_Id_Policy : public TAO_Reverse_Active_Object_Map_Impl
 {
   // = TITLE
-  //
   //     Table for maintaining a mapping of servant to object ids (for
   //     the MULTIPLE_ID POA_Policy)
 public:
@@ -375,15 +359,12 @@ public:
 class TAO_Export TAO_Dynamic_Hash_Active_Object_Map : public TAO_Active_Object_Map_Impl
 {
   // = TITLE
-  //
   //   Lookup strategy based on dynamic hashing.
   //
   // = DESCRIPTION
-  //
   //   The active object map is implemented using a ACE_Hash_Map_Manager,
   //   the iterators are implemented using the ACE_Hash_Map_Iterator
   //   class.
-  //
 public:
   TAO_Dynamic_Hash_Active_Object_Map (CORBA::ULong size);
 
@@ -427,9 +408,7 @@ protected:
 class TAO_Export TAO_Dynamic_Hash_Active_Object_Map_Iterator : public TAO_Active_Object_Map_Iterator_Impl
 {
   // = TITLE
-  //
   //   Iterator for TAO_Dynamic_Hash_Active_Object_Map.
-  //
 public:
   typedef TAO_Dynamic_Hash_Active_Object_Map::iterator Impl;
 
@@ -454,10 +433,8 @@ protected:
 class TAO_Export TAO_Array_Active_Object_Map_Iterator : public TAO_Active_Object_Map_Iterator_Impl
 {
   // = TITLE
-  //
   //   Iterator for TAO_Linear_Active_Object_Map and
   //   TAO_Active_Demux_Active_Object_Map
-  //
 public:
   TAO_Array_Active_Object_Map_Iterator (TAO_Active_Object_Map_Entry *pos);
   virtual ~TAO_Array_Active_Object_Map_Iterator (void);
@@ -478,15 +455,12 @@ protected:
 class TAO_Export TAO_Linear_Active_Object_Map : public TAO_Active_Object_Map_Impl
 {
   // = TITLE
-  //
   //    Lookup strategy based on a simple linear search.  Not
   //    efficient, but most likely will always work.
   //
   // = DESCRIPTION
-  //
   //   Uses a dynamic array to store the objects and linear search for
   //   the lookups.
-  //
 public:
   TAO_Linear_Active_Object_Map (CORBA::ULong size);
   virtual ~TAO_Linear_Active_Object_Map (void);
@@ -533,18 +507,15 @@ protected:
 class TAO_Export TAO_Active_Demux_Active_Object_Map : public TAO_Linear_Active_Object_Map
 {
   // = TITLE
-  //
   //   An active object map lookup strategy based on active
   //   demultiplexing strategy.
   //
   // = DESCRIPTION
-  //
   //   Use the linear active object map as the base; keys must be the
   //   string representation of the indices into the array and a
   //   generation count, so lookups can be done in O(1).
   //
   //   Iterators are implemented using pointers on the array.
-  //
 public:
   TAO_Active_Demux_Active_Object_Map (CORBA::ULong size);
   // Constructor, including an initial size.
@@ -568,7 +539,6 @@ public:
                                                       CORBA::Environment &TAO_IN_ENV);
 
 protected:
-
   enum
   {
     INDEX_FIELD = 0,
