@@ -1,3 +1,12 @@
+Sat May 18 07:59:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp (open):
+
+	  Configure the connector to use blocked connections.  The recent
+	  non-blocking connect fixes had some thread safety issues.  To be
+	  addressed after the forthcoming beta.
+
 Fri May 17 18:55:09 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/ORT/client.dsp : 
