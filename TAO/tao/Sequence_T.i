@@ -516,7 +516,7 @@ TAO_Unbounded_Array_Sequence<T, T_var>::get_buffer (CORBA::Boolean orphan)
       if (this->buffer_ == 0)
         {
           result = 
-	    TAO_Unbounded_Array_Sequence<T, T_Var>::allocbuf (this->length_);
+	    TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (this->length_);
           this->buffer_ = result;
         }
       else
