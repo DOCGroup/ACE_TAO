@@ -305,16 +305,15 @@ public:
   // = Activation control methods.
 
   /**
-   * Notifies all waiting threads that the queue has been deactivated
-   * so they can wakeup and continue other processing.  If <pulse> is
-   * 0 then the queue's state is changed to deactivated and any other
-   * operations called until the queue is activated again will
-   * immediately return -1 with <errno> == ESHUTDOWN.  If <pulse> is
+   * Notify all waiting threads so they can wakeup and continue other
+   * processing.  If <pulse> is 0 the queue's state is changed to
+   * deactivated and other operations called until the queue is
+   * activated again will return -1 with <errno> == ESHUTDOWN.  If <pulse> is
    * non-0 then only the waiting threads are notified and the queue's state
    * is not changed.  In either case, however, no messages are removed
    * from the queue.  Returns WAS_INACTIVE if queue was inactive before
    * the call and WAS_ACTIVE if queue was active before the call.  */
-  virtual int deactivate (void);
+  virtual int deactivate (int pulse = 0);
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
@@ -1127,14 +1126,15 @@ public:
   // = Activation control methods.
 
   /**
-   * Deactivate the queue and wakeup all threads waiting on the queue
-   * so they can continue.  No messages are removed from the queue,
-   * however.  Any other operations called until the queue is
-   * activated again will immediately return -1 with <errno> ==
-   * ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
-   * call and WAS_ACTIVE if queue was active before the call.
-   */
-  virtual int deactivate (void);
+   * Notify all waiting threads so they can wakeup and continue other
+   * processing.  If <pulse> is 0 the queue's state is changed to
+   * deactivated and other operations called until the queue is
+   * activated again will return -1 with <errno> == ESHUTDOWN.  If <pulse> is
+   * non-0 then only the waiting threads are notified and the queue's state
+   * is not changed.  In either case, however, no messages are removed
+   * from the queue.  Returns WAS_INACTIVE if queue was inactive before
+   * the call and WAS_ACTIVE if queue was active before the call.  */
+  virtual int deactivate (int pulse);
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
