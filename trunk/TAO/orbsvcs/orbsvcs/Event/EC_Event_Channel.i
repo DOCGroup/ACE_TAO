@@ -193,5 +193,5 @@ ACE_INLINE int
 TAO_EC_Event_Channel::destroyed (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return this->destroyed_;
-}  
+  return (this->status_ == EC_S_DESTROYED);
+}

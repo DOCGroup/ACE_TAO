@@ -324,8 +324,15 @@ private:
   /// Mutex to protect the internal state
   TAO_SYNCH_MUTEX mutex_;
 
-  /// Flag to check if the event channel has been destroyed already
-  int destroyed_;
+  /// Flag to track the status of the event channel
+  enum {
+    EC_S_IDLE
+    , EC_S_ACTIVATING
+    , EC_S_ACTIVE
+    , EC_S_DESTROYING
+    , EC_S_DESTROYED
+  };
+  int status_;
 };
 
 #if defined (__ACE_INLINE__)

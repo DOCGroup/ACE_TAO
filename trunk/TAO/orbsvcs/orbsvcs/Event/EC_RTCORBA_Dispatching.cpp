@@ -19,7 +19,7 @@ TAO_EC_RTCORBA_Dispatching::
 {
   ACE_NEW (this->tasks_, TAO_EC_Dispatching_Task[this->lanes_.length ()]);
   for (CORBA::ULong i = 0; i != this->lanes_.length (); ++i)
-    this->tasks_->thr_mgr (&this->thread_manager_);
+    this->tasks_[i].thr_mgr (&this->thread_manager_);
 }
 
 TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching (void)
