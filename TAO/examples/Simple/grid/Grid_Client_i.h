@@ -40,7 +40,7 @@ public:
   virtual ~Grid_Client_i (void);
   // Destructor
 
-  virtual int run (int, char *[]);
+  virtual int run (char *,int, char *[]);
   // Execute the methods.
 
   virtual int parse_args (int argc, char**argv);

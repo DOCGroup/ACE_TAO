@@ -64,11 +64,12 @@ Grid_Client_i::parse_args (int argc,
 }
 
 int
-Grid_Client_i::run (int argc,
+Grid_Client_i::run (char *name,
+                    int argc,
                     char *argv[])
 {
   // Initialize the client.
-  if (client.init (argc, argv) == -1)
+  if (client.init (name,argc, argv) == -1)
     return -1;
 
   if (this->parse_args (argc, argv) == -1)
