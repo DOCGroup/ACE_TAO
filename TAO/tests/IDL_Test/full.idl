@@ -26,34 +26,31 @@
 // for such ILD files to include each other, as long as 
 // they are part of the same build.
 
-module mod1
+module mod2
 {
-  module mod2
+  interface fwd;
+  interface full;
+
+  interface fwd 
   {
-    interface fwd;
-    interface full;
+    attribute string attr;
 
-    interface fwd 
+    union un switch (short)
     {
-      attribute string attr;
-
-      union un switch (short)
-      {
-        case 0: full full_mem;
-      };
-
-      typedef sequence<full> full_seq;
-
-      exception bar {};
-
-      full op (inout full full_arg,
-               inout un un_arg,
-               inout full_seq full_seq_arg)
-               raises (bar);
+      case 0: full full_mem;
     };
 
-    interface full;
-    interface fwd;
+    typedef sequence<full> full_seq;
+
+    exception bar {};
+
+    full op (inout full full_arg,
+             inout un un_arg,
+             inout full_seq full_seq_arg)
+             raises (bar);
   };
+
+  interface full;
+  interface fwd;
 };
 

@@ -26,22 +26,19 @@
 // for such ILD files to include each other, as long as 
 // they are part of the same build.
 
-module mod1
+module mod2
 {
-  module mod2
+  interface fwd;
+
+  interface full
   {
-    interface fwd;
-
-    interface full
-    {
-      fwd op (in fwd inarg,
-              inout fwd inoutarg,
-              out fwd outarg);
-    };
-
-    typedef sequence<full, 5> full_seq2;
-
-    interface fwd;
+    fwd op (in fwd inarg,
+            inout fwd inoutarg,
+            out fwd outarg);
   };
+
+  typedef sequence<full, 5> full_seq2;
+
+  interface fwd;
 };
 
