@@ -1,8 +1,8 @@
 #
-# Makefile for building the Faults ping executable
+# Makefile for building the deferred_synch_client latency performance-tests
 #
 
-NAME = dii_client
+NAME = deferred_synch_client
 
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1 -GC
 
