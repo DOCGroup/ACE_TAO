@@ -1,25 +1,5 @@
-// $Id$
-#include "ace/CDR_Base.h"
-#include "ace/Unbounded_Queue.h"
-
-// Instantiations of templates with basic data types that can be used
-// across  ACE+TAO.
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node<ACE_INT32>;
-template class ACE_Unbounded_Queue<ACE_INT32>;
-template class ACE_Unbounded_Queue_Iterator<ACE_INT32>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node<ACE_INT32>;
-#pragma instantiate ACE_Unbounded_Queue<ACE_INT32>;
-#pragma instantiate ACE_Unbounded_Queue_Iterator<ACE_INT32>;
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION*/
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE)
-// Note: this part has been created through concatenation of ALL
+//$Id$
+// Note: this file has been created through concatenation of ALL
 // explicit template instantiations in ACE, and only those that
 // interfered with the multithreaded port of ACE to pSOS using the
 // Diab D-C++ 4.1a compiler have been wrapped with the appropriate
@@ -29,6 +9,7 @@ template class ACE_Unbounded_Queue_Iterator<ACE_INT32>;
 // wish to extend this technique to instantiation pragmas, you will
 // need to modify the preprocesor directives below
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_FILE)
 // header files that are not already included
 #include "ace/Local_Tokens.h"
 #include "ace/Token.h"
