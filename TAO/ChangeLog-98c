@@ -18,6 +18,11 @@ Mon Mar 02 08:00:41 1998  David L. Levine  <levine@cs.wustl.edu>
           But, g++ typically creates out-of-line instantiations of
           inline template member functions.
 
+        * tao/sequence.{h,cpp} (TAO_{B,Unb}ounded_Base_Sequence):
+          added (virtual) destructors.  Without them, GreenHills on
+          Chorus was duplicating their vtables when instantiating
+          templates based on those classes.
+
 Sun Mar  1 13:42:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* release.pl: This script will now move the 'Current' tag to
