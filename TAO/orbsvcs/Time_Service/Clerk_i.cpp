@@ -64,7 +64,7 @@ Clerk_i::read_ior (const char *filename)
 
           CORBA::Object_var objref =
             this->orb_->string_to_object (str,
-					  ACE_TRY_ENV);
+                                          ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           // Return if the server reference is nil.
@@ -81,7 +81,7 @@ Clerk_i::read_ior (const char *filename)
                                            ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-	  this->insert_server (server);
+          this->insert_server (server);
         }
     }
   ACE_CATCHANY
@@ -116,7 +116,7 @@ Clerk_i::parse_args (void)
         this->timer_value_ = atoi (get_opts.optarg);
         break;
 
-      case 'u': 
+      case 'u':
         // time in usecs after which the clerk should update time.
         // Continues the precision of the -t option.
         this->timer_value_usecs_ = atoi (get_opts.optarg);
@@ -207,7 +207,7 @@ Clerk_i::get_first_IOR (void)
                             iter.out ());
       CosNaming::Name server_name;
       server_name.length (1);
-      server_name[0].id = bindings_list[0].binding_name[0].id;
+      server_name[0].id = bindings_list[0u].binding_name[0].id;
 
       temp_object =
         server_context->resolve (server_name,
@@ -405,7 +405,7 @@ Clerk_i::if_first_clerk (CosNaming::Name clerk_context_name)
   ACE_TRY
     {
       this->my_name_server_->resolve
-	(clerk_context_name, ACE_TRY_ENV);
+        (clerk_context_name, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCH (CORBA::UserException, userex)
@@ -435,15 +435,15 @@ Clerk_i::register_clerk (void)
       CosNaming::NamingContext_var clerk_context;
 
       if (if_first_clerk (clerk_context_name))
-	{
-	  clerk_context = this->my_name_server_->new_context (ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+        {
+          clerk_context = this->my_name_server_->new_context (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
 
-	  this->my_name_server_->rebind_context (clerk_context_name,
-						 clerk_context.in (),
-						 ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
-	}
+          this->my_name_server_->rebind_context (clerk_context_name,
+                                                 clerk_context.in (),
+                                                 ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
 
       char host_name[MAXHOSTNAMELEN];
       char clerk_mc_name[MAXHOSTNAMELEN];
@@ -462,8 +462,8 @@ Clerk_i::register_clerk (void)
       clerk_name[1].id = CORBA::string_dup (clerk_mc_name);
 
       this->my_name_server_->rebind (clerk_name,
-				     this->time_service_clerk_.in (),
-				     ACE_TRY_ENV);
+                                     this->time_service_clerk_.in (),
+                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
     }
@@ -546,10 +546,10 @@ Clerk_i::init (int argc,
 
       // Register the clerk with the Naming Service.
       if (this->ior_fp_ == 0)
-	{
-	  if (this->register_clerk () != 0)
-	    return -1;
-	}
+        {
+          if (this->register_clerk () != 0)
+            return -1;
+        }
 
       // Close the open file handler.
       // ACE_OS::fclose (this->ior_fp_);
