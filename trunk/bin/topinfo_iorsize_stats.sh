@@ -48,7 +48,7 @@ if test -f $file
     sleep 30;
     # Get the size once the client has made sufficient invocations. 
     s_invocations=`top -p $s_id -n 1 -b | grep $US| awk '{print $5}'`;
-    actual_server_growth= s_invocations - server_start_size;
+    actual_server_growth= $s_invocations - $server_start_size;
     if test $OPT == 1
         then 
         echo $DATE $s_invocations >> $DEST/source/server_opt_ior_size.txt
