@@ -1,3 +1,11 @@
+Wed Oct  6 13:58:06 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Process.cpp:
+	* ace/Process.inl:
+
+	  Moved virtual method ACE_Managed_Process::unmanage() from
+	  *.inl to *.cpp.
+
 Wed Oct  6 13:41:22 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/Functor.cpp:
