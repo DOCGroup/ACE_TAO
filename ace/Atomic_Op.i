@@ -1,3 +1,4 @@
+// -*- C++ -*-
 // $Id$
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE TYPE 
