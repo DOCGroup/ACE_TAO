@@ -333,6 +333,26 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = 0;
+
+  // Use the typedefed name if that is the one used in the IDL defn.
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  // ACE_NESTED_CLASS macros needed for MSVC, but only for stub code,
+  // because otherwise the types are not defined in the
+  // same scope, which they must be to use ACE_NESTED_CLASS.
+
+  be_decl* scope =
+    be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+
+  AST_Decl::NodeType nt = scope->node_type ();
 
   // Check if the type is an any.
   if (node->pt () == AST_PredefinedType::PT_any)
@@ -370,8 +390,27 @@ int be_visitor_args_request_info_arglist::visit_predefined_type (
       switch (this->direction ())
         {
         case AST_Argument::dir_IN:
-          *os << this->type_name (node) << " &";
-          break;
+          {
+            if (bt->is_nested ()
+                && (nt == AST_Decl::NT_interface || nt == AST_Decl::NT_union )
+                && this->ctx_->sub_state () 
+                     == TAO_CodeGen::TAO_INTERCEPTORS_INFO_ARGUMENT_STUB)
+              {
+                *os << "const ACE_NESTED_CLASS (";
+	              *os << scope->name () << ",";
+	              *os << bt->local_name ();
+	              *os << ")" << " &";
+
+                // Reset the substate.
+                this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
+              }
+            else
+              {
+                *os << this->type_name (node) << " &";
+              }
+
+            break;
+          }
         case AST_Argument::dir_INOUT:
           *os << this->type_name (node) << " &";
           break;
