@@ -1,3 +1,32 @@
+Wed Jul  5 17:15:26 2000  John Heitmann  <jwh1@cs.wustl.edu>
+
+	* pace/Makefile:
+	  Fixed error introduced by my earlier update.
+
+	* pace/termios.*:
+	  Added typedefs and changed function signatures appropriately.
+	  Removed tcgetpgrp which was added to unistd earlier.
+
+	* pace/sys/wait.h:
+	  Added macros.
+
+	* pace/sys/utsname.*:
+	* pace/sys/times.*:
+	* pace/sys/stat.*:
+	* pace/sys/mman.*
+	  Added typedefs and changed function parameters appropriately.
+
+	* pace/time.h:
+	  Added #include "pace/signal.h"
+
+	* pace/unistd.inl:
+	  Changed spelling error.
+
+	* pace/signal.*:
+	* pace/stat.*:
+	  Typedefs of structs later used as pointers were broken
+	  so I reverted back to the old way temporarily.
+
 Wed Jul 05 16:00:32 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/types.h:

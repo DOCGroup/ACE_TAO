@@ -16,29 +16,29 @@
 #include "pace/unistd.h"
 #include <termios.h>
 PACE_INLINE
-speed_t
-pace_cfgetospeed (const struct termios *termiosp)
+pace_speed_t
+pace_cfgetospeed (const pace_termios *termiosp)
 {
   return cfgetospeed (termiosp);
 }
 
 PACE_INLINE
 int
-pace_cfsetospeed (struct termios *termios_p, speed_t speed)
+pace_cfsetospeed (pace_termios *termios_p, pace_speed_t speed)
 {
   return cfsetospeed (termios_p, speed);
 }
 
 PACE_INLINE
-speed_t
-pace_cfgetispeed (const struct termios *termios_p)
+pace_speed_t
+pace_cfgetispeed (const pace_termios *termios_p)
 {
   return cfgetispeed (termios_p);
 }
 
 PACE_INLINE
 int
-pace_cfsetispeed (struct termios *termios_p, speed_t speed)
+pace_cfsetispeed (pace_termios *termios_p, pace_speed_t speed)
 {
   return cfsetispeed (termios_p, speed);
 }
@@ -52,7 +52,7 @@ pace_tcdrain (int fildes)
 
 PACE_INLINE
 int
-pace_tcgetattr (int fildes, struct termios *termios_p)
+pace_tcgetattr (int fildes, pace_termios *termios_p)
 {
   return tcgetattr (fildes, termios_p);
 }
@@ -72,7 +72,7 @@ pace_tcflush (int fildes, int queue_selector)
 }
 
 PACE_INLINE
-pid_t
+pace_pid_t
 pace_tcgetpgrp (int fildes)
 {
   return tcgetpgrp (fildes);
@@ -89,14 +89,14 @@ PACE_INLINE
 int
 pace_tcsetattr (int fildes,
                 int optional_actions,
-                const struct termios *termios_p)
+                const pace_termios *termios_p)
 {
   return tcsetattr (fildes, optional_actions, termios_p);
 }
 
 PACE_INLINE
 int
-pace_tcsetpgrp (int fildes, pid_t pgrp_id)
+pace_tcsetpgrp (int fildes, pace_pid_t pgrp_id)
 {
   return tcsetpgrp (fildes, pgrp_id);
 }
