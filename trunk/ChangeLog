@@ -1,3 +1,11 @@
+Fri Dec 31 15:23:58 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/Service_Config.cpp:
+	* ace/Service_Config.h:
+
+	  Added support for -p command line argument, which specifies 
+	  a filename to write the process id.
+
 Thu Dec 30 13:21:37 2004  Chris Cleeland  <cleeland@ociweb.com>
 
         * ACE version 5.4.3 released.

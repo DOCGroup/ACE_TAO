@@ -196,6 +196,7 @@ public:
    *        overrides the @a ignore_static_svcs parameter value.
    * - '-n' Explicitly disables the use of static services. This flag
    *        overrides the @a ignore_static_svcs parameter value.
+   * - '-p' Specifies a pathname which is used to store the process id.
    * - '-s' Specifies a signal number other than SIGHUP to trigger reprocessing
    *        of the configuration file(s). Ignored for platforms that do not
    *        have POSIX signals, such as Windows.
@@ -424,6 +425,9 @@ private:
   // = Set by command-line options.
   /// Shall we become a daemon process?
   static int be_a_daemon_;
+
+  /// Pathname of file to write process id.
+  static char *pid_file_name_;
 
   /// Should we avoid loading the static services?
   static int no_static_svcs_;
