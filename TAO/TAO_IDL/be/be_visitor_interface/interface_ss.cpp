@@ -218,7 +218,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "void " << node->full_skel_name ()
       << "::_non_existent_skel (" << be_idt << be_idt_nl
       << "CORBA::ServerRequest &_tao_server_request, " << be_nl
-      << "void * _tao_object_reference," << be_nl
+      << "void * /* _tao_object_reference */ ," << be_nl
       << "void * /*context*/," << be_nl
       << "CORBA::Environment &_tao_environment" << be_uidt_nl
       << ")" << be_uidt_nl;

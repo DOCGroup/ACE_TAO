@@ -140,12 +140,12 @@ public:
   // to the C++ name lookup rules (if you don't know what I'm talking
   // about, then try moving it there).
 
+  virtual ~TAO_Unbounded_Base_Sequence (void);
+  // destructor.
+
 protected:
   TAO_Unbounded_Base_Sequence (void);
   // Default constructor.
-
-  virtual ~TAO_Unbounded_Base_Sequence (void);
-  // destructor.
 
   TAO_Unbounded_Base_Sequence (CORBA::ULong maximum,
                                CORBA::ULong length,
@@ -181,12 +181,12 @@ public:
   // to the C++ name lookup rules (if you don't know what I'm talking
   // about, then try moving it there).
 
+  virtual ~TAO_Bounded_Base_Sequence (void);
+  // destructor.
+
 protected:
   TAO_Bounded_Base_Sequence (void);
   // Default constructor.
-
-  virtual ~TAO_Bounded_Base_Sequence (void);
-  // destructor.
 
   TAO_Bounded_Base_Sequence (CORBA::ULong maximum,
                              CORBA::ULong length,
