@@ -74,12 +74,14 @@
 
 #define ACE_LACKS_MSYNC
 #define ACE_LACKS_MADVISE
+#define ACE_LACKS_SOME_POSIX_PROTOTYPES
 
 // Compiler/platform has <alloca.h>
 #define ACE_HAS_ALLOCA_H
 
 // Compiler/platform has the getrusage() system call.
 #define ACE_HAS_GETRUSAGE
+#define ACE_HAS_GETRUSAGE_PROTO
 
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T
@@ -123,5 +125,14 @@
 
 // Compiler doesn't support static data member templates.
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
+
+// I added the following to support building on RedHat 4.2/Linux 2.0.30/Alpha.
+// Please let me know if any of these are inconsistent with other Linux
+// platforms.  David <levine@cs.wustl.edu>
+#define ACE_HAS_DLFCN_H_BROKEN_EXTERN_C
+#define ACE_HAS_SIGWAIT
+#define ACE_HAS_SIZET_SOCKET_LEN
+#define ACE_LACKS_RPC_H
+#define ACE_NEEDS_SYSTIME_H
 
 #endif /* ACE_CONFIG_H */
