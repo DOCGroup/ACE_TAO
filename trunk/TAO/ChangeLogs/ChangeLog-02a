@@ -1,3 +1,12 @@
+Fri Apr  5 09:22:57 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/BiDir_GIOP/BiDirPolicy_Validator.cpp: Added a check for
+	  validating the BiDirGIOP policy before proceeding. This caused
+	  application to crash when they just linked in the BiDirGIOP
+	  library without setting any policies at the application
+	  level. Thanks to Werner Buchert <w.buchert@medat.de> for
+	  reporting the problem. 
+	  
 Fri Apr 05 08:24:27 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Transport_Cache_Manager.cpp: Added a missing template
