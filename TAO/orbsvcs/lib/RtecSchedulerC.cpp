@@ -931,7 +931,7 @@ void  RtecScheduler::Scheduler::set (RtecScheduler::handle_t handle, RtecSchedul
     return;
   }
   this->Release (); // QueryInterface has bumped up our refcount
-  istub->do_call (env, &RtecScheduler_Scheduler_set_calldata, 0, &handle, &time, &typical_time, &cached_time, &period, &quantum, &threads);
+  istub->do_call (env, &RtecScheduler_Scheduler_set_calldata, 0, &handle, &time, &typical_time, &cached_time, &period, &importance, &quantum, &threads);
   return; // no value
   
 }
