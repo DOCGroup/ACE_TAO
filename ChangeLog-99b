@@ -1,3 +1,10 @@
+Wed Sep 15 21:42:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h:
+	  Removed extra "typedef" in the declaration of the
+	  ACE_Protocol_Info structure, it was causing a large number of
+	  warnings in several platforms.
+
 Wed Sep 15 15:08:33 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* bin/run_all_list.pm:
