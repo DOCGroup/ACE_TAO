@@ -1723,7 +1723,16 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
     return -1;
 
   if (ACE_BIT_DISABLED (mask, ACE_Event_Handler::DONT_CALL))
-    (void) eh->handle_close (handle, mask);
+    {
+      // Release the lock during the "close" upcall.
+      ACE_Reverse_Lock<ACE_SYNCH_MUTEX> reverse_lock (this->lock_);
+      ACE_GUARD_RETURN (ACE_Reverse_Lock<ACE_SYNCH_MUTEX>,
+                        reverse_guard,
+                        reverse_lock,
+                        -1);
+
+      (void) eh->handle_close (handle, mask);
+    }
 
   // Note the fact that we've changed the state of the wait_set,
   // i.e. the "interest set," which is used by the dispatching loop to
