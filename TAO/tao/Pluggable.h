@@ -70,9 +70,6 @@ public:
   /// The tag, each concrete class will have a specific tag value.
   CORBA::ULong tag (void) const;
 
-  /// The priority for this endpoint.
-  CORBA::Short priority (void) const;
-
   /// Method to initialize acceptor for address.
   virtual int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
@@ -104,9 +101,9 @@ public:
    * in the mprofile that is of the same type.  Currently, this
    * is used when RT CORBA is enabled.
    */
-  virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile,
-                               CORBA::Boolean share_profile) = 0;
+  virtual int create_profile (const TAO_ObjectKey &object_key,
+                              TAO_MProfile &mprofile,
+                              CORBA::Short priority) = 0;
 
   /// Return 1 if the <endpoint> has the same address as the acceptor.
   virtual int is_collocated (const TAO_Endpoint* endpoint) = 0;
@@ -127,10 +124,6 @@ public:
    */
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key) = 0;
-
-protected:
-  /// The priority for this endpoint
-  CORBA::Short priority_;
 
 private:
   /// IOP protocol tag.

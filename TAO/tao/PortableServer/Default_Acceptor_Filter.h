@@ -53,10 +53,11 @@ public:
   TAO_Default_Acceptor_Filter (void);
 
   /// Populate <mprofile> with all available endpoints.
-  int fill_mprofile (const TAO_ObjectKey &object_key,
-                     TAO_MProfile &mprofile,
-                     TAO_Acceptor **acceptors_begin,
-                     TAO_Acceptor **acceptors_end);
+  int fill_profile (const TAO_ObjectKey &object_key,
+                    TAO_MProfile &mprofile,
+                    TAO_Acceptor **acceptors_begin,
+                    TAO_Acceptor **acceptors_end,
+                    CORBA::Short priority);
 
   /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS
   /// tag component of profiles.

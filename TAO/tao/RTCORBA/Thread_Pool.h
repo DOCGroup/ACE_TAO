@@ -111,6 +111,9 @@ public:
 
 private:
 
+  /// Validate the lane's priority and map priority it to a native value.
+  void validate_and_map_priority (CORBA::Environment &ACE_TRY_ENV);
+
   TAO_Thread_Pool &pool_;
   CORBA::ULong id_;
 
@@ -121,6 +124,8 @@ private:
   TAO_Thread_Pool_Threads threads_;
 
   TAO_Thread_Lane_Resources resources_;
+
+  CORBA::Short native_priority_;
 };
 
 class TAO_Thread_Pool_Manager;

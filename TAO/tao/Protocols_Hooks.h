@@ -64,12 +64,11 @@ public:
                                   &is_client_propagated,
                                   CORBA::Short &server_priority) = 0;
 
-  virtual void get_selector_bands_policy_hook (
-                           CORBA::Policy *bands_policy,
-                           CORBA::Short &min_priority,
-                           CORBA::Short &max_priority,
-                           CORBA::Short &p,
-                           int &in_range) = 0;
+  virtual void get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
+                                               CORBA::Short &min_priority,
+                                               CORBA::Short &max_priority,
+                                               CORBA::Short &p,
+                                               int &in_range) = 0;
 
   /**
    * Accessor and modifier to the current thread priority, used to
@@ -79,10 +78,10 @@ public:
    */
   //@{
   virtual int get_thread_priority (CORBA::Short &,
-                           CORBA::Environment &) = 0;
+                                   CORBA::Environment &) = 0;
 
   virtual int set_thread_priority (CORBA::Short,
-                           CORBA::Environment &) = 0;
+                                   CORBA::Environment &) = 0;
 
   //@}
 

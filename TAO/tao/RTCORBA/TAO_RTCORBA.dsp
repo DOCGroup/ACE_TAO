@@ -164,10 +164,6 @@ SOURCE=.\Linear_Priority_Mapping.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pool_Per_Endpoint.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Priority_Mapping.cpp
 # End Source File
 # Begin Source File
@@ -257,10 +253,6 @@ SOURCE=.\Direct_Priority_Mapping.h
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pool_Per_Endpoint.h
 # End Source File
 # Begin Source File
 
@@ -357,10 +349,6 @@ SOURCE=.\Direct_Priority_Mapping.i
 # Begin Source File
 
 SOURCE=.\Linear_Priority_Mapping.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Pool_Per_Endpoint.i
 # End Source File
 # Begin Source File
 

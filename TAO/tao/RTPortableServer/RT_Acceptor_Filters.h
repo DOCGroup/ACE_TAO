@@ -56,22 +56,15 @@ public:
   TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols);
 
   /// Populate <mprofile> based on what's in <protocols_>.
-  int fill_mprofile (const TAO_ObjectKey &object_key,
-                     TAO_MProfile &mprofile,
-                     TAO_Acceptor **acceptors_begin,
-                     TAO_Acceptor **acceptors_end);
+  int fill_profile (const TAO_ObjectKey &object_key,
+                    TAO_MProfile &mprofile,
+                    TAO_Acceptor **acceptors_begin,
+                    TAO_Acceptor **acceptors_end,
+                    CORBA::Short priority);
 
   /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS
   /// tag component of profiles.
   int encode_endpoints (TAO_MProfile &mprofile);
-
-  virtual int validate_acceptor (TAO_Acceptor *acceptor);
-  // Template method pattern.  This method is used by <fill_mprofile>
-  // to decide whether <acceptor> endpoint should be added to
-  // mprofile or not.  Returns true or false.
-  // This implementation always returns true.  Subclasses can override
-  // to specify additional conditions that must be met by an
-  // <acceptor> for inclusion into mprofile.
 
 private:
   RTCORBA::ProtocolList &protocols_;
