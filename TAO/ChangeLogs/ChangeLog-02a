@@ -1,3 +1,12 @@
+Fri Aug 17 08:18:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/RTPortableServer/TAO_RTPortableServer.dsp:
+        * tao/DynamicInterface/TAO_DynamicInterface.dsp:
+
+          Fixed setting in the MFC versions of these projects.
+          Thanks to Frank Wolf <fwolf@gum.de> for pointing
+          these out.
+
 Fri Aug 17 10:59:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/tests/Makefile.bor
