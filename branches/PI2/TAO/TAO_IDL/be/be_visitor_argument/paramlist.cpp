@@ -46,7 +46,7 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
  
   os->indent ();
 
-  *os << be_idt << "CORBA::ULong length = this->parameter_list_.length ();" << be_nl
+  *os << be_idt << "length = this->parameter_list_.length ();" << be_nl
       << "  this->parameter_list_.length (length + 1);" << be_nl
       << "  this->parameter_list_[length].argument "; //<<= this->arg_;
   // Insertion into an Any has some special cases which need to be 
@@ -85,11 +85,13 @@ int be_visitor_args_paramlist::visit_argument (be_argument *node)
       }
       
     case AST_Decl::NT_string:
-      *os << "from_string (this->"<< node->local_name () << "_);" ;
-      break;
-      
+        *os << "CORBA::Any::from_string (this->"<< node->local_name () 
+            << node->max_size ()->ev ()->u.ulval << "_);" ;
+        break;
+      }
     case AST_Decl::NT_wstring:
-      *os << "from_wstring (this->"<< node->local_name () << "_);" ;
+      *os << "CORBA::Any::from_wstring (this->"<< node->local_name ()
+          << node->max_size ()->ev ()->u.ulval << "_);" ;
       break;
       
    default:
@@ -135,16 +137,16 @@ be_visitor_args_paramlist::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_boolean:
-      *os << "from_boolean (this->";
+      *os << "CORBA::Any::from_boolean (this->";
       break;
     case AST_PredefinedType::PT_char:
-      *os << "from_char (this->";
+      *os << "CORBA::Any::from_char (this->";
       break;
     case AST_PredefinedType::PT_wchar:
-      *os << "from_wchar (this->";
+      *os << "CORBA::Any::from_wchar (this->";
       break;
     case AST_PredefinedType::PT_octet:
-      *os << "from_octet (this->";
+      *os << "CORBA::Any::from_octet (this->";
       break;
             
     default:
