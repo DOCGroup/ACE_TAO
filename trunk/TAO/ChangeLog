@@ -1,3 +1,14 @@
+Mon Jan  5 19:09:41 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/default_resource.cpp:
+
+	  Used a different constructor which has an option for restarting
+	  the reactor event loop when EINTR occurs. In TAO, we pass a
+	  non-0 value to restart the reactor event loop if EINTR
+	  occurs. Thanks to Markus Stenberg
+	  <markus.stenberg@conformiq.com> for motivating this. This fixes
+	  [BUGID 1649].
+
 Mon Jan  5 18:37:22 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FT_App/FT_App.mpc:
