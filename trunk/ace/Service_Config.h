@@ -334,6 +334,9 @@ private:
   //static ACE_Static_Svc_Descriptor service_list_[];
   // List of statically linked services.
 
+  static ACE_STATIC_SVCS *static_svcs_;
+  // Singleton repository of statically linked services.
+
   static sig_atomic_t reconfig_occurred_;
   // True if reconfiguration occurred.
 
