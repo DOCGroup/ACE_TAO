@@ -33,7 +33,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
   int len = ::WideCharToMultiByte (CP_OEMCP,
                                    0,
                                    wstr,
-                                   -1,
+                                   1,
                                    0,
                                    0,
                                    0,
