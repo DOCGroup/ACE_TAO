@@ -23,6 +23,7 @@ DIRS  = CDR \
 	Bug_1361_Regression \
 	Bug_1020_Basic_Regression \
 	Bug_1568_Regression \
+	Bug_1670_Regression \
 	Bug_1482_Regression \
 	Bug_1551_Regression \
 	Collocation_Tests \
