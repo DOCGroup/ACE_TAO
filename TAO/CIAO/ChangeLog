@@ -1,3 +1,12 @@
+Tue Jul 08 10:52:56 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Daemon/CIAO_Daemon.cpp:
+	* tools/Daemon/README: Reverted the previous documentation change,
+	  instead, register the daemon interface as "CIAODaemon" in the
+	  internal IOR table.  This provides a more consistent naming
+	  scheme throughout.  Thanks to Roland Schimmack <SC@ProCom.de>
+	  for motivating this change.
+
 Tue Jul 08 07:11:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/Daemon/README: Fixed discrepancy in document.  The
