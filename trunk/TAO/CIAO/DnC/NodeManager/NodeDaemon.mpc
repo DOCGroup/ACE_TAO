@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Node_Daemon): ciao_server, iortable {
+project(Node_Daemon): ciao_server, iortable, naming {
   libs += Deployment_svnt
   requires += dnc
   includes += $(CIAO_ROOT)/DnC
