@@ -4,10 +4,10 @@
 #define ARRAY_C
 
 #define ACE_BUILD_DLL
-#include "Array.h"
+#include "ace/Array.h"
 
 #if !defined (__ACE_INLINE__)
-#include "Array.i"
+#include "ace/Array.i"
 #endif /* __ACE_INLINE__ */
 
 // Dynamically initialize an array.
