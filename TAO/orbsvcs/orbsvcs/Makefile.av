@@ -70,6 +70,10 @@ ifeq ($(rapi),1)
 	      AV/QoS_UDP
 endif # rapi
 
+ifeq ($(sctp),openss7)
+  CPP_SRCS += AV/SCTP_SEQ
+endif # sctp
+
 IDL_SRC = \
         $(addsuffix S.cpp, $(IDL_FILES)) \
         $(addsuffix C.cpp, $(IDL_FILES))
@@ -91,7 +95,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
-CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs -DTAO_ORBSVCS_HAS_AV
+CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/orbsvcs/orbsvcs -DTAO_ORBSVCS_HAS_AV -I/localhost/proj/pces/users/gnaik/src/linux-sctp-0.2.14/include
 
 ifeq ($(shared_libs),1)
 ifneq ($(SHLIB),)
