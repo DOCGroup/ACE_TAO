@@ -60,6 +60,7 @@ ACE_HAS_BROKEN_SENDMSG                  OS/compiler omits the const from the sen
 ACE_HAS_BROKEN_SETRLIMIT                OS/compiler omits the const from the rlimit parameter in the setrlimit() prototype.
 ACE_HAS_BROKEN_TIMESPEC_MEMBERS         platform define struct timespec members as ts_sec and ts_nsec instead of tv_sec and tv_nsec.  This is highly non-portable.  Currently only FreeBSD 2.1.x uses it.
 ACE_HAS_BROKEN_WRITEV                   OS/compiler omits the const from the iovec parameter in the writev() prototype.
+ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS   GNUC 2.7.3 mistakenly takes the template definition as the place where an inline function of an argument class is first used.
 ACE_HAS_BSTRING                         Platform has <bstring.h> (which contains bzero() prototype)
 ACE_HAS_BYTESEX_H                       Platform has <bytesex.h>.
 ACE_HAS_CANCEL_IO                       Platform supports the Win32 CancelIO() function (WinNT 4.0 and beyond).
