@@ -1275,7 +1275,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_field *node)
         node->visibility() == AST_Field::vis_PRIVATE ? 0 : 1;
 
       os->indent (); // start from current indentation level
-      *os << visibility << ", // data memeber visibility marker"
+      *os << visibility << ", // data member visibility marker"
           << "\n\n";
 
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
