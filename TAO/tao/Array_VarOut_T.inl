@@ -221,14 +221,14 @@ template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (void)
   : ptr_ (0),
-    nocopy_ (false)
+    nocopy_ (0)
 {}
 
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
     T_slice * p,
-    bool nocopy
+    CORBA::Boolean nocopy
   )
   : ptr_ (p),
     nocopy_ (nocopy)
