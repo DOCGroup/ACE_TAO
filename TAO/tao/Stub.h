@@ -49,10 +49,10 @@ class TAO_Policy_Manager_Impl;
 enum TAO_Param_Type
 {
   // = TITLE
-  //    TAO_Param_Type
+  //   TAO_Param_Type
   //
   // = DESCRIPTION
-  //    Parameter mode of a given parameter.
+  //   Parameter mode of a given parameter.
   PARAM_IN,
   PARAM_OUT,
   PARAM_INOUT,

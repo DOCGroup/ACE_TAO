@@ -605,7 +605,7 @@ char *tao_yytext_ptr;
 #line 1 "fe/idl.ll"
 #define INITIAL 0
 #line 3 "fe/idl.ll"
-/*  $Id: idl.ll,v 1.29 1999/05/17 02:15:08 nanbor Exp $
+/*  $Id: idl.ll,v 1.30 1999/06/06 22:04:06 schmidt Exp $
 
 COPYRIGHT
 
