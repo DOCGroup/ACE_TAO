@@ -1,3 +1,10 @@
+Wed Sep  1 07:43:46 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/POSIX_Proactor.h: Updated the documentation to use
+	  the right names for ACE_POSIX_SIG_Proactor and
+ 	  ACE_POSIX_AIOCB_Proactor.  Thanks to John D. Robertson
+ 	  <john@rrci.com> for motivating this fix.
+
 Wed Sep  1 07:00:39 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/global.features:
