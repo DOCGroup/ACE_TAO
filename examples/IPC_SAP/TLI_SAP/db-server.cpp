@@ -24,7 +24,7 @@ lookup_name (ACE_HANDLE handle)
   static struct 
     {
       int emp_id;
-      const char emp_name[EMPNAMELEN];
+      const char *emp_name;
     } employee_db[] =
       {
         {123, "John Wayne Bobbit"},
