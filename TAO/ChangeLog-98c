@@ -1,5 +1,12 @@
 Mon Nov 02 12:34:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* performance-tests/Demux/demux_test_client.cpp (run_linear_test,
+	  run_random_test, run_worst_test, run_best_test): Win32 doesn't
+	  support conversion from unsigned __int64 to double directly.
+	  Therefore, we must use the ACE_UINT64_DBLCAST_ADAPTER to convert
+	  it to __int64 first.  In this case, it'll be safer if we do the
+	  substraction first before multiplying the constant factor.
+
 	* performance-tests/Demux/{server,client}.cpp (main): Added
 	  trailing return statements to avoid warnings from VC 6.
 
