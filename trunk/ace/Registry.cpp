@@ -22,7 +22,7 @@
 
 // Separator for components in a name 
 /* static */
-      LPCTSTR ACE_Registry::STRING_SEPARATOR = __TEXT ("\\");
+LPCTSTR ACE_Registry::STRING_SEPARATOR = __TEXT ("\\");
 
 // Simple binding constructor
 ACE_Registry::Binding::Binding ()
