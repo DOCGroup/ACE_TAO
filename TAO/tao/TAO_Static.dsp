@@ -307,10 +307,6 @@ SOURCE=.\IOPS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\IOR_LookupTable.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Leader_Follower.h
 # End Source File
 # Begin Source File
@@ -1332,10 +1328,6 @@ SOURCE=.\IOPC.cpp
 # Begin Source File
 
 SOURCE=.\IOPS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\IOR_LookupTable.cpp
 # End Source File
 # Begin Source File
 

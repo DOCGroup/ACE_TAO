@@ -1,3 +1,53 @@
+Mon Sep 11 19:45:00 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * TAOACE.dsw:
+        * TAOACE_Static.dsw:
+        * tao/TAO.dsp:
+        * tao/TAO.dsw:
+        * tao/TAO_Static.dsp:
+        * tao/IORTable/TAO_IORTable.dsp:
+        * tao/IORTable/TAO_IORTable_Static.dsp:
+          Add new project files for the TAO_IORTable library.
+
+        * examples/Callback_Quoter/Consumer.dsp:
+        * examples/Callback_Quoter/Notifier.dsp:
+        * examples/Callback_Quoter/Supplier.dsp:
+        * examples/Event_Comm/Consumer.dsp:
+        * examples/Event_Comm/Notifier.dsp:
+        * examples/Event_Comm/Supplier.dsp:
+        * examples/Simple/bank/client.dsp:
+        * examples/Simple/bank/server.dsp:
+        * examples/Simple/chat/client.dsp:
+        * examples/Simple/chat/server.dsp:
+        * examples/Simple/echo/client.dsp:
+        * examples/Simple/echo/server.dsp:
+        * examples/Simple/grid/client.dsp:
+        * examples/Simple/grid/server.dsp:
+        * examples/Simple/time/client.dsp:
+        * examples/Simple/time/server.dsp:
+        * orbsvcs/Concurrency_Service/Concurrency_Service.dsp:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/Naming_Service/NT_Naming_Service.dsp:
+        * orbsvcs/Naming_Service/Naming_Service.dsp:
+        * orbsvcs/Notify_Service/Notify_Service.dsp:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/tests/tests.dsw:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_child.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_client.dsp:
+        * orbsvcs/tests/AVStreams/benchmark/av_benchmark_server.dsp:
+        * orbsvcs/tests/Concurrency/CC_client.dsp:
+        * orbsvcs/tests/ImplRepo/airplane_server.dsp:
+        * orbsvcs/tests/ImplRepo/nestea_server.dsp:
+        * orbsvcs/tests/Property/client.dsp:
+        * orbsvcs/tests/Property/server.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.dsp:
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.dsp:
+        * orbsvcs/tests/Simple_Naming/client.dsp:
+        * orbsvcs/tests/Time/Time_Service_Test.dsp:
+        * tests/InterOp-Naming/server.dsp:
+          Add TAO_IORTable to the projects that need it.
+
 Mon Sep 11 12:56:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Makefile:
