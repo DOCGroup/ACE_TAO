@@ -24,7 +24,7 @@ namespace TAO
 
   }
 
-  int
+  Invocation_Status
   Synch_Twoway_Invocation::communicate (Argument **args,
                                         int args_number
                                         ACE_ENV_ARG_DECL)
@@ -45,12 +45,12 @@ namespace TAO
 
         ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
                                            CORBA::COMPLETED_NO),
-                          -1);
+                          TAO_INVOKE_FAILURE);
       }
 
     TAO_Target_Specification tspec;
     this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
 
     TAO_OutputCDR &cdr =
@@ -59,56 +59,84 @@ namespace TAO
     this->write_header (tspec,
                         cdr
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
     this->marshal_data (args,
                         args_number,
                         cdr
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
 
     this->send_message (TAO_Transport::TAO_TWOWAY_REQUEST,
                         cdr
                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+
+    // @@ In all MT environments, there's a cancellation point lurking
+    // here; need to investigate.  Client threads would frequently be
+    // canceled sometime during recv_request ... the correct action to
+    // take on being canceled is to issue a CancelRequest message to the
+    // server and then imediately let other client-side cancellation
+    // handlers do their jobs.
+    //
+    // In C++, that basically means to unwind the stack using almost
+    // normal procedures: all destructors should fire, and some "catch"
+    // blocks should probably be able to handle things like releasing
+    // pointers. (Without unwinding the C++ stack, resources that must
+    // be freed by thread cancellation won't be freed, and the process
+    // won't continue to function correctly.)  The tricky part is that
+    // according to POSIX, all C stack frames must also have their
+    // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
+    // environment.
 
     this->resolver_.transport ()->wait_strategy ()->wait (0,
                                                           rd);
 
-    this->check_reply_status (rd,
-                              args,
-                              args_number
-                              ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK_RETURN (-1);
-
-    return 0;
+    return this->check_reply_status (rd,
+                                     args,
+                                     args_number
+                                     ACE_ENV_ARG_PARAMETER);
   }
 
 
-  void
+  Invocation_Status
   Synch_Twoway_Invocation::check_reply_status (TAO_Synch_Reply_Dispatcher &rd,
                                                Argument **args,
                                                int args_number
                                                ACE_ENV_ARG_DECL)
   {
+    // Grab the reply CDR
+    TAO_InputCDR &cdr =
+      rd.reply_cdr ();
+
+    // Set the translators
+    this->resolver_.transport ()->assign_translators (&cdr, 0);
+
     int i = 0;
+
     switch (rd.reply_status ())
       {
       case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
         for (i = 0; i != args_number; ++i)
           {
             if (!((*args[i]).demarshal (rd.reply_cdr ())))
-              ACE_THROW (CORBA::MARSHAL ());
+              ACE_THROW_RETURN (CORBA::MARSHAL (),
+                                TAO_INVOKE_FAILURE);
           }
         break;
-
+      case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
+        // Handle the forwarding and return so the stub restarts the
+        // request!
+        return this->location_forward (cdr
+                                       ACE_ENV_ARG_PARAMETER);
       case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
         // return this->handle_user_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         break;
       case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
         // return this->handle_system_exception (ACE_ENV_SINGLE_ARG_PARAMETER)
         break;
+
 #if 0
         {
         // @@ Add the location macros for this exceptions...
@@ -167,11 +195,7 @@ namespace TAO
       }
       // NOTREACHED.
 
-    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
-      // Handle the forwarding and return so the stub restarts the
-      // request!
-      return this->location_forward (this->inp_stream ()
-                                     ACE_ENV_ARG_PARAMETER);
+
     case TAO_PLUGGABLE_MESSAGE_NEEDS_ADDRESSING_MODE:
       {
         // We have received an exception with a request to change the
@@ -198,9 +222,49 @@ namespace TAO
 #endif
 
     }
-    return;
+    return TAO_INVOKE_SUCCESS;
   }
 
+  Invocation_Status
+  Synch_Twoway_Invocation::location_forward (TAO_InputCDR &inp_stream
+                                             ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    CORBA::Object_var forward_reference;
+
+    // It can be assumed that the GIOP header and the reply header
+    // are already handled.  Further it can be assumed that the
+    // reply body contains an object reference to the new object.
+    // This object pointer will be now extracted.
+
+    if ((inp_stream >> forward_reference.out ()) == 0)
+      {
+        ACE_THROW_RETURN (CORBA::MARSHAL (),
+                          TAO_INVOKE_FAILURE);
+      }
+
+    // The object pointer has to be changed to a TAO_Stub pointer
+    // in order to obtain the profiles.
+    TAO_Stub *stubobj = forward_reference->_stubobj ();
+
+    if (stubobj == 0)
+      ACE_THROW_RETURN (CORBA::INTERNAL (),
+                        TAO_INVOKE_FAILURE);
+
+    // Reset the profile in the stubs
+    this->resolver_.stub ()->add_forward_profiles (stubobj->base_profiles ());
+
+    // Is this check needed?
+    /*
+    if (this->resolver_.stub ()->next_profile () == 0)
+      ACE_THROW (CORBA::TRANSIENT (
+        CORBA::SystemException::_tao_minor_code (
+          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+          errno),
+        CORBA::COMPLETED_NO));
+    */
+    return TAO_INVOKE_RESTART;
+  }
 
 
   /*************************************************************************/
@@ -211,7 +275,7 @@ namespace TAO
   {
   }
 
-  int
+  Invocation_Status
   Synch_Oneway_Invocation::communicate (Argument **args,
                                         int args_number
                                         ACE_ENV_ARG_DECL)
@@ -225,7 +289,7 @@ namespace TAO
       {
         TAO_Target_Specification tspec;
         this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (-1);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
         TAO_OutputCDR &cdr =
           this->resolver_.transport ()->messaging_object ()->out_stream ();
@@ -233,19 +297,19 @@ namespace TAO
         this->write_header (tspec,
                             cdr
                             ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (-1);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
         this->marshal_data (args,
                             args_number,
                             cdr
                             ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (-1);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
 
         this->send_message (TAO_Transport::TAO_ONEWAY_REQUEST,
                             cdr
                             ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (-1);
+        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
       }
     else
       {
@@ -254,6 +318,8 @@ namespace TAO
                                                      ACE_ENV_ARG_PARAMETER);
       }
 
-    return 0;
+    return TAO_INVOKE_SUCCESS;
   }
+
+
 }

@@ -21,9 +21,16 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Remote_Invocation.h"
+#include "ace/Global_Macros.h"
 
 class TAO_Operation_Details;
 class TAO_Synch_Reply_Dispatcher;
+class TAO_InputCDR;
+
+namespace CORBA
+{
+  class SystemException;
+}
 
 namespace TAO
 {
@@ -35,16 +42,24 @@ namespace TAO
     Synch_Twoway_Invocation (Profile_Transport_Resolver &resolver,
                              TAO_Operation_Details &detail);
 
-    int communicate (Argument **args,
-                     int args_number
-                     ACE_ENV_ARG_DECL);
+    Invocation_Status communicate (Argument **args,
+                                   int args_number
+                                   ACE_ENV_ARG_DECL);
+
+  protected:
+
+    Invocation_Status location_forward (TAO_InputCDR &cdr
+                                        ACE_ENV_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
 
-    void check_reply_status (TAO_Synch_Reply_Dispatcher &rd,
-                             Argument **args,
-                             int args_number
-                             ACE_ENV_ARG_DECL);
+    Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd,
+                                          Argument **args,
+                                          int args_number
+                                          ACE_ENV_ARG_DECL);
+
+
   };
 
   class TAO_Export Synch_Oneway_Invocation: public Synch_Twoway_Invocation
@@ -53,9 +68,9 @@ namespace TAO
     Synch_Oneway_Invocation (Profile_Transport_Resolver &resolver,
                              TAO_Operation_Details &detail);
 
-    int communicate (Argument **args,
-                     int args_number
-                     ACE_ENV_ARG_DECL);
+    Invocation_Status communicate (Argument **args,
+                                   int args_number
+                                   ACE_ENV_ARG_DECL);
 
   };
 }

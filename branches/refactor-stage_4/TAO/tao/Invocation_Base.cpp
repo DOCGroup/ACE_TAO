@@ -38,7 +38,9 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
 
 
   void
-  Invocation_Base::invoke (ACE_ENV_SINGLE_ARG_DECL)
+  Invocation_Base::invoke (TAO_Exception_Data * /*ex_data*/,
+                           long /*ex_count*/
+                           ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
     // Should stub object be refcounted here?
@@ -57,55 +59,65 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
     /*if (stub->orb_core ()->is_service_invocation ())
       return stub->orb_core ()->invoke_services ();
     */
+    TAO::Invocation_Status status = TAO_INVOKE_START;
 
-    Profile_Transport_Resolver resolver (stub);
-
-    resolver.resolve (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-    TAO_Operation_Details op_details (this->operation_,
-                                      this->op_len_,
-                                      this->number_args_ != 0);
-
-    op_details.request_id (resolver.transport ()->tms ()->request_id ());
-
-    if (this->type_ == TAO_ONEWAY_INVOCATION)
+    while (status != TAO_INVOKE_SUCCESS)
       {
-        int has_synchronization = 0;
-        Messaging::SyncScope sync_scope;
-        stub->orb_core ()->call_sync_scope_hook (stub,
-                                                 has_synchronization,
-                                                 sync_scope);
+        Profile_Transport_Resolver resolver (stub);
 
-        op_details.response_flags (sync_scope);
-
-        TAO::Synch_Oneway_Invocation synch (resolver,
-                                            op_details);
-
-        synch.communicate (this->args_,
-                           this->number_args_
-                           ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK;
-      }
-    else if (this->type_ == TAO_TWOWAY_INVOCATION
-             && this->mode_ == TAO_SYNCHRONOUS_INVOCATION)
-      {
-        // @@ NOTE:Need to change this to something better. Too many
-        // hash defines meaning the same  thing..
-        op_details.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
-        TAO::Synch_Twoway_Invocation synch (resolver,
-                                            op_details);
-
-        synch.communicate (this->args_,
-                           this->number_args_
-                           ACE_ENV_ARG_PARAMETER);
+        resolver.resolve (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_CHECK;
 
-      }
-    else if (this->type_ == TAO_TWOWAY_INVOCATION
-             && this->mode_ == TAO_ASYNCHRONOUS_CALLBACK_INVOCATION)
-      {
-        // @@ Do Nothing at this point
+        TAO_Operation_Details op_details (this->operation_,
+                                          this->op_len_,
+                                          this->number_args_ != 0);
+
+        op_details.request_id (resolver.transport ()->tms ()->request_id ());
+
+        if (this->type_ == TAO_ONEWAY_INVOCATION)
+          {
+            int has_synchronization = 0;
+            Messaging::SyncScope sync_scope;
+            stub->orb_core ()->call_sync_scope_hook (stub,
+                                                     has_synchronization,
+                                                     sync_scope);
+
+            op_details.response_flags (sync_scope);
+
+            TAO::Synch_Oneway_Invocation synch (resolver,
+                                                op_details);
+
+            status =
+              synch.communicate (this->args_,
+                                 this->number_args_
+                                 ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+          }
+        else if (this->type_ == TAO_TWOWAY_INVOCATION
+                 && this->mode_ == TAO_SYNCHRONOUS_INVOCATION)
+          {
+            // @@ NOTE:Need to change this to something better. Too many
+            // hash defines meaning the same  thing..
+            op_details.response_flags (TAO_TWOWAY_RESPONSE_FLAG);
+            TAO::Synch_Twoway_Invocation synch (resolver,
+                                                op_details);
+
+            status =
+              synch.communicate (this->args_,
+                                 this->number_args_
+                                 ACE_ENV_ARG_PARAMETER);
+            ACE_CHECK;
+          }
+        else if (this->type_ == TAO_TWOWAY_INVOCATION
+                 && this->mode_ == TAO_ASYNCHRONOUS_CALLBACK_INVOCATION)
+          {
+            // Should never get here..
+            ACE_THROW (CORBA::INTERNAL (
+               CORBA::SystemException::_tao_minor_code (
+                 TAO_DEFAULT_MINOR_CODE,
+                 EINVAL),
+               CORBA::COMPLETED_NO));
+          }
       }
   }
 

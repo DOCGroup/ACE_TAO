@@ -23,6 +23,9 @@
 #include "ace/CORBA_macros.h"
 #include "ace/Global_Macros.h"
 
+
+struct TAO_Exception_Data;
+
 namespace  CORBA
 {
   class Object;
@@ -73,16 +76,19 @@ namespace TAO
                      TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
 
 
-    void invoke (ACE_ENV_SINGLE_ARG_DECL)
+    void invoke (TAO_Exception_Data *ex,
+                 long ex_count
+                 ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   private:
     /// Dont allow default initializations
-    Invocation_Base (void);
+    ACE_UNIMPLEMENTED_FUNC (Invocation_Base (void));
 
-    Invocation_Base & operator = (const Invocation_Base &);
+    ACE_UNIMPLEMENTED_FUNC (Invocation_Base & operator= (const Invocation_Base &));
 
   private:
+
     CORBA::Object *target_;
 
     Argument **args_;
@@ -99,6 +105,10 @@ namespace TAO
   };
 } // End namespace TAO
 
+
+#if defined (__ACE_INLINE__)
+# include "Invocation_Base.inl"
+#endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"
 #endif /*TAO_INVOCATION_BASE_H*/

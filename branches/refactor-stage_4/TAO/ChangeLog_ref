@@ -1,3 +1,17 @@
+Tue Jul  8 15:00:12 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp (TAO): 
+	* tao/Synch_Invocation.h: Added support for location forward. 
+
+	* tao/Invocation_Base.h:
+	* tao/Invocation_Base.cpp: Added two more parameters to the invoke
+	  () call. They are required to access the exception types defined
+	  in the IDL. Further added a loop around the place to handle
+	  location forwards. 
+
+	* tao/Remote_Invocation.h: Added a enum for passing the status of
+	  the invocation around. 
+
 Tue Jul  8 12:50:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
