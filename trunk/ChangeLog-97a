@@ -1,3 +1,13 @@
+Sun Jan 12 18:20:49 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/ACE.cpp (round_to_pagesize): fixed typo in reference to
+	  ACE::pagesize_
+
+	* ace/ACE.cpp: initialize ACE::pagesize_ to 0 if ACE_HAS_GETPAGESIZE.
+	  That allows ACE:round_to_pagesize () to set ACE::pagesize_ using
+	  the appropriate system call.  If ACE_HAS_GETPAGESIZE isn't set,
+	  then ACE::pagesize_ is initialized to ACE_PAGE_SIZE, as before.
+
 Sat Jan 11 15:11:28 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.i (thr_setprio): The POSIX implementation of
