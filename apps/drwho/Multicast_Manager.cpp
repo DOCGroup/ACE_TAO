@@ -67,7 +67,7 @@ Multicast_Manager::get_next_host_addr (in_addr &host_addr)
        Multicast_Manager::current_ptr != 0;
        Multicast_Manager::current_ptr = Multicast_Manager::current_ptr->next)
     {
-      char *host_name = Multicast_Manager::current_ptr->host_name;
+      const char *host_name = Multicast_Manager::current_ptr->host_name;
       hostent *hp = Multicast_Manager::get_host_entry (host_name);
 
       if (hp == 0)
@@ -147,7 +147,7 @@ Multicast_Manager::checkoff_host (in_addr host_addr)
 }
 
 int 
-Multicast_Manager::get_next_non_responding_host (char *&host_name)
+Multicast_Manager::get_next_non_responding_host (const char *&host_name)
 {
   for (Multicast_Manager::current_ptr = Multicast_Manager::current_ptr == 0 ? Multicast_Manager::drwho_list : Multicast_Manager::current_ptr->next;
        Multicast_Manager::current_ptr != 0;

@@ -40,7 +40,7 @@ public:
   static void checkoff_host (in_addr host_addr);
   static int get_next_host_addr (in_addr &host_addr);
   static int outstanding_hosts_remain (void);
-  static int get_next_non_responding_host (char *&host_name);
+  static int get_next_non_responding_host (const char *&host_name);
   static int insert_hosts_from_file (const char *filename);
   static void insert_default_hosts (void);
 
