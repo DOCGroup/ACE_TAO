@@ -1,3 +1,9 @@
+Fri Jan 18 06:54:48 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/orbsvcs.dsw:
+
+          Added ETCL to the dependencies for the Fault_Tolerance workspace.
+
 Thu Jan 17 23:31:13 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO.dsp:
