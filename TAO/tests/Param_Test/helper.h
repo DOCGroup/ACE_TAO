@@ -20,7 +20,7 @@
 #if !defined (HELPER_H)
 #define HELPER_H
 
-#include "param_testC.h"
+#include "param_testCli.h"
 
 class Generator
 {

@@ -19,7 +19,7 @@
 #if !defined (PARAM_TEST_BOUNDED_SHORT_SEQUENCE_H)
 #define PARAM_TEST_BOUNDED_SHORT_SEQUENCE_H
 
-#include "param_testC.h"
+#include "param_testCli.h"
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 //           test bounded sequences of shorts
