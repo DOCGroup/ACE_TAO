@@ -7,7 +7,7 @@ Mon Sep  1 13:26:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Asynch_Reply_Dispatcher_Base.i: Removed inclusion of
 	  Transport.h from the header file. Moved the method transport ()
 	  from the inlined file to the cpp file which helped us to get rid
-	  of the Transport.h onclusion.
+	  of the Transport.h inclusion.
 
 Mon Sep  1 11:08:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
