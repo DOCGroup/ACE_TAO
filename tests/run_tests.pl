@@ -13,7 +13,7 @@ use English;
 $tmp="/tmp";
 $compilation_log="log/compilations.log";
 
-$ACE_ROOT = $ENV{'ACE_ROOT'};
+$ACE_ROOT = $ENV{'ACE_ROOT'}  ||  '..';
 $LD_VAR = 'LD_LIBRARY_PATH';
 
 if ($OSNAME eq "HP-UX") {
@@ -162,10 +162,11 @@ PROGRAM: while (<LIST>) {
 
   for ($i = 0; $i < $#fields; $i++) {
     $var = $fields[$i];
-#    print "var = $var -> $program\n";
+####    print "var = $var -> $program\n";
     local $e = $$var;
     if ($e == 1) {
-      print STDERR "Skipping $program on this platform\n";
+      print STDERR "Skipping $program on this platform\n"
+        unless $var = 'DISABLED';
       next PROGRAM;
     }
   }
