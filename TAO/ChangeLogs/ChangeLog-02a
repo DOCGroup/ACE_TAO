@@ -1,3 +1,15 @@
+Thu Feb 17 19:05:33 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/nested_scope.idl:
+	  New file.
+
+	* tests/IDL_Test/idl_test.dsp:
+	* tests/IDL_Test/Makefile:
+	* tests/IDL_Test/reopened_modules.idl:
+	  Removed new example from reopened_modules.idl and added 
+	  the example plus many similar ones for various data types 
+	  to new file nested_scope.idl.
+
 Thu Feb 17 18:39:36 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
