@@ -1,3 +1,11 @@
+Mon Aug 10 16:54:12 1998  Jeff Parsons  <jp4@cs.wustl.edu>
+
+  * Param_Test/run_test.pl:
+    Added run-through for typecodes (it was missing) and increased wait
+    between server and client startup to 5 (first time you run server, it 
+    takes a little longer to get going and the first test was getting
+    skipped).
+
 Mon Aug 10 16:46:50 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp: Fixed an error
