@@ -6,7 +6,7 @@ Mon Sep 20 14:58:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  problem.
 
 	* tao/Invocation.h:
-	  Fixed warning under Sun/CC
+	  Fixed warning under Sun/CC.
 
 Mon Sep 20 14:47:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
