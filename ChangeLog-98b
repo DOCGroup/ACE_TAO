@@ -9,6 +9,9 @@ Mon Oct 26 08:22:18 1998  David L. Levine  <levine@cs.wustl.edu>
           of course, so that was leaked if the fork was attempted
           but failed.
 
+        * tests/Pipe_Test.cpp,Process_Mutex_Test.cpp: don't try
+          to run these tests if ACE_LACKS_FORK, either.
+
         * tests/run_tests.vxworks: changed
           Message_Queue_Notifications_Test.cpp to
           Message_Queue_Notifications_Test.
