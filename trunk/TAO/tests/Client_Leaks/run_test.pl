@@ -16,13 +16,13 @@ $CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 } 
 
-$client = $CL->SpawnWaitKill (300);
+$client = $CL->SpawnWaitKill (600);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";

@@ -1,5 +1,5 @@
 #
-# Makefile for building the Faults test executable
+# $Id$
 #
 
 NAME = server

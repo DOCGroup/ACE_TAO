@@ -12,7 +12,7 @@ $client_conf = PerlACE::LocalFile ("client.global.conf");
 $server_conf = PerlACE::LocalFile ("server.conf");
 $client_process = "client";
 $debug_level = '0';
-$threads = '1';
+$threads = '4';
 $status = 0;
 
 foreach $i (@ARGV) {
@@ -22,7 +22,6 @@ foreach $i (@ARGV) {
         $debug_level = '1';
     } elsif ($i eq '-creation') {
         $client_process = 'orb_creation';
-        $threads='2';
     }
 }
 

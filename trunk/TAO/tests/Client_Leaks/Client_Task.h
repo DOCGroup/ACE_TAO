@@ -21,12 +21,18 @@ public:
   Client_Task (Test::Process_Factory_ptr process_Factory,
                int iterations);
 
+  /// Return the total number of sucessful calls
+  int successful_calls (void) const;
+
   /// Thread entry point
   int svc (void);
 
 private:
-  /// Run one iteration of the test 
-  void one_iteration (CORBA::Environment &ACE_TRY_ENV);
+  /// Run one iteration of the test
+  int one_iteration (CORBA::Environment &ACE_TRY_ENV);
+
+  /// Make sure that the thread has a connection available
+  void validate_connection (CORBA::Environment &ACE_TRY_ENV);
 
 private:
   /// Reference to the test interface
@@ -34,6 +40,12 @@ private:
 
   /// Total number of processes created by each thread
   int iterations_;
+
+  /// At least some calls must be successful
+  int successful_calls_;
+
+  /// Implement the Monitor Object Pattern.
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 #include "ace/post.h"
