@@ -79,8 +79,13 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // Uninstall a servant for component or home.
-    virtual void uninstall_reference (CORBA::Object_ptr objref
-                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    virtual void uninstall (CORBA::Object_ptr objref
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    // Uninstall a servant for component or home.
+    virtual void uninstall (PortableServer::Servant svt
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   protected:
