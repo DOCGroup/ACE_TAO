@@ -29,10 +29,6 @@ SHFLAGS       = <%shflags%>
 CPPFLAGS     += <%cppflags%>
 <%endif%>
 <%endfor%>
-<%if(zzip)%>
-CPPFLAGS     += -I$(ZZIP_ROOT)/include
-CPPFLAGS     +=<%foreach(zzip_defines)%> -D<%zzip_define%><%endfor%>
-<%endif%>
 <%if(pch_header)%>
 CPPFLAGS     +=<%foreach(pch_defines)%> -D<%pch_define%><%endfor%>
 <%endif%>
@@ -55,9 +51,6 @@ LDFLAGS      +=<%foreach(libpaths)%> -L<%libpath%><%endfor%>
 <%if(linkflags)%>
 LDFLAGS      += <%linkflags%>
 <%endif%>
-<%if(zzip)%>
-LDFLAGS     += -L$(ZZIP_ROOT)/lib
-<%endif%>
 <%endfor%>
 <%foreach(platforms)%>
 LDLIBS       += <%ldlibs%>
@@ -73,9 +66,6 @@ LDLIBS       +=<%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
 <%endif%>
 <%if(ssl)%>
 LDLIBS       +=<%foreach(ssl_libs)%> -l<%ssl_lib%><%endfor%>
-<%endif%>
-<%if(zzip)%>
-LDLIBS       +=<%foreach(zzip_libs)%> -l<%zzip_lib%><%endfor%>
 <%endif%>
 OUTPUT_OPTION = -o $@
 <%marker(macros)%>
