@@ -29,7 +29,7 @@ public:
 
     int init(const char* schedule_discipline, PortableServer::POA_ptr poa);
 
-  typedef ACE_Vector<RtecEventComm::EventType> EventType_Vector;
+    typedef ACE_Vector<RtecEventComm::EventType> EventType_Vector;
 
   //To specify a consumer of one type of event, set both types to the same value
     virtual RtEventChannelAdmin::handle_t register_consumer (

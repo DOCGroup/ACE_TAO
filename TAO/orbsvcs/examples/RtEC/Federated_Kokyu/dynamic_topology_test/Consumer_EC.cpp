@@ -185,6 +185,8 @@ public:
                  ACE_ENV_ARG_PARAMETER
                  );
     ACE_CHECK;
+
+    ACE_DEBUG((LM_DEBUG,"Consumer_EC set_up_supp_and_cons() DONE\n"));
   } //set_up_supp_and_cons()
 
 private:
