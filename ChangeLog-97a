@@ -1,3 +1,17 @@
+Wed Apr 16 15:46:58 1997    <irfan@TWOSTEP>
+
+	* tests/Process_Strategy_Test: Added test to batch files and
+ 	  MSVC++ Makefiles.
+
+	* tests/Process_Strategy_Test.cpp (open): Added UNICODE support.
+
+	* ace/OS.h: Added SIGCHLD to Win32 section.
+
+	* ace/config-win32-common.h: UNICODE should not be automatically
+ 	  defined if ACE_HAS_UNICODE is defined. ACE_HAS_UNICODE signifies
+ 	  that the OS has UNICODE support. It does not mean that your code
+ 	  must be UNICODE. UNICODE must be defined at the project level.
+
 Wed Apr 16 17:05:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tests/Process_Strategy_Test.cpp: Only compile this test if

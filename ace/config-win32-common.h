@@ -23,6 +23,9 @@
 #define ACE_LACKS_MSGBUF_T
 #define ACE_LACKS_SYSV_SHMEM
 
+// Win32 has UNICODE support
+#define ACE_HAS_UNICODE
+
 // Compiler/platform correctly calls init()/fini() for shared
 // libraries. - applied for DLLs ?
 //define ACE_HAS_AUTOMATIC_INIT_FINI
@@ -187,15 +190,17 @@
 	#pragma warning(disable:4201)  /* winnt.h uses nameless structs */
 #endif /* _MSC_VER */
 
+#if defined (_UNICODE)
+#if !defined (UNICODE)
+#define UNICODE         /* UNICODE is used by Windows headers */
+#endif /* UNICODE */
+#endif /* _UNICODE */
 
-
-#if defined (ACE_HAS_UNICODE) && !defined (UNICODE)
-	#define UNICODE
-#endif
-
-#if defined (ACE_HAS_UNICODE) && !defined (_UNICODE)
-	#define _UNICODE
-#endif
+#if defined (UNICODE)
+#if !defined (_UNICODE)
+#define _UNICODE        /* _UNICODE is used by C-runtime/MFC headers */
+#endif /* _UNICODE */
+#endif /* UNICODE */
 
 #ifdef _DEBUG
 	#include <crtdbg.h>
@@ -238,6 +243,20 @@
 	#if !defined (WIN32_LEAN_AND_MEAN)
 		#define WIN32_LEAN_AND_MEAN
 	#endif /* WIN32_LEAN_AND_MEAN */
+
+        #if defined (_UNICODE)
+                #if !defined (UNICODE)
+                        #define UNICODE         /* UNICODE is used by Windows headers */
+                #endif /* UNICODE */
+        #endif /* _UNICODE */
+
+        #if defined (UNICODE)
+                #if !defined (_UNICODE)
+                        #define _UNICODE        /* _UNICODE is used by C-runtime/MFC headers */
+                #endif /* _UNICODE */
+        #endif /* UNICODE */
+
+
 #endif /* !defined (_INC_INWDOWS) */
 
 // Always use WS2 when available

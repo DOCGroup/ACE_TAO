@@ -2132,6 +2132,10 @@ struct sigaction
 #define SIGIO 29
 #endif /* SIGSEGV */
 
+#if !defined (SIGCHLD)
+#define SIGCHLD 18
+#endif /* SIGCHLD */
+
 #if !defined (SIGQUIT)
 #define SIGQUIT 3
 #endif /* SIGQUIT */
