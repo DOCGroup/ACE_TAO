@@ -1,3 +1,9 @@
+Wed Mar 15 21:18:19 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU: set
+          ACE_HAS_GNUG_PRE_2_8 to 1 for LynxOS 2.5.0, because
+          its g++ doesn't support -fno-exceptions.
+
 Wed Mar 15 20:47:12 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/ACE.h: moved #include of OS.h inside the #ifndef ACE_ACE_H

@@ -60,6 +60,7 @@ ifeq (2.5.0,$(VERSION))
   # NOTE: On LynxOS Version 2.5.0, optimization causes these warnings:
   #       warning: internal compiler error: debugging info corrupted
   optimize = 0
+  ACE_HAS_GNUG_PRE_2_8 = 1
 else
   optimize = 1
 
