@@ -21,6 +21,7 @@ Mon Feb 21 10:59:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  Also, a small change to lookup_by_name_local in utl_scope.cpp
 	  fixed a bug reported by Jonathan Reis <reis@stentorsoft.com>.
+	  This closes out bugzilla bug #449.
 
 Sun Feb 20 23:43:22 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -149,7 +150,8 @@ Fri Feb 18 19:05:11 2000  Jeff Parsons  <parsons@cs.wustl.edu>
           Added command line option -Sc to suppress generation
           of tie classes and *S_T.* files. A question about this
           was sent in by Alex Hornby <alex@anvil.co.uk>, which
-          prompted the implementation.
+          prompted the implementation. This closes out bugzilla
+	  bug #443.
 
 Fri Feb 18 13:53:43 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
