@@ -59,6 +59,9 @@
 // used as formal arguments to a template class.
 #  define ACE_HAS_TEMPLATE_TYPEDEFS
 
+// This is legit for A.03.05 - not sure A.03.04, but it should be.
+#  define ACE_HAS_USING_KEYWORD
+
 // Platform lacks streambuf "linebuffered ()".
 #  define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
