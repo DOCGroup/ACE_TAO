@@ -515,15 +515,9 @@ ACE_Reactor::max_notify_iterations (int iterations)
   ACE_TRACE ("ACE_Reactor::max_notify_iterations");
   ACE_MT (ACE_GUARD (ACE_REACTOR_MUTEX, ace_mon, this->token_));
 
-#if defined (ACE_WIN32)
-  // There seems to be a Win32 bug with non-blocking mode, so we'll
-  // always just read one notification at a time.
-  iterations = 1;
-#else
   // Must always be > 0 or < 0 to optimize the loop exit condition.
   if (iterations == 0)
     iterations = 1;
-#endif /* ACE_WIN32 */
 
   this->max_notify_iterations_ = iterations;
 }
@@ -707,20 +701,17 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
 	break;
     }
 
+  // Reassign number_dispatched to -1 if things have gone seriously
+  // wrong.
+  if (n == -1 && errno != EWOULDBLOCK)
+    number_dispatched = -1;
+
   // Enqueue ourselves into the list of waiting threads.  When we
   // reacquire the token we'll be off and running again with ownership
   // of the token.  The postcondition of this call is that
   // this->reactor_.token_.current_owner () == ACE_Thread::self ();
   this->reactor_->renew ();
-
-  if (n == -1 && errno != EWOULDBLOCK)
-    {
-      // If we're returning -1 here something is seriously wrong!
-      ACE_ASSERT (!"something's totally wrong!\n");
-      return -1;
-    }
-  else
-    return number_dispatched;
+  return number_dispatched;
 }
 #endif /* ACE_MT_SAFE */
 
@@ -941,13 +932,8 @@ ACE_Reactor::ACE_Reactor (ACE_Sig_Handler *sh,
     timer_queue_ (0),
     delete_timer_queue_ (0),
     delete_signal_handler_ (0),
-#if defined (ACE_WIN32)
-    requeue_position_ (0), // Must always requeue ourselves "next" on Win32.
-    max_notify_iterations_ (1),
-#else
     requeue_position_ (-1), // Requeue at end of waiters by default.
     max_notify_iterations_ (-1),
-#endif /* ACE_WIN32 */
     initialized_ (0),
     state_changed_ (0)
 #if defined (ACE_MT_SAFE)
@@ -970,13 +956,8 @@ ACE_Reactor::ACE_Reactor (size_t size,
     timer_queue_ (0),
     delete_timer_queue_ (0),
     delete_signal_handler_ (0),
-#if defined (ACE_WIN32)
-    requeue_position_ (0), // Must always requeue ourselves "next" on Win32.
-    max_notify_iterations_ (1),
-#else
     requeue_position_ (-1), // Requeue at end of waiters by default.
     max_notify_iterations_ (-1),
-#endif /* ACE_WIN32 */
     initialized_ (0),
     state_changed_ (0)
 #if defined (ACE_MT_SAFE)
