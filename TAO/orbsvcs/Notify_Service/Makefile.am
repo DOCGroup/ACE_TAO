@@ -7,19 +7,22 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.NT_Notify_Service.am 
 
-noinst_PROGRAMS = NT_Notify_Service
+bin_PROGRAMS = NT_Notify_Service
 
 NT_Notify_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 NT_Notify_Service_SOURCES = \
-  Notify_Service.cpp \
   NT_Notify_Server.cpp \
-  NT_Notify_Service.cpp
+  NT_Notify_Service.cpp \
+  Notify_Service.cpp \
+  NT_Notify_Service.h \
+  Notify_Service.h
 
 NT_Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -36,24 +39,22 @@ NT_Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-noinst_HEADERS = \
-  Notify_Service.h \
-  NT_Notify_Service.h
-
 ## Makefile.Notify_Service.am 
 
-noinst_PROGRAMS += Notify_Service
+bin_PROGRAMS += Notify_Service
 
 Notify_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Notify_Service_SOURCES = \
   Notify_Server.cpp \
-  Notify_Service.cpp
+  Notify_Service.cpp \
+  Notify_Service.h
 
 Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -69,9 +70,6 @@ Notify_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_ETCL.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-noinst_HEADERS += \
-  Notify_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:

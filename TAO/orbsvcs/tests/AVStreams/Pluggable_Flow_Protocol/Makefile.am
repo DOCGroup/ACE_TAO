@@ -14,7 +14,8 @@ receiver_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 receiver_SOURCES = \
   receiver.cpp \
@@ -34,7 +35,6 @@ receiver_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.AVS_Pluggable_Flow_Protocol_Send.am 
 
 noinst_PROGRAMS += sender
@@ -44,7 +44,8 @@ sender_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 sender_SOURCES = \
   sender.cpp \
@@ -64,7 +65,6 @@ sender_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.AVS_Pluggable_Flow_Protocol_Ts.am 
 
 noinst_LTLIBRARIES = libTAO_TS.la
@@ -74,11 +74,15 @@ libTAO_TS_la_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -DTAO_TS_BUILD_DLL
 
 libTAO_TS_la_SOURCES = \
   TimeStamp.cpp
+
+libTAO_TS_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_TS_la_LIBADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_AV.la \
@@ -96,7 +100,6 @@ libTAO_TS_la_LIBADD = \
 
 noinst_HEADERS = \
   TimeStamp.h
-
 
 ## Clean up template repositories, etc.
 clean-local:

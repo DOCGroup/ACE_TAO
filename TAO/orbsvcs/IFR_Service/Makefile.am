@@ -8,14 +8,16 @@ TAO_BUILDDIR = $(top_builddir)
 ## Makefile.IFR_Service.am 
 
 if !BUILD_MINIMUM_CORBA
-noinst_PROGRAMS = IFR_Service
-endif
+
+bin_PROGRAMS = IFR_Service
 
 IFR_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
-  -I$(TAO_BUILDDIR)
+  -I$(TAO_BUILDDIR) \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 IFR_Service_SOURCES = \
   IFR_Server.cpp \
@@ -35,12 +37,13 @@ IFR_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.TAO_IFR_BE.am 
 
 if !BUILD_MINIMUM_CORBA
+
 lib_LTLIBRARIES = libTAO_IFR_BE.la
-endif
 
 libTAO_IFR_BE_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -83,12 +86,13 @@ noinst_HEADERS = \
   ifr_removing_visitor.h \
   ifr_visitor.h
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Makefile.TAO_IFR_EXE.am 
 
 if !BUILD_MINIMUM_CORBA
-bin_PROGRAMS = tao_ifr
-endif
+
+bin_PROGRAMS += tao_ifr
 
 tao_ifr_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -112,6 +116,7 @@ tao_ifr_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
 
 ## Clean up template repositories, etc.
 clean-local:

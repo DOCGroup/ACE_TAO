@@ -3,7 +3,7 @@
 
 project : orbsvcslib, core, naming, iormanip, portablegroup, ami, minimum_corba {
   sharedname   = TAO_CosLoadBalancing
-  idlflags    += -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=LoadBalancing/LoadBalancing_export.h
+  idlflags    += -Wb,export_macro=TAO_LoadBalancing_Export -Wb,export_include=orbsvcs/LoadBalancing/LoadBalancing_export.h
   dynamicflags = TAO_LOADBALANCING_BUILD_DLL
   tagchecks   += CosLoadBalancing
 

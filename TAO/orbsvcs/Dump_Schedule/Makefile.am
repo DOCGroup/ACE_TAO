@@ -7,14 +7,15 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Dump_Schedule.am 
 
-noinst_PROGRAMS = Dump_Schedule
+bin_PROGRAMS = Dump_Schedule
 
 Dump_Schedule_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Dump_Schedule_SOURCES = \
   Dump_Schedule.cpp
@@ -31,7 +32,6 @@ Dump_Schedule_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_IORTable.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
 
 ## Clean up template repositories, etc.
 clean-local:

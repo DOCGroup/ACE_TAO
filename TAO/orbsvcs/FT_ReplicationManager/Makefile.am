@@ -9,16 +9,16 @@ TAO_BUILDDIR = $(top_builddir)
 
 if BUILD_ACE_UUID
 if !BUILD_MINIMUM_CORBA
+
 lib_LTLIBRARIES = libTAO_ReplicationManagerLib.la
-endif
-endif
 
 libTAO_ReplicationManagerLib_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs \
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs \
   -DTAO_REPLICATIONMANAGERLIB_BUILD_DLL
 
 libTAO_ReplicationManagerLib_la_SOURCES = \
@@ -26,6 +26,9 @@ libTAO_ReplicationManagerLib_la_SOURCES = \
   FT_FaultAnalyzer.cpp \
   FT_FaultConsumer.cpp \
   FT_FaultEventDescriptor.cpp
+
+libTAO_ReplicationManagerLib_la_LDFLAGS = \
+ -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_ReplicationManagerLib_la_LIBADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_FaultTolerance.la \
@@ -54,21 +57,23 @@ noinst_HEADERS = \
   FT_FaultConsumer.h \
   FT_FaultEventDescriptor.h
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_ACE_UUID
 
 ## Makefile.FT_ReplicationManager.am 
 
 if BUILD_ACE_UUID
 if !BUILD_MINIMUM_CORBA
+
 noinst_PROGRAMS = FT_ReplicationManager
-endif
-endif
 
 FT_ReplicationManager_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 FT_ReplicationManager_SOURCES = \
   FT_Property_Validator.cpp \
@@ -101,6 +106,8 @@ FT_ReplicationManager_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
+endif !BUILD_MINIMUM_CORBA
+endif BUILD_ACE_UUID
 
 ## Clean up template repositories, etc.
 clean-local:

@@ -34,7 +34,7 @@ CLEANFILES = \
 dataS_T.cpp dataC.inl dataS.inl dataS_T.inl dataC.cpp dataS.cpp dataC.h dataS.h dataS_T.h: data-stamp
 
 data-stamp: $(srcdir)/data.idl
-	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/data.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs $(srcdir)/data.idl
 	@touch $@
 
 ## Makefile.ECM_Consumer.am 
@@ -46,7 +46,8 @@ ECM_Consumer_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 ECM_Consumer_SOURCES = \
   ECM_Consumer.cpp \
@@ -76,7 +77,6 @@ ECM_Consumer_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-
 ## Makefile.ECM_Supplier.am 
 
 noinst_PROGRAMS += ECM_Supplier
@@ -86,7 +86,8 @@ ECM_Supplier_CPPFLAGS = \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 ECM_Supplier_SOURCES = \
   ECM_Data.cpp \
@@ -115,7 +116,6 @@ ECM_Supplier_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
 
 ## Clean up template repositories, etc.
 clean-local:

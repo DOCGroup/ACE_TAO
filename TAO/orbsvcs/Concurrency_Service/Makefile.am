@@ -7,17 +7,19 @@ TAO_BUILDDIR = $(top_builddir)
 
 ## Makefile.Concurrency_Service.am 
 
-noinst_PROGRAMS = Concurrency_Service
+bin_PROGRAMS = Concurrency_Service
 
 Concurrency_Service_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
   -I$(TAO_ROOT) \
   -I$(TAO_BUILDDIR) \
-  -I$(TAO_ROOT)/orbsvcs/orbsvcs
+  -I$(TAO_ROOT)/orbsvcs \
+  -I$(TAO_BUILDDIR)/orbsvcs
 
 Concurrency_Service_SOURCES = \
-  Concurrency_Service.cpp
+  Concurrency_Service.cpp \
+  Concurrency_Service.h
 
 Concurrency_Service_LDADD = \
   $(TAO_BUILDDIR)/orbsvcs/orbsvcs/libTAO_CosNaming.la \
@@ -31,9 +33,6 @@ Concurrency_Service_LDADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
-
-noinst_HEADERS = \
-  Concurrency_Service.h
 
 ## Clean up template repositories, etc.
 clean-local:
