@@ -506,6 +506,26 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, GIOP::IORAddressingInf
 
 }
 
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const GIOP::Version &ver)
+{
+  if ((strm.write_octet (ver.major)) &&
+      (strm.write_octet (ver.minor)))
+    return 1;
+  else
+    return 0;
+
+}
+
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, GIOP::Version &ver)
+{
+  if ((strm.read_octet (ver.major)) &&
+       (strm.read_octet (ver.minor)))
+      return 1;
+      else
+      return 0;
+}
+
+
 
 ACE_INLINE CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,

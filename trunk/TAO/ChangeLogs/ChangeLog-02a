@@ -1,3 +1,27 @@
+Thu Aug 10 05:23:30 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/orbconf.h: Added a macro TAO_HAS_FT_CORBA and #defines for
+	  the revision number of the FT spec.
+
+	* tao/ftcorbafwd.h:
+	* tao/ftpoafwd.h: Forward declarations for the data types in the
+	  FT module. This forward declaration helps us to split the data
+	  types and interfaces defined in the FT module in to two pieces,
+	  one that is specific to the ORB core and the rest that are at
+	  the service layer.
+
+	* tao/GIOPC.h:
+	* tao/GIOPC.i: Added cdr operators for GIOP::Version.
+
+	* tao/FT_CORBAC.cpp:
+	* tao/FT_CORBAC.h:
+	* tao/FT_CORBAC.i:
+	* tao/FT_CORBAS.cpp:
+	* tao/FT_CORBAS.h:
+	* tao/FT_CORBAS.i: The client and server side code that is
+	  specific to the ORB core.
+
+
 Thu Aug 10 04:41:27 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/Event_Service/Event_Service_static.dsw:
