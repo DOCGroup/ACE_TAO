@@ -1,19 +1,25 @@
+Fri Feb 26 12:38:00 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp: added #include "ace/Thread_Manager.h" on
+          WIN32, for ACE_Thread_Descriptor declaration.  Thanks
+          to Barry Hoggard <hoggard@cfx.com> for reporting this.
+
 Fri Feb 26 11:56:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/Log_Priority.h (ACE_Log_Priority): Removed all references to
-	  ACE_HAS_BROKEN_ENUMS since it has been deprecated (see David's
-	  ChangeLog entries from Feb 5).
+        * ace/Log_Priority.h (ACE_Log_Priority): Removed all references to
+          ACE_HAS_BROKEN_ENUMS since it has been deprecated (see David's
+          ChangeLog entries from Feb 5).
 
 Fri Feb 26 11:09:47 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.i (sema_destroy): ACE_OSCALL and ACE_OSCALL_RETURN macro
-	  calls for sem_destroy, sem_unlink and sem_close had too few
-	  arguments.  Added the missing arguments for the macros.
+        * ace/OS.i (sema_destroy): ACE_OSCALL and ACE_OSCALL_RETURN macro
+          calls for sem_destroy, sem_unlink and sem_close had too few
+          arguments.  Added the missing arguments for the macros.
 
 Fri Feb 26 10:59:45 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/Reactor/WFMO_Reactor/test_talker.cpp (main): Fixed to
-	use the new proactor interface.
+        * examples/Reactor/WFMO_Reactor/test_talker.cpp (main): Fixed to
+        use the new proactor interface.
 
 Thu Feb 25 22:17:58 1999  David L. Levine  <levine@cs.wustl.edu>
 
