@@ -21,6 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class ACE_Time_Value;
 class TAO_ORB_Core;
 class TAO_Transport;
 class TAO_Synch_Reply_Dispatcher;

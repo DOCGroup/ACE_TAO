@@ -22,6 +22,8 @@
 
 #include "LF_Invocation_Event.h"
 
+struct iovec;
+
 class ACE_Message_Block;
 class ACE_Allocator;
 /**

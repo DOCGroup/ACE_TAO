@@ -1,10 +1,10 @@
 #include "ClientRequestInfo_i.h"
 #include "Invocation.h"
 #include "Stub.h"
-#include "AbstractBase.h"
 #include "Profile.h"
 #include "Tagged_Components.h"
 #include "debug.h"
+#include "AbstractBase.h"
 
 ACE_RCSID (TAO,
            ClientRequestInfo_i,

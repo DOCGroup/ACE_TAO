@@ -26,9 +26,8 @@
 
 
 // For the (W)String_var and (W)String_out iostream operators.
-#if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
-#include "ace/streams.h"
-#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
+#include "ace/iosfwd.h"
+
 
 namespace CORBA
 {

@@ -4,6 +4,9 @@
 # include "tao/CORBA_String.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include "ace/OS.h"
+#include "ace/streams.h"
+
 
 ACE_RCSID (tao,
            CORBA_String,
