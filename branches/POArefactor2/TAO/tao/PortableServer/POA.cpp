@@ -1053,6 +1053,8 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
                                               priority,
                                               user_id.out ()) != 0)
     {
+// @Johnny, here is a mismatch with the spec, when the unique_id policy is set and
+// the servant is already in the map a ServantAlreadyActive should be generated
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
     }
@@ -1077,7 +1079,6 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   // same number of times.
   servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
-
 
   return user_id._retn ();
 }
@@ -1127,6 +1128,9 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
                              priorities_match,
                              wait_occurred_restart_call);
 
+// @johnny the implementation is not complete, this does the spec also say
+// If the POA has the UNIQUE_ID policy and the servant is already
+// in the Active Object Map, the ServantAlreadyActive exception is raised.
   if (result)
     {
       ACE_THROW (PortableServer::POA::ObjectAlreadyActive ());
@@ -1440,6 +1444,7 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   if (this->cached_policies_.id_assignment () == PortableServer::SYSTEM_ID &&
       !this->is_poa_generated_id (user_id))
     {
+// @johnny, minor code should be 14
       ACE_THROW_RETURN (CORBA::BAD_PARAM (),
                         CORBA::Object::_nil ());
     }
