@@ -1,3 +1,16 @@
+Wed Sep 29 15:35:21 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * docs/implrepo/index.html:
+        * docs/implrepo/tao_ir.html:
+        * docs/implrepo/usersguide.html:
+          
+          Replaced -ORBImplRepoServiceIOR with -ORBInitRef.
+
+        * examples/Callback_Quoter/run_test.pl:
+        * examples/Quoter/run_test.pl:
+
+          Replaced -ORBNameServiceIOR with -ORBInitRef.
+
 Wed Sep 29 15:32:31 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.cpp:

@@ -27,17 +27,17 @@ following:
 
 <ol>
   <li>Register name and startup commands with the IR using <b>tao_ir<br>
-    </b><em>Example:<code> </em>tao_ir -ORBImplRepoServiceIOR file://implrepo.ior add plane -c
-    &quot;airplane_server -i -ORBImplRepoServiceIOR file://implrepo.ior&quot;</code></li>
+    </b><em>Example:<code> </em>tao_ir -ORBInitRef ImplRepoService=file://implrepo.ior add plane -c
+    &quot;airplane_server -i -ORBInitRef ImplRepoService=file://implrepo.ior&quot;</code></li>
   <li>Start the server once to generate an IR-ified IOR</li>
   <li>Start clients and pass them the above IOR</li>
   <li>Clients will use the IOR, which will automatically go through the IR</li>
   <li>The IR will start the server if it is not already running</li>
   <li>At any time when the server is not currently in use by a client, it can be shut down
     using <strong>tao_ir<br>
-    </strong><em>Example:</em><code> tao_ir -ORBImplRepoServiceIOR file://implrepo.ior shutdown plane</code></li>
+    </strong><em>Example:</em><code> tao_ir -ORBInitRef ImplRepoService=file://implrepo.ior shutdown plane</code></li>
   <li>After the server isn't needed anymore, it can be removed from the IR database using <strong>tao_ir<br>
-    </strong><em>Example:<code> </em>tao_ir -ORBImplRepoServiceIOR file://implrepo.ior remove plane</code></li>
+    </strong><em>Example:<code> </em>tao_ir -ORBInitRef ImplRepoService=file://implrepo.ior remove plane</code></li>
 </ol>
 
 <hr>
