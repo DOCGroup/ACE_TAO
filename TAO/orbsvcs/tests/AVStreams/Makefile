@@ -11,14 +11,17 @@
 
 LDLIBS     =  -lorbsvcs -lTAO
 
-PROG_SRCS = server.cpp client.cpp
+PROG_SRCS =  main.cpp
 
 LSRC = $(PROG_SRCS)
 
-AVStreams_SERVER_OBJS = server.o
-AVStreams_CLIENT_OBJS = client.o
+#AVStreams_SERVER_OBJS = server.o
+#AVStreams_CLIENT_OBJS = client.o
 
-BIN = server client
+COSPROPERTY_OBJS = main.o
+
+#BIN = server client
+BIN = main
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
@@ -41,14 +44,19 @@ DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
 
-server:	$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+#server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
+#$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS)
 
-client:	$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+#client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
+#$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+
+main: $(addprefix $(VDIR), $(COSPROPERTY_OBJS))	
+	$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS) 
+
 
 realclean: clean
 	-/bin/rm -rf 
+
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
