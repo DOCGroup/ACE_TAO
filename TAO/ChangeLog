@@ -1,3 +1,20 @@
+Sat Oct 26 1::28:12  UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/media-timer.{h,cpp}:
+        * orbsvcs/orbsvcs/AV/media_timer.{h,cpp}:
+          Renamed media-timer to media_timer because the BCB5 Static linker
+          has problems with the - in the filename.
+
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV.bor:
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp:
+        * orbsvcs/orbsvcs/Makefile.av:
+          Updated these files because of the file rename
+
+        * tests/ORT/ServerRequestInterceptor.h:
+          Fixed fuzz error
+
 Fri Oct 25 21:48:30 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/POA.cpp (adapter_name_i):
