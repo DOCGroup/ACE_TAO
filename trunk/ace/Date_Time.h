@@ -10,7 +10,9 @@
 //    ACE_Date_Time.h
 //
 // = AUTHOR
-//    Tim Harrison (harrison@cs.wustl.edu) (and he's darn proud of this ;-))
+//    Tim Harrison (harrison@cs.wustl.edu) (and he's darn proud of
+//      this ;-))
+//      Well he shouldn't be, no const accessors, tsck, tsck, tsck ;-)
 //
 // ============================================================================
 
@@ -39,43 +41,43 @@ public:
                  long microsec = 0);
   // Set/get portions of ACE_Date_Time, no check for validity.
 
-  long day (void);
+  long day (void) const;
   // Get day.
 
   void day (long day);
   // Set day.
 
-  long month (void);
+  long month (void) const;
   // Get month.
 
   void month (long month);
   // Set month.
 
-  long year (void);
+  long year (void) const;
   // Get year.
 
   void year (long year);
   // Set year.
 
-  long hour (void);
+  long hour (void) const;
   // Get hour.
 
   void hour (long hour);
   // Set hour.
 
-  long minute (void);
+  long minute (void) const;
   // Get minute.
 
   void minute (long minute);
   // Set minute.
 
-  long second (void);
+  long second (void) const;
   // Get second.
 
   void second (long second);
   // Set second.
 
-  long microsec (void);
+  long microsec (void) const;
   // Get microsec.
 
   void microsec (long microsec);
