@@ -6,6 +6,9 @@ Tue Apr 29 00:58:06 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 Tue Apr 29 00:33:46 1997    <irfan@TWOSTEP>
 
+	* examples/Reactor/Misc/notification.cpp: Add this test to the
+ 	  Win32 makefile.
+
 	* ace: Removed config-win32-msvc2.0.h,  config-win32-msvc4.0.h
 	  config-win32-msvc4.x.h, and config-winnt-4.0-msvc.h from the
 	  repository. These files have been replaced by config-win32.h
