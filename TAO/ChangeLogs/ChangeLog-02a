@@ -1,3 +1,57 @@
+Mon Apr  9 21:05:07 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAOACE.dsw:
+
+          Even though the old TypeCodeFactory_DLL project had been
+          removed, it was still hanging around in the dependencies.
+          Removed it completely.
+
+        * examples/TypeCode_Creation/main.cpp:
+        * examples/TypeCode_Creation/test.idl:
+
+          Extended the example to include a union with all the bells
+          and whistles - multiple case labels, non-monotonic
+          non-consecutive case labels, and a default case.
+
+        * orbsvcs/IFR_Service/AttributeDef_i.cpp:
+        * orbsvcs/IFR_Service/ConstantDef_i.cpp:
+        * orbsvcs/IFR_Service/Contained_i.cpp:
+        * orbsvcs/IFR_Service/Container_i.cpp:
+        * orbsvcs/IFR_Service/ExceptionDef_i.cpp:
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/OperationDef_i.cpp:
+        * orbsvcs/IFR_Service/Repository_i.cpp:
+        * orbsvcs/IFR_Service/UnionDef_i.cpp:
+
+          Cosmetic changes.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+
+          Cosmetic changes plus a change to the dummy typecode
+          member passed in StuctMembers and UnionMembers to create
+          StructDefs, ExceptionDefs and UnionDefs in the IfR. 
+          I was using _tc_null, and the spec requires _tc_void.
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+
+          Changed some _tc_nulls to _tc_voids, as in the above item.
+
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.h:
+
+          Added several validation checks for parameters passed into
+          the typecode creation methods. The spec lists criteria for
+          valid names, ids, member and content types, discriminator
+          types, and default label types. It also requires that
+          member names and label values be unique. There is a specific
+          combination of exception and minor code to be thrown for
+          the failure to meet each of these criteria. All that is in
+          place now.
+
 Mon Apr  9 18:20:22 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tests/Portable_Interceptors/Makefile (DIRS)
