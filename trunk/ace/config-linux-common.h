@@ -40,7 +40,7 @@
 # define ACE_HAS_BROKEN_SETRLIMIT
 # define ACE_HAS_RUSAGE_WHO_ENUM enum __rusage_who
 # define ACE_HAS_RLIMIT_RESOURCE_ENUM enum __rlimit_resource
-# define ACE_HAS_SIZET_SOCKET_LEN
+# define ACE_HAS_SOCKLEN_T
 
   // NOTE:  the following defines are necessary with glibc 2.0 (0.961212-5)
   //        on Alpha.  I assume that they're necessary on Intel as well,
@@ -57,6 +57,47 @@
   extern "C" char *strtok_r __P ((char *__s, __const char *__delim,
                                   char **__save_ptr));
   // NOTE:  end of glibc 2.0 (0.961212-5)-specific configuration.
+
+#if defined (__alpha)
+// NOTE:  On __alpha only, the assembler doesn't have enough string
+//        space with -g.  You can either SUPPRESS_DASH_G = 1, or patch
+//        your binutils 2.8.1.0.1-g gas/ecoff.c as follows:
+//--- ecoff.c.ORIGINAL	Mon May 26 12:32:47 1997
+//+++ ecoff.c	Thu Jan 15 09:21:08 1998
+//@@ -769,7 +769,11 @@
+//    can't be represented (assuming there are strings > 4096 bytes).  */
+// 
+// #ifndef PAGE_SIZE
+//-#define PAGE_SIZE 4096		/* size of varray pages */
+//+// Thu Jan 15 09:21:03 CST 1998  David L. Levine  <levine@cs.wustl.edu>
+//+// Raised PAGE_SIZE to 8192 from 4096 to avoid "String too big"
+//+// errors on Linux/Alpha, with -g.  The OS page size is 8192, so this
+//+// should be OK.
+//+#define PAGE_SIZE 8192		/* size of varray pages */
+// #endif
+// 
+// #define PAGE_USIZE ((unsigned long) PAGE_SIZE)
+
+// NOTE: you'll need to patch /usr/src/linux/include/linux/posix_types.h
+//       as follows:
+//--- posix_types.h.ORIGINAL	Wed Nov 12 12:01:56 1997
+//+++ posix_types.h	Wed Jan 14 13:07:47 1998
+//@@ -41,9 +41,13 @@
+// #undef __FDMASK
+// #define	__FDMASK(d)	(1UL << ((d) % __NFDBITS))
+// 
+//-typedef struct fd_set {
+//+#include <gnu/types.h>
+//+typedef __fd_set __kernel_fd_set;
+//+#if 0
+//+typedef struct kernel_fd_set {
+// 	unsigned long fds_bits [__FDSET_LONGS];
+// } __kernel_fd_set;
+//+#endif
+// 
+// /* Type of a signal handler.  */
+// typedef void (*__kernel_sighandler_t)(int);
+#endif /* ! __alpha */
 
 #else
 #endif /* __GLIBC__ */
