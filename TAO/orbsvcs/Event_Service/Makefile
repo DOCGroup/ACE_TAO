@@ -161,7 +161,7 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
  $(TAO_ROOT)/tao/Align.h \
- $(TAO_ROOT)/tao/CORBA.h \
+ $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Sequence.h \
  $(TAO_ROOT)/tao/Sequence.i \
  $(TAO_ROOT)/tao/Sequence_T.h \
@@ -179,7 +179,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/Exception.h \
  $(TAO_ROOT)/tao/NVList.h \
  $(TAO_ROOT)/tao/Object.h \
- $(TAO_ROOT)/tao/ORB.h \
  $(TAO_ROOT)/tao/Principal.h \
  $(TAO_ROOT)/tao/Request.h \
  $(TAO_ROOT)/tao/Server_Request.h \
@@ -221,7 +220,6 @@ Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
  $(TAO_ROOT)/tao/default_client.i \
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/Connect.i \
- $(TAO_ROOT)/tao/CORBA.i \
  $(TAO_ROOT)/tao/Request.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
