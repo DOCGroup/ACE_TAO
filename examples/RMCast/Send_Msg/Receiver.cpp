@@ -31,7 +31,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     Message expected_msg;
     expected_msg.sn = 0;
 
-    // VC6 does not know about new rules.
+    // VC6 does not know about the new rules.
     //
     {
       for (unsigned short i = 0; i < payload_size; i++)
@@ -60,7 +60,21 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     while (true)
     {
-      socket.recv (&msg, sizeof (msg));
+      size_t s = socket.size ();
+
+      if (s != sizeof (msg))
+      {
+        ACE_ERROR ((LM_ERROR, "unexpected message size %d, expected %d\n",
+                    s, sizeof (msg)));
+        continue;
+      }
+
+      if (socket.recv (&msg, sizeof (msg)) != s)
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "recv() reported different size than size()\n"));
+        continue;
+      }
 
       if (received[msg.sn] == 1)
       {

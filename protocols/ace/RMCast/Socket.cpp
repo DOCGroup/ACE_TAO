@@ -37,6 +37,9 @@ namespace ACE_RMCast
     size_t
     recv_ (void* buf, size_t s);
 
+    size_t
+    size_ ();
+
   private:
     virtual void
     recv (Message_ptr m);
@@ -137,6 +140,26 @@ namespace ACE_RMCast
     return r;
   }
 
+  size_t Socket_Impl::
+  size_ ()
+  {
+    Lock l (mutex_);
+
+    while (queue_.is_empty ()) cond_.wait ();
+
+    // I can't get the head of the queue without actually dequeuing
+    // the element.
+    //
+    Message_ptr m;
+    if (queue_.dequeue_head (m) == -1) abort ();
+    if (queue_.enqueue_head (m) == -1) abort ();
+
+    Data const* d = static_cast<Data const*>(m->find (Data::id));
+
+    return d->size ();
+  }
+
+
   void Socket_Impl::
   recv (Message_ptr m)
   {
@@ -186,5 +209,11 @@ namespace ACE_RMCast
   recv (void* buf, size_t s)
   {
     return impl_->recv_ (buf, s);
+  }
+
+  size_t Socket::
+  size ()
+  {
+    return impl_->size_ ();
   }
 }
