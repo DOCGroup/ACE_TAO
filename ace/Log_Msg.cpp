@@ -804,10 +804,11 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
 
                 case 'I': // Indent with nesting_depth*width spaces
                   type = SKIP_SPRINTF;
-                  if (!wpc) w[wpc++] = 1;
-                  w[wpc-1] *=   this->trace_depth_;
-                  memset(bp, ' ', w[wpc-1]);
-                  bp += w[wpc-1];
+                  if (!wpc) 
+                    w[wpc++] = 1;
+                  w[wpc-1] *= this->trace_depth_;
+                  ACE_OS::memset (bp, ' ', w[wpc-1]);
+                  bp += w[wpc - 1];
                   *bp = '\0';
                   break;
 
