@@ -1,5 +1,4 @@
 // $Id$
-
 #include "tao/Active_Object_Map.h"
 
 #if !defined (__ACE_INLINE__)
@@ -9,6 +8,7 @@
 #include "ace/Auto_Ptr.h"
 
 ACE_RCSID(tao, Active_Object_Map, "$Id$")
+
 
 TAO_Active_Object_Map::Map_Entry::Map_Entry (void)
   : user_id_ (),

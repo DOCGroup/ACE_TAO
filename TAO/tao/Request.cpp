@@ -6,7 +6,8 @@
 
 #include "tao/Object.h"
 #include "tao/Stub.h"
-#include "tao/GIOP.h"
+#include "tao/Pluggable_Messaging_Utils.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Request.i"
@@ -191,7 +192,7 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
 {
   switch (reply_status)
   {
-    case TAO_GIOP_NO_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION:
       if (this->result_ != 0)
         {
           this->result_->value ()->_tao_decode (incoming,
@@ -214,9 +215,9 @@ CORBA_Request::handle_response (TAO_InputCDR &incoming,
       }
 
       break;
-    case TAO_GIOP_USER_EXCEPTION:
-    case TAO_GIOP_SYSTEM_EXCEPTION:
-    case TAO_GIOP_LOCATION_FORWARD:
+    case TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION:
+    case TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD:
     default:
       // @@ (JP) Don't know what to do about any of these yet.
       ACE_ERROR ((LM_ERROR,

@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 //
 // $Id$
+
 //
 // ================================================================
 //
@@ -622,6 +623,7 @@ TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        IOP::ServiceContextList *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
                                        const IOP::ServiceContextList *&);
+
 
 #ifndef __ACE_INLINE__
 
