@@ -274,7 +274,7 @@ iiop_string_to_object (CORBA::String string,
 // Destringify arbitrary objrefs.
 
 CORBA::Object_ptr
-IIOP_ORB::string_to_object (const CORBA::String str,
+IIOP_ORB::string_to_object (CORBA::String str,
                             CORBA::Environment &env)
 {
   env.clear ();

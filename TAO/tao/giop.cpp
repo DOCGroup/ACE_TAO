@@ -77,7 +77,7 @@ dump_msg (const char *label,
 }
 
 CORBA::Boolean
-TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
+TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
                         CDR &stream)
 {
   ACE_TIMEPROBE ("  -> GIOP::send_request - start");
@@ -145,7 +145,6 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) closing conn %d after fault\n", peer.get_handle ()));
           handler->close ();
-          handler = 0;
           ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
           return CORBA::B_FALSE;
         }
@@ -155,7 +154,6 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
                       "(%P|%t) OutgoingMessage::writebuf () ... EOF, closing conn %d\n",
                       peer.get_handle ()));
           handler->close ();
-          handler = 0;
           ACE_TIMEPROBE ("  -> GIOP::send_request - fail");
           return CORBA::B_FALSE;
         }
@@ -774,9 +772,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
                              CORBA::Environment &env)
 {
   // Send Request, return on error or if we're done
-  TAO_SVC_HANDLER *handler = this->handler_;
 
-  if (TAO_GIOP::send_request (handler, this->stream_) == CORBA::B_FALSE)
+  if (this->handler_->send_request (this->stream_) == -1)
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
@@ -837,7 +834,8 @@ TAO_GIOP_Invocation::invoke (CORBA::ExceptionList &exceptions,
   // (explicitly coded) handlers called.  We assume a POSIX.1c/C/C++
   // environment.
 
-  TAO_GIOP_MsgType m = TAO_GIOP::recv_request (handler, this->stream_, env);
+  TAO_GIOP_MsgType m = TAO_GIOP::recv_request (this->handler_,
+                                               this->stream_, env);
   switch (m)
     {
     case TAO_GIOP_Reply:
