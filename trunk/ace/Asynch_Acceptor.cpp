@@ -37,11 +37,12 @@ ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor (void)
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor (void)
 {
-  //this->asynch_accept_.close ();
-
   // Close down the listen socket
   if (this->listen_handle_ != ACE_INVALID_HANDLE)
-    ACE_OS::closesocket (this->listen_handle_);
+    {
+      ACE_OS::closesocket (this->listen_handle_);
+      this->listen_handle_ = ACE_INVALID_HANDLE;
+    }
 }
 
 template <class HANDLER> int
@@ -326,8 +327,10 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   // Delete the dynamically allocated message_block
   result.message_block ().release ();
 
-  // Start off another asynchronous accept to keep the backlog going
-  if (this->should_reissue_accept ())
+  // Start off another asynchronous accept to keep the backlog going,
+  // unless we closed the listen socket already (from the destructor).
+  if (this->should_reissue_accept () &&
+      this->listen_handle_ != ACE_INVALID_HANDLE)
     this->accept (this->bytes_to_read_);
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || defined (ACE_HAS_AIO_CALLS */
 }

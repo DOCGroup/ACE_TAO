@@ -16,11 +16,11 @@ ACE_RCSID (ace,
 # if defined (ACE_HAS_EVENT_POLL) && defined (linux)
 #  include /**/ <sys/epoll.h>
 # elif defined (ACE_HAS_DEV_POLL)
-#    if defined (sun)
-#      include /**/ <sys/devpoll.h>
-#    elif defined (linux)
+#    if defined (linux)
 #      include /**/ <linux/devpoll.h>
-#    endif  /* sun */
+#    else
+#      include /**/ <sys/devpoll.h>
+#    endif  /* linux */
 # endif  /* ACE_HAS_DEV_POLL */
 
 #if !defined (__ACE_INLINE__)
