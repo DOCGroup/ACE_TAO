@@ -314,6 +314,11 @@ TAO_GIOP_ReplyStatusType
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
 				    CORBA::Environment &env)
 {
+  TAO_GIOP_ReplyStatusType retval = 
+    TAO_GIOP_Invocation::invoke (CORBA::B_TRUE, env);
+  if (env.exception () != 0)
+    return retval;
+
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,
   // so most response messages are illegal.
