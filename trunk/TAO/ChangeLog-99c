@@ -1,7 +1,9 @@
 Thu Jun 10 15:24:21 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp: Added the inclusion of ace/Object_Manager.h
-	  because of the use of ACE_Static_Object_Lock.
+	  because of the use of ACE_Static_Object_Lock.  Thanks to
+	  J. Russell Noseworthy <rnosewor@objectsciences.com> for
+	  reporting this.
 
 Thu Jun 10 15:27:39 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
