@@ -169,6 +169,9 @@ public:
   ACE_Reverse_Lock<ACE_SYNCH_MUTEX> &reverse_lock (void);
   // Accessors
 
+  int has_clients (void) const;
+  // Check if there are any client threads running
+
 private:
   TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
   // Shortcut to obtain the TSS resources of the orb core.
@@ -191,6 +194,10 @@ private:
   // There could be many leaders in the thread pool (i.e. calling
   // ORB::run), and the same leader could show up multiple times as it
   // receives nested upcalls and sends more requests.
+
+  int clients_;
+  // Count the number of active clients, this is useful to know when
+  // to deactivate the reactor
 };
 
 // ****************************************************************
@@ -414,6 +421,13 @@ public:
   int run (ACE_Time_Value *tv, int break_on_timeouts);
   // Run the event loop
 
+  void shutdown (CORBA::Boolean wait_for_completion,
+                 CORBA::Environment &ACE_TRY_ENV);
+  // End the event loop
+
+  int has_shutdown (void);
+  // Get the shutdown flag value
+
 protected:
   int set_iiop_endpoint (int dotted_decimal_addresses,
                          CORBA::UShort port,
@@ -560,6 +574,10 @@ protected:
 
   TAO_Leader_Follower leader_follower_;
   // Information about the leader follower model
+
+  int has_shutdown_;
+  // Flag which denotes that the ORB should shut down and <run> should
+  // return.
 };
 
 // ****************************************************************
