@@ -483,9 +483,6 @@ TAO_DynStruct_i::destroy (CORBA::Environment &ACE_TRY_ENV)
           ACE_CHECK;
         }
     }
-
-  // Free the top level
-  delete this;
 }
 
 DynamicAny::DynAny_ptr
