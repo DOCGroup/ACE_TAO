@@ -1119,7 +1119,7 @@ struct ACE_rwlock_t
   //     At the current time, this stuff only works for threads
   //     within the same process.
 {
-friend class ACE_rwlock_t;
+friend class ACE_OS;
 private:
   ACE_mutex_t lock_; 
   // Serialize access to internal state.
