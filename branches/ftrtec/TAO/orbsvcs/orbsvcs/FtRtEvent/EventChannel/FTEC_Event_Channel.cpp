@@ -355,8 +355,8 @@ TAO_FTEC_Event_Channel::disconnect_push_supplier (
         CORBA::SystemException
       ))
 {
-  return ec_impl_->disconnect_push_supplier(oid
-                                            ACE_ENV_ARG_PARAMETER);
+  ec_impl_->disconnect_push_supplier(oid
+                                     ACE_ENV_ARG_PARAMETER);
 }
 
 void
