@@ -152,7 +152,7 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
     &diff ()  ||
     &create_kit ();
 } else {
-  &create_kit ();
+  $status = &create_kit ();
 }
 &cleanup;
 
