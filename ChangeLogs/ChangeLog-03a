@@ -1,3 +1,10 @@
+Tue Oct 16 01:55:44 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/SString.cpp (operator<<): Avoided the problem of printing
+	  wchar strings temporarily.  Using ACE_Wide_To_Ascii didn't work
+	  on platforms that don't support wchar.  Thanks to Keith Hamburg
+	  for pointing this out.
+
 Wed Oct 10 21:17:40 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/String_Base.cpp: Fixed incorrect RCSID name.  Thanks to
