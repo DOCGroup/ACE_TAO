@@ -24,7 +24,7 @@
 # include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
 #endif //  PG_PS_UNIT_TEST
 
-int main (int argc, ACE_TCHAR * argv[] )
+int main (int argc, char * argv[] )
 {
   // create an instance of the factory and give it the first
   // chance at the arguments.
@@ -101,5 +101,7 @@ int main (int argc, ACE_TCHAR * argv[] )
   }
   return result;
 }
+
+#include "ace/post.h"
 
 
