@@ -353,6 +353,12 @@ ACE_Log_Msg::log (const char *format_str,
   extern int sys_nerr;
   typedef void (*PTF)(...);
 
+  // Only print the message if <priority_mask_> hasn't been reset to
+  // exclude this logging priority.
+
+  if (ACE_BIT_DISABLED (this->priority_mask_, log_priority))
+    return 0;
+
   ACE_Log_Record log_record (log_priority, 
 			     ACE_OS::time ((time_t *) 0),
 			     this->getpid ());
@@ -583,11 +589,8 @@ ACE_Log_Msg::log (const char *format_str,
 
   ACE_OS::free (ACE_MALLOC_T (save_p));
 
-  // Only print the message if "SILENT" mode is disabled and the
-  // <priority_mask_> hasn't been reset to exclude this logging
-  // priority.
-  if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT) == 0
-      && ACE_BIT_ENABLED (this->priority_mask_, log_priority))
+  // Only print the message if "SILENT" mode is disabled.
+  if (ACE_BIT_DISABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT))
     {
       // Copy the message from thread-specific storage into the
       // transfer buffer (this can be optimized away by changing other

@@ -196,14 +196,18 @@ ACE_Thread::setcancelstate (struct cancel_state &new_state,
   int old_ctype;
 
   if (new_state.cancelstate != 0
-      && ACE_OS::thr_setcancelstate (new_state.cancelstate, &old_cstate) == 0)
+      && ACE_OS::thr_setcancelstate (new_state.cancelstate, 
+				     &old_cstate) == 0)
     return -1;
 
   if (new_state.canceltype != 0 
-      && ACE_OS::thr_setcanceltype (new_state.canceltype, &old_ctype) == 0)
+      && ACE_OS::thr_setcanceltype (new_state.canceltype, 
+				    &old_ctype) == 0)
     {
       int o_cstate;
-      ACE_OS::thr_setcancelstate (old_cstate, &o_cstate);
+
+      ACE_OS::thr_setcancelstate (old_cstate, 
+				  &o_cstate);
       return -1;
     }
 

@@ -442,6 +442,19 @@ ACE_MT_CORBA_Handler::process_events (void *)
 {
   ACE_TRACE ("ACE_MT_CORBA_Handler::process_events");
 
+  // Special knowlege, we "know" that we are dealing with a singleton
+  // and that we are invoked in a context where the mutex controlling
+  // instance creation is held, so by the time we get the mutex
+  // the instance must exist.
+  if (ACE_MT_CORBA_Handler::instance_ == 0)
+    {
+      ACE_GUARD_RETURN (ACE_Thread_Mutex, 
+		        ace_mon, 
+		        ace_mt_corba_handler_lock_,
+			0);
+      ACE_ASSERT (ACE_MT_CORBA_Handler::instance_ != 0);
+    }
+
   ACE_Thread_Control t (ACE_MT_CORBA_Handler::instance_->thr_mgr ());
   
   // This thread only processes events.
