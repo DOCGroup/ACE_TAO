@@ -9,10 +9,10 @@ Sat Feb  6 22:07:45 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
 Sat Feb  6 20:30:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/CDR.h: 
-	* ace/CDR.i: 
-	* ace/CDR.cpp: 
-	  Fixed some indentation and style problems.
+        * ace/CDR.h:
+        * ace/CDR.i:
+        * ace/CDR.cpp:
+          Fixed some indentation and style problems.
 
 Sat Feb 06 07:47:20 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -24,10 +24,10 @@ Sat Feb 06 02:41:07 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
         * tests/Map_Test.cpp: The hell of explicit template instantiation.
           Someone please save me from these stupid compilers.
 
-        * ace/Map: Damm stupid broken g++ (2.7) has deformed my beautiful
-          code based on typedefs and forced me to use their basic form.  I
-          hate this shit!  However, users should continue to use the
-          typedefs provided as I do in the Map_Test.
+        * ace/Map: Broken g++ (2.7) has deformed my beautiful code based
+          on typedefs and forced me to use their basic form.  However,
+          users should continue to use the typedefs provided as I do in
+          the Map_Test.
 
 Fri Feb 05 21:57:24 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
