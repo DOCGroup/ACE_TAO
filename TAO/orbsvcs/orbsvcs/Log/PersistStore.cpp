@@ -27,7 +27,7 @@ PersistStore::open (const char * file_name)
                                 O_RDWR | O_CREAT | O_TRUNC,
                                 ACE_DEFAULT_FILE_PERMS);
 
-  if (ACE_static_cast(int,this->write_persistent_file_) == -1) {
+  if (this->write_persistent_file_ == ACE_INVALID_HANDLE) {
     perror ("open:write");
     return -1;
   }
@@ -36,7 +36,7 @@ PersistStore::open (const char * file_name)
   this->read_persistent_file_ = ACE_OS::open (file_name,
                                           O_RDONLY);
 
-  if (ACE_static_cast(int,this->write_persistent_file_) == -1) {
+  if (this->write_persistent_file_ == ACE_INVALID_HANDLE) {
     perror ("open:read");
     return -1;
   }
@@ -154,16 +154,20 @@ PersistStore::retrieve (DsLogAdmin::RecordId id, DsLogAdmin::LogRecord &rec)
   // Move to the beginning of the file.
   ACE_OS::lseek (this->read_persistent_file_, 0, SEEK_SET);
 
-  while (read (ACE_static_cast(int,this->write_persistent_file_), 
-               (void*) &data, 
-               sizeof (PersistentData)) > 0)
+  while (ACE_OS::read (this->write_persistent_file_,
+                       (void*) &data, 
+                       sizeof (PersistentData)) > 0)
   {
     tc = new CORBA::TypeCode (data.kind);
 
-    read (ACE_static_cast(int,this->write_persistent_file_), (void*) tc.in (), sizeof (CORBA::TypeCode));
+    ACE_OS::read (this->write_persistent_file_,
+                  (void*) tc.in (),
+                  sizeof (CORBA::TypeCode));
 
     mb_data = new char[data.mb_size];
-    read (ACE_static_cast(int,this->write_persistent_file_), (void*) mb_data, data.mb_size);
+    ACE_OS::read (this->write_persistent_file_,
+                  (void*) mb_data,
+                  data.mb_size);
 
     // Check to see if this id matches.
     if (id == data.id)
