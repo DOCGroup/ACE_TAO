@@ -1,3 +1,13 @@
+Thu Sep 28 17:47:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_info_rettype.cpp:
+
+	  Fixed generated code for more use cases of interceptors. The
+	  errors that prompted this fix were in FT_CORBA.idl and 
+	  reported by Aniruddha Gokhale <gokhale@research.bell-labs.com>.
+
 Thu Sep 28 14:35:32 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* orbsvcs/tests/Notify/performance_tests/RedGreen/Makefile:
