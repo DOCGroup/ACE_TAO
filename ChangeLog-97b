@@ -1,3 +1,11 @@
+Tue Nov 18 11:40:18 1997  Steve Huston  <shuston@riverace.com>
+
+	* ace/IOStream.(cpp h): Added:   &&(ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+	  to the #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) lines to only use
+	  the new iostreams things if that's been selected by the config file.
+	  In ACE_Streambuf::overflow(), changed:
+  	     if (!eback())  to    if (!pbase())
+
 Tue Nov 18 08:23:53 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/Thread_Pool_Test.cpp (open): Moved the activate() method
