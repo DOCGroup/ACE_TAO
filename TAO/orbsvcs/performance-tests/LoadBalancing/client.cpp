@@ -127,7 +127,7 @@ main (int argc, char *argv[])
 
       ACE_Sample_History history (niterations);
 
-      const float usecs = 1.0 / rate * 1e6;
+      // const float usecs = 1.0 / rate * 1e6;
 
       // ACE_Time_Value tv (0, ACE_static_cast (const long, usecs));
 
