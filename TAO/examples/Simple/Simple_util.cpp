@@ -175,12 +175,11 @@ Server<Servant>::register_name (void)
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
+      ACE_TRY_ENV.clear ();
       ACE_ERROR_RETURN ((LM_DEBUG,
                          "Unable to bind %s \n",
                          name),
                         -1);
-                         
-      ACE_TRY_ENV.clear ();
     }
   ACE_ENDTRY;
 
