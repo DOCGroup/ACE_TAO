@@ -4,6 +4,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
+#include "ace/Profile_Timer.h"
 #include "../Latency_Stats.h"
 
 static size_t number_of_messages = 100;
@@ -99,7 +100,8 @@ Leader_Follower_Task::svc (void)
             {
               ++burst;
               messages_in_this_burst = 0;
-              ACE_OS::sleep (timeout_between_bursts);
+              ACE_Time_Value tv (0, timeout_between_bursts);
+              ACE_OS::sleep (tv);
             }
 
           if (messages_in_this_burst == 0)
@@ -244,8 +246,8 @@ main (int argc, ASYS_TCHAR *argv[])
                   Leader_Follower_Task *[number_of_threads],
                   -1);
 
-  ACE_Rusage begin_rusage;
-  ACE_OS::getrusage (RUSAGE_SELF, &begin_rusage);
+  ACE_Profile_Timer timer;
+  timer.start ();
 
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
@@ -286,8 +288,9 @@ main (int argc, ASYS_TCHAR *argv[])
   // Wait for all threads to terminate.
   result = ACE_Thread_Manager::instance ()->wait ();
 
-  ACE_Rusage end_rusage;
-  ACE_OS::getrusage (RUSAGE_SELF, &end_rusage);
+  timer.stop ();
+  ACE_Rusage rusage;
+  timer.elapsed_rusage (rusage);
 
   Latency_Stats latency;
   Throughput_Stats throughput;
@@ -295,6 +298,8 @@ main (int argc, ASYS_TCHAR *argv[])
     {
       latency.accumulate (leader_followers[i]->latency_stats_);
       throughput.accumulate (leader_followers[i]->throughput_stats_);
+      ACE_DEBUG ((LM_DEBUG, "Thread[%d]: ", i));
+      leader_followers[i]->throughput_stats_.dump_results ("", "");
     }
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals for latency:\n"));
@@ -302,10 +307,15 @@ main (int argc, ASYS_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "\nTotals for throughput:\n"));
   throughput.dump_results (argv[0], "throughput");
-
-  ACE_DEBUG ((LM_DEBUG, "\nRusage %d/%d\n",
-              end_rusage.ru_nvcsw - begin_rusage.ru_nvcsw,
-              end_rusage.ru_nivcsw - begin_rusage.ru_nivcsw));
+  
+  ACE_DEBUG ((LM_DEBUG, "\n(%t) Context switches %d/%d\n",
+#if defined(ACE_HAS_PRUSAGE_T)
+              rusage.pr_vctx,
+              rusage.pr_ictx));
+#else
+              rusage.pr_vctx,
+              rusage.pr_ictx));
+#endif /* ACE_HAS_PRUSAGE_T */
 
   for (i = 0; i < number_of_threads; ++i)
     {
