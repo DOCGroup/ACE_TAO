@@ -9,6 +9,14 @@
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
 #include "ace/Thread_Manager.h"
+#include "ace/streams.h"
+
+#include <string>
+
+#if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
+                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0))
+#  error "Must add to config.h: #define ACE_HAS_STANDARD_CPP_LIBRARY 1"
+#endif
 
 
 class Quit_Handler : public ACE_Event_Handler {
@@ -53,7 +61,7 @@ class Server_Shutdown : public ACE_Service_Object {
 public:
   virtual int init (int, ACE_TCHAR *[]) {
     reactor_ = ACE_Reactor::instance ();
-    ACE_Thread_Manager::instance ()->spawn
+    return ACE_Thread_Manager::instance ()->spawn
       (controller, reactor_, THR_DETACHED);
   }
 
@@ -68,4 +76,5 @@ private:
   ACE_Reactor *reactor_;
 };
 
-ACE_FACTORY_DEFINE (Server_Shutdown)
+ACE_FACTORY_DECLARE (SLDEX, Server_Shutdown)
+ACE_FACTORY_DEFINE (SLDEX, Server_Shutdown)
