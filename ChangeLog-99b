@@ -1,3 +1,29 @@
+Tue Oct 19 00:43:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-win32-common.h: Undefined ACE_HAS_EXCEPTIONS under
+	  WinCE.
+
+	The following changes are contributions from James Buck
+	  <jim@newsol.com> and Peter C. Chien <peter@newsol.com>.
+
+	* ace/config-WinCE.h (ACE_LACKS_SOCKET_BUFSIZ): We cannot change
+	  the socket buffer size on WinCE.
+
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/OS.cpp: Added a customized TSS errno implementation for
+	  WinCE version 2.10 and above based on James and Peter's patch.
+	  ACE_Errno_Guard also had to be changed when using this
+	  implementation.  However, this code is not active by default
+	  because I don't know how to detect CE's OS and platform
+	  configuration automatically.  To use the code, define
+	  ACE_HAS_WINCE_BROKEN_ERRNO.
+
+	* ace/OS.i(cond_wait,cond_timedwait): On WinCE, we must tweak the
+	  returning result from the semaphore if timeout occurred.
+	  Because CE uses the simulated semaphore, the returning value is
+	  not the same as that returned by a native semaphore.
+
 Tue Oct 19 00:03:57 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* include/makeinclude/wrapper_macros.GNU:
@@ -36,7 +62,7 @@ Mon Oct 18 21:32:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	Updates that remove need to use _GNU_SOURCE macro on Linux/glibc
 	systems [Bug 167]:
-	
+
 	* ace/OS.i:
 
 	  Return ACE_static_cast (off_t, -1), instead of just -1 in
@@ -58,7 +84,7 @@ Mon Oct 18 21:32:29 1999  Ossama Othman  <othman@cs.wustl.edu>
 	  member.  It's not pretty, but it works.
 
 	* ace/config-linux-common.h:
-	
+
 	  strptime() is an XOPEN function.  It is only enabled if
 	  _XOPEN_SOURCE or _GNU_SOURCE is defined (_GNU_SOURCE causes
 	  _XOPEN_SOURCE to be defined on Linux/glibc systems).  If

@@ -5070,59 +5070,6 @@ extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
 
-class ACE_Export ACE_Errno_Guard
-{
-  // = TITLE
-  //   Provides a wrapper to improve performance when thread-specific
-  //   errno must be saved and restored in a block of code.
-  //
-  // = DESCRIPTION
-  //   The typical use-case for this is the following:
-  //
-  //   int error = errno;
-  //   call_some_function_that_might_change_errno ();
-  //   errno = error;
-  //
-  //   This can be replaced with
-  //
-  //   {
-  //     ACE_Errno_Guard guard (errno);
-  //     call_some_function_that_might_change_errno ();
-  //   }
-  //
-  //   This implementation is more elegant and more efficient since it
-  //   avoids an unnecessary second access to thread-specific storage
-  //   by caching a pointer to the value of errno in TSS.
-public:
-  // = Initialization and termination methods.
-  ACE_Errno_Guard (int &errno_ref,
-                   int error);
-  //  Stash the value of <error> into <error_> and initialize the
-  //  <errno_ptr_> to the address of <errno_ref>.
-
-  ACE_Errno_Guard (int &errno_ref);
-  //  Stash the value of <errno> into <error_> and initialize the
-  //  <errno_ptr_> to the address of <errno_ref>.
-
-  ~ACE_Errno_Guard (void);
-  // Reset the value of <errno> to <error>.
-
-  int operator= (int error);
-  // Assign <error> to <error_>.
-
-  int operator== (int error);
-  // Compare <error> with <error_> for equality.
-
-  int operator!= (int error);
-  // Compare <error> with <error_> for inequality.
-
-private:
-#if defined (ACE_MT_SAFE)
-  int *errno_ptr_;
-#endif /* ACE_MT_SAFE */
-  int error_;
-};
-
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #if defined (ACE_HAS_WINSOCK2_GQOS)
 typedef SERVICETYPE ACE_SERVICE_TYPE;
@@ -7942,6 +7889,31 @@ ace_main_i
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 # if defined (ACE_HAS_WINCE)
+#   if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+class ACE_Export ACE_CE_Errno
+{
+  // Some versions of CE don't support <errno> and some versions'
+  // implementations are busted.  So we implement our own.
+  // Our implementation takes up one Tls key, however, it does not
+  // allocate memory fromt the heap so there's no problem with cleanin
+  // up the errno when a thread exit.
+public:
+  ACE_CE_Errno () {}
+  static void init ();
+  static void fini ();
+  static ACE_CE_Errno *instance ();
+
+  operator int (void) const;
+  int operator= (int);
+
+private:
+  static ACE_CE_Errno *instance_;
+  static DWORD errno_key_;
+};
+
+#     define errno (* (ACE_CE_Errno::instance ()))
+#   endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+
 class ACE_Export ACE_CE_Bridge
 {
   // = TITLE
@@ -8010,6 +7982,70 @@ private:
   // A pointer to the default ACE_CE_BRIDGE obj.
 };
 # endif /* ACE_HAS_WINCE */
+
+#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+#  define ACE_ERRNO_TYPE ACE_CE_Errno
+#else
+#  define ACE_ERRNO_TYPE int
+#endif /* ACE_HAS_WINCE */
+
+class ACE_Export ACE_Errno_Guard
+{
+  // = TITLE
+  //   Provides a wrapper to improve performance when thread-specific
+  //   errno must be saved and restored in a block of code.
+  //
+  // = DESCRIPTION
+  //   The typical use-case for this is the following:
+  //
+  //   int error = errno;
+  //   call_some_function_that_might_change_errno ();
+  //   errno = error;
+  //
+  //   This can be replaced with
+  //
+  //   {
+  //     ACE_Errno_Guard guard (errno);
+  //     call_some_function_that_might_change_errno ();
+  //   }
+  //
+  //   This implementation is more elegant and more efficient since it
+  //   avoids an unnecessary second access to thread-specific storage
+  //   by caching a pointer to the value of errno in TSS.
+public:
+  // = Initialization and termination methods.
+  ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
+                   int error);
+  //  Stash the value of <error> into <error_> and initialize the
+  //  <errno_ptr_> to the address of <errno_ref>.
+
+  ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref);
+  //  Stash the value of <errno> into <error_> and initialize the
+  //  <errno_ptr_> to the address of <errno_ref>.
+
+  ~ACE_Errno_Guard (void);
+  // Reset the value of <errno> to <error>.
+
+#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+  int operator= (const ACE_ERRNO_TYPE &errno_ref);
+  // Assign <errno_ref> to <error_>.
+#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+
+  int operator= (int error);
+  // Assign <error> to <error_>.
+
+  int operator== (int error);
+  // Compare <error> with <error_> for equality.
+
+  int operator!= (int error);
+  // Compare <error> with <error_> for inequality.
+
+private:
+#if defined (ACE_MT_SAFE)
+  ACE_ERRNO_TYPE *errno_ptr_;
+#endif /* ACE_MT_SAFE */
+  int error_;
+};
 
 // This is used to indicate that a platform doesn't support a
 // particular feature.

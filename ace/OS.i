@@ -115,7 +115,7 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 #endif /* ACE_LACKS_MALLOC_H */
 
 ACE_INLINE
-ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref,
+ACE_Errno_Guard::ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
                                   int error)
   :
 #if defined (ACE_MT_SAFE)
@@ -129,7 +129,7 @@ ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref,
 }
 
 ACE_INLINE
-ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref)
+ACE_Errno_Guard::ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref)
   :
 #if defined (ACE_MT_SAFE)
     errno_ptr_ (&errno_ref),
@@ -148,6 +148,14 @@ ACE_Errno_Guard::~ACE_Errno_Guard (void)
 #endif /* ACE_MT_SAFE */
 }
 
+#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+ACE_INLINE int
+ACE_Errno_Guard::operator= (const ACE_ERRNO_TYPE &error)
+{
+  return this->error_ = error;
+}
+#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
+
 ACE_INLINE int
 ACE_Errno_Guard::operator= (int error)
 {
@@ -165,6 +173,29 @@ ACE_Errno_Guard::operator!= (int error)
 {
   return this->error_ != error;
 }
+
+#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
+ACE_INLINE ACE_CE_Errno *
+ACE_CE_Errno::instance ()
+{
+  // This should be inlined.
+  return ACE_CE_Errno::instance_;
+}
+
+ACE_INLINE
+ACE_CE_Errno::operator int (void) const
+{
+  return (int) TlsGetValue (ACE_CE_Errno::errno_key_);
+}
+
+ACE_INLINE int
+ACE_CE_Errno::operator= (int x)
+{
+  // error checking?
+  TlsSetValue (ACE_CE_Errno::errno_key_, (void *) x);
+  return x;
+}
+#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
 
 // Returns the value of the object as a timeval.
 
@@ -4082,7 +4113,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
     // give preference to writers over readers...
     {
       result = ACE_OS::cond_signal (&rw->waiting_writers_);
-      error = errno;
+      error =  errno;
     }
   else if (rw->num_waiting_readers_ > 0 && rw->num_waiting_writers_ == 0)
     {
