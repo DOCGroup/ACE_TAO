@@ -41,16 +41,7 @@ TAO_Time_Service_Server::universal_time (CORBA::Environment &_env)
 CosTime::UTO_ptr
 TAO_Time_Service_Server::secure_universal_time (CORBA::Environment &env)
 {
-  TAO_TRY
-    {
-      TAO_TRY_ENV.exception (new CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Exception:");
-    }
-  TAO_ENDTRY;
-
+  env.exception (new CORBA::NO_IMPLEMENT (CORBA::COMPLETED_NO));
   return 0;
 }
 
