@@ -4,6 +4,7 @@
 #include "HTTP_Request.h"
 #include "HTTP_Helpers.h"
 #include "HTTP_Config.h"
+#include "ace/OS_String.h"
 
 ACE_RCSID(server, HTTP_Request, "$Id$")
 
@@ -97,7 +98,7 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
         while (this->headers_.complete_header_line (mb.rd_ptr ()) > 0);
     }
 
-  mb.wr_ptr (strlen(mb.rd_ptr ()) - mb.length ());
+  mb.wr_ptr (ACE_OS_String::strlen(mb.rd_ptr ()) - mb.length ());
 
   if (this->headers_.end_of_headers ()
       || (this->got_request_line () && this->version () == 0))

@@ -1,6 +1,8 @@
 // $Id$
 
 #include "ace/Log_Msg.h"
+#include "ace/ace_ctype.h"
+#include "ace/OS_String.h"
 
 #include "Parse_Headers.h"
 
@@ -64,7 +66,7 @@ Headers::parse_header_line (char * const header_line)
     }
 
   // Write back the unused portion of the input.
-  ACE_OS::memmove (header_line, ptr, strlen(ptr) + 1);
+  ACE_OS::memmove (header_line, ptr, ACE_OS_String::strlen(ptr) + 1);
 }
 
 int

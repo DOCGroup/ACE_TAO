@@ -5,6 +5,7 @@
 
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
+#include "ace/Main_Macros.h"
 
 ACE_RCSID(file_reverse, file_reverse, "$Id$")
 

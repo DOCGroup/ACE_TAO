@@ -1,6 +1,9 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Global_Macros.h"
+#include "ace/Trace.h"
+
 template<class T> ACE_INLINE void
 ACE_Event_Handler_T<T>::op_handler (T *op)
 {

@@ -3,6 +3,7 @@
 // client.C
 
 #include "Log_Wrapper.h"
+#include "ace/OS_String.h"
 
 ACE_RCSID(Multicast, Log_Wrapper, "$Id$")
 
@@ -30,9 +31,9 @@ Log_Wrapper::open (const int port, const char *mcast_addr)
   if ((host_info = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR(host_data.nodename))) == NULL)
     return -1;
   else
-    ACE_OS::memcpy ((char *) &this->log_msg_.host,
-                    (char *) host_info->h_addr,
-                    host_info->h_length);
+    ACE_OS_String::memcpy ((char *) &this->log_msg_.host,
+                           (char *) host_info->h_addr,
+                           host_info->h_length);
 
   // This starts out initialized to all zeros!
   server_ = ACE_INET_Addr (port, mcast_addr);
@@ -55,7 +56,7 @@ Log_Wrapper::log_message (Log_Priority type, char *message)
 
   this->log_msg_.type = type;
   this->log_msg_.time = time (0);
-  this->log_msg_.msg_length = strlen(message)+1;
+  this->log_msg_.msg_length = ACE_OS_String::strlen(message)+1;
   this->log_msg_.sequence_number = htonl(sequence_number_);
 
   iovec iovp[2];

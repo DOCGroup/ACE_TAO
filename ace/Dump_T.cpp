@@ -10,6 +10,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Trace.h"
+
 ACE_RCSID(ace, Dump_T, "$Id$")
 
 template <class Concrete>
