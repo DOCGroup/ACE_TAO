@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //     TAO
-// 
+//
 // = FILENAME
 //     server_factory.cpp
 //
@@ -67,6 +67,12 @@ TAO_Server_Strategy_Factory::create_poa_lock (void)
 
 ACE_Lock *
 TAO_Server_Strategy_Factory::create_poa_mgr_lock (void)
+{
+  return 0;
+}
+
+ACE_Lock *
+TAO_Server_Strategy_Factory::create_servant_lock (void)
 {
   return 0;
 }
