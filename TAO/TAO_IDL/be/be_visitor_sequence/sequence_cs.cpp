@@ -222,9 +222,10 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
     {
       // basic IDL types are in TAO. Sequences of (w)strings in TAO are
       // specializations and so are not template classes.
-      if (nt != AST_Decl::NT_pre_defined
-          && nt != AST_Decl::NT_string
-          && nt != AST_Decl::NT_wstring)
+      if ((nt != AST_Decl::NT_pre_defined
+           && nt != AST_Decl::NT_string
+           && nt != AST_Decl::NT_wstring)
+          || ! node->unbounded ())
         {
           if (this->gen_base_class_tmplinst (node, bt) == -1)
             {
