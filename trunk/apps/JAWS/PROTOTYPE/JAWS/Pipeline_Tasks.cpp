@@ -34,7 +34,6 @@ JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 
       db->io_handler ()->task (next);
     }
-cerr << "********** Pipeline_Handler: status = " << status << endl;
 
   return status;
 }
