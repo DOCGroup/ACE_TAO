@@ -1,3 +1,9 @@
+Mon Oct  2 07:38:59 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* performance-tests/RTCorba/Oneways/Reliable: Added new Borland C++
+	  Builder project files.  Thanks to Johnny Willemsen
+ 	  <Johnny.Willemsen@meco.nl> for contributing these.
+
 Sat Sep 30 16:17:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Fault_Tolerance_Service.h: Added TAO_Export keyword for the
