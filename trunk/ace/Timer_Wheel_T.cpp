@@ -4,6 +4,7 @@
 #define ACE_BUILD_DLL
 
 #include "ace/Timer_Wheel_T.h"
+#include "ace/High_Res_Timer.h"
 
 
 // Constructor that takes in a <wheel>, a reference to the timer queue

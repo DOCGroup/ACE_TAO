@@ -4,6 +4,7 @@
 #define ACE_BUILD_DLL
 
 #include "ace/Timer_Hash_T.h"
+#include "ace/High_Res_Timer.h"
 
 struct Hash_Token
 {
@@ -372,6 +373,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::cancel (const TYPE &type,
 					       int dont_call)
 {
   ACE_TRACE ("ACE_Timer_Hash_T::cancel");
+
   ACE_MT (ACE_GUARD_RETURN (LOCK, ace_mon, this->mutex_, -1));
 
   size_t i; // loop  variable
