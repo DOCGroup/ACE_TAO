@@ -20,7 +20,8 @@ DIRS  = CDR \
 	MT_Client \
 	MT_Server \
 	FL_Cube \
-	POA
+	POA \
+	Faults
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
