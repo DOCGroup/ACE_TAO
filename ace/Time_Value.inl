@@ -122,7 +122,7 @@ ACE_Time_Value::msec (void) const
 
 #if !defined (ACE_LACKS_LONGLONG_T)
 ACE_INLINE void
-ACE_Time_Value::msec (unsigned long long &ms) const
+ACE_Time_Value::msec (ACE_UINT64 &ms) const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::msec");
   ms = this->tv_.tv_sec;
