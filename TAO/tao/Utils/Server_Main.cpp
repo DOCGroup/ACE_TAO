@@ -28,6 +28,10 @@ ACE_RCSID (Utils,
 #include "ace/Log_Msg.h"
 #include "tao/ORB.h"
 
+#ifndef ACE_TIME_VALUE_H
+#  include "ace/Time_Value.h"  // Required for ACE_Time_Value
+#endif
+
 template <typename SERVANT>
 TAO::Utils::Server_Main<SERVANT>::Server_Main (const char * name)
   : name_(name)
