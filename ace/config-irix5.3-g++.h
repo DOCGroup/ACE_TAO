@@ -17,6 +17,7 @@
 #define ACE_HAS_STRING_CLASS
 #define IRIX5
 #define ACE_HAS_SIGWAIT
+#define ACE_HAS_DIRENT
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
