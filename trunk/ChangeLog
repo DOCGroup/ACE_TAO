@@ -1,3 +1,11 @@
+Wed Jun 30 08:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SString.cpp:
+          To make things easier to maintenance use the new
+          ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION macro to check
+          whether we need to explicit instantiate static template members.
+          This macro is set for the GNU compiler for AIX, HPUX and VxWorks.
+
 Wed Jun 30 06:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
