@@ -1,5 +1,12 @@
 Thu Apr 16 13:28:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* tao/decode.cpp: 
+	  An exception was raised if a nil object reference was decoded.
+
+	* tao/POA.cpp: 
+	  For debugging purposes we print a message when an exception is
+	  raised on the server side.
+
 	* TAO_IDL/be/be_visitor_interface.cpp: 
 	  Use ACE_NESTED_CLASS macro for collocated classes, this makes
 	  the generated code portable between NT and other platforms.
