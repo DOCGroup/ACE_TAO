@@ -5,7 +5,7 @@
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -15,25 +15,29 @@ endif
 LDLIBS = -lorbsvcs -lTAO
 
 PROG_SRCS = \
-	client.cpp \
-	Client_i.cpp \
+        client.cpp \
+        Client_i.cpp \
 
 SRC = $(PROG_SRCS)
 
 SIMPLE_CLT_OBJS = Client_i.o \
-	client.o
+        client.o
 
-BIN = client \
-
-BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
-VBIN = $(BIN:%=%$(VAR))
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+#### If the TAO orbsvcs library wasn't built with sufficient components,
+#### don't try to build here.
+TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
+ifeq (Time,$(findstring Time,$(TAO_ORBSVCS)))
+  BIN += client
+endif # Time
+
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
@@ -42,7 +46,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 
@@ -53,14 +57,18 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs
 .PRECIOUS: TimeServiceS.cpp TimeServiceS.i TimeServiceS.h
 .PRECIOUS: TimeServiceS_T.cpp TimeServiceS_T.i TimeServiceS_T.h
 
-client:	$(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
+client: $(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
-	-/bin/rm -rf TimeServiceC.* TimeServiceS.* TimeServiceS_T.*
+	-$(RM) TimeServiceC.* TimeServiceS.* TimeServiceS_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+#----------------------------------------------------------------------------
+#	Dependencies
+#----------------------------------------------------------------------------
 
 .obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Client_i.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeServiceC.h \
