@@ -1,3 +1,9 @@
+Thu Jun 26 19:53:11 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
+
+	* performance-tests/Misc/context_switch_time.cpp (main): Added
+	  get_env_gloval_scale_factor() at the very beginning so that high
+	  resolution timer can return correct time in millisecond.
+
 Thu Jun 26 15:29:55 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/Timer_Queue_Test.cpp: Changed the random scheduling to use
