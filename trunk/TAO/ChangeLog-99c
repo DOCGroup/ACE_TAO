@@ -1,222 +1,228 @@
+Wed Jun 23 10:09:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO-INSTALL.html: added link to ACE-INSTALL.html's resource
+          requirements discussion.  Thanks to Gilbert Roulot
+          <gilbert.roulot@tts.thomson-csf.com> for this suggestion.
+
 Wed Jun 23 10:00:16 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
 
-	* orbsvcs/tests/CosEC_Multiple.cpp:
-	* examples/Event_Comm/Event_Comm_i.cpp:
-	* examples/Event_Comm/Supplier_Input_Handler.cpp:
-	  Fixed unused arg warnings.
+        * orbsvcs/tests/CosEC_Multiple.cpp:
+        * examples/Event_Comm/Event_Comm_i.cpp:
+        * examples/Event_Comm/Supplier_Input_Handler.cpp:
+          Fixed unused arg warnings.
 
 Wed Jun 23 09:49:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/complex_any.cpp:
-	* TAO/tests/Param_Test/results.cpp:
-	* TAO/tests/Param_Test/typecode.cpp:
-	* TAO/tests/Param_Test/ub_any_seq.cpp:
-	* TAO/tests/Param_Test/ub_short_seq.cpp:
-	  Fixed unused arg warnings.
+        * TAO/tests/Param_Test/complex_any.cpp:
+        * TAO/tests/Param_Test/results.cpp:
+        * TAO/tests/Param_Test/typecode.cpp:
+        * TAO/tests/Param_Test/ub_any_seq.cpp:
+        * TAO/tests/Param_Test/ub_short_seq.cpp:
+          Fixed unused arg warnings.
 
 Wed Jun 23 09:26:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	  Changed a couple of instances of ACE_dynamic_cast
-	  to ACE_reinterpret_cast in generated code. I had earlier
-	  changed these from ACE_static_cast mistakenly to
-	  ACE_dynamic_cast. Thanks to David for setting me
-	  straight.
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+          Changed a couple of instances of ACE_dynamic_cast
+          to ACE_reinterpret_cast in generated code. I had earlier
+          changed these from ACE_static_cast mistakenly to
+          ACE_dynamic_cast. Thanks to David for setting me
+          straight.
 
 Wed Jun 23 00:42:05 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Simple/time-date: Fixed warnings in the code.
-	  Thanks to Carlos for reporting this.
+        * examples/Simple/time-date: Fixed warnings in the code.
+          Thanks to Carlos for reporting this.
 
 Wed Jun 23 00:07:51 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* orbsvcs/tests/Time/run_test.pl: Changed all instances of server
-	    and clerk to Time_Service_Server and Time_Service_Clerk.
+        * orbsvcs/tests/Time/run_test.pl: Changed all instances of server
+            and clerk to Time_Service_Server and Time_Service_Clerk.
 
 Tue Jun 22 22:11:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/default_resource.cpp:
-	  Removed the warning about -ORBresources, the current behavior is
-	  acceptable and we decided not to remove the option in the
-	  future.
+        * tao/default_resource.cpp:
+          Removed the warning about -ORBresources, the current behavior is
+          acceptable and we decided not to remove the option in the
+          future.
 
-	* orbsvcs/tests/Makefile:
-	* orbsvcs/tests/AVStreams/Makefile:
-	* orbsvcs/tests/AVStreams/benchmark/Makefile:
-	* orbsvcs/tests/AVStreams/benchmark/run_test.pl:
-	* orbsvcs/tests/AVStreams/benchmark/svc.conf:
-	* orbsvcs/tests/AVStreams/sfp/Makefile:
-	* orbsvcs/tests/Property/run_test.pl:
-	  Updated the Makefiles and scripts on the AV tests, there is some
-	  hope of adding them to the nightly builds.
+        * orbsvcs/tests/Makefile:
+        * orbsvcs/tests/AVStreams/Makefile:
+        * orbsvcs/tests/AVStreams/benchmark/Makefile:
+        * orbsvcs/tests/AVStreams/benchmark/run_test.pl:
+        * orbsvcs/tests/AVStreams/benchmark/svc.conf:
+        * orbsvcs/tests/AVStreams/sfp/Makefile:
+        * orbsvcs/tests/Property/run_test.pl:
+          Updated the Makefiles and scripts on the AV tests, there is some
+          hope of adding them to the nightly builds.
 
-	* orbsvcs/tests/Event/Basic/BCast.cpp:
-	  Fixed a warning.
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+          Fixed a warning.
 
-	* tests/POA/Destruction/Makefile:
-	  Updated dependencies
+        * tests/POA/Destruction/Makefile:
+          Updated dependencies
 
 Tue Jun 22 21:49:38 1999  Fred Kuhns  <fredk@cs.wustl.edu>
 
         * IORManipulation.cpp:
-	  Fixed usage of type_id, was if (type_id) now if (type_id.in ())
+          Fixed usage of type_id, was if (type_id) now if (type_id.in ())
           This will ensure a const char * is returned for the if.
 
 Tue Jun 22 21:11:56 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/ImplRepo_Service/Repository.cpp:Added missing template
-	  instantiations
+        * orbsvcs/ImplRepo_Service/Repository.cpp:Added missing template
+          instantiations
 
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
-	* orbsvcs/ImplRepo_Service/ImplRepo_i.h: Added few missing
-	  exceptions in the signature.
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h: Added few missing
+          exceptions in the signature.
 
 Tue Jun 22 20:11:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (locate_servant_i): If incarnate() returns 0, then
-	  an OBJ_ADAPTER exception should be raised.  Thanks to Matthew
-	  Newhook <matthew@ooc.com> for pointing this out.
+        * tao/POA.cpp (locate_servant_i): If incarnate() returns 0, then
+          an OBJ_ADAPTER exception should be raised.  Thanks to Matthew
+          Newhook <matthew@ooc.com> for pointing this out.
 
 Tue Jun 22 20:23:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
-	* orbsvcs/tests/EC_Multiple/run_test.pl:
-	* orbsvcs/tests/Event_Latency/run_test.pl:
-	  Updated to work in the nightly builds
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl:
+          Updated to work in the nightly builds
 
-	* examples/Simple/chat/Broadcaster_i.cpp:
-	  Fixed warning
+        * examples/Simple/chat/Broadcaster_i.cpp:
+          Fixed warning
 
-	* tests/Makefile:
-	  Added the POA directory
+        * tests/Makefile:
+          Added the POA directory
 
-	* orbsvcs/tests/Event_Latency/Event_Latency.cpp:
-	  The POA was not activated
+        * orbsvcs/tests/Event_Latency/Event_Latency.cpp:
+          The POA was not activated
 
-	* examples/Simple/bank/run_test.pl:
-	* examples/Simple/grid/run_test.pl:
-	* examples/Simple/time/run_test.pl:
-	* examples/Simple/time-date/run_test.pl:
-	  Minor fixes on the server shutdown
+        * examples/Simple/bank/run_test.pl:
+        * examples/Simple/grid/run_test.pl:
+        * examples/Simple/time/run_test.pl:
+        * examples/Simple/time-date/run_test.pl:
+          Minor fixes on the server shutdown
 
 Tue Jun 22 20:10:53 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/echo/server.cpp:
-	* examples/Simple/bank/server.cpp:
-	* examples/Simple/grid/server.cpp:
-	* examples/Simple/time/server.cpp: Made some cosmetic changes.
+        * examples/Simple/echo/server.cpp:
+        * examples/Simple/bank/server.cpp:
+        * examples/Simple/grid/server.cpp:
+        * examples/Simple/time/server.cpp: Made some cosmetic changes.
 
-	* tao/Active_Object_Map.cpp: Removed some statements that were
-	  giving compile errors. They were ACE_UNUSED_ARG ()  which were
-	  not there.
+        * tao/Active_Object_Map.cpp: Removed some statements that were
+          giving compile errors. They were ACE_UNUSED_ARG ()  which were
+          not there.
 
 Tue Jun 22 19:27:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Event/Performance/run_test.pl:
-	  Make the tests shorter because they were timing out on some
-	  platforms.
+        * orbsvcs/tests/Event/Performance/run_test.pl:
+          Make the tests shorter because they were timing out on some
+          platforms.
 
 Tue Jun 22 17:09:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Active_Object_Map.cpp
-	  (TAO_Multiple_Id_Strategy::is_servant_in_map() and
-	  TAO_User_Id_Strategy::bind_using_system_id()): Fixed unused arg
-	  warnings.  Thanks to Carlos for pointing these out.
+        * tao/Active_Object_Map.cpp
+          (TAO_Multiple_Id_Strategy::is_servant_in_map() and
+          TAO_User_Id_Strategy::bind_using_system_id()): Fixed unused arg
+          warnings.  Thanks to Carlos for pointing these out.
 
-	* tao/Object_Adapter and tao/POA:
+        * tao/Object_Adapter and tao/POA:
 
-	  Did some major rework of the POA Current object.  Previously,
-	  this object was used for the POA Current as well as the cleanup
-	  object. Servant_Upcall has taken over the role of the cleanup
-	  object.  Therefore, moved all extra state from POA Current to
-	  Servant Upcall.
+          Did some major rework of the POA Current object.  Previously,
+          this object was used for the POA Current as well as the cleanup
+          object. Servant_Upcall has taken over the role of the cleanup
+          object.  Therefore, moved all extra state from POA Current to
+          Servant Upcall.
 
-	  The above change allowed me to fix POA::destroy().  Previously,
-	  when POA::destroy() was called, the POA object was destroyed
-	  immediately.  The problem with this was that there might be
-	  outstanding requests being dispatched by this POA.  These
-	  outstanding requests access POA state once they complete.  If
-	  the POA is already gone by this time, a seg fault will occur.
-	  The fix allows the POA destruction to be delayed till all the
-	  outstanding requests complete.
+          The above change allowed me to fix POA::destroy().  Previously,
+          when POA::destroy() was called, the POA object was destroyed
+          immediately.  The problem with this was that there might be
+          outstanding requests being dispatched by this POA.  These
+          outstanding requests access POA state once they complete.  If
+          the POA is already gone by this time, a seg fault will occur.
+          The fix allows the POA destruction to be delayed till all the
+          outstanding requests complete.
 
-	* tests/POA/Destruction/Destruction.cpp: This new test will make
-	  sure that the above mentioned change works.
+        * tests/POA/Destruction/Destruction.cpp: This new test will make
+          sure that the above mentioned change works.
 
-	* test/POA/Identity: Moved this application from examples
-	  directory to the test directory.
+        * test/POA/Identity: Moved this application from examples
+          directory to the test directory.
 
 Tue Jun 22 18:38:35 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/Simple/Simple_util.cpp: Made the POA state active
-	  before calling the rebind  on the naming service.
+        * examples/Simple/Simple_util.cpp: Made the POA state active
+          before calling the rebind  on the naming service.
 
 Tue Jun 22 17:45:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	* orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
-	* orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_T.cpp:
-	* tests/Param_Test/param_test_i.cpp:
-	  More unused variable/parameter warnings are removed.
+        * orbsvcs/orbsvcs/CosEvent_Utilities.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Timeout_Filter.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterators_T.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_T.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+          More unused variable/parameter warnings are removed.
 
 Tue Jun 22 17:14:48 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* orbsvcs/tests/Logger/run_test.pl:
-	* orbsvcs/tests/Property/run_test.pl:
-	* orbsvcs/tests/Time/run_test.pl: Updated the tests to
-	  reflect new guidelines concerning timeouts and blocking.
+        * orbsvcs/tests/Logger/run_test.pl:
+        * orbsvcs/tests/Property/run_test.pl:
+        * orbsvcs/tests/Time/run_test.pl: Updated the tests to
+          reflect new guidelines concerning timeouts and blocking.
 
 Tue Jun 22 17:07:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Any.h:
-	* tao/Any.cpp:
-	  Added the insertion operator for exceptions into anys (copying
-	  version).
+        * tao/Any.h:
+        * tao/Any.cpp:
+          Added the insertion operator for exceptions into anys (copying
+          version).
 
 Tue Jun 22 15:18:46 1999  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* examples/Quoter/run_test.pl:
-	* examples/Simple/bank/run_test.pl:
-	* examples/Simple/grid/run_test.pl:
-	* examples/Simple/time/run_test.pl:
-	* examples/Simple/time-date/run_test.pl:
-	* orbsvcs/tests/AVStreams/benchmarks/run_test.pl:
-	* orbsvcs/tests/CosEC_Multiple/run_test.pl:
-	* orbsvcs/tests/CosEC_Multiple/run_test2.pl:
-	* orbsvcs/tests/EC_Basic/run_test.pl:
-	* orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
-	* orbsvcs/tests/EC_Multiple/run_test.pl:
-	* orbsvcs/tests/Event_Latency/run_test.pl: Updated the tests to
-	  reflect new guidelines concerning timeouts and blocking.
+        * examples/Quoter/run_test.pl:
+        * examples/Simple/bank/run_test.pl:
+        * examples/Simple/grid/run_test.pl:
+        * examples/Simple/time/run_test.pl:
+        * examples/Simple/time-date/run_test.pl:
+        * orbsvcs/tests/AVStreams/benchmarks/run_test.pl:
+        * orbsvcs/tests/CosEC_Multiple/run_test.pl:
+        * orbsvcs/tests/CosEC_Multiple/run_test2.pl:
+        * orbsvcs/tests/EC_Basic/run_test.pl:
+        * orbsvcs/tests/EC_Custom_Marshal/run_test.pl:
+        * orbsvcs/tests/EC_Multiple/run_test.pl:
+        * orbsvcs/tests/Event_Latency/run_test.pl: Updated the tests to
+          reflect new guidelines concerning timeouts and blocking.
 
 Tue Jun 22 15:11:26 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/Event/Basic/BCast.cpp:
-	  Fixed problems opening and closing the event handler. Thanks to
-	  Tom Ziomek for pointing this out.
+        * orbsvcs/tests/Event/Basic/BCast.cpp:
+          Fixed problems opening and closing the event handler. Thanks to
+          Tom Ziomek for pointing this out.
 
 Tue Jun 22 14:21:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
-	  Methods allocbuf() in *C.i and _allocate_buffer() in *C.cpp
-	  always allocate the maximum for the bounded sequence, so the
-	  ULong 'length" arg was always unused. Commented it out in the
-	  generated code. Warnings reported on Linux builds.
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+          Methods allocbuf() in *C.i and _allocate_buffer() in *C.cpp
+          always allocate the maximum for the bounded sequence, so the
+          ULong 'length" arg was always unused. Commented it out in the
+          generated code. Warnings reported on Linux builds.
 
 Tue Jun 22 14:02:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
