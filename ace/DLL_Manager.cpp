@@ -463,16 +463,10 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
               dll_unload_policy the_policy = 0;
               void *unload_policy_ptr =
                 dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);
-#if defined (__GNUG__)
-              // g++ won't allow void*->func*
               ptrdiff_t temp_p =
                 ACE_reinterpret_cast (ptrdiff_t, unload_policy_ptr);
               the_policy =
                 ACE_reinterpret_cast (dll_unload_policy, temp_p);
-#else
-              the_policy =
-                ACE_reinterpret_cast (dll_unload_policy, unload_policy_ptr);
-#endif /* __GNUG__ */
               if (the_policy != 0)
                 unload = ACE_BIT_DISABLED (the_policy (),
                                            ACE_DLL_UNLOAD_POLICY_LAZY);

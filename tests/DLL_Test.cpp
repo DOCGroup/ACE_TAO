@@ -92,7 +92,7 @@ int basic_test (ACE_DLL &dll)
   foo = dll.symbol (ACE_TEXT ("get_hello"));
 
   // Cast the void* to long first.
-  long tmp = ACE_reinterpret_cast (long, foo);
+  ptrdiff_t tmp = ACE_reinterpret_cast (ptrdiff_t, foo);
   Hello_Factory factory = ACE_reinterpret_cast (Hello_Factory, tmp);
   if (factory == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
