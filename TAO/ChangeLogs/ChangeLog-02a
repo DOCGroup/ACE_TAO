@@ -17,6 +17,9 @@ Fri Sep  8 10:43:52 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  TAO_ORB_Core pointer to its base class to initialise the base
 	  class properly.
 
+	* tao/Connector_Registry.cpp: Made changes to the constructor of
+	  TAO_Unknown_Profile object.
+
 Thu Sep  7 23:03:27 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Acceptor_Filter.h:
