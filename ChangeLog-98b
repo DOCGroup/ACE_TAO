@@ -1,3 +1,27 @@
+Wed Aug 12 17:12:57 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* APC.DSP:
+	* Abondoned.dsp:
+	* Console_Input.dsp:
+	* Directory_Changes.dsp:
+	* Exceptions.dsp:
+	* Multithreading.dsp:
+	* Network_Events.dsp:
+	* Prerun_State_Changes.dsp:
+	* Registration.dsp:
+	* Registry_Changes.dsp:
+	* Removals.dsp:
+	* Talker.dsp:
+	* Timeouts.dsp:
+	* Window_Messages.dsp:
+	* test_abandoned.cpp:
+	* test_apc.cpp:
+	* test_window_messages.cpp:
+	  Added updated versions of project files (with correct include
+	  directories).  Also changed the <main>'s to take in argc and
+	  argv.  Thanks to Jeff Hellzen <JHellzen@hwdcsaws.cahwnet.gov> 
+	  for submitting these changes.
+
 Wed Aug 12 16:16:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/MsgQueue_Notifications_Test.cpp: Since this test doesn't
