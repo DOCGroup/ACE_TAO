@@ -420,7 +420,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,"
                     " (leader) exit reactor event loop\n",
-                    result));
+                    t_id));
     }
   }
   //
@@ -471,7 +471,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       /**
        * There should be no reason to reset the value of result
        * here. If there was an error in handle_events () that the
-       * leader saw, I (Bala) thinks it should be propogated to the
+       * leader saw, I (Bala) beleave it should be propogated to the
        * clients.
        * result = 0;
        */
