@@ -90,12 +90,27 @@ int
 Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
-  Param_Test::StructSeq_out out (this->out_.out ());
-  this->ret_ = objref->test_struct_sequence (this->in_,
-                                             this->inout_.inout (),
-                                             out,
-                                             ACE_TRY_ENV);
-  return (ACE_TRY_ENV.exception () ? -1:0);
+  ACE_TRY
+    {
+      Param_Test::StructSeq_out out (this->out_.out ());
+
+      this->ret_ = objref->test_struct_sequence (this->in_,
+                                                 this->inout_.inout (),
+                                                 out,
+                                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_Struct_Sequence::run_sii_test\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 int
@@ -103,40 +118,60 @@ Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
                                 CORBA::NVList_ptr retval,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::Any in_arg (Param_Test::_tc_StructSeq,
-                     &this->in_,
-                     0);
+  ACE_TRY
+    {
+      CORBA::Any in_arg (Param_Test::_tc_StructSeq,
+                         &this->in_,
+                         0);
 
-  CORBA::Any inout_arg (Param_Test::_tc_StructSeq,
-                        &this->inout_.inout (),
-                        0);
+      CORBA::Any inout_arg (Param_Test::_tc_StructSeq,
+                            &this->inout_.inout (),
+                            0);
 
-  CORBA::Any out_arg (Param_Test::_tc_StructSeq,
-                      &this->out_.inout (), // .out () causes crash
-                      0);
+      CORBA::Any out_arg (Param_Test::_tc_StructSeq,
+                          &this->out_.inout (), // .out () causes crash
+                          0);
 
-  // add parameters
-  param_list->add_value ("s1",
-                         in_arg,
-                         CORBA::ARG_IN,
-                         ACE_TRY_ENV);
+      // add parameters
+      param_list->add_value ("s1",
+                             in_arg,
+                             CORBA::ARG_IN,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  param_list->add_value ("s2",
-                         inout_arg,
-                         CORBA::ARG_INOUT,
-                         ACE_TRY_ENV);
+      param_list->add_value ("s2",
+                             inout_arg,
+                             CORBA::ARG_INOUT,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  param_list->add_value ("s3",
-                         out_arg,
-                         CORBA::ARG_OUT,
-                         ACE_TRY_ENV);
+      param_list->add_value ("s3",
+                             out_arg,
+                             CORBA::ARG_OUT,
+                             ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-  // add return value type
-  retval->item (0, ACE_TRY_ENV)->value ()->replace (Param_Test::_tc_StructSeq,
-                                            &this->ret_.inout (), // see above
-                                            0, // does not own
-                                            ACE_TRY_ENV);
-  return 0;
+      CORBA::NamedValue *item = retval->item (0,
+                                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      item->value ()->replace (Param_Test::_tc_StructSeq,
+                               &this->ret_.inout (),
+                               0, // does not own
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_String_Sequence::add_args\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 CORBA::Boolean

@@ -100,12 +100,27 @@ int
 Test_Bounded_String::run_sii_test (Param_Test_ptr objref,
 				   CORBA::Environment &ACE_TRY_ENV)
 {
-  CORBA::String_out str_out (this->out_);
-  this->ret_ = objref->test_unbounded_string (this->in_,
-                                              this->inout_,
-                                              str_out,
-                                              ACE_TRY_ENV);
-  return (ACE_TRY_ENV.exception () ? -1:0);
+  ACE_TRY
+    {
+      CORBA::String_out str_out (this->out_);
+
+      this->ret_ = objref->test_unbounded_string (this->in_,
+                                                  this->inout_,
+                                                  str_out,
+                                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      return 0;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_Bounded_String_Sequence::run_sii_test\n");
+
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
 }
 
 int
