@@ -10,12 +10,7 @@
 
 #include "ace/CORBA_macros.h"
 
-#if !defined (__ACE_INLINE__)
-#include "Asynch_Reply_Dispatcher.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(Messaging, Asynch_Reply_Dispatcher, "$Id$")
-
 
 // Constructor.
 TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
