@@ -23,7 +23,7 @@ VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BUILD = $(VBIN)
 
-LDLIBS = -lACE_SSL
+LDLIBS = -lACE_SSL -lssl -lcrypto
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
