@@ -3,6 +3,7 @@
 # platform_freebsd_pthread.GNU
 
 # ***** Notice: This configuration is still under debugging. *****
+optimize = 1
 # ***** It still doesn't work quite the way it expected to.  *****
 
 # For pthreads support on FreeBSD, you need
@@ -17,12 +18,13 @@ debug = 1
 
 CC              = gcc
 CXX		= g++
-CFLAGS          += -w -O2 -fno-strict-prototypes -D_POSIX_THREADS
+CFLAGS          += -w -fno-strict-prototypes -D_POSIX_THREADS
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
 DLD             = ld
 LD		= $(CXX) 
 LIBS            += -lc_r -lstdc++ -lcompat
+OCFLAGS         += -O2
 PIC             = -fpic -DPIC
 AR              = ar
 ARFLAGS         = ruv

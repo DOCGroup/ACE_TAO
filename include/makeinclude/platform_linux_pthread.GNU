@@ -10,15 +10,17 @@
 # Jan Rychter <jwr@icm.edu.pl>
 
 debug = 1
+optimize = 1
 
 CC              = gcc
 CXX		= g++
-CFLAGS		+= -w -O2 -fno-strict-prototypes -D_MIT_POSIX_THREADS -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS
+CFLAGS		+= -w -fno-strict-prototypes -D_MIT_POSIX_THREADS -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS
 CCFLAGS		+= $(CFLAGS) -fno-implicit-templates
 DCFLAGS		+= -g
 DLD             = $(CXX)
 LD		= $(CXX) 
 LIBS            += -lpthreads
+OCFLAGS		+= -O2
 PIC             = -fPIC
 AR              = ar
 ARFLAGS         = ruv

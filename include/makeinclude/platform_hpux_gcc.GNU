@@ -2,6 +2,7 @@
 #
 
 debug = 1
+optimize = 1
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
@@ -9,11 +10,12 @@ HPUX_VERS	:= $(join $(word 2,$(HPVERS_WORDS)),$(word 3,$(HPVERS_WORDS)))
 #
 CC		= gcc
 CXX		= g++
-CFLAGS		+= -w -O2
+CFLAGS		+= -w
 CCFLAGS		+= $(CFLAGS) -fno-implicit-templates
 DCFLAGS		+= -g -DHPUX_VERS=$(HPUX_VERS)
 DLD		= $(CXX)
 LD		= $(CXX)
+OCFLAGS		+= -O2
 PIC		= -fPIC
 ARFLAGS		= ruv
 RANLIB		= echo
