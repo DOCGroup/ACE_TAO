@@ -1,3 +1,9 @@
+Fri Jul 16 11:50:24 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (log):
+	* tests/Basic_Types_Test.cpp (main): Reverted my previous
+	  change.  It was not a safe assumption.
+
 Fri Jul 16 09:20:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Memory_Pool.h: Added a way to set the segment_size in
