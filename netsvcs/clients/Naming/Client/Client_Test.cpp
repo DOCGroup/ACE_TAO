@@ -33,7 +33,7 @@ public:
   virtual int handle_input (ACE_HANDLE handle);
   // Handle user entered commands
 
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize name options and naming context when dynamically
   // linked.
 
@@ -123,7 +123,7 @@ Client_Test::Client_Test (void)
 
 int
 Client_Test::init (int /* argc */,
-                   char * /* argv */ [])
+                   ACE_TCHAR * /* argv */ [])
 {
   ACE_DEBUG ((LM_DEBUG, "Client_Test::init\n"));
 
