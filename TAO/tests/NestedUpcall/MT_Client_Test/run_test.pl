@@ -23,14 +23,16 @@ $CL = new PerlACE::Process ("client", "-f $ior1file -g $ior2file -n 2 -i 10 -s 5
 $SV1->Spawn ();
 $SV2->Spawn ();
 
-if (PerlACE::waitforfile_timed ($ior1file, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ior1file,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior1file>\n";
     $SV1->Kill ();
     $SV2->Kill ();
     exit 1;
 }
 
-if (PerlACE::waitforfile_timed ($ior2file, 5) == -1) {
+if (PerlACE::waitforfile_timed ($ior2file,
+                        $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$ior2file>\n";
     $SV1->Kill ();
     $SV2->Kill ();
