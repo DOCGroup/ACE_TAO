@@ -1,7 +1,10 @@
 Mon Jul 23 11:44:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
         Support for GIOP Lite and GIOP Fragments are being added in this
-        checkin. 
+        checkin. Merged from the branch giop_lite_fragment.
+
+	* tao/Makefile: 
+	* tao/Makefile.bor: Added GIOP Lite  files to the list of files.
 
 Sat Jul 14 16:42:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
