@@ -8,6 +8,10 @@ Wed Sep 16 22:36:55 1998  David L. Levine  <levine@cs.wustl.edu>
           added static cast to avoid signed/unsigned comparison.
           Added ACE_UNUSED_ARG (_env).
 
+        * examples/POA/Explicit_Activation/server.cpp (write_iors_to_file):
+          changed type of local "result" from int to u_int to
+          avoid signed/unsigned comparison.
+
 1998-09-16  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * examples/Simple/echo/Client_i.h (class Client_i):
