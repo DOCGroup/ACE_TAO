@@ -69,10 +69,13 @@ Logger_i::log (const Logger::Log_Record &log_rec,
   rec.msg_data (msgbuf);
   // Set ACE_Log_Record.msg_data to the value stored in msgbuf
   
+#if 0
+  // @@ This is currently unused.  Remove them?
   hostent rhost;
   char storage[MAXHOSTNAMELEN + 1];
-  
-  ACE_INET_Addr addy (0,
+#endif /* 0 */
+
+  ACE_INET_Addr addy (ACE_static_cast (int, 0),
                       ACE_static_cast (ACE_UINT32,
                                        log_rec.host_addr));
   // The constructor for ACE_INET_Addr requires a port number, which
