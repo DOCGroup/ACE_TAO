@@ -34,10 +34,7 @@ AR		= $(XDIR)/bin/ar
 ARFLAGS		= srv
 #RANLIB		= /bin/true
 RANLIB		= $(XDIR)/bin/ranlib
-PRELIB	= (echo "main() { }" > gcctemp.c && \
-	  $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-	  $(LD) $^ $(LDFLAGS) -lACE $(LIBS); \
-	  status=$$?; rm -f gcctemp.* a.out; exit $$status)
+PRELIB	= @true
 #### don't build shared objects:
 BUILD           = $(VOBJS) $(VLIB) $(VBIN)
 
