@@ -54,6 +54,72 @@ Sat Jun 26 13:10:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	  orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp: Fixed exception
 	  handling to be compliant with the ACE macros.
 
+Sat Jun 26 12:45:26 1999  Jody Hagins <jody@atdesk.com>  
+  
+        This is a change log for the modifications made to support
+	Borland C++Builder 4.0, Patch 1.  Thanks to 
+	Christopher Kohlhoff <chris@kohlhoff.com> and Chris Uzdavinis
+	<chris@uzdavinis.com> for helping with this.
+	
+        * TAO\examples\BCB\chat\*: Example program for Borland C++Builder
+	  4 showing how to use TAO in a GUI application. Implements a
+ 	  client for the server in TAO\examples\Simple\chat.
+
+	* TAO/TAO_IDL/be/be_args.cpp: Added new back end (-Wb) option
+	  'pch_include' which allows you to specify a common include to be
+	  added at the top of all idl generated files. This can be used
+	  with a precompiled header mechanism (such as that provided by
+	  C++Builder or MSVC++). It takes a *very* long time to compile
+	  GUI programs without this. 
+
+	* TAO/TAO_IDL/be/be_codegen.cpp: Added support for
+	  TAO_EXPORT_NESTED_CLASSES macro. 
+
+	* Added support for new back end (-Wb) option 'pch_include'.
+
+	* TAO/TAO_IDL/be/be_helper.cpp: Target of sprintf function should
+	  not also be used as an insertion argument.
+
+	* TAO/TAO_IDL/be/be_visitor_sequence/gen_unbounded_sequence_ch.cpp: 
+	  Added support for TAO_EXPORT_NESTED_CLASSES macro.
+
+	* TAO/TAO_IDL/driver/drv_preproc.cpp: Added command line options
+	  for use with Borland C++Builder preprocessor.
+
+	* TAO/TAO_IDL/include/idl_global.h: Added support for new back end
+	  (-Wb) option 'pch_include'. 
+
+	* TAO/TAO_IDL/util/utl_global.h: Added support for new back end
+	  (-Wb) option 'pch_include'. 
+
+	* TAO/examples/Callback_Quoter/Consumer_Handler.cpp: Member
+	  variable use_naming_service_ was not initialised. 
+
+	* TAO/examples/Callback_Quoter/Supplier_i.cpp: Member variable
+	  f_ptr_ was not initialised.  Cmd line option string was missing
+	  ':' required for parameter to 'f'. 
+
+	* TAO/orbsvcs/orbsvcs/Sched/SchedEntry.cpp: Workaround for BCB4
+ 	  internal compiler error
+
+	* TAO/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h: Need
+ 	  ACE_TEMPLATE_SPECIALIZE on specializations.
+
+	* TAO/tao/Active_Object_Map.cpp: BCB4 doesn't accept constructor
+	  syntax for static member variables. 
+
+	* TAO/tao/Object_Adapter.cpp: BCB4 doesn't accept constructor
+ 	  syntax for static member variables.
+
+	* TAO/tao/Sequence.i Need ACE_TEMPLATE_SPECIALIZE on
+	  specializations. 
+
+	* TAO/tao/orbconf.h: Added TAO_EXPORT_NESTED_CLASSES macro to
+	  allow nested classes to be exported (see also change in
+	  ace\config-win32-borland.h). Borland C++Builder (unlike MSVC++)
+	  does not automatically export nested classes when the outer
+	  class is exported. 
+  
 Sat Jun 26 13:20:57 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/sfp.cpp : 
