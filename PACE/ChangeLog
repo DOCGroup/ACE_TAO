@@ -1,3 +1,10 @@
+Mon Jul 17 14:00:35 2000  Andrew G. Gilpin  <agg1@cs.wustl.edu>
+
+	* pace/config/utility.h:
+
+	  Changed #if (PACE_WIN32 != 0) to #if (PACE_WIN32) to be
+	  more consistent.
+
 Mon Jul 17 13:31:50 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/utility.h:
