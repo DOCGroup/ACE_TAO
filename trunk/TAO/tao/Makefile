@@ -13,6 +13,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 DIRS = \
   PortableServer \
+  Messaging \
   DynamicAny \
   BiDir_GIOP \
   IORManipulation \
@@ -323,7 +324,6 @@ endif # minimum_corba
 ifeq ($(corba_messaging),1)
 
 DIRS += \
-  Messaging \
   DynamicInterface \
   RTCORBA \
   RTPortableServer
