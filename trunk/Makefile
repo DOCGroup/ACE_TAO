@@ -50,7 +50,7 @@ clone:
                 (clone -s $(ACE_ROOT)/$$dir $$dir) \
         done
 
-RELEASE_FILES = ACE_wrappers/ACE-INSTALL.html \
+CONTROLLED_FILES = ACE_wrappers/ACE-INSTALL.html \
                 ACE_wrappers/ACE-categories \
                 ACE_wrappers/ACE-install.sh \
                 ACE_wrappers/ACE-lessons.html \
@@ -74,10 +74,12 @@ RELEASE_FILES = ACE_wrappers/ACE-INSTALL.html \
                 ACE_wrappers/etc \
                 ACE_wrappers/examples \
                 ACE_wrappers/include \
-                ACE_wrappers/man \
                 ACE_wrappers/netsvcs \
                 ACE_wrappers/performance-tests \
                 ACE_wrappers/tests
+
+RELEASE_FILES = $(CONTROLLED_FILES) \
+                ACE_wrappers/man
 
 RELEASE_LIB_FILES = \
                 ACE_wrappers/STL \
@@ -105,7 +107,7 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
               if [ -z "$$CHANGELOG" ]; then \
                 echo unable to find latest ChangeLog file; exit 1; fi; \
               DATE=`/usr/bin/date +"%a %b %d %T %Y"`; export DATE; \
-              cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | \
+              cd ..; UPTODATE=`cvs -nq update $(CONTROLLED_FILES) | \
                 egrep -v '/tests/log/' | perl -pi -e 's%/ACE_wrappers%%g; \
                 s/$$/\\\n  /g'`; cd ACE_wrappers; \
               if [ "$$UPTODATE" ]; then /pkg/gnu/bin/echo -e ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit 1; fi; \
@@ -144,8 +146,8 @@ ifeq ($(shell pwd),/project/adaptive/ACE_wrappers)
                 { s/[^0-9]+(\d+)\.(\d+)\.(\d+).+/\1_\2_\3/ ; print }' VERSION`;\
               export VERSION_TAG; \
               CURRENT_TAG=Current; export CURRENT_TAG; \
-              cd ..; cvs tag $$VERSION_TAG $(RELEASE_FILES); \
-              cvs tag -F $$CURRENT_TAG $(RELEASE_FILES); cd ACE_wrappers) &&
+              cd ..; cvs -nq tag $$VERSION_TAG $(CONTROLLED_FILES); \
+              cd ACE_wrappers) &&
 else
   TIMESTAMP =
 endif
