@@ -2,10 +2,9 @@ Sun Mar 18 10:40:32 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/TAO_Static.dsp:
 
-	  Removed apparently obsolete references to
-	  Transport_Connection_Property.cpp.  Whoever removed that file
-	  neglected to document that fact, and neglected to update this
-	  project file.  Strike one, whoever you are!
+	  Removed apparently incorrect references to
+	  Transport_Connection_Property.cpp.  Whoever updated this file
+	  wasn't didn't do any testing.  Strike one, whoever you are!
 
 	  Added missing files `Base_Transport_Property.*' to this project
 	  file.
