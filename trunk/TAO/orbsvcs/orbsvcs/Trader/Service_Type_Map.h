@@ -96,9 +96,36 @@ public:
   
 private:
 
+  class Hashable_ULong
+  {
+  public:
+
+    Hashable_ULong (void)
+      : number_ (0) {}
+    
+    Hashable_ULong (CORBA::ULong number)
+      : number_ (number) {}
+
+    u_long hash (void) const { return number_; }
+
+    Hashable_ULong& operator= (const Hashable_ULong& number)
+      { this->number_ = number.number_; }
+    
+    operator CORBA::ULong (void) const { return number_; }
+
+    friend int operator== (const Hashable_ULong& left,
+		    const Hashable_ULong& right)
+      { return left.number_ == right.number_; }
+    
+  private:
+
+    CORBA::ULong number_;   
+  };
+  
   typedef ACE_Hash_Map_Manager
     <
-    CORBA::ULong,
+    //    CORBA::ULong,
+    Hashable_ULong,
     CosTrading::Offer,
     ACE_Null_Mutex
     >
