@@ -171,6 +171,10 @@ DRV_cpp_init (void)
       DRV_cpp_putarg ("-+");
 #endif /* ACE_MVS */
       DRV_cpp_putarg ("-E");
+#if defined (__HP_aCC)
+      DRV_cpp_putarg ("+W");
+      DRV_cpp_putarg ("67");     // Ignore "invalid #pragma directive"
+#endif /* __HP_aCC */
 #endif /* !defined (__BORLANDC__) */
 
       // So we can find the required orb.idl file.
