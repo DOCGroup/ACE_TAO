@@ -1,7 +1,13 @@
+Mon Aug 23 16:06:39 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Added checks for ACE_HAS_VWFPRINTF and ACE_HAS_VWSPRINTF.
+
 Tue Aug 24 00:34:30 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* ace/QtReactor.cpp: 
-	Removed unecessary #include <qeventloop.h>. Thanks to 
+	* ace/QtReactor.cpp:
+	Removed unecessary #include <qeventloop.h>. Thanks to
 	Gan Deng <gan.deng@vanderbilt.edu> for a patch.
 
 
