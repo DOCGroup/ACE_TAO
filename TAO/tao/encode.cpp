@@ -31,6 +31,7 @@
 #include "tao/Principal.h"
 #include "tao/varout.h"
 #include "tao/Union.h"
+#include "tao/debug.h"
 
 ACE_RCSID(tao, encode, "$Id$")
 
