@@ -1,3 +1,6 @@
+#
+# $Id$
+#
 # Makefile for building the Transcoder_Test exe with Borland C++ Builder
 
 NAME = Transcoder_Test
