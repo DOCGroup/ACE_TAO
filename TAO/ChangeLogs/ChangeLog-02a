@@ -1,3 +1,39 @@
+Wed Jul 25 22:10:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp:
+	* tao/Transport.h: Fixed a subtle problem that seems to have lead
+	  to the  Muxing tests failing randomly. The problem is something
+	  like this
+	  - multiple client threads can try to share a connection
+	  - because of the above, more than one message are sent on the
+	    same connection
+	  - if the server is multi-threaded, the messages can be processed
+	    concurrently
+	  - there may be a possibility of more than two replies coming on
+	    the same connection.
+	  - one of the client threads can pick up both the replies
+	  - one of the replies would be queued up and the first one can be
+	    its own
+	  - after queueing up the second it would wake up another thread
+	  - if the woken up thread does not own the reply, it could just
+	    take the reply and try to transfer ownership to the right
+	    thread.
+	  - before the second thread transfers the reply, teh second
+	    thread would have resumed the handler and because of which one
+	    of the threads would have gone into the reactor from the LF.
+	  - at exactly the same instant the seccond thread will have
+	    difficulty in waking up the thread on select () is it is the
+	    owner.
+	  Fixed this problem by not resuming the handle till we dispatch
+	  the reply. We dont buy anything by resuming the handle before
+	  dispatching the reply because, the dispatching will not be
+	  unbounded. The forces that apply to the server thread, which
+	  resumes the handle before making an upcall does not apply to the
+	  client threads that reads and processes replies. This fix should
+	  ideally fix the Muxing test failure on different paltforms. If
+	  it doesnt, it will atleast prevent the race condition outlined
+	  above :-)
+
 Wed Jul 25 20:33:21 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/Simple/time-date/Makefile.bor:
@@ -11,7 +47,7 @@ Wed Jul 25 12:50:00 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 	* tao/Strategies/DIOP_Factory.cpp:
 
 	  Changed the return value of requires_explicit_endpoint () to 0
-	  and documented that this return code is not reflecting that 
+	  and documented that this return code is not reflecting that
 	  the endpoints are not cleaned-up but that we disable it by default
 	  because DIOP is only suitable for certain use cases, e.g. it only
 	  supports one-ways.
@@ -28,7 +64,7 @@ Tue Jul 25 01:00:00 2001  Craig Rodrigues <crodrigu@bbn.com>
         * orbsvcs/tests/AVVStreams/Asynch_Three_Stage/run_test.pl:
         * orbsvcs/tests/AVStreams/Asynch_Three_Stage/input:
 
-         Increase the times that the perl scripts expecting the 
+         Increase the times that the perl scripts expecting the
          the CORBA processes to run for.  Decrease the size
          of the Asynch_Three_Stage input file by 4000 lines.
 
