@@ -19,7 +19,25 @@ use File::Basename;
 my($basePath) = getExecutePath($0) . '/MakeProjectCreator';
 unshift(@INC, $basePath . '/modules');
 
+my($mpcpath) = (defined $ENV{MPC_CORE} ? "$ENV{MPC_CORE}" :
+                                         dirname(dirname($basePath)) . '/MPC');
+unshift(@INC, $mpcpath . '/modules');
+
+if (! -x "$mpcpath/modules") {
+  print STDERR "ERROR: Unable to access the MPC module path.\n" .
+               "       Perhaps you need to check out the MPC module?\n";
+  exit(255);
+}
+
 require MPC;
+
+# ************************************************************
+# Data Section
+# ************************************************************
+
+my(@creators) = ('GNUACEProjectCreator',
+                 'BorlandProjectCreator',
+                );
 
 # ************************************************************
 # Subroutine Section
@@ -78,5 +96,16 @@ sub getExecutePath {
 # Main Section
 # ************************************************************
 
+## Allocate a driver
 my($driver) = new MPC();
+
+## Add our creators to the front of the list
+my($creators) = $driver->getCreatorList();
+unshift(@$creators, @creators);
+
+## Add the mpc path to the include paths
+unshift(@ARGV, '-include', "$mpcpath/config",
+               '-include', "$mpcpath/templates");
+
+## Execute the driver
 exit($driver->execute($basePath, basename($0), \@ARGV));

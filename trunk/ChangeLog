@@ -1,27 +1,130 @@
+Mon Apr  5 13:27:27 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/README:
+        * bin/mpc.pl:
+        * bin/mwc.pl:
+
+          Updated these to point to the new MPC repository.
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/config/bison.mpb:
+        * bin/MakeProjectCreator/config/flex.mpb:
+        * bin/MakeProjectCreator/config/lex.mpb:
+        * bin/MakeProjectCreator/config/openssl.mpb:
+        * bin/MakeProjectCreator/config/qt.mpb:
+        * bin/MakeProjectCreator/config/qt_moc.mpb:
+        * bin/MakeProjectCreator/config/rpc.mpb:
+        * bin/MakeProjectCreator/config/zlib.mpb:
+        * bin/MakeProjectCreator/modules/AutomakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/BMakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/BMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/CbxProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/CbxWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/Driver.pm:
+        * bin/MakeProjectCreator/modules/EM3ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/EM3WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/FeatureParser.pm:
+        * bin/MakeProjectCreator/modules/GHSProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/GHSWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/GUID.pm:
+        * bin/MakeProjectCreator/modules/HTMLProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/HTMLWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/MPC.pm:
+        * bin/MakeProjectCreator/modules/MWC.pm:
+        * bin/MakeProjectCreator/modules/MakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/MakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/NMakeWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/Options.pm:
+        * bin/MakeProjectCreator/modules/OutputMessage.pm:
+        * bin/MakeProjectCreator/modules/Parser.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/SLEProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/SLEWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/StringProcessor.pm:
+        * bin/MakeProjectCreator/modules/TemplateInputReader.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/modules/VA4ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VA4WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC71ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC71WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/Version.pm:
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+        * bin/MakeProjectCreator/templates/automake.mpd:
+        * bin/MakeProjectCreator/templates/bmake.mpd:
+        * bin/MakeProjectCreator/templates/bmakecommon.mpt:
+        * bin/MakeProjectCreator/templates/bmakedll.mpt:
+        * bin/MakeProjectCreator/templates/bmakedllexe.mpt:
+        * bin/MakeProjectCreator/templates/bmakelib.mpt:
+        * bin/MakeProjectCreator/templates/bmakelibexe.mpt:
+        * bin/MakeProjectCreator/templates/cbx.mpd:
+        * bin/MakeProjectCreator/templates/cbxdll.mpt:
+        * bin/MakeProjectCreator/templates/cbxexe.mpt:
+        * bin/MakeProjectCreator/templates/common.mpt:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+        * bin/MakeProjectCreator/templates/ghs.mpd:
+        * bin/MakeProjectCreator/templates/html.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/makedll.mpt:
+        * bin/MakeProjectCreator/templates/makeexe.mpt:
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+        * bin/MakeProjectCreator/templates/nmakedll.mpt:
+        * bin/MakeProjectCreator/templates/nmakeexe.mpt:
+        * bin/MakeProjectCreator/templates/sle.mpd:
+        * bin/MakeProjectCreator/templates/sledll.mpt:
+        * bin/MakeProjectCreator/templates/sleexe.mpt:
+        * bin/MakeProjectCreator/templates/va4icc.mpd:
+        * bin/MakeProjectCreator/templates/va4iccdll.mpt:
+        * bin/MakeProjectCreator/templates/va4iccdllexe.mpt:
+        * bin/MakeProjectCreator/templates/va4icclib.mpt:
+        * bin/MakeProjectCreator/templates/va4icclibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc6dspdll.mpt:
+        * bin/MakeProjectCreator/templates/vc6dspdllexe.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplib.mpt:
+        * bin/MakeProjectCreator/templates/vc6dsplibexe.mpt:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+        * bin/MakeProjectCreator/templates/vc7dll.mpt:
+        * bin/MakeProjectCreator/templates/vc7exe.mpt:
+        * bin/MakeProjectCreator/templates/vc7lib.mpt:
+        * bin/MakeProjectCreator/templates/vc7libexe.mpt:
+
+          Removed these files.
+
 Fri Apr 02 13:36:08 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
         * ACE version 5.4.1 released.
 
 Fri Apr  2 13:05:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  Updated with the latest developments just prior to BFO.
+          Updated with the latest developments just prior to BFO.
 
 Thu Apr  1 22:54:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release: 
+        * bin/make_release:
 
-	  Fixes from testing.
+          Fixes from testing.
 
 Thu Apr  1 18:03:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release: 
+        * bin/make_release:
 
-	  We now generate static project files for VC6, solution and
-	  vcproj files for VC7 (for the whole of
-	  ACE+TAO+CIAO). Additionally we also generate em3 files for the
-	  whole of ACE. This is for the ACE distribution only. 
+          We now generate static project files for VC6, solution and
+          vcproj files for VC7 (for the whole of
+          ACE+TAO+CIAO). Additionally we also generate em3 files for the
+          whole of ACE. This is for the ACE distribution only.
 
 Thu Apr  1 10:21:31 2004  Chad Elliott  <elliott_c@ociweb.com>
 
