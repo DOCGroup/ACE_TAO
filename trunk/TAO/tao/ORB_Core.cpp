@@ -1572,7 +1572,6 @@ TAO_ORB_Core::destroy (CORBA_Environment &ACE_TRY_ENV)
     {
       ACE_THROW (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
                                   CORBA::COMPLETED_NO));
-      ACE_CHECK;
     }
 }
 
