@@ -15,14 +15,14 @@
 class ACE_Export ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
 {
   // = TITLE
-  // 
-  //     This is result object is used by the <end_event_loop> of the 
+  //
+  //     This is result object is used by the <end_event_loop> of the
   //     ACE_Proactor interface to wake up all the threads blocking
   //     for completions.
-  // 
+  //
   // = DESCRIPTION
-  // 
-  
+  //
+
 public:
   ACE_POSIX_Wakeup_Completion (ACE_Handler &handler,
                                const void *act = 0,
@@ -30,11 +30,11 @@ public:
                                int priority = 0,
                                int signal_number = ACE_SIGRTMIN);
   // Constructor.
-  
+
   virtual ~ACE_POSIX_Wakeup_Completion (void);
   // Destructor.
-  
-  
+
+
   virtual void complete (u_long bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
@@ -348,13 +348,13 @@ ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
       ACE_NEW_RETURN (wakeup_completion,
                       ACE_POSIX_Wakeup_Completion (this->wakeup_handler_),
                       -1);
-      
+
       if (wakeup_completion->post_completion (this) == -1)
         return -1;
     }
-  
+
   return 0;
-}  
+}
 
 class ACE_Export ACE_AIOCB_Notify_Pipe_Manager : public ACE_Handler
 {
@@ -642,11 +642,11 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
                       "%N:%l:(%P | %t)::%p\n",
                       "ACE_POSIX_AIOCB_Proactor::handle_events:"
                       "aio_suspend failed"));
-          
+
           return 0;
         }
     }
-  
+
   // Retrive the result pointer.
   ACE_POSIX_Asynch_Result *asynch_result = 0;
   size_t ai;
@@ -656,15 +656,15 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
   // !!! Protected area.
   {
     ACE_Guard<ACE_Thread_Mutex> locker (this->mtx_AIOCB_);
-    
+
     for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
       {
         // Dont process null blocks.
         if (aiocb_list_ [ai] == 0)
           continue;
-        
+
         // = Analyze error and return values.
-        
+
         // Get the error status of the aio_ operation.
         error_status = aio_error (aiocb_list_[ai]);
         if (error_status == -1)
@@ -674,11 +674,11 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
                              "ACE_POSIX_AIOCB_Proactor::handle_events:"
                              "<aio_error> has failed"),
                             -1);
-        
-        // Continue the loop if <aio_> operation is still in progress. 
+
+        // Continue the loop if <aio_> operation is still in progress.
         if (error_status == EINPROGRESS)
           continue;
-        
+
         // Handle cancel'ed asynchronous operation. We dont have to call
         // <aio_return> in this case, since return_status is going to be
         // -1. We will pass 0 for the <bytes_transferred> in this case
@@ -693,45 +693,45 @@ ACE_POSIX_AIOCB_Proactor::handle_events (unsigned long milli_seconds)
             // operation has finished (successfully or unsuccessfully!!!)
             // Get the return_status of the <aio_> operation.
             return_status = aio_return (aiocb_list_[ai]);
-            
+
             if (return_status == -1)
               {
                 ACE_DEBUG ((LM_ERROR,
                             "%N:%l:(%P | %t)::%p\n",
                             "ACE_POSIX_AIOCB_Proactor::handle_events:"
                             "<aio_return> failed to transfer any data\n"));
-                
+
                 return_status = 0;
               }
-            
+
             break;
           }
       }
-    
+
     // Something should have completed.
     ACE_ASSERT (ai != this->aiocb_list_max_size_);
-    
+
     // Retrive the result pointer.
     asynch_result = this->result_list_ [ai];
-    
+
     // ACE_reinterpret_cast (ACE_POSIX_Asynch_Result *,
     //                   this->aiocb_list_[ai]);
     // ACE_dynamic_cast (ACE_POSIX_Asynch_Result *,
     //                   this->aiocb_list_[ai]);
-    
+
     // Invalidate entry in the aiocb list.
     this->aiocb_list_[ai] = 0;
     this->result_list_ [ai] = 0;
     this->aiocb_list_cur_size_--;
   } // !! End of protected area.
-    
+
   // Call the application code.
   this->application_specific_code (asynch_result,
                                    return_status, // Bytes transferred.
                                    1,             // Success
                                    0,             // No completion key.
                                    error_status); // Error
-  
+
   // Success
   return 1;
 }
@@ -756,8 +756,8 @@ ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *r
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor");
 
   // Protect the atomic action , which is: find free slot , start IO ,
-  // save ptr in the lists  
-  
+  // save ptr in the lists
+
   ACE_Guard<ACE_Thread_Mutex> locker (this->mtx_AIOCB_);
 
   if (result == 0)
@@ -805,7 +805,7 @@ ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *r
                             -1);
         }
     }
-  else 
+  else
     {
       // write
       if (aio_write (result) == -1)
@@ -816,9 +816,9 @@ ACE_POSIX_AIOCB_Proactor::register_aio_with_proactor (ACE_POSIX_Asynch_Result *r
                             -1);
         }
     }
-      
+
   // Store the pointers.
-  this->aiocb_list_[ai] = result; 
+  this->aiocb_list_[ai] = result;
   this->result_list_ [ai] = result;
 
   this->aiocb_list_cur_size_ ++;
@@ -1181,10 +1181,10 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
   if (sig_info.si_code == SI_ASYNCIO)
     {
       // Analyze error and return values.
-      
+
       int error_status = 0;
       int return_status = 0;
-      
+
       // Check the error status
       error_status = aio_error (asynch_result);
 
@@ -1213,7 +1213,7 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
         {
           return_status = 0;
         }
-      else 
+      else
         {
           // Get the return_status of the <aio_> operation.
           return_status = aio_return (asynch_result);
@@ -1229,9 +1229,9 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
               return_status = 0;
             }
         }
-      
+
       // error status and return status are obtained. Dispatch the
-      // completion . 
+      // completion .
       this->application_specific_code (asynch_result,
                                        return_status,
                                        1,             // Result : True.
