@@ -2,18 +2,18 @@ Sat Oct 19 20:00:00 2002  Stephen Torri <storri@cse.wustl.edu>
 
 	* tests/Recursive_Condition_Test.cpp:
 
-	Added test to check nesting_level after requiring a Recursive
-	Condition Mutex multiple times. Also after releasing for the
-	same number of times.
+	  Added test to check nesting_level after requiring a Recursive  
+	  Condition Mutex multiple times. Also after releasing for the
+	  same number of times. 
 
 	* tests/SString_Test.cpp:
 	* ace/String_Base.i:
 
-	Bug 1323: Fixed. In the effort to protect from memory problems
-        with non-null terminated strings the operators '<' and '>' where
-        rendered useless. Now the comparions use strcmp instead of
-        strncmp. A series of tests have been added to SString_Test.cpp
-        to ensure this does not happen again.
+	  Bug 1323: Fixed. In the effort to protect from memory problems 
+	  with non-null terminated strings the operators '<' and '>' where 
+	  rendered useless. Now the comparions use strcmp instead of
+          strncmp. A series of tests have been added to SString_Test.cpp 
+	  to ensure this does not happen again.
 
 Sat Oct 19 21:58:00 2002  Krishnakumar B  <kitty@cse.wustl.edu>
 
