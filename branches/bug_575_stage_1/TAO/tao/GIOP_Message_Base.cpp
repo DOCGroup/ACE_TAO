@@ -569,7 +569,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // the stream and never touch that again for anything. We basically
   // loose ownership of the data_block.
 
-  switch (this->message_state_.message_type_)
+  switch (qd->msg_type_)
     {
     case TAO_GIOP_REQUEST:
       // Should be taken care by the state specific invocations. They
@@ -632,7 +632,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   // the stream and never touch that again for anything. We basically
   // loose ownership of the data_block.
 
-  switch (this->message_state_.message_type_)
+  switch (qd->msg_type_)
     {
     case TAO_GIOP_REPLY:
       // Should be taken care by the state specific parsing
@@ -1100,7 +1100,8 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
                              0,
                              ACE_Message_Block::DONT_DELETE,
                              0);
-  ACE_Message_Block message_block(&data_block);
+  ACE_Message_Block message_block(&data_block,
+                                  ACE_Message_Block::DONT_DELETE);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   size_t bt;

@@ -76,6 +76,20 @@ private:
   /// appropriate).
   TAO_Wait_Strategy *wait_strategy_;
 
+  /* @@todo: At some point of time we are going to get to a situation
+     where TAO has huge stack sizes. Need to think on how we would
+     deal with that. One idea would be to push these things on TSS as
+     this is created by the thread on a per invocation basis. Post 1.2
+     would be a nice time for that I guess
+  */
+
+  /// The buffer that is used to initialise the data block
+  char buf_[ACE_CDR::DEFAULT_BUFSIZE];
+
+  /// datablock that is created on teh stack to initialise the CDR
+  /// stream underneath.
+  ACE_Data_Block db_;
+
   /// CDR stream which has the reply information that needs to be
   /// demarshalled by the stubs
   TAO_InputCDR reply_cdr_;
