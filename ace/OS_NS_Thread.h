@@ -1796,6 +1796,16 @@ protected:
   /// "True" if signaled.
   int is_signaled_;
 
+  /// Special bool for auto_events alone
+  /**
+   * The semantics of auto events forces us to introduce this extra
+   * variable to ensure that the thread is not woken up
+   * spuriously. Please see event_wait and event_timedwait () to see
+   * how this is used for auto_events. Theoretically this is a hack
+   * that needs revisiting after x.4
+   */
+  bool auto_event_signaled_;
+
   /// Number of waiting threads.
   unsigned long waiting_threads_;
 };
