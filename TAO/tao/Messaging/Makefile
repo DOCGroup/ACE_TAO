@@ -21,6 +21,7 @@ CPP_SRCS += \
   Messaging \
   MessagingC \
   MessagingS \
+  TAO_ExtC \
   Messaging_ORBInitializer \
   Messaging_PolicyFactory \
   Messaging_Policy_i
