@@ -1,3 +1,9 @@
+Mon Jun  9 08:27:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Makefile.ace:
+          Added NT_Service. Thanks to Wolfgang Schroeder <cpp_kurs@arcor.de>
+          for reporting this.
+
 Sun Jun  8 22:36:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* THANKS: Added Andrew Voumard to the hall of fame.
@@ -7,17 +13,17 @@ Sun Jun  8 17:55:18 UTC 2003  Don Hinton  <dhinton@dresystems.com>
         * bin/g++_metrics.sh:
           Fixed a typo that caused the script to fail.
 
-Sun Jun  8 10:52:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu> 
+Sun Jun  8 10:52:23 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/PerlACE/Process.pm:
 	* bin/PerlACE/Process_Win32.pm:
 	* bin/PerlACE/Process_Unix.pm: Moved the Normalize_Executable_Name
 	  method to platform specific implementation files.  The original
 	  implementation in Process.pm was Win32 specific.
- 
+
 Sat Jun  7 11:12:16 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.h: Added a 
+	* performance-tests/Synch-Benchmarks/Synch_Lib/Benchmark_Base.h: Added a
 	  #include for "ace/Atomic_Op.h" to solve a compilation problem.
   	  Thanks to Nick Kukuczka <nickk@appliedepi.com> for reporting
  	  this.
