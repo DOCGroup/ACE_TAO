@@ -457,15 +457,14 @@ public:
   /// Accessor for cached POA policies.
   TAO_POA_Cached_Policies &cached_policies (void);
 
+  /// This method gives the policies that are exposed to the client.
+  /// These policies are shipped within the IOR.
   virtual CORBA::PolicyList *client_exposed_policies (
       CORBA::Short object_priority
       ACE_ENV_ARG_DECL
     );
-  // This method gives the policies that are exposed to the client.
-  // These policies are shipped within the IOR.
 
-
-  // Utility functions for the other
+  /// Utility functions for the other
   static char* ObjectId_to_string (const PortableServer::ObjectId &id);
 
   static CORBA::WChar* ObjectId_to_wstring (
@@ -519,9 +518,9 @@ public:
 
   CORBA::Boolean cleanup_in_progress (void);
 
+  /// Calls protected static method used when POACurrent is not appropriate.
   static int parse_ir_object_key (const TAO::ObjectKey &object_key,
                                   PortableServer::ObjectId &user_id);
-  // Calls protected static method used when POACurrent is not appropriate.
 
   TAO_Object_Adapter &object_adapter (void);
 
@@ -664,30 +663,30 @@ protected:
 //
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
+  /// ImplRepo helper method, notify the ImplRepo on startup
   void imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL);
-  // ImplRepo helper method, notify the ImplRepo on startup
 
+  /// ImplRepo helper method, notify the ImplRepo on shutdown
   void imr_notify_shutdown (void);
-  // ImplRepo helper method, notify the ImplRepo on shutdown
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Wrapper for the ORB's key_to_object that will alter the object pointer
+  /// if the ImplRepo is used.
   CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,
                                    const char *type_id,
                                    TAO_ServantBase *servant,
                                    CORBA::Boolean collocated,
                                    CORBA::Short priority
                                    ACE_ENV_ARG_DECL);
-  // Wrapper for the ORB's key_to_object that will alter the object pointer
-  // if the ImplRepo is used.
 
+  /// Like key_to_stub() but assume that the ORB is not shutting down.
   virtual TAO_Stub* key_to_stub_i (const TAO::ObjectKey &key,
                                    const char *type_id,
                                    CORBA::Short priority
                                    ACE_ENV_ARG_DECL);
-  // Like key_to_stub() but assume that the ORB is not shutting down.
 
   TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
                                 const char *type_id,
@@ -990,7 +989,7 @@ protected:
 
   TAO_ORB_Core &orb_core_;
 
-  // The object adapter we belong to
+  /// The object adapter we belong to
   TAO_Object_Adapter *object_adapter_;
 
   CORBA::Boolean cleanup_in_progress_;
