@@ -1,3 +1,11 @@
+Wed Oct 28 09:13:10 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: expanded discussion of non-static
+          ACE_Object_Manager, including the fact that it's the
+          default config on Win32 and VxWorks.  And that not
+          declaring main () with two arguments will lead to
+          link failure due to unresolved ace_main_i.
+
 Tue Oct 27 22:14:18 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6 released.
