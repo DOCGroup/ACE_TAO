@@ -87,11 +87,13 @@ ACE_Handle_Set::count_bits (u_long n) const
 #if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
   register int rval = 0;
 
-  while (n > 0)
-    {
-      rval++;
-      n &= n - 1;
-    }
+  // Count the number of enabled bits in <n>.  This algorithm is very
+  // fast, i.e., O(enabled bits in n).
+
+  for (register u_long m = n;
+       m != 0;
+       m &= m - 1)
+    rval++;
 
   return rval;
 #else
