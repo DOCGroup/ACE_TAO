@@ -48,7 +48,8 @@ Mon Dec  1 12:20:11 2003  Huang-Ming Huang  <hh1@cse.wustl.edu>
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/Replication_Service.cpp:
           Use ACE_AUTOP_PTR_RESET instead of auto_ptr.reset() to fix the problem
-          in MSVC 6.
+          in MSVC 6. Thanks to alan l batongbacal<alanlb@vt.edu>  for reporting
+          the problem.
 
         * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
           Fixed warnings in SunForte8 build.
