@@ -1,3 +1,14 @@
+Tue Nov 25 16:21:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Servant_To_Reference_Test/server.cpp (svc): 
+
+	  Reduced the number of iterations so that they have any chance of
+	  completing on slower machines. 
+	
+	* tests/Servant_To_Reference_Test/run_test.pl:
+
+	  Scripts for daily builds
+
 Tue Nov 25 15:52:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/PortableServer/POA.cpp:
