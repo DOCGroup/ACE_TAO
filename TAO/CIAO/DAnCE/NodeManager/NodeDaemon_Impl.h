@@ -123,6 +123,11 @@ namespace CIAO
     Deployment::NodeApplicationManager_var manager_;
   };
 }
+
+#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning(pop)
+#endif /* _MSC_VER */
+
 #if defined (__ACE_INLINE__)
 # include "NodeDaemon_Impl.inl"
 #endif /* __ACE_INLINE__ */
