@@ -1,0 +1,26 @@
+//$Id$
+#include <RTScheduler.pidl>
+#include <RTCORBA.pidl>
+
+module MUF_Scheduling
+{
+  struct SchedulingParameter
+  {
+    TimeBase::TimeT deadline;
+    TimeBase::TimeT estimated_initial_execution_time;
+    long criticality;
+  };
+
+  local interface SchedulingParameterPolicy
+  : CORBA::Policy
+  {
+    attribute SchedulingParameter value;
+  };
+  
+  local interface Scheduler : RTScheduling::Scheduler
+  {
+    SchedulingParameterPolicy
+      create_scheduling_parameter 
+        (in SchedulingParameter value);
+  };
+};
