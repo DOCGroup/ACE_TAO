@@ -1001,6 +1001,22 @@ private:
 };
 
 #if 0
+class ACE_Process_Condition
+  // = TITLE
+  //     ACE_Condition variable wrapper that works across processes.
+{
+public:
+  ACE_Process_Condition (MUTEX &m, LPCTSTR name = 0, void *arg = 0);
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  // ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+};
+#endif /* ACE_HAS_STHREADS */
+
+#if 0
 class ACE_Export ACE_Process_Barrier : public ACE_Barrier
   // = TITLE 
   //     Implements "barrier synchronization" using ACE_Process_Mutexes! 
@@ -1031,7 +1047,7 @@ class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
 {
 public:
   ACE_Thread_Barrier (u_int count, LPCTSTR name = 0);
-  // Create a Process_Barrier, passing in the optional <name>.
+  // Create a Thread_Barrier, passing in the optional <name>.
 
   void dump (void) const;
   // Dump the state of an object.
