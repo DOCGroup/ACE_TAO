@@ -1,3 +1,27 @@
+Mon Jan 28 12:23:39 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be_include/be_visitor_argument/argument.h:
+	* TAO_IDL/be/be_visitor_argument/argument.cpp:
+	  Add functionality to support fixed-direction arguments, i.e. the
+	  visitor caller can override the actual direction of the
+	  argument.  This is used in AMH to make all the INOUT arguments
+	  behave as IN arguments.
+
+	* TAO_IDL/be/be_visitor_operation/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/amh_ss.cpp:
+	  Use the set_fixed_direction() functionality in the
+	  be_visitor_args visitors to generate correct code for the INOUT
+	  arguments in an AMH function.
+
+	* TAO_IDL/be_include/be_visitor_operation/amh_ss.h:
+	  Removed extra argument in the generate_shared_section() helper,
+	  the argument is no longer needed.
+	  
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  Fixed problem in UTL_ScopeActiveIterator, a bogus si.next() was
+	  left in the for()-loop body.
+
 Mon Jan 28 12:15:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tests/OBV/Forward/server.dsp:

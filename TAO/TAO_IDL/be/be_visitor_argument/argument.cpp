@@ -26,6 +26,7 @@ ACE_RCSID(be_visitor_argument, argument, "$Id$")
 
 be_visitor_args::be_visitor_args (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
+  , fixed_direction_ (-1)
 {
 }
 
@@ -71,10 +72,19 @@ be_visitor_args::type_name (be_type *node,
 AST_Argument::Direction
 be_visitor_args::direction (void)
 {
+  if (this->fixed_direction_ != -1)
+    return AST_Argument::Direction (this->fixed_direction_);
+
   // grab the argument node. We know that our context has stored the right
   // argument node
   be_argument *arg = this->ctx_->be_node_as_argument ();
 
   ACE_ASSERT (arg != 0);
   return arg->direction ();
+}
+
+void
+be_visitor_args::set_fixed_direction (AST_Argument::Direction direction)
+{
+  this->fixed_direction_ = direction;
 }
