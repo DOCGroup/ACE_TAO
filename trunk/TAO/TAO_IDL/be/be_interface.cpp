@@ -1380,7 +1380,7 @@ be_interface::gen_perfect_hash_methods (void)
                                 "-N lookup",
                                 idl_global->perfect_hasher (),
                                 this->flatname ());
-  
+
   // Spawn a process for gperf.
   if (process_manager.spawn (process_options) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1424,18 +1424,20 @@ be_interface::cleanup_gperf_temp_file (void)
   // Codegen singleton.
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
+#if ! defined (linux)
+  // RedHat Linux 5.1/Intel core dumps if ss is deleted.
+
   // Delete the stream ptr.
   TAO_OutStream *ss = cg->gperf_input_stream ();
-  if (ss != 0)
-    delete ss;
+  delete ss;
+#endif /* ! linux */
 
   // Delete the temp file.
   ACE_OS::unlink (cg->gperf_input_filename ());
 
   // Delete the filename ptr.
   char *fname = cg->gperf_input_filename ();
-  if (fname != 0)
-    delete fname;
+  delete fname;
 }
 
 int
@@ -1499,42 +1501,42 @@ be_interface::gen_skel_helper (be_interface *derived,
                 {
                   // generate the static method corresponding to this method
                   *os << "static void " << d->local_name ()
-		      << "_skel (" << be_idt << be_idt_nl
-		      << "CORBA::ServerRequest &req, " << be_nl
-		      << "void *obj," << be_nl
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "CORBA::ServerRequest &req, " << be_nl
+                      << "void *obj," << be_nl
                       << "void *context," << be_nl
-		      << "CORBA::Environment &env =" << be_idt_nl
-		      << "CORBA::Environment::default_environment ()"
-		      << be_uidt << be_uidt_nl
-		      << ");" << be_uidt << "\n\n";
+                      << "CORBA::Environment &env =" << be_idt_nl
+                      << "CORBA::Environment::default_environment ()"
+                      << be_uidt << be_uidt_nl
+                      << ");" << be_uidt << "\n\n";
                 }
               else
                 { // generate code in the inline file
                   // generate the static method corresponding to this method
                   *os << "ACE_INLINE void "
-		      << derived->full_skel_name () << "::"
-		      << d->local_name ()
-		      << "_skel (" << be_idt << be_idt_nl
-		      << "CORBA::ServerRequest &req," << be_nl
-		      << "void *obj," << be_nl
-		      << "void *context," << be_nl
-		      << "CORBA::Environment &env" << be_uidt_nl
-		      << ")" << be_uidt_nl
-		      << "{" << be_idt_nl;
-		  *os << ancestor->full_skel_name ()
-		      << "_ptr impl = ("
-		      << derived->full_skel_name ()
-		      << "_ptr) obj;" << be_nl;
+                      << derived->full_skel_name () << "::"
+                      << d->local_name ()
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "CORBA::ServerRequest &req," << be_nl
+                      << "void *obj," << be_nl
+                      << "void *context," << be_nl
+                      << "CORBA::Environment &env" << be_uidt_nl
+                      << ")" << be_uidt_nl
+                      << "{" << be_idt_nl;
                   *os << ancestor->full_skel_name ()
-		      << "::" << d->local_name ()
-		      << "_skel (" << be_idt << be_idt_nl
-		      << "req," << be_nl
-		      << "(" << ancestor->full_skel_name ()
-		      << "_ptr) impl," << be_nl
-		      << "context," << be_nl
-		      << " env" << be_uidt_nl
-		      << ");" << be_uidt << be_uidt_nl
-		      << "}\n";
+                      << "_ptr impl = ("
+                      << derived->full_skel_name ()
+                      << "_ptr) obj;" << be_nl;
+                  *os << ancestor->full_skel_name ()
+                      << "::" << d->local_name ()
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "req," << be_nl
+                      << "(" << ancestor->full_skel_name ()
+                      << "_ptr) impl," << be_nl
+                      << "context," << be_nl
+                      << " env" << be_uidt_nl
+                      << ");" << be_uidt << be_uidt_nl
+                      << "}\n";
                 }
             }
           else if (d->node_type () == AST_Decl::NT_attr)
@@ -1550,42 +1552,42 @@ be_interface::gen_skel_helper (be_interface *derived,
                 {
                   // generate the static method corresponding to this method
                   *os << "static void _get_" << d->local_name ()
-		      << "_skel (" << be_idt << be_idt_nl
-		      << "CORBA::ServerRequest &req," << be_nl
-		      << "void *obj," << be_nl
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "CORBA::ServerRequest &req," << be_nl
+                      << "void *obj," << be_nl
                       << "void *context," << be_nl
-		      << "CORBA::Environment &env =" << be_idt_nl
-		      << "CORBA::Environment::default_environment ()"
-		      << be_uidt << be_uidt_nl
-		      << ");" << be_uidt << "\n\n";
+                      << "CORBA::Environment &env =" << be_idt_nl
+                      << "CORBA::Environment::default_environment ()"
+                      << be_uidt << be_uidt_nl
+                      << ");" << be_uidt << "\n\n";
                 }
               else
                 { // generate code in the inline file
                   // generate the static method corresponding to this method
                   *os << "ACE_INLINE void "
-		      << derived->full_skel_name () << "::_get_"
-		      << d->local_name ()
-		      << "_skel (" << be_idt << be_idt_nl
-		      << "CORBA::ServerRequest &req," << be_nl
-		      << "void *obj," << be_nl
-		      << "void *context," << be_nl
-		      << "CORBA::Environment &env" << be_uidt_nl
-		      << ")" << be_uidt_nl
-		      << "{" << be_idt_nl
-		      << ancestor->full_skel_name ()
-		      << "_ptr impl = ("
-		      << derived->full_skel_name ()
-		      << "_ptr) obj;" << nl;
+                      << derived->full_skel_name () << "::_get_"
+                      << d->local_name ()
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "CORBA::ServerRequest &req," << be_nl
+                      << "void *obj," << be_nl
+                      << "void *context," << be_nl
+                      << "CORBA::Environment &env" << be_uidt_nl
+                      << ")" << be_uidt_nl
+                      << "{" << be_idt_nl
+                      << ancestor->full_skel_name ()
+                      << "_ptr impl = ("
+                      << derived->full_skel_name ()
+                      << "_ptr) obj;" << nl;
                   *os << ancestor->full_skel_name ()
-		      << "::_get_" << d->local_name ()
-		      << "_skel (" << be_idt << be_idt_nl
-		      << "req," << be_nl
-		      << "(" << ancestor->full_skel_name ()
-		      << "_ptr) impl," << be_nl
-		      << "context," << be_nl
-		      << "env" << be_uidt_nl
-		      << ");" << be_uidt << be_uidt_nl
-		      << "}\n";
+                      << "::_get_" << d->local_name ()
+                      << "_skel (" << be_idt << be_idt_nl
+                      << "req," << be_nl
+                      << "(" << ancestor->full_skel_name ()
+                      << "_ptr) impl," << be_nl
+                      << "context," << be_nl
+                      << "env" << be_uidt_nl
+                      << ");" << be_uidt << be_uidt_nl
+                      << "}\n";
                 }
 
               if (!attr->readonly ())
@@ -1595,45 +1597,45 @@ be_interface::gen_skel_helper (be_interface *derived,
                   if (os->stream_type () == TAO_OutStream::TAO_SVR_HDR)
                     {
                       // generate the static method corresponding to
-		      // this method
+                      // this method
                       *os << "static void _set_" << d->local_name ()
-			  << "_skel (" << be_idt << be_idt_nl
-			  << "CORBA::ServerRequest &req," << be_nl
-			  << "void *obj," << be_nl
+                          << "_skel (" << be_idt << be_idt_nl
+                          << "CORBA::ServerRequest &req," << be_nl
+                          << "void *obj," << be_nl
                           << "void *context," << be_nl
-			  << "CORBA::Environment &env = " << be_idt_nl
-			  << "CORBA::Environment::default_environment ()"
-			  << be_uidt << be_uidt_nl
-			  << ");" << be_uidt << "\n\n";
+                          << "CORBA::Environment &env = " << be_idt_nl
+                          << "CORBA::Environment::default_environment ()"
+                          << be_uidt << be_uidt_nl
+                          << ");" << be_uidt << "\n\n";
                     }
                   else
                     { // generate code in the inline file
                       // generate the static method corresponding to
-		      // this method
+                      // this method
                       *os << "ACE_INLINE void "
-			  << derived->full_skel_name ()
+                          << derived->full_skel_name ()
                           << "::_set_" << d->local_name ()
-			  << "_skel (" << be_idt << be_idt_nl
-			  << "CORBA::ServerRequest &req," << be_nl
-			  << "void *obj," << be_nl
-			  << "void *context," << be_nl
-			  << "CORBA::Environment &env" << be_uidt_nl
-			  << ")" << be_uidt_nl
-			  << "{" << be_idt_nl
-			  << ancestor->full_skel_name ()
-			  << "_ptr impl = ("
-			  << derived->full_skel_name ()
-			  << "_ptr) obj;" << be_nl;
+                          << "_skel (" << be_idt << be_idt_nl
+                          << "CORBA::ServerRequest &req," << be_nl
+                          << "void *obj," << be_nl
+                          << "void *context," << be_nl
+                          << "CORBA::Environment &env" << be_uidt_nl
+                          << ")" << be_uidt_nl
+                          << "{" << be_idt_nl
+                          << ancestor->full_skel_name ()
+                          << "_ptr impl = ("
+                          << derived->full_skel_name ()
+                          << "_ptr) obj;" << be_nl;
                       *os << ancestor->full_skel_name ()
-			  << "::_get_" << d->local_name ()
-			  << "_skel (" << be_idt << be_idt_nl
-			  << "req," << be_nl
-			  << "(" << ancestor->full_skel_name ()
-			  << "_ptr) impl," << be_nl
-			  << "context," << be_nl
-			  << "env" << be_uidt_nl
-			  << ");" << be_uidt << be_uidt_nl
-			  << "}\n";
+                          << "::_get_" << d->local_name ()
+                          << "_skel (" << be_idt << be_idt_nl
+                          << "req," << be_nl
+                          << "(" << ancestor->full_skel_name ()
+                          << "_ptr) impl," << be_nl
+                          << "context," << be_nl
+                          << "env" << be_uidt_nl
+                          << ");" << be_uidt << be_uidt_nl
+                          << "}\n";
                     }
 
                 }
@@ -1672,8 +1674,8 @@ be_interface::collocated_ctor_helper (be_interface *derived,
 
 int
 be_interface::copy_ctor_helper (be_interface *derived,
-				be_interface *base,
-				TAO_OutStream *os)
+                                be_interface *base,
+                                TAO_OutStream *os)
 {
   if (derived == base)
     // we are the same. Don't do anything, otherwise we will end up calling
