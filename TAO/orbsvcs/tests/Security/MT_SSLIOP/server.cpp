@@ -21,7 +21,7 @@ parse_args (int argc, char *argv[])
       case 'i':
          ior_table_name = get_opts.opt_arg ();
          break;
-       
+
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
@@ -87,29 +87,28 @@ main (int argc, char *argv[])
         orb->object_to_string (server.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));A
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
 
-
-      if (ior_table_name != 0) 
+      if (ior_table_name != 0)
         {
-          CORBA::Object_var table_object = 
+          CORBA::Object_var table_object =
              orb->resolve_initial_references ("IORTable" ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
-         
-          IORTable::Table_var adapter = 
+
+          IORTable::Table_var adapter =
              IORTable::Table::_narrow (table_object.in () ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
-                   
-          if (CORBA::is_nil (adapter.in ())) 
+
+          if (CORBA::is_nil (adapter.in ()))
             {
               ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
               return -1;
             }
-         
+
           adapter->bind ( ior_table_name, ior.in () ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
         }
-            
+
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
