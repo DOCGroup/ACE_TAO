@@ -579,7 +579,6 @@ public:
   // factory method for a wrapped VxWorks message queue
 
 #endif /* defined (VXWORKS) */
-
 };
 
 #if defined (__ACE_INLINE__)
