@@ -62,9 +62,10 @@
 #define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_NEW_THROWS_EXCEPTIONS
 
-#if defined (__KCC_VERSION) && (__KCC_VERSION < 3400)
+// __KCC_VERSION is not defined before 3.4.  
+#if !defined (__KCC_VERSION)
 #define ACE_AUTO_PTR_LACKS_RESET
-#endif /* __KCC_VERSION && __KCC_VERSION < 3400 */
+#endif /* !__KCC_VERSION */
 
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
 
