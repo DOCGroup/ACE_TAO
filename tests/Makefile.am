@@ -18,9 +18,7 @@ AUTOMAKE_OPTIONS = 1.4
 ##                         -Ossama
 ## SUBDIRS = CLASSIX \
 ##           WinCE \
-##           log \
 ##           version_tests
-SUBDIRS = log
 
 INCLUDES = -I$(top_builddir) -I$(top_srcdir)
 
@@ -286,7 +284,18 @@ EXTRA_DIST = $(noinst_SCRIPTS) $(noinst_DATA)
 ##                 $(tmp)/ace_test_file \
 ##                 $(tmp)/Naming_Test*
 
+## Run local targets
+all-local: log_dir
+
+## Create tests `log' directory
+log_dir:
+	if test -d log; then : else mkdir log; fi
+
 ## Clean up template repositories, etc.
 clean-local:
 	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
 	-rm -rf ptrepository Templates.DB gcctemp.c gcctemp so_locations
+
+## Clean up `log' directory , etc.
+distclean-local:
+	-rm -rf log
