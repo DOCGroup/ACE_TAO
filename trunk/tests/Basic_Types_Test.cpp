@@ -17,6 +17,9 @@
 // ============================================================================
 
 #include "ace/OS.h"
+// Don't use the ACE version accessors in class ACE, so that we can
+// support this test cleanly with the OS component, only.
+#include "ace/Version.h"
 
 #if defined (ACE_HAS_MINIMAL_ACE_OS)
   // Redefine these macros to allow the test to print out useful info.
@@ -63,12 +66,10 @@ main (int, ASYS_TCHAR *[])
 {
   ACE_START_TEST (ASYS_TEXT ("Basic_Types_Test"));
 
-#if !defined (ACE_HAS_MINIMAL_ACE_OS)
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("This is ACE Version %u.%u.%u\n\n"),
-              ACE::major_version (),
-              ACE::minor_version(),
-              ACE::beta_version()));
-#endif /* ! ACE_HAS_MINIMAL_ACE_OS */
+              ACE_MAJOR_VERSION,
+              ACE_MINOR_VERSION,
+              ACE_BETA_VERSION));
 
   u_int errors = 0;
 
