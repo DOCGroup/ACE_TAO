@@ -146,7 +146,7 @@ namespace TAO
       tph->set_client_network_priority (this->resolver_.transport ()->tag (),
                                         this->resolver_.stub ()
                                         ACE_ENV_ARG_PARAMETER);
-    ACE_CHECK;
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
     
     TAO_Connection_Handler *connection_handler =
       this->resolver_.transport ()->connection_handler ();

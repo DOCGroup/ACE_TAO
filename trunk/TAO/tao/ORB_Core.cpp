@@ -1081,7 +1081,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
   this->protocols_hooks_ =
     ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
     (TAO_ORB_Core_Static_Resources::instance ()->protocols_hooks_name_.c_str());
-    
+
   // Must have valid protocol hooks.
   if (this->protocols_hooks_ == 0)
     ACE_THROW_RETURN (CORBA::INITIALIZE (
@@ -2589,7 +2589,8 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 CORBA::Policy_ptr
-TAO_ORB_Core::get_policy (CORBA::PolicyType type)
+TAO_ORB_Core::get_policy (CORBA::PolicyType type
+                          ACE_ENV_ARG_DECL)
 {
   CORBA::Policy_var result;
 
@@ -2599,22 +2600,32 @@ TAO_ORB_Core::get_policy (CORBA::PolicyType type)
     result = policy_manager->get_policy (type);
 
   if (CORBA::is_nil (result.in ()))
-    result = this->get_default_policies ()->get_policy (type);
+    {
+      result =
+        this->get_default_policies ()->get_policy (type
+                                                   ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   return result._retn ();
 }
 
 CORBA::Policy_ptr
-TAO_ORB_Core::get_policy_including_current (CORBA::PolicyType type)
+TAO_ORB_Core::get_policy_including_current (CORBA::PolicyType type
+                                            ACE_ENV_ARG_DECL)
 {
   TAO_Policy_Current &policy_current =
     this->policy_current ();
 
-  CORBA::Policy_var result = 
+  CORBA::Policy_var result =
     policy_current.get_policy (type);
 
   if (CORBA::is_nil (result.in ()))
-    result = this->get_policy (type);
+    {
+      result = this->get_policy (type
+                                 ACE_ENV_ARG_DECL);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   return result._retn ();
 }
@@ -2630,22 +2641,34 @@ TAO_ORB_Core::get_cached_policy (TAO_Cached_Policy_Type type)
     result = policy_manager->get_cached_policy (type);
 
   if (CORBA::is_nil (result.in ()))
-    result = this->get_default_policies ()->get_cached_policy (type);
+    {
+      result =
+        this->get_default_policies ()->get_cached_policy (type
+                                                          ACE_ENV_ARG_DECL);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   return result._retn ();
 }
 
 CORBA::Policy_ptr
-TAO_ORB_Core::get_cached_policy_including_current (TAO_Cached_Policy_Type type)
+TAO_ORB_Core::get_cached_policy_including_current (
+    TAO_Cached_Policy_Type type
+    ACE_ENV_ARG_DECL)
 {
   TAO_Policy_Current &policy_current =
     this->policy_current ();
 
-  CORBA::Policy_var result = 
+  CORBA::Policy_var result =
     policy_current.get_cached_policy (type);
 
   if (CORBA::is_nil (result.in ()))
-    result = this->get_cached_policy (type);
+    {
+      result =
+        this->get_cached_policy (type
+                                 ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+    }
 
   return result._retn ();
 }
