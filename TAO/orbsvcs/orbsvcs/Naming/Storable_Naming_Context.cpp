@@ -546,7 +546,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
       // Now delete the file
       ACE_Auto_Ptr<TAO_Storable_Base>
         fl (
-          this->factory_->create_stream(ACE_TEXT_ALWAYS_CHAR(file_name.c_str()),
+          this->factory_->create_stream(file_name.c_str(),
                                         ACE_TEXT("r"))
           );
       if (fl.get())

@@ -5,6 +5,7 @@
 #include "NamingViewerDlg.h"
 #include "ace/ARGV.h"
 #include "ace/ACE.h"
+#include "ace/Argv_Type_Converter.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -47,10 +48,12 @@ BOOL CNamingViewerApp::InitInstance()
 	//  of your final executable, you should remove from the following
 	//  the specific initialization routines you do not need.
 
+#if !defined (_WIN32_WCE)
 #ifdef _AFXDLL
 	Enable3dControls();			// Call this when using MFC in a shared DLL
 #else
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
+#endif
 #endif
 
   // Parse command line arguments so we can initialize ORB with them
@@ -60,8 +63,9 @@ BOOL CNamingViewerApp::InitInstance()
   {
     
     int argc = Argv.argc();
-    ACE_TCHAR** argv = Argv.argv();
-    CORBA::ORB_var ORB = CORBA::ORB_init(argc, argv);
+    ACE_Argv_Type_Converter argcon (argc, Argv.argv ());
+    CORBA::ORB_var ORB = CORBA::ORB_init(argcon.get_argc (),
+                                         argcon.get_ASCII_argv ());
 	  CNamingViewerDlg dlg(ORB);
 	  m_pMainWnd = &dlg;
 	  int nResponse = dlg.DoModal();

@@ -1,3 +1,31 @@
+Fri Feb 11 08:42:25 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/TAO_Service/TAO_Service.cpp:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * tao/CDR.cpp:
+        * tao/Connector_Registry.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/UTF16_BOM_Factory.cpp:
+        * utils/NamingViewer/BindDialog.cpp:
+        * utils/NamingViewer/BindNewContext.cpp:
+        * utils/NamingViewer/NamingTreeCtrl.cpp:
+        * utils/NamingViewer/NamingViewer.mpc:
+        * utils/NamingViewer/NamingViewer.cpp:
+        * utils/NamingViewer/NamingViewerDlg.h:
+        * utils/NamingViewer/NamingViewerDlg.cpp:
+        * utils/NamingViewer/SelectNSDialog.cpp:
+        * utils/NamingViewer/ViewIORDialog.cpp:
+        * utils/catior/catior.cpp:
+        * utils/catior/catior.mpc:
+        * utils/nslist/nsadd.cpp:
+        * utils/nslist/nsdel.cpp:
+        * utils/nslist/nslist.cpp:
+        * utils/nslist/nslist.mpc:
+
+          Added better support for EVC 4.  It is not complete, but now the
+          CosNaming library (among other things) can be built.
+
 Fri Feb 11 07:29:34 2005  Ciju John  <john_c@ociweb.com>
 
         * orbsvcs/tests/Notify/Reconnecting/run_test.pl:

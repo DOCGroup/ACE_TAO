@@ -22,6 +22,7 @@
 #include "tao/ORB_Constants.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Argv_Type_Converter.h"
 
 CORBA::ORB_var orb;
 int showIOR = 0;
@@ -214,7 +215,7 @@ list_context (CosNaming::NamingContext_ptr nc,
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 {
   showIOR = 0;
   showNSonly = 0;
@@ -222,14 +223,19 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      ACE_Argv_Type_Converter argcon (argcw, argvw);
+      orb = CORBA::ORB_init (argcon.get_argc (), argcon.get_ASCII_argv (),
+                             "" ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      char *pname = argv[0];
+      int argc = argcon.get_argc ();
+      ACE_TCHAR** argv = argcon.get_TCHAR_argv ();
+
+      ACE_TCHAR *pname = argv[0];
 
       while (argc > 0)
         {
-          if (strcmp(*argv, "--ior") == 0)
+          if (ACE_OS::strcmp(*argv, ACE_TEXT ("--ior")) == 0)
             {
               if (showNSonly)
                 {
@@ -240,7 +246,7 @@ main (int argc, char *argv[])
                 }
               showIOR = 1;
             }
-          else if (ACE_OS::strcmp (*argv, "--nsior") == 0)
+          else if (ACE_OS::strcmp (*argv, ACE_TEXT ("--nsior")) == 0)
             {
               if (showIOR)
                 {
@@ -251,11 +257,11 @@ main (int argc, char *argv[])
                 }
               showNSonly = 1;
             }
-          else if (ACE_OS::strcmp (*argv, "--ctxior") == 0)
+          else if (ACE_OS::strcmp (*argv, ACE_TEXT ("--ctxior")) == 0)
             {
               showCtxIOR = 1;
             }
-          else if (ACE_OS::strncmp (*argv, "--", 2) == 0)
+          else if (ACE_OS::strncmp (*argv, ACE_TEXT ("--"), 2) == 0)
             {
               ACE_DEBUG ((LM_DEBUG, "Usage: %s [[ --ior ][ --ctxior ] | --nsior ]\n", pname));
               return 1;
