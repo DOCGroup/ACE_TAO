@@ -3,7 +3,7 @@
 #include "Connection_Handler.h"
 #include "debug.h"
 #include "Transport.h"
-
+#include "ORB_Core.h"
 #include "ace/Flag_Manip.h"
 
 ACE_RCSID (tao,
@@ -11,8 +11,10 @@ ACE_RCSID (tao,
            "$Id$")
 
 TAO_Thread_Per_Connection_Handler::TAO_Thread_Per_Connection_Handler (
-    TAO_Connection_Handler *ch)
-  : ch_ (ch)
+    TAO_Connection_Handler *ch,
+    TAO_ORB_Core *oc)
+  : TAO_TPC_BASE (oc->thr_mgr ())
+  , ch_ (ch)
 {
   this->ch_->transport ()->add_reference ();
 }

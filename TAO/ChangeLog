@@ -1,3 +1,20 @@
+Tue Feb 17 16:56:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Thread_Per_Connection_Handler.cpp:
+	* tao/Thread_Per_Connection_Handler.h:
+
+	  Pass the thread manager used in the ORB_Core to the
+	  ACE_Task_Base instead of allowing task base to choose a thread
+	  manager on its own. This solves all sorts of crashes during
+	  shutdown and hack like the one in "Fri Feb  6 10:48:07 2004
+	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>". We need to
+	  fix the patches applied. 
+	
+ 	* tao/Acceptor_Impl.cpp:
+
+	  Pass TAO_ORB_Core to the Thread_Per_Connection_Handler during 
+	  creation. 
+
 Tue Feb 17 16:06:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_module.cpp:

@@ -121,7 +121,8 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
       TAO_Thread_Per_Connection_Handler *tpch = 0;
 
       ACE_NEW_RETURN (tpch,
-                      TAO_Thread_Per_Connection_Handler (sh),
+                      TAO_Thread_Per_Connection_Handler (sh,
+                                                         this->orb_core_),
                       -1);
 
       result = tpch->activate (f->server_connection_thread_flags (),
