@@ -22,6 +22,15 @@ TAO_ORB_Core::_decr_refcnt (void)
   return 0;
 }
 
+ACE_INLINE ACE_Lock *
+TAO_ORB_Core::locking_strategy (void)
+{
+  if (this->resource_factory ()->use_locked_data_blocks ())
+    return &this->data_block_lock_;
+
+  return 0;
+}
+
 ACE_INLINE TAO_Transport_Cache_Manager *
 TAO_ORB_Core::transport_cache (void)
 {
