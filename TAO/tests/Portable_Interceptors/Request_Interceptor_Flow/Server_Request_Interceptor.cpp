@@ -9,7 +9,8 @@ ACE_RCSID (Request_Interceptor_Flow,
 #include "testC.h"
 
 Server_Request_Interceptor::Server_Request_Interceptor (const char *name)
-  : Request_Interceptor (name)
+  : Request_Interceptor (name),
+    scenario_ (0)
 {
 }
 
@@ -35,37 +36,24 @@ Server_Request_Interceptor::receive_request_service_contexts (
 
   if (ACE_OS_String::strcmp ("SERVER B", this->name_.in ()) == 0)
     {
-      // Determine which test scenario we are in
-      Dynamic::ParameterList_var paramlist =
-        ri->arguments (ACE_TRY_ENV);
-      ACE_CHECK;
+      this->scenario_++;
 
-      Test::TestScenario scenario;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
-                           // overloaded operator ambiguity.
-      if (paramlist[i].argument >>= scenario)
+      switch (this->scenario_)
         {
-          switch (scenario)
-            {
-            case 2:
-              // We can only throw a CORBA::SystemException or a
-              // PortableInteceptor::ForwardRequest exception due to
-              // the restricted exception specification dictated by
-              // the IDL for request interceptors.  As such, an
-              // arbitrary CORBA::SystemException was chosen
-              // (NO_PERMISSION, in this case).
-              ACE_DEBUG ((LM_DEBUG,
-                          " raised CORBA::NO_PERMISSION exception\n"));
-              ACE_THROW (CORBA::NO_PERMISSION ());  // Expected exception.
+        case 2:
+          // We can only throw a CORBA::SystemException or a
+          // PortableInteceptor::ForwardRequest exception due to
+          // the restricted exception specification dictated by
+          // the IDL for request interceptors.  As such, an
+          // arbitrary CORBA::SystemException was chosen
+          // (NO_PERMISSION, in this case).
+          ACE_DEBUG ((LM_DEBUG,
+                      " raised CORBA::NO_PERMISSION exception\n"));
+          ACE_THROW (CORBA::NO_PERMISSION ());  // Expected exception.
 
-            default:
-              break;
-            }
+        default:
+          break;
         }
-      else
-        ACE_ERROR ((LM_ERROR,
-                    "\nERROR: receive_request_service_contexts - "
-                    "Could not extract arguments.\n"));
     }
 
   ACE_DEBUG ((LM_DEBUG,

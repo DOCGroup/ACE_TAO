@@ -93,11 +93,18 @@ public:
 
 private:
 
-  // Returns 1 if the server-side test is currently being run, and 0
-  // otherwise.
+  /// Returns 1 if the server-side test is currently being run, and 0
+  /// otherwise.
   CORBA::Boolean server_side_test (
     PortableInterceptor::ServerRequestInfo_ptr info,
     CORBA::Environment &ACE_TRY_ENV);
+
+private:
+
+  /// Variable used to keep track of the scenario count.  Used to get
+  /// around the inability to call RequestInfo::arguments() in the
+  /// receive_service_contexts() interception point.
+  Test::TestScenario scenario_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
