@@ -146,7 +146,7 @@ namespace TAO
 
     typedef Special_Basic_Tag                               idl_tag;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 #include "tao/Special_Basic_Argument_T.inl"

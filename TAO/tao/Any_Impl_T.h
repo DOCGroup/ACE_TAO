@@ -68,7 +68,7 @@ namespace TAO
   private:
     T * value_;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 # include "tao/Any_Impl_T.inl"

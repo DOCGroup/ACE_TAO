@@ -62,7 +62,7 @@ namespace TAO
     T * value_;
     CORBA::ULong bound_;
   };
-};
+}
 
 #if defined (__ACE_INLINE__)
 # include "tao/Any_Special_Impl_T.inl"
