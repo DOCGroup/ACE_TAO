@@ -1,3 +1,11 @@
+Fri Sep 28 19:24:51 2001  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-11.00.h: Moved the definitions for ACE_HAS_WCHAR
+          and ACE_HAS_XPG4_MULTIBYTE_CHAR from the compiler-independent
+          section to the aC++ section. (at least) gcc 3.0 distributed from
+          HP can't handle compiling wide char stuff... it refers to
+          wctype.h, only available in aC++.
+
 Fri Sep 28 12:46:25 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Context.cpp (report_error):
@@ -65,15 +73,16 @@ Fri Sep 28 09:37:28 2001  Ossama Othman  <ossama@uci.edu>
 
 Fri Sep 28 06:17:27 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
-	* ace/SPIPE_Acceptor.{h,cpp}: Fixed the use of "char" for "already_connected_"
-	  to be "int".  Thanks to Johnny Willemsen for reporting this.
+	* ace/SPIPE_Acceptor.{h,cpp}: Fixed the use of "char" for
+          "already_connected_" to be "int".  Thanks to Johnny Willemsen
+          for reporting this.
 
 	* ACE-INSTALL.html: Improved the installation instructions for BCB 4/5.
 	  Thanks to Chris Kohloff for contributing this and to
 	  Jan Kalin <jan.kalin@zag.si> for motivating this.
 
-	* ace/TTY_IO.cpp: Fixed numerous bugs in the control() method.  Thanks to
-	  Airat A. Sadreev <airatsa@nm.ru> for reporting this.
+	* ace/TTY_IO.cpp: Fixed numerous bugs in the control() method.
+          Thanks to Airat A. Sadreev <airatsa@nm.ru> for reporting this.
 	
 	* ace/TTY_IO.h: Add a new field for Win32.  Thanks to
 	  Airat A. Sadreev <airatsa@nm.ru> for reporting this.
