@@ -18,6 +18,9 @@
 # the target CPU.  The /opt/SUNWspro/ Sun C++ installation directory
 # is site-specific.
 #
+# To build 64-bit binaries with Forte 6, build with the "buildbits=64"
+# option (make buildbits=64).
+#
 # With slight modification, this file could be used with Sun C++ 4.1.
 # However, it's likely that you won't be able to build all of ACE
 # with Sun C++ 4.1.
@@ -125,6 +128,17 @@ else  # ! 4.2
         ifeq (0,$(stdcpplib))
           CCFLAGS += -library=iostream -DACE_USES_OLD_IOSTREAMS
         endif # stdcpplib
+
+        # If 64-bit build is desired, turn that on. If no code gen options
+        # are given to Forte 6, the default build is 32-bit, even when
+        # building on a 64-bit system. Specifying xarch=v9 generates code
+        # that runs on any Sparc v9 (64-bit) processor. If you want to
+        # tune this further, you should extract and insert from CCFLAGS
+        # in a private platform_macros.GNU file.
+        ifeq (64,$(buildbits))
+          CCFLAGS += -xarch=v9
+          LDFLAGS += -xarch=v9
+        endif # buildbits
       endif # CC 5.0
     endif # compat4 requested
   endif # CC 5.0 or later
