@@ -6,6 +6,13 @@ Thu Feb 12 10:21:47 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/Makefile,xdr.{h,cpp},t-xdr.cpp,corba.h: removed xdr files
           because they're no longer used.
 
+        * tao/encode.cpp,poa.{h,cpp},poaC.{h,cpp}: replaced wchar_t
+          with CORBA::WChar.
+
+        * TAO_IDL/ast/ast_generator.cpp,TAO_IDL/be/be_generator.cpp
+          (create_wstring): use short instead of wchar_t if
+          ACE_HAS_WCHAR_TYPEDEFS_CHAR.
+
 Wed Feb 11 11:20:34 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/iiopobj.h,stub.h (operator =): added return type to avoid
