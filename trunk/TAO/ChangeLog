@@ -1,3 +1,8 @@
+Wed Nov 26 10:47:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/PSS/PSDL_Scope.cpp:
+          Removed generation of include of non-existent files
+
 Tue Nov 25 21:17:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_sunsoft.cpp:
@@ -18,7 +23,7 @@ Tue Nov 25 20:11:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/Makefile.Security:
 	* orbsvcs/orbsvcs/Makefile.av:
 
-	  Updated dependencies just for the above files. 
+	  Updated dependencies just for the above files.
 
 Tue Nov 25 20:01:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -26,22 +31,22 @@ Tue Nov 25 20:01:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Lots of libraries depend on CosNaming. CosNaming depends on
 	  corba_messaging. This means that most of the orbsvcs cannot be
-	  built without corba_messaging. 
+	  built without corba_messaging.
 
 Tue Nov 25 18:17:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/Simulator/Event_Supplier/Makefile:
 
 	  Do not build this in parallel This seems to create lots of
-	  problems. 
+	  problems.
 
 2003-11-25  Douglas C. Schmidt  <schmidt@deuce.doc.wustl.edu>
 
 	* utils/wxNamingViewer/wxBindNewContext.cpp: Updated this file to
 	  fix the following problems:
-	
+
 	  - wxBindNewContext.cpp:110, add a # in front of endif
-	
+
 	  - wxBindNewContext.cpp: 113 - 119, remove duplicate definition of
 	    WxBindNewContext constructor.
 
@@ -49,11 +54,11 @@ Tue Nov 25 18:17:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 Tue Nov 25 16:21:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tests/Servant_To_Reference_Test/server.cpp (svc): 
+	* tests/Servant_To_Reference_Test/server.cpp (svc):
 
 	  Reduced the number of iterations so that they have any chance of
-	  completing on slower machines. 
-	
+	  completing on slower machines.
+
 	* tests/Servant_To_Reference_Test/run_test.pl:
 
 	  Scripts for daily builds
@@ -70,7 +75,7 @@ Tue Nov 25 15:52:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  method servant_to_reference_i () which does the bulk of the
 	  work. Thanks to Milan Cvetkovic <mcvetkovic@mpathix.com> for
 	  proposing this fix.
-	  
+
 	* tests/Servant_To_Reference_Test:
 
 	  A new test to check for race conditions.
@@ -82,14 +87,14 @@ Tue Nov 25 15:52:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Tue Nov 25 14:03:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/CosNaming.mpc:
-        
+
           Added naming_export.h to the project creator.
 
 Tue Nov 25 13:51:02 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp (compute_full_name):
         * TAO_IDL/be/be_visitor_interface/amh_si.cpp (gen_skel_helper):
-        
+
           Fixed long-standing problems with code that was hanging on
           to memory owned by ACE_CStrings. These problems show themselves
           only intermittently, which is why they weren't fixed long ago.
@@ -138,7 +143,7 @@ Tue Nov 25 07:16:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  Fixed a small typo that caused the Makefile not to build any of
 	  the executables. This should fix the strange errors that were
-	  caused when Naming_Service wasn't built. 
+	  caused when Naming_Service wasn't built.
 
 Tue Nov 25 10:55:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -163,25 +168,25 @@ Tue Nov 25 05:25:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 Mon Nov 24 20:02:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/tests/Trading/ttest_export.h:
-        
+
           New file containing export macro definitions for Trading_Lib_Test.
-          
+
         * orbsvcs/tests/Trading/Offer_Exporter.h:
         * orbsvcs/tests/Trading/Offer_Importer.h:
         * orbsvcs/tests/Trading/Service_Type_Exporter.h:
         * orbsvcs/tests/Trading/TT_Info.h:
-        
+
           Added include of the new export header file above.
-          
+
         * orbsvcs/tests/Trading/Trading.mpc:
-        
+
           Updated to generate and use the export macro.
 
 Mon Nov 24 20:05:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers:
 
-	  Provided the path to the included header files. 
+	  Provided the path to the included header files.
 
 Mon Nov 24 19:57:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
