@@ -450,7 +450,7 @@ Test_ECG::run (int argc, char* argv[])
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier\n"));
 
-      RtecEventChannelAdmin::Observer_Handle observer_handle;
+      RtecEventChannelAdmin::Observer_Handle observer_handle = 0;
       if (this->rmt_name_ != 0)
         {
           tv.set (5, 0);
