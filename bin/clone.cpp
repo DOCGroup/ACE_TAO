@@ -22,7 +22,7 @@ extern "C" char *getwd (char *);
 #endif
 
 extern char *sys_errlist[];
-static void clone (char* s_path, char* d_path, int sroot_flag);
+static void clone (char* s_path, char* d_path, int sroot_flag, int level);
 
 static char *pname;
 static int errors = 0;
@@ -156,7 +156,7 @@ abspath (char *cwd, char *rel_pathname)
 }
 
 static char*
-path_concat (char* s1, char* s2)
+path_concat (const char* s1, const char* s2)
 {
   int s1_len;
   char* ret_val = (char *) malloc ((s1_len = strlen (s1)) + strlen (s2) + 2);
@@ -331,19 +331,38 @@ remove_item (char* s_path, char* d_path)
 
 #ifndef USG
 static void
-mk_symbolic_link (char *s_path, char *d_path)
+mk_symbolic_link (const char *s_path, const char *d_path)
 {
-  if (symlink (s_path, d_path))
+  int result = 0;
+ 
+  if (s_path[0] == '/' || level < 2)
+    result = symlink (s_path, d_path);
+  else
+    {
+      int len;
+      char *new_s_path = (char *) malloc (len = strlen(s_path) + 3 * level);
+      int i;
+      char *cp = new_s_path;
+       
+      for (i = 0; i < level-1; i++)
+        {
+ 	  strcpy (cp, "../");
+ 	  cp += 3;
+ 	}
+      strcpy (cp, s_path);
+      result = symlink (new_s_path, d_path);
+    }
+  if (result)
     {
       if (!quiet_flag)
         fprintf (stderr, "%s: error: can't symlink %s to %s: %s\n",
-          pname, s_path, d_path, sys_errlist[errno]);
-     }
+                 pname, s_path, d_path, sys_errlist[errno]);
+    }
   else
     {
       if (verbose_flag)
         fprintf (stderr, "%s: created symlink %s -> %s\n",
-          pname, d_path, s_path);
+                 pname, d_path, s_path);
     }
 }
 #endif
@@ -558,7 +577,7 @@ symlink_SCCS (char* s_path, char* d_path)
 }
 
 static void
-clone_dir (char* s_path, char* d_path)
+clone_dir (char* s_path, char* d_path, int level)
 {
   DIR* dirp;
 
@@ -622,7 +641,7 @@ clone_dir (char* s_path, char* d_path)
       if (sccs_flag && !strcmp (dir_entry_p->d_name, "SCCS"))
         symlink_SCCS(new_s_path, new_d_path);
       else
-        clone (new_s_path, new_d_path, 0);
+        clone (new_s_path, new_d_path, 0, level+1);
 
       free (new_s_path);
       free (new_d_path);
@@ -672,7 +691,7 @@ clone_symbolic_link (char* s_path,char* d_path)
 	}
     }
 
-  mk_symbolic_link(symlink_buf, d_path); /* Make an identical symlink.  */
+  mk_symbolic_link(symlink_buf, d_path, 0); /* Make an identical symlink.  */
 }
 
 
@@ -681,12 +700,12 @@ clone_symbolic_link (char* s_path,char* d_path)
 #define IS_DIR(STAT_BUF) (((STAT_BUF).st_mode & S_IFMT) == S_IFDIR)
 
 static void
-clone (char* s_path, char* d_path, int sroot_flag)
+clone (char* s_path, char* d_path, int sroot_flag, int level)
 {
   struct stat src_stat_buf;
   struct stat dst_stat_buf;
   int dir_already_exists = 0;
-  char* intype = "file";
+  const char* intype = "file";
 
   if (lstat (s_path, &src_stat_buf) == -1)
     {
@@ -735,7 +754,7 @@ clone (char* s_path, char* d_path, int sroot_flag)
     }
   else
     {
-      char* outtype = "file";
+      const char* outtype = "file";
 
       if (lstat (d_path, &dst_stat_buf) == -1)
 	{
@@ -818,7 +837,7 @@ clone (char* s_path, char* d_path, int sroot_flag)
                 pname, d_path);
           }
 
-	clone_dir(s_path, d_path);
+	clone_dir(s_path, d_path, level);
 
 	/* By default, output directories which existed before this
 	   program was executed are reset back to their original
@@ -850,7 +869,7 @@ clone (char* s_path, char* d_path, int sroot_flag)
 
 #ifndef USG
 	if (symlink_flag)
-	  mk_symbolic_link(s_path, d_path);
+	  mk_symbolic_link(s_path, d_path, level);
 	else
 #endif
 	if (copy_flag)
@@ -952,6 +971,6 @@ main (int argc, char *argv[])
       exit (1);
     }
   umask (0);			/* disable all masking */
-  clone (src_path, dst_path, 1);
+  clone (src_path, dst_path, 1, 0);
   return 0;
 }
