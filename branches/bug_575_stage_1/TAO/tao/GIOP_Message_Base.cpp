@@ -1360,30 +1360,6 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (void)
   return this->generator_parser_->is_ready_for_bidirectional ();
 }
 
-int
-TAO_GIOP_Message_Base::more_messages (void)
-{
-# if 0
-  int retval =
-    this->message_handler_.is_message_ready ();
-
-  if (retval <= 0)
-    return retval;
-
-
-  // Get the message state
-  TAO_GIOP_Message_State &state =
-    this->message_handler_.message_state ();
-
-  // Set the state internally for parsing and generating messages
-  this->set_state (state.giop_version.major,
-                   state.giop_version.minor);
-
-  return retval;
-#endif
-
-  return 0;
-}
 
 TAO_Queued_Data *
 TAO_GIOP_Message_Base::make_queued_data (size_t sz)
