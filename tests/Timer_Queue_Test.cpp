@@ -26,7 +26,7 @@
 #include "test_config.h"
 
 // Number of iterations for the performance tests.
-static int max_iterations = ACE_DEFAULT_MAX_TIMERS;
+static int max_iterations = ACE_DEFAULT_TIMERS;
 
 // Keep track of the timer ids that were assigned to us.
 static int *timer_ids = 0;
