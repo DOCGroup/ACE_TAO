@@ -12,12 +12,11 @@
 //
 // ============================================================================
 
-#include <iostream.h>
-#include <fstream.h>
-
+#include "ace/streams.h" 
 #include "ace/ACE.h"
-#include "ttcp_i.h"
 #include "ace/Get_Opt.h"
+
+#include "ttcp_i.h"
 
 char Usage[] = "\
 Usage: server [TAO options] [options] \n\
@@ -65,36 +64,71 @@ main (int argc, char **argv)
 
   int c;                      // option
   CORBA::Environment env;     // environment
-  CORBA::ORB_ptr     orb_ptr; // handle to the ORB
-  CORBA::POA_ptr     oa_ptr;  // Object adapter
+  CORBA::ORB_var     orb_var; // handle to the ORB
+  PortableServer::POA_var root_poa; // Object adapter
   CORBA::String      key = (CORBA::String) "key0"; // key assigned to our
                                                    // target object
-  char              *oa_name = "POA"; // name of our OA
+  CORBA::Object_var obj_var;
+  char              *oa_name = "RootPOA"; // name of our OA
   char              *orb_name = "internet"; // name of our ORB
   CORBA::String      str; // for stringified representation of the object reference
 
   ACE_UNUSED_ARG (key);
 
   // initialize the underlying ORB and get a handle to it
-  orb_ptr = CORBA::ORB_init (argc, argv, orb_name, env);
+  orb_var = CORBA::ORB_init (argc, argv, orb_name, env);
   if (env.exception () != 0)
     {
       env.print_exception ("ORB init");
       return 1;
     }
 
-  // now get a handle to the object adapter
-  oa_ptr = orb_ptr->POA_init (argc, argv, oa_name);
+  obj_var = orb_var->resolve_initial_references(oa_name);
+
+  if (CORBA::is_nil(obj_var.in()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       " (%P|%t) Unable to initialize the POA.\n"),
+		      -1);
+  
+  root_poa = PortableServer::POA::_narrow (obj_var.in (), env);
+
   if (env.exception () != 0)
     {
-      env.print_exception ("OA init");
+      env.print_exception ("POA init");
       return 1;
     }
 
-  if (oa_ptr == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to initialize the POA.\n"),
-		      1);
+  PortableServer::POAManager_var poa_manager =
+    root_poa->the_POAManager (env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("POA manager");
+      return 1;
+    }
+
+  PortableServer::PolicyList policies (2);
+  policies.length (2);  
+  policies[0] =
+    root_poa->create_id_assignment_policy (PortableServer::USER_ID,
+					   env);
+  policies[1] =
+    root_poa->create_lifespan_policy (PortableServer::PERSISTENT,
+				      env);
+
+  // We use a different POA, otherwise the user would have to
+  // change the object key each time it invokes the server.
+  PortableServer::POA_var good_poa =
+    root_poa->create_POA ("RootPOA_is_BAD",
+			  poa_manager.in (),
+			  policies,
+			  env);  
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("create good poa");
+      return 1;
+    }
 
   // for parsing the arguments
   ACE_Get_Opt get_opt (argc, argv, "l:vd:f:L:");
@@ -126,17 +160,46 @@ main (int argc, char **argv)
   //
 
   // create an instance of an object implementing the "ttcp" interface
-  my_ttcp = new ttcp_sequence_i ("TTCP_IIOP_test"); // this is its name
+  my_ttcp = new ttcp_sequence_i; // this is its name
+
+  PortableServer::ObjectId_var id = 
+    PortableServer::string_to_ObjectId ("TTCP_IIOP_test");
+  good_poa->activate_object_with_id (id.in (),
+				     my_ttcp,
+				     env);
+  if (env.exception () != 0)
+    {
+      env.print_exception ("string_to_ObjectId");
+      return 1;
+    }
+
+  obj_var = good_poa->id_to_reference (id.in (), env);
+ 
+  if (env.exception () != 0)
+    {
+      env.print_exception ("id_to_reference");
+      return 1;
+    }
+
+  poa_manager->activate (env);
+
+  if (env.exception () != 0)
+    {
+      env.print_exception ("id_to_reference");
+      return 1;
+    }
 
   if (TAO_debug_level > 0)
     {
       // get a stringified representation of the object reference created above
-      str = orb_ptr->object_to_string (my_ttcp, env);
-      if (env.exception() != 0)
-        {
-          env.print_exception ("object_to_string", stdout);
-          return 1;
-        }
+      str = orb_var->object_to_string (obj_var.in (),
+				       env);
+      if (env.exception () != 0)
+	{
+	  env.print_exception ("object_to_string");
+	  return 1;
+	}
+       
       ACE_DEBUG ((LM_DEBUG, "stringified obj reference = %s\n", str));
     }
 
@@ -148,12 +211,8 @@ main (int argc, char **argv)
 
   // Handle requests for this object until we're killed, or one of the
   // methods asks us to exit.
-  if (orb_ptr->run () == -1)
+  if (orb_var->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
 
   return 0;
-
-  // usage:
-  // fprintf (stderr, Usage);
-  // return(1);
 }
