@@ -1,3 +1,17 @@
+Wed Apr 16 13:35:34 2003  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Basic_Types.h (ACE_WINT_T, ACE_WCHAR_T):
+	* ace/CDR_Base.h (WChar):
+	* ace/OS.h (WChar):
+
+	  Cleaned up redundant and inconsistent wide character related
+	  typedefs.  The ACE_OS::WChar and ACE_CDR::WChar types are now
+	  based on the ACE_WCHAR_T type defined in ace/Basic_Types.h
+	  rather than using a set of preprocessor conditionals to set
+	  them.  In particular, the preprocessor conditionals are now
+	  localized in ace/Basic_Types.h.  This reduces maintenance burden
+	  since a single location need be modified instead of multiple.
+
 Wed Apr 16 19:27:29 UTC 2003  Don Hinton  <dhinton@drestystems.com>
 
         * ace/Get_Opt.{h,cpp}:
