@@ -1,5 +1,8 @@
 // $Id$
 
+#if !defined (JAWS_ASSOC_ARRAY_CPP)
+#define JAWS_ASSOC_ARRAY_CPP
+
 #include "ace/inc_user_config.h"
 #include "JAWS/Assoc_Array.h"
 
@@ -262,3 +265,5 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::
 operator= (const JAWS_Assoc_Array_Iterator<KEY, DATA> &aai)
 {
 }
+
+#endif /* !defined (JAWS_ASSOC_ARRAY_CPP) */
