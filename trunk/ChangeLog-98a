@@ -22,7 +22,8 @@ Thu Jan 22 09:04:13 1998  David L. Levine  <@cs.wustl.edu>
           guaranteed to be unique on VxWorks.
 
         * ace/OS.cpp (thr_create): on VxWorks only, use the t_id (task
-          name) if supplied.
+          name) and stack_size if supplied.  Also added support for setting
+          the stack, but commented it out because it doesn't seem to work.
 
         * tests/Conn_Test.cpp: on VxWorks, assign thread (VxWorks task)
           names to server and client threads, to test that feature.
