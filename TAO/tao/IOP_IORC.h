@@ -24,6 +24,7 @@
 
 #ifndef _TAO_IDL_ORIG_IOP_IORC_H_
 #define _TAO_IDL_ORIG_IOP_IORC_H_
+
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
@@ -31,7 +32,8 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "TAO_Export.h"
+
+#include "tao/TAO_Export.h"
 #include "tao/OctetSeqC.h"
 #include "tao/CDR.h"
 
