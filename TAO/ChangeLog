@@ -1,3 +1,11 @@
+Mon Mar  8 13:53:58 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* NEWS:
+
+	  Added a NEWS file which tracks user visible changes between
+	  every beta. Thanks to Olli Savia and Gary Duzan for motivating
+	  this. 	
+
 Sun Mar  7 17:47:16 2004  Olli Savia  <ops@iki.fi>
 
 	* TAO-INSTALL.html

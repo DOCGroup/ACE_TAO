@@ -1,3 +1,11 @@
+Mon Mar  8 13:54:16 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* NEWS:
+
+	  Added a NEWS file which tracks user visible changes between
+	  every beta. Thanks to Olli Savia and Gary Duzan for motivating
+	  this. 		
+
 Wed Mar  3 14:30:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantHeaderGenerator.cpp:
