@@ -71,7 +71,10 @@ ECT_Throughput::run (int argc, char* argv[])
       ACE_TRY_CHECK;
 
       CORBA::Object_var poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+        this->orb_->resolve_initial_references("RootPOA",
+                                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
@@ -188,7 +191,10 @@ ECT_Throughput::run (int argc, char* argv[])
 
 #if 0
       CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService");
+        this->orb_->resolve_initial_references ("NameService",
+                                                ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       if (CORBA::is_nil (naming_obj.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the Naming Service.\n"),
