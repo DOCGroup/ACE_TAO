@@ -1,0 +1,16 @@
+//
+// $Id$
+//
+
+#ifndef _TIME_BASE_IDL_
+#define _TIME_BASE_IDL_
+
+// Force the IDL compiler to include this file [it does not include
+// empty files]
+#pragma prefix "omg.org"
+
+#include "tao/TimeBase.pidl"
+
+#pragma prefix ""
+
+#endif /* _TIME_BASE_IDL_ */

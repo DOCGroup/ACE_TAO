@@ -1,0 +1,4 @@
+rm -f outfile
+touch outfile 
+grep "Mbit/sec\|Send" results.TAO | head -20 > outfile
+grep "msec/call\|Send" results.TAO | head -20 >> outfile
