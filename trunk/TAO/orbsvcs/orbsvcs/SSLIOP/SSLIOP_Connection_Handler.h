@@ -60,26 +60,11 @@ public:
   /// Destructor.
   ~TAO_SSLIOP_Connection_Handler (void);
 
-  /// Called by the <Strategy_Acceptor> when the handler is completely
-  /// connected.  Argument is unused.
-  virtual int open (void *);
-
-
-  /// = Active object activation method.
-  virtual int activate (long flags = THR_NEW_LWP,
-                        int n_threads = 1,
-                        int force_active = 0,
-                        long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                        int grp_id = -1,
-                        ACE_Task_Base *task = 0,
-                        ACE_hthread_t thread_handles[] = 0,
-                        void *stack[] = 0,
-                        size_t stack_size[] = 0,
-                        ACE_thread_t  thread_names[] = 0);
-
-  /// Only used when the handler is turned into an active object by
-  /// calling <activate>.  This serves as the event loop in such cases.
-  virtual int svc (void);
+  //@{
+  //** @name Connection Handler overloads
+  */
+  virtual int open_handler (void *);
+  //@}
 
   //@{
   /** @name Event Handler overloads
@@ -89,6 +74,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_output (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  virtual int open (void *);
   //@}
 
   /// Add ourselves to Cache.
