@@ -1,24 +1,24 @@
 Mon Jun  7 17:09:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Naming/test_multiple_contexts.cpp (main): Added a cast
- 	  to resolve const problems.  Thanks to David for reporting this.
+        * examples/Naming/test_multiple_contexts.cpp (main): Added a cast
+          to resolve const problems.  Thanks to David for reporting this.
 
-	* examples/Naming/test_writers.cpp (main): Fixed a typo.  Thanks
- 	  to David for reporting this.
+        * examples/Naming/test_writers.cpp (main): Fixed a typo.  Thanks
+          to David for reporting this.
 
 Mon Jun  7 14:21:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* tests/DLL_Test.cpp (main): ANSI C++ spec doesnt allow void * to
-  	  be typecasted to a function_pointer. Hence made changes to
-	  remove the warning due to this. Thanks to Nanbor
-	  <nanbor@cs.wustl.edu> for pointing it out.
+        * tests/DLL_Test.cpp (main): ANSI C++ spec doesnt allow void * to
+          be typecasted to a function_pointer. Hence made changes to
+          remove the warning due to this. Thanks to Nanbor
+          <nanbor@cs.wustl.edu> for pointing it out.
 
 Mon Jun  7 14:12:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Added a general section explaining the order
-	  of user defined macros and platform config file.  Thanks to
-	  Stephen E Blake <stephen_e_blake@email.moore.com> for pointing
-	  this out.
+        * ACE-INSTALL.html: Added a general section explaining the order
+          of user defined macros and platform config file.  Thanks to
+          Stephen E Blake <stephen_e_blake@email.moore.com> for pointing
+          this out.
 
 Mon Jun 07 10:55:12 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -28,8 +28,8 @@ Mon Jun 07 10:55:12 1999  David L. Levine  <levine@cs.wustl.edu>
 Mon Jun  7 12:35:17 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
         * examples/Service_Configurator/IPC-tests/client: Fixed some more
- 	  warnings related to const-correctness.  I believe that ACE is
- 	  now just about completely const-correct.
+          warnings related to const-correctness.  I believe that ACE is
+          now just about completely const-correct.
 
         * examples/Service_Configurator/Misc/main.cpp (main): Cast to
           (ASYS_TCHAR **) rather than (ASYS_THCAR *[]).  Thanks to David
