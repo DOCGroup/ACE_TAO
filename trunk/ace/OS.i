@@ -4841,7 +4841,7 @@ ACE_OS::execvp (const char *file, char *const argv[])
 }
 
 ACE_INLINE int 
-ACE_OS::execl (const char */* path */, const char */* arg0 */, ...)
+ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 {
 // ACE_TRACE ("ACE_OS::execl");
 #if defined (ACE_WIN32) || defined (VXWORKS)
@@ -4854,7 +4854,7 @@ ACE_OS::execl (const char */* path */, const char */* arg0 */, ...)
 }
 
 ACE_INLINE int 
-ACE_OS::execle (const char */* path */, const char * /* arg0 */, ...)
+ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
 {
 // ACE_TRACE ("ACE_OS::execle");
 #if defined (ACE_WIN32) || defined (VXWORKS)

@@ -20,6 +20,12 @@ ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name)
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
 }
 
+template <class MALLOC>
+ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter (void)
+{ 
+  ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter");
+}
+
 template <class MALLOC> void
 ACE_Allocator_Adapter<MALLOC>::dump (void) const
 {
@@ -176,6 +182,13 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc (const char *pool_name,
   this->open ();
 }
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
+
+
+template <ACE_MEM_POOL_1, class LOCK> 
+ACE_Malloc<ACE_MEM_POOL_2, LOCK>::~ACE_Malloc (void)
+{
+  ACE_TRACE ("ACE_Malloc<MEM_POOL>::~ACE_Malloc<MEM_POOL>");
+}
 
 // Clean up the resources allocated by ACE_Malloc.
 
