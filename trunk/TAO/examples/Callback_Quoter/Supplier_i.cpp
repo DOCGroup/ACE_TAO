@@ -70,7 +70,7 @@ Supplier_i::orb (CORBA::ORB_ptr orb)
 // Remove the client handler.
 
 void
-Supplier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer_handler,
+Supplier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
                                  CORBA::Environment &TAO_TRY_ENV)
 {
 
@@ -83,11 +83,11 @@ Supplier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer_handler,
       // the *iter is nothing but the stockname + unbounded set
       // of consumers+threshold values, i.e a ACE_Hash_Map_Entry.
 
-       CONSUMERS *consumers;
        Consumer_Data consumer_to_remove;
-       consumer_to_remove.consumer_ = consumer_handle;
+       consumer_to_remove.consumer_ = Callback_Quoter::Consumer::_duplicate(consumer);
 
-       (*iter).consumers->remove (consumer_to_remove);
+       (*iter).int_id_->remove (consumer_to_remove);
+       // int_id is a member of the ACE_Hash_Map_Entry.
        // the remove method will do a find internally using
        // operator == which will check only the consumer pointers.
        // If match found it will be removed from the set.
