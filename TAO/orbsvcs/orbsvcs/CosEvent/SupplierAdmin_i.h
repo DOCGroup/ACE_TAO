@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -13,7 +13,9 @@
 //   Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // = DESCRIPTION
-//   This has the implementation of the CosEventChannelAdmin::SupplierAdmin interface.
+//   This has the implementation of the
+//   CosEventChannelAdmin::SupplierAdmin interface.
+//
 // ============================================================================
 
 #if !defined (_SUPPLIERADMIN_I_H)
@@ -27,17 +29,21 @@ class SupplierAdmin_i : public POA_CosEventChannelAdmin::SupplierAdmin
 {
   // = TITLE
   //   class SupplierAdmin_i implements the SupplierAdmin interface.
-  // = DESCRIPTION
-  //   This implementation of the SupplierAdmin uses the RtecEventChannelAdmin::SupplierAdmin.
   //
+  // = DESCRIPTION
+  //   This COS-compliant implementation of the SupplierAdmin uses
+  //   TAO's RtecEventChannelAdmin::SupplierAdmin.
 public:
   // = Initialization and termination methods.
   SupplierAdmin_i (void);
+  // Constructor.
 
-  ~SupplierAdmin_i ();
+  ~SupplierAdmin_i (void);
+  // Destructor.
 
   int init (const RtecEventChannelAdmin::SupplierQOS &supplierqos,
             RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin);
+  // @@ Pradeep, please add comments.
 
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
   obtain_push_consumer (CORBA::Environment &TAO_TRY_ENV);
@@ -52,7 +58,10 @@ private:
   // The SupplierQOS specified by the user of this class.
 
   RtecEventChannelAdmin::SupplierAdmin_var rtec_supplieradmin_;
-  // The RtecEventChannelAdmin::SupplierAdmin specified by the user of this class.
+  // The RtecEventChannelAdmin::SupplierAdmin specified by the user of
+  // this class.
 };
 
+// @@ Pradeep, please don't use // here, but use /* ... */ instead.
+// Please fix all uses of this in your code since it's not portable.
 #endif // _SUPPLIERADMIN_I_H

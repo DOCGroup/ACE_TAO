@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -13,9 +13,10 @@
 //   Pradeep Gore <pradeep@cs.wustl.edu>
 //
 // = DESCRIPTION
-//   This has the implementation of the CosEventChannelAdmin::ConsumerAdmin interface.
+//   This has the implementation of the
+//   CosEventChannelAdmin::ConsumerAdmin interface.
+//
 // ============================================================================
-
 
 #if !defined (_CONSUMERADMIN_I_H)
 #define _CONSUMERADMIN_I_H
@@ -28,14 +29,17 @@ class ConsumerAdmin_i : public POA_CosEventChannelAdmin::ConsumerAdmin
 {
   // = TITLE
   //   class ConsumerAdmin_i implements the ConsumerAdmin interface.
-  // = DESCRIPTION
-  //   This implementation of the ConsumerAdmin uses the RtecEventChannelAdmin::ConsumerAdmin.
   //
+  // = DESCRIPTION
+  //   This implementation of the ConsumerAdmin uses the
+  //   RtecEventChannelAdmin::ConsumerAdmin.
 public:
   // = Initialization and termination methods.
   ConsumerAdmin_i (void);
+  // Constructor.
 
-  ~ConsumerAdmin_i ();
+  ~ConsumerAdmin_i (void);
+  // Destructor.
 
   int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
             RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin);
@@ -53,7 +57,10 @@ private:
   // The ConsumerQOS specified by the user of this class.
 
   RtecEventChannelAdmin::ConsumerAdmin_var rtec_consumeradmin_;
-  // The RtecEventChannelAdmin::ConsumerAdmin specified by the user of this class.
+  // The RtecEventChannelAdmin::ConsumerAdmin specified by the user of
+  // this class.
 };
 
+// @@ Pradeep, please don't use // here, but use /* ... */ instead.
+// Please fix all uses of this in your code since it's not portable.
 #endif //_CONSUMERADMIN_I_H
