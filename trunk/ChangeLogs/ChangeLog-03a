@@ -1,4 +1,4 @@
-Fri Sep 28 12:14:29 2001  Ossama Othman  <ossama@uci.edu>
+Fri Sep 28 12:31:39 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
 
@@ -18,6 +18,8 @@ Fri Sep 28 12:14:29 2001  Ossama Othman  <ossama@uci.edu>
 	* ace/SSL/SSL_Accept_Handler.cpp (ssl_accept):
 	* ace/SSL/SSL_Connect_Handler.cpp (ssl_connect):
 	* ace/SSL/SSL_SOCK_Stream.i (send_i):
+	* ace/SSL/SSL_SOCK_Acceptor.cpp (ssl_accept):
+	* ace/SSL/SSL_SOCK_Connector.cpp (ssl_connect):
 
 	  In the event a SSL_ERROR_SYSCALL error condition occurs, call
 	  ACE_OS::set_errno_to_last_error() to make sure errno is updated
