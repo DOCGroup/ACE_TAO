@@ -8,9 +8,11 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = CORBAplus \
-	Orbix \
-	TAO
+DIRS = TAO
+
+# DIRS  = CORBAplus \
+#	Orbix \
+#	TAO
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
