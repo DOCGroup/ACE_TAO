@@ -40,7 +40,7 @@ namespace TAO
     }
 
     void
-    Transient_Lifespan_Strategy::notify_shutdown ()
+    Transient_Lifespan_Strategy::notify_shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     {
     }
 

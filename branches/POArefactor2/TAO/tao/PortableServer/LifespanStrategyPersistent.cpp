@@ -72,7 +72,7 @@ namespace TAO
     }
 
     void
-    Persistent_Lifespan_Strategy::notify_shutdown ()
+    Persistent_Lifespan_Strategy::notify_shutdown (ACE_ENV_SINGLE_ARG_DECL)
     {
       (void) this->imr_notify_shutdown ();
 

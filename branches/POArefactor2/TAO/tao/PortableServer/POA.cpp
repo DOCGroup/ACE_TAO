@@ -887,7 +887,11 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
     }
 
   // Notify the lifespan strategy of our shutdown
-  this->active_policy_strategies_.lifespan_strategy()->notify_shutdown ();
+  this->active_policy_strategies_.lifespan_strategy()->notify_shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+// @todo, is the exception handling above correct, should we just fail when
+// the notify above fails
 
   // When a POA is destroyed, any requests that have started execution
   // continue to completion. Any requests that have not started
