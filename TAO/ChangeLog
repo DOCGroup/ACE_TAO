@@ -1,3 +1,10 @@
+Fri Aug 29 08:24:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/RTCORBA/RT_Protocols_Hooks.cpp:
+
+          Added #include of tao/debug.h and made cosmetic changes to
+          keep line lengths under 80 columns.
+
 Fri Aug 29 07:45:30 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/PollableC.cpp:
