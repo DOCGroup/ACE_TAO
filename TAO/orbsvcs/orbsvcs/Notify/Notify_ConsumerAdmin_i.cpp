@@ -1,5 +1,10 @@
 // $Id$
 
+// @@ Pradeep: you should always include the header file first, that
+// way it is easier to detect inconsistencies or missing #includes in
+// the .h file, so the first include in this case should be
+// "Notify_ConsumerAdmin_i.h"
+
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "Notify_ConsumerAdmin_i.h"
 #include "Notify_ProxyPushSupplier_i.h"
@@ -25,6 +30,8 @@ TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_
    refcount_ (1),
    destory_child_POAs_ (0),
    event_channel_ (event_channel),
+   // @@ Pradeep: don't use statics, it is better to pass these as
+   // arguments.
    channel_objects_factory_ (TAO_Notify_Factory::get_channel_objects_factory ()),
    poa_factory_ (TAO_Notify_Factory::get_poa_factory ()),
    event_manager_objects_factory_ (TAO_Notify_Factory::get_event_manager_objects_factory ()),
@@ -34,6 +41,7 @@ TAO_Notify_ConsumerAdmin_i::TAO_Notify_ConsumerAdmin_i (TAO_Notify_EventChannel_
    filter_eval_task_ (0),
    dispatching_task_ (0)
 {
+  // @@ Pradeep: don't forget the this-> stuff for local variables.
   event_channel_->_add_ref (); // we don't want our parent to go away!
 }
 
@@ -665,6 +673,11 @@ TAO_Notify_Filter_Command_Worker::TAO_Notify_Filter_Command_Worker (TAO_Notify_E
 void
 TAO_Notify_Filter_Command_Worker::work (TAO_Notify_EventListener* event_listener, CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: you should use ACE_NEW here....
+  // @@ Pradeep: do you really need to allocate this guy from the
+  // heap? Maybe you can just allocate it from the stack and only if
+  // somebody really wants to keep it around you make a copy?  The
+  // idea is to save allocations in the good case.
   TAO_Notify_Listener_Filter_Eval_Command* mb =
     new TAO_Notify_Listener_Filter_Eval_Command (this->event_, event_listener, this->eval_parent_);
 

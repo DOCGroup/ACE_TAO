@@ -28,6 +28,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// @@ Pradeep: I appretiate the separation of concerns from having
+// multiple factories, but consider that some configurations of
+// Collection, Locks, and dispatchers don't go well together.  The
+// purpose of an Abstract Factory is to have a single object that
+// returns consistently configured objects....
+
 class TAO_Notify_Export TAO_Notify_Default_EMO_Factory : public TAO_Notify_EMO_Factory
 {
  public:

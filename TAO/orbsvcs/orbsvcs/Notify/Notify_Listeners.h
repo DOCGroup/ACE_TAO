@@ -30,12 +30,23 @@
 class TAO_Notify_Event;
 class TAO_Notify_EventType_List;
 
+// @@ Pradeep: this file has three separate classes, that do not seem
+// related in anyway, you should move them to their own files.
+// @@ Pradeep: it seems like the classes in this file are fundamental
+// interfaces used all over the place, you should document them and
+// how they interact, in the README file or in the paper or both.
+
+// @@ Pradeep: if this class is what I think it is then it should be
+// in its own file..
 class TAO_Notify_Export TAO_Notify_RefCounted
 {
   // = TITLE
   //   TAO_Notify_RefCounted
   //
   // = DESCRIPTION
+  //   @@ Pradeep: what do you mean "often", is it used for something
+  //   else sometimes?  Or is it that sometimes refcounting is done
+  //   some other way?
   //   Often used interface for ref. counting.
   //
  public:
@@ -44,7 +55,7 @@ class TAO_Notify_Export TAO_Notify_RefCounted
   // Increment and decrement the reference count.
 };
 
-/**************************************************************************************************/
+// ****************************************************************
 
 class  TAO_Notify_Export TAO_Notify_EventListener : virtual public TAO_Notify_RefCounted
 {
@@ -57,20 +68,25 @@ class  TAO_Notify_Export TAO_Notify_EventListener : virtual public TAO_Notify_Re
   //   must specify what kind of events it is interested in.
   //
 
- public:
-  virtual void dispatch_event (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV) = 0;
+public:
+  virtual void dispatch_event (TAO_Notify_Event &event,
+                               CORBA::Environment &ACE_TRY_ENV) = 0;
   // Callback methods to supply the event to the listener.
 
-  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Boolean eval_parent, CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event,
+                                          CORBA::Boolean eval_parent,
+                                          CORBA::Environment &ACE_TRY_ENV) = 0;
   // Evaluates true if this event is acceptable by the listener.
-  // The <eval_parent> is a hint to the listener to help it determine if its wise to evaluate
-  // the parents filter too.This helps in implementing the "interfilter group operator" logic.
+  // The <eval_parent> is a hint to the listener to help it determine
+  // if its wise to evaluate the parents filter too. This helps in
+  // implementing the "interfilter group operator" logic. 
 
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Ask the listener to relinqish any bindings and prepare to be disposed.
+  // Ask the listener to relinquish any bindings and prepare to be
+  // disposed.
 };
 
-/**************************************************************************************************/
+// ****************************************************************
 
 class TAO_Notify_Export TAO_Notify_EventSource : virtual public TAO_Notify_RefCounted
 {
@@ -81,9 +97,12 @@ class TAO_Notify_Export TAO_Notify_EventSource : virtual public TAO_Notify_RefCo
   //   The event source suppliers events to the Notify Manager.
   //
  public:
-  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event, CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual CORBA::Boolean evaluate_filter (TAO_Notify_Event &event,
+                                          CORBA::Environment &ACE_TRY_ENV) = 0;
   // Evaluates true if this event is acceptable by the Source.
 };
+
+// ****************************************************************
 
 class TAO_Notify_Export TAO_Notify_UpdateListener : virtual public TAO_Notify_RefCounted
 {
@@ -97,7 +116,9 @@ class TAO_Notify_Export TAO_Notify_UpdateListener : virtual public TAO_Notify_Re
   //
 
  public:
-  virtual void dispatch_update (TAO_Notify_EventType_List& added, TAO_Notify_EventType_List& removed, CORBA::Environment &ACE_TRY_ENV) = 0;
+  virtual void dispatch_update (TAO_Notify_EventType_List& added,
+                                TAO_Notify_EventType_List& removed,
+                                CORBA::Environment &ACE_TRY_ENV) = 0;
   // Callback method to supply updates.
 };
 

@@ -1,58 +1,74 @@
+Wed Aug 09 16:49:53 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/Notify/README:
+        * orbsvcs/orbsvcs/Notify/Notify_Channel_Objects_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_Collection_Factory.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Default_EMO_Factory.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Event.h:
+        * orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.h:
+        * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.h:
+        * orbsvcs/orbsvcs/Notify/Notify_Listeners.h:
+          Made swift code review, need more details about the internal to
+          give better feedback.  Pradeep is already working on that.
+
 Wed Aug 09 18:09:30 2000  Pradeep  <pradeep@cs.wustl.edu>
 
         * TAO version 1.1.8 released.
 
 Wed Aug 09 02:09:21 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Singleton_Manager.cpp:
+        * tao/TAO_Singleton_Manager.cpp:
 
-	  Explicitly include "ace/Object_Manager.h" since some compilers
-	  get confused about the existence of the
-	  ACE_Object_Manager::at_exit() method.
+          Explicitly include "ace/Object_Manager.h" since some compilers
+          get confused about the existence of the
+          ACE_Object_Manager::at_exit() method.
 
 Tue Aug  8 17:03:12 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
 
-	  Some changes to this file meant to be checked in after
-	  the next beta release were included in the checkin
-	  below. I've reverted those for now.
+          Some changes to this file meant to be checked in after
+          the next beta release were included in the checkin
+          below. I've reverted those for now.
 
 Tue Aug  8 15:10:45 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
 
-	  Minor changes to fix incorrect generated code for the
-	  user exception _type() function. Build error showed
-	  up in generated code for nested_scopes.idl.
+          Minor changes to fix incorrect generated code for the
+          user exception _type() function. Build error showed
+          up in generated code for nested_scopes.idl.
 
-	* tests/IDL_Test/main.cpp:
+        * tests/IDL_Test/main.cpp:
 
-	  Because of recent changes to ORB and POA, had resolve
-	  the root POA and add an explicit call to root_poa->destroy,
-	  even though no calls are made in the test. Thanks to
-	  Irfan for helping to track this down.
+          Because of recent changes to ORB and POA, had resolve
+          the root POA and add an explicit call to root_poa->destroy,
+          even though no calls are made in the test. Thanks to
+          Irfan for helping to track this down.
 
 Tue Aug 08 12:38:47 2000  Ossama Othman  <ossama@uci.edu>
 
-	* tao/TAO_Singleton_Manager.cpp (TAO_Singleton_Manager):
+        * tao/TAO_Singleton_Manager.cpp (TAO_Singleton_Manager):
 
-	  Invoke init() with special value that leaves the "registered
-	  with Object Manager" state unset.  That state must be set by
-	  explicitly invoking init().
+          Invoke init() with special value that leaves the "registered
+          with Object Manager" state unset.  That state must be set by
+          explicitly invoking init().
 
-	  (init):
+          (init):
 
-	  Only set the "registered with Object Manager" state if the
-	  TAO_Singleton_Manager is being explicitly initialized.
+          Only set the "registered with Object Manager" state if the
+          TAO_Singleton_Manager is being explicitly initialized.
 
-	* examples/Simple/time-date/Time_Date.cpp (init, fini):
+        * examples/Simple/time-date/Time_Date.cpp (init, fini):
 
-	  Added calls to TAO_Singleton_Manager::{init,fini}() that
-	  pre-initialize the ORB so that it remains isolated from the
-	  ACE_Object_Manager, forcing its lifetime be to dictated by the
-	  Service Configurator.
+          Added calls to TAO_Singleton_Manager::{init,fini}() that
+          pre-initialize the ORB so that it remains isolated from the
+          ACE_Object_Manager, forcing its lifetime be to dictated by the
+          Service Configurator.
 
 Tue Aug 08 09:52:52 2000  David L. Levine <levine@cs.wustl.edu>
 

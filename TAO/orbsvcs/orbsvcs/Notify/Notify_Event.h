@@ -31,6 +31,9 @@
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "orbsvcs/CosEventCommC.h"
 
+// @@ Pradeep: this is another case of multiple classes bunched in the
+// same file, you should really think about separating it.
+
 class TAO_Notify_Export TAO_Notify_EventType
 {
   // = TITLE

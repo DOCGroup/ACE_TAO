@@ -301,7 +301,7 @@ virtual CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (
     CORBA::SystemException
   ));
 
- protected:
+protected:
   // = Helper methods
   void destroy_i (CORBA::Environment &ACE_TRY_ENV);
   // Destroy CA
