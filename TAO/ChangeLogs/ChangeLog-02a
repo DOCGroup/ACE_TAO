@@ -1,3 +1,8 @@
+Fri Sep 15 14:25:37 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ior_corbaloc/ior_corbaloc.dsp :
+	  Removed the dsp file.
+
 Fri Sep 15 16:18:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl_static.dsp:
