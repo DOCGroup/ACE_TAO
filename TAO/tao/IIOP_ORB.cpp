@@ -9,7 +9,16 @@
 // This includes objref stringification/destringification for IIOP
 // object references.
 
-#include "tao/corba.h"
+#include "tao/IIOP_ORB.h"
+#include "tao/CDR.h"
+#include "tao/Typecode.h"
+#include "tao/Environment.h"
+#include "tao/Object.h"
+#include "tao/Stub.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/GIOP.h"
+#include "tao/POA.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_ORB.i"

@@ -13,7 +13,15 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/IIOP_Profile.h"
+#include "tao/GIOP.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/ORB.h"
+#include "tao/MProfile.h"
+#include "tao/ORB_Core.h"
+
+ACE_RCSID(tao, IIOP_Profile, "$Id$")
 
 static const char *prefix_ = "iiop:";
 

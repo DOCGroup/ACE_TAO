@@ -7,10 +7,16 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "tao/corba.h"
+#include "tao/CurrentC.h"
+#include "tao/Stub.h"
+#include "tao/Servant_Base.h"
+#include "tao/Typecode.h"
+#include "tao/Any.h"
+#include "tao/POA_CORBA.h"
+#include "tao/Environment.h"
 
 #if !defined (__ACE_INLINE__)
-#include "CurrentC.i"
+#include "tao/CurrentC.i"
 #endif /* !defined INLINE */
 
 ACE_RCSID(tao, CurrentC, "$Id$")

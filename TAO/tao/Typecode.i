@@ -51,7 +51,6 @@ CORBA::TypeCode::_nil (void)
 ACE_INLINE CORBA::TCKind
 CORBA_TypeCode::kind (CORBA::Environment &env) const
 {
-  env.clear ();
   return this->kind_;
 }
 
@@ -72,8 +71,6 @@ CORBA_TypeCode::equal (const CORBA::TypeCode_ptr tc,
 ACE_INLINE const char *
 CORBA_TypeCode::id (CORBA::Environment &env) const
 {
-  env.clear ();
-
   // if already precomputed
   if (this->private_state_->tc_id_known_)
     return this->private_state_->tc_id_;
@@ -85,8 +82,6 @@ CORBA_TypeCode::id (CORBA::Environment &env) const
 ACE_INLINE const char *
 CORBA_TypeCode::name (CORBA::Environment &env) const
 {
-  env.clear ();
-
   // if already precomputed
   if (this->private_state_->tc_name_known_)
     return this->private_state_->tc_name_;
@@ -102,8 +97,6 @@ CORBA_TypeCode::name (CORBA::Environment &env) const
 ACE_INLINE CORBA::ULong
 CORBA_TypeCode::member_count (CORBA::Environment &env) const
 {
-  env.clear ();
-
   // if already precomputed
   if (this->private_state_->tc_member_count_known_)
     return this->private_state_->tc_member_count_;

@@ -7,7 +7,10 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#include "corba.h"
+#include "tao/CurrentC.h"
+#include "tao/Operation_Table.h"
+#include "tao/POA_CORBA.h"
+#include "tao/Server_Request.h"
 
 ACE_RCSID(tao, CurrentS, "$Id$")
 

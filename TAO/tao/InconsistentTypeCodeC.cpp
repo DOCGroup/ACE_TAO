@@ -23,10 +23,11 @@
 // ======================================================================
 
 #include "tao/InconsistentTypeCodeC.h"
+#include "tao/ORB.h"
 
 // default constructor
 CORBA_ORB_InconsistentTypeCode::CORBA_ORB_InconsistentTypeCode (void)
-: CORBA_UserException (CORBA::ORB::_tc_InconsistentTypeCode)
+  : CORBA_UserException (CORBA::ORB::_tc_InconsistentTypeCode)
 {
 }
 

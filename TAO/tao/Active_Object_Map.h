@@ -18,6 +18,17 @@
 #ifndef TAO_ACTIVE_OBJECT_MAP_H
 #define TAO_ACTIVE_OBJECT_MAP_H
 
+#include "ace/Hash_Map_Manager_T.h"
+#include "tao/corbafwd.h"
+#include "tao/Servant_Base.h"
+
+class TAO_Export TAO_ObjectId_Hash
+{
+public:
+  u_long operator () (const PortableServer::ObjectId &id) const;
+  // Returns hash value.
+};
+
 class TAO_Export TAO_Active_Object_Map_Entry
 {
   // = TITLE

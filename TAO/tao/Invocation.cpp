@@ -1,6 +1,8 @@
 // $Id$
 
-#include "tao/corba.h"
+#include "tao/Invocation.h"
+#include "tao/Stub.h"
+#include "tao/Principal.h"
 
 #include "tao/Timeprobe.h"
 
@@ -370,7 +372,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   TAO_CATCH (CORBA_SystemException, ex)
     {
       // Handle the exception for this level here and throw it out again.
-      dexc (TAO_TRY_ENV, "invoke, location forward (decode)");
+      TAO_TRY_ENV.print_exception ("invoke, location forward (decode)");
       transport->close_conn ();
       TAO_RETHROW_SAME_ENV_RETURN (TAO_GIOP_SYSTEM_EXCEPTION);
     }

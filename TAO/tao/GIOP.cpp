@@ -48,8 +48,12 @@
 //    just expose behavior (methods) to all transport protocols that
 //    can be used with GIOP!  fredk
 
-#include "tao/corba.h"
+#include "tao/GIOP.h"
 #include "tao/Timeprobe.h"
+#include "tao/CDR.h"
+#include "tao/Pluggable.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP.i"
@@ -133,7 +137,7 @@ TAO_GIOP::dump_msg (const char *label,
     }
 }
 
-CORBA_Boolean
+CORBA::Boolean
 operator<<(TAO_OutputCDR &cdr,
            const TAO_GIOP_ServiceContext &x)
 {
@@ -144,7 +148,7 @@ operator<<(TAO_OutputCDR &cdr,
     return 0;
 }
 
-CORBA_Boolean
+CORBA::Boolean
 operator>>(TAO_InputCDR &cdr,
            TAO_GIOP_ServiceContext &x)
 {
@@ -155,7 +159,7 @@ operator>>(TAO_InputCDR &cdr,
     return 0;
 }
 
-CORBA_Boolean
+CORBA::Boolean
 operator<< (TAO_OutputCDR &cdr,
             const TAO_GIOP_ServiceContextList &x)
 {
@@ -171,7 +175,7 @@ operator<< (TAO_OutputCDR &cdr,
   return cdr.good_bit ();
 }
 
-CORBA_Boolean
+CORBA::Boolean
 operator>>(TAO_InputCDR &cdr,
            TAO_GIOP_ServiceContextList &x)
 {

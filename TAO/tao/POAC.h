@@ -18,6 +18,10 @@
 #ifndef TAO_IDL_POAC_H
 #define TAO_IDL_POAC_H
 
+#include "tao/PolicyC.h"
+#include "tao/CurrentC.h"
+#include "tao/Exception.h"
+
 class TAO_ServantBase;
 class TAO_Local_ServantBase;
 class TAO_DynamicImplementation;
@@ -294,11 +298,11 @@ public:
   public:
     // the static operations
     static ThreadPolicy_ptr _duplicate (ThreadPolicy_ptr obj);
-    static ThreadPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static ThreadPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static ThreadPolicy_ptr _nil (void);
 
-    virtual ThreadPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual ThreadPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ThreadPolicy (STUB_Object *objref = 0,
                   TAO_ServantBase *servant = 0,
@@ -391,11 +395,11 @@ public:
   public:
     // the static operations
     static LifespanPolicy_ptr _duplicate (LifespanPolicy_ptr obj);
-    static LifespanPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static LifespanPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static LifespanPolicy_ptr _nil (void);
 
-    virtual LifespanPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual LifespanPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     LifespanPolicy (
                     STUB_Object *objref = 0,
@@ -490,11 +494,11 @@ public:
   public:
     // the static operations
     static IdUniquenessPolicy_ptr _duplicate (IdUniquenessPolicy_ptr obj);
-    static IdUniquenessPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static IdUniquenessPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static IdUniquenessPolicy_ptr _nil (void);
 
-    virtual IdUniquenessPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual IdUniquenessPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     IdUniquenessPolicy (
                         STUB_Object *objref = 0,
@@ -589,11 +593,11 @@ public:
   public:
     // the static operations
     static IdAssignmentPolicy_ptr _duplicate (IdAssignmentPolicy_ptr obj);
-    static IdAssignmentPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static IdAssignmentPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static IdAssignmentPolicy_ptr _nil (void);
 
-    virtual IdAssignmentPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual IdAssignmentPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     IdAssignmentPolicy (
                         STUB_Object *objref = 0,
@@ -688,11 +692,11 @@ public:
   public:
     // the static operations
     static ImplicitActivationPolicy_ptr _duplicate (ImplicitActivationPolicy_ptr obj);
-    static ImplicitActivationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static ImplicitActivationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static ImplicitActivationPolicy_ptr _nil (void);
 
-    virtual ImplicitActivationPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual ImplicitActivationPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ImplicitActivationPolicy (
                               STUB_Object *objref = 0,
@@ -787,11 +791,11 @@ public:
   public:
     // the static operations
     static ServantRetentionPolicy_ptr _duplicate (ServantRetentionPolicy_ptr obj);
-    static ServantRetentionPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static ServantRetentionPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static ServantRetentionPolicy_ptr _nil (void);
 
-    virtual ServantRetentionPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual ServantRetentionPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ServantRetentionPolicy (
                             STUB_Object *objref = 0,
@@ -887,11 +891,11 @@ public:
   public:
     // the static operations
     static RequestProcessingPolicy_ptr _duplicate (RequestProcessingPolicy_ptr obj);
-    static RequestProcessingPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static RequestProcessingPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static RequestProcessingPolicy_ptr _nil (void);
 
-    virtual RequestProcessingPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual RequestProcessingPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     RequestProcessingPolicy (
                              STUB_Object *objref = 0,
@@ -993,11 +997,11 @@ public:
   public:
     // the static operations
     static SynchronizationPolicy_ptr _duplicate (SynchronizationPolicy_ptr obj);
-    static SynchronizationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static SynchronizationPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static SynchronizationPolicy_ptr _nil (void);
 
-    virtual SynchronizationPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual SynchronizationPolicyValue value (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     SynchronizationPolicy (
                            STUB_Object *objref = 0,
@@ -1084,7 +1088,7 @@ public:
   public:
     // the static operations
     static POAManager_ptr _duplicate (POAManager_ptr obj);
-    static POAManager_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static POAManager_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static POAManager_ptr _nil (void);
 
 
@@ -1120,11 +1124,11 @@ public:
 
 #endif /* end #if !defined */
 
-    virtual void  activate (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  hold_requests (CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  discard_requests (CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual void  activate (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  hold_requests (CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  discard_requests (CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  deactivate (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     POAManager (
                 STUB_Object *objref = 0,
@@ -1211,11 +1215,11 @@ public:
   public:
     // the static operations
     static AdapterActivator_ptr _duplicate (AdapterActivator_ptr obj);
-    static AdapterActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static AdapterActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static AdapterActivator_ptr _nil (void);
 
-    virtual CORBA::Boolean  unknown_adapter (POA_ptr parent, const char *name, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual CORBA::Boolean  unknown_adapter (POA_ptr parent, const char *name, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     AdapterActivator (
                       STUB_Object *objref = 0,
@@ -1303,10 +1307,10 @@ public:
   public:
     // the static operations
     static ServantManager_ptr _duplicate (ServantManager_ptr obj);
-    static ServantManager_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static ServantManager_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static ServantManager_ptr _nil (void);
 
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ServantManager (
                     STUB_Object *objref = 0,
@@ -1393,12 +1397,12 @@ public:
   public:
     // the static operations
     static ServantActivator_ptr _duplicate (ServantActivator_ptr obj);
-    static ServantActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static ServantActivator_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static ServantActivator_ptr _nil (void);
 
-    virtual Servant  incarnate (const ObjectId &oid, POA_ptr adapter, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  etherealize (const ObjectId &oid, POA_ptr adapter, Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual Servant  incarnate (const ObjectId &oid, POA_ptr adapter, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  etherealize (const ObjectId &oid, POA_ptr adapter, Servant serv, CORBA::Boolean cleanup_in_progress, CORBA::Boolean remaining_activations, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ServantActivator (
                       STUB_Object *objref = 0,
@@ -1488,12 +1492,12 @@ public:
 
     // the static operations
     static ServantLocator_ptr _duplicate (ServantLocator_ptr obj);
-    static ServantLocator_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static ServantLocator_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static ServantLocator_ptr _nil (void);
 
-    virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie & the_cookie, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  postinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, Servant the_servant, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual Servant  preinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie & the_cookie, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  postinvoke (const ObjectId &oid, POA_ptr adapter, const char *operation, Cookie the_cookie, Servant the_servant, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     ServantLocator (
                     STUB_Object *objref = 0,
@@ -1580,7 +1584,7 @@ public:
   public:
     // the static operations
     static POA_ptr _duplicate (POA_ptr obj);
-    static POA_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static POA_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static POA_ptr _nil (void);
 
 
@@ -1942,16 +1946,16 @@ public:
 
 #endif /* end #if !defined */
 
-    virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const CORBA::PolicyList &policies, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual ThreadPolicy_ptr  create_thread_policy (ThreadPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual LifespanPolicy_ptr  create_lifespan_policy (LifespanPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual IdUniquenessPolicy_ptr  create_id_uniqueness_policy (IdUniquenessPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual IdAssignmentPolicy_ptr  create_id_assignment_policy (IdAssignmentPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual ImplicitActivationPolicy_ptr  create_implicit_activation_policy (ImplicitActivationPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual ServantRetentionPolicy_ptr  create_servant_retention_policy (ServantRetentionPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual RequestProcessingPolicy_ptr  create_request_processing_policy (RequestProcessingPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+    virtual POA_ptr  create_POA (const char *adapter_name, POAManager_ptr a_POAManager, const CORBA::PolicyList &policies, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual POA_ptr  find_POA (const char *adapter_name, CORBA::Boolean activate_it, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  destroy (CORBA::Boolean etherealize_objects, CORBA::Boolean wait_for_completion, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual ThreadPolicy_ptr  create_thread_policy (ThreadPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual LifespanPolicy_ptr  create_lifespan_policy (LifespanPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual IdUniquenessPolicy_ptr  create_id_uniqueness_policy (IdUniquenessPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual IdAssignmentPolicy_ptr  create_id_assignment_policy (IdAssignmentPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual ImplicitActivationPolicy_ptr  create_implicit_activation_policy (ImplicitActivationPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual ServantRetentionPolicy_ptr  create_servant_retention_policy (ServantRetentionPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual RequestProcessingPolicy_ptr  create_request_processing_policy (RequestProcessingPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
 
     // **************************************************
     //
@@ -1959,29 +1963,29 @@ public:
     //
     // **************************************************
 
-    virtual SynchronizationPolicy_ptr  create_synchronization_policy (SynchronizationPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
+    virtual SynchronizationPolicy_ptr  create_synchronization_policy (SynchronizationPolicyValue value, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
 
-    virtual char * the_name (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual POA_ptr  the_parent (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual POAManager_ptr  the_POAManager (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual AdapterActivator_ptr  the_activator (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void the_activator(AdapterActivator_ptr the_activator, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual ServantManager_ptr  get_servant_manager (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  set_servant_manager (ServantManager_ptr imgr, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual Servant  get_servant (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  set_servant (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual ObjectId * activate_object (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  activate_object_with_id (const ObjectId &id, Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual void  deactivate_object (const ObjectId &oid, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual CORBA::Object_ptr  create_reference (const char *intf, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual CORBA::Object_ptr  create_reference_with_id (const ObjectId &oid, const char *intf, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual ObjectId * servant_to_id (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual CORBA::Object_ptr  servant_to_reference (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual Servant  reference_to_servant (CORBA::Object_ptr reference, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual ObjectId * reference_to_id (CORBA::Object_ptr reference, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual Servant  id_to_servant (const ObjectId &oid, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual CORBA::Object_ptr  id_to_reference (const ObjectId &oid, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()) = 0;
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual char * the_name (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual POA_ptr  the_parent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual POAManager_ptr  the_POAManager (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual AdapterActivator_ptr  the_activator (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void the_activator(AdapterActivator_ptr the_activator, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual ServantManager_ptr  get_servant_manager (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  set_servant_manager (ServantManager_ptr imgr, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual Servant  get_servant (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  set_servant (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual ObjectId * activate_object (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  activate_object_with_id (const ObjectId &id, Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual void  deactivate_object (const ObjectId &oid, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual CORBA::Object_ptr  create_reference (const char *intf, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual CORBA::Object_ptr  create_reference_with_id (const ObjectId &oid, const char *intf, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual ObjectId * servant_to_id (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual CORBA::Object_ptr  servant_to_reference (Servant p_servant, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual Servant  reference_to_servant (CORBA::Object_ptr reference, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual ObjectId * reference_to_id (CORBA::Object_ptr reference, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual Servant  id_to_servant (const ObjectId &oid, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual CORBA::Object_ptr  id_to_reference (const ObjectId &oid, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()) = 0;
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     POA (
          STUB_Object *objref = 0,
@@ -2068,7 +2072,7 @@ public:
   public:
     // the static operations
     static Current_ptr _duplicate (Current_ptr obj);
-    static Current_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    static Current_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
     static Current_ptr _nil (void);
 
 
@@ -2104,9 +2108,9 @@ public:
 
 #endif /* end #if !defined */
 
-    virtual POA_ptr  get_POA (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual ObjectId * get_object_id (CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
-    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+    virtual POA_ptr  get_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual ObjectId * get_object_id (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+    virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   protected:
     Current (
              STUB_Object *objref = 0,

@@ -16,7 +16,9 @@
 // ============================================================================
 
 #ifndef TAO_UNION_H
-#  define TAO_UNION_H
+#define TAO_UNION_H
+
+#include "tao/corbafwd.h"
 
 class TAO_Export TAO_Base_Union
 {

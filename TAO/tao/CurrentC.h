@@ -29,7 +29,8 @@
 #ifndef TAO_EXPORT_MACRO
 #define TAO_EXPORT_MACRO
 #endif
-#include "tao/corba.h"
+
+#include "tao/Object.h"
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
@@ -108,11 +109,11 @@ class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
  public:
   // the static operations
   static CORBA_Current_ptr _duplicate (CORBA_Current_ptr obj);
-  static CORBA_Current_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+  static CORBA_Current_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   static CORBA_Current_ptr _nil (void);
 
   virtual CORBA::Boolean _is_a (const CORBA::Char *type_id,
-                                CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ()
+                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ()
                                 );
   virtual const char* _interface_repository_id (void) const;
  protected:

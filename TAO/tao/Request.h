@@ -19,15 +19,21 @@
 // ============================================================================
 
 #ifndef TAO_REQUEST_H
-#  define TAO_REQUEST_ H
+#define TAO_REQUEST_ H
+
+#include "tao/corbafwd.h"
+#include "tao/NVList.h"
+#include "tao/Environment.h"
 
 class TAO_Export CORBA_Request
 {
   // = TITLE
   //   CORBA_Request
+  //
   // = DESCRIPTION
   //   Provides a way to create requests and populate it with parameters for
   //   use in the Dynamic Invocation Interface
+  //
 public:
   CORBA::Object_ptr target (void) const;
   // Return the target of this request.

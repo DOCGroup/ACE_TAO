@@ -17,6 +17,11 @@
 #ifndef TAO_OPTABLE_H
 #define TAO_OPTABLE_H
 
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Singleton.h"
+#include "ace/Synch.h"
+#include "tao/corbafwd.h"
+
 class TAO_operation_db_entry
 {
   // = TITLE

@@ -16,7 +16,10 @@
 // ============================================================================
 
 #ifndef TAO_SEQUENCE_H
-#  define TAO_SEQUENCE_H
+#define TAO_SEQUENCE_H
+
+#include "tao/corbafwd.h"
+#include "tao/Managed_Types.h"
 
 class CORBA_Object;
 class CORBA_Environment;
@@ -60,7 +63,7 @@ public:
 
   virtual void _downcast (void *target,
                           CORBA_Object *src,
-                          CORBA_Environment &TAO_IN_ENV = CORBA_Environment::default_environment ());
+                          CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Used for sequences of objects to downcast a recently demarshalled
   // object reference into the right type.
 

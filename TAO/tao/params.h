@@ -15,11 +15,16 @@
 // ============================================================================
 
 #ifndef TAO_PARAMS_H
-#  define TAO_PARAMS_H
+#define TAO_PARAMS_H
+
+#include "ace/INET_Addr.h"
+#include "tao/corbafwd.h"
 
 // Forward decls.
 
 class TAO_Server_Connection_Handler;
+class TAO_Active_Object_Map_Impl;
+class TAO_Reverse_Active_Object_Map_Impl;
 
 // This is a quick hack to avoid having to unravel the intracacies of
 // the all the hairy order interdepencies that currently exist in TAO.

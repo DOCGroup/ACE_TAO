@@ -20,6 +20,9 @@
 #ifndef TAO_MPROFILE_H
 #define TAO_MPROFILE_H
 
+#include "tao/corbafwd.h"
+
+class TAO_Profile;
 typedef TAO_Profile * TAO_Profile_ptr;
 // @@ Fred, please don't create global typedefs that aren't prefixed
 // by TAO_.

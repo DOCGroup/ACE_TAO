@@ -22,7 +22,15 @@
 //
 // ============================================================================
 
-#include "tao/corba.h"
+#include "tao/Marshal.h"
+#include "tao/CDR.h"
+#include "tao/Environment.h"
+#include "tao/Any.h"
+#include "tao/Object.h"
+#include "tao/Stub.h"
+#include "tao/Principal.h"
+#include "tao/varout.h"
+#include "tao/Union.h"
 
 ACE_RCSID(tao, encode, "$Id$")
 
@@ -88,7 +96,8 @@ TAO_Marshal_Primitive::encode (CORBA::TypeCode_ptr tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Primitive::encode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Primitive::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -136,7 +145,8 @@ TAO_Marshal_Any::encode (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Any::encode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Any::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -174,7 +184,8 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
           // Indirected typecodes can't occur at "top level" like
           // this, only nested inside others!
         case ~0u:
-          dmsg ("indirected typecode at top level!");
+          ACE_DEBUG ((LM_DEBUG,
+                      "indirected typecode at top level!"));
           continue_encoding = 0;
           break;
 
@@ -202,7 +213,8 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_TypeCode::encode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_TypeCode::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -235,7 +247,8 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Principal::encode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Principal::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -456,7 +469,8 @@ TAO_Marshal_Struct::encode (CORBA::TypeCode_ptr tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("marshaling encode_struct detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "marshaling encode_struct detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -588,7 +602,8 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                                   break;
                                 default:
                                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-                                  dmsg ("Union::encode - Bad discriminant type");
+                                  ACE_DEBUG ((LM_DEBUG,
+                                              "Union::encode - Bad discriminant type"));
                                   return CORBA::TypeCode::TRAVERSE_STOP;
                                 }// end of switch
 
@@ -613,7 +628,8 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                               else // error getting member type
                                 {
                                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-                                  dmsg1 ("Union::encode - error getting member type:%d",i);
+                                  ACE_DEBUG ((LM_DEBUG,
+                                              "Union::encode - error getting member type:%d",i));
                                   return CORBA::TypeCode::TRAVERSE_STOP;
                                 }
 
@@ -621,7 +637,8 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                           else // error getting member label
                             {
                               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-                              dmsg1 ("Union::encode - error member label : %d", i);
+                              ACE_DEBUG ((LM_DEBUG,
+                                          "Union::encode - error member label : %d", i));
                               return CORBA::TypeCode::TRAVERSE_STOP;
                             }
                         } // end of while
@@ -634,42 +651,48 @@ TAO_Marshal_Union::encode (CORBA::TypeCode_ptr tc,
                       else
                         {
                           env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-                          dmsg ("Union::encode - failed. No match and no default case");
+                          ACE_DEBUG ((LM_DEBUG,
+                                      "Union::encode - failed. No match and no default case"));
                           return CORBA::TypeCode::TRAVERSE_STOP;
                         }
                     }
                   else // error getting member count
                     {
                       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-                      dmsg ("Union::encode - error getting member count");
+                      ACE_DEBUG ((LM_DEBUG,
+                                  "Union::encode - error getting member count"));
                       return CORBA::TypeCode::TRAVERSE_STOP;
                     }
                 }
               else // error getting default index
                 {
                   env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-                  dmsg ("Union::encode - error getting default used");
+                  ACE_DEBUG ((LM_DEBUG,
+                              "Union::encode - error getting default used"));
                   return CORBA::TypeCode::TRAVERSE_STOP;
                 }
             }
           else // error getting discrim_pad_size
             {
               env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-              dmsg ("Union::encode - error getting discrim padded size");
+              ACE_DEBUG ((LM_DEBUG,
+                          "Union::encode - error getting discrim padded size"));
               return CORBA::TypeCode::TRAVERSE_STOP;
             }
         }
       else // error encoding discriminant
         {
           env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-          dmsg ("Union::encode - error encoding discriminant");
+          ACE_DEBUG ((LM_DEBUG,
+                      "Union::encode - error encoding discriminant"));
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
   else // error getting the discriminant
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-      dmsg ("Union::encode - error getting the discriminant typecode");
+      ACE_DEBUG ((LM_DEBUG,
+                  "Union::encode - error getting the discriminant typecode"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1058,7 +1081,8 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
     } // no exception computing bounds
   // error exit
   env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
-  dmsg ("marshaling TAO_Marshal_Sequence::encode detected error");
+  ACE_DEBUG ((LM_DEBUG,
+              "marshaling TAO_Marshal_Sequence::encode detected error"));
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -1140,7 +1164,8 @@ TAO_Marshal_Alias::encode (CORBA::TypeCode_ptr tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Alias::encode detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Alias::encode detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }
@@ -1260,7 +1285,8 @@ TAO_Marshal_Except::encode (CORBA::TypeCode_ptr tc,
   else
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      dmsg ("TAO_Marshal_Except detected error");
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO_Marshal_Except detected error"));
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
 }

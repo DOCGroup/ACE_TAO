@@ -30,7 +30,11 @@
 // environment is itself reentrant.
 //
 
-#include "tao/corba.h"
+#include "tao/Any.h"
+#include "tao/Typecode.h"
+#include "tao/Object.h"
+// The next one is only needed for sizeof(String_var)
+#include "tao/ORB.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any.i"
@@ -277,25 +281,25 @@ CORBA_Any::operator<<= (from_string s)
 
   CORBA::TypeCode_ptr tc = 0;
   if (s.bound_ > 0)
-  {
-    // Bounded string.
-    _oc_string [1] = s.bound_;
-    ACE_NEW (tc, CORBA::TypeCode (CORBA::tk_string,
-                                  sizeof _oc_string,
-                                  (char *) &_oc_string,
-                                  1,
-                                  sizeof (CORBA::String_var)));
-  }
+    {
+      // Bounded string.
+      _oc_string [1] = s.bound_;
+      ACE_NEW (tc, CORBA::TypeCode (CORBA::tk_string,
+                                    sizeof _oc_string,
+                                    (char *) &_oc_string,
+                                    1,
+                                    sizeof (CORBA::String_var)));
+    }
   else
-  tc = CORBA::_tc_string; // unbounded.
+    tc = CORBA::_tc_string; // unbounded.
 
   CORBA::Environment env;
   if (s.nocopy_)
-  this->replace (tc, new char* (s.val_), 1, env);
+    this->replace (tc, new char* (s.val_), 1, env);
   else
   // copying
-  this->replace (tc, new char* (CORBA::string_dup (s.val_)),
-                 1, env);
+    this->replace (tc, new char* (CORBA::string_dup (s.val_)),
+                   1, env);
 }
 
 // Extraction: these are safe and hence we have to check that the
