@@ -34,10 +34,12 @@ main (int argc, char **argv)
     }
 
   // Get Object reference to RootPOA.
-  CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+  CORBA::Object_var obj =
+    orb->resolve_initial_references ("RootPOA");
 
   // Narrow Object reference to RootPOA to a POA reference.
-  PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in(), env);
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (obj.in(), env);
 
   if (env.exception () != 0)
     {
@@ -48,7 +50,8 @@ main (int argc, char **argv)
   // Get a TAO_Adapter_Activator reference
   TAO_Adapter_Activator activator_impl;
 
-  PortableServer::AdapterActivator_var activator = activator_impl._this (env);
+  PortableServer::AdapterActivator_var activator =
+    activator_impl._this (env);
 
   if (env.exception () != 0)
     {
@@ -68,9 +71,10 @@ main (int argc, char **argv)
 
   // Try to find a childPOA of RootPOA named firstPOA
   ACE_CString name = "firstPOA";
-  PortableServer::POA_var first_poa = root_poa->find_POA (name.c_str (),
-                                                          CORBA::B_TRUE,
-                                                          env);
+  PortableServer::POA_var first_poa =
+    root_poa->find_POA (name.c_str (),
+                        CORBA::B_TRUE,
+                        env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::find_POA");
@@ -82,9 +86,10 @@ main (int argc, char **argv)
 
   name += TAO_POA::name_separator ();
   name += "secondPOA";
-  PortableServer::POA_var second_poa = root_poa->find_POA (name.c_str (),
-                                                           CORBA::B_TRUE,
-                                                           env);
+  PortableServer::POA_var second_poa =
+    root_poa->find_POA (name.c_str (),
+                        CORBA::B_TRUE,
+                        env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::find_POA");
@@ -106,9 +111,10 @@ main (int argc, char **argv)
   // resulting in the creation of third and forth POAs as well as the
   // fifth POA.
 
-  PortableServer::POA_var fifth_poa = root_poa->find_POA (name.c_str (),
-                                                          CORBA::B_TRUE,
-                                                          env);
+  PortableServer::POA_var fifth_poa =
+    root_poa->find_POA (name.c_str (),
+                        CORBA::B_TRUE,
+                        env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::find_POA");
@@ -117,28 +123,32 @@ main (int argc, char **argv)
 
   // Get the names of all the POAs
 
-  CORBA::String_var root_poa_name = root_poa->the_name (env);
+  CORBA::String_var root_poa_name =
+    root_poa->the_name (env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
       return -1;
     }
 
-  CORBA::String_var first_poa_name = first_poa->the_name (env);
+  CORBA::String_var first_poa_name =
+    first_poa->the_name (env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
       return -1;
     }
 
-  CORBA::String_var second_poa_name = second_poa->the_name (env);
+  CORBA::String_var second_poa_name =
+    second_poa->the_name (env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");
       return -1;
     }
 
-  CORBA::String_var fifth_poa_name = fifth_poa->the_name (env);
+  CORBA::String_var fifth_poa_name =
+    fifth_poa->the_name (env);
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POA::_narrow");

@@ -36,11 +36,13 @@ main (int argc, char **argv)
 
   // Resolve the initial references for the name RootPOA thus getting
   // an object of type CORBA::Object.
-  CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+  CORBA::Object_var obj =
+    orb->resolve_initial_references ("RootPOA");
 
   // apply _narrow on the object of type CORBA::Object, to make it a
   // POA class Object.
-  PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in (), env);
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (obj.in (), env);
 
   if (env.exception () != 0)
     {
@@ -49,7 +51,8 @@ main (int argc, char **argv)
     }
 
   // Get the name of the root POA.
-  CORBA::String_var poa_name = root_poa->the_name (env);
+  CORBA::String_var poa_name =
+    root_poa->the_name (env);
 
   if (env.exception () != 0)
     {
@@ -59,7 +62,7 @@ main (int argc, char **argv)
 
   cout << "The RootPOA is : " << poa_name.in () << endl;
 
-  // destroy the POA object,also destroys the child POAs if any.
+  // Destroy the POA object,also destroys the child POAs if any.
   root_poa->destroy (CORBA::B_TRUE,
                      CORBA::B_TRUE,
                      env);

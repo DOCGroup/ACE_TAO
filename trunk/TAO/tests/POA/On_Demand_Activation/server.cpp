@@ -32,10 +32,12 @@ main (int argc, char **argv)
     }
 
   // Get an Object reference to RootPOA.
-  CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+  CORBA::Object_var obj =
+    orb->resolve_initial_references ("RootPOA");
 
   // Narrow the Object reference to a POA reference
-  PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj, env);
+  PortableServer::POA_var root_poa =
+    PortableServer::POA::_narrow (obj, env);
 
   if (env.exception () != 0)
     {
@@ -44,7 +46,8 @@ main (int argc, char **argv)
     }
 
   // Get the POAManager of RootPOA
-  PortableServer::POAManager_var poa_manager = root_poa->the_POAManager (env);
+  PortableServer::POAManager_var poa_manager =
+    root_poa->the_POAManager (env);
 
   if (env.exception () != 0)
     {
@@ -146,7 +149,9 @@ main (int argc, char **argv)
   }
 
   MyFooServantActivator servant_activator_impl;
-  PortableServer::ServantActivator_var servant_activator = servant_activator_impl._this (env);
+  PortableServer::ServantActivator_var servant_activator =
+    servant_activator_impl._this (env);
+
   if (env.exception () != 0)
     {
       env.print_exception ("PortableServer::POAManager::_this");
@@ -168,6 +173,7 @@ main (int argc, char **argv)
 
   PortableServer::ObjectId_var first_foo_oid =
     PortableServer::string_to_ObjectId ("firstFoo");
+
   CORBA::Object_var first_foo =
     first_poa->create_reference_with_id (first_foo_oid.in (), "IDL:Foo:1.0", env);
 
@@ -215,7 +221,7 @@ main (int argc, char **argv)
     }
 
   // Invoke object_to_string on the references created in firstPOA and
-  // secondPOA
+  // secondPOA.
 
   CORBA::String_var first_foo_ior = 
     orb->object_to_string (first_foo, env);
@@ -241,7 +247,7 @@ main (int argc, char **argv)
 	     first_foo_ior.in (),
 	     second_foo_ior.in ()));
 
-  // Set the poa_manager state to active, ready to process requests
+  // Set the poa_manager state to active, ready to process requests.
   poa_manager->activate (env);
 
   if (env.exception () != 0)
