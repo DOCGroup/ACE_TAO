@@ -11,12 +11,10 @@ ACE_ROOT = $(top_srcdir)/..
 TAO_BUILDDIR = $(top_builddir)
 TAO_ROOT = $(top_srcdir)
 
-pkgconfig_DATA =
-lib_LTLIBRARIES =
 
 ## Makefile.TAO.am
 
-lib_LTLIBRARIES += libTAO.la
+lib_LTLIBRARIES = libTAO.la
 
 libTAO_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -95,6 +93,7 @@ libTAO_la_SOURCES = \
   Dynamic_Adapter.cpp \
   Dynamic_ParameterA.cpp \
   Dynamic_ParameterC.cpp \
+  Empty_Param_TypeCode.cpp \
   Encodable.cpp \
   Endpoint.cpp \
   Endpoint_Selector_Factory.cpp \
@@ -269,8 +268,8 @@ libTAO_la_SOURCES = \
   Transport_Descriptor_Interface.cpp \
   Transport_Mux_Strategy.cpp \
   Transport_Timer.cpp \
+  TypeCode.cpp \
   TypeCodeFactory_Adapter.cpp \
-  Typecode.cpp \
   Typecode_Constants.cpp \
   Typecode_typesC.cpp \
   ULongLongSeqA.cpp \
@@ -324,6 +323,9 @@ nobase_include_HEADERS = \
   Adapter.h \
   Adapter_Factory.h \
   Adapter_Registry.h \
+  Alias_TypeCode.cpp \
+  Alias_TypeCode.h \
+  Alias_TypeCode.inl \
   Allocator.h \
   Any.h \
   Any.i \
@@ -463,10 +465,13 @@ nobase_include_HEADERS = \
   Dynamic_Parameter.pidl \
   Dynamic_ParameterC.h \
   Dynamic_ParameterC.inl \
+  Empty_Param_TypeCode.h \
+  Empty_Param_TypeCode.inl \
   Encodable.h \
   Endpoint.h \
   Endpoint.i \
   Endpoint_Selector_Factory.h \
+  Enum_TypeCode.inl \
   Environment.h \
   Environment.i \
   Exception.h \
@@ -483,6 +488,9 @@ nobase_include_HEADERS = \
   Fixed_Size_Argument_T.cpp \
   Fixed_Size_Argument_T.h \
   Fixed_Size_Argument_T.inl \
+  Fixed_TypeCode.cpp \
+  Fixed_TypeCode.h \
+  Fixed_TypeCode.inl \
   FloatSeq.pidl \
   FloatSeqC.h \
   FloatSeqC.inl \
@@ -638,6 +646,9 @@ nobase_include_HEADERS = \
   Object_Ref_Table.h \
   Object_T.cpp \
   Object_T.h \
+  Objref_TypeCode.cpp \
+  Objref_TypeCode.h \
+  Objref_TypeCode.inl \
   Objref_VarOut_T.cpp \
   Objref_VarOut_T.h \
   OctetSeq.pidl \
@@ -721,6 +732,9 @@ nobase_include_HEADERS = \
   Sequence_T.cpp \
   Sequence_T.h \
   Sequence_T.i \
+  Sequence_TypeCode.cpp \
+  Sequence_TypeCode.h \
+  Sequence_TypeCode.inl \
   Server_Strategy_Factory.h \
   Service_Callbacks.h \
   Service_Context.h \
@@ -743,6 +757,12 @@ nobase_include_HEADERS = \
   StringSeqC.h \
   StringSeqC.inl \
   StringSeqS.h \
+  String_TypeCode.cpp \
+  String_TypeCode.h \
+  String_TypeCode.inl \
+  Struct_TypeCode.cpp \
+  Struct_TypeCode.h \
+  Struct_TypeCode.inl \
   Stub.h \
   Stub.i \
   Stub_Factory.h \
@@ -796,9 +816,32 @@ nobase_include_HEADERS = \
   Transport_Descriptor_Interface.inl \
   Transport_Mux_Strategy.h \
   Transport_Timer.h \
+  True_RefCount_Policy.inl \
+  TypeCode.h \
+  TypeCode.inl \
   TypeCodeFactory_Adapter.h \
-  Typecode.h \
-  Typecode.i \
+  TypeCode_Base_Attributes.cpp \
+  TypeCode_Base_Attributes.h \
+  TypeCode_Base_Attributes.inl \
+  TypeCode_Case.cpp \
+  TypeCode_Case.h \
+  TypeCode_Case.inl \
+  TypeCode_Constants.h \
+  TypeCode_Default_Case.cpp \
+  TypeCode_Default_Case.h \
+  TypeCode_Default_Case.inl \
+  TypeCode_Enumerator.cpp \
+  TypeCode_Enumerator.h \
+  TypeCode_Enumerator.inl \
+  TypeCode_Non_Default_Case.cpp \
+  TypeCode_Non_Default_Case.h \
+  TypeCode_Non_Default_Case.inl \
+  TypeCode_Struct_Field.cpp \
+  TypeCode_Struct_Field.h \
+  TypeCode_Struct_Field.inl \
+  TypeCode_Value_Field.cpp \
+  TypeCode_Value_Field.h \
+  TypeCode_Value_Field.inl \
   Typecode_Constants.h \
   Typecode_types.pidl \
   Typecode_typesC.h \
@@ -822,11 +865,19 @@ nobase_include_HEADERS = \
   UShortSeqS.h \
   UTF16_BOM_Factory.h \
   UTF16_BOM_Translator.h \
+  Union_TypeCode.cpp \
+  Union_TypeCode.h \
+  Union_TypeCode.inl \
   UserException.h \
   UserException.inl \
   ValueModifier.pidl \
   ValueModifierC.h \
   ValueModifierC.inl \
+  Value_Box_TypeCode.cpp \
+  Value_Box_TypeCode.h \
+  Value_TypeCode.cpp \
+  Value_TypeCode.h \
+  Value_TypeCode.inl \
   Valuetype_Adapter.h \
   VarOut_T.cpp \
   VarOut_T.h \
@@ -881,7 +932,7 @@ nobase_include_HEADERS = \
   target_specification.i \
   varbase.h
 
-pkgconfig_DATA += TAO.pc
+pkgconfig_DATA = TAO.pc
 
 TAO.pc: ${top_builddir}/config.status ${srcdir}/TAO.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/TAO.pc.in
