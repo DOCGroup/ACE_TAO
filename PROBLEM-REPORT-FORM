@@ -43,14 +43,17 @@ Subject: [area]: [synopsis]
 
     TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
     COMPILER NAME AND VERSION (AND PATCHLEVEL):
+
+    CONTENTS OF $ACE_ROOT/ace/config.h:
+
+    CONTENTS OF $ACE_ROOT/include/makeinclude/platform_macros.GNU (unless
+    this isn't used in this case, e.g., with Microsoft Visual C++):
     
     AREA/CLASS/EXAMPLE AFFECTED:
 [What example failed?  What module failed to compile?]
 
     DOES THE PROBLEM AFFECT:
         COMPILATION?
-            If so, what do your $ACE_ROOT/ace/config.h and
-            $ACE_ROOT/include/makeinclude/platform_macros.GNU contain?
         LINKING?
             On Unix systems, did you run make realclean first?
         EXECUTION?
