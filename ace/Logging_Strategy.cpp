@@ -11,7 +11,7 @@ ACE_RCSID(lib, Logging_Strategy, "$Id$")
 // Parse the string containing (thread) priorities and set them accordingly.
 
 void
-ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string, 
+ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
                                   ACE_Log_Msg::MASK_TYPE mask)
 {
   u_long priority_mask = 0;
@@ -169,8 +169,8 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
   ACE_NEW (this->filename_, ACE_TCHAR[MAXPATHLEN + 1]);
 
   // Get the temporary directory
-  if (ACE::get_temp_dir (this->filename_,
-                         MAXPATHLEN - 7) == -1)  // 7 for "logfile"
+  if (ACE_Lib_Find::get_temp_dir (this->filename_,
+                                  MAXPATHLEN - 7) == -1)  // 7 for "logfile"
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("Temporary path too long, ")
@@ -197,7 +197,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
   ACE_TRACE ("ACE_Logging_Strategy::init");
 
   // Store current priority masks for changes in <parse_args>.
-  
+
   this->process_priority_mask_ =
     ACE_Log_Msg::instance ()->priority_mask (ACE_Log_Msg::PROCESS);
 
@@ -209,10 +209,10 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 
   // Setup priorities (to original if not specified on command line)
 
-  ACE_Log_Msg::instance ()->priority_mask (thread_priority_mask_, 
+  ACE_Log_Msg::instance ()->priority_mask (thread_priority_mask_,
                                            ACE_Log_Msg::THREAD);
 
-  ACE_Log_Msg::instance ()->priority_mask (process_priority_mask_, 
+  ACE_Log_Msg::instance ()->priority_mask (process_priority_mask_,
                                            ACE_Log_Msg::PROCESS);
 
   // Check if any flags were specified. If none were specified, let

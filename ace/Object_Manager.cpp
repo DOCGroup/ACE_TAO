@@ -11,9 +11,11 @@
 #  include "ace/Reactor.h"
 #  include "ace/Thread_Manager.h"
 #else  /* ! ACE_LACKS_ACE_SVCCONF */
+#if 0
 #  if !defined (ACE_HAS_WINCE)  && !defined (ACE_LACKS_ACE_OTHER)
 #    include "ace/Naming_Context.h"
 #  endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
+#endif /* 0 */
 #  include "ace/Service_Manager.h"
 #  include "ace/Service_Config.h"
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
@@ -103,9 +105,11 @@ public:
   ~ACE_Object_Manager_Preallocations (void);
 
 private:
+#if 0
 #if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER)
   ACE_Static_Svc_Descriptor ace_svc_desc_ACE_Naming_Context;
 #endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
+#endif /* 0 */
   ACE_Static_Svc_Descriptor ace_svc_desc_ACE_Service_Manager;
 };
 
@@ -118,9 +122,10 @@ private:
 
 ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 {
+#if 0
   // Define the static services.  This macro call creates static
   // service descriptors that are used for initialization below.
-#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER) 
+#if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER)
   ACE_STATIC_SVC_DEFINE (ACE_Naming_Context_initializer,
                          ACE_LIB_TEXT ("ACE_Naming_Context"),
                          ACE_SVC_OBJ_T,
@@ -130,6 +135,7 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
                          0)
 
 #endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
+#endif /* 0 */
 
   ACE_STATIC_SVC_DEFINE (ACE_Service_Manager_initializer,
                          ACE_LIB_TEXT ("ACE_Service_Manager"),
@@ -139,21 +145,25 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
                            ACE_Service_Type::DELETE_OBJ,
                          0)
 
+#if 0
   // Initialize the static service objects using the descriptors created
   // above.
 #if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER)
   ace_svc_desc_ACE_Naming_Context =
     ace_svc_desc_ACE_Naming_Context_initializer;
 #endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
+#endif /* 0 */
 
   ace_svc_desc_ACE_Service_Manager =
     ace_svc_desc_ACE_Service_Manager_initializer;
 
+#if 0
   // Add to the list of static configured services.
 #if !defined (ACE_HAS_WINCE)  &&  !defined (ACE_LACKS_ACE_OTHER)
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_ACE_Naming_Context);
 #endif /* ! ACE_HAS_WINCE  &&  ! ACE_LACKS_ACE_OTHER */
+#endif /* 0 */
 
   ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_ACE_Service_Manager);
@@ -610,7 +620,8 @@ ACE_Object_Manager::fini (void)
 
 #  if (((defined (ACE_HAS_WINNT)) && (ACE_HAS_WINNT == 1)) || (defined (ACE_HAS_AIO_CALLS)))
       ACE_Proactor::close_singleton ();
-#  endif /* !ACE_HAS_WINCE */
+#  endif / !ACE_HAS_WINCE /
+
 
 #  if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
       ACE_Thread_Manager::close_singleton ();

@@ -21,7 +21,7 @@
 //
 // = TODO
 //    - Add locking for thread safety.
-//    - Need to investigate what happens if memory mapped file gets mapped to 
+//    - Need to investigate what happens if memory mapped file gets mapped to
 //      a location different than it was created with.
 //    - Add dynamic buffer when importing.  currently it will not allow
 //      importing of values greater than a fixed ammount (4096 bytes)
@@ -64,10 +64,10 @@ class ACE_Export ACE_Section_Key_Internal
 public:
   virtual ~ACE_Section_Key_Internal (void);
   // Virtual destructor, make sure descendants are virtual!
-  
+
   virtual int add_ref (void);
   // Increment reference count
-  
+
   virtual int dec_ref (void);
   // Decrement reference count.  Will delete this if count gets to 0
 protected:
@@ -82,7 +82,7 @@ class ACE_Export ACE_Configuration_Section_Key
 {
   // = TITLE
   //     Referenced counted wrapper for <ACE_Section_Key_Internal>.
-  // 
+  //
   // = DESCRIPTION
   //     Reference counted wrapper class for the abstract internal
   //     section key.  A user gets one of these to represent a section
@@ -91,17 +91,17 @@ class ACE_Export ACE_Configuration_Section_Key
 public:
   ACE_Configuration_Section_Key (void);
   // Default ctor
-  
+
   ACE_EXPLICIT ACE_Configuration_Section_Key (ACE_Section_Key_Internal *key);
   // ctor based on a pointer to a concrete internal key, does an
   // add_ref on <key>.
-  
+
   ACE_Configuration_Section_Key (const ACE_Configuration_Section_Key &rhs);
   // Copy ctor, does an add_ref on rhs.key_.
-  
+
   ~ACE_Configuration_Section_Key (void);
   // destructor, does a <dec_ref> on <key_>.
-  
+
   ACE_Configuration_Section_Key &
     operator= (const ACE_Configuration_Section_Key &rhs);
   // assignment operator, does a <dec_ref> on <key_> and <add_ref> to
@@ -118,7 +118,7 @@ class ACE_Export ACE_Configuration
   // = DESCRIPTION
   //     This class provides an interface for configuration databases.
 public:
-  enum VALUETYPE 
+  enum VALUETYPE
   {
     STRING,
     INTEGER,
@@ -129,27 +129,27 @@ public:
 
   virtual ~ACE_Configuration (void);
   // destructor
-  
+
   virtual const ACE_Configuration_Section_Key& root_section (void);
   // Returns the root section of this configuration.
-  
+
   virtual int open_section (const ACE_Configuration_Section_Key &base,
-                            const ACE_TCHAR *sub_section, 
-                            int create, 
+                            const ACE_TCHAR *sub_section,
+                            int create,
                             ACE_Configuration_Section_Key& result) = 0;
   // Finds a <sub_section> in <base> and places the resulting key in
   // <result>. If create is non zero, the sub_section will be created
   // if it doesn't exist
-  
+
   virtual int remove_section (const ACE_Configuration_Section_Key &key,
-                              const ACE_TCHAR *sub_section, 
+                              const ACE_TCHAR *sub_section,
                               int recursive) = 0;
   // Removes the <sub_section> from <key>.  If recursive is non zero,
   // any subkeys below <sub_section> are remove as well.
 
-  virtual int enumerate_values (const ACE_Configuration_Section_Key& key, 
-                                int index, 
-                                ACE_TString& name, 
+  virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
+                                int index,
+                                ACE_TString& name,
                                 VALUETYPE& type) = 0;
   // method to enumerate through the <name> and <type> of values in a
   // <key>.  To begin iteration, <index> must be zero. to continue
@@ -159,8 +159,8 @@ public:
   // when there are no more values to iterate through.  Note - you may
   // not delete or add values while enumerating.  If you need to do
   // this, you start the enumeration over again.
-  
-  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key, 
+
+  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
                                   int index, ACE_TString& name) = 0;
   // method to enumerate through the <name> subsections in <key>.  To
   // begin iteration, <index> must zero. to continue iteration, invoke
@@ -170,39 +170,39 @@ public:
   // subsections to iterate through.  Note - you may not delete or add
   // values while enumerating.  If you need to do this, you start the
   // enumeration over again.
-    
-  virtual int set_string_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
+
+  virtual int set_string_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
                                 const ACE_TString& value) = 0;
   // sets the value in <key> with <name> to a string of <value>
-  
-  virtual int set_integer_value (const ACE_Configuration_Section_Key& key, 
-                                 const ACE_TCHAR* name, 
+
+  virtual int set_integer_value (const ACE_Configuration_Section_Key& key,
+                                 const ACE_TCHAR* name,
                                  u_int value) = 0;
   // sets the value in <key> with <name> to an integer of <value>
-  
-  virtual int set_binary_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
-                                const void* data, 
+
+  virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
+                                const void* data,
                                 u_int length) = 0;
   // sets the value in <key> with <name> to binary data of <data> with
   // <length>.
 
-  virtual int get_string_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
+  virtual int get_string_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
                                 ACE_TString& value) = 0;
   // gets the string value of <name> from <key> and places it in
   // <value>.  Returns non zero on error (if value is not a string).
-  
-  virtual int get_integer_value (const ACE_Configuration_Section_Key& key, 
-                                 const ACE_TCHAR* name, 
+
+  virtual int get_integer_value (const ACE_Configuration_Section_Key& key,
+                                 const ACE_TCHAR* name,
                                  u_int& value) = 0;
   // gets the integer value of <name> from <key> and places it in
   // <value>.  Returns non zero on error (if value is not an integer).
-  
-  virtual int get_binary_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
-                                void*& data, 
+
+  virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
+                                void*& data,
                                 u_int& length) = 0;
   // gets the binary value of <name> from <key> and places a copy in
   // <data> and sets <length> to the length of the data.  caller is
@@ -212,19 +212,19 @@ public:
   virtual int find_value(const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,
                          VALUETYPE& type) = 0;
-  // checks to see if an entry of <name> is in <key> and places the 
-  // data type in <type>.  Returns 0 on success (entry is found), 
+  // checks to see if an entry of <name> is in <key> and places the
+  // data type in <type>.  Returns 0 on success (entry is found),
   // -1 on error
 
 
-  virtual int remove_value (const ACE_Configuration_Section_Key& key, 
+  virtual int remove_value (const ACE_Configuration_Section_Key& key,
                             const ACE_TCHAR* name) = 0;
   // Removes the the value <name> from <key>.  returns non zero on
   // error.
 
-  int expand_path (const ACE_Configuration_Section_Key& key, 
-                   const ACE_TString& path_in, 
-                   ACE_Configuration_Section_Key& key_out, 
+  int expand_path (const ACE_Configuration_Section_Key& key,
+                   const ACE_TString& path_in,
+                   ACE_Configuration_Section_Key& key_out,
                    int create = 1);
   // Expands <path_in> to <key_out> from <key>.  If create is true,
   // the subsections are created.  Returns 0 on success, non zero on
@@ -242,19 +242,19 @@ public:
 protected:
   ACE_Configuration (void);
   // Default ctor
-  
-  ACE_Section_Key_Internal* get_internal_key 
+
+  ACE_Section_Key_Internal* get_internal_key
     (const ACE_Configuration_Section_Key& key);
   // resolves the internal key from a section key
-  
+
   int validate_name (const ACE_TCHAR* name);
   // tests to see if <name> is valid.  <name> must be < 255 characters
   // and not contain the path separator '\', brackets [] or = (maybe
   // just restrict to alphanumeric?) returns non zero if name is not
   // valid
 
-  int export_section (const ACE_Configuration_Section_Key& section, 
-                      const ACE_TString& path, 
+  int export_section (const ACE_Configuration_Section_Key& section,
+                      const ACE_TString& path,
                       FILE* out);
   // Used when exporting a configuration to a file
 
@@ -282,7 +282,7 @@ public:
 protected:
   virtual ~ACE_Section_Key_Win32 (void);
   // destructor - invokes <RegCloseKey>
-  
+
   // Not used
   ACE_Section_Key_Win32 (const ACE_Section_Key_Win32& rhs);
   ACE_Section_Key_Win32& operator= (const ACE_Section_Key_Win32& rhs);
@@ -306,61 +306,61 @@ public:
 
   virtual ~ACE_Configuration_Win32Registry (void);
   // destructor
-  
-  virtual int open_section (const ACE_Configuration_Section_Key& base, 
-                            const ACE_TCHAR* sub_section, 
-                            int create, 
+
+  virtual int open_section (const ACE_Configuration_Section_Key& base,
+                            const ACE_TCHAR* sub_section,
+                            int create,
                             ACE_Configuration_Section_Key& result);
-  
-  virtual int remove_section (const ACE_Configuration_Section_Key& key, 
-                              const ACE_TCHAR* sub_section, 
+
+  virtual int remove_section (const ACE_Configuration_Section_Key& key,
+                              const ACE_TCHAR* sub_section,
                               int recursive);
 
-  virtual int enumerate_values (const ACE_Configuration_Section_Key& key, 
-                                int Index, 
-                                ACE_TString& name, 
+  virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
+                                int Index,
+                                ACE_TString& name,
                                 VALUETYPE& type);
-  
-  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key, 
-                                  int Index, 
+
+  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
+                                  int Index,
                                   ACE_TString& name);
-  
-  virtual int set_string_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
+
+  virtual int set_string_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
                                 const ACE_TString& value);
-  
-  virtual int set_integer_value (const ACE_Configuration_Section_Key& key, 
-                                 const ACE_TCHAR* name, 
+
+  virtual int set_integer_value (const ACE_Configuration_Section_Key& key,
+                                 const ACE_TCHAR* name,
                                  u_int value);
-  
-  virtual int set_binary_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
-                                const void* data, 
+
+  virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
+                                const void* data,
                                 u_int length);
 
-  virtual int get_string_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
+  virtual int get_string_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
                                 ACE_TString& value);
-  
-  virtual int get_integer_value (const ACE_Configuration_Section_Key& key, 
-                                 const ACE_TCHAR* name, 
+
+  virtual int get_integer_value (const ACE_Configuration_Section_Key& key,
+                                 const ACE_TCHAR* name,
                                  u_int& value);
-  
-  virtual int get_binary_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
-                                void*& data, 
+
+  virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
+                                void*& data,
                                 u_int& length);
 
   virtual int find_value(const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,
                          VALUETYPE& type);
 
-  virtual int remove_value (const ACE_Configuration_Section_Key& key, 
+  virtual int remove_value (const ACE_Configuration_Section_Key& key,
                             const ACE_TCHAR* name);
   // Removes the the value <name> from <key>.  returns non zero on error
 
-  static HKEY resolve_key (HKEY hKey, 
-                           const ACE_TCHAR* path, 
+  static HKEY resolve_key (HKEY hKey,
+                           const ACE_TCHAR* path,
                            int create = 1);
   // This method traverses <path> through <hKey>.  It is useful when
   // you want the HKEY for a specific registry key, especially when
@@ -384,10 +384,10 @@ protected:
 // ACE_Allocator version
 
 typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL,
-                                           ACE_SYNCH_MUTEX> > 
+                                           ACE_SYNCH_MUTEX> >
         PERSISTENT_ALLOCATOR;
 typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL,
-                                           ACE_SYNCH_MUTEX> > 
+                                           ACE_SYNCH_MUTEX> >
         HEAP_ALLOCATOR;
 
 class ACE_Export ACE_Configuration_ExtId
@@ -435,15 +435,15 @@ public:
   const ACE_TCHAR *name (void);
 };
 
-typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int> 
+typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>
         SUBSECTION_MAP;
 typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
                                 int,
                                 ACE_Hash<ACE_Configuration_ExtId>,
                                 ACE_Equal_To<ACE_Configuration_ExtId>,
-                                ACE_Null_Mutex> 
+                                ACE_Null_Mutex>
         SUBSECTION_HASH;
-typedef ACE_Hash_Map_Entry<ACE_Configuration_ExtId, int> 
+typedef ACE_Hash_Map_Entry<ACE_Configuration_ExtId, int>
         SUBSECTION_ENTRY;
 
 class ACE_Export ACE_Configuration_Value_IntId
@@ -460,16 +460,16 @@ public:
 
   ACE_EXPLICIT ACE_Configuration_Value_IntId (ACE_TCHAR* string);
   // string constructor, takes ownership of string
-  
+
   ACE_EXPLICIT ACE_Configuration_Value_IntId (u_int integer);
   // integer constructor
-  
+
   ACE_Configuration_Value_IntId (void* data, u_int length);
   // binary constructor, takes ownership of data
-  
+
   ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs);
   // copy ctor
-  
+
   ~ACE_Configuration_Value_IntId (void);
   // destructor
 
@@ -483,7 +483,7 @@ public:
 
   ACE_Configuration::VALUETYPE      type_;
   void*                             data_;
-  // points to the string value or binary data or IS the integer 
+  // points to the string value or binary data or IS the integer
   // (XXX need to change this since sizeof (u_int) is
   // not the same accross different platforms)
   u_int                      length_;
@@ -491,7 +491,7 @@ public:
 };
 
 typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId,
-                                    ACE_Configuration_Value_IntId> 
+                                    ACE_Configuration_Value_IntId>
         VALUE_MAP;
 typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
                                 ACE_Configuration_Value_IntId,
@@ -500,7 +500,7 @@ typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
                                 ACE_Null_Mutex>
         VALUE_HASH;
 typedef ACE_Hash_Map_Entry<ACE_Configuration_ExtId,
-                           ACE_Configuration_Value_IntId> 
+                           ACE_Configuration_Value_IntId>
         VALUE_ENTRY;
 
 class ACE_Export ACE_Configuration_Section_IntId
@@ -509,15 +509,15 @@ class ACE_Export ACE_Configuration_Section_IntId
   //     The internal ID for a section hash table
   //
   // = DESCRIPTION
-  //     Contains a hash table containing value name/values 
+  //     Contains a hash table containing value name/values
 public:
   ACE_Configuration_Section_IntId (void);
   // default ctor
 
-  ACE_EXPLICIT ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map, 
+  ACE_EXPLICIT ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map,
                                                 SUBSECTION_MAP* section_hash_map);
   // named ctor
-  
+
   ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs);
   // copy ctor
 
@@ -537,19 +537,19 @@ public:
   SUBSECTION_MAP* section_hash_map_;
 };
 typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId,
-        ACE_Configuration_Section_IntId> 
+        ACE_Configuration_Section_IntId>
         SECTION_MAP;
 typedef ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId,
                                 ACE_Configuration_Section_IntId,
                                 ACE_Hash<ACE_Configuration_ExtId>,
                                 ACE_Equal_To<ACE_Configuration_ExtId>,
-                                ACE_Null_Mutex> 
+                                ACE_Null_Mutex>
         SECTION_HASH;
 typedef ACE_Hash_Map_Entry<ACE_Configuration_ExtId,
-                           ACE_Configuration_Section_IntId> 
+                           ACE_Configuration_Section_IntId>
         SECTION_ENTRY;
 
-class ACE_Export ACE_Configuration_Section_Key_Heap 
+class ACE_Export ACE_Configuration_Section_Key_Heap
   : public ACE_Section_Key_Internal
 {
   // = TITLE
@@ -561,10 +561,10 @@ class ACE_Export ACE_Configuration_Section_Key_Heap
 public:
   ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path);
   // constructor based on the full path of the section
-  
+
   ACE_TCHAR* path_;
   //the path itself
-  
+
   VALUE_HASH::ITERATOR* value_iter_;
   // The value iterator
 
@@ -573,7 +573,7 @@ public:
 protected:
   virtual ~ACE_Configuration_Section_Key_Heap (void);
   // destructor - will delete the iterators
-  
+
   // Not used
   ACE_Configuration_Section_Key_Heap (const ACE_Configuration_Section_Key_Heap& rhs);
   ACE_Configuration_Section_Key_Heap& operator= (const ACE_Configuration_Section_Key_Heap& rhs);
@@ -590,78 +590,78 @@ class ACE_Export ACE_Configuration_Heap : public ACE_Configuration
   //     representation of a configuraiton database. A persistent heap
   //     may be used to store configurations persistently
 public:
-  
+
   ACE_Configuration_Heap (void);
   // Default ctor
-  
+
   virtual ~ACE_Configuration_Heap (void);
   // destructor
 
-  int open (const ACE_TCHAR* file_name, 
-            void* base_address = ACE_DEFAULT_BASE_ADDR, 
+  int open (const ACE_TCHAR* file_name,
+            void* base_address = ACE_DEFAULT_BASE_ADDR,
             int default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
   // opens a configuration based on a file name
 
   int open (int default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
   // opens a heap based configuration
 
-  virtual int open_section (const ACE_Configuration_Section_Key& base, 
-                            const ACE_TCHAR* sub_section, 
+  virtual int open_section (const ACE_Configuration_Section_Key& base,
+                            const ACE_TCHAR* sub_section,
                             int create, ACE_Configuration_Section_Key& result);
-  
-  virtual int remove_section (const ACE_Configuration_Section_Key& key, 
-                              const ACE_TCHAR* sub_section, 
+
+  virtual int remove_section (const ACE_Configuration_Section_Key& key,
+                              const ACE_TCHAR* sub_section,
                               int recursive);
 
-  virtual int enumerate_values (const ACE_Configuration_Section_Key& key, 
-                                int Index, 
-                                ACE_TString& name, 
+  virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
+                                int Index,
+                                ACE_TString& name,
                                 VALUETYPE& type);
-  
-  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key, 
-                                  int Index, 
+
+  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
+                                  int Index,
                                   ACE_TString& name);
-  
-  virtual int set_string_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
+
+  virtual int set_string_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
                                 const ACE_TString& value);
-  
-  virtual int set_integer_value (const ACE_Configuration_Section_Key& key, 
-                                 const ACE_TCHAR* name, 
+
+  virtual int set_integer_value (const ACE_Configuration_Section_Key& key,
+                                 const ACE_TCHAR* name,
                                  u_int value);
-  
-  virtual int set_binary_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
-                                const void* data, 
+
+  virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
+                                const void* data,
                                 u_int length);
 
-  virtual int get_string_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
+  virtual int get_string_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
                                 ACE_TString& value);
-  
-  virtual int get_integer_value (const ACE_Configuration_Section_Key& key, 
-                                 const ACE_TCHAR* name, 
+
+  virtual int get_integer_value (const ACE_Configuration_Section_Key& key,
+                                 const ACE_TCHAR* name,
                                  u_int& value);
-  
-  virtual int get_binary_value (const ACE_Configuration_Section_Key& key, 
-                                const ACE_TCHAR* name, 
-                                void* &data, 
+
+  virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
+                                const ACE_TCHAR* name,
+                                void* &data,
                                 u_int &length);
 
   virtual int find_value(const ACE_Configuration_Section_Key& key,
                          const ACE_TCHAR* name,
                          VALUETYPE& type);
 
-  virtual int remove_value (const ACE_Configuration_Section_Key& key, 
+  virtual int remove_value (const ACE_Configuration_Section_Key& key,
                             const ACE_TCHAR* name);
   // Removes the the value <name> from <key>.  returns non zero on error
 
 private:
-  int add_section (const ACE_Configuration_Section_Key& base, 
-                   const ACE_TCHAR* sub_section, 
+  int add_section (const ACE_Configuration_Section_Key& base,
+                   const ACE_TCHAR* sub_section,
                    ACE_Configuration_Section_Key& result);
   // adds a new section
-  
+
   int create_index (void);
   // Helper for the <open> method.
 
@@ -670,17 +670,17 @@ private:
   // allocated space.
 
   int value_open_helper (size_t hash_table_size, void *buffer);
-  
+
   int section_open_helper (size_t hash_table_size, void *buffer);
 
   int load_key (const ACE_Configuration_Section_Key& key, ACE_TString& name);
 
-  int new_section (const ACE_TString& section, 
+  int new_section (const ACE_TString& section,
                    ACE_Configuration_Section_Key& result);
 
   ACE_Configuration_Heap (const ACE_Configuration_Heap& rhs);
   ACE_Configuration_Heap& operator= (const ACE_Configuration_Heap& rhs);
-  
+
   ACE_Allocator *allocator_;
   SECTION_MAP *index_;
   int default_map_size_;

@@ -401,7 +401,7 @@ ACE_Service_Object_Type::fini (void) const
 
   return ACE_Service_Type_Impl::fini ();
 }
-
+/*
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Message_Queue<ACE_SYNCH>;
 template class ACE_Message_Queue_Iterator<ACE_SYNCH>;
@@ -425,7 +425,8 @@ template class ACE_Thru_Task<ACE_SYNCH>;
   template class ACE_Module<ACE_NULL_SYNCH>;
   template class ACE_Task<ACE_NULL_SYNCH>;
   template class ACE_Thru_Task<ACE_NULL_SYNCH>;
-#endif /* ACE_HAS_THREADS */
+  #endif *//* ACE_HAS_THREADS */
+/*
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Message_Queue<ACE_SYNCH>
 #pragma instantiate ACE_Message_Queue_Iterator<ACE_SYNCH>
@@ -448,6 +449,6 @@ template class ACE_Thru_Task<ACE_SYNCH>;
   #pragma instantiate ACE_Module<ACE_NULL_SYNCH>
   #pragma instantiate ACE_Task<ACE_NULL_SYNCH>
   #pragma instantiate ACE_Thru_Task<ACE_NULL_SYNCH>
-#endif /* ACE_HAS_THREADS */
-#else
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+  #endif *//* ACE_HAS_THREADS */
+//#else
+//#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -2,9 +2,6 @@
 
 #include "ace/Task.h"
 #include "ace/Module.h"
-#if !defined (ACE_HAS_WINCE)
-#include "ace/Service_Config.h"
-#endif /* !ACE_HAS_WINCE */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Task.i"
@@ -171,9 +168,11 @@ ACE_Task_Base::cleanup (void *object, void *)
   // The thread count must be decremented first in case the <close>
   // hook does something crazy like "delete this".
   t->thr_count_dec ();
+
   // @@ Is it possible to pass in the exit status somehow?
   t->close ();
 }
+
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
