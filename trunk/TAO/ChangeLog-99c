@@ -1,3 +1,15 @@
+Fri Oct  8 19:30:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Asynch_Invocation.{h,i,cpp}:
+	* tao/Reply_Dispatcher.{h,i,cpp}:
+	* tao/Request.{h,cpp}:
+	* tao/MessagingC.h:
+	* tao/Stub.{h,cpp}:
+	  Removed the #if defined (TAO_HAS_AMI_CALLBACK)
+	  || defined (TAO_HAS_AMI_POLLER) from around the
+	  deferred synchoronous code checked in earlier. It doesn't
+	  use AMI callbacks or pollers.
+
 Fri Oct  8 18:16:18 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp (run):
