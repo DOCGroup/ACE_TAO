@@ -23,13 +23,13 @@
 
 ACE_RCSID(tao, MessagingS, "$Id$")
 
-POA_Messaging::RebindPolicy::RebindPolicy (void)
+  POA_Messaging::RebindPolicy::RebindPolicy (void)
 {
 }
 
 POA_Messaging::RebindPolicy::RebindPolicy (const RebindPolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::RebindPolicy::~RebindPolicy (void)
@@ -37,22 +37,22 @@ POA_Messaging::RebindPolicy::~RebindPolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::RebindPolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                   const char* value,
+                                                   CORBA::Environment &ACE_TRY_ENV
+                                                   )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RebindPolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RebindPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::RebindPolicy::_downcast (
-    const char* logical_type_id
-  )
+                                              const char* logical_type_id
+                                              )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/RebindPolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::RebindPolicy_ptr, this);
@@ -69,9 +69,9 @@ const char* POA_Messaging::RebindPolicy::_interface_repository_id (void) const
 }
 
 POA_Messaging::_tao_collocated_RebindPolicy::_tao_collocated_RebindPolicy (
-    POA_Messaging::RebindPolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                           POA_Messaging::RebindPolicy_ptr  servant,
+                                                                           TAO_Stub *stub
+                                                                           )
   : ACE_NESTED_CLASS (Messaging,RebindPolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -85,23 +85,23 @@ POA_Messaging::RebindPolicy_ptr POA_Messaging::_tao_collocated_RebindPolicy::_ge
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_RebindPolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                   const char* logical_type_id,
+                                                                   CORBA::Environment &ACE_TRY_ENV
+                                                                   )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 Messaging::RebindMode POA_Messaging::_tao_collocated_RebindPolicy::rebind_mode  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                 CORBA::Environment &ACE_TRY_ENV
+                                                                                 )
 {
   return this->servant_->rebind_mode (
-    ACE_TRY_ENV
-  );
+                                      ACE_TRY_ENV
+                                      );
 }
 
 
@@ -124,11 +124,14 @@ POA_Messaging::RebindPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
 void
 POA_Messaging::RebindPolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                        CORBA::ServerRequest &_tao_request,
+                                        void *_tao_context,
+                                        CORBA::Environment &ACE_TRY_ENV
+                                        )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -139,7 +142,7 @@ POA_Messaging::SyncScopePolicy::SyncScopePolicy (void)
 
 POA_Messaging::SyncScopePolicy::SyncScopePolicy (const SyncScopePolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::SyncScopePolicy::~SyncScopePolicy (void)
@@ -147,22 +150,22 @@ POA_Messaging::SyncScopePolicy::~SyncScopePolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::SyncScopePolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                      const char* value,
+                                                      CORBA::Environment &ACE_TRY_ENV
+                                                      )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/SyncScopePolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/SyncScopePolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::SyncScopePolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                 const char* logical_type_id
+                                                 )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/SyncScopePolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::SyncScopePolicy_ptr, this);
@@ -179,9 +182,9 @@ const char* POA_Messaging::SyncScopePolicy::_interface_repository_id (void) cons
 }
 
 POA_Messaging::_tao_collocated_SyncScopePolicy::_tao_collocated_SyncScopePolicy (
-    POA_Messaging::SyncScopePolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                 POA_Messaging::SyncScopePolicy_ptr  servant,
+                                                                                 TAO_Stub *stub
+                                                                                 )
   : ACE_NESTED_CLASS (Messaging,SyncScopePolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -195,23 +198,23 @@ POA_Messaging::SyncScopePolicy_ptr POA_Messaging::_tao_collocated_SyncScopePolic
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_SyncScopePolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                      const char* logical_type_id,
+                                                                      CORBA::Environment &ACE_TRY_ENV
+                                                                      )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 Messaging::SyncScope POA_Messaging::_tao_collocated_SyncScopePolicy::synchronization  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                       CORBA::Environment &ACE_TRY_ENV
+                                                                                       )
 {
   return this->servant_->synchronization (
-    ACE_TRY_ENV
-  );
+                                          ACE_TRY_ENV
+                                          );
 }
 
 
@@ -234,11 +237,14 @@ POA_Messaging::SyncScopePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
 void
 POA_Messaging::SyncScopePolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                           CORBA::ServerRequest &_tao_request,
+                                           void *_tao_context,
+                                           CORBA::Environment &ACE_TRY_ENV
+                                           )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -249,7 +255,7 @@ POA_Messaging::RequestPriorityPolicy::RequestPriorityPolicy (void)
 
 POA_Messaging::RequestPriorityPolicy::RequestPriorityPolicy (const RequestPriorityPolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::RequestPriorityPolicy::~RequestPriorityPolicy (void)
@@ -257,22 +263,22 @@ POA_Messaging::RequestPriorityPolicy::~RequestPriorityPolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::RequestPriorityPolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                            const char* value,
+                                                            CORBA::Environment &ACE_TRY_ENV
+                                                            )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestPriorityPolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestPriorityPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::RequestPriorityPolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                       const char* logical_type_id
+                                                       )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/RequestPriorityPolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::RequestPriorityPolicy_ptr, this);
@@ -289,9 +295,9 @@ const char* POA_Messaging::RequestPriorityPolicy::_interface_repository_id (void
 }
 
 POA_Messaging::_tao_collocated_RequestPriorityPolicy::_tao_collocated_RequestPriorityPolicy (
-    POA_Messaging::RequestPriorityPolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                             POA_Messaging::RequestPriorityPolicy_ptr  servant,
+                                                                                             TAO_Stub *stub
+                                                                                             )
   : ACE_NESTED_CLASS (Messaging,RequestPriorityPolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -305,23 +311,23 @@ POA_Messaging::RequestPriorityPolicy_ptr POA_Messaging::_tao_collocated_RequestP
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_RequestPriorityPolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                            const char* logical_type_id,
+                                                                            CORBA::Environment &ACE_TRY_ENV
+                                                                            )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 Messaging::PriorityRange POA_Messaging::_tao_collocated_RequestPriorityPolicy::priority_range  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                                CORBA::Environment &ACE_TRY_ENV
+                                                                                                )
 {
   return this->servant_->priority_range (
-    ACE_TRY_ENV
-  );
+                                         ACE_TRY_ENV
+                                         );
 }
 
 
@@ -344,11 +350,14 @@ POA_Messaging::RequestPriorityPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
 void
 POA_Messaging::RequestPriorityPolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                                 CORBA::ServerRequest &_tao_request,
+                                                 void *_tao_context,
+                                                 CORBA::Environment &ACE_TRY_ENV
+                                                 )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -359,7 +368,7 @@ POA_Messaging::ReplyPriorityPolicy::ReplyPriorityPolicy (void)
 
 POA_Messaging::ReplyPriorityPolicy::ReplyPriorityPolicy (const ReplyPriorityPolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::ReplyPriorityPolicy::~ReplyPriorityPolicy (void)
@@ -367,22 +376,22 @@ POA_Messaging::ReplyPriorityPolicy::~ReplyPriorityPolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::ReplyPriorityPolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                          const char* value,
+                                                          CORBA::Environment &ACE_TRY_ENV
+                                                          )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyPriorityPolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyPriorityPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::ReplyPriorityPolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                     const char* logical_type_id
+                                                     )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/ReplyPriorityPolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::ReplyPriorityPolicy_ptr, this);
@@ -399,9 +408,9 @@ const char* POA_Messaging::ReplyPriorityPolicy::_interface_repository_id (void) 
 }
 
 POA_Messaging::_tao_collocated_ReplyPriorityPolicy::_tao_collocated_ReplyPriorityPolicy (
-    POA_Messaging::ReplyPriorityPolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                         POA_Messaging::ReplyPriorityPolicy_ptr  servant,
+                                                                                         TAO_Stub *stub
+                                                                                         )
   : ACE_NESTED_CLASS (Messaging,ReplyPriorityPolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -415,23 +424,23 @@ POA_Messaging::ReplyPriorityPolicy_ptr POA_Messaging::_tao_collocated_ReplyPrior
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_ReplyPriorityPolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                          const char* logical_type_id,
+                                                                          CORBA::Environment &ACE_TRY_ENV
+                                                                          )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 Messaging::PriorityRange POA_Messaging::_tao_collocated_ReplyPriorityPolicy::priority_range  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                              CORBA::Environment &ACE_TRY_ENV
+                                                                                              )
 {
   return this->servant_->priority_range (
-    ACE_TRY_ENV
-  );
+                                         ACE_TRY_ENV
+                                         );
 }
 
 
@@ -454,11 +463,14 @@ POA_Messaging::ReplyPriorityPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
 void
 POA_Messaging::ReplyPriorityPolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                               CORBA::ServerRequest &_tao_request,
+                                               void *_tao_context,
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -469,7 +481,7 @@ POA_Messaging::RequestStartTimePolicy::RequestStartTimePolicy (void)
 
 POA_Messaging::RequestStartTimePolicy::RequestStartTimePolicy (const RequestStartTimePolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::RequestStartTimePolicy::~RequestStartTimePolicy (void)
@@ -477,22 +489,22 @@ POA_Messaging::RequestStartTimePolicy::~RequestStartTimePolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::RequestStartTimePolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                             const char* value,
+                                                             CORBA::Environment &ACE_TRY_ENV
+                                                             )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestStartTimePolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestStartTimePolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::RequestStartTimePolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                        const char* logical_type_id
+                                                        )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/RequestStartTimePolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::RequestStartTimePolicy_ptr, this);
@@ -509,9 +521,9 @@ const char* POA_Messaging::RequestStartTimePolicy::_interface_repository_id (voi
 }
 
 POA_Messaging::_tao_collocated_RequestStartTimePolicy::_tao_collocated_RequestStartTimePolicy (
-    POA_Messaging::RequestStartTimePolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                               POA_Messaging::RequestStartTimePolicy_ptr  servant,
+                                                                                               TAO_Stub *stub
+                                                                                               )
   : ACE_NESTED_CLASS (Messaging,RequestStartTimePolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -525,23 +537,23 @@ POA_Messaging::RequestStartTimePolicy_ptr POA_Messaging::_tao_collocated_Request
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_RequestStartTimePolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                             const char* logical_type_id,
+                                                                             CORBA::Environment &ACE_TRY_ENV
+                                                                             )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 TimeBase::UtcT POA_Messaging::_tao_collocated_RequestStartTimePolicy::start_time  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                   CORBA::Environment &ACE_TRY_ENV
+                                                                                   )
 {
   return this->servant_->start_time (
-    ACE_TRY_ENV
-  );
+                                     ACE_TRY_ENV
+                                     );
 }
 
 
@@ -564,11 +576,14 @@ POA_Messaging::RequestStartTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
 void
 POA_Messaging::RequestStartTimePolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                                  CORBA::ServerRequest &_tao_request,
+                                                  void *_tao_context,
+                                                  CORBA::Environment &ACE_TRY_ENV
+                                                  )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -579,7 +594,7 @@ POA_Messaging::RequestEndTimePolicy::RequestEndTimePolicy (void)
 
 POA_Messaging::RequestEndTimePolicy::RequestEndTimePolicy (const RequestEndTimePolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::RequestEndTimePolicy::~RequestEndTimePolicy (void)
@@ -587,22 +602,22 @@ POA_Messaging::RequestEndTimePolicy::~RequestEndTimePolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::RequestEndTimePolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                           const char* value,
+                                                           CORBA::Environment &ACE_TRY_ENV
+                                                           )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestEndTimePolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RequestEndTimePolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::RequestEndTimePolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                      const char* logical_type_id
+                                                      )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/RequestEndTimePolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::RequestEndTimePolicy_ptr, this);
@@ -619,9 +634,9 @@ const char* POA_Messaging::RequestEndTimePolicy::_interface_repository_id (void)
 }
 
 POA_Messaging::_tao_collocated_RequestEndTimePolicy::_tao_collocated_RequestEndTimePolicy (
-    POA_Messaging::RequestEndTimePolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                           POA_Messaging::RequestEndTimePolicy_ptr  servant,
+                                                                                           TAO_Stub *stub
+                                                                                           )
   : ACE_NESTED_CLASS (Messaging,RequestEndTimePolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -635,23 +650,23 @@ POA_Messaging::RequestEndTimePolicy_ptr POA_Messaging::_tao_collocated_RequestEn
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_RequestEndTimePolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                           const char* logical_type_id,
+                                                                           CORBA::Environment &ACE_TRY_ENV
+                                                                           )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 TimeBase::UtcT POA_Messaging::_tao_collocated_RequestEndTimePolicy::end_time  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                               CORBA::Environment &ACE_TRY_ENV
+                                                                               )
 {
   return this->servant_->end_time (
-    ACE_TRY_ENV
-  );
+                                   ACE_TRY_ENV
+                                   );
 }
 
 
@@ -674,11 +689,14 @@ POA_Messaging::RequestEndTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
 void
 POA_Messaging::RequestEndTimePolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                                CORBA::ServerRequest &_tao_request,
+                                                void *_tao_context,
+                                                CORBA::Environment &ACE_TRY_ENV
+                                                )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -689,7 +707,7 @@ POA_Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (void)
 
 POA_Messaging::ReplyStartTimePolicy::ReplyStartTimePolicy (const ReplyStartTimePolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::ReplyStartTimePolicy::~ReplyStartTimePolicy (void)
@@ -697,22 +715,22 @@ POA_Messaging::ReplyStartTimePolicy::~ReplyStartTimePolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::ReplyStartTimePolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                           const char* value,
+                                                           CORBA::Environment &ACE_TRY_ENV
+                                                           )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyStartTimePolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyStartTimePolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::ReplyStartTimePolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                      const char* logical_type_id
+                                                      )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/ReplyStartTimePolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::ReplyStartTimePolicy_ptr, this);
@@ -729,9 +747,9 @@ const char* POA_Messaging::ReplyStartTimePolicy::_interface_repository_id (void)
 }
 
 POA_Messaging::_tao_collocated_ReplyStartTimePolicy::_tao_collocated_ReplyStartTimePolicy (
-    POA_Messaging::ReplyStartTimePolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                           POA_Messaging::ReplyStartTimePolicy_ptr  servant,
+                                                                                           TAO_Stub *stub
+                                                                                           )
   : ACE_NESTED_CLASS (Messaging,ReplyStartTimePolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -745,23 +763,23 @@ POA_Messaging::ReplyStartTimePolicy_ptr POA_Messaging::_tao_collocated_ReplyStar
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_ReplyStartTimePolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                           const char* logical_type_id,
+                                                                           CORBA::Environment &ACE_TRY_ENV
+                                                                           )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 TimeBase::UtcT POA_Messaging::_tao_collocated_ReplyStartTimePolicy::start_time  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                 CORBA::Environment &ACE_TRY_ENV
+                                                                                 )
 {
   return this->servant_->start_time (
-    ACE_TRY_ENV
-  );
+                                     ACE_TRY_ENV
+                                     );
 }
 
 
@@ -784,11 +802,14 @@ POA_Messaging::ReplyStartTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
 void
 POA_Messaging::ReplyStartTimePolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                                CORBA::ServerRequest &_tao_request,
+                                                void *_tao_context,
+                                                CORBA::Environment &ACE_TRY_ENV
+                                                )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -799,7 +820,7 @@ POA_Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (void)
 
 POA_Messaging::ReplyEndTimePolicy::ReplyEndTimePolicy (const ReplyEndTimePolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::ReplyEndTimePolicy::~ReplyEndTimePolicy (void)
@@ -807,22 +828,22 @@ POA_Messaging::ReplyEndTimePolicy::~ReplyEndTimePolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::ReplyEndTimePolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                         const char* value,
+                                                         CORBA::Environment &ACE_TRY_ENV
+                                                         )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyEndTimePolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyEndTimePolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::ReplyEndTimePolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                    const char* logical_type_id
+                                                    )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/ReplyEndTimePolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::ReplyEndTimePolicy_ptr, this);
@@ -839,9 +860,9 @@ const char* POA_Messaging::ReplyEndTimePolicy::_interface_repository_id (void) c
 }
 
 POA_Messaging::_tao_collocated_ReplyEndTimePolicy::_tao_collocated_ReplyEndTimePolicy (
-    POA_Messaging::ReplyEndTimePolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                       POA_Messaging::ReplyEndTimePolicy_ptr  servant,
+                                                                                       TAO_Stub *stub
+                                                                                       )
   : ACE_NESTED_CLASS (Messaging,ReplyEndTimePolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -855,23 +876,23 @@ POA_Messaging::ReplyEndTimePolicy_ptr POA_Messaging::_tao_collocated_ReplyEndTim
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_ReplyEndTimePolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                         const char* logical_type_id,
+                                                                         CORBA::Environment &ACE_TRY_ENV
+                                                                         )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 TimeBase::UtcT POA_Messaging::_tao_collocated_ReplyEndTimePolicy::end_time  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                             CORBA::Environment &ACE_TRY_ENV
+                                                                             )
 {
   return this->servant_->end_time (
-    ACE_TRY_ENV
-  );
+                                   ACE_TRY_ENV
+                                   );
 }
 
 
@@ -894,11 +915,14 @@ POA_Messaging::ReplyEndTimePolicy::_this (CORBA_Environment &ACE_TRY_ENV)
 
 void
 POA_Messaging::ReplyEndTimePolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                              CORBA::ServerRequest &_tao_request,
+                                              void *_tao_context,
+                                              CORBA::Environment &ACE_TRY_ENV
+                                              )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -909,7 +933,7 @@ POA_Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (void)
 
 POA_Messaging::RelativeRequestTimeoutPolicy::RelativeRequestTimeoutPolicy (const RelativeRequestTimeoutPolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::RelativeRequestTimeoutPolicy::~RelativeRequestTimeoutPolicy (void)
@@ -917,22 +941,22 @@ POA_Messaging::RelativeRequestTimeoutPolicy::~RelativeRequestTimeoutPolicy (void
 }
 
 CORBA::Boolean POA_Messaging::RelativeRequestTimeoutPolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                   const char* value,
+                                                                   CORBA::Environment &ACE_TRY_ENV
+                                                                   )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RelativeRequestTimeoutPolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RelativeRequestTimeoutPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::RelativeRequestTimeoutPolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                              const char* logical_type_id
+                                                              )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/RelativeRequestTimeoutPolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::RelativeRequestTimeoutPolicy_ptr, this);
@@ -949,9 +973,9 @@ const char* POA_Messaging::RelativeRequestTimeoutPolicy::_interface_repository_i
 }
 
 POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::_tao_collocated_RelativeRequestTimeoutPolicy (
-    POA_Messaging::RelativeRequestTimeoutPolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                                           POA_Messaging::RelativeRequestTimeoutPolicy_ptr  servant,
+                                                                                                           TAO_Stub *stub
+                                                                                                           )
   : ACE_NESTED_CLASS (Messaging,RelativeRequestTimeoutPolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -965,23 +989,23 @@ POA_Messaging::RelativeRequestTimeoutPolicy_ptr POA_Messaging::_tao_collocated_R
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                   const char* logical_type_id,
+                                                                                   CORBA::Environment &ACE_TRY_ENV
+                                                                                   )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy::relative_expiry  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                               CORBA::Environment &ACE_TRY_ENV
+                                                                                               )
 {
   return this->servant_->relative_expiry (
-    ACE_TRY_ENV
-  );
+                                          ACE_TRY_ENV
+                                          );
 }
 
 
@@ -995,22 +1019,25 @@ POA_Messaging::RelativeRequestTimeoutPolicy::_this (CORBA_Environment &ACE_TRY_E
     Messaging::RelativeRequestTimeoutPolicy::_nil ();
 
   ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy (this,
-                                                                   stub),
-      Messaging::RelativeRequestTimeoutPolicy::_nil ()
-    );
+                  retval,
+                  POA_Messaging::_tao_collocated_RelativeRequestTimeoutPolicy (this,
+                                                                               stub),
+                  Messaging::RelativeRequestTimeoutPolicy::_nil ()
+                  );
 
   return retval;
 }
 
 void
 POA_Messaging::RelativeRequestTimeoutPolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                                        CORBA::ServerRequest &_tao_request,
+                                                        void *_tao_context,
+                                                        CORBA::Environment &ACE_TRY_ENV
+                                                        )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -1021,7 +1048,7 @@ POA_Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (v
 
 POA_Messaging::RelativeRoundtripTimeoutPolicy::RelativeRoundtripTimeoutPolicy (const RelativeRoundtripTimeoutPolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::RelativeRoundtripTimeoutPolicy::~RelativeRoundtripTimeoutPolicy (void)
@@ -1029,22 +1056,22 @@ POA_Messaging::RelativeRoundtripTimeoutPolicy::~RelativeRoundtripTimeoutPolicy (
 }
 
 CORBA::Boolean POA_Messaging::RelativeRoundtripTimeoutPolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                     const char* value,
+                                                                     CORBA::Environment &ACE_TRY_ENV
+                                                                     )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::RelativeRoundtripTimeoutPolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                                const char* logical_type_id
+                                                                )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/RelativeRoundtripTimeoutPolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::RelativeRoundtripTimeoutPolicy_ptr, this);
@@ -1061,9 +1088,9 @@ const char* POA_Messaging::RelativeRoundtripTimeoutPolicy::_interface_repository
 }
 
 POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::_tao_collocated_RelativeRoundtripTimeoutPolicy (
-    POA_Messaging::RelativeRoundtripTimeoutPolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                                               POA_Messaging::RelativeRoundtripTimeoutPolicy_ptr  servant,
+                                                                                                               TAO_Stub *stub
+                                                                                                               )
   : ACE_NESTED_CLASS (Messaging,RelativeRoundtripTimeoutPolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -1077,23 +1104,23 @@ POA_Messaging::RelativeRoundtripTimeoutPolicy_ptr POA_Messaging::_tao_collocated
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                     const char* logical_type_id,
+                                                                                     CORBA::Environment &ACE_TRY_ENV
+                                                                                     )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 TimeBase::TimeT POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy::relative_expiry  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                                 CORBA::Environment &ACE_TRY_ENV
+                                                                                                 )
 {
   return this->servant_->relative_expiry (
-    ACE_TRY_ENV
-  );
+                                          ACE_TRY_ENV
+                                          );
 }
 
 
@@ -1107,22 +1134,25 @@ POA_Messaging::RelativeRoundtripTimeoutPolicy::_this (CORBA_Environment &ACE_TRY
     Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
 
   ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy (this,
-                                                                     stub),
-      Messaging::RelativeRoundtripTimeoutPolicy::_nil ()
-    );
+                  retval,
+                  POA_Messaging::_tao_collocated_RelativeRoundtripTimeoutPolicy (this,
+                                                                                 stub),
+                  Messaging::RelativeRoundtripTimeoutPolicy::_nil ()
+                  );
 
   return retval;
 }
 
 void
 POA_Messaging::RelativeRoundtripTimeoutPolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                                          CORBA::ServerRequest &_tao_request,
+                                                          void *_tao_context,
+                                                          CORBA::Environment &ACE_TRY_ENV
+                                                          )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -1133,7 +1163,7 @@ POA_Messaging::RoutingPolicy::RoutingPolicy (void)
 
 POA_Messaging::RoutingPolicy::RoutingPolicy (const RoutingPolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::RoutingPolicy::~RoutingPolicy (void)
@@ -1141,22 +1171,22 @@ POA_Messaging::RoutingPolicy::~RoutingPolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::RoutingPolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                    const char* value,
+                                                    CORBA::Environment &ACE_TRY_ENV
+                                                    )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RoutingPolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/RoutingPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::RoutingPolicy::_downcast (
-    const char* logical_type_id
-  )
+                                               const char* logical_type_id
+                                               )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/RoutingPolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::RoutingPolicy_ptr, this);
@@ -1173,9 +1203,9 @@ const char* POA_Messaging::RoutingPolicy::_interface_repository_id (void) const
 }
 
 POA_Messaging::_tao_collocated_RoutingPolicy::_tao_collocated_RoutingPolicy (
-    POA_Messaging::RoutingPolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                             POA_Messaging::RoutingPolicy_ptr  servant,
+                                                                             TAO_Stub *stub
+                                                                             )
   : ACE_NESTED_CLASS (Messaging,RoutingPolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -1189,23 +1219,23 @@ POA_Messaging::RoutingPolicy_ptr POA_Messaging::_tao_collocated_RoutingPolicy::_
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_RoutingPolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                    const char* logical_type_id,
+                                                                    CORBA::Environment &ACE_TRY_ENV
+                                                                    )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 Messaging::RoutingTypeRange POA_Messaging::_tao_collocated_RoutingPolicy::routing_range  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                          CORBA::Environment &ACE_TRY_ENV
+                                                                                          )
 {
   return this->servant_->routing_range (
-    ACE_TRY_ENV
-  );
+                                        ACE_TRY_ENV
+                                        );
 }
 
 
@@ -1219,22 +1249,25 @@ POA_Messaging::RoutingPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
     Messaging::RoutingPolicy::_nil ();
 
   ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_RoutingPolicy (this,
-                                                    stub),
-      Messaging::RoutingPolicy::_nil ()
-    );
+                  retval,
+                  POA_Messaging::_tao_collocated_RoutingPolicy (this,
+                                                                stub),
+                  Messaging::RoutingPolicy::_nil ()
+                  );
 
   return retval;
 }
 
 void
 POA_Messaging::RoutingPolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                         CORBA::ServerRequest &_tao_request,
+                                         void *_tao_context,
+                                         CORBA::Environment &ACE_TRY_ENV
+                                         )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -1245,7 +1278,7 @@ POA_Messaging::MaxHopsPolicy::MaxHopsPolicy (void)
 
 POA_Messaging::MaxHopsPolicy::MaxHopsPolicy (const MaxHopsPolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::MaxHopsPolicy::~MaxHopsPolicy (void)
@@ -1253,22 +1286,22 @@ POA_Messaging::MaxHopsPolicy::~MaxHopsPolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::MaxHopsPolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                    const char* value,
+                                                    CORBA::Environment &ACE_TRY_ENV
+                                                    )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/MaxHopsPolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/MaxHopsPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::MaxHopsPolicy::_downcast (
-    const char* logical_type_id
-  )
+                                               const char* logical_type_id
+                                               )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/MaxHopsPolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::MaxHopsPolicy_ptr, this);
@@ -1285,9 +1318,9 @@ const char* POA_Messaging::MaxHopsPolicy::_interface_repository_id (void) const
 }
 
 POA_Messaging::_tao_collocated_MaxHopsPolicy::_tao_collocated_MaxHopsPolicy (
-    POA_Messaging::MaxHopsPolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                             POA_Messaging::MaxHopsPolicy_ptr  servant,
+                                                                             TAO_Stub *stub
+                                                                             )
   : ACE_NESTED_CLASS (Messaging,MaxHopsPolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -1301,23 +1334,23 @@ POA_Messaging::MaxHopsPolicy_ptr POA_Messaging::_tao_collocated_MaxHopsPolicy::_
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_MaxHopsPolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                    const char* logical_type_id,
+                                                                    CORBA::Environment &ACE_TRY_ENV
+                                                                    )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 CORBA::UShort POA_Messaging::_tao_collocated_MaxHopsPolicy::max_hops  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                       CORBA::Environment &ACE_TRY_ENV
+                                                                       )
 {
   return this->servant_->max_hops (
-    ACE_TRY_ENV
-  );
+                                   ACE_TRY_ENV
+                                   );
 }
 
 
@@ -1331,22 +1364,25 @@ POA_Messaging::MaxHopsPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
     Messaging::MaxHopsPolicy::_nil ();
 
   ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_MaxHopsPolicy (this,
-                                                    stub),
-      Messaging::MaxHopsPolicy::_nil ()
-    );
+                  retval,
+                  POA_Messaging::_tao_collocated_MaxHopsPolicy (this,
+                                                                stub),
+                  Messaging::MaxHopsPolicy::_nil ()
+                  );
 
   return retval;
 }
 
 void
 POA_Messaging::MaxHopsPolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                         CORBA::ServerRequest &_tao_request,
+                                         void *_tao_context,
+                                         CORBA::Environment &ACE_TRY_ENV
+                                         )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -1357,7 +1393,7 @@ POA_Messaging::QueueOrderPolicy::QueueOrderPolicy (void)
 
 POA_Messaging::QueueOrderPolicy::QueueOrderPolicy (const QueueOrderPolicy& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Policy) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 
 POA_Messaging::QueueOrderPolicy::~QueueOrderPolicy (void)
@@ -1365,22 +1401,22 @@ POA_Messaging::QueueOrderPolicy::~QueueOrderPolicy (void)
 }
 
 CORBA::Boolean POA_Messaging::QueueOrderPolicy::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                       const char* value,
+                                                       CORBA::Environment &ACE_TRY_ENV
+                                                       )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/QueueOrderPolicy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/QueueOrderPolicy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Policy:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::QueueOrderPolicy::_downcast (
-    const char* logical_type_id
-  )
+                                                  const char* logical_type_id
+                                                  )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/QueueOrderPolicy:1.0") == 0)
     return ACE_static_cast (POA_Messaging::QueueOrderPolicy_ptr, this);
@@ -1397,9 +1433,9 @@ const char* POA_Messaging::QueueOrderPolicy::_interface_repository_id (void) con
 }
 
 POA_Messaging::_tao_collocated_QueueOrderPolicy::_tao_collocated_QueueOrderPolicy (
-    POA_Messaging::QueueOrderPolicy_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                                   POA_Messaging::QueueOrderPolicy_ptr  servant,
+                                                                                   TAO_Stub *stub
+                                                                                   )
   : ACE_NESTED_CLASS (Messaging,QueueOrderPolicy) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Policy) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -1413,23 +1449,23 @@ POA_Messaging::QueueOrderPolicy_ptr POA_Messaging::_tao_collocated_QueueOrderPol
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_QueueOrderPolicy::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                       const char* logical_type_id,
+                                                                       CORBA::Environment &ACE_TRY_ENV
+                                                                       )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 Messaging::Ordering POA_Messaging::_tao_collocated_QueueOrderPolicy::allowed_orders  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                      CORBA::Environment &ACE_TRY_ENV
+                                                                                      )
 {
   return this->servant_->allowed_orders (
-    ACE_TRY_ENV
-  );
+                                         ACE_TRY_ENV
+                                         );
 }
 
 
@@ -1443,22 +1479,25 @@ POA_Messaging::QueueOrderPolicy::_this (CORBA_Environment &ACE_TRY_ENV)
     Messaging::QueueOrderPolicy::_nil ();
 
   ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_QueueOrderPolicy (this,
-                                                       stub),
-      Messaging::QueueOrderPolicy::_nil ()
-    );
+                  retval,
+                  POA_Messaging::_tao_collocated_QueueOrderPolicy (this,
+                                                                   stub),
+                  Messaging::QueueOrderPolicy::_nil ()
+                  );
 
   return retval;
 }
 
 void
 POA_Messaging::QueueOrderPolicy::_dispatch (
-        CORBA::ServerRequest &,
-        void *,
-        CORBA::Environment &ACE_TRY_ENV)
+                                            CORBA::ServerRequest &_tao_request,
+                                            void *_tao_context,
+                                            CORBA::Environment &ACE_TRY_ENV
+                                            )
 {
-  ACE_THROW (CORBA::INTERNAL ());
+  TAO_Locality_Constrained_ServantBase::_dispatch (_tao_request,
+                                                   _tao_context,
+                                                   ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -1477,21 +1516,21 @@ POA_Messaging::ReplyHandler::~ReplyHandler (void)
 }
 
 CORBA::Boolean POA_Messaging::ReplyHandler::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                   const char* value,
+                                                   CORBA::Environment &ACE_TRY_ENV
+                                                   )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyHandler:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/ReplyHandler:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void* POA_Messaging::ReplyHandler::_downcast (
-    const char* logical_type_id
-  )
+                                              const char* logical_type_id
+                                              )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/ReplyHandler:1.0") == 0)
     return ACE_static_cast (POA_Messaging::ReplyHandler_ptr, this);
@@ -1511,9 +1550,9 @@ const char* POA_Messaging::ReplyHandler::_interface_repository_id (void) const
 }
 
 POA_Messaging::_tao_collocated_ReplyHandler::_tao_collocated_ReplyHandler (
-    POA_Messaging::ReplyHandler_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                                           POA_Messaging::ReplyHandler_ptr  servant,
+                                                                           TAO_Stub *stub
+                                                                           )
   : ACE_NESTED_CLASS (Messaging,ReplyHandler) (),
     CORBA_Object (stub, servant, 1),
     servant_ (servant)
@@ -1526,14 +1565,14 @@ POA_Messaging::ReplyHandler_ptr POA_Messaging::_tao_collocated_ReplyHandler::_ge
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_ReplyHandler::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                   const char* logical_type_id,
+                                                                   CORBA::Environment &ACE_TRY_ENV
+                                                                   )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 
@@ -1547,11 +1586,11 @@ POA_Messaging::ReplyHandler::_this (CORBA_Environment &ACE_TRY_ENV)
     Messaging::ReplyHandler::_nil ();
 
   ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_ReplyHandler (this,
-                                                   stub),
-      Messaging::ReplyHandler::_nil ()
-    );
+                  retval,
+                  POA_Messaging::_tao_collocated_ReplyHandler (this,
+                                                               stub),
+                  Messaging::ReplyHandler::_nil ()
+                  );
 
   return retval;
 }
@@ -1567,7 +1606,7 @@ class TAO_Messaging_Poller_Perfect_Hash_OpTable : public TAO_Perfect_Hash_OpTabl
 private:
   unsigned int hash (const char *str, unsigned int len);
 public:
- const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
+  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
 /* starting time is 12:37:20 */
 /* C++ code produced by gperf version 2.7 (GNU C++ version) */
@@ -1576,21 +1615,21 @@ unsigned int
 TAO_Messaging_Poller_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
   static const unsigned char asso_values[] =
-    {
-     30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
-     30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
-     30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
-     30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
-     30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
-     30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
-     30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
-     30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
-     30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
-     30, 30, 30, 30, 30,  0, 30,  0, 30, 10,
-     30,  5, 30, 30, 30,  0, 30, 30, 30, 30,
-     30, 30, 30, 30,  0, 30,  0, 30, 30, 30,
-     30,  0, 30, 30, 30, 30, 30, 30,
-    };
+  {
+    30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
+    30, 30, 30, 30, 30,  0, 30,  0, 30, 10,
+    30,  5, 30, 30, 30,  0, 30, 30, 30, 30,
+    30, 30, 30, 30,  0, 30,  0, 30, 30, 30,
+    30,  0, 30, 30, 30, 30, 30, 30,
+  };
   return len + asso_values[str[len - 1]] + asso_values[str[0]];
 }
 
@@ -1598,38 +1637,38 @@ const class TAO_operation_db_entry *
 TAO_Messaging_Poller_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 {
   enum
-    {
-      TOTAL_KEYWORDS = 11,
-      MIN_WORD_LENGTH = 5,
-      MAX_WORD_LENGTH = 23,
-      MIN_HASH_VALUE = 5,
-      MAX_HASH_VALUE = 29,
-      HASH_VALUE_RANGE = 25,
-      DUPLICATES = 2
-    };
+  {
+    TOTAL_KEYWORDS = 11,
+    MIN_WORD_LENGTH = 5,
+    MAX_WORD_LENGTH = 23,
+    MIN_HASH_VALUE = 5,
+    MAX_HASH_VALUE = 29,
+    HASH_VALUE_RANGE = 25,
+    DUPLICATES = 2
+  };
 
   static const class TAO_operation_db_entry  wordlist[] =
-    {
-      {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
-      {"_is_a",  &POA_Messaging::Poller::_is_a_skel},
-      {"is_ready",      &POA_Messaging::Poller::is_ready_skel},
-      {"_get_target",   &POA_Messaging::Poller::_get_target_skel},
-      {"_non_existent",  &POA_Messaging::Poller::_non_existent_skel},
-      {"_get_op_name",  &POA_Messaging::Poller::_get_op_name_skel},
-      {"_get_is_from_poller",   &POA_Messaging::Poller::_get_is_from_poller_skel},
-      {"_get_operation_target",         &POA_Messaging::Poller::_get_operation_target_skel},
-      {"_get_associated_handler",       &POA_Messaging::Poller::_get_associated_handler_skel},
-      {"_set_associated_handler",       &POA_Messaging::Poller::_set_associated_handler_skel},
-      {"_get_operation_name",   &POA_Messaging::Poller::_get_operation_name_skel},
-      {"create_pollable_set",   &POA_Messaging::Poller::create_pollable_set_skel},
-    };
+  {
+    {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
+    {"_is_a",  &POA_Messaging::Poller::_is_a_skel},
+    {"is_ready",      &POA_Messaging::Poller::is_ready_skel},
+    {"_get_target",   &POA_Messaging::Poller::_get_target_skel},
+    {"_non_existent",  &POA_Messaging::Poller::_non_existent_skel},
+    {"_get_op_name",  &POA_Messaging::Poller::_get_op_name_skel},
+    {"_get_is_from_poller",   &POA_Messaging::Poller::_get_is_from_poller_skel},
+    {"_get_operation_target",         &POA_Messaging::Poller::_get_operation_target_skel},
+    {"_get_associated_handler",       &POA_Messaging::Poller::_get_associated_handler_skel},
+    {"_set_associated_handler",       &POA_Messaging::Poller::_set_associated_handler_skel},
+    {"_get_operation_name",   &POA_Messaging::Poller::_get_operation_name_skel},
+    {"create_pollable_set",   &POA_Messaging::Poller::create_pollable_set_skel},
+  };
 
   static const signed char lookup[] =
-    {
-       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,   6,  -1,  -1,   7,  -1,   8,
-       -1, -12,  -2,   9,  -1,  10,  -1,  11,  -1, -37,  14,  -1,  -1,  -1,
-       -1,  15,
-    };
+  {
+    -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,   6,  -1,  -1,   7,  -1,   8,
+    -1, -12,  -2,   9,  -1,  10,  -1,  11,  -1, -37,  14,  -1,  -1,  -1,
+    -1,  15,
+  };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
@@ -1673,179 +1712,179 @@ POA_Messaging::Poller::Poller (void)
 // copy ctor
 POA_Messaging::Poller::Poller (const Poller& rhs)
   :   ACE_NESTED_CLASS (POA_CORBA,Pollable) (rhs),
-    TAO_ServantBase (rhs)
+      TAO_ServantBase (rhs)
 {}
 // skeleton destructor
 POA_Messaging::Poller::~Poller (void)
 {
 }
 void POA_Messaging::Poller::_get_operation_target_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference,
-    void * /* context */,
-    CORBA::Environment &ACE_TRY_ENV
-)
+                                                        CORBA::ServerRequest &_tao_server_request,
+                                                        void *_tao_object_reference,
+                                                        void * /* context */,
+                                                        CORBA::Environment &ACE_TRY_ENV
+                                                        )
 {
   POA_Messaging::Poller *_tao_impl = (POA_Messaging::Poller *)_tao_object_reference;
   CORBA::Object_var _tao_retval;
   _tao_retval = _tao_impl->operation_target (
-    ACE_TRY_ENV
-  );
+                                             ACE_TRY_ENV
+                                             );
   ACE_CHECK;
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
-    (_tao_out << _tao_retval.in ())
-  ))
+        (_tao_out << _tao_retval.in ())
+        ))
     ACE_THROW (CORBA::MARSHAL () );
 
 }
 
 void POA_Messaging::Poller::_get_operation_name_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference,
-    void * /* context */,
-    CORBA::Environment &ACE_TRY_ENV
-)
+                                                      CORBA::ServerRequest &_tao_server_request,
+                                                      void *_tao_object_reference,
+                                                      void * /* context */,
+                                                      CORBA::Environment &ACE_TRY_ENV
+                                                      )
 {
   POA_Messaging::Poller *_tao_impl = (POA_Messaging::Poller *)_tao_object_reference;
   CORBA::String_var _tao_retval;
   _tao_retval = _tao_impl->operation_name (
-    ACE_TRY_ENV
-  );
+                                           ACE_TRY_ENV
+                                           );
   ACE_CHECK;
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
-    (_tao_out << _tao_retval.in ())
-  ))
+        (_tao_out << _tao_retval.in ())
+        ))
     ACE_THROW (CORBA::MARSHAL () );
 
 }
 
 void POA_Messaging::Poller::_get_associated_handler_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference,
-    void * /* context */,
-    CORBA::Environment &ACE_TRY_ENV
-)
+                                                          CORBA::ServerRequest &_tao_server_request,
+                                                          void *_tao_object_reference,
+                                                          void * /* context */,
+                                                          CORBA::Environment &ACE_TRY_ENV
+                                                          )
 {
   POA_Messaging::Poller *_tao_impl = (POA_Messaging::Poller *)_tao_object_reference;
   Messaging::ReplyHandler_var _tao_retval;
   _tao_retval = _tao_impl->associated_handler (
-    ACE_TRY_ENV
-  );
+                                               ACE_TRY_ENV
+                                               );
   ACE_CHECK;
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
-    (_tao_out << _tao_retval.in ())
-  ))
+        (_tao_out << _tao_retval.in ())
+        ))
     ACE_THROW (CORBA::MARSHAL () );
 
 }
 
 void POA_Messaging::Poller::_set_associated_handler_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference,
-    void * /* context */,
-    CORBA::Environment &ACE_TRY_ENV
-)
+                                                          CORBA::ServerRequest &_tao_server_request,
+                                                          void *_tao_object_reference,
+                                                          void * /* context */,
+                                                          CORBA::Environment &ACE_TRY_ENV
+                                                          )
 {
   TAO_InputCDR &_tao_in = _tao_server_request.incoming ();
   POA_Messaging::Poller *_tao_impl = (POA_Messaging::Poller *)_tao_object_reference;
   Messaging::ReplyHandler_var associated_handler;
   if (!(
-    (_tao_in >> associated_handler.out ())
-  ))
+        (_tao_in >> associated_handler.out ())
+        ))
     ACE_THROW (CORBA::MARSHAL () );
 
   _tao_impl->associated_handler (
-    associated_handler.in (),
-    ACE_TRY_ENV
-  );
+                                 associated_handler.in (),
+                                 ACE_TRY_ENV
+                                 );
   ACE_CHECK;
   _tao_server_request.init_reply (ACE_TRY_ENV);
 }
 
 void POA_Messaging::Poller::_get_is_from_poller_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference,
-    void * /* context */,
-    CORBA::Environment &ACE_TRY_ENV
-)
+                                                      CORBA::ServerRequest &_tao_server_request,
+                                                      void *_tao_object_reference,
+                                                      void * /* context */,
+                                                      CORBA::Environment &ACE_TRY_ENV
+                                                      )
 {
   POA_Messaging::Poller *_tao_impl = (POA_Messaging::Poller *)_tao_object_reference;
   CORBA::Boolean _tao_retval = 0;
   _tao_retval = _tao_impl->is_from_poller (
-    ACE_TRY_ENV
-  );
+                                           ACE_TRY_ENV
+                                           );
   ACE_CHECK;
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
-    (_tao_out << CORBA::Any::from_boolean (_tao_retval))
-  ))
+        (_tao_out << CORBA::Any::from_boolean (_tao_retval))
+        ))
     ACE_THROW (CORBA::MARSHAL () );
 
 }
 
 void POA_Messaging::Poller::_get_target_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference,
-    void * /* context */,
-    CORBA::Environment &ACE_TRY_ENV
-)
+                                              CORBA::ServerRequest &_tao_server_request,
+                                              void *_tao_object_reference,
+                                              void * /* context */,
+                                              CORBA::Environment &ACE_TRY_ENV
+                                              )
 {
   POA_Messaging::Poller *_tao_impl = (POA_Messaging::Poller *)_tao_object_reference;
   CORBA::Object_var _tao_retval;
   _tao_retval = _tao_impl->target (
-    ACE_TRY_ENV
-  );
+                                   ACE_TRY_ENV
+                                   );
   ACE_CHECK;
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
-    (_tao_out << _tao_retval.in ())
-  ))
+        (_tao_out << _tao_retval.in ())
+        ))
     ACE_THROW (CORBA::MARSHAL () );
 
 }
 
 void POA_Messaging::Poller::_get_op_name_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void *_tao_object_reference,
-    void * /* context */,
-    CORBA::Environment &ACE_TRY_ENV
-)
+                                               CORBA::ServerRequest &_tao_server_request,
+                                               void *_tao_object_reference,
+                                               void * /* context */,
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               )
 {
   POA_Messaging::Poller *_tao_impl = (POA_Messaging::Poller *)_tao_object_reference;
   CORBA::String_var _tao_retval;
   _tao_retval = _tao_impl->op_name (
-    ACE_TRY_ENV
-  );
+                                    ACE_TRY_ENV
+                                    );
   ACE_CHECK;
   _tao_server_request.init_reply (ACE_TRY_ENV);
   ACE_CHECK;
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(
-    (_tao_out << _tao_retval.in ())
-  ))
+        (_tao_out << _tao_retval.in ())
+        ))
     ACE_THROW (CORBA::MARSHAL () );
 
 }
 
 void POA_Messaging::Poller::_is_a_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void * _tao_object_reference,
-    void * /*context*/,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                        CORBA::ServerRequest &_tao_server_request,
+                                        void * _tao_object_reference,
+                                        void * /*context*/,
+                                        CORBA::Environment &ACE_TRY_ENV
+                                        )
 {
   static const TAO_Param_Data_Skel Messaging_Poller_is_a_paramdata [] =
   {
@@ -1858,42 +1897,42 @@ void POA_Messaging::Poller::_is_a_skel (
   CORBA::Boolean _tao_retval;
   CORBA::String_var _tao_value;
   _tao_server_request.demarshal (
-    ACE_TRY_ENV,
-    &Messaging_Poller_is_a_calldata,
-    &_tao_retval,
-    &_tao_value.inout ()
-  );
+                                 ACE_TRY_ENV,
+                                 &Messaging_Poller_is_a_calldata,
+                                 &_tao_retval,
+                                 &_tao_value.inout ()
+                                 );
   ACE_CHECK;
   _tao_retval = _tao_impl->_is_a (_tao_value.in (), ACE_TRY_ENV);
   ACE_CHECK;
   _tao_server_request.marshal (
-    ACE_TRY_ENV,
-    &Messaging_Poller_is_a_calldata,
-    &_tao_retval,
-    &_tao_value.inout ()
-  );
+                               ACE_TRY_ENV,
+                               &Messaging_Poller_is_a_calldata,
+                               &_tao_retval,
+                               &_tao_value.inout ()
+                               );
 }
 
 CORBA::Boolean POA_Messaging::Poller::_is_a (
-    const char* value,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                             const char* value,
+                                             CORBA::Environment &ACE_TRY_ENV
+                                             )
 {
   if (
-    (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/Poller:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Pollable:1.0")) ||
-    (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
-      return 1;
-    else
-      return 0;
+      (!ACE_OS::strcmp ((char *)value, "IDL:Messaging/Poller:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, "IDL:omg.org/CORBA/Pollable:1.0")) ||
+      (!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (ACE_TRY_ENV))))
+    return 1;
+  else
+    return 0;
 }
 
 void POA_Messaging::Poller::_non_existent_skel (
-    CORBA::ServerRequest &_tao_server_request,
-    void * /* _tao_object_reference */ ,
-    void * /*context*/,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                CORBA::ServerRequest &_tao_server_request,
+                                                void * /* _tao_object_reference */ ,
+                                                void * /*context*/,
+                                                CORBA::Environment &ACE_TRY_ENV
+                                                )
 {
   static const TAO_Param_Data_Skel Messaging_Poller_non_existent_paramdata [] =
   {
@@ -1903,15 +1942,15 @@ void POA_Messaging::Poller::_non_existent_skel (
   {"_non_existent", 1, 1, Messaging_Poller_non_existent_paramdata};
   CORBA::Boolean _tao_retval = 0;
   _tao_server_request.marshal (
-    ACE_TRY_ENV,
-    &Messaging_Poller_non_existent_calldata,
-    &_tao_retval
-  );
+                               ACE_TRY_ENV,
+                               &Messaging_Poller_non_existent_calldata,
+                               &_tao_retval
+                               );
 }
 
 void* POA_Messaging::Poller::_downcast (
-    const char* logical_type_id
-  )
+                                        const char* logical_type_id
+                                        )
 {
   if (ACE_OS::strcmp (logical_type_id, "IDL:Messaging/Poller:1.0") == 0)
     return ACE_static_cast (POA_Messaging::Poller_ptr, this);
@@ -1928,10 +1967,10 @@ void POA_Messaging::Poller::_dispatch (CORBA::ServerRequest &req, void * context
   const char *opname = req.operation (); // retrieve operation name
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
-  {
-    ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION ());
-  }
+    {
+      ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
+      ACE_THROW (CORBA_BAD_OPERATION ());
+    }
   else
     skel (req, this, context, ACE_TRY_ENV);
 }
@@ -1942,9 +1981,9 @@ const char* POA_Messaging::Poller::_interface_repository_id (void) const
 }
 
 POA_Messaging::_tao_collocated_Poller::_tao_collocated_Poller (
-    POA_Messaging::Poller_ptr  servant,
-    TAO_Stub *stub
-  )
+                                                               POA_Messaging::Poller_ptr  servant,
+                                                               TAO_Stub *stub
+                                                               )
   : ACE_NESTED_CLASS (Messaging,Poller) (),
     ACE_NESTED_CLASS (POA_CORBA,_tao_collocated_Pollable) (servant, stub),
     CORBA_Object (stub, servant, 1),
@@ -1958,79 +1997,79 @@ POA_Messaging::Poller_ptr POA_Messaging::_tao_collocated_Poller::_get_servant (v
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_Poller::_is_a (
-    const char* logical_type_id,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                             const char* logical_type_id,
+                                                             CORBA::Environment &ACE_TRY_ENV
+                                                             )
 {
   return this->servant_->_is_a (
-      logical_type_id,
-      ACE_TRY_ENV
-    );
+                                logical_type_id,
+                                ACE_TRY_ENV
+                                );
 }
 
 CORBA::Object_ptr POA_Messaging::_tao_collocated_Poller::operation_target  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                            CORBA::Environment &ACE_TRY_ENV
+                                                                            )
 {
   return this->servant_->operation_target (
-    ACE_TRY_ENV
-  );
+                                           ACE_TRY_ENV
+                                           );
 }
 
 char * POA_Messaging::_tao_collocated_Poller::operation_name  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                               CORBA::Environment &ACE_TRY_ENV
+                                                               )
 {
   return this->servant_->operation_name (
-    ACE_TRY_ENV
-  );
+                                         ACE_TRY_ENV
+                                         );
 }
 
 Messaging::ReplyHandler_ptr POA_Messaging::_tao_collocated_Poller::associated_handler  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                                        CORBA::Environment &ACE_TRY_ENV
+                                                                                        )
 {
   return this->servant_->associated_handler (
-    ACE_TRY_ENV
-  );
+                                             ACE_TRY_ENV
+                                             );
 }
 
 void POA_Messaging::_tao_collocated_Poller::associated_handler  (
-    Messaging::ReplyHandler_ptr associated_handler,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                 Messaging::ReplyHandler_ptr associated_handler,
+                                                                 CORBA::Environment &ACE_TRY_ENV
+                                                                 )
 {
   this->servant_->associated_handler (
-    associated_handler,
-    ACE_TRY_ENV
-  );
+                                      associated_handler,
+                                      ACE_TRY_ENV
+                                      );
 }
 
 CORBA::Boolean POA_Messaging::_tao_collocated_Poller::is_from_poller  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                       CORBA::Environment &ACE_TRY_ENV
+                                                                       )
 {
   return this->servant_->is_from_poller (
-    ACE_TRY_ENV
-  );
+                                         ACE_TRY_ENV
+                                         );
 }
 
 CORBA::Object_ptr POA_Messaging::_tao_collocated_Poller::target  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                                  CORBA::Environment &ACE_TRY_ENV
+                                                                  )
 {
   return this->servant_->target (
-    ACE_TRY_ENV
-  );
+                                 ACE_TRY_ENV
+                                 );
 }
 
 char * POA_Messaging::_tao_collocated_Poller::op_name  (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+                                                        CORBA::Environment &ACE_TRY_ENV
+                                                        )
 {
   return this->servant_->op_name (
-    ACE_TRY_ENV
-  );
+                                  ACE_TRY_ENV
+                                  );
 }
 
 
@@ -2044,11 +2083,11 @@ POA_Messaging::Poller::_this (CORBA_Environment &ACE_TRY_ENV)
     Messaging::Poller::_nil ();
 
   ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_Poller (this,
-                                             stub),
-      Messaging::Poller::_nil ()
-    );
+                  retval,
+                  POA_Messaging::_tao_collocated_Poller (this,
+                                                         stub),
+                  Messaging::Poller::_nil ()
+                  );
 
   return retval;
 }
