@@ -122,11 +122,13 @@ DEP_CPP_SSTRI=\
 	"..\ace\OS.i"\
 	"..\ace\SString.h"\
 	"..\ace\SString.i"\
-	"..\ace\stdcpp.h"\
 	"..\ace\Trace.h"\
 	"..\ace\Version.h"\
 	"..\ace\ws2tcpip.h"\
 	".\test_config.h"\
+	
+NODEP_CPP_SSTRI=\
+	"..\ace\stdcpp.h"\
 	
 
 !ENDIF 

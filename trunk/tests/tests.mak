@@ -4,8 +4,8 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
 !IF "$(CFG)" == ""
-CFG=OrdMultiSet_Test - Win32 Debug
-!MESSAGE No configuration specified.  Defaulting to OrdMultiSet_Test - Win32\
+CFG=Timeprobe_Test - Win32 Debug
+!MESSAGE No configuration specified.  Defaulting to Timeprobe_Test - Win32\
  Debug.
 !ENDIF 
 
@@ -49,12 +49,13 @@ CFG=OrdMultiSet_Test - Win32 Debug
  "Thread_Mutex_Test - Win32 Debug" && "$(CFG)" !=\
  "SOCK_Connector_Test - Win32 Debug" && "$(CFG)" !=\
  "Basic_Types_Test - Win32 Debug" && "$(CFG)" != "Env_Value_Test - Win32 Debug"\
- && "$(CFG)" != "OrdMultiSet_Test - Win32 Debug"
+ && "$(CFG)" != "OrdMultiSet_Test - Win32 Debug" && "$(CFG)" !=\
+ "Timeprobe_Test - Win32 Debug"
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "tests.mak" CFG="OrdMultiSet_Test - Win32 Debug"
+!MESSAGE NMAKE /f "tests.mak" CFG="Timeprobe_Test - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -159,6 +160,8 @@ CFG=OrdMultiSet_Test - Win32 Debug
  "Win32 (x86) Console Application")
 !MESSAGE "OrdMultiSet_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
+!MESSAGE "Timeprobe_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 !ERROR An invalid configuration is specified.
 !ENDIF 
@@ -210,8 +213,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -270,8 +271,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -330,8 +329,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -390,8 +387,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -450,8 +445,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -510,8 +503,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -570,8 +561,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -630,8 +619,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -690,8 +677,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -750,8 +735,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -810,8 +793,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -870,8 +851,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -930,8 +909,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -990,8 +967,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1050,8 +1025,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1110,8 +1083,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1170,8 +1141,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1230,8 +1199,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1290,8 +1257,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1350,8 +1315,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1410,8 +1373,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1470,8 +1431,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1530,8 +1489,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1590,8 +1547,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1650,8 +1605,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1710,8 +1663,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1770,8 +1721,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1830,8 +1779,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1890,8 +1837,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1950,8 +1895,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2010,8 +1953,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2070,8 +2011,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2130,8 +2069,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2190,8 +2127,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2250,8 +2185,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2310,8 +2243,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2371,8 +2302,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2432,8 +2361,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2492,8 +2419,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2552,8 +2477,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2613,8 +2536,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2673,8 +2594,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2733,8 +2652,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2793,8 +2710,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2853,8 +2768,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2913,8 +2826,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2973,8 +2884,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3034,8 +2943,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3092,8 +2999,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3152,8 +3057,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3211,8 +3114,6 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Basic_Types_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3270,8 +3171,6 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/Env_Value_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3329,8 +3228,6 @@ CLEAN :
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
  /Fp"$(INTDIR)/OrdMultiSet_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3353,7 +3250,67 @@ LINK32_OBJS= \
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
+!ELSEIF  "$(CFG)" == "Timeprobe_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Timeprobe_Test\Debug"
+# PROP BASE Intermediate_Dir "Timeprobe_Test\Debug"
+# PROP BASE Target_Dir "Timeprobe_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "Timeprobe_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\Timeprobe_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\Timeprobe_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\Timeprobe_Test.exe"
+	-@erase "$(OUTDIR)\Timeprobe_Test.ilk"
+	-@erase "$(OUTDIR)\Timeprobe_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE"\
+ /Fp"$(INTDIR)/Timeprobe_Test.pch" /YX /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/Timeprobe_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/Timeprobe_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Timeprobe_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\Timeprobe_Test.obj"
+
+"$(OUTDIR)\Timeprobe_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
 !ENDIF 
+
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -3381,9 +3338,6 @@ LINK32_OBJS= \
 # Begin Source File
 
 SOURCE=.\Handle_Set_Test.cpp
-
-!IF  "$(CFG)" == "Handle_Set_Test - Win32 Debug"
-
 DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3396,6 +3350,7 @@ DEP_CPP_HANDL=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -3458,8 +3413,6 @@ DEP_CPP_HANDL=\
 "$(INTDIR)\Handle_Set_Test.obj" : $(SOURCE) $(DEP_CPP_HANDL) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -3470,13 +3423,11 @@ DEP_CPP_HANDL=\
 # Begin Source File
 
 SOURCE=.\Mem_Map_Test.cpp
-
-!IF  "$(CFG)" == "Mem_Map_Test - Win32 Debug"
-
 DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -3484,34 +3435,61 @@ DEP_CPP_MEM_M=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Mem_Map_Test.obj" : $(SOURCE) $(DEP_CPP_MEM_M) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -3523,9 +3501,6 @@ DEP_CPP_MEM_M=\
 # Begin Source File
 
 SOURCE=.\Naming_Test.cpp
-
-!IF  "$(CFG)" == "Naming_Test - Win32 Debug"
-
 DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3540,6 +3515,7 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -3615,6 +3591,7 @@ DEP_CPP_NAMIN=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -3633,8 +3610,6 @@ DEP_CPP_NAMIN=\
 "$(INTDIR)\Naming_Test.obj" : $(SOURCE) $(DEP_CPP_NAMIN) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -3645,9 +3620,6 @@ DEP_CPP_NAMIN=\
 # Begin Source File
 
 SOURCE=.\Reactor_Timer_Test.cpp
-
-!IF  "$(CFG)" == "Reactor_Timer_Test - Win32 Debug"
-
 DEP_CPP_REACT=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3660,6 +3632,7 @@ DEP_CPP_REACT=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -3724,8 +3697,6 @@ DEP_CPP_REACT=\
 "$(INTDIR)\Reactor_Timer_Test.obj" : $(SOURCE) $(DEP_CPP_REACT) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -3736,9 +3707,6 @@ DEP_CPP_REACT=\
 # Begin Source File
 
 SOURCE=.\Reactors_Test.cpp
-
-!IF  "$(CFG)" == "Reactors_Test - Win32 Debug"
-
 DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3751,6 +3719,7 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -3813,8 +3782,10 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -3827,6 +3798,7 @@ DEP_CPP_REACTO=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -3853,8 +3825,6 @@ DEP_CPP_REACTO=\
 "$(INTDIR)\Reactors_Test.obj" : $(SOURCE) $(DEP_CPP_REACTO) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -3865,13 +3835,11 @@ DEP_CPP_REACTO=\
 # Begin Source File
 
 SOURCE=.\SString_Test.cpp
-
-!IF  "$(CFG)" == "SString_Test - Win32 Debug"
-
 DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -3879,32 +3847,61 @@ DEP_CPP_SSTRI=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\SString_Test.obj" : $(SOURCE) $(DEP_CPP_SSTRI) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -3916,13 +3913,11 @@ DEP_CPP_SSTRI=\
 # Begin Source File
 
 SOURCE=.\Time_Value_Test.cpp
-
-!IF  "$(CFG)" == "Time_Value_Test - Win32 Debug"
-
 DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -3930,32 +3925,61 @@ DEP_CPP_TIME_=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Time_Value_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -3967,9 +3991,6 @@ DEP_CPP_TIME_=\
 # Begin Source File
 
 SOURCE=.\Timer_Queue_Test.cpp
-
-!IF  "$(CFG)" == "Timer_Queue_Test - Win32 Debug"
-
 DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -3982,6 +4003,7 @@ DEP_CPP_TIMER=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -4058,8 +4080,6 @@ DEP_CPP_TIMER=\
 "$(INTDIR)\Timer_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_TIMER) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -4070,9 +4090,6 @@ DEP_CPP_TIMER=\
 # Begin Source File
 
 SOURCE=.\UPIPE_SAP_Test.cpp
-
-!IF  "$(CFG)" == "UPIPE_SAP_Test - Win32 Debug"
-
 DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4087,6 +4104,7 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -4158,8 +4176,10 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream.cpp"\
 	{$(INCLUDE)}"\ace\Stream.h"\
 	{$(INCLUDE)}"\ace\Stream.i"\
@@ -4175,6 +4195,7 @@ DEP_CPP_UPIPE=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -4209,8 +4230,6 @@ DEP_CPP_UPIPE=\
 "$(INTDIR)\UPIPE_SAP_Test.obj" : $(SOURCE) $(DEP_CPP_UPIPE) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -4221,9 +4240,6 @@ DEP_CPP_UPIPE=\
 # Begin Source File
 
 SOURCE=.\Priority_Buffer_Test.cpp
-
-!IF  "$(CFG)" == "Priority_Buffer_Test - Win32 Debug"
-
 DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4236,6 +4252,7 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -4295,8 +4312,10 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
@@ -4306,6 +4325,7 @@ DEP_CPP_PRIOR=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -4327,8 +4347,6 @@ DEP_CPP_PRIOR=\
 "$(INTDIR)\Priority_Buffer_Test.obj" : $(SOURCE) $(DEP_CPP_PRIOR) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -4339,13 +4357,11 @@ DEP_CPP_PRIOR=\
 # Begin Source File
 
 SOURCE=.\Time_Service_Test.cpp
-
-!IF  "$(CFG)" == "Time_Service_Test - Win32 Debug"
-
 DEP_CPP_TIME_S=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -4353,34 +4369,63 @@ DEP_CPP_TIME_S=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Process.h"\
 	{$(INCLUDE)}"\ace\Process.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Time_Service_Test.obj" : $(SOURCE) $(DEP_CPP_TIME_S) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -4392,9 +4437,6 @@ DEP_CPP_TIME_S=\
 # Begin Source File
 
 SOURCE=.\SPIPE_Test.cpp
-
-!IF  "$(CFG)" == "SPIPE_Test - Win32 Debug"
-
 DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4409,6 +4451,7 @@ DEP_CPP_SPIPE=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -4477,8 +4520,6 @@ DEP_CPP_SPIPE=\
 "$(INTDIR)\SPIPE_Test.obj" : $(SOURCE) $(DEP_CPP_SPIPE) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -4489,9 +4530,6 @@ DEP_CPP_SPIPE=\
 # Begin Source File
 
 SOURCE=.\Buffer_Stream_Test.cpp
-
-!IF  "$(CFG)" == "Buffer_Stream_Test - Win32 Debug"
-
 DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4504,6 +4542,7 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -4566,8 +4605,10 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream.cpp"\
 	{$(INCLUDE)}"\ace\Stream.h"\
 	{$(INCLUDE)}"\ace\Stream.i"\
@@ -4583,6 +4624,7 @@ DEP_CPP_BUFFE=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -4610,8 +4652,6 @@ DEP_CPP_BUFFE=\
 "$(INTDIR)\Buffer_Stream_Test.obj" : $(SOURCE) $(DEP_CPP_BUFFE) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -4622,9 +4662,6 @@ DEP_CPP_BUFFE=\
 # Begin Source File
 
 SOURCE=.\Barrier_Test.cpp
-
-!IF  "$(CFG)" == "Barrier_Test - Win32 Debug"
-
 DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4637,6 +4674,7 @@ DEP_CPP_BARRI=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -4694,8 +4732,6 @@ DEP_CPP_BARRI=\
 "$(INTDIR)\Barrier_Test.obj" : $(SOURCE) $(DEP_CPP_BARRI) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -4706,9 +4742,6 @@ DEP_CPP_BARRI=\
 # Begin Source File
 
 SOURCE=.\Reader_Writer_Test.cpp
-
-!IF  "$(CFG)" == "Reader_Writer_Test - Win32 Debug"
-
 DEP_CPP_READE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4721,6 +4754,7 @@ DEP_CPP_READE=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -4780,8 +4814,6 @@ DEP_CPP_READE=\
 "$(INTDIR)\Reader_Writer_Test.obj" : $(SOURCE) $(DEP_CPP_READE) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -4792,9 +4824,6 @@ DEP_CPP_READE=\
 # Begin Source File
 
 SOURCE=.\Recursive_Mutex_Test.cpp
-
-!IF  "$(CFG)" == "Recursive_Mutex_Test - Win32 Debug"
-
 DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4807,6 +4836,7 @@ DEP_CPP_RECUR=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -4866,8 +4896,6 @@ DEP_CPP_RECUR=\
 "$(INTDIR)\Recursive_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_RECUR) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -4878,9 +4906,6 @@ DEP_CPP_RECUR=\
 # Begin Source File
 
 SOURCE=.\Task_Test.cpp
-
-!IF  "$(CFG)" == "Task_Test - Win32 Debug"
-
 DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -4893,6 +4918,7 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -4955,8 +4981,10 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -4969,6 +4997,7 @@ DEP_CPP_TASK_=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -4995,8 +5024,6 @@ DEP_CPP_TASK_=\
 "$(INTDIR)\Task_Test.obj" : $(SOURCE) $(DEP_CPP_TASK_) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -5007,9 +5034,6 @@ DEP_CPP_TASK_=\
 # Begin Source File
 
 SOURCE=.\Thread_Manager_Test.cpp
-
-!IF  "$(CFG)" == "Thread_Manager_Test - Win32 Debug"
-
 DEP_CPP_THREA=\
 	".\Thread_Manager_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -5023,6 +5047,7 @@ DEP_CPP_THREA=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -5080,8 +5105,6 @@ DEP_CPP_THREA=\
 "$(INTDIR)\Thread_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_THREA) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -5092,9 +5115,6 @@ DEP_CPP_THREA=\
 # Begin Source File
 
 SOURCE=.\TSS_Test.cpp
-
-!IF  "$(CFG)" == "TSS_Test - Win32 Debug"
-
 DEP_CPP_TSS_T=\
 	".\TSS_Test_Errno.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -5108,6 +5128,7 @@ DEP_CPP_TSS_T=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -5165,8 +5186,6 @@ DEP_CPP_TSS_T=\
 "$(INTDIR)\TSS_Test.obj" : $(SOURCE) $(DEP_CPP_TSS_T) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -5177,9 +5196,6 @@ DEP_CPP_TSS_T=\
 # Begin Source File
 
 SOURCE=.\Thread_Pool_Test.cpp
-
-!IF  "$(CFG)" == "Thread_Pool_Test - Win32 Debug"
-
 DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5192,6 +5208,7 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -5254,8 +5271,10 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -5268,6 +5287,7 @@ DEP_CPP_THREAD=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -5294,8 +5314,6 @@ DEP_CPP_THREAD=\
 "$(INTDIR)\Thread_Pool_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -5306,14 +5324,12 @@ DEP_CPP_THREAD=\
 # Begin Source File
 
 SOURCE=.\Future_Test.cpp
-
-!IF  "$(CFG)" == "Future_Test - Win32 Debug"
-
 DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Activation_Queue.h"\
+	{$(INCLUDE)}"\ace\Activation_Queue.i"\
 	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
@@ -5322,6 +5338,7 @@ DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -5387,8 +5404,10 @@ DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -5401,6 +5420,7 @@ DEP_CPP_FUTUR=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -5427,8 +5447,6 @@ DEP_CPP_FUTUR=\
 "$(INTDIR)\Future_Test.obj" : $(SOURCE) $(DEP_CPP_FUTUR) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -5439,9 +5457,6 @@ DEP_CPP_FUTUR=\
 # Begin Source File
 
 SOURCE=.\Tokens_Test.cpp
-
-!IF  "$(CFG)" == "Tokens_Test - Win32 Debug"
-
 DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5456,6 +5471,7 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -5534,6 +5550,7 @@ DEP_CPP_TOKEN=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -5560,8 +5577,6 @@ DEP_CPP_TOKEN=\
 "$(INTDIR)\Tokens_Test.obj" : $(SOURCE) $(DEP_CPP_TOKEN) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -5572,9 +5587,6 @@ DEP_CPP_TOKEN=\
 # Begin Source File
 
 SOURCE=.\Message_Queue_Test.cpp
-
-!IF  "$(CFG)" == "Message_Queue_Test - Win32 Debug"
-
 DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5587,6 +5599,7 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -5646,8 +5659,10 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
@@ -5657,6 +5672,7 @@ DEP_CPP_MESSA=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -5678,8 +5694,6 @@ DEP_CPP_MESSA=\
 "$(INTDIR)\Message_Queue_Test.obj" : $(SOURCE) $(DEP_CPP_MESSA) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -5690,9 +5704,6 @@ DEP_CPP_MESSA=\
 # Begin Source File
 
 SOURCE=.\Map_Manager_Test.cpp
-
-!IF  "$(CFG)" == "Map_Manager_Test - Win32 Debug"
-
 DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5705,6 +5716,7 @@ DEP_CPP_MAP_M=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -5786,8 +5798,6 @@ DEP_CPP_MAP_M=\
 "$(INTDIR)\Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_MAP_M) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -5798,13 +5808,11 @@ DEP_CPP_MAP_M=\
 # Begin Source File
 
 SOURCE=.\Pipe_Test.cpp
-
-!IF  "$(CFG)" == "Pipe_Test - Win32 Debug"
-
 DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -5812,7 +5820,16 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
@@ -5821,9 +5838,18 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
@@ -5832,18 +5858,29 @@ DEP_CPP_PIPE_=\
 	{$(INCLUDE)}"\ace\Pipe.i"\
 	{$(INCLUDE)}"\ace\Process.h"\
 	{$(INCLUDE)}"\ace\Process.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Pipe_Test.obj" : $(SOURCE) $(DEP_CPP_PIPE_) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -5855,9 +5892,6 @@ DEP_CPP_PIPE_=\
 # Begin Source File
 
 SOURCE=.\Process_Mutex_Test.cpp
-
-!IF  "$(CFG)" == "Process_Mutex_Test - Win32 Debug"
-
 DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5870,9 +5904,16 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Get_Opt.h"\
 	{$(INCLUDE)}"\ace\Get_Opt.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
@@ -5881,15 +5922,26 @@ DEP_CPP_PROCE=\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Process.h"\
 	{$(INCLUDE)}"\ace\Process.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
@@ -5912,8 +5964,6 @@ DEP_CPP_PROCE=\
 "$(INTDIR)\Process_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_PROCE) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -5924,9 +5974,6 @@ DEP_CPP_PROCE=\
 # Begin Source File
 
 SOURCE=.\SV_Shared_Memory_Test.cpp
-
-!IF  "$(CFG)" == "SV_Shared_Memory_Test - Win32 Debug"
-
 DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -5939,6 +5986,7 @@ DEP_CPP_SV_SH=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -5994,8 +6042,6 @@ DEP_CPP_SV_SH=\
 "$(INTDIR)\SV_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_SV_SH) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -6006,9 +6052,6 @@ DEP_CPP_SV_SH=\
 # Begin Source File
 
 SOURCE=.\MM_Shared_Memory_Test.cpp
-
-!IF  "$(CFG)" == "MM_Shared_Memory_Test - Win32 Debug"
-
 DEP_CPP_MM_SH=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6021,6 +6064,7 @@ DEP_CPP_MM_SH=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -6081,8 +6125,6 @@ DEP_CPP_MM_SH=\
 "$(INTDIR)\MM_Shared_Memory_Test.obj" : $(SOURCE) $(DEP_CPP_MM_SH) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -6093,9 +6135,6 @@ DEP_CPP_MM_SH=\
 # Begin Source File
 
 SOURCE=.\Service_Config_Test.cpp
-
-!IF  "$(CFG)" == "Service_Config_Test - Win32 Debug"
-
 DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6108,6 +6147,7 @@ DEP_CPP_SERVI=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -6179,8 +6219,6 @@ DEP_CPP_SERVI=\
 "$(INTDIR)\Service_Config_Test.obj" : $(SOURCE) $(DEP_CPP_SERVI) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -6191,9 +6229,6 @@ DEP_CPP_SERVI=\
 # Begin Source File
 
 SOURCE=.\SOCK_Test.cpp
-
-!IF  "$(CFG)" == "SOCK_Test - Win32 Debug"
-
 DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6208,6 +6243,7 @@ DEP_CPP_SOCK_=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -6282,8 +6318,6 @@ DEP_CPP_SOCK_=\
 "$(INTDIR)\SOCK_Test.obj" : $(SOURCE) $(DEP_CPP_SOCK_) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -6294,9 +6328,6 @@ DEP_CPP_SOCK_=\
 # Begin Source File
 
 SOURCE=.\Message_Block_Test.cpp
-
-!IF  "$(CFG)" == "Message_Block_Test - Win32 Debug"
-
 DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6309,6 +6340,7 @@ DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -6375,8 +6407,10 @@ DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -6389,6 +6423,7 @@ DEP_CPP_MESSAG=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -6416,8 +6451,6 @@ DEP_CPP_MESSAG=\
 "$(INTDIR)\Message_Block_Test.obj" : $(SOURCE) $(DEP_CPP_MESSAG) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -6428,9 +6461,6 @@ DEP_CPP_MESSAG=\
 # Begin Source File
 
 SOURCE=.\Reactor_Notify_Test.cpp
-
-!IF  "$(CFG)" == "Reactor_Notify_Test - Win32 Debug"
-
 DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -6443,6 +6473,7 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -6459,6 +6490,8 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
 	{$(INCLUDE)}"\ace\iosfwd.h"\
+	{$(INCLUDE)}"\ace\Local_Tokens.h"\
+	{$(INCLUDE)}"\ace\Local_Tokens.i"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -6471,6 +6504,9 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Map_Manager.cpp"\
+	{$(INCLUDE)}"\ace\Map_Manager.h"\
+	{$(INCLUDE)}"\ace\Map_Manager.i"\
 	{$(INCLUDE)}"\ace\Mem_Map.h"\
 	{$(INCLUDE)}"\ace\Mem_Map.i"\
 	{$(INCLUDE)}"\ace\Memory_Pool.h"\
@@ -6492,6 +6528,8 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Reactor.h"\
 	{$(INCLUDE)}"\ace\Reactor.i"\
 	{$(INCLUDE)}"\ace\Reactor_Impl.h"\
+	{$(INCLUDE)}"\ace\Select_Reactor.h"\
+	{$(INCLUDE)}"\ace\Select_Reactor.i"\
 	{$(INCLUDE)}"\ace\Service_Config.h"\
 	{$(INCLUDE)}"\ace\Service_Config.i"\
 	{$(INCLUDE)}"\ace\Service_Object.h"\
@@ -6507,8 +6545,10 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -6521,6 +6561,7 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -6538,6 +6579,8 @@ DEP_CPP_REACTOR=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.cpp"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
+	{$(INCLUDE)}"\ace\Token.h"\
+	{$(INCLUDE)}"\ace\Token.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
@@ -6546,8 +6589,6 @@ DEP_CPP_REACTOR=\
 
 "$(INTDIR)\Reactor_Notify_Test.obj" : $(SOURCE) $(DEP_CPP_REACTOR) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -6559,9 +6600,6 @@ DEP_CPP_REACTOR=\
 # Begin Source File
 
 SOURCE=.\IOStream_Test.cpp
-
-!IF  "$(CFG)" == "IOStream_Test - Win32 Debug"
-
 DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\Acceptor.cpp"\
@@ -6579,6 +6617,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -6664,8 +6703,10 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -6681,6 +6722,7 @@ DEP_CPP_IOSTR=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -6708,8 +6750,6 @@ DEP_CPP_IOSTR=\
 "$(INTDIR)\IOStream_Test.obj" : $(SOURCE) $(DEP_CPP_IOSTR) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -6720,9 +6760,6 @@ DEP_CPP_IOSTR=\
 # Begin Source File
 
 SOURCE=.\Process_Strategy_Test.cpp
-
-!IF  "$(CFG)" == "Process_Strategy_Test - Win32 Debug"
-
 DEP_CPP_PROCES=\
 	".\Process_Strategy_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -6741,6 +6778,7 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -6824,8 +6862,10 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -6841,6 +6881,7 @@ DEP_CPP_PROCES=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -6868,8 +6909,6 @@ DEP_CPP_PROCES=\
 "$(INTDIR)\Process_Strategy_Test.obj" : $(SOURCE) $(DEP_CPP_PROCES) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -6880,9 +6919,6 @@ DEP_CPP_PROCES=\
 # Begin Source File
 
 SOURCE=.\Conn_Test.cpp
-
-!IF  "$(CFG)" == "Conn_Test - Win32 Debug"
-
 DEP_CPP_CONN_=\
 	"..\ace\LOCK_SOCK_Acceptor.cpp"\
 	".\Conn_Test.h"\
@@ -6902,6 +6938,7 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Connector.cpp"\
 	{$(INCLUDE)}"\ace\Connector.h"\
@@ -6992,8 +7029,10 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -7009,6 +7048,7 @@ DEP_CPP_CONN_=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -7036,8 +7076,6 @@ DEP_CPP_CONN_=\
 "$(INTDIR)\Conn_Test.obj" : $(SOURCE) $(DEP_CPP_CONN_) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -7048,9 +7086,6 @@ DEP_CPP_CONN_=\
 # Begin Source File
 
 SOURCE=.\Simple_Message_Block_Test.cpp
-
-!IF  "$(CFG)" == "Simple_Message_Block_Test - Win32 Debug"
-
 DEP_CPP_SIMPL=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7063,6 +7098,7 @@ DEP_CPP_SIMPL=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -7121,8 +7157,6 @@ DEP_CPP_SIMPL=\
  "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -7133,9 +7167,6 @@ DEP_CPP_SIMPL=\
 # Begin Source File
 
 SOURCE=.\Reactor_Exceptions_Test.cpp
-
-!IF  "$(CFG)" == "Reactor_Exceptions_Test - Win32 Debug"
-
 DEP_CPP_REACTOR_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7150,6 +7181,7 @@ DEP_CPP_REACTOR_=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -7225,8 +7257,6 @@ DEP_CPP_REACTOR_=\
  "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -7237,9 +7267,6 @@ DEP_CPP_REACTOR_=\
 # Begin Source File
 
 SOURCE=.\Priority_Task_Test.cpp
-
-!IF  "$(CFG)" == "Priority_Task_Test - Win32 Debug"
-
 DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7252,6 +7279,7 @@ DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -7316,8 +7344,10 @@ DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -7330,6 +7360,7 @@ DEP_CPP_PRIORI=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -7356,8 +7387,6 @@ DEP_CPP_PRIORI=\
 "$(INTDIR)\Priority_Task_Test.obj" : $(SOURCE) $(DEP_CPP_PRIORI) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -7368,13 +7397,11 @@ DEP_CPP_PRIORI=\
 # Begin Source File
 
 SOURCE=.\Sigset_Ops_Test.cpp
-
-!IF  "$(CFG)" == "Sigset_Ops_Test - Win32 Debug"
-
 DEP_CPP_SIGSE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -7382,32 +7409,61 @@ DEP_CPP_SIGSE=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Sigset_Ops_Test.obj" : $(SOURCE) $(DEP_CPP_SIGSE) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -7419,9 +7475,6 @@ DEP_CPP_SIGSE=\
 # Begin Source File
 
 SOURCE=.\Message_Queue_Notifications_Test.cpp
-
-!IF  "$(CFG)" == "Message_Queue_Notifications_Test - Win32 Debug"
-
 DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7434,6 +7487,7 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -7496,8 +7550,10 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -7510,6 +7566,7 @@ DEP_CPP_MESSAGE=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -7537,8 +7594,6 @@ DEP_CPP_MESSAGE=\
  "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -7549,15 +7604,13 @@ DEP_CPP_MESSAGE=\
 # Begin Source File
 
 SOURCE=.\Enum_Interfaces_Test.cpp
-
-!IF  "$(CFG)" == "Enum_Interfaces_Test - Win32 Debug"
-
 DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -7565,7 +7618,16 @@ DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
@@ -7574,25 +7636,45 @@ DEP_CPP_ENUM_=\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Enum_Interfaces_Test.obj" : $(SOURCE) $(DEP_CPP_ENUM_) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -7604,9 +7686,6 @@ DEP_CPP_ENUM_=\
 # Begin Source File
 
 SOURCE=.\Hash_Map_Manager_Test.cpp
-
-!IF  "$(CFG)" == "Hash_Map_Manager_Test - Win32 Debug"
-
 DEP_CPP_HASH_=\
 	".\Hash_Map_Manager_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -7620,6 +7699,7 @@ DEP_CPP_HASH_=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -7693,8 +7773,6 @@ DEP_CPP_HASH_=\
 "$(INTDIR)\Hash_Map_Manager_Test.obj" : $(SOURCE) $(DEP_CPP_HASH_) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -7705,9 +7783,6 @@ DEP_CPP_HASH_=\
 # Begin Source File
 
 SOURCE=.\Semaphore_Test.cpp
-
-!IF  "$(CFG)" == "Semaphore_Test - Win32 Debug"
-
 DEP_CPP_SEMAP=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7720,6 +7795,7 @@ DEP_CPP_SEMAP=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -7779,8 +7855,6 @@ DEP_CPP_SEMAP=\
 "$(INTDIR)\Semaphore_Test.obj" : $(SOURCE) $(DEP_CPP_SEMAP) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -7791,9 +7865,6 @@ DEP_CPP_SEMAP=\
 # Begin Source File
 
 SOURCE=.\Atomic_Op_Test.cpp
-
-!IF  "$(CFG)" == "Atomic_Op_Test - Win32 Debug"
-
 DEP_CPP_ATOMI=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7806,22 +7877,40 @@ DEP_CPP_ATOMI=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Event_Handler.h"\
 	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
@@ -7844,8 +7933,6 @@ DEP_CPP_ATOMI=\
 "$(INTDIR)\Atomic_Op_Test.obj" : $(SOURCE) $(DEP_CPP_ATOMI) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -7856,9 +7943,6 @@ DEP_CPP_ATOMI=\
 # Begin Source File
 
 SOURCE=.\MT_SOCK_Test.cpp
-
-!IF  "$(CFG)" == "MT_SOCK_Test - Win32 Debug"
-
 DEP_CPP_MT_SO=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -7873,6 +7957,7 @@ DEP_CPP_MT_SO=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -7947,8 +8032,6 @@ DEP_CPP_MT_SO=\
 "$(INTDIR)\MT_SOCK_Test.obj" : $(SOURCE) $(DEP_CPP_MT_SO) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -7959,9 +8042,6 @@ DEP_CPP_MT_SO=\
 # Begin Source File
 
 SOURCE=.\Priority_Reactor_Test.cpp
-
-!IF  "$(CFG)" == "Priority_Reactor_Test - Win32 Debug"
-
 DEP_CPP_PRIORIT=\
 	".\Priority_Reactor_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -7980,6 +8060,7 @@ DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Connector.cpp"\
 	{$(INCLUDE)}"\ace\Connector.h"\
@@ -8077,8 +8158,10 @@ DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -8094,6 +8177,7 @@ DEP_CPP_PRIORIT=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -8124,8 +8208,6 @@ DEP_CPP_PRIORIT=\
  "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -8136,9 +8218,6 @@ DEP_CPP_PRIORIT=\
 # Begin Source File
 
 SOURCE=.\Reactor_Performance_Test.cpp
-
-!IF  "$(CFG)" == "Reactor_Performance_Test - Win32 Debug"
-
 DEP_CPP_REACTOR_P=\
 	".\Reactor_Performance_Test.h"\
 	{$(INCLUDE)}"\.\test_config.h"\
@@ -8157,6 +8236,7 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Connector.cpp"\
 	{$(INCLUDE)}"\ace\Connector.h"\
@@ -8256,8 +8336,10 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
@@ -8273,6 +8355,7 @@ DEP_CPP_REACTOR_P=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -8303,8 +8386,6 @@ DEP_CPP_REACTOR_P=\
  "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -8315,9 +8396,6 @@ DEP_CPP_REACTOR_P=\
 # Begin Source File
 
 SOURCE=.\Notify_Performance_Test.cpp
-
-!IF  "$(CFG)" == "Notify_Performance_Test - Win32 Debug"
-
 DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -8330,6 +8408,7 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -8404,8 +8483,10 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
+	{$(INCLUDE)}"\ace\Strategies.i"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
+	{$(INCLUDE)}"\ace\Strategies_T.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
@@ -8415,6 +8496,7 @@ DEP_CPP_NOTIF=\
 	{$(INCLUDE)}"\ace\Synch.h"\
 	{$(INCLUDE)}"\ace\Synch.i"\
 	{$(INCLUDE)}"\ace\Synch_Options.h"\
+	{$(INCLUDE)}"\ace\Synch_Options.i"\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
@@ -8440,8 +8522,6 @@ DEP_CPP_NOTIF=\
  "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -8452,9 +8532,6 @@ DEP_CPP_NOTIF=\
 # Begin Source File
 
 SOURCE=.\Thread_Mutex_Test.cpp
-
-!IF  "$(CFG)" == "Thread_Mutex_Test - Win32 Debug"
-
 DEP_CPP_THREAD_=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
@@ -8467,6 +8544,7 @@ DEP_CPP_THREAD_=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -8524,8 +8602,6 @@ DEP_CPP_THREAD_=\
 "$(INTDIR)\Thread_Mutex_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD_) "$(INTDIR)"
 
 
-!ENDIF 
-
 # End Source File
 # End Target
 ################################################################################
@@ -8536,15 +8612,13 @@ DEP_CPP_THREAD_=\
 # Begin Source File
 
 SOURCE=.\SOCK_Connector_Test.cpp
-
-!IF  "$(CFG)" == "SOCK_Connector_Test - Win32 Debug"
-
 DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
 	{$(INCLUDE)}"\ace\Addr.h"\
 	{$(INCLUDE)}"\ace\Addr.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -8552,7 +8626,16 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
@@ -8563,13 +8646,24 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SOCK.h"\
 	{$(INCLUDE)}"\ace\SOCK.i"\
 	{$(INCLUDE)}"\ace\SOCK_Connector.h"\
@@ -8581,7 +8675,18 @@ DEP_CPP_SOCK_C=\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Time_Value.h"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
@@ -8589,8 +8694,6 @@ DEP_CPP_SOCK_C=\
 
 "$(INTDIR)\SOCK_Connector_Test.obj" : $(SOURCE) $(DEP_CPP_SOCK_C) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -8602,13 +8705,11 @@ DEP_CPP_SOCK_C=\
 # Begin Source File
 
 SOURCE=.\Basic_Types_Test.cpp
-
-!IF  "$(CFG)" == "Basic_Types_Test - Win32 Debug"
-
 DEP_CPP_BASIC=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -8616,32 +8717,61 @@ DEP_CPP_BASIC=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Basic_Types_Test.obj" : $(SOURCE) $(DEP_CPP_BASIC) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -8653,13 +8783,11 @@ DEP_CPP_BASIC=\
 # Begin Source File
 
 SOURCE=.\Env_Value_Test.cpp
-
-!IF  "$(CFG)" == "Env_Value_Test - Win32 Debug"
-
 DEP_CPP_ENV_V=\
 	{$(INCLUDE)}"\.\test_config.h"\
 	{$(INCLUDE)}"\ace\ACE.h"\
 	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
@@ -8667,37 +8795,66 @@ DEP_CPP_ENV_V=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
 	{$(INCLUDE)}"\ace\Env_Value_T.cpp"\
 	{$(INCLUDE)}"\ace\Env_Value_T.h"\
 	{$(INCLUDE)}"\ace\Env_Value_T.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
 	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
 	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
 	{$(INCLUDE)}"\ace\Managed_Object.h"\
 	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
 	{$(INCLUDE)}"\ace\Object_Manager.h"\
 	{$(INCLUDE)}"\ace\Object_Manager.i"\
 	{$(INCLUDE)}"\ace\OS.h"\
 	{$(INCLUDE)}"\ace\OS.i"\
 	{$(INCLUDE)}"\ace\Process.h"\
 	{$(INCLUDE)}"\ace\Process.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
 	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
 	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 
 "$(INTDIR)\Env_Value_Test.obj" : $(SOURCE) $(DEP_CPP_ENV_V) "$(INTDIR)"
 
-
-!ENDIF 
 
 # End Source File
 # End Target
@@ -8721,6 +8878,7 @@ DEP_CPP_ORDMU=\
 	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
 	{$(INCLUDE)}"\ace\Containers.h"\
@@ -8774,6 +8932,92 @@ DEP_CPP_ORDMU=\
 	
 
 "$(INTDIR)\OrdMultiSet_Test.obj" : $(SOURCE) $(DEP_CPP_ORDMU) "$(INTDIR)"
+
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "Timeprobe_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\Timeprobe_Test.cpp
+DEP_CPP_TIMEP=\
+	{$(INCLUDE)}"\.\test_config.h"\
+	{$(INCLUDE)}"\ace\ACE.h"\
+	{$(INCLUDE)}"\ace\ACE.i"\
+	{$(INCLUDE)}"\ace\Atomic_Op.i"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
+	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\Basic_Types.h"\
+	{$(INCLUDE)}"\ace\Basic_Types.i"\
+	{$(INCLUDE)}"\ace\config-win32-common.h"\
+	{$(INCLUDE)}"\ace\config-win32.h"\
+	{$(INCLUDE)}"\ace\config-WinCE.h"\
+	{$(INCLUDE)}"\ace\config.h"\
+	{$(INCLUDE)}"\ace\Containers.cpp"\
+	{$(INCLUDE)}"\ace\Containers.h"\
+	{$(INCLUDE)}"\ace\Containers.i"\
+	{$(INCLUDE)}"\ace\Event_Handler.h"\
+	{$(INCLUDE)}"\ace\Event_Handler.i"\
+	{$(INCLUDE)}"\ace\Free_List.cpp"\
+	{$(INCLUDE)}"\ace\Free_List.h"\
+	{$(INCLUDE)}"\ace\Free_List.i"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.h"\
+	{$(INCLUDE)}"\ace\High_Res_Timer.i"\
+	{$(INCLUDE)}"\ace\inc_user_config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
+	{$(INCLUDE)}"\ace\Log_Msg.h"\
+	{$(INCLUDE)}"\ace\Log_Priority.h"\
+	{$(INCLUDE)}"\ace\Log_Record.h"\
+	{$(INCLUDE)}"\ace\Log_Record.i"\
+	{$(INCLUDE)}"\ace\Malloc.h"\
+	{$(INCLUDE)}"\ace\Malloc.i"\
+	{$(INCLUDE)}"\ace\Malloc_T.cpp"\
+	{$(INCLUDE)}"\ace\Malloc_T.h"\
+	{$(INCLUDE)}"\ace\Malloc_T.i"\
+	{$(INCLUDE)}"\ace\Managed_Object.cpp"\
+	{$(INCLUDE)}"\ace\Managed_Object.h"\
+	{$(INCLUDE)}"\ace\Managed_Object.i"\
+	{$(INCLUDE)}"\ace\Mem_Map.h"\
+	{$(INCLUDE)}"\ace\Mem_Map.i"\
+	{$(INCLUDE)}"\ace\Memory_Pool.h"\
+	{$(INCLUDE)}"\ace\Memory_Pool.i"\
+	{$(INCLUDE)}"\ace\Object_Manager.h"\
+	{$(INCLUDE)}"\ace\Object_Manager.i"\
+	{$(INCLUDE)}"\ace\OS.h"\
+	{$(INCLUDE)}"\ace\OS.i"\
+	{$(INCLUDE)}"\ace\Signal.h"\
+	{$(INCLUDE)}"\ace\Signal.i"\
+	{$(INCLUDE)}"\ace\Singleton.cpp"\
+	{$(INCLUDE)}"\ace\Singleton.h"\
+	{$(INCLUDE)}"\ace\Singleton.i"\
+	{$(INCLUDE)}"\ace\SString.h"\
+	{$(INCLUDE)}"\ace\SString.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
+	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.i"\
+	{$(INCLUDE)}"\ace\Synch.h"\
+	{$(INCLUDE)}"\ace\Synch.i"\
+	{$(INCLUDE)}"\ace\Synch_T.cpp"\
+	{$(INCLUDE)}"\ace\Synch_T.h"\
+	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\sys_conf.h"\
+	{$(INCLUDE)}"\ace\Thread.h"\
+	{$(INCLUDE)}"\ace\Thread.i"\
+	{$(INCLUDE)}"\ace\Timeprobe.cpp"\
+	{$(INCLUDE)}"\ace\Timeprobe.h"\
+	{$(INCLUDE)}"\ace\Timeprobe.i"\
+	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	
+
+"$(INTDIR)\Timeprobe_Test.obj" : $(SOURCE) $(DEP_CPP_TIMEP) "$(INTDIR)"
 
 
 # End Source File
