@@ -156,7 +156,11 @@ Quoter_Client::init_naming_service (void)
     CosNaming::NamingContext_var naming_context = 
       CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
     TAO_CHECK_ENV;
-    
+
+    ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Naming Service.\n"));
+
+    // ------------------------------------------- direct use of the Quoter Factory
+    /*
     // Try to get the quoter_factory
     CosNaming::Name quoter_factory_name (2);
     quoter_factory_name.length (2);
@@ -172,15 +176,78 @@ Quoter_Client::init_naming_service (void)
 
     ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory!\n"));
     
-    this->factory_ =
+    this->factory_var_ =
       Stock::Quoter_Factory::_narrow (factory_obj.in (), 
                                       TAO_TRY_ENV);
     TAO_CHECK_ENV;
+   
+    if (CORBA::is_nil (this->factory_var_->in ()))
+      ACE_ERROR_RETURN ((LM_ERROR,
+      " could not resolve quoter factory in Naming service <%s>\n"),
+      -1);*/
+    // -------------------------------------------- end of direct use
+
+    CosNaming::Name quoterFactoryFinderName (2);
+    quoterFactoryFinderName.length (2);
+    quoterFactoryFinderName[0].id = CORBA::string_dup ("IDL_Quoter");
+    quoterFactoryFinderName[1].id = CORBA::string_dup ("QuoterFactoryFinder");
+
+    ACE_DEBUG ((LM_DEBUG, "Trying to resolve the Quoter Factory Finder!\n"));
+
+    CORBA::Object_var factory_obj =
+      naming_context->resolve (quoterFactoryFinderName,
+                               TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+
+    ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory Finder!\n"));
     
-    if (CORBA::is_nil (this->factory_.in ()))
+    Stock::QuoterFactoryFinder_var factoryFinder_var =
+      Stock::QuoterFactoryFinder::_narrow (factory_obj.in (), 
+                                      TAO_TRY_ENV);
+    TAO_CHECK_ENV;
+   
+    if (CORBA::is_nil (factoryFinder_var.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
       " could not resolve quoter factory in Naming service <%s>\n"),
       -1);
+
+    ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory Finder.\n"));
+
+    // The name of the Quoter Factory
+    CosLifeCycle::Key factoryName (1);  // max = 1 
+    factoryName.length(1);
+    factoryName[0].id =
+    CORBA::string_dup ("quoter_factory");
+    
+    // Find an appropriate factory over there.
+    CosLifeCycle::Factories_ptr factories_ptr = 
+        factoryFinder_var->find_factories (factoryName, TAO_TRY_ENV);
+
+    if (factories_ptr == 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+      "Did not get a Quoter Factory.\n"),
+      -1);
+
+    // Get the first object reference to a factory.
+    CORBA::Object_var quoter_FactoryObj_var = (*factories_ptr)[0];
+
+
+      // Narrow it to a Quoter Factory.
+    factory_var_ = Stock::Quoter_Factory::_narrow (quoter_FactoryObj_var.in (),
+                                                   TAO_TRY_ENV);
+
+    TAO_CHECK_ENV;
+
+    if (CORBA::is_nil (this->factory_var_.in ()))
+      ACE_ERROR_RETURN ((LM_ERROR,
+      "Factory received is not valid.\n"),
+      -1);
+
+    ACE_DEBUG ((LM_DEBUG, "Have a proper reference to the Quoter Factory.\n"));
+  }
+  TAO_CATCH (CosLifeCycle::NoFactory, excpt)
+  {
+    TAO_TRY_ENV.print_exception ("Quoter::init_naming_service: No Factory available!");
   }
   TAO_CATCHANY
   {
@@ -230,11 +297,11 @@ Quoter_Client::init (int argc, char **argv)
                                           TAO_TRY_ENV);
           TAO_CHECK_ENV;
       
-          this->factory_ = Stock::Quoter_Factory::_narrow (factory_object.in (), 
+          this->factory_var_ = Stock::Quoter_Factory::_narrow (factory_object.in (), 
                                                            TAO_TRY_ENV);
           TAO_CHECK_ENV;
       
-          if (CORBA::is_nil (this->factory_.in ()))
+          if (CORBA::is_nil (this->factory_var_.in ()))
             {
               ACE_ERROR_RETURN ((LM_ERROR,"invalid factory key <%s>\n",
                                  this->quoter_factory_key_),
@@ -246,7 +313,7 @@ Quoter_Client::init (int argc, char **argv)
     
       // Now retrieve the Quoter obj ref corresponding to the key.
       this->quoter_ =
-        this->factory_->create_quoter (this->quoter_key_,
+        this->factory_var_->create_quoter (this->quoter_key_,
                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
