@@ -1,3 +1,11 @@
+Sun Jan 25 09:11:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/msvc_mpc_auto_compile.pl:
+
+	  Soem cosmetic fixes to get ACEXEML and Kokyu compiled well
+	  before other things. The dsw's in TAO hierarchy do not have the
+	  dsp's of ACE hierarchy included but for TAOACE.dsw.
+
 Sun Jan 25 08:59:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Kokyu/Kokyu.mwc:

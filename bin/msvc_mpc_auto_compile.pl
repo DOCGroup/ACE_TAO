@@ -20,6 +20,8 @@ else {
 
 
 @ace_core_dirs = ("$ACE_ROOT\\ace",
+		  "$ACE_ROOT\\Kokyu",
+		  "$ACE_ROOT\\ACEXML",
                   "$ACE_ROOT\\tests");
 
 @tao_core_dirs = ("$ACE_ROOT\\TAO\\tao",
@@ -131,9 +133,10 @@ sub Build_All ()
     my @configurations = Find_Dsw (@new_directory_search);
 
     print STDERR "Second pass (for other things)\n" if ($print_status == 1);
-    print "\nmsvc_auto_compile: Second  Pass (rest of the stuff)\n";
+    print "\nmsvc_mpc_auto_compile: Second  Pass (rest of the stuff)\n";
 
     foreach $c (@configurations) {
+        print "\nUsing $c for compilation\n";
         if ($Build_Debug) {
             $Status = Build ($c, "ALL - Win32 Debug");
             return if $Status != 0 && !$Ignore_errors;
