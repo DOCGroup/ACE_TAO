@@ -1,3 +1,9 @@
+Sat Mar  9 07:52:45 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/SPIPE_Addr.cpp (set): Changed a strcpy() to a strcat() to
+	  fix the code.  Thanks to Robert Laferriere
+ 	  <robert.laferriere@med.ge.com> for reporting this.
+
 Fri Mar  8 19:45:31 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv1/Thread_Per_Connection_Logging_Server.cpp:
