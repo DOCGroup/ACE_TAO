@@ -47,7 +47,6 @@ ACE_Pipe::open (void)
 	}
     }
       
-#if !defined (VXWORKS)
   int one = 1;
   // Make sure that the TCP stack doesn't try to buffer small writes.
   // Since this communication is purely local to the host it doesn't
@@ -55,7 +54,6 @@ ACE_Pipe::open (void)
   if (writer.set_option (IPPROTO_TCP, TCP_NODELAY,
 			 &one, sizeof one) == -1)
     return -1;
-#endif /* !VXWORKS */
 
   // Close down the acceptor endpoint since we don't need it anymore.
   acceptor.close ();
