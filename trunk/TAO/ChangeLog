@@ -1,3 +1,8 @@
+Sun Jun 22 13:58:08 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Translator.cpp:
+          Added include of ace/OS.h. 
+
 Sun Jun 22 03:27:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tao/Cleanup_Func_Registry.h:
