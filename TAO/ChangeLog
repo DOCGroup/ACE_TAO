@@ -1,3 +1,12 @@
+Sun Dec 12 10:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DomainC.{h,cpp,i,inl}:
+        * tao/DomainA.cpp:
+          Regenerated and replace .i file with .inl variant
+
+        * tao/Makefile.am:
+          Updated because of change above
+
 Sun Dec 12 10:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Profile.cpp:
