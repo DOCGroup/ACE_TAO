@@ -440,6 +440,8 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer (
   ACE_CHECK;
   proxy->disconnect_push_consumer(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  TAO_FTRTEC::TimeLogger::output();
 }
 
 void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
