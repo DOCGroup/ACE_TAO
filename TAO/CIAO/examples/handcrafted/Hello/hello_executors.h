@@ -6,6 +6,7 @@
 #define HELLO_EXECUTORS_H
 
 #include "helloEC.h"
+#include "hello_executors_export.h"
 
 class HelloWorld_Impl : public virtual CCM_HelloWorld
 {

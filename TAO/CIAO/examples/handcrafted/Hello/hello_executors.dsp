@@ -94,10 +94,6 @@ LINK32=link.exe
 
 SOURCE=.\hello_executors.cpp
 # End Source File
-# Begin Source File
-
-SOURCE=.\helloEC.cpp
-# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -110,76 +106,14 @@ SOURCE=.\hello_executors.h
 
 SOURCE=.\hello_executors_export.h
 # End Source File
-# Begin Source File
-
-SOURCE=.\helloEC.h
-# End Source File
 # End Group
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # End Group
-# Begin Group "IDL Files"
-
-# PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=.\helloE.idl
-
-!IF  "$(CFG)" == "hello_executors - Win32 Release"
-
-# PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\helloE.idl
-InputName=helloE
-
-BuildCmds= \
-	..\..\..\..\..\bin\release\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_EXECUTOR_Export -Wb,export_include=hello_executors_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl \
-	del *S.* \
-	del *S_T.* \
-	
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "hello_executors - Win32 Debug"
-
-# PROP Ignore_Default_Tool 1
-# Begin Custom Build - Invoking TAO_IDL Compiler on $(InputPath)
-InputPath=.\helloE.idl
-InputName=helloE
-
-BuildCmds= \
-	..\..\..\..\..\bin\tao_idl -I ../../.. -I ../../../.. -I ../../../../orbsvcs/orbsvcs -Wb,export_macro=HELLO_EXECUTOR_Export -Wb,export_include=hello_executors_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" -Sc -Ge 1 $(InputName).idl
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-
-"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-   $(BuildCmds)
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter "i,inl"
-# Begin Source File
-
-SOURCE=.\helloEC.i
-# End Source File
 # End Group
 # End Target
 # End Project

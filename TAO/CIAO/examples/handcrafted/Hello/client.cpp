@@ -57,13 +57,13 @@ main (int argc, char *argv[])
 
       // Now get the HelloHome
 
-      obj = home_finder->find_home_by_name ("HelloHome"
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+//       obj = home_finder->find_home_by_name ("HelloHome"
+//                                             ACE_ENV_ARG_PARAMETER);
+//       ACE_TRY_CHECK;
 
-      invoke (obj, "Frodo Baggins using 'find_home_by_name'"
-              ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+//       invoke (obj, "Frodo Baggins using 'find_home_by_name'"
+//               ACE_ENV_ARG_PARAMETER);
+//       ACE_TRY_CHECK;
 
       obj = home_finder->find_home_by_home_type
         ("IDL:omg.org/HelloHome:1.0"
@@ -83,6 +83,8 @@ main (int argc, char *argv[])
               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
+      orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

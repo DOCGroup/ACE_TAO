@@ -27,7 +27,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name hello_stub
+    Project_Dep_Name hello_servants
     End Project Dependency
 }}}
 
@@ -42,7 +42,7 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name hello_executors
+    Project_Dep_Name hello_stub
     End Project Dependency
 }}}
 

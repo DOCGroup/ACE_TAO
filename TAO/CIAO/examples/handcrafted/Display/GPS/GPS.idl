@@ -12,11 +12,14 @@
 
 module HUDisplay
 {
-
   component GPS
     {
       provides position MyPosition;
       publishes tick Ready;
       consumes tick Refresh;
     };
+
+  home GPSHome manages GPS
+  {
+  };
 };

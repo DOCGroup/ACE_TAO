@@ -17,13 +17,29 @@ project (RateGen_skel) : ciao_component {
   depends += HUD_skel RateGen_stub
   sharedname = RateGen_skel
   dllflags  = RATEGEN_SKEL_BUILD_DLL
+  idlflags  += -I ../../../.. -I ../../../../.. -I ../../../../../orbsvcs/orbsvcs -Wb,export_macro=RATEGEN_SKEL_Export -Wb,export_include=RateGen_skel_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h"
   libpaths += ..
   libs += RateGen_stub HUD_stub
 
   IDL_Files {
+    RateGenE.idl
   }
 
   Source_Files {
     RateGenS.cpp
+    RateGen_Glues.cpp
+    RateGenEC.cpp
+  }
+}
+
+project (RateGen_Impl) : ciao_component {
+  depends += RateGen_skel
+  sharedname = RateGen_Impl
+  dllflags = RATEGEN_IMPL_BUILD_DLL
+  libpaths += ..
+  libs += RateGen_stub HUD_stub RateGen_skel
+
+  Source_Files {
+    RateGen_Impl.cpp
   }
 }
