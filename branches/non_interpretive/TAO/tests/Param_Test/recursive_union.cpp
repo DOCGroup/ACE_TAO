@@ -52,7 +52,7 @@ Test_Recursive_Union::dii_req_invoke (CORBA::Request *req,
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_.in ();
-  req->add_out_arg ("s3") <<= this->out_.in ();
+  req->add_out_arg ("s3") = CORBA::Any (Param_Test::_tc_Recursive_Union);
 
   req->set_return_type (Param_Test::_tc_Recursive_Union);
 
@@ -73,7 +73,7 @@ Test_Recursive_Union::dii_req_invoke (CORBA::Request *req,
     req->arguments ()->item (2, ACE_TRY_ENV);
   ACE_CHECK;
   *o3->value () >>= tmp;
-  this->inout_ = new Param_Test::Recursive_Union (*tmp);
+  this->out_ = new Param_Test::Recursive_Union (*tmp);
 }
 
 int

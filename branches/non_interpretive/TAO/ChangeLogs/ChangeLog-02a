@@ -1,3 +1,89 @@
+Thu Mar  9 18:50:44 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Any.h:
+        * tao/Any.i:
+        * tao/Any.cpp:
+          The <<= and >>= operators must set a function to cleanup the
+          objects stored by the Any.  The function usually just casts from
+          void* to the real type and invokes 'delete' or CORBA::release().
+          This is far more efficient, type safe and maintainable than the
+          deep_free approach.
+          The function is provided in the _tao_replace() method. For the
+          time beign (until the hand-crafted code is fixed), we maintain
+          both versions.
+
+        * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/array_ch.cpp:
+        * TAO_IDL/be/be_visitor_array/array_cs.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_enum/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_cs.cpp:
+          Modified to:
+          - Generate an _tao_any_destructor() function to destroy the
+            object stored into an any.  For sequences, structures, unions
+            and interfaces the function is an static function of the
+            corresponding class.  For arrays it is a static member of the
+            T_forany class.
+          - The generated <<= and >>= operators have been modified to pass
+            the _tao_any_destructor. Thus the generated code no longer
+            depends on deep_free!
+            Furthermore the implementations of the <<= operators have been
+            optimized.  It makes no sense to pre-allocate the object,
+            because sometimes the >>= operator is never invoked. In other
+            word: eager evaluation only makes sense when the result is
+            used all the time, and this is not the case for the <<=
+            operators.
+
+        * tao/BoundsC.cpp:
+        * tao/BoundsC.h:
+        * tao/CONV_FRAMEC.cpp:
+        * tao/CONV_FRAMEC.h:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/DomainC.cpp:
+          Updated to use the new _tao_replace() methods.
+
+        * tao/DynAny_i.cpp:
+          The >>=(char*&) operators have been removed from the Any class,
+          they were a TAO extension.
+
+        * tests/Param_Test/Makefile:
+        * tests/Param_Test/anyop.cpp:
+          Updated dependencies.
+
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/bd_wstring.cpp:
+        * tests/Param_Test/objref.cpp:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/recursive_union.cpp:
+        * tests/Param_Test/typecode.cpp:
+        * tests/Param_Test/ub_any_seq.cpp:
+        * tests/Param_Test/ub_string.cpp:
+        * tests/Param_Test/ub_wstring.cpp:
+          Fix a few memory management problems and some glaring bugs.
+          With this round of changes all the DII and SII tests pass!
+          We still have to look for memory leaks.
+
+        * TAO_IDL/be/be_visitor_operation/ami_exception_holder_operation_cs.cpp:
+        * tao/decode.cpp:
+        * tao/encode.cpp:
+          These files were not commited in the last change.
+
 Wed Mar  8 19:18:10 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Makefile:

@@ -67,7 +67,7 @@ Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req,
   req->invoke (ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::WChar *tmp;
+  const CORBA::WChar *tmp;
   req->return_value () >>= tmp;
   this->ret_ = CORBA::wstring_dup (tmp);
 

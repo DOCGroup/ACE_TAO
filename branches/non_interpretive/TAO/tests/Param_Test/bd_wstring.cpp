@@ -2,174 +2,174 @@
 
 // ============================================================================
 //
-// = Library
-//    Tao/Tests/Param_Test
+// = LIBRARY
+//    TAO/tests/Param_Test
 //
-// = Filename
-//    Bd_Wstring.Cpp
+// = FILENAME
+//    bd_wstring.cpp
 //
-// = Description
-//    Tests Bounded Wide Strings
+// = DESCRIPTION
+//    tests bounded wide strings
 //
-// = Authors
+// = AUTHORS
 //      Jeff Parsons
 //
 // ============================================================================
 
-#Include "Helper.H"
-#Include "Bd_Wstring.H"
+#include "helper.h"
+#include "bd_wstring.h"
 
-Ace_Rcsid(Param_Test, Bd_Wstring, "$id: Bd_Wstring.Cpp,V 1.3 1999/09/17 17:03:22 Parsons Exp $")
+ACE_RCSID(Param_Test, bd_wstring, "$Id$")
 
 // ************************************************************************
-//               Test_Bounded_Wstring
+//               Test_Bounded_WString
 // ************************************************************************
 
-Test_Bounded_Wstring::Test_Bounded_Wstring (Void)
-  : Opname_ (Corba::String_Dup ("Test_Bounded_Wstring")),
-    In_ (0),
-    Inout_ (0),
-    Out_ (0),
-    Ret_ (0)
+Test_Bounded_WString::Test_Bounded_WString (void)
+  : opname_ (CORBA::string_dup ("test_bounded_wstring")),
+    in_ (0),
+    inout_ (0),
+    out_ (0),
+    ret_ (0)
 {
 }
 
-Test_Bounded_Wstring::~Test_Bounded_Wstring (Void)
+Test_Bounded_WString::~Test_Bounded_WString (void)
 {
-  Corba::String_Free (This->Opname_);
-  Corba::Wstring_Free (This->In_);
-  Corba::Wstring_Free (This->Inout_);
-  Corba::Wstring_Free (This->Out_);
-  Corba::Wstring_Free (This->Ret_);
-  This->Opname_ = 0;
-  This->In_ = 0;
-  This->Inout_ = 0;
-  This->Out_ = 0;
-  This->Ret_ = 0;
+  CORBA::string_free (this->opname_);
+  CORBA::wstring_free (this->in_);
+  CORBA::wstring_free (this->inout_);
+  CORBA::wstring_free (this->out_);
+  CORBA::wstring_free (this->ret_);
+  this->opname_ = 0;
+  this->in_ = 0;
+  this->inout_ = 0;
+  this->out_ = 0;
+  this->ret_ = 0;
 }
 
-Const Char *
-Test_Bounded_Wstring::Opname (Void) Const
+const char *
+Test_Bounded_WString::opname (void) const
 {
-  Return This->Opname_;
+  return this->opname_;
 }
 
-Void
-Test_Bounded_Wstring::Dii_Req_Invoke (Corba::Request *Req,
-                                      Corba::Environment &Ace_Try_Env)
+void
+Test_Bounded_WString::dii_req_invoke (CORBA::Request *req,
+                                      CORBA::Environment &ACE_TRY_ENV)
 {
-  Req->Add_In_Arg ("S1") <<= Corba::Any::From_Wstring (This->In_, 128);
-  Req->Add_Inout_Arg ("S2") <<= Corba::Any::From_Wstring (This->Inout_, 128);
-  Req->Add_Out_Arg ("S3") <<= Corba::Any::From_Wstring (This->Out_, 128);
+  req->add_in_arg ("s1") <<= CORBA::Any::from_wstring (this->in_, 128);
+  req->add_inout_arg ("s2") <<= CORBA::Any::from_wstring (this->inout_, 128);
+  req->add_out_arg ("s3") <<= CORBA::Any::from_wstring (this->out_, 128);
 
-  Req->Set_Return_Type (Param_Test::_Tc_Short_Wstring);
+  req->set_return_type (Param_Test::_tc_short_wstring);
 
-  Req->Invoke (Ace_Try_Env);
-  Ace_Check;
+  req->invoke (ACE_TRY_ENV);
+  ACE_CHECK;
 
-  Corba::Wchar *Tmp;
-  Req->Return_Value () >>= Corba::Any::To_Wstring (Tmp, 128);
-  This->Ret_ = Corba::Wstring_Dup (Tmp);
+  CORBA::WChar *tmp;
+  req->return_value () >>= CORBA::Any::to_wstring (tmp, 128);
+  this->ret_ = CORBA::wstring_dup (tmp);
 
-  Corba::Namedvalue_Ptr Arg2 =
-    Req->Arguments ()->Item (1, Ace_Try_Env);
-  Ace_Check;
-  *Arg2->Value () >>= Corba::Any::To_Wstring (Tmp, 128);
-  This->Inout_ = Corba::Wstring_Dup (Tmp);
+  CORBA::NamedValue_ptr arg2 =
+    req->arguments ()->item (1, ACE_TRY_ENV);
+  ACE_CHECK;
+  *arg2->value () >>= CORBA::Any::to_wstring (tmp, 128);
+  this->inout_ = CORBA::wstring_dup (tmp);
 
-  Corba::Namedvalue_Ptr Arg3 =
-    Req->Arguments ()->Item (2, Ace_Try_Env);
-  Ace_Check;
-  *Arg3->Value () >>= Corba::Any::To_Wstring (Tmp, 128);
-  This->Out_ = Corba::Wstring_Dup (Tmp);
+  CORBA::NamedValue_ptr arg3 =
+    req->arguments ()->item (2, ACE_TRY_ENV);
+  ACE_CHECK;
+  *arg3->value () >>= CORBA::Any::to_wstring (tmp, 128);
+  this->out_ = CORBA::wstring_dup (tmp);
 }
 
-Int
-Test_Bounded_Wstring::Init_Parameters (Param_Test_Ptr,
-                                                               Corba::Environment &)
+int
+Test_Bounded_WString::init_parameters (Param_Test_ptr,
+				                               CORBA::Environment &)
 {
-  Generator *Gen = Generator::Instance (); // Value Generator
+  Generator *gen = GENERATOR::instance (); // value generator
 
-  // Release Any Previously Occupied Values
-  Corba::Wstring_Free (This->In_);
-  Corba::Wstring_Free (This->Inout_);
-  Corba::Wstring_Free (This->Out_);
-  Corba::Wstring_Free (This->Ret_);
-  This->In_ = 0;
-  This->Inout_ = 0;
-  This->Out_ = 0;
-  This->Ret_ = 0;
+  // release any previously occupied values
+  CORBA::wstring_free (this->in_);
+  CORBA::wstring_free (this->inout_);
+  CORBA::wstring_free (this->out_);
+  CORBA::wstring_free (this->ret_);
+  this->in_ = 0;
+  this->inout_ = 0;
+  this->out_ = 0;
+  this->ret_ = 0;
 
-  This->In_ = Gen->Gen_Wstring (32);
-  This->Inout_ = Corba::Wstring_Dup (This->In_);
-  Return 0;
+  this->in_ = gen->gen_wstring (32);
+  this->inout_ = CORBA::wstring_dup (this->in_);
+  return 0;
 }
 
-Int
-Test_Bounded_Wstring::Reset_Parameters (Void)
+int
+Test_Bounded_WString::reset_parameters (void)
 {
-  // Release Any Previously Occupied Values
-  Corba::Wstring_Free (This->Inout_);
-  Corba::Wstring_Free (This->Out_);
-  Corba::Wstring_Free (This->Ret_);
-  This->Inout_ = 0;
-  This->Out_ = 0;
-  This->Ret_ = 0;
+  // release any previously occupied values
+  CORBA::wstring_free (this->inout_);
+  CORBA::wstring_free (this->out_);
+  CORBA::wstring_free (this->ret_);
+  this->inout_ = 0;
+  this->out_ = 0;
+  this->ret_ = 0;
 
-  This->Inout_ = Corba::Wstring_Dup (This->In_);
-  Return 0;
+  this->inout_ = CORBA::wstring_dup (this->in_);
+  return 0;
 }
 
-Int
-Test_Bounded_Wstring::Run_Sii_Test (Param_Test_Ptr Objref,
-                                                            Corba::Environment &Ace_Try_Env)
+int
+Test_Bounded_WString::run_sii_test (Param_Test_ptr objref,
+				                            CORBA::Environment &ACE_TRY_ENV)
 {
-  Ace_Try
+  ACE_TRY
     {
-      Corba::Wstring_Out Str_Out (This->Out_);
+      CORBA::WString_out str_out (this->out_);
 
-      This->Ret_ = Objref->Test_Bounded_Wstring (This->In_,
-                                                 This->Inout_,
-                                                 Str_Out,
-                                                 Ace_Try_Env);
-      Ace_Try_Check;
+      this->ret_ = objref->test_bounded_wstring (this->in_,
+                                                 this->inout_,
+                                                 str_out,
+                                                 ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
-      Return 0;
+      return 0;
     }
-  Ace_Catchany
+  ACE_CATCHANY
     {
-      Ace_Print_Exception (Ace_Any_Exception,
-                           "Test_Bounded_Wstring::Run_Sii_Test\N");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Test_Bounded_WString::run_sii_test\n");
 
     }
-  Ace_Endtry;
-  Return -1;
+  ACE_ENDTRY;
+  return -1;
 }
 
-Corba::Boolean
-Test_Bounded_Wstring::Check_Validity (Void)
+CORBA::Boolean
+Test_Bounded_WString::check_validity (void)
 {
-  Corba::Ulong Len = Ace_Os::Wslen (This->In_);
+  CORBA::ULong len = ACE_OS::wslen (this->in_);
 
-  If (!Ace_Os::Wscmp (This->In_, This->Out_) &&
-      !Ace_Os::Wscmp (This->In_, This->Ret_) &&
-      Ace_Os::Wslen (This->Inout_) == 2*Len &&
-      !Ace_Os::Wsncmp (This->In_, This->Inout_, Len) &&
-      !Ace_Os::Wsncmp (This->In_, &This->Inout_[Len], Len))
-    Return 1;
+  if (!ACE_OS::wscmp (this->in_, this->out_) &&
+      !ACE_OS::wscmp (this->in_, this->ret_) &&
+      ACE_OS::wslen (this->inout_) == 2*len &&
+      !ACE_OS::wsncmp (this->in_, this->inout_, len) &&
+      !ACE_OS::wsncmp (this->in_, &this->inout_[len], len))
+    return 1;
 
-  Return 0; // Otherwise
+  return 0; // otherwise
 }
 
-Corba::Boolean
-Test_Bounded_Wstring::Check_Validity (Corba::Request_Ptr)
+CORBA::Boolean
+Test_Bounded_WString::check_validity (CORBA::Request_ptr)
 {
-  // No Need To Retrieve Anything Because, For All The Args And
-  // The Return, We Provided The Memory And We Own It.
-  Return This->Check_Validity ();
+  // No need to retrieve anything because, for all the args and
+  // the return, we provided the memory and we own it.
+  return this->check_validity ();
 }
 
-Void
-Test_Bounded_Wstring::Print_Values (Void)
+void
+Test_Bounded_WString::print_values (void)
 {
 }

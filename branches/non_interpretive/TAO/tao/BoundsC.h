@@ -47,7 +47,8 @@
     CORBA_Bounds (void); // default ctor
     CORBA_Bounds (const CORBA_Bounds &); // copy ctor
     ~CORBA_Bounds (void); // dtor
-        CORBA_Bounds &operator= (const CORBA_Bounds &);
+    static void _tao_any_destructor (void*);
+    CORBA_Bounds &operator= (const CORBA_Bounds &);
 
 
     virtual void _raise (void);

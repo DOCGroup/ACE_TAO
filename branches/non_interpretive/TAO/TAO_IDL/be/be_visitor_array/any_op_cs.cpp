@@ -62,21 +62,23 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "TAO_OutputCDR stream;" << be_nl
       << "stream << _tao_elem;" << be_nl
       << "if (_tao_elem.nocopy ()) // no copy" << be_idt_nl
-      << "_tao_any._tao_replace (" << be_idt << be_idt_nl 
+      << "_tao_any._tao_replace (" << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
       << "TAO_ENCAP_BYTE_ORDER," << be_nl
       << "stream.begin ()," << be_nl
       << "1," << be_nl
       << "(void *)_tao_elem.in ()," << be_nl
+      << node->name () << "_forany::_tao_any_destructor," << be_nl
       <<  "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "else                // copy" << be_idt_nl
       << "_tao_any._tao_replace (" << be_idt << be_idt_nl
-      << node->tc_name () << "," << be_nl 
-      << "TAO_ENCAP_BYTE_ORDER," << be_nl 
-      << "stream.begin ()," << be_nl 
-      << "1," << be_nl 
+      << node->tc_name () << "," << be_nl
+      << "TAO_ENCAP_BYTE_ORDER," << be_nl
+      << "stream.begin ()," << be_nl
+      << "1," << be_nl
       << node->name () << "_dup (_tao_elem.in ())," << be_nl
+      << node->name () << "_forany::_tao_any_destructor," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl
@@ -112,9 +114,10 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << "if (stream >> _tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
-      << node->tc_name () << "," << be_nl 
-      << "1," << be_nl 
-      << "_tao_elem.inout ()," << be_nl 
+      << node->tc_name () << "," << be_nl
+      << "1," << be_nl
+      << "_tao_elem.inout ()," << be_nl
+      << node->name () << "_forany::_tao_any_destructor," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl

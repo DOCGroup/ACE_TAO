@@ -65,6 +65,13 @@ CORBA_Current_ptr CORBA_Current::_nil (void)
   return (CORBA_Current_ptr)NULL;
 } // end of _nil
 
+void
+CORBA_Current::_tao_any_destructor (void* x)
+{
+  CORBA_Current *tmp = ACE_static_cast (CORBA_Current*,x);
+  CORBA::release (tmp);
+}
+
 CORBA::Boolean CORBA_Current::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
   if (
@@ -82,47 +89,34 @@ const char* CORBA_Current::_interface_repository_id (void) const
 
 void operator<<= (CORBA::Any &_tao_any, CORBA::Current_ptr _tao_elem)
 {
-  CORBA::Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
-    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::Current::_duplicate (_tao_elem);
     TAO_OutputCDR stream;
-    if (stream << *_tao_obj_ptr)
+    if (stream << _tao_elem)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_Current, 
+          CORBA::_tc_Current,
           TAO_ENCAP_BYTE_ORDER,
           stream.begin (),
-          1,
-          _tao_obj_ptr,
           ACE_TRY_ENV
         );
       ACE_TRY_CHECK;
     }
-    else
-    {
-      delete _tao_obj_ptr;
-    }
   }
   ACE_CATCHANY
   {
-    delete _tao_obj_ptr;
   }
   ACE_ENDTRY;
 }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Current_ptr &_tao_elem)
 {
-  CORBA::Object_ptr *tmp = 0;
-  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
   ACE_TRY_NEW_ENV
   {
     _tao_elem = CORBA::Current::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equivalent (CORBA::_tc_Current, ACE_TRY_ENV)) // not equal
       {
-        delete tmp;
         return 0;
       }
     ACE_TRY_CHECK;
@@ -135,24 +129,19 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Current_ptr &_tao
     {
       _tao_elem = CORBA::Current::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->_tao_replace (
           CORBA::_tc_Current,
           1,
-          tmp,
+          _tao_elem,
+          CORBA::Current::_tao_any_destructor,
           ACE_TRY_ENV
         );
       ACE_TRY_CHECK;
       return 1;
     }
-    else    // failure
-    {
-      delete tmp;
-    }
   }
   ACE_CATCHANY
   {
-    delete tmp;
     _tao_elem = CORBA::Current::_nil ();
     return 0;
   }
@@ -160,4 +149,3 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Current_ptr &_tao
   _tao_elem = CORBA::Current::_nil ();
   return 0;
 }
-

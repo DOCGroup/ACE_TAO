@@ -67,7 +67,7 @@ Test_Unbounded_String::dii_req_invoke (CORBA::Request *req,
   req->invoke (ACE_TRY_ENV);
   ACE_CHECK;
 
-  char *tmp;
+  const char *tmp;
   req->return_value () >>= tmp;
   this->ret_ = CORBA::string_dup (tmp);
 

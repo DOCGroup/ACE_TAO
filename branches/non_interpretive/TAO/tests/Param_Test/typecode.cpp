@@ -89,9 +89,7 @@ Test_TypeCode::init_parameters (Param_Test_ptr,
       Param_Test::_tc_Nested_Struct
     };
 
-  Generator *gen = GENERATOR::instance (); // value generator
   static CORBA::ULong index = 0;
-  // (CORBA::ULong) (gen->gen_long () % sizeof(tc_table)/sizeof(tc_table[0]));
 
   this->tc_holder_ = CORBA::TypeCode::_duplicate (tc_table [index]);
   this->in_ = this->tc_holder_;

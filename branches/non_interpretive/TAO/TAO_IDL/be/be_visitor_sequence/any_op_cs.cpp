@@ -72,6 +72,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "stream.begin ()," << be_nl
       << "1," << be_nl
       << "_tao_any_val," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK; " << be_uidt_nl
@@ -101,6 +102,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "stream.begin ()," << be_nl
       << "1," << be_nl
       << "_tao_elem," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_uidt_nl
@@ -146,6 +148,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
       << "ACE_reinterpret_cast (void *, _tao_elem)," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
@@ -197,12 +200,13 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << ");" << be_uidt_nl
       << "if (stream >> *(" << node->name () << " *)_tao_elem)" << be_nl
       << "{" << be_idt_nl
-      << "((CORBA::Any *)&_tao_any)->_tao_replace (" 
+      << "((CORBA::Any *)&_tao_any)->_tao_replace ("
       << be_idt << be_idt_nl
       << node->tc_name () << "," << be_nl
       << "1," << be_nl
       << "ACE_reinterpret_cast (void *, ACE_const_cast ("
       << node->name () << " *&, _tao_elem))," << be_nl
+      << node->name () << "::_tao_any_destructor," << be_nl
       << "ACE_TRY_ENV" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl

@@ -89,37 +89,49 @@ main (int argc, char *argv[])
 
           {
             CORBA::Object_var obj =
-              orb->string_to_object ("iioploc://localhost:12345/TheKey",
+              orb->string_to_object ("IOR:010000001b00000049444c3a6f6d"
+                                     "672e6f72672f506172616d5f54657374"
+                                     "3a312e30000001000000000000009000"
+                                     "000001010100130000006b656c766172"
+                                     "2e6563652e7563692e6564750000e404"
+                                     "00003000000014010f004e5550000000"
+                                     "130000000001000000006368696c645f"
+                                     "706f6100000000000100000070617261"
+                                     "6d5f7465737403000000000000000800"
+                                     "000001000000004f4154010000001400"
+                                     "00000108b54001000100000000000901"
+                                     "010000000000004f4154040000000108"
+                                     "0000",
                                      ACE_TRY_ENV);
             ACE_TRY_CHECK;
 
-            Coffee_var coffee =
-              Coffee::_unchecked_narrow (obj.in (),
+            Param_Test_var param_test =
+              Param_Test::_unchecked_narrow (obj.in (),
                                          ACE_TRY_ENV);
             ACE_TRY_CHECK;
 
-            any <<= coffee.in ();
+            any <<= param_test.in ();
 
-            Coffee_ptr o;
+            Param_Test_ptr o;
             if (!(any >>= o))
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "Cannot extract Coffee (oh the horror)\n"));
+                            "Cannot extract Param_Test (oh the horror)\n"));
               }
             CORBA::Boolean equiv =
-              coffee->_is_equivalent (o, ACE_TRY_ENV);
+              param_test->_is_equivalent (o, ACE_TRY_ENV);
             ACE_TRY_CHECK;
             if (!equiv)
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "Mismatched Coffee extraction\n"));
+                            "Mismatched Param_Test extraction\n"));
               }
 
-            CORBA::Object_ptr other;
-            if (!(any >>= CORBA::Any::to_object (other)))
+            CORBA::Object_var other;
+            if (!(any >>= CORBA::Any::to_object (other.inout ())))
               {
                 ACE_DEBUG ((LM_DEBUG,
-                            "Cannot extract Coffee as Object\n"));
+                            "Cannot extract Param_Test as Object\n"));
               }
           }
 
@@ -198,10 +210,10 @@ main (int argc, char *argv[])
           }
 
           {
-            char *i = "123";
+            const char i[] = "123";
             any <<= i;
 
-            char * o;
+            const char *o;
             if (!(any >>= o)
                 || ACE_OS::strcmp (i, o) != 0)
               {

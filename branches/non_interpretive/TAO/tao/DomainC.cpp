@@ -349,7 +349,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::DomainManager_ptr _tao_elem)
     if (stream << *_tao_obj_ptr)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_DomainManager, 
+          CORBA::_tc_DomainManager,
           TAO_ENCAP_BYTE_ORDER,
           stream.begin (),
           1,
@@ -442,7 +442,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ConstructionPolicy_ptr _tao_elem)
     if (stream << *_tao_obj_ptr)
     {
       _tao_any._tao_replace (
-          CORBA::_tc_ConstructionPolicy, 
+          CORBA::_tc_ConstructionPolicy,
           TAO_ENCAP_BYTE_ORDER,
           stream.begin (),
           1,
@@ -542,7 +542,7 @@ void operator<<= (
           _tao_any_val,
           ACE_TRY_ENV
         );
-      ACE_TRY_CHECK; 
+      ACE_TRY_CHECK;
     }
     else
     {
@@ -625,7 +625,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::DomainManagerList
   {
     delete _tao_elem;
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
@@ -676,9 +676,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const CORBA::DomainManag
   {
     delete ACE_const_cast (CORBA::DomainManagerList *&, _tao_elem);
     _tao_elem = 0;
-    return 0; 
+    return 0;
   }
   ACE_ENDTRY;
   return 0;
 }
-

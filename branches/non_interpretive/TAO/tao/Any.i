@@ -275,7 +275,13 @@ operator >>= (CORBA_Any_var lhs, CORBA::TypeCode_ptr &rhs)
 }
 
 ACE_INLINE CORBA::Boolean
-operator >>= (CORBA_Any_var lhs, char* &rhs)
+operator >>= (CORBA_Any_var lhs, const char *&rhs)
+{
+  return lhs.inout () >>= rhs;
+}
+
+ACE_INLINE CORBA::Boolean
+operator >>= (CORBA_Any_var lhs, const CORBA::WChar *&rhs)
 {
   return lhs.inout () >>= rhs;
 }

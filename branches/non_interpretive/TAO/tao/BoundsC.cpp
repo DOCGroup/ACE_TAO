@@ -24,6 +24,12 @@ CORBA_Bounds::~CORBA_Bounds (void)
 {
 }
 
+void CORBA_Bounds::_tao_any_destructor (void *x)
+{
+  CORBA_Bounds *tmp = ACE_static_cast (CORBA_Bounds*,x);
+  delete tmp;
+}
+
 // copy constructor
 CORBA_Bounds::CORBA_Bounds (const CORBA::Bounds &_tao_excp)
   : CORBA_UserException (_tao_excp._type ())
@@ -87,25 +93,18 @@ CORBA::Exception *CORBA_Bounds::_alloc (void)
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::Bounds &_tao_elem)
 {
-  CORBA::Bounds *_tao_any_val = 0;
-  ACE_NEW (_tao_any_val,
-           CORBA::Bounds (_tao_elem));
-  if (!_tao_any_val) return;
   ACE_TRY_NEW_ENV
   {
     TAO_OutputCDR stream;
-    stream << *_tao_any_val;
+    stream << _tao_elem;
     _tao_any._tao_replace (CORBA::_tc_Bounds,
                            TAO_ENCAP_BYTE_ORDER,
                            stream.begin (),
-                           1,
-                           _tao_any_val,
                            ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
   ACE_CATCHANY
   {
-    delete _tao_any_val;
   }
   ACE_ENDTRY;
 }
@@ -121,6 +120,7 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::Bounds *_tao_elem) // non copying
                            stream.begin (),
                            1,
                            _tao_elem,
+                           CORBA::Bounds::_tao_any_destructor,
                            ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -152,6 +152,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::Bounds *&_tao_ele
             CORBA::_tc_Bounds,
             1,
             ACE_reinterpret_cast (void*, _tao_elem),
+            CORBA::Bounds::_tao_any_destructor,
             ACE_TRY_ENV);
         ACE_TRY_CHECK;
         return 1;
