@@ -1000,6 +1000,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
 
   continue_decoding = stream->get_ulong (seq->length);
   seq->maximum = seq->length;
+  seq->release = 1;
   seq->buffer = 0;
 
   if (continue_decoding)
@@ -1036,7 +1037,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                         }
                       //                      CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
-			return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
                     case CORBA::tk_long:
                     case CORBA::tk_ulong:
@@ -1048,9 +1049,9 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                           value += size;
                         }
                       //                      CORBA::release (tc2);
-                      if (continue_decoding == CORBA::B_TRUE)
-			return CORBA::TypeCode::TRAVERSE_CONTINUE;
-                      break;
+					  if (continue_decoding == CORBA::B_TRUE)
+						return CORBA::TypeCode::TRAVERSE_CONTINUE;
+					  break;
                     case CORBA::tk_double:
                     case CORBA::tk_longlong:
                     case CORBA::tk_ulonglong:
@@ -1062,7 +1063,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                         }
                       //                      CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
-			return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
                     case CORBA::tk_boolean:
                       // For primitives, compute the size only once
@@ -1073,7 +1074,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                         }
                       //                      CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
-			return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
                     case CORBA::tk_char:
                     case CORBA::tk_octet:
@@ -1085,7 +1086,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                         }
                       //                      CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
-			return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
                     case CORBA::tk_longdouble:
                       // For primitives, compute the size only once
@@ -1096,7 +1097,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                         }
                       //                      CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
-			return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
                     case CORBA::tk_wchar:
                       // For primitives, compute the size only once
@@ -1107,7 +1108,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                         }
                       //                      CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
-			return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
                     case CORBA::tk_enum:
                       // For primitives, compute the size only once
@@ -1118,21 +1119,22 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                         }
                       //                      CORBA::release (tc2);
                       if (continue_decoding == CORBA::B_TRUE)
-			return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                        return CORBA::TypeCode::TRAVERSE_CONTINUE;
                       break;
                       // handle all aggregate types here
+                    case CORBA::tk_objref:
+                    case CORBA::tk_string:
+                    case CORBA::tk_wstring:
+                      ACE_OS::memset ((char*)data+16, 0, 4);
                     case CORBA::tk_any:
                     case CORBA::tk_TypeCode:
                     case CORBA::tk_Principal:
-                    case CORBA::tk_objref:
                     case CORBA::tk_struct:
                     case CORBA::tk_union:
-                    case CORBA::tk_string:
                     case CORBA::tk_sequence:
                     case CORBA::tk_array:
                     case CORBA::tk_alias:
                     case CORBA::tk_except:
-                    case CORBA::tk_wstring:
                       // For those aggregate types whose size is constant, we
                       // compute it only once
                       while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)

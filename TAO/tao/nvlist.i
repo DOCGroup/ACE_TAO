@@ -24,7 +24,7 @@
 // constructor
 ACE_INLINE
 CORBA_NamedValue::CORBA_NamedValue (void)
-  : refcount_ (0),
+  : refcount_ (1),
     flags_ (0),
     name_ (0)
 {
@@ -67,14 +67,14 @@ CORBA_NVList::CORBA_NVList (void)
 ACE_INLINE CORBA::ULong
 CORBA_NVList::count (void) const
 {
-  return this->len_;
+  return this->max_;
 }
 
 ACE_INLINE CORBA::NamedValue_ptr
 CORBA_NVList::item (CORBA::ULong n, CORBA::Environment &env)
 {
   env.clear ();
-  if (n >= this->len_) // 0 based indexing
+  if (n >= this->max_) // 0 based indexing
     {
       env.exception (new CORBA::TypeCode::Bounds ());
       return 0;

@@ -944,6 +944,10 @@ be_state_attribute::gen_code (be_type *bt, be_decl *d, be_type *type)
           break;
           case TAO_CodeGen::TAO_ATTRIBUTE_RETVAL_RETURN_CS:
             {
+              if (type->node_type () == AST_Decl::NT_sequence)
+                {
+                  *os << "retval->init_mgr ();" << nl;
+                }
               *os << "return retval;" << nl;
             }
           break;
