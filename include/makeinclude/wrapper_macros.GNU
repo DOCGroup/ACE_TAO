@@ -122,7 +122,8 @@ ifdef purify
 #### You might want to adjust the Purify options below.
 #### -best-effort is undocumented but supported, and seems
 #### to help avoid occasional link failure.
-PRELINK += purify -best-effort -cache-dir=/tmp/purifycache -chain-length=20 -inuse-at-exit -fds-inuse-at-exit=no
+#### SIGINT is used by the ACE Thread_Manager_Test.
+PRELINK += purify -best-effort -cache-dir=/tmp/purifycache -chain-length=20 -fds-inuse-at-exit=no -ignore-signals=SIGINT -inuse-at-exit -max_threads=100
 endif # purify
 
 COMPILE.c	= $(CC) $(CFLAGS) $(CPPFLAGS) -c
