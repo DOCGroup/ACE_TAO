@@ -40,7 +40,7 @@ sub new {
 
   $self->{'path'}     = $path;
   $self->{'name'}     = $name;
-  $self->{'version'}  = 1.9;
+  $self->{'version'}  = "2.0";
   $self->{'types'}    = {};
   $self->{'creators'} = \@creators;
   $self->{'default'}  = $creators[0];
@@ -101,7 +101,7 @@ sub optionError {
                $spaces . "[-noreldefs] [-notoplevel] [-static] [-static_only]\n" .
                $spaces . "[-value_template <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
                $spaces . "[-value_project <NAME+=VAL | NAME=VAL | NAME-=VAL>]\n" .
-               $spaces . "[-feature_file <file name>]\n" .
+               $spaces . "[-feature_file <file name>] [-make_coexistence]\n" .
                $spaces . "[-type <";
 
   my(@keys) = sort keys %{$self->{'types'}};
@@ -141,6 +141,8 @@ sub optionError {
 "       -relative       Any \$() variable in an mpc that is matched to NAME\n" .
 "                       is replaced by VAR only if VAR can be made into a\n" .
 "                       relative path based on the current working directory.\n" .
+"       -make_coexistence If multiple 'make' based project types are\n" .
+"                       generated, they will be named such that they can coexist.\n" .
 "       -noreldefs      Do not try to generate default relative definitions.\n" .
 "       -notoplevel     Do not generate the top level target file.  Files\n" .
 "                       are still process, but no top level file is created.\n" .
@@ -325,7 +327,8 @@ sub run {
                                   $options->{'toplevel'},
                                   $options->{'baseprojs'},
                                   $global_feature_file,
-                                  $options->{'feature_file'});
+                                  $options->{'feature_file'},
+                                  $options->{'coexistence'});
       if ($base ne $file) {
         my($dir) = ($base eq '' ? $file : dirname($file));
         if (!$generator->cd($dir)) {

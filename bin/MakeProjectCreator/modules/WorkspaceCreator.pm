@@ -61,6 +61,7 @@ sub new {
   my($baseprojs) = shift;
   my($gfeature)  = shift;
   my($feature)   = shift;
+  my($makeco)    = shift;
   my($self)      = Creator::new($class, $global, $inc,
                                 $template, $ti, $dynamic, $static,
                                 $relative, $addtemp, $addproj,
@@ -80,6 +81,7 @@ sub new {
   $self->{'wctype'}              = $self->extractType("$self");
   $self->{'modified_count'}      = 0;
   $self->{'global_feature_file'} = $gfeature;
+  $self->{'coexistence'}         = $makeco;
 
   ## Add a hash reference for our workspace type
   if (!defined $previous_workspace_name{$self->{'wctype'}}) {
@@ -832,6 +834,9 @@ sub process_cmdline {
       if (defined $options->{'reldefs'}) {
         $self->optionError('-noreldefs is ignored');
       }
+      if (defined $options->{'coexistence'}) {
+        $self->optionError('-make_coexistence is ignored');
+      }
       if (defined $options->{'input'}->[0]) {
         $self->optionError('Command line files ' .
                            'specified in a workspace are ignored');
@@ -895,13 +900,20 @@ sub project_creator {
                    $parameters{'toplevel'},
                    $parameters{'baseprojs'},
                    $self->{'global_feature_file'},
-                   $parameters{'feature_file'});
+                   $parameters{'feature_file'},
+                   $self->make_coexistence());
 }
 
 
 sub sort_files {
   #my($self) = shift;
   return 0;
+}
+
+
+sub make_coexistence {
+  my($self) = shift;
+  return $self->{'coexistence'};
 }
 
 
