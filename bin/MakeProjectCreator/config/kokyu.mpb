@@ -1,5 +1,6 @@
 project : acelib {
   after    += Kokyu
-  libs     += Kokyu
-  includes += $(ACE_ROOT)/Kokyu
+  libs     += Kokyu dsui
+  libpaths += $(DATASTREAM_ROOT)/lib
+  includes += $(ACE_ROOT)/Kokyu $(DATASTREAM_ROOT)/include
 }
