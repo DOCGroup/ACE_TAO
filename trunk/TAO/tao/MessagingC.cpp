@@ -1479,46 +1479,28 @@ Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_narrow (
   return Messaging::ReplyHandler::_unchecked_narrow (obj, ACE_TRY_ENV);
 }
 
+
 Messaging::ReplyHandler_ptr Messaging::ReplyHandler::_unchecked_narrow (
     CORBA::Object_ptr obj,
-    CORBA::Environment &ACE_TRY_ENV
+    CORBA::Environment &
   )
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   if (CORBA::is_nil (obj))
     return Messaging::ReplyHandler::_nil ();
   TAO_Stub* stub = obj->_stubobj ();
   stub->_incr_refcnt ();
-  void* servant = 0;
-  if (obj->_is_collocated () && obj->_servant() != 0)
-    servant = obj->_servant()->_downcast ("IDL:Messaging/ReplyHandler:1.0");
-  if (servant == 0)
+  if (obj->_is_collocated () && _TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer != 0)
     {
-      Messaging::ReplyHandler_ptr rval =
-        Messaging::ReplyHandler::_nil ();
-
-      ACE_NEW_RETURN (rval,
-                      Messaging::ReplyHandler (stub),
-                      Messaging::ReplyHandler::_nil ());
-
-      return rval;
+      ReplyHandler_ptr retv = _TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer (obj);
+      if (retv != 0)
+        return retv;
     }
-
-  Messaging::ReplyHandler_ptr retval =
-    Messaging::ReplyHandler::_nil ();
-
-  ACE_NEW_RETURN (
-      retval,
-      POA_Messaging::_tao_collocated_ReplyHandler (
-          ACE_reinterpret_cast (POA_Messaging::ReplyHandler_ptr,
-                                servant),
-          stub
-        ),
-      Messaging::ReplyHandler::_nil ()
-    );
-
+  Messaging::ReplyHandler_ptr retval = 0;
+  ACE_NEW_RETURN (retval, Messaging::ReplyHandler (stub), 0);
   return retval;
 }
+
+
 
 CORBA::Boolean Messaging::ReplyHandler::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
 {
@@ -1549,13 +1531,11 @@ TAO_NAMESPACE_END
 
 CORBA::Boolean 
 OBV_Messaging::ExceptionHolder::_tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &strm){
-  //  @@: Michael
-  return /*OBV_Messaging::ExceptionHolder::*/_tao_marshal_state (strm);
+  return _tao_marshal_state (strm);
   
 }
 CORBA::Boolean OBV_Messaging::ExceptionHolder::_tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &strm){
-  // @@: Michael
-  return /*OBV_Messaging::ExceptionHolder::*/_tao_unmarshal_state (strm);
+  return _tao_unmarshal_state (strm);
   
 }
 // accessor to set the member
@@ -2521,6 +2501,10 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Messaging::PolicyValueSe
 // ****************************************************************
 
 #if defined(TAO_HAS_AMI_CALLBACK) || defined(TAO_HAS_AMI_POLLER)
+
+Messaging::ReplyHandler_ptr (*_TAO_collocation_Messaging_ReplyHandler_Stub_Factory_function_pointer) (
+    CORBA::Object_ptr obj
+  ) = 0;
 
 void operator<<= (CORBA::Any &_tao_any, Messaging::ReplyHandler_ptr _tao_elem)
 {
