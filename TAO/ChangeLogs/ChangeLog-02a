@@ -1,3 +1,10 @@
+Tue Nov 14 10:48:00 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp: 
+	* tao/IIOP_Connector.h : Added a default destructor for
+	  TAO_IIOP_Connector class. This should fix the g++ 2.7.2 problem
+	  in the builds. 
+
 Tue Nov 14 08:50:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * utils/IOR-parser/Makefile:
@@ -68,11 +75,21 @@ Mon Nov 13 18:14:35 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Server_Declared/Server.dsp
         * tests/RTCORBA/Server_Declared/client.dsp
+<<<<<<< ChangeLog
+
+	  Made minor changes to get the test running.
+	  Updated the project files to link TAO_Strategies.
+ 
+=======
 
           Made minor changes to get the test running.
           Updated the project files to link TAO_Strategies.
+>>>>>>> 1.1919
 
+<<<<<<< ChangeLog
+=======
 
+>>>>>>> 1.1919
 Mon Nov 13 18:00:15 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
         * tests/RTCORBA/Client_Propagated/svc.conf:
