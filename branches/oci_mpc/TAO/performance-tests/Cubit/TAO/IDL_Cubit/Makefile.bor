@@ -1,0 +1,8 @@
+#
+# Makefile for building the performance-tests Cubit
+#
+
+MAKEFILES = server.bor client.bor collocation_test.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+

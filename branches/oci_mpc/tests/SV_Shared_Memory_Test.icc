@@ -1,0 +1,15 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "SV_Shared_Memory_Test"
+	{
+	   source type (cpp) "SV_Shared_Memory_Test.cpp"
+	   source platformLinkLibs
+	}
+    }

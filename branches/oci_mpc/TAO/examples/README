@@ -1,0 +1,105 @@
+This directory contains a number of example applications that
+illustrate how to program with standard CORBA using TAO.  The
+individual directories contain READMEs on how to run the following
+examples:
+
+        . Advanced 
+
+          Contains example code from "Advanced CORBA Programming with 
+          C++" by Michi Henning and Steve Vinoski with slight 
+          adaptations for TAO.
+
+        . Borland 
+
+          This directory illustrates how to write a Borland C++
+          Builder application using ACE+TAO.
+
+        . Buffered _AMI
+
+          This is a simple test for buffered AMI calls.  It invokes
+          multiple AMI calls.  Due to buffering in the ORB, the calls
+          are automatically bunched together instead of being
+          delivered to the server upon every invocation.
+
+        . Buffered _Oneways
+
+          This is a simple test for buffered oneways.  It invokes
+          multiple oneway calls.  Due to buffering in the ORB, the
+          calls are automatically bunched together instead of being
+          delivered to the server upon every invocation.
+
+        . Callback_Quoter
+
+          Illustrates how to implement distributed callbacks using
+          TAO.
+
+        . Content_Server
+        
+          Three examples that illustrate how to program client/server
+          applications for downloading large file content via SMI,
+          AMI, and the Iterator and Observer patterns.
+
+        . Event_Comm
+
+          Another illustration of how to implement distributed
+          callbacks using TAO.
+
+        . Load_Balancing
+
+          A simple CORBA load balancing service that allows clients to
+          treat a group of objects as an equivalence class to improve
+          distributed load balancing.
+
+        . Load_Balancing_persistent
+        
+          A variant of the preceding example that keeps the state of
+          the load balancer persistent.
+
+        . Logging 
+
+          This example implements a simple logging service using TAO.
+
+        . mfc
+
+          This is an short example to show how to integrate TAO and
+          MFC base GUI applications.
+
+        . OBV
+
+          This is a demonstration of the CORBA 2.3 valuetype feature from
+          the Object-by-Value specification.
+
+        . Persistent_Grid
+
+          This example shows how to store the state of CORBA servants in
+          persistent memory.
+
+        . PluggableUDP
+        
+          This example tests the UDP Pluggable Protocol (DIOP) implementation by
+          sending oneway requests to a server.
+
+        . POA
+
+          Contains various small examples of POA features based on
+          the OMG POA specification.
+
+        . Quoter
+        
+          Illustrates how to use the Global POA options with multiple
+          threads.  This example also shows how to use the Lifecycle
+          service. 
+                      
+        . Simple
+          
+          Contains a number of simple CORBA examples, which also
+          illustrate how to write canonical Orbix/VisiBroker/OmniORB
+          examples in TAO using standard CORBA features rather than
+          proprietary ORB features.
+
+        . Simulator
+
+          This is a demonstration of the TAO "Distributed Object
+          Visualization Environment" (DOVE), which shows how the TAO
+          Real-time Event Service can be used to transport monitoring
+          events.

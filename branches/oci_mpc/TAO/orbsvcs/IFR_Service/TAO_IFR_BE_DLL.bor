@@ -1,0 +1,44 @@
+#
+# Makefile for building the TAO_IFR_BE_DLL library
+#
+
+!ifndef MINIMUM_CORBA
+NAME = TAO_IFR_BE_DLL
+!else
+!undef NAME
+!endif
+
+OBJFILES = \
+	$(OBJDIR)\be_global.obj \
+	$(OBJDIR)\be_produce.obj \
+	$(OBJDIR)\ifr_adding_visitor.obj \
+	$(OBJDIR)\ifr_adding_visitor_exception.obj \
+	$(OBJDIR)\ifr_adding_visitor_operation.obj \
+	$(OBJDIR)\ifr_adding_visitor_structure.obj \
+	$(OBJDIR)\ifr_adding_visitor_union.obj \
+	$(OBJDIR)\ifr_removing_visitor.obj \
+	$(OBJDIR)\ifr_visitor.obj
+
+!ifdef STATIC
+TAO_IFR_BE_DLLFLAG=0
+!else
+TAO_IFR_BE_DLLFLAG=1
+!endif
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+	$(TAO_IFR_CLIENT_CFLAGS) \
+	$(TAO_IDL_FE_CFLAGS) \
+	-DTAO_IFR_BE_HAS_DLL=$(TAO_IFR_BE_DLLFLAG) \
+	-DTAO_IFR_BE_BUILD_DLL
+
+CPPDIR = .
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+	$(TAO_IFR_CLIENT_LIB) \
+	$(TAO_IDL_FE_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
