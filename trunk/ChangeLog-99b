@@ -1,18 +1,26 @@
+Fri Sep 24 08:27:28 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.*,Synch.cpp: reverted changes of:
+
+          Thu Sep 23 11:13:38 1999  Wei Chiang <wei.chiang@nokia.com>
+
+          because Bug 342 proposes a more general fix.
+
 Thu Sep 23 19:02:47 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* examples/QOS/server.cpp (main): 
-	* examples/QOS/server.cpp (main): 
+        * examples/QOS/server.cpp (main):
+        * examples/QOS/server.cpp (main):
 
-	  Removed the instantiation of ACE_OS_Object_Manager from 
-	  the above files. This is done automagically in ACE.
-	
-	* examples/QOS/Sender_QOS_Event_Handler.h:
-	  Fixed a warning regarding the #def of MY_DEFPORT.
+          Removed the instantiation of ACE_OS_Object_Manager from
+          the above files. This is done automagically in ACE.
+
+        * examples/QOS/Sender_QOS_Event_Handler.h:
+          Fixed a warning regarding the #def of MY_DEFPORT.
 
 Thu Sep 23 14:12:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/auto_compile:
-	  It was reporting success even when things failed.
+        * bin/auto_compile:
+          It was reporting success even when things failed.
 
 Thu Sep 23 11:13:38 1999  Wei Chiang <wei.chiang@nokia.com>
 
