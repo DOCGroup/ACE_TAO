@@ -363,6 +363,7 @@ Client::test_get_properties (CORBA::Environment &env)
   CORBA::Boolean return_val = propsetdef_->get_properties (names.in (),
                                                            properties_out,
                                                            env);
+  ACE_UNUSED_ARG (return_val);
   TAO_CHECK_ENV_RETURN (env, -1);
   
   // Get the value to the _var.
@@ -516,6 +517,7 @@ Client::test_get_all_properties (CORBA::Environment &env)
   // Get the number of current properties.
   CORBA::ULong num_of_properties =
     this->propsetdef_->get_number_of_properties (env);
+  ACE_UNUSED_ARG (num_of_properties);
   TAO_CHECK_ENV_RETURN (env, -1);
 
   // Get half on the properties and half of on the iterator.
@@ -643,6 +645,7 @@ Client::test_get_all_properties (CORBA::Environment &env)
         }
       TAO_CHECK_ENV_RETURN (env, -1);
     }
+  return 0;
 }
 
 // Testing define property with mode.
@@ -786,6 +789,7 @@ Client::test_get_property_value (CORBA::Environment &env)
       return -1;
     }
   TAO_ENDTRY;
+  return 0;
 }
 
 int
