@@ -6,7 +6,8 @@ Wed Aug  8 15:03:58 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  certain things based on the muxed strategy. But for DIOP, we
 	  dont cache the handles and the call started doing something
 	  really bad like closing the handles. We now just return a 0
-	  after sending the request.
+	  after sending the request. This should fix the problem in the
+	  full builds with DIOP.
 
 Wed Aug  8 12:16:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
