@@ -43,10 +43,10 @@ public:
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
-  virtual int init (int argc, char* argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
 
   /// Parse svc.conf arguments
-  int parse_args (int argc, char* argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
 
   // = Check Client_Strategy_Factory.h for the documentation of the
   //   following methods.
@@ -57,8 +57,8 @@ public:
   virtual ACE_Lock *create_ft_service_retention_id_lock (void);
 
 protected:
-  void report_option_value_error (const char* option_name,
-                                  const char* option_value);
+  void report_option_value_error (const ACE_TCHAR* option_name,
+                                  const ACE_TCHAR* option_value);
 
 private:
   enum Lock_Type

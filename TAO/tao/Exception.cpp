@@ -102,11 +102,23 @@ CORBA_Exception::_tao_print_exception (const char *user_provided_info,
                                        FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
-              ACE_TEXT ("(%P|%t) EXCEPTION, %s\n")
-              ACE_TEXT ("%s\n"),
-              user_provided_info,
-              this->_info ().c_str ()));
+              ACE_LIB_TEXT("(%P|%t) EXCEPTION, %s\n")
+              ACE_LIB_TEXT("%s\n"),
+              ACE_TEXT_CHAR_TO_TCHAR(user_provided_info),
+              ACE_TEXT_CHAR_TO_TCHAR(this->_info ().c_str ())));
 }
+
+#if defined (ACE_USES_WCHAR)
+void
+CORBA_Exception::_tao_print_exception (const ACE_WCHAR_T *info,
+                                       FILE *f) const
+{
+    // Even though this call causes additional type conversions,
+    // this is better for the maintenance.  Plus, this will occur
+    // only on exception anyway.
+    this->_tao_print_exception(ACE_TEXT_ALWAYS_CHAR(info), f);
+}
+#endif  // ACE_USES_WCHAR
 
 void
 CORBA_Exception::_tao_any_destructor (void *x)
@@ -296,22 +308,28 @@ CORBA_SystemException::_tao_errno (int errno_value)
       return TAO_ETIMEDOUT_MINOR_CODE;
     case ENFILE:
       return TAO_ENFILE_MINOR_CODE;
-    case EMFILE:
-      return TAO_EMFILE_MINOR_CODE;
     case EPIPE:
       return TAO_EPIPE_MINOR_CODE;
     case ECONNREFUSED:
       return TAO_ECONNREFUSED_MINOR_CODE;
     case ENOENT:
       return TAO_ENOENT_MINOR_CODE;
+
+#if !defined (ACE_HAS_WINCE)
+    case EMFILE:
+      return TAO_EMFILE_MINOR_CODE;
     case EBADF:
       return TAO_EBADF_MINOR_CODE;
+    case EPERM:
+      return TAO_EPERM_MINOR_CODE;
+    case EINVAL:
+      return TAO_EINVAL_MINOR_CODE;
+#endif  // ACE_HAS_WINCE
+
 #if (ENOSYS != EFAULT)
     case ENOSYS:
       return TAO_ENOSYS_MINOR_CODE;
 #endif /* ENOSYS != EFAULT */
-    case EPERM:
-      return TAO_EPERM_MINOR_CODE;
     case EAFNOSUPPORT:
       return TAO_EAFNOSUPPORT_MINOR_CODE;
     case EAGAIN:
@@ -326,8 +344,6 @@ CORBA_SystemException::_tao_errno (int errno_value)
       return TAO_EBUSY_MINOR_CODE;
     case EEXIST:
       return TAO_EEXIST_MINOR_CODE;
-    case EINVAL:
-      return TAO_EINVAL_MINOR_CODE;
     case ECOMM:
       return TAO_ECOMM_MINOR_CODE;
     case ECONNRESET:
@@ -356,8 +372,8 @@ void
 CORBA_SystemException::_tao_print_system_exception (FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
-              ACE_TEXT ("(%P|%t) system exception, ID '%s'\n"),
-              this->_info ().c_str ()));
+              ACE_LIB_TEXT("(%P|%t) system exception, ID '%s'\n"),
+              ACE_TEXT_CHAR_TO_TCHAR(this->_info ().c_str ())));
 }
 
 ACE_CString

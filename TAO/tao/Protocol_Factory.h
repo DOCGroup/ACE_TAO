@@ -35,7 +35,7 @@ public:
   virtual ~TAO_Protocol_Factory (void);
 
   /// Initialization hook.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// The protocol tag, each concrete class will have a specific tag
   /// value.

@@ -24,7 +24,7 @@ TAO_Protocol_Factory::tag (void) const
 
 int
 TAO_Protocol_Factory::init (int /* argc */,
-                            char * /* argv */ [])
+                            ACE_TCHAR * /* argv */ [])
 {
  return -1;
 }

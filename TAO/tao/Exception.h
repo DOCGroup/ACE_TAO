@@ -88,6 +88,12 @@ public:
   void _tao_print_exception (const char *info,
                              FILE *f = stdout) const;
 
+#if defined (ACE_USES_WCHAR)
+  /// ACE_WCHAR_T version of _tao_print_exception.
+  void _tao_print_exception (const ACE_WCHAR_T *info,
+                             FILE *f = stdout) const;
+#endif  // ACE_USES_WCHAR
+
   /// Returns a string containing information about the exception. This
   /// function is not CORBA compliant.
   virtual ACE_CString _info (void) const = 0;

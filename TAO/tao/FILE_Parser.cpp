@@ -39,7 +39,7 @@ TAO_FILE_Parser::parse_string (const char *ior,
   const char *filename =
     ior + sizeof (::file_prefix)+1;
 
-  FILE* file = ACE_OS::fopen (filename, "r");
+  FILE* file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_LIB_TEXT("r"));
 
   if (file == 0)
     return CORBA::Object::_nil ();

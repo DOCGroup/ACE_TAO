@@ -75,7 +75,7 @@ TAO_GIOP_Message_Base::generate_request_header (
     {
       if (TAO_debug_level)
 	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+		    ACE_LIB_TEXT ("(%P|%t) Error in writing GIOP header \n")));
 
       return -1;
     }
@@ -87,7 +87,7 @@ TAO_GIOP_Message_Base::generate_request_header (
     {
       if (TAO_debug_level)
 	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT ("(%P|%t) Error in writing request header \n")));
+		    ACE_LIB_TEXT ("(%P|%t) Error in writing request header \n")));
 
       return -1;
     }
@@ -120,7 +120,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
     {
       if (TAO_debug_level)
 	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+		    ACE_LIB_TEXT ("(%P|%t) Error in writing GIOP header \n")));
 
       return -1;
     }
@@ -133,7 +133,7 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
     {
       if (TAO_debug_level)
 	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT ("(%P|%t) Error in writing locate request header \n")));
+		    ACE_LIB_TEXT ("(%P|%t) Error in writing locate request header \n")));
 
 
       return -1;
@@ -167,7 +167,7 @@ TAO_GIOP_Message_Base::generate_reply_header (
     {
       if (TAO_debug_level)
 	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT ("(%P|%t) Error in writing GIOP header \n")));
+		    ACE_LIB_TEXT ("(%P|%t) Error in writing GIOP header \n")));
 
       return -1;
     }
@@ -1468,13 +1468,13 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       ACE_DEBUG ((LM_DEBUG,
 		  ACE_TEXT ("(%P | %t): %s GIOP v%c.%c msg, ")
 		  ACE_TEXT ("%d data bytes, %s endian, %s = %u\n"),
-		  label,
+          ACE_TEXT_CHAR_TO_TCHAR(label),
 		  digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
 		  digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
 		  len - TAO_GIOP_MESSAGE_HEADER_LEN ,
-		  (byte_order == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
-		  message_name,
-		  *id));
+          (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_LIB_TEXT("my") : ACE_LIB_TEXT("other"),
+          ACE_TEXT_CHAR_TO_TCHAR(message_name),
+          *id));
 
       if (TAO_debug_level >= 10)
 	ACE_HEX_DUMP ((LM_DEBUG,

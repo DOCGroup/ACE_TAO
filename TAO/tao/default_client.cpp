@@ -36,41 +36,41 @@ TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory (void)
 }
 
 int
-TAO_Default_Client_Strategy_Factory::init (int argc, char *argv[])
+TAO_Default_Client_Strategy_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   return this->parse_args (argc, argv);
 }
 
 int
-TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
+TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRACE ("TAO_Default_Client_Strategy_Factory::parse_args");
 
   int curarg;
 
-  for (curarg = 0; curarg < argc && argv[curarg]; curarg++)
+  for (curarg = 0; curarg < argc && argv[curarg]; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
-                              "-ORBProfileLock") == 0)
+                              ACE_LIB_TEXT("-ORBProfileLock")) == 0)
         {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "thread") == 0)
+                                    ACE_LIB_TEXT("thread")) == 0)
               this->profile_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
-                                         "null") == 0)
+                                         ACE_LIB_TEXT("null")) == 0)
               this->profile_lock_type_ = TAO_NULL_LOCK;
             else
-              this->report_option_value_error ("-ORBProfileLock", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBProfileLock"), name);
           }
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-ORBIIOPProfileLock") == 0)
+                                   ACE_LIB_TEXT("-ORBIIOPProfileLock")) == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("WARNING: The -ORBIIOPProfileLock option")
@@ -79,58 +79,58 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
           curarg++;
           if (curarg < argc)
             {
-              char *name = argv[curarg];
+              ACE_TCHAR* name = argv[curarg];
 
               if (ACE_OS::strcasecmp (name,
-                                      "thread") == 0)
+                                      ACE_LIB_TEXT("thread")) == 0)
                 this->profile_lock_type_ = TAO_THREAD_LOCK;
               else if (ACE_OS::strcasecmp (name,
-                                           "null") == 0)
+                                           ACE_LIB_TEXT("null")) == 0)
                 this->profile_lock_type_ = TAO_NULL_LOCK;
             }
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
-                                   "-ORBClientConnectionHandler") == 0)
+                                   ACE_LIB_TEXT("-ORBClientConnectionHandler")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
-              char *name = argv[curarg];
+              ACE_TCHAR* name = argv[curarg];
 
               if (ACE_OS::strcasecmp (name,
-                                      "MT") == 0)
+                                      ACE_LIB_TEXT("MT")) == 0)
                 this->wait_strategy_ = TAO_WAIT_ON_LEADER_FOLLOWER;
               else if (ACE_OS::strcasecmp (name,
-                                           "ST") == 0)
+                                           ACE_LIB_TEXT("ST")) == 0)
                 this->wait_strategy_ = TAO_WAIT_ON_REACTOR;
               else if (ACE_OS::strcasecmp (name,
-                                           "RW") == 0)
+                                           ACE_LIB_TEXT("RW")) == 0)
                 this->wait_strategy_ = TAO_WAIT_ON_READ;
               else
-                this->report_option_value_error ("-ORBClientConnectionHandler", name);
+                this->report_option_value_error (ACE_LIB_TEXT("-ORBClientConnectionHandler"), name);
             }
         }
       else if (ACE_OS::strcmp (argv[curarg],
-                               "-ORBTransportMuxStrategy") == 0)
+                               ACE_LIB_TEXT("-ORBTransportMuxStrategy")) == 0)
         {
           curarg++;
           if (curarg < argc)
             {
-              char *name = argv[curarg];
+              ACE_TCHAR* name = argv[curarg];
 
               if (ACE_OS::strcasecmp (name,
-                                      "MUXED") == 0)
+                                      ACE_LIB_TEXT("MUXED")) == 0)
                 this->transport_mux_strategy_ = TAO_MUXED_TMS;
               else if (ACE_OS::strcasecmp (name,
-                                           "EXCLUSIVE") == 0)
+                                           ACE_LIB_TEXT("EXCLUSIVE")) == 0)
                 this->transport_mux_strategy_ = TAO_EXCLUSIVE_TMS;
               else
-                this->report_option_value_error ("-ORBTransportMuxStrategy", name);
+                this->report_option_value_error (ACE_LIB_TEXT("-ORBTransportMuxStrategy"), name);
             }
         }
 
-      else if (ACE_OS::strncmp (argv[curarg], "-ORB", 4) == 0)
+      else if (ACE_OS::strncmp (argv[curarg], ACE_LIB_TEXT("-ORB"), 4) == 0)
         {
           // Can we assume there is an argument after the option?
           // curarg++;
@@ -238,8 +238,8 @@ TAO_Default_Client_Strategy_Factory::create_ft_service_retention_id_lock (void)
 
 void
 TAO_Default_Client_Strategy_Factory::report_option_value_error (
-                                 const char* option_name,
-                                 const char* option_value)
+                                 const ACE_TCHAR* option_name,
+                                 const ACE_TCHAR* option_value)
 {
   ACE_DEBUG((LM_DEBUG,
              ACE_TEXT ("Client_Strategy_Factory - unknown argument")

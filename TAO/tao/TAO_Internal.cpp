@@ -1,11 +1,5 @@
 // $Id$
 
-#include "ace/Service_Config.h"
-#include "ace/Service_Repository.h"
-#include "ace/Object_Manager.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Env_Value_T.h"
-
 #include "TAO_Internal.h"
 #include "default_server.h"
 #include "default_client.h"
@@ -28,7 +22,15 @@
 #include "Default_Thread_Lane_Resources_Manager.h"
 #include "Default_Collocation_Resolver.h"
 
+#include "ace/Service_Config.h"
+#include "ace/Service_Repository.h"
+#include "ace/Object_Manager.h"
+#include "ace/Arg_Shifter.h"
+#include "ace/Env_Value_T.h"
+#include "ace/Argv_Type_Converter.h"
+
 #include "debug.h"
+
 
 ACE_RCSID (tao,
            TAO_Internal,
@@ -64,7 +66,7 @@ const char *TAO_Internal::client_strategy_factory_args_ = 0;
 int TAO_Internal::service_open_count_ = 0;
 
 int
-TAO_Internal::open_services (int &argc, char **argv)
+TAO_Internal::open_services (int &argc, ACE_TCHAR **argv)
 {
   // Construct an argument vector specific to the Service
   // Configurator.
@@ -72,19 +74,20 @@ TAO_Internal::open_services (int &argc, char **argv)
 
   // Be certain to copy the program name so that service configurator
   // has something to skip!
-  const char *argv0 = "";
+  ACE_TCHAR* argv0 = ACE_LIB_TEXT("");
+
   if (argc > 0 && argv != 0)
     argv0 = argv[0];
 
   CORBA::ULong len = 0;
   svc_config_argv.length (1);
-  svc_config_argv[0] = argv0;
+  svc_config_argv[0] = ACE_TEXT_ALWAYS_CHAR(argv0);
 
   // Should we skip the <ACE_Service_Config::open> method, e.g., if we
   // already being configured by the ACE Service Configurator.
   int skip_service_config_open = 0;
 
-#if defined (TAO_DEBUG)
+#if defined (TAO_DEBUG) && !defined (ACE_HAS_WINCE)
   // Make it a little easier to debug programs using this code.
   {
     TAO_debug_level = ACE_Env_Value<u_int> ("TAO_ORB_DEBUG", 0);
@@ -100,7 +103,7 @@ TAO_Internal::open_services (int &argc, char **argv)
                     ACE_TEXT ("TAO_debug_level == %d"), TAO_debug_level));
       }
   }
-#endif  /* TAO_DEBUG */
+#endif  /* TAO_DEBUG && !ACE_HAS_WINCE */
 
   // Extract the Service Configurator ORB options from the argument
   // vector.
@@ -108,17 +111,17 @@ TAO_Internal::open_services (int &argc, char **argv)
 
   while (arg_shifter.is_anything_left ())
     {
-      const char *current_arg = 0;
+      const ACE_TCHAR *current_arg = 0;
 
       // Start with the parameterless flags.
       if (arg_shifter.cur_arg_strncasecmp
-          ("-ORBSkipServiceConfigOpen") == 0)
+          (ACE_LIB_TEXT("-ORBSkipServiceConfigOpen")) == 0)
         {
           skip_service_config_open = 1;
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-ORBDebug") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-ORBDebug")) == 0)
         {
           // later, replace all of these
           // warning this turns on a daemon
@@ -126,14 +129,14 @@ TAO_Internal::open_services (int &argc, char **argv)
           arg_shifter.consume_arg ();
         }
       else if ((current_arg = arg_shifter.get_the_parameter
-                ("-ORBDebugLevel")))
+                (ACE_LIB_TEXT("-ORBDebugLevel"))))
         {
           TAO_debug_level =
             ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
         }
-      else if (arg_shifter.cur_arg_strncasecmp ("-ORBDaemon") == 0)
+      else if (arg_shifter.cur_arg_strncasecmp (ACE_LIB_TEXT("-ORBDaemon")) == 0)
         {
           // Be a daemon
 
@@ -145,7 +148,7 @@ TAO_Internal::open_services (int &argc, char **argv)
           arg_shifter.consume_arg ();
         }
       // Continue with flags that accept parameters.
-      else if ((current_arg = arg_shifter.get_the_parameter ("-ORBSvcConfDirective")))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ORBSvcConfDirective"))))
         {
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
@@ -155,16 +158,16 @@ TAO_Internal::open_services (int &argc, char **argv)
           // configuration information rather than using a svc.conf
           // file.  Pass the "-S" to the service configurator.
           svc_config_argv[len] = CORBA::string_dup ("-S");
-          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
+          svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
 
           arg_shifter.consume_arg ();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-ORBSvcConf")))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ORBSvcConf"))))
         {
           // Specify the name of the svc.conf file to be used.
 
           // Proceeds only if the configuration file exists.
-          FILE *conf_file = ACE_OS::fopen (current_arg, "r");
+          FILE *conf_file = ACE_OS::fopen (current_arg, ACE_LIB_TEXT("r"));
           if (conf_file == 0)
             {
               // Assigning EINVAL to errno to make an exception
@@ -186,17 +189,17 @@ TAO_Internal::open_services (int &argc, char **argv)
           svc_config_argv.length (len + 2);  // 2 arguments to add
 
           svc_config_argv[len] = CORBA::string_dup ("-f");
-          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
+          svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
 
           arg_shifter.consume_arg();
         }
-      else if ((current_arg = arg_shifter.get_the_parameter ("-ORBServiceConfigLoggerKey")))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_LIB_TEXT("-ORBServiceConfigLoggerKey"))))
         {
           len = svc_config_argv.length ();
           svc_config_argv.length (len + 2);  // 2 arguments to add
 
           svc_config_argv[len] = CORBA::string_dup ("-k");
-          svc_config_argv[len + 1] = CORBA::string_dup (current_arg);
+          svc_config_argv[len + 1] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(current_arg));
 
           arg_shifter.consume_arg ();
         }
@@ -272,7 +275,11 @@ TAO_Internal::open_services_i (int &argc,
 
       if (skip_service_config_open == 0)
         {
-            result = ACE_Service_Config::open (argc, argv,
+            // Copy command line parameter not to use original.
+            ACE_Argv_Type_Converter command_line(argc, argv);
+
+            result = ACE_Service_Config::open (command_line.get_argc(),
+                                               command_line.get_TCHAR_argv(),
                                                ACE_DEFAULT_LOGGER_KEY,
                                                0, // Don't ignore static services.
                                                ignore_default_svc_conf_file);
@@ -289,11 +296,11 @@ TAO_Internal::open_services_i (int &argc,
       // @@ What the heck do these things do and do we need to avoid
       // calling them if we're not invoking the svc.conf file?
       if (TAO_Internal::resource_factory_args_ != 0)
-        ACE_Service_Config::process_directive (TAO_Internal::resource_factory_args_);
+        ACE_Service_Config::process_directive (ACE_TEXT_CHAR_TO_TCHAR(TAO_Internal::resource_factory_args_));
       if (TAO_Internal::client_strategy_factory_args_ != 0)
-        ACE_Service_Config::process_directive (TAO_Internal::client_strategy_factory_args_);
+        ACE_Service_Config::process_directive (ACE_TEXT_CHAR_TO_TCHAR(TAO_Internal::client_strategy_factory_args_));
       if (TAO_Internal::server_strategy_factory_args_ != 0)
-        ACE_Service_Config::process_directive (TAO_Internal::server_strategy_factory_args_);
+        ACE_Service_Config::process_directive (ACE_TEXT_CHAR_TO_TCHAR(TAO_Internal::server_strategy_factory_args_));
       return result;
     }
   else

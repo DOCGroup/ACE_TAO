@@ -63,21 +63,21 @@ TAO_Default_Server_Strategy_Factory::server_connection_thread_count (void)
 // Evil macros b/c I'm lazy!
 #define TAO_BEGINCHECK  if (0)
 #define TAO_CHECKANDSET(sym) \
-  else if (ACE_OS::strcmp (flag, #sym) == 0) \
+  else if (ACE_OS::strcmp (const_cast<const ACE_TCHAR *>(flag), ACE_LIB_TEXT(#sym)) == 0) \
   ACE_SET_BITS (this->thread_flags_, sym)
 #define TAO_ENDCHECK
 
 void
-TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
+TAO_Default_Server_Strategy_Factory::tokenize (ACE_TCHAR* flag_string)
 {
-  char *lasts = 0;
+  ACE_TCHAR* lasts = 0;
 
-  for (char *flag = ACE_OS::strtok_r (flag_string,
-                                      "|",
+  for (ACE_TCHAR* flag = ACE_OS::strtok_r (flag_string,
+                                      ACE_LIB_TEXT("|"),
                                       &lasts);
        flag != 0;
        flag = ACE_OS::strtok_r (0,
-                                "|",
+                                ACE_LIB_TEXT("|"),
                                 &lasts))
     {
       TAO_BEGINCHECK;
@@ -93,7 +93,7 @@ TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
 }
 
 int
-TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
+TAO_Default_Server_Strategy_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   return this->parse_args (argc, argv);
 }
@@ -105,7 +105,7 @@ TAO_Default_Server_Strategy_Factory::open (TAO_ORB_Core *)
 }
 
 int
-TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
+TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
 
@@ -113,34 +113,34 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
   for (curarg = 0; curarg < argc && argv[curarg]; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
-                            "-ORBConcurrency") == 0)
+                            ACE_LIB_TEXT("-ORBConcurrency")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "reactive") == 0)
+                                    ACE_LIB_TEXT("reactive")) == 0)
               this->activate_server_connections_ = 0;
             else if (ACE_OS::strcasecmp (name,
-                                         "thread-per-connection") == 0)
+                                         ACE_LIB_TEXT("thread-per-connection")) == 0)
               this->activate_server_connections_ = 1;
             else
-              this->report_option_value_error ("-ORBConcurrency", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBConcurrency"), name);
           }
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBThreadPerConnectionTimeout") == 0)
+                                 ACE_LIB_TEXT("-ORBThreadPerConnectionTimeout")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "infinite") == 0)
+                                    ACE_LIB_TEXT("infinite")) == 0)
               {
                 this->thread_per_connection_use_timeout_ = 0;
               }
@@ -155,9 +155,9 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
       }
 
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBTableSize") == 0
+                                 ACE_LIB_TEXT("-ORBTableSize")) == 0
              || ACE_OS::strcasecmp (argv[curarg],
-                                    "-ORBActiveObjectMapSize") == 0)
+                                    ACE_LIB_TEXT("-ORBActiveObjectMapSize")) == 0)
       {
         curarg++;
         if (curarg < argc)
@@ -167,7 +167,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                              10);
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBPOAMapSize") == 0)
+                                 ACE_LIB_TEXT("-ORBPOAMapSize")) == 0)
       {
         curarg++;
         if (curarg < argc)
@@ -177,171 +177,171 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
                              10);
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBActiveHintInIds") == 0)
+                                 ACE_LIB_TEXT("-ORBActiveHintInIds")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *value = argv[curarg];
+            ACE_TCHAR* value = argv[curarg];
 
             this->active_object_map_creation_parameters_.use_active_hint_in_ids_ =
               ACE_OS::atoi (value);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBActiveHintInPOANames") == 0)
+                                 ACE_LIB_TEXT("-ORBActiveHintInPOANames")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *value = argv[curarg];
+            ACE_TCHAR* value = argv[curarg];
 
             this->active_object_map_creation_parameters_.use_active_hint_in_poa_names_ =
               ACE_OS::atoi (value);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBAllowReactivationOfSystemids") == 0)
+                                 ACE_LIB_TEXT("-ORBAllowReactivationOfSystemids")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *value = argv[curarg];
+            ACE_TCHAR* value = argv[curarg];
 
             this->active_object_map_creation_parameters_.allow_reactivation_of_system_ids_ =
               ACE_OS::atoi (value);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBUseridPolicyDemuxStrategy") == 0)
+                                 ACE_LIB_TEXT("-ORBUseridPolicyDemuxStrategy")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             // Active demux not supported with user id policy.
             if (ACE_OS::strcasecmp (name,
-                                    "dynamic") == 0)
+                                    ACE_LIB_TEXT("dynamic")) == 0)
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_user_id_policy_ =
                 TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name,
-                                         "linear") == 0)
+                                         ACE_LIB_TEXT("linear")) == 0)
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_user_id_policy_ =
                 TAO_LINEAR;
             else
-              this->report_option_value_error ("-ORBUseridPolicyDemuxStrategy", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBUseridPolicyDemuxStrategy"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBSystemidPolicyDemuxStrategy") == 0)
+                                 ACE_LIB_TEXT("-ORBSystemidPolicyDemuxStrategy")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "dynamic") == 0)
+                                    ACE_LIB_TEXT("dynamic")) == 0)
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ =
                 TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name,
-                                         "linear") == 0)
+                                         ACE_LIB_TEXT("linear")) == 0)
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ =
                 TAO_LINEAR;
             else if (ACE_OS::strcasecmp (name,
-                                         "active") == 0)
+                                         ACE_LIB_TEXT("active")) == 0)
               this->active_object_map_creation_parameters_.object_lookup_strategy_for_system_id_policy_ =
                 TAO_ACTIVE_DEMUX;
             else
-              this->report_option_value_error ("-ORBSystemidPolicyDemuxStrategy", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBSystemidPolicyDemuxStrategy"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBPersistentidPolicyDemuxStrategy") == 0)
+                                 ACE_LIB_TEXT("-ORBPersistentidPolicyDemuxStrategy")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             // Active demux not supported with user id policy.
             if (ACE_OS::strcasecmp (name,
-                                    "dynamic") == 0)
+                                    ACE_LIB_TEXT("dynamic")) == 0)
               this->active_object_map_creation_parameters_.poa_lookup_strategy_for_persistent_id_policy_ =
                 TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name,
-                                         "linear") == 0)
+                                         ACE_LIB_TEXT("linear")) == 0)
               this->active_object_map_creation_parameters_.poa_lookup_strategy_for_persistent_id_policy_ =
                 TAO_LINEAR;
             else
-              this->report_option_value_error ("-ORBPersistentidPolicyDemuxStrategy", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBPersistentidPolicyDemuxStrategy"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBTransientidPolicyDemuxStrategy") == 0)
+                                 ACE_LIB_TEXT("-ORBTransientidPolicyDemuxStrategy")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "dynamic") == 0)
+                                    ACE_LIB_TEXT("dynamic")) == 0)
               this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ =
                 TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name,
-                                         "linear") == 0)
+                                         ACE_LIB_TEXT("linear")) == 0)
               this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ =
                 TAO_LINEAR;
             else if (ACE_OS::strcasecmp (name,
-                                         "active") == 0)
+                                         ACE_LIB_TEXT("active")) == 0)
               this->active_object_map_creation_parameters_.poa_lookup_strategy_for_transient_id_policy_ =
                 TAO_ACTIVE_DEMUX;
             else
-              this->report_option_value_error ("-ORBTransientidPolicyDemuxStrategy", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBTransientidPolicyDemuxStrategy"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBUniqueidPolicyReverseDemuxStrategy") == 0)
+                                 ACE_LIB_TEXT("-ORBUniqueidPolicyReverseDemuxStrategy")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "dynamic") == 0)
+                                    ACE_LIB_TEXT("dynamic")) == 0)
               this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ =
                 TAO_DYNAMIC_HASH;
             else if (ACE_OS::strcasecmp (name,
-                                         "linear") == 0)
+                                         ACE_LIB_TEXT("linear")) == 0)
               this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ =
                 TAO_LINEAR;
             else
-              this->report_option_value_error ("-ORBUniqueidPolicyReverseDemuxStrategy", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBUniqueidPolicyReverseDemuxStrategy"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBPOALock") == 0)
+                                 ACE_LIB_TEXT("-ORBPOALock")) == 0)
       {
         curarg++;
         if (curarg < argc)
           {
-            char *name = argv[curarg];
+            ACE_TCHAR* name = argv[curarg];
 
             if (ACE_OS::strcasecmp (name,
-                                    "thread") == 0)
+                                    ACE_LIB_TEXT("thread")) == 0)
               this->poa_lock_type_ = TAO_THREAD_LOCK;
             else if (ACE_OS::strcasecmp (name,
-                                         "null") == 0)
+                                         ACE_LIB_TEXT("null")) == 0)
               this->poa_lock_type_ = TAO_NULL_LOCK;
             else
-              this->report_option_value_error ("-ORBPOALock", name);
+              this->report_option_value_error (ACE_LIB_TEXT("-ORBPOALock"), name);
           }
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
-                                 "-ORBThreadFlags") == 0)
+                                 ACE_LIB_TEXT("-ORBThreadFlags")) == 0)
       {
         curarg++;
 
@@ -349,20 +349,20 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
           this->tokenize (argv[curarg]);
       }
 
-    else if (ACE_OS::strncmp (argv[curarg], "-ORB", 4) == 0)
+    else if (ACE_OS::strncmp (argv[curarg], ACE_LIB_TEXT("-ORB"), 4) == 0)
       {
         // Can we assume there is an argument after the option?
         // curarg++;
         ACE_ERROR ((LM_ERROR,
-                    "Server_Strategy_Factory - "
-                    "unknown option <%s>\n",
+                    ACE_LIB_TEXT("Server_Strategy_Factory - ")
+                    ACE_LIB_TEXT("unknown option <%s>\n"),
                     argv[curarg]));
       }
     else
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "Server_Strategy_Factory - "
-                    "ignoring option <%s>\n",
+                    ACE_LIB_TEXT("Server_Strategy_Factory - ")
+                    ACE_LIB_TEXT("ignoring option <%s>\n"),
                     argv[curarg]));
       }
 
@@ -371,8 +371,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
 void
 TAO_Default_Server_Strategy_Factory::report_option_value_error (
-                                 const char* option_name,
-                                 const char* option_value)
+                                 const ACE_TCHAR* option_name,
+                                 const ACE_TCHAR* option_value)
 {
   ACE_DEBUG((LM_DEBUG,
              ACE_TEXT ("Server_Strategy_Factory - unknown argument")

@@ -55,7 +55,7 @@ struct TAO_Export CORBA_ServiceDetail
                       CORBA::Boolean release=0
                       );
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
-      ~_tao_seq_Octet (void); // dtor
+      virtual ~_tao_seq_Octet (void); // dtor
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       _tao_seq_Octet (

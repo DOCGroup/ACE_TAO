@@ -97,17 +97,17 @@ TAO_IIOP_Connection_Handler::open (void*)
     {
       if (TAO_debug_level > 0)
         {
-          char remote_as_string[MAXHOSTNAMELEN + 16];
-          char local_as_string[MAXHOSTNAMELEN + 16];
+          ACE_TCHAR remote_as_string[MAXHOSTNAMELEN + 16];
+          ACE_TCHAR local_as_string[MAXHOSTNAMELEN + 16];
 
           (void) remote_addr.addr_to_string (remote_as_string,
                                              sizeof(remote_as_string));
           (void) local_addr.addr_to_string (local_as_string,
                                             sizeof(local_as_string));
           ACE_ERROR ((LM_ERROR,
-                      "TAO(%P|%t) - TAO_IIOP_Connection_Handler::open, "
-                      "Holy Cow! The remote addr and "
-                      "local addr are identical (%s == %s)\n",
+                      ACE_LIB_TEXT("TAO(%P|%t) - TAO_IIOP_Connection_Handler::open, ")
+                      ACE_LIB_TEXT("Holy Cow! The remote addr and ")
+                      ACE_LIB_TEXT("local addr are identical (%s == %s)\n"),
                       remote_as_string, local_as_string));
         }
       return -1;
@@ -115,15 +115,15 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 0)
     {
-      char client[MAXHOSTNAMELEN + 16];
+      ACE_TCHAR client[MAXHOSTNAMELEN + 16];
 
       // Verify that we can resolve the peer hostname.
       if (remote_addr.addr_to_string (client, sizeof (client)) == -1)
         return -1;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) IIOP connection to peer ")
-                  ACE_TEXT ("<%s> on %d\n"),
+                  ACE_LIB_TEXT ("TAO (%P|%t) IIOP connection to peer ")
+                  ACE_LIB_TEXT ("<%s> on %d\n"),
                   client, this->peer ().get_handle ()));
     }
 
@@ -148,8 +148,8 @@ TAO_IIOP_Connection_Handler::activate (long flags,
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) IIOP_Connection_Handler::activate %d ")
-                 ACE_TEXT ("threads, flags = %d\n"),
+                 ACE_LIB_TEXT ("TAO (%P|%t) IIOP_Connection_Handler::activate %d ")
+                 ACE_LIB_TEXT ("threads, flags = %d\n"),
                  n_threads,
                  flags,
                  THR_BOUND));
@@ -198,9 +198,9 @@ TAO_IIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
   //    all waiting reply handlers).
   if (TAO_debug_level)
   ACE_DEBUG  ((LM_DEBUG,
-               ACE_TEXT ("TAO (%P|%t) ")
-               ACE_TEXT ("IIOP_Connection_Handler::handle_close ")
-               ACE_TEXT ("(%d, %d)\n"),
+               ACE_LIB_TEXT ("TAO (%P|%t) ")
+               ACE_LIB_TEXT ("IIOP_Connection_Handler::handle_close ")
+               ACE_LIB_TEXT ("(%d, %d)\n"),
                handle,
                rm));
 
@@ -221,9 +221,9 @@ TAO_IIOP_Connection_Handler::handle_close_i (void)
 {
   if (TAO_debug_level)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) ")
-                 ACE_TEXT ("IIOP_Connection_Handler::handle_close_i ")
-                 ACE_TEXT ("(%d)\n"),
+                 ACE_LIB_TEXT ("TAO (%P|%t) ")
+                 ACE_LIB_TEXT ("IIOP_Connection_Handler::handle_close_i ")
+                 ACE_LIB_TEXT ("(%d)\n"),
                  this->transport ()->id ()));
 
   if (this->transport ()->wait_strategy ()->is_registered ())
@@ -310,8 +310,9 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) Listening port [%d] on [%s]\n",
-                      listen_point.port, listen_point.host.in ()));
+                      ACE_LIB_TEXT("(%P|%t) Listening port [%d] on [%s]\n"),
+                      listen_point.port,
+                      ACE_TEXT_CHAR_TO_TCHAR(listen_point.host.in ())));
         }
 
       // Construct an  IIOP_Endpoint object

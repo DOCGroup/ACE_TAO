@@ -7,6 +7,7 @@
 #include "tao/debug.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Argv_Type_Converter.h"
 
 ACE_RCSID (tao,
            DLL_ORB,
@@ -59,11 +60,26 @@ TAO_DLL_ORB::init (int /*argc*/, ACE_TCHAR *argv[])
 
       int new_argc = new_argv.argc ();
 
+#if defined (ACE_HAS_WINCE)
+      {
+          // Copy command line parameter from new_argv.
+          ACE_Argv_Type_Converter command_line(new_argc, new_argv.argv());
+
+          // Initialize the ORB.
+          this->orb_ = CORBA::ORB_init (command_line.get_argc(),
+                                        command_line.get_ASCII_argv(),
+                                        ""
+                                         ACE_ENV_ARG_PARAMETER);
+          // command_line will be destroyed here and new_argv will be updated if necessary
+      }
+#else
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
                                     new_argv.argv (),
                                     ""
                                      ACE_ENV_ARG_PARAMETER);
+#endif  // ACE_HAS_WINCE
+
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (this->orb_.in ()))
