@@ -1,3 +1,10 @@
+Wed May 21 02:49:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/Makefile.am:
+          Added missing Main.cpp to several targets.  Thanks to
+          Terletsky Oleg <oleg.terletsky@comverse.com> for reporting this
+          and supplying the patch.
+
 Tue May 20 18:56:03 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/tests.mpc:
