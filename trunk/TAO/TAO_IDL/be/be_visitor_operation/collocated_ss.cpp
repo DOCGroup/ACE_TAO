@@ -181,7 +181,7 @@ int be_visitor_operation_collocated_ss::visit_operation (be_operation *node)
       << ");" << be_uidt_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
       << "this->_object_key ()," << be_nl
-      << "\"" << node->local_name () << "\"";
+      << "\"" << node->original_local_name () << "\"";
   if (!idl_global->exception_support ())
     *os << "," << be_nl
         << "ACE_TRY_ENV" << be_uidt_nl

@@ -23,11 +23,11 @@
 #ifndef _BE_INTERFACE_AMI_HANDLER_FWD_CI_H_
 #define _BE_INTERFACE_AMI_HANDLER_FWD_CI_H_
 
-class be_visitor_ami_handler_fwd_ci : public be_visitor_decl
+class be_visitor_interface_ami_handler_fwd_ci : public be_visitor_decl
 {
   //
   // = TITLE
-  //   be_visitor_ami_handler_fwd_ci
+  //   be_visitor_interface_ami_handler_fwd_ci
   //
   // = DESCRIPTION
   //   This visitor visits the interface to generate the forward
@@ -35,10 +35,10 @@ class be_visitor_ami_handler_fwd_ci : public be_visitor_decl
   //
   //
 public:
-  be_visitor_ami_handler_fwd_ci (be_visitor_context *ctx);
+  be_visitor_interface_ami_handler_fwd_ci (be_visitor_context *ctx);
   // constructor
 
-  ~be_visitor_ami_handler_fwd_ci (void);
+  ~be_visitor_interface_ami_handler_fwd_ci (void);
   // destructor
 
   virtual int visit_interface (be_interface *node);

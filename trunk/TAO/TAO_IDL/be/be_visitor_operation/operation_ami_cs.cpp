@@ -8,13 +8,14 @@
 //    TAO IDL
 //
 // = FILENAME
-//    operation_ami_cs.cpp
+//    ami_cs.cpp
 //
 // = DESCRIPTION
 //    Visitor generating code for Operation in the stubs file.
 //
 // = AUTHOR
-//    Aniruddha Gokhale
+//    Aniruddha Gokhale and Alexander Babu Arulanthu
+//    <alex@cs.wustl.edu>  
 //
 // ============================================================================
 
