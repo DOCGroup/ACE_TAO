@@ -160,12 +160,6 @@ ACE_OutputCDR::reset (void)
   ACE_CDR::mb_align (&this->start_);
 }
 
-ACE_INLINE size_t
-ACE_OutputCDR::total_length (void) const
-{
-  return ACE_CDR::total_length (this->begin (), this->end ());
-}
-
 // Decode the CDR stream.
 
 ACE_INLINE ACE_CDR::Boolean
@@ -429,6 +423,12 @@ ACE_INLINE const ACE_Message_Block*
 ACE_OutputCDR::end (void) const
 {
   return this->current_->cont ();
+}
+
+ACE_INLINE size_t
+ACE_OutputCDR::total_length (void) const
+{
+  return ACE_CDR::total_length (this->begin (), this->end ());
 }
 
 ACE_INLINE const char*
