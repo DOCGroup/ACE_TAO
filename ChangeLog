@@ -1,6 +1,8 @@
-Sun Dec 19 10:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Sun Dec 19 10:45:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/QOS/Change_Receiver_FlowSpec/sender.cpp:
+        * examples/QOS/Diffserv/diffserv_test.cpp:
+        * examples/QOS/Diffserv/server.cpp:
           Fixed compile error in unicode build
 
 Sun Dec 19 01:32:05 2004  Emre Turkay  <turkaye@dre.vanderbilt.edu>
