@@ -1,100 +1,108 @@
+Tue Jun 02 08:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU,ACE-INSTALL.html:
+        * orbsvcs/Event_Service/Makefile,orbsvcs/tests/EC_Multiple/Makefile,
+          orbsvcs/tests/Event_Latency/Makefile,tao/Makefile:
+          moved probe=1 support from individual Makefiles to
+          wrapper_macros.GNU.
+
 Mo Jun 1  21:36:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * tests/Quoter: Several files had to be modified in order
-	  to use the LifeCycle Service now as a separate object as
-	  part of the orbsvcs.
+          to use the LifeCycle Service now as a separate object as
+          part of the orbsvcs.
 
-	* orbsvcs/LifeCycle_Service: Did some more customizations.
+        * orbsvcs/LifeCycle_Service: Did some more customizations.
 
 Mon Jun  1 15:48:28 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/orbconf.h: Modified the TAO_NAMESPACE related macros. Added
-	some more to deal with the nested namespaces that can occur due to
-	nested modules.
+        * tao/orbconf.h: Modified the TAO_NAMESPACE related macros. Added
+        some more to deal with the nested namespaces that can occur due to
+        nested modules.
 
-	* TAO_IDL/be_include/be_visitor_typecode.h
-	  TAO_IDL/be/be_visitor_typecode.cpp:
+        * TAO_IDL/be_include/be_visitor_typecode.h
+          TAO_IDL/be/be_visitor_typecode.cpp:
 
-	  Added two new files that define a new visitor which will
-	  generate code for different types. The TypeCode generation now
-	  uses the different NAMESPACE related macros described above.
+          Added two new files that define a new visitor which will
+          generate code for different types. The TypeCode generation now
+          uses the different NAMESPACE related macros described above.
 
-	* TAO_IDL/be_include/be_codegen.h: Added two new enumerations for
-	the TypeCode generating visitors.
+        * TAO_IDL/be_include/be_codegen.h: Added two new enumerations for
+        the TypeCode generating visitors.
 
-	* TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
-	be_visitor_interface, be_visitor_sequence, be_visitor_structure,
-	be_visitor_typedef, be_visitor_union}.cpp: Used the new TypeCode
-	visitors. One advantage of using these is that all code gets
-	factored into a visitor. At the same time, we can conditionally
-	opt not to generate the TypeCodes. This may be desired for
-	compiled marshaling.
+        * TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
+        be_visitor_interface, be_visitor_sequence, be_visitor_structure,
+        be_visitor_typedef, be_visitor_union}.cpp: Used the new TypeCode
+        visitors. One advantage of using these is that all code gets
+        factored into a visitor. At the same time, we can conditionally
+        opt not to generate the TypeCodes. This may be desired for
+        compiled marshaling.
 
-	In be_visitor_sequence.cpp, we do not generate the typecode if the
-	sequences was typedefed.
+        In be_visitor_sequence.cpp, we do not generate the typecode if the
+        sequences was typedefed.
 
-	* TAO_IDL/be_include/be_visitor_constant.h
-	  TAO_IDL/be/be_visitor_constant.cpp: Added similar logic to the
-	  TypeCode generation when constants are defined insided modules
-	  that get mapped to namespaces.
+        * TAO_IDL/be_include/be_visitor_constant.h
+          TAO_IDL/be/be_visitor_constant.cpp: Added similar logic to the
+          TypeCode generation when constants are defined insided modules
+          that get mapped to namespaces.
 
-	* TAO_IDL/be/be_interpretive.cpp: Added cases to deal with the two
-	new TypeCode generating visitors.
+        * TAO_IDL/be/be_interpretive.cpp: Added cases to deal with the two
+        new TypeCode generating visitors.
 
-	* TAO_IDL/fe/{idl.yy, y.tab.cpp}: Removed some incorrect code in
-	the action part of the idl.yy file.
+        * TAO_IDL/fe/{idl.yy, y.tab.cpp}: Removed some incorrect code in
+        the action part of the idl.yy file.
 
-	* TAO_IDL/Makefile: Reran make depend.
+        * TAO_IDL/Makefile: Reran make depend.
 
 Mo Jun 1  14:37:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/RtecScheduler.idl
-	  orbsvcs/orbsvcs/Runtime_Scheduler.{cpp, h}
-	  orbsvcs/orbsvcs/Scheduler_Factory.{cpp, h}
-	  orbsvcs/orbsvcs/Event/Dispatching_Modules.{cpp, h, i}
+        * orbsvcs/orbsvcs/RtecScheduler.idl
+          orbsvcs/orbsvcs/Runtime_Scheduler.{cpp, h}
+          orbsvcs/orbsvcs/Scheduler_Factory.{cpp, h}
+          orbsvcs/orbsvcs/Event/Dispatching_Modules.{cpp, h, i}
           orbsvcs/orbsvcs/Event/Event_Channel.cpp
-	  orbsvcs/orbsvcs/Event/RT_Task.cpp
-	  orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp, h}
-	  orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
-	  orbsvcs/orbsvcs/Sched/SchedEntry.h
-	  orbsvcs/orbsvcs/Sched/Scheduler.{cpp, h}
+          orbsvcs/orbsvcs/Event/RT_Task.cpp
+          orbsvcs/orbsvcs/Sched/Config_Scheduler.{cpp, h}
+          orbsvcs/orbsvcs/Sched/DynSched.{cpp, h}
+          orbsvcs/orbsvcs/Sched/SchedEntry.h
+          orbsvcs/orbsvcs/Sched/Scheduler.{cpp, h}
 
-	  Removed Dynamic Subpriority from RtecScheduler IDL
-	  interface: both static and dynamic subpriorities
-	  now map into a single preemption subpriority value
+          Removed Dynamic Subpriority from RtecScheduler IDL
+          interface: both static and dynamic subpriorities
+          now map into a single preemption subpriority value
 
-	* orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
-	  orbsvcs/tests/Sched_Conf/Sched_Conf.{dsp, dsw}
-	  orbsvcs/tests/Sched_Conf/Makefile
+        * orbsvcs/tests/Sched_Conf/Sched_Conf.cpp
+          orbsvcs/tests/Sched_Conf/Sched_Conf.{dsp, dsw}
+          orbsvcs/tests/Sched_Conf/Makefile
 
           Added a "test" program that simulates a configuration
-	  run and generates a runtime scheduler header: to use
-	  the strategized scheduler for static RMS scheduling,
-	  put the following at the beginning of ace/config.h:
+          run and generates a runtime scheduler header: to use
+          the strategized scheduler for static RMS scheduling,
+          put the following at the beginning of ace/config.h:
 
-	  #define TAO_USES_STRATEGY_SCHEDULER
-	  #define TAO_USES_RMS_SCHEDULING
+          #define TAO_USES_STRATEGY_SCHEDULER
+          #define TAO_USES_RMS_SCHEDULING
           #define TAO_MIN_CRITICAL_PRIORITY 3
 
 Mo Jun 1  10:16:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-	* docs/orbsvcs.html: Added the LifeCycle Service to the list
-	  of services.
+        * docs/orbsvcs.html: Added the LifeCycle Service to the list
+          of services.
 
-	* docs/releasenotes/index.html: Added new information about
-	  DOVE to the file.
+        * docs/releasenotes/index.html: Added new information about
+          DOVE to the file.
 
 Mo Jun 1  10:16:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * orbsvcs/LifeCycle_Service: Created the LifeCycle Service.
 
-	* orbsvcs/Makefile: Added the LifeCycle Service to the list
-	  of directories.
+        * orbsvcs/Makefile: Added the LifeCycle Service to the list
+          of directories.
 
-	* orbsvcs/orbsvcs/Makefile: Added the LifeCycleService* files.
+        * orbsvcs/orbsvcs/Makefile: Added the LifeCycleService* files.
 
-	* orbsvcs/orbsvcs/LifeCycleService.idl: Created an IDL
-	  file describing the interface of the LifeCycle Service.
+        * orbsvcs/orbsvcs/LifeCycleService.idl: Created an IDL
+          file describing the interface of the LifeCycle Service.
 
 Fri May 29 17:58:16 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -102,145 +110,145 @@ Fri May 29 17:58:16 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Fri May 29 16:03:00 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp: Removed the
-	terminate calls by adding -x option to the client so that it shuts
-	down the server.
+        * tests/Cubit/TAO/IDL_Cubit/IDL_Cubit_Test.cpp: Removed the
+        terminate calls by adding -x option to the client so that it shuts
+        down the server.
 
 Fri May 29 13:00:35 1998   Michael Kircher <mk1@cs.wustl.edu>
 
         * tests/Quoter/Factory_Trader.cpp: CosTradingC.h is only
-	  parsed when the trading service is available.
+          parsed when the trading service is available.
 
 Fri May 29 11:02:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/orbconf.h: Removed an unnecessary OR condition for the
-	TAO_NAMESPACE macro.
+        * tao/orbconf.h: Removed an unnecessary OR condition for the
+        TAO_NAMESPACE macro.
 
 Fri May 29 09:15:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/ORB_Core.cpp (init): Added code to pass svcconf directives
- 	  to the Service Configurator.  Thanks to Mark Boriack for
- 	  contributing this.
+        * tao/ORB_Core.cpp (init): Added code to pass svcconf directives
+          to the Service Configurator.  Thanks to Mark Boriack for
+          contributing this.
 
-	* tao/ORB_Core.cpp (init): Make sure that we dynamically
- 	  string_dup() ALL the argv/argc arguments, not just some of them,
- 	  so that we can correctly clean stuff up when we're done.
+        * tao/ORB_Core.cpp (init): Make sure that we dynamically
+          string_dup() ALL the argv/argc arguments, not just some of them,
+          so that we can correctly clean stuff up when we're done.
 
 Thu May 28 14:32:07 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/Server_Request.cpp:(demarshal, marshal): more optimizations
-	to get rid of the NVList and other DSI-centric logic in the
-	handling of static skeletons generated by the IDL compiler. These
-	optimizations are the result of my discussions with Irfan
-	Pyarali.
+        * tao/Server_Request.cpp:(demarshal, marshal): more optimizations
+        to get rid of the NVList and other DSI-centric logic in the
+        handling of static skeletons generated by the IDL compiler. These
+        optimizations are the result of my discussions with Irfan
+        Pyarali.
 
 Thu May 28 11:37:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/orbconf.h: Removed the TAO_NAMESPACE_STORAGE_CLASS macro.
+        * tao/orbconf.h: Removed the TAO_NAMESPACE_STORAGE_CLASS macro.
 
-	* tao/CurrentS.cpp: In the initialization of the constructor, we
-	were calling the default ctor of the base class. However, we now
-	call the other ctor that takes the stub object and servant as
-	arguments.
+        * tao/CurrentS.cpp: In the initialization of the constructor, we
+        were calling the default ctor of the base class. However, we now
+        call the other ctor that takes the stub object and servant as
+        arguments.
 
-	* tao/{encode, decode}.cpp: In Struct::{encode, decode}, I had
-	made an erroneous change a few days back where I was passing the
-	address of a pointer. This was for the Objref and Typecode
-	cases. Carlos pointed this out. Seth was getting lots of errors
-	due to this. This has been fixed.
+        * tao/{encode, decode}.cpp: In Struct::{encode, decode}, I had
+        made an erroneous change a few days back where I was passing the
+        address of a pointer. This was for the Objref and Typecode
+        cases. Carlos pointed this out. Seth was getting lots of errors
+        due to this. This has been fixed.
 
-	* TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
-	be_visitor_interface, be_visitor_sequence, be_visitor_structure,
-	be_visitor_typedef, be_visitor_union}.cpp:
+        * TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
+        be_visitor_interface, be_visitor_sequence, be_visitor_structure,
+        be_visitor_typedef, be_visitor_union}.cpp:
 
-	Reverted my previous change where I generated the
-	TAO_NAMSPACE_STORAGE_CLASS macro if the data type was nested. We
-	no more generate this macro and this macro has been removed from
-	orbconf.h as explained above.
+        Reverted my previous change where I generated the
+        TAO_NAMSPACE_STORAGE_CLASS macro if the data type was nested. We
+        no more generate this macro and this macro has been removed from
+        orbconf.h as explained above.
 
 Thu May 28 00:08:19 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/orbconf.h (TAO_NAMESPACE_STORAGE_CLASS): Changed it from
- 	  extern to static.
+        * tao/orbconf.h (TAO_NAMESPACE_STORAGE_CLASS): Changed it from
+          extern to static.
 
-	* orbsvcs/orbsvcs/Naming/Entries.h: Removed the default for the
- 	  binding type in the constructor of NS_IntId.  It was breaking
- 	  VC5.0 if CosNaming was a namespace.
+        * orbsvcs/orbsvcs/Naming/Entries.h: Removed the default for the
+          binding type in the constructor of NS_IntId.  It was breaking
+          VC5.0 if CosNaming was a namespace.
 
-	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (rebind): Added
- 	  CosNaming::nobject as the binding type to NS_IntId instances
- 	  since the default was removed in the constructor.
+        * orbsvcs/orbsvcs/Naming/CosNaming_i.cpp (rebind): Added
+          CosNaming::nobject as the binding type to NS_IntId instances
+          since the default was removed in the constructor.
 
 Wed May 27 17:56:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_module.cpp (visit_module): Supress
-	  generation of NT export specifier after TAO_NAMESPACE.
+        * TAO_IDL/be/be_visitor_module.cpp (visit_module): Supress
+          generation of NT export specifier after TAO_NAMESPACE.
 
-	* tao/CurrentS.cpp (_tao_collocated_Current): Changed
-	  "ACE_NESTED_CLASS (CORBA,Current)" to "CORBA_Current".
+        * tao/CurrentS.cpp (_tao_collocated_Current): Changed
+          "ACE_NESTED_CLASS (CORBA,Current)" to "CORBA_Current".
 
-	* tao/POAS.cpp (_tao_collocated_Current): Changed
-	  "POA_CORBA::_tao_collocated_Current" to ACE_NESTED_CLASS
-	  (POA_CORBA,_tao_collocated_Current).
+        * tao/POAS.cpp (_tao_collocated_Current): Changed
+          "POA_CORBA::_tao_collocated_Current" to ACE_NESTED_CLASS
+          (POA_CORBA,_tao_collocated_Current).
 
-	* tao/POA_CORBA.h (_tao_collocated_Current): Changed its base
-	  class to CORBA_Current.
+        * tao/POA_CORBA.h (_tao_collocated_Current): Changed its base
+          class to CORBA_Current.
 
 Wed May 27 16:08:10 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
-	be_visitor_interface, be_visitor_sequence, be_visitor_structure,
-	be_visitor_typedef, be_visitor_union}.cpp:
+        * TAO_IDL/be/{be_visitor_enum, be_visitor_exception,
+        be_visitor_interface, be_visitor_sequence, be_visitor_structure,
+        be_visitor_typedef, be_visitor_union}.cpp:
 
-	The typecode declarations generated in the header file for
-	user-defined IDL types used to be "static" if the data type was
-	enclosed inside a module. However, for platforms that support
-	"namespaces", this should be extern. Hence we generate a macro
-	called "TAO_NAMESPACE_STORAGE_CLASS" defined in tao/orbconf.h
+        The typecode declarations generated in the header file for
+        user-defined IDL types used to be "static" if the data type was
+        enclosed inside a module. However, for platforms that support
+        "namespaces", this should be extern. Hence we generate a macro
+        called "TAO_NAMESPACE_STORAGE_CLASS" defined in tao/orbconf.h
 
-	* orbsvcs/orbsvcs/Makefile: Ran make depend since some files in
-	TAO/tao were removed.
+        * orbsvcs/orbsvcs/Makefile: Ran make depend since some files in
+        TAO/tao were removed.
 
-	* tao/PolicyS.{h, i}: Removed from the CVS repository
+        * tao/PolicyS.{h, i}: Removed from the CVS repository
 
-	* tao/CurrentC.{h, i, cpp}
-	  tao/CurrentS.cpp: Added to the repository. This defined the
-	  interface Current in the CORBA namespace. *NOTE* these are newly
-	  added files.
+        * tao/CurrentC.{h, i, cpp}
+          tao/CurrentS.cpp: Added to the repository. This defined the
+          interface Current in the CORBA namespace. *NOTE* these are newly
+          added files.
 
-	* tao/ORB.h: Moved Declarations for RepositoryID and Identifier
-	from the POA namespace to the CORBA namespace. Also added some
-	more TypeCode declarations e.g., _tc_Current, _tc_Identifier,
-	others.
+        * tao/ORB.h: Moved Declarations for RepositoryID and Identifier
+        from the POA namespace to the CORBA namespace. Also added some
+        more TypeCode declarations e.g., _tc_Current, _tc_Identifier,
+        others.
 
-	* tao/POAC.{h, i, cpp}: Removed everything related to
-	CurrentBase. RepositoryID and Identifier are now in the CORBA
-	namespace instead of the PortableServer namespace.
+        * tao/POAC.{h, i, cpp}: Removed everything related to
+        CurrentBase. RepositoryID and Identifier are now in the CORBA
+        namespace instead of the PortableServer namespace.
 
-	* tao/POAS.{h, cpp}: PortableServer::Current now inherits from
-	POA_CORBA::Current instead of PortableServer::CurrentBase.
+        * tao/POAS.{h, cpp}: PortableServer::Current now inherits from
+        POA_CORBA::Current instead of PortableServer::CurrentBase.
 
-	* tao/POA_CORBA.h: Merger of the PolicyS.h and CurrentS.h
-	files. It defines the POA_CORBA namespace which is the C++ mapping
-	for the CORBA module for the server-side. It defines the Policy
-	and Current classes for the server-side. *NOTE* This is a newly
-	introduced file.
+        * tao/POA_CORBA.h: Merger of the PolicyS.h and CurrentS.h
+        files. It defines the POA_CORBA namespace which is the C++ mapping
+        for the CORBA module for the server-side. It defines the Policy
+        and Current classes for the server-side. *NOTE* This is a newly
+        introduced file.
 
-	* tao/PolicyC.cpp: Moved the definition of the _tc_Policy typecode
-	to the TypeCode constants file since this is owned by the ORB.
+        * tao/PolicyC.cpp: Moved the definition of the _tc_Policy typecode
+        to the TypeCode constants file since this is owned by the ORB.
 
-	* tao/Servant_Base.{h, cpp}: PortableServer::RepositoryId is now
-	CORBA::RepositoryId.
+        * tao/Servant_Base.{h, cpp}: PortableServer::RepositoryId is now
+        CORBA::RepositoryId.
 
-	* tao/Typecode_Constants.cpp: Added new typecode definitions for
-	all the newly introduced stuff as well as moved stuff such as
-	Current, Policy, PolicyType, PolicyList, RepositoryId, and
-	Identifier.
+        * tao/Typecode_Constants.cpp: Added new typecode definitions for
+        all the newly introduced stuff as well as moved stuff such as
+        Current, Policy, PolicyType, PolicyList, RepositoryId, and
+        Identifier.
 
-	* tao/orbconf.h: TAO_NAMESPACE macro is now "namespace" for
-	platforms that supports it. Needs to be checked.
+        * tao/orbconf.h: TAO_NAMESPACE macro is now "namespace" for
+        platforms that supports it. Needs to be checked.
 
-	* tao/Makefile: Did make depend.
+        * tao/Makefile: Did make depend.
 
 Wed May 27 12:53:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
