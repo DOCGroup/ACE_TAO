@@ -7,7 +7,8 @@ ACE_RCSID(Xt_Stopwatch, client, "$Id$")
 
 #if !defined (ACE_HAS_XT)
 
-int main (int, char *[])
+int 
+main (int, char *[])
 {
   ACE_ERROR ((LM_INFO,
               "Xt not supported on this platform\n"));
@@ -15,18 +16,23 @@ int main (int, char *[])
 }
 
 #else
-
 #include "Control.h"
 #include "Client.h"
 #include "tao/xt_resource.h"
 
 int
-main (int argc,
-      char* argv[])
+main (int argc, char *argv[])
 {
-  XtAppContext  app;
-  Widget        toplevel = XtAppInitialize ( &app, "Start & Stop", NULL, 0,
-                                             &argc, argv, NULL, NULL, 0 );
+  XtAppContext app;
+  Widget toplevel = XtAppInitialize (&app,
+                                     "Start & Stop",
+                                     NULL,
+                                     0,
+                                     &argc,
+                                     argv,
+                                     NULL,
+                                     NULL,
+                                     0);
 
   TAO_XT_Resource_Factory::set_context (app);
 
@@ -69,8 +75,10 @@ Client::Client (CORBA::ORB_ptr orb)
 Client::~Client (void)
 {
 }
+
 void
-Client::parse_args (int argc, char *argv[],
+Client::parse_args (int argc,
+                    char *argv[],
                     CORBA::Environment &ACE_TRY_ENV)
 {
   const char *ior = "file://test.ior";
@@ -112,8 +120,9 @@ void
 Client::add_callback (Control &ctrl)
 {
   XtPointer client_data = ACE_static_cast (XtPointer, this);
-  // Register callbacks, specifying the object's instance
-  // pointer as client data.
+
+  // Register callbacks, specifying the object's instance pointer as
+  // client data.
   XtAddCallback (ctrl.startwidget (),
                  XmNactivateCallback,
                  &Client::start_callback,
@@ -125,13 +134,13 @@ Client::add_callback (Control &ctrl)
                  client_data);
 }
 
-
 void
 Client::start_callback (Widget widget,
                         XtPointer client_data,
-                        XtPointer )
+                        XtPointer)
 {
-  Client *self = ACE_static_cast (Client*,client_data);
+  Client *self = ACE_static_cast (Client *,
+                                  client_data);
   self->start_hook ();
 }
 
@@ -140,7 +149,8 @@ Client::stop_callback (Widget widget,
                        XtPointer client_data,
                        XtPointer )
 {
-  Client *self = ACE_static_cast (Client*,client_data);
+  Client *self = ACE_static_cast (Client *,
+                                  client_data);
   self->stop_hook ();
 }
 
@@ -173,10 +183,12 @@ Client::stop_hook (void)
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Caught an exception in the stop button callback");
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught an exception in the stop button callback");
       return;
     }
   ACE_ENDTRY;
   ACE_CHECK;
 }
+
 #endif /* ACE_HAS_FL */

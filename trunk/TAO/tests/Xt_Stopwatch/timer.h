@@ -9,15 +9,15 @@
 //   timer.h
 //
 // = AUTHOR
-//   Bala
+//   Bala <bala@cs.wustl.edu>
 //
 // ============================================================================
+
 #ifndef TIMER_H
 #define TIMER_H
 
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
-
 
 class Timer_imp
 {
@@ -28,24 +28,25 @@ class Timer_imp
              Stopwatch_display *);
   // Constructor..
     
-  void start(void);        
+  void start (void);        
   // Resets, and starts the clock ticking
 
   void stop (void);         
   // Stops the clock
 
-  CORBA::Float  elapsed_time(void ); 
+  CORBA::Float  elapsed_time (void); 
   // Returns time since timer started
 
  private:
   
-  static void tick_callback (XtPointer, XtIntervalId* );
-  // Static member function used for TimeOut callback  
+  static void tick_callback (XtPointer,
+                             XtIntervalId *);
+  // Static member function used for TimeOut callback.
   
   void tick (void);  
   // Called every interval_ milliseconds
   
-  virtual void report_time (CORBA::Float );
+  virtual void report_time (CORBA::Float);
   // Called at each clock tick...  
 
   Stopwatch_display *stopwatch_;
@@ -63,4 +64,5 @@ class Timer_imp
   XtAppContext app_; 
   // Required by Xt functions
 };
-#endif
+
+#endif /* TIMER_H */
