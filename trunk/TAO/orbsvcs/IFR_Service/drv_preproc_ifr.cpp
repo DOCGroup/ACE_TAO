@@ -580,8 +580,8 @@ DRV_pre_proc (const char *myfile)
 
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC) 
     {
-      FILE *preproc = ACE_OS::fopen (tmp_file, "r");      
-      char buffer[BUFSIZ + 1];  // 1 for extra null
+      FILE *preproc = ACE_OS::fopen (tmp_file, "r");
+      char buffer[ACE_Log_Record::MAXLOGMSGLEN];
       int bytes;
 
       if (preproc == NULL)
@@ -594,15 +594,25 @@ DRV_pre_proc (const char *myfile)
           ACE_OS::exit (99);
         }
 
+      // ACE_DEBUG sends to stderr - we want stdout for this dump
+      // of the preprocessor output. So we modify the singleton that
+      // was created in this process. Since IDL_CF_ONLY_PREPROC causes
+      // an (almost) immediate exit below, we don't have to restore
+      // the singleton's default parameters.
+      ACE_Log_Msg *out = ACE_Log_Msg::instance ();
+      out->msg_ostream (&cout);
+      out->clr_flags (ACE_Log_Msg::STDERR);
+
       while ((bytes = ACE_OS::fread (buffer, 
                                      sizeof (char), 
-                                     BUFSIZ, 
+                                     ACE_Log_Record::MAXLOGMSGLEN - 1, 
                                      preproc)) 
-          != 0) 
+          != 0)
         {
-          buffer[bytes] = 0;  // Null char
+          buffer[bytes] = 0;
 
-          ACE_DEBUG ((LM_DEBUG, buffer));
+          ACE_DEBUG ((LM_DEBUG, 
+                      buffer));
         }
 
       ACE_OS::fclose (preproc);
