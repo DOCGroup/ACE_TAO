@@ -272,7 +272,7 @@ sub parse_exclude {
   my(@exclude) = ();
 
   while(<$fh>) {
-    my($line) = $self->strip_line($_);
+    my($line) = $self->preprocess_line($fh, $_);
 
     if ($line eq '') {
     }
