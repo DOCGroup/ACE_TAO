@@ -196,6 +196,23 @@ sub read_global_configuration {
 }
 
 
+sub process_assignment {
+  my($self)   = shift;
+  my($name)   = shift;
+  my($value)  = shift;
+  my($assign) = shift;
+
+  ## Support the '*' mechanism as in the project name, to allow
+  ## the user to correctly depend on another project within the same
+  ## directory.
+  if ($name eq 'after' && $value =~ /\*/) {
+    my($def) = $self->get_default_project_name();
+    $value = $self->fill_type_name($value, $def);
+  }
+  $self->SUPER::process_assignment($name, $value, $assign);
+}
+
+
 sub parse_line {
   my($self)   = shift;
   my($ih)     = shift;
