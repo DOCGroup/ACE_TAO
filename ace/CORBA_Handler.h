@@ -30,16 +30,6 @@
 #undef EXCEPTIONS
 #undef WANT_ORBIX_FDS
 
-#if defined (ACE_WIN32) && !defined (ACE_ORBIX_HAS_NAMESPACES)
-#define ACE_CORBA_1(NAME) CORBA_##NAME
-#define ACE_CORBA_2(TYPE, NAME) CORBA_##TYPE##_##NAME
-#define ACE_CORBA_3(TYPE, NAME) CORBA_##TYPE##::##NAME
-#else
-#define ACE_CORBA_1(NAME) CORBA::##NAME
-#define ACE_CORBA_2(TYPE, NAME) CORBA::##TYPE##::##NAME
-#define ACE_CORBA_3(TYPE, NAME) CORBA::##TYPE##::##NAME
-#endif /* ACE_WIN32 */
-
 class ACE_Export ACE_CORBA_Handler : public ACE_Service_Object
   // = TITLE
   //     Handle CORBA requests in conjunction with ACE.

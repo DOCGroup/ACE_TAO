@@ -382,7 +382,7 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
           file->release ();
 
           this->remove_i ((char *) file->filename_);
-          result = this->hash_.bind (file->filename_, file);
+          result = this->hash_.bind (file->filename (), file);
 
           if (result == 0)
             file->acquire ();

@@ -70,11 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "idl.h"
 #include "idl_extern.h"
-
 #include "fe_private.h"
-
 #include "y.tab.h"
-
 #include <string.h>
 
 static char	idl_escape_reader(char *);
@@ -83,7 +80,7 @@ static long	idl_atoi(char *, long);
 static void	idl_parse_line_and_file(char *);
 static void	idl_store_pragma(char *);
 
-#if 0
+#if 0 /* defined (HPUX) */
 // HPUX has yytext typed to unsigned char *. We make sure here that
 // we'll always use char * static char* __yytext = (char*) yytext;
 // NOTE: This will not work under flex(1) were yytext is not a fixed
@@ -93,8 +90,10 @@ inline char *__yytext()
 {
   return (char *) yytext;
 }
+#define ace_yytext __yytext()
+#else
+#define ace_yytext yytext
 #endif /* 0 */
-
 %}
 
 %array
@@ -147,66 +146,69 @@ oneway		return IDL_ONEWAY;
 		}
 
 [a-zA-Z][a-zA-Z0-9_]*	{
-    char *z = (char *) malloc(strlen(yytext) + 1);
-    strcpy(z, yytext);
+    char *z = (char *) malloc(strlen(ace_yytext) + 1);
+    strcpy(z, ace_yytext);
     yylval.strval = z;
     return IDENTIFIER;
 }
 
 -?[0-9]+"."[0-9]*([eE][+-]?[0-9]+)?[lLfF]?      {
-                  yylval.dval = idl_atof(yytext);
+                  yylval.dval = idl_atof(ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 -?[0-9]+[eE][+-]?[0-9]+[lLfF]?  {
-                  yylval.dval = idl_atof(yytext);
+                  yylval.dval = idl_atof(ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 
 -?[1-9][0-9]*	{
-		  yylval.ival = idl_atoi(yytext, 10);
+		  yylval.ival = idl_atoi(ace_yytext, 10);
 		  return IDL_INTEGER_LITERAL;
 	        }
 -?0[xX][a-fA-F0-9]+ {
-		  yylval.ival = idl_atoi(yytext, 16);
+		  yylval.ival = idl_atoi(ace_yytext, 16);
 		  return IDL_INTEGER_LITERAL;
 	        }
 -?0[0-7]*	{
-		  yylval.ival = idl_atoi(yytext, 8);
+		  yylval.ival = idl_atoi(ace_yytext, 8);
 		  return IDL_INTEGER_LITERAL;
 	      	}
 
 "\""[^\"]*"\""	{
 		  /* Skip the quotes */
-		  char *tmp = yytext;
+		  char *tmp = ace_yytext;
 		  tmp[strlen(tmp)-1] = '\0';
 		  yylval.sval = new String(tmp + 1);
 		  return IDL_STRING_LITERAL;
 	      	}
 "'"."'"		{
-		  yylval.cval = yytext() [1];
+		  yylval.cval = ace_yytext [1];
 		  return IDL_CHARACTER_LITERAL;
 	      	}
 "'"\\([0-7]{1,3})"'"	{
 		  // octal character constant
-		  yylval.cval = idl_escape_reader(yytext + 1);
+		  yylval.cval = idl_escape_reader(ace_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
 		}
 "'"\\."'"	{
-		  yylval.cval = idl_escape_reader(yytext + 1);
+		  yylval.cval = idl_escape_reader(ace_yytext + 1);
 		  return IDL_CHARACTER_LITERAL;
 		}
 ^#[ \t]*pragma[ \t].*\n	{/* remember pragma */
   		  idl_global->set_lineno(idl_global->lineno() + 1);
-		  idl_store_pragma(yytext);
+		  idl_store_pragma(ace_yytext);
 		}
 ^#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*\n		{
-		  idl_parse_line_and_file(yytext);
+		  idl_parse_line_and_file(ace_yytext);
+		}
+^#[ \t]*[0-9]*" ""\""[^\"]*"\""\n		{
+		  idl_parse_line_and_file(ace_yytext);
 		}
 ^#line[ \t]*[0-9]*" ""\""[^\"]*"\""\n		{
-		  idl_parse_line_and_file(yytext);
+		  idl_parse_line_and_file(ace_yytext);
 		}
 ^#[ \t]*[0-9]*\n {
-		  idl_parse_line_and_file(yytext);
+		  idl_parse_line_and_file(ace_yytext);
 	        }
 ^#[ \t]*ident.*\n	{
 		  /* ignore cpp ident */
@@ -234,7 +236,7 @@ oneway		return IDL_ONEWAY;
 \n		{
   		  idl_global->set_lineno(idl_global->lineno() + 1);
 		}
-.		return yytext [0];
+.		return ace_yytext [0];
 
 %%
 	/* subroutines */

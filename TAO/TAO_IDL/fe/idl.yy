@@ -72,9 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 %{
 #include "idl.h"
 #include "idl_extern.h"
-
 #include "fe_private.h"
-
 #include <stdio.h>
 
 #if (defined(apollo) || defined(hpux)) && defined(__cplusplus)
@@ -84,6 +82,11 @@ extern	"C" int yywrap();
 void yyerror (char *);
 int yylex (void);
 extern "C" int yywrap (void);
+extern char yytext[];
+extern int yyleng;
+#define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext) 
+// Force the pretty debugging code to compile.
+#define YYDEBUG 1 
 %}
 
 /*
