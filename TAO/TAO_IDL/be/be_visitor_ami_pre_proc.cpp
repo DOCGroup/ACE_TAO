@@ -832,10 +832,12 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
             {
               // Create the argument.
               be_argument *arg = 0;
+              UTL_ScopedName arg_name (original_arg->local_name (), 
+                                       0);
               ACE_NEW_RETURN (arg,
                               be_argument (AST_Argument::dir_IN,
                                            original_arg->field_type (),
-                                           original_arg->name ()),
+                                           &arg_name),
                               0);
 
               op->be_add_argument (arg);

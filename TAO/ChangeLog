@@ -1,8 +1,18 @@
+Tue Dec 23 09:47:27 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+	* TAO_IDL/ast/ast_decl.cpp:
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+
+	  Fixed incorrect dropping of _cxx_ prefix in parameter name (if
+	  it clashes with a C++ keyword) of AMI sendc_* operation. Thanks
+	  to  Cyrille Chépélov <cyrille@softek.fr> for reporting the bug.
+
 Tue Dec 23 12:53:59 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* docs/tutorials/Quoter/RT_Event_Service/Quoter_RT_Event_Service.mpc:
 	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
 	* docs/tutorials/Quoter/Event_Service/Quoter_Event_Service.mpc:
+	
 	  Because these tutorials using orbsvcs, base the projects on
           orbsvcsexe instead of taoexe because with taoexe we lack the
 	  $(TAO_ROOT)/orbsvcs include path
