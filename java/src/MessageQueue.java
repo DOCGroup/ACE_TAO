@@ -462,11 +462,14 @@ public class MessageQueue
 	this.tail_ = newItem;
       }
 
-    // Make sure to count *all* the bytes in a composite message!!! 
-    for (MessageBlock temp = newItem; 
-	 temp != null; 
-	 temp = temp.cont ())
-      this.currentBytes_ += temp.size ();
+    if (item.msgType() != MessageType.MB_OBJECT)
+      {
+	// Make sure to count *all* the bytes in a composite message!!! 
+	for (MessageBlock temp = newItem; 
+	     temp != null; 
+	     temp = temp.cont ())
+	  this.currentBytes_ += temp.size ();
+      }
 
     this.currentCount_++;
     return this.currentCount_;
@@ -487,11 +490,14 @@ public class MessageQueue
 
     this.head_ = newItem;
 
-    // Make sure to count *all* the bytes in a composite message!!!
-    for (MessageBlock temp = newItem; 
-	 temp != null; 
-	 temp = temp.cont ())
-      this.currentBytes_ += temp.size ();
+    if (item.msgType() != MessageType.MB_OBJECT)
+      {
+	// Make sure to count *all* the bytes in a composite message!!!
+	for (MessageBlock temp = newItem; 
+	     temp != null; 
+	     temp = temp.cont ())
+	  this.currentBytes_ += temp.size ();
+      }
 
     this.currentCount_++;
 
@@ -544,11 +550,14 @@ public class MessageQueue
 	  }
       }
 
-    // Make sure to count *all* the bytes in a composite message!!!
-    for (MessageBlock temp = newItem; 
-	 temp != null; 
-	 temp = temp.cont ())
-      this.currentBytes_ += temp.size ();
+    if (item.msgType() != MessageType.MB_OBJECT)
+      {    
+	// Make sure to count *all* the bytes in a composite message!!!
+	for (MessageBlock temp = newItem; 
+	     temp != null; 
+	     temp = temp.cont ())
+	  this.currentBytes_ += temp.size ();
+      }
 
     this.currentCount_++;
     return this.currentCount_;
@@ -562,12 +571,15 @@ public class MessageQueue
     if (this.head_ == null)
       this.tail_ = null;
 
-    // Make sure to subtract off all of the bytes associated with this
-    // message.
-    for (MessageBlock temp = firstItem; 
-	 temp != null; 
-	 temp = temp.cont ())
-      this.currentBytes_ -= temp.size ();
+    if (item.msgType() != MessageType.MB_OBJECT)
+      {
+	// Make sure to subtract off all of the bytes associated with this
+	// message.
+	for (MessageBlock temp = firstItem; 
+	     temp != null; 
+	     temp = temp.cont ())
+	  this.currentBytes_ -= temp.size ();
+      }
 
     this.currentCount_--;
     return firstItem;
