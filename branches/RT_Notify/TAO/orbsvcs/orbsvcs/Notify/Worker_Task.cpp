@@ -17,7 +17,6 @@ TAO_NS_Worker_Task::~TAO_NS_Worker_Task ()
 }
 
 void
-TAO_NS_Worker_Task::shutdown (void)
+TAO_NS_Worker_Task::update_qos_properties (const TAO_NS_QoSProperties& /*qos_properties*/)
 {
-  return;
 }

@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Method_Request.h"
+#include "Method_Request.h"
 
 class TAO_NS_ThreadPool_Task;
 
@@ -29,7 +29,7 @@ class TAO_NS_ThreadPool_Task;
  * @brief Shutdown message for the ThreadPool_Task
  *
  */
-class TAO_Notify_Export TAO_NS_Method_Request_Shutdown : public ACE_Method_Request
+class TAO_Notify_Export TAO_NS_Method_Request_Shutdown : public TAO_NS_Method_Request
 {
 public:
   /// Constuctor
@@ -38,8 +38,11 @@ public:
   /// Destructor
   ~TAO_NS_Method_Request_Shutdown ();
 
-  /// Execute method.
-  virtual int call (void);
+  /// Create a copy of this object.
+  TAO_NS_Method_Request* copy (void);
+
+  /// Execute the Request
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
 
 private:
   // Task to shutdown

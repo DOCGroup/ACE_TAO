@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 // $Id$
 // Definition for Win32 Export directives.

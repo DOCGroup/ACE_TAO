@@ -1,9 +1,5 @@
 // $Id$
 
-#include "ProxySupplier.h"
-#include "Method_Request_Dispatch.h"
-#include "Worker_Task.h"
-
 ACE_INLINE int
 TAO_NS_ProxySupplier::is_connected (void)
 {
@@ -14,4 +10,10 @@ ACE_INLINE TAO_NS_Consumer*
 TAO_NS_ProxySupplier::consumer (void)
 {
   return this->consumer_;
+}
+
+ACE_INLINE TAO_NS_ConsumerAdmin*
+TAO_NS_ProxySupplier::consumer_admin (void)
+{
+  return this->consumer_admin_;
 }

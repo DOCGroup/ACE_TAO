@@ -21,7 +21,10 @@
 
 #include "orbsvcs/CosNotificationC.h"
 #include "EventTypeSeq.h"
-#include "Types.h"
+
+class TAO_NS_Proxy;
+class TAO_NS_QoSProperties;
+class TAO_NS_Peer;
 
 /**
  * @class TAO_NS_Peer
@@ -37,50 +40,37 @@ public:
   TAO_NS_Peer (void);
 
   /// Destructor
-  ~TAO_NS_Peer ();
-
-  void updates_dispatch_observer (TAO_NS_Updates_Dispatch_Observer* updates_dispatch_observer);
-
-  /// Access Proxy.
-  virtual TAO_NS_Proxy* proxy (void) = 0;
+  virtual ~TAO_NS_Peer ();
 
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
 
-  ///=Subscription change
+  /// Release
+  virtual void release (void) = 0;
 
-  /// Subscription type added
-  void type_added (const TAO_NS_EventType& added);
+  /// Shutdown the peer.
+  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Subscription type removed
-  void type_removed (const TAO_NS_EventType& removed);
+  /// Access Proxy.
+  virtual TAO_NS_Proxy* proxy (void) = 0;
 
-  /// Dispatch Pending.
-  void dispatch_pending (ACE_ENV_SINGLE_ARG_DECL);
+  // Dispatch updates
+  virtual void dispatch_updates (const TAO_NS_EventTypeSeq & added,
+                                 const TAO_NS_EventTypeSeq & removed
+                                 ACE_ENV_ARG_DECL);
+
+  /// QoS changed notification from the Peer.
+  virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
+
+  /// Handle dispatch exceptions.
+  void handle_dispatch_exception (ACE_ENV_SINGLE_ARG_DECL);
 
 protected:
-  // Dispatch updates implementation.
-  virtual void dispatch_updates_i (const TAO_NS_EventTypeSeq & added,
-                                   const TAO_NS_EventTypeSeq & removed
+  /// Implementation of Peer specific dispatch_updates
+  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
+                                   const CosNotification::EventTypeSeq& removed
                                    ACE_ENV_ARG_DECL) = 0;
-
-  ///= Data Members
-
-  /// The mutex to serialize access to state variables.
-  TAO_SYNCH_MUTEX lock_;
-
-  /// Types added.
-  TAO_NS_EventTypeSeq added_;
-
-  /// Types removed.
-  TAO_NS_EventTypeSeq removed_;
-
-  // Updates Dispatch Observer
-  TAO_NS_Updates_Dispatch_Observer* updates_dispatch_observer_;
-
-  /// Retry count. How many times have we failed to contact the remote peer?
-  int retry_count_;
 };
 
 #if defined (__ACE_INLINE__)

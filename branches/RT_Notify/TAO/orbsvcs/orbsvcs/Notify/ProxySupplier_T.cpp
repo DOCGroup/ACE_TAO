@@ -19,6 +19,7 @@ ACE_RCSID(Notify, TAO_NS_ProxySupplier_T, "$id$")
 #include "Method_Request_Dispatch_No_Filtering.h"
 #include "Worker_Task.h"
 #include "Event_Manager.h"
+#include "ConsumerAdmin.h"
 
 template <class SERVANT_TYPE>
 TAO_NS_ProxySupplier_T<SERVANT_TYPE>::TAO_NS_ProxySupplier_T (void)
@@ -171,7 +172,7 @@ TAO_NS_ProxySupplier_T<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::ConsumerAdmin_var ret;
 
-  CORBA::Object_var object = this->parent_->ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var object = this->consumer_admin_->ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ret._retn ());
 
   ret = CosNotifyChannelAdmin::ConsumerAdmin::_narrow (object.in () ACE_ENV_ARG_PARAMETER);

@@ -4,6 +4,7 @@
 #define TAO_NS_PROXYCONSUMER_T_CPP
 
 #include "ProxyConsumer_T.h"
+#include "SupplierAdmin.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "ProxyConsumer_T.inl"
@@ -39,7 +40,7 @@ TAO_NS_ProxyConsumer_T<SERVANT_TYPE>::MyAdmin (ACE_ENV_SINGLE_ARG_DECL)
 {
   CosNotifyChannelAdmin::SupplierAdmin_var ret;
 
-  CORBA::Object_var object = this->parent_->ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Object_var object = this->supplier_admin_->ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (ret._retn ());
 
   ret = CosNotifyChannelAdmin::SupplierAdmin::_narrow (object.in () ACE_ENV_ARG_PARAMETER);

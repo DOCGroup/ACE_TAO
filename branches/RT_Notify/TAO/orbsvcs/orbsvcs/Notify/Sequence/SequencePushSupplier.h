@@ -21,7 +21,6 @@
 
 #include "orbsvcs/CosNotifyCommC.h"
 #include "../Supplier.h"
-#include "../Destroy_Callback.h"
 
 class TAO_NS_ProxyConsumer;
 

@@ -13,7 +13,7 @@
 #define TAO_NS_ETCL_FILTER_H
 #include "ace/pre.h"
 
-#include "etcl_notify_filtering_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +23,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "orbsvcs/CosNotifyFilterS.h"
-#include "Constraint_Interpreter.h"
+#include "Notify_Constraint_Interpreter.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -35,10 +35,10 @@
 /**
  * @class TAO_ETCL_Filter
  *
- * @brief
+ * @brief Implementation of CosNotifyFilter::Filter servant.
  *
  */
-class ETCL_Notify_Filtering_Export TAO_NS_ETCL_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
+class TAO_Notify_Export TAO_NS_ETCL_Filter : public POA_CosNotifyFilter::Filter, public PortableServer::RefCountServantBase
 {
 public:
   /// Constuctor
@@ -131,6 +131,11 @@ private:
                      CosNotifyFilter::InvalidConstraint
                      ));
 
+  void remove_all_constraints_i (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((
+                     CORBA::SystemException
+                     ));
+
   struct TAO_NS_Constraint_Expr
   {
     // = DESCRIPTION
@@ -143,24 +148,19 @@ private:
     // Constraint Interpreter.
   };
 
+  /// Lock to serialize access to data members.
+  TAO_SYNCH_MUTEX lock_;
+
   /// Id generator for ConstraintInfo's.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> constraint_expr_ids_;
+  ACE_Atomic_Op <ACE_SYNCH_NULL_MUTEX, CORBA::Long> constraint_expr_ids_;
 
   /// A list of the constraints stored in this filter.
-  ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
-                                         ACE_NESTED_CLASS (TAO_NS_ETCL_Filter, TAO_NS_Constraint_Expr*),
-                                         TAO_SYNCH_MUTEX>
-  constraint_expr_list_;
+  typedef ACE_Hash_Map_Manager <CosNotifyFilter::ConstraintID,
+                                ACE_NESTED_CLASS (TAO_NS_ETCL_Filter, TAO_NS_Constraint_Expr*),
+                                ACE_SYNCH_NULL_MUTEX>
+  CONSTRAINT_EXPR_LIST;
 
-  typedef ACE_Hash_Map_Iterator <CosNotifyFilter::ConstraintID,
-                                                  ACE_NESTED_CLASS (TAO_NS_ETCL_Filter, TAO_NS_Constraint_Expr*),
-                                                  TAO_SYNCH_MUTEX>
-  CONSTRAINT_EXPR_LIST_ITER;
-
-  typedef ACE_Hash_Map_Entry <CosNotifyFilter::ConstraintID,
-                                               ACE_NESTED_CLASS (TAO_NS_ETCL_Filter,
-                                                                 TAO_NS_Constraint_Expr*)>
-  CONSTRAINT_EXPR_ENTRY;
+  CONSTRAINT_EXPR_LIST constraint_expr_list_;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

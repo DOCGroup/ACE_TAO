@@ -19,32 +19,58 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Method_Request.h"
+#include "ace/Message_Block.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "Event.h"
-#include "Types.h"
 
 /**
  * @class TAO_NS_Method_Request
  *
- * @brief Base class for NS method Requests
+ * @brief Interface for NS method Requests
  *
  */
-class TAO_Notify_Export TAO_NS_Method_Request : public ACE_Method_Request
+class TAO_Notify_Export TAO_NS_Method_Request : public ACE_Message_Block
 {
 public:
-  /// Constuctor
-  TAO_NS_Method_Request (TAO_NS_Event_var& event);
+  enum {PRIORITY_BASE = 32768};
 
-  /// Destructor
-  virtual ~TAO_NS_Method_Request ();  
+  /// Execute the Request
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL) = 0;
 
   /// Create a copy of this object.
   virtual TAO_NS_Method_Request* copy (void) = 0;
+};
+
+/***********************************************************************/
+
+/**
+ * @class TAO_NS_Method_Request_Event
+ *
+ * @brief Base class for NS method Requests on Events.
+ *
+ */
+class TAO_Notify_Export TAO_NS_Method_Request_Event : public TAO_NS_Method_Request
+{
+public:
+  /// Constuctor
+  TAO_NS_Method_Request_Event (const TAO_NS_Event_var& event);
+
+  /// Destructor
+  virtual ~TAO_NS_Method_Request_Event ();
+
+  /// Execute the Request
+  virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Create a copy of this object.
+  virtual TAO_NS_Method_Request* copy (void);
+
+  /// Obtain the event.
+  const TAO_NS_Event_var& event (void);
 
 protected:
-  TAO_NS_Event_var event_;
+  const TAO_NS_Event_var event_;
 };
+
 
 #if defined (__ACE_INLINE__)
 #include "Method_Request.inl"

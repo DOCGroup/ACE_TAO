@@ -20,11 +20,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "Event.h"
-#include "Supplier.h"
 #include "Proxy.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
+
+class TAO_NS_SupplierAdmin;
+class TAO_NS_Supplier;
 
 /**
  * @class TAO_NS_ProxyConsumer
@@ -32,7 +33,7 @@
  * @brief Base class for all types of ProxyConsumer implementations.
  *
  */
-class TAO_Notify_Export TAO_NS_ProxyConsumer : public TAO_NS_Proxy
+class TAO_Notify_Export TAO_NS_ProxyConsumer : public virtual TAO_NS_Proxy
 {
 public:
   /// Constuctor
@@ -40,6 +41,9 @@ public:
 
   /// Destructor
   ~TAO_NS_ProxyConsumer ();
+
+  /// Init
+  void init (TAO_NS_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL);
 
   /// Connect
   void connect (TAO_NS_Supplier* supplier ACE_ENV_ARG_DECL)
@@ -49,11 +53,15 @@ public:
                      ));
 
   /// Disconnect
-  void disconnect (void);
+  void disconnect (ACE_ENV_SINGLE_ARG_DECL);
 
   /// Shutdown  (TAO_NS_Container_T method)
-  virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
+  virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Destroy this object.
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Start event propagation.
   virtual void push (TAO_NS_Event_var &event);
 
   /// Access our Peer.
@@ -62,9 +70,16 @@ public:
   /// Access the Supplier
   TAO_NS_Supplier* supplier (void);
 
-protected:
   /// Return 1 if connected
   int is_connected (void);
+
+  /// The SA parent.
+  TAO_NS_SupplierAdmin* supplier_admin (void);
+
+protected:
+  ///= Data Members.
+  /// The SA parent.
+  TAO_NS_SupplierAdmin* supplier_admin_;
 
   /// The Supplier that we're connect to.
   TAO_NS_Supplier* supplier_;

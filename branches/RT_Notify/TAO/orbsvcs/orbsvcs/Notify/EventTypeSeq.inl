@@ -1,4 +1,1 @@
 // $Id$
-
-#include "EventTypeSeq.h"
-	

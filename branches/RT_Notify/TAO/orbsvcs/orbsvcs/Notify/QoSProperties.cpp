@@ -75,8 +75,8 @@ TAO_NS_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, CosNot
   return err_index == -1 ? 0 : 1;
 }
 
-void
-TAO_NS_QoSProperties::transfer (TAO_NS_QoSProperties& qos_properties)
+int
+TAO_NS_QoSProperties::copy (TAO_NS_QoSProperties& qos_properties)
 {
   qos_properties.priority_ = this->priority_;
   qos_properties.timeout_ = this->timeout_;
@@ -89,12 +89,24 @@ TAO_NS_QoSProperties::transfer (TAO_NS_QoSProperties& qos_properties)
 
   for (; iter.next (entry); iter.advance ())
     {
-      qos_properties.property_map_.bind (entry->ext_id_, entry->int_id_);
+      if (qos_properties.property_map_.rebind (entry->ext_id_, entry->int_id_) == -1)
+        return -1;
     }
+
+  return 0;
+}
+
+int
+TAO_NS_QoSProperties::transfer (TAO_NS_QoSProperties& qos_properties)
+{
+  if (this->copy (qos_properties) == -1)
+    return -1;
 
   // unbind the properties that we don't want to transfer.
   qos_properties.property_map_.unbind (NotifyExt::ThreadPool);
   qos_properties.property_map_.unbind (NotifyExt::ThreadPoolLanes);
+
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

@@ -19,41 +19,43 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Container.h"
-#include "Object_T.h"
+#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
 /**
  * @class TAO_NS_Container_T
  *
- * @brief A template class that manages a collection.  
- * TYPE = type of collection, OBJECT = the object, PARENT = parent of object (grandparent of TYPE) 
+ * @brief A template class that manages a collection.
+ * TYPE = type of collection
  *
  */
-template <class TYPE, class OBJECT, class PARENT = TAO_NS_NULL_PARENT>
-class TAO_Notify_Export TAO_NS_Container_T : public TAO_NS_Object_T<OBJECT, PARENT>, public virtual TAO_NS_Container
+template <class TYPE>
+class TAO_Notify_Export TAO_NS_Container_T
 {
-public:
+  typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
+ public:
+
   /// Constuctor
   TAO_NS_Container_T (void);
 
   /// Destructor
-  virtual ~TAO_NS_Container_T ();  
-
-  /// Insert object to this container.
-  void insert (TYPE* type ACE_ENV_ARG_DECL);
-
-  /// Remove type from container_
-  void remove (TYPE* type ACE_ENV_ARG_DECL);
+  virtual ~TAO_NS_Container_T ();
 
   /// Init this object.
-  void init_collection (ACE_ENV_SINGLE_ARG_DECL);
+  void init (ACE_ENV_SINGLE_ARG_DECL);
+
+  /// Insert object to this container.
+  virtual void insert (TYPE* type ACE_ENV_ARG_DECL);
+
+  /// Remove type from container_
+  virtual void remove (TYPE* type ACE_ENV_ARG_DECL);
 
   /// Shutdown
   virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
-protected:
-  typedef TAO_ESF_Proxy_Collection<TYPE> COLLECTION;
+  /// Collection
+  COLLECTION* collection (void);
 
+protected:
   /// The collection data structure that we add objects to.
   COLLECTION* collection_;
 };

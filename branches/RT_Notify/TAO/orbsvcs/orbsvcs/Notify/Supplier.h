@@ -21,6 +21,7 @@
 
 #include "Peer.h"
 
+#include "orbsvcs/CosNotifyCommC.h"
 class TAO_NS_ProxyConsumer;
 
 /**
@@ -45,8 +46,16 @@ public:
   virtual TAO_NS_Proxy* proxy (void);
 
 protected:
+  /// Dispatch updates implementation.
+  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
+                                   const CosNotification::EventTypeSeq& removed
+                                   ACE_ENV_ARG_DECL);
+
   /// The proxy that we associate with.
   TAO_NS_ProxyConsumer* proxy_;
+
+  /// Interface that accepts subscription_changes
+  CosNotifyComm::NotifySubscribe_var subscribe_;
 };
 
 #if defined (__ACE_INLINE__)

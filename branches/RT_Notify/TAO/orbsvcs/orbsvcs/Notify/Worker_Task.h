@@ -20,27 +20,46 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Method_Request.h"
+#include "Refcountable.h"
+
+class TAO_NS_AdminProperties;
+class TAO_NS_QoSProperties;
+class TAO_NS_Timer;
+class TAO_NS_Buffering_Strategy;
 
 /**
  * @class TAO_NS_Worker_Task
  *
  * @brief Base Worker Task.
  *
+ * Memory Management : The Worker Task should be allocated on the heap and
+ * the <shutdown> method should be called to release memory.
+ *
  */
-class TAO_Notify_Export TAO_NS_Worker_Task
+class TAO_Notify_Export TAO_NS_Worker_Task : public TAO_NS_Refcountable
 {
 public:
   /// Constuctor
   TAO_NS_Worker_Task (void);
 
-  /// Destructor
-  virtual ~TAO_NS_Worker_Task ();
+  /// Update QoS Properties.
+  virtual void update_qos_properties (const TAO_NS_QoSProperties& qos_properties);
 
+  ///= Public method to be implemented by subclasses.
   /// Exec the request.
   virtual void exec (TAO_NS_Method_Request& method_request) = 0;
 
   /// Shutdown task
-  virtual void shutdown (void);
+  virtual void shutdown (void) = 0;
+
+  /// The object used by clients to register timers.
+  virtual TAO_NS_Timer* timer (void) = 0;
+
+  virtual TAO_NS_Buffering_Strategy* buffering_strategy (void) = 0;
+
+protected:
+  /// Destructor
+  virtual ~TAO_NS_Worker_Task ();
 };
 
 #if defined (__ACE_INLINE__)

@@ -20,6 +20,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Worker_Task.h"
+#include "AdminProperties.h"
+#include "Destroy_Callback.h"
+
+class TAO_NS_Timer_Reactor;
 
 /**
  * @class TAO_NS_Reactive_Task
@@ -27,7 +31,7 @@
  * @brief A reactive worker task. Simply executes the command in the caller's context.
  *
  */
-class TAO_Notify_Export TAO_NS_Reactive_Task : public TAO_NS_Worker_Task
+class TAO_Notify_Export TAO_NS_Reactive_Task : public TAO_NS_Worker_Task, public TAO_NS_Destroy_Callback
 {
 public:
   /// Constuctor
@@ -36,8 +40,27 @@ public:
   /// Destructor
   ~TAO_NS_Reactive_Task ();
 
+  /// Release
+  virtual void release (void);
+
+  /// Init the reactive task.
+  void init (TAO_NS_AdminProperties_var& admin_properties ACE_ENV_ARG_DECL);
+
+  /// Shutdown task
+  virtual void shutdown (void);
+
   /// Exec the request.
   virtual void exec (TAO_NS_Method_Request& method_request);
+
+  /// The object used by clients to register timers. This method returns a Reactor based Timer.
+  virtual TAO_NS_Timer* timer (void);
+
+  /// Returns NULL.
+  virtual TAO_NS_Buffering_Strategy* buffering_strategy (void);
+
+protected:
+  /// The timer.
+  TAO_NS_Timer_Reactor* timer_;
 };
 
 #if defined (__ACE_INLINE__)

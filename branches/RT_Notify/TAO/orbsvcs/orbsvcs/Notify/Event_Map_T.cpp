@@ -8,7 +8,6 @@
 #include "Event_Map_Entry_T.h"
 #include "Properties.h"
 #include "Factory.h"
-#include "Event_Map_Observer.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Event_Map_T.inl"
@@ -18,7 +17,7 @@ ACE_RCSID(RT_Notify, TAO_NS_Event_Map_T, "$Id$")
 
 template <class PROXY, class ACE_LOCK>
 TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::TAO_NS_Event_Map_T (void)
-  :event_type_count_ (0), broadcast_collection_ (0), observer_ (0)
+  :proxy_count_ (0)
 {
 
 }
@@ -31,56 +30,53 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::~TAO_NS_Event_Map_T ()
 template <class PROXY, class ACE_LOCK> void
 TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::init (ACE_ENV_SINGLE_ARG_DECL)
 {
-  broadcast_collection_ = this->create_entry (TAO_NS_EventType::special () ACE_ENV_ARG_PARAMETER);
+  this->broadcast_entry_.init (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  this->updates_entry_.init (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
-template <class PROXY, class ACE_LOCK> TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::COLLECTION*
-TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::create_entry (const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL)
+template <class PROXY, class ACE_LOCK> void
+TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::connect (PROXY* proxy ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Event_Map_Entry_T<PROXY>* entry;
+  this->updates_entry_.connected (proxy ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  int result = -1;
+  ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+  ++this->proxy_count_;
+}
 
-  {
-    ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, 0);
+template <class PROXY, class ACE_LOCK> void
+TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::disconnect (PROXY* proxy ACE_ENV_ARG_DECL)
+{
+  this->updates_entry_.disconnected (proxy ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-    result = this->map_.find (event_type, entry);
-  }
-
-  if (result == -1)
-    {
-      ACE_NEW_THROW_EX (entry,
-                        ENTRY (),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (0);
-
-      entry->init (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, 0);
-
-      if (map_.bind (event_type, entry) == -1)
-        ACE_THROW_RETURN (CORBA::NO_MEMORY (), 0);
-  }
-
-  return entry->collection ();
+  ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
+  --this->proxy_count_;
 }
 
 template <class PROXY, class ACE_LOCK> int
 TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Event_Map_Entry_T<PROXY>* entry;
+  ENTRY* entry;
 
   int result = -1;
 
-  {
-    ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+  if (event_type.is_special () == 1)
+    {
+      entry = &this->broadcast_entry_;
 
-    result = this->map_.find (event_type, entry);
-  }
+      result = 0;
+    }
+  else
+    {
+      ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-  if (result == -1)
+      result = this->map_.find (event_type, entry);
+    }
+
+  if (result == -1) // This type is being seen for the first time.
   {
     ACE_NEW_THROW_EX (entry,
                       ENTRY (),
@@ -98,54 +94,71 @@ TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_NS_EventTyp
     if (map_.bind (event_type, entry) == -1)
       ACE_THROW_RETURN (CORBA::NO_MEMORY (), -1);
 
-    if (this->observer_ != 0)
-      this->observer_->type_added (event_type);
+    if (this->event_types_.insert (event_type) == -1)
+      return -1;
 
-    return ++event_type_count_;
+    return 1;
   }
-  else
+  else // Add to existing entry or the broadcast entry.
     {
       entry->connected (proxy ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
-
-      ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
-      return ++event_type_count_;
     }
+
+  return 0;
 }
 
 template <class PROXY, class ACE_LOCK> int
 TAO_NS_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_NS_EventType& event_type ACE_ENV_ARG_DECL)
 {
-  TAO_NS_Event_Map_Entry_T<PROXY>* entry;
+  ENTRY* entry;
 
-  int result = -1;
-  {
-    ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
-
-    result = this->map_.find (event_type, entry);
-  }
-
-  if (result == 0)
+  if (event_type.is_special () == 1)
     {
+      entry = &this->broadcast_entry_;
+
       entry->disconnected (proxy ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (-1);
+    }
+  else
+    {
+      int result = -1;
 
-      ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
-      return --event_type_count_;
+      {
+        ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
-      if (entry->count () == 0)
+        result = this->map_.find (event_type, entry);
+      }
+
+      if (result == 0)
         {
-          if (this->observer_ != 0)
-            this->observer_->type_removed (event_type);
+          entry->disconnected (proxy ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (-1);
 
-          /// @@TODO: Exec a strategy for removing entries.
-          /// Strategy 1: remove_immediately
-          /// Strategy 2: remove_bunch_after_threshold
-          /// Strategy 3: use cached allocator
+          if (entry->count () == 0)
+            {
+              /// Exec a strategy for removing entries.
+              /// Strategy 1: remove_immediately
+              /// Strategy 2: remove a bunch_after crossing a threshold
+              /// Strategy 3: use cached allocator and 1
+
+              // Strategy 1:
+              ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
+
+              this->map_.unbind (event_type);
+
+              if (entry->_decr_refcnt () == 0)
+                delete entry;
+
+              if (this->event_types_.remove (event_type) == -1)
+                return -1;
+
+              return 1;
+            }
         }
     }
 
-  return -1;
+  return 0;
 }
 
 #endif /* TAO_NS_EVENT_MAP_T_C */

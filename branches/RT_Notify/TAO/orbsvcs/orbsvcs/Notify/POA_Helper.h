@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  @file POA.h
+ *  @file POA_Helper.h
  *
  *  $Id$
  *
@@ -77,7 +77,7 @@ protected:
 };
 
 #if defined (__ACE_INLINE__)
-#include "POA.inl"
+#include "POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

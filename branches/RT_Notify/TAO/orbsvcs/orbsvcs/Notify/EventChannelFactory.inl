@@ -1,3 +1,1 @@
 // $Id$
-
-#include "EventChannelFactory.h"

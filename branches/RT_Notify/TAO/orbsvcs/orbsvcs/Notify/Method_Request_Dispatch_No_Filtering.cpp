@@ -1,9 +1,6 @@
 // $Id$
 
 #include "Method_Request_Dispatch_No_Filtering.h"
-#include "ProxySupplier.h"
-#include "Consumer.h"
-#include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Method_Request_Dispatch_No_Filtering.inl"
@@ -11,8 +8,12 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_Method_Request_Dispatch_No_Filtering, "$Id$")
 
-TAO_NS_Method_Request_Dispatch_No_Filtering::TAO_NS_Method_Request_Dispatch_No_Filtering (TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier)
-  : TAO_NS_Method_Request (event), proxy_supplier_ (proxy_supplier)
+#include "tao/debug.h"
+#include "ProxySupplier.h"
+#include "Consumer.h"
+
+TAO_NS_Method_Request_Dispatch_No_Filtering::TAO_NS_Method_Request_Dispatch_No_Filtering (const TAO_NS_Event_var& event, TAO_NS_ProxySupplier* proxy_supplier)
+  : TAO_NS_Method_Request_Event (event), proxy_supplier_ (proxy_supplier), refcountable_guard_ (*proxy_supplier)
 {
 }
 
@@ -28,9 +29,10 @@ TAO_NS_Method_Request_Dispatch_No_Filtering::copy (void)
 }
 
 int
-TAO_NS_Method_Request_Dispatch_No_Filtering::call (void)
+TAO_NS_Method_Request_Dispatch_No_Filtering::execute (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
+  if (this->proxy_supplier_->has_shutdown ())
+    return 0; // If we were shutdown while waiting in the queue, return with no action.
 
   ACE_TRY
     {
