@@ -7279,11 +7279,8 @@ private:
 #   if defined (__BORLANDC__) && (__BORLANDC__ <= 0x540)
 #   define ACE_WIN32CALL_RETURN(X,TYPE,FAILVALUE) \
   do { \
-    TYPE ace_result_ = (TYPE) X; \
-    do { \
-    TYPE ace_result_; \
     TYPE ace_local_result_ = (TYPE) X; \
-    ace_result_ = ace_local_result_; \
+    TYPE ace_result_ = ace_local_result_; \
     if (ace_result_ == FAILVALUE) \
       ACE_OS::set_errno_to_last_error (); \
     return ace_result_; \
