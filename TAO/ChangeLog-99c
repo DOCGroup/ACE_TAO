@@ -1,3 +1,35 @@
+Thu Jul 15 17:52:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/IDL_Test/anonymous.idl:
+	* TAO/tests/IDL_Test/array.idl:
+	* TAO/tests/IDL_Test/constants.idl:
+	* TAO/tests/IDL_Test/enum_in_struct.idl:
+	* TAO/tests/IDL_Test/generic_object.idl:
+	* TAO/tests/IDL_Test/included.idl:
+	* TAO/tests/IDL_Test/including.idl:
+	* TAO/tests/IDL_Test/interface.idl:
+	* TAO/tests/IDL_Test/keywords.idl:
+	* TAO/tests/IDL_Test/reopened_modules.idl:
+	* TAO/tests/IDL_Test/sequence.idl:
+	* TAO/tests/IDL_Test/typedef.idl:
+	* TAO/tests/IDL_Test/union.idl:
+	* TAO/tests/IDL_Test/main.cpp:
+	* TAO/tests/IDL_Test/IDL_Test.dsw:
+	* TAO/tests/IDL_Test/idl_test.dsp:
+	* TAO/tests/IDL_Test/Makefile:
+	* TAO/tests/IDL_Test/README:
+	  New files and directory. A new test which is
+	  a collection of many IDL examples that have
+	  uncovered bugs in the past. The idea is to
+	  make sure these bugs never recur. Some of the
+	  examples are adapted from IDL code sent in
+	  by ACE and TAO users - many thanks to all those
+	  who helped dig out the bugs!
+
+	  It is hoped that there will be regular additions
+	  to these examples, making the tests more rigorous
+	  and comprehensive.
+
 Thu Jul 15 17:44:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP.h:
