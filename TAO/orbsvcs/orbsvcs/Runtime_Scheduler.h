@@ -39,7 +39,7 @@ public:
 
   virtual RtecScheduler::handle_t create (const char * entry_point,
                                           CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::DUPLICATE_NAME));
   // Create an RT_Info.  In the config run scheduler this actually constructs
   // a new RT_Info.  Here, we just return its handle, or an error value if
@@ -47,13 +47,13 @@ public:
 
   virtual RtecScheduler::handle_t lookup (const char * entry_point,
                                           CORBA::Environment &_env)
-    TAO_THROW_SPEC((CORBA::SystemException));
+    ACE_THROW_SPEC((CORBA::SystemException));
   // Lookup a handle for an RT_Info, and return its handle, or an error
   // value if it's not present.
 
   virtual RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle,
                                        CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK));
   // Return a pointer to the RT_Info corresponding to the passed handle.
 
@@ -68,7 +68,7 @@ public:
                     CORBA::Long threads,
                     RtecScheduler::Info_Type_t info_type,
                     CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK));
   // Set characteristics of the RT_Info corresponding to the passed handle.
 
@@ -77,7 +77,7 @@ public:
                          RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                          RtecScheduler::Preemption_Priority_t& p_priority,
                          CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::NOT_SCHEDULED));
   // Returns the priority and subpriority values assigned to an RT_Info,
@@ -88,7 +88,7 @@ public:
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority,
                                      CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK,
                      RtecScheduler::NOT_SCHEDULED));
   // Returns the priority and subpriority values assigned to an RT_Info,
@@ -99,7 +99,7 @@ public:
                                CORBA::Long number_of_calls,
                                RtecScheduler::Dependency_Type_t dependency_type,
                                CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UNKNOWN_TASK));
   // In the config run scheduler, this method registers a dependency between
   // two RT_Infos.  In the run time scheduler, this is a no-op.
@@ -110,7 +110,7 @@ public:
                                    RtecScheduler::Config_Info_Set_out configs,
                                    RtecScheduler::Scheduling_Anomaly_Set_out anomalies,
                                    CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                      RtecScheduler::UTILIZATION_BOUND_EXCEEDED,
                      RtecScheduler::INSUFFICIENT_THREAD_PRIORITY_LEVELS,
                      RtecScheduler::TASK_COUNT_MISMATCH));
@@ -122,13 +122,13 @@ public:
                                        RtecScheduler::OS_Priority& o_priority,
                                        RtecScheduler::Dispatching_Type_t & d_type,
                                        CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED,
                     RtecScheduler::UNKNOWN_PRIORITY_LEVEL));
   // Provides the thread priority and queue type for the given priority level.
 
   virtual RtecScheduler::Preemption_Priority_t last_scheduled_priority (CORBA::Environment &_env)
-    TAO_THROW_SPEC ((CORBA::SystemException,
+    ACE_THROW_SPEC ((CORBA::SystemException,
                     RtecScheduler::NOT_SCHEDULED));
   // Returns the last priority number assigned to an operation in the
   // schedule.  The number returned is one less than the total number

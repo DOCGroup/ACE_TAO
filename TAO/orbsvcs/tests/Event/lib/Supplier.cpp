@@ -137,6 +137,7 @@ EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
 
 void
 EC_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
