@@ -1,3 +1,11 @@
+2003-08-01  Diego Sevilla  <dsevilla@ditec.um.es>
+
+	* performance-tests/Benchmark/RoundTripClient/RoundTripClient_exec.cpp:
+	Small bug fix.
+
+	* performance-tests/Benchmark/Benchmark.idl: Added missing
+	Controller interface.
+
 2003-07-31  Diego Sevilla  <dsevilla@ditec.um.es>
 
         * performance-tests/Benchmark/Benchmark.idl:
