@@ -1,3 +1,10 @@
+Thu Aug 27 15:41:44 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/client.cpp: Deleted some unnecessary
+ 	ACE_DEBUG statements.  Cleaned up code.
+
 Thu Aug 27 12:38:20 1998  Carlos O'Ryan  <coryan@swarm.cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
