@@ -37,11 +37,8 @@ If using the -i option, you might want to run the server with the option
 more human-readable form. The server can be run in the same window in the 
 background, or in a different window.
 
-The command line options, default calls per loop, order and display format of the 
-stats are all similar to those in the IDL_Cubit tests.
+The command line options, default calls per loop, order and display
+format of the stats are all similar to those in the IDL_Cubit tests.
 
 On the Unix side, the Makefile will also build IDL_Cubit/server if
-necessary (thanks to David Levine). If the server exits when run on a
-Unix machine, it probbly means that someone else is also running it 
-and the defaults port numbers have collided. Just add the arg
-[-ORBport 0] when running the server and it will get a new port number.
+necessary (thanks to David Levine).

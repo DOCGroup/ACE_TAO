@@ -19,6 +19,6 @@ Typing
 
 To run the client, type 
 
-% client [-ORBport port] -k IOR
+% client -k IOR
 
 where IOR can be got from the server output.

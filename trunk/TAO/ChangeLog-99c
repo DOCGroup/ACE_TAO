@@ -1,3 +1,38 @@
+Mon May 31 19:32:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* docs/releasenotes/ec.html:
+	* examples/POA/Default_Servant/README:
+	* examples/POA/Forwarding/README:
+	* examples/POA/Generic_Servant/README:
+	* examples/POA/On_Demand_Activation/README:
+	* examples/Simulator/README:
+	* orbsvcs/Naming_Service/README:
+	* orbsvcs/orbsvcs/Event/RT_Task.cpp:
+	* orbsvcs/tests/start_services:
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_client/Command_Handler.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
+	* orbsvcs/tests/EC_Multiple/README:
+	* orbsvcs/tests/EC_Multiple/run_dynamic:
+	* orbsvcs/tests/EC_Multiple/run_latency:
+	* orbsvcs/tests/EC_Multiple/run_overhead:
+	* orbsvcs/tests/EC_Multiple/run_schedule:
+	* orbsvcs/tests/EC_Multiple/run_throughput:
+	* orbsvcs/tests/EC_Multiple/run_utilization:
+	* performance-tests/Cubit/COOL/IDL_Cubit/README:
+	* performance-tests/Cubit/CORBAplus/MT_Cubit/server/svr.cpp:
+	* performance-tests/Cubit/TAO/DII_Cubit/README:
+	* performance-tests/Thruput/CORBAplus/run_server:
+	* performance-tests/Thruput/TAO/new_server_test:
+	* performance-tests/Thruput/TAO/run_server:
+	* tests/NestedUpcall/MT_Client_Test/README:
+	* tests/NestedUpcall/Reactor/README:
+	* tests/NestedUpcall/Triangle_Test/README:
+	  Removed all references to the -ORBhost or -ORBport options,
+	  first because the default values work in most cases and second
+	  because the options are obsolete (-ORBenpoint replaces both).
+
 Mon May 31 19:21:59 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/UIOP_Acceptor.cpp:

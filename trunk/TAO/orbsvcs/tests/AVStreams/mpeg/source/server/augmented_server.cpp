@@ -366,8 +366,8 @@ AV_Server::AV_Server (void)
     video_process_strategy_ (&video_process_options_),
     audio_process_strategy_ (&audio_process_options_)
 {
-  this->video_process_options_.command_line ("./vs -ORBport 0 -ORBobjrefstyle url");
-  this->audio_process_options_.command_line ("./as -ORBport 0 -ORBobjrefstyle url");
+  this->video_process_options_.command_line ("./vs -ORBobjrefstyle url");
+  this->audio_process_options_.command_line ("./as -ORBobjrefstyle url");
 }
 
 // %% move to the destructor or sig handler

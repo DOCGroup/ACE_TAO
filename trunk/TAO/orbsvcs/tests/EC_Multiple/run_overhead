@@ -3,11 +3,6 @@
 # $Id$
 #
 
-if [ -z "$NameServicePort" ]; then
-  NameServicePort=0
-  export NameServicePort
-fi
-
 MSG_INTERVAL=5000 # 50000
 # The interval between the messages, in usecs
 
@@ -32,31 +27,31 @@ RPT_MSGS=1000
 for i in $RPT_ITER; do
   echo Short circuit RPT test $i
   sleep 1
-  ./EC_Multiple -ORBport 0 -l EC1 -s RUNTIME1 \
+  ./EC_Multiple -l EC1 -s RUNTIME1 \
     -a 1 -b 2 -c 2 -p EC1.pid -m $RPT_MSGS -u $UTL_COUNT \
     -i $MSG_INTERVAL -x > OVH.RPT.X.${i}.log 2>&1
 
   echo Local RPT EC test $i
-  ../../Naming_Service/Naming_Service -ORBport $NameServicePort \
+  ../../Naming_Service/Naming_Service \
     -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
   sleep 2
   NameService=`cat NameService.ior`
   export NameService
-  ./EC_Multiple -ORBport 0 -l EC1 -s RUNTIME1 \
+  ./EC_Multiple -l EC1 -s RUNTIME1 \
     -a 1 -b 2 -c 2 -p EC1.pid -m $RPT_MSGS -u $UTL_COUNT \
     -i $MSG_INTERVAL > OVH.RPT.LCL.${i}.log 2>&1
   kill `cat NameService.pid`
 
   echo Remote RPT EC test $i
-  ../../Naming_Service/Naming_Service -ORBport $NameServicePort \
+  ../../Naming_Service/Naming_Service \
     -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
   sleep 2
   NameService=`cat NameService.ior`
   export NameService
-  ./EC_Multiple -ORBport 0 -l EC1 -r EC2 -s RUNTIME1 -o RUNTIME2 \
+  ./EC_Multiple -l EC1 -r EC2 -s RUNTIME1 -o RUNTIME2 \
     -a 1 -b 2 -c 3 -p EC1.pid -m $RPT_MSGS -u $UTL_COUNT \
     -i $MSG_INTERVAL > OVH.RPT.RMT1.${i}.log 2>&1 &
-  ./EC_Multiple -ORBport 0 -l EC2 -r EC1 -s RUNTIME2 -o RUNTIME1 \
+  ./EC_Multiple -l EC2 -r EC1 -s RUNTIME2 -o RUNTIME1 \
     -a 4 -b 3 -c 2 -p EC2.pid -m $RPT_MSGS -u $UTL_COUNT \
     -i $MSG_INTERVAL > OVH.RPT.RMT2.${i}.log 2>&1 &
   sleep 2
@@ -76,7 +71,7 @@ exit 0
 for i in $MSG_COUNTS; do
   echo Short circuit test $i
   sleep 1
-  ./EC_Multiple -ORBport 0 -l EC1 -s RUNTIME1 \
+  ./EC_Multiple -l EC1 -s RUNTIME1 \
     -a 1 -b 2 -c 2 -m $i -u $UTL_COUNT \
     -i $MSG_INTERVAL -x > OVH.X.${i}.log 2>&1
 done
@@ -84,7 +79,7 @@ done
 # Generate the local data, i.e. what is the overhead of using the local EC.
 for i in $MSG_COUNTS; do
   echo Local EC test $i
-  ../../Naming_Service/Naming_Service -ORBport $NameServicePort \
+  ../../Naming_Service/Naming_Service \
     -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
   sleep 2
   NameService=`cat NameService.ior`
@@ -99,15 +94,15 @@ done
 # can be as high as 2 msec
 for i in $MSG_COUNTS; do
   echo Remote EC test $i
-  ../../Naming_Service/Naming_Service -ORBport $NameServicePort \
+  ../../Naming_Service/Naming_Service \
     -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
   sleep 2
   NameService=`cat NameService.ior`
   export NameService
-  ./EC_Multiple -ORBport 0 -l EC1 -r EC2 -s RUNTIME1 -o RUNTIME2 \
+  ./EC_Multiple -l EC1 -r EC2 -s RUNTIME1 -o RUNTIME2 \
     -a 1 -b 2 -c 3 -p EC1.pid -m $i -u $UTL_COUNT \
     -i $MSG_INTERVAL > OVH.RMT1.${i}.log 2>&1 &
-  ./EC_Multiple -ORBport 0 -l EC2 -r EC1 -s RUNTIME2 -o RUNTIME1 \
+  ./EC_Multiple -l EC2 -r EC1 -s RUNTIME2 -o RUNTIME1 \
     -a 4 -b 3 -c 2 -p EC2.pid -m $i -u $UTL_COUNT \
     -i $MSG_INTERVAL > OVH.RMT2.${i}.log 2>&1 &
   sleep 2

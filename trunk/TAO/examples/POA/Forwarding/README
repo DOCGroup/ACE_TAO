@@ -26,23 +26,23 @@ the above documentation about location forwarding.
 
 To run the test for the POA approach do the following:
 
-% server -o server2 -ORBport 10040 -ORBobjrefstyle url
-% server -f server2 -o server1 -ORBport 10041 -ORBobjrefstyle url
+% server -o server2 -ORBobjrefstyle url
+% server -f server2 -o server1 -ORBobjrefstyle url
 % client -f server1 -i 5
 
 A similar invocation for the servant locator approach can be done as
 follows (basically just the switches are different):
 
-% server -p server2 -ORBport 10040 -ORBobjrefstyle url
-% server -g server2 -p server1 -ORBport 10041 -ORBobjrefstyle url
+% server -p server2 -ORBobjrefstyle url
+% server -g server2 -p server1 -ORBobjrefstyle url
 % client -g server1 -i 5
 
 For additional features try using the first server with the POA
 apporach and the second with the servant locator approach:
 
-% server -o server3 -ORBport 10040 -ORBobjrefstyle url  
-% server -g server3 -p server2 -ORBport 10041 -ORBobjrefstyle url
-% server -f server2 -o server1 -ORBport 10043 -ORBobjrefstyle url
+% server -o server3 -ORBobjrefstyle url  
+% server -g server3 -p server2 -ORBobjrefstyle url
+% server -f server2 -o server1 -ORBobjrefstyle url
 % client -f server1 -i 8
 
 The first two calls will be called on server1, then the location
