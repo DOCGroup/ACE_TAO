@@ -4,6 +4,10 @@
 #ifndef LOGGING_HANDLER_H
 #define LOGGING_HANDLER_H
 
+#include "ace/INET_Addr.h"
+#include "ace/SOCK_Stream.h"
+#include "ace/Reactor.h"
+
 /*
   Since we used the template to create the acceptor, we don't know if there is a
   way to get to the reactor it uses.  We'll take the easy way out and grab the

@@ -1,3 +1,9 @@
+Mon Oct  5 15:34:41 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/002/handler.h:  Added includes for INET_Addr.h,
+	SOCK_Stream.h and Reactor.h.  Susan Liebeskind pointed out that
+	AIX gets confused in processing templates if these aren't present.
+
 Mon Oct 05 10:02:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-chorus.h: added ACE_LACKS_TRUNCATE.  Thanks
