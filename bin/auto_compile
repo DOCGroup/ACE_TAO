@@ -241,14 +241,14 @@ sub report_errors {
   if ($#_ >= 0) {
     local $to = $ADMIN;
 
-    open (MAIL, "|".$MAIL.' -s "[AUTO_COMPILE] '.$BUILD.'" '.$to)
+    open (MAIL, "|".$MAIL.' -s "[AUTO_COMPILE] '.$HOST.' '.$BUILD.'" '.$to)
       || mydie "Cannot open mail pipe for: $_\n";
 
     print MAIL 'The following message is brought to you by: ', "\n";
-    print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $CHECKOUT\n\n";
+    print MAIL $CMD, ' [', $REVISION, "] for $BUILD on $HOST\n\n";
 
     print MAIL "\nPlease check the following log for more info:\n\n";
-    print MAIL $LOG_URL, $LOG_NAME, "\n\n";
+    print MAIL $LOG_URL, '?', $HOST, '_', $BUILD, "\n\n";
 
     local $m;
     foreach $m (@_) {
