@@ -1,3 +1,17 @@
+Sun Nov 28 18:00:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/IORInterceptor/IORInterceptor.pidl:
+
+	  Added some documentation for applying diffs.
+	
+	* tao/IORInterceptor/IORInterceptorC.h:
+
+	  Cosmetic hand craft to minimize the number of lines of diffs. 
+	
+	* tao/IORInterceptor/diff/IORInterceptor.diff:
+
+	  New file for maintenence.
+
 Sun Nov 28 17:41:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORInterceptor/IORInterceptor.h:	
