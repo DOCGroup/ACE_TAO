@@ -1,3 +1,19 @@
+Sun Nov 23 21:28:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAOACE.dsw:
+
+          Added project dependencies that had gone missing.
+
+        * orbsvcs/orbsvcs/FTORB_Utils.dsp:
+        * orbsvcs/orbsvcs/FT_ClientORB.dsp:
+        * orbsvcs/orbsvcs/FT_ServerORB.dsp:
+
+          Fixed link lib paths and build output directories.
+
+        * orbsvcs/orbsvcs/SSLIOP.dsp:
+
+          Turned on RTTI.
+
 Sun Nov 23 20:43:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:

@@ -15,7 +15,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ACEXML"=..\ACEXML\common\ACEXML.dsp - Package Owner=<4>
+Project: "ACEXML DLL"=..\ACEXML\common\ACEXML.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -27,7 +27,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ACEXML_Parser"=..\ACEXML\parser\parser\ACEXML_Parser.dsp - Package Owner=<4>
+Project: "ACEXML_Parser DLL"=..\ACEXML\parser\parser\ACEXML_Parser.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -542,6 +542,9 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name PortableGroup
     End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name IORManip
+    End Project Dependency
 }}}
 
 ###############################################################################
@@ -777,7 +780,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Kokyu"=..\Kokyu\Kokyu.dsp - Package Owner=<4>
+Project: "Kokyu_DLL"=..\Kokyu\Kokyu.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1218,7 +1221,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "RT_Notification"=.\orbsvcs\orbsvcs\RT_Notification.dsp - Package Owner=<4>
+Project: "RT_Notification DLL"=.\orbsvcs\orbsvcs\RT_Notification.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1302,7 +1305,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Svc_Utils"=.\orbsvcs\orbsvcs\Svc_Utils.dsp - Package Owner=<4>
+Project: "Svc Utils"=.\orbsvcs\orbsvcs\Svc_Utils.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1310,11 +1313,17 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "TAO"=.\tao\TAO.dsp - Package Owner=<4>
+Project: "TAO DLL"=.\tao\TAO.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -1322,6 +1331,9 @@ Package=<5>
 
 Package=<4>
 {{{
+    Begin Project Dependency
+    Project_Dep_Name ACE DLL
+    End Project Dependency
 }}}
 
 ###############################################################################
