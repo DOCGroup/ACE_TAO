@@ -1,3 +1,18 @@
+Thu Oct 15 12:43:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Task.cpp (activate): Changed to activate new active objects
+	  using the same grp_id if this task has been activated before and
+	  no new grp_id is specified in activate method.  Also, the task's
+	  grp_id will only get updated if it has never been updated even
+	  if <force_active> is set.  This prevent the original <grp_id_>
+	  get lost but the consequence if that if users select to
+	  force_activate new tasks with a different grp_id, the new grp_id
+	  will get lost and the only way to wait for these threads is to
+	  either perform a wait for all threads, or wait for each
+	  individual thread by waiting on the thread handles returned by
+	  the activate method.
+	  (ACE_Task_Base): Changed to initialize <grp_id_> to -1.
+
 Thu Oct 15 10:07:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.56 released.
