@@ -1,3 +1,7 @@
+Wed Jun 20 07:31:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Big_Reply/Big_Reply_i.cpp: Fixed a compile error on
+	  Linux. 
 Wed Jun 20 07:48:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tests/Makefile.bor
