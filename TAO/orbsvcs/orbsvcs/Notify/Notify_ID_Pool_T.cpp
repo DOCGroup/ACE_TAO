@@ -25,7 +25,9 @@ TAO_Notify_ID_Pool<ID_TYPE>::~TAO_Notify_ID_Pool ()
 template <class ID_TYPE> ID_TYPE
 TAO_Notify_ID_Pool<ID_TYPE>::get (void)
 {
-  return ++this->id_;
+  // Using the prefix ++ operator here causes problems with
+  // the default supplier and consumer admins.
+  return this->id_++;
 }
 
 template <class ID_TYPE> void

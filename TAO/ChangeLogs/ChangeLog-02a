@@ -1,3 +1,11 @@
+Tue Mar 12 12:30:16 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Notify_ID_Pool_T.cpp:
+
+        Switch the code back to use the postfix ++ operator.  
+        Using the prefix ++ operator was causing problems with the default
+        supplier and consumer admins.
+
 Tue Mar 12 11:07:31 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
