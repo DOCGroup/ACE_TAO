@@ -1,3 +1,12 @@
+Tue Aug  5 12:12:39 1997  Mike MacFaden  (mrm@mrm-ss20)
+
+        * Thanks to Amos Shapira <amos@gezernet.co.il> apply patches to
+ 	  support IRIX 6.3. Stated request for: I think it would make
+ 	  things "righter" to make the code use C++ strings (and maybe
+ 	  vectors?).
+  
+        * Begin testing on HP-UX 10.01 (missing ucontext.h)
+ 
 Mon Aug  4 03:25:38 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Added new changes from Mike MacFaden, which add new html

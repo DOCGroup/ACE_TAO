@@ -36,14 +36,24 @@ changed during code rework. See ASNMP/asnmp/ChangeLog for details.
 <h2>Class Heirarchy</h2>
 
 <pre>
-UdpTarget  - defines  Collection of attributes(address, timeout, etc) used 
-             to define a command session.
-Snmp - A logical session between NM app and agent 
-Pdu  - Pdu contains a vb list , community string, and a command  
-Vb   - Varbind. A pdu can have zero, one or more of these
-       consists of an Oid to identify the variable and a datatype
-       of one of the SMI values. The oid/value binding is defined
-       in a MIB file (RFC 1155)
+UdpTarget - Defines a collection of attributes needed to define a 
+             communications session with an SNMP agent 
+            This includes  network address, response timeout, etc.
+  
+Snmp - A logical session between NM app and agent. Provides the
+       commands get, get_next, trap. Manages transactions between app and 
+       server.
+
+Pdu  - A container object that represents an SNMP Protocol Data Unit.
+       A Pdu contains a command (get,getnext,trap) Varbind List list, 
+       a community string.
+
+Vb   - Aka Varbind or Variable Binding.  A pdu can have zero, 
+       one or more of these. A Vb consists of an Oid to identify 
+       the variable and a value corresponding to  one of the SMI values. 
+       The oid/value binding is defined in a MIB file (RFC 1155)
+       Agents hava a MIB file that defines what each variable means.
+       Most agents implement MIB II as defined in RFC 1156.        
 
 <p>The Structure of Managment Information (SMI) datatypes
 and related types are:

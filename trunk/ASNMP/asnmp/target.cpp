@@ -108,12 +108,12 @@ void SnmpTarget::set_default_version( const snmp_version v)
   default_version_ = v; 
 }
 
-const snmp_version SnmpTarget::get_version() const
+snmp_version SnmpTarget::get_version() const
 { 
   return version_;
 }
 
-const snmp_version SnmpTarget::get_default_version() const
+snmp_version SnmpTarget::get_default_version() const
 { 
   return default_version_;
 }
