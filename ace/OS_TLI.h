@@ -24,7 +24,6 @@
 
 # if !defined (ACE_HAS_TLI)
 // Dummies to help compilation.
-struct rlimit { };
 struct t_call { };
 struct t_bind { };
 struct t_info { };
