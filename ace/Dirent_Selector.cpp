@@ -40,7 +40,11 @@ ACE_Dirent_Selector::close (void)
 {
   for (--n_; n_ >= 0; --n_)
     {
+#if defined (ACE_LACKS_STRUCT_DIR)
+      // Only the lacking-struct-dir emulation allocates this. Native
+      // scandir includes d_name in the dirent struct itself.
       ACE_OS::free (this->namelist_[n_]->d_name);
+#endif
       ACE_OS::free (this->namelist_[n_]);
     }
 

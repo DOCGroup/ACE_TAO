@@ -1,3 +1,12 @@
+Wed Jun  9 10:47:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Dirent_Selector.cpp (close): Regarding this:
+	  Thu Jun  3 18:49:59 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+	  Only platforms with ACE_LACKS_STRUCT_DIR dynamically allocate the
+	  d_name string. All others include it in the dirent struct itself.
+	  Please see Bugzilla 1833 - this problem should be remedied in
+	  ACE_OS::scandir_emulation itself, and this patch removed.
+	
 Tue Jun  8 17:01:32 2004  Steve Huston  <shuston@riverace.com>
 
 	* include/makeinclude/platform_hpux_aCC.GNU: Removed the AREXTRA
