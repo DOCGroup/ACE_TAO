@@ -1,3 +1,9 @@
+Sun Apr 05 18:05:26 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * orbsvcs/tests/Simulator/DOVEBrowser/{ DOVEBrowser.java,
+          DemoCore.java, PushConsumerFactory.java }:
+	  The Browser accepts now the parameter -ORBnameserviceior.
+
 Sun Apr 05 10:20:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_lynxos.GNU: only define

@@ -32,11 +32,8 @@ Requirements:
 		   
 
 !!RELEASE CHANGES: 
-	- Visibroker 3.2 instead of 3.1 (new naming conventions)
-	- No more customization of the RtecEventCommC.h file (bug is fixed)
-	- A different Weapons struct is now used, but it does not influence
-      the functionality.
 	- A first version of the DOVE MIB is now available.
+        - the DOVEBrowser accepts now the ORBnameserviceior parameter
 
 Parts of the Demo:
 
@@ -154,6 +151,7 @@ Starting:
 
 	DOVE Browser:
 		vbj DOVEBrowser
+                (also supported: vbj DOVEBrowser -ORBnameserviceior <IOR> ) 
 
 
 	DOVE MIB:
