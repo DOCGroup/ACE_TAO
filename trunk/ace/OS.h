@@ -7516,7 +7516,7 @@ private:
    do { \
         if (POINTER) \
           { \
-            POINTER->~CLASS (); \
+            (POINTER)->~CLASS (); \
           } \
       } \
    while (0)
@@ -7529,7 +7529,7 @@ private:
                  i < SIZE; \
                  ++i) \
             { \
-              POINTER[i].~CLASS (); \
+              (POINTER)[i].~CLASS (); \
             } \
           } \
       } \
@@ -7539,7 +7539,7 @@ private:
    do { \
         if (POINTER) \
           { \
-            POINTER->~CLASS (); \
+            (POINTER)->~CLASS (); \
             DEALLOCATOR (POINTER); \
           } \
       } \
@@ -7553,7 +7553,7 @@ private:
                  i < SIZE; \
                  ++i) \
             { \
-              POINTER[i].~CLASS (); \
+              (POINTER)[i].~CLASS (); \
             } \
             DEALLOCATOR (POINTER); \
           } \
@@ -7565,7 +7565,7 @@ private:
      do { \
           if (POINTER) \
             { \
-              POINTER->~T_CLASS (); \
+              (POINTER)->~T_CLASS (); \
             } \
         } \
      while (0)
@@ -7577,7 +7577,7 @@ private:
                    i < SIZE; \
                    ++i) \
               { \
-                POINTER[i].~T_CLASS (); \
+                (POINTER)[i].~T_CLASS (); \
               } \
             } \
         } \
@@ -7587,7 +7587,7 @@ private:
      do { \
           if (POINTER) \
             { \
-              POINTER->~T_CLASS T_PARAMETER (); \
+              (POINTER)->~T_CLASS T_PARAMETER (); \
               DEALLOCATOR (POINTER); \
             } \
         } \
@@ -7597,7 +7597,7 @@ private:
      do { \
           if (POINTER) \
             { \
-              POINTER->~T_CLASS (); \
+              (POINTER)->~T_CLASS (); \
               DEALLOCATOR (POINTER); \
             } \
         } \
@@ -7611,7 +7611,7 @@ private:
                    i < SIZE; \
                    ++i) \
               { \
-                POINTER[i].~T_CLASS (); \
+                (POINTER)[i].~T_CLASS (); \
               } \
               DEALLOCATOR (POINTER); \
             } \
@@ -7622,7 +7622,7 @@ private:
      do { \
           if (POINTER) \
             { \
-              POINTER->~T_CLASS <T_PARAM1, T_PARAM2> (); \
+              (POINTER)->~T_CLASS <T_PARAM1, T_PARAM2> (); \
               DEALLOCATOR (POINTER); \
             } \
         } \
@@ -7632,7 +7632,7 @@ private:
      do { \
           if (POINTER) \
             { \
-              POINTER->~T_CLASS (); \
+              (POINTER)->~T_CLASS (); \
               DEALLOCATOR (POINTER); \
             } \
         } \
@@ -7642,7 +7642,7 @@ private:
      do { \
           if (POINTER) \
             { \
-              POINTER->~T_CLASS (); \
+              (POINTER)->~T_CLASS (); \
               DEALLOCATOR (POINTER); \
             } \
         } \
@@ -7651,7 +7651,7 @@ private:
      do { \
           if (POINTER) \
             { \
-              POINTER->~T_CLASS (); \
+              (POINTER)->~T_CLASS (); \
               DEALLOCATOR (POINTER); \
             } \
         } \
@@ -7664,7 +7664,7 @@ private:
                    i < SIZE; \
                    ++i) \
               { \
-                POINTER[i].~T_CLASS (); \
+                (POINTER)[i].~T_CLASS (); \
               } \
               DEALLOCATOR (POINTER); \
             } \
@@ -7675,7 +7675,7 @@ private:
      do { \
           if (POINTER) \
             { \
-              POINTER->T_CLASS T_PARAMETER::~T_CLASS (); \
+              (POINTER)->T_CLASS T_PARAMETER::~T_CLASS (); \
             } \
         } \
      while (0)
@@ -7687,7 +7687,7 @@ private:
                    i < SIZE; \
                    ++i) \
               { \
-                POINTER[i].T_CLASS T_PARAMETER::~T_CLASS (); \
+                (POINTER)[i].T_CLASS T_PARAMETER::~T_CLASS (); \
               } \
             } \
         } \
