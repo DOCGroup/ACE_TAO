@@ -367,10 +367,10 @@ private:
 	      ACE_Allocator *data_block_allocator);
   // Perform the actual initialization.
 
-  char *rd_ptr_;
+  size_t rd_ptr_;
   // Pointer to beginning of next read.
 
-  char *wr_ptr_;
+  size_t wr_ptr_;
   // Pointer to beginning of next write.
 
   u_long priority_;

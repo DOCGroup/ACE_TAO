@@ -219,6 +219,7 @@ ACE_Asynch_Operation::register_aio_with_proactor (aiocb *aiocb_ptr)
   // Store the pointers.
   this->proactor_->aiocb_list_[ai] = aiocb_ptr;
   this->proactor_->aiocb_list_cur_size_ ++;
+
   return 0;
 }
 #endif /* ACE_HAS_AIO_CALLS */
@@ -1336,7 +1337,7 @@ ACE_Asynch_Transmit_Handler::ACE_Asynch_Transmit_Handler (ACE_Asynch_Transmit_Fi
 ACE_Asynch_Transmit_Handler::~ACE_Asynch_Transmit_Handler (void)
 {
   delete result_;
-  delete mb_;
+  mb_->release ();
 }
 
 // Do the transmission.
@@ -1375,11 +1376,16 @@ ACE_Asynch_Transmit_Handler::transmit (void)
   while (!error && !this->transmit_file_done_)
     error = this->proactor_->handle_events ();
 
-  if (!error && this->transmit_file_done_)
-    // No error, transmission done.
-    return 0;
+  if (!error)
+    {
+      // No error, transmission done.
+      delete this;
+      return 0;
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 void
@@ -1456,7 +1462,6 @@ ACE_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream:
       ACE_SEH_FINALLY
         {
           transmit_file_done_ = 1;
-          delete this;
         }
       break;
 
