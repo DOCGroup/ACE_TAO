@@ -406,6 +406,10 @@ SOURCE=.\Functor.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Functor_String.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Get_Opt.cpp
 # End Source File
 # Begin Source File
@@ -1463,6 +1467,10 @@ SOURCE=.\Free_List.h
 # Begin Source File
 
 SOURCE=.\Functor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Functor_String.h
 # End Source File
 # Begin Source File
 
@@ -2631,6 +2639,10 @@ SOURCE=.\Free_List.i
 # Begin Source File
 
 SOURCE=.\Functor.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Functor_String.inl
 # End Source File
 # Begin Source File
 
