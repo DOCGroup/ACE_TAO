@@ -37,8 +37,16 @@ endif
 # Comment out for now... 
 # $(DEFS:%=$(INSINC)/%) \
 
-INSTALL = $(VLIB:%.a=$(INSLIB)/%.a) \
-	  $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
+ifdef shared_libs_only
+  INSTALL = $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
+else
+ifdef static_libs_only
+  INSTALL = $(VLIB:%.a=$(INSLIB)/%.a)
+else
+  INSTALL = $(VLIB:%.a=$(INSLIB)/%.a) \
+	    $(VSHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
+endif # static_libs_only
+endif # shared_libs_only
 
 ifdef PRELIB
 # Unfortunately, gcc has to do a link of all of the objects (during which
