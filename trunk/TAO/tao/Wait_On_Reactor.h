@@ -43,6 +43,7 @@ public:
   virtual int wait (ACE_Time_Value *max_wait_time,
                     int &reply_received);
   virtual int register_handler (void);
+  virtual int non_blocking (void);
 };
 
 #include "ace/post.h"
