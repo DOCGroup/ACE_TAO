@@ -5520,6 +5520,9 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                               addrlen,
                               overlapped,
                               func);
+  if (result != 0) {
+    ACE_OS::set_errno_to_last_error ();
+  }
   flags = the_flags;
   number_of_bytes_recvd = ACE_static_cast (size_t, bytes_recvd);
   return result;
@@ -5590,6 +5593,9 @@ ACE_OS::sendto (ACE_HANDLE handle,
                             addrlen,
                             overlapped,
                             func);
+  if (result != 0) {
+    ACE_OS::set_errno_to_last_error ();
+  }
   number_of_bytes_sent = ACE_static_cast (size_t, bytes_sent);
   return result;
 #else

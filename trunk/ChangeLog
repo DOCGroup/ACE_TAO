@@ -1,3 +1,10 @@
+Tue Mar 12 10:45:00 2002  Justin Michel <michel_j@ociweb.com>
+ 
+       * ace/OS.i:
+
+         Added call to ACE_OS::set_errno_to_last_error() in two places 
+         where Winsock WSARecvFrom or WSASendTo were called.
+
 Tue Mar 12 09:06:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * etc/Svc_Conf_l.cpp.diff:
