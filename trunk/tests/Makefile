@@ -9,7 +9,8 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN =	Atomic_Op_Test \
+BIN =	Env_Value_Test \
+	Atomic_Op_Test \
 	Barrier_Test \
 	Basic_Types_Test \
 	Buffer_Stream_Test \
