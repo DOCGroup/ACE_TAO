@@ -113,12 +113,16 @@ include $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 CPPFLAGS        += $(DEFFLAGS) $(INCLDIRS)
 IDL             = idl
 IDLFLAGS        = -A -B -s S.cpp -c C.cpp
-INCLDIRS        += -I. -I$(ACE_ROOT)
+ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
+  INCLDIRS        += -I. -I$(ACE_ROOT)
+endif
 INSBIN          = $(ACE_ROOT)/bin
 INSINC          = $(ACE_ROOT)/ace
 INSLIB          = $(ACE_ROOT)/ace
 INSMAN          = $(ACE_ROOT)/man
-LDFLAGS         += -L$(ACE_ROOT)/ace -L./
+ifeq (,$(findstring -L$(ACE_ROOT)/ace,$(LDFLAGS)))
+  LDFLAGS         += -L$(ACE_ROOT)/ace -L./
+endif
 LEX             = flex
 PCFLAGS         += #### set in platform_macros.GNU file, e.g., -p
 PCCFLAGS        += #### set in platform_macros.GNU file, e.g., -p
