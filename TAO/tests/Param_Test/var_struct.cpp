@@ -78,7 +78,7 @@ Test_Var_Struct::dii_req_invoke (CORBA::Request *req,
 }
 
 int
-Test_Var_Struct::init_parameters (Param_Test_ptr ,
+Test_Var_Struct::init_parameters (Param_Test_ptr,
                                   CORBA::Environment &)
 {
   Generator *gen = GENERATOR::instance (); // value generator
@@ -93,14 +93,24 @@ Test_Var_Struct::init_parameters (Param_Test_ptr ,
   this->in_.shrt = gen->gen_short ();
   // set the length of the sequence
   this->in_.seq.length (len);
+
   // now set each individual element
-  for (CORBA::ULong i=0; i < this->in_.seq.length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_.seq.length (); i++)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
       char *str = gen->gen_string ();
       this->in_.seq[i] = str;
     }
+
+  this->inout_->dbl = 0.0;
+  this->inout_->dummy1 = CORBA::string_dup ("");
+  this->inout_->boole = 0;
+  this->inout_->dummy2 = CORBA::string_dup ("");
+  this->inout_->shrt = 0;
+  // set the length of the sequence
+  this->inout_->seq.length (0);
+
   return 0;
 }
 
@@ -110,6 +120,15 @@ Test_Var_Struct::reset_parameters (void)
   this->inout_ = new Param_Test::Var_Struct; // delete the previous ones
   this->out_ = new Param_Test::Var_Struct;
   this->ret_ = new Param_Test::Var_Struct;
+
+  this->inout_->dbl = 0.0;
+  this->inout_->dummy1 = CORBA::string_dup ("");
+  this->inout_->boole = 0;
+  this->inout_->dummy2 = CORBA::string_dup ("");
+  this->inout_->shrt = 0;
+  // set the length of the sequence
+  this->inout_->seq.length (0);
+
   return 0;
 }
 

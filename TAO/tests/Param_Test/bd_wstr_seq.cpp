@@ -82,25 +82,21 @@ Test_Bounded_WString_Sequence::init_parameters (Param_Test_ptr ,
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  const CORBA::WChar *choiceList[3];
-  CORBA::ULong i = 0;
-
-  for (i = 0; i < 3; i++)
-    {
-      choiceList[i] = gen->gen_wstring ();
-    }
-
   CORBA::ULong len = this->in_->maximum ();
 
   // set the length of the sequence
   this->in_->length (len);
   this->inout_->length (len);
+
   // now set each individual element
-  for (i = 0; i < this->in_->length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_->length (); i++)
     {
-      this->in_[i] = choiceList[i%3];
-      this->inout_[i] = choiceList[(i+1)%3]; // different from in_
+      this->in_[i] = gen->gen_wstring ();
+
+	  // different from in_
+      this->inout_[i] = gen->gen_wstring ();
     }
+
   return 0;
 }
 

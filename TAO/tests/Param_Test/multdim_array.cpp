@@ -89,6 +89,7 @@ Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/,
           for (CORBA::ULong k=0; k < Param_Test::DIM1; k++)
             {
               this->in_ [i][j][k] = gen->gen_long ();
+              this->inout_ [i][j][k] = 0;
             }
         }
     }
@@ -98,6 +99,8 @@ Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/,
 int
 Test_Multdim_Array::reset_parameters (void)
 {
+  Generator *gen = GENERATOR::instance (); // value generator
+
   // free the in value array
   Param_Test::Multdim_Array_free (this->in_._retn ());
   // needed for repeated DII calls
@@ -114,7 +117,7 @@ Test_Multdim_Array::reset_parameters (void)
           for (CORBA::ULong k=0; k < Param_Test::DIM1; k++)
             {
               this->inout_ [i][j][k] = 0;
-              this->out_ [i][j][k] = 0;
+              this->in_ [i][j][k] = gen->gen_long ();
             }
         }
     }

@@ -82,26 +82,19 @@ Test_WString_Sequence::init_parameters (Param_Test_ptr ,
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  const CORBA::WChar *choiceList[3];
-  CORBA::ULong i = 0;
-
-  for (i = 0; i < 3; i++)
-    {
-      choiceList[i] = gen->gen_wstring ();
-    }
-
-  CORBA::ULong len = sizeof(choiceList)/sizeof(CORBA::WChar *) - 1;
+  CORBA::ULong len = 2;
 
   // set the length of the sequences
   this->in_->length (len);
   this->inout_->length (len);
 
   // now set each individual element
-  for (i = 0; i < this->in_->length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_->length (); i++)
     {
-      this->in_[i] = choiceList[i];
-      this->inout_[i] = choiceList[i+1];
+      this->in_[i] = gen->gen_wstring ();
+      this->inout_[i] = gen->gen_wstring ();
     }
+
   return 0;
 }
 
