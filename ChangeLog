@@ -1,3 +1,9 @@
+Fri Mar 18 10:25:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/ace.mpc:
+
+	  Add pkgconfig_files section.
+
 Fri Mar 18 09:56:55 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/QoS/qos.mpc:
