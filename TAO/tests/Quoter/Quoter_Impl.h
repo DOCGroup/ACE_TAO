@@ -34,7 +34,9 @@ class Quoter_Impl: public POA_Stock::Quoter
   //   Actual Quoter Implementation class.  Returns a quoter for a given stock
   //   and provides an example for the lifecycle functionality.
 public:
-  Quoter_Impl (const char *obj_name = "",  const unsigned char use_LifeCycle_Service = 0);
+  Quoter_Impl (const char *obj_name = "",  
+	       const unsigned char use_LifeCycle_Service = 0,
+	       PortableServer::POA_ptr poa = 0);
   // Constructor (use_LifeCycle_Service is 1 if the LifeCycle_Service should be used 
   // instead of the Quoter Generic_Factory
 
@@ -64,6 +66,9 @@ private:
   unsigned char use_LifeCycle_Service_;
   // This flag defines if a Generic Factory is used (0 by default) or 
   // the more sophisticated LifeCycle Service (1)
+
+  PortableServer::POA_ptr poa_;
+  // Keep a reference to the POA for use by the move operation
 };
 
 // Forward declaration.
