@@ -1,7 +1,7 @@
 Sun Oct 20 00:23:03 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/server.cpp: 
-	  Renamed the variables loc1 and loc2 and location1 and
+	  Renamed the variables loc1 and loc2 as location1 and
 	  location2. The variables loc1 and loc2 is a legacy left over in
 	  UNIX, which denotes pointers to characters matched by regular
 	  expressions. This should fix compile errors in SunCC builds.
