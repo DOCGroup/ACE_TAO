@@ -670,6 +670,16 @@ ACE_OS_String::strtok_r (char *s, const char *tokens, char **lasts)
 #endif /* (ACE_HAS_REENTRANT_FUNCTIONS) */
 }
 
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wchar_t*
+ACE_OS_String::strtok_r (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts)
+{
+    // This is added for WinCE for now.  Other platforms may have
+    // their own wide-character version of strtok_s function defined.
+    return ACE_OS_String::strtok_r_emulation (s, tokens, lasts);
+}
+#endif  // ACE_HAS_WCHAR
+
 #if !defined (ACE_LACKS_STRTOD)
 ACE_INLINE double
 ACE_OS_String::strtod (const char *s, char **endptr)

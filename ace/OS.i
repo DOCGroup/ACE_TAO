@@ -8050,7 +8050,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
       bytes_sent += buffers[i].iov_len;
 
       // If the transfer isnt complete just drop out of the loop.
-      if (result < buffers[i].iov_len)
+      if (result < (int)buffers[i].iov_len)
         break;
     }
 # endif /* ACE_HAS_WINSOCK2 != 0 */
