@@ -1,0 +1,20 @@
+# file      : CCF/IDL3/Traversal/Makefile.alt
+# author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+# cvs-id    : $id$
+
+root = ../../..
+
+include $(root)/Bootstrap.rules
+
+$(call include, $(root)/Config.rules)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Object.pre.rules)
+
+cxx_translation_units := Component.cpp   \
+                         EventType.cpp   \
+                         Home.cpp        \
+                         Operation.cpp
+
+CXX_PREPROCESS_FLAGS  += -I$(root) -I$(UTILITY_ROOT) -I$(BOOST_ROOT)
+
+$(call include, $(UTILITY_ROOT)/BuildRules/Object.post.rules)
