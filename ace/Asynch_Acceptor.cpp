@@ -8,8 +8,8 @@
 
 ACE_RCSID(ace, Asynch_Acceptor, "$Id$")
 
-#if defined (ACE_WIN32) 
-// This only works on Win32 platforms 
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+// This only works on platforms that support async i/o
 
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"
@@ -373,5 +373,5 @@ ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept (void)
   return this->reissue_accept_;
 }
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 #endif /* ACE_ASYNCH_ACCEPTOR_C */
