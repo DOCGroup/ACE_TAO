@@ -158,7 +158,7 @@ TAO_Offer_Iterator_Collection::next_n (CORBA::ULong n,
             iter->next_n (offers_left,
                           CosTrading::OfferSeq_out (out_offers.out ()),
                           ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_CHECK_RETURN (0);
 
           // If we've exhausted this iterator, destroy it.
           if (any_left == 0)
