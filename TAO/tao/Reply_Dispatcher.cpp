@@ -40,7 +40,8 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core)
                 TAO_ENCAP_BYTE_ORDER,
                 orb_core),
     reply_received_ (0),
-    leader_follower_condition_variable_ (0)
+    leader_follower_condition_variable_ (0),
+    orb_core_ (orb_core)
 {
 }
 
@@ -72,12 +73,23 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (CORBA::ULong reply_status,
   // Steal the buffer so that no copying is done.
   this->reply_cdr_.reset (message_state->cdr.steal_contents (),
                           message_state->cdr.byte_order ());
-
   
-  // If condition variable is present, signal it.
+  // If condition variable is present, then we are doing leader
+  // follower model. Do all the nessary things. 
   if (this->leader_follower_condition_variable_ != 0)
     {
-      // @@ Carlos: Should we apply lock here? (Alex).
+      TAO_Leader_Follower& leader_follower =
+        this->orb_core_->leader_follower ();
+
+      // We *must* remove it when we signal it so the same condition
+      // is not signalled for both wake up as a follower and as the
+      // next leader. 
+      // The follower may not be there if the reply is received while
+      // the consumer is not yet waiting for it (i.e. it send the
+      // request but has not blocked to receive the reply yet).
+      // Ignore errors.
+      (void) leader_follower.remove_follower (this->leader_follower_condition_variable_);
+  
       (void) this->leader_follower_condition_variable_->signal ();
     }
   
