@@ -1,6 +1,11 @@
+Fri Mar 18 20:52:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ORB_Core.{h,cpp}:
+          Removed orb_resources_ member, it is not used anymore
+
 Fri Mar 18 11:48:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
-	* tao/RTCORBA/RT_Stub.h: 
+	* tao/RTCORBA/RT_Stub.h:
 
 	  Changed the member variables defined in the RT_Stub class
 	  from pointer type to "_var" type to avoid memory leak.
@@ -9,9 +14,9 @@ Fri Mar 18 11:48:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 Fri Mar 18 10:58:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* docs/Options.html (below): 
+	* docs/Options.html (below):
 
-	  Added documentation for -ORBDropRepliesonShutdown. 
+	  Added documentation for -ORBDropRepliesonShutdown.
 
 Fri Mar 18 10:36:32 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -20,26 +25,26 @@ Fri Mar 18 10:36:32 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	  These two tests require that the ORB not drop replies during
 	  shutdown.  Therefore added that strategy. If this strategy is
-	  not used EC would exit with a COMM_FAILURE exception. 
+	  not used EC would exit with a COMM_FAILURE exception.
 
 Fri Mar 18 10:34:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* tao/Transport.cpp:
 	* tao/Transport.h (provide_blockable_handler):
 
-	  Return a bool instead of void. 
-	
+	  Return a bool instead of void.
+
 	* tao/Transport_Cache_Manager.cpp:
 
 	  Check for the return value from provide_blockable_handler before
-	  marking the entry as closed.  
+	  marking the entry as closed.
 
 Fri Mar 18 09:26:32 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Faults/client.cpp:
 
 	  Added an additional check to omit COMM_FAILURE exceptions when
-	  doing a self shutdown test. This shodl address test failures in
+          doing a self shutdown test. This shoudl address test failures in
 	  our daily builds.
 
 Fri Mar 18 10:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
