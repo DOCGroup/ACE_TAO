@@ -1,3 +1,10 @@
+Sat Sep  6 10:41:17 1997  Carlos O'Ryan  <coryan@polka.cs.wustl.edu>
+
+	* ace/Malloc.h: 
+	  sizeof() must be casted to int in ACE_CONTROL_BLOCK_ALIGN_LONGS
+	  otherwise unsigned int arithmetic is used, thus obtaining
+	  unexpected results.
+
 Sat Sep 06 09:07:02 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* performance-tests/Misc/Makefile: moved $(BIN) files from FILES

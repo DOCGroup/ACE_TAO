@@ -234,10 +234,12 @@ public:
 				+ sizeof (ACE_Malloc_Header *) \
 				+ MAXNAMELEN)
 #endif /* ACE_MALLOC_STATS */
- 	
+
+// Notice the casting to int for sizeof() otherwise unsigned int
+// arithmetic is used and some awful things may happen.
 #define ACE_CONTROL_BLOCK_ALIGN_LONGS ((ACE_CONTROL_BLOCK_SIZE % ACE_MALLOC_ALIGN != 0 \
 					? ACE_MALLOC_ALIGN - (ACE_CONTROL_BLOCK_SIZE) \
-					: ACE_MALLOC_ALIGN) / sizeof(long))
+					: ACE_MALLOC_ALIGN) / int(sizeof(long)))
 
   long align_[ACE_CONTROL_BLOCK_ALIGN_LONGS < 1 ? 1 : ACE_CONTROL_BLOCK_ALIGN_LONGS];
 
