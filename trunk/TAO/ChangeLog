@@ -1,3 +1,15 @@
+Thu May  8 10:48:54 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/AMH/Sink_Server/Base_Server.cpp:
+        * examples/AMH/Sink_Server/Client_Task.cpp:
+        * examples/AMH/Sink_Server/MT_AMH_Server.cpp:
+        * examples/AMH/Sink_Server/client.dsp:
+        * examples/AMH/Sink_Server/mt_server.dsp:
+        * examples/AMH/Sink_Server/st_server.dsp:
+
+          Reverted some changes I mistakenly made to these files and
+          projects.
+
 Wed May  7 22:49:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/Faults/run_test.pl: Added thread-per-connection config to
