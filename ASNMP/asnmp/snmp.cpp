@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -44,6 +43,8 @@
 #include "asnmp/address.h" // class def for addresses
 #include "asnmp/wpdu.h"    // adapter to cmu_library / wire protocol
 #include "asnmp/transaction.h" // synchronous transaction processor
+
+ACE_RCSID(asnmp, snmp, "$Id$")
 
 const coldStartOid coldStart;
 const warmStartOid warmStart;

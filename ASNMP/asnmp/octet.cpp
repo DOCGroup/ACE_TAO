@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -36,6 +35,8 @@
 
 #include "ace/OS.h"
 #include "asnmp/octet.h"    // include definition for octet class
+
+ACE_RCSID(asnmp, octet, "$Id$")
 
 //============[ syntax type ]=========================================
 SmiUINT32 OctetStr::get_syntax()

@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -33,6 +32,8 @@
 =====================================================================*/
 
 #include "asnmp/timetick.h"	       // include header file for timetick class
+
+ACE_RCSID(asnmp, timetick, "$Id$")
 
 // constructor with a value   
 TimeTicks::TimeTicks( const unsigned long i):SnmpUInt32(i)

@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -37,6 +36,9 @@
 //---------[ external C libaries used ]--------------------------------
 
 #include "asnmp/oid.h"                  // include def for oid class
+
+ACE_RCSID(asnmp, oid, "$Id$")
+
 enum Defs {SNMPBUFFSIZE=300,
 	   SNMPCHARSIZE=15};          // max oid value (4294967295UL) 
 

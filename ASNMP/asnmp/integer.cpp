@@ -1,6 +1,5 @@
 // $Id$
 
-/* -*-C++-*- */
 // ============================================================================
 //
 // = LIBRARY
@@ -34,6 +33,8 @@
 =====================================================================*/
 
 #include "asnmp/integer.h"        // header file for gauge class 
+
+ACE_RCSID(asnmp, integer, "$Id$")
 
 // constructor with value
 SnmpUInt32::SnmpUInt32 (const u_long i)
