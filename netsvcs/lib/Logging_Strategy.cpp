@@ -2,9 +2,14 @@
 // $Id$
 
 #define ACE_BUILD_SVC_DLL
-#include "ace/stdcpp.h"
 #include "ace/Get_Opt.h"
 #include "Logging_Strategy.h"
+#if defined ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
+# include <fstream.h>
+# include <iostream.h>
+#else
+# include "ace/stdcpp.h"
+#endif /* ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
 
 // Parse the string containing all the flags and set the flags accordingly
 void
