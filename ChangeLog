@@ -1,8 +1,15 @@
+Sun Nov 28 22:10:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/am_edit:
+
+	  Removed old file.  MPC-generated Makefile.am's make this script
+	  obsolete.
+
 Mon Nov 29 07:36:03 2004  Olli Savia  <ops@iki.fi>
 
         * apps/JAWS/server/HTTP_Helpers.cpp:
           Added "const" qualifiers to silence compile time warnings.
-        
+
 Sun Nov 28 17:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/notify_serv.mpb:
