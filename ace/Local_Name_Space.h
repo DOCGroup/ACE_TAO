@@ -33,7 +33,7 @@
  * with the Map_Manager.
  *
  * In order to work correctly, this class must be able to
- * convert back and forth with <ACE_WStrings>.  Note that this
+ * convert back and forth with <ACE_NS_WStrings>.  Note that this
  * class must not have a destructor since otherwise we'll have
  * problems...
  */
@@ -49,14 +49,14 @@ public:
                  const ACE_USHORT16 *src,
                  size_t len);
 
-  /// Converts an ACE_WString to an ACE_NS_String;
-  ACE_NS_String (const ACE_WString &);
+  /// Converts an ACE_NS_WString to an ACE_NS_String;
+  ACE_NS_String (const ACE_NS_WString &);
 
   /// Destructor
   ~ACE_NS_String (void);
 
-  /// Converts an ACE_NS_String to fresh copy of an ACE_WString;
-  operator ACE_WString () const;
+  /// Converts an ACE_NS_String to fresh copy of an ACE_NS_WString;
+  operator ACE_NS_WString () const;
 
   /// Return the ASCII character representation.
   char *char_rep (void) const;

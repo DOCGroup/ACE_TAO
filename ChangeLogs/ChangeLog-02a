@@ -1,12 +1,95 @@
+Tue Dec 04 20:08:49 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	  Merged in the new String_Base template class.
+
+	* ace/Makefile: Added String_Base into the list of template
+	  files.
+
+	* ace/Basic_Types.h: Added definitions of ACE_WCHAR_T and
+	  ACE_WINT_T which are defined to wchat_t and wint_t when
+	  ACE_HAS_WCHAR are defined, and ACE_USHORT16 otherwise.  They are
+	  needed to support various "wide character" string operations
+	  that we need to support the templatized ACE_WString, which uses
+	  ACE_USHORT16 as the wide char type when wchar_t is not
+	  supported.
+
+	* ace/OS_String.h:
+	* ace/OS_String.inl:
+	* ace/OS_String.cpp: Made several wchar version string functions
+	  available no matter ACE_HAS_WCHAR is defined or not.  There are
+	  more functions (the ones that have *_emulation helpers
+	  available) that can be made availabe at all time, but I just
+	  fixed the ones that ACE_WString needed for now.  We can add more
+	  later.
+
+	* ace/SString.h: Changed the definition of ACE_WSTRING_TYPE to
+	  ACE_WCHAR_T.  ACE_WCHAR_T is defined in the same fashion as
+	  ACE_WSTRING_TYPE was originally defined.
+
+	* ace/Local_Name_Space.cpp: ACE_NS_WString::char_rep works just
+	  fine.  We don't need to use ACE_Wide_To_Ascii::convert
+	  explicitly since it is not available when ACE_HAS_WCHAR isn't
+	  defined.
+
+	* ace/SString.cpp (operator<<): Avoided the problem of printing
+	  wchar strings temporarily.  Using ACE_Wide_To_Ascii didn't work
+	  on platforms that don't support wchar.  Thanks to Keith Hamburg
+	  for pointing this out.
+
+	* ace/String_Base.cpp: Fixed incorrect RCSID name.  Thanks to
+	  Keith Hamburg <khamburg@cs.wustl.edu> for reporting it.
+
+	* ace/SString.cpp:
+	* ace/SString.h:
+	* ace/SString.i: Changed ACE_WString to be a typedef of
+	  ACE_String_Base<ACE_WSTRING_TYPE> and added a subclass of it
+	  called ACE_NS_WString to maintain backward compatibility.
+
+	* tests/Naming_Test.cpp:
+	* ace/Local_Name_Space.cpp:
+	* ace/Local_Name_Space.h:
+	* ace/Local_Name_Space_T.cpp:
+	* ace/Local_Name_Space_T.h:
+	* ace/Name_Space.cpp:
+	* ace/Name_Space.h:
+	* ace/Naming_Context.cpp:
+	* ace/Naming_Context.h:
+	* ace/Remote_Name_Space.cpp:
+	* ace/Remote_Name_Space.h:
+	* netsvcs/clients/Naming/Client/Client_Test.cpp:
+	* netsvcs/lib/Name_Handler.cpp:
+	* netsvcs/lib/Name_Handler.h:  Changed the use of ACE_WString to
+	  ACE_NS_WString.
+
+	* tests/SString_Test.cpp: Added ACE_TEXT_WIDE to convert char
+	  strings to wchar strings for initializing ACE_WString as you can
+	  no longer initialize a ACE_WString with a char string.
+
+	* ace/String_Base.h:
+	* ace/String_Base.i:
+	* ace/String_Base.cpp: Abstracted out ACE_CString and ACE_WString
+	  into a templatized String_Base.
+
+	* ace/CDR_Stream.h: Removed forward declarating ACE_CString and
+	  added inclusion of <SString.h>.
+
+	* ace/SString.h:
+	* ace/SString.i:
+	* ace/SString.cpp: Changed ACE_CString to be a typedef of
+	  ACE_String_Base<char>.
+
+	* ace/ace_dll.dsp:
+	* ace/ace_lib.dsp: Added String_Base.* to appropriate folders.
+
 Tue Dec  4 20:57:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h: 
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
 
 	  Added a outgoing queue to the test. This should more or less
 	  represent a simple CORBA invocation. Reduced a call to new to by
-	  using a shared data block with a lock. 
-	
+	  using a shared data block with a lock.
+
 Tue Dec  4 19:10:22 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/config-sunos5.6.h: Removed the setting of _POSIX_C_SOURCE to
@@ -42,18 +125,18 @@ Tue Dec  4 10:07:31 2001  Steve Huston  <shuston@riverace.com>
 
 Tue Dec  4 06:59:09 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp: 
+	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.cpp:
 	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
 	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
-	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp: 
-	   
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+
 	  New tests for measuring the throughput of two different server
 	  concurrency architectures.  The idea is to make it simpler than
 	  what is already there and hence the tests. The old tests were a
 	  bit confusing and very complicated. The old tests have been
 	  retained. The tests are for getting some ball-park figures for
 	  RT_CORBA and for TAO in general.
-	
+
 Tue Dec  4 10:00:04 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * examples/Reactor/Multicast/client.cpp:

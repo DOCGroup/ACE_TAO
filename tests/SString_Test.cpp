@@ -154,12 +154,12 @@ main (int, ACE_TCHAR *[])
   }
 
   {
-    ACE_WString s0 ("hello");
-    ACE_WString s1 ("hello");
-    ACE_WString s2 ("world");
-    ACE_WString s3 ("ll");
-    ACE_WString s4 ("ello");
-    ACE_WString s5 = s1 + " " + s2;
+    ACE_WString s0 (ACE_TEXT_WIDE ("hello"));
+    ACE_WString s1 (ACE_TEXT_WIDE ("hello"));
+    ACE_WString s2 (ACE_TEXT_WIDE ("world"));
+    ACE_WString s3 (ACE_TEXT_WIDE ("ll"));
+    ACE_WString s4 (ACE_TEXT_WIDE ("ello"));
+    ACE_WString s5 = s1 + ACE_TEXT_WIDE (" ") + s2;
 
     ACE_WSTRING_TYPE single_character = 'z';
     ACE_WString single_character_string (single_character);

@@ -32,7 +32,7 @@
 class Naming_Context : public ACE_Naming_Context
 {
   // = TITLE
-  // 
+  //
   //   This helper class adds the correct default constructor to the
   //   <ACE_Naming_Context> class so that we can use it in
   //   <ACE_Singleton>.
@@ -62,10 +62,10 @@ public:
   typedef int (ACE_Name_Handler::*OPERATION) (void);
   // Pointer to a member function of ACE_Name_Handler returning int
 
-  typedef int (ACE_Naming_Context::*LIST_OP) (ACE_PWSTRING_SET &, const ACE_WString &);
+  typedef int (ACE_Naming_Context::*LIST_OP) (ACE_PWSTRING_SET &, const ACE_NS_WString &);
   // Pointer to a member function of ACE_Naming_Context returning int
 
-  typedef ACE_Name_Request (ACE_Name_Handler::*REQUEST) (ACE_WString *);
+  typedef ACE_Name_Request (ACE_Name_Handler::*REQUEST) (ACE_NS_WString *);
   // Pointer to a member function of ACE_Name_Handler returning ACE_Name_Request
 
   // = Initialization and termination.
@@ -173,13 +173,13 @@ private:
   // Handle LIST_NAME_ENTRIES, LIST_VALUE_ENTRIES, and
   // LIST_TYPE_ENTRIES requests.
 
-  ACE_Name_Request name_request (ACE_WString *one_name);
+  ACE_Name_Request name_request (ACE_NS_WString *one_name);
   // Create a name request.
 
-  ACE_Name_Request value_request (ACE_WString *one_name);
+  ACE_Name_Request value_request (ACE_NS_WString *one_name);
   // Create a value request.
 
-  ACE_Name_Request type_request (ACE_WString *one_name);
+  ACE_Name_Request type_request (ACE_NS_WString *one_name);
   // Create a type request.
 };
 
