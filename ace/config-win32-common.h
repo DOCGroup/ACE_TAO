@@ -89,11 +89,6 @@ typedef unsigned __int64 ACE_UINT64;
 // Compiler/platform has correctly prototyped header files.
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-// Platform supports IP multicast on Winsock 2
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-# define ACE_HAS_IP_MULTICAST
-#endif /* ACE_HAS_WINSOCK2 */
-
 // Platform contains <poll.h>.
 //define ACE_HAS_POLL
 
@@ -414,6 +409,11 @@ typedef unsigned __int64 ACE_UINT64;
 
         // Version 1.1 of WinSock
         #define ACE_WSOCK_VERSION 1, 1
+#endif /* ACE_HAS_WINSOCK2 */
+
+// Platform supports IP multicast on Winsock 2
+#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
+# define ACE_HAS_IP_MULTICAST
 #endif /* ACE_HAS_WINSOCK2 */
 
 #if defined (_MSC_VER)
