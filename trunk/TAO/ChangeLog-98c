@@ -5,6 +5,12 @@ Thu Nov 19 15:12:06 1998  David L. Levine  <levine@cs.wustl.edu>
           underscores confuse rsh/bash, so the output file couldn't be
           closed.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.cpp (svc):
+          on VxWorks, instead of calling ACE_OS::thr_exit (), call
+          the client Thread_Manager's exit ().  That will allow the
+          main thread to determine when all the clients have finished,
+          because it calls wait () on the client Thread_Manager.
+
 Thu Nov 19 14:51:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
