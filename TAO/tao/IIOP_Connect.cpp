@@ -228,7 +228,7 @@ TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
       // Decrement the reference count
       this->decr_ref_count ();
 
-      return TAO_IIOP_SVC_HANDLER::handle_close (handle, rm);
+      //return TAO_IIOP_SVC_HANDLER::handle_close (handle, rm);
     }
 
   return 0;
@@ -274,7 +274,9 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
     {
       --this->refcount_;
       if (this->refcount_ == 0)
-        this->TAO_IIOP_SVC_HANDLER::handle_close ();
+          this->decr_ref_count ();
+
+      //this->TAO_IIOP_SVC_HANDLER::handle_close ();
       return result;
     }
 
@@ -311,7 +313,8 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    this->TAO_IIOP_SVC_HANDLER::handle_close ();
+    this->decr_ref_count ();
+  //this->TAO_IIOP_SVC_HANDLER::handle_close ();
 
   return result;
 }
