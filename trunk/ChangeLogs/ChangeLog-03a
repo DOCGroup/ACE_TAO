@@ -1,6 +1,13 @@
+Thu May 10 10:06:57 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/tests.dsw:
+        * tests/ARGV_Test.dsp:
+          Add project file for ARGV_Test, thanks to Cristian Ferretti
+          <cristian_ferretti@yahoo.com> for pointing this out.
+
 Thu May 10 06:36:08 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/CDR_File_Test.cpp: Fixed a compile error with g++.
+        * tests/CDR_File_Test.cpp: Fixed a compile error with g++.
 
 Thu May 10 08:13:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
@@ -14,47 +21,47 @@ Thu May 10 08:13:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
         * tests/Synch/Makefile.bor
 
           Added or updated the above BCB makefiles so that the tests are
-	  build with BCB 
+          build with BCB
 
 Wed May  9 23:19:30 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
-	* ace/CDR_Streams.h:
-	* ace/CDR_Streams.cpp:
-	* ace/CDR_Streams.i:
-	* ace/CDR_Base.h: Changed the WChar implementation to suit GIOP
-	  1.2. 
+        * ace/CDR_Streams.h:
+        * ace/CDR_Streams.cpp:
+        * ace/CDR_Streams.i:
+        * ace/CDR_Base.h: Changed the WChar implementation to suit GIOP
+          1.2.
 
-	* tests/CDR_Test.cpp:Added test for wchar. 
-	
-	  Thanks to Bala (bala@cs.wustl.edu) for helping me out.
+        * tests/CDR_Test.cpp:Added test for wchar.
+
+          Thanks to Bala (bala@cs.wustl.edu) for helping me out.
 
 Wed May  9 16:06:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/TTY_IO.cpp (control):
-	* ace/OS.h: Corrected this change "Wed May  9 14:03:01 2001
-	  Douglas C. Schmidt". The problem was with the definition of the
-	  macro ACE_VTIME. Looks more like a cut and paste error.
+        * ace/TTY_IO.cpp (control):
+        * ace/OS.h: Corrected this change "Wed May  9 14:03:01 2001
+          Douglas C. Schmidt". The problem was with the definition of the
+          macro ACE_VTIME. Looks more like a cut and paste error.
 
 Wed May  9 16:00:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/OS.h:
-	* ace/TTY_IO.cpp: Reverted this change "Wed May  9 14:03:01 2001
-	  Douglas C. Schmidt".
+        * ace/OS.h:
+        * ace/TTY_IO.cpp: Reverted this change "Wed May  9 14:03:01 2001
+          Douglas C. Schmidt".
 
 Wed May  9 14:03:01 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/TTY_IO.cpp (control): Use the new ACE_VMIN and ACE_VTIME
-	  macros.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
- 	  suggesting this.
+        * ace/TTY_IO.cpp (control): Use the new ACE_VMIN and ACE_VTIME
+          macros.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de> for
+          suggesting this.
 
-	* ace/OS.h: Added support for the new ACE_VMIN and ACE_VTIME
-	  macros.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de>
-	  for suggesting this.
+        * ace/OS.h: Added support for the new ACE_VMIN and ACE_VTIME
+          macros.  Thanks to Hans Utz <hans.utz@informatik.uni-ulm.de>
+          for suggesting this.
 
 Wed May  9 14:25:35 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* THANKS: Added Darren Griffith <darren.griffith@esecurityinc.com>
-	  to the hall of fame.
+        * THANKS: Added Darren Griffith <darren.griffith@esecurityinc.com>
+          to the hall of fame.
 
 Wed May  9 11:40:06 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -122,14 +129,14 @@ Fri May  4 06:28:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
           <ACE_HANDLE> so this will work properly on Win32 platforms.
           Thanks to Johnny Willemsen for reporting the problem.
 =======
-	* ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
-	  users to control whether wide character strings use the "L"
- 	  prefix via their config.h files.  Thanks to Albert Wijnja for
- 	  this fix.
+        * ace/ace_wchar.h: Add a new macro (ACE_USES_L_PREFIX) that allows
+          users to control whether wide character strings use the "L"
+          prefix via their config.h files.  Thanks to Albert Wijnja for
+          this fix.
 
-	* examples/Misc/test_read_buffer.cpp (main): Changed <int> to
-	  <ACE_HANDLE> so this will work properly on Win32 platforms.
-	  Thanks to Johnny Willemsen for reporting the problem.
+        * examples/Misc/test_read_buffer.cpp (main): Changed <int> to
+          <ACE_HANDLE> so this will work properly on Win32 platforms.
+          Thanks to Johnny Willemsen for reporting the problem.
 >>>>>>> 4.1974
 
         * examples/Misc/test_XtReactor2.cpp (main): Fixed a stray ')'.
@@ -1862,10 +1869,10 @@ Tue Mar 27 05:35:38 2001  Christopher Kohlhoff <chris@kohlhoff.com>
 
         * include/makeinclude/make_flags.bor:
           Prevent PASCAL build by default with BCB5 since it is not
-	  required. Since both VCL and non-VCL applications share a common
-	  run-time library you can simply link your VCL code with a
-	  non-PASCAL build of the ACE+TAO libraries. This behaviour can be
-	  overridden by defining the FORCE_PASCAL flag.
+          required. Since both VCL and non-VCL applications share a common
+          run-time library you can simply link your VCL code with a
+          non-PASCAL build of the ACE+TAO libraries. This behaviour can be
+          overridden by defining the FORCE_PASCAL flag.
 
         * include/makeinclude/build_core_exe.bor:
         * include/makeinclude/build_core_library.bor:
