@@ -21,8 +21,8 @@ ACE_Cached_Mem_Pool_Node<T>::set_next (ACE_Cached_Mem_Pool_Node<T> *ptr)
   this->next_ = ptr;
 }
 
-template <class T, class LOCK> ACE_INLINE void *
-ACE_Cached_Allocator<T, LOCK>::malloc (size_t nbytes)
+template <class T, class ACE_LOCK> ACE_INLINE void *
+ACE_Cached_Allocator<T, ACE_LOCK>::malloc (size_t nbytes)
 {
   // Check if size requested fits within pre-determined size.
   if (nbytes > sizeof (T))
@@ -33,8 +33,8 @@ ACE_Cached_Allocator<T, LOCK>::malloc (size_t nbytes)
   return this->free_list_.remove ()->addr ();
 }
 
-template <class T, class LOCK> ACE_INLINE void
-ACE_Cached_Allocator<T, LOCK>::free (void * ptr)
+template <class T, class ACE_LOCK> ACE_INLINE void
+ACE_Cached_Allocator<T, ACE_LOCK>::free (void * ptr)
 {
   this->free_list_.add ((ACE_Cached_Mem_Pool_Node<T> *) ptr) ;
 }
@@ -149,38 +149,38 @@ ACE_Allocator_Adapter<MALLOC>::protect (void *addr, size_t len, int flags)
   return this->allocator_.protect (addr, len, flags);
 }
 
-template <ACE_MEM_POOL_1, class LOCK> ACE_MEM_POOL &
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::memory_pool (void)
+template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_MEM_POOL &
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::memory_pool (void)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, LOCK>::memory_pool");
+  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::memory_pool");
   return this->memory_pool_;
 }
 
-template <ACE_MEM_POOL_1, class LOCK> int
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::sync (ssize_t len, int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK> int
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::sync (ssize_t len, int flags)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, LOCK>::sync");
+  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::sync");
   return this->memory_pool_.sync (len, flags);
 }
 
-template <ACE_MEM_POOL_1, class LOCK> int
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::sync (void *addr, size_t len, int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK> int
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::sync (void *addr, size_t len, int flags)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, LOCK>::sync");
+  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::sync");
   return this->memory_pool_.sync (addr, len, flags);
 }
 
-template <ACE_MEM_POOL_1, class LOCK> int
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::protect (ssize_t len, int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK> int
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (ssize_t len, int flags)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, LOCK>::protect");
+  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::protect");
   return this->memory_pool_.protect (len, flags);
 }
 
-template <ACE_MEM_POOL_1, class LOCK> int
-ACE_Malloc<ACE_MEM_POOL_2, LOCK>::protect (void *addr, size_t len, int flags)
+template <ACE_MEM_POOL_1, class ACE_LOCK> int
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::protect (void *addr, size_t len, int flags)
 {
-  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, LOCK>::protect");
+  ACE_TRACE ("ACE_Malloc<MEMORY_POOL, ACE_LOCK>::protect");
   return this->memory_pool_.protect (addr, len, flags);
 }
 
