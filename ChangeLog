@@ -64,7 +64,7 @@ Mon May 19 11:03:31 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* m4/ace.m4 (ACE_CONFIGURATION_OPTIONS):
 
 	  Added "--enable-alloca" configure script option.  alloca()
-	  support will be disabled by support.
+	  support will be disabled by default.
 
 Mon May 19 16:08:47 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
