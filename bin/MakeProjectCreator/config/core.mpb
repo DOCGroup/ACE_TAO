@@ -5,4 +5,8 @@ project {
   verbatim(borland, macros) {
     INSTALL_THIS_TARGET = 1
   }
+
+  specific(automake) {
+    INSTALL_THIS_TARGET = 1
+  }
 }
