@@ -1,5 +1,48 @@
 Sun Nov 16 13:34:29 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
+	* tests/SOCK_Connector_Test.cpp (fail_no_listener_nonblocking): 
+	  Changed the line
+
+	  status = con.complete (sock);
+
+	  to 
+
+	  if (sock.get_handle () != ACE_INVALID_HANDLE)
+  	    status = con.complete (sock);
+
+	  The change worksaround a core dump due the the following
+ 	  conditions:
+
+	  - the find_another_host function in SOCK_Connector_Test comes
+	    up with the entry for an NT machine.
+
+	  - the ACE_OS::connect call at line 64 of SOCK_Connector.cpp
+	    "successfully" fails returning -1 but in this case
+	    errno is set to ECONNREFUSED.
+
+	  - Since errno is not EINPROGRESS or EWOULDBLOCK the
+	    ACE_SOCK_Stream 'new_stream' close member function is called
+	    which, besides closing the "handle", also sets it to
+	    ACE_INVALID_HANDLE.
+
+	  - Since the errno was ECONNREFUSED the 'if' test at line 97 of
+	    SOCK_Connector_Test.cpp is true and the next statement
+
+	    status = con.complete (sock);
+
+	    is called causing a core dump since sock.get_handle() is
+	    ACE_INVALID_HANDLE (-1 on Solaris).
+
+	  Thanks to Jack Erickson <jack@pinion.com> for reporting this.
+
+	* ace/OS: Cast away the constness of the parameters to _tempnam()
+ 	  for Borland C++.  Thanks to Valik Solrzano Barboza
+ 	  <valik@xs4all.nl> for this.
+
+	* ace/config-unixware-2.1.2-g++.h: Changed
+ 	  ACE_HAS_OSF1_GETTIMEOFDAY to ACE_HAS_SVR4_GETTIMEOFDAY.  Thanks
+ 	  to John Connett <jrc@skylon.demon.co.uk> for reporting this.
+
 	* ace/SPIPE_Addr.cpp (set): Fixed a problem where we were
  	  potentially writing into character constants.  Thanks to Darrell
  	  Brunsch for finding this.
