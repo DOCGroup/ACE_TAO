@@ -1,3 +1,12 @@
+Tue Nov  4 16:34:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/Active_Objref_Map.h:
+	* ciao/Client_init.h:
+	* ciao/Object_Set_T.h:
+	* ciao/Server_init.h:
+
+	  Added new includes that are needed to get them compiling. 
+
 Wed Oct 29 16:39:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:

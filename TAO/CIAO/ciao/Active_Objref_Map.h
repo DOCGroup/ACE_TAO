@@ -17,12 +17,13 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Active_Map_manager_T.h"
-#include "ciao/CIAO_Container_Export.h"
-#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ciao/CIAO_Container_Export.h"
+#include "tao/Object.h"
 
 namespace CIAO
 {
