@@ -1,6 +1,14 @@
+Thu Aug 01 07:34:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Made the definition of the missing parts of the Win32api of MingW
+          dependent on the version of the w32api instead of our own defines.
+          This way we automically define the missing things when needed. Thanks
+          to Craig for suggesting this.
+
 Wed Jul 31 23:39:27 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* etc/*.doxygen: Change DOT_PATH from /usr/local/bin/ to 
+	* etc/*.doxygen: Change DOT_PATH from /usr/local/bin/ to
 	  empty, forcing doxygen to look for the dot program in PATH.
 	  This eliminates warnings in the Doxygen nightly build.
 
