@@ -2028,6 +2028,13 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
   return 0;
 }
 
+
+TAO_Transport_Cache_Manager &
+TAO_Transport::transport_cache_manager (void)
+{
+  return this->orb_core_->lane_resources ().transport_cache ();
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Reverse_Lock<ACE_Lock>;
