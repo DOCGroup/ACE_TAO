@@ -1,8 +1,6 @@
-// $Id$
-
 /* -*-C++-*- */
 // ============================================================================
-//
+// $Id$
 // = LIBRARY
 //    asnmp
 //
@@ -1035,7 +1033,7 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
   vars->next_variable = NULL;
 
   // hook in the Oid portion
-  ACE_NEW(vars->name, oid[(name_length * sizeof(oid))]);
+  ACE_NEW(vars->name, oid[(name_length)]);
 
   // fixed
   ACE_OS::memcpy((char *)vars->name,(char *)name, name_length * sizeof(oid));
@@ -1355,8 +1353,10 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
 
     // agent-addr 
     cp = asn1::build_string(cp, 
-			  &length,
-	  (u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_OCTET_STR),
+			    &length,
+			    // HDN Fixed to use correct tag
+			    (u_char)SMI_IPADDRESS,
+			    //(u_char)(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_OCTET_STR),
 			  (u_char *)&pdu->agent_addr.sin_addr.s_addr, 
 			  sizeof(pdu->agent_addr.sin_addr.s_addr));
     if (cp == NULL)
@@ -1383,7 +1383,9 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
     // timestamp  
     cp = asn1::build_int(cp, 
 		       &length,
-	       (u_char )(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
+			 // HDN Fixed to use correct tag
+			 (u_char)SMI_TIMETICKS,
+			 //(u_char )(ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_INTEGER),
 		       (long *)&pdu->time, 
 		       sizeof(pdu->time));
     if (cp == NULL)
@@ -1721,6 +1723,4 @@ int cmu_snmp::parse( struct snmp_pdu *pdu,
   }
   return 0;
 }
-
-
 
