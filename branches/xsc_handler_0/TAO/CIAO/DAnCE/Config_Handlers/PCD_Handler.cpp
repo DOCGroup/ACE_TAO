@@ -5,6 +5,7 @@
 #include "CEPE_Handler.h"
 #include "PSPE_Handler.h"
 #include "ERE_Handler.h"
+#include "CRDD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
 
@@ -105,6 +106,19 @@ namespace CIAO
           erehandler.get_ExternalReferenceEndpoint (
             toconfig.externalReference [toconfig.externalReference.length () - 1],
             *ipoint); 
+        }
+        
+      //Configure the resource value.
+      if (desc.deployedResource_p ())
+        {
+          CRDD_Handler crddhandler;
+          
+          toconfig.deployedResource.length (
+            toconfig.deployedResource.length () + 1);
+            
+          crddhandler.get_ConnectionResourceDeploymentDescription (
+            toconfig.deployedResource[toconfig.deployedResource.length () - 1],
+            desc.deployedResource ()); 
         }
       
     }
