@@ -1,3 +1,8 @@
+Wed Dec 10 21:41:48 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* docs/releasenotes/index.html: Updated the release notes on the
+ 	Naming Service.
+
 Wed Dec 10 20:13:57 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* Makefile: 
