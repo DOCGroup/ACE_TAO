@@ -1482,6 +1482,10 @@ SOURCE=.\Global_Macros.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Guard_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Handle_Ops.h
 # End Source File
 # Begin Source File
@@ -2635,6 +2639,10 @@ SOURCE=.\Functor_T.i
 # Begin Source File
 
 SOURCE=.\Get_Opt.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Guard_T.inl
 # End Source File
 # Begin Source File
 
