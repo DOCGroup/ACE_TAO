@@ -1,3 +1,20 @@
+Wed May 19 16:23:18 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Pluggable.cpp (TAO_Transport): Hardcoded <Wait_On_Read>
+	strategy.  
+
+	* tao/Connect.cpp: Changes to <ST_Client_Connection_Handler> in
+	order to get the <Wait_On_Reactor> to work.  
+
+	* tao/Pluggable.cpp: Hard coding <Wait_On_Reactor> instead of
+	<Wait_On_Read>. 
+
+	* tao/GIOP.cpp: Incrementing the <message_offset> in the Tranport
+	object updating the state of the incoming message.
+
+	* tao/IIOP_Wait_Strategy.cpp: Implemented <Wait_On_Reactor>
+	strategy. Not well tested yet.  
+
 Tue May 18 11:43:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	Got <Wait_On_Read strategy> to work with the new architecture. 
