@@ -1,5 +1,13 @@
 Mon Aug 24 18:11:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Memory_Pool.cpp (ACE_Local_Memory_Pool::release): This
+ 	  memory pool uses "new" to create memory chunks for the Malloc
+ 	  class.  However, since it did not keep track of this memory,
+ 	  these chunks were leaked.
+
+	  The solution was to keep tarck of the chunks allocated and
+ 	  delete them in release().
+
 	* ace/Object_Manager.cpp (~ACE_Object_Manager): Moved TSS cleanup
  	  *before* Service_Config::close().  We need this to happen since
  	  DLL related TSS objects need to get cleaned up *before* the DLL

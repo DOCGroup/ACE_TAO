@@ -8,6 +8,8 @@
 #include "ace/Memory_Pool.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Auto_Ptr.h"
+
 ACE_RCSID(ace, Memory_Pool, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Local_Memory_Pool)
@@ -30,15 +32,35 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::acquire");
   rounded_bytes = this->round_up (nbytes);
-  // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
 
-  void *cp = (void *) new char[rounded_bytes];
-
-  if (cp == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) %u\n"), cp), 0);
+  ACE_Auto_Basic_Array_Ptr<char> cp = new char[rounded_bytes];
+  
+  if (cp.get () == 0)
+    ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) new failed \n")), 0);
   else
-    // ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("(%P|%t) acquired more chunks, nbytes = %d, rounded_bytes = %d, new break = %d\n"), nbytes, rounded_bytes, cp));
-  return cp;
+    {
+      int result = this->allocated_chunks_.insert (cp.get ());
+      if (result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR, ASYS_TEXT ("(%P|%t) insertion into set failed\n")), 0);
+    }
+
+  return cp.release ();
+}
+
+int
+ACE_Local_Memory_Pool::release (void)
+{
+  ACE_TRACE ("ACE_Local_Memory_Pool::release");
+
+  // Zap the memory we allocated.
+  for (ACE_Unbounded_Set<char *>::iterator i = this->allocated_chunks_.begin ();
+       i != this->allocated_chunks_.end ();
+       ++i)
+    {
+      delete[] *i;
+    }
+
+  return 0;
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MMAP_Memory_Pool)
@@ -764,3 +786,14 @@ ACE_Shared_Memory_Pool::release (void)
   return result;
 }
 #endif /* !ACE_LACKS_SYSV_SHMEM */
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Auto_Basic_Array_Ptr<char *>;
+template class ACE_Unbounded_Set<char *>;
+template class ACE_Unbounded_Set_Iterator<char *>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<char *>
+#pragma instantiate ACE_Unbounded_Set<char *> 
+#pragma instantiate ACE_Unbounded_Set_Iterator<char *> 
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
