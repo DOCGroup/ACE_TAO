@@ -2849,8 +2849,13 @@ typedef int ssize_t;
 # endif /* ACE_HAS_SSIZE_T */
 
 # if defined (ACE_HAS_PACE)
+#   if defined (ACE_HAS_LYNXOS_SIGNALS)
+typedef void (*ACE_SignalHandler)(...);
+typedef void (*ACE_SignalHandlerV)(...);
+#   else
 typedef pace_sig_pf ACE_SignalHandler;
 typedef pace_sig_pf ACE_SignalHandlerV;
+#   endif /* ACE_HAS_LYNXOS_SIGNALS */
 # elif defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
 // Prototypes for both signal() and struct sigaction are consistent..
 #   if defined (ACE_HAS_SIG_C_FUNC)

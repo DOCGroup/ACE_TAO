@@ -1,3 +1,9 @@
+Mon Aug 14 21:55:54 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * ace/OS.{h,i}:
+          Added function typedefs for pace_signal for compiling
+          ACE with PACE for LynxOS.
+
 Fri Aug 11 17:49:36 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/TP_Reactor.cpp: Add #include "ace/Thread.h" to pick up the

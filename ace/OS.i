@@ -6872,7 +6872,11 @@ ACE_OS::signal (int signum, ACE_SignalHandler func)
     return 0;
   else
 #if defined (ACE_HAS_PACE)
+# if defined (ACE_HAS_LYNXOS_SIGNALS)
+    return (void (*)(...))::pace_signal (signum, (void (*)(int)) func);
+# else
     return ::pace_signal (signum, func);
+# endif /* ACE_HAS_LYNXOS_SIGNALS */
 #elif defined (ACE_PSOS) && !defined (ACE_PSOS_TM) && !defined (ACE_PSOS_DIAB_MIPS) && !defined (ACE_PSOS_DIAB_PPC)
     return (ACE_SignalHandler) ::signal (signum, (void (*)(void)) func);
 #elif defined (ACE_PSOS_DIAB_MIPS) || defined (ACE_PSOS_DIAB_PPC)
