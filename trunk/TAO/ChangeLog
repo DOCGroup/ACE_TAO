@@ -1,3 +1,9 @@
+Sat Apr  2 08:35:03 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Union_TypeCode.cpp (equivalent_i, member_label_i):
+
+	  Fixed emulated exception macro usage.
+
 Sat Apr  2 01:22:37 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_array.cpp (compute_tc_size):
