@@ -1,3 +1,22 @@
+Fri Oct 13 06:28:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/IFR_Service.bor:
+	  Fixed link problem by adding required libraries.
+
+        * orbsvcs/orbsvcs/FaultTolerance.bor:
+	* orbsvcs/orbsvcs/Makefile.bor:
+   	* orbsvcs/tests/FaultTolerance/*/*.bor:
+	  Added new makefiles for FaultTolerance library and tests.
+
+	* tests/Collocation/*.bor:
+	  Changed DLL macros to fix case mismatch.
+
+	* tests/IORManipulation/Makefile.bor:
+	* tests/MProfile/client.bor:
+	  Fixed link problem by adding missing IORManip library.
+
+	  Thanks to Christopher Kohlhoff for providing these fixes.
+
 Thu Oct 12 18:14:16 2000  Phillip DiCorpo  <dicorpo@cs.wustl.edu>
 
 	* examples/Advanced/ch_12/client.cpp (operator<<):
