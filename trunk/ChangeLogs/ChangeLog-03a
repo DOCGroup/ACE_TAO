@@ -1,8 +1,15 @@
+Sat Jun 16 00:09:14 2001  Krishnakumar B  <kitty@cs.wustl.edu>
+
+	* bin/nightlybuilds/builds.lst (WEB):
+
+	  Added IA-64 to the nightly builds. The tests are disabled for
+	  now. They will be enabled after TAO 1.2 is released.
+
 Fri Jun 15 20:46:01 2001  Sharath R. Cholleti  <sharath@cs.wustl.edu>
 
 	* ace/CDR_Stream.{cpp,h,i}:
 
-	  WChar implementation of GIOP 1.2. Made changes in some of the 
+	  WChar implementation of GIOP 1.2. Made changes in some of the
 	  ACE_InputCDR constructors, exchange_data_blocks () and steal_from ().
 
 Fri Jun 15 20:18:07 2001  Krishnakumar B  <kitty@cs.wustl.edu>

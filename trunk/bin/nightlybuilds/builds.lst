@@ -195,6 +195,11 @@ TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/beguine.doc.wustl.edu_NO_AMI_MESSAGING/
 WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?beguine.doc.wustl.edu_NO_AMI_MESSAGING
 
+[RedHat_IA64_Linux]
+TYPE = TIMEONLY
+LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/yoda_Full
+WEB  = http://ace.cs.wustl.edu/~bugzilla/cgi-bin/show_log_dir.cgi?yoda_Full
+
 [Debian_NoInterceptors]
 TYPE = TIMEONLY
 LIST = http://ace.cs.wustl.edu/~bugzilla/auto_compile_logs/charanga_Full/
@@ -214,4 +219,3 @@ WEB  = http://amras.ece.uci.edu/cgi-bin/show_log_dir.cgi?amras_QNX
 TYPE = TIMEONLY
 LIST = http://prince.ociweb.com/buildlogs/auto_compile_logs/herb_HPUX_ACC/
 WEB  = http://prince.ociweb.com/buildlogs/show_log_dir.cgi?herb_HPUX_ACC
-
