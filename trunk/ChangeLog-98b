@@ -10,6 +10,9 @@ Fri Jul 24 09:05:24 1998  David L. Levine  <levine@cs.wustl.edu>
           (LynxOS and HP/UX 10.x), call ::pthread_detach () on joined
           threads.  Only do it if the THR_DETACHED flag is not enabled.
 
+        Thanks to Dave Mayerhoefer <davem@lynx.com> for diagnosing the
+        lack of ::pthread_detach () calls in ACE.
+
 Fri Jul 24 00:39:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * ace/ace_dll.dsp (Message_Queue_T.cpp): This file contains
