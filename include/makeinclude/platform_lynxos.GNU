@@ -16,7 +16,9 @@
 #### can be overridden for your particular platform.
 
 
-debug = 1
+ifeq ($(debug),)
+  debug = 1
+endif
 shared_libs =
 static_libs = 1
 #### optimize is defined below because it is version-dependent.
