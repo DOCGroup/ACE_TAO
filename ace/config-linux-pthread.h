@@ -15,6 +15,8 @@
 #define ACE_HAS_PENTIUM
 #define ACE_HAS_LONGLONG_T
 #define ACE_HAS_STRING_CLASS
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 // Fixes a problem with new versions of Linux...
 #ifndef msg_accrights

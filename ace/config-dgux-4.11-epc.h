@@ -188,5 +188,8 @@
 // Header files lack t_errno for ACE_TLI.
 #define ACE_LACKS_T_ERRNO
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #define ACE_DGUX
 #endif /* ACE_CONFIG_H */

@@ -33,6 +33,8 @@
 #define ACE_HAS_LONGLONG_T
 #define ACE_TEMPLATES_REQUIRE_PRAGMA
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 
 #define ACE_HAS_AIX_HI_RES_TIMER

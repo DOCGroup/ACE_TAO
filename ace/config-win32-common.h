@@ -30,6 +30,9 @@
 #define ACE_HAS_TYPENAME_KEYWORD
 #endif /* _MSC_VER >= 1100 */
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 // Win32 has UNICODE support
 #define ACE_HAS_UNICODE
 

@@ -16,6 +16,9 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #define ACE_HAS_BROKEN_SENDMSG
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_CHARPTR_SOCKOPT

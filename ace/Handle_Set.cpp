@@ -79,43 +79,28 @@ ACE_Handle_Set::ACE_Handle_Set (const ACE_FD_SET_TYPE &fd_mask)
 // Counts the number of bits enabled in N.  Uses a table lookup to
 // speed up the count.
 
-#if defined (ACE_HAS_LONG_FDMASK)
-// If there are platforms where fd_mask isn't typedef'd to a 4 byte
-// quantify we'll have to use the following code.
-
 int
 ACE_Handle_Set::count_bits (u_long n) const
 {
-  ACE_TRACE ("ACE_Handle_Set::count_bits");
-  int rval = 0;
+
+ ACE_TRACE ("ACE_Handle_Set::count_bits");
+#if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
+  register int rval = 0;
 
   while (n > 0)
     {
-#if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
       rval++;
       n &= n - 1;
-#else
-      rval += ACE_Handle_Set::nbits_[n & 0xff];
-      n >>= 8;
-#endif /* ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT */
     }
 
   return rval;
-}
 #else
-
-// Otherwise we can use the following.
-
-int
-ACE_Handle_Set::count_bits (u_long n) const
-{
-  ACE_TRACE ("ACE_Handle_Set::count_bits");
-  return (ACE_Handle_Set::nbits_[n & 0xff] 
-	  + ACE_Handle_Set::nbits_[(n >> 8) & 0xff] 
-	  + ACE_Handle_Set::nbits_[(n >> 16) & 0xff] 
-	  + ACE_Handle_Set::nbits_[(n >> 24) & 0xff]);
+   return (ACE_Handle_Set::nbits_[n & 0xff] 
+ 	  + ACE_Handle_Set::nbits_[(n >> 8) & 0xff] 
+ 	  + ACE_Handle_Set::nbits_[(n >> 16) & 0xff] 
+  	  + ACE_Handle_Set::nbits_[(n >> 24) & 0xff]);
+#endif /* ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT */
 }
-#endif /* ACE_HAS_LONG_FDMASK */
 
 // Synchronize the underlying FD_SET with the MAX_FD and the SIZE.
 

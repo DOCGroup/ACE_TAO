@@ -5,6 +5,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Synch.h"
+#include "ace/Signal.h"
 #include "ace/Timer_Queue_T.h"
 
 #if !defined (__ACE_INLINE__)
@@ -277,6 +278,112 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::deletion (ACE_Timer_Queue_T<A
   // Does nothing
   
   return 0;
+}
+
+template <class TQ> TQ &
+ACE_Async_Timer_Queue_Adapter<TQ>::timer_queue (void)
+{
+  return this->timer_queue_;
+}
+
+template <class TQ> int
+ACE_Async_Timer_Queue_Adapter<TQ>::cancel (long timer_id,
+					   const void **act)
+{
+  // Block all signals.
+  ACE_Sig_Guard sg;
+  ACE_UNUSED_ARG (sg);
+
+  return this->timer_queue_.cancel (timer_id, act);
+}
+
+template <class TQ> long 
+ACE_Async_Timer_Queue_Adapter<TQ>::schedule (ACE_Event_Handler *eh,
+				 const void *act, 
+				 const ACE_Time_Value &delay,
+				 const ACE_Time_Value &interval)
+{
+  // Block all signals.
+  ACE_Sig_Guard sg;
+  ACE_UNUSED_ARG (sg);
+
+  long tid = this->timer_queue_.schedule (eh, 0, delay);
+
+  if (tid == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "schedule_timer"), -1);
+
+  ACE_Time_Value tv = this->timer_queue_.earliest_time () 
+    - ACE_OS::gettimeofday ();
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "scheduling timer %d for (%d, %d)\n",
+	      tid, tv.sec (), tv.usec ()));
+
+  // Beware of negative times and zero times (which cause problems for
+  // ualarm()).
+  if (tv < ACE_Time_Value::zero)
+    tv = ACE_Time_Value (0, 1);
+
+  // Schedule a new timer.
+  ACE_OS::ualarm (tv);
+  return 0;
+}
+
+template <class TQ>
+ACE_Async_Timer_Queue_Adapter<TQ>::ACE_Async_Timer_Queue_Adapter (void)
+{
+  // The following code is necessary to selectively "block" all
+  // signals when SIGALRM is running.  Also, we always restart system
+  // calls that are interrupted by the signals.
+
+  // Block *all* signals when the SIGARLM handler is running!
+  ACE_Sig_Set ss (1); 
+
+  ACE_Sig_Action sa ((ACE_SignalHandler) 0,
+		     ss,
+		     SA_RESTART);
+
+  if (this->sig_handler_.register_handler (SIGALRM, this, &sa) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
+}
+
+// This is the signal handler function for the asynchronous timer
+// list.  It gets invoked asynchronously when the SIGALRM signal
+// occurs.
+template <class TQ> int
+ACE_Async_Timer_Queue_Adapter<TQ>::handle_signal (int signum,
+						  siginfo_t *,
+						  ucontext_t *)
+{
+  ACE_DEBUG ((LM_DEBUG, "handling signal %S\n", signum));
+
+  switch (signum)
+    {
+    case SIGALRM:
+      {
+	int expired_timers;
+
+	// Expire the pending timers.
+	expired_timers = this->timer_queue_.expire ();
+
+	if (expired_timers > 0)
+	  ACE_DEBUG ((LM_DEBUG,
+		      "time = %d, timers expired = %d\n", 
+		      ACE_OS::time (),
+		      expired_timers));
+
+	// Only schedule a new timer if there is one in the list.
+	if (this->timer_queue_.is_empty () == 0)
+	  ACE_OS::ualarm (this->timer_queue_.earliest_time () 
+			  - ACE_OS::gettimeofday ());
+	
+	return 0;
+	/* NOTREACHED */
+      }
+    default:
+      ACE_ERROR_RETURN ((LM_ERROR, "unexpected signal %S\n", signum), -1);
+      /* NOTREACHED */
+    }
 }
 
 #endif /* ACE_TIMER_QUEUE_T_C*/

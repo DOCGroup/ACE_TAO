@@ -36,6 +36,9 @@
 // include iostream.h only where they need it.
 #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_SOCKETS
 #define ACE_HAS_NONSTATIC_OBJECT_MANAGER

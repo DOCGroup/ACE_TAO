@@ -16,6 +16,9 @@
 #define MAXPATHLEN 1023
 #endif /* SCO */
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #define ACE_HAS_SIG_MACROS
 #define ACE_LACKS_CONST_TIMESPEC_PTR
 #define ACE_TEMPLATES_REQUIRE_SOURCE

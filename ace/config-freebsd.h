@@ -169,4 +169,7 @@ ange */
 
 // #define ACE_HAS_SIGWAIT
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #endif /* ACE_CONFIG_H */

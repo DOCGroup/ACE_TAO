@@ -349,6 +349,48 @@ public:
   // the timer is still contained in it
 };
 
+template <class TQ>
+class ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
+  // = TITLE
+  //     Adapts a <TQ> to be run asynchronously.
+  //
+  // = DESCRIPTION
+  //     This implementation uses the <ualarm> call, which generates
+  //     the SIGARLM signal that is caught by this class.
+{
+public:
+  typedef TQ TIMER_QUEUE;
+
+  ACE_Async_Timer_Queue_Adapter (void);
+  // Register the SIGALRM handler.
+
+  long schedule (ACE_Event_Handler *type,
+		 const void *act, 
+		 const ACE_Time_Value &delay,
+		 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  // Schedule the timer according to the semantics of the
+  // <ACE_Timer_List>.  However, this timer gets dispatched via a
+  // signal, rather than by a user calling <expire>.
+
+  int cancel (long timer_id, const void **);
+  // Cancel the <timer_id>.
+
+  TQ &timer_queue (void);
+  // Access the underlying <TIMER_QUEUE>.
+
+private:
+  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  // Called back by SIGALRM handler.
+
+  ACE_Sig_Handler sig_handler_;
+  // Handler for the SIGALRM signal, so that we can access our state
+  // without requiring global variables.
+
+  TQ timer_queue_;
+  // Implementation of the timer queue (e.g., <ACE_Timer_List>,
+  // <ACE_Timer_Heap>, etc.).
+};
+
 #if defined (__ACE_INLINE__)
 #include "ace/Timer_Queue_T.i"
 #endif /* __ACE_INLINE__ */

@@ -19,6 +19,9 @@ extern "C" void pthread_init();
 
 #define PTHREAD_STACK_MIN 1024
 
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
 #if !defined (IP_ADD_MEMBERSHIP)
 #define IP_ADD_MEMBERSHIP 0x13
 #endif	/*  m88k */
