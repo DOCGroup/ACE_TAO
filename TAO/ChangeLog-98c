@@ -1,3 +1,10 @@
+Fri Aug 21 20:12:29 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Event_Latency/Event_Latency.cpp: 
+	  Removed the #include <limits.h> that made some HP-UX compilers
+	  ver angry. Thanks to John Mulhern <9107@mn3.lawson.lawson.com>
+	  for reporting this.
+
 Fri Aug 21 19:22:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp: 
