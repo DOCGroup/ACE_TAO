@@ -4,6 +4,8 @@
 
 // FlowSpec_Entry.i
 
+#include "ace/OS_NS_strings.h"
+
 ACE_INLINE
 int
 TAO_FlowSpec_Entry::set_direction (const char *direction)
