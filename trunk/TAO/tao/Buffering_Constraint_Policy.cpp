@@ -1,5 +1,6 @@
 // $Id$
 
+
 #include "tao/Buffering_Constraint_Policy.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)

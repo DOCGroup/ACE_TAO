@@ -11,3 +11,4 @@ TAO_Buffering_Constraint_Policy::buffering_constraint (void)
 {
   return this->buffering_constraint_;
 }
+
