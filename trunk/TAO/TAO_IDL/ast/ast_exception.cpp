@@ -412,7 +412,7 @@ AST_Exception::dump (ostream &o)
 }
 
 int
-AST_Exception::accept (ast_visitor *visitor)
+AST_Exception::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_exception (this);
 }

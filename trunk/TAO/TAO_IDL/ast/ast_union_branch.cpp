@@ -117,7 +117,7 @@ AST_UnionBranch::dump (ostream &o)
 }
 
 int
-AST_UnionBranch::accept (ast_visitor *visitor)
+AST_UnionBranch::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_union_branch (this);
 }

@@ -2497,7 +2497,7 @@ AST_Expression::dump (ostream &o)
 }
 
 int
-AST_Expression::accept (ast_visitor *visitor)
+AST_Expression::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_expression (this);
 }

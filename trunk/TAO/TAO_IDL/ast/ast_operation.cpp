@@ -474,7 +474,7 @@ AST_Operation::dump (ostream &o)
 }
 
 int
-AST_Operation::accept (ast_visitor *visitor)
+AST_Operation::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_operation (this);
 }

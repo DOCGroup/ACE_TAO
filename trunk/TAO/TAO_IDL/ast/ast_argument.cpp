@@ -131,7 +131,7 @@ AST_Argument::dump (ostream &o)
 }
 
 int
-AST_Argument::accept (ast_visitor *visitor)
+AST_Argument::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_argument (this);
 }

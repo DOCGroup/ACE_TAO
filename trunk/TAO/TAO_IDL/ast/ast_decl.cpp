@@ -550,7 +550,7 @@ AST_Decl::dump (ostream &o)
 }
 
 int
-AST_Decl::accept (ast_visitor *visitor)
+AST_Decl::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_decl (this);
 }

@@ -130,7 +130,7 @@ AST_String::dump(ostream &o)
 }
 
 int
-AST_String::accept (ast_visitor *visitor)
+AST_String::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_string (this);
 }

@@ -515,7 +515,7 @@ AST_Structure::dump (ostream &o)
 }
 
 int
-AST_Structure::accept (ast_visitor *visitor)
+AST_Structure::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_structure (this);
 }
