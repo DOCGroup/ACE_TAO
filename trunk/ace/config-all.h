@@ -379,7 +379,7 @@
 #    endif /* HPUX_VERS < 1100 */
 #    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #  elif defined (__SUNPRO_CC)
-#      if (__SUNPRO_CC < 0x500) || (__SUNPRO_CC_COMPAT == 4))
+#      if (__SUNPRO_CC < 0x500) || (__SUNPRO_CC_COMPAT == 4)
 #        include /**/ <exception.h>
          // Note: we catch ::xalloc rather than just xalloc because of
          // a name clash with unsafe_ios::xalloc()
@@ -390,7 +390,7 @@
 #        define ACE_bad_alloc std::bad_alloc
 #        define ACE_throw_bad_alloc throw ACE_bad_alloc ()
 #      endif /* __SUNPRO_CC < 0x500 */
-#  elif defined (__BORLANDC__) || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) 
+#  elif defined (__BORLANDC__) || defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #    include /**/ <new>
 #    define ACE_bad_alloc std::bad_alloc
 #    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
