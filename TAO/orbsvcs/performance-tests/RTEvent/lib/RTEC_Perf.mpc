@@ -7,7 +7,6 @@ project(RTEC_Perf): strategies, messaging, orbsvcslib, rtcorbaevent, rtevent, na
 
   Template_Files {
     Auto_Disconnect.cpp
-    Auto_Functor.cpp
     Low_Priority_Setup.cpp
     RIR_Narrow.cpp
     Servant_var.cpp

@@ -14,7 +14,7 @@ project(DsEventLogAdmin) : orbsvcslib, core, dslogadmin, event {
   }
 
   Source_Files(ORBSVCS_COMPONENTS) {
-    EventLog {
+    DsEventLogAdmin {
       DsEventLogAdminC.cpp
       DsEventLogAdminS.cpp
       Log/EventLogFactory_i.cpp
