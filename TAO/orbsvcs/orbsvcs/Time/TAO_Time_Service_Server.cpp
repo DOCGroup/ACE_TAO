@@ -2,6 +2,8 @@
 #include "TAO_TIO.h"
 #include "TAO_Time_Service_Server.h"
 
+#include "tao/debug.h"
+
 
 ACE_RCSID (Time,
            TAO_Time_Service_Server,
