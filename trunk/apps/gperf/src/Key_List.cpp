@@ -27,6 +27,7 @@ ACE_RCSID(src, Key_List, "$Id$")
 
 #if defined (ACE_HAS_GPERF)
 
+#include "ace/ACE.h"
 #include "ace/Read_Buffer.h"
 #include "Hash_Table.h"
 
@@ -66,6 +67,10 @@ Key_List::~Key_List (void)
       delete this->head;
       this->head = temp;
     }
+
+  delete [] this->array_type_;
+  delete [] this->return_type;
+  delete [] this->struct_tag;
 }
 
 // Gathers the input stream into a buffer until one of two things occur:
@@ -178,43 +183,49 @@ Key_List::output_types (void)
 {
   if (option[TYPE])
     {
-      array_type_ = array_type ();
-      if (array_type_ == 0)
+      delete [] this->array_type_;
+      this->array_type_ = array_type ();
+      if (this->array_type_ == 0)
         // Something's wrong, but we'll catch it later on....
         return -1;
       else
         {
           // Yow, we've got a user-defined type...
-          int struct_tag_length = ACE_OS::strcspn (array_type_,
+          int struct_tag_length = ACE_OS::strcspn (this->array_type_,
                                                    "{\n\0");
           if (option[POINTER])      // And it must return a pointer...
             {
-              ACE_NEW_RETURN (return_type,
+              delete [] this->return_type;
+              ACE_NEW_RETURN (this->return_type,
                               char[struct_tag_length + 2],
                               -1);
-              ACE_OS::strncpy (return_type,
-                               array_type_,
+              ACE_OS::strncpy (this->return_type,
+                               this->array_type_,
                                struct_tag_length);
-              return_type[struct_tag_length] = '*';
-              return_type[struct_tag_length + 1] = '\0';
+              this->return_type[struct_tag_length] = '*';
+              this->return_type[struct_tag_length + 1] = '\0';
             }
 
-          ACE_NEW_RETURN (struct_tag,
+          delete [] this->struct_tag;
+          ACE_NEW_RETURN (this->struct_tag,
                           char[struct_tag_length + 2],
                           -1);
-          ACE_OS::strncpy (struct_tag,
-                           array_type_,
+          ACE_OS::strncpy (this->struct_tag,
+                           this->array_type_,
                            struct_tag_length);
-          if (struct_tag[struct_tag_length] != ' ')
+          if (this->struct_tag[struct_tag_length] != ' ')
             {
-              struct_tag[struct_tag_length] = ' ';
+              this->struct_tag[struct_tag_length] = ' ';
               struct_tag_length++;
             }
-          struct_tag[struct_tag_length] = '\0';
+          this->struct_tag[struct_tag_length] = '\0';
         }
     }
   else if (option[POINTER])     // Return a char *.
-    return_type = (char *) Key_List::default_array_type;
+    {
+      delete [] this->return_type;
+      this->return_type = ACE::strnew (Key_List::default_array_type);
+    }
   return 0;
 }
 
@@ -1901,9 +1912,9 @@ Key_List::dump (void)
 Key_List::Key_List (void)
   : head (0),
     total_duplicates (0),
-    array_type_ ((char *) Key_List::default_array_type),
-    return_type ((char *) Key_List::default_return_type),
-    struct_tag ((char *) Key_List::default_array_type),
+    array_type_ (ACE::strnew (Key_List::default_array_type)),
+    return_type (ACE::strnew (Key_List::default_return_type)),
+    struct_tag (ACE::strnew (Key_List::default_array_type)),
     max_key_len (INT_MIN),
     min_key_len (INT_MAX),
     key_sort (0),
