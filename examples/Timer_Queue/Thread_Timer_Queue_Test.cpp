@@ -192,6 +192,10 @@ Thread_Timer_Queue_Test_Driver::Thread_Timer_Queue_Test_Driver (void)
 {
 }
 
+Thread_Timer_Queue_Test_Driver::~Thread_Timer_Queue_Test_Driver (void)
+{
+}
+
 int
 Thread_Timer_Queue_Test_Driver::run_test (void)
 {
