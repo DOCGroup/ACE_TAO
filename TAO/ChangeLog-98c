@@ -1,5 +1,8 @@
 Mon Nov  3 18:30:09 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
+	* tests/Cubit/TAO/IDL_Cubit/clnt.cpp (main): compare with 
+	"!= 0" rather than "== -1" for errors.
+	
 	* tests/Cubit/TAO/IDL_Cubit/cubit.idl (enum discrim): Deleted
 	enumerations not used.
 	
