@@ -95,6 +95,7 @@ TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Simple/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
 
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl
 TAO/orbsvcs/tests/Trading/run_test.pl: !MINIMUM

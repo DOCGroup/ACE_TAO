@@ -1,3 +1,21 @@
+2001-03-13  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.h: 
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp: 	
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/ditributer.h: 	
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/ditributer.cpp: 	
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.h: 	
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile: 		
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl:
+	* orbsvcs/tests/AVStreams/Simple_Three_Stage/README: 			
+	* orbsvcs/tests/AVStreams/Makefile: 			
+
+	Created a new test, Simple_Three_Stage. It consists of a sender
+	that sends data, read from a file, to the distributer at a
+	specified rate .The distributer in turn sends the data to the
+	receiver. The receiver writes the data to a file.
+	
 Tue Mar 13 11:59:45 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
