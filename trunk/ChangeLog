@@ -1,3 +1,9 @@
+Thu Nov 18 19:22:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/APG/Processes/Spawn.cpp:
+          Don't call setUserId when ACE_WIN32 and ACE_LACKS_PWD_FUNCTIONS are
+          not set, then this method is just not there.
+
 Thu Nov 18 11:52:19 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/ciao_servant.mpb:
