@@ -36,11 +36,13 @@ MIF_Sched_Param_Policy::value (const MIF_Scheduling::SchedulingParameter& value 
   this->value_ = value;
 }
 
-CORBA::Policy_ptr MIF_Sched_Param_Policy::copy ()
+CORBA::Policy_ptr 
+MIF_Sched_Param_Policy::copy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  MIF_Sched_Param_Policy* tmp;
-  ACE_NEW_THROW_EX (tmp, MIF_Sched_Param_Policy (*this),
+  MIF_Sched_Param_Policy* tmp = 0;
+  ACE_NEW_THROW_EX (tmp, 
+		    MIF_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
@@ -48,7 +50,8 @@ CORBA::Policy_ptr MIF_Sched_Param_Policy::copy ()
   return tmp;
 }
 
-void MIF_Sched_Param_Policy::destroy ()
+void 
+MIF_Sched_Param_Policy::destroy (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }

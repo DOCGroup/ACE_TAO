@@ -1,3 +1,14 @@
+Sat Mar 20 08:41:19 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+	* examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+
+	  We have seen this before and we will see it more and more. I am
+	  talking about the abuse/misuse of the environment macros. Fixed
+	  few such problems here. The tests should now compile in the
+	  daily builds. Thanks to Johnny for reporting it.
+
 Fri Mar 19 09:57:03 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_ccm_pre_proc.cpp:
