@@ -1,22 +1,28 @@
+Fri May 14 09:14:55 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_osf1_cxx.GNU:
+          added $(ACELIB) to SOFLAGS for DU 5.x.  It should
+          have been there all along.
+
 Thu May 13 17:27:14 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* netsvcs/servers/svc.conf:
-	* netsvcs/clients/Naming/Client/svc2.conf:
-	* netsvcs/clients/Naming/Client/svc2.conf: Removed relative paths
-	  from all DLL's.  They were hard-coded which was not portable.
-	  ACE should figure out the correct path automatically.
+        * netsvcs/servers/svc.conf:
+        * netsvcs/clients/Naming/Client/svc2.conf:
+        * netsvcs/clients/Naming/Client/svc2.conf: Removed relative paths
+          from all DLL's.  They were hard-coded which was not portable.
+          ACE should figure out the correct path automatically.
 
-	* netsvcs/lib/Name_Handler.cpp: Replaced several calls to
-	  ACE_WString::rep with ACE_WString::fast_rep to avoid memory
-	  leaks.  Thanks to Valery Arkhangorodsky
-	  <valerya@servicesoft.com> for reporting this.
+        * netsvcs/lib/Name_Handler.cpp: Replaced several calls to
+          ACE_WString::rep with ACE_WString::fast_rep to avoid memory
+          leaks.  Thanks to Valery Arkhangorodsky
+          <valerya@servicesoft.com> for reporting this.
 
-	* ace/Registry.cpp (close): Only close <key_> when we do own a
-	  key.
+        * ace/Registry.cpp (close): Only close <key_> when we do own a
+          key.
 
-	* netsvcs/lib/Name_Handler.cpp (resolve): The atype string needs
-	  to be delete[]'ed once we are done with it.  Thanks to Valery
-	  Arkhangorodsky <valerya@servicesoft.com> for pointing this out.
+        * netsvcs/lib/Name_Handler.cpp (resolve): The atype string needs
+          to be delete[]'ed once we are done with it.  Thanks to Valery
+          Arkhangorodsky <valerya@servicesoft.com> for pointing this out.
 
 Thu May 13 09:39:17 1999  David L. Levine  <levine@cs.wustl.edu>
 
