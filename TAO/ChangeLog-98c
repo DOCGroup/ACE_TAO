@@ -1,17 +1,32 @@
+Thu Mar 12 09:01:43 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO_IDL/Makefile: added -Wno-unused to g++ CCFLAGS to
+          suppress warnings about unused parameters and variables.
+
+        * TAO_IDL/be/be_visitor_interface.cpp
+          (be_visitor_interface_sh::visit_interface,
+           be_visitor_interface_collocated_ss::visit_interface):
+          changed type of loop index "i" to signed, to avoid
+          signed/unsigned comparison.
+
+        * TAO_IDL/be/be_visitor_sequence.cpp
+          (be_visitor_sequence_ci::visit_sequence): made int return
+          type explicit.
+
 Thu Mar 12 01:03:17 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/NewPOA/NewPOA.cpp (main): Updated the following files
- 	  to correctly use CORBA::Policies that are used to create new
- 	  POAs.  Things that needed fixing included proper exception
- 	  handling and making sure to destroy the policies once we were
- 	  through using them.
+        * tests/POA/NewPOA/NewPOA.cpp (main): Updated the following files
+          to correctly use CORBA::Policies that are used to create new
+          POAs.  Things that needed fixing included proper exception
+          handling and making sure to destroy the policies once we were
+          through using them.
 
-	  - TAO/tao/tao_util.cpp
-	  - TAO/tests/Cubit/TAO/MT_Cubit/server.cpp
-	  - TAO/tests/POA/Default_Servant/server.cpp
-	  - TAO/tests/POA/Explicit_Activation/server.cpp
-	  - TAO/tests/POA/NewPOA/NewPOA.cpp
-	  - TAO/tests/POA/On_Demand_Activation/server.cpp
+          - TAO/tao/tao_util.cpp
+          - TAO/tests/Cubit/TAO/MT_Cubit/server.cpp
+          - TAO/tests/POA/Default_Servant/server.cpp
+          - TAO/tests/POA/Explicit_Activation/server.cpp
+          - TAO/tests/POA/NewPOA/NewPOA.cpp
+          - TAO/tests/POA/On_Demand_Activation/server.cpp
 
 Wed Mar 11 21:02:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -20,138 +35,138 @@ Wed Mar 11 21:02:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Mar 11 18:10:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO_IDL/tao_idl.dsp: Added new visitor files into the project.
+        * tao/TAO_IDL/tao_idl.dsp: Added new visitor files into the project.
 
 Wed Mar 11 17:23:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tao/tao_util: Changed the name of root_poa_ to poa_ since it
- 	  doesn't have to be a root POA.
+        * tao/tao_util: Changed the name of root_poa_ to poa_ since it
+          doesn't have to be a root POA.
 
 Wed Mar 11 14:37:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* TAO_IDL/Makefile: Included be_visitor_exception.cpp and ran make
-	depend
+        * TAO_IDL/Makefile: Included be_visitor_exception.cpp and ran make
+        depend
 
-	* TAO_IDL/be/be_interpretive.cpp: The factory is now able to
-	produce concrete visitors for exceptions.
+        * TAO_IDL/be/be_interpretive.cpp: The factory is now able to
+        produce concrete visitors for exceptions.
 
-	* TAO_IDL/be/be_visitor_args.cpp
-	  TAO_IDL/be_include/be_visitor_args.h: Added a method
-	  "void_return_type" that determines if the operation return type
-	  was "void" or not. This was necessary since we were incorrectly
-	  generating ACE_NEW_RETURN statements in stubs for cases that had
-	  void return types
+        * TAO_IDL/be/be_visitor_args.cpp
+          TAO_IDL/be_include/be_visitor_args.h: Added a method
+          "void_return_type" that determines if the operation return type
+          was "void" or not. This was necessary since we were incorrectly
+          generating ACE_NEW_RETURN statements in stubs for cases that had
+          void return types
 
-	* TAO_IDL/be/be_visitor_context.cpp
-	  TAO_IDL/be_include/be_visitor_context.h: Added a boolean data
-	  member that indicates whether we are generating the special
-	  constructor in the exceptions.
+        * TAO_IDL/be/be_visitor_context.cpp
+          TAO_IDL/be_include/be_visitor_context.h: Added a boolean data
+          member that indicates whether we are generating the special
+          constructor in the exceptions.
 
-	* TAO_IDL/be/be_visitor_exception.cpp
-	  TAO_IDL/be/be_visitor_exception.h: Added  various visitors for
-	  exception handling.
+        * TAO_IDL/be/be_visitor_exception.cpp
+          TAO_IDL/be/be_visitor_exception.h: Added  various visitors for
+          exception handling.
 
-	* TAO_IDL/be/be_visitor_{struct, union, module, interface,
-	sequence}.cpp: Made sure that code is not generated for imported
-	types.
+        * TAO_IDL/be/be_visitor_{struct, union, module, interface,
+        sequence}.cpp: Made sure that code is not generated for imported
+        types.
 
-	* TAO_IDL/be/be_visitor_typedef.cpp: Eliminated the multiple
-	declaration of typedefed variables and their typecodes.
+        * TAO_IDL/be/be_visitor_typedef.cpp: Eliminated the multiple
+        declaration of typedefed variables and their typecodes.
 
-	* TAO_IDL/be/be_visitor_interface.cpp: The "_is_a_skel" now uses
-	the same table driven approach as the other skeletons do.
+        * TAO_IDL/be/be_visitor_interface.cpp: The "_is_a_skel" now uses
+        the same table driven approach as the other skeletons do.
 
 Wed Mar 11 12:54:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tests/POA/Explicit_Activation/server.cpp (main): The server was
- 	  changed to test how the POA handles a user given ID which does
- 	  not contain printable characters.
+        * tests/POA/Explicit_Activation/server.cpp (main): The server was
+          changed to test how the POA handles a user given ID which does
+          not contain printable characters.
 
-	* tao/poa (Policies and Currents): Since Policies and Currents do
- 	  not have locality constraints, they now inherit from regular
- 	  servants rather than local servants.  This change causes them to
- 	  register with POAs when their _this() method is invoked.
-  	  Therefore, the destroy() methods on the Policies was changed to
- 	  make sure that the Policies are deactivated from the POA they
- 	  were registered with.
+        * tao/poa (Policies and Currents): Since Policies and Currents do
+          not have locality constraints, they now inherit from regular
+          servants rather than local servants.  This change causes them to
+          register with POAs when their _this() method is invoked.
+          Therefore, the destroy() methods on the Policies was changed to
+          make sure that the Policies are deactivated from the POA they
+          were registered with.
 
-	* tao/sequence_T.cpp (operator=): The semantics of the elements of
- 	  a sequence are the same as that of a var variable.  Therefore we
- 	  will not duplicate the user provided pointer before assigning it
- 	  to the internal variable.  However, we will release it.
+        * tao/sequence_T.cpp (operator=): The semantics of the elements of
+          a sequence are the same as that of a var variable.  Therefore we
+          will not duplicate the user provided pointer before assigning it
+          to the internal variable.  However, we will release it.
 
 Tue Mar 10 16:09:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/cdr.{h,cpp}: Added a get_string and put_string method for
-	retrieving and encoding a string. This uses "memcpy" rather than
-	having to go through a get_char/put_char for every byte of the
-	string.
+        * tao/cdr.{h,cpp}: Added a get_string and put_string method for
+        retrieving and encoding a string. This uses "memcpy" rather than
+        having to go through a get_char/put_char for every byte of the
+        string.
 
-	* tao/connect.cpp: In "handle_request", the marshaling of inout,
-	out, and return value parameters was done inside this method after
-	the operation skeleton had returned. This required unnecessary
-	heap allocation of these parameters. Allocating these parameters
-	on the skeleton call stack was not possible since the marshaling
-	took place after the skeleton had returned. To eliminate these
-	unnecessary waste, 2 new methods on the ServerRequest class are
-	added that perform the demarshaling and marshaling while the
-	skeleton call stack is active. More explanation on these is given
-	below.
+        * tao/connect.cpp: In "handle_request", the marshaling of inout,
+        out, and return value parameters was done inside this method after
+        the operation skeleton had returned. This required unnecessary
+        heap allocation of these parameters. Allocating these parameters
+        on the skeleton call stack was not possible since the marshaling
+        took place after the skeleton had returned. To eliminate these
+        unnecessary waste, 2 new methods on the ServerRequest class are
+        added that perform the demarshaling and marshaling while the
+        skeleton call stack is active. More explanation on these is given
+        below.
 
-	* tao/{encode, decode}.cpp: Used the get_string and put_string
-	methods on the CDR class.
+        * tao/{encode, decode}.cpp: Used the get_string and put_string
+        methods on the CDR class.
 
-	* tao/giop.*: Added a method called "stream" that returns a
-	reference to the underlying CDR stream. This is helpful when you
-	need access to the stream so that data types can be marshaled into
-	the stream using a compiled form of marshaling. This form of
-	marshaling will soon be added to TAO IDL compiler.
+        * tao/giop.*: Added a method called "stream" that returns a
+        reference to the underlying CDR stream. This is helpful when you
+        need access to the stream so that data types can be marshaled into
+        the stream using a compiled form of marshaling. This form of
+        marshaling will soon be added to TAO IDL compiler.
 
-	* tao/object.{h, cpp}: Added a method called "stubobj" which
-	returns a pointer to the underlying Stub_Object. This method
-	eliminates the need to call QueryInterface inside every stub. This
-	way some code size is reduced.
+        * tao/object.{h, cpp}: Added a method called "stubobj" which
+        returns a pointer to the underlying Stub_Object. This method
+        eliminates the need to call QueryInterface inside every stub. This
+        way some code size is reduced.
 
-	Also, removed the "get_most_derived" method as well as the "void
-	*sub_" data member which was useless.
+        Also, removed the "get_most_derived" method as well as the "void
+        *sub_" data member which was useless.
 
-	* tao/svrrqst.{h, i, cpp}: Added a new file svrrqst.i. Added two
-	new methods on class IIOP_ServerRequest. These methods enable
-	demarshaling and marshaling of parameters while the operation
-	skeleton's call stack is active. The interface to these methods is
-	exactly like the one used by do_call i.e., a table driven
-	approach. Two new data structures - TAO_Param_data_Skel and
-	TAO_Call_Data_Skel are added. These two tables behave in exactly
-	the same way as the TAO_Param_Data and TAO_Call_Data tables. See
-	the generated code to see how these are used by the demarshal and
-	marshal methods.
+        * tao/svrrqst.{h, i, cpp}: Added a new file svrrqst.i. Added two
+        new methods on class IIOP_ServerRequest. These methods enable
+        demarshaling and marshaling of parameters while the operation
+        skeleton's call stack is active. The interface to these methods is
+        exactly like the one used by do_call i.e., a table driven
+        approach. Two new data structures - TAO_Param_data_Skel and
+        TAO_Call_Data_Skel are added. These two tables behave in exactly
+        the same way as the TAO_Param_Data and TAO_Call_Data tables. See
+        the generated code to see how these are used by the demarshal and
+        marshal methods.
 
-	Two more methods and data members are added to this class -
-	"incoming" and "outgoing". These are the CDR streams that indicate
-	the incoming and the outgoing CDR streams.
+        Two more methods and data members are added to this class -
+        "incoming" and "outgoing". These are the CDR streams that indicate
+        the incoming and the outgoing CDR streams.
 
-	An additional "init_reply" method is added that is useful for the
-	compiled marshaling. This is still experimental.
+        An additional "init_reply" method is added that is useful for the
+        compiled marshaling. This is still experimental.
 
-	* TAO_IDL: This is the first release of the new TAO_IDL compiler
-	based on the Visitor pattern. All the old files and code is still
-	included in this release until the transition is complete.
+        * TAO_IDL: This is the first release of the new TAO_IDL compiler
+        based on the Visitor pattern. All the old files and code is still
+        included in this release until the transition is complete.
 
-	Although the Visitor pattern is used, we still maintain all the
-	code generation states we had in the previous version of the
-	compiler. The reason is that we maintain a Factory of Visitors
-	indexed on these enumerated states. The downside is the necessity
-	to have states and a larger code size. The larger code size is due
-	to the fact that everytime a Visitor is required, we must first
-	set the appropriate state and then ask the factory to produce it
-	for us. The positive side of this design is that almost all the
-	Visitor files are independent of each other. They only deal with
-	an abstract base level Visitors. The Factory will produce the
-	appropriate specialized Visitor which is a subclass of the base
-	"visitor" class. An additional benefit is that we can switch from
-	having to generate code that uses Interpretive marshaling to
-	compiled marshaling. Visitors for compiled marshaling will be
-	added later. Here are the files that are added:
+        Although the Visitor pattern is used, we still maintain all the
+        code generation states we had in the previous version of the
+        compiler. The reason is that we maintain a Factory of Visitors
+        indexed on these enumerated states. The downside is the necessity
+        to have states and a larger code size. The larger code size is due
+        to the fact that everytime a Visitor is required, we must first
+        set the appropriate state and then ask the factory to produce it
+        for us. The positive side of this design is that almost all the
+        Visitor files are independent of each other. They only deal with
+        an abstract base level Visitors. The Factory will produce the
+        appropriate specialized Visitor which is a subclass of the base
+        "visitor" class. An additional benefit is that we can switch from
+        having to generate code that uses Interpretive marshaling to
+        compiled marshaling. Visitors for compiled marshaling will be
+        added later. Here are the files that are added:
 
         be_include/
                 be_visitor.h
@@ -195,21 +210,21 @@ Tue Mar 10 16:09:56 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
                 be_visitor_union.cpp
                 be_visitor_union_branch.cpp
 
-	NOTE: Code generation for attributes is achieved by using a crude
-	form of the Adapter pattern. We convert the Attribute node into
-	one or possibly two operation nodes and add scope elements that
-	are arguments. The code gene ration is then handed over to the
-	Operation Visitors.
+        NOTE: Code generation for attributes is achieved by using a crude
+        form of the Adapter pattern. We convert the Attribute node into
+        one or possibly two operation nodes and add scope elements that
+        are arguments. The code gene ration is then handed over to the
+        Operation Visitors.
 
-	* be/be_interpretive.cpp: This file defined the implementation of
-	the Factory of Visitors for intepretive marshaling.
+        * be/be_interpretive.cpp: This file defined the implementation of
+        the Factory of Visitors for intepretive marshaling.
 
-	* be_include/be_codegen.h: Added a few more states. Some others
-	are now useless. They will be removed eventually. Also added the
-	Abstract Factory for Visitors.
+        * be_include/be_codegen.h: Added a few more states. Some others
+        are now useless. They will be removed eventually. Also added the
+        Abstract Factory for Visitors.
 
-	* Makefile: Modofoed to include all the visitor files and ran
-	"make depend" on it.
+        * Makefile: Modofoed to include all the visitor files and ran
+        "make depend" on it.
 
 Tue Mar 10 13:22:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -235,79 +250,79 @@ Tue Mar 10 13:22:20 1998  David L. Levine  <levine@cs.wustl.edu>
 Mon Mar 09 22:27:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/POA/Generic_Servant/client.cpp: Added code to time calls
- 	  and produce stats.
+          and produce stats.
 
-	* tao/svrrqst: Removed the lock in CORBA_ServerRequest which was
- 	  used to protect the refcount. This protection was excessive.
+        * tao/svrrqst: Removed the lock in CORBA_ServerRequest which was
+          used to protect the refcount. This protection was excessive.
 
-	* tao/optable.cpp: Changed the table so that it does not use a RW
- 	  Lock. Since the optable is read only, a null lock will suffice.
+        * tao/optable.cpp: Changed the table so that it does not use a RW
+          Lock. Since the optable is read only, a null lock will suffice.
 
-	* tao/objtable.cpp: Changed the implementation of
- 	  TAO_Dynamic_Hash_ObjTable so that it does not use a RW Lock. The
- 	  POA takes care of all necessary locking, and therefore, a null
- 	  lock will suffice.
+        * tao/objtable.cpp: Changed the implementation of
+          TAO_Dynamic_Hash_ObjTable so that it does not use a RW Lock. The
+          POA takes care of all necessary locking, and therefore, a null
+          lock will suffice.
 
-	* tao/poa: The following optimizations were made to decrease the
- 	  time a POA takes to find a servant:
+        * tao/poa: The following optimizations were made to decrease the
+          time a POA takes to find a servant:
 
-	  - Added new classes TAO_Creation_Time and
- 	    TAO_Temporary_Creation_Time.  These classes are used to record
- 	    and compare the creation time of POAs. The old method was
- 	    inefficient as unsigned long were used.  These long required
- 	    conversions to strings.  The new scheme uses a fixed size
- 	    buffer. The TAO_Temporary_Creation_Time is a special class
- 	    that tracks the creation time only during the lifetime of the
- 	    upcall.
+          - Added new classes TAO_Creation_Time and
+            TAO_Temporary_Creation_Time.  These classes are used to record
+            and compare the creation time of POAs. The old method was
+            inefficient as unsigned long were used.  These long required
+            conversions to strings.  The new scheme uses a fixed size
+            buffer. The TAO_Temporary_Creation_Time is a special class
+            that tracks the creation time only during the lifetime of the
+            upcall.
 
-	  - parse_key_permanent_id() and parse_key_temporary_id() were
- 	    added so that the parse_key() routine can distinguish when to
- 	    create a new id and when to create a special id which is only
- 	    used during the lifetime of the upcall.
+          - parse_key_permanent_id() and parse_key_temporary_id() were
+            added so that the parse_key() routine can distinguish when to
+            create a new id and when to create a special id which is only
+            used during the lifetime of the upcall.
 
-	  - rfind() was added so that the TAO_POA::String::rfind() does
- 	    not have to be used.
+          - rfind() was added so that the TAO_POA::String::rfind() does
+            not have to be used.
 
-	  - Changed the object_key_type from String to char.
+          - Changed the object_key_type from String to char.
 
-	  - In post_invoke(), only create the POA_var if necessary.
+          - In post_invoke(), only create the POA_var if necessary.
 
-	  - Changed create_object_key() and parse_key() so that the old
- 	    format of:
+          - Changed create_object_key() and parse_key() so that the old
+            format of:
 
-	    Transient/Seconds/MicroSecond/POAName/ObjectId
+            Transient/Seconds/MicroSecond/POAName/ObjectId
 
-	    to:
+            to:
 
-	    T/TimeStampPOAName/ObjectId
+            T/TimeStampPOAName/ObjectId
 
-	  - Removed excessive memcpy() and strcpy() calls in parse_key().
+          - Removed excessive memcpy() and strcpy() calls in parse_key().
 
-	  - Changed create_object_id() to not include the POA name.
+          - Changed create_object_id() to not include the POA name.
 
-	  - Changed is_poa_generated_id() to take the changes to
- 	    create_object_id() into account.
+          - Changed is_poa_generated_id() to take the changes to
+            create_object_id() into account.
 
-	  - Changed string_to_ObjectId() and ObjectId_to_string() to not
- 	    use encode and decode routines.
+          - Changed string_to_ObjectId() and ObjectId_to_string() to not
+            use encode and decode routines.
 
 Mon Mar  9 15:23:19 1998  Sumedh Mungee  <sumedh@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp (open):
-	Temporarily disabled use of threads, and reverted back to the
-	forking model. The threaded model needs more work before it can
-	safely support multiple clients.
+        * orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp (open):
+        Temporarily disabled use of threads, and reverted back to the
+        forking model. The threaded model needs more work before it can
+        safely support multiple clients.
 
 Mon Mar  9 14:57:13 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/sequence.h:
-	* tao/sequence.cpp:
-	* tao/sequence_T.h:
-	* tao/sequence_T.cpp:
-	  Removed the _narrow_fixup() method, it was causing problem with
-	  sequences of TypeCodes and it is not really needed: the
-	  functionality can be implemented in the stubs (skeletons) and/or
-	  the >>= methods.
+        * tao/sequence.h:
+        * tao/sequence.cpp:
+        * tao/sequence_T.h:
+        * tao/sequence_T.cpp:
+          Removed the _narrow_fixup() method, it was causing problem with
+          sequences of TypeCodes and it is not really needed: the
+          functionality can be implemented in the stubs (skeletons) and/or
+          the >>= methods.
 
 Mon Mar 09 09:59:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -317,16 +332,16 @@ Mon Mar 09 09:59:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Sat Mar 07 12:14:58 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
-	* TAO version 0.1.7, released Sat Mar 07 12:14:58 1998.
+        * TAO version 0.1.7, released Sat Mar 07 12:14:58 1998.
 
 Sat Mar  7 11:59:27 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
-	* tao/orb_core.cpp (get_root_poa): Changed this from being a
- 	macro-implemented method to a hand-implemented method.  This is
- 	necessary b/c the location of its resource is keyed not off
- 	resource_source_ but rathe off poa_source_, and there's no macro
- 	avaialble for that.  Thanks to John Geiss <jtgb@eci-esyst.com> for
- 	reporting the bug that led to this fix!
+        * tao/orb_core.cpp (get_root_poa): Changed this from being a
+        macro-implemented method to a hand-implemented method.  This is
+        necessary b/c the location of its resource is keyed not off
+        resource_source_ but rathe off poa_source_, and there's no macro
+        avaialble for that.  Thanks to John Geiss <jtgb@eci-esyst.com> for
+        reporting the bug that led to this fix!
 
 Sat Mar 07 08:29:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
