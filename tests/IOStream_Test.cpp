@@ -23,6 +23,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/IOStream.h"
+#include "ace/OS_NS_sys_wait.h"
 
 ACE_RCSID (tests, IOStream_Test, "$Id$")
 
