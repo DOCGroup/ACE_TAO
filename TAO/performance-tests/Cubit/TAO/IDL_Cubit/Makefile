@@ -1022,7 +1022,7 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
   cubitS_T.h cubitS_T.i cubitS_T.cpp cubitS.i \
-  $(TAO_ROOT)/tao/TAO_Internal.h
+  $(TAO_ROOT)/tao/TAO_Internal.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1876,7 +1876,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Thread_Manager.i \
   $(TAO_ROOT)/tao/ORB_Core.i \
   $(TAO_ROOT)/tao/Strategies/advanced_resource.i \
-  $(ACE_ROOT)/ace/ARGV.h $(ACE_ROOT)/ace/ARGV.i
+  $(ACE_ROOT)/ace/ARGV.h $(ACE_ROOT)/ace/ARGV.i \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
