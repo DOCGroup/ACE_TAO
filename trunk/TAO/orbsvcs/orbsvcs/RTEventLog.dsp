@@ -105,6 +105,10 @@ SOURCE=.\RTEventLogAdminS.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Log\RTEventLogConsumer.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Log\RTEventLogFactory_i.cpp
 # End Source File
 # Begin Source File
@@ -134,6 +138,10 @@ SOURCE=.\RTEventLogAdminS.h
 # Begin Source File
 
 SOURCE=.\RTEventLogAdminS_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Log\RTEventLogConsumer.h
 # End Source File
 # Begin Source File
 
