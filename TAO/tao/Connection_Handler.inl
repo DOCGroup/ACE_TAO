@@ -43,7 +43,6 @@ TAO_Connection_Handler::decr_ref_count (void)
       // <cache_map_entry_>
       if (this->cache_map_entry_)
         {
-
           // Now mark the Ext_Id for us as closed
           this->cache_map_entry_->int_id_.recycle_state
             (ACE_RECYCLABLE_CLOSED);
