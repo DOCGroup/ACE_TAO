@@ -1,48 +1,57 @@
+Mon Mar 12 17:54:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/Client_Leaks/client.cpp:
+          Ignore Test::Spawn_Failed exceptions, they are not the kind of
+          error we are looking for anyway.
+
+        * tests/Client_Leaks/run_test.pl:
+          Increase running time for the test.
+
 Mon Mar 12 18:46:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Base.cpp: Made a try fix for QNX and BCB.
+        * tao/GIOP_Message_Base.cpp: Made a try fix for QNX and BCB.
 
 Mon Mar 12 16:50:14 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.FaultTolerance: Fixed the Makefile for
-	  builds where corba_messaging is turned off.
+        * orbsvcs/orbsvcs/Makefile.FaultTolerance: Fixed the Makefile for
+          builds where corba_messaging is turned off.
 
 Mon Mar 12 14:56:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Buffered_Oneways/Makefile:
-	* examples/PluggableUDP/DIOP/Makefile:
-	* orbsvcs/IFR_Service/Makefile.IFR_Service:
-	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
-	* orbsvcs/tests/Notify/Basic/Makefile:
-	* performance-tests/Pluggable/Makefile:
-	* performance-tests/RTCorba/Oneways/Reliable/Makefile:
-	* performance-tests/Thruput/TAO/Makefile:
-	* tests/AMI/Makefile:
-	* tests/Codec/Makefile:
-	* tests/DSI_Gateway/Makefile:
-	* tests/FL_Cube/Makefile:
-	* tests/Forwarding/Makefile:
-	* tests/InterOp-Naming/Makefile:
-	* tests/MProfile/Makefile:
-	* tests/MT_Server/Makefile:
-	* tests/Multiple_Inheritance/Makefile:
-	* tests/Native_Exceptions/Makefile:
-	* tests/OctetSeq/Makefile:
-	* tests/Param_Test/Makefile:
-	* tests/Portable_Interceptors/Benchmark/Makefile:
-	* tests/Portable_Interceptors/Dynamic/Makefile:
-	* tests/Portable_Interceptors/ForwardRequest/Makefile:
-	* tests/Portable_Interceptors/IORInterceptor/Makefile:
-	* tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
-	* tests/QtTests/Makefile:
-	* tests/Single_Read/Makefile:
-	* tests/Timed_Buffered_Oneways/Makefile:
-	* tests/Timeout/Makefile: Fixed duplicate uses of library.  KCC is
-	  the only compiler that catches this problem.  Usually, this is
-	  caused by Makefiles adding -lTAO into $(LDLIBS) but it has
-	  already been taken care of by rule.tao.GNU.
+        * examples/Buffered_Oneways/Makefile:
+        * examples/PluggableUDP/DIOP/Makefile:
+        * orbsvcs/IFR_Service/Makefile.IFR_Service:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+        * orbsvcs/tests/Notify/Basic/Makefile:
+        * performance-tests/Pluggable/Makefile:
+        * performance-tests/RTCorba/Oneways/Reliable/Makefile:
+        * performance-tests/Thruput/TAO/Makefile:
+        * tests/AMI/Makefile:
+        * tests/Codec/Makefile:
+        * tests/DSI_Gateway/Makefile:
+        * tests/FL_Cube/Makefile:
+        * tests/Forwarding/Makefile:
+        * tests/InterOp-Naming/Makefile:
+        * tests/MProfile/Makefile:
+        * tests/MT_Server/Makefile:
+        * tests/Multiple_Inheritance/Makefile:
+        * tests/Native_Exceptions/Makefile:
+        * tests/OctetSeq/Makefile:
+        * tests/Param_Test/Makefile:
+        * tests/Portable_Interceptors/Benchmark/Makefile:
+        * tests/Portable_Interceptors/Dynamic/Makefile:
+        * tests/Portable_Interceptors/ForwardRequest/Makefile:
+        * tests/Portable_Interceptors/IORInterceptor/Makefile:
+        * tests/Portable_Interceptors/Service_Context_Manipulation/Makefile:
+        * tests/QtTests/Makefile:
+        * tests/Single_Read/Makefile:
+        * tests/Timed_Buffered_Oneways/Makefile:
+        * tests/Timeout/Makefile: Fixed duplicate uses of library.  KCC is
+          the only compiler that catches this problem.  Usually, this is
+          caused by Makefiles adding -lTAO into $(LDLIBS) but it has
+          already been taken care of by rule.tao.GNU.
 
 Mon Mar 12 12:55:50 2001  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -50,10 +59,10 @@ Mon Mar 12 12:55:50 2001  Carlos O'Ryan  <coryan@uci.edu>
         * performance-tests/Latency/st_client.conf:
           Reenable the RW waiting strategy for both tests.  This
           application does not need nested upcalls. This explains the
-	  mysterious 10% drop in performance shown on the nightly builds,
-	  I guess I wasn't thinking when I commited this files mixed on
-	  the middle of all the ORB::run() changes. Frank Hunleth tracked
-	  this one down. 
+          mysterious 10% drop in performance shown on the nightly builds,
+          I guess I wasn't thinking when I commited this files mixed on
+          the middle of all the ORB::run() changes. Frank Hunleth tracked
+          this one down.
 
 Mon Mar 12 11:37:14 2001  Carlos O'Ryan  <coryan@uci.edu>
 

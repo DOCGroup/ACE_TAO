@@ -55,6 +55,11 @@ run_iteration (Test::Process_Factory_ptr process_factory,
       process->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
+  ACE_CATCH(Test::Spawn_Failed, ignored)
+    {
+      // Ignore this exception, it is usually caused by a transient
+      // condition
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
