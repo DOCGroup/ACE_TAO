@@ -1,3 +1,22 @@
+Thu Oct 23 22:46:10 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO IDL Compiler: More progress in terms of getting the Cubit
+	example to work with the IDL generated code. However, we are still
+	finding some problems with using the client-side cubit_union_dii
+	to work properly.
+
+	Much of the improvements were to the server-side skeletons for
+	operations. In addition, code for union constructors, assignment
+	operator, and accessor for discriminant added.
+
+	Some bugs in typecode generation are fixed. This had to do with
+	the encapsulation length for predefined types. It was returning -1
+	as opposed to 0.
+
+	* TAO/tests/IDL_Cubit: Added this directory with the cubit
+	example. Use this to test the IDL compiler. The makefile will
+	invoke the IDL compiler to create the required files.
+
 Thu Oct 23 18:34:02 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/*/Makefile: Fixed the Makefiles so that it has the correct
