@@ -1,3 +1,11 @@
+Mon Apr 05 17:02:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/High_Res_Timer.cpp (global_scale_factor ()): removed
+          comment that said we use BogoMIPS on Linux/Intel.  We
+          only use it on Linux/alpha.  Thanks to
+          Thomas Lockhart <Thomas.G.Lockhart@jpl.nasa.gov> for
+          reporting this.
+
 Mon Apr  5 15:54:57 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * ace/Profile_Timer.i: Removed ACE_OS::gettimeofday ()
