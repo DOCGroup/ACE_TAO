@@ -10,7 +10,6 @@
 
 DIRS  =	Event_Supplier
 
-#	DOVEMIB
 #        DOVEBrowser
 
 ifndef TAO_ROOT
