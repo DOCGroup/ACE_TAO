@@ -1232,6 +1232,8 @@ ECM_Local_Federation::close_receiver (CORBA::Environment &_env)
   TAO_CHECK_ENV_RETURN_VOID (_env);
   this->receiver_.shutdown (_env);
   TAO_CHECK_ENV_RETURN_VOID (_env);
+  this->mcast_eh_.close (_env);
+  TAO_CHECK_ENV_RETURN_VOID (_env);
 }
 
 void
