@@ -464,16 +464,20 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
           // non-blocking semantics then register ourselves with the
           // ACE_Reactor so that it will call us back when the
           // connection is complete or we timeout, whichever comes
-          // first...  Note that we needn't check the return value
-          // here because if something goes wrong that will reset
-          // errno this will be detected by the caller (since -1 is
-          // being returned...).
+          // first...  
+          int result;
+
           if (sh_copy == 0)
-            this->create_AST (sh,
-                              synch_options);
+            result = this->create_AST (sh, synch_options);
           else
-            this->create_AST (*sh_copy,
-                              synch_options);
+            result = this->create_AST (*sh_copy, synch_options);
+
+          // If for some reason the <create_AST> call failed, then
+          // <errno> will be set to the new error.  If the call
+          // succeeds, however, we need to make sure that <errno>
+          // remains set to <EWOULDBLOCK>.
+          if (result == 0)
+            errno = EWOULDBLOCK;
         }
       else
         {
@@ -486,19 +490,14 @@ ACE_Connector<SH, PR_CO_2>::connect_i (SH *&sh,
               if (sh)
                 sh->close (0);
             }
-          else
-            {
-              if (*sh_copy)
-                (*sh_copy)->close (0);
-            }
+          else if (*sh_copy)
+            (*sh_copy)->close (0);
         }
       return -1;
     }
   else
-    {
-      // Activate immediately if we are connected.
-      return this->activate_svc_handler (sh);
-    }
+    // Activate immediately if we are connected.
+    return this->activate_svc_handler (sh);
 }
 
 // Initiate connection to peer.
@@ -559,8 +558,6 @@ template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::create_AST (SH *sh,
                                         const ACE_Synch_Options &synch_options)
 {
-  // Save/restore errno.
-  ACE_Errno_Guard error (errno);
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::create_AST");
   AST *ast;
 
