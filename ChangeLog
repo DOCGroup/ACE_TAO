@@ -1,42 +1,49 @@
+Wed Apr 30 07:40:51 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/gperf/src/Hash_Table.cpp:
+        * apps/gperf/src/Key_List.cpp:
+
+          Remove build warnings on Windows XP 64-bit.
+
 Tue Apr 29 18:40:28 2003  Steve Huston  <shuston@riverace.com>
 
-	Picked up the following from Riverace's 5.3 tree:
+        Picked up the following from Riverace's 5.3 tree:
 
-	Sat Apr 19 19:12:39 2003  Steve Huston  <shuston@riverace.com>
+        Sat Apr 19 19:12:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-WinCE.h: Define ACE_DEFAULT_BASE_ADDR to 0 always;
-	  WinCE can't do fixed address memory mapped file. Also added
-	  ACE_HAS_TSS_EMULATION; WinCE is very restrictive with TLS keys.
+        * ace/config-WinCE.h: Define ACE_DEFAULT_BASE_ADDR to 0 always;
+          WinCE can't do fixed address memory mapped file. Also added
+          ACE_HAS_TSS_EMULATION; WinCE is very restrictive with TLS keys.
 
-	* ace/config-win32-common.h: Only set ACE_DEFAULT_BASE_ADDR if it
-	  hasn't been set prior. Allows the CE definition to hold, and also
-	  allows a user to set a particular value.
+        * ace/config-win32-common.h: Only set ACE_DEFAULT_BASE_ADDR if it
+          hasn't been set prior. Allows the CE definition to hold, and also
+          allows a user to set a particular value.
 
-	* ace/Configuration.cpp: When native Win32 calls are used and return
-	  an error, set errno to the error status value so the logging %p
-	  stuff works correctly.
+        * ace/Configuration.cpp: When native Win32 calls are used and return
+          an error, set errno to the error status value so the logging %p
+          stuff works correctly.
 
-	* ace/Log_Msg.cpp (log): For %p, don't try strerror() for WinCE. It
-	  doesn't have this concept, so run everything through FormatMessage.
+        * ace/Log_Msg.cpp (log): For %p, don't try strerror() for WinCE. It
+          doesn't have this concept, so run everything through FormatMessage.
 
-	* tests/Config_Test.cpp: Be sure that no keys are left open before
-	  attempting to delete the referred-to sections later. Deleting
-	  while a key is still open to the being-deleted section fails on CE.
+        * tests/Config_Test.cpp: Be sure that no keys are left open before
+          attempting to delete the referred-to sections later. Deleting
+          while a key is still open to the being-deleted section fails on CE.
 
-	* tests/Logging_Strategy_Test.cpp: When setting the ouptut log file
-	  name, use the platform log file extension (it's different for WinCE).
+        * tests/Logging_Strategy_Test.cpp: When setting the ouptut log file
+          name, use the platform log file extension (it's different for WinCE).
 
-	* tests/Malloc_Test.cpp: If on WinCE, must use base 0, NEVER_FIXED
-	  ACE_MMAP_Memory_Pool_Options. WinCE cannot do fixed addresses.
+        * tests/Malloc_Test.cpp: If on WinCE, must use base 0, NEVER_FIXED
+          ACE_MMAP_Memory_Pool_Options. WinCE cannot do fixed addresses.
 
-	* tests/MT_Reactor_Upcall_Test.cpp:
-	* tests/Reactor_Dispatch_Order_Test.cpp: Don't attempt the WFMO_Reactor
-	  part if on WinCE. CE doesn't have the necessary Winsock2 support.
+        * tests/MT_Reactor_Upcall_Test.cpp:
+        * tests/Reactor_Dispatch_Order_Test.cpp: Don't attempt the WFMO_Reactor
+          part if on WinCE. CE doesn't have the necessary Winsock2 support.
 
-	Fri Mar 21 22:45:39 2003  Steve Huston  <shuston@riverace.com>
+        Fri Mar 21 22:45:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/config-WinCE.h: Added ACE_LACKS_AUTO_PTR; also see
-	  Wed Feb 19 17:43:15 2003  Steve Huston  <shuston@riverace.com>
+        * ace/config-WinCE.h: Added ACE_LACKS_AUTO_PTR; also see
+          Wed Feb 19 17:43:15 2003  Steve Huston  <shuston@riverace.com>
 
 Tue Apr 29 18:30:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
@@ -83,11 +90,11 @@ Tue Apr 29 12:58:51 2003  Chad Elliott  <elliott_c@ociweb.com>
 
 Tue Apr 29 12:17:03 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* ace/Message_Queue_T.cpp:
-	  Fixed a bug in Dynamic_Message_Queue::enqueue method. The
-	  current number of bytes was getting decremented when a message
-	  was enqueued. Thanks to Michael Kircher
-	  (Michael.Kircher@siemens.com) for reporting this bug.
+        * ace/Message_Queue_T.cpp:
+          Fixed a bug in Dynamic_Message_Queue::enqueue method. The
+          current number of bytes was getting decremented when a message
+          was enqueued. Thanks to Michael Kircher
+          (Michael.Kircher@siemens.com) for reporting this bug.
 
 Tue Apr 29 11:21:40 2003  Chad Elliott  <elliott_c@ociweb.com>
 
