@@ -96,13 +96,15 @@ private:
 #   define ACE_UNIMPLEMENTED_FUNC(f) f;
 # endif /* ACE_NEEDS_FUNC_DEFINITIONS */
 
-// Easy way to designate that a class is used as a pseudo-namespace.
-// Insures that g++ "friendship" anamolies are properly handled.
-# define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
-private: \
-CLASSNAME (void); \
-CLASSNAME (const CLASSNAME&); \
-friend class ace_dewarn_gplusplus
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  // Easy way to designate that a class is used as a pseudo-namespace.
+  // Insures that g++ "friendship" anamolies are properly handled.
+  # define ACE_CLASS_IS_NAMESPACE(CLASSNAME) \
+  private: \
+  CLASSNAME (void); \
+  CLASSNAME (const CLASSNAME&); \
+  friend class ace_dewarn_gplusplus
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 // ----------------------------------------------------------------
 
@@ -132,21 +134,23 @@ friend class ace_dewarn_gplusplus
 #   endif /* ! ACE_HAS_BROKEN_NAMESPACES */
 # endif  /* !ACE_NESTED_CLASS */
 
-/**
- * @name CORBA namespace macros.
- *
- * CORBA namespace macros.
- *
- * @deprecated These macros were formerly used by TAO but are now
- *             deprecated, and only remain to retain some backward
- *             compatibility.  They will be removed in a future ACE
- *             release.
- */
-//@{
-# define ACE_CORBA_1(NAME) CORBA::NAME
-# define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
-# define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
-//@}
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  /**
+   * @name CORBA namespace macros.
+   *
+   * CORBA namespace macros.
+   *
+   * @deprecated These macros were formerly used by TAO but are now
+   *             deprecated, and only remain to retain some backward
+   *             compatibility.  They will be removed in a future ACE
+   *             release.
+   */
+  //@{
+  # define ACE_CORBA_1(NAME) CORBA::NAME
+  # define ACE_CORBA_2(TYPE, NAME) CORBA::TYPE::NAME
+  # define ACE_CORBA_3(TYPE, NAME) CORBA::TYPE::NAME
+  //@}
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 // ----------------------------------------------------------------
 
