@@ -178,6 +178,9 @@ TAO_IIOP_SSL_Connector::make_connection (
                 ACE_TEXT ("(%P|%t) IIOP_SSL_Connector::connect ")
                 ACE_TEXT ("making a new connection \n")));
 
+  const ACE_INET_Addr &remote_address =
+    iiop_endpoint->object_addr ();
+
   // Purge connections (if necessary)
   this->orb_core ()->lane_resources ().transport_cache ().purge ();
 
