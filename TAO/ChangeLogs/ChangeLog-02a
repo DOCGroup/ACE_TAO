@@ -1,3 +1,10 @@
+Sat Apr 29 12:53:26 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Makefile.am:
+	* tao/Makefile.bor: Added files 
+	* tao/Invocation.cpp: Made some fixes to the changes that I made
+	  yesterday.
+
 Sat Apr 29 03:10:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp (gen_skel_helper): Changed some

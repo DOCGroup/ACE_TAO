@@ -47,6 +47,21 @@ PLUGGABLE_PROTOCOLS_FILES = \
   IORS.cpp \
   IORManipulation.cpp
 
+PLUGGABLE_MESSAGING_FILES = \
+Pluggable_Messaging \
+Pluggable_Messaging_Utils \
+GIOP_Message_Base \
+GIOP_Message_Connectors \
+GIOP_Message_Acceptors \
+GIOP_Message_Accept_State \
+GIOP_Utils \
+GIOP_Message_Headers \
+target_specification \
+GIOP_Server_Request \
+GIOP_Message_Lite \
+GIOP_Message_State \
+Tagged_Profile
+
 DEFAULT_RESOURCES_FILES = \
   default_client.cpp \
   default_server.cpp \
@@ -96,8 +111,6 @@ ORB_CORE_FILES = \
   Client_Strategy_Factory.cpp \
   debug.cpp \
   Object_KeyC.cpp \
-  GIOP.cpp \
-  GIOP_Server_Request.cpp \
   Invocation.cpp \
   Interceptor.cpp \
   InterceptorC.cpp \
