@@ -105,6 +105,8 @@ endif
 <%endif%>
 <%endif%>
 
+ACE_SHLIBS =<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 <%if(tao)%>
 include $(TAO_ROOT)/rules.tao.GNU
@@ -151,7 +153,6 @@ else
 endif
 <%endif%>
 <%endif%>
-ACELIB =<%foreach(defaultlibs)%> -l<%defaultlib%><%endfor%>
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
