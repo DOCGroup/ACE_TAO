@@ -207,7 +207,8 @@ ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
   // Must have a thread manager!
   if (this->thr_mgr_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "error: must have a non-NULL thread manager\n"), -1);
+                       "error: must have a non-NULL thread manager\n"),
+                      -1);
   else
     return 0;
 }
@@ -236,7 +237,9 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Accept_Strategy");
 
   if (this->open (local_addr, restart) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("open")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("open")));
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
@@ -292,13 +295,13 @@ template <class SVC_HANDLER> int
 ACE_Process_Strategy<SVC_HANDLER>::open (size_t n_processes,
                                          ACE_Event_Handler *acceptor,
                                          ACE_Reactor *reactor,
-                                         int flags)
+                                         int daemonize)
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::open");
   this->n_processes_ = n_processes;
   this->acceptor_ = acceptor;
   this->reactor_ = reactor;
-  this->flags_ = flags;
+  this->flags_ = daemonize;
 
   return 0;
 }
@@ -309,10 +312,22 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler");
 
-  switch (ACE_OS::fork ("child"))
+  int result;
+
+  // If <flags_> is non-0 then we'll use <ACE::daemonize> to avoid
+  // creating zombies.
+  if (this->flags_)
+    result = ACE::daemonize (0, 0, "child");
+  else
+    result = ACE_OS::fork ("child");
+
+  switch (result)
     {
     case -1:
-      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("fork")), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("%p\n"),
+                         ASYS_TEXT ("fork")),
+                        -1);
       /* NOTREACHED */
     case 0: // In child process.
 
@@ -348,7 +363,9 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
       delete_recycling_strategy_ (0)
 {
   if (this->open (cre_s, con_s, rec_s) == -1)
-    ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Cached_Connect_Strategy::ACE_Cached_Connect_Strategy")));
+    ACE_ERROR ((LM_ERROR,
+                ASYS_TEXT ("%p\n"),
+                ASYS_TEXT ("ACE_Cached_Connect_Strategy::ACE_Cached_Connect_Strategy")));
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
