@@ -1,3 +1,10 @@
+Tue Jun  6 10:19:50 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/append.cpp:
+	* tao/skip.cpp:
+	  Cosmetic changes - removing code commented out for
+	  months, shortening long lines, etc.
+
 Tue Jun  6 09:42:39 2000  Chris Kohlhoff <chris@kohlhoff.com>
 
         * orbsvcs/orbsvcs/Makefile.bor:
