@@ -69,18 +69,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * fe_extern.cc - export FE interfaces to driver
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "fe_extern.h"
+#include "ast_root.h"
+#include "global_extern.h"
+#include "utl_err.h"
+#include "utl_indenter.h"
 
-#include	"fe_private.h"
-
-#include 	"utl_err.h"
-#include	"utl_indenter.h"
-#include	"utl_string.h"
-
-ACE_RCSID(fe, fe_extern, "$Id$")
-
-// yacc parser interface
+ACE_RCSID (fe, 
+           fe_extern, 
+           "$Id$")
 
 extern int tao_yyparse (void);
 extern FILE *tao_yyin;
@@ -128,13 +125,3 @@ FE_new_UTL_Indenter (void)
   return retval;
 }
 
-UTL_String *
-FE_new_UTL_String (char *str)
-{
-  UTL_String *retval = 0;
-  ACE_NEW_RETURN (retval,
-                  UTL_String (str),
-                  0);
-
-  return retval;
-}

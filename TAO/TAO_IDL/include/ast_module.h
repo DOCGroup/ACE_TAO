@@ -67,6 +67,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_MODULE_AST_MODULE_HH
 #define _AST_MODULE_AST_MODULE_HH
 
+#include "ast_decl.h"
+#include "utl_scope.h"
+
 // Representation of module.
 //
 // NOTE: add(AST_EnumValue *) is defined here because enums can
@@ -133,9 +136,19 @@ private:
 
   virtual AST_Module *fe_add_module (AST_Module *m);
 
-  virtual AST_Interface  *fe_add_interface (AST_Interface *i);
+  virtual AST_Interface *fe_add_interface (AST_Interface *i);
 
   virtual AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i);
+
+  virtual AST_ValueType *fe_add_valuetype (AST_ValueType *i);
+
+  virtual AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
+
+  virtual AST_Component *fe_add_component (AST_Component *i);
+
+  virtual AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);
+
+  virtual AST_Home *fe_add_home (AST_Home *i);
 
   virtual AST_Constant *fe_add_constant (AST_Constant *c);
 
@@ -143,7 +156,11 @@ private:
 
   virtual AST_Union *fe_add_union (AST_Union *u);
 
+  virtual AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
+
   virtual AST_Structure *fe_add_structure (AST_Structure *s);
+
+  virtual AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
 
   virtual AST_Enum *fe_add_enum (AST_Enum  *e);
 

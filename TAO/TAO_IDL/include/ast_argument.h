@@ -70,8 +70,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Representation of argument to operation:
 // An argument is a field with a direction attached
 
-#include "idl_fwd.h"
-#include "idl_narrow.h"
 #include "ast_field.h"
 
 

@@ -25,12 +25,12 @@
 
 class be_operation;
 
-// Base class for operation level strategeis
-
+// Base class for operation level strategies.
 class be_operation_strategy
 {
 public:
-  enum Strategy_Kind {
+  enum Strategy_Kind 
+  {
     DEFAULT = 0,
     AMI_SENDC,
     AMI_HANDLER_REPLY_STUB,
@@ -40,41 +40,42 @@ public:
   be_operation_strategy (be_operation *node,
                          Strategy_Kind strategy_type);
 
-  virtual ~be_operation_strategy ();
+  virtual ~be_operation_strategy (void);
 
   int strategy_type ();
   // Return the type of the strategy.
 
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
-                                            int is_extra_state = 0) = 0;
-  // Change the sate if necessary
+  virtual TAO_CodeGen::CG_STATE next_state (
+      TAO_CodeGen::CG_STATE current_state,
+      int is_extra_state = 0
+    ) = 0;
+  // Change the state if necessary.
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // returns true if we have to genrate extra code.
+  // Returns true if we have to genrate extra code.
 
-  virtual be_operation *marshaling ();
-  // returns the operation containing special marshaling information,
+  virtual be_operation *marshaling (void);
+  // Returns the operation containing special marshaling information,
   // this makes sense if not all arguments get marshaled, e.g. AMI
-  // sendc_ operations
+  // sendc_ operations.
 
-  virtual be_operation *arguments ();
-  // returns a customized arguments list, e.g. AMI sendc_ operations
+  virtual be_operation *arguments (void);
+  // Returns a customized arguments list, e.g. AMI sendc_ operations
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
 
 protected:
 
   be_operation *node_;
-  // The node we strategize
+  // The node we strategize.
 
   Strategy_Kind strategy_type_;
-  // the type of strategy
+  // The type of strategy.
 };
 
 
 
-// Default (do nothing) strategy for operations
-
+// Default (do nothing) strategy for operations.
 class be_operation_default_strategy
   : public be_operation_strategy
 {
@@ -83,7 +84,7 @@ public:
 
   virtual ~be_operation_default_strategy ();
 
-  // overridden methods.
+  // Overridden methods.
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
 
@@ -92,51 +93,48 @@ public:
 
 // Strategy to mark normal reply handler operations
 // in order to have them generate the reply stub
-// alias client skeleton for AMI
-
+// alias client skeleton for AMI.
 class be_operation_ami_handler_reply_stub_strategy
   : public be_operation_strategy
 {
 public:
   be_operation_ami_handler_reply_stub_strategy (be_operation *node);
 
-  virtual ~be_operation_ami_handler_reply_stub_strategy ();
+  virtual ~be_operation_ami_handler_reply_stub_strategy (void);
 
-  // overridden methods.
+  // Overridden methods.
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // returns true if we have to genrate extra code.
+  // Returns true if we have to genrate extra code.
 };
 
 
 // Strategy to mark normal sendc_ operations
 // in AMI mode.
-
-class be_operation_ami_sendc_strategy
-  : public be_operation_strategy
+class be_operation_ami_sendc_strategy : public be_operation_strategy
 {
 public:
   be_operation_ami_sendc_strategy (be_operation *node,
                                    be_operation *marshaling,
                                    be_operation *arguments);
 
-  virtual ~be_operation_ami_sendc_strategy ();
+  virtual ~be_operation_ami_sendc_strategy (void);
 
-  // overridden methods.
+  // Overridden methods.
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
-  // returns true if we have to genrate extra code.
+  // Returns true if we have to genrate extra code.
 
-  virtual be_operation *marshaling ();
-  // returns the operation containing special marshaling information,
+  virtual be_operation *marshaling (void);
+  // Returns the operation containing special marshaling information,
   // this makes sense if not all arguments get marshaled, e.g. AMI
   // sendc_ operations
 
-  virtual be_operation *arguments ();
+  virtual be_operation *arguments (void);
   // returns a customized arguments list, e.g. AMI sendc_ operations
   // only use the in and inout arguments but not the out arguments,
   // also the first argument is the reply handler.
@@ -148,7 +146,6 @@ private:
 
 // Strategy for raise operations in the AMI exception
 // holder valuetype.
-
 class be_operation_ami_exception_holder_raise_strategy
   : public be_operation_strategy
 {
@@ -157,14 +154,15 @@ public:
 
   virtual ~be_operation_ami_exception_holder_raise_strategy ();
 
-  // overridden methods.
-  virtual TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
-                                            int is_extra_state = 0);
+  // Overridden methods.
+  virtual TAO_CodeGen::CG_STATE next_state (
+      TAO_CodeGen::CG_STATE current_state,
+      int is_extra_state = 0
+    );
 };
 
 
-// AMH strategy
-
+// AMH strategy.
 class be_operation_amh_strategy
   : public be_operation_strategy
 {
@@ -173,13 +171,13 @@ public:
 
   virtual ~be_operation_amh_strategy ();
 
-  // overridden methods.
+  // Overridden methods.
   TAO_CodeGen::CG_STATE next_state (TAO_CodeGen::CG_STATE current_state,
                                     int is_extra_state = 0);
 
   virtual int has_extra_code_generation (TAO_CodeGen::CG_STATE current_state);
 
-  virtual be_operation *arguments ();
+  virtual be_operation *arguments (void);
 
 private:
   be_operation *arguments_;

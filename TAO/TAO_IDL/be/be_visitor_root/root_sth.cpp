@@ -18,15 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_root.h"
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_root, root_sth, "$Id$")
-
+ACE_RCSID (be_visitor_root, 
+           root_sth, 
+           "$Id$")
 
 // ****************************************
 // Root visitor for server template header
@@ -168,7 +162,7 @@ be_visitor_root_sth::visit_module (be_module *node)
 
   if (!node->is_nested ())
     {
-      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n";
+      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n\n";
     }
 
   return 0;

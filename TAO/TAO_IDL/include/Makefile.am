@@ -19,6 +19,8 @@ noinst_HEADERS = \
   ast_argument.h \
   ast_array.h \
   ast_attribute.h \
+  ast_component.h \
+  ast_component_fwd.h \
   ast_concrete_type.h \
   ast_constant.h \
   ast_decl.h \
@@ -29,6 +31,7 @@ noinst_HEADERS = \
   ast_extern.h \
   ast_field.h \
   ast_generator.h \
+  ast_home.h \
   ast_interface.h \
   ast_interface_fwd.h \
   ast_module.h \
@@ -39,11 +42,15 @@ noinst_HEADERS = \
   ast_sequence.h \
   ast_string.h \
   ast_structure.h \
+  ast_structure_fwd.h \
   ast_type.h \
   ast_typedef.h \
   ast_union.h \
+  ast_union_fwd.h \
   ast_union_branch.h \
   ast_union_label.h \
+  ast_valuetype.h \
+  ast_valuetype_fwd.h \
   be_extern.h \
   drv_extern.h \
   drv_link.h \

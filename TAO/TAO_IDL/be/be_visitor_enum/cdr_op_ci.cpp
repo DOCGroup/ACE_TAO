@@ -18,12 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_enum.h"
-
-ACE_RCSID(be_visitor_enum, cdr_op_ci, "$Id$")
+ACE_RCSID (be_visitor_enum, 
+           cdr_op_ci, 
+           "$Id$")
 
 
 // ***************************************************************************
@@ -32,7 +29,7 @@ ACE_RCSID(be_visitor_enum, cdr_op_ci, "$Id$")
 // ***************************************************************************
 
 be_visitor_enum_cdr_op_ci::be_visitor_enum_cdr_op_ci (be_visitor_context *ctx)
-  : be_visitor_scope (ctx)
+  : be_visitor_decl (ctx)
 {
 }
 

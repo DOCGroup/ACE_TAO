@@ -18,22 +18,18 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-
-#include "be_visitor_typedef.h"
-
-ACE_RCSID(be_visitor_typedef, cdr_op_ci, "$Id$")
-
+ACE_RCSID (be_visitor_typedef, 
+           cdr_op_ci, 
+           "$Id$")
 
 // ***************************************************************************
 // Typedef visitor for generating CDR operator declarations in the client
 // stubs file
 // ***************************************************************************
 
-be_visitor_typedef_cdr_op_ci::be_visitor_typedef_cdr_op_ci
-(be_visitor_context *ctx)
+be_visitor_typedef_cdr_op_ci::be_visitor_typedef_cdr_op_ci (
+    be_visitor_context *ctx
+  )
   : be_visitor_typedef (ctx)
 {
 }
@@ -49,12 +45,6 @@ be_visitor_typedef_cdr_op_ci::visit_typedef (be_typedef *node)
     {
       return 0;
     }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // generate the CDR << and >> operator impls
-
-  os->indent ();
 
   // In general, we may have a chain of typedefs. i.e.,
   // typedef sequence<long> X;

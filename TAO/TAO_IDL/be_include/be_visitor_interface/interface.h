@@ -40,6 +40,8 @@
 //   methods.
 //
 
+class AST_Operation;
+
 class be_visitor_interface : public be_visitor_scope
 {
   //
@@ -49,7 +51,6 @@ class be_visitor_interface : public be_visitor_scope
   // = DESCRIPTION
   //   This is a concrete visitor for interface that abstracts all common tasks
   //
-
 public:
   be_visitor_interface (be_visitor_context *ctx);
   // constructor
@@ -59,6 +60,10 @@ public:
 
   virtual int visit_interface (be_interface *node);
   // visit the interface node
+
+  virtual int visit_scope (be_scope *node);
+  // An override of the base class method so we can generate code for
+  // any abstract parents the interface may have.
 
   // =visit methods on all elements syntactically valid in a Interface scope
 
@@ -80,7 +85,13 @@ public:
   virtual int visit_structure (be_structure *node);
   // visit a structure
 
+  virtual int visit_structure_fwd (be_structure_fwd *node);
+  // visit a forward declared structure
+
   virtual int visit_union (be_union *node);
+  // visit a union
+
+  virtual int visit_union_fwd (be_union_fwd *node);
   // visit a union
 
   virtual int visit_typedef (be_typedef *node);
@@ -88,6 +99,9 @@ public:
 
  protected:
     int is_amh_rh_node (be_interface *node);
+
+    static void add_abstract_op_args (AST_Operation *old_op,
+                                      be_operation &new_op);
 };
 
 #endif /*  _BE_INTERFACE_INTERFACE_H_ */

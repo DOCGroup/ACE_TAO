@@ -18,13 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_union.h"
-
-ACE_RCSID(be_visitor_union, any_op_ch, "$Id$")
-
+ACE_RCSID (be_visitor_union, 
+           any_op_ch, 
+           "$Id$")
 
 // ***************************************************************************
 // Union visitor for generating Any operator declarations in the client header
@@ -45,7 +41,8 @@ int
 be_visitor_union_any_op_ch::visit_union (be_union *node)
 {
   if (node->cli_hdr_any_op_gen ()
-      || node->imported ())
+      || node->imported ()
+      || node->is_local ())
     {
       return 0;
     }
@@ -68,8 +65,6 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
       << " operator>>= (const CORBA::Any &, const "
       << node->name () << " *&);\n";
 
-
-  // All we have to do is to visit the scope and generate code.
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

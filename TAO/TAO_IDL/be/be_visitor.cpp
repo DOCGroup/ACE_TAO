@@ -21,11 +21,12 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
 #include "be_visitor.h"
-#include "be_visitor_valuetype.h"
-ACE_RCSID(be, be_visitor, "$Id$")
+#include "ace/config-all.h"
+
+ACE_RCSID (be, 
+           be_visitor, 
+           "$Id$")
 
 be_visitor::be_visitor (void)
 {
@@ -81,12 +82,32 @@ int be_visitor::visit_valuetype_fwd (be_valuetype_fwd *)
   return 0;
 }
 
+int be_visitor::visit_component (be_component *)
+{
+  return 0;
+}
+
+int be_visitor::visit_component_fwd (be_component_fwd *)
+{
+  return 0;
+}
+
+int be_visitor::visit_home (be_home *)
+{
+  return 0;
+}
+
 int be_visitor::visit_factory (be_factory *)
 {
   return 0;
 }
 
 int be_visitor::visit_structure (be_structure *)
+{
+  return 0;
+}
+
+int be_visitor::visit_structure_fwd (be_structure_fwd *)
 {
   return 0;
 }
@@ -127,6 +148,11 @@ int be_visitor::visit_attribute (be_attribute *)
 }
 
 int be_visitor::visit_union (be_union *)
+{
+  return 0;
+}
+
+int be_visitor::visit_union_fwd (be_union_fwd *)
 {
   return 0;
 }
@@ -180,3 +206,4 @@ int be_visitor::visit_native (be_native *)
 {
   return 0;
 }
+

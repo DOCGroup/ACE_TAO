@@ -67,20 +67,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_SEQUENCE_AST_SEQUENCE_HH
 #define _AST_SEQUENCE_AST_SEQUENCE_HH
 
-// Representation of sequence declaration:
-//
+#include "ast_concrete_type.h"
+#include "idl_bool.h"
+
+class AST_Expression;
+class AST_Type;
+
 // A sequence is a combination of a maximum size and a base type.
 
 class TAO_IDL_FE_Export AST_Sequence : public virtual AST_ConcreteType
 {
 public:
-  // Operations.
-
-  // Constructor(s).
   AST_Sequence (void);
 
   AST_Sequence (AST_Expression *max_size,
                 AST_Type *bt,
+                UTL_ScopedName *n,
                 idl_bool local,
                 idl_bool abstract);
 

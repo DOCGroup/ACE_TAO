@@ -67,8 +67,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ATTRIBUTE_AST_ATTRIBUTE_HH
 #define _AST_ATTRIBUTE_AST_ATTRIBUTE_HH
 
+#include "ast_field.h"
+#include "utl_scoped_name.h"
+#include "ace/OS.h"
+
 // Representation of attribute declaration:
-// An attribute is a field with a readonly property
+// An attribute is a field with a readonly property.
 
 class TAO_IDL_FE_Export AST_Attribute : public virtual AST_Field
 {

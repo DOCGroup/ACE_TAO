@@ -89,28 +89,39 @@ UTL_StrList::last_component()
 
 // AST Dumping
 void
-UTL_StrList::dump(ACE_OSTREAM_TYPE &o)
+UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
 {
-  char                        *s;
-  UTL_StrlistActiveIterator *i = new UTL_StrlistActiveIterator(this);
-  long                         first = I_TRUE;
-  long                         second = I_FALSE;
+  char *s = 0;;
+  UTL_StrlistActiveIterator *i = new UTL_StrlistActiveIterator (this);
+  long first = I_TRUE;
+  long second = I_FALSE;
 
-  while (!(i->is_done())) {
-    if (!first)
-      o << "::";
-    else if (second)
-      first = second = I_FALSE;
-    s = i->item()->get_string();
-    o << s;
-    if (first) {
-      if (strcmp(s, "::") != 0)
-        first = I_FALSE;
-      else
-        second = I_TRUE;
+  for (UTL_StrlistActiveIterator (this); !i.is_done(); i.next ()) 
+    {
+      if (!first)
+        {
+          o << "::";
+        }
+      else if (second)
+        {
+          first = second = I_FALSE;
+        }
+
+      s = i.item ()->get_string ();
+      o << s;
+
+      if (first) 
+        {
+          if (ACE_OS::strcmp (s, "::") != 0)
+            {
+              first = I_FALSE;
+            }
+          else
+            {
+              second = I_TRUE;
+            }
+        }
     }
-    i->next();
-  }
 }
 
 /*

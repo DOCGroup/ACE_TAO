@@ -16,11 +16,18 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_codegen.h"
+#include "be_helper.h"
+#include "be_visitor_factory.h"
+#include "be_stream_factory.h"
+#include "be_extern.h"
+#include "global_extern.h"
+#include "utl_string.h"
+#include "idl_defines.h"
 
-ACE_RCSID(be, be_codegen, "$Id$")
+ACE_RCSID (be, 
+           be_codegen, 
+           "$Id$")
 
 TAO_IDL_BE_Export TAO_CodeGen *tao_cg = 0;
 
@@ -57,6 +64,11 @@ TAO_CodeGen::~TAO_CodeGen (void)
   delete this->client_inline_;
   delete this->server_inline_;
   delete this->server_template_inline_;
+#if !defined (linux) && !defined (__QNX__)
+  // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
+  delete this->gperf_input_stream_;
+#endif /* ! linux */
+  delete [] this->gperf_input_filename_;
   this->curr_os_ = 0;
   //  delete this->visitor_factory_;
 }
@@ -135,6 +147,10 @@ TAO_CodeGen::start_client_header (const char *fname)
     }
   else
     {
+      *this->client_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
+                            << "// " << __FILE__ << ":" << __LINE__ 
+                            << be_nl << be_nl;
+
       // Generate the #ident string, if any.
       this->gen_ident_string (this->client_header_);
 
@@ -295,6 +311,10 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       return -1;
     }
 
+  *this->client_stubs_ << be_nl << "// TAO_IDL - Generated from" << be_nl
+                       << "// " << __FILE__ << ":" << __LINE__ 
+                       << be_nl << be_nl;
+
   // Generate the ident string, if any.
   this->gen_ident_string (this->client_stubs_);
 
@@ -409,6 +429,10 @@ TAO_CodeGen::start_server_header (const char *fname)
     }
   else
     {
+      *this->server_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
+                            << "// " << __FILE__ << ":" << __LINE__ 
+                            << be_nl << be_nl;
+
       // Generate the ident string, if any.
       this->gen_ident_string (this->server_header_);
 
@@ -568,6 +592,11 @@ TAO_CodeGen::start_server_template_header (const char *fname)
     }
   else
     {
+      *this->server_template_header_ << be_nl << "// TAO_IDL - Generated from" 
+                                     << be_nl 
+                                     << "// " << __FILE__ << ":" << __LINE__ 
+                                     << be_nl << be_nl;
+
       // Generate the ident string, if any.
       this->gen_ident_string (this->server_template_header_);
 
@@ -629,6 +658,10 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
     {
       return -1;
     }
+
+  *this->server_skeletons_ << be_nl << "// TAO_IDL - Generated from "
+                           << be_nl << "// " << __FILE__ << ":" << __LINE__ 
+                           << be_nl << be_nl;
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_skeletons_);
@@ -732,6 +765,11 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
     }
   else
     {
+      *this->server_template_skeletons_ << be_nl << "// TAO_IDL - Generated from "
+                                        << be_nl << "// " 
+                                        << __FILE__ << ":" << __LINE__ 
+                                        << be_nl << be_nl;
+
       // Generate the ident string, if any.
       this->gen_ident_string (this->server_template_skeletons_);
 
@@ -865,6 +903,11 @@ TAO_CodeGen::start_implementation_header (const char *fname)
     }
   else
     {
+      *this->implementation_header_ << be_nl << "// TAO_IDL - Generated from "
+                                    << be_nl << "// " 
+                                    << __FILE__ << ":" << __LINE__ 
+                                    << be_nl << be_nl;
+
       // Generate the ident string, if any.
       this->gen_ident_string (this->implementation_header_);
 
@@ -923,6 +966,11 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
     }
   else
     {
+      *this->implementation_skeleton_ << be_nl << "// TAO_IDL - Generated from "
+                                      << be_nl << "// " 
+                                      << __FILE__ << ":" << __LINE__ 
+                                      << be_nl << be_nl;
+
       // Generate the ident string, if any.
       this->gen_ident_string (this->implementation_skeleton_);
 
@@ -949,6 +997,10 @@ int
 TAO_CodeGen::end_client_header (void)
 {
   // Generate the <<= and >>= operators here.
+
+  *this->client_header_ << "// TAO_IDL - Generated from" << be_nl
+                        << "// " << __FILE__ << ":" << __LINE__ 
+                        << be_nl;
 
   // Insert the code to include the inline file.
   *this->client_header_ << "\n#if defined (__ACE_INLINE__)\n";
@@ -982,6 +1034,10 @@ TAO_CodeGen::end_client_header (void)
 int
 TAO_CodeGen::end_server_header (void)
 {
+  *this->server_header_ << be_nl << "// TAO_IDL - Generated from "
+                        << be_nl << "// " << __FILE__ << ":" << __LINE__ 
+                        << be_nl << be_nl;
+
   // Insert the template header.
   if (be_global->gen_tie_classes ())
     {
@@ -1074,6 +1130,11 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 int
 TAO_CodeGen::end_server_template_header (void)
 {
+  *this->server_template_header_ << be_nl << "// TAO_IDL - Generated from "
+                                 << be_nl << "// " 
+                                 << __FILE__ << ":" << __LINE__ 
+                                 << be_nl << be_nl;
+
   // Insert the code to include the inline file.
   *this->server_template_header_ << "\n#if defined (__ACE_INLINE__)\n";
   *this->server_template_header_
@@ -1166,8 +1227,8 @@ TAO_CodeGen::gperf_input_stream (void)
 void
 TAO_CodeGen::gperf_input_filename (char *filename)
 {
-  delete  [] this->gperf_input_filename_;
-  this->gperf_input_filename_ = ACE::strnew (filename);
+  delete [] this->gperf_input_filename_;
+  this->gperf_input_filename_ = filename;
 }
 
 char *
@@ -1203,9 +1264,7 @@ TAO_CodeGen::node (void)
 void
 TAO_CodeGen::config_visitor_factory (void)
 {
-  // We have removed interpreted marshaling from TAO, so
-  // TAO_INTERPRETIVE_VISITOR_FACTORY is no more.
-  this->visitor_factory_ = TAO_COMPILED_VISITOR_FACTORY::instance ();
+  this->visitor_factory_ = TAO_VISITOR_FACTORY::instance ();
 }
 
 void
@@ -1292,3 +1351,4 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
           << included_file
           << end_delimiter << "\n";
 }
+

@@ -18,8 +18,9 @@
 #ifndef TAO_BE_VISITOR_VALUETYPE_H
 #define TAO_BE_VISITOR_VALUETYPE_H
 
-#include "be_visitor_scope.h"
+#include "idl_defines.h"
 
+#include "be_visitor_scope.h"
 #include "be_visitor_valuetype/valuetype.h"
 #include "be_visitor_valuetype/valuetype_ch.h"
 #include "be_visitor_valuetype/valuetype_obv_ch.h"
@@ -27,6 +28,9 @@
 #include "be_visitor_valuetype/valuetype_obv_cs.h"
 #include "be_visitor_valuetype/valuetype_ci.h"
 #include "be_visitor_valuetype/valuetype_cs.h"
+#include "be_visitor_valuetype/valuetype_sh.h"
+#include "be_visitor_valuetype/valuetype_si.h"
+#include "be_visitor_valuetype/valuetype_ss.h"
 #include "be_visitor_valuetype/any_op_ch.h"
 #include "be_visitor_valuetype/any_op_cs.h"
 #include "be_visitor_valuetype/cdr_op_ch.h"

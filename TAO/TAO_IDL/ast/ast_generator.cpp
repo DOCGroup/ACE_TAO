@@ -70,16 +70,34 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of the AST nodes. It contains an operation for every constructor
 // of every AST class.
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "ast_root.h"
+#include "ast_valuetype.h"
+#include "ast_valuetype_fwd.h"
+#include "ast_component.h"
+#include "ast_component_fwd.h"
+#include "ast_home.h"
+#include "ast_exception.h"
+#include "ast_enum.h"
+#include "ast_attribute.h"
+#include "ast_union.h"
+#include "ast_union_fwd.h"
+#include "ast_union_branch.h"
+#include "ast_enum_val.h"
+#include "ast_array.h"
+#include "ast_sequence.h"
+#include "ast_string.h"
+#include "ast_structure_fwd.h"
+#include "ast_native.h"
+#include "ast_factory.h"
+#include "utl_identifier.h"
+#include "nr_extern.h"
 
-#include "ace/config-all.h"
+#include "ast_generator.h"
 
-ACE_RCSID(ast, ast_generator, "$Id$")
+ACE_RCSID (ast, 
+           ast_generator, 
+           "$Id$")
 
-// Public operations.
-
-// Construct an AST_PredefinedType node (a predefined type).
 AST_PredefinedType *
 AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
                                        UTL_ScopedName *n)
@@ -93,12 +111,11 @@ AST_Generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
   return retval;
 }
 
-// Construct an AST_Module node (a module).
 AST_Module *
 AST_Generator::create_module (UTL_Scope *s,
                               UTL_ScopedName *n)
 {
-  // We create this first so if we find a module with the
+ // We create this first so if we find a module with the
   // same name from an included file, we can add its
   // members to the new module's scope.
   AST_Module *retval = 0;
@@ -171,7 +188,6 @@ AST_Generator::create_module (UTL_Scope *s,
   return retval;
 }
 
-// Construct an AST_Root node (a node representing the root of an AST).
 AST_Root *
 AST_Generator::create_root (UTL_ScopedName *n)
 {
@@ -183,32 +199,29 @@ AST_Generator::create_root (UTL_ScopedName *n)
   return retval;
 }
 
-//     Construct an AST_Interface node (an interface).
 AST_Interface *
 AST_Generator::create_interface (UTL_ScopedName *n,
-                                 AST_Interface **ih,
-                                 long nih,
-                                 AST_Interface **ih_flat,
-                                 long nih_flat,
-                                 idl_bool l,
-                                 idl_bool a)
+                                 AST_Interface **inherits,
+                                 long n_inherits,
+                                 AST_Interface **inherits_flat,
+                                 long n_inherits_flat,
+                                 idl_bool local,
+                                 idl_bool abstract)
 {
   AST_Interface *retval = 0;
   ACE_NEW_RETURN (retval,
                   AST_Interface (n,
-                                 ih,
-                                 nih,
-                                 ih_flat,
-                                 nih_flat,
-                                 l,
-                                 a),
+                                 inherits,
+                                 n_inherits,
+                                 inherits_flat,
+                                 n_inherits_flat,
+                                 local,
+                                 abstract),
                   0);
 
   return retval;
 }
 
-// Construct an AST_InterfaceFwd node (a node representing the forward
-// declaration of an interface).
 AST_InterfaceFwd *
 AST_Generator::create_interface_fwd (UTL_ScopedName *n,
                                      idl_bool local,
@@ -229,29 +242,33 @@ AST_Generator::create_interface_fwd (UTL_ScopedName *n,
   return retval;
 }
 
-// Create an AST_Interface node which is a valuetype.
-AST_Interface *
+AST_ValueType *
 AST_Generator::create_valuetype (UTL_ScopedName *n,
-                                 AST_Interface **ih,
-                                 long nih)
+                                 AST_Interface **inherits,
+                                 long n_inherits,
+                                 AST_ValueType *inherits_concrete,
+                                 AST_Interface **inherits_flat,
+                                 long n_inherits_flat,
+                                 AST_Interface **supports,
+                                 long n_supports,
+                                 AST_Interface *supports_concrete,
+                                 idl_bool abstract,
+                                 idl_bool truncatable)
 {
-  AST_Interface *retval = 0;
+  AST_ValueType *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_Interface (n,
-                                 ih,
-                                 nih,
-                                 0,
-                                 0,
-                                 0,
-                                 0),
+                  AST_ValueType (n,
+                                 inherits,
+                                 n_inherits,
+                                 inherits_concrete,
+                                 inherits_flat,
+                                 n_inherits_flat,
+                                 supports,
+                                 n_supports,
+                                 supports_concrete,
+                                 abstract,
+                                 truncatable),
                   0);
-
-  // Valuetypes are represented as be_valuetype derived from be_interface,
-  // which derives from AST_Interface. If you construct a backend which
-  // utilizes only the AST_... classes, you must instantiate an object that
-  // returns true from AST_Interface::is_valuetype().
-  // (@@@ (JP) implemented 2000/10/4)
-  retval->set_valuetype ();
 
   // The following helps with OBV_ namespace generation.
   AST_Module *m = AST_Module::narrow_from_scope (retval->defined_in ());
@@ -264,29 +281,96 @@ AST_Generator::create_valuetype (UTL_ScopedName *n,
   return retval;
 }
 
-// Create an AST_InterfaceFwd node whose full_definition
-// member is a valuetype.
-AST_InterfaceFwd *
-AST_Generator::create_valuetype_fwd (UTL_ScopedName *n)
+AST_ValueTypeFwd *
+AST_Generator::create_valuetype_fwd (UTL_ScopedName *n,
+                                     idl_bool abstract)
 {
-  // See note in create_valuetype().
-  // Dummy placeholder must return true from is_valuetype().
-
-  AST_Interface *dummy = this->create_valuetype (n,
+  AST_ValueType *dummy = this->create_valuetype (n,
                                                  0,
-                                                 -1);
+                                                 -1,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 abstract,
+                                                 I_FALSE);
 
-  AST_InterfaceFwd *retval = 0;
+  AST_ValueTypeFwd *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_InterfaceFwd (dummy,
+                  AST_ValueTypeFwd (dummy,
                                     n),
                   0);
 
   return retval;
 }
 
+AST_Component *
+AST_Generator::create_component (UTL_ScopedName *n,
+                                 AST_Component *base_component,
+                                 AST_Interface **supports,
+                                 long n_supports,
+                                 AST_Interface **supports_flat,
+                                 long n_supports_flat)
+{
+  AST_Component *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Component (n,
+                                 base_component,
+                                 supports,
+                                 n_supports,
+                                 supports_flat,
+                                 n_supports_flat),
+                  0);
 
-// Construct an AST_Exception node (an exception).
+  return retval;
+}
+
+AST_ComponentFwd *
+AST_Generator::create_component_fwd (UTL_ScopedName *n)
+{
+  AST_Component *dummy = this->create_component (n,
+                                                 0,
+                                                 0,
+                                                 -1,
+                                                 0,
+                                                 0);
+
+  AST_ComponentFwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_ComponentFwd (dummy,
+                                    n),
+                  0);
+
+  return retval;
+}
+
+AST_Home *
+AST_Generator::create_home (UTL_ScopedName *n,
+                            AST_Home *base_home,
+                            AST_Component *managed_component,
+                            AST_ValueType *primary_key,
+                            AST_Interface **supports,
+                            long n_supports,
+                            AST_Interface **supports_flat,
+                            long n_supports_flat)
+{
+  AST_Home *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Home (n,
+                            base_home,
+                            managed_component,
+                            primary_key,
+                            supports,
+                            n_supports,
+                            supports_flat,
+                            n_supports_flat),
+                  0);
+
+  return retval;
+}
+
 AST_Exception *
 AST_Generator::create_exception (UTL_ScopedName *n,
                                  idl_bool local,
@@ -302,7 +386,6 @@ AST_Generator::create_exception (UTL_ScopedName *n,
   return retval;
 }
 
-// Construct an AST_Structure node (a struct).
 AST_Structure *
 AST_Generator::create_structure (UTL_ScopedName *n,
                                  idl_bool local,
@@ -318,7 +401,17 @@ AST_Generator::create_structure (UTL_ScopedName *n,
   return retval;
 }
 
-// Construct an AST_Enum node (an enum).
+AST_StructureFwd *
+AST_Generator::create_structure_fwd (UTL_ScopedName *n)
+{
+  AST_StructureFwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_StructureFwd (n),
+                  0);
+
+  return retval;
+}
+
 AST_Enum *
 AST_Generator::create_enum (UTL_ScopedName *n,
                             idl_bool local,
@@ -334,7 +427,6 @@ AST_Generator::create_enum (UTL_ScopedName *n,
   return retval;
 }
 
-// Construct an AST_Operation node (an operation on an interface).
 AST_Operation *
 AST_Generator::create_operation (AST_Type *rt,
                                  AST_Operation::Flags fl,
@@ -354,7 +446,6 @@ AST_Generator::create_operation (AST_Type *rt,
   return retval;
 }
 
-// Construct an AST_Field node (a field in a struct, union or exception).
 AST_Field *
 AST_Generator::create_field (AST_Type *ft,
                              UTL_ScopedName *n,
@@ -370,7 +461,6 @@ AST_Generator::create_field (AST_Type *ft,
   return retval;
 }
 
-// Construct an AST_Argument node (an argument to an operation).
 AST_Argument *
 AST_Generator::create_argument (AST_Argument::Direction d,
                                 AST_Type *ft,
@@ -386,7 +476,6 @@ AST_Generator::create_argument (AST_Argument::Direction d,
   return retval;
 }
 
-// Construct an AST_Attribute node (an attribute).
 AST_Attribute *
 AST_Generator::create_attribute (idl_bool ro,
                                  AST_Type *ft,
@@ -406,7 +495,6 @@ AST_Generator::create_attribute (idl_bool ro,
   return retval;
 }
 
-// Construct an AST_Union node (a union).
 AST_Union *
 AST_Generator::create_union (AST_ConcreteType *dt,
                              UTL_ScopedName *n,
@@ -424,7 +512,17 @@ AST_Generator::create_union (AST_ConcreteType *dt,
   return retval;
 }
 
-// Construct an AST_UnionBranch node (a branch in a union).
+AST_UnionFwd *
+AST_Generator::create_union_fwd (UTL_ScopedName *n)
+{
+  AST_UnionFwd *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_UnionFwd (n),
+                  0);
+
+  return retval;
+}
+
 AST_UnionBranch *
 AST_Generator::create_union_branch (UTL_LabelList *ll,
                                     AST_Type *ft,
@@ -440,7 +538,6 @@ AST_Generator::create_union_branch (UTL_LabelList *ll,
   return retval;
 }
 
-// Construct an AST_UnionLabel node (a label in a union).
 AST_UnionLabel *
 AST_Generator::create_union_label (AST_UnionLabel::UnionLabel ul,
                                    AST_Expression *v)
@@ -454,7 +551,6 @@ AST_Generator::create_union_label (AST_UnionLabel::UnionLabel ul,
   return retval;
 }
 
-// Construct an AST_Constant node (a constant).
 AST_Constant *
 AST_Generator::create_constant (AST_Expression::ExprType et,
                                 AST_Expression *ev,
@@ -470,7 +566,6 @@ AST_Generator::create_constant (AST_Expression::ExprType et,
   return retval;
 }
 
-// Construct an AST_Expression node denoting a symbolic name.
 AST_Expression *
 AST_Generator::create_expr (UTL_ScopedName *n)
 {
@@ -482,7 +577,6 @@ AST_Generator::create_expr (UTL_ScopedName *n)
   return retval;
 }
 
-// Construct an AST_Expression denoting a coercion.
 AST_Expression *
 AST_Generator::create_expr (AST_Expression *v,
                             AST_Expression::ExprType t)
@@ -496,8 +590,6 @@ AST_Generator::create_expr (AST_Expression *v,
   return retval;
 }
 
-// Construct an AST_Expression node denoting a binary combinator.
-// of two other AST_Expression nodes
 AST_Expression  *
 AST_Generator::create_expr (AST_Expression::ExprComb c,
                             AST_Expression *v1,
@@ -513,7 +605,6 @@ AST_Generator::create_expr (AST_Expression::ExprComb c,
   return retval;
 }
 
-// Construct an AST_Expression node denoting a long integer.
 AST_Expression *
 AST_Generator::create_expr (long v)
 {
@@ -525,8 +616,6 @@ AST_Generator::create_expr (long v)
   return retval;
 }
 
-// Construct an AST_Expression node denoting a long integer being used.
-// as a boolean
 AST_Expression *
 AST_Generator::create_expr (long v,
                             AST_Expression::ExprType t)
@@ -540,7 +629,6 @@ AST_Generator::create_expr (long v,
   return retval;
 }
 
-// Construct an AST_Expression node denoting an unsigned long integer.
 AST_Expression *
 AST_Generator::create_expr (unsigned long v)
 {
@@ -552,8 +640,6 @@ AST_Generator::create_expr (unsigned long v)
   return retval;
 }
 
-// Construct an AST_Expression node denoting a string (a char *
-// encapsulated as String).
 AST_Expression *
 AST_Generator::create_expr (UTL_String *s)
 {
@@ -565,7 +651,6 @@ AST_Generator::create_expr (UTL_String *s)
   return retval;
 }
 
-// Construct an AST_Expression node denoting a character.
 AST_Expression *
 AST_Generator::create_expr (char c)
 {
@@ -577,7 +662,6 @@ AST_Generator::create_expr (char c)
   return retval;
 }
 
-// Construct an AST_Expression node denoting a wide character.
 AST_Expression *
 AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
 {
@@ -589,7 +673,6 @@ AST_Generator::create_expr (ACE_OutputCDR::from_wchar wc)
   return retval;
 }
 
-// Construct an AST_Expression node denoting a wide string.
 AST_Expression *
 AST_Generator::create_expr (char *s)
 {
@@ -601,7 +684,6 @@ AST_Generator::create_expr (char *s)
   return retval;
 }
 
-// Construct an AST_Expression node denoting a 64-bit floating point number.
 AST_Expression *
 AST_Generator::create_expr (double d)
 {
@@ -613,7 +695,6 @@ AST_Generator::create_expr (double d)
   return retval;
 }
 
-// Construct an AST_EnumVal node (an enumerator).
 AST_EnumVal *
 AST_Generator::create_enum_val (unsigned long v,
                                 UTL_ScopedName *n)
@@ -627,7 +708,6 @@ AST_Generator::create_enum_val (unsigned long v,
   return retval;
 }
 
-// Construct an AST_Array node (an array type or field modifier).
 AST_Array *
 AST_Generator::create_array (UTL_ScopedName *n,
                              unsigned long ndims,
@@ -647,10 +727,10 @@ AST_Generator::create_array (UTL_ScopedName *n,
   return retval;
 }
 
-// Construct an AST_Sequence node (a sequence type definition).
 AST_Sequence *
 AST_Generator::create_sequence (AST_Expression *ms,
                                 AST_Type *bt,
+                                UTL_ScopedName *n,
                                 idl_bool local,
                                 idl_bool abstract)
 {
@@ -658,6 +738,7 @@ AST_Generator::create_sequence (AST_Expression *ms,
   ACE_NEW_RETURN (retval,
                   AST_Sequence (ms,
                                 bt,
+                                n,
                                 local,
                                 abstract),
                   0);
@@ -665,32 +746,46 @@ AST_Generator::create_sequence (AST_Expression *ms,
   return retval;
 }
 
-// Construct an AST_String node (a string type definition).
 AST_String *
 AST_Generator::create_string (AST_Expression *ms)
 {
+  Identifier id ("string");
+  UTL_ScopedName n (&id,
+                    0);
+
   AST_String *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_String (ms),
+                  AST_String (AST_Decl::NT_string,
+                              &n,
+                              ms),
                   0);
 
   return retval;
 }
 
-// Construct an AST_String node denoting a wide string type definition.
 AST_String      *
 AST_Generator::create_wstring (AST_Expression *ms)
 {
+  Identifier id (sizeof (ACE_CDR::WChar) == 1
+                   ? "string"
+                   : "wstring");
+  UTL_ScopedName n (&id,
+                    0);
+  AST_Decl::NodeType nt = sizeof (ACE_CDR::WChar) == 1
+                            ? AST_Decl::NT_string
+                            : AST_Decl::NT_wstring;
+
   AST_String *retval = 0;
   ACE_NEW_RETURN (retval,
-                  AST_String (ms,
+                  AST_String (nt,
+                              &n,
+                              ms,
                               sizeof (ACE_OS::WChar)),
                   0);
 
   return retval;
 }
 
-// Construct an AST_Typedef node (a typedef).
 AST_Typedef *
 AST_Generator::create_typedef (AST_Type *bt,
                                UTL_ScopedName *n,
@@ -708,7 +803,6 @@ AST_Generator::create_typedef (AST_Type *bt,
   return retval;
 }
 
-// Construct an AST_Native node.
 AST_Native *
 AST_Generator::create_native (UTL_ScopedName *n)
 {

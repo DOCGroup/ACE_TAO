@@ -18,19 +18,12 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+ACE_RCSID (be_visitor_typecode, 
+           typecode_defn, 
+           "$Id$")
 
-#include "be_visitor_typecode.h"
-
-ACE_RCSID(be_visitor_typecode, typecode_defn, "$Id$")
-
-
-//
 // This is an implementation of C++ "scoped lock" idiom in order to
 // avoid repetitive code.
-//
 class Scoped_Compute_Queue_Guard
 {
 public:
@@ -48,17 +41,18 @@ Scoped_Compute_Queue_Guard::Scoped_Compute_Queue_Guard (
 {
   if (customer_ != 0)
     {
-      // reset the compute queue to set the stage for computing our
-      // encapsulation length
+      // Reset the compute queue to set the stage for computing our
+      // encapsulation length.
       customer_->queue_reset (customer_->compute_queue_);
     }
 }
+
 Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard (void)
 {
   if (customer_ != 0)
     {
-      // reset the compute queue since we must not affect computation of other
-      // nodes
+      // Reset the compute queue since we must not affect computation of other
+      // nodes.
       customer_->queue_reset (customer_->compute_queue_);
     }
 }
@@ -286,6 +280,9 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                         -1);
     }
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   os->indent (); // start from current indentation level
 
   // Generate the typecode information here
@@ -336,19 +333,11 @@ be_visitor_typecode_defn::visit_type (be_type *node)
       *os << "CORBA::tk_except";
       break;
     case AST_Decl::NT_interface:
-      {
-        // Yet another fruit of interface being a valuetype sometimes :-(
-        AST_Interface* iface = AST_Interface::narrow_from_decl (node);
-        if (iface != 0 && iface->is_valuetype ())
-          {
-            *os << "CORBA::tk_value";
-          }
-        else
-          {
-            *os << "CORBA::tk_objref";
-          }
-       break;
-      }
+      *os << "CORBA::tk_objref";
+      break;
+    case AST_Decl::NT_valuetype:
+      *os << "CORBA::tk_value";
+      break;
     case AST_Decl::NT_sequence:
       *os << "CORBA::tk_sequence";
       break;
@@ -391,6 +380,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
     {
       *os << "TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)" << be_nl;
       be_module *module = be_module::narrow_from_scope (node->defined_in ());
+
       if (!module || (this->gen_nested_namespace_begin (module) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -398,17 +388,21 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                              "Error parsing nested name\n"),
                             -1);
         }
-      *os << "TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_";
+
+      *os << "TAO_NAMESPACE_DEFINE (" << be_idt << be_idt_nl
+          << "::CORBA::TypeCode_ptr," << be_nl 
+          << "_tc_";
 
       // Local name generation.
       *os << node->local_name ();
 
-      *os << ", &_tc_TAO_tc_";
+      *os << "," << be_nl
+          << "&_tc_TAO_tc_";
 
       // Flat name generation.
       *os << node->flat_name ();
 
-      *os << ")" << be_nl;
+      *os << be_uidt_nl << ")" << be_uidt_nl;
 
       if (this->gen_nested_namespace_end (module) == -1)
         {
@@ -1285,7 +1279,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_field *node)
         node->visibility() == AST_Field::vis_PRIVATE ? 0 : 1;
 
       os->indent (); // start from current indentation level
-      *os << visibility << ", // data memeber visibility marker"
+      *os << visibility << ", // data member visibility marker"
           << "\n\n";
 
       this->tc_offset_ += sizeof (ACE_CDR::ULong);
@@ -2095,7 +2089,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
             this->tc_offset_ += sizeof (ACE_CDR::ULong);
             break;
 
-          case AST_Expression::EV_any:
+          case AST_Expression::EV_enum:
             // enum
             os->print ("0x%08.8x", (unsigned long)ev->u.eval);
             // size of any aligned to 4 bytes
@@ -2178,7 +2172,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
             this->tc_offset_ += sizeof (ACE_CDR::ULong);
             break;
 
-          case AST_Expression::EV_any:
+          case AST_Expression::EV_enum:
             // enum
             os->print ("0x%08.8x", (unsigned long)dv.u.enum_val);
             // size of short/wchar aligned to 4 bytes
@@ -2327,7 +2321,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
   // TAO doesn't support neither CUSTOM nor TRUNCATABLE
   // valuetypes. So basically need to choose between
   // VM_NONE = 0 and VM_ABSTRACT = 2
-  ACE_CDR::ULong value_modifier = node->is_abstract_valuetype () ? 2 : 0;
+  ACE_CDR::ULong value_modifier = node->is_abstract () ? 2 : 0;
 
   *os << value_modifier << ", // value modifier" << "\n";
 
@@ -2335,19 +2329,14 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
 
   //STEP 4: generate TypeCode of concrete base
 
-  AST_Interface *inherited = 0;
-  if (node->n_inherits () > 0 &&
-      (   // Statefull base valuetype is always first
-          inherited =
-          AST_Interface::narrow_from_decl(node->inherits ()[0])
-      ) != 0 &&
-      inherited->is_valuetype () &&
-      !inherited->is_abstract ()
-     )
+  AST_ValueType *concrete_inherited = node->inherits_concrete ();
+
+  if (concrete_inherited != 0)
     {
       // Got non-abstract base valuetype. Now emit its typecode
-      be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[0]);
+      be_valuetype *vt = be_valuetype::narrow_from_decl(concrete_inherited);
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
+
       if (!vt || vt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -2356,6 +2345,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_valuetype *node)
                              ACE_TEXT ("failed to generate typecode\n")),
                             -1);
         }
+
       // revert the state to what it was before
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_SCOPE);
     }
@@ -3270,22 +3260,17 @@ be_visitor_typecode_defn::compute_encap_length (be_valuetype *node)
 
 
   // STEP 5: get encapsulation length for concrete base valuetype
-  AST_Interface *inherited = 0;
-  if (node->n_inherits () > 0 &&
-      (   // Statefull abse valuetype is always first
-          inherited =
-          AST_Interface::narrow_from_decl(node->inherits ()[0])
-      ) != 0 &&
-      inherited->is_valuetype () &&
-      !inherited->is_abstract ()
-     )
+  AST_ValueType *concrete_inherited = node->inherits_concrete ();
+
+  if (concrete_inherited != 0)
     {
       // Got non-abstract base valuetype.
 
       this->computed_tc_size_ = 0;
 
-      be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[0]);
+      be_valuetype *vt = be_valuetype::narrow_from_decl (concrete_inherited);
       this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TC_SIZE);
+
       if (!vt || vt->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

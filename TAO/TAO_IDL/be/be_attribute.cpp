@@ -19,11 +19,12 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_attribute.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_attribute, "$Id$")
+ACE_RCSID (be, 
+           be_attribute, 
+           "$Id$")
 
 be_attribute::be_attribute (void)
 {

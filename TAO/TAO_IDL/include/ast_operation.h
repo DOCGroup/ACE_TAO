@@ -67,14 +67,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_OPERATION_AST_OPERATION_HH
 #define _AST_OPERATION_AST_OPERATION_HH
 
-// Representation of operation declaration.
-
-#include "idl_fwd.h"
-#include "idl_narrow.h"
-#include "utl_list.h"
 #include "ast_decl.h"
 #include "utl_scope.h"
-#include "utl_scoped_name.h"
+
+class UTL_ExceptList;
 
 class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl,
                                         public virtual UTL_Scope
@@ -112,6 +108,9 @@ public:
 
   // Public operations.
 
+  int void_return_type (void);
+  /// Returns 1 if the operation has a void return type.
+
   /// Return the number of arguments
   virtual int argument_count (void);
 
@@ -142,6 +141,9 @@ public:
 
   // Method to add exceptions
   UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
+
+  AST_Argument *be_add_argument (AST_Argument *arg);
+  // Add an argument to the scope.
 
   // Cleanup function.
   virtual void destroy (void);

@@ -62,14 +62,17 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _UTL_STRLIST_UTL_STRLIST_HH
 #define _UTL_STRLIST_UTL_STRLIST_HH
 
-// utl_strlist.hh
-//
-// List of String nodes
+#include "utl_list.h"
+#include "ace/OS.h"
+
+class UTL_String;
+
+// List of String nodes.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
@@ -77,46 +80,35 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //       will cease to operate correctly if you use either multiple or
 //       public virtual inheritance.
 
-/*
-** DEPENDENCIES: utl_list.hh, utl_string.hh
-**
-** USE: Included from util.hh
-*/
-
 class TAO_IDL_FE_Export UTL_StrList : public UTL_List
 {
 public:
-  // Operations
+  UTL_StrList (UTL_String *s, 
+               UTL_StrList *cdr);
 
-  // Constructor
-  UTL_StrList(UTL_String *s, UTL_StrList *cdr);
-
-  // Destructor
   virtual ~UTL_StrList (void);
 
   // AST Dumping
-  virtual void          dump(ACE_OSTREAM_TYPE &o);
-
-  // Other Operations
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Copy a list of strings
-  virtual UTL_List      *copy();
+  virtual UTL_List *copy (void);
 
   // Cleanup method.
   virtual void destroy (void);
 
   // Get list element
-  UTL_String                *head();
+  UTL_String *head (void);
 
   // Set the list element
-  void                  set_head(UTL_String *);
+  void set_head (UTL_String *);
 
   // Get last element in this list
-  UTL_String                *last_component();
+  UTL_String *last_component (void);
 
 private:
-  // Data
-  UTL_String                *pd_car_data;   // The list item
+  // The list item
+  UTL_String *pd_car_data;
 };
 
 // Active iterator for  UTL_StrList
@@ -124,13 +116,10 @@ class TAO_IDL_FE_Export UTL_StrlistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
-  // Operations
-
-  // Constructor(s)
   UTL_StrlistActiveIterator(UTL_StrList *s);
 
-  // Get current item
-  UTL_String                *item();
+  // Get current item.
+  UTL_String *item (void);
 };
 
 #endif           // _UTL_STRLIST_UTL_STRLIST_HH

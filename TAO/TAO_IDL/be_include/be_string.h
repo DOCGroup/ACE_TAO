@@ -35,15 +35,17 @@ public:
   be_string (void);
   //  Default constructor.
 
-  be_string (AST_Expression *v);
-  // Constructor.
-
-  be_string (AST_Expression *v,
-             long wide);
+  be_string (AST_Decl::NodeType nt,
+             UTL_ScopedName *n,
+             AST_Expression *v,
+             long width);
   // Constructor.
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
+
+  // Cleanup.
+  virtual void destroy (void);
 
   // Narrowing.
   DEF_NARROW_METHODS2 (be_string, AST_String, be_type);

@@ -64,17 +64,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-// utl_string.cc - Implementation of quick and dirty TEMPORARY String
-//                 for IDL compiler
+#include "utl_string.h"
+#include "global_extern.h"
+#include "utl_err.h"
 
-#include        "idl.h"
-#include        "idl_extern.h"
-
-ACE_RCSID(util, utl_string, "$Id$")
-
-/*
- * Constructors.
- */
+ACE_RCSID (util, 
+           utl_string, 
+           "$Id$")
 
 UTL_String::UTL_String (void)
   : p_str (0),
@@ -132,10 +128,6 @@ UTL_String::~UTL_String (void)
 {
 }
 
-/*
- * Private operations.
- */
-
 // Compute a canonical form for this string. This is (implemented as)
 // a corresponding string with all upper case characters where the
 // original has lower case characters, identical characters otherwise.
@@ -157,12 +149,8 @@ UTL_String::canonicalize (void)
   c_str[this->len] = '\0';
 }
 
-/*
- * Public operations.
- */
-
 // Compare two UTL_String *.
-long
+idl_bool
 UTL_String::compare (UTL_String *s)
 {
   char *s_c_str;
@@ -180,9 +168,7 @@ UTL_String::compare (UTL_String *s)
         (ACE_OS::strcmp (this->c_str, s_c_str) == 0) ? I_TRUE : I_FALSE;
     }
 
-  /*
-   * Check that the names are typed consistently.
-   */
+  // Check that the names are typed consistently.
   if (result == I_TRUE
       && ACE_OS::strcmp (this->p_str, s->get_string ()) != 0)
     {
@@ -267,10 +253,6 @@ UTL_String::get_canonical_rep (void)
 
   return this->c_str;
 }
-
-/*
- * Redefined virtual operations.
- */
 
 // AST Dumping.
 void

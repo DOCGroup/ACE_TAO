@@ -67,6 +67,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_CONSTANT_AST_CONSTANT_HH
 #define _AST_CONSTANT_AST_CONSTANT_HH
 
+#include "ast_expression.h"
+#include "ast_decl.h"
+#include "global_extern.h"
+
 // Representation of constant declaration:
 //
 // NOTE: Part of the job of the constructor is to convert
@@ -80,9 +84,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Constant : public virtual AST_Decl
 {
 public:
-  // Operations.
-
-  // Constructor(s).
   AST_Constant (void);
 
   AST_Constant (AST_Expression::ExprType et,
@@ -94,17 +95,24 @@ public:
                 AST_Expression *ev,
                 UTL_ScopedName *n);
 
-  // Destructor.
   virtual ~AST_Constant (void);
 
   // Data Accessors.
   AST_Expression *constant_value (void);
-
   AST_Expression::ExprType et (void);
 
   // Accessors for the private member.
   idl_bool ifr_added (void);
   void ifr_added (idl_bool val);
+
+  const char *exprtype_to_string (void);
+  // Returns the appropriate type.
+
+  static const char *exprtype_to_string (AST_Expression::ExprType et);
+  // For use with ORBs without the CORBA namespace.
+
+  UTL_ScopedName *enum_full_name (void);
+  // If our type is enum, we have to generate the scoped name.
 
   // Narrowing
   DEF_NARROW_METHODS1(AST_Constant, AST_Decl);
@@ -116,8 +124,10 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
-private:
-  // Data.
+  // Cleanup.
+  virtual void destroy (void);
+
+protected:
   AST_Expression *pd_constant_value;
   // The value.
 

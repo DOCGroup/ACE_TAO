@@ -19,10 +19,9 @@
 //
 // ============================================================================
 
-#include "be_visitor_valuetype.h"
-#include "be_visitor_field.h"
-
-ACE_RCSID(be_visitor_valuetype, valuetype, "$Id$")
+ACE_RCSID (be_visitor_valuetype, 
+           valuetype, 
+           "$Id$")
 
 be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
@@ -44,7 +43,6 @@ int
 be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 {
   int n_processed = 0;
-
   this->elem_number_ = 0;
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
@@ -63,21 +61,20 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 
       AST_Field *field = AST_Field::narrow_from_decl (d);
 
-      if (field && field->visibility() == AST_Field::vis_PRIVATE)
+      if (field && field->visibility () == AST_Field::vis_PRIVATE)
         {
-          continue;      // ignore private fields in this run
+          continue;      
+          // Ignore private fields in this run
           // AST_Attribute derives from AST_Field, so test for
           // vis_PRIVATE is ok (the attribute has it set to vis_NA)
         }
 
       be_decl *bd = be_decl::narrow_from_decl (d);
-      // set the scope node as "node" in which the code is being
+      // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
-      // for code generation
+      // for code generation.
 
       this->ctx_->scope (node->decl ());
-
-      // set the node to be visited
       this->ctx_->node (bd);
       this->elem_number_++;
 
@@ -89,7 +86,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
                             -1);
           
         }
-    } // end of for loop
+    }
 
   this->elem_number_ = 0;
 
@@ -129,8 +126,6 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
       // for code generation.
 
       this->ctx_->scope (node->decl ());
-
-      // Set the node to be visited.
       this->ctx_->node (bd);
       this->elem_number_++;
 
@@ -167,21 +162,16 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
   this->ctx_->node (node);
   this->ctx_->attribute (node);
 
-  be_operation *op = 0;
-  ACE_NEW_RETURN (op,
-                  be_operation (node->field_type (),
-                                AST_Operation::OP_noflags,
-                                node->name (),
-                                0,
-                                0),
-                  -1);
+  be_operation get_op (node->field_type (),
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       0,
+                       0);
 
-  op->set_name ((UTL_IdList *) node->name ()->copy ());
+  get_op.set_name ((UTL_IdList *) node->name ()->copy ());
 
-  if (!op || this->visit_operation (op) == -1)
+  if (this->visit_operation (&get_op) == -1)
     {
-      delete op;
-      op = 0;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -189,66 +179,39 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                         -1);
     }
 
-  delete op;
-  op = 0;
-
   if (node->readonly ())
     {
       // Nothing else to do.
       return 0;
     }
 
-  // The set method.
-  // The return type  is "void".
+  Identifier id ("void");
 
-  Identifier *id = 0;
-  UTL_ScopedName *sn = 0;
+  UTL_ScopedName sn (&id,
+                     0);
 
-  ACE_NEW_RETURN (id,
-                  Identifier ("void"),
-                  -1);
-
-  ACE_NEW_RETURN (sn,
-                  UTL_ScopedName (id,
-                                  0),
-                  -1);
-
-  be_predefined_type *rt = 0;
-  ACE_NEW_RETURN (rt,
-                  be_predefined_type (AST_PredefinedType::PT_void,
-                                      sn),
-                  -1);
+  be_predefined_type rt (AST_PredefinedType::PT_void,
+                         &sn);
 
   // Argument type is the same as the attribute type.
-  be_argument *arg = 0;
-  ACE_NEW_RETURN (arg,
-                  be_argument (AST_Argument::dir_IN,
-                               node->field_type (),
-                               node->name ()),
-                  -1);
+  be_argument arg (AST_Argument::dir_IN,
+                   node->field_type (),
+                   node->name ());
 
-  arg->set_name ((UTL_IdList *) node->name ()->copy ());
+  arg.set_name ((UTL_IdList *) node->name ()->copy ());
 
   // Create the operation.
-  ACE_NEW_RETURN (op,
-                  be_operation (rt,
-                                AST_Operation::OP_noflags,
-                                node->name (),
-                                0,
-                                0),
-                  -1);
+  be_operation set_op (&rt,
+                       AST_Operation::OP_noflags,
+                       node->name (),
+                       0,
+                       0);
 
-  op->set_name ((UTL_IdList *) node->name ()->copy ());
-  op->add_argument_to_scope (arg);
+  set_op.set_name ((UTL_IdList *) node->name ()->copy ());
+  set_op.be_add_argument (&arg);
 
- if (!op || this->visit_operation (op) == -1)
+ if (this->visit_operation (&set_op) == -1)
     {
-      delete op;
-      op = 0;
-      delete arg;
-      arg = 0;
-      delete rt;
-      rt = 0;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_attribute::"
                          "visit_attribute - "
@@ -256,12 +219,6 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                         -1);
     }
 
-  delete op;
-  op = 0;
-  delete rt;
-  rt = 0;
-  delete arg;
-  arg = 0;
   return 0;
 }
 
@@ -269,22 +226,26 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
 int
 be_visitor_valuetype::visit_constant (be_constant *node)
 {
-  // Instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-
-  // This switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set.
+  int status = 0;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_VALUETYPE_CH:
-      ctx.state (TAO_CodeGen::TAO_CONSTANT_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_CONSTANT_CH);
+        be_visitor_constant_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CS:
-      ctx.state (TAO_CodeGen::TAO_CONSTANT_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_CONSTANT_CS);
+        be_visitor_constant_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
@@ -310,18 +271,7 @@ be_visitor_valuetype::visit_constant (be_constant *node)
       }
     }
 
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype::"
-                         "visit_constant - "
-                         "NULL visitor\n"),
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
@@ -330,44 +280,61 @@ be_visitor_valuetype::visit_constant (be_constant *node)
                         -1);
     }
 
-  delete visitor;
   return 0;
 }
 
 int
 be_visitor_valuetype::visit_enum (be_enum *node)
 {
-  // Instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-
-  // This switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set.
+  int status = 0;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_VALUETYPE_CH:
-      ctx.state (TAO_CodeGen::TAO_ENUM_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_ENUM_CH);
+        be_visitor_enum_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CS:
-      ctx.state (TAO_CodeGen::TAO_ENUM_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_ENUM_CS);
+        be_visitor_enum_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CH);
+        be_visitor_enum_any_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_ENUM_ANY_OP_CS);
+        be_visitor_enum_any_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CH);
-      break;
-    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CH);
+        be_visitor_enum_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
-      ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_ENUM_CDR_OP_CI);
+        be_visitor_enum_cdr_op_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
@@ -388,18 +355,7 @@ be_visitor_valuetype::visit_enum (be_enum *node)
       }
     }
 
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype::"
-                         "visit_enum - "
-                         "NULL visitor\n"),  
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
@@ -408,56 +364,74 @@ be_visitor_valuetype::visit_enum (be_enum *node)
                         -1);
     }
 
-  delete visitor;
-  return 0;
-}
-
-
-int
-be_visitor_valuetype::visit_operation (be_operation *)
-{
-  // Is overridden in derived visitors.
   return 0;
 }
 
 int
 be_visitor_valuetype::visit_exception (be_exception *node)
 {
-  // Instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-
-  // This switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set.
+  int status = 0;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_VALUETYPE_CH:
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_EXCEPTION_CH);
+        be_visitor_exception_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CI:
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_EXCEPTION_CI);
+        be_visitor_exception_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CS:
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_EXCEPTION_CS);
+        be_visitor_exception_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CH);
+        be_visitor_exception_any_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_EXCEPTION_ANY_OP_CS);
+        be_visitor_exception_any_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CH);
+        be_visitor_exception_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CI);
+        be_visitor_exception_cdr_op_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS);
-      break;
-
+      {
+        ctx.state (TAO_CodeGen::TAO_EXCEPTION_CDR_OP_CS);
+        be_visitor_exception_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_SH:
     case TAO_CodeGen::TAO_VALUETYPE_IH:
     case TAO_CodeGen::TAO_VALUETYPE_SI:
@@ -485,18 +459,7 @@ be_visitor_valuetype::visit_exception (be_exception *node)
       }
     }
 
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface::"
-                         "visit_exception - "
-                         "NULL visitor\n"),  
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface::"
@@ -505,47 +468,74 @@ be_visitor_valuetype::visit_exception (be_exception *node)
                         -1);
     }
 
-  delete visitor;
   return 0;
 }
 
 int
 be_visitor_valuetype::visit_structure (be_structure *node)
 {
-  // Instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-
-  // This switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set.
+  int status = 0;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_VALUETYPE_CH:
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_CH);
+        be_visitor_structure_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CI:
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_CI);
+        be_visitor_structure_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CS:
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_CS);
+        be_visitor_structure_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CH);
+        be_visitor_structure_any_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_ANY_OP_CS);
+        be_visitor_structure_any_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CH);
+        be_visitor_structure_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CI);
+        be_visitor_structure_cdr_op_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_CDR_OP_CS);
+        be_visitor_structure_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
@@ -565,18 +555,7 @@ be_visitor_valuetype::visit_structure (be_structure *node)
       }
     }
 
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype::"
-                         "visit_structure - "
-                         "NULL visitor\n"),  
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
@@ -585,47 +564,138 @@ be_visitor_valuetype::visit_structure (be_structure *node)
                         -1);
     }
 
-  delete visitor;
+  return 0;
+}
+
+int
+be_visitor_valuetype::visit_structure_fwd (be_structure_fwd *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_VALUETYPE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_STRUCT_FWD_CH);
+        be_visitor_structure_fwd_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_VALUETYPE_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_IH:
+    case TAO_CodeGen::TAO_VALUETYPE_SI:
+    case TAO_CodeGen::TAO_VALUETYPE_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_IS:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_valuetype::"
+                           "visit_structure_fwd - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype::"
+                         "visit_structure_fwd - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
   return 0;
 }
 
 int
 be_visitor_valuetype::visit_union (be_union *node)
 {
-  // Instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-
-  // This switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set.
+  int status = 0;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_VALUETYPE_CH:
-      ctx.state (TAO_CodeGen::TAO_UNION_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_CH);
+        be_visitor_union_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CI:
-      ctx.state (TAO_CodeGen::TAO_UNION_CI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_CI);
+        be_visitor_union_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CS:
-      ctx.state (TAO_CodeGen::TAO_UNION_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_CS);
+        be_visitor_union_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CH);
+        be_visitor_union_any_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_ANY_OP_CS);
+        be_visitor_union_any_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CH);
+        be_visitor_union_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
-      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CI);
+        be_visitor_union_cdr_op_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_CDR_OP_CS);
+        be_visitor_union_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
@@ -645,18 +715,7 @@ be_visitor_valuetype::visit_union (be_union *node)
       }
     }
 
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype::"
-                         "visit_union - "
-                         "NULL visitor\n"),  
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
@@ -665,47 +724,138 @@ be_visitor_valuetype::visit_union (be_union *node)
                         -1);
     }
 
-  delete visitor;
+  return 0;
+}
+
+int
+be_visitor_valuetype::visit_union_fwd (be_union_fwd *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_VALUETYPE_CH:
+      {
+        ctx.state (TAO_CodeGen::TAO_UNION_FWD_CH);
+        be_visitor_union_fwd_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_VALUETYPE_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_IH:
+    case TAO_CodeGen::TAO_VALUETYPE_SI:
+    case TAO_CodeGen::TAO_VALUETYPE_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_IS:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SH:
+    case TAO_CodeGen::TAO_VALUETYPE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_MARSHAL_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CH:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CI:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CS:
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
+      return 0; // nothing to be done
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_valuetype::"
+                           "visit_union_fwd - "
+                           "Bad context state\n"), 
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype::"
+                         "visit_union_fwd - "
+                         "failed to accept visitor\n"),  
+                        -1);
+    }
+
   return 0;
 }
 
 int
 be_visitor_valuetype::visit_typedef (be_typedef *node)
 {
-  // Instantiate a visitor context with a copy of our context. This info
-  // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-
-  // This switch is acceptable rather than having derived visitors overriding
-  // this method and differing only in what state they set.
+  int status = 0;
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_VALUETYPE_CH:
-      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_TYPEDEF_CH);
+        be_visitor_typedef_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CI:
-      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_TYPEDEF_CI);
+        be_visitor_typedef_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CS:
-      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_TYPEDEF_CS);
+        be_visitor_typedef_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CH);
+        be_visitor_typedef_any_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_TYPEDEF_ANY_OP_CS);
+        be_visitor_typedef_any_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CH:
-      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CH);
+        be_visitor_typedef_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
-      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CI);
+        be_visitor_typedef_cdr_op_ci visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS);
-      break;
+      {
+        ctx.state (TAO_CodeGen::TAO_TYPEDEF_CDR_OP_CS);
+        be_visitor_typedef_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CI:
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CS:
@@ -725,18 +875,7 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
       }
     }
 
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype::"
-                         "visit_typedef - "
-                         "NULL visitor\n"),  
-                        -1);
-    }
-
-  if (node->accept (visitor) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype::"
@@ -745,7 +884,6 @@ be_visitor_valuetype::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  delete visitor;
   return 0;
 }
 
@@ -762,7 +900,6 @@ int
 be_visitor_valuetype::gen_pd (be_valuetype *node)
 {
   int n_processed = 0;
-
   this->elem_number_ = 0;
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
@@ -778,20 +915,22 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
                              "bad node in this scope\n"), 
                             -1);
         }
+
       be_field *field = be_field::narrow_from_decl (d);
 
       if (!field)
         {
           continue;
         }
+
       ++n_processed;
+
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
       // for code generation.
-
       this->ctx_->scope (node->decl ());
 
-      // set the node to be visited
+      // Set the node to be visited.
       this->ctx_->node (field);
       this->elem_number_++;
 
@@ -812,13 +951,10 @@ int
 be_visitor_valuetype::gen_field_pd (be_field *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt;
-  be_valuetype *vt;
 
-  os = this->ctx_->stream ();
   // First generate the type information.
-  bt = be_type::narrow_from_decl (node->field_type ());
-  vt = be_valuetype::narrow_from_scope (node->defined_in ());
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_valuetype *vt = be_valuetype::narrow_from_scope (node->defined_in ());
 
   if (!bt || !vt)
     {
@@ -833,12 +969,12 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   // will be modified based on what type of node we are visiting.
   be_visitor_context ctx (*this->ctx_);
   ctx.node (node);
-
   ctx.state (TAO_CodeGen::TAO_FIELD_CH);
-
   be_visitor_field_ch visitor (&ctx);
 
-  if (bt->accept(&visitor) == -1)
+  *os << be_nl;
+
+  if (bt->accept (&visitor) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_ch::"
@@ -849,8 +985,9 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
 
   // Now output the field name.  
   *os << " " << vt->field_pd_prefix ()
-             << node->local_name ()
-             << vt->field_pd_postfix() << ";" << be_nl;
+      << node->local_name ()
+      << vt->field_pd_postfix () << ";";
+
   return 0;
 }
 
@@ -859,7 +996,7 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
 int
 be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 {
-  if (node->is_abstract_valuetype ())
+  if (node->is_abstract ())
     {
       return 0;
     }
@@ -885,7 +1022,7 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
 int
 be_visitor_valuetype::gen_init_impl (be_valuetype *node)
 {
-  if (node->is_abstract_valuetype ())
+  if (node->is_abstract ())
     {
       return 0;
     }
@@ -973,11 +1110,11 @@ be_visitor_valuetype::determine_factory_style (be_valuetype* node)
         } // end of for loop
     } // end of if
 
-  if(!have_operation && !have_factory)
+  if (!have_operation && !have_factory)
     {
       factory_style = FS_CONCRETE_FACTORY;
     }
-  else if(have_operation && !have_factory)
+  else if (have_operation && !have_factory)
     {
       factory_style = FS_NO_FACTORY;
     }
@@ -990,7 +1127,7 @@ be_visitor_valuetype::determine_factory_style (be_valuetype* node)
 }
 
 idl_bool
-be_visitor_valuetype::have_operation(be_valuetype* node)
+be_visitor_valuetype::have_operation (be_valuetype* node)
 {
   // Check whatever scope we get for operations/attributes.
 
@@ -1030,24 +1167,24 @@ be_visitor_valuetype::have_operation(be_valuetype* node)
 
           AST_Decl::NodeType node_type = d->node_type();
 
-          if(node_type == AST_Decl::NT_op)
+          if (node_type == AST_Decl::NT_op)
             {
               have_operation = 1;
               continue;
             }
 
-          if(node_type == AST_Decl::NT_attr)
+          if (node_type == AST_Decl::NT_attr)
             {
               have_operation = 1;
               continue;
             }
 
-          if(node_type == AST_Decl::NT_factory)
+          if (node_type == AST_Decl::NT_factory)
             {
               continue;
             }
 
-          if(node_type == AST_Decl::NT_field)
+          if (node_type == AST_Decl::NT_field)
             {
               continue;
             }
@@ -1055,35 +1192,26 @@ be_visitor_valuetype::have_operation(be_valuetype* node)
         } // end of for loop
     } // end of if
 
-  //Now traverse inheritance tree.
-  int i;  // loop index
+  // Now traverse inheritance tree.
+  long i;  // loop index
+  long n_inherits = node->n_inherits ();
+  AST_Interface **inherits = node->inherits ();
 
-  AST_Interface *iface =
-    AST_Interface::narrow_from_scope (node);
-
-  for (i = 0; i < iface->n_inherits (); ++i)
+  for (i = 0; i < n_inherits; ++i)
     {
-      AST_Interface *inherited =
-        AST_Interface::narrow_from_decl (iface->inherits ()[i]);
-
-      if (!inherited || !inherited->is_valuetype())
-        {
-          continue;
-        }
-
-      be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[i]);
+      be_valuetype *vt = be_valuetype::narrow_from_decl (inherits[i]);
 
       if (vt != 0)
         {
           have_operation = have_operation ||
-            be_visitor_valuetype::have_operation(vt);
+            be_visitor_valuetype::have_operation (vt);
 
-          if(have_operation)
+          if (have_operation)
             {
               break;
             }
         }
-    }  // end of for loop
+    }
 
   return have_operation;
 }
@@ -1094,26 +1222,15 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
   // VT needs RefCounter if it has concrete factory and
   // none of its base VT has ref_counter
 
-  if (determine_factory_style(node) != FS_CONCRETE_FACTORY)
+  if (determine_factory_style (node) != FS_CONCRETE_FACTORY)
     {
       return 0;
     }
 
   // Now go thru our base VTs and see if one has already.
-
-  int i;  // loop index
-
-  for (i = 0; i < node->n_inherits (); ++i)
+  for (int i = 0; i < node->n_inherits (); ++i)
     {
-      AST_Interface *inherited =
-        AST_Interface::narrow_from_decl (node->inherits ()[i]);
-
-      if (!inherited || !inherited->is_valuetype())
-        {
-          continue;
-        }
-
-      be_valuetype *vt = be_valuetype::narrow_from_decl(node->inherits ()[i]);
+      be_valuetype *vt = be_valuetype::narrow_from_decl (node->inherits ()[i]);
 
       if (vt != 0)
         {
@@ -1122,7 +1239,7 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
               return 0;
             }
         }
-    }  // end of for loop
+    }
 
   return 1;
 }
@@ -1132,7 +1249,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 {
 
   // Just try to find a VT with concrete factory in inheritance tree.
-  if(node == 0)
+  if (node == 0)
     {
       return 0;
     }
@@ -1143,19 +1260,8 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
     }
 
   // Now go thru our base VTs.
-
-  int i;  // loop index
-
-  for (i = 0; i < node->n_inherits (); ++i)
+  for (int i = 0; i < node->n_inherits (); ++i)
     {
-      AST_Interface *inherited =
-        AST_Interface::narrow_from_decl (node->inherits ()[i]);
-
-      if (!inherited || !inherited->is_valuetype())
-        {
-          continue;
-        }
-
       be_valuetype *vt = be_valuetype::narrow_from_decl (node->inherits ()[i]);
 
       if (vt != 0)
@@ -1165,7 +1271,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
               return 1;
             }
         }
-    }  // end of for loop
+    }
 
   return 0;
 }

@@ -18,21 +18,18 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
-
-#include "be_visitor_interface.h"
-
-ACE_RCSID(be_visitor_interface, cdr_op_ci, "$Id$")
+ACE_RCSID (be_visitor_interface, 
+           cdr_op_ci, 
+           "$Id$")
 
 // ***************************************************************************
 // Interface visitor for generating CDR operator declarations in the client
 // stubs file
 // ***************************************************************************
 
-be_visitor_interface_cdr_op_ci::be_visitor_interface_cdr_op_ci
-(be_visitor_context *ctx)
+be_visitor_interface_cdr_op_ci::be_visitor_interface_cdr_op_ci (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
@@ -59,7 +56,7 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
 
       // First generate code for our children. The reason we do this first is
       // because the inlined code for our children must be available before
-      // it in our parent, but we must forward declare the parent
+      // it is seen in our parent, but we must forward declare the parent
       // we use operators, so code like this:
       //
       // // IDL
@@ -71,8 +68,10 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
       // defined).
       //
 
+      *os << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
       // Generate the CDR << and >> operator declarations.
-      os->indent ();
       *os << be_global->stub_export_macro ()
           << " CORBA::Boolean operator<< ("
           << be_idt << be_idt_nl
@@ -100,7 +99,8 @@ be_visitor_interface_cdr_op_ci::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_cdr_op_ci"
                          "::visit_interface - "
-                         "codegen for scope failed\n"), -1);
+                         "codegen for scope failed\n"), 
+                        -1);
     }
 
   node->cli_inline_cdr_op_gen (1);

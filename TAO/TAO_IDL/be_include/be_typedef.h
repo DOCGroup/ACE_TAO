@@ -57,11 +57,6 @@ public:
   // Narrowing.
   DEF_NARROW_METHODS2 (be_typedef, AST_Typedef, be_type);
   DEF_NARROW_FROM_DECL (be_typedef);
-
-protected:
-  virtual int compute_size_type (void);
-  // Compute the size type if it is unknown.
-
 };
 
 #endif

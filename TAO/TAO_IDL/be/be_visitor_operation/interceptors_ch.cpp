@@ -18,18 +18,13 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+ACE_RCSID (be_visitor_operation, 
+           operation_interceptors_ch, 
+           "$Id$")
 
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, operation_interceptors_ch, "$Id$")
-
-
-  // ******************************************************
-  // primary visitor for "operation" in client header
-  // ******************************************************
+// ******************************************************
+// primary visitor for "operation" in client header
+// ******************************************************
 
 be_visitor_operation_interceptors_ch::be_visitor_operation_interceptors_ch (
     be_visitor_context *ctx

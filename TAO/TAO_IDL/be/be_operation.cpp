@@ -19,11 +19,15 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include "be_operation.h"
+#include "be_operation_strategy.h"
+#include "be_predefined_type.h"
+#include "be_argument.h"
+#include "be_visitor.h"
 
-ACE_RCSID(be, be_operation, "$Id$")
+ACE_RCSID (be, 
+           be_operation, 
+           "$Id$")
 
 be_operation::be_operation (void)
 {
@@ -56,71 +60,16 @@ be_operation::~be_operation (void)
 {
 }
 
-int
-be_operation::void_return_type (void)
-{
-  be_type* type = be_type::narrow_from_decl (this->return_type ());
-
-  if (type->node_type () == AST_Decl::NT_pre_defined
-      && (be_predefined_type::narrow_from_decl (type)->pt ()
-            == AST_PredefinedType::PT_void))
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-be_argument *
-be_operation::add_argument_to_scope (be_argument *arg)
-{
-  this->add_to_scope (arg);
-  this->add_to_referenced (arg,
-                           0,
-                           0);
-  return arg;
-}
-
-// Compute the size type of the node in question.
-int
-be_operation::compute_size_type (void)
-{
-
-  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
-       !si.is_done ();
-       si.next ())
-    {
-      // Get the next AST decl node
-      AST_Decl *d = si.item ();
-      be_decl *bd = be_decl::narrow_from_decl (d);
-
-      if (bd != 0)
-        {
-          // Our sizetype depends on the sizetype of our members. Although
-          // previous value of sizetype may get overwritten, we are
-          // guaranteed by the "size_type" call that once the value reached
-          // be_decl::VARIABLE, nothing else can overwrite it.
-          this->size_type (bd->size_type ());
-        }
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "WARNING (%N:%l) be_operation::compute_size_type - "
-                      "narrow_from_decl returned 0\n"));
-        }
-    }
-
-  return 0;
-}
-
 void
 be_operation::destroy (void)
 {
+  delete this->strategy_;
+  this->strategy_ = 0;
+
   // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_decl::destroy ();
+  this->be_scope::destroy ();
+  this->be_decl::destroy ();
+  this->AST_Operation::destroy ();
 }
 
 int

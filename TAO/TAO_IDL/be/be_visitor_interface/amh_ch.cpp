@@ -11,14 +11,13 @@
 */
 //=============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_interface.h"
+ACE_RCSID (be_visitor_interface, 
+           amh_ch, 
+           "$Id$")
 
-ACE_RCSID(be_visitor_amh_interface, interface, "$Id$")
-
-be_visitor_amh_interface_ch::be_visitor_amh_interface_ch (be_visitor_context *ctx)
+be_visitor_amh_interface_ch::be_visitor_amh_interface_ch (
+    be_visitor_context *ctx
+  )
   : be_visitor_interface (ctx)
 {
 }
@@ -114,17 +113,13 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
   // Generate the body.
 
   *os << "{" << be_nl
-      << "public:" << be_nl
+      << "public:" << be_idt_nl
 
-      // Generate the _ptr_type and _var_type typedefs
-      // but we must protect against certain versions of g++.
-      << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)"
-      << be_idt_nl
+      // Generate the _ptr_type and _var_type typedefs.
       << "typedef " << node->local_name () << "_ptr _ptr_type;"
       << be_nl
       << "typedef " << node->local_name () << "_var _var_type;"
-      << be_uidt_nl
-      << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n" << be_idt_nl;
+      << be_nl;
 
   // Generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
@@ -139,6 +134,5 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
     }
 
   node->cli_hdr_gen (I_TRUE);
-
   return 0;
 }

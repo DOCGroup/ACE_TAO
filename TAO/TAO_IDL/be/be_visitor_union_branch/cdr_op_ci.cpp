@@ -18,18 +18,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
-#include "be_visitor_union_branch.h"
-#include "be_visitor_array.h"
-#include "be_visitor_enum.h"
-#include "be_visitor_sequence.h"
-#include "be_visitor_structure.h"
-#include "be_visitor_union.h"
-
-ACE_RCSID(be_visitor_union_branch, cdr_op_ci, "$Id$")
-
+ACE_RCSID (be_visitor_union_branch, 
+           cdr_op_ci, 
+           "$Id$")
 
 // **********************************************
 //  Visitor for union_branch in the client stubs file.
@@ -295,7 +286,7 @@ be_visitor_union_branch_cdr_op_ci::visit_interface (be_interface *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << node->name () << "_var _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp.inout ();" << be_nl
+          << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union."
@@ -350,7 +341,7 @@ be_visitor_union_branch_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << node->name () << "_var _tao_union_tmp;" << be_nl
-          << "result = strm >> _tao_union_tmp.inout ();" << be_nl
+          << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
           << "if (result)" << be_idt_nl
           << "{" << be_idt_nl
           << "_tao_union."
@@ -383,6 +374,116 @@ be_visitor_union_branch_cdr_op_ci::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_union_branch_cdr_op_ci::visit_valuetype (be_valuetype *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Retrieve the union_branch node.
+  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+
+  if (!f)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
+                         "visit_valuetype - "
+                         "cannot retrieve union_branch node\n"), 
+                        -1);
+    }
+
+  // Check what is the code generations substate. Are we generating code for
+  // the in/out operators for our parent or for us?
+  switch (this->ctx_->sub_state ())
+    {
+    case TAO_CodeGen::TAO_CDR_INPUT:
+      *os << node->name () << "_var _tao_union_tmp;" << be_nl
+          << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
+          << "if (result)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "_tao_union."
+          << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
+          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+          << "}" << be_uidt;
+
+      break;
+
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << "result = strm << _tao_union."
+          << f->local_name () << " ();";
+      break;
+
+    case TAO_CodeGen::TAO_CDR_SCOPE:
+      // Nothing to be done because an interface cannot be declared inside a
+      // union.
+      break;
+
+    default:
+      // Error.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
+                         "visit_valuetype - "
+                         "bad sub state\n"), 
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_union_branch_cdr_op_ci::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  // Retrieve the union_branch node.
+  be_union_branch *f = this->ctx_->be_node_as_union_branch ();
+
+  if (!f)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
+                         "visit_valuetype_fwd - "
+                         "cannot retrieve union_branch node\n"), 
+                        -1);
+    }
+
+  // Check what is the code generations substate. Are we generating code for
+  // the in/out operators for our parent or for us?
+  switch (this->ctx_->sub_state ())
+    {
+    case TAO_CodeGen::TAO_CDR_INPUT:
+      *os << node->name () << "_var _tao_union_tmp;" << be_nl
+          << "result = strm >> _tao_union_tmp.inout ();" << be_nl << be_nl
+          << "if (result)" << be_idt_nl
+          << "{" << be_idt_nl
+          << "_tao_union."
+          << f->local_name () << " (_tao_union_tmp.in ());" << be_nl
+          << "_tao_union._d (_tao_discriminant);" << be_uidt_nl
+          << "}" << be_uidt;
+
+      break;
+
+    case TAO_CodeGen::TAO_CDR_OUTPUT:
+      *os << "result  = strm << _tao_union."
+          << f->local_name () << " ();";
+      break;
+
+    case TAO_CodeGen::TAO_CDR_SCOPE:
+      // Nothing to be done because an interface cannot be forward declared
+      // inside a union.
+      break;
+
+    default:
+      // Error.
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
+                         "visit_valuetype_fwd - "
+                         "bad sub state\n"), 
+                        -1);
+    }
+
+  return 0;
+}
+
+int
 be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
@@ -399,24 +500,30 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
                         -1);
     }
 
+  AST_PredefinedType::PredefinedType pt = node->pt ();
+
   // Check what is the code generations substate. Are we generating code for
   // the in/out operators for our parent or for us?
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-
-      if (node->pt () == AST_PredefinedType::PT_pseudo)
+      if (pt == AST_PredefinedType::PT_object)
         {
           char *local_name = node->local_name ()->get_string ();
 
-          if (!ACE_OS::strcmp (local_name, "TypeCode"))
-            {
-              *os << "CORBA::TypeCode_var _tao_union_tmp;" << be_nl;
-            }
-          else if (!ACE_OS::strcmp (local_name, "Object"))
-            {
-              *os << "CORBA::Object_var _tao_union_tmp;" << be_nl;
-            }
+          *os << "CORBA::Object_var _tao_union_tmp;" << be_nl;
+
+          *os << "result = strm >> _tao_union_tmp.out ();" << be_nl
+              << "if (result)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());";
+
+        }
+      else if (pt == AST_PredefinedType::PT_pseudo)
+        {
+          char *local_name = node->local_name ()->get_string ();
+
+          *os << "CORBA::TypeCode_var _tao_union_tmp;" << be_nl;
 
           //@@TODO - case for ValueBase.
 
@@ -426,7 +533,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
               << "_tao_union." << f->local_name () << " (_tao_union_tmp.in ());";
 
         }
-      else if (node->pt () == AST_PredefinedType::PT_char)
+      else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "CORBA::Char _tao_union_tmp;" << be_nl
               << "CORBA::Any::to_char _tao_union_helper "
@@ -437,7 +544,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
               << "_tao_union." << f->local_name ()
               << " (_tao_union_tmp);";
         }
-      else if (node->pt () == AST_PredefinedType::PT_wchar)
+      else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "CORBA::WChar _tao_union_tmp;" << be_nl
               << "CORBA::Any::to_wchar _tao_union_helper "
@@ -448,7 +555,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
               << "_tao_union." << f->local_name ()
               << " (_tao_union_tmp);";
         }
-      else if (node->pt () == AST_PredefinedType::PT_octet)
+      else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "CORBA::Octet _tao_union_tmp;" << be_nl
               << "CORBA::Any::to_octet _tao_union_helper "
@@ -459,7 +566,7 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
               << "_tao_union." << f->local_name ()
               << " (_tao_union_tmp);";
         }
-      else if (node->pt () == AST_PredefinedType::PT_boolean)
+      else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "CORBA::Boolean _tao_union_tmp;" << be_nl
               << "CORBA::Any::to_boolean _tao_union_helper "
@@ -490,26 +597,27 @@ be_visitor_union_branch_cdr_op_ci::visit_predefined_type (be_predefined_type *no
 
       *os << "result = ";
 
-      if (node->pt () == AST_PredefinedType::PT_pseudo)
+      if (pt == AST_PredefinedType::PT_pseudo
+          || pt == AST_PredefinedType::PT_object)
         {
           *os << "strm << _tao_union." << f->local_name () << " ();";
         }
-      else if (node->pt () == AST_PredefinedType::PT_char)
+      else if (pt == AST_PredefinedType::PT_char)
         {
           *os << "strm << CORBA::Any::from_char (_tao_union."
               << f->local_name () << " ());";
         }
-      else if (node->pt () == AST_PredefinedType::PT_wchar)
+      else if (pt == AST_PredefinedType::PT_wchar)
         {
           *os << "strm << CORBA::Any::from_wchar (_tao_union."
               << f->local_name () << " ());";
         }
-      else if (node->pt () == AST_PredefinedType::PT_octet)
+      else if (pt == AST_PredefinedType::PT_octet)
         {
           *os << "strm << CORBA::Any::from_octet (_tao_union."
               << f->local_name () << " ());";
         }
-      else if (node->pt () == AST_PredefinedType::PT_boolean)
+      else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "strm << CORBA::Any::from_boolean (_tao_union."
               << f->local_name () << " ());";

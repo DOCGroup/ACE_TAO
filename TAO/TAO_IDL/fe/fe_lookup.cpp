@@ -1,7 +1,7 @@
 // $Id$
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"fe_private.h"
+
+#include "fe_private.h"
+
 /* starting time is 2:40:07 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: /project/adaptive/ACE_wrappers/build/SunOS5.5/bin/gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat  */
@@ -41,7 +41,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
       DUPLICATES = 0
     };
 
-  static const struct TAO_IDL_CPP_Keyword_Entry  wordlist[] =
+  static const struct TAO_IDL_CPP_Keyword_Entry wordlist[] =
     {
       {"",0}, {"",0}, {"",0}, {"",0}, {"",0}, {"",0},
       {"delete",  "_cxx_delete"},

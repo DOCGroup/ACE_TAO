@@ -67,6 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_STRING_AST_STRING_HH
 #define _AST_STRING_AST_STRING_HH
 
+#include "ast_concrete_type.h"
+#include "utl_scoped_name.h"
+
+class AST_Expression;
+
 // Representation of string declaration.
 // A string type is represented by a maximum size.
 
@@ -78,10 +83,10 @@ public:
   // Constructor(s) and destructor
   AST_String (void);
 
-  AST_String (AST_Expression *max_size);
-
-  AST_String (AST_Expression *max_size,
-              long wide);
+  AST_String (AST_Decl::NodeType nt,
+              UTL_ScopedName *n,
+              AST_Expression *max_size,
+              long wide = 1);
 
   virtual ~AST_String (void);
 
@@ -98,6 +103,9 @@ public:
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
+
+  // Cleanup.
+  virtual void destroy (void);
 
 private:
   // Data.

@@ -18,14 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include "be_visitor_root.h"
-
-ACE_RCSID(be_visitor_root, root_ch, "$Id$")
-
+ACE_RCSID (be_visitor_root, 
+           root_ch, 
+           "$Id$")
 
 // ********************************
 // Root visitor for client header
@@ -47,10 +42,10 @@ be_visitor_root_ch::init (void)
   if (tao_cg->start_client_header (be_global->be_get_client_hdr_fname ())
         == -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "(%N:%l) be_visitor_root_ch::init - "
-                  "Error opening client header file\n"));
-      return -1;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_root_ch::init - "
+                         "Error opening client header file\n"),
+                        -1);
     }
 
   // Initialize the stream.

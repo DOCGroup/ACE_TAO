@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   be_visitor_amh_pre_proc.cpp
  *
@@ -15,19 +14,25 @@
 //=============================================================================
 
 #include "be_visitor_amh_pre_proc.h"
+#include "be_visitor_context.h"
+#include "be_root.h"
+#include "be_module.h"
+#include "be_interface.h"
+#include "be_valuetype.h"
+#include "be_attribute.h"
+#include "be_operation.h"
+#include "be_predefined_type.h"
+#include "be_argument.h"
+#include "utl_identifier.h"
 
 be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-
-
 be_visitor_amh_pre_proc::~be_visitor_amh_pre_proc (void)
 {
 }
-
-
 
 int
 be_visitor_amh_pre_proc::visit_root (be_root *node)
@@ -43,8 +48,6 @@ be_visitor_amh_pre_proc::visit_root (be_root *node)
   return 0;
 }
 
-
-
 int
 be_visitor_amh_pre_proc::visit_module (be_module *node)
 {
@@ -59,8 +62,6 @@ be_visitor_amh_pre_proc::visit_module (be_module *node)
   return 0;
 }
 
-
-
 int
 be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 {
@@ -70,13 +71,13 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
       return 0;
     }
 
-  // don't generate AMH classes for imported or local interfaces
+  // Don't generate AMH classes for imported, local or abstract interfaces
   // either...
   // @@ Mayur, maybe we do want to insert the AMH node for imported
   // interfaces, not because we want to generate code for them, but
   // because the (imported-AMH-) node could be needed to generate a
   // non-imported, AMH node, for example, for a derived interface.
-  if (node->imported () || node->is_local ())
+  if (node->imported () || node->is_local () || node->is_abstract ())
     {
       return 0;
     }
@@ -128,7 +129,6 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   return 0;
 }
 
-
 be_interface *
 be_visitor_amh_pre_proc::create_response_handler (
     be_interface *node,
@@ -174,7 +174,6 @@ be_visitor_amh_pre_proc::create_response_handler (
   return response_handler;
 }
 
-
 int
 be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
                                                be_interface *response_handler,
@@ -201,7 +200,9 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
                             0);
         }
 
-      if (d->node_type () == AST_Decl::NT_attr)
+      AST_Decl::NodeType nt = d->node_type ();
+
+      if (nt == AST_Decl::NT_attr)
         {
           be_attribute *attribute = be_attribute::narrow_from_decl (d);
 
@@ -210,7 +211,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
               return 0;
             }
         }
-      else
+      else if (nt == AST_Decl::NT_op)
         {
           be_operation* operation = be_operation::narrow_from_decl (d);
 
@@ -221,11 +222,14 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
                                                        exception_holder);
             }
         }
+      else
+        {
+          continue;
+        }
     }
 
   return 1;
 }
-
 
 int
 be_visitor_amh_pre_proc::create_response_handler_operation (
@@ -263,7 +267,7 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                                               be_interface *response_handler,
                                               be_valuetype *exception_holder)
 {
-  Identifier *id = 0;
+ Identifier *id = 0;
   UTL_ScopedName *sn = 0;
 
   ACE_NEW_RETURN (id,
@@ -312,7 +316,7 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                   -1);
 
   argument->set_defined_in (node_excep);
-  node_excep->add_argument_to_scope (argument);
+  node_excep->be_add_argument (argument);
 
   node_excep->set_defined_in (response_handler);
   response_handler->be_add_operation (node_excep);
@@ -395,7 +399,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                       -1);
 
       // Add the response handler to the argument list
-      operation->add_argument_to_scope (arg);
+      operation->be_add_argument (arg);
     }
 
   // Iterate over the arguments and put all the out and inout arguments
@@ -430,7 +434,7 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                                        original_arg->name ()),
                           -1);
 
-          operation->add_argument_to_scope (arg);
+          operation->be_add_argument (arg);
         }
     }
 
@@ -445,7 +449,6 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
 
   return 0;
 }
-
 
 int
 be_visitor_amh_pre_proc::visit_operation (be_operation *node)
@@ -475,7 +478,6 @@ be_visitor_amh_pre_proc::visit_operation (be_operation *node)
 
   return 0;
 }
-
 
 int
 be_visitor_amh_pre_proc::visit_attribute (be_attribute *node)
@@ -616,14 +618,22 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   AST_Interface **p_intf = 0;
 
   UTL_ScopedName *excep_holder_name =
-    node->compute_name ("AMH_", "ExceptionHolder");
+    node->compute_name ("AMH_", 
+                        "ExceptionHolder");
 
   be_valuetype *excep_holder = 0;
   ACE_NEW_RETURN (excep_holder,
-                  be_valuetype (excep_holder_name,  // name
-                                p_intf,             // list of inherited
-                                inherit_count,      // number of inherited
-                                1),                 // set not abstract
+                  be_valuetype (excep_holder_name,
+                                p_intf,
+                                inherit_count,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0),
                   0);
 
   excep_holder->set_name (excep_holder_name);
@@ -648,8 +658,9 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
         }
 
       be_decl *op = be_decl::narrow_from_decl (d);
+      AST_Decl::NodeType nt = d->node_type ();
 
-      if (d->node_type () == AST_Decl::NT_attr)
+      if (nt == AST_Decl::NT_attr)
         {
           AST_Attribute *attribute = AST_Attribute::narrow_from_decl (d);
 
@@ -669,11 +680,15 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                                             SET_OPERATION);
             }
         }
-      else
+      else if (nt == AST_Decl::NT_op)
         {
           this->create_raise_operation (op,
                                         excep_holder,
                                         NORMAL);
+        }
+      else
+        {
+          continue;
         }
     }
 
@@ -780,9 +795,11 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
   // Set the proper strategy.
   be_operation_ami_exception_holder_raise_strategy *ehrs = 0;
-  ACE_NEW_RETURN (ehrs,
-                  be_operation_ami_exception_holder_raise_strategy (operation),
-                  -1);
+  ACE_NEW_RETURN (
+      ehrs,
+      be_operation_ami_exception_holder_raise_strategy (operation),
+      -1
+    );
 
   be_operation_strategy *old_strategy =
     operation->set_strategy (ehrs);
@@ -846,7 +863,9 @@ be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
 be_operation *
 be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
 {
-  ACE_CString original_op_name (node->name ()->last_component ()->get_string ());
+  ACE_CString original_op_name (
+      node->name ()->last_component ()->get_string ()
+    );
   ACE_CString new_op_name = ACE_CString ("set_") + original_op_name;
 
   UTL_ScopedName *set_name = ACE_static_cast (UTL_ScopedName *,
@@ -894,7 +913,7 @@ be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
 
   operation->set_name (set_name);
   operation->set_defined_in (node->defined_in ());
-  operation->add_argument_to_scope (arg);
+  operation->be_add_argument (arg);
 
   return operation;
 }

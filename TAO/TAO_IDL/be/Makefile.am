@@ -24,6 +24,8 @@ libbe_la_SOURCES = \
   be_array.cpp \
   be_attribute.cpp \
   be_codegen.cpp \
+  be_component.cpp \
+  be_component_fwd.cpp \
   be_constant.cpp \
   be_decl.cpp \
   be_enum.cpp \
@@ -33,6 +35,7 @@ libbe_la_SOURCES = \
   be_field.cpp \
   be_generator.cpp \
   be_helper.cpp \
+  be_home.cpp \
   be_init.cpp \
   be_interface.cpp \
   be_interface_fwd.cpp \
@@ -49,10 +52,12 @@ libbe_la_SOURCES = \
   be_stream_factory.cpp \
   be_string.cpp \
   be_structure.cpp \
+  be_structure_fwd.cpp \
   be_sunsoft.cpp \
   be_type.cpp \
   be_typedef.cpp \
   be_union.cpp \
+  be_union_fwd.cpp \
   be_union_branch.cpp \
   be_union_label.cpp \
   be_valuetype.cpp \
@@ -62,6 +67,8 @@ libbe_la_SOURCES = \
   be_visitor_argument.cpp \
   be_visitor_array.cpp \
   be_visitor_attribute.cpp \
+  be_visitor_component.cpp \
+  be_visitor_component_fwd.cpp \
   be_visitor_constant.cpp \
   be_visitor_context.cpp \
   be_visitor_decl.cpp \
@@ -69,6 +76,7 @@ libbe_la_SOURCES = \
   be_visitor_exception.cpp \
   be_visitor_factory.cpp \
   be_visitor_field.cpp \
+  be_visitor_home.cpp \
   be_visitor_interface.cpp \
   be_visitor_interface_fwd.cpp \
   be_visitor_module.cpp \

@@ -74,24 +74,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //	 will cease to operate correctly if you use either multiple or
 //	 public virtual inheritance.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "utl_decllist.h"
+#include "fe_declarator.h"
 
-ACE_RCSID(util, utl_decllist, "$Id$")
+ACE_RCSID (util, 
+           utl_decllist, 
+           "$Id$")
 
 /*
  * Constructor(s)
  */
 
-UTL_DeclList::UTL_DeclList(FE_Declarator *s, UTL_DeclList *cdr)
-	    : UTL_List(cdr),
-	      pd_car_data(s)
+UTL_DeclList::UTL_DeclList (FE_Declarator *s, 
+                            UTL_DeclList *cdr)
+  : UTL_List(cdr),
+	  pd_car_data(s)
 {
 }
-
-/*
- * Private operations
- */
 
 /*
  * Public operations
@@ -99,9 +98,22 @@ UTL_DeclList::UTL_DeclList(FE_Declarator *s, UTL_DeclList *cdr)
 
 // Get list item
 FE_Declarator *
-UTL_DeclList::head()
+UTL_DeclList::head (void)
 {
   return pd_car_data;
+}
+
+void
+UTL_DeclList::destroy (void)
+{
+  if (this->pd_car_data != 0)
+    {
+      this->pd_car_data->destroy ();
+      delete this->pd_car_data;
+      this->pd_car_data = 0;
+    }
+
+  this->UTL_List::destroy ();
 }
 
 /*
@@ -115,7 +127,7 @@ UTL_DeclList::head()
  */
 
 UTL_DecllistActiveIterator::UTL_DecllistActiveIterator (UTL_DeclList *s)
-  : UTL_ListActiveIterator(s)
+  : UTL_ListActiveIterator (s)
 {
 }
 
@@ -129,14 +141,14 @@ UTL_DecllistActiveIterator::UTL_DecllistActiveIterator (UTL_DeclList *s)
 
 // Get current item
 FE_Declarator *
-UTL_DecllistActiveIterator::item()
+UTL_DecllistActiveIterator::item (void)
 {
   if (source == 0)
     {
       return 0;
     }
 
-  return ((UTL_DeclList *) source)->head();
+  return ((UTL_DeclList *) source)->head ();
 }
 
 /*

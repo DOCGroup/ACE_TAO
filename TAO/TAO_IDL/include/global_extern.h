@@ -67,6 +67,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _GLOBAL_EXTERN_GLOBAL_EXTERN_HH
 #define _GLOBAL_EXTERN_GLOBAL_EXTERN_HH
 
+#include "TAO_IDL_FE_Export.h"
+#include "idl_global.h"
+#include "idl_bool.h"
+
+class AST_Decl;
+
 // global_extern.hh - Global data for the IDL compiler
 
 extern TAO_IDL_FE_Export IDL_GlobalData *idl_global;

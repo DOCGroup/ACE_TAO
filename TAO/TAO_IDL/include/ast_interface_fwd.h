@@ -67,23 +67,22 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH
 #define _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH
 
+#include "ast_type.h"
+
+class AST_Interface;
+
 // Representation of a forward interface declaration.
 
 class TAO_IDL_FE_Export AST_InterfaceFwd : public virtual AST_Type
 {
 public:
-  // Operations.
-
-  // Constructor(s).
   AST_InterfaceFwd (void);
 
   AST_InterfaceFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  // Destructor.
   virtual ~AST_InterfaceFwd (void);
 
-  // Data Accessors.
   AST_Interface *full_definition (void);
   void set_full_definition (AST_Interface *nfd);
 
@@ -92,7 +91,9 @@ public:
   virtual idl_bool is_local (void);
   virtual idl_bool is_valuetype (void);
   virtual idl_bool is_abstract_valuetype (void);
-  virtual void set_abstract_valuetype (void);
+
+  // Cleanup function.
+  virtual void destroy (void);
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_InterfaceFwd, AST_Type);
@@ -105,10 +106,8 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
 private:
-  // Data.
-
   AST_Interface *pd_full_definition;
-  // The interface this is a forward declaration of
+  // The interface this is a forward declaration of.
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

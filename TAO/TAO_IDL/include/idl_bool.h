@@ -62,24 +62,16 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
 #ifndef _IDL_BOOL_IDL_BOOL_HH
 #define _IDL_BOOL_IDL_BOOL_HH
 
 /*
- * idl_bool.hh - Boolean definitions for IDL CFE
- *
  * This is interim. When porting to a new platform, this file will be
  * modified to incorporate definitions for the boolean type suitable
  * for the new platform.
  */
-
-/*
-** DEPENDENCIES: NONE
-**
-** USE: Included from idl.hh
-*/
 
 #ifndef I_TRUE
 #define I_TRUE  1
@@ -89,6 +81,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define I_FALSE 0
 #endif
 
-typedef         long            idl_bool;
+typedef long idl_bool;
 
 #endif           // _IDL_BOOL_IDL_BOOL_HH

@@ -62,11 +62,9 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
- */
+*/
 
-// utl_exprlist.cc
-//
-// Implementation of a list of strings
+// Implementation of a list of expressions.
 
 // NOTE: This list class only works correctly because we use single public
 //       inheritance, as opposed to multiple inheritance or public virtual.
@@ -74,68 +72,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 //	 will cease to operate correctly if you use either multiple or
 //	 public virtual inheritance.
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include	"utl_exprlist.h"
 
-ACE_RCSID(util, utl_exprlist, "$Id$")
+ACE_RCSID (util, 
+           utl_exprlist, 
+           "$Id$")
 
-/*
- * Constructor(s)
- */
-
-UTL_ExprList::UTL_ExprList(AST_Expression *s, UTL_ExprList *cdr)
-	    : UTL_List(cdr),
-	      pd_car_data(s)
+UTL_ExprList::UTL_ExprList (AST_Expression *s, 
+                            UTL_ExprList *cdr)
+	: UTL_List(cdr),
+	  pd_car_data(s)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-// Get list item
+// Get list item.
 AST_Expression *
-UTL_ExprList::head()
+UTL_ExprList::head (void)
 {
-  return pd_car_data;
+  return this->pd_car_data;
 }
 
-/*
- * Redefinition of inherited virtual operations
- */
-
-// UTL_ExprList active iterator
-
-/*
- * Constructor
- */
-
-UTL_ExprlistActiveIterator::UTL_ExprlistActiveIterator(UTL_ExprList *s)
-			  : UTL_ListActiveIterator(s)
+UTL_ExprlistActiveIterator::UTL_ExprlistActiveIterator (UTL_ExprList *s)
+	: UTL_ListActiveIterator(s)
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
-
-// Get current item
+// Get current item.
 AST_Expression *
-UTL_ExprlistActiveIterator::item()
+UTL_ExprlistActiveIterator::item (void)
 {
-  if (source == NULL)
-    return NULL;
-  return ((UTL_ExprList *) source)->head();
+  if (source == 0)
+    {
+      return 0;
+    }
+
+  return ((UTL_ExprList *) source)->head ();
 }
 
-/*
- * Redefinition of inherited virtual operations
- */

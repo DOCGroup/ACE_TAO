@@ -64,17 +64,26 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-#include	"idl.h"
-#include	"idl_extern.h"
+#include "ast_module.h"
+#include "ast_root.h"
+#include "ast_valuetype.h"
+#include "ast_component.h"
+#include "ast_home.h"
+#include "ast_operation.h"
+#include "ast_factory.h"
+#include "ast_exception.h"
+#include "ast_union.h"
+#include "ast_enum.h"
+#include "ast_interface_fwd.h"
+#include "utl_scope.h"
 
-ACE_RCSID(narrow, narrow, "$Id$")
+ACE_RCSID (narrow, 
+           narrow, 
+           "$Id$")
 
 // Narrowing functions for AST
 
-/*
- * Convert a UTL_Scope node into an AST_Decl node if possible
- */
-AST_Decl *
+TAO_IDL_FE_Export AST_Decl *
 ScopeAsDecl (UTL_Scope *s)
 {
   if (s == 0) return 0;
@@ -87,6 +96,12 @@ ScopeAsDecl (UTL_Scope *s)
       return AST_Root::narrow_from_scope (s);
     case AST_Decl::NT_interface:
       return AST_Interface::narrow_from_scope (s);
+    case AST_Decl::NT_valuetype:
+      return AST_ValueType::narrow_from_scope (s);
+    case AST_Decl::NT_component:
+      return AST_Component::narrow_from_scope (s);
+    case AST_Decl::NT_home:
+      return AST_Home::narrow_from_scope (s);
     case AST_Decl::NT_op:
       return AST_Operation::narrow_from_scope (s);
     case AST_Decl::NT_factory:
@@ -107,7 +122,7 @@ ScopeAsDecl (UTL_Scope *s)
 /*
  * Convert an AST_Decl to a UTL_Scope if possible
  */
-UTL_Scope *
+TAO_IDL_FE_Export UTL_Scope *
 DeclAsScope (AST_Decl *d)
 {
    if (d == 0) return 0;
@@ -125,6 +140,12 @@ DeclAsScope (AST_Decl *d)
          */
      case AST_Decl::NT_interface:
         return AST_Interface::narrow_from_decl (d);
+     case AST_Decl::NT_valuetype:
+        return AST_ValueType::narrow_from_decl (d);
+     case AST_Decl::NT_component:
+        return AST_Component::narrow_from_decl (d);
+     case AST_Decl::NT_home:
+        return AST_Home::narrow_from_decl (d);
      case AST_Decl::NT_module:
         return AST_Module::narrow_from_decl (d);
      case AST_Decl::NT_root:

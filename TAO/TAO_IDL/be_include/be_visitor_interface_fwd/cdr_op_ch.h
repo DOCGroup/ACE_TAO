@@ -44,7 +44,6 @@ public:
 
   virtual int visit_interface_fwd (be_interface_fwd *node);
   // visit forward declared interface
-
 };
 
 #endif /* _BE_VISITOR_INTERFACE_FWD_CDR_OP_CH_H_ */

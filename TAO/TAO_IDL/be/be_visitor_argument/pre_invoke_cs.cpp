@@ -19,11 +19,9 @@
 //
 // ============================================================================
 
-#include "idl.h"
-#include "be.h"
-#include "be_visitor_argument.h"
-
-ACE_RCSID(be_visitor_argument, pre_invoke_cs, "$Id$")
+ACE_RCSID (be_visitor_argument, 
+           pre_invoke_cs, 
+           "$Id$")
 
 
 // *************************************************************************
@@ -78,7 +76,7 @@ be_visitor_args_pre_invoke_cs::cannot_return_zero (void)
       return 1;
     }
   else if (bt->base_node_type () == AST_Decl::NT_struct
-           && bt->size_type () == be_decl::FIXED)
+           && bt->size_type () == AST_Type::FIXED)
     {
       return 1;
     }
@@ -139,7 +137,7 @@ be_visitor_args_pre_invoke_cs::visit_array (be_array *node)
   switch (this->direction ())
     {
     case AST_Argument::dir_OUT:
-      if (node->size_type () == be_decl::VARIABLE)
+      if (node->size_type () == AST_Type::VARIABLE)
         {
           os->indent ();
 
@@ -199,6 +197,7 @@ be_visitor_args_pre_invoke_cs::visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
+    case AST_PredefinedType::PT_object:
       {
       switch (this->direction ())
         {

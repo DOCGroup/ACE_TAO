@@ -16,14 +16,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-#include        "ace/SString.h"
-
-#include "be_visitor_operation.h"
-
-ACE_RCSID(be_visitor_operation, operation_is, "$Id$")
+ACE_RCSID (be_visitor_operation, 
+           operation_is, 
+           "$Id$")
 
 // ************************************************************
 // Operation visitor for implementation skeleton
@@ -41,25 +36,16 @@ be_visitor_operation_is::~be_visitor_operation_is (void)
 int
 be_visitor_operation_is::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;       // type node representing the return type
-
-  //cout<<"Within visit_operation "<<endl;
-  os = this->ctx_->stream ();
-  be_interface *intf =
-    this->ctx_->interface ();
-
-
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_interface *intf = this->ctx_->interface ();
 
   this->ctx_->node (node); // save the node
 
   os->indent (); // start with the current indentation level
 
-
-
-
   // STEP I: generate the return type
-  bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -69,50 +55,29 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                         -1);
     }
 
-  // grab the right visitor to generate the return type
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_OTHERS);
-  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_rettype oro_visitor (&ctx);
 
-  if (!visitor)
+  if (bt->accept (&oro_visitor) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_is::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
-    }
-
-  if (bt->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_is::"
                          "visit_operation - "
                          "codegen for return type failed\n"),
                         -1);
     }
-  delete visitor;
 
   const char *classname = 0;
 
   if (intf)
     {
-      //If derived class
+      // If derived class/
       classname = intf->flat_name ();
-
     }
-
   else
     {
-      ACE_CString str(node->flat_name ());
-
-      int lnmlength = ACE_OS::strlen (node->local_name ()->get_string ());
-
-      int fnmlength = ACE_OS::strlen (node->flat_name ());
-      fnmlength--;
-
-      classname = str.substr (0,(fnmlength-lnmlength) ).rep ();
+      classname = ScopeAsDecl (node->defined_in ())->flat_name ();
     }
 
   // STEP 2: generate the operation name
@@ -123,68 +88,20 @@ be_visitor_operation_is::visit_operation (be_operation *node)
   // we grab a visitor that generates the parameter listing
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_IS);
-  visitor = tao_cg->make_visitor (&ctx);
+  be_visitor_operation_arglist oa_visitor (&ctx);
 
-
-  if (!visitor)
+  if (node->accept (&oa_visitor) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_is::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
-    }
-
-
-  if (node->accept (visitor) == -1)
-    {
-      delete visitor;
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_is::"
                          "visit_operation - "
                          "codegen for argument list failed\n"),
                         -1);
     }
-  delete visitor;
 
-  //generate the excetions thrown by the operation
-  //  this->gen_throw_spec (node);
-
-  *os <<be_idt_nl << "{"<<be_idt_nl;
-  *os << "//Add your implementation here"<<be_uidt_nl;
-
-  //Code to generate teh return statement in the operations.....
-  //Can be uncommented when required
-
-  /*
-  ctx = *this->ctx_;
-  ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_IS);
-  visitor = tao_cg->make_visitor (&ctx);
-
-  if (!visitor)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_operation_is::"
-                         "visit_operation - "
-                         "Bad visitor to return type\n"),
-                        -1);
-    }
-
-
-  if (bt->accept (visitor) == -1)
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_operation_is::"
-                         "visit_operation - "
-                         "codegen for return type failed\n"),
-                        -1);
-    }
-  delete visitor;
-  */
-
+  *os << be_idt_nl << "{" << be_idt_nl;
+  *os << "// Add your implementation here" << be_uidt_nl;
   *os << "}" << be_nl << be_uidt_nl;
-
 
   return 0;
 }

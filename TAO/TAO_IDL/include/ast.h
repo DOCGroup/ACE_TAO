@@ -103,6 +103,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast_root.h"            // class AST_Root
 #include        "ast_interface.h"       // class AST_Interface
 #include        "ast_interface_fwd.h"   // class AST_InterfaceFwd
+#include        "ast_component.h"       // class AST_Component
 #include        "ast_structure.h"       // class AST_Structure
 #include        "ast_exception.h"       // class AST_Exception
 #include        "ast_enum.h"            // class AST_Enum

@@ -80,35 +80,48 @@ UTL_IdList::UTL_IdList(Identifier *s, UTL_IdList *cdr)
 
 // Get last item of this list
 Identifier *
-UTL_IdList::last_component()
+UTL_IdList::last_component (void)
 {
-  if (tail() == NULL)
-    return head();
-  return tail()->last_component();
+  if (tail() == 0)
+    {
+      return head ();
+    }
+
+  return tail ()->last_component ();
 }
 
 // AST Dumping
 void
-UTL_IdList::dump(ACE_OSTREAM_TYPE &o)
+UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
-  UTL_IdListActiveIterator      *i = new UTL_IdListActiveIterator(this);
-  long                          first = I_TRUE;
-  long                          second = I_FALSE;
+  long first = I_TRUE;
+  long second = I_FALSE;
 
-  while (!(i->is_done())) {
-    if (!first)
-      o << "::";
-    else if (second)
-      first = second = I_FALSE;
-    i->item()->dump(o);
-    if (first) {
-      if (strcmp(i->item()->get_string(), "::") != 0)
-        first = I_FALSE;
-      else
-        second = I_TRUE;
+  for (UTL_IdListActiveIterator (this); !i.is_done (); i.next ()) 
+    {
+      if (!first)
+        {
+          o << "::";
+        }
+      else if (second)
+        {
+          first = second = I_FALSE;
+        }
+
+      i.item ()->dump (o);
+
+      if (first) 
+        {
+          if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
+            {
+              first = I_FALSE;
+            }
+          else
+            {
+              second = I_TRUE;
+            }
+        }
     }
-    i->next();
-  }
 }
 
 /*
@@ -121,8 +134,8 @@ UTL_IdList::dump(ACE_OSTREAM_TYPE &o)
  * Constructor
  */
 
-UTL_IdListActiveIterator::UTL_IdListActiveIterator(UTL_IdList *s)
-                        : UTL_ListActiveIterator<UTL_IdList, Identifier>(s)
+UTL_IdListActiveIterator::UTL_IdListActiveIterator (UTL_IdList *s)
+  : UTL_ListActiveIterator<UTL_IdList, Identifier> (s)
 {
 }
 

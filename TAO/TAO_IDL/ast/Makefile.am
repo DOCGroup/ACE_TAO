@@ -22,6 +22,8 @@ libast_la_SOURCES = \
   ast_array.cpp \
   ast_attribute.cpp \
   ast_check.cpp \
+  ast_component.cpp \
+  ast_component_fwd.cpp \
   ast_concrete_type.cpp \
   ast_constant.cpp \
   ast_decl.cpp \
@@ -31,6 +33,7 @@ libast_la_SOURCES = \
   ast_expression.cpp \
   ast_field.cpp \
   ast_generator.cpp \
+  ast_home.cpp \
   ast_interface.cpp \
   ast_interface_fwd.cpp \
   ast_module.cpp \
@@ -43,11 +46,15 @@ libast_la_SOURCES = \
   ast_sequence.cpp \
   ast_string.cpp \
   ast_structure.cpp \
+  ast_structure_fwd.cpp \
   ast_type.cpp \
   ast_typedef.cpp \
   ast_union.cpp \
+  ast_union_fwd.cpp \
   ast_union_branch.cpp \
   ast_union_label.cpp \
+  ast_valuetype.cpp \
+  ast_valuetype_fwd.cpp \
   ast_visitor.cpp
 
 

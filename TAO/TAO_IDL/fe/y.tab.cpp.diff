@@ -40,23 +40,3 @@
      ++tao_yynerrs;
  tao_yyinrecovery:
      if (tao_yyerrflag < 3)
-@@ -2683,7 +2682,10 @@
-               idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
-             }
- 
--          tao_yyval.dcval = idl_global->scopes ()->bottom ()->lookup_primitive_type (tao_yyvsp[0].etval);
-+          tao_yyval.dcval =
-+            idl_global->scopes ()->bottom ()->lookup_primitive_type (
-+                                                  tao_yyvsp[0].etval
-+                                                );
-         }
- break;
- case 227:
-@@ -3495,6 +3497,7 @@
-         }
- break;
- case 309:
-+#line 2588 "fe/idl.tao_yy"
- {
-           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
-         }

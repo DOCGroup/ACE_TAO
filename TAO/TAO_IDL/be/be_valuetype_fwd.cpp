@@ -21,11 +21,13 @@
 // ============================================================================
 
 
-#include "idl.h"
-#include "idl_extern.h"
-#include "be.h"
+#include "be_valuetype_fwd.h"
+#include "be_visitor.h"
+#include "ast_interface.h"
 
-ACE_RCSID(be, be_valuetype_fwd, "$Id$")
+ACE_RCSID (be, 
+           be_valuetype_fwd, 
+           "$Id$")
 
 be_valuetype_fwd::be_valuetype_fwd (void)
 {
@@ -35,9 +37,11 @@ be_valuetype_fwd::be_valuetype_fwd (AST_Interface *dummy,
                                     UTL_ScopedName *n)
   : be_interface_fwd (dummy,
                       n),
+    AST_ValueTypeFwd (dummy,
+                      n),
     AST_InterfaceFwd (dummy,
                       n),
-    AST_Decl (AST_Decl::NT_interface_fwd,
+    AST_Decl (AST_Decl::NT_valuetype_fwd,
               n)
 {
 }
@@ -46,20 +50,19 @@ be_valuetype_fwd::~be_valuetype_fwd (void)
 {
 }
 
-
-void
-be_valuetype_fwd::set_abstract_valuetype (void)
-{
-  this->full_definition ()->set_abstract_valuetype ();
-}
-
 int
 be_valuetype_fwd::accept (be_visitor *visitor)
 {
   return visitor->visit_valuetype_fwd (this);
 }
 
+void
+be_valuetype_fwd::destroy (void)
+{
+  this->be_interface_fwd::destroy ();
+}
+
 // Narrowing.
-IMPL_NARROW_METHODS1 (be_valuetype_fwd, be_interface_fwd)
+IMPL_NARROW_METHODS2 (be_valuetype_fwd, be_interface_fwd, AST_ValueTypeFwd)
 IMPL_NARROW_FROM_DECL (be_valuetype_fwd)
 

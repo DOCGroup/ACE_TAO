@@ -67,8 +67,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_UNION_AST_UNION_HH
 #define _AST_UNION_AST_UNION_HH
 
-// Representation of union declaration:
-//
+#include "ast_structure.h"
+
 // NOTE: add (AST_ConcreteType *) is defined here because a union
 // can contain locally defined types in addition to fields.
 //
@@ -140,6 +140,10 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+protected:
+  virtual int compute_size_type (void);
+  // Compute the size type if it is unknown.
+
 private:
   // Data.
 
@@ -148,7 +152,7 @@ private:
 
   AST_Expression::ExprType pd_udisc_type;
   // Its expression type.
-  // Convention: udisc_type == EV_any denotes an enum value.
+  // Convention: udisc_type == EV_enum denotes an enum value.
 
   // Operations.
 

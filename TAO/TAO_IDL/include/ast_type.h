@@ -67,28 +67,32 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_TYPE_AST_TYPE_HH
 #define _AST_TYPE_AST_TYPE_HH
 
+#include "ast_decl.h"
+
 // Class for all IDL types
 //
 // This is useful wherever any IDL type defining construct can appear
 // such as the base type for a typedef or array.
 
-#include "idl_fwd.h"
-#include "idl_narrow.h"
-#include "ast_decl.h"
-
-
 class TAO_IDL_FE_Export AST_Type : public virtual AST_Decl
 {
 public:
+  enum SIZE_TYPE
+  {
+    SIZE_UNKNOWN,
+    FIXED,
+    VARIABLE
+  };
+  // Indicates if we are fixed size or variable. Most useful for structs,
+  // unions, and arrays.
+
   // Operations.
 
-  // Constructor(s).
   AST_Type (void);
 
   AST_Type (AST_Decl::NodeType nt,
             UTL_ScopedName *n);
 
-  // Destructor.
   virtual ~AST_Type (void);
 
   virtual idl_bool in_recursion (AST_Type *node = 0);
@@ -100,13 +104,30 @@ public:
   // the corresponding forward declaration classes.
   virtual idl_bool is_defined (void);
 
+  virtual void size_type (SIZE_TYPE);
+  // Set the size type.
+
+  virtual SIZE_TYPE size_type (void);
+  // Return our size type.
+
   // Accessors/mutators for the private members.
+
+  idl_bool has_constructor (void);
+  // Accessor for protected member.
+
+  void has_constructor (idl_bool value);
+  // Mutator for protected member.
 
   idl_bool ifr_added (void);
   void ifr_added (idl_bool val);
 
   idl_bool ifr_fwd_added (void);
   void ifr_fwd_added (idl_bool val);
+
+  const char *nested_type_name (AST_Decl *d,
+                                const char *suffix = 0,
+                                const char *prefix = 0);
+  // Type name of a node used when generating declarations.
 
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Type, AST_Decl);
@@ -115,13 +136,36 @@ public:
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
+  // Cleanup.
+  virtual void destroy (void);
+
 protected:
+  virtual int compute_size_type (void);
+  // Determine our size type and set it if it is unknown.
+
+  const char *nested_name (const char *local_name,
+                           const char *full_name,
+                           AST_Decl *use_scope,
+                           const char *suffix,
+                           const char *prefix);
+  // Type name of a node used when generating declarations.
+
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
   idl_bool ifr_added_;
 
   // Has this node been forward declared in this IDL file?
   idl_bool ifr_fwd_added_;
+
+  SIZE_TYPE size_type_;
+  // Whether we are fixed or variable size (by default fixed).
+
+  idl_bool has_constructor_;
+  // Attribute that helps a union determine whether a member
+  // should be included by value or by reference.
+
+  char *nested_type_name_;
+  // For the corresponding method.
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH
