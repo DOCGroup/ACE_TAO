@@ -47,7 +47,7 @@ Video_Control_i::stat_stream (CORBA::Char_out ch,
 }
 
 
-CORBA::Boolean 
+void
 Video_Control_i::close (CORBA::Environment& env)
 {
   ACE_DEBUG ((LM_DEBUG, 
@@ -55,7 +55,7 @@ Video_Control_i::close (CORBA::Environment& env)
               "shutting down the ORB\n"));
 
   TAO_ORB_Core_instance ()-> orb ()-> shutdown ();
-  return CORBA::B_TRUE;
+  return;
 }
 
 

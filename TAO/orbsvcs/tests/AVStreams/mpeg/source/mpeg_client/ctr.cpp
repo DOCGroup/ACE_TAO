@@ -2272,7 +2272,8 @@ static void PlayAudioOnly(void)
   
   if (timer_on >4)
   {
-    stop_timer();
+    // ~~we may need to uncomment this ??
+    //    stop_timer();
     
     /* tries to rewind and play again */
     if (shared->loopBack)
@@ -2327,7 +2328,6 @@ static void PlayAudioOnly(void)
 /* returns: 0 - no forward calculated , 1 - forward calculated */
 static int PlayAudio(void)
 {
-  cerr << "PlayAudio called ()\n";
   int timer_count = timerCount;
   int i = timer_count / framesPerAudioPlay;
   if (audioFirst)
@@ -2450,14 +2450,14 @@ static int PlayAudio(void)
  
 void TimerProcessing(void)
 {
-  cerr << "Timerprocessing signal went off\n";
+  //  cerr << "Timerprocessing signal went off\n";
   if (audioSocket >= 0 && shared->cmd == CmdPLAY)
   {
     if (videoSocket < 0)
       PlayAudioOnly();
     else if (rtplay)
     {
-      cerr << "TimerProcessing: calling PlayAudio ()\n";
+      //  cerr << "TimerProcessing: calling PlayAudio ()\n";
       int res = PlayAudio();
       /* and also tries to sync audio and video */
       if (res)
@@ -2505,7 +2505,7 @@ void TimerProcessing(void)
       (shared->cmd == CmdPLAY || shared->cmd == CmdFF || shared->cmd == CmdFB)) {
     DisplayPicture();
   }
-  cerr << "Timerprocessing signal-handler done\n";
+  //  cerr << "Timerprocessing signal-handler done\n";
 }
  
 #define MAX_WAIT_USEC 10000000
@@ -2946,7 +2946,7 @@ int CTRmain(void)
   else
     hasAudioDevice = 0;
  
-  ComInitClient(VCR_TCP_PORT, VCR_UNIX_PORT, VCR_ATM_PORT);
+  //  ComInitClient(VCR_TCP_PORT, VCR_UNIX_PORT, VCR_ATM_PORT);
  
   if ((vh = (char *)malloc(PATH_SIZE)) == NULL)
   {
