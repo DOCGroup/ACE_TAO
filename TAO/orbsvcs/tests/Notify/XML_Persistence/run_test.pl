@@ -31,20 +31,7 @@ cleanup();
 
 $ret = 0;
 
-$UTEST = new PerlACE::Process("main", "-ORBEndpoint iiop://:$port");
-$ret = $UTEST->SpawnWaitKill(10);
-if ($ret != 0) {
-  print "ERROR : main returned $ret\n";
-  exit $ret;
-}
-
-# NOTE: In TAO 1.3a main ran the notification service twice
-# producing both abc.xml and loadtest.xml.  Unfortunately
-# in TAO 1.4 the notification service will does not run
-# successfully the second time in the same EXE.
-# -- todo figure out why and fix it.
-# Thus main was modified to run in two passes.  If loadtest.xml
-# exists, it runs pass 2.
+$UTEST = new PerlACE::Process("main", "-ORBEndpoint iiop://:$port -pass 3");
 $ret = $UTEST->SpawnWaitKill(10);
 if ($ret != 0) {
   print "ERROR : main returned $ret\n";
