@@ -1,0 +1,117 @@
+// -*- MPC -*-
+// $Id$
+
+project (CIAO_Client) : taolib_with_idl, valuetype, ifr_client {
+  requires += dnc
+  sharedname  = CIAO_Client
+  idlflags  += -Wb,stub_export_include=CIAO_Client_Export.h -Wb,stub_export_macro=CIAO_CLIENT_Export -Wb,skel_export_include=CIAO_Container_Export.h -Wb,skel_export_macro=CIAO_CONTAINER_Export
+  dynamicflags    = CIAO_CLIENT_BUILD_DLL
+
+  IDL_Files {
+    CCM_Base.idl
+    CCM_Event.idl
+    CCM_Component.idl
+    CIAO_Value.idl
+  }
+
+  Source_Files {
+    CCM_BaseC.cpp
+    CCM_EventC.cpp
+    CCM_ComponentC.cpp
+    CIAO_ValueC.cpp
+    Client_init.cpp
+  }
+
+  Header_Files {
+    CIAO_Client_Export.h
+    CIAO_common.h
+  }
+}
+
+project (CIAO_Container) : orbsvcslib, portableserver, security, iorinterceptor, objreftemplate, valuetype, ifr_client {
+  requires += dnc
+  after += CIAO_Client
+  sharedname  = CIAO_Container
+  libs       += CIAO_Client
+  idlflags  += -Wb,export_include=CIAO_Container_Export.h -Wb,export_macro=CIAO_CONTAINER_Export
+  dynamicflags = CIAO_CONTAINER_BUILD_DLL
+
+  IDL_Files {
+    CCM_Transaction.idl
+    CosPersistentState.idl
+    CCM_Container.idl
+    CCM_Container_Ex.idl
+  }
+
+  Source_Files {
+    CCM_TransactionC.cpp
+    CosPersistentStateC.cpp
+    CCM_ContainerC.cpp
+    CCM_Container_ExC.cpp
+    CCM_BaseS.cpp
+    CCM_EventS.cpp
+    CCM_ComponentS.cpp
+    Cookies.cpp
+  }
+}
+
+project (CIAO_Server) : orbsvcslib, portableserver, iorinterceptor, objreftemplate, valuetype, ifr_client, security {
+  requires     += dnc
+  after        += CIAO_Container
+  sharedname   =  CIAO_Server
+  libs         += CIAO_Client CIAO_Container
+  idlflags     += -Wb,export_include=CIAO_Server_Export.h -Wb,export_macro=CIAO_SERVER_Export
+  dynamicflags =  CIAO_SERVER_BUILD_DLL
+
+  IDL_Files {
+    Deployment_Core.idl
+  }
+
+  Source_Files {
+    Deployment_CoreC.cpp
+    Deployment_CoreS.cpp
+    Container_Base.cpp
+    NodeApplication_Impl.cpp
+    Server_init.cpp
+  }
+
+  Header_Files {
+    CIAO_Server_Export.h
+    CIAO_common.h
+  }
+}
+
+project(Deployment_stub) : taolib_with_idl, valuetype , ciao_server_dnc {
+  requires     += dnc
+  sharedname   =  Deployment_stub
+  idlflags     += -Wb,stub_export_macro=Deployment_stub_Export -Wb,stub_export_include=Deployment_stub_export.h -Wb,skel_export_macro=Deployment_svnt_Export -Wb,skel_export_include=Deployment_svnt_export.h
+  dynamicflags =  DEPLOYMENT_STUB_BUILD_DLL
+
+  IDL_Files {
+     Deployment.idl
+  }
+
+  Source_Files {
+    DeploymentC.cpp
+  }
+}
+
+project(Deployment_svnt) : taolib_with_idl, portableserver, ciao_server_dnc {
+  requires     += dnc
+  after        += Deployment_stub
+  sharedname   =  Deployment_svnt
+  dynamicflags =  DEPLOYMENT_SVNT_BUILD_DLL
+  libs         += Deployment_stub
+  idlflags     +=  -Wb,export_macro=Deployment_svnt_Export -Wb,export_include=Deployment_svnt_export.h
+
+  IDL_Files {
+    NodeApplication_CallBack.idl
+  }
+
+  Source_Files {
+    NodeApplication_CallBackC.cpp
+    NodeApplication_CallBackS.cpp
+    NodeApp_CB_Impl.cpp
+    DeploymentS.cpp
+  }
+}
