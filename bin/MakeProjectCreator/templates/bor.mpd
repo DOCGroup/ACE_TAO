@@ -1,6 +1,5 @@
 # Makefile for building the <%if(exename)%><%exename%> exe<%endif%><%if(sharedname)%><%sharedname%> library<%else%><%if(staticname)%><%staticname%> library<%endif%><%endif%> with Borland C++ Make
 
-NO_FULL_PATH=1
 <%if(exename)%>
 NAME = <%exename%>
 <%else%>
@@ -9,50 +8,64 @@ NAME = <%if(sharedname)%><%sharedname%><%else%><%staticname%><%endif%>
 <%endif%>
 <%endif%>
 
+NO_FULL_PATH=1
 <%if(idl_files)%>
+
 TAO_IDL = <%idl_compiler%>
 <%endif%>
-
 <%if(exename || sharedname || staticname)%>
 <%if(source_files)%>
+
 OBJFILES = \
 <%foreach(source_files)%>
 	$(OBJDIR)\<%basenoextension(source_file)%>.obj<%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
 <%endif%>
+<%if(libpaths)%>
 
 LFLAGS = \
 <%foreach(libpaths)%>
-	-L"<%libpath%>\$(CONFIG_SUBDIR)" -L"<%libpath%>" \
+	-L"<%libpath%>\$(CONFIG_SUBDIR)" \
+	-j"<%libpath%>\$(CONFIG_SUBDIR)" <%fornotlast(" \\")%>
 <%endfor%>
-	-L$(CORE_BINDIR)
-
+<%endif%>
+<%if(lit_libs)%>
 LIBFILES = \
+
 <%foreach(lit_libs)%>
 	<%lit_lib%>.lib \
 <%endfor%>
 <%foreach(libs defaultlibs)%>
-	<%lib%>$(LIB_DECORATOR).lib <%fornotlast(" \\")%>
+	<%lib%>$(LIB_DECORATOR).lib<%fornotlast(" \\")%>
 <%endfor%>
-
+<%endif%>
 <%if(idl_files)%>
+
 IDLFILES = \
 <%foreach(idl_files)%>
         <%idl_file%><%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
-
 <%if(resource_files)%>
+
 RESOURCE =<%foreach(resource_files)%> $(OBJDIR)\<%noextension(resource_file)%>.res<%endfor%>
 <%endif%>
 
 !ifdef STATIC
-LIB_FLAGS =<%foreach(staticflags)%> -D<%staticflag%><%endfor%>
-DLL_FLAGS =
+<%if(staticflags)%>
+LIB_FLAGS = \
+<%foreach(staticflags)%> 
+        -D<%staticflag%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
 !else
-LIB_FLAGS =
-DLL_FLAGS =<%foreach(dynamicflags)%> -D<%dynamicflag%><%endfor%>
+<%if(dynamicflags)%>
+DLL_FLAGS = \
+<%foreach(dynamicflags)%>
+        -D<%dynamicflag%><%fornotlast(" \\")%>
+<%endfor%>
+<%endif%>
 !endif
 
 CFLAGS = \
@@ -80,21 +93,16 @@ CFLAGS = \
 
 CPPDIR = <%cppdir%>
 CDIR   = <%cppdir%>
-
 <%if(header_files || template_files || inline_files || idl_files)%>
-INCLUDES = \
-<%foreach(header_files template_files inline_files idl_files)%>
-	<%header_file%><%fornotlast(" \\")%>
-<%endfor%>
 
 INCDIR_NAME = <%relwd%>
-
 <%endif%>
 <%if(idl_files)%>
 
 all: idl_src_files
 
 <%endif%>
+
 #
 # Override defaults in outputdir.bor
 #
@@ -110,20 +118,11 @@ PASCAL_DIR=.
 !ifdef UNICODE
 UNICODE_DIR=.
 !endif
+
 INSTALL_DLLDIR=$(INSTALL_DIR)\lib
 INCLUDES_INSTALL=1
-<%if(header_files || template_files || inline_files || idl_files)%>
-includes_install: $(INCLUDES)
-<%foreach(header_files template_files inline_files idl_files)%>
-	-@mkdir $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%> 2> NUL
-	-&copy /Y <%header_file%> $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%header_file%> > NUL
-<%endfor%>
-<%else%>
-includes_install:
-	@echo Nothing to install.
-<%endif%>
-
 <%if(exename)%>
+
 <%if(install)%>
 # We use BINDIR for install instead of BASE_BINDIR, because
 # this is the location for all scripts too. 
@@ -154,8 +153,20 @@ BINDIR = <%libout%>
 !include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
 <%endif%>
 <%endif%>
+<%if(header_files || template_files || inline_files || idl_files)%>
 
+includes_install: $(INCLUDES)
+<%foreach(header_files template_files inline_files idl_files)%>	
+	-@if not exist $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%> mkdir $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%dirname(header_file)%>
+	-&copy /Y <%header_file%> $(INSTALL_DIR)\include\$(INCDIR_NAME)\<%header_file%> 1> NUL
+<%endfor%>
+<%else%>
+
+includes_install:
+	@echo Nothing to install.
+<%endif%>
 <%if(idl_files)%>
+
 #
 # IDL Build rules
 #
