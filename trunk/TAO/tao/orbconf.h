@@ -377,6 +377,7 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 # if !defined (TAO_HAS_REMOTE_POLICIES)
 #  define TAO_HAS_REMOTE_POLICIES 0
 # endif /* TAO_HAS_REMOTE_POLICIES */
+
 #else
 
 // Interceptors is supported by default if we are not building
@@ -384,6 +385,10 @@ and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
 #define TAO_HAS_INTERCEPTORS
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+#if !defined (TAO_DISABLE_RT_CORBA) && !defined (TAO_HAS_MINIMUM_CORBA)
+#  define TAO_HAS_RT_CORBA
+#endif /* !TAO_HAS_RT_CORBA && !TAO_HAS_MINIMUM_CORBA */
 
 // If the user has not already specified TAO_HAS_UIOP, and the
 // platform supports UNIX domain sockets, and minimum CORBA is not

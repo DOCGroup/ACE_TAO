@@ -210,7 +210,7 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                   -1);
 
   if (this->base_acceptor_.open (addr,
-                                 this->orb_core_->reactor (),
+                                 this->orb_core_->reactor (this),
                                  this->creation_strategy_,
                                  this->accept_strategy_,
                                  this->concurrency_strategy_) == -1)

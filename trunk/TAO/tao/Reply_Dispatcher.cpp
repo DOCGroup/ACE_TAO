@@ -1,8 +1,9 @@
 // $Id$
 
 #include "tao/Reply_Dispatcher.h"
-#include "tao/debug.h"
 #include "tao/ORB_Core.h"
+#include "tao/Leader_Follower.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Reply_Dispatcher.i"
