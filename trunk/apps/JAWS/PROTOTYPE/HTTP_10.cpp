@@ -2,64 +2,31 @@
 
 #include "HTTP_10.h"
 
-#include "JAWS/IO.h"
-#include "JAWS/IO_Handler.h"
-#include "JAWS/Policy.h"
+#include "JAWS/JAWS.h"
 
-JAWS_HTTP_10_Read_Task::JAWS_HTTP_10_Read_Task (void)
+// ------------- Helper functions ---------------
+
+char *
+JAWS_HTTP_10_Helper::HTTP_decode_string (char *path)
 {
-}
+  // replace the percentcodes with the actual character
+  int i, j;
+  char percentcode[3];
 
-JAWS_HTTP_10_Read_Task::~JAWS_HTTP_10_Read_Task (void)
-{
-}
-
-int
-JAWS_HTTP_10_Read_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
-{
-  JAWS_Dispatch_Policy *policy = data->policy ();
-  JAWS_IO_Handler *handler = data->io_handler ();
-  // JAWS_Pipeline_Handler *task = data->task ();
-
-  JAWS_IO *io = policy->io ();
-
-  ACE_Message_Block mb (data);
-
-  io->read (handler, mb, data->size ());
-  if (handler->status () == JAWS_IO_Handler::READ_OK)
+  for (i = j = 0; path[i] != '\0'; i++, j++)
     {
-      return this->put_next (&mb);
+      if (path[i] == '%')
+	{
+	  percentcode[0] = path[++i];
+	  percentcode[1] = path[++i];
+	  percentcode[2] = '\0';
+	  path[j] = (char) ACE_OS::strtol (percentcode, (char **) 0, 16);
+	}
+      else
+	path[j] = path[i];
     }
 
-  return 1;
-}
+  path[j] = path[i];
 
-JAWS_HTTP_10_Write_Task::JAWS_HTTP_10_Write_Task (void)
-{
-}
-
-JAWS_HTTP_10_Write_Task::~JAWS_HTTP_10_Write_Task (void)
-{
-}
-
-int
-JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
-{
-  JAWS_Dispatch_Policy *policy = data->policy ();
-  JAWS_IO_Handler *handler = data->io_handler ();
-  //  JAWS_Pipeline_Handler *task = data->task ();
-
-  JAWS_IO *io = policy->io ();
-
-  char message[] = "<html><h1>This is a test</h1></html>\n";
-
-  ACE_Message_Block mb (data);
-
-  io->send_error_message (handler, message, sizeof (message));
-  if (handler->status () == JAWS_IO_Handler::WRITE_OK)
-    {
-      return 0;
-    }
-
-  return -1;
+  return path;
 }
