@@ -886,8 +886,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
             // @@ We should raise a CORBA::NO_MEMORY, but we ran out
             //    of memory already. We need a pre-allocated, TSS,
             //    CORBA::NO_MEMORY instance
-            ACE_NEW_RETURN (ex, 
-                            CORBA::UNKNOWN, 
+            ACE_NEW_RETURN (ex,
+                            CORBA::UNKNOWN,
                             TAO_INVOKE_EXCEPTION);
           }
 
@@ -963,8 +963,8 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                           ACE_TRY_ENV);
     }
 
-  // The rest of this function is very similar to 
-  // TWO_GIOP_Twoway_Invocation::invoke_i, because we must 
+  // The rest of this function is very similar to
+  // TWO_GIOP_Twoway_Invocation::invoke_i, because we must
   // wait for a reply. See comments in that code.
   int retval =
     this->transport_->tms ()->bind_dispatcher (this->request_id_,
@@ -980,7 +980,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     }
 
   // Send the request.
-  retval = TAO_GIOP_Invocation::invoke (1, 
+  retval = TAO_GIOP_Invocation::invoke (1,
                                         ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
 
@@ -1066,7 +1066,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
                                           CORBA::COMPLETED_YES),
                           TAO_INVOKE_EXCEPTION);
 
-        return TAO_INVOKE_EXCEPTION;
+        //        return TAO_INVOKE_EXCEPTION;
       }
 
     case TAO_GIOP_SYSTEM_EXCEPTION:
@@ -1119,7 +1119,7 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
     case TAO_GIOP_LOCATION_FORWARD:
       // Handle the forwarding and return so the stub restarts the
       // request!
-      return this->location_forward (this->inp_stream (), 
+      return this->location_forward (this->inp_stream (),
                                      ACE_TRY_ENV);
     }
 

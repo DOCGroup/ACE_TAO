@@ -813,8 +813,8 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   else
     *os << "1";
 
-  *os << "," << be_nl << "this," << be_nl 
-      << this->compute_operation_name (node) << "," 
+  *os << "," << be_nl << "this," << be_nl
+      << this->compute_operation_name (node) << ","
       << be_nl << "_tao_call.service_info ()," << be_nl
       << "_tao_interceptor_args.inout ()," << be_nl
       << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
@@ -831,20 +831,19 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
 
   // Prepare the request header
   os->indent ();
-  *os << "const CORBA::Octet flag = " << be_idt_nl
-      << "ACE_static_cast (const CORBA::Octet, ";
+  *os << "CORBA::Long flag = ";
 
   switch (node->flags ())
     {
     case AST_Operation::OP_oneway:
-      *os << "_tao_call.sync_scope ());";
+      *os << "_tao_call.sync_scope ();";
       break;
     default:
-      *os << "TAO::SYNC_WITH_TARGET);";
+      *os << "TAO::SYNC_WITH_TARGET;";
     }
 
-  *os << be_uidt_nl 
-      << "_tao_call.prepare_header (flag, ACE_TRY_ENV);\n";
+  *os << be_nl
+      << "_tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);\n";
 
   // check if there is an exception
   if (this->gen_check_interceptor_exception (bt) == -1)
@@ -1076,7 +1075,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   else
     *os << "1";
 
-  *os << "," << be_nl << "this," << be_nl 
+  *os << "," << be_nl << "this," << be_nl
       << this->compute_operation_name (node)
       << "," << be_nl << "_tao_call.service_info ()," << be_nl
       << "_tao_interceptor_args.inout ()," << be_nl
@@ -1109,7 +1108,7 @@ be_compiled_visitor_operation_cs::gen_marshal_and_invoke (be_operation
   else
     *os << "1";
 
-  *os << "," << be_nl << "this," << be_nl 
+  *os << "," << be_nl << "this," << be_nl
       << this->compute_operation_name (node)
       << "," << be_nl // _tao_call.service_info (), "
       << "_tao_cookies," << be_nl << "ACE_TRY_ENV" << be_uidt_nl
