@@ -19,15 +19,14 @@ CFG=IORManip - Win32 Debug
 !MESSAGE 
 !MESSAGE "IORManip - Win32 Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE "IORManip - Win32 Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "IORManip - Win32 MFC Debug" (based on "Win32 (x86) Dynamic-Link Library")
+!MESSAGE "IORManip - Win32 MFC Release" (based on "Win32 (x86) Dynamic-Link Library")
 !MESSAGE 
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
-CPP=cl.exe
-MTL=midl.exe
-RSC=rc.exe
 
 !IF  "$(CFG)" == "IORManip - Win32 Release"
 
@@ -40,11 +39,15 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ""
 # PROP Intermediate_Dir "DLL\Release\IORManipulation"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+CPP=cl.exe
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "IORManip_EXPORTS" /YX /FD /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_IORMANIP_BUILD_DLL" /FD /c
+MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -67,11 +70,14 @@ LINK32=link.exe
 # PROP Intermediate_Dir "DLL\Debug\IORManipulation"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
+CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "IORManip_EXPORTS" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "TAO_IORMANIP_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
+MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -80,6 +86,70 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_IORManipd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+
+!ELSEIF  "$(CFG)" == "IORManip - Win32 MFC Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir ""
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "DLL\Debug\IORManipulationMFC"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "IORManip_EXPORTS" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D "TAO_IORMANIP_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 TAOmfcd.lib acemfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_IORManipulationmfcd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+
+!ELSEIF  "$(CFG)" == "IORManip - Win32 MFC Release"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 0
+# PROP BASE Output_Dir ""
+# PROP BASE Intermediate_Dir ""
+# PROP BASE Ignore_Export_Lib 0
+# PROP BASE Target_Dir ""
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 0
+# PROP Output_Dir ""
+# PROP Intermediate_Dir "DLL\Release\IORManipulationMFC"
+# PROP Ignore_Export_Lib 0
+# PROP Target_Dir ""
+CPP=cl.exe
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "IORManip_EXPORTS" /FD /c
+# SUBTRACT BASE CPP /YX
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /D "NDEBUG" /D ACE_HAS_MFC=1 /D "TAO_IORMANIP_BUILD_DLL" /D "WIN32" /D "_WINDOWS" /FD /c
+# SUBTRACT CPP /YX
+MTL=midl.exe
+# ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+# ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
+RSC=rc.exe
+# ADD BASE RSC /l 0x409 /d "NDEBUG"
+# ADD RSC /l 0x409 /d "NDEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 acemfc.lib TAOmfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_IORManipulationmfc.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
@@ -93,14 +163,35 @@ LINK32=link.exe
 # Begin Source File
 
 SOURCE=.\IORC.cpp
+
+!IF  "$(CFG)" == "IORManip - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "IORManip - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\IORManip_Loader.cpp
+
+!IF  "$(CFG)" == "IORManip - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "IORManip - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\IORManipulation.cpp
+
+!IF  "$(CFG)" == "IORManip - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "IORManip - Win32 Debug"
+
+!ENDIF 
+
 # End Source File
 # End Group
 # Begin Group "Header Files"

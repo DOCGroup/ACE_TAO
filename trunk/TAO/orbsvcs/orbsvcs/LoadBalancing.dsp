@@ -112,7 +112,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 TAOd.lib aced.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingd.dll" /pdbtype:sept /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT BASE LINK32 /profile
-# ADD LINK32 TAOd.lib aced.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 TAOmfcd.lib acemfcd.lib TAO_PortableServermfcd.lib /nologo /dll /debug /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingmfcd.dll" /pdbtype:sept /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 # SUBTRACT LINK32 /profile
 
 !ELSEIF  "$(CFG)" == "LoadBalancing - Win32 MFC Release"
@@ -140,7 +140,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 ace.lib TAO.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancing.dll" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
+# ADD LINK32 acemfc.lib TAOmfc.lib TAO_PortableServermfc.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\TAO_LoadBalancingmfc.dll" /libpath:"..\..\tao\PortableServer" /libpath:"..\..\tao" /libpath:"..\..\..\ace"
 
 !ENDIF 
 
