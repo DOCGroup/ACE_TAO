@@ -49,9 +49,6 @@ public:
   virtual void push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
-  virtual void push_i (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
-
-  /// Push <event> to this consumer.
   virtual void push (const CORBA::Any& event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.

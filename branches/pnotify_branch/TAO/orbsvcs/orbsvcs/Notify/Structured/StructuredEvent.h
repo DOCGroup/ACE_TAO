@@ -22,6 +22,8 @@
 #include "../EventType.h"
 #include "orbsvcs/CosNotificationC.h"
 
+class TAO_Notify_StructuredEvent;
+
 /**
  * @class TAO_Notify_StructuredEvent_No_Copy
  *
@@ -38,8 +40,11 @@ public:
   /// Destructor
   ~TAO_Notify_StructuredEvent_No_Copy ();
 
-  /// Copy the event.
-  virtual TAO_Notify_Event* copy (ACE_ENV_SINGLE_ARG_DECL) const;
+  /// returns a copy of this event allocated on the heap
+  virtual const TAO_Notify_Event * copy_on_heap ()const;
+
+  /// marshal this event into a CDR buffer (for persistence)
+  virtual void marshal (TAO_OutputCDR & cdr) const;
 
   CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL) const;
 
@@ -63,6 +68,10 @@ public:
 
   /// Push event to the Event_Forwarder interface
   virtual void push_no_filtering (Event_Forwarder::ProxyPushSupplier_ptr forwarder ACE_ENV_ARG_DECL) const;
+
+  /// unmarshal this event from a CDR buffer (for persistence)
+  /// \return the new event, or NULL if this is the wrong type of event.
+  static TAO_Notify_StructuredEvent * unmarshal (TAO_InputCDR & cdr);
 
 protected:
   /// Structured Event
@@ -88,6 +97,9 @@ public:
 
   /// Destructor
   ~TAO_Notify_StructuredEvent ();
+
+  /// returns this
+  virtual const TAO_Notify_Event * copy_on_heap ()const;
 
 protected:
   /// Copy of the Event.

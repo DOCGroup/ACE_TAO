@@ -54,9 +54,6 @@ public:
   void push (const TAO_Notify_Event* event ACE_ENV_ARG_DECL);
 
   /// Push <event> to this consumer.
-  void push (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL);
-
-  /// Push <event> to this consumer.
   virtual void push (const CORBA::Any& event ACE_ENV_ARG_DECL) = 0;
 
   /// Push <event> to this consumer.
@@ -84,7 +81,7 @@ protected:
   virtual void push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL) = 0;
 
   /// Push Implementation.
-  virtual void push_i (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL) = 0;
+//  virtual int push_i (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL) = 0;
 
   /// Get the shared Proxy Lock
   TAO_SYNCH_MUTEX* proxy_lock (void);

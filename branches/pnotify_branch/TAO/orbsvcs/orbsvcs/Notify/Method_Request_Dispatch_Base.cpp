@@ -1,11 +1,36 @@
 // $Id$
+#include "Method_Request_Dispatch_Base.h"
 
-#include "Admin.h"
+#if ! defined (__ACE_INLINE__)
+#include "Method_Request_Dispatch_Base.inl"
+#endif /* __ACE_INLINE__ */
+
+#include "ConsumerAdmin.h"
 #include "Consumer.h"
+#include "ProxySupplier.h"
+
 #include "tao/debug.h"
 
-template <class EVENT, class PROXY, class EVENT_PARAM, class PROXY_PARAM> ACE_INLINE int
-TAO_Notify_Method_Request_Dispatch_T<EVENT, PROXY, EVENT_PARAM, PROXY_PARAM>::execute_i (ACE_ENV_SINGLE_ARG_DECL)
+ACE_RCSID (Notify,
+           TAO_Notify_Method_Request_Dispatch_Base,
+           "$Id$")
+
+
+TAO_Notify_Method_Request_Dispatch_Base::TAO_Notify_Method_Request_Dispatch_Base (
+      const TAO_Notify_Event * event,
+      TAO_Notify_ProxySupplier* proxy_supplier,
+      bool filtering)
+  : event_ (event)
+  , proxy_supplier_ (proxy_supplier)
+  , filtering_ (filtering)
+{
+}
+
+TAO_Notify_Method_Request_Dispatch_Base::~TAO_Notify_Method_Request_Dispatch_Base ()
+{
+}
+
+TAO_Notify_Method_Request_Dispatch_Base::execute_i (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->proxy_supplier_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
@@ -13,7 +38,6 @@ TAO_Notify_Method_Request_Dispatch_T<EVENT, PROXY, EVENT_PARAM, PROXY_PARAM>::ex
   if (this->filtering_ == 1)
     {
       TAO_Notify_Admin* parent = this->proxy_supplier_->consumer_admin ();
-
       CORBA::Boolean val =  this->proxy_supplier_->check_filters (this->event_,
                                                                   parent->filter_admin (),
                                                                   parent->filter_operator ()

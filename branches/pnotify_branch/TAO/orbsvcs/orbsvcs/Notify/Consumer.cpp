@@ -51,7 +51,8 @@ TAO_Notify_Consumer::dispatch_pending (ACE_ENV_SINGLE_ARG_DECL)
     {
       if (event_collection_copy.dequeue_head (event) == 0)
         {
-          proxy_supplier->push_no_filtering (event ACE_ENV_ARG_PARAMETER);
+          // push without filtering
+          proxy_supplier->push (event.get (), false ACE_ENV_ARG_PARAMETER);
         }
     }
 }

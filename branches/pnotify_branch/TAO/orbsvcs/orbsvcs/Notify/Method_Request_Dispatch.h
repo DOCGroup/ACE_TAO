@@ -21,7 +21,8 @@
 
 #include "Method_Request.h"
 #include "Refcountable.h"
-#include "Method_Request_Dispatch_T.h"
+//#include "Method_Request_Dispatch_T.h"
+#include "Method_Request_Dispatch_Base.h"
 #include "ProxySupplier.h"
 
 /**
@@ -31,13 +32,9 @@
  *
  */
 
-typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var
-                                         , TAO_Notify_ProxySupplier_Guard
-                                         , const TAO_Notify_Event_var&
-                                         , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_Base;
-
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch : public TAO_Notify_Method_Request_Dispatch_Base
-                                                       , public TAO_Notify_Method_Request
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch
+    : public TAO_Notify_Method_Request_Dispatch_Base
+    , public TAO_Notify_Method_Request
 {
 public:
   /// Constuctor
@@ -48,6 +45,9 @@ public:
 
   /// Execute the Request
   virtual int execute (ACE_ENV_SINGLE_ARG_DECL);
+private:
+  const TAO_Notify_Event_var event_var_;
+  TAO_Notify_ProxySupplier_Guard proxy_guard_;
 };
 
 /*******************************************************************************************************/
@@ -58,14 +58,9 @@ public:
  * @brief Dispatchs an event to a proxy supplier.
  *
  */
-
-typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event*
-                                         , TAO_Notify_ProxySupplier*
-                                         , const TAO_Notify_Event*
-                                         , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_No_Copy_Base;
-
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy : public TAO_Notify_Method_Request_Dispatch_No_Copy_Base
-                                                                 , public TAO_Notify_Method_Request_No_Copy
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy
+    : public TAO_Notify_Method_Request_Dispatch_Base
+    , public TAO_Notify_Method_Request_No_Copy
 {
 public:
   /// Constuctor
@@ -90,13 +85,9 @@ public:
  *
  */
 
-typedef TAO_Notify_Method_Request_Dispatch_T<const TAO_Notify_Event_var&
-                                         , TAO_Notify_ProxySupplier*
-                                         , const TAO_Notify_Event_var&
-                                         , TAO_Notify_ProxySupplier*>  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex_Base;
-
-class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy_Ex : public TAO_Notify_Method_Request_Dispatch_No_Copy_Ex_Base
-                                                                 , public TAO_Notify_Method_Request_No_Copy
+class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy_Ex
+  : public TAO_Notify_Method_Request_Dispatch_Base
+  , public TAO_Notify_Method_Request_No_Copy
 {
 public:
   /// Constuctor
@@ -110,6 +101,8 @@ public:
 
   /// Create a copy of this object.
   virtual TAO_Notify_Method_Request* copy (ACE_ENV_SINGLE_ARG_DECL);
+private:
+  const TAO_Notify_Event_var& event_var_;
 };
 
 #if defined (__ACE_INLINE__)

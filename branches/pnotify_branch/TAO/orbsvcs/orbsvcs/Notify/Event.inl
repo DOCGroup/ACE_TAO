@@ -12,6 +12,12 @@ TAO_Notify_Event::timeout (void) const
   return this->timeout_;
 }
 
+ACE_INLINE const TAO_Notify_Property_Boolean&
+TAO_Notify_Event::reliable (void) const
+{
+  return this->reliable_;
+}
+
 /**********************************************************/
 
 ACE_INLINE
@@ -21,8 +27,8 @@ TAO_Notify_Event_var::TAO_Notify_Event_var (void)
 }
 
 ACE_INLINE
-TAO_Notify_Event_var::TAO_Notify_Event_var (TAO_Notify_Event* event)
-  : TAO_Notify_Event_var_Base (event)
+TAO_Notify_Event_var::TAO_Notify_Event_var (const TAO_Notify_Event* event)
+  : TAO_Notify_Event_var_Base (const_cast <TAO_Notify_Event *>(event))
 {
 }
 
@@ -35,7 +41,7 @@ TAO_Notify_Event_Copy_var::TAO_Notify_Event_Copy_var (void)
 }
 
 ACE_INLINE
-TAO_Notify_Event_Copy_var::TAO_Notify_Event_Copy_var (TAO_Notify_Event* event)
+TAO_Notify_Event_Copy_var::TAO_Notify_Event_Copy_var (const TAO_Notify_Event* event)
   : TAO_Notify_Event_var (event)
 {
 }

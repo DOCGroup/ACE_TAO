@@ -107,21 +107,15 @@ TAO_Notify_SequencePushConsumer::cancel_timer (void)
 void
 TAO_Notify_SequencePushConsumer::push_i (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Event* copy = event->copy (ACE_ENV_SINGLE_ARG_PARAMETER);
+  const TAO_Notify_Event * copy = event->copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   TAO_Notify_Event_Copy_var copy_var (copy);
 
-  this->push_i (copy_var ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_SequencePushConsumer::push_i (const TAO_Notify_Event_var& event ACE_ENV_ARG_DECL)
-{
   TAO_Notify_Method_Request_Event* method_request;
 
   ACE_NEW_THROW_EX (method_request,
-                    TAO_Notify_Method_Request_Event (event),
+                    TAO_Notify_Method_Request_Event (copy_var),
                     CORBA::NO_MEMORY ());
 
   int msg_count = this->buffering_strategy_->enqueue (*method_request);

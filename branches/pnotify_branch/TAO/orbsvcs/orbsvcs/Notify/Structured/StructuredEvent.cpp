@@ -36,8 +36,29 @@ TAO_Notify_StructuredEvent_No_Copy::~TAO_Notify_StructuredEvent_No_Copy ()
 {
 }
 
-TAO_Notify_Event*
-TAO_Notify_StructuredEvent_No_Copy::copy (ACE_ENV_SINGLE_ARG_DECL) const
+void
+TAO_Notify_StructuredEvent_No_Copy::marshal (TAO_OutputCDR & cdr) const
+{
+  static const ACE_CDR::Octet STRUCTURED_CODE = MARSHAL_STRUCTURED;
+  cdr.write_octet (STRUCTURED_CODE);
+  cdr << (*this->notification_);
+}
+
+//static
+TAO_Notify_StructuredEvent *
+TAO_Notify_StructuredEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
+{
+  TAO_Notify_StructuredEvent * event = 0;
+  CosNotification::StructuredEvent body;
+  if (cdr >> body)
+  {
+    event = new TAO_Notify_StructuredEvent (body);
+  }
+  return event;
+}
+
+const TAO_Notify_Event *
+TAO_Notify_StructuredEvent_No_Copy::copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER) const
 {
   TAO_Notify_Event* copy;
 
@@ -119,3 +140,10 @@ TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (const CosNotification::S
 TAO_Notify_StructuredEvent::~TAO_Notify_StructuredEvent ()
 {
 }
+
+const TAO_Notify_Event *
+TAO_Notify_StructuredEvent::copy_on_heap (ACE_ENV_SINGLE_ARG_PARAMETER)const
+{
+  return this;
+}
+

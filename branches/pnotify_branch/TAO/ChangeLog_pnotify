@@ -1,3 +1,81 @@
+Tue Oct 19 10:43:28 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_T.cpp:
+          Removed these files.
+          Replacing template-based with inheritence-based copy managament.
+          The problem with a template based approach (other than the
+          obscurity of overloading methods based on raw vs smart
+          pointer (some comments would have been nice!)) is the
+          source code explosion.  Because the distinction
+          between Event * and Event_var is meaningful, every stage of the
+          process has to provide (at least) two methods to preserve this
+          distinction even when this stage doesn't care.
+          This became a problem in adding event persistence because it
+          meant that the event persistence stuff would also have to preserve
+          this "state-by-pointer-type" info.
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_Base.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.inl:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup_Base.cpp:
+          Added these files.
+
+
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Dispatch.cpp:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.h:
+        * orbsvcs/orbsvcs/Notify/Method_Request_Lookup.cpp:
+          Now derived from *_Base rather than _T<x,x,x,x>
+
+
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.h:
+        * orbsvcs/orbsvcs/Notify/Any/AnyEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredEvent.cpp:
+        * orbsvcs/orbsvcs/Notify/Event.h:
+        * orbsvcs/orbsvcs/Notify/Event.inl:
+        * orbsvcs/orbsvcs/Notify/Event.cpp:
+          The distinction that the templates were attempting to preserve
+          was whether or not the event had been copied to the heap.
+          The goal was to keep the event on the stack as long as possible,
+          but make a copy on the heap when it became necessary to queue the
+          event for later processing or for another thread.
+
+          This is now handled by providing a virtual "Event::copy_on_heap" method.
+          A event on the stack makes a copy and returns a pointer to it.
+          A event on the heap just returns a pointer to itself.
+
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.h:
+        * orbsvcs/orbsvcs/Notify/Refcountable_Guard_T.inl:
+          The pointer to events was based on Refcountable_Auto_Ptr which is
+          not smart enough to have two pointers to the same object unless one
+          was created from the other.  Event was changed to be a Refcountable
+          object and Refcountable_Guard was extended to allow null pointers,
+          thereby allowing it to be contained in a collection.  Asserts protect
+          null Refcountable_Guards from misuse.
+
+        * orbsvcs/orbsvcs/Notify/Consumer.h:
+        * orbsvcs/orbsvcs/Notify/Consumer.inl:
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Proxy.h:
+        * orbsvcs/orbsvcs/Notify/Proxy.inl:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.h:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Sequence/SequencePushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.h:
+        * orbsvcs/orbsvcs/Notify/Structured/StructuredPushConsumer.cpp:
+          Eliminate overridden-by-pointer-type methods that are
+          no longer needed.  Use copy_on_heap when necessary.
+
+
 Mon Oct 18 15:21:49 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/Notify/Buffering_Strategy.h:

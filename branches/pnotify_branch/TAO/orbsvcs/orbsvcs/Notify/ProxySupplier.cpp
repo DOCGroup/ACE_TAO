@@ -151,34 +151,9 @@ TAO_Notify_ProxySupplier::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_ProxySupplier::push (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
+TAO_Notify_ProxySupplier::push (const TAO_Notify_Event* event, bool filter ACE_ENV_ARG_DECL)
 {
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (event, this, 1);
-
-  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_ProxySupplier::push (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
-{
-  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex request (event, this, 1);
-
-  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_ProxySupplier::push_no_filtering (const TAO_Notify_Event* event ACE_ENV_ARG_DECL)
-{
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (event, this, 0); // No filtering.
-
-  this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
-}
-
-void
-TAO_Notify_ProxySupplier::push_no_filtering (const TAO_Notify_Event_var &event ACE_ENV_ARG_DECL)
-{
-  TAO_Notify_Method_Request_Dispatch_No_Copy_Ex request (event, this, 0); // No filtering.
-
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event, this, filter);
   this->worker_task ()->execute (request ACE_ENV_ARG_PARAMETER);
 }
 
