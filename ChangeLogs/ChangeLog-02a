@@ -1,9 +1,46 @@
+Sat Apr 15 21:49:04 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/ACE.cpp:
+        * apps/Gateway/Gateway/Options.cpp:
+          
+          Nick Pratt <npratt@microstrategy.com> reported two cases where
+          we were using sizeof some_string to figure out its length.  This
+          of course doesn't work when the string is a wide string, so they
+          have been changed to account for the character size.
+
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp:
+        * apps/gperf/src/gperf.dsp:
+        * apps/gperf/src/gperf_lib.dsp:
+
+          Changed around the order of the configurations so that in the 
+          default case (such as out of the box) the regular Debug version 
+          will be the current configuration.
+
+Sat Apr 15 19:35:57 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        (On behalf of Christopher Kohlhoff <chris@kohlhoff.com>)
+
+        * ace/Makefile.bor: 
+
+          Added new file QoS_Manager.cpp.
+
+        * ace/Basic_Types.h:
+        * ace/Timer_Queue_Adapters.h: 
+
+          Added missing pre/post includes.
+
+        * include/makeinclude/ace_flags.bor:
+        * include/makeinclude/build_example.bor:
+          
+          Updated for new orbsvcs libraries.
+
 Sat Apr 15 18:17:02 2000  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp:
 	  Fixed the handle_output() function so that it does the "Right
  	  Thing"[TM] on Windows NT.  Win32 Winsock doesn't trigger
- 	  multiple "You can write now" signals, so we have to assume that
+ 	  multiple "You can write now" signals, so we have to assume that      
  	  we can continue to write until we get another EWOULDBLOCK.
 	  Thanks to Nick Pratt
 
@@ -67,17 +104,17 @@ Mon Apr 10 07:30:22 2000  John Rodgers <jrrodgers@acm.org>
 Sun Apr  9 14:16:23 2000  James CE Johnson  <jcej@mobsec.com>
 
         * docs/tutorials/015/page01.html : Thanks to Conrad Hughes for
-        pointing out that a real implementation would compress before
-        encrypting since encrypted data shouldn't really be compressible
-        anyway.
+          pointing out that a real implementation would compress before
+          encrypting since encrypted data shouldn't really be compressible
+          anyway.
 
         * docs/tutorials/015/Protocol_Stream.cpp (open): Reorder the
-        module pushing so that encryption happens before compression.
+          module pushing so that encryption happens before compression.
 
         * docs/tutorials/015/Crypt.cpp :
         * docs/tutorials/015/Compressor.cpp :
-        Add a few extra bytes when creating the new message blocks.  A
-        real implementation would probably need that.
+          Add a few extra bytes when creating the new message blocks.  A
+          real implementation would probably need that.
 
 Sun Apr 09 00:04:25 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
