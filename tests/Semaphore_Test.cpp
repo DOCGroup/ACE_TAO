@@ -136,8 +136,7 @@ int main (int argc, char *argv[])
     test_timeout ();
 
   // Initialize the semaphore to a certain number
-  for (i = 0; i < n_semcount; i++)
-    s.release ();
+  s.release (n_semcount);
 
   if (ACE_Thread_Manager::instance ()->spawn_n (n_workers, 
 						ACE_THR_FUNC (worker), 
