@@ -1,3 +1,16 @@
+Wed Mar 13 10:02:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/driver/drv_args.cpp:
+
+          In the case where a dash is followed by a space instead of
+          command line option letters, replaced the action adding
+          stdin to the IDL file list with an error message. The 
+          previous action was causing an endless self-spawn loop.
+          This was the last item listed in [BUGID:390] that has not
+          yet been fixed, so I'll close the bug entry. Thanks to
+          Craig Rodrigues <crodrigu@bbn.com> for pointing out that
+          this entry was almost ready to be closed.
+
 Wed Mar 13 15:12:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ETCL.bor:
