@@ -1,3 +1,40 @@
+Mon Sep 27 15:19:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.cpp:
+	  In replace(), made creation of Any's message block member
+	  conditional on the void *value arg being non-zero. When 
+	  a thing like this would happen (an OUT arg), a new message
+	  block gets created for the Any in the stub. Thanks to
+	  Philippe Merle <Philippe.Merle@lifl.fr> for sending in this
+	  fix.
+
+	* tao/DynAny_i.cpp:
+	  Used call to unalias() to check for type correctness in
+	  insert_string, insert_any and insert_typecode. Thanks to
+	  Philippe Merle <Philippe.Merle@lifl.fr> for sending in this
+	  fix.
+
+	* tao/Exception.h:
+	* tao/Exception.cpp:
+	  Added copy constructor that creates a new Any exception_
+	  member on the heap. This is to avoid creation by some
+	  compilers of a default copy constructor that does not do
+	  the right thing. Thanks again to Phillipe Merle
+	  for sending in thi fix.
+
+	* Stub.cpp:
+	  In do_dynamic_call(), in the branch of INOUT/OUT arg
+	  processing where the Any's value is 0, there was a
+	  missing assignment of the write pointer in the new
+	  message block created for the Any. Thanks to 
+	  Philippe Merle <Philippe.Merle@lifl.fr> for the example
+	  that uncovered this bug.
+
+	* Sequence_T.cpp:
+	  Added missing call to base class operator= in 
+	  TAO_Bounded_Array_Sequence operator=, which was 
+	  causing a param test to return incorrect results.
+
 Mon Sep 27 15:15:34 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/corbafwd.h:
