@@ -24,6 +24,14 @@
 /* static */
 LPCTSTR ACE_Registry::STRING_SEPARATOR = __TEXT ("\\");
 
+int 
+ACE_Registry::Name_Component::operator== (const Name_Component &rhs)
+{
+  return 
+    rhs.id_ == this->id_ &&
+    rhs.kind_ == this->kind_;
+}
+
 // Simple binding constructor
 ACE_Registry::Binding::Binding ()
   : name_ (),
@@ -51,6 +59,14 @@ ACE_Registry::Binding::Binding (const Istring &name,
 {
 }
 
+
+int 
+ACE_Registry::Binding::operator== (const Binding &rhs)
+{
+  return 
+    rhs.name_ == this->name_ &&
+    rhs.type_ == this->type_;
+}
 
 // Name accessor
 // (Name version)
@@ -578,12 +594,13 @@ ACE_Registry::Naming_Context::close (void)
 
 // Convert a <name> to a <string>
 ACE_Registry::Istring 
-ACE_Registry::make_string (const Name &name)
+ACE_Registry::make_string (const Name &const_name)
 {
   Istring string;
+  Name &name = ACE_const_cast (Name &, const_name);
 
   // Iterator through the components of name
-  for (Name::const_iterator iterator = name.begin ();
+  for (Name::iterator iterator = name.begin ();
        iterator != name.end ();
        iterator++)
     {
@@ -603,8 +620,8 @@ ACE_Registry::make_string (const Name &name)
 ACE_Registry::Name 
 ACE_Registry::make_name (const Istring &string)
 {
-  size_t new_position = 0;
-  size_t last_position = 0;
+  int new_position = 0;
+  int last_position = 0;
   Name name;
 
   // Rememeber: NPOS is -1
@@ -630,7 +647,7 @@ ACE_Registry::make_name (const Istring &string)
       // Update positions 
       last_position = new_position;
       // Insert component into name
-      name.push_back (component);
+      name.insert (component);
     }
 
   return name;
@@ -769,7 +786,7 @@ ACE_Registry::Naming_Context::list (Binding_List &list)
       ACE_Registry::Binding binding;      
       result = iterator.next_one (binding);
       if (result == 0)
-	list.push_back (binding);
+	list.insert (binding);
       else 
 	break;
     }
@@ -841,7 +858,7 @@ ACE_Registry::Binding_Iterator::next_one (Binding &binding)
   
   if (result == 0)
     // Success
-    binding = list[0];  
+    binding = (*list.begin ());  
   
   return result;
 }
@@ -933,7 +950,7 @@ ACE_Registry::Binding_Iterator::Object_Iteration::next_n (u_long how_many,
 	    // Create binding
 	    Binding binding (string, OBJECT);
 	    // Add to binding list
-	    list.push_back (binding);
+	    list.insert (binding);
 	  }
 	// Continue to add to list
 	break;	
@@ -1003,7 +1020,7 @@ ACE_Registry::Binding_Iterator::Context_Iteration::next_n (u_long how_many,
 	    // Create binding
 	    Binding binding (string, CONTEXT);
 	    // Add to binding list
-	    list.push_back (binding);
+	    list.insert (binding);
 	  }
 	// Continue to add to list
 	break;	
