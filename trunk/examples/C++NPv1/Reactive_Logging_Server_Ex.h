@@ -18,6 +18,7 @@
 #include "Logging_Server.h"
 #include "Logging_Handler.h"
 #include "ace/Null_Mutex.h"
+#include "ace/os_include/os_fcntl.h"
 
 typedef ACE_Hash_Map_Manager<ACE_HANDLE,
                              ACE_FILE_IO *,
