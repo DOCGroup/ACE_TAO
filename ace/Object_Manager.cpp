@@ -24,7 +24,7 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   // Delete all registered objects and arrays.
   while (registered_objects_.dequeue_head (info) != -1)
     {
-      info.cleanup_hook_ (info.object_, info.param_);
+      (*info.cleanup_hook_) (info.object_, info.param_);
     }
 
   // This call closes and deletes all ACE library services and
