@@ -1,7 +1,7 @@
 # $Id$
 
 # This file should allow to build ACE for mingw32 with mingw tools.
-# Edit to change TCPU and MINGW_BASE below.
+# Edit to change TCPU below.
 #
 # Don't forget to define the ACE_ROOT environment variable!
 
