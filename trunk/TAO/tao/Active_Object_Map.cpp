@@ -15,7 +15,8 @@ TAO_Active_Object_Map::Map_Entry::Map_Entry (void)
     system_id_ (),
     servant_ (0),
     reference_count_ (1),
-    deactivated_ (0)
+    deactivated_ (0),
+    priority_ (-1)
 {
 }
 
@@ -321,6 +322,8 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
 
 int
 TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_id,
+                                          CORBA::Short priority,
+                                          int &priorities_match,
                                           int &deactivated)
 {
   Map_Entry *entry = 0;
@@ -331,6 +334,9 @@ TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_i
       if (entry->servant_ == 0)
         {
           result = 0;
+
+          if (entry->priority_ != priority)
+            priorities_match = 0;
         }
       else
         {
@@ -387,6 +393,7 @@ TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
 int
 TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
                                             const PortableServer::ObjectId &user_id,
+                                            CORBA::Short priority,
                                             TAO_Active_Object_Map::Map_Entry *&entry)
 {
   int result = this->active_object_map_->user_id_map_->find (user_id,
@@ -408,6 +415,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
                       -1);
       entry->user_id_ = user_id;
       entry->servant_ = servant;
+      entry->priority_ = priority;
 
       result = this->active_object_map_->id_hint_strategy_->bind (*entry);
 
@@ -521,6 +529,7 @@ TAO_Multiple_Id_Strategy::is_servant_in_map (PortableServer::Servant,
 int
 TAO_Multiple_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
                                               const PortableServer::ObjectId &user_id,
+                                              CORBA::Short priority,
                                               TAO_Active_Object_Map::Map_Entry *&entry)
 {
   int result = this->active_object_map_->user_id_map_->find (user_id,
@@ -537,6 +546,7 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (PortableServer::Servant servant,
                       -1);
       entry->user_id_ = user_id;
       entry->servant_ = servant;
+      entry->priority_ = priority;
 
       result =
         this->active_object_map_->id_hint_strategy_->bind (*entry);
@@ -717,6 +727,7 @@ TAO_Id_Assignment_Strategy::set_active_object_map (TAO_Active_Object_Map *active
 
 int
 TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant,
+                                            CORBA::Short,
                                             TAO_Active_Object_Map::Map_Entry *&)
 {
   return -1;
@@ -724,6 +735,7 @@ TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant,
 
 int
 TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Servant servant,
+                                                             CORBA::Short priority,
                                                              TAO_Active_Object_Map::Map_Entry *&entry)
 {
   ACE_NEW_RETURN (entry,
@@ -735,6 +747,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Ser
   if (result == 0)
     {
       entry->servant_ = servant;
+      entry->priority_ = priority;
 
       result = this->active_object_map_->id_hint_strategy_->bind (*entry);
 
@@ -765,6 +778,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (PortableServer::Ser
 
 int
 TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (PortableServer::Servant servant,
+                                                               CORBA::Short priority,
                                                                TAO_Active_Object_Map::Map_Entry *&entry)
 {
   ACE_NEW_RETURN (entry,
@@ -775,6 +789,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (PortableServer::S
   if (result == 0)
     {
       entry->servant_ = servant;
+      entry->priority_ = priority;
 
       result = this->active_object_map_->id_hint_strategy_->bind (*entry);
 

@@ -68,6 +68,9 @@ public:
 
     CORBA::Boolean deactivated_;
     // Has this servant been deactivated already?
+
+    CORBA::Short priority_;
+    // Priority of this servant.
   };
 
   TAO_Active_Object_Map (int user_id_policy,
@@ -85,24 +88,30 @@ public:
   // Must be used with UNIQUE_ID policy.
 
   int is_user_id_in_map (const PortableServer::ObjectId &user_id,
+                         CORBA::Short priority,
+                         int &priorities_match,
                          int &deactivated);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
   int bind_using_system_id_returning_system_id (PortableServer::Servant servant,
+                                                CORBA::Short priority,
                                                 PortableServer::ObjectId_out system_id);
   // Must be used with SYSTEM_ID policy.
 
   int bind_using_system_id_returning_user_id (PortableServer::Servant servant,
+                                              CORBA::Short priority,
                                               PortableServer::ObjectId_out user_id);
   // Must be used with SYSTEM_ID policy.
 
   int bind_using_user_id (PortableServer::Servant servant,
-                          const PortableServer::ObjectId &user_id);
+                          const PortableServer::ObjectId &user_id,
+                          CORBA::Short priority);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
 
   int find_system_id_using_user_id (const PortableServer::ObjectId &user_id,
+                                    CORBA::Short priority,
                                     PortableServer::ObjectId_out system_id);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
@@ -274,6 +283,7 @@ public:
 
   virtual int bind_using_user_id (PortableServer::Servant servant,
                                   const PortableServer::ObjectId &user_id,
+                                  CORBA::Short priority,
                                   TAO_Active_Object_Map::Map_Entry *&entry) = 0;
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
@@ -320,6 +330,7 @@ public:
 
   virtual int bind_using_user_id (PortableServer::Servant servant,
                                   const PortableServer::ObjectId &user_id,
+                                  CORBA::Short priority,
                                   TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
@@ -358,6 +369,7 @@ public:
 
   virtual int bind_using_user_id (PortableServer::Servant servant,
                                   const PortableServer::ObjectId &user_id,
+                                  CORBA::Short priority,
                                   TAO_Active_Object_Map::Map_Entry *&entry);
   // Can be used with any policy.  With the SYSTEM_ID policy,
   // <user_id> is actually <system_id>.
@@ -439,6 +451,7 @@ public:
   // Virtual destructor.
 
   virtual int bind_using_system_id (PortableServer::Servant servant,
+                                    CORBA::Short priority,
                                     TAO_Active_Object_Map::Map_Entry *&entry) = 0;
   // Must be used with SYSTEM_ID policy.
 
@@ -460,6 +473,7 @@ class TAO_User_Id_Strategy : public TAO_Id_Assignment_Strategy
   //     Strategy for the USER_ID policy.
 public:
   virtual int bind_using_system_id (PortableServer::Servant servant,
+                                    CORBA::Short priority,
                                     TAO_Active_Object_Map::Map_Entry *&entry);
   // Must be used with SYSTEM_ID policy.
 };
@@ -473,6 +487,7 @@ class TAO_System_Id_With_Unique_Id_Strategy : public TAO_Id_Assignment_Strategy
   //     Strategy for the SYSTEM_ID policy (with UNIQUE_ID policy).
 public:
   virtual int bind_using_system_id (PortableServer::Servant servant,
+                                    CORBA::Short priority,
                                     TAO_Active_Object_Map::Map_Entry *&entry);
   // Must be used with SYSTEM_ID policy.
 };
@@ -486,6 +501,7 @@ class TAO_System_Id_With_Multiple_Id_Strategy : public TAO_Id_Assignment_Strateg
   //     Strategy for the SYSTEM_ID policy (with MULTIPLE_ID policy).
 public:
   virtual int bind_using_system_id (PortableServer::Servant servant,
+                                    CORBA::Short priority,
                                     TAO_Active_Object_Map::Map_Entry *&entry);
   // Must be used with SYSTEM_ID policy.
 };
