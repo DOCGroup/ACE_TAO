@@ -1,72 +1,79 @@
+Wed Apr 12 15:15:15 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/Concurrency/lex.CC_command.cpp (ACE_CC_YY_DECL):
+          added initializations of ace_cc_yy_cp and ace_cc_yy_bp to 0,
+          so that g++ doesn't complain about possible unitialized uses.
+          Thanks to Vishal for reporting this.
+
 Tue Apr 11 23:33:16 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/orbconf.h: Disabled SHMIOP by default if
-	  TAO_HAS_MINIMUM_CORBA is enabled, it is enabled by default
-	  otherwise.
+        * tao/orbconf.h: Disabled SHMIOP by default if
+          TAO_HAS_MINIMUM_CORBA is enabled, it is enabled by default
+          otherwise.
 
 Tue Apr 11 20:58:16 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp:
-	  The .i file name was incorrect, but only builds with inlining
-	  disabled would detect that.
+        * orbsvcs/orbsvcs/ESF/ESF_Copy_On_Read.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Changes.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp:
+          The .i file name was incorrect, but only builds with inlining
+          disabled would detect that.
 
-	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
-	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i:
-	* orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i:
-	* orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
-	* orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
-	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
-	* orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
-	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
-	  Workaround several MSVC 6 compiler bugs related to templates and
-	  traits.  Nasty stuff.
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Peer_Admin.cpp:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.h:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.i:
+        * orbsvcs/orbsvcs/ESF/ESF_Proxy_Admin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Basic_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Null_Factory.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_ConsumerControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_Reactive_SupplierControl.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.cpp:
+        * orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/Event/EC_Trivial_Supplier_Filter.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Interpreter.h:
+          Workaround several MSVC 6 compiler bugs related to templates and
+          traits.  Nasty stuff.
 
-	* orbsvcs/orbsvcs/RTEvent.dsp:
-	  Remove all the files that are not in the repo anymore.
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+          Remove all the files that are not in the repo anymore.
 
-	* orbsvcs/orbsvcs/AV.dsp:
-	* orbsvcs/orbsvcs/CosConcurrency.dsp:
-	* orbsvcs/orbsvcs/CosEvent.dsp:
-	* orbsvcs/orbsvcs/CosLifeCycle.dsp:
-	* orbsvcs/orbsvcs/CosNaming.dsp:
-	* orbsvcs/orbsvcs/CosNotification.dsp:
-	* orbsvcs/orbsvcs/CosProperty.dsp:
-	* orbsvcs/orbsvcs/CosTime.dsp:
-	* orbsvcs/orbsvcs/CosTrading.dsp:
-	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
-	* orbsvcs/orbsvcs/RTEvent.dsp:
-	* orbsvcs/orbsvcs/RTSched.dsp:
-	* orbsvcs/orbsvcs/Svc_Utils.dsp:
-	  Disable precompiled headers for all this project files. We don't
-	  use them in ACE+TAO.
+        * orbsvcs/orbsvcs/AV.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency.dsp:
+        * orbsvcs/orbsvcs/CosEvent.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle.dsp:
+        * orbsvcs/orbsvcs/CosNaming.dsp:
+        * orbsvcs/orbsvcs/CosNotification.dsp:
+        * orbsvcs/orbsvcs/CosProperty.dsp:
+        * orbsvcs/orbsvcs/CosTime.dsp:
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin.dsp:
+        * orbsvcs/orbsvcs/RTEvent.dsp:
+        * orbsvcs/orbsvcs/RTSched.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils.dsp:
+          Disable precompiled headers for all this project files. We don't
+          use them in ACE+TAO.
 
 Tue Apr 11 21:41:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP_Message_Lite.cpp (TAO_GIOP_Message_Lite):
-	* tao/GIOP_Message_Lite.h:
-	* tao/GIOP_Message_Acceptors.{h,cpp,i}: Fixed a pending problem
-	  with multi-threaded servers dumping a core during shutdown. The
-	  actual problem was that these classes were caching TSS resources
-	  indirectly, and were getting destroyed long after the TSS
-	  resources are destroyed by the ORB. So, these classes allocate
-	  their own resources instead of depending on the ORB_Core.
+        * tao/GIOP_Message_Lite.cpp (TAO_GIOP_Message_Lite):
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_Acceptors.{h,cpp,i}: Fixed a pending problem
+          with multi-threaded servers dumping a core during shutdown. The
+          actual problem was that these classes were caching TSS resources
+          indirectly, and were getting destroyed long after the TSS
+          resources are destroyed by the ORB. So, these classes allocate
+          their own resources instead of depending on the ORB_Core.
 
 Tue Apr 11 17:57:48 2000  Carlos O'Ryan  <coryan@uci.edu>
 
