@@ -520,18 +520,13 @@ TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
 void
 TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
 {
-  // Only set the auto_ptr if poa_manager is allocated here.
-  auto_ptr<TAO_POA_Manager> safe_poa_manager;
-
   TAO_POA_Manager *poa_manager;
   ACE_NEW_THROW_EX (poa_manager,
                     TAO_POA_Manager (*this),
                     CORBA::NO_MEMORY ());
   ACE_CHECK;
 
-  ACE_AUTO_PTR_RESET (safe_poa_manager,
-                      poa_manager,
-                      TAO_POA_Manager);
+  PortableServer::POAManager_var safe_poa_manager = poa_manager;
 
 #if 0
   TAO_POA_Policies root_poa_policies (this->orb_core_,
@@ -557,7 +552,7 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // Construct a new POA
   ACE_NEW_THROW_EX (this->root_,
                     TAO_POA (TAO_DEFAULT_ROOTPOA_NAME,
-                             *poa_manager,
+                             poa_manager,
                              policies,
                              0,
                              this->lock (),
@@ -571,13 +566,7 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   // The Object_Adapter will keep a reference to the Root POA so that
   // on its destruction, it can check whether the Root POA has
   // been destroyed yet or not.
-  this->root_->_add_ref ();
-
-  // Release the auto_ptr since we got here without error, the TAO_POA
-  // object takes ownership of the POA_Manager object (actually it
-  // shares the ownership with its peers).
-
-  (void) safe_poa_manager.release ();
+  // this->root_->_add_ref ();
 }
 
 void
