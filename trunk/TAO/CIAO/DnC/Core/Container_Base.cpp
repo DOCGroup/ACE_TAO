@@ -59,13 +59,13 @@ CIAO::Session_Container::init (const char *name,
 {
   char buffer[MAXPATHLEN];
 
-   if (name == 0)
-     {
-       this->number_ = ++CIAO::Session_Container::serial_number_;
-       ACE_OS::sprintf (buffer, "CIAO::Session_Container-%ld",
+  if (name == 0)
+    {
+      this->number_ = ++CIAO::Session_Container::serial_number_;
+      ACE_OS::sprintf (buffer, "CIAO::Session_Container-%ld",
                         this->number_);
-       name = buffer;
-     }
+      name = buffer;
+    }
 
    CORBA::Object_var poa_object =
      this->orb_->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -105,10 +105,6 @@ CIAO::Session_Container::init (const char *name,
 
    return 0;
 }
-
-//@@ Why are we having install_servant and install_component at the
-//   same time. Can't we make a "base" implementation and just do
-//   call forwarding to save some space?    --Tao
 
 CORBA::Object_ptr
 CIAO::Session_Container::install_servant (PortableServer::Servant p
@@ -277,7 +273,7 @@ CIAO::Session_Container::uninstall (PortableServer::Servant svt
 }
 
 void
-CIAO::Session_Container::uninstall_component (CORBA::Object_ptr objref,
+CIAO::Session_Container::uninstall_component (Components::CCMObject_ptr objref,
                                               PortableServer::ObjectId_out oid
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))

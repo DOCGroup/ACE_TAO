@@ -9,8 +9,7 @@
 CIAO::NodeApplication_Impl::~NodeApplication_Impl ()
 {
   //@@ This should clean up all components and homes.
-  //@@ I am not clear about if the destroy of home will also clean
-  //   components.
+
 }
 
 void
@@ -53,7 +52,7 @@ properties (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 
 ::Components::CCMHome_ptr
 CIAO::NodeApplication_Impl::
-install_home (const ::Deployment::Properties  & properties
+install_home (const ::Deployment::ImplementationInfo & impl_info
 	      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Deployment::UnknownImplId,
@@ -61,45 +60,78 @@ install_home (const ::Deployment::Properties  & properties
 		   Deployment::InstallationFailure,
 		   Components::InvalidConfiguration))
 {
-  struct home_installation_info config_info;
-  this->parse_config_values (properties,
-			     config_info
-                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
 
-  Components::CCMHome_var newhome
-    = this->container_->ciao_install_home
-    (config_info.executor_dll_.in (),
-     config_info.executor_entrypt_.in (),
-     config_info.servant_dll_.in (),
-     config_info.servant_entrypt_.in ()
-     ACE_ENV_ARG_PARAMETER);
+ Components::CCMHome_var newhome =
+   this->container_->ciao_install_home
+   (impl_info.executor_dll.in (),
+    impl_info.executor_entrypt.in (),
+    impl_info.servant_dll.in (),
+    impl_info.servant_entrypt.in ()
+    ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (0);
 
-  this->home_set_.add (newhome.in ());
+  // Bind the home in the map.
+  // Note: The bind will duplicate the ObjectRef.
+  if (this->home_map_.bind (impl_info.component_instance_name.in (),
+			    Components::CCMHome::_duplicate (newhome.in ())));
+      ACE_THROW_RETURN (Deployment::InstallationFailure (), 0);
+
+  //Note: If the return value will be discarded, it must be kept in a var or
+  //      release () will have to be called explicitly.
   return newhome._retn ();
 }
 
 void
 CIAO::NodeApplication_Impl::
-remove_home (Components::CCMHome_ptr href
+remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   Components::RemoveFailure))
+{
+  //Remove all the components in the NodeApplication/Container
+  Home_Iterator iter (this->home_map_.begin ());
+
+  // Remove all components first.
+  // Of course we can call remove on the home to remove the component
+  // but this is easier.
+  remove_components ();
+  ACE_CHECK;
+
+  // Even if above op failed we should still remove homes.
+  for (;
+       iter != this->home_map_.end ();
+       ++iter)
+  {
+    this->container_->ciao_uninstall_home ( (*iter).int_id_);
+    ACE_CHECK;
+
+    CORBA::release ( (*iter).int_id_);
+  }
+
+  this->home_map_.unbind_all ();
+}
+
+void
+CIAO::NodeApplication_Impl::
+remove_home (const char * comp_ins_name
 	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
   ACE_THROW_SPEC ((CORBA::SystemException,
 		   Components::RemoveFailure))
 {
-  if (this->home_set_.object_in_set (href) == 0)
+  Components::CCMHome_ptr home;
+  ACE_CString str (comp_ins_name);
+
+  if (this->home_map_.find (str, home) != 0)
     ACE_THROW (CORBA::BAD_PARAM ());
 
-  // @@ Finalizing home... how?  Removing all the components, but how?
-  // It looks like the component home will also need to keep a record
-  // of all the components it creates.
-  this->container_->ciao_uninstall_home (href
-                                         ACE_ENV_ARG_PARAMETER);
+  this->container_->ciao_uninstall_home (home);
   ACE_CHECK;
 
+  // If the previous calls failed, what should we do here??
+  CORBA::release (home);
+
   // @@ Still need to remove the home if the previous operation fails?
-  if (this->home_set_.remove (href) == -1)
+  if (this->home_map_.unbind (str) == -1)
     ACE_THROW (::Components::RemoveFailure ());
 }
 
@@ -115,54 +147,38 @@ get_homes (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  CORBA::ULong len = this->home_set_.size ();
+  CORBA::ULong len = this->home_map_.current_size ();
   retval->length (len);
 
-#if 0
-  // TAO is broken here.  Both <replace>, <get_buffer> and friends are missing.
-  this->home_set_.copy (len, retval->get_buffer (0));
-#else
+  Home_Iterator iter (this->home_map_.begin ());
+  CORBA::ULong i;
 
-  for (CORBA::ULong i = 0; i < len; ++i)
-    {
-      retval[i] = this->home_set_.at (i);
-    }
-#endif
+  for (i = 0;
+       iter != this->home_map_.end ();
+       ++iter, ++i)
+  {
+    retval[i] = Components::CCMHome::_duplicate ( (*iter).int_id_);
+  }
 
   return retval._retn ();
 
 }
 
-void
-CIAO::NodeApplication_Impl::
-remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::RemoveFailure))
-{
-  // @@ Need to remove all CCMHome
-
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-  //ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::remove\n"));
-}
-
 CORBA::Long
 CIAO::NodeApplication_Impl::
-init (const ::Deployment::Properties & properties
-      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-		   Components::InvalidConfiguration))
+init (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // Create an internal Container
-  // The underlying container implementation supports old static configuration.
-  // Here I just ignore it.    --Tao
   ACE_NEW_THROW_EX (this->container_,
-                    CIAO::Session_Container (this->orb_.in ()),
+                    CIAO::Session_Container (this->orb_.in (),
+                                             0,
+                                             0),
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (-1);
 
   return this->container_->init (0,
-                                 0
-                                 ACE_ENV_ARG_PARAMETER);
+				 0
+				 ACE_ENV_ARG_PARAMETER);
 }
 
 ::CORBA::Object_ptr
@@ -173,6 +189,69 @@ get_node_application_manager (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
   return ::CORBA::Object::_duplicate (this->node_app_manager_.in ());
 }
 
+
+PortableServer::POA_ptr
+CIAO::NodeApplication_Impl::
+_default_POA (void)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+void
+CIAO::NodeApplication_Impl::
+remove_components (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   Components::RemoveFailure))
+{
+  //Remove all the components in the NodeApplication/Container
+  Component_Iterator iter (this->component_map_.begin ());
+  PortableServer::ObjectId_var oid;
+
+  // Release all component servant object.
+  for (;
+       iter != this->component_map_.end ();
+       ++iter)
+  {
+    this->container_->uninstall_component ((*iter).int_id_,
+					   oid.out ());
+    ACE_CHECK;
+
+    CORBA::release ( (*iter).int_id_);
+  }
+
+  this->component_map_.unbind_all ();
+  // To this point the servant should have been destroyed. However,
+  // if someone is still making calls on the servant, terrible thing
+  // will happen.
+}
+
+void
+CIAO::NodeApplication_Impl::
+remove_component (const char * comp_ins_name
+	     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException,
+		   Components::RemoveFailure))
+{
+  Components::CCMObject_ptr comp;
+
+  ACE_CString str (comp_ins_name);
+  PortableServer::ObjectId_var oid;
+
+  if (this->component_map_.find (str, comp) != 0)
+    ACE_THROW (CORBA::BAD_PARAM ());
+
+  this->container_->uninstall_component (comp, oid.out ());
+  ACE_CHECK;
+
+  // If the previous calls failed, what should we do here??
+  CORBA::release (comp);
+
+  // @@ Still need to remove the home if the previous operation fails?
+  if (this->component_map_.unbind (str) == -1)
+  ACE_THROW (::Components::RemoveFailure ());
+}
+
+/*
 void
 CIAO::NodeApplication_Impl::
 parse_config_values (const ::Deployment::Properties & properties,
@@ -222,10 +301,4 @@ parse_config_values (const ::Deployment::Properties & properties,
   // We don't need to worry about the case when some info is missing since
   // the modeling tool will ensure the complete info to presented in the properties.
 }
-
-PortableServer::POA_ptr
-CIAO::NodeApplication_Impl::
-_default_POA (void)
-{
-  return PortableServer::POA::_duplicate (this->poa_.in ());
-}
+*/
