@@ -1,3 +1,10 @@
+Tue Jun 06 15:44:03 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-lynxos.h: added support for LynxOS 3.1.0.
+          It uses ACE_HAS_PTHREADS_STD instead of ACE_HAS_PTHREADS_DRAFT4 +
+          ACE_HAS_STDARG_THR_DEST.  Thanks to Dorr H. Clark
+          <dhclark@Lynx.COM> for reporting this.
+
 Tue Jun  6 12:39:23 2000  Phil Mesnier  <mesnier_p@ociweb.com>
 
         Ported ACE & TAO to Unixware 7.1, using GNU C++ compiler gcc 2.95.2.
@@ -13,23 +20,23 @@ Tue Jun  6 12:39:23 2000  Phil Mesnier  <mesnier_p@ociweb.com>
         * include/makeinclude/wrapper_macros.GNU
 
 Tue Jun  6 10:32:51 2000  Edan Ayal <edanayal@yahoo.com>
-  
-	* ace/Message_Queue.h: Added the following two pure
-	  virtual methods to class 'ACE_Message_Queue_Base':
 
-	  virtual ACE_Notification_Strategy *notification_strategy (void) = 0;
-	  virtual void notification_strategy (ACE_Notification_Strategy *s) = 0;
-	  virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
+        * ace/Message_Queue.h: Added the following two pure
+          virtual methods to class 'ACE_Message_Queue_Base':
+
+          virtual ACE_Notification_Strategy *notification_strategy (void) = 0;
+          virtual void notification_strategy (ACE_Notification_Strategy *s) = 0;
+          virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
                                          ACE_Time_Value *timeout = 0);
 
-	  These methods allow the 'ACE_Message_Queue_Base' to be used as a
- 	  base class (without specifying the synch method or templatizing
- 	  on it) and access/alter the notification strategy.
-	
+          These methods allow the 'ACE_Message_Queue_Base' to be used as a
+          base class (without specifying the synch method or templatizing
+          on it) and access/alter the notification strategy.
+
 Tue Jun  6 09:42:39 2000  Chris Kohlhoff <chris@kohlhoff.com>
 
         * include/makeinclude/ace_flags.bor:
-	  Added support for new orbsvcs libraries.
+          Added support for new orbsvcs libraries.
 
 Mon Jun 05 20:59:42 2000  David L. Levine  <levine@cs.wustl.edu>
 
