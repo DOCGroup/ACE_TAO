@@ -1,3 +1,14 @@
+Sun Aug 16 23:49:20 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer.dsp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier.dsp:
+	  Updated project files.
+
+	* orbsvcs/tests/EC_Custom_Marshal/EC_Custom_Marshal.dsw:
+	* orbsvcs/tests/EC_Custom_Marshal/ECCM_Supplier.dsp:
+	* orbsvcs/tests/EC_Custom_Marshal/ECCM_Consumer.dsp: 
+	  New projects/workspace added.
+
 Sun Aug 16 17:15:39 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tao/Connect.h:
