@@ -1,3 +1,8 @@
+Wed Aug 11 09:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/ImplRepo.pidl:
+          Updated documentation to doxygen style
+
 Wed Aug 11 07:57:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Basic/Basic.mpc:
