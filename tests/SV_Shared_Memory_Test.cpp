@@ -170,11 +170,10 @@ main (int, ASYS_TCHAR *[])
       break;
     default:
       parent (shm);
+      delete parent_mutex;
+      delete parent_synch;
       break;
     }
-
-  delete parent_mutex;
-  delete parent_synch;
 #else
   ACE_ERROR ((LM_INFO,
               ASYS_TEXT ("SYSV IPC, SYSV SHMEM, or fork ")
