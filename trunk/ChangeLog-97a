@@ -1,3 +1,15 @@
+Sun Jun 01 20:29:20 1997  James CE Johnson <jcej@lads.com>
+
+	* ace/IOStream*:
+	  - removed the old 4/5/97 comments
+	  - made operator>>, << on QuotedString a template
+
+	  This last makes QuotedString much more functional.  As
+	  templated functions, the QuotedString can now be used on
+	  other iostream-type objects.  The previous method of
+	  defining the function only for the type of ACE_IOStream
+	  being created was didn't provide this flexibility.
+
 Sat May 31 07:01:22 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (open): To avoid handle leaks, we need to
