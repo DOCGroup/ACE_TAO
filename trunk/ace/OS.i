@@ -6,10 +6,10 @@
 #define ACE_INLINE
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#if defined (ACE_LACKS_RLIMIT_PROTO)
+#if defined (ACE_LACKS_RLIMIT_PROTOTYPE)
 int getrlimit (int resource, struct rlimit *rlp);       
 int setrlimit (int resource, const struct rlimit *rlp); 
-#endif /* ACE_LACKS_RLIMIT_PROTO */                 
+#endif /* ACE_LACKS_RLIMIT_PROTOTYPE */                 
 
 #if !defined (ACE_HAS_STRERROR)
 #if defined (ACE_HAS_SYS_ERRLIST)
@@ -544,11 +544,11 @@ ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
   ACE_UNUSED_ARG (argv);
   ACE_UNUSED_ARG (optstring);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_POSIX_PROTO)
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::getopt (argc, (const char* const *) argv, optstring), int, -1);
 #else
   ACE_OSCALL_RETURN (::getopt (argc, argv, optstring), int, -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
 ACE_INLINE uid_t 
@@ -3651,11 +3651,11 @@ ACE_OS::sendmsg (ACE_HANDLE handle, const struct msghdr *msg, int flags)
 {
   // ACE_TRACE ("ACE_OS::sendmsg");
 #if !defined (ACE_LACKS_SENDMSG)
-#if defined (ACE_LACKS_POSIX_PROTO)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::sendmsg (handle, (struct msghdr *) msg, flags), int, -1);
 #else
   ACE_OSCALL_RETURN (::sendmsg (handle, (ACE_SENDMSG_TYPE *) msg, flags), int, -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #else
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (msg);
@@ -3697,22 +3697,22 @@ ACE_INLINE size_t
 ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 {
   // ACE_TRACE ("ACE_OS::fread");
-#if defined (ACE_LACKS_POSIX_PROTO)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::fread ((char *) ptr, size, nelems, fp), int, 0);
 #else
   ACE_OSCALL_RETURN (::fread (ptr, size, nelems, fp), int, 0);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
 ACE_INLINE size_t 
 ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 {
   // ACE_TRACE ("ACE_OS::fwrite");
-#if defined (ACE_LACKS_POSIX_PROTO)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::fwrite ((const char *) ptr, size, nitems, fp), int, 0);
 #else
   ACE_OSCALL_RETURN (::fwrite (ptr, size, nitems, fp), int, 0);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
 // Accessors to PWD file.
@@ -5371,13 +5371,13 @@ ACE_OS::msgrcv (int int_id, void *buf, size_t len,
 {
   // ACE_TRACE ("ACE_OS::msgrcv");
 #if defined (ACE_HAS_SYSV_IPC)
-#if defined (ACE_LACKS_POSIX_PROTO) || defined (ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS)
   ACE_OSCALL_RETURN (::msgrcv (int_id, (msgbuf *) buf, len, type, flags), 
 		     int, -1);
 #else
   ACE_OSCALL_RETURN (::msgrcv (int_id, buf, len, type, flags), 
 		     int, -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (buf);
@@ -5394,11 +5394,11 @@ ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
 {
   // ACE_TRACE ("ACE_OS::msgsnd");
 #if defined (ACE_HAS_SYSV_IPC)
-#if defined (ACE_LACKS_POSIX_PROTO) || defined (ACE_HAS_NONCONST_MSGSND) || defined (ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_NONCONST_MSGSND) || defined (ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS)
   ACE_OSCALL_RETURN (::msgsnd (int_id, (msgbuf *) buf, len, flags), int, -1);
 #else
   ACE_OSCALL_RETURN (::msgsnd (int_id, buf, len, flags), int, -1);
-#endif /* ACE_LACKS_POSIX_PROTO || ACE_HAS_NONCONST_MSGSND */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES || ACE_HAS_NONCONST_MSGSND */
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (buf);
@@ -5433,6 +5433,24 @@ ACE_OS::ualarm (u_int usecs, u_int interval)
 #else
   ACE_UNUSED_ARG (usecs);
   ACE_UNUSED_ARG (interval);
+  
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_UALARM */
+}
+
+ACE_INLINE u_int 
+ACE_OS::ualarm (const ACE_Time_Value &tv,
+		const ACE_Time_Value &tv_interval)
+{
+  // ACE_TRACE ("ACE_OS::ualarm");
+
+#if defined (ACE_HAS_UALARM)
+  u_int usecs = (tv.sec () * 1000000) + tv.usec ();
+  u_int interval = (tv_interval.sec () * 1000000) + tv_interval.usec ();
+  return ::ualarm (usecs, interval);
+#else
+  ACE_UNUSED_ARG (tv);
+  ACE_UNUSED_ARG (tv_interval);
   
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_UALARM */
@@ -5524,7 +5542,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbolname)
 {
   // ACE_TRACE ("ACE_OS::dlsym");
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-#if defined (ACE_LACKS_POSIX_PROTO)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::dlsym (handle, (char*) symbolname), void *, 0);
 #elif defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
   char asm_symbolname [MAXPATHLEN] ;
@@ -5535,7 +5553,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbolname)
   ACE_OSCALL_RETURN (::dlsym (handle, asm_symbolname), void *, 0);
 #else
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #elif defined (ACE_WIN32)
   ACE_OSCALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
 #elif defined (__hpux)
@@ -5605,13 +5623,13 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
   else
     return -1;
 #else
-#if defined (ACE_LACKS_POSIX_PROTO)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::write (handle, (const char *) buf, nbyte), ssize_t, -1);
 #elif defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL_RETURN (::write (handle, (char *) buf, nbyte), ssize_t, -1);
 #else
   ACE_OSCALL_RETURN (::write (handle, buf, nbyte), ssize_t, -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #endif /* ACE_WIN32 */
 }
 
@@ -5641,11 +5659,11 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   DWORD ok_len;
   return ::ReadFile (handle, buf, len, &ok_len, 0) ? (ssize_t) ok_len : -1;
 #else
-#if defined (ACE_LACKS_POSIX_PROTO) || defined (ACE_HAS_CHARPTR_SOCKOPT)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_HAS_CHARPTR_SOCKOPT)
   ACE_OSCALL_RETURN (::read (handle, (char *) buf, len), ssize_t, -1);
 #else
   ACE_OSCALL_RETURN (::read (handle, buf, len), ssize_t, -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #endif /* ACE_WIN32 */
 }
 
@@ -6009,11 +6027,11 @@ ACE_OS::shmat (int int_id, void *shmaddr, int shmflg)
 {
   // ACE_TRACE ("ACE_OS::shmat");
 #if defined (ACE_HAS_SYSV_IPC)
-#if defined (ACE_LACKS_POSIX_PROTO) || defined (ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES) || defined (ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS)
   ACE_OSCALL_RETURN (::shmat (int_id, (char *)shmaddr, shmflg), void *, (void *) -1);
 #else
   ACE_OSCALL_RETURN (::shmat (int_id, shmaddr, shmflg), void *, (void *) -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (shmaddr);
@@ -6474,7 +6492,7 @@ ACE_OS::execv (const char *path, char *const argv[])
   ACE_UNUSED_ARG (argv);
 	
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_POSIX_PROTO)
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::execv (path, (const char **) argv), int, -1);
 #else
   ACE_OSCALL_RETURN (::execv (path, argv), int, -1);
@@ -6491,7 +6509,7 @@ ACE_OS::execve (const char *path, char *const argv[], char *const envp[])
   ACE_UNUSED_ARG (envp);
 
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_POSIX_PROTO)
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::execve (path, (const char **) argv, (char **) envp), int, -1);
 #else
   ACE_OSCALL_RETURN (::execve (path, argv, envp), int, -1);
@@ -6507,7 +6525,7 @@ ACE_OS::execvp (const char *file, char *const argv[])
   ACE_UNUSED_ARG (argv);
 
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_POSIX_PROTO)
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::execvp (file, (const char **) argv), int, -1);
 #else
   ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
@@ -7016,11 +7034,11 @@ ACE_OS::sigaction (int signum,
   return osa->sa_handler == SIG_ERR ? -1 : 0;
 #elif defined (CHORUS)
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_LACKS_POSIX_PROTO) || defined(ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS)
+#elif defined (ACE_LACKS_POSIX_PROTOTYPES) || defined(ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS)
   ACE_OSCALL_RETURN (::sigaction (signum, (struct sigaction*) nsa, osa), int, -1);
 #else
   ACE_OSCALL_RETURN (::sigaction (signum, nsa, osa), int, -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 }
 
 ACE_INLINE char *
@@ -7572,11 +7590,11 @@ ACE_INLINE int
 ACE_OS::sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
 #if !defined (ACE_LACKS_SIGSET)
-#if defined (ACE_LACKS_POSIX_PROTO)
+#if defined (ACE_LACKS_POSIX_PROTOTYPES)
   ACE_OSCALL_RETURN (::sigprocmask (how, (int*) nsp, osp), int, -1);
 #else
   ACE_OSCALL_RETURN (::sigprocmask (how, nsp, osp), int, -1);
-#endif /* ACE_LACKS_POSIX_PROTO */
+#endif /* ACE_LACKS_POSIX_PROTOTYPES */
 #else
   ACE_UNUSED_ARG (how);
   ACE_UNUSED_ARG (nsp);

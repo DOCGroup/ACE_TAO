@@ -943,6 +943,10 @@ struct sembuf
 void herror (const char *str);
 #endif /* ACE_HAS_H_ERRNO */
 
+#if defined (ACE_LACKS_UALARM_PROTOTYPE)
+extern "C" u_int ualarm (u_int usecs, u_int interval);
+#endif /* ACE_LACKS_UALARM_PROTOTYPE */
+
 #if defined (ACE_LACKS_MSGBUF_T)
 struct msgbuf {};
 #endif /* ACE_LACKS_MSGBUF_T */
@@ -3123,7 +3127,10 @@ public:
 
   // = A set of wrappers for timers and resource stats.
   static u_int alarm (u_int secs);
-  static u_int ualarm (u_int usecs, u_int interval);
+  static u_int ualarm (u_int usecs,
+		       u_int interval = 0);
+  static u_int ualarm (const ACE_Time_Value &tv, 
+		       const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
   static ACE_hrtime_t gethrtime (void);
 #if defined (ACE_HAS_POWERPC) && defined (ghs)
   static void readPPCTimeBase (u_long &most,

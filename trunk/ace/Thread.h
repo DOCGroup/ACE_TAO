@@ -87,7 +87,7 @@ public:
 		      void *stack[] = 0,
 		      size_t stack_size[] = 0,
 		      ACE_hthread_t thread_handles[] = 0);
-  // Spawn N new threads, which execute <func> with argument <arg>.
+  // Spawn <n> new threads, which execute <func> with argument <arg>.
   // The thread_ids of successfully spawned threads will be placed
   // into the <thread_ids> buffer (which must be the same size as
   // <n>).  If <stack> != 0 it is assumed to be an array of <n>

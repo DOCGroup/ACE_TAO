@@ -27,6 +27,8 @@
 
 // The SunOS 5.x version of rand_r is inconsistent with the header files...
 #define ACE_HAS_BROKEN_RANDR
+#define ACE_HAS_UALARM
+#define ACE_LACKS_UALARM_PROTOTYPE
 
 // Platform supports system configuration information.
 #define ACE_HAS_SYSINFO

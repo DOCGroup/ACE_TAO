@@ -13,6 +13,8 @@
 
 #define ACE_HAS_STRING_CLASS
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
+#define ACE_HAS_UALARM
+#define ACE_LACKS_UALARM_PROTOTYPE
 
 // ACE_HAS_EXCEPTIONS requires -fhandle-exceptions, but that gives
 // g++ 2.7.2 fits:  it spits out all kinds of warnings that it doesn't

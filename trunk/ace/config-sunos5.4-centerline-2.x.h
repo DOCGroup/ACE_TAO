@@ -8,6 +8,8 @@
 #define ACE_CONFIG_H
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
+#define ACE_HAS_UALARM
+#define ACE_LACKS_UALARM_PROTOTYPE
 
 // Platform supports pread() and pwrite()
 #define ACE_HAS_P_READ_WRITE
