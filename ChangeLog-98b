@@ -1,5 +1,8 @@
 Thu Jun 18 20:46:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* performance_tests/Misc/childbirth_time.cpp: Changed to use the
+	  variable MULTIPLY_FACTOR in statistic calculation.
+
 	* ace/config-freebsd-pthread.h: Added the following definition:
 	       #define ACE_HAS_SIGINFO_T
 	       #define ACE_LACKS_SIGINFO_H
