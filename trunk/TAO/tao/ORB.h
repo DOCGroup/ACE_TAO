@@ -503,9 +503,13 @@ public:
                                      CORBA_EnumMemberSeq &members,
                                      CORBA::Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
+
+  CORBA_TypeCode_ptr create_exception_tc (const char *id,
+                                          const char *name,
+                                          CORBA_StructMemberSeq &members,
+                                          CORBA::Environment &ACE_TRY_ENV =
+                                          TAO_default_environment ());
   
-                                     
-    
 #endif /*TAO_HAS_INTERFACE_REPOSITORY */
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
