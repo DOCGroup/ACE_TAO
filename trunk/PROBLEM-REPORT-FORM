@@ -38,9 +38,12 @@ Subject: [area]: [synopsis]
     ACE VERSION: 5.2.2
 
     HOST MACHINE and OPERATING SYSTEM:
+        If on Windows based OS's, which version of WINSOCK do you
+        use?:
+
     TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
     COMPILER NAME AND VERSION (AND PATCHLEVEL):
-
+    
     AREA/CLASS/EXAMPLE AFFECTED:
 [What example failed?  What module failed to compile?]
 
