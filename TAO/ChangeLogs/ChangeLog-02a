@@ -1,3 +1,12 @@
+Fri Feb  9 12:13:44 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+
+	  Created duplicates of streamendpoint _ptrs before assigning them
+	  to _vars. 
+
+	  Thanks to Bruce McIntosh<Bruce.McIntosh@Australia.Boeing.com> for suggesting this.
+
 Thu Feb  8 18:47:52 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/MProfile.cpp (init_policy_list):
