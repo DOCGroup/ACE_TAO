@@ -38,7 +38,7 @@ TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq 
 void
 TAO_Notify_EventTypeSeq::populate (CosNotification::EventTypeSeq& event_type_seq) const
 {
-  event_type_seq.length (ACE_static_cast (CORBA::ULong, this->size ()));
+  event_type_seq.length (static_cast<CORBA::ULong>(this->size ()));
 
   inherited::CONST_ITERATOR iter (*this);
 
@@ -60,7 +60,7 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
       event_type_seq.length (ACE_static_cast (CORBA::ULong, this->size () - 1));
     }
   else
-      event_type_seq.length (ACE_static_cast (CORBA::ULong, this->size ()));
+      event_type_seq.length (static_cast<CORBA::ULong>(this->size ()));
 
   inherited::CONST_ITERATOR iter (*this);
 

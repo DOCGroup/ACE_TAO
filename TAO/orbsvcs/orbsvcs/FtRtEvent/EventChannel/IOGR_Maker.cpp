@@ -190,15 +190,14 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
           // @@ NOTE: This involves an allocation and a dellocation. This is
           // really bad.
           Safe_InputCDR cdr (
-            ACE_reinterpret_cast (const char*,
-                                  tagged_components.component_data.get_buffer ()),
+            reinterpret_cast<const char*>(tagged_components.component_data.get_buffer ()),
             tagged_components.component_data.length ());
           CORBA::Boolean byte_order;
 
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
             return false;
 
-          cdr.reset_byte_order (ACE_static_cast (int,byte_order));
+          cdr.reset_byte_order (static_cast<int>(byte_order));
 
           return (cdr >> ft_tag_component_) != 0;
        }

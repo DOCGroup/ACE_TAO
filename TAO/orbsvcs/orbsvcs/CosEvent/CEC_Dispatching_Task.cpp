@@ -33,7 +33,7 @@ TAO_CEC_Dispatching_Task::svc (void)
                         "EC (%P|%t) getq error in Dispatching Queue\n"));
 
           TAO_CEC_Dispatch_Command *command =
-            ACE_dynamic_cast(TAO_CEC_Dispatch_Command*, mb);
+            dynamic_cast<TAO_CEC_Dispatch_Command*>(mb);
 
           if (command == 0)
             {

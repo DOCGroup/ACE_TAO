@@ -1142,7 +1142,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container
                                                          "def_kind",
                                                          kind);
               CORBA::DefinitionKind def_kind =
-                ACE_static_cast (CORBA::DefinitionKind, kind);
+                static_cast<CORBA::DefinitionKind>(kind);
 
               TAO_Contained_i *impl = this->repo_->select_contained (def_kind);
               impl->section_key (defn_key);

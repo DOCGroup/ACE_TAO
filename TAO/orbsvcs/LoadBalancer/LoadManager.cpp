@@ -89,7 +89,7 @@ extern "C"
 void *
 TAO_LB_run_load_manager (void * orb_arg)
 {
-  CORBA::ORB_ptr orb = ACE_static_cast (CORBA::ORB_ptr, orb_arg);
+  CORBA::ORB_ptr orb = static_cast<CORBA::ORB_ptr>(orb_arg);
 
   // Only the main thread should handle signals.
   //

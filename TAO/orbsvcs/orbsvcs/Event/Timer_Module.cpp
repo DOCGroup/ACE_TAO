@@ -78,7 +78,7 @@ TAO_EC_ST_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority_t,
                                         const ACE_Time_Value& interval)
 {
   return this->reactor_->schedule_timer (&this->timeout_handler_,
-                                         ACE_static_cast(void*,act),
+                                         static_cast<void*>(act),
                                          delta, interval);
 }
 
@@ -99,7 +99,7 @@ TAO_EC_ST_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t,
     }
   else
     act = ACE_reinterpret_cast (ACE_Command_Base *,
-                                ACE_const_cast (void *, vp));
+                                const_cast<void *>(vp));
 
   return result;
 }
@@ -214,7 +214,7 @@ TAO_EC_RPT_Timer_Module::schedule_timer (RtecScheduler::Preemption_Priority_t pr
 {
   ACE_Reactor& reactor = this->GetReactorTask (priority)->get_reactor ();
   return reactor.schedule_timer (&this->timeout_handler_,
-                                 ACE_static_cast(void*,act),
+                                 static_cast<void*>(act),
                                  delta, interval);
 }
 
@@ -236,7 +236,7 @@ TAO_EC_RPT_Timer_Module::cancel_timer (RtecScheduler::Preemption_Priority_t prio
     }
   else
     act = ACE_reinterpret_cast (ACE_Command_Base *,
-                                ACE_const_cast (void *, vp));
+                                const_cast<void *>(vp));
 
   return result;
 }
@@ -262,7 +262,7 @@ TAO_EC_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
                                         const void *vp)
 {
   ACE_Command_Base *act = ACE_static_cast(ACE_Command_Base*,
-                                          ACE_const_cast(void*,vp));
+                                          const_cast<void*>(vp));
 
   if (act == 0)
     ACE_ERROR_RETURN ((LM_ERROR, "ACE_ES_Priority_Timer::handle_timeout: "

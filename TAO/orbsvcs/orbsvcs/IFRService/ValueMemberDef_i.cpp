@@ -76,8 +76,7 @@ TAO_ValueMemberDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   this->repo_->config ()->get_integer_value  (this->section_key_,
                                               "access",
                                               val);
-  vm.access = ACE_static_cast (CORBA::Visibility,
-                               val);
+  vm.access = static_cast<CORBA::Visibility>(val);
 
   CORBA::Contained::Description *retval = 0;
   ACE_NEW_RETURN (retval,
@@ -190,8 +189,7 @@ TAO_ValueMemberDef_i::access_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   this->repo_->config ()->get_integer_value (this->section_key_,
                                              "access",
                                              val);
-  return ACE_static_cast (CORBA::Visibility,
-                          val);
+  return static_cast<CORBA::Visibility>(val);
 }
 
 void

@@ -28,7 +28,7 @@ TAO_EC_Null_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
     {
       const RtecEventComm::Event& e = event[j];
       RtecEventComm::Event* buffer =
-        ACE_const_cast(RtecEventComm::Event*, &e);
+        const_cast<RtecEventComm::Event*>(&e);
       RtecEventComm::EventSet single_event (1, 1, buffer, 0);
 
       TAO_EC_QOS_Info event_info;

@@ -52,8 +52,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
       // will look up each parameter and add its repository entry to
       // our params_ member.
 
-      CORBA::ULong length = ACE_static_cast (CORBA::ULong,
-                                             node->argument_count ());
+      CORBA::ULong length = static_cast<CORBA::ULong>(node->argument_count ());
 
       this->params_.length (length);
 
@@ -77,8 +76,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       if (excepts != 0)
         {
-          length = ACE_static_cast (CORBA::ULong,
-                                    excepts->length ());
+          length = static_cast<CORBA::ULong>(excepts->length ());
         }
       else
         {
@@ -114,8 +112,7 @@ ifr_adding_visitor_operation::visit_operation (AST_Operation *node)
 
       if (ctx_list != 0)
         {
-          length = ACE_static_cast (CORBA::ULong,
-                                    ctx_list->length ());
+          length = static_cast<CORBA::ULong>(ctx_list->length ());
         }
       else
         {

@@ -556,7 +556,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev (AC
                        "%s:%s:%ld",
                        "VDev",
                        this->host_,
-                       ACE_static_cast (long, this->pid_));
+                       static_cast<long>(this->pid_));
 
       if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
       // create the name
@@ -791,7 +791,7 @@ TAO_AV_Child_Process_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
                    "%s:%s:%ld",
                    "Stream_Endpoint_A",
                    this->host_,
-                   ACE_static_cast (long, this->pid_));
+                   static_cast<long>(this->pid_));
 
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
   this->stream_endpoint_name_.length (1);
@@ -817,7 +817,7 @@ TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
                    "%s:%s:%ld",
                    "Stream_Endpoint_B",
                    this->host_,
-                   ACE_static_cast (long, this->pid_));
+                   static_cast<long>(this->pid_));
 
   if (TAO_debug_level > 0) ACE_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
   this->stream_endpoint_name_.length (1);

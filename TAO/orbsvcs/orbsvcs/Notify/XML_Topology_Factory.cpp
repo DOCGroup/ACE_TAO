@@ -32,7 +32,7 @@ namespace TAO_Notify
       delete saver;
       saver = 0;
     }
-    return ACE_static_cast (Topology_Saver *, saver);
+    return static_cast<Topology_Saver *>(saver);
   }
 
   // virtual
@@ -47,7 +47,7 @@ namespace TAO_Notify
       delete loader;
       loader = 0;
     }
-    return ACE_static_cast (Topology_Loader *, loader);
+    return static_cast<Topology_Loader *>(loader);
   }
 
   // virtual

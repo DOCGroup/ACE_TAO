@@ -541,7 +541,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAd
     PortableServer::POA_var poa = consumer_poa();
 
     const PortableServer::Servant servant = poa->id_to_servant(
-      ACE_reinterpret_cast(const PortableServer::ObjectId& ,id)
+      reinterpret_cast<const PortableServer::ObjectId&>(id)
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
     POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr obj =
@@ -550,7 +550,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAd
       servant->_downcast ("IDL:RtecEventChannelAdmin/ProxyPushSupplier:1.0")
       );
 
-    return ACE_static_cast(TAO_FTEC_ProxyPushSupplier*, obj);
+    return static_cast<TAO_FTEC_ProxyPushSupplier*>(obj);
   }
   ACE_CATCHALL {
   }
@@ -565,7 +565,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAd
     PortableServer::POA_var poa= supplier_poa();
 
     const PortableServer::Servant servant = poa->id_to_servant(
-      ACE_reinterpret_cast(const PortableServer::ObjectId& ,id)
+      reinterpret_cast<const PortableServer::ObjectId&>(id)
       ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
 
@@ -575,7 +575,7 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAd
       servant->_downcast ("IDL:RtecEventChannelAdmin/ProxyPushConsumer:1.0")
       );
 
-    return ACE_static_cast(TAO_FTEC_ProxyPushConsumer*, obj);
+    return static_cast<TAO_FTEC_ProxyPushConsumer*>(obj);
   }
   ACE_CATCHALL {
   }

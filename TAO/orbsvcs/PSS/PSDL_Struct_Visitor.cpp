@@ -437,7 +437,7 @@ TAO_PSDL_Struct_Visitor::gen_code_for_si (void)
   ps_si->incr_indent (0); ps_si->nl ();
   *ps_si << "_tc_" << this->struct_name_ << ","; ps_si->nl ();
   *ps_si << "1,"; ps_si->nl ();
-  *ps_si << "ACE_static_cast (void *, tmp),"; ps_si->nl ();
+  *ps_si << "static_cast<void *>(tmp),"; ps_si->nl ();
   *ps_si << this->struct_name_ << "::_tao_any_destructor";
 
   ps_si->decr_indent (0); ps_si->nl ();

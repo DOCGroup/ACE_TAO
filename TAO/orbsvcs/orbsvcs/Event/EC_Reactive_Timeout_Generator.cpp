@@ -36,7 +36,7 @@ TAO_EC_Reactive_Timeout_Generator::schedule_timer (
       const ACE_Time_Value& interval)
 {
   return this->reactor_->schedule_timer (&this->event_handler_,
-                                         ACE_static_cast(void*,filter),
+                                         static_cast<void*>(filter),
                                          delta,
                                          interval);
 }

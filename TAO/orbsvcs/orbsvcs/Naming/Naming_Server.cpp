@@ -417,7 +417,7 @@ TAO_Naming_Server::init_with_orb (int argc,
         {
           ACE_OS::fprintf (pidf,
                            "%ld\n",
-                           ACE_static_cast (long, ACE_OS::getpid ()));
+                           static_cast<long>(ACE_OS::getpid ()));
           ACE_OS::fclose (pidf);
         }
     }
@@ -585,7 +585,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                 ACE_OS::getenv ("NameServicePort");
 
               if (port_number != 0)
-                port = ACE_static_cast (u_short, ACE_OS::atoi (port_number));
+                port = static_cast<u_short>(ACE_OS::atoi (port_number));
             }
 
           // Port wasn't specified on the command-line or in environment -

@@ -696,7 +696,7 @@ CORBA::ULong
 TAO_PropertySet::get_number_of_properties (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return ACE_static_cast (CORBA::ULong, this->hash_table_.current_size ());
+  return static_cast<CORBA::ULong>(this->hash_table_.current_size ());
 }
 
 //  Returns all of the property names currently defined in the
@@ -1738,8 +1738,7 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
     return 0;
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong,
-                                       this->iterator_.map ().current_size ());
+  CORBA::ULong size = static_cast<CORBA::ULong>(this->iterator_.map ().current_size ());
 
   CORBA::ULong len = 0;
   if (how_many <= size)
@@ -1834,8 +1833,7 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
   if (this->iterator_.next (entry_ptr) == 0 || how_many == 0)
     return 0;
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong,
-                                      this->iterator_.map ().current_size ());
+  CORBA::ULong size = static_cast<CORBA::ULong>(this->iterator_.map ().current_size ());
 
   CORBA::ULong len;
   if (how_many <= size)

@@ -199,7 +199,7 @@ TAO_FlowSpec_Entry::set_protocol (void)
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::set_protocol address is not 0\n"));
-      ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->address_);
+      ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*>(this->address_);
       char buf[BUFSIZ];
       inet_addr->addr_to_string (buf,BUFSIZ);
       if (TAO_debug_level > 0)
@@ -469,7 +469,7 @@ TAO_FlowSpec_Entry::get_local_addr_str (void)
                         char [BUFSIZ],
                         0);
 
-        ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr *,this->local_addr_);
+        ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *>(this->local_addr_);
         inet_addr->addr_to_string (buf,BUFSIZ);
         ACE_CString cstring (buf, 0, 0);
 
@@ -650,7 +650,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_TCP:
         case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
-            ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->address_);
+            ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*>(this->address_);
             inet_addr->addr_to_string (address,BUFSIZ);
           }
           break;
@@ -699,7 +699,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_TCP:
 	case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
-            ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->address_);
+            ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*>(this->address_);
             control_port = inet_addr->get_port_number() + 1;
             ACE_INET_Addr *inet_control_addr;
             ACE_NEW_RETURN (inet_control_addr,
@@ -730,7 +730,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_TCP:
 	case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
-	    ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->peer_addr_);
+	    ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*>(this->peer_addr_);
             inet_addr->addr_to_string (address,BUFSIZ);
 	    //inet_addr->get_host_name (address, BUFSIZ);
 	    
@@ -777,7 +777,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_TCP:
 	case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
-            ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->control_address_);
+            ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*>(this->control_address_);
             control_port = inet_addr->get_port_number();
           }
           break;
@@ -932,7 +932,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_SFP_UDP:
         case TAO_AV_Core::TAO_AV_USERDEFINED_UDP:
           {
-            ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->address_);
+            ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*>(this->address_);
             inet_addr->addr_to_string (address,BUFSIZ);
           }
           break;
@@ -979,7 +979,7 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
         case TAO_AV_Core::TAO_AV_TCP:
 	case TAO_AV_Core::TAO_AV_SCTP_SEQ:
           {
-            ACE_INET_Addr *inet_addr = ACE_dynamic_cast (ACE_INET_Addr*,this->control_address_);
+            ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*>(this->control_address_);
             control_port = inet_addr->get_port_number();
           }
           break;

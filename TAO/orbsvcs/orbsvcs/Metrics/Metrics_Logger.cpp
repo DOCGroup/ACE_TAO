@@ -824,28 +824,16 @@ TAO_Metrics_Logger::process_timeprobe_data (const Metrics::TimeprobeParameter_Se
       CORBA::Any any;
 
           util_data_.hrt_op_utilization =
-            ACE_static_cast (
-              CORBA::Double,
-              ACE_UINT64_DBLCAST_ADAPTER (hrt_op_time))
-            / ACE_static_cast (
-                CORBA::Double,
-                ACE_UINT64_DBLCAST_ADAPTER (interval));
+            static_cast<CORBA::Double>(ACE_UINT64_DBLCAST_ADAPTER (hrt_op_time))
+            / static_cast<CORBA::Double>(ACE_UINT64_DBLCAST_ADAPTER (interval));
 
           util_data_.srt_op_utilization =
-            ACE_static_cast (
-              CORBA::Double,
-              ACE_UINT64_DBLCAST_ADAPTER (srt_op_time))
-            / ACE_static_cast (
-                CORBA::Double,
-                ACE_UINT64_DBLCAST_ADAPTER (interval));
+            static_cast<CORBA::Double>(ACE_UINT64_DBLCAST_ADAPTER (srt_op_time))
+            / static_cast<CORBA::Double>(ACE_UINT64_DBLCAST_ADAPTER (interval));
 
           util_data_.queue_utilization =
-            ACE_static_cast (
-              CORBA::Double,
-              ACE_UINT64_DBLCAST_ADAPTER (queue_time))
-            / ACE_static_cast (
-                CORBA::Double,
-                ACE_UINT64_DBLCAST_ADAPTER (interval));
+            static_cast<CORBA::Double>(ACE_UINT64_DBLCAST_ADAPTER (queue_time))
+            / static_cast<CORBA::Double>(ACE_UINT64_DBLCAST_ADAPTER (interval));
 
           ACE_TRY_NEW_ENV
             {

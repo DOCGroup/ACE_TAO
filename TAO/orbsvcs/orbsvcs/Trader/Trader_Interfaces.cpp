@@ -384,7 +384,7 @@ fill_receptacles (const char* /* type */,
   ACE_CHECK_RETURN (0);
 
   CORBA::ULong i = 0;
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, pref_inter.num_offers ());
+  CORBA::ULong size = static_cast<CORBA::ULong>(pref_inter.num_offers ());
   CORBA::ULong offers_in_sequence = (how_many < size) ? how_many : size;
   CORBA::ULong offers_in_iterator = size - offers_in_sequence;
 
@@ -957,11 +957,11 @@ _cxx_export (CORBA::Object_ptr reference,
   // No copying, no memory leaks. Violates the "in" parameter semantics
   // when this object is colocated with the client, however.
   //  CosTrading::PropertySeq* hack_seq =
-  //    ACE_const_cast (CosTrading::PropertySeq*, &properties);
+  //    const_cast<CosTrading::PropertySeq*>(&properties);
   //  CosTrading::Property* pbuf = hack_seq->get_buffer (1);
 
   //  CosTrading::PropertySeq* hack_seq =
-  //    ACE_const_cast (CosTrading::PropertySeq*, &properties);
+  //    const_cast<CosTrading::PropertySeq*>(&properties);
   //  CosTrading::Property* pbuf = hack_seq->get_buffer (0);
   //  offer->properties.replace (plength, plength, pbuf, 0);
   //  offer->properties._allocate_buffer (plength);
@@ -1059,7 +1059,7 @@ modify (const char *id,
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
 
   CosTrading::Offer* offer = offer_database.
-    lookup_offer (ACE_const_cast (CosTrading::OfferId, id), type ACE_ENV_ARG_PARAMETER);
+    lookup_offer (const_cast<CosTrading::OfferId>(id), type ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (offer != 0)
@@ -1325,7 +1325,7 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
   else
     {
       size_t time_value = ACE_OS::time ();
-      ACE_OS::srand (ACE_static_cast (u_int, time_value));
+      ACE_OS::srand (static_cast<u_int>(time_value));
 
       this->stem_id_[0] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
       this->stem_id_[1] = ACE_static_cast (CORBA::Octet, ACE_OS::rand () %  256);
@@ -1795,7 +1795,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links (ACE_ENV_SINGLE_ARG_DECL_NO
   size_t size = this->links_.current_size ();
   CORBA::ULong i = 0;
   CosTrading::LinkName* link_seq =
-    CosTrading::LinkNameSeq::allocbuf (ACE_static_cast (CORBA::ULong, size));
+    CosTrading::LinkNameSeq::allocbuf (static_cast<CORBA::ULong>(size));
 
   // Copy the link names into the buffer.
   for (ACE_TYPENAME Links::iterator links_iter (this->links_);

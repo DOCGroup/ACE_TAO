@@ -1572,7 +1572,7 @@ get_config_info_set (RtecScheduler::Config_Info_Set_out configs
        ++config_iter)
     {
       config_info = (*config_iter).int_id_;
-      configs[ACE_static_cast (CORBA::ULong, config_info->preemption_priority)] = *config_info;
+      configs[static_cast<CORBA::ULong>(config_info->preemption_priority)] = *config_info;
     }
 
   return;
@@ -1692,7 +1692,7 @@ get_config_infos (RtecScheduler::Config_Info_Set_out configs
        ++config_iter)
     {
       config_info = (*config_iter).int_id_;
-      configs[ACE_static_cast (CORBA::ULong, config_info->preemption_priority)] = *config_info;
+      configs[static_cast<CORBA::ULong>(config_info->preemption_priority)] = *config_info;
     }
 }
 
@@ -1814,8 +1814,7 @@ create_i (const char *entry_point,
   // Connect the entry to the RT_Info.
   new_rt_info->volatile_token =
     ACE_static_cast (CORBA::ULongLong,
-                     ACE_reinterpret_cast (ptrdiff_t,
-                                           new_sched_entry));
+                     reinterpret_cast<ptrdiff_t>(new_sched_entry));
 
   // With everything safely registered in the map and tree, just
   // update the next handle and info counter and return the new info.
@@ -2510,11 +2509,10 @@ detect_cycles_i (ACE_ENV_SINGLE_ARG_DECL)
   // Sort the pointers to entries in order of descending forward
   // finish times, which produces a reverse topological ordering,
   // with callers ahead of called nodes.
-  ACE_OS::qsort (ACE_reinterpret_cast (void *, entry_ptr_array_),
+  ACE_OS::qsort (reinterpret_cast<void *>(entry_ptr_array_),
                  this->rt_info_count_,
                  sizeof (TAO_Reconfig_Scheduler_Entry *),
-                 ACE_reinterpret_cast (COMP_FUNC,
-                                       RECONFIG_SCHED_STRATEGY::comp_entry_finish_times));
+                 reinterpret_cast<COMP_FUNC>(RECONFIG_SCHED_STRATEGY::comp_entry_finish_times));
 
   // Traverse entries in reverse topological order,
   // looking for strongly connected components (cycles).
@@ -2573,11 +2571,10 @@ perform_admission_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Sort the pointers to original tuples in ascending admission
   // order, according to the scheduling strategy's admission policy.
-  ACE_OS::qsort (ACE_reinterpret_cast (void *, tuple_ptr_array_),
+  ACE_OS::qsort (reinterpret_cast<void *>(tuple_ptr_array_),
            this->rt_info_tuple_count_,
            sizeof (TAO_RT_Info_Tuple *),
-           ACE_reinterpret_cast (COMP_FUNC,
-                                 RECONFIG_SCHED_STRATEGY::total_admission_comp));
+           reinterpret_cast<COMP_FUNC>(RECONFIG_SCHED_STRATEGY::total_admission_comp));
 
   // Traverse tuples in admission order, updating the associate tuple
   // for each thread delineator.
@@ -2657,11 +2654,10 @@ propagate_criticalities_i (ACE_ENV_SINGLE_ARG_DECL)
   // Sort the pointers to original tuples in ascending admission
   // order, according to the scheduling strategy's admission policy.
 
-  ACE_OS::qsort (ACE_reinterpret_cast (void *, tuple_ptr_array_),
+  ACE_OS::qsort (reinterpret_cast<void *>(tuple_ptr_array_),
                  this->rt_info_tuple_count_,
                  sizeof (TAO_RT_Info_Tuple *),
-                 ACE_reinterpret_cast (COMP_FUNC,
-                   RECONFIG_SCHED_STRATEGY::comp_tuple_finish_times ));
+                 reinterpret_cast<COMP_FUNC>(RECONFIG_SCHED_STRATEGY::comp_tuple_finish_times ));
 
   // Traverse entries in topological (ascending forward DFS
   // finish time) order, propagating aggregate execution
@@ -2762,11 +2758,10 @@ assign_priorities_i (ACE_ENV_SINGLE_ARG_DECL)
   // Sort the pointers to entries in descending order
   // of static priority and static subpriority, according
   // to our given scheduling strategy.
-  ACE_OS::qsort (ACE_reinterpret_cast (void *, entry_ptr_array_),
+  ACE_OS::qsort (reinterpret_cast<void *>(entry_ptr_array_),
                  this->rt_info_count_,
                  sizeof (TAO_Reconfig_Scheduler_Entry *),
-                 ACE_reinterpret_cast (COMP_FUNC,
-                                       RECONFIG_SCHED_STRATEGY::total_priority_comp));
+                 reinterpret_cast<COMP_FUNC>(RECONFIG_SCHED_STRATEGY::total_priority_comp));
 
 #ifdef SCHEDULER_LOGGING
   ACE_DEBUG ((LM_DEBUG, "Scheduler::qsorted array is\n"));

@@ -363,7 +363,7 @@ int FTClientMain::pass (
           {
             ACE_OS::fprintf (stdout, "FT Client: ->die(%ld);\n", operand);
           }
-          this->replica_->die(ACE_static_cast (FT_TEST::TestReplica::Bane, operand) ACE_ENV_ARG_PARAMETER);
+          this->replica_->die(static_cast<FT_TEST::TestReplica::Bane>(operand) ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (-1);
           echo = 0;
           break;
@@ -429,7 +429,7 @@ int FTClientMain::pass (
         }
         case 'v':
         {
-          this->verbose_ = ACE_static_cast(Verbosity, operand);
+          this->verbose_ = static_cast<Verbosity>(operand);
           break;
         }
         case 'z':

@@ -259,8 +259,7 @@ void TAO_Storable_Naming_Context::Write(TAO_Storable_Base& wrtr)
   ACE_TRACE("Write");
   TAO_NS_Persistence_Header header;
 
-  header.size (ACE_static_cast(unsigned int,
-                               storable_context_->current_size()));
+  header.size (static_cast<unsigned int>(storable_context_->current_size()));
   header.destroyed (destroyed_);
 
   wrtr << header;
@@ -1017,8 +1016,7 @@ TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n
           CosNaming::Name rest_of_name
             (n.maximum () - 1,
              n.length () - 1,
-             ACE_const_cast (CosNaming::NameComponent*,
-                             n.get_buffer ()) + 1);
+             const_cast<CosNaming::NameComponent*>(n.get_buffer ()) + 1);
 
           // If there are any exceptions, they will propagate up.
           return context->resolve (rest_of_name
@@ -1374,7 +1372,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   if (this->context_->current_size () > how_many)
     n = how_many;
   else
-    n = ACE_static_cast (CORBA::ULong, this->context_->current_size ());
+    n = static_cast<CORBA::ULong>(this->context_->current_size ());
 
   // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);

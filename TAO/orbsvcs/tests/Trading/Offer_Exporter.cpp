@@ -175,7 +175,7 @@ TAO_Offer_Exporter::export_offers_to_all (ACE_ENV_SINGLE_ARG_DECL)
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "Getting link information for %s\n",
-                          ACE_static_cast (const char*, link_name_seq[i])));
+                          static_cast<const char*>(link_name_seq[i])));
             }
 
           CosTrading::Link::LinkInfo_var link_info =
@@ -192,7 +192,7 @@ TAO_Offer_Exporter::export_offers_to_all (ACE_ENV_SINGLE_ARG_DECL)
           if (this->verbose_)
             {
               ACE_DEBUG ((LM_DEBUG, "Exporting offers to %s\n",
-                          ACE_static_cast (const char*, link_name_seq[i])));
+                          static_cast<const char*>(link_name_seq[i])));
             }
 
           this->export_to (link_info->target_reg.in () ACE_ENV_ARG_PARAMETER);

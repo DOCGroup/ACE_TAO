@@ -116,7 +116,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
         }
     }
 
-  CORBA::ULong size = ACE_static_cast (CORBA::ULong, key_queue.size ());
+  CORBA::ULong size = static_cast<CORBA::ULong>(key_queue.size ());
   fifd->operations.length (size);
 
   for (i = 0; i < size; ++i)
@@ -167,8 +167,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
         }
     }
 
-  size = ACE_static_cast (CORBA::ULong, 
-                          key_queue.size ());
+  size = static_cast<CORBA::ULong>(key_queue.size ());
   fifd->attributes.length (size);
 
   for (i = 0; i < size; ++i)

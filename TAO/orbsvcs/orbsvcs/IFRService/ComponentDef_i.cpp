@@ -30,8 +30,7 @@ TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple
                              "is_multiple",
                              is_multiple);
   desc_seq[index].is_multiple =
-    ACE_static_cast (CORBA::Boolean,
-                     is_multiple);
+    static_cast<CORBA::Boolean>(is_multiple);
 }
 
 // Specialization.
