@@ -1,3 +1,7 @@
+Wed Jan 06 16:44:06 1999  David L. Levine  <schmidt@cs.wustl.edu>
+
+        * TAO version 0.2.47 released.
+
 Wed Jan 06 16:16:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/Time_Service/Server_i.cpp (init_IR): added .in ()
