@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Ambreen Ilyas">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (X11; I; SunOS 5.5.1 sun4u) [Netscape]">
+   <TITLE>Example 2</TITLE>
+</HEAD>
+<BODY>
+<FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+<BR><FONT COLOR="#CC0000">//// This example is from the ACE Programmers
+Guide.</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; Chapter:&nbsp; "The Acceptor/Connector"&nbsp;
+(Connection Initialization)</FONT>
+<BR><FONT COLOR="#CC0000">//// For details please see the guide at</FONT>
+<BR><FONT COLOR="#CC0000">//// http://www.cs.wustl.edu/~schmidt/ACE.html</FONT>
+<BR><FONT COLOR="#CC0000">////&nbsp; AUTHOR: Umar Syyid (usyyid@hns.com)</FONT>
+<BR><FONT COLOR="#CC0000">//// and Ambreen Ilyas (ambreen@bitsmart.com)</FONT>
+<BR><FONT COLOR="#CC0000">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</FONT>
+
+<P><FONT COLOR="#CC0000">//Example 2</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/Reactor.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/Svc_Handler.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/Acceptor.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/Synch.h"</FONT>
+<BR><FONT COLOR="#000099">#include</FONT> <FONT COLOR="#006600">"ace/SOCK_Acceptor.h"</FONT>
+<BR><FONT COLOR="#000099">#define</FONT> <FONT COLOR="#663366">PORT_NUM
+10101</FONT>
+<BR><FONT COLOR="#000099">#define</FONT><FONT COLOR="#663366"> DATA_SIZE
+12</FONT>
+
+<P><FONT COLOR="#FF0000">//forward declaration</FONT>
+<BR>class My_Svc_Handler;
+
+<P><FONT COLOR="#FF0000">//Create the Acceptor class</FONT>
+<BR>typedef ACE_Acceptor&lt;My_Svc_Handler,ACE_SOCK_ACCEPTOR> MyAcceptor;
+
+<P><FONT COLOR="#FF0000">//Create a service handler similar to as seen
+in example 1.</FONT>
+<BR><FONT COLOR="#FF0000">//Except this time include the handle_input()
+method which will be</FONT>
+<BR><FONT COLOR="#FF0000">//called back automatically by the reactor when
+new data arrives</FONT>
+<BR><FONT COLOR="#FF0000">//on the newly established connection</FONT>
+<BR>class My_Svc_Handler:
+<BR>&nbsp;public ACE_Svc_Handler &lt;ACE_SOCK_STREAM,ACE_NULL_SYNCH>{
+<BR>public:
+<BR>My_Svc_Handler(){
+<BR>&nbsp;data= new char[DATA_SIZE];
+<BR>&nbsp;}
+<BR>int open(void*){
+<BR>&nbsp;ACE_DEBUG((LM_DEBUG,"Connection established"));
+
+<P><FONT COLOR="#FF0000">&nbsp;//Register the service handler with the
+reactor</FONT>
+<BR>&nbsp;ACE_Reactor::instance()->register_handler(this,
+<BR>&nbsp;ACE_Event_Handler::READ_MASK);
+<BR>&nbsp;return 0;
+<BR>&nbsp;}
+
+<P>int handle_input(ACE_HANDLE){
+<BR>&nbsp;<FONT COLOR="#FF0000">//After using the peer() method of ACE_Svc_Handler
+to obtain a</FONT>
+<BR><FONT COLOR="#FF0000">//reference to the underlying stream of the service
+handler class</FONT>
+<BR><FONT COLOR="#FF0000">//we call recv_n() on it to read the data which
+has been received.</FONT>
+<BR><FONT COLOR="#FF0000">//This data is stored in the data array and then
+printed out</FONT>
+<BR>&nbsp;peer().recv_n(data,DATA_SIZE);
+<BR>&nbsp;ACE_OS::printf("&lt;&lt; %s\n",data);
+
+<P>&nbsp;<FONT COLOR="#FF0000">//keep yourself registered with the reactor</FONT>
+<BR>&nbsp; return 0;
+<BR>&nbsp;}
+<BR>private:
+<BR>&nbsp;char* data;
+<BR>};
+
+<P>int main(int argc, char* argv[]){
+<BR>&nbsp;ACE_INET_Addr addr(PORT_NUM);
+<BR><FONT COLOR="#FF0000">&nbsp;//create the acceptor</FONT>
+<BR>&nbsp;MyAcceptor acceptor(addr, <FONT COLOR="#FF0000">//address to
+accept on</FONT>
+<BR>&nbsp; ACE_Reactor::instance()); <FONT COLOR="#FF0000">//the reactor
+to use</FONT>
+
+<P>while(1)
+<BR><FONT COLOR="#FF0000">&nbsp;//Start the reactor?s event loop</FONT>
+<BR>&nbsp;ACE_Reactor::instance()->handle_events();
+<BR>}
+
+<P>&nbsp;<A HREF="ex03.html">Next Example</A>
+</BODY>
+</HTML>
