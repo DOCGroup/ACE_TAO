@@ -203,7 +203,7 @@ main (int argc, char *argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "Naming Service:\n---------\n"));
             }
-  
+
           list_context (root_nc.in (), 1);
           ACE_TRY_CHECK;
         }
