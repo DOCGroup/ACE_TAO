@@ -70,6 +70,9 @@ public:
   Options (void);
   // Constructor.
 
+  ~Options (void);
+  // Destructor.
+
   int parse_args (int argc, char *argv[]);
 
   enum Concurrency_Type
