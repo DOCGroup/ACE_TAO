@@ -42,6 +42,7 @@ report process</a>.<P>
 
 <UL>
   <LI><A HREF="#platforms">Supported Platforms and C++ Compilers</A>
+  <LI><A HREF="#MPC">General MPC information</A>
   <LI><A HREF="#installnotes">Installation Notes</A>
   <LI><A HREF="#g++">Compiling ACE with GNU g++</A>
   <LI><A HREF="#egcs">Compiling ACE with egcs</A>
@@ -163,6 +164,45 @@ HREF="http://www.cs.wustl.edu/~schmidt/ACE-users.html">user
 community</A>.  Naturally, we will be happy to accept well-tested
 patches from the ACE+TAO user community for any platforms that aren't
 supported by the DOC group, Riverace, or OCI. <P>
+
+<P><HR><P>
+<H3><A NAME="MPC">General MPC information</A></H3>
+
+If you are attempting to generate project files using MPC, and you get
+the following error message:<br>
+
+<pre>
+ERROR: Unable to find the MPC modules in /builds/ACE_wrappers/MPC.
+You can set the MPC_ROOT environment variable to the location of MPC.
+</pre>
+
+You need to do one of the following:
+
+<ol>
+<li>If you have already obtained MPC, either move it underneath the
+ACE_wrappers directory or set your MPC_ROOT environment variable to point
+to the full path of MPC.</li>
+<li>Check out MPC from either the DOC Group CVS repository or the OCI
+anonymous CVS server and set your MPC_ROOT environment variable.</li>
+</ol>
+
+If you do not have access to the DOC Group CVS repository, you can check
+out MPC from the OCI anonymous CVS server using the following command.
+
+<pre>
+cvs -d :pserver:anonymous@anoncvs.ociweb.com:/cvs co MPC
+</pre>
+
+The README and USAGE files in the MPC directory are an up-to-date source
+of documentation, however it is not a complete set of documentation. The
+TAO Developer's Guide from OCI starting with the 1.3a version contains
+more information about MPC.<p>
+
+There is a pdf of the MPC chapter from the TAO 1.3a Developer's Guide
+available at <a href="http://downloads.ociweb.com/MPC/">
+http://downloads.ociweb.com/MPC/</a>, however much of MPC has changed
+since it's writing.  It will be updated as newer versions of the
+TAO Developer's Guide is released.
 
 <P><HR><P>
 <H3><A NAME="installnotes">Installation Notes</A></H3>

@@ -31,3 +31,9 @@ that will generate only static libraries.
 
 For more information about MPC, see the README and USAGE files in the
 MPC directory.
+
+You can get MPC using cvs.  If you have access to the DOC Group CVS
+repository, you can check-out the 'MPC' module.  You can also
+anonymously check-out MPC from OCI's anonymous CVS server.
+
+cvs -d :pserver:anonymous@anoncvs.ociweb.com:/cvs co MPC
