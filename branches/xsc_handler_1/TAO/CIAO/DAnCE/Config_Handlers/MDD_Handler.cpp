@@ -84,7 +84,7 @@ namespace CIAO
            ae != ab;
            ++ab)
         {
-          CORBA::ULong tmp = 0;
+          size_t tmp = 0;
 
           bool r =
             ADD_Handler::IDREF.find_ref (ab->id ().c_str (),
