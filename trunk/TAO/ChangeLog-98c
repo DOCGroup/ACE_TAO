@@ -1,62 +1,67 @@
+Mon Jan 04 16:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/Event_Channel_i.cpp (for_consumers):
+          added missing ; at end of statement.
+
 Mon Jan  4 14:29:49 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
 
-	  For the [] operator, instead of returning a
-	  TAO_SeqElem_String_Manager, we were generating
-	  TAO_String_Manager. 
+          For the [] operator, instead of returning a
+          TAO_SeqElem_String_Manager, we were generating
+          TAO_String_Manager.
 
-	* tests/Param_Test/objref.cpp
-	  tests/Param_Test/ub_objref_seq.cpp:
+        * tests/Param_Test/objref.cpp
+          tests/Param_Test/ub_objref_seq.cpp:
 
-	  There were instances of incorrect assignment between a
-	  String_var and a TAO_String_Manager. 
+          There were instances of incorrect assignment between a
+          String_var and a TAO_String_Manager.
 
 Mon Jan 04 12:45:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Runtime_Scheduler.{cpp, h}
-          orbsvcs/orbsvcs/Scheduler_Utilities.{h, i}: added 
-	  ACE_NEW_THROW_RETURN, lots of comments.
+          orbsvcs/orbsvcs/Scheduler_Utilities.{h, i}: added
+          ACE_NEW_THROW_RETURN, lots of comments.
 
 Mon Jan 04 12:04:37 1999  Carlos O'Ryan  <coryan@JIG>
 
-	* orbsvcs/orbsvcs/CosEvent/*
-	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp: 
-	  Another code review for Pradeep.
+        * orbsvcs/orbsvcs/CosEvent/*
+        * orbsvcs/CosEvent_Service/CosEvent_Service.cpp:
+          Another code review for Pradeep.
 
 Mon Jan  4 07:39:27 EST 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
 
-	  The code was written with the assumption that a string member of
-	  a struct gets mapped to CORBA::String_var. However, due to the
-	  recent changes made to the IDL compiler where a string member
-	  gets mapped to a TAO_String_Manager caused several problems in
-	  the Trader code. This happened when the string member was
-	  assigned directly to a CORBA::String_var class. The right way to
-	  do this is to use the "in ()" method on the TAO_String_Manager
-	  class to retrieve the underlying string. 
+          The code was written with the assumption that a string member of
+          a struct gets mapped to CORBA::String_var. However, due to the
+          recent changes made to the IDL compiler where a string member
+          gets mapped to a TAO_String_Manager caused several problems in
+          the Trader code. This happened when the string member was
+          assigned directly to a CORBA::String_var class. The right way to
+          do this is to use the "in ()" method on the TAO_String_Manager
+          class to retrieve the underlying string.
 
-	* tao/Managed_Types.h
-	  tao/ORB.h:
+        * tao/Managed_Types.h
+          tao/ORB.h:
 
-	  I had forgotten to include the Managed_Types.i file when the
-	  ACE_INLINE macro is defined. This was causing all kinds of
-	  undefined symbol errors at link time. However, it turns out that
-	  the Managed_Types.i file uses operations such as
-	  CORBA::string_free that get used before their inline definition
-	  is seen in ORB.i. The solution to this dependency problem is to
-	  include Managed_Types.i after ORB.i in the file ORB.h.
+          I had forgotten to include the Managed_Types.i file when the
+          ACE_INLINE macro is defined. This was causing all kinds of
+          undefined symbol errors at link time. However, it turns out that
+          the Managed_Types.i file uses operations such as
+          CORBA::string_free that get used before their inline definition
+          is seen in ORB.i. The solution to this dependency problem is to
+          include Managed_Types.i after ORB.i in the file ORB.h.
 
-	* tao/{Sequence, Sequence_T}.{i,cpp} (operator []):
+        * tao/{Sequence, Sequence_T}.{i,cpp} (operator []):
 
-	  Moved the definition of the [] operator to the *.cpp file since
-	  it was using the inline constructor of the
-	  TAO_SeqElem_String_Manager before it was defined.
+          Moved the definition of the [] operator to the *.cpp file since
+          it was using the inline constructor of the
+          TAO_SeqElem_String_Manager before it was defined.
 
-	* tao/Managed_Types.i:
+        * tao/Managed_Types.i:
 
-	  Some missing ACE_INLINE added.
+          Some missing ACE_INLINE added.
 
 Mon Jan 04 00:15:13 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
@@ -67,11 +72,11 @@ Mon Jan 04 00:15:13 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
 Sun Jan 03 23:05:08 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/TAO_Static.dsp: 
-	* tao/TAO.dsp: 
+        * tao/TAO_Static.dsp:
+        * tao/TAO.dsp:
 
-	  Added Managed_Types.cpp to build.
-	
+          Added Managed_Types.cpp to build.
+
 Sun Jan 03 22:42:22 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Time/TAO_UTO.cpp (TAO_UTO): moved "/2" out of
