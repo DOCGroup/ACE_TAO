@@ -1139,8 +1139,6 @@ sub check_for_include ()
 sub check_for_non_bool_operators ()
 {
     print "Running non-bool equality, relational and logical operator check\n";
-    # Only bother looking at the headers.  The C++ compiler will flag
-    # mismatched return types that developers introduce.
     foreach $file (@files_h, @files_inl, @files_cpp) {
         my $line = 0;
         if (open (FILE, $file)) {
