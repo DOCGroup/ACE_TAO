@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // $Id$
 
-#include "ifr_dii_client.h"
+#include "idl3_client.h"
 
 ACE_RCSID (Application_Test, 
            client, 
@@ -10,10 +10,9 @@ ACE_RCSID (Application_Test,
 int
 main (int argc, char *argv[])
 {
-  IFR_DII_Client client;
+  IDL3_Client client;
 
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       if (client.init (argc,
                        argv
@@ -28,9 +27,9 @@ main (int argc, char *argv[])
            ACE_TRY_CHECK;
 
            if (status == -1)
-           {
-              return 1;
-           }
+             {
+                return 1;
+             }
         }
     }
   ACE_CATCHANY

@@ -180,7 +180,7 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i (
       attr.section_key (key);
 
       attr.fill_description (fifd->attributes[i]
-                                 ACE_ENV_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
     }
 
@@ -295,7 +295,7 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
   xattr.exceptions ("get_excepts",
                     get_exceptions);
 
-  xattr.exceptions ("set_excepts",
+  xattr.exceptions ("put_excepts",
                     set_exceptions);
 
   // Create the object reference.

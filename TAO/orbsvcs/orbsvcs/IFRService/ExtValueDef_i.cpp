@@ -585,7 +585,7 @@ TAO_ExtValueDef_i::describe_ext_value_i (
 
           this->fill_exceptions (fv_desc->attributes[i].put_exceptions,
                                  attr_key,
-                                 "set_excepts"
+                                 "put_excepts"
                                  ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
         }
@@ -857,7 +857,7 @@ TAO_ExtValueDef_i::create_ext_attribute_i (
                     get_exceptions);
 
   this->exceptions (new_key,
-                    "set_excepts",
+                    "put_excepts",
                     set_exceptions);
 
   // Create the object reference.

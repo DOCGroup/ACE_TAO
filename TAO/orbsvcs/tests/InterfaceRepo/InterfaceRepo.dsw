@@ -27,6 +27,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "IDL3_Test"=.\IDL3_Test\IDL3_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "IFR_Test"=.\IFR_Test\IFR_Test.dsp - Package Owner=<4>
 
 Package=<5>

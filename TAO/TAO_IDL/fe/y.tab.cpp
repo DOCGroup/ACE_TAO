@@ -4893,7 +4893,7 @@ case 318:
 
                   if (tao_yyvsp[-2].nlval != 0)
                     {
-                      (void) a->fe_add_get_exceptions (tao_yyvsp[0].nlval);
+                      (void) a->fe_add_get_exceptions (tao_yyvsp[-2].nlval);
                     }
 
                   if (tao_yyvsp[0].nlval != 0)

@@ -829,7 +829,7 @@ TAO_Repository_i::create_servants_and_poas (ACE_ENV_SINGLE_ARG_DECL)
       this-> name ## _servant_ \
     ); \
   this-> name ## _poa_->set_servant (this-> name ## _servant_ \
-                                        ACE_ENV_ARG_PARAMETER); \
+                                     ACE_ENV_ARG_PARAMETER); \
   ACE_CHECK_RETURN (-1);
 
   CONCRETE_IR_OBJECT_TYPES
@@ -904,8 +904,6 @@ TAO_Repository_i::select_container (CORBA::DefinitionKind def_kind) const
       return this->InterfaceDef_servant_->_tied_object ();
     case CORBA::dk_LocalInterface:
       return this->LocalInterfaceDef_servant_->_tied_object ();
-    case CORBA::dk_Module:
-      return this->ModuleDef_servant_->_tied_object ();
     case CORBA::dk_Repository:
       return ACE_const_cast (TAO_Repository_i *, this);
     case CORBA::dk_Struct:
@@ -940,8 +938,6 @@ TAO_Repository_i::select_contained (CORBA::DefinitionKind def_kind) const
       return this->InterfaceDef_servant_->_tied_object ();
     case CORBA::dk_LocalInterface:
       return this->LocalInterfaceDef_servant_->_tied_object ();
-    case CORBA::dk_Module:
-      return this->ModuleDef_servant_->_tied_object ();
     case CORBA::dk_Native:
       return this->NativeDef_servant_->_tied_object ();
     case CORBA::dk_Operation:
@@ -986,8 +982,6 @@ TAO_Repository_i::select_poa (CORBA::DefinitionKind def_kind) const
       return this->InterfaceDef_poa_.in ();
     case CORBA::dk_LocalInterface:
       return this->LocalInterfaceDef_poa_.in ();
-    case CORBA::dk_Module:
-      return this->ModuleDef_poa_.in ();
     case CORBA::dk_Native:
       return this->NativeDef_poa_.in ();
     case CORBA::dk_Operation:
