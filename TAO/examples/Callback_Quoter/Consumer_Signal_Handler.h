@@ -34,21 +34,40 @@ class Consumer_Handler;
 
 class Consumer_Signal_Handler : public ACE_Event_Handler
 {
-public:
+ public:
 
   Consumer_Signal_Handler (Consumer_Handler *consumer_handler);
   // The consumer_handler refernce will be used to access
   // the servant methods.
 
-  virtual int handle_signal (int signum, siginfo_t*, ucontext_t*);
+  int handle_signal (int signum,
+			     siginfo_t*,
+			     ucontext_t*);
   // This method takes action on an signal event.
+
+  int handle_close (ACE_HANDLE handle,
+			    ACE_Reactor_Mask close_mask);
+  // For removal of the signal handler from the dispatch tables.
+  // When the handle_signal () returns < 0 this method will
+  // be executed automatically.
+
+  friend class ACE_Shutup_GPlusPlus;
+  // Turn off g++ warning
+
 private:
 
- ~Consumer_Signal_Handler ();
+  ~Consumer_Signal_Handler ();
+  // private destructor so that the signal handler is
+  // always created dynamically and hence the heap doesnt
+  // get corrupted.
 
- Consumer_Handler *consumer_handler_;
+  int quit_on_signal ();
+  // Exit gracefully on a signal.
+
+  Consumer_Handler *consumer_handler_;
+  // Reference to the Consumer_Handler which is used in
+  // accessing the servant methods.x
 
 };
-
 
 #endif /* CONSUMER_SIGNAL_HANDLER_H */
