@@ -1,3 +1,10 @@
+Thu Sep 17 09:04:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: 
+	  More fixes for HP-UX 10.2, we have to use ACE_OS::thr_equal()
+	  instead of operator==, thanks to Anne Blankert <anne@geodan.nl>
+	  for pointing out this problems.
+
 Wed Sep 16 22:36:55 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Mcast/EC_Mcast.i
