@@ -1,3 +1,8 @@
+Thu Aug 12 21:30:09 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          added SIMNT support.
+
 Thu Aug 12 20:54:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-osf1-4.0.h: added ACE_HAS_USING_KEYWORD
