@@ -420,12 +420,8 @@ namespace
                         EmitterBase
   {
     FacetEmitter (Context& c)
-      : EmitterBase (c),
-        scope_type_name_emitter_ (c.os ()),
-        simple_type_name_emitter_ (c.os ())
+      : EmitterBase (c)
     {
-      scope_belongs_.node_traverser (scope_type_name_emitter_);
-      simple_belongs_.node_traverser (simple_type_name_emitter_);
     }
 
     virtual void
@@ -536,12 +532,6 @@ namespace
       // Close the CIAO_GLUE namespace.
       os << "}" << endl;
     }
-
-  private:
-    EnclosingTypeNameEmitter scope_type_name_emitter_;
-    SimpleTypeNameEmitter simple_type_name_emitter_;
-    Traversal::Belongs scope_belongs_;
-    Traversal::Belongs simple_belongs_;
   };
 
   struct ContextEmitter : Traversal::Component, EmitterBase
@@ -1423,11 +1413,13 @@ namespace
         : EmitterBase (c),
           type_name_emitter_ (c.os ()),
           simple_type_name_emitter_ (c.os ()),
-          servant_type_name_emitter_ (c.os ())
+          servant_type_name_emitter_ (c.os ()),
+          enclosing_type_name_emitter_ (c.os ())
       {
         belongs_.node_traverser (type_name_emitter_);
         simple_belongs_.node_traverser (simple_type_name_emitter_);
         servant_belongs_.node_traverser (servant_type_name_emitter_);
+        enclosing_belongs_.node_traverser (enclosing_type_name_emitter_);
       }
 
       virtual void
@@ -1443,8 +1435,11 @@ namespace
            << "{"
            << "if (::CORBA::is_nil (this->provide_"
            << p.name () << "_.in ()))" << endl
-           << "{"
-           << p.scoped_name ().scope_name ().scope_name () << "::CCM_";
+           << "{";
+           
+        Traversal::ProviderData::belongs (p, enclosing_belongs_);
+           
+        os << "::CCM_";
 
         Traversal::ProviderData::belongs (p, simple_belongs_);
 
@@ -1520,9 +1515,11 @@ namespace
       TypeNameEmitter type_name_emitter_;
       SimpleTypeNameEmitter simple_type_name_emitter_;
       ServantTypeNameEmitter servant_type_name_emitter_;
+      EnclosingTypeNameEmitter enclosing_type_name_emitter_;
       Traversal::Belongs belongs_;
       Traversal::Belongs simple_belongs_;
       Traversal::Belongs servant_belongs_;
+      Traversal::Belongs enclosing_belongs_;
     };
 
     struct ConsumesEmitter : Traversal::ConsumerData,
