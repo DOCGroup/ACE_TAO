@@ -1294,52 +1294,6 @@ TAO_Object_Adapter::servant_dispatcher (TAO_Servant_Dispatcher *dispatcher)
   this->servant_dispatcher_ = dispatcher;
 }
 
-PortableServer::POA_ptr
-TAO_POA_Current::get_POA (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::Current::NoContext))
-{
-  TAO::Portable_Server::POA_Current_Impl *impl = this->implementation ();
-
-  if (impl == 0)
-    ACE_THROW_RETURN (PortableServer::Current::NoContext (),
-                      0);
-  return impl->get_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-PortableServer::ObjectId *
-TAO_POA_Current::get_object_id (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   PortableServer::Current::NoContext))
-{
-  TAO::Portable_Server::POA_Current_Impl *impl = this->implementation ();
-
-  if (impl == 0)
-    ACE_THROW_RETURN (PortableServer::Current::NoContext (),
-                      0);
-  return impl->get_object_id (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-TAO::Portable_Server::POA_Current_Impl *
-TAO_POA_Current::implementation (void)
-{
-  return static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                          (TAO_TSS_RESOURCES::instance ()->poa_current_impl_);
-}
-
-TAO::Portable_Server::POA_Current_Impl *
-TAO_POA_Current::implementation (TAO::Portable_Server::POA_Current_Impl *new_current)
-{
-  TAO_TSS_Resources *tss =
-    TAO_TSS_RESOURCES::instance ();
-
-  TAO::Portable_Server::POA_Current_Impl *old =
-    static_cast <TAO::Portable_Server::POA_Current_Impl *>
-                     (tss->poa_current_impl_);
-  tss->poa_current_impl_ = new_current;
-  return old;
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 // Common typedefs.

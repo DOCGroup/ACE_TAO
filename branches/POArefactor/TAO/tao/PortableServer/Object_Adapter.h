@@ -83,40 +83,6 @@ class TAO_TSS_Resources;
 class TAO_Transport;
 class TAO_Servant_Dispatcher;
 
-class TAO_PortableServer_Export TAO_POA_Current
-  : public PortableServer::Current,
-    public TAO_Local_RefCounted_Object
-{
-public:
-  /// Constructor
-  TAO_POA_Current (void);
-
-  /**
-   * Returns the POA on which the current request is being invoked.
-   * Can raise the <CORBA::NoContext> exception if this function is
-   * not invoked in the context of an upcall.
-   */
-  PortableServer::POA_ptr get_POA (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
-
-  /**
-   * Returns the object id of the current request being invoked.  Can
-   * raise the <CORBA::NoContext> exception if this function is not
-   * invoked in the context of an upcall.
-   */
-  PortableServer::ObjectId *get_object_id (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::Current::NoContext));
-
-  /// Returns the class that implements this interface.
-  TAO::Portable_Server::POA_Current_Impl *implementation (void);
-
-  /// Sets the thread-specific pointer to the new POA Current state,
-  /// returning a pointer to the existing POA Current state.
-  TAO::Portable_Server::POA_Current_Impl *implementation (TAO::Portable_Server::POA_Current_Impl *new_current);
-};
-
 /**
  * @class TAO_Object_Adapter
  *

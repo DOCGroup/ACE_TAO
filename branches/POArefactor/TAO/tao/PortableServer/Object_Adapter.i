@@ -4,12 +4,6 @@
 
 #include "tao/SystemException.h"
 
-
-ACE_INLINE
-TAO_POA_Current::TAO_POA_Current (void)
-{
-}
-
 ACE_INLINE TAO_Policy_Validator &
 TAO_Object_Adapter::validator (void)
 {
