@@ -2,6 +2,8 @@
 
 #include "ace/Get_Opt.h"
 
+#include "orbsvcs/LoadBalancing/LB_RPMS_Monitor.h"
+
 #include "HasherFactory.h"
 
 //#include "PropertyManagerTest.h"
@@ -44,11 +46,21 @@ parse_args (int argc, char *argv[])
 }
 
 LoadBalancing::Criteria *
-setup_criteria (HasherFactory &hasher_factory)
+setup_lb (CORBA::Object_ptr lb,
+          TAO_LB_RPMS_Monitor &rpms_monitor,
+          HasherFactory &hasher_factory)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      LoadBalancing::ReplicationManager_var balancer =
+        LoadBalancing::ReplicationManager::_narrow (lb, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      LoadBalancing::LoadMonitor_var monitor =
+        rpms_monitor._this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       const CORBA::UShort INIT_NUM_REPLICAS = 4;
       const CORBA::UShort MIN_NUM_REPLICAS = 3;
 
@@ -100,7 +112,7 @@ setup_criteria (HasherFactory &hasher_factory)
 
       LoadBalancing::GenericFactory_var factory =
         LoadBalancing::GenericFactory::_narrow (obj.in (),
-                                                   ACE_TRY_ENV);
+                                                ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       LoadBalancing::FactoryInfos factory_infos;
@@ -128,6 +140,12 @@ setup_criteria (HasherFactory &hasher_factory)
             CORBA::string_dup (location);
           factory_info.the_location[CORBA::ULong (0)].kind =
             CORBA::string_dup ("location number");
+
+          // Register a load monitor for each of the replicas.
+          balancer->register_load_monitor (monitor.in (),
+                                           factory_info.the_location,
+                                           ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
 
       factories.val <<= factory_infos;
@@ -168,6 +186,10 @@ main (int argc, char *argv[])
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      TAO_LB_RPMS_Monitor rpms_monitor;
+      rpms_monitor.init (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "test_orb",
@@ -225,12 +247,15 @@ main (int argc, char *argv[])
 //                           -1);
 
 
-      HasherFactory hasher_factory (orb.in (), root_poa.in ());
+      HasherFactory hasher_factory (orb.in (),
+                                    root_poa.in ());
 
       // Set up the criteria to be used when creating the object
       // group, and activate the hasher factory.
       LoadBalancing::Criteria_var the_criteria =
-        ::setup_criteria (hasher_factory);
+        ::setup_lb (lb,
+                    rpms_monitor,
+                    hasher_factory);
 
       // The FactoryCreationId
       LoadBalancing::GenericFactory::FactoryCreationId_var

@@ -5,7 +5,6 @@
 
 #include "tao/debug.h"
 
-
 ACE_RCSID (LoadBalancing,
            HasherFactory,
            "$Id$")
