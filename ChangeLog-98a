@@ -2,6 +2,13 @@ Fri Feb 20 06:36:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Timer_Queue_Adapters (activate): added thread_names argument.
 
+        * ace/OS.{h,i} (cond_timedwait): fixed on LynxOS (DCE_DRAFT4_THREADS),
+          where pthread_cond_timedwait () expects a relative instead of
+          absolute time.
+
+        * tests/Buffer_Stream_Test (Consumer::svc): removed thr_yield for
+          LynxOS, now that ACE_OS::cond_timedwait () is fixed.
+
 Thu Feb 19 17:59:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* apps/JAWS/clients/Caching/*: Reworked and cleaned up these files a
@@ -103,8 +110,7 @@ Wed Feb 18 12:22:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Buffer_Stream_Test.cpp (Consumer::svc): added a
           thr_yield so that the test magically works on LynxOS.
-          It looks like pthread_cond_{,timed}wait is busted on
-          LynxOS, we're investigating it.
+          ACE_OS::cond_timedwait is busted on LynxOS, we're investigating it.
 
 Wed Feb 18 11:53:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
