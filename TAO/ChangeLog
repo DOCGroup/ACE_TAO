@@ -63,6 +63,7 @@ Tue Mar 16 00:49:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Makefile.bor:
 	* tao/Makefile.tao:
+	* tao/TAO.dsp:
 	* tao/tao.mpc:
 
 	  Added new PICurrent_Copy_Callback.{h,cpp} files to the source
@@ -90,6 +91,7 @@ Tue Mar 16 00:49:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* tao/PortableServer/Makefile:
 	* tao/PortableServer/Makefile.bor:
 	* tao/PortableServer/PortableServer.mpc:
+	* tao/PortableServer/TAO_PortableServer.dsp:
 
 	  Added new PICurrent_Guard files to these files.
 
