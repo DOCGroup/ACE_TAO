@@ -1,3 +1,10 @@
+Wed Apr 28 14:00:20 1999  Carlos O'Ryan  <coryan@JIG>
+
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
+	* orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
+	* orbsvcs/examples/CosEC/Factory/FactoryCosEventChannel_i.cpp:
+	  Added @@ comments for Pradeep.
+
 Wed Apr 28 10:07:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/POA/Reference_Counted_Servant/Makefile: added PSRC
