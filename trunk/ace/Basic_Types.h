@@ -258,6 +258,8 @@ typedef ACE_UINT16 ACE_USHORT16;
 
 // If the platform lacks a long long, define one.
 # if defined (ACE_LACKS_LONGLONG_T)
+class ACE_CString;
+
 /**
  * @class ACE_U_LongLong
  *
@@ -350,6 +352,9 @@ typedef ACE_UINT16 ACE_USHORT16;
     /// Outputs the value to the FILE, in hex.
     void output (FILE * = stdout) const;
 
+    ACE_CString as_string (u_int base = 10,
+                           u_int uppercase = 0) const;
+
     ACE_UINT32 hi (void) const;
     ACE_UINT32 lo (void) const;
 
@@ -406,6 +411,10 @@ typedef ACE_UINT16 ACE_USHORT16;
   };
 
   typedef ACE_U_LongLong ACE_UINT64;
+
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
+  ostream &operator<< (ostream &, const ACE_U_LongLong &);
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 # endif /* ACE_LACKS_LONGLONG_T */
 

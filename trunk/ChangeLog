@@ -1,3 +1,13 @@
+Fri Apr  6 08:23:02 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Basic_Types.cpp:
+        * ace/Basic_Types.h:
+        * tests/Process_Strategy_Test.cpp:
+        * examples/Connection/misc/Connection_Handler.cpp:
+
+          Remove build warnings for platforms that don't support unsigned
+          long long types and have unsigned char's.
+
 Fri Apr  6 02:02:01 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h:
