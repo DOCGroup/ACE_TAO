@@ -1123,12 +1123,25 @@ TAO_POA::create_reference_i (const char *intf,
   // appropriate servant manager to be invoked, if one is
   // available. The generated Object Id value may be obtained by
   // invoking POA::reference_to_id with the created reference.
+
   PortableServer::ObjectId_var system_id;
-  if (this->active_object_map ().bind_using_system_id_returning_system_id (0,
-                                                                           system_id.out ()) != 0)
+
+  // Do the following if we going to retain this object in the active
+  // object map.
+  if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                        CORBA::Object::_nil ());
+      if (this->active_object_map ().bind_using_system_id_returning_system_id (0,
+                                                                               system_id.out ()) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+    }
+  else
+    {
+      // Otherwise, it is the NON_RETAIN policy.  Therefore, any ol'
+      // object id will do (even an empty one).
+      system_id = new PortableServer::ObjectId;
     }
 
   // Create object key.
@@ -1170,19 +1183,32 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
   // requests on those references will cause the object to be
   // activated if necessary, or the default servant used, depending on
   // the applicable policies.
+
   PortableServer::Servant servant = 0;
   PortableServer::ObjectId_var system_id;
 
-  // @@ We need something that can find the system id using appropriate strategy,
-  // at the same time, return the servant if one is available.  Before we have that
-  // function, <create_reference_with_id_i> basically generates broken collocated
-  // object when DIRECT collocation strategy is used.
-
-  if (this->active_object_map ().find_system_id_using_user_id (user_id,
-                                                               system_id.out ()) != 0)
+  // Do the following if we going to retain this object in the active
+  // object map.
+  if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                        CORBA::Object::_nil ());
+      // @@ We need something that can find the system id using
+      // appropriate strategy, at the same time, return the servant if
+      // one is available.  Before we have that function,
+      // <create_reference_with_id_i> basically generates broken
+      // collocated object when DIRECT collocation strategy is used.
+
+      if (this->active_object_map ().find_system_id_using_user_id (user_id,
+                                                                   system_id.out ()) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+    }
+  else
+    {
+      // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
+      // is the same as system id.
+      system_id = new PortableServer::ObjectId (user_id);
     }
 
   // Create object key.
@@ -1536,20 +1562,31 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference,
                         0);
     }
 
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
-
-  // The object denoted by the reference does not have to be active
-  // for this operation to succeed.
-  PortableServer::ObjectId_var user_id;
-  if (this->active_object_map ().find_user_id_using_system_id (system_id,
-                                                               user_id.out ()) != 0)
+  // Do the following if we have the RETAIN policy.
+  if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                        0);
-    }
+      // Lock access for the duration of this transaction.
+      TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0);
 
-  return user_id._retn ();
+      // The object denoted by the reference does not have to be
+      // active for this operation to succeed.
+      PortableServer::ObjectId_var user_id;
+      if (this->active_object_map ().find_user_id_using_system_id (system_id,
+                                                                   user_id.out ()) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
+        }
+
+      return user_id._retn ();
+    }
+  else
+    {
+      // Otherwise, it is the NON_RETAIN policy.  Therefore, the
+      // system id is the id (and no conversion/transformation is
+      // needed).
+      return new PortableServer::ObjectId (system_id);
+    }
 }
 
 PortableServer::Servant
@@ -1760,11 +1797,28 @@ TAO_POA::locate_servant_i (const char *operation,
                            TAO_POA_Current_Impl &poa_current_impl,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  if (this->active_object_map ().find_user_id_using_system_id (system_id,
-                                                               poa_current_impl.object_id_) != 0)
+  // If we have the RETAIN policy, convert/transform from system id to
+  // user id.
+  if (this->policies ().servant_retention () == PortableServer::RETAIN)
     {
-      ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                        0);
+      if (this->active_object_map ().find_user_id_using_system_id (system_id,
+                                                                   poa_current_impl.object_id_) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            0);
+        }
+    }
+  else
+    {
+      // We have the NON_RETAIN policy, user id is the system id.
+
+      // Smartly copy all the data; <poa_current_impl.object_id_> does
+      // not own the data.
+      poa_current_impl.object_id_.replace (system_id.maximum (),
+                                           system_id.length (),
+                                           ACE_const_cast (CORBA::Octet *,
+                                                           system_id.get_buffer ()),
+                                           0);
     }
 
   // If the POA has the RETAIN policy, the POA looks in the Active
