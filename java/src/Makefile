@@ -7,7 +7,7 @@ JACE_WRAPPER = ..
 CLASSDIR = $(JACE_WRAPPER)/classes
 DOCDIR = $(JACE_WRAPPER)/doc
 
-JC = javac_g
+JC = javac
 JCOPTS = -g -d $(CLASSDIR)
 JD = javadoc
 JDOPTS = -d $(DOCDIR)
@@ -122,8 +122,21 @@ socksap:	os $(addsuffix .java,$(pkg_socksap))
 	$(COMPILE.java)
 
 pkg_svcconfig = \
-	ServiceObject \
-	ServiceConfig \
+        ServiceLoader \
+        ClassNameGenerator \
+        ClassReader \
+        parser \
+	sym \
+	ParseNode \
+	SuspendNode \
+	ResumeNode \
+	RemoveNode \
+	ServiceRecord \
+        ServiceObjectRecord \
+        Yylex \
+        AddServiceObjectNode \
+        ServiceObject \
+        ServiceConfig \
 	ServiceRepository
 
 svcconfig:	os reactor misc $(addsuffix .java,$(pkg_svcconfig))

@@ -59,4 +59,22 @@ public class ServiceObject implements EventHandler
   {
     return -1;
   }
+
+  /**
+   * Request that this service suspend activity.  Overwrite this
+   * method to do anything useful.
+   */
+  public int suspend () 
+  {
+    return -1;
+  }
+
+  /**
+   * Request that this service resume activity.  Overwrite this
+   * method to do anything useful.
+   */
+  public int resume ()
+  {
+    return -1;
+  }
 }

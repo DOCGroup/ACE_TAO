@@ -50,8 +50,14 @@ public class SOCKStream
     this.socket_ = s;
     // Note that if s is not a valid socket or is null, the
     // following calls will throw exceptions
-    this.iStream_ = new DataInputStream (s.getInputStream ());
-    this.oStream_ = new PrintStream (s.getOutputStream ());
+
+    // Create buffered, platform independent byte streams.  This hasn't been switched
+    // to the newer character streams since the change would break cross talk with
+    // non-Java sockets.
+
+    this.iStream_ = new DataInputStream(new BufferedInputStream(s.getInputStream()));
+
+    this.oStream_ = new PrintStream(new DataOutputStream(new BufferedOutputStream(s.getOutputStream())));
   }
 
   /* Get the underlying Socket.
@@ -84,8 +90,10 @@ public class SOCKStream
     {
       // Get the data out
       String buf = s.toString ();
-      this.oStream_.print(buf);
+
+      this.oStream_.println(buf);
       this.oStream_.flush ();
+
       return buf.length ();
     }
 
@@ -96,8 +104,9 @@ public class SOCKStream
    */
   public int send (String s) throws IOException
     {
-      this.oStream_.print (s);
-      this.oStream_.flush ();
+      this.oStream_.println(s);
+      this.oStream_.flush();
+
       return s.length ();
     }
 
@@ -125,6 +134,7 @@ public class SOCKStream
     {
       String temp = this.iStream_.readLine ();
       s.append (temp);
+
       if (temp == null) // Possible if user sends just a line feed, but        
         return -1;      // not checking would cause a null ptr exception       
       else                    
@@ -152,7 +162,7 @@ public class SOCKStream
    */
   public void inputStream (InputStream iStream)
     {
-      this.iStream_ = new DataInputStream (iStream);
+      this.iStream_ = new DataInputStream(new BufferedInputStream(iStream));
     }
 
   /**
@@ -169,8 +179,8 @@ public class SOCKStream
    *@param iStream the output stream
    */
   public void outputStream (OutputStream oStream)
-    {
-      this.oStream_ = new PrintStream (oStream);
+    {    
+      this.oStream_ = new PrintStream(new DataOutputStream(new BufferedOutputStream(oStream)));
     }
 
   /**

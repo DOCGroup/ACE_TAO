@@ -6,277 +6,187 @@
  * = FILENAME
  *    ServiceRepository.java
  *
- *@author Prashant Jain
+ * The service repository stores the network services, allowing them to be removed, suspended,
+ * resumed, etc.  To reload a service, the caller must remove it from the repository and then
+ * call prepareForReload().
+ *
+ *@see JACE.ServiceConfigurator.ServiceRecord;
+ *@see JACE.ServiceConfigurator.ServiceConfig;
+ *
+ *@author Everett Anderson
  *
  *************************************************/
 package JACE.ServiceConfigurator;
 
 import java.io.*;
 import java.util.*;
-import java.net.*;
-import JACE.OS.*;
+import JACE.ServiceConfigurator.*;
 
-/**
- * <hr>
- * <h2>SYNOPSIS</h2>
- *<blockquote>
- *     Provides a repository for loaded Java classes
- *</blockquote>
- *
- * <h2>DESCRIPTION</h2>
- *<blockquote>
- * This class provides a means to load Java classes explicitly at
- * runtime. Note that since the class makes use of the Java
- * ClassLoader, this class can not be used in a Java applet.
- *</blockquote>
- */
 public class ServiceRepository
 {
   /**
-   * Create a Service Repository.
+   * Constructor
    */
   public ServiceRepository ()
   {
-    this.loader_ = new ServiceLoader (null);
+    this.serviceVector_ = new Vector();
   }
 
   /**
-   * Create a Service Repository passing in the context. Note that
-   * this can cause problems for the default system loader since it will
-   * try to load all the system classes using the context specified.
-   *@param context Context to use when loading classes.
+   * Constructor
+   *
+   *@param initialSize    Initial vector size for the repository
    */
-  public ServiceRepository (String context)
+  public ServiceRepository (int initialSize)
   {
-    this.loader_ = new ServiceLoader (context);
+    this.serviceVector_ = new Vector (initialSize);
   }
 
   /**
-   * Set the context
-   *@param context Context to use when loading classes.
+   *  Shut down all the services, closing them in reverse order of insertion
+   *  
+   *  Maybe should be called by finalize?
    */
-  public void context (String c)
-  {
-    this.loader_.context (c);
+  public int close() 
+  { 
+    for (int i = this.size() - 1; i >= 0; i--) {
+      ServiceRecord  rec = (ServiceRecord)this.serviceVector_.elementAt(i);
+
+      rec.fini();
+
+      this.serviceVector_.removeElementAt(i);
+    }
+
+    return 0;
   }
 
   /**
-   * Load a Java Class. This method first checks if the class is
-   * already in the repository. If it is not, it checks if the class
-   * is a system class and can be found on the local system. If both
-   * these fail, the method tries to load the bytes for the class and
-   * then create the Class from these bytes.
-   *@param name name of the class to find in the repository
-   *@return Class corresponding to name
+   * Insert a ServiceRecord into the repository.
+   * (If already in, calls fini() and replaces)
+   *
+   *@param srvRec      ServiceRecord to add
    */
-  public Class load (String name) throws ClassNotFoundException
+  public void insert (ServiceRecord srvRec)
   {
-    return this.loader_.loadClass (name, true);
+    ServiceRecord alreadyIn = find(srvRec.name());
+
+    // Replace the service
+    if (alreadyIn != null) {
+      alreadyIn.fini();
+      this.serviceVector_.removeElement(alreadyIn);
+    }
+
+    this.serviceVector_.addElement(srvRec);
   }
 
   /**
-   * Load a Java Class across the network. The method tries to load
-   * the bytes for the class and then create the Class from these
-   * bytes. 
-   *@param url URL of the class to load
-   *@return Class corresponding to the url
+   * Finds the ServiceRecord associated with a given
+   * service name.  Note -- the user should not try to
+   * get a ServiceObject out of the ServiceRecord.
+   * Same as saying ignoreSuspended is false on the
+   * next method.
+   *
+   *@param name    Name of the service to find
    */
-  public Class load (URL url) throws ClassNotFoundException
+  public ServiceRecord find (String name)
   {
-    return this.loader_.loadClass (url, true);
+    return this.find(name, false);
   }
 
-  private ServiceLoader loader_;
-}
-
-class ServiceLoader extends ClassLoader
-{
-  public ServiceLoader (String context)
+  /** Return the service record for the given service.  The caller
+    * should NOT try to access a ServiceObject (or Module or Stream)
+    * by taking it out of the ServiceRecord -- just make the calls
+    * through the record!
+    *
+    *@param   name             Name of the service to find
+    *@param   ignoreSuspended  Allow finding suspended services?
+    */
+  public ServiceRecord find (String name, boolean ignoreSuspended)
   {
-    super ();
-    if (context == null)
-      this.getClassPath ();
-    else
-      this.context_ = context;
+    ServiceRecord rec;
+
+    for (int i = 0; i < this.size(); i++) {
+      rec = (ServiceRecord)this.serviceVector_.elementAt(i);
+
+      if ((rec.name().equals(name)) && ((!ignoreSuspended) || (!rec.suspended())))
+	return rec;
+    }
+
+    return null;
   }
 
-  public void context (String c)
+  /** Take the given service out of the repository.  This also sets the
+   * reference in the repository to null to ensure there are no
+   * hidden references to the old ServiceObject.  To reload, the user must
+   * still run prepareToReload on ServiceConfig if they don't want any
+   * problems.
+   */
+  public int remove (String name)
   {
-    this.context_ = c;
+    ACE.DEBUG("Removing service: " + name);
+
+    ServiceRecord rec = this.find(name, false);
+
+    if (rec == null)
+      return -1;
+
+    int index = this.serviceVector_.indexOf(rec);
+
+    // Shut down the service
+    rec.fini();
+
+    // Make sure there are no hidden references left
+    this.serviceVector_.setElementAt(null, index);
+
+    this.serviceVector_.removeElementAt(index);
+
+    return 0;
   }
 
-  // Load a compiled class file into runtime
-  public Class loadClass (String name, boolean resolve) throws ClassNotFoundException
+  /**
+   * Resume a suspended service
+   *@param name    Name of the service to resume
+   */
+  public int resume (String name)
   {
-    Class newClass;
-    if (this.context_ == null)
-      {
-	try
-	  {
-	    // Try to load it the class by reading in the bytes.
-	    // Note that we are not catching ClassNotFoundException here
-	    // since our caller will catch it.
-	    try
-	      {
-		byte[] buf = bytesForClass (name);
-		newClass = defineClass (buf, 0, buf.length);
-		//	    ACE.DEBUG ("Loaded class: "+ name);
-	    
-		// Check if we need to load other classes referred to by this class.
-		if (resolve)
-		  resolveClass (newClass);
-	      }
-	    catch (ClassNotFoundException e)
-	      {
-		//	    ACE.DEBUG ("Using default loader for class: "+ name);
-		// Try default system loader
-		if ((newClass = findSystemClass (name)) != null)
-		  return newClass;
-		else 
-		  throw (e);   // Rethrow the exception
-	      }
-	  }
-	catch (IOException e)
-	  {
-	    throw new ClassNotFoundException (e.toString ());
-	  }
-      }
-    else
-      {
-	System.out.println ("Fetching over the net");
-	System.out.println ("Context: " + this.context_);
-	// Try to load it the class by reading in the bytes.
-	// Note that we are not catching ClassNotFoundException here
-	// since our caller will catch it.
-	try
-	  {
-	    URL url = new URL (this.context_ + name);
-	    URLConnection urlConnection = url.openConnection ();
+    ServiceRecord rec = this.find(name, false);
 
-	    // Get the input stream associated with the URL connection and
-	    // pipe it to a newly created DataInputStream
-	    DataInputStream i = new DataInputStream (urlConnection.getInputStream ());
+    if (rec == null)
+      return -1;
 
-	    // Allocate a buffer big enough to hold the contents of the
-	    // data we are about to read
-	    byte [] buf = new byte [urlConnection.getContentLength ()];
-
-	    // Now read all the data into the buffer
-	    i.readFully (buf);
-
-	    newClass = defineClass (buf, 0, buf.length);
-	    //	    ACE.DEBUG ("Loaded class: "+ name);
-	    
-	    // Check if we need to load other classes referred to by this class.
-	    if (resolve)
-	      resolveClass (newClass);
-	  }
-	catch (IOException e)
-	  {
-	    throw new ClassNotFoundException (e.toString ());
-	  }
-      }
-    return newClass;
+    return rec.resume();
   }
 
-  // Load a compiled class file across the network
-  public Class loadClass (URL url, boolean resolve) throws ClassNotFoundException
+  /**
+   * Suspend a service
+   *@param name    Name of the service to suspend
+   */
+  public int suspend (String name)
   {
-    Class newClass = null;
-    // Try to load it the class by reading in the bytes.
-    // Note that we are not catching ClassNotFoundException here
-    // since our caller will catch it.
-    try
-      {
-	URLConnection urlConnection = url.openConnection ();
+    ServiceRecord rec = this.find(name, false);
 
-	// Get the input stream associated with the URL connection and
-	// pipe it to a newly created DataInputStream
-	DataInputStream i = new DataInputStream (urlConnection.getInputStream ());
+    if (rec == null)
+      return -1;
 
-	// Allocate a buffer big enough to hold the contents of the
-	// data we are about to read
-	byte [] buf = new byte [urlConnection.getContentLength ()];
-
-	// Now read all the data into the buffer
-	i.readFully (buf);
-
-	newClass = defineClass (buf, 0, buf.length);
-	//	    ACE.DEBUG ("Loaded class: "+ name);
-	    
-	// Check if we need to load other classes referred to by this class.
-	if (resolve)
-	  resolveClass (newClass);
-      }
-    catch (IOException e)
-      {
-	throw new ClassNotFoundException (e.toString ());
-      }
-    return newClass;
+    return rec.suspend();
   }
 
-  private void getClassPath ()
+  /**
+   * Returns the number of items in the repository
+   */
+  public int size ()
   {
-    // Cache system properties that are needed when trying to find a
-    // class file
-    this.classPath_     = System.getProperty ("java.class.path", ".");
-    this.pathSeparator_ = System.getProperty ("path.separator", ":");
-    this.fileSeparator_ = System.getProperty ("file.separator", "/");
+    return this.serviceVector_.size();
   }
 
-  // Read a file into a byte array
-  private byte[] bytesForClass (String name) throws IOException, ClassNotFoundException
-  {
-    // Break up the CLASSPATH to check for existence of file in each
-    // sub-path. Note that we use the path_separator to extract every
-    // sub-path and use that to check if the class file exists.
-    StringTokenizer tokens = new StringTokenizer (this.classPath_, 
-						  this.pathSeparator_);
-    while (tokens.hasMoreTokens ())
-      {
-	// Create a File object which can then be used to see if the
-	// class file actually exists
-	File classFile = new File (tokens.nextToken () + 
-				    this.fileSeparator_ + 
-				    name + 
-				    ".class");
+  // Vector representation
+  Vector serviceVector_;
+};
+  
 
-	// Check if file exists, is a normal file and is readable
-	if (true) /*classFile.exists () && 
-	    classFile.isFile () &&
-	    classFile.canRead ()) */
-	  {    
-	    // Set up the stream
-	    FileInputStream in = new FileInputStream (classFile);
 
-	    // Get byte count
-	    int length = in.available ();
-	    
-	    if (length == 0)
-	      throw new ClassNotFoundException (name);
+  
 
-	    // Create an array of bytes to read the file in
-	    byte[] buf = new byte[length];
+  
 
-	    // Read the file
-	    in.read (buf);
-
-	    // Return byte array
-	    return buf;
-	  }
-      }
-    // File was not found so throw an exception.
-    throw new ClassNotFoundException ("Class file " + name + " not found");
-  }
-
-  private String classPath_;
-  // Class path that is loaded at construction
-
-  private String pathSeparator_;
-  // Platform-dependent path separator (e.g., : or ;)
-
-  private String fileSeparator_;
-  // Platform-dependent file separator (e.g., / or \)
-
-  private String context_ = null;
-}
+  

@@ -209,5 +209,5 @@ public class Acceptor extends ServiceObject
   private Class handlerFactory_;
 
   // Our connection acceptance factory
-  private SOCKAcceptor sockAcceptor_;
+  protected SOCKAcceptor sockAcceptor_;
 }
