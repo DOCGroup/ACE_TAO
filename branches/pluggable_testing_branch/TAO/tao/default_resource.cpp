@@ -3,6 +3,7 @@
 #include "tao/default_resource.h"
 #include "tao/Client_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
+#include "tao/debug.h"
 
 #include "ace/Select_Reactor.h"
 #include "ace/XtReactor.h"
@@ -215,6 +216,11 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       item->factory (
           ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("IIOP_Factory"));
       this->protocol_factories_.insert (item);
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Loaded default protocol <IIOP_Factory>\n"));
+        }
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
       item =
@@ -222,22 +228,33 @@ TAO_Default_Resource_Factory::init_protocol_factories (void)
       item->factory (
           ACE_Dynamic_Service<TAO_Protocol_Factory>::instance ("UIOP_Factory"));
       this->protocol_factories_.insert (item);
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Loaded default protocol <UIOP_Factory>\n"));
+        }
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
       return 0;
     }
 
   for ( ; factory != end ; factory++)
     {
-      const ACE_CString name = (*factory)->protocol_name ();
+      const ACE_CString& name = (*factory)->protocol_name ();
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
       if ((*factory)->factory () == 0)
         {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                "(%P|%t) Unable to load protocol %s\n",
-                                name.c_str ()),
-                                -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "TAO (%P|%t) Unable to load protocol <%s>, %p\n",
+                             name.c_str (), ""),
+                            -1);
+        }
 
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Loaded protocol <%s>\n",
+                      name.c_str ()));
         }
     }
   return 0;

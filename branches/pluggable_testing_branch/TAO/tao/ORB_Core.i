@@ -59,6 +59,18 @@ TAO_ORB_Core::optimize_collocation_objects (void) const
 }
 
 ACE_INLINE void
+TAO_ORB_Core::using_collocation (CORBA::Boolean b)
+{
+  this->optimize_collocation_objects (b);
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ORB_Core::using_collocation (void) const
+{
+  return this->optimize_collocation_objects ();
+}
+
+ACE_INLINE void
 TAO_ORB_Core::use_global_collocation (CORBA::Boolean opt)
 {
   this->use_global_collocation_ = opt;
