@@ -106,7 +106,7 @@ const int ACE_MAX_TIMERS = 4;
 const int ACE_MAX_THREADS = 4;
 const int ACE_MAX_DELAY = 10;
 const int ACE_MAX_INTERVAL = 0;
-const int ACE_MAX_ITERATIONS = 10;
+const int ACE_MAX_ITERATIONS = 100;
 
 class ACE_Test_Output
 {

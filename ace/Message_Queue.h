@@ -75,60 +75,62 @@ public:
   virtual ~ACE_Message_Queue (void);
   // Close down the message queue and release all resources.
 
+  // = Enqueue and dequeue methods.
+
+  // For all the following routines if <timeout> == 0, the caller will
+  // block until action is possible, else will wait until the absolute
+  // time specified in *<timeout> elapses).  These calls will return,
+  // however, when queue is closed, deactivated, when a signal occurs,
+  // or if the time specified in timeout elapses, (in which case errno
+  // = EWOULDBLOCK).
+
   int peek_dequeue_head (ACE_Message_Block *&first_item, 
 			 ACE_Time_Value *tv = 0);
-  // Retrieve the first ACE_Message_Block without removing it.
+  // Retrieve the first <ACE_Message_Block> without removing it.
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
-  // = For all the following three routines if tv == 0, the caller
-  // will block until action is possible, else will wait until the
-  // absolute time specified in *tv elapses).  Calls will return,
-  // however, when queue is closed, deactivated, when a signal occurs,
-  // or if the time specified in tv elapses, (in which case errno =
-  // EWOULDBLOCK).
-
-  int enqueue_prio (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
+  int enqueue_prio (ACE_Message_Block *new_item, 
+		    ACE_Time_Value *timeout = 0);
   // Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
   // accordance with its <msg_priority> (0 is lowest priority).  FIFO
   // order is maintained when messages of the same priority are
   // inserted consecutively.  Returns -1 on failure, else the number
   // of items still on the queue.
 
-  int enqueue (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
+  int enqueue (ACE_Message_Block *new_item, ACE_Time_Value *timeout = 0);
   // This is an alias for <enqueue_prio>.  It's only here for
   // backwards compatibility and will go away in a subsequent release.
   // Please use <enqueue_prio> instead.
 
-  int enqueue_tail (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
+  int enqueue_tail (ACE_Message_Block *new_item, ACE_Time_Value *timeout = 0);
   // Enqueue an <ACE_Message_Block *> at the end of the queue.
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
-  int enqueue_head (ACE_Message_Block *new_item, ACE_Time_Value *tv = 0);
+  int enqueue_head (ACE_Message_Block *new_item, ACE_Time_Value *timeout = 0);
   // Enqueue an <ACE_Message_Block *> at the head of the queue.
   // Returns -1 on failure, else the number of items still on the
   // queue.
 
-  int dequeue_head (ACE_Message_Block *&first_item, ACE_Time_Value *tv = 0);
+  int dequeue_head (ACE_Message_Block *&first_item, ACE_Time_Value *timeout = 0);
   // Dequeue and return the <ACE_Message_Block *> at the head of the
   // queue.  Returns -1 on failure, else the number of items still on
   // the queue.
 
-  // = Checks if queue is full/empty. 
+  // = Check if queue is full/empty. 
   int is_full (void);
   // True if queue is full, else false.
   int is_empty (void);
   // True if queue is empty, else false.
 
+  // = Queue statistic methods.
   size_t message_bytes (void);
   // Number of total bytes on the queue.
-
   size_t message_count (void);
   // Number of total messages on the queue.
 
   // = Flow control routines 
-
   size_t high_water_mark (void);
   // Get high watermark.
   void high_water_mark (size_t hwm);
@@ -153,6 +155,8 @@ public:
   // messages again.  Returns WAS_INACTIVE if queue was inactive
   // before the call and WAS_ACTIVE if queue was active before the
   // call.
+
+  // = Notification hook.
 
   virtual int notify (void);
   // This hook is automatically invoked by <enqueue_head>,

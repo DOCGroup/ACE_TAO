@@ -226,7 +226,7 @@ ACE_Stream_Tail<ACE_SYNCH_2>::canonical_flush (ACE_Message_Block *mb)
   if (ACE_BIT_ENABLED (*cp, ACE_Task_Flags::ACE_FLUSHW))
     {
       this->flush (ACE_Task_Flags::ACE_FLUSHALL);
-      ACE_BIT_CLR (*cp, ACE_Task_Flags::ACE_FLUSHW);
+      ACE_CLR_BITS (*cp, ACE_Task_Flags::ACE_FLUSHW);
     }
 
   if (ACE_BIT_ENABLED (*cp, ACE_Task_Flags::ACE_FLUSHR))
