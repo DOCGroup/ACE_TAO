@@ -1,6 +1,7 @@
 Sat May 19 20:37:00 2001  Balachandran Natarajan <bala@cs.wustl.edu>
 
-	* tests/Connection_Purging/server.dsp (USERDEP__TEST_):
+	* tests/Connection_Purging/server.dsp: Fixed an error on Win32
+	  platforms
 
 Sat May 19 17:00:00 2001  Ossama Othman  <ossama@uci.edu>
 
