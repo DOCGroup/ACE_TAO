@@ -10,7 +10,8 @@ Wed Feb 27 09:32:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
           Fixed compile error when __ACE_INLINE__ is not defined
 
         * tao/Makefile.bor:
-          Added new Messaging directory
+          Added new Messaging directory and removed all files that where
+          moved to the new subdirectory
 
 Tue Feb 26 21:29:05 2002  Ossama Othman  <ossama@uci.edu>
 
