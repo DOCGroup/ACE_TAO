@@ -29,7 +29,6 @@ class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 public:
   Priority_Task (void);
 
-  int close (u_long = 0);
   int open (void *);
   int svc (void);
 
@@ -41,13 +40,6 @@ Priority_Task::Priority_Task (void)
   : ACE_Task<ACE_MT_SYNCH> (ACE_Service_Config::thr_mgr ()),
     priority_ (0)
 {
-}
-
-int
-Priority_Task::close (u_long)
-{
-  ACE_DEBUG ((LM_DEBUG, "(%t) leaving Task with priority %d\n", this->priority_));
-  return 0;
 }
 
 int
@@ -137,11 +129,12 @@ main (int, char *[])
                                                   ACE_SCOPE_THREAD);
     }
 
+  ACE_DEBUG ((LM_DEBUG, "(%t) %d tasks spawned, wait for them to exit . . .\n",
+                        ACE_MAX_ITERATIONS));
+
   // Wait for all tasks to exit.
   ACE_Service_Config::thr_mgr ()->wait ();
 
-  for (i = 0; i < ACE_MAX_ITERATIONS; i++)
-    tasks[i].close ();
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */
