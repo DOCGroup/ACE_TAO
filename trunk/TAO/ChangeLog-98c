@@ -1,3 +1,12 @@
+Wed Dec  9 16:05:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Invocation.cpp (invoke): Fixed the memory leaks in preparing
+	  new exceptions.  Thanks to Terry Rosenbaum
+	  <Terry.Rosenbaum@Radiology.MSU.edu> for sending us the patch.
+	  Also applied more exception handling macros into this file.
+
+	* tao/try_macros.h: Added TAO_THROW_ENV_RETURN_VOID.
+
 Wed Dec  9 13:26:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEBrowser/DOVEBrowser.java
@@ -9,16 +18,16 @@ Wed Dec  9 13:26:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
 	  Cleaned up some type names in that had changed when RtecScheduler.idl
 	  was brought up to CORBA standard (type names and element names must
-	  differ in more than just letter case).  
+	  differ in more than just letter case).
 
-	  Added support for -ORBnameserviceport on command line of the 
+	  Added support for -ORBnameserviceport on command line of the
 	  compiled DOVEBrowser version.  Generalized command line option
 	  handling, fixed bug with using == instead of .equals for string
 	  comparison.
 
         * orbsvcs/tests/Simulator/Event_Supplier/Event_Sup.dsp
-          orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.dsp: added -I 
-	  switch with relative path to TAO\orbsvcs\orbsvcs to tao_idl 
+          orbsvcs/tests/Simulator/Event_Supplier/Logging_Sup.dsp: added -I
+	  switch with relative path to TAO\orbsvcs\orbsvcs to tao_idl
 	  invocation in the custom build step.
 
 1998-12-09  Nagarajan Surendran  <naga@polka.cs.wustl.edu>
@@ -29,12 +38,12 @@ Wed Dec  9 13:26:50 1998  Chris Gill  <cdgill@cs.wustl.edu>
 Wed Dec  9 11:03:13 EST 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
-	
+
 	  In the visit_interface and visit_interface_fwd methods, we were
           not generating the fully scoped name for code generated in the
 	  *.i or *.cpp file. Thanks to Naga (naga@cs.wustl.edu) for
-	  submitting the bugreport. 
-	
+	  submitting the bugreport.
+
 Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * README, VERSION: expanded mention of BUG-REPORT-FORM.
