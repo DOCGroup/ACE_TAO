@@ -1,3 +1,39 @@
+Mon Jun 12 17:23:59 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/constants.h:
+
+	  Added POSIX minimum values in PACE format.
+
+	* pace/config/platform.h (PACE_LINUX):
+
+	  Removed ACE code that shouldn't be included in PACE files.
+	  Deprecated macro that did not follow our current pattern.
+	  Added PACE_LINUX macro.
+
+Mon Jun 12 15:41:51 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/config/compiler.h:
+	  
+	  Deprecated PACE_HAS_CPLUSPLUS.
+	  Current PACE_CPLUSPLUS
+
+	  We will save the 'HAS' for user defined feature macros.
+	  Anytime we are renaming a current macro, we will just
+	  prepend PACE_'xxx'. See the next ChangeLog entry. The
+	  same motivation applies. Once I change the source code
+	  to reflect this idea, I will remove the deprecated
+	  macro names.
+
+	  Moved error stuff from 'codes.h' to compiler.
+
+	* pace/config/codes.h"
+
+	  Removed from repository.
+
+	* pace/defines.h:
+
+	  Removed #include "codes.h" from reposistory.
+
 Fri Jun  9 14:05:25 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/config/compiler.h:

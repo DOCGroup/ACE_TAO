@@ -22,16 +22,29 @@
 int errno;
 
 
-# if defined (_POSIX_C_SOURCE)
-# define PACE_POSIX_C_SOURCE _POSIX_C_SOURCE
-# endif /* _POSIX_C_SOURCE */
-
 # if defined (__cplusplus)
 # define PACE_INLINE inline
-# define PACE_HAS_CPLUSPLUS
+/* deprecated */
+# define PACE_HAS_CPLUSPLUS __cplusplus
+/* current */
+# define PACE_CPLUSPLUS __cplusplus
 # else  /* ! __cplusplus */
 # define PACE_INLINE static
 # endif /* ! __cplusplus */
+
+/* ======================================================================
+ * error control
+ * ====================================================================== */
+
+/* deprecated */
+# define PACE_NO_PLATFORM_SUPPORT -5000
+
+/* current */
+# define PACE_ERRNO_NO_PLATFORM_SUPPORT -5000
+# define PACE_ERRNO_LACKS_REENTRANT -5001
+# define PACE_ERRNO_LACKS_POSIX_PTHREAD_SEMANTICS -5002
+# define PACE_ERRNO_LACKS_POSIX_C_SOURCE -5003
+# define PACE_ERRNO_LACKS_RT -5004
 
 /* deprecated */
 # define PACE_RETURN_NO_SUPPORT(X) \

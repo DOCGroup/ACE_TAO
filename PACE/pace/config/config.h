@@ -19,18 +19,22 @@
 
 # define PACE_HAS_INLINE
 
-# if defined __EXTENSIONS__
+# if defined (_POSIX_C_SOURCE)
+# define PACE_POSIX_C_SOURCE _POSIX_C_SOURCE
+# endif /* _POSIX_C_SOURCE */
+
+# if defined (__EXTENSIONS__)
 # define PACE_EXTENSIONS __EXTENSIONS__
 # endif
 
-# if defined _REENTRANT
+# if defined (_REENTRANT)
 /* deprecated */
 # define PACE_HAS_REENTRANT
 /* current */
 # define PACE_REENTRANT _REENTRANT
 # endif
 
-# if defined _POSIX_PTHREAD_SEMANTICS
+# if defined (_POSIX_PTHREAD_SEMANTICS)
 /* deprecated */
 # define PACE_HAS_POSIX_PTHREAD_SEMANTICS _POSIX_PTHREAD_SEMANTICS
 /* current */
