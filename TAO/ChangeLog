@@ -1,3 +1,11 @@
+Wed Dec 24 12:41:05 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc:
+	  Fixed incorrect filename
+
+	* docs/tutorials/Quoter/Naming_Service/Quoter_Naming_Service.mpc:
+	  Build after and link with the Quoter_Idl_Lib
+
 Wed Dec 24 11:52:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/server.bor:
