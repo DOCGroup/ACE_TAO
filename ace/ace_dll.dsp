@@ -1814,6 +1814,29 @@ DEP_CPP_BASIC=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\CDR.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Containers.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
@@ -25509,6 +25532,10 @@ SOURCE=.\Basic_Types.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CDR.h
+# End Source File
+# Begin Source File
+
 SOURCE=".\config-win32-common.h"
 # End Source File
 # Begin Source File
@@ -26294,6 +26321,10 @@ SOURCE=.\Auto_Ptr.i
 # Begin Source File
 
 SOURCE=.\Basic_Types.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CDR.i
 # End Source File
 # Begin Source File
 
