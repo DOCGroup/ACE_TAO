@@ -9,9 +9,9 @@
 //    OrdMultiSet_Test.cpp
 //
 // = DESCRIPTION
-//    This is a simple test of the ACE_Ordered_MultiSet and 
+//    This is a simple test of the ACE_Ordered_MultiSet and
 //    ACE_Ordered_MultiSet_Iterator class templates, instantiating them with
-//    type int.  No command line arguments are needed to run the test.  
+//    type int.  No command line arguments are needed to run the test.
 //
 // = AUTHOR
 //    Chris Gill
@@ -72,7 +72,7 @@ main (int, ASYS_TCHAR *[])
       iter.next (ptr);
       ACE_ASSERT (ptr != 0);
       ACE_ASSERT (*ptr == i);
-    
+
       // move to the next element in the set
       iter.advance ();
     }
@@ -93,7 +93,7 @@ main (int, ASYS_TCHAR *[])
       iter.next (ptr);
       ACE_ASSERT (ptr != 0);
       ACE_ASSERT (*ptr == i);
-    
+
       // Move to the previous element in the set.
       iter.retreat ();
     }
@@ -139,7 +139,7 @@ main (int, ASYS_TCHAR *[])
   while (set.remove (202) == 0);
   while (set.remove (203) == 0);
 
-  // Put the iterator out of range and make sure it stays 
+  // Put the iterator out of range and make sure it stays
   // that way for finds on the missing elements.
   iter.last ();
   iter.advance ();
@@ -152,15 +152,15 @@ main (int, ASYS_TCHAR *[])
 
   // Make sure the other elements can be found.
   set.find (205, iter);
-  ACE_ASSERT (iter.done () == 0);  
+  ACE_ASSERT (iter.done () == 0);
   iter.next (ptr);
-  ACE_ASSERT (ptr != 0);  
-  ACE_ASSERT (*ptr == 205);  
+  ACE_ASSERT (ptr != 0);
+  ACE_ASSERT (*ptr == 205);
   set.find (201, iter);
-  ACE_ASSERT (iter.done () == 0);  
+  ACE_ASSERT (iter.done () == 0);
   iter.next (ptr);
-  ACE_ASSERT (ptr != 0);  
-  ACE_ASSERT (*ptr == 201);  
+  ACE_ASSERT (ptr != 0);
+  ACE_ASSERT (*ptr == 201);
 
   // Finally, iterate through the set and make sure its contents are
   // correct (one 201 and five 205s).
@@ -168,7 +168,7 @@ main (int, ASYS_TCHAR *[])
   ACE_ASSERT (iter.done () == 0);
   iter.next (ptr);
   ACE_ASSERT (ptr != 0);
-  ACE_ASSERT (*ptr == 201);  
+  ACE_ASSERT (*ptr == 201);
   iter.advance ();
 
   for (i = 1; i <= 5; ++i)
@@ -178,7 +178,7 @@ main (int, ASYS_TCHAR *[])
       ACE_ASSERT (iter.done () == 0);
       iter.next (ptr);
       ACE_ASSERT (ptr != 0);
-      ACE_ASSERT (*ptr == 205);  
+      ACE_ASSERT (*ptr == 205);
 
       // Move to the next element in the set.
       iter.advance ();

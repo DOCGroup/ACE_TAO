@@ -323,9 +323,9 @@ ACE_Unbounded_Stack<T>::remove (const T &item)
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
       this->cur_size_--;
-      ACE_DES_FREE_TEMPLATE (temp, 
+      ACE_DES_FREE_TEMPLATE (temp,
                              this->allocator_->free,
-                             ACE_Node, 
+                             ACE_Node,
                              <T>);
       return 0;
     }
@@ -445,7 +445,7 @@ ACE_Unbounded_Queue<T>::delete_nodes (void)
 
       ACE_DES_FREE_TEMPLATE (temp,
                              this->allocator_->free,
-                             ACE_Node, 
+                             ACE_Node,
                              <T>);
       this->cur_size_--;
     }
@@ -460,9 +460,9 @@ ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)
 //   ACE_TRACE ("ACE_Unbounded_Queue<T>::~ACE_Unbounded_Queue (void)");
 
   this->delete_nodes ();
-  ACE_DES_FREE_TEMPLATE (head_, 
+  ACE_DES_FREE_TEMPLATE (head_,
                          this->allocator_->free,
-                         ACE_Node, 
+                         ACE_Node,
                          <T>);
   this->head_ = 0;
 }
@@ -525,9 +525,9 @@ ACE_Unbounded_Queue<T>::dequeue_head (T &item)
 
   item = temp->item_;
   this->head_->next_ = temp->next_;
-  ACE_DES_FREE_TEMPLATE (temp, 
+  ACE_DES_FREE_TEMPLATE (temp,
                          this->allocator_->free,
-                         ACE_Node, 
+                         ACE_Node,
                          <T>);
   --this->cur_size_;
   return 0;
@@ -784,7 +784,7 @@ ACE_Double_Linked_List<T>::~ACE_Double_Linked_List (void)
 {
   this->delete_nodes ();
 
-  ACE_DES_FREE (head_, 
+  ACE_DES_FREE (head_,
                 this->allocator_->free,
                 T);
 
@@ -1464,10 +1464,12 @@ ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
 {
 }
 
+# if ! defined (ACE_HAS_BROKEN_NOOP_DTORS)
 template <class T>
 ACE_DNode<T>::~ACE_DNode (void)
 {
 }
+# endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set)
 
@@ -1554,9 +1556,9 @@ ACE_Unbounded_Set<T>::delete_nodes (void)
     {
       ACE_Node<T> *temp = curr;
       curr = curr->next_;
-      ACE_DES_FREE_TEMPLATE (temp, 
+      ACE_DES_FREE_TEMPLATE (temp,
                              this->allocator_->free,
-                             ACE_Node, 
+                             ACE_Node,
                              <T>);
       this->cur_size_--;
     }
@@ -1573,9 +1575,9 @@ ACE_Unbounded_Set<T>::~ACE_Unbounded_Set (void)
   this->delete_nodes ();
 
   // Delete the dummy node.
-  ACE_DES_FREE_TEMPLATE (head_, 
+  ACE_DES_FREE_TEMPLATE (head_,
                          this->allocator_->free,
-                         ACE_Node, 
+                         ACE_Node,
                          <T>);
   this->head_ = 0;
 }
@@ -1678,9 +1680,9 @@ ACE_Unbounded_Set<T>::remove (const T &item)
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
       this->cur_size_--;
-      ACE_DES_FREE_TEMPLATE (temp, 
+      ACE_DES_FREE_TEMPLATE (temp,
                              this->allocator_->free,
-                             ACE_Node, 
+                             ACE_Node,
                              <T>);
       return 0;
     }
@@ -1959,7 +1961,7 @@ ACE_Ordered_MultiSet<T>::remove (const T &item)
     this->cur_size_--;
 
     ACE_DES_FREE_TEMPLATE (node,
-                           this->allocator_->free, 
+                           this->allocator_->free,
                            ACE_DNode,
                            <T>);
     return 0;
@@ -2027,7 +2029,7 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
   ACE_DNode<T> *temp;
   ACE_NEW_MALLOC_RETURN (temp,
                          (ACE_DNode<T>*) this->allocator_->malloc (sizeof (ACE_DNode<T>)),
-                         ACE_DNode<T> (item), 
+                         ACE_DNode<T> (item),
                          -1);
 
   // obtain approximate location of the node
@@ -2251,7 +2253,7 @@ ACE_DLList<T>::delete_head (void)
   ACE_DLList_Node *temp1 = ACE_DLList_Base::delete_head ();
   T *temp2 = (T *) (temp1 ? temp1->item_ : 0);
   ACE_DES_FREE (temp1,
-                this->allocator_->free, 
+                this->allocator_->free,
                 ACE_DLList_Node);
 
   return temp2;
@@ -2263,7 +2265,7 @@ ACE_DLList<T>::delete_tail (void)
   ACE_DLList_Node *temp1 = ACE_DLList_Base::delete_tail ();
   T *temp2 = (T *) (temp1 ? temp1->item_ : 0);
   ACE_DES_FREE (temp1,
-                this->allocator_->free, 
+                this->allocator_->free,
                 ACE_DLList_Node);
   return temp2;
 }
@@ -2283,7 +2285,7 @@ ACE_Array_Base<T>::ACE_Array_Base (size_t size,
     this->allocator_ = ACE_Allocator::instance ();
 
   if (size != 0)
-    {   
+    {
       ACE_NEW_MALLOC (this->array_,
                       (T *) this->allocator_->malloc (size * sizeof (T)),
                       T);
@@ -2306,7 +2308,7 @@ ACE_Array_Base<T>::ACE_Array_Base (size_t size,
     this->allocator_ = ACE_Allocator::instance ();
 
   if (size != 0)
-    {   
+    {
       ACE_NEW_MALLOC (this->array_,
                       (T *) this->allocator_->malloc (size * sizeof (T)),
                       T);
@@ -2388,7 +2390,7 @@ ACE_Array_Base<T>::get (T &item, size_t index) const
      {
        // Copies the item.  If you don't want to copy, use operator []
        // instead (but then you'll be responsible for range checking).
-       item = this->array_[index];  
+       item = this->array_[index];
        return 0;
      }
    else
@@ -2401,7 +2403,7 @@ ACE_Array_Base<T>::max_size (size_t new_size)
   if (new_size > this->max_size_)
     {
       T *tmp;
-      
+
       ACE_NEW_MALLOC_RETURN (tmp,
                              (T *) this->allocator_->malloc (new_size * sizeof (T)),
                              T,
