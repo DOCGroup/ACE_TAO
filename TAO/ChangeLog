@@ -1,3 +1,11 @@
+Sat Apr 10 14:07:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_structure/cdr_op_ch.cpp:
+        
+          Added missing check for locality constraint (struct contains a
+          local interface at some level) to match the check in
+          cdr_op_cs.cpp.
+
 Fri Apr  9 23:25:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
