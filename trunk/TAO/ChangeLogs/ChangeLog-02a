@@ -1,3 +1,13 @@
+Mon Feb 26 01:24:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+        * TAO/ValueBase.cpp:
+          The code of value types needs a urgent repair in many places. 
+          With this change I fixed how the ORB was obtained - from
+          fetching it via TAO_ORB_Core_instance to fetching
+          it via the CDR stream, which owns a correct reference to it.
+          With TAO_ORB_Core_instance we could have actually fetched 
+          the wrong ORB.
+
 Sun Feb 25 19:37:24 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/POA/Adapter_Activator/run_test.pl:
