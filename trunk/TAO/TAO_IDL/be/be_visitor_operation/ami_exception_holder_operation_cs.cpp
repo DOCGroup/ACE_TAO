@@ -181,7 +181,7 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
   *os << "CORBA::SystemException* exception =" << be_idt_nl
       << "TAO_Exceptions::create_system_exception (type_id.in ()," << be_idt_nl
       << "ACE_TRY_ENV);" << be_uidt_nl << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl << be_nl;
+      << "ACE_CHECK;" << be_nl << be_nl;
   *os << "if (exception == 0)" << be_idt_nl
       << " {" << be_idt_nl
       << "// @@ We should raise a CORBA::NO_MEMORY, but we ran out" << be_nl
