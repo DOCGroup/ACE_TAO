@@ -144,12 +144,12 @@ main (int argc, char *argv[])
       // Property values
 
       // Major and Minor revision numbers
-      ft_tag_component.version.major = (CORBA::Octet) 1;
-      ft_tag_component.version.minor = (CORBA::Octet) 0;
+      ft_tag_component.component_version.major = (CORBA::Octet) 1;
+      ft_tag_component.component_version.minor = (CORBA::Octet) 0;
 
       // Domain id
       const char *id = "iogr_regression";
-      ft_tag_component.ft_domain_id = id;
+      ft_tag_component.group_domain_id = id;
 
       // Object group id
       ft_tag_component.object_group_id =

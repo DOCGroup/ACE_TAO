@@ -22,17 +22,17 @@ EventChannelFactory_i::EventChannelFactory_i(const char* conf_filename, CORBA::O
 
 CORBA::Object_ptr EventChannelFactory_i::create_object (
   const char * type_id,
-  const FT::Criteria & the_criteria,
-  FT::GenericFactory::FactoryCreationId_out factory_creation_id
+  const PortableGroup::Criteria & the_criteria,
+  PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
   ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
-  , FT::NoFactory
-  , FT::ObjectNotCreated
-  , FT::InvalidCriteria
-  , FT::InvalidProperty
-  , FT::CannotMeetCriteria
+  , PortableGroup::NoFactory
+  , PortableGroup::ObjectNotCreated
+  , PortableGroup::InvalidCriteria
+  , PortableGroup::InvalidProperty
+  , PortableGroup::CannotMeetCriteria
   ))
 {
 
@@ -42,17 +42,17 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
 
   ACE_TRY {
 
-  file = fopen(conf_file, "r");
-  if (file == 0)
-    ACE_TRY_THROW (FT::NoFactory());
+    file = fopen(conf_file, "r");
+    if (file == 0)
+      ACE_TRY_THROW (PortableGroup::NoFactory());
 
-  ACE_Read_Buffer read_buf(file);
+    ACE_Read_Buffer read_buf(file);
 
-  while ((id_str = read_buf.read(' ')) != 0 &&
-    (prog = read_buf.read('\n')) != 0) {
-      id_str[strlen(id_str)-1] = '\0';
-      if (strcmp(id_str, type_id) == 0) {
-        return create_process(prog, the_criteria, factory_creation_id);
+    while ((id_str = read_buf.read(' ')) != 0 &&
+      (prog = read_buf.read('\n')) != 0) {
+        id_str[strlen(id_str)-1] = '\0';
+        if (strcmp(id_str, type_id) == 0) {
+          return create_process(prog, the_criteria, factory_creation_id);
       }
     }
   }
@@ -65,16 +65,16 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   ACE_ENDTRY;
   ACE_CHECK_RETURN(CORBA::Object::_nil());
 
-  ACE_THROW_RETURN(FT::ObjectNotCreated(), CORBA::Object::_nil());
+    ACE_THROW_RETURN(PortableGroup::ObjectNotCreated(), CORBA::Object::_nil());
 }
 
 void EventChannelFactory_i::delete_object (
-  const FT::GenericFactory::FactoryCreationId & factory_creation_id
+  const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
   ACE_ENV_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((
   CORBA::SystemException
-  , FT::ObjectNotFound
+  , PortableGroup::ObjectNotFound
   ))
 {
   ACE_TRACE("EventChannelFactory_i::delete_object");
@@ -89,8 +89,8 @@ void EventChannelFactory_i::delete_object (
 
 CORBA::Object_ptr EventChannelFactory_i::create_process (
   char * process_str,
-  const FT::Criteria & the_criteria,
-  FT::GenericFactory::FactoryCreationId_out factory_creation_id)
+  const PortableGroup::Criteria & the_criteria,
+  PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   ACE_TRACE("EventChannelFactory_i::create_process");
 
@@ -99,7 +99,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   // fill the factory_creation_id
 
   ACE_NEW_RETURN(factory_creation_id,
-    FT::GenericFactory::FactoryCreationId,
+    PortableGroup::GenericFactory::FactoryCreationId,
     CORBA::Object::_nil());
   *factory_creation_id <<= (CORBA::ULong) ++id;
 

@@ -1,0 +1,16 @@
+*.dsp
+*.dsw
+*.ilk
+*.pdb
+*.plg
+*.ncb
+*.opt
+*.exe
+*.ior
+*.dat
+Release
+Debug
+FT_ReplicaC*
+FT_ReplicaS*
+FT_TestReplicaC*
+FT_TestReplicaS*

@@ -1,4 +1,4 @@
-project(CosLoadManager): namingexe, portableserver, core, loadbalancing {
+project(CosLoadManager): namingexe, portableserver, core, iormanip, loadbalancing {
   requires += ami interceptors
   Source_Files {
     LoadManager.cpp

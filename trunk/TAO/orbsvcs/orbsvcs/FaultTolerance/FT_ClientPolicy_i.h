@@ -41,7 +41,7 @@
  * to keep trying to connect to server object groups under certain
  * conditions.
  */
-class TAO_FT_ClientORB_Export TAO_FT_Request_Duration_Policy
+class TAO_FT_Export TAO_FT_Request_Duration_Policy
   : public FT::RequestDurationPolicy,
     public TAO_Local_RefCounted_Object
 {

@@ -1,4 +1,4 @@
-project(*Server): taoserver, orbsvcsexe, iormanip, ftorb {
+project(*Server): taoserver, orbsvcsexe, iormanip, ftorb, messaging{
   requires += interceptors
   idlflags += -Gv -DCORBA3 -I$(TAO_ROOT)
 

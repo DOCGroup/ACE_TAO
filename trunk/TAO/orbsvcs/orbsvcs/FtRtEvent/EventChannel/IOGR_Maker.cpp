@@ -30,7 +30,7 @@ IOGR_Maker::init(CORBA::ORB_ptr orb
     iorm_ = resolve_init<TAO_IOP::TAO_IOR_Manipulation>(orb,
                                                         TAO_OBJID_IORMANIPULATION
                                                         ACE_ENV_ARG_PARAMETER);
-    ft_tag_component_.ft_domain_id = "ft_eventchannel";
+    ft_tag_component_.group_domain_id = "ft_eventchannel";
     ft_tag_component_.object_group_id = 0;
     ft_tag_component_.object_group_ref_version = 0;
     maker = this;
@@ -217,7 +217,7 @@ IOGR_Maker::copy_ft_group_component(CORBA::Object_ptr ior)
 void
 IOGR_Maker::set_ft_domain_id(const char* domain_id)
 {
-  ft_tag_component_.ft_domain_id = domain_id;
+  ft_tag_component_.group_domain_id = domain_id;
 }
 
 void
