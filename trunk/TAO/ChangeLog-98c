@@ -1,5 +1,14 @@
 Wed Feb 25 21:41:50 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/Event/RT_Task.h: Changed the use of ACE_MT_SYNCH
+ 	  to ACE_SYNCH so that we can at least build the Event Channel on
+ 	  a single-threaded platform.
+
+	* orbsvcs/orbsvcs/Event_Service_Constants.h: Changed the use of
+ 	  ACE_Thread_Mutex and ACE_RT_Thread_Mutex to ACE_THREAD_MUTEX and
+ 	  ACE_RW_THREAD_MUTEX, respectively, so that TAO will build on
+ 	  non-threaded platforms.
+
 	* tao/poa.cpp,
           tao/default_server.cpp: Fixed TAO by conditionally
 	  compiling the code that relies on the recursive mutexes

@@ -23,17 +23,19 @@
 
 // ************************************************************
 
-#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION) || !defined (ACE_HAS_THREADS)
   typedef ACE_Null_Mutex ACE_MEMORY_POOL_MUTEX;
 #else
   // Use the same object for each thread.  Therefore, we have to use
   // real synchronization.
   typedef ACE_Thread_Mutex ACE_MEMORY_POOL_MUTEX;
-#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION || !ACE_HAS_THREADS */
 
-typedef char ACE_ES_Dispatch_Request_Chunk[sizeof (ACE_ES_Dispatch_Request)];
+typedef char 
+        ACE_ES_Dispatch_Request_Chunk[sizeof (ACE_ES_Dispatch_Request)];
 
-typedef ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX> _ACE_Dispatch_Request_Allocator;
+typedef ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_MEMORY_POOL_MUTEX> 
+        _ACE_Dispatch_Request_Allocator;
 
 class TAO_ORBSVCS_Export ACE_ES_Dispatch_Request_Allocator : public _ACE_Dispatch_Request_Allocator
 // = TITLE
