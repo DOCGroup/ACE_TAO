@@ -9,6 +9,8 @@
 #include "tao/IOP.pidl" // from 98-03-01.idl
 #include "tao/GIOP.pidl" // from 98-03-01.idl
 #include "tao/Policy.pidl"
+#include "PortableGroup.idl"
+
 
 #pragma prefix "omg.org"
 
@@ -17,13 +19,13 @@
 module FT
 {
   /// FTDomainId's are denoted as strings
-  typedef string FTDomainId;
+  typedef PortableGroup::GroupDomainId FTDomainId;
 
     /// The objectgroup id
-  typedef unsigned long long ObjectGroupId;
+  typedef PortableGroup::ObjectGroupId ObjectGroupId;
 
   /// The reference version of the object group
-  typedef unsigned long ObjectGroupRefVersion;
+  typedef PortableGroup::ObjectGroupRefVersion ObjectGroupRefVersion;
 
   /**
    * @struct TagFTGroupTaggedComponent
@@ -31,13 +33,7 @@ module FT
    * @brief Contents of the Tagged_Component field with tag
    *  TAG_FT_GROUP
    */
-  struct TagFTGroupTaggedComponent
-  {
-    GIOP::Version version;
-    FTDomainId ft_domain_id;
-    ObjectGroupId object_group_id;
-    ObjectGroupRefVersion object_group_ref_version;
-  };
+  typedef PortableGroup::TagGroupTaggedComponent TagFTGroupTaggedComponent;
 
   /**
    * @struct TagFTPrinaryTaggedComponent

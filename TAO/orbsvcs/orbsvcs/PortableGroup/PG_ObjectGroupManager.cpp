@@ -2,11 +2,12 @@
 #include "PG_GenericFactory.h"
 #include "PG_conf.h"
 #include "PG_Operators.h"
+#include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 
 #include "tao/debug.h"
 
 #include "ace/Auto_Ptr.h"
-#include "ace/Reverse_Lock_T.h"
+
 
 ACE_RCSID (PortableGroup,
            PG_ObjectGroupManager,
@@ -473,12 +474,34 @@ PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::create_object_group (
   PortableGroup::ObjectGroupId group_id,
   const char * type_id,
+  const char * domain_id,
   const PortableGroup::Criteria & the_criteria
   ACE_ENV_ARG_DECL)
 {
-  //TODO - Use IORManipulation to create and assign
-  //       an empty IOGR. For now, just leave it nil.
-  CORBA::Object_var object_group;
+  // Create a reference for the ObjectGroup corresponding to the
+  // RepositoryId of the object being created.
+  PortableServer::ObjectId_var oid =
+    PortableServer::string_to_ObjectId (type_id);
+  CORBA::Object_var object_group =
+    this->poa_->create_reference_with_id (oid,
+                                          type_id
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+  FT::TagFTGroupTaggedComponent ft_tag_component;
+  TAO_FT_IOGR_Property prop (ft_tag_component);
+
+  ft_tag_component.component_version.major = (CORBA::Octet) 1;
+  ft_tag_component.component_version.minor = (CORBA::Octet) 0;
+  ft_tag_component.group_domain_id = domain_id;
+  ft_tag_component.object_group_id = group_id;
+  ft_tag_component.object_group_ref_version = 0;
+
+  // Set the property
+  iorm_->set_property (&prop, 
+                        object_group.in ()
+                        ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   ACE_NEW_THROW_EX (group_entry,
@@ -505,7 +528,6 @@ TAO_PG_ObjectGroupManager::create_object_group (
   for (CORBA::ULong i = 0; i < len; ++i)
     group_entry->properties[i] = the_criteria[i];
 
-  {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                       guard,
                       this->lock_,
@@ -514,7 +536,6 @@ TAO_PG_ObjectGroupManager::create_object_group (
     if (this->object_group_map_.bind (group_id, group_entry) != 0)
       ACE_THROW_RETURN (PortableGroup::ObjectNotCreated (),
                         PortableGroup::ObjectGroup::_nil ());
-  }
 
   (void) safe_group_entry.release ();
 
@@ -561,8 +582,11 @@ TAO_PG_ObjectGroupManager::object_group (const PortableServer::ObjectId & oid)
                     this->lock_,
                     PortableGroup::ObjectGroup::_nil ());
 
+{
 //TODO -- need to fix this code. The LoadBalancer uses this.
 //        Need to implement some sort of objectId-to-ObjectGroup nmap.
+  int _todo_fix_temporarily_disabled_code_;
+}
 #if 0
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.find (group_id, group_entry) == 0)
@@ -593,13 +617,29 @@ TAO_PG_ObjectGroupManager::member_count (
   return ACE_static_cast (CORBA::ULong, group_entry->member_infos.size ());
 }
 
-void
-TAO_PG_ObjectGroupManager::poa (PortableServer::POA_ptr p)
+int
+TAO_PG_ObjectGroupManager::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr p)
 {
-  ACE_ASSERT (CORBA::is_nil (this->poa_.in ())
-              && !CORBA::is_nil (p));
+  ACE_ASSERT (CORBA::is_nil (this->orb_.in ()) && !CORBA::is_nil (orb));
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
+  ACE_ASSERT (CORBA::is_nil (this->poa_.in ()) && !CORBA::is_nil (p));
   this->poa_ = PortableServer::POA::_duplicate (p);
+
+  int result = 0;
+
+  // Get an object reference for the ORBs IORManipulation object!
+  CORBA::Object_var IORM =
+    orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
+                                      0
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  iorm_ = TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ()
+                                                  ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  return result;
 }
 
 
@@ -670,9 +710,16 @@ TAO_PG_ObjectGroupManager::get_group_entry (
   if (CORBA::is_nil (this->poa_.in ()))
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  //TODO - Change this to call the IORManipulation::get_properties 
-  //       when its available, and then extract the object_group_id.
-  PortableGroup::ObjectGroupId group_id = 10; // dummy value for now
+  // extract the group_id from the object group reference
+  FT::TagFTGroupTaggedComponent ftc;
+  TAO_FT_IOGR_Property tmp_prop;
+
+  tmp_prop.get_tagged_component (object_group,
+                                 ftc
+                                 ACE_ENV_ARG_PARAMETER);
+  ACE_TRY_CHECK;
+
+  PortableGroup::ObjectGroupId group_id = ftc.object_group_id;
 
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.find (group_id, group_entry) != 0)

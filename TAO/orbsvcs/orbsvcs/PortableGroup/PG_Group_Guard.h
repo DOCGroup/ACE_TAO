@@ -14,7 +14,7 @@
 #ifndef TAO_PG_GROUP_GUARD_H
 #define TAO_PG_GROUP_GUARD_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -84,10 +84,10 @@ private:
   /// Flag that dictates whether or not the destructor will perform
   /// cleanup.
   int released_;
-    
+
 };
 
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_PG_GROUP_GUARD_H */

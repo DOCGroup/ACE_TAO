@@ -14,7 +14,7 @@
 #ifndef TAO_PG_OBJECT_GROUP_MANAGER_H
 #define TAO_PG_OBJECT_GROUP_MANAGER_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "orbsvcs/PortableGroupS.h"
 
@@ -27,6 +27,8 @@
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServerC.h"
+#include "orbsvcs/FT_CORBA_ORBC.h"
+#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 
 
 /// Forward declarations
@@ -167,6 +169,7 @@ public:
   PortableGroup::ObjectGroup_ptr create_object_group (
     PortableGroup::ObjectGroupId group_id,
     const char * type_id,
+    const char * domain_id,
     const PortableGroup::Criteria & the_criteria
     ACE_ENV_ARG_DECL);
 
@@ -211,9 +214,8 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableGroup::ObjectGroupNotFound));
 
-  /// Set the POA to use when converting object group references to
-  /// ObjectIds.
-  void poa (PortableServer::POA_ptr p);
+  /// Initializes the group manager.
+  int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr p);
 
   /// Set the pointer to the GenericFactory associated with this
   /// ObjectGroupManager.
@@ -272,8 +274,14 @@ protected:
 
 private:
 
+  /// The orb
+  CORBA::ORB_var orb_;
+
   /// Reference to the POA that created the object group references.
   PortableServer::POA_var poa_;
+
+  /// The ORBs IORManipulation object
+  TAO_IOP::TAO_IOR_Manipulation_var iorm_;
 
   /// The underlying table that contains all object group
   /// information.
@@ -293,6 +301,6 @@ private:
 };
 
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif  /* TAO_PG_OBJECT_GROUP_MANAGER_H */

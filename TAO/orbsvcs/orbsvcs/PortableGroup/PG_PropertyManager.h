@@ -14,7 +14,7 @@
 #ifndef TAO_PG_PROPERTY_MANAGER_H
 #define TAO_PG_PROPERTY_MANAGER_H
 
-#include /**/ "ace/pre.h"
+#include "ace/pre.h"
 
 #include "ace/config-all.h"
 
@@ -28,7 +28,7 @@
 
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager_T.h"
-#include "ace/Null_Mutex.h"
+
 
 
 /// Forward declarations.
@@ -56,7 +56,7 @@ public:
   TAO_PG_PropertyManager (TAO_PG_ObjectGroupManager & object_group_manager);
 
   /// Specifies the property validator to use (0 means: use the default)
-  virtual void init ( 
+  virtual void init (
     TAO_PG_Default_Property_Validator * property_validator );
 
   /**
@@ -186,6 +186,6 @@ private:
 
 };
 
-#include /**/ "ace/post.h"
+#include "ace/post.h"
 
 #endif /* TAO_PG_PROPERTY_MANAGER_H */

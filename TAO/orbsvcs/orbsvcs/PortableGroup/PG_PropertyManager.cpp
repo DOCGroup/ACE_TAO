@@ -3,7 +3,6 @@
 #include "PG_PropertyManager.h"
 #include "PG_ObjectGroupManager.h"
 #include "PG_Property_Utils.h"
-#include "ace/SString.h"
 
 ACE_RCSID (PortableGroup,
            PG_PropertyManager,
@@ -26,16 +25,18 @@ TAO_PG_PropertyManager::init (
   TAO_PG_Default_Property_Validator * property_validator )
 {
   if (property_validator)
-    {
-      property_validator_ = property_validator;
-    }
+  {
+    property_validator_ = property_validator;
+  }
   else
-    {
-      // @@OCI-folks have an environment variable for throwing
-      // exceptions.
-      ACE_NEW (property_validator_,
-               TAO_PG_Default_Property_Validator);
-    }
+  {
+    ACE_NEW_THROW_EX (
+        property_validator_,
+        TAO_PG_Default_Property_Validator,
+        CORBA::NO_MEMORY ()
+    );
+    ACE_CHECK;
+  }
 }
 
 
@@ -244,11 +245,10 @@ TAO_PG_PropertyManager::set_properties_dynamically (
   PortableGroup::Properties * dynamic_properties =
     this->object_group_manager_.get_dynamic_properties (object_group
                                                 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (0);
 
   // Now override the dynamic (object group) properties with the new values
-  TAO_PG::override_properties (overrides,
-                               *dynamic_properties);
+  TAO_PG::override_properties (overrides, *dynamic_properties);
 }
 
 

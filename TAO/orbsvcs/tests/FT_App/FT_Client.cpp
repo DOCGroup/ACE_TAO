@@ -430,7 +430,7 @@ int FTClientMain::pass (
           }
           if (unitTests.run_test(operand))
           {
-            std::cout << "FT Client: ERROR: Test failed." << endl;
+            std::cout << "FT Client: ERROR: Test failed." << std::endl;
           }
           break;
         }
