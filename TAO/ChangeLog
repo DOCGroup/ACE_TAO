@@ -1,3 +1,41 @@
+Thu Aug 14 15:09:52 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.cpp:
+        * tao/Any.h:
+        * tao/Any.i:
+
+          Changed the memory management of the type code stored in the
+          Any_Impl. The only way for this to work in all cases is for
+          the Any_Impl to always own and release the type code. Also
+          removed the constructor taking a type code and void* value,
+          it has been removed from the C++ mapping. Finally, added a
+          _tao_set_typecode() method to be used internally when it is
+          necessary to manipulate the type code of an Any that has no value.
+
+        * tao/Any_Array_Impl_T.cpp:
+        * tao/Any_Basic_Impl_T.cpp:
+        * tao/Any_Dual_Impl_T.cpp:
+        * tao/Any_Impl_T.cpp:
+        * tao/Any_Special_Basic_Impl_T.cpp:
+        * tao/Any_Special_Impl_T.cpp:
+        
+          Changed the overridden free_value() methods to reflect the changed
+          semantics of the type code member described above. Also modified
+          the extract() methods to do a better memory cleanup in the event
+          of a failed extraction.
+             
+        * tao/NVList.cpp:
+        * tao/RequestInfo_Util.cpp:
+        * tao/Typecode.cpp:
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+        * tao/DynamicInterface/Request.inl:
+        * tests/Param_Test/any.cpp:
+        * tests/Param_Test/complex_any.cpp:
+        * tests/Param_Test/recursive_union.cpp:
+
+          Changes required as a consequence of those above.
+
 Thu Aug 14 18:46:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/orbsvcs/Metrics/Metrics_LocalCache.h:

@@ -137,10 +137,13 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           return 0;
         }
 
+      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
       TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = 0;
       ACE_NEW_RETURN (replacement,
                       BOUNDED_TSTRING_ANY_IMPL (destructor,
-                                                CORBA::TypeCode::_duplicate (tc),
+                                                tc,
                                                 0,
                                                 bound),
                       0);
@@ -157,11 +160,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
 						            TAO_DEF_GIOP_MAJOR,
 						            TAO_DEF_GIOP_MINOR);
 
-      CORBA::TCKind kind = tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      impl->assign_translator (kind,
-                               &cdr);
+      impl->assign_translator (kind, &cdr);
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)
@@ -171,6 +170,9 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
           replacement_safety.release ();
           return 1;
         }
+
+      // Duplicated by Any_Impl base class constructor.
+      CORBA::release (tc);
     }
   ACE_CATCHANY
     {
@@ -191,7 +193,6 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::free_value (void)
     }
 
   CORBA::release (this->type_);
-  this->type_ = CORBA::TypeCode::_nil ();
   this->value_ = 0;
 }
 

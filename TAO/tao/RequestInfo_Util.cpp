@@ -81,31 +81,17 @@ TAO_RequestInfo_Util::make_any (CORBA::Boolean tk_void_any
                                 ACE_ENV_ARG_DECL)
 {
   CORBA::Any *any = 0;
+  ACE_NEW_THROW_EX (any,
+                    CORBA::Any,
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
 
   if (tk_void_any)
     {
-      ACE_NEW_THROW_EX (any,
-                        CORBA::Any (CORBA::_tc_void,
-                                    0),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-
-      // The Any duplicates the TypeCode so there is no problem in
-      // allowing the TypeCode_var to decrement the reference count on
-      // the tk_void TypeCode.
-    }
-  else
-    {
-      ACE_NEW_THROW_EX (any,
-                        CORBA::Any,
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
+      any->_tao_set_typecode (CORBA::_tc_void);
     }
 
   // No need to do an ACE_CHECK_RETURN.  The caller should do that.

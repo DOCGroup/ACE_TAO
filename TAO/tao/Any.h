@@ -50,15 +50,6 @@ namespace CORBA
     Any (void);
     Any (const Any &);
 
-    /// This signature is required by the C++ mapping, but allows
-    /// obvious type safety dangers. TAO's implementation will
-    /// accept only 0 for the void*. This constructor is
-    /// used with interceptors, where an Any may need to be
-    /// created that contains a void type.
-    Any (TypeCode_ptr,
-         void *,
-         Boolean release = 0);
-
     ~Any (void);
 
     Any &operator= (const Any &);
@@ -132,11 +123,6 @@ namespace CORBA
     Boolean operator>>= (to_abstract_base) const;
     Boolean operator>>= (to_value) const;
 
-    /// Spec-defined signature.
-    void replace (TypeCode_ptr,
-                  void *value,
-                  Boolean release = 0);
-
     /// TAO-specific signature.
     void replace (TAO::Any_Impl *);
 
@@ -150,6 +136,9 @@ namespace CORBA
 
     /// TAO extension, does not return a duplicate.
     CORBA::TypeCode_ptr _tao_get_typecode (void) const;
+
+    /// TAO extension.
+    void _tao_set_typecode (const CORBA::TypeCode_ptr);
 
     ACE_Message_Block *_tao_get_cdr (void) const;
     int _tao_byte_order (void) const;
@@ -325,9 +314,8 @@ namespace TAO
   {
   public:
     Unknown_IDL_Type (CORBA::TypeCode_ptr,
-                      const ACE_Message_Block *,
-                      int byte_order,
-                      CORBA::Boolean release_tc = 0,
+                      const ACE_Message_Block *mb = 0,
+                      int byte_order = TAO_ENCAP_BYTE_ORDER,
                       ACE_Char_Codeset_Translator *ctrans = 0,
                       ACE_WChar_Codeset_Translator *wtrans = 0);
     virtual ~Unknown_IDL_Type (void);
@@ -351,7 +339,6 @@ namespace TAO
   private:
     ACE_Message_Block *cdr_;
     int byte_order_;
-    CORBA::Boolean release_tc_;
     ACE_Char_Codeset_Translator *char_translator_;
     ACE_WChar_Codeset_Translator *wchar_translator_;
   };

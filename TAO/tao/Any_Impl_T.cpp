@@ -86,6 +86,9 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
           return 1;
         }
 
+      CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+
       TAO::Any_Impl_T<T> *replacement = 0;
       ACE_NEW_RETURN (replacement,
                       TAO::Any_Impl_T<T> (destructor,
@@ -103,11 +106,7 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
 						            TAO_DEF_GIOP_MAJOR,
 						            TAO_DEF_GIOP_MINOR);
 
-      CORBA::TCKind kind = any_tc->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      impl->assign_translator (kind,
-                               &cdr);
+      impl->assign_translator (kind, &cdr);
       CORBA::Boolean result = replacement->demarshal_value (cdr);
 
       if (result == 1)
@@ -115,8 +114,11 @@ TAO::Any_Impl_T<T>::extract (const CORBA::Any & any,
           _tao_elem = ACE_const_cast (T *, replacement->value_);
           ACE_const_cast (CORBA::Any &, any).replace (replacement);
           replacement_safety.release ();
-          return result;
+          return 1;
         }
+
+      // Duplicated by Any_Impl base class constructor.
+      CORBA::release (any_tc);
     }
   ACE_CATCHANY
     {
@@ -136,6 +138,7 @@ TAO::Any_Impl_T<T>::free_value (void)
       this->value_destructor_ = 0;
     }
 
+  CORBA::release (this->type_);
   this->value_ = 0;
 }
 

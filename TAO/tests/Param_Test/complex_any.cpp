@@ -56,7 +56,7 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req
 {
   req->add_in_arg ("s1") <<= this->in_;
   req->add_inout_arg ("s2") <<= this->inout_;
-  req->add_out_arg ("s3") <<= CORBA::Any (CORBA::_tc_any, 0);
+  req->add_out_arg ("s3") <<= this->out_.in ();
 
   req->set_return_type (CORBA::_tc_any);
 

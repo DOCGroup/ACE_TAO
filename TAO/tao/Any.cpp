@@ -139,24 +139,6 @@ CORBA::Any::Any (const CORBA::Any &rhs)
     }
 }
 
-CORBA::Any::Any (CORBA::TypeCode_ptr tc,
-                 void *value,
-                 CORBA::Boolean release)
-{
-  if (value != 0)
-    {
-      ACE_DECLARE_NEW_CORBA_ENV;
-      ACE_THROW (CORBA::NO_IMPLEMENT ());
-      return;
-    }
-
-  ACE_NEW (this->impl_,
-           TAO::Unknown_IDL_Type (tc,
-                                  0,
-                                  ACE_CDR_BYTE_ORDER,
-                                  release));
-}
-
 CORBA::Any::~Any (void)
 {
   if (this->impl_ != 0)
@@ -187,25 +169,16 @@ CORBA::Any::operator= (const CORBA::Any &rhs)
 }
 
 void
-CORBA::Any::replace (CORBA::TypeCode_ptr,
-                     void *,
-                     CORBA::Boolean)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_THROW (CORBA::NO_IMPLEMENT ());
-}
-
-void
 CORBA::Any::replace (TAO::Any_Impl *new_impl)
 {
+  ACE_ASSERT (new_impl != 0);
+
   if (this->impl_ != 0)
     {
       this->impl_->_remove_ref ();
     }
 
   this->impl_ = new_impl;
-
-  ACE_ASSERT (this->impl_ != 0);
 }
 
 CORBA::TypeCode_ptr
@@ -228,6 +201,20 @@ CORBA::Any::_tao_get_typecode (void) const
     }
 
   return CORBA::_tc_null;
+}
+
+void
+CORBA::Any::_tao_set_typecode (const CORBA::TypeCode_ptr tc)
+{
+  if (this->impl_ == 0)
+    {
+      ACE_NEW (this->impl_,
+               TAO::Unknown_IDL_Type (tc));
+    }
+  else
+    {
+      this->impl_->type (tc);
+    }
 }
 
 ACE_Message_Block *
@@ -349,7 +336,7 @@ CORBA::Any::checked_to_abstract_base (
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
                          CORBA::TypeCode_ptr tc)
   : value_destructor_ (destructor),
-    type_ (tc),
+    type_ (CORBA::TypeCode::_duplicate (tc)),
     refcount_ (1)
 {
 }
@@ -420,15 +407,12 @@ TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     CORBA::TypeCode_ptr tc,
     const ACE_Message_Block *mb,
     int byte_order,
-    CORBA::Boolean release_tc,
     ACE_Char_Codeset_Translator *ctrans,
     ACE_WChar_Codeset_Translator *wtrans
   )
-  : TAO::Any_Impl (0,
-                   tc),
+  : TAO::Any_Impl (0, tc),
     cdr_ (ACE_Message_Block::duplicate (mb)),
     byte_order_ (byte_order),
-    release_tc_ (release_tc),
     char_translator_ (ctrans),
     wchar_translator_ (wtrans)
 {
@@ -470,11 +454,7 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR &cdr)
 void
 TAO::Unknown_IDL_Type::free_value (void)
 {
-  if (this->release_tc_ == 1)
-    {
-      CORBA::release (this->type_);
-    }
-
+  CORBA::release (this->type_);
   ACE_Message_Block::release (this->cdr_);
 }
 
@@ -774,8 +754,7 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
       ACE_NEW_RETURN (impl,
                       TAO::Unknown_IDL_Type (tc,
                                              0,
-                                             cdr.byte_order (),
-                                             1),
+                                             cdr.byte_order ()),
                       0);
 
       any.replace (impl);

@@ -241,6 +241,7 @@ CORBA::NVList::add_element (CORBA::Flags flags
 
   // set the flags and enqueue in the queue
   nv->flags_ = flags;
+
   if (this->values_.enqueue_tail (nv) == -1)
     {
       delete nv;
