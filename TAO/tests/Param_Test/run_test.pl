@@ -1,4 +1,4 @@
-#$Id$
+# $Id$
 # -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
@@ -90,11 +90,14 @@ for ($i = 0; $i <= $#ARGV; $i++)
   }
 }
 
-@types = ("short", "ubstring", "bdstring", "fixed_struct", "strseq", 
-          "bounded_strseq", "var_struct", "nested_struct", "struct_seq", 
-	  "bounded_struct_seq", "any", "objref", "objref_sequence", 
-	  "any_sequence", "short_sequence", "long_sequence", 
-	  "bounded_short_sequence", "bounded_long_sequence",
+@types = ("short", "ubstring", "bdstring", "fixed_struct",
+	  "ub_strseq", "bd_strseq",
+	  "var_struct", "nested_struct",
+	  "ub_struct_seq", "bd_struct_seq",
+	  "any", "objref", "objref_sequence", 
+	  "any_sequence",
+	  "ub_short_sequence", "ub_long_sequence", 
+	  "bd_short_sequence", "bd_long_sequence",
 	  "fixed_array", "var_array", "typecode");
 
 if ($type ne "")

@@ -49,24 +49,7 @@ public:
   to_Time_Value (const TimeBase::TimeT& rhs);
 };
 
-#if !defined (__ACE_INLINE__)
-
-extern TAO_ORBSVCS_Export int operator== (const TimeBase::TimeT &lhs,
-					  const TimeBase::TimeT &rhs);
-extern TAO_ORBSVCS_Export int operator!= (const TimeBase::TimeT &lhs,
-					  const TimeBase::TimeT &rhs);
-extern TAO_ORBSVCS_Export int operator< (const TimeBase::TimeT &lhs,
-					 const TimeBase::TimeT &rhs);
-extern TAO_ORBSVCS_Export int operator<= (const TimeBase::TimeT &lhs,
-					  const TimeBase::TimeT &rhs);
-extern TAO_ORBSVCS_Export int operator< (const TimeBase::TimeT &lhs,
-					 const TimeBase::TimeT &rhs);
-extern TAO_ORBSVCS_Export int operator> (const TimeBase::TimeT &lhs,
-					 const TimeBase::TimeT &rhs);
-extern TAO_ORBSVCS_Export int operator>= (const TimeBase::TimeT &lhs,
-					  const TimeBase::TimeT &rhs);
-
-#else /* defined (__ACE_INLINE__) */
+#if defined (__ACE_INLINE__)
 #include "orbsvcs/Time_Utilities.i"
 #endif /* __ACE_INLINE__ */
 

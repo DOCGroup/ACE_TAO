@@ -133,7 +133,7 @@ Task_Entry::effective_execution_time () const
   // Just use low 32 bits.  This will have to change when CosTimeBase.idl
   // is finalized.
   ACE_UINT32 worst_case_execution_time =
-    ACE_static_cast (ACE_UINT32, rt_info_->worst_case_execution_time.low);
+    ACE_static_cast (ACE_UINT32, rt_info_->worst_case_execution_time);
 
   return (rt_info_->info_type == RtecScheduler::OPERATION)
          ? worst_case_execution_time * dispatches_.size ()

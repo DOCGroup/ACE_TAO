@@ -349,10 +349,10 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 
   // timeline entries cover the execution time of the dispatch
   CORBA::ULong remaining_time =
-    dispatch_entry.task_entry().rt_info ()->worst_case_execution_time.low;
+    dispatch_entry.task_entry().rt_info ()->worst_case_execution_time;
 
   // initialize last stop time to arrival time of the dispatch
-  CORBA::ULong last_stop = dispatch_entry.arrival ().low;
+  CORBA::ULong last_stop = dispatch_entry.arrival ();
 
   TimeLine_Entry *last_entry = 0;
   TimeLine_Entry *current_entry = 0;
@@ -448,8 +448,8 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
           last_stop,
           (((remaining_time + last_stop) < link->entry ().start())
              ? (remaining_time + last_stop) : link->entry ().start()),
-          dispatch_entry.arrival ().low,
-          dispatch_entry.deadline ().low,
+          dispatch_entry.arrival (),
+          dispatch_entry.deadline (),
           (TimeLine_Entry *) 0, last_entry),
         ST_VIRTUAL_MEMORY_EXHAUSTED);
 
@@ -484,8 +484,8 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
         dispatch_entry,
         last_stop,
         remaining_time + last_stop,
-        dispatch_entry.arrival ().low,
-        dispatch_entry.deadline ().low,
+        dispatch_entry.arrival (),
+        dispatch_entry.deadline (),
         0, last_entry),
       ST_VIRTUAL_MEMORY_EXHAUSTED);
 
@@ -685,8 +685,8 @@ ACE_MUF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
                                                  u_long current_time)
 {
   long laxity =
-    entry.deadline ().low - current_time -
-    entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+    entry.deadline () - current_time -
+    entry.task_entry ().rt_info ()->worst_case_execution_time;
 
   return (laxity > 0) ? LONG_MAX - laxity : laxity;
 }
@@ -704,12 +704,12 @@ ACE_MUF_Scheduler_Strategy::dynamic_subpriority_comp
 {
   // order by descending dynamic priority according to ascending laxity
   u_long laxity1 =
-    first_entry.deadline ().low - first_entry.arrival ().low -
-    first_entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+    first_entry.deadline () - first_entry.arrival () -
+    first_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
   u_long laxity2 =
-    second_entry.deadline ().low - first_entry.arrival ().low -
-    second_entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+    second_entry.deadline () - first_entry.arrival () -
+    second_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
 
   if (laxity1 < laxity2)
@@ -784,13 +784,13 @@ ACE_RMS_Scheduler_Strategy::priority_comp (const Dispatch_Entry &first_entry,
                                            const Dispatch_Entry &second_entry)
 {
   // compare by decreasing dispatch period
-  if ((first_entry.deadline ().low - first_entry.arrival ().low)    <
-      (second_entry.deadline ().low - second_entry.arrival ().low))
+  if ((first_entry.deadline () - first_entry.arrival ())    <
+      (second_entry.deadline () - second_entry.arrival ()))
   {
     return -1;
   }
-  else if ((first_entry.deadline ().low - first_entry.arrival ().low)    >
-           (second_entry.deadline ().low - second_entry.arrival ().low))
+  else if ((first_entry.deadline () - first_entry.arrival ())    >
+           (second_entry.deadline () - second_entry.arrival ()))
   {
     return 1;
   }
@@ -932,8 +932,8 @@ ACE_MLF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
                                                  u_long current_time)
 {
   long laxity =
-    entry.deadline ().low - current_time -
-    entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+    entry.deadline () - current_time -
+    entry.task_entry ().rt_info ()->worst_case_execution_time;
 
   return (laxity > 0) ? LONG_MAX - laxity : laxity;
 }
@@ -948,12 +948,12 @@ ACE_MLF_Scheduler_Strategy::dynamic_subpriority_comp
   // order by laxity (ascending)
   // order by descending dynamic priority according to ascending laxity
   u_long laxity1 =
-    first_entry.deadline ().low - first_entry.arrival ().low -
-    first_entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+    first_entry.deadline () - first_entry.arrival () -
+    first_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
   u_long laxity2 =
-    second_entry.deadline ().low - first_entry.arrival ().low -
-    second_entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+    second_entry.deadline () - first_entry.arrival () -
+    second_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
   if (laxity1 < laxity2)
   {
@@ -1050,7 +1050,7 @@ long
 ACE_EDF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
                                                  u_long current_time)
 {
-  long time_to_deadline = entry.deadline ().low - current_time;
+  long time_to_deadline = entry.deadline () - current_time;
   return (time_to_deadline > 0)
          ? LONG_MAX - time_to_deadline : time_to_deadline;
 }
@@ -1063,13 +1063,13 @@ ACE_EDF_Scheduler_Strategy::dynamic_subpriority_comp
    const Dispatch_Entry &second_entry)
 {
   // order by dispatchable interval (ascending)
-  if (first_entry.deadline ().low - first_entry.arrival ().low <
-      second_entry.deadline ().low - first_entry.arrival ().low)
+  if (first_entry.deadline () - first_entry.arrival () <
+      second_entry.deadline () - first_entry.arrival ())
   {
     return -1;
   }
-  else if (first_entry.deadline ().low - first_entry.arrival ().low >
-           second_entry.deadline ().low - first_entry.arrival ().low)
+  else if (first_entry.deadline () - first_entry.arrival () >
+           second_entry.deadline () - first_entry.arrival ())
   {
     return 1;
   }
@@ -1135,13 +1135,13 @@ ACE_RMS_Dyn_Scheduler_Strategy::priority_comp (const Dispatch_Entry &first_entry
   {
     // if they're both in the high criticality bracket,
     // order by dispatch period as in RMS scheduling
-    if ((first_entry.deadline ().low - first_entry.arrival ().low)    <
-        (second_entry.deadline ().low - second_entry.arrival ().low))
+    if ((first_entry.deadline () - first_entry.arrival ())    <
+        (second_entry.deadline () - second_entry.arrival ()))
     {
       return -1;
     }
-    else if ((first_entry.deadline ().low - first_entry.arrival ().low)    >
-             (second_entry.deadline ().low - second_entry.arrival ().low))
+    else if ((first_entry.deadline () - first_entry.arrival ())    >
+             (second_entry.deadline () - second_entry.arrival ()))
     {
       return 1;
     }
@@ -1199,8 +1199,8 @@ ACE_RMS_Dyn_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
       RtecScheduler::HIGH_CRITICALITY)
   {
     long laxity =
-      entry.deadline ().low - current_time -
-      entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+      entry.deadline () - current_time -
+      entry.task_entry ().rt_info ()->worst_case_execution_time;
 
      return (laxity > 0) ? LONG_MAX - laxity : laxity;
   }
@@ -1231,12 +1231,12 @@ ACE_RMS_Dyn_Scheduler_Strategy::dynamic_subpriority_comp
     // for VERY_LOW_CRITICALITY, LOW_CRITICALITY and MEDIUM_CRITICALITY,
     // order second by laxity (ascending)
     u_long laxity1 =
-      first_entry.deadline ().low - first_entry.arrival ().low -
-      first_entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+      first_entry.deadline () - first_entry.arrival () -
+      first_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
     u_long laxity2 =
-      second_entry.deadline ().low - first_entry.arrival ().low -
-      second_entry.task_entry ().rt_info ()->worst_case_execution_time.low;
+      second_entry.deadline () - first_entry.arrival () -
+      second_entry.task_entry ().rt_info ()->worst_case_execution_time;
 
     if (laxity1 < laxity2)
     {

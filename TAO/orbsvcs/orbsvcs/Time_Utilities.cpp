@@ -9,4 +9,4 @@
 
 ACE_RCSID(orbsvcs, Time_Utilities, "$Id$")
 
-TimeBase::TimeT ORBSVCS_Time::zero = {0, 0};
+TimeBase::TimeT ORBSVCS_Time::zero = 0;
