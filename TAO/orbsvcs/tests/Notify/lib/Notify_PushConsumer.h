@@ -29,6 +29,7 @@
 #include "ace/pre.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
+#include "notify_test_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -37,7 +38,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_PushConsumer : public POA_CosNotifyComm::PushConsumer, public PortableServer::RefCountServantBase
+class TAO_NOTIFY_TEST_Export TAO_Notify_PushConsumer : public POA_CosNotifyComm::PushConsumer, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_PushConsumer

@@ -16,7 +16,10 @@ TAO_Notify_StructuredPushConsumer::~TAO_Notify_StructuredPushConsumer (void)
 // @@ Pradeep: do not assume that the user will activate the servant
 // using _this() and changing the default POA, there are many other
 // activation modes.
-void TAO_Notify_StructuredPushConsumer::init (PortableServer::POA_ptr poa, CORBA::Environment & /*ACE_TRY_ENV*/)
+// @@ Carlos: The <connect> method will activate the servant with the supplied poa.
+//            This is the contract for clients of this class.
+//
+void TAO_Notify_StructuredPushConsumer::init (PortableServer::POA_ptr poa, CORBA::Environment &/*ACE_TRY_ENV*/)
 {
   this->default_POA_ = PortableServer::POA::_duplicate (poa);
 }
@@ -27,16 +30,23 @@ TAO_Notify_StructuredPushConsumer::_default_POA (CORBA::Environment &/*env*/)
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
+
+CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr
+TAO_Notify_StructuredPushConsumer::get_proxy_supplier (void)
+{
+  return proxy_supplier_.in ();
+}
+
 void
 TAO_Notify_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin, CORBA::Environment &ACE_TRY_ENV)
 {
   // Activate the consumer with the default_POA_
-  CosNotifyComm::StructuredPushConsumer_var objref =
+  CosNotifyComm::StructuredPushConsumer_var consumer_ref =
     this->_this (ACE_TRY_ENV);
   ACE_CHECK;
 
   CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
-    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_id_, ACE_TRY_ENV);
+    consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT, proxy_supplier_id_, ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
@@ -48,9 +58,8 @@ TAO_Notify_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin
 
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
-  proxy_supplier_->connect_structured_push_consumer (objref.in (),
+  proxy_supplier_->connect_structured_push_consumer (consumer_ref.in (),
                                                      ACE_TRY_ENV);
-  ACE_CHECK;
 }
 
 void
@@ -99,4 +108,13 @@ TAO_Notify_StructuredPushConsumer::disconnect_structured_push_consumer (CORBA::E
                    ))
 {
   this->deactivate (ACE_TRY_ENV);
+}
+
+void
+TAO_Notify_StructuredPushConsumer:: push_structured_event (const CosNotification::StructuredEvent &/*notification*/, CORBA::Environment &/*ACE_TRY_ENV*/)
+  ACE_THROW_SPEC ((
+                   CORBA::SystemException,
+                   CosEventComm::Disconnected
+                   ))
+{
 }

@@ -9,7 +9,8 @@
 //   Notify_StructuredPushSupplier
 //
 // = DESCRIPTION
-//   This class is to be used by clients of the Notification Service.
+//   This class is to be used by clients of the Notification Service
+//   to implement Structured Push Suppliers.
 //
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>
@@ -30,28 +31,24 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
+class TAO_NOTIFY_TEST_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyComm::StructuredPushSupplier, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_StructuredPushSupplier
   //
   // = DESCRIPTION
-  //
+  //   Implements rudimentary StructuredPushSupplier functionality.
   //
  public:
   // = Initialization and Termination code
   TAO_Notify_StructuredPushSupplier (void);
   // Constructor.
 
-  void init (PortableServer::POA_ptr poa,
-             CORBA::Environment & /*ACE_TRY_ENV*/);
+  void init (PortableServer::POA_ptr poa, CORBA::Environment & /*ACE_TRY_ENV*/);
   // Init
 
-  // @@ Pradeep: try to cleanup the code you cut & paste, it is was
-  // really hard to read.
-  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                CORBA::Environment &ACE_TRY_ENV);
-  // Connect the Supplier to the EventChannel.
+  void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin, CORBA::Environment &ACE_TRY_ENV);
+  // Activates this servant with the POA supplied in init.
   // Creates a new proxy supplier and connects to it.
 
   void disconnect (CORBA::Environment &ACE_TRY_ENV);
@@ -61,18 +58,26 @@ class TAO_Notify_Export TAO_Notify_StructuredPushSupplier:public POA_CosNotifyCo
                            CORBA::Environment &ACE_TRY_ENV);
   // Send one event.
 
+  CosNotifyChannelAdmin::StructuredProxyPushConsumer_ptr get_proxy_consumer (void);
+  // Accessor for <proxy_consumer_>.
 
-  void deactivate (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  void deactivate (CORBA::Environment &ACE_TRY_ENV);
   // Deactivate the object.
 
   // = ServantBase operations
   PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
-  // @@ Any reasons why this is public?
-  CosNotifyChannelAdmin::ProxyID my_id_;
-  // This supplier's id.
-
 protected:
+  // = Data Members
+  CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_;
+  // The proxy that we are connected to.
+
+  CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
+  // This <proxy_consumer_> id.
+
+  PortableServer::POA_var default_POA_;
+  // The default POA.
+
   virtual ~TAO_Notify_StructuredPushSupplier ();
   // Destructor
 
@@ -94,13 +99,6 @@ protected:
       ACE_THROW_SPEC ((
         CORBA::SystemException
       ));
-
-  // = Data members
-  PortableServer::POA_var default_POA_;
-  // The default POA.
-
-  CosNotifyChannelAdmin::StructuredProxyPushConsumer_var consumer_proxy_;
-  // The proxy that we are connected to.
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
