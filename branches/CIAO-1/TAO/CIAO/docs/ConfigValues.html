@@ -120,13 +120,55 @@ operation.  CIAO accepts the following feature names:<p>
     <th>Remarks</th>
   </tr>
   <tr>
-    <td>CIAO-??(placeholder)</td>
-    <td>boolean</td>
+    <td>CIAO-executor-path</td>
+    <td><code>string</code></td>
     <td>
-        Example only.  Not a valid config value
+        REQUIRED
     </td>
     <td>
-        Example only.
+        This string value specifies the location of the executor DLL.
+        In the future, we should use UUIDs to identify the component
+        executors and query the ComponentInstallation interface for
+        the actual location of the DLL.
+    </td>
+  </tr>
+  <tr>
+    <td>CIAO-executor-entrypt</td>
+    <td><code>string</code></td>
+    <td>
+        REQUIRED
+    </td>
+    <td>
+        This string value specifies the entry point of the executor
+        DLL.  It points to a factory function for the component executor.
+    </td>
+  </tr>
+  <tr>
+    <td>CIAO-servant-path</td>
+    <td><code>string</code></td>
+    <td>
+        REQUIRED
+    </td>
+    <td>
+        This string value specifies the location of the servant DLL.
+        In the future, we should use UUIDs to identify the component
+        servants and query the ComponentInstallation interface for
+        the actual location of the DLL. <p>
+
+        Servant are part of the Container framework and we can use
+        type checking to ensure servant and container match with each
+        other.
+    </td>
+  </tr>
+  <tr>
+    <td>CIAO-executor-entrypt</td>
+    <td><code>string</code></td>
+    <td>
+        REQUIRED
+    </td>
+    <td>
+        This string value specifies the entry point of the servant
+        DLL.  It points to a factory function for the compnent servant.
     </td>
   </tr>
 </table>

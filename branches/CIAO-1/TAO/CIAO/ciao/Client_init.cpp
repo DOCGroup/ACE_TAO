@@ -1,9 +1,9 @@
 // $Id$
 
-#include "ciao/Client_init.h"
-#include "ciao/CIAO_common.h"
-#include "ciao/CCM_ComponentC.h"
-#include "CIAO/CIAO_ValueC.h"
+#include "Client_init.h"
+#include "CIAO_common.h"
+#include "CCM_ComponentC.h"
+#include "CIAO_ValueC.h"
 
 int
 CIAO::Client_init (CORBA::ORB_ptr o)

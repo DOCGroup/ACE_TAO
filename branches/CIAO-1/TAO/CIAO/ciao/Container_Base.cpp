@@ -51,6 +51,7 @@ CIAO::Session_Container::init (const char *name
        this->number_ = ++CIAO::Session_Container::serial_number_;
        ACE_OS::sprintf (buffer, "CIAO::Session_Container-%d",
                         this->number_);
+       name = buffer;
      }
 
    CORBA::Object_var poa_object =
@@ -108,11 +109,11 @@ CIAO::Session_Container::install_servant (PortableServer::Servant p
 }
 
 Components::CCMHome_ptr
-CIAO::Session_Container::_ciao_install_home (const char *exe_dll_name,
-                                             const char *exe_entrypt,
-                                             const char *sv_dll_name,
-                                             const char *sv_entrypt
-                                             ACE_ENV_ARG_DECL)
+CIAO::Session_Container::ciao_install_home (const char *exe_dll_name,
+                                            const char *exe_entrypt,
+                                            const char *sv_dll_name,
+                                            const char *sv_entrypt
+                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::Deployment::UnknownImplId,
                    Components::Deployment::ImplEntryPointNotFound,
@@ -170,6 +171,15 @@ CIAO::Session_Container::_ciao_install_home (const char *exe_dll_name,
 }
 
 void
+CIAO::Session_Container::ciao_uninstall_home (Components::CCMHome_ptr homeref
+                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->uninstall (homeref
+                   ACE_ENV_ARG_PARAMETER);
+}
+
+void
 CIAO::Session_Container::uninstall (CORBA::Object_ptr objref
                                     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -192,26 +202,6 @@ CIAO::Session_Container::uninstall (PortableServer::Servant svt
     = this->poa_->servant_to_id (svt
                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
-
-  this->poa_->deactivate_object (oid
-                                 ACE_ENV_ARG_PARAMETER);
-}
-
-void
-CIAO::Session_Container::debug_uninstall (CORBA::Object_ptr objref
-                                          ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  PortableServer::ObjectId_var oid
-    = this->poa_->reference_to_id (objref
-                                   ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  PortableServer::Servant sv
-    = this->poa_->id_to_servant (oid
-                                 ACE_ENV_ARG_PARAMETER);
-
-  sv = sv;
 
   this->poa_->deactivate_object (oid
                                  ACE_ENV_ARG_PARAMETER);
