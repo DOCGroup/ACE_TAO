@@ -16,6 +16,7 @@ ACE_RCSID (ace,
 #include "ace/Object_Manager_Base.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/Log_Msg.h"
 
 // This is necessary to work around nasty problems with MVS C++.
 
@@ -502,11 +503,11 @@ ACE_TSS_Ref::operator != (const ACE_TSS_Ref &tss_ref) const
 // single file of template instantiations
 
 ACE_TSS_Info::ACE_TSS_Info (ACE_thread_key_t key,
-                            void (*dest)(void *),
+                            ACE_TSS_Info::Destructor dest,
                             void *tss_inst)
   : key_ (key),
     destructor_ (dest),
-    tss_obj_ (tss_inst),
+    tss_inst_ (tss_inst),
     thread_count_ (-1)
 {
   ACE_OS_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
@@ -515,7 +516,7 @@ ACE_TSS_Info::ACE_TSS_Info (ACE_thread_key_t key,
 ACE_TSS_Info::ACE_TSS_Info (void)
   : key_ (ACE_OS::NULL_key),
     destructor_ (0),
-    tss_obj_ (0),
+    tss_inst_ (0),
     thread_count_ (-1)
 {
   ACE_OS_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
@@ -563,7 +564,7 @@ ACE_TSS_Info::dump (void)
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("key_ = %u\n"), this->key_));
   ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("destructor_ = %u\n"), this->destructor_));
-  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("tss_obj_ = %u\n"), this->tss_obj_));
+  ACE_DEBUG ((LM_DEBUG, ACE_LIB_TEXT ("tss_inst_ = %u\n"), this->tss_inst_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #   endif /* 0 */
 # endif /* ACE_HAS_DUMP */
@@ -663,7 +664,7 @@ public:
   int remove (ACE_thread_key_t key);
 
   /// Detaches a tss_instance from its key.
-  int detach (void *inst);
+  int detach (ACE_thread_key_t key, void *inst);
 
   /// Mark a key as being used by this thread.
   void key_used (ACE_thread_key_t key);
@@ -696,6 +697,9 @@ private:
   /// Accessor for this threads ACE_TSS_Keys instance.
   ACE_TSS_Keys *tss_keys ();
 
+  /// Check existence of tss_keys for this thread
+  bool find_tss_keys (ACE_TSS_Keys *& tss_keys) const;
+
 # if defined (ACE_HAS_TSS_EMULATION)
   /// Key that is used by in_use_.  We save this key so that we know
   /// not to call its destructor in free_all_keys_left ().
@@ -722,90 +726,37 @@ void
 ACE_TSS_Cleanup::exit (void * /* status */)
 {
   ACE_OS_TRACE ("ACE_TSS_Cleanup::exit");
-
-  ACE_TSS_TABLE_ITERATOR key_info = table_;
-  ACE_TSS_Info info_arr[ACE_DEFAULT_THREAD_KEYS];
-  int info_ix = 0;
-
-  // While holding the lock, we only collect the ACE_TSS_Info objects
-  // in an array without invoking the according destructors.
-  {
-    ACE_TSS_CLEANUP_GUARD
-
-    // Iterate through all the thread-specific items and free them all
-    // up.
-
-    for (unsigned int i = 0;
-         i < ACE_DEFAULT_THREAD_KEYS;
-         ++key_info, ++i)
-      {
-        if (key_info->key_ == ACE_OS::NULL_key  ||
-            ! key_info->key_in_use ()) continue;
-
-        // If the key's ACE_TSS_Info in-use bit for this thread was set,
-        // unset it and decrement the key's thread_count_.
-        if (! tss_keys ()->test_and_clear (key_info->key_))
-          {
-            --key_info->thread_count_;
-          }
-
-        void *tss_info = 0;
-
-        if (key_info->destructor_
-            && ACE_OS::thr_getspecific (key_info->key_, &tss_info) == 0
-            && tss_info)
-          {
-            info_arr[info_ix].key_ = key_info->key_;
-            info_arr[info_ix].destructor_ = key_info->destructor_;
-            info_arr[info_ix++].tss_obj_ = key_info->tss_obj_;
-          }
-      }
-  }
-
-  // Now we have given up the ACE_TSS_Cleanup::lock_ and we start
-  // invoking destructors, in the reverse order of creation.
-  for (int i = info_ix - 1; i >= 0; --i)
+  // if not initialized or already cleaned up
+  ACE_TSS_Keys *this_threads_keys = 0;
+  if (! find_tss_keys (this_threads_keys) )
     {
-      void *tss_info = 0;
-
-      ACE_OS::thr_getspecific (info_arr[i].key_, &tss_info);
-
-      if (tss_info != 0)
-        {
-          // Only call the destructor if the value is non-zero for this
-          // thread.
-          (*info_arr[i].destructor_)(tss_info);
-        }
+      return;
     }
 
-  // Acquire the ACE_TSS_CLEANUP_LOCK, then free TLS keys and remove
-  // entries from ACE_TSS_Info table.
-  {
-    ACE_TSS_CLEANUP_GUARD
-
-# if 0
-    // We shouldn't free the key and remove it from the table here
-    // because if we do and some thread ends before other threads
-    // even get started (or their TSS object haven't been created yet,)
-    // it's entry will be removed from the table and we are in big chaos.
-    // For TSS object, these have been done in ACE_TSS_Cleanup::detach.
-    // Two other use cases will be user managed TSS'es and system wide
-    // TSS, ones are users responsibilities and the others should be
-    // persistant system wide.
-    for (int i = 0; i < index; i++)
-      {
-#   if defined (ACE_WIN32) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
-        // Calling thr_keyfree here ensure the key
-        // gets removed appropriately.  Notice that
-        // a key should be removed before freeing it.
-        ACE_OS::thr_keyfree (key_info->key_);
-#   else
-        // don't bother to free the key
-        this->remove (key_info->key_);
-#   endif /* ACE_WIN32 */
-      }
-# endif /* 0 */
-  }
+  // note: tss_keys is thread specific
+  // and key_ & tss_inst_ values of a table_ entry won't change while
+  // thread_count_ shows this thread using the entry, so no lock is
+  // necessary here
+  for (unsigned int key = ACE_DEFAULT_THREAD_KEYS;
+    key > 0;
+    )
+    {
+      --key;
+      ACE_TSS_Info & info = this->table_[key];
+      // if this key is in use by this thread
+      if (this_threads_keys->is_set(info.key_))
+        {
+          // defer deleting the in-use key until all others have been deleted
+          if(info.key_ != this->in_use_)
+            {
+              detach (info.key_, info.tss_inst_);
+              // Warning: we may have just detached the log buffer.  This thread
+              // can no longer log anything.
+            }
+        }
+    }
+    // delete the in_use_ bit buffer last (and very carefully!)
+    detach (this->table_[this->in_use_].key_, this->table_[this->in_use_].tss_inst_);
 }
 
 int
@@ -921,15 +872,9 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
   if (key_index < ACE_DEFAULT_THREAD_KEYS)
     {
       // "Remove" the TSS_Info table entry by zeroing out its key_ and
-      // destructor_ fields.  Also, keep track of the number threads
-      // using the key.
+      // destructor_ fields.
       ACE_TSS_Info &info = this->table_ [key_index];
 
-      // Don't bother to test/clear the in "use bit" if the program is
-      // shutting down.  Doing so will cause a new ACE_TSS object to be
-      // created again.
-      if (!ACE_OS_Object_Manager::shutting_down ())
-        tss_keys ()->test_and_clear (info.key_);
       info.key_in_use (0);
       info.key_ = ACE_OS::NULL_key;
       info.destructor_ = 0;
@@ -940,49 +885,107 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
 }
 
 int
-ACE_TSS_Cleanup::detach (void *inst)
+ACE_TSS_Cleanup::detach (ACE_thread_key_t key, void *inst)
 {
-  ACE_TSS_CLEANUP_GUARD
+  // variables to hold the destructor and the object to be destructed
+  // the actual call is deferred until the guard is released
+  ACE_TSS_Info::Destructor destructor = 0;
+  void * tss_obj = 0;
 
-  ACE_TSS_TABLE_ITERATOR key_info = table_;
-  int success = 0;
-  int ref_cnt = 0;
+  // scope the guard
+  {
+    ACE_TSS_CLEANUP_GUARD
 
-  // Mark the key as detached in the TSS_Info table.
-  // It only works for the first key that "inst" owns.
-  // I don't know why.
-  for (unsigned int i = 0;
-       i < ACE_DEFAULT_THREAD_KEYS;
-       ++key_info, ++i)
-    {
-      if (key_info->tss_obj_ == inst)
+    // sanity check
+    // this happens when a thread knows about a key via an ACE_TSS, but has never used it.
+    if (! tss_keys ()->is_set (key))
+      {
+#ifdef ACE_DEBUGGING_TSS_CLEANUP
+        ACE_DEBUG((LM_DEBUG,
+          ACE_TEXT ("(%P|%t) ACE_TSS_Cleanup::detach for unused key[%d] from @%@\n")
+          , key
+          , inst
+          ));
+#endif // ACE_DEBUGGING_TSS_CLEANUP
+        return 0;
+      }
+
+
+    ACE_TSS_TABLE_ITERATOR key_info = table_;
+      // optimization:  assume key is an index into the table
+      if (key < sizeof(this->table_)/sizeof(this->table_[0])
+        && this->table_[key].key_ == key)
         {
-          key_info->tss_obj_ = 0;
-          ref_cnt = --key_info->thread_count_;
-          success = 1;
-          break;
+          key_info += key;
         }
-    }
+      else
+        {
+          bool found = false;
+          for (size_t i = 0;
+            ! found && i < sizeof(this->table_)/sizeof(this->table_[0]);
+            ++i)
+            {
+              if (key_info->key_ == key)
+                {
+                  found = true;
+                }
+              else
+                {
+                  ++key_info;
+                }
+            }
+            if (!found)
+              {
+                return -1;
+              }
+        }
+      if (key_info->tss_inst_ != inst)
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("(%P|%t)ACE_TSS_Cleanup::detach mismatched key[%d] and instance(@%@ != @%@).\n")
+            , key
+            , inst
+            , key_info->tss_inst_
+            ));
+          return -1;
+        }
+      // save destructor & argument for destructor until after the guard is released
+      destructor = key_info->destructor_;
+      ACE_OS::thr_getspecific (key_info->key_, &tss_obj);
 
-  if (success == 0)
-    return -1;
-  else if (ref_cnt == 0)
-    {
-      // Mark the key as no longer being used.
-      key_info->key_in_use (0);
-# if defined (ACE_WIN32) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
-      ACE_thread_key_t temp_key = key_info->key_;
-# endif /* ACE_WIN32 */
-      int retv = this->remove (key_info->key_);
+      int ref_cnt = --key_info->thread_count_;
+#ifdef ACE_DEBUGGING_TSS_CLEANUP
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ACE_TSS_Cleanup::detach[%d] decrement %d\n"),key,key_info->thread_count_));
+#endif //ACE_DEBUGGING_TSS_CLEANUP
 
+      // this key is no longer in use by this thread
+      tss_keys ()->test_and_clear(key);
+
+      // if no threads are still using this key
+
+      if(ref_cnt < 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("(%P|%t) ACE_TSS_Cleanup::detach Should not occur: ref_cnt(%d) < 0 \n"), ref_cnt ));
+        }
+      else if (ref_cnt == 0)
+        {
+        // @@todo should this call ACE_OS::thr_keyfree(key) instead
 # if defined (ACE_WIN32)
-      ::TlsFree (temp_key);
+          ACE_thread_key_t temp_key = key_info->key_;
+          ::TlsFree (temp_key);
 # elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS)
-      ::tsd_delete (temp_key);
+          ACE_thread_key_t temp_key = key_info->key_;
+          ::tsd_delete (temp_key);
 # endif /* ACE_WIN32 */
-      return retv;
+          this->remove (key_info->key_);
+        }
+    } // end of scope for the Guard
+  // if there's a destructor and an object to be "destructed"
+  if (destructor != 0 && tss_obj != 0)
+    {
+      (*destructor) (tss_obj);
     }
-
   return 0;
 }
 
@@ -1017,6 +1020,17 @@ ACE_TSS_Cleanup::dump (void)
        ++key_info, ++i)
     key_info->dump ();
 # endif /* ACE_HAS_DUMP */
+}
+
+bool
+ACE_TSS_Cleanup::find_tss_keys (ACE_TSS_Keys *& tss_keys) const
+{
+  if (in_use_ == ACE_OS::NULL_key)
+    return false;
+  if (ACE_OS::thr_getspecific (in_use_,
+          reinterpret_cast<void **> (&tss_keys)) == -1)
+        return false; // This should not happen!
+  return tss_keys != 0;
 }
 
 ACE_TSS_Keys *
@@ -3198,11 +3212,11 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 #endif /* VXWORKS */
 
 int
-ACE_OS::thr_key_detach (void *inst)
+ACE_OS::thr_key_detach (ACE_thread_key_t key, void *inst)
 {
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
   if (ACE_TSS_Cleanup::lockable ())
-    return ACE_TSS_Cleanup::instance()->detach (inst);
+    return ACE_TSS_Cleanup::instance()->detach (key, inst);
   else
     // We're in static constructor/destructor phase.  Don't
     // try to use the ACE_TSS_Cleanup instance because its lock

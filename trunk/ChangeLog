@@ -1,3 +1,55 @@
+Fri Aug 13 15:26:40 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * ace/TSS_T.cpp:
+          Pass the TSS key to ACE_OS::thr_key_detach.  This 
+          eliminates the table lookup formerly required to
+          identify the key being detached. 
+
+        * ace/OS_NS_Thread.h:
+        * ace/OS_NS_Thread.cpp:
+          --Accept and use the TSS key from TST_T.cpp
+          --Typedef the function pointer used to delete TSS 
+          objects.  This improves readability.
+          --Change the name of the ACE_TSS_Info member from
+          tss_obj_ to tss_info_.  This avoids confusion
+          due to conflicting use of the name "tss_obj"
+          --Check to see if a thread has actually used
+          a TSS key before decrementing the "number of
+          threads using this key" counter.  This eliminates
+          a messy situation in which the key is deleted
+          while threads are still using it.
+          --Fix bugzilla 1542:  Leaks in ACE_TSS
+          Note that the patch suggested
+          in the bugzilla report did not completely address
+          the problem, so this fix takes a different approach.
+          Significant features of this change:
+          > The ACE_TSS_Cleanup::detach method now frees the 
+            thread's specified TSS entry.  Formerly it leaked it.
+          > The exit method defers to the detach method to
+            free the entry. This ensures entries are handled
+            consistently -- no matter how they are freed up.
+          > The ACE_TSS_Cleanup::in_use_ entry receives special
+            handling to avoid using it while deleting it.  Formerly
+            it was leaked, so it didn't matter.
+          -- Note this does NOT address bugzilla 1797.  I'll 
+          look at that one next.
+
+        * ace/Object_Manager.cpp:
+          Eliminating TSS leaks revealed another problem.  The
+          main thread was not waiting for other threads to exit
+          before dismantling the ACE infrastructure in 
+          Object_Manager::fini.  There's a hack in Thread_Manager
+          that disables the wait method when the Object_Manager
+          is shutting down.   
+          Unfortunatly this causes a messy race condition in which 
+          one thread is deleting objects while other threads are 
+          using them.  
+          The "solution" here is to call Thread_Manager::wait()
+          with a short (1 second) timeout.  If the threads have
+          already exited -- no problem, and no delay.  If they 
+          haven't, they get a chance to exit cleanly.
+          
+
 Fri Aug 13 18:43:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/CDR_Base.h (ACE_CDR): 
