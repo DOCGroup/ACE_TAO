@@ -48,7 +48,7 @@ public:
 
   // = Event_Handler methods.
   int handle_input (ACE_HANDLE);
-  handle_exception (ACE_HANDLE);
+  int handle_exception (ACE_HANDLE);
 
 private:
 
