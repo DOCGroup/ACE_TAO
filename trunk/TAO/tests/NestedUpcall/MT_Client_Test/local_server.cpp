@@ -156,19 +156,19 @@ MT_Server::init (int argc,
       this->parse_args ();
       // ~~ check for the return value here
 
-      CORBA::String_var str  =
+      this->str_  =
         this->orb_manager_ptr_->activate_under_child_poa ("MT",
                                                           &this->mT_Object_i_,
                                                           ACE_TRY_ENV);
       ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
-                  str.in ()));
+                  this->str_.in ()));
 
       if (this->ior_output_file_)
         {
           ACE_OS::fprintf (this->ior_output_file_,
                            "%s",
-                           str.in ());
+                           this->str_.in ());
           ACE_OS::fclose (this->ior_output_file_);
         }
 
@@ -241,6 +241,19 @@ MT_Server::~MT_Server (void)
 {
   if (this->object_key_ != 0)
     ACE_OS::free (this->object_key_);
+
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      this->orb_manager_ptr_->deactivate_under_child_poa (this->str_.in (),
+                                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "MT_Client::~MT_Client");
+    }
+  ACE_ENDTRY;
 }
 
 

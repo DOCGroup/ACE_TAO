@@ -1,28 +1,11 @@
 // $Id$
 
 ACE_INLINE int
-TAO_Active_Object_Map::is_servant_in_map (PortableServer::Servant servant)
+TAO_Active_Object_Map::is_servant_in_map (PortableServer::Servant servant,
+                                          int &deactivated)
 {
-  return this->id_uniqueness_strategy_->is_servant_in_map (servant);
-}
-
-ACE_INLINE int
-TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_id)
-{
-  Map_Entry *entry = 0;
-  int result = this->user_id_map_->find (user_id,
-                                         entry);
-  if (result == 0)
-    {
-      if (entry->servant_ == 0)
-        result = 0;
-      else
-        result = 1;
-    }
-  else
-    result = 0;
-
-  return result;
+  return this->id_uniqueness_strategy_->is_servant_in_map (servant,
+                                                           deactivated);
 }
 
 ACE_INLINE int

@@ -10,4 +10,11 @@ Object Adapter (POA) interfaces and their usage scenarios.
 
         . Destruction
 
-                The example tests the destruction of a POA during an upcall.
+                The program tests the destruction of a POA during an
+                upcall.
+
+        . Deactivation
+
+                This program tests the reactivation of a servant that
+                has been deactivated but not removed from the Active
+                Object Map yet.

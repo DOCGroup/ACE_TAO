@@ -11,6 +11,7 @@
 #----------------------------------------------------------------------------
 
 DIRS  = Destruction \
+	Deactivation \
 	Identity
 
 # The following test hasn't been updated yet

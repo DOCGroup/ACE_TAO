@@ -89,6 +89,9 @@ private:
 
   unsigned int iterations_;
   // number of times the server should call to the disted MT OBject
+
+  CORBA::String_var str_;
+  // IOR of our servant.
 };
 
 

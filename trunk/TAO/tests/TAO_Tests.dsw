@@ -51,42 +51,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Faults Client"=.\Faults\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Faults Server"=.\Faults\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "IORTest"=.\IORManipulation\IORTest.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "InterOp Naming Client"=".\InterOp-Naming\client.dsp" - Package Owner=<4>
 
 Package=<5>
@@ -219,7 +183,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Nested Upcall Reactor Client"=.\NestedUpcall\Reactor\client.dsp - Package Owner=<4>
+Project: "Nested Upcall Simple Client"=.\NestedUpcall\Simple\client.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -231,7 +195,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Nested Upcall Reactor Server"=.\NestedUpcall\Reactor\server.dsp - Package Owner=<4>
+Project: "Nested Upcall Simple Server"=.\NestedUpcall\Simple\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -304,6 +268,18 @@ Package=<4>
 ###############################################################################
 
 Project: "OctetSeq Server"=.\OctetSeq\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "POA Deactivation"=.\POA\Deactivation\Deactivation.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
