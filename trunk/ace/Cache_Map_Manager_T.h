@@ -34,19 +34,19 @@ class ACE_Cache_Map_Iterator;
 template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Reverse_Iterator;
 
-template <class KEY, class VALUE,  class MAP, class CACHING_STRATEGY, class ATTRIBUTES>
+template <class KEY, class VALUE, class MAP, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Manager
 {
   // = TITLE
   //     Defines a abstraction which will purge entries from a map.
-  //   
+  //
   // = DESCRIPTION
   //     The Cache_Map_Manager will manage the map it contains
   //     and provide purging on demand from the map. The strategy for
   //     caching is decided by the user and provided to the Cache
   //     Manager.  The Cache Manager acts as a agent and communicates
   //     between the Map and the Strategy for purging entries from the
-  //     map. 
+  //     map.
   //
   //     No locking mechanism provided since locking at this level
   //     isnt efficient.  Locking has to be provided by the
@@ -75,7 +75,7 @@ public:
   typedef REVERSE_ITERATOR reverse_iterator;
 
   // = Initialization and termination methods.
- 
+
   ACE_Cache_Map_Manager (size_t size = ACE_DEFAULT_MAP_SIZE,
                          ACE_Allocator *alloc = 0,
                          CACHING_STRATEGY *caching_s = 0,
@@ -95,7 +95,7 @@ public:
             CACHING_STRATEGY *caching_s = 0,
             int delete_caching_strategy = 1);
   // Initialise a cache with size <length> and set the caching_strategy.
-  
+
   int close (void);
   // Close down a cache and release dynamically allocated resources.
 
@@ -198,6 +198,7 @@ protected:
 };
 
 ////////////////////////////////////////////////////////////////////////////////
+
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator
 {
@@ -211,11 +212,11 @@ class ACE_Cache_Map_Iterator
 public:
 
   // = Traits.
-  typedef ACE_Reference_Pair<KEY, VALUE> value_type; 
+  typedef ACE_Reference_Pair<KEY, VALUE> value_type;
   typedef ACE_Pair <VALUE, ATTRIBUTES> CACHE_VALUE;
   // The actual value mapped to the key in the cache. The <attributes>
   // are used by the strategy and is transperant to the cache user.
- 
+
   // = Initialisation and termination methods.
 
   ACE_Cache_Map_Iterator (const IMPLEMENTATION &iterator_impl);
@@ -323,7 +324,7 @@ public:
   ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator-- (int);
   // Postfix reverse.
 
-  REVERSE_IMPLEMENTATION &iterator_implementation (void); 
+  REVERSE_IMPLEMENTATION &iterator_implementation (void);
   // Returns the iterator of the internal map in the custody of the
   // Cache_Map_Manager.
 
