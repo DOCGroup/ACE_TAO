@@ -30,7 +30,7 @@ Handle_L_Pipe::open (const ACE_UNIX_Addr &suap, int async)
 {
   if (this->ACE_LSOCK_Acceptor::open (suap) == -1)
     return -1;
-  else if (async && this->ACE_LSOCK_Acceptor::enable (SIGIO) == -1)
+  else if (async && this->ACE_LSOCK_Acceptor::enable (ACE_SIGIO) == -1)
     return -1;
   else
     return 0;
