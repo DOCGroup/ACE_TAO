@@ -260,8 +260,8 @@ CORBA::Boolean
 Video_Control_Handler::fast_backward (const Video_Control::FFpara &para,
                                 CORBA::Environment&)
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Video_Control_Handler::init_video called\n"));
   return this->state_->fast_backward (para);
-
 }
 
 
