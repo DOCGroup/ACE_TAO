@@ -125,7 +125,7 @@ LD              = $(CXX)
 LDFLAGS         = -hidden $(wildcard /usr/lib/libcxxstd.a) -non_hidden
 LIBS            += $(CFLAGS) -ltli -lrt
 MATHLIB         = -lm
-OCFLAGS         += -O4
+OCFLAGS         += -O3
 PIC             =
 ARFLAGS         = cruvZ
 # This is needed to pull in all the template instantiations from the

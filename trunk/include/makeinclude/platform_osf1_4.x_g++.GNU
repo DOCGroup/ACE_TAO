@@ -35,7 +35,7 @@ DCFLAGS         += -g
 LD              = $(CXX)
 DLD             = $(CXX)
 LIBS            += -lpthread -lmach -lexc -ltli -lrt
-OCFLAGS         += -O2
+OCFLAGS         += -O3
 PIC             = -fpic
 ARFLAGS         = cruvZ
 # When libraries are archived, a hash index is automatically created so there
