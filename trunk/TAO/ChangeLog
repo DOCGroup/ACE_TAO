@@ -1,11 +1,16 @@
-Fri Aug 22 09:44:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+Sun Aug 22 10:19:00 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-    * TAO_IDL/be/be_global.cpp:
-    * TAO_IDL/include/idl_global.h:
-    * TAO_IDL/util/utl_global.cpp:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+          Fixed compile error with Borland compiler
 
-      Removed all support for '-Gv' and '-Sv' valuetype switches as per
-      [Bug 1908].
+Sun Aug 22 09:44:00 UTC 2004  Martin Corino <mcorino@remedy.nl>
+
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Removed all support for '-Gv' and '-Sv' valuetype switches as per
+          [Bug 1908].
 
 Fri Aug 20 13:11:38 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
