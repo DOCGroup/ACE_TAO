@@ -1,3 +1,48 @@
+Wed Nov 10 22:12:32 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+
+	  Enabled the CVS directory check so that ACE's stock Makefiles
+	  won't get inadvertently clobbered by developers who want to
+	  experiment with the configure script.
+
+	* m4/acinclude.m4:
+
+	  Made CVS directory check more verbose.  It now provides an
+	  example of how to avoid the error it detects, i.e. it provides
+	  an example that demonstrates to do a build without affecting the
+	  source.
+
+	* Makefile.in:
+	* ace/Makefile.in:
+	* ace/config.h.in:
+	* apps/gperf/src/Makefile.in:
+	* apps/gperf/Makefile.in:
+	* apps/Makefile.in:
+	* netsvcs/clients/Logger/Makefile.in:
+	* netsvcs/clients/Naming/Client/Makefile.in:
+	* netsvcs/clients/Naming/Dump_Restore/Makefile.in:
+	* netsvcs/clients/Naming/Makefile.in:
+	* netsvcs/clients/Tokens/collection/Makefile.in:
+	* netsvcs/clients/Tokens/deadlock/Makefile.in:
+	* netsvcs/clients/Tokens/invariant/Makefile.in:
+	* netsvcs/clients/Tokens/manual/Makefile.in:
+	* netsvcs/clients/Tokens/mutex/Makefile.in:
+	* netsvcs/clients/Tokens/rw_lock/Makefile.in:
+	* netsvcs/clients/Tokens/Makefile.in:
+	* netsvcs/clients/Makefile.in:
+	* netsvcs/lib/Makefile.in:
+	* netsvcs/servers/Makefile.in:
+	* netsvcs/Makefile.in:
+	* man/html/Makefile.in:
+	* man/man3/Makefile.in:
+	* man/Makefile.in:
+	* tests/Makefile.in:
+
+	  Added these files so that developers who don't have GNU
+	  Autoconf, Automake and Libtool can run the configure script and
+	  attempt builds to provide feedback to us.
+
 Wed Nov 10 21:35:47 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* m4/compiler.m4:
