@@ -115,6 +115,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_O
 .PRECIOUS: CosPropertyServiceC.cpp CosPropertyServiceS.cpp CosPropertyServiceC.h CosPropertyServiceS.h
 .PRECIOUS: AVStreamsC.cpp AVStreamsS.cpp AVStreamsC.h AVStreamsS.h
 
+idl_stubs: $(addsuffix .h, $(IDL_FILES))
+
 clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 
@@ -132,132 +134,114 @@ realclean: clean
 .obj/CosNamingC.o .obj/CosNamingC.so .shobj/CosNamingC.o .shobj/CosNamingC.so: CosNamingC.cpp CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -277,7 +261,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -296,7 +279,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -325,136 +307,118 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosNamingC.i CosNamingS.h CosNamingS.i
+ orbsvcs_export.h CosNamingC.i CosNamingS.h CosNamingS.i
 .obj/CosNamingS.o .obj/CosNamingS.so .shobj/CosNamingS.o .shobj/CosNamingS.so: CosNamingS.cpp CosNamingS.h CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -474,7 +438,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -493,7 +456,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -522,136 +484,118 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosNamingC.i CosNamingS.i
+ orbsvcs_export.h CosNamingC.i CosNamingS.i
 .obj/CosTimeBaseC.o .obj/CosTimeBaseC.so .shobj/CosTimeBaseC.o .shobj/CosTimeBaseC.so: CosTimeBaseC.cpp CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -671,7 +615,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -690,7 +633,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -719,136 +661,118 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosTimeBaseC.i CosTimeBaseS.h CosTimeBaseS.i
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS.h CosTimeBaseS.i
 .obj/CosTimeBaseS.o .obj/CosTimeBaseS.so .shobj/CosTimeBaseS.o .shobj/CosTimeBaseS.so: CosTimeBaseS.cpp CosTimeBaseS.h CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -868,7 +792,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -887,7 +810,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -916,136 +838,118 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosTimeBaseC.i CosTimeBaseS.i
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS.i
 .obj/RtecEventCommC.o .obj/RtecEventCommC.so .shobj/RtecEventCommC.o .shobj/RtecEventCommC.so: RtecEventCommC.cpp RtecEventCommC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1065,7 +969,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -1084,7 +987,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -1113,138 +1015,120 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosTimeBaseC.h CosTimeBaseC.i RtecEventCommC.i RtecEventCommS.h \
- CosTimeBaseS.h CosTimeBaseS.i RtecEventCommS.i
+ orbsvcs_export.h CosTimeBaseC.h CosTimeBaseC.i RtecEventCommC.i \
+ RtecEventCommS.h CosTimeBaseS.h CosTimeBaseS.i RtecEventCommS.i
 .obj/RtecEventCommS.o .obj/RtecEventCommS.so .shobj/RtecEventCommS.o .shobj/RtecEventCommS.so: RtecEventCommS.cpp RtecEventCommS.h CosTimeBaseS.h \
  CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1264,7 +1148,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -1283,7 +1166,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -1312,137 +1194,119 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosTimeBaseC.i CosTimeBaseS.i RtecEventCommC.h RtecEventCommC.i \
- RtecEventCommS.i
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS.i RtecEventCommC.h \
+ RtecEventCommC.i RtecEventCommS.i
 .obj/RtecSchedulerC.o .obj/RtecSchedulerC.so .shobj/RtecSchedulerC.o .shobj/RtecSchedulerC.so: RtecSchedulerC.cpp RtecSchedulerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1462,7 +1326,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -1481,7 +1344,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -1510,138 +1372,120 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosTimeBaseC.h CosTimeBaseC.i RtecSchedulerC.i RtecSchedulerS.h \
- CosTimeBaseS.h CosTimeBaseS.i RtecSchedulerS.i
+ orbsvcs_export.h CosTimeBaseC.h CosTimeBaseC.i RtecSchedulerC.i \
+ RtecSchedulerS.h CosTimeBaseS.h CosTimeBaseS.i RtecSchedulerS.i
 .obj/RtecSchedulerS.o .obj/RtecSchedulerS.so .shobj/RtecSchedulerS.o .shobj/RtecSchedulerS.so: RtecSchedulerS.cpp RtecSchedulerS.h CosTimeBaseS.h \
  CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1661,7 +1505,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -1680,7 +1523,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -1709,138 +1551,120 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosTimeBaseC.i CosTimeBaseS.i RtecSchedulerC.h RtecSchedulerC.i \
- RtecSchedulerS.i
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS.i RtecSchedulerC.h \
+ RtecSchedulerC.i RtecSchedulerS.i
 .obj/RtecEventChannelAdminC.o .obj/RtecEventChannelAdminC.so .shobj/RtecEventChannelAdminC.o .shobj/RtecEventChannelAdminC.so: RtecEventChannelAdminC.cpp \
  RtecEventChannelAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -1860,7 +1684,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -1879,7 +1702,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -1908,141 +1730,123 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosTimeBaseC.h CosTimeBaseC.i RtecEventCommC.h RtecEventCommC.i \
- RtecSchedulerC.h RtecSchedulerC.i RtecEventChannelAdminC.i \
- RtecEventChannelAdminS.h CosTimeBaseS.h CosTimeBaseS.i \
- RtecEventCommS.h RtecEventCommS.i RtecSchedulerS.h RtecSchedulerS.i \
- RtecEventChannelAdminS.i
+ orbsvcs_export.h CosTimeBaseC.h CosTimeBaseC.i RtecEventCommC.h \
+ RtecEventCommC.i RtecSchedulerC.h RtecSchedulerC.i \
+ RtecEventChannelAdminC.i RtecEventChannelAdminS.h CosTimeBaseS.h \
+ CosTimeBaseS.i RtecEventCommS.h RtecEventCommS.i RtecSchedulerS.h \
+ RtecSchedulerS.i RtecEventChannelAdminS.i
 .obj/RtecEventChannelAdminS.o .obj/RtecEventChannelAdminS.so .shobj/RtecEventChannelAdminS.o .shobj/RtecEventChannelAdminS.so: RtecEventChannelAdminS.cpp \
  RtecEventChannelAdminS.h CosTimeBaseS.h CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2062,7 +1866,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -2081,7 +1884,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -2110,139 +1912,122 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- CosTimeBaseC.i CosTimeBaseS.i RtecEventCommS.h RtecEventCommC.h \
- RtecEventCommC.i RtecEventCommS.i RtecSchedulerS.h RtecSchedulerC.h \
- RtecSchedulerC.i RtecSchedulerS.i RtecEventChannelAdminC.h \
- RtecEventChannelAdminC.i RtecEventChannelAdminS.i
+ orbsvcs_export.h CosTimeBaseC.i CosTimeBaseS.i RtecEventCommS.h \
+ RtecEventCommC.h RtecEventCommC.i RtecEventCommS.i RtecSchedulerS.h \
+ RtecSchedulerC.h RtecSchedulerC.i RtecSchedulerS.i \
+ RtecEventChannelAdminC.h RtecEventChannelAdminC.i \
+ RtecEventChannelAdminS.i
 .obj/LoggerC.o .obj/LoggerC.so .shobj/LoggerC.o .shobj/LoggerC.so: LoggerC.cpp LoggerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2262,7 +2047,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -2281,7 +2065,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -2310,136 +2093,118 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- LoggerC.i LoggerS.h LoggerS.i
+ orbsvcs_export.h LoggerC.i LoggerS.h LoggerS.i
 .obj/LoggerS.o .obj/LoggerS.so .shobj/LoggerS.o .shobj/LoggerS.so: LoggerS.cpp LoggerS.h LoggerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2459,7 +2224,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -2478,7 +2242,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -2507,138 +2270,120 @@ realclean: clean
  $(TAO_ROOT)/tao/default_server.i \
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
- LoggerC.i LoggerS.i
+ orbsvcs_export.h LoggerC.i LoggerS.i
 .obj/Event_Utilities.o .obj/Event_Utilities.so .shobj/Event_Utilities.o .shobj/Event_Utilities.so: Event_Utilities.cpp \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2658,7 +2403,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -2677,7 +2421,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -2715,143 +2458,124 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Utilities.i
 .obj/Scheduler_Factory.o .obj/Scheduler_Factory.so .shobj/Scheduler_Factory.o .shobj/Scheduler_Factory.so: Scheduler_Factory.cpp \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -2871,7 +2595,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -2890,7 +2613,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -2935,132 +2657,114 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -3080,7 +2784,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -3099,7 +2802,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -3141,135 +2843,117 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Runtime_Scheduler.i
 .obj/Scheduler_Utilities.o .obj/Scheduler_Utilities.so .shobj/Scheduler_Utilities.o .shobj/Scheduler_Utilities.so: Scheduler_Utilities.cpp \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -3289,7 +2973,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -3308,7 +2991,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -3347,132 +3029,114 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -3492,7 +3156,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -3511,7 +3174,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -3548,132 +3210,114 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -3693,7 +3337,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -3712,7 +3355,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -3747,134 +3389,115 @@ realclean: clean
  Naming/Entries.h
 .obj/Entries.o .obj/Entries.so .shobj/Entries.o .shobj/Entries.so: Naming/Entries.cpp Naming/Entries.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Version.h \
- $(ACE_ROOT)/ace/ace/ACE.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -3894,7 +3517,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -3913,7 +3535,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -3945,572 +3566,136 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i
-.obj/Ior_Multicast.o .obj/Ior_Multicast.so .shobj/Ior_Multicast.o .shobj/Ior_Multicast.so: Naming/Ior_Multicast.cpp \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/streams.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
- $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
- $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
- $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/sequence.i \
- $(TAO_ROOT)/tao/sequence_T.h \
- $(TAO_ROOT)/tao/sequence_T.i \
- $(TAO_ROOT)/tao/objkeyC.h \
- $(TAO_ROOT)/tao/objkeyC.i \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/client_factory.h \
- $(TAO_ROOT)/tao/server_factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(TAO_ROOT)/tao/strategy_T.i \
- $(TAO_ROOT)/tao/except.h \
- $(TAO_ROOT)/tao/orbobj.h \
- $(TAO_ROOT)/tao/nvlist.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/marshal.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/poa.h \
- $(TAO_ROOT)/tao/poaC.h \
- $(TAO_ROOT)/tao/poaC.i \
- $(TAO_ROOT)/tao/servant_base.h \
- $(TAO_ROOT)/tao/poaS.h \
- $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(TAO_ROOT)/tao/objtable.h \
- $(TAO_ROOT)/tao/connect.h \
- $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/optable.h \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iioporb.h \
- $(TAO_ROOT)/tao/giop.h \
- $(TAO_ROOT)/tao/orb_core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/nvlist.i \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/stub.i \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/orbobj.i \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/giop.i \
- $(TAO_ROOT)/tao/iioporb.i \
- $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/server_factory.i \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.i \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/singletons.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
- Naming/Ior_Multicast.h \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/ace/SOCK_Dgram_Mcast.i
-.obj/Naming_Utils.o .obj/Naming_Utils.so .shobj/Naming_Utils.o .shobj/Naming_Utils.so: Naming/Naming_Utils.cpp \
- $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
- $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/streams.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
- $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
- $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
- $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
- $(ACE_ROOT)/ace/Object_Manager.i \
- $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
- $(ACE_ROOT)/ace/Reactor.h \
- $(ACE_ROOT)/ace/Synch_Options.h \
- $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
- $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
- $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
- $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
- $(ACE_ROOT)/ace/Task_T.i \
- $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
- $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
- $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
- $(TAO_ROOT)/tao/compat/objbase.h \
- $(TAO_ROOT)/tao/compat/initguid.h \
- $(TAO_ROOT)/tao/orbconf.h \
- $(TAO_ROOT)/tao/orb.h \
- $(TAO_ROOT)/tao/align.h \
- $(TAO_ROOT)/tao/corbacom.h \
- $(TAO_ROOT)/tao/sequence.h \
- $(TAO_ROOT)/tao/sequence.i \
- $(TAO_ROOT)/tao/sequence_T.h \
- $(TAO_ROOT)/tao/sequence_T.i \
- $(TAO_ROOT)/tao/objkeyC.h \
- $(TAO_ROOT)/tao/objkeyC.i \
- $(TAO_ROOT)/tao/any.h \
- $(TAO_ROOT)/tao/params.h \
- $(TAO_ROOT)/tao/client_factory.h \
- $(TAO_ROOT)/tao/server_factory.h \
- $(TAO_ROOT)/tao/default_client.h \
- $(TAO_ROOT)/tao/default_server.h \
- $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
- $(TAO_ROOT)/tao/strategy_T.i \
- $(TAO_ROOT)/tao/except.h \
- $(TAO_ROOT)/tao/orbobj.h \
- $(TAO_ROOT)/tao/nvlist.h \
- $(TAO_ROOT)/tao/object.h \
- $(TAO_ROOT)/tao/principa.h \
- $(TAO_ROOT)/tao/request.h \
- $(TAO_ROOT)/tao/svrrqst.h \
- $(TAO_ROOT)/tao/typecode.h \
- $(TAO_ROOT)/tao/marshal.h \
- $(TAO_ROOT)/tao/cdr.h \
- $(TAO_ROOT)/tao/stub.h \
- $(TAO_ROOT)/tao/poa.h \
- $(TAO_ROOT)/tao/poaC.h \
- $(TAO_ROOT)/tao/poaC.i \
- $(TAO_ROOT)/tao/servant_base.h \
- $(TAO_ROOT)/tao/poaS.h \
- $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
- $(TAO_ROOT)/tao/objtable.h \
- $(TAO_ROOT)/tao/connect.h \
- $(TAO_ROOT)/tao/orb_core.h \
- $(TAO_ROOT)/tao/optable.h \
- $(TAO_ROOT)/tao/debug.h \
- $(TAO_ROOT)/tao/iiopobj.h \
- $(TAO_ROOT)/tao/iioporb.h \
- $(TAO_ROOT)/tao/giop.h \
- $(TAO_ROOT)/tao/orb_core.i \
- $(ACE_ROOT)/ace/Dynamic_Service.h \
- $(TAO_ROOT)/tao/corbacom.i \
- $(TAO_ROOT)/tao/typecode.i \
- $(TAO_ROOT)/tao/nvlist.i \
- $(TAO_ROOT)/tao/any.i \
- $(TAO_ROOT)/tao/stub.i \
- $(TAO_ROOT)/tao/object.i \
- $(TAO_ROOT)/tao/orbobj.i \
- $(TAO_ROOT)/tao/marshal.i \
- $(TAO_ROOT)/tao/cdr.i \
- $(TAO_ROOT)/tao/giop.i \
- $(TAO_ROOT)/tao/iioporb.i \
- $(TAO_ROOT)/tao/iiopobj.i \
- $(TAO_ROOT)/tao/params.i \
- $(TAO_ROOT)/tao/server_factory.i \
- $(TAO_ROOT)/tao/default_client.i \
- $(TAO_ROOT)/tao/default_server.i \
- $(TAO_ROOT)/tao/connect.i \
- $(TAO_ROOT)/tao/singletons.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
- Naming/Naming_Utils.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/CosNaming_i.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Entries.h \
- $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/Ior_Multicast.h \
- $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
- $(ACE_ROOT)/ace/ace/SOCK_Dgram.h \
- $(ACE_ROOT)/ace/SOCK_Dgram.i \
- $(ACE_ROOT)/ace/ace/SOCK_Dgram_Mcast.i
 .obj/BCU.o .obj/BCU.so .shobj/BCU.o .shobj/BCU.so: Event/BCU.cpp \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/OS.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ace/Version.h \
- $(ACE_ROOT)/ace/ace/ACE.i Event/BCU.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
+ Event/BCU.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h
 .obj/CORBA_Utils_T.o .obj/CORBA_Utils_T.so .shobj/CORBA_Utils_T.o .shobj/CORBA_Utils_T.so: Event/CORBA_Utils_T.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/OS.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Version.h \
- $(ACE_ROOT)/ace/ace/ACE.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
  Event/CORBA_Utils_T.h \
  $(ACE_ROOT)/ace/Time_Value.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -4530,7 +3715,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -4549,7 +3733,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -4581,136 +3764,119 @@ realclean: clean
  Event/CORBA_Utils_T.i
 .obj/Dispatching_Modules.o .obj/Dispatching_Modules.so .shobj/Dispatching_Modules.o .shobj/Dispatching_Modules.so: Event/Dispatching_Modules.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/ace/OS.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Version.h \
- $(ACE_ROOT)/ace/ace/ACE.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ace/Sched_Params.i \
+ $(ACE_ROOT)/ace/Sched_Params.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(ACE_ROOT)/ace/OS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -4730,7 +3896,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -4749,7 +3914,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -4792,7 +3956,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Timeprobe.i \
  Event/Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseS.i \
@@ -4805,158 +3968,134 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- Event/Local_ESTypes.i Event/CORBA_Utils_T.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- Event/CORBA_Utils_T.i Event/Task_Manager.h Event/RT_Task.h \
- Event/RT_Task.i Event/Task_Manager.i Event/ReactorTask.h \
- Event/Fast_Reactor.h \
+ Event/Local_ESTypes.i Event/CORBA_Utils_T.h Event/CORBA_Utils_T.i \
+ Event/Task_Manager.h Event/RT_Task.h Event/RT_Task.i \
+ Event/Task_Manager.i Event/ReactorTask.h Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/ace/Select_Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i \
  $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/ace/Timer_List_T.h \
+ $(ACE_ROOT)/ace/Timer_List_T.h \
  Event/Event_Channel.i Event/Dispatching_Modules.h \
  Event/Dispatching_Modules.i Event/Memory_Pools.i
 .obj/Event_Channel.o .obj/Event_Channel.so .shobj/Event_Channel.o .shobj/Event_Channel.so: Event/Event_Channel.cpp \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/ace/Thread.h \
- $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
+ $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Handle_Set.i \
  $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
  $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Free_List.i \
  $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -4976,7 +4115,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -4995,7 +4133,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -5036,20 +4173,17 @@ realclean: clean
  $(TAO_ROOT)/tao/Timeprobe.i \
  Event/ReactorTask.h Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/ace/Select_Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i \
  $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/ace/Timer_List_T.h \
+ $(ACE_ROOT)/ace/Timer_List_T.h \
  Event/Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
@@ -5065,140 +4199,120 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
  Event/Local_ESTypes.i Event/RT_Task.h Event/RT_Task.i \
- Event/Event_Channel.h Event/CORBA_Utils_T.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- Event/CORBA_Utils_T.i Event/Task_Manager.h Event/Task_Manager.i \
- Event/Event_Channel.i Event/Dispatching_Modules.i \
- Event/Memory_Pools.h Event/Memory_Pools.i
+ Event/Event_Channel.h Event/CORBA_Utils_T.h Event/CORBA_Utils_T.i \
+ Event/Task_Manager.h Event/Task_Manager.i Event/Event_Channel.i \
+ Event/Dispatching_Modules.i Event/Memory_Pools.h Event/Memory_Pools.i
 .obj/Local_ESTypes.o .obj/Local_ESTypes.so .shobj/Local_ESTypes.o .shobj/Local_ESTypes.so: Event/Local_ESTypes.cpp Event/Local_ESTypes.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -5218,7 +4332,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -5237,7 +4350,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -5267,7 +4379,6 @@ realclean: clean
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -5292,140 +4403,119 @@ realclean: clean
  Event/Local_ESTypes.i
 .obj/Memory_Pools.o .obj/Memory_Pools.so .shobj/Memory_Pools.o .shobj/Memory_Pools.so: Event/Memory_Pools.cpp Event/Memory_Pools.h \
  $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/ace/Thread.h \
- $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  Event/Event_Channel.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(TAO_ROOT)/tao/Timeprobe.i \
  Event/Local_ESTypes.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -5445,7 +4535,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -5493,7 +4582,6 @@ realclean: clean
  $(TAO_ROOT)/tao/connect.i \
  $(TAO_ROOT)/tao/singletons.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/orbsvcs_export.h \
@@ -5515,157 +4603,136 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- Event/Local_ESTypes.i Event/CORBA_Utils_T.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- Event/CORBA_Utils_T.i Event/Task_Manager.h Event/RT_Task.h \
- Event/RT_Task.i Event/Task_Manager.i Event/ReactorTask.h \
- Event/Fast_Reactor.h \
+ Event/Local_ESTypes.i Event/CORBA_Utils_T.h Event/CORBA_Utils_T.i \
+ Event/Task_Manager.h Event/RT_Task.h Event/RT_Task.i \
+ Event/Task_Manager.i Event/ReactorTask.h Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/ace/Select_Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i \
  $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/ace/Timer_List_T.h \
+ $(ACE_ROOT)/ace/Timer_List_T.h \
  Event/Event_Channel.i Event/Dispatching_Modules.h \
  Event/Dispatching_Modules.i Event/Memory_Pools.i
 .obj/RT_Task.o .obj/RT_Task.so .shobj/RT_Task.o .shobj/RT_Task.so: Event/RT_Task.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/ace/OS.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Version.h \
- $(ACE_ROOT)/ace/ace/ACE.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ace/Sched_Params.i \
+ $(ACE_ROOT)/ace/Sched_Params.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.h \
- $(ACE_ROOT)/ace/OS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -5685,7 +4752,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -5704,7 +4770,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -5746,7 +4811,6 @@ realclean: clean
  $(TAO_ROOT)/tao/Timeprobe.i \
  Event/Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
@@ -5761,58 +4825,52 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecEventChannelAdminS.i \
- Event/Local_ESTypes.i Event/CORBA_Utils_T.h \
- $(ACE_ROOT)/ace/Time_Value.h \
- Event/CORBA_Utils_T.i Event/Task_Manager.h Event/Task_Manager.i \
- Event/ReactorTask.h Event/Fast_Reactor.h \
+ Event/Local_ESTypes.i Event/CORBA_Utils_T.h Event/CORBA_Utils_T.i \
+ Event/Task_Manager.h Event/Task_Manager.i Event/ReactorTask.h \
+ Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/ace/Select_Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i \
  $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/ace/Timer_List_T.h \
+ $(ACE_ROOT)/ace/Timer_List_T.h \
  Event/Event_Channel.i Event/Memory_Pools.h \
  Event/Dispatching_Modules.h Event/Dispatching_Modules.i \
  Event/Memory_Pools.i
 .obj/ReactorTask.o .obj/ReactorTask.so .shobj/ReactorTask.o .shobj/ReactorTask.so: Event/ReactorTask.cpp \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/High_Res_Timer.i \
+ $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(TAO_ROOT)/tao/Timeprobe.h \
  $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Event_Handler.i \
  $(ACE_ROOT)/ace/Synch_T.i \
- $(ACE_ROOT)/ace/ace/Thread.h \
- $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
  $(TAO_ROOT)/tao/Timeprobe.i \
@@ -5820,103 +4878,86 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
- $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -5936,7 +4977,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -5955,7 +4995,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -5993,20 +5032,17 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  Event/ReactorTask.h Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/ace/Select_Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i \
  $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/ace/Timer_List_T.h \
+ $(ACE_ROOT)/ace/Timer_List_T.h \
  Event/Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
@@ -6024,137 +5060,118 @@ realclean: clean
  Event/Local_ESTypes.i Event/RT_Task.h Event/RT_Task.i
 .obj/Task_Manager.o .obj/Task_Manager.so .shobj/Task_Manager.o .shobj/Task_Manager.so: Event/Task_Manager.cpp Event/Task_Manager.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/OS.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ace/Version.h \
- $(ACE_ROOT)/ace/ace/ACE.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
  $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.h \
- $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/Free_List.h \
  $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Malloc_T.i \
  $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/ace/Signal.h \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -6174,7 +5191,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -6193,7 +5209,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -6231,17 +5246,15 @@ realclean: clean
  Event/RT_Task.i Event/Task_Manager.i Event/ReactorTask.h \
  Event/Fast_Reactor.h \
  $(ACE_ROOT)/ace/Select_Reactor.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Token.h \
+ $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i \
- $(ACE_ROOT)/ace/ace/Pipe.h \
+ $(ACE_ROOT)/ace/Pipe.h \
  $(ACE_ROOT)/ace/Pipe.i \
- $(ACE_ROOT)/ace/ace/Select_Reactor.i \
+ $(ACE_ROOT)/ace/Select_Reactor.i \
  $(ACE_ROOT)/ace/Timer_Heap.h \
- $(ACE_ROOT)/ace/ace/Timer_Heap_T.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Heap_T.h \
  $(ACE_ROOT)/ace/Timer_List.h \
- $(ACE_ROOT)/ace/ace/Timer_List_T.h \
+ $(ACE_ROOT)/ace/Timer_List_T.h \
  Event/Local_ESTypes.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
@@ -6263,132 +5276,114 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -6408,7 +5403,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -6427,7 +5421,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -6466,7 +5459,6 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Scheduler_Factory.i \
  Sched/Scheduler_Generic.h Sched/Scheduler.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  Sched/Scheduler.i Sched/Scheduler_Generic.i Sched/Config_Scheduler.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerS.h \
@@ -6476,136 +5468,119 @@ realclean: clean
  Sched/Config_Scheduler.i
 .obj/Scheduler.o .obj/Scheduler.so .shobj/Scheduler.o .shobj/Scheduler.so: Sched/Scheduler.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/ace/OS.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Version.h \
- $(ACE_ROOT)/ace/ace/ACE.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ace/Sched_Params.i \
+ $(ACE_ROOT)/ace/Sched_Params.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
+ $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
- $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/SString.i \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
- $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -6625,7 +5600,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -6644,7 +5618,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
@@ -6677,146 +5650,125 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosTimeBaseC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Time_Utilities.i \
  Sched/Scheduler.h \
- $(ACE_ROOT)/ace/Message_Block.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/Event_Service_Constants.h \
  Sched/Scheduler.i
 .obj/Scheduler_Generic.o .obj/Scheduler_Generic.so .shobj/Scheduler_Generic.o .shobj/Scheduler_Generic.so: Sched/Scheduler_Generic.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \
- $(ACE_ROOT)/ace/ace/OS.h \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
- $(ACE_ROOT)/ace/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Version.h \
- $(ACE_ROOT)/ace/ace/ACE.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/ace/Sched_Params.i \
+ $(ACE_ROOT)/ace/Sched_Params.i \
  Sched/Scheduler_Generic.h Sched/Scheduler.h \
  $(ACE_ROOT)/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.i \
+ $(ACE_ROOT)/ace/Map_Manager.i \
  $(ACE_ROOT)/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ace/Malloc.h \
+ $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
- $(ACE_ROOT)/ace/ace/Synch.h \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/ace/Free_List.h \
- $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/Free_List.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/Memory_Pool.h \
- $(ACE_ROOT)/ace/ace/Signal.h \
- $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Malloc_T.i \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Mem_Map.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Mem_Map.h \
  $(ACE_ROOT)/ace/Mem_Map.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/Memory_Pool.i \
- $(ACE_ROOT)/ace/ace/Message_Block.i \
+ $(ACE_ROOT)/ace/Memory_Pool.i \
+ $(ACE_ROOT)/ace/Message_Block.i \
  $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/SString.i \
  $(TAO_ROOT)/orbsvcs/orbsvcs/RtecSchedulerC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
  $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -6836,7 +5788,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -6895,132 +5846,114 @@ realclean: clean
  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/ace/streams.h \
  $(ACE_ROOT)/ace/inc_user_config.h \
- $(ACE_ROOT)/ace/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/config.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
- $(ACE_ROOT)/ace/ace/OS.i \
- $(ACE_ROOT)/ace/ace/Trace.h \
- $(ACE_ROOT)/ace/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
- $(ACE_ROOT)/ace/ace/ACE.h \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/ace/Get_Opt.i \
- $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/SOCK_IO.h \
+ $(ACE_ROOT)/ace/SOCK_IO.h \
  $(ACE_ROOT)/ace/SOCK.h \
- $(ACE_ROOT)/ace/ace/Addr.h \
- $(ACE_ROOT)/ace/ACE.h \
- $(ACE_ROOT)/ace/Addr.i \
- $(ACE_ROOT)/ace/ace/IPC_SAP.h \
- $(ACE_ROOT)/ace/IPC_SAP.i \
- $(ACE_ROOT)/ace/ace/SOCK.i \
- $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/Addr.h \
- $(ACE_ROOT)/ace/INET_Addr.i \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.i \
- $(ACE_ROOT)/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Event_Handler.h \
- $(ACE_ROOT)/ace/Event_Handler.i \
- $(ACE_ROOT)/ace/ace/Synch.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Simple.h \
- $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
- $(ACE_ROOT)/ace/ace/SV_Semaphore_Complex.i \
- $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/Synch.i \
- $(ACE_ROOT)/ace/ace/Synch_T.i \
- $(ACE_ROOT)/ace/Thread.h \
- $(ACE_ROOT)/ace/ace/Thread.i \
- $(ACE_ROOT)/ace/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch.h \
- $(ACE_ROOT)/ace/Hash_Map_Manager.h \
- $(ACE_ROOT)/ace/ace/OS.h \
- $(ACE_ROOT)/ace/SString.h \
- $(ACE_ROOT)/ace/ace/SString.i \
+ $(ACE_ROOT)/ace/Addr.i \
+ $(ACE_ROOT)/ace/IPC_SAP.h \
+ $(ACE_ROOT)/ace/IPC_SAP.i \
+ $(ACE_ROOT)/ace/SOCK.i \
+ $(ACE_ROOT)/ace/SOCK_IO.i \
  $(ACE_ROOT)/ace/INET_Addr.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.h \
- $(ACE_ROOT)/ace/ace/SOCK_Stream.h \
- $(ACE_ROOT)/ace/ace/Time_Value.h \
- $(ACE_ROOT)/ace/ace/SOCK_Acceptor.i \
- $(ACE_ROOT)/ace/SOCK_Connector.h \
- $(ACE_ROOT)/ace/ace/SOCK_Connector.i \
- $(ACE_ROOT)/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Strategies_T.h \
- $(ACE_ROOT)/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Service_Object.h \
- $(ACE_ROOT)/ace/Shared_Object.h \
- $(ACE_ROOT)/ace/ace/Shared_Object.i \
+ $(ACE_ROOT)/ace/INET_Addr.i \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Hash_Map_Manager.h \
+ $(ACE_ROOT)/ace/SString.h \
+ $(ACE_ROOT)/ace/SString.i \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.h \
+ $(ACE_ROOT)/ace/Time_Value.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ $(ACE_ROOT)/ace/SOCK_Connector.h \
+ $(ACE_ROOT)/ace/SOCK_Connector.i \
+ $(ACE_ROOT)/ace/Strategies.h \
+ $(ACE_ROOT)/ace/Strategies_T.h \
+ $(ACE_ROOT)/ace/Service_Config.h \
+ $(ACE_ROOT)/ace/Service_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.h \
+ $(ACE_ROOT)/ace/Shared_Object.i \
  $(ACE_ROOT)/ace/Service_Object.i \
- $(ACE_ROOT)/ace/ace/Signal.h \
+ $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Containers.i \
+ $(ACE_ROOT)/ace/Containers.i \
  $(ACE_ROOT)/ace/Signal.i \
- $(ACE_ROOT)/ace/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.h \
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
- $(ACE_ROOT)/ace/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/ace/Containers.h \
- $(ACE_ROOT)/ace/ace/Service_Config.i \
- $(ACE_ROOT)/ace/ace/Reactor.h \
- $(ACE_ROOT)/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.i \
- $(ACE_ROOT)/ace/Timer_Queue.h \
- $(ACE_ROOT)/ace/ace/Timer_Queue_T.h \
- $(ACE_ROOT)/ace/Free_List.h \
- $(ACE_ROOT)/ace/ace/Synch_T.h \
- $(ACE_ROOT)/ace/ace/Free_List.i \
- $(ACE_ROOT)/ace/Timer_Queue_T.i \
- $(ACE_ROOT)/ace/Signal.h \
- $(ACE_ROOT)/ace/Reactor.i \
- $(ACE_ROOT)/ace/ace/Reactor_Impl.h \
- $(ACE_ROOT)/ace/ace/Handle_Set.h \
- $(ACE_ROOT)/ace/ace/Svc_Conf_Tokens.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
+ $(ACE_ROOT)/ace/Service_Config.i \
  $(ACE_ROOT)/ace/Reactor.h \
+ $(ACE_ROOT)/ace/Handle_Set.h \
+ $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/Timer_Queue.h \
+ $(ACE_ROOT)/ace/Timer_Queue_T.h \
+ $(ACE_ROOT)/ace/Free_List.h \
+ $(ACE_ROOT)/ace/Free_List.i \
+ $(ACE_ROOT)/ace/Timer_Queue_T.i \
+ $(ACE_ROOT)/ace/Reactor.i \
+ $(ACE_ROOT)/ace/Reactor_Impl.h \
+ $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  $(ACE_ROOT)/ace/Synch_Options.h \
  $(ACE_ROOT)/ace/Connector.h \
- $(ACE_ROOT)/ace/ace/Service_Config.h \
- $(ACE_ROOT)/ace/ace/Map_Manager.h \
+ $(ACE_ROOT)/ace/Map_Manager.h \
  $(ACE_ROOT)/ace/Map_Manager.i \
- $(ACE_ROOT)/ace/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Svc_Handler.h \
  $(ACE_ROOT)/ace/Task.h \
- $(ACE_ROOT)/ace/ace/Thread_Manager.h \
+ $(ACE_ROOT)/ace/Thread_Manager.h \
  $(ACE_ROOT)/ace/Thread_Manager.i \
- $(ACE_ROOT)/ace/ace/Task.i \
- $(ACE_ROOT)/ace/ace/Task_T.h \
+ $(ACE_ROOT)/ace/Task.i \
+ $(ACE_ROOT)/ace/Task_T.h \
  $(ACE_ROOT)/ace/Message_Queue.h \
- $(ACE_ROOT)/ace/ace/Message_Block.h \
+ $(ACE_ROOT)/ace/Message_Block.h \
  $(ACE_ROOT)/ace/Malloc.h \
- $(ACE_ROOT)/ace/ace/Malloc.i \
- $(ACE_ROOT)/ace/ace/Malloc_T.h \
+ $(ACE_ROOT)/ace/Malloc.i \
+ $(ACE_ROOT)/ace/Malloc_T.h \
  $(ACE_ROOT)/ace/Malloc_T.i \
- $(ACE_ROOT)/ace/ace/Memory_Pool.h \
+ $(ACE_ROOT)/ace/Memory_Pool.h \
  $(ACE_ROOT)/ace/Mem_Map.h \
- $(ACE_ROOT)/ace/ace/Mem_Map.i \
+ $(ACE_ROOT)/ace/Mem_Map.i \
  $(ACE_ROOT)/ace/Memory_Pool.i \
  $(ACE_ROOT)/ace/Message_Block.i \
- $(ACE_ROOT)/ace/ace/IO_Cntl_Msg.h \
- $(ACE_ROOT)/ace/ace/Strategies.h \
- $(ACE_ROOT)/ace/ace/Message_Queue.i \
+ $(ACE_ROOT)/ace/IO_Cntl_Msg.h \
+ $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Dynamic.h \
- $(ACE_ROOT)/ace/ace/Dynamic.i \
+ $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.i \
  $(ACE_ROOT)/ace/Svc_Handler.i \
- $(ACE_ROOT)/ace/ace/Connector.i \
+ $(ACE_ROOT)/ace/Connector.i \
  $(ACE_ROOT)/ace/Acceptor.h \
- $(ACE_ROOT)/ace/ace/Acceptor.i \
- $(ACE_ROOT)/ace/Svc_Handler.h \
+ $(ACE_ROOT)/ace/Acceptor.i \
  $(TAO_ROOT)/tao/compat/objbase.h \
  $(TAO_ROOT)/tao/compat/initguid.h \
  $(TAO_ROOT)/tao/orbconf.h \
@@ -7040,7 +5973,6 @@ realclean: clean
  $(TAO_ROOT)/tao/default_client.h \
  $(TAO_ROOT)/tao/default_server.h \
  $(TAO_ROOT)/tao/strategy_T.h \
- $(ACE_ROOT)/ace/Strategies_T.h \
  $(TAO_ROOT)/tao/strategy_T.i \
  $(TAO_ROOT)/tao/except.h \
  $(TAO_ROOT)/tao/orbobj.h \
@@ -7059,7 +5991,6 @@ realclean: clean
  $(TAO_ROOT)/tao/servant_base.h \
  $(TAO_ROOT)/tao/poaS.h \
  $(TAO_ROOT)/tao/poaS.i \
- $(ACE_ROOT)/ace/Map_Manager.h \
  $(TAO_ROOT)/tao/objtable.h \
  $(TAO_ROOT)/tao/connect.h \
  $(TAO_ROOT)/tao/orb_core.h \
