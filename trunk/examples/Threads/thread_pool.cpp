@@ -1,11 +1,11 @@
 // $Id$
 
-// This test program illustrates how the ACE task synchronization
-// mechanisms work in conjunction with the ACE_Task and the
-// ACE_Thread_Manager.  If the <manual> flag is set input comes from
-// stdin until the user enters a return -- otherwise, the input is
-// generated automatically.  All worker threads shutdown when they
-// receive a message block of length 0.
+// This test program illustrates how the <ACE_Task> synchronization
+// mechanisms work in conjunction with the <ACE_Thread_Manager>.  If
+// the <manual> flag is set input comes from stdin until the user
+// enters a return -- otherwise, the input is generated automatically.
+// All worker threads shutdown when they receive a message block of
+// length 0.
 //
 // This code is original based on a test program written by Karlheinz
 // Dorn <Karlheinz.Dorn@med.siemens.de>.  It was modified to utilize
@@ -61,9 +61,7 @@ Thread_Pool::close (u_long)
 
 Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr, 
 			  int n_threads) 
-  : ACE_Task<ACE_MT_SYNCH> (thr_mgr,
-                            0,
-                            1) // Wait in destructor for threads to exit...
+  : ACE_Task<ACE_MT_SYNCH> (thr_mgr)
 {
   // Create the pool of worker threads.
   if (this->activate (THR_NEW_LWP,
@@ -197,11 +195,11 @@ producer (Thread_Pool &thread_pool)
 	}
       else
 	{
-          // Send a shutdown message to the waiting threads and exit.
 	  ACE_DEBUG ((LM_DEBUG,
                       "\n(%t) start loop, dump of task:\n"));
 	  // thread_pool.dump ();
 
+          // Send a shutdown message to the waiting threads and exit.
 	  for (int i = thread_pool.thr_count (); i > 0; i--)
 	    {
 	      ACE_DEBUG ((LM_DEBUG, 
@@ -239,18 +237,19 @@ main (int argc, char *argv[])
 	      argc,
               n_threads));
 
-  {
-    // Create the worker tasks.
-    Thread_Pool thread_pool (ACE_Thread_Manager::instance (), 
-                             n_threads);
+  // Create the worker tasks.
+  Thread_Pool thread_pool (ACE_Thread_Manager::instance (), 
+                           n_threads);
 
-    // Create work for the worker tasks to process in their own threads.
-    producer (thread_pool);
+  // Create work for the worker tasks to process in their own threads.
+  producer (thread_pool);
     
-    // Wait for all the threads to reach their exit point.
-    ACE_DEBUG ((LM_DEBUG,
-                "(%t) waiting for threads to exit in Thread_Pool destructor...\n"));
-  }
+  ACE_DEBUG ((LM_DEBUG,
+              "(%t) waiting for threads to exit in Thread_Pool destructor...\n"));
+  // Wait for all the threads to reach their exit point.
+  if (thread_pool.wait () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "(%t) wait() failed\n"),
+                      1);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) destroying worker tasks and exiting...\n"));

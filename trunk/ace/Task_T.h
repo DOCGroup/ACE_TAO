@@ -45,14 +45,11 @@ public:
 
   // = Initialization/termination methods.
   ACE_Task (ACE_Thread_Manager *thr_mgr = 0,
-            ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0,
-            int wait_for_threads_in_destructor = 0);
+            ACE_Message_Queue<ACE_SYNCH_USE> *mq = 0);
   // Initialize a Task, supplying a thread manager and a message
   // queue.  If the user doesn't supply a ACE_Message_Queue pointer
   // then we'll allocate one dynamically.  Otherwise, we'll use the
-  // one passed as a parameter.  If <wait_for_threads_in_destructor>
-  // is non-0 then <~ACE_Task> will wait for any threads in this task
-  // to exit before returning.
+  // one passed as a parameter.
 
   virtual ~ACE_Task (void);
   // Destructor.
@@ -139,10 +136,6 @@ public: // Should be protected:
 
   ACE_Task<ACE_SYNCH_USE> *next_;
   // Pointer to adjacent ACE_Task.
-
-  int wait_for_threads_in_destructor_;
-  // If this is non-0 then wait for threads in this task to exit
-  // before returning from the destructor.
 
   void dump (void) const;
   // Dump the state of an object.

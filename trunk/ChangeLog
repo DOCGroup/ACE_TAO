@@ -1,3 +1,33 @@
+Mon Jan 17 18:03:17 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Thread_Pool_Test.cpp: Enhanced this test to illustrate how
+	  to shut down Tasks using either the "empty message" strategy or
+ 	  the "queue deactivation" strategy.
+
+	* ace/Message_Queue.h: Updated the documentation of the enqueue*()
+ 	  and dequeue*() methods to clarify which errno values are set
+ 	  when the calls return -1.
+
+	* examples/Threads/thread_pool.cpp: Updated this example to
+	  remove the use of the now-defunct "wait_for_threads_to_shutdown"
+ 	  feature of ACE_Task.
+
+	* ace/Task_T: Removed the recent feature added on
+  
+          Sat Jan  8 09:44:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+  
+          that allowed to an ACE_Task's destructor to wait for threads in
+ 	  a task to exit.  It turns out this is practically impossible to
+ 	  use correctly because of the way that destructors are destroyed
+ 	  from the "top down".  However, it's trivial to get the same
+ 	  behavior by simply calling the Tasks's wait() method whenever
+ 	  you want to implement barrier synchronization on a Task's thread
+ 	  exits.
+  
+	* tests/Thread_Pool_Test.cpp: Updated this test to illustrate
+	  various strategies to wait for threads to exit.  Thanks to Mark
+ 	  C. Barnes <marcus@muse3d.com> for motivating this example.
+
 Mon Jan 17 14:20:17 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.h:
@@ -273,7 +303,7 @@ Sun Jan  9 00:25:58 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           reporting this problem with VxWorks.
 
         * ace/Pair_T.h: Reformatted to conform to the ACE style.
-
+  
 Sat Jan  8 09:44:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * examples/Threads/thread_pool.cpp: Revised the example to
