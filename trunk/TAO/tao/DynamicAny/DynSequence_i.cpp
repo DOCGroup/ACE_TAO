@@ -688,6 +688,16 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
       ACE_Message_Block *field_mb = field_any->_tao_get_cdr ();
 
+      if (field_mb == 0)
+        {
+          ACE_NEW_RETURN (field_mb,
+                          ACE_Message_Block,
+                          0);
+          TAO_OutputCDR out;
+          field_any->impl ()->marshal_value (out);
+          ACE_CDR::consolidate (field_mb, out.begin ());
+        }
+
       TAO_InputCDR field_cdr (field_mb,
                               field_any->_tao_byte_order ());
 
