@@ -1,5 +1,5 @@
 This directory contains program(s) that demonstrate how to use ACE's
-Log_Msg class to record various information.  
+Log_Msg class to record various information.
 
         * test_callback.cpp: This program tests the Log_Msg
           abstraction wrt writing to user defined callback objects.
