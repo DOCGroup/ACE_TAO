@@ -114,7 +114,7 @@
 #define MAKE_PIPE_NAME MAKE_PIPE_NAME_A
 #endif /* UNICODE */
 
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE) || defined (ACE_HAS_PHARLAP)
 const size_t ACE_MAX_CLIENTS = 4;
 #else
 const size_t ACE_MAX_CLIENTS = 30;
