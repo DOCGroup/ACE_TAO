@@ -9,7 +9,6 @@
 #define ACE_YY_FLEX_MAJOR_VERSION 2
 #define ACE_YY_FLEX_MINOR_VERSION 5
 
-
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
 #ifdef c_plusplus
 #ifndef __cplusplus
@@ -146,8 +145,8 @@ struct ace_yy_buffer_state
 	{
 	FILE *ace_yy_input_file;
 
-	ACE_TCHAR *ace_yy_ch_buf;		/* input buffer */
-	ACE_TCHAR *ace_yy_buf_pos;		/* current position in input buffer */
+	ACE_TCHAR *ace_yy_ch_buf;	/* input buffer */
+	ACE_TCHAR *ace_yy_buf_pos;	/* current position in input buffer */
 
 	/* Size of input buffer in bytes, not including room for EOB
 	 * characters.
@@ -217,7 +216,7 @@ static int ace_yy_n_chars;		/* number of characters read into ace_yy_ch_buf */
 int ace_yyleng;
 
 /* Points to current character in buffer. */
-static ACE_TCHAR *ace_yy_c_buf_p = (ACE_TCHAR *) 0;
+static ACE_TCHAR *ace_yy_c_buf_p = (char *) 0;
 static int ace_yy_init = 1;		/* whether we need to initialize */
 static int ace_yy_start = 0;	/* start state number */
 
@@ -501,9 +500,7 @@ static ACE_TCHAR *ace_yy_last_accepting_cpos;
 #define ACE_YY_MORE_ADJ 0
 #define ACE_YY_RESTORE_ACE_YY_MORE_OFFSET
 ACE_TCHAR *ace_yytext;
-#line 1 "Svc_Conf.l"
 #define INITIAL 0
-#line 2 "Svc_Conf.l"
 // $Id$
 // Sample lexical analysis for regular expression subset.  Must be
 // compiled with FLEX and an ANSI C++ compiler.
@@ -621,12 +618,12 @@ ACE_YY_MALLOC_DECL
 		if ( c == '\n' ) \
 			buf[n++] = (ACE_TCHAR) c; \
 		if ( c == EOF && ferror( ace_yyin ) ) \
-			ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("input in flex scanner failed")); \
+			ACE_YY_FATAL_ERROR(ACE_LIB_TEXT( "input in flex scanner failed") ); \
 		result = n; \
 		} \
 	else if ( ((result = fread( buf, sizeof (ACE_TCHAR), max_size, ace_yyin )) == 0) \
 		  && ferror( ace_yyin ) ) \
-		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("input in flex scanner failed"));
+		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT("input in flex scanner failed") );
 #endif
 
 /* No semi-colon after return; correct usage is to write "ace_yyterminate();" -
@@ -674,7 +671,6 @@ ACE_YY_MALLOC_DECL
 
 ACE_YY_DECL
 	{
-
           ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                                     ace_mon,
                                     *ACE_Static_Object_Lock::instance (),
@@ -683,10 +679,9 @@ ACE_YY_DECL
           ACE_Svc_Conf_Lexer_Guard ace_lexer_guard (ACE_SVC_CONF_PARAM);
 
 	register ace_yy_state_type ace_yy_current_state;
-	register ACE_TCHAR *ace_yy_cp = 0, *ace_yy_bp = 0;
+	register ACE_TCHAR *ace_yy_cp, *ace_yy_bp;
 	register int ace_yy_act;
 
-#line 35 "Svc_Conf.l"
 
 
 
@@ -777,100 +772,81 @@ case 1:
 ace_yy_c_buf_p = ace_yy_cp -= 1;
 ACE_YY_DO_BEFORE_ACTION; /* set up ace_yytext again */
 ACE_YY_RULE_SETUP
-#line 37 "Svc_Conf.l"
 ; /* EMPTY */
 	ACE_YY_BREAK
 case 2:
 ACE_YY_RULE_SETUP
-#line 38 "Svc_Conf.l"
 { return token (ACE_DYNAMIC); }
-        //	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 3:
 ACE_YY_RULE_SETUP
-#line 39 "Svc_Conf.l"
 { return token (ACE_STATIC); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 4:
 ACE_YY_RULE_SETUP
-#line 40 "Svc_Conf.l"
 { return token (ACE_SUSPEND); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 5:
 ACE_YY_RULE_SETUP
-#line 41 "Svc_Conf.l"
 { return token (ACE_RESUME); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 6:
 ACE_YY_RULE_SETUP
-#line 42 "Svc_Conf.l"
 { return token (ACE_REMOVE); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 7:
 ACE_YY_RULE_SETUP
-#line 43 "Svc_Conf.l"
 { return token (ACE_USTREAM); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 8:
 ACE_YY_RULE_SETUP
-#line 44 "Svc_Conf.l"
 { return token (ACE_MODULE_T); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 9:
 ACE_YY_RULE_SETUP
-#line 45 "Svc_Conf.l"
 { return token (ACE_SVC_OBJ_T); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 10:
 ACE_YY_RULE_SETUP
-#line 46 "Svc_Conf.l"
 { return token (ACE_STREAM_T); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 11:
 ACE_YY_RULE_SETUP
-#line 47 "Svc_Conf.l"
 { return token (ACE_ACTIVE); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 12:
 ACE_YY_RULE_SETUP
-#line 48 "Svc_Conf.l"
 { return token (ACE_INACTIVE); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 13:
 ACE_YY_RULE_SETUP
-#line 49 "Svc_Conf.l"
 { return token (':'); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 14:
 ACE_YY_RULE_SETUP
-#line 50 "Svc_Conf.l"
 { return token ('*'); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 15:
 ACE_YY_RULE_SETUP
-#line 51 "Svc_Conf.l"
 { return token ('('); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 16:
 ACE_YY_RULE_SETUP
-#line 52 "Svc_Conf.l"
 { return token (')'); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 17:
 ACE_YY_RULE_SETUP
-#line 53 "Svc_Conf.l"
 { return token ('{'); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 18:
 ACE_YY_RULE_SETUP
-#line 54 "Svc_Conf.l"
 { return token ('}'); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 19:
 ACE_YY_RULE_SETUP
-#line 55 "Svc_Conf.l"
 {
                         // Check for first type of string, i.e.,
-                        // "double quotes" delimited.
+                        // "double quotes" delimited.  
                         ACE_TCHAR *s = ACE_OS::strrchr (ace_yytext, '"');
                         if (s == 0)
                           // Check for second type of string, i.e.,
@@ -884,40 +860,35 @@ ACE_YY_RULE_SETUP
 			ace_yyleng -= 1;
                         ace_yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (ace_yytext + 1, ace_yyleng);
 			return token (ACE_STRING); }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 20:
 ACE_YY_RULE_SETUP
-#line 71 "Svc_Conf.l"
 {
 		        ace_yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (ace_yytext, ace_yyleng);
 			return token (ACE_IDENT);
 		      }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 21:
 ACE_YY_RULE_SETUP
-#line 75 "Svc_Conf.l"
 {
 		        ace_yylval->ident_ = ACE_SVC_CONF_PARAM->obstack.copy (ace_yytext, ace_yyleng);
 			return token (ACE_PATHNAME);
 		      }
-//	ACE_YY_BREAK
+	//      ACE_YY_BREAK
 case 22:
 ACE_YY_RULE_SETUP
-#line 79 "Svc_Conf.l"
 ; /* EMPTY */
 	ACE_YY_BREAK
 case 23:
 ACE_YY_RULE_SETUP
-#line 80 "Svc_Conf.l"
 { ACE_SVC_CONF_PARAM->yylineno++; ace_yylineno++; }
 	ACE_YY_BREAK
 case 24:
 ACE_YY_RULE_SETUP
-#line 81 "Svc_Conf.l"
 {
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_LIB_TEXT ("unknown character = (%d"),
-                                          *ace_yytext));
+                         ACE_ERROR ((LM_ERROR,
+                                     ACE_LIB_TEXT ("unknown character = (%d"), 
+                                                   *ace_yytext));
                         if (ACE_OS::ace_isprint (*ace_yytext))
                           ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT ("|%c"), *ace_yytext));
                         ACE_ERROR ((LM_ERROR, ACE_LIB_TEXT (")\n")));
@@ -926,12 +897,10 @@ ACE_YY_RULE_SETUP
 case ACE_YY_STATE_EOF(INITIAL):
 case ACE_YY_STATE_EOF(PARAMETERS):
 case ACE_YY_STATE_EOF(NORMAL):
-#line 89 "Svc_Conf.l"
 { ace_yyterminate(); }
-//	ACE_YY_BREAK
+//      ACE_YY_BREAK
 case 25:
 ACE_YY_RULE_SETUP
-#line 90 "Svc_Conf.l"
 ACE_SVC_CONF_ECHO;
 	ACE_YY_BREAK
 
@@ -1059,7 +1028,7 @@ ACE_SVC_CONF_ECHO;
 
 	default:
 		ACE_YY_FATAL_ERROR(
-			ACE_LIB_TEXT ("fatal flex scanner internal error--no action found"));
+			ACE_LIB_TEXT("fatal flex scanner internal error--no action found") );
 	} /* end of action switch */
 		} /* end of scanning one token */
 	} /* end of ace_yylex */
@@ -1082,7 +1051,7 @@ static int ace_yy_get_next_buffer()
 
 	if ( ace_yy_c_buf_p > &ace_yy_current_buffer->ace_yy_ch_buf[ace_yy_n_chars + 1] )
 		ACE_YY_FATAL_ERROR(
-		ACE_LIB_TEXT ("fatal flex scanner internal error--end of buffer missed"));
+		ACE_LIB_TEXT("fatal flex scanner internal error--end of buffer missed") );
 
 	if ( ace_yy_current_buffer->ace_yy_fill_buffer == 0 )
 		{ /* Don't try to fill the buffer, so this is an EOF. */
@@ -1125,8 +1094,8 @@ static int ace_yy_get_next_buffer()
 		while ( num_to_read <= 0 )
 			{ /* Not enough room in the buffer - grow it. */
 #ifdef ACE_YY_USES_REJECT
-			ACE_YY_FATAL_ERROR(
-ACE_LIB_TEXT ("input buffer overflow, can't enlarge buffer because scanner uses REJECT"));
+                          ACE_YY_FATAL_ERROR(ACE_LIB_TEXT(
+"input buffer overflow, can't enlarge buffer because scanner uses REJECT") );
 #else
 
 			/* just a shorter name for the current buffer */
@@ -1145,18 +1114,17 @@ ACE_LIB_TEXT ("input buffer overflow, can't enlarge buffer because scanner uses 
 					b->ace_yy_buf_size *= 2;
 
 				b->ace_yy_ch_buf = (ACE_TCHAR *)
-                                  /* Include room in for 2 EOB chars. */
-                                  ace_yy_flex_realloc(
-                                    (void *) b->ace_yy_ch_buf,
-                                    (b->ace_yy_buf_size + 2) * sizeof (ACE_TCHAR) );
+					/* Include room in for 2 EOB chars. */
+					ace_yy_flex_realloc( (void *) b->ace_yy_ch_buf,
+                                                      (b->ace_yy_buf_size + 2)*sizeof(ACE_TCHAR));
 				}
 			else
 				/* Can't grow it, we don't own it. */
 				b->ace_yy_ch_buf = 0;
 
 			if ( ! b->ace_yy_ch_buf )
-				ACE_YY_FATAL_ERROR(
-				ACE_LIB_TEXT ("fatal error - scanner input buffer overflow"));
+                          ACE_YY_FATAL_ERROR(ACE_LIB_TEXT(
+				"fatal error - scanner input buffer overflow") );
 
 			ace_yy_c_buf_p = &b->ace_yy_ch_buf[ace_yy_c_buf_p_offset];
 
@@ -1166,7 +1134,7 @@ ACE_LIB_TEXT ("input buffer overflow, can't enlarge buffer because scanner uses 
 			}
 
 		if ( num_to_read * sizeof (ACE_TCHAR) > ACE_YY_READ_BUF_SIZE )
-			num_to_read = ACE_YY_READ_BUF_SIZE / sizeof (ACE_TCHAR);
+			num_to_read = ACE_YY_READ_BUF_SIZE/sizeof (ACE_TCHAR);
 
 		/* Read in more data. */
 		ACE_YY_INPUT( (&ace_yy_current_buffer->ace_yy_ch_buf[number_to_move]),
@@ -1302,7 +1270,7 @@ register ACE_TCHAR *ace_yy_bp;
 			ace_yy_n_chars = ace_yy_current_buffer->ace_yy_buf_size;
 
 		if ( ace_yy_cp < ace_yy_current_buffer->ace_yy_ch_buf + 2 )
-			ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("flex scanner push-back overflow"));
+			ACE_YY_FATAL_ERROR(ACE_LIB_TEXT( "flex scanner push-back overflow") );
 		}
 
 	*--ace_yy_cp = (ACE_TCHAR) c;
@@ -1379,7 +1347,7 @@ static int input()
 			}
 		}
 
-	c = *(unsigned char *) ace_yy_c_buf_p;  /* cast for 8-bit char's */
+	c = *(unsigned char *) ace_yy_c_buf_p;	/* cast for 8-bit char's */
 	*ace_yy_c_buf_p = '\0';	/* preserve ace_yytext */
 	ace_yy_hold_char = *++ace_yy_c_buf_p;
 
@@ -1459,16 +1427,16 @@ int size;
 
 	b = (ACE_YY_BUFFER_STATE) ace_yy_flex_alloc( sizeof( struct ace_yy_buffer_state ) );
 	if ( ! b )
-		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("out of dynamic memory in ace_yy_create_buffer()"));
+		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT( "out of dynamic memory in ace_yy_create_buffer()") );
 
 	b->ace_yy_buf_size = size;
 
 	/* ace_yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->ace_yy_ch_buf = (ACE_TCHAR *) ace_yy_flex_alloc( (b->ace_yy_buf_size + 2) * sizeof (ACE_TCHAR) );
+	b->ace_yy_ch_buf = (ACE_TCHAR *) ace_yy_flex_alloc( (b->ace_yy_buf_size + 2 ) * sizeof (ACE_TCHAR));
 	if ( ! b->ace_yy_ch_buf )
-		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("out of dynamic memory in ace_yy_create_buffer()"));
+		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT( "out of dynamic memory in ace_yy_create_buffer()") );
 
 	b->ace_yy_is_our_buffer = 1;
 
@@ -1580,7 +1548,7 @@ ace_yy_size_t size;
 
 	b = (ACE_YY_BUFFER_STATE) ace_yy_flex_alloc( sizeof( struct ace_yy_buffer_state ) );
 	if ( ! b )
-		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT ("out of dynamic memory in ace_yy_scan_buffer()"));
+		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT( "out of dynamic memory in ace_yy_scan_buffer()" ));
 
 	b->ace_yy_buf_size = size - 2;	/* "- 2" to take care of EOB's */
 	b->ace_yy_buf_pos = b->ace_yy_ch_buf = base;
@@ -1632,9 +1600,9 @@ int len;
 
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = len + 2;
-	buf = (ACE_TCHAR *) ace_yy_flex_alloc( n * sizeof (ACE_TCHAR) );
+	buf = (ACE_TCHAR *) ace_yy_flex_alloc( n );
 	if ( ! buf )
-		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("out of dynamic memory in ace_yy_scan_bytes()"));
+		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT( "out of dynamic memory in ace_yy_scan_bytes()" ));
 
 	for ( i = 0; i < len; ++i )
 		buf[i] = bytes[i];
@@ -1643,7 +1611,7 @@ int len;
 
 	b = ace_yy_scan_buffer( buf, n );
 	if ( ! b )
-		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("bad buffer in ace_yy_scan_bytes()"));
+		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT( "bad buffer in ace_yy_scan_bytes()") );
 
 	/* It's okay to grow etc. this buffer, and we should throw it
 	 * away when we're done.
@@ -1678,8 +1646,8 @@ int new_state;
 					(void *) ace_yy_start_stack, new_size );
 
 		if ( ! ace_yy_start_stack )
-			ACE_YY_FATAL_ERROR(
-			ACE_LIB_TEXT ("out of memory expanding start-condition stack"));
+                  ACE_YY_FATAL_ERROR(ACE_LIB_TEXT(
+			"out of memory expanding start-condition stack" ));
 		}
 
 	ace_yy_start_stack[ace_yy_start_stack_ptr++] = ACE_YY_START;
@@ -1693,7 +1661,7 @@ int new_state;
 static void ace_yy_pop_state()
 	{
 	if ( --ace_yy_start_stack_ptr < 0 )
-		ACE_YY_FATAL_ERROR (ACE_LIB_TEXT ("start-condition stack underflow"));
+		ACE_YY_FATAL_ERROR(ACE_LIB_TEXT( "start-condition stack underflow" ));
 
 	BEGIN(ace_yy_start_stack[ace_yy_start_stack_ptr]);
 	}
@@ -1718,7 +1686,7 @@ static void ace_yy_fatal_error( msg )
 ACE_TCHAR msg[];
 #endif
 	{
-	(void) ACE_OS::fprintf( stderr, ACE_LIB_TEXT ("%s\n"), msg );
+	(void) ACE_OS::fprintf( stderr, ACE_LIB_TEXT("%s\n"), msg );
 	exit( ACE_YY_EXIT_FAILURE );
 	}
 
@@ -1820,7 +1788,6 @@ int main()
 	return 0;
 	}
 #endif
-#line 90 "Svc_Conf.l"
 
 int
 ace_yywrap (void)
