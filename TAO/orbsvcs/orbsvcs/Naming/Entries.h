@@ -1,7 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
 
-
 // ============================================================================
 //
 // = LIBRARY
@@ -15,8 +14,8 @@
 // 
 // ============================================================================
 
-#if !defined (NS_COSNAMING_H)
-#define NS_COSNAMING_H
+#if !defined (TAO_ENTRIES_H)
+#define TAO_ENTRIES_H
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h"
@@ -26,30 +25,24 @@
 #include "orbsvcs/CosNamingC.h"
 
 class TAO_ORBSVCS_Export NS_IntId 
+{
   // = TITLE
   //     Stores information a context keeps for each bound name
   //     (object reference and the type of binding).
-  //
-  // = DESCRIPTION
-  //
-  //
-  //
-  //
-{
 public:
   // = Initialization and termination methods.
   NS_IntId (void);
-  // default constructor.
+  // Constructor.
 
   NS_IntId (CORBA::Object_ptr obj,
 	    CosNaming::BindingType type /* = CosNaming::nobject */);
-  // constructor.
+  // Constructor.
   
   NS_IntId (const NS_IntId & rhs);
-  // copy constructor
+  // Copy constructor.
 
   ~NS_IntId (void);
-  // destructor 
+  // Destructor.
 
   void operator= (const NS_IntId & rhs);
   // Assignment operator (does copy memory).
@@ -63,29 +56,24 @@ public:
 };
 
 class TAO_ORBSVCS_Export NS_ExtId 
+{
   // = TITLE
   //    Stores the name to which an object is bound.
-  //
-  // = DESCRIPTION
-  //
-  //
-  //
-  //
-{
 public:
   // = Initialization and termination methods.
+
   NS_ExtId (void);
-  // default constructor.
+  // Constructor.
 
   NS_ExtId (const char *id, 
 	    const char *kind);
-  // constructor.
+  // Constructor.
   
   NS_ExtId (const NS_ExtId & rhs);
-  // copy constructor
+  // Copy constructor.
 
   ~NS_ExtId (void);
-  // destructor 
+  // Destructor. 
 
   void operator= (const NS_ExtId & rhs);
   // Assignment operator (does copy memory).
@@ -100,11 +88,10 @@ public:
   // This class has to have a hash for use with ACE_Hash_Map_Manager.
 
   ACE_CString kind_;  
-  // any information user wants to store (not used by Naming Service).
+  // Any information user wants to store (not used by Naming Service).
 
   ACE_CString id_;  
-  // any information user wants to store (not used by Naming Service).
+  // Any information user wants to store (not used by Naming Service).
 };
 
-
-#endif /* NS_COSNAMING_H */
+#endif /* TAO_ENTRIES_H */

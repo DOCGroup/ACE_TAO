@@ -25,11 +25,11 @@
 
 ACE_RCSID(Naming, Naming_Utils, "$Id$")
 
-  // Default constructor
+// Default constructor
 
-  TAO_Naming_Server::TAO_Naming_Server (void)
-    : ior_multicast_ (0),
-      naming_context_name_ (CORBA::string_dup ("NameService"))
+TAO_Naming_Server::TAO_Naming_Server (void)
+  : ior_multicast_ (0),
+    naming_context_name_ (CORBA::string_dup ("NameService"))
 {
 }
 
@@ -63,7 +63,10 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
 		    "\nNameService not found; calling init\n"));
-      return (this->init_new_naming (orb, child_poa, argc, argv));
+      return this->init_new_naming (orb, 
+                                    child_poa,
+                                    argc,
+                                    argv);
     }
   else
     {
@@ -153,7 +156,8 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
       if (ACE_OS::strcmp (this->naming_context_name_.in (),
                           "NameService") == 0)
 	{
-          // Get the naming context ptr to NameService.
+          // Get the naming context ptr to NameService and register
+          // with the POA.
           this->naming_context_ =
             this->naming_context_impl_._this (TAO_TRY_ENV);
           TAO_CHECK_ENV;

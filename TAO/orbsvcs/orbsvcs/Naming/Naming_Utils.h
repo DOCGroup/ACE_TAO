@@ -61,8 +61,8 @@ public:
             PortableServer::POA_ptr root_poa,
 	    int argc = 0,
             char **argv = 0);
-  // Locate a  name server under the given ORB and POA.  If no name
-  // server can be resolved, create a new name server. 
+  // Locate a name server under the given ORB and POA.  If no name
+  // server can be resolved, create a new name server.
 
   int init_new_naming (CORBA::ORB_ptr orb,
 		       PortableServer::POA_ptr root_poa,
@@ -88,8 +88,12 @@ public:
   // Returns a <NamingContext_ptr>.
 
 private:
+  // @@ Marina, can you please revise this to use dynamic allocation
+  // rather than be allocated in the class.  This will make sure that
+  // we follow a consistent policy for managing the memory of our
+  // NamingContexts...
   NS_NamingContext naming_context_impl_;
-  // Naming context implemetation for "NameService".
+  // Naming context implementation for "NameService".
 
   CosNaming::NamingContext_var naming_context_;
   // NamingContext ptr.
