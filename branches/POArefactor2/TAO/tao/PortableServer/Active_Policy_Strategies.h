@@ -32,7 +32,7 @@ namespace TAO
     class ThreadStrategy;
     class Request_Processing_Strategy;
     class Id_Assignment_Strategy;
-    class Lifespan_Strategy;
+    class LifespanStrategy;
     class Id_Uniqueness_Strategy;
     class ImplicitActivationStrategy;
     class ServantRetentionStrategy;
@@ -57,7 +57,7 @@ namespace TAO
 
       Id_Uniqueness_Strategy *id_uniqueness_strategy (void) const;
 
-      Lifespan_Strategy *lifespan_strategy (void) const;
+      LifespanStrategy *lifespan_strategy (void) const;
 
       ImplicitActivationStrategy *implicit_activation_strategy (void) const;
 
@@ -67,7 +67,7 @@ namespace TAO
       ThreadStrategy *thread_strategy_;
       Request_Processing_Strategy *request_processing_strategy_;
       Id_Assignment_Strategy *id_assignment_strategy_;
-      Lifespan_Strategy *lifespan_strategy_;
+      LifespanStrategy *lifespan_strategy_;
       Id_Uniqueness_Strategy *id_uniqueness_strategy_;
       ImplicitActivationStrategy *implicit_activation_strategy_;
       ServantRetentionStrategy *servant_retention_strategy_;

@@ -16,6 +16,7 @@
 #include "RequestProcessingStrategy.h"
 #include "IdAssignmentStrategy.h"
 #include "LifespanStrategy.h"
+#include "LifespanStrategyFactory.h"
 #include "IdUniquenessStrategy.h"
 #include "ImplicitActivationStrategy.h"
 #include "ImplicitActivationStrategyFactory.h"
@@ -136,21 +137,24 @@ namespace TAO
 
       id_uniqueness_strategy_->strategy_init (poa);
 
-      switch (policies.lifespan())
-      {
-        case ::PortableServer::TRANSIENT :
-        {
-          ACE_NEW (lifespan_strategy_, Transient_Lifespan_Strategy);
-          break;
-        }
-        case ::PortableServer::PERSISTENT :
-        {
-          ACE_NEW (lifespan_strategy_, Persistent_Lifespan_Strategy);
-          break;
-        }
-      }
+      /**/
 
-      lifespan_strategy_->strategy_init (poa);
+      LifespanStrategyFactory *lifespan_strategy_factory =
+        ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyFactory");
+
+      if (lifespan_strategy_factory == 0)
+        {
+          ACE_Service_Config::process_directive (ACE_TEXT("dynamic LifespanStrategyFactory Service_Object *")
+                                                 ACE_TEXT("TAO_PortableServer:_make_LifespanStrategyFactoryImpl()"));
+          lifespan_strategy_factory =
+            ACE_Dynamic_Service<LifespanStrategyFactory>::instance ("LifespanStrategyFactory");
+        }
+
+      if (lifespan_strategy_factory != 0)
+        lifespan_strategy_ = lifespan_strategy_factory->create (policies.lifespan());
+
+      if (lifespan_strategy_ != 0)
+        lifespan_strategy_->strategy_init (poa);
 
       /**/
 

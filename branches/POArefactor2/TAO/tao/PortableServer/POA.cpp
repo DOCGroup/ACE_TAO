@@ -44,6 +44,7 @@ ACE_RCSID (PortableServer,
 #include "ace/OS_NS_unistd.h"
 #include "poa_macros.h"
 #include "POA_Guard.h"
+#include "Creation_Time.h"
 
 #include "tao/PortableServer/RequestProcessingStrategy.h"
 #include "tao/PortableServer/LifespanStrategy.h"
@@ -1475,7 +1476,7 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
 bool
 TAO_POA::is_poa_generated (CORBA::Object_ptr reference,
                            PortableServer::ObjectId &system_id
-                          ACE_ENV_ARG_DECL)
+                           ACE_ENV_ARG_DECL)
 {
   TAO::ObjectKey_var key = reference->_key (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (false);

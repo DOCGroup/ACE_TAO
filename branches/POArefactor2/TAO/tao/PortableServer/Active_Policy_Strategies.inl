@@ -33,7 +33,7 @@ namespace TAO
     }
 
     ACE_INLINE
-    Lifespan_Strategy*
+    LifespanStrategy*
     Active_Policy_Strategies::lifespan_strategy (void) const
     {
       return lifespan_strategy_;

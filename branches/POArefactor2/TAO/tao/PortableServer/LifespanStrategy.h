@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file Lifespan_Strategy.h
+ *  @file LifespanStrategy.h
  *
  *  $Id$
  *
@@ -16,11 +16,9 @@
 
 #include "portableserver_export.h"
 #include "Policy_Strategy.h"
-#include "Creation_Time.h"
 #include "ace/Service_Config.h"
 
 #include "tao/Object_KeyC.h"
-#include "tao/OctetSeqC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,25 +28,23 @@
 
 namespace TAO
 {
-//  class ObjectKey;
-
-//  typedef ObjectKey *ObjectKey_ptr;
-//  typedef TAO_Objref_Var_T<ObjectKey> ObjectKey_var;
+  namespace Portable_Server
+  {
+    class Temporary_Creation_Time;
+  }
 }
-
-class ServerObject_i;
 
 namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export Lifespan_Strategy :
+    class TAO_PortableServer_Export LifespanStrategy :
        public virtual Policy_Strategy
     {
     public:
-      Lifespan_Strategy (void);
+      LifespanStrategy (void);
 
-      virtual ~Lifespan_Strategy (void);
+      virtual ~LifespanStrategy (void);
 
       virtual
       void strategy_init (TAO_POA *poa);
@@ -83,100 +79,12 @@ namespace TAO
       /// Validate whether this matches the set lifespan strategy
       virtual
       bool validate (CORBA::Boolean is_persistent,
-                     TAO::Portable_Server::Temporary_Creation_Time creation_time) const = 0;
+                     const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const = 0;
 
     protected:
       TAO_POA *poa_;
-
-      CORBA::OctetSeq id_;
     };
 
-    class TAO_PortableServer_Export Transient_Lifespan_Strategy :
-       public virtual Lifespan_Strategy
-    {
-    public:
-      Transient_Lifespan_Strategy (void);
-
-      virtual ~Transient_Lifespan_Strategy (void);
-
-      virtual
-      void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
-
-      virtual
-      void notify_shutdown ();
-
-      char key_type (void) const;
-
-      virtual CORBA::Boolean persistent (void) const
-      {
-        return false;
-      }
-
-      CORBA::ULong key_length (void) const;
-
-      virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
-
-      virtual
-      bool validate (CORBA::Boolean is_persistent,
-                     TAO::Portable_Server::Temporary_Creation_Time creation_time) const;
-
-    private:
-      TAO::Portable_Server::Creation_Time creation_time_;
-    };
-
-    class TAO_PortableServer_Export Persistent_Lifespan_Strategy :
-       public virtual Lifespan_Strategy
-    {
-    public:
-      Persistent_Lifespan_Strategy ();
-
-      virtual ~Persistent_Lifespan_Strategy (void);
-
-      virtual
-      void notify_startup (ACE_ENV_SINGLE_ARG_DECL);
-
-      virtual
-      void notify_shutdown ();
-
-      char key_type (void) const;
-
-      virtual CORBA::Boolean persistent (void) const
-      {
-        return true;
-      }
-
-      CORBA::ULong key_length (void) const;
-
-      virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
-
-      virtual
-      bool validate (CORBA::Boolean is_persistent,
-                     TAO::Portable_Server::Temporary_Creation_Time creation_time) const;
-
-    private:
-      /// @name Implementation repository related methods
-      //@{
-
-      // @@ Johnny, for the timebeing could you please comment out the
-      //all the ImR related code? I am not sure whether this is the
-      //right place foir these. May be they are. We can get to them
-      //later.
-      // @Bala, I think the triggering of the ImR should be here, the question
-      // whether this functionality must be here or use an adapter with a
-      // separate library, important is that the code is out of the POA
-      /// ImplRepo helper method, notify the ImplRepo on startup
-      void imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL);
-
-      /// ImplRepo helper method, notify the ImplRepo on shutdown
-      void imr_notify_shutdown (void);
-      //@}
-
-      /// Implementation Repository Server Object
-      ServerObject_i *server_object_;
-
-      /// Flag for whether the ImR should be used or not.
-      bool use_imr_;
-    };
   } /* namespace Portable_Server */
 } /* namespace TAO */
 
