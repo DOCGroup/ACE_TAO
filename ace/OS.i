@@ -5502,12 +5502,14 @@ ACE_OS::gethostbyname_r (const char *name, hostent *result,
   ACE_UNUSED_ARG (h_errnop);
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
-#   if defined (DIGITAL_UNIX)
+#   if defined (DIGITAL_UNIX) || \
+       (defined (ACE_AIX_MINOR_VERS) && (ACE_AIX_MINOR_VERS > 2))
   ACE_UNUSED_ARG (result);
   ACE_UNUSED_ARG (buffer);
   ACE_UNUSED_ARG (h_errnop);
 
-  // gethostbyname returns thread-specific storage on Digital Unix
+  // gethostbyname returns thread-specific storage on Digital Unix and
+  // AIX 4.3
   ACE_SOCKCALL_RETURN (::gethostbyname (name), struct hostent *, 0);
 #   elif defined (AIX) || defined (HPUX_10)
   ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
