@@ -145,4 +145,23 @@ TAO_Policy_Manager_Impl::get_policy (
 
 // ****************************************************************
 
+TAO_Policy_Current_Impl &
+TAO_Policy_Current::implementation (TAO_Policy_Current_Impl &current)
+{
+  TAO_ORB_Core_TSS_Resources *tss =
+    TAO_ORB_CORE_TSS_RESOURCES::instance ();
+
+  TAO_Policy_Current_Impl *old = tss->policy_current_;
+  tss->policy_current_ = &current;
+  return *old;
+}
+
+TAO_Policy_Current_Impl &
+TAO_Policy_Current::implementation (void)
+{
+  return *TAO_ORB_CORE_TSS_RESOURCES::instance ()->policy_current_;
+}
+
+// ****************************************************************
+
 #endif /* TAO_HAS_CORBA_MESSAGING */
