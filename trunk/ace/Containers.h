@@ -650,8 +650,10 @@ protected:
 
   int remove_element (T *item);
   // Remove an <item> from the list.  Return 0 if succeed, -1 otherwise.
-  // Notice that this function only checks if item is <head_>.  Users
-  // must ensure the item is in the list.
+  // Notice that this function checks if item is <head_> and either its
+  // <next_> or <prev_> is NULL.  The function resets item's <next_> and
+  // <prev_> to 0 to prevent clobbering the double-linked list if a user
+  // tries to remove the same node again.
   
   T *head_;
   // Head of the circular double-linked list.
