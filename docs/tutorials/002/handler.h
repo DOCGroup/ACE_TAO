@@ -70,6 +70,11 @@ public:
   void destroy (void)
   {
     /*
+      Remove ourselves from the reactor
+     */
+    g_reactor->remove_handler(this,ACE_Event_Handler::READ_MASK|ACE_Event_Handler::DONT_CALL);
+
+    /*
       Cancel that timer we scheduled in open()
      */
     g_reactor->cancel_timer (this);
@@ -132,6 +137,14 @@ protected:
     return 0;
   }
 
+  /*
+    Clean ourselves up when handle_input() (or handle_timer()) returns -1
+   */
+  int handle_close(ACE_HANDLE, ACE_Reactor_Mask _mask)
+  {
+    this->destroy();
+    return 0;
+  }
 };
 
 #endif // LOGGING_HANDLER_H
