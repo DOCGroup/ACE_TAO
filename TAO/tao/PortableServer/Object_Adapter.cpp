@@ -1473,6 +1473,12 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
 
           this->state_ = PRIORITY_RESET_REQUIRED;
         }
+      else if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("RTCORBA::CLIENT_PROPAGATED processing")
+                    ACE_TEXT (" (%P|%t): original thread priority =")
+                    ACE_TEXT (" requested priority = %d\n"),
+                    target_priority));
     }
 }
 

@@ -23,7 +23,7 @@ includes the following:
           value.
 
         . Server_Declared
-        
+
           Tests PriorityModelPolicy with RTCORBA::SERVER_DECLARED
           value.
 
@@ -34,13 +34,6 @@ includes the following:
         . Client_Protocol
 
           Tests various settings of RTCORBA::ClientProtocolPolicy.
-
-        . MT_Client_Protocol_Priority
-        
-          Multithreaded test with two client threads [with different
-          priorities and different ClientProtocolPolicy Current-level
-          overrides] concurrently making invocations on one object
-          reference, which has a CLIENT_PROPAGATED priority model.
 
         . Private_Connection
 
@@ -54,3 +47,10 @@ includes the following:
 
           Tests <Object::_validate_connection>.
 
+        . MT_Client_Protocol_Priority
+
+          Multithreaded client test. Two client threads [with
+          different priorities and different ClientProtocolPolicy
+          Current-level overrides] concurrently making invocations on
+          one object reference, which has a CLIENT_PROPAGATED priority
+          model.

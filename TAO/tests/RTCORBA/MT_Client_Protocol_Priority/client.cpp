@@ -55,12 +55,15 @@ CORBA::ULong protocol2 = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "o:a:b:e:f:");
+  ACE_Get_Opt get_opts (argc, argv, "o:a:b:e:f:n:");
   int c, result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'n':
+        iterations = ACE_OS::atoi (get_opts.optarg);
+        break;
       case 'o':
         ior = get_opts.optarg;
         break;
@@ -109,6 +112,7 @@ parse_args (int argc, char *argv[])
                            "-b <priority2> "
                            "-e <protocol_type1> "
                            "-f <protocol_type2> "
+                           "-n <number_of_iterations> "
                            "\n",
                            argv [0]),
                           -1);
@@ -180,6 +184,16 @@ main (int argc, char *argv[])
 
       RTCORBA::PriorityMapping *pm =
         mapping_manager->mapping ();
+
+      // RTCurrent.
+      object =
+        orb->resolve_initial_references ("RTCurrent", ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      RTCORBA::Current_var current =
+        RTCORBA::Current::_narrow (object.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (check_for_nil (current.in (), "RTCurrent") == -1)
+        return 1;
 
       // Obtain Test object reference.
       object =
@@ -256,8 +270,10 @@ main (int argc, char *argv[])
       // Wait for worker threads to finish.
       ACE_Thread_Manager::instance ()->wait ();
 
-      // Testing over.  Shut down server ORB.
+      // Testing over.  Shut down the server.
       ACE_DEBUG ((LM_DEBUG, "Client threads finished\n"));
+      current->the_priority (priority1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       server->shutdown (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
@@ -330,11 +346,6 @@ Worker_Thread::svc (void)
       policy_current->set_policy_overrides (policy_list,
                                             CORBA::SET_OVERRIDE,
                                             ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      // Prime: establish a connection.
-      // @@ Replace with validate_connection?
-      this->server_->test_method (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Wait for other threads.

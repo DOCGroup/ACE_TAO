@@ -261,6 +261,13 @@ int
 TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
                                                     ACE_Time_Value *max_wait_time)
 {
+  if (TAO_debug_level > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("TAO (%P|%t) - ")
+                  ACE_TEXT ("IIOP_Server_Connection_Handler::handle_input\n")));
+    }
+
   this->refcount_++;
 
   int result = this->acceptor_factory_->handle_input (this->transport (),
@@ -285,7 +292,6 @@ TAO_IIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
       //this->TAO_IIOP_SVC_HANDLER::handle_close ();
       return result;
     }
-
   //
   // Take out all the information from the <message_state> and reset
   // it so that nested upcall on the same transport can be handled.

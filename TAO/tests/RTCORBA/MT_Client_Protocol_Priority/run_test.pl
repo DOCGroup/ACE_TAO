@@ -10,41 +10,51 @@ require ACEutils;
 use Cwd;
 
 $cwd = getcwd();
+
+# Test parameters.
 $iorfile = "$cwd$DIR_SEPARATOR" . "test.ior";
+$data_file = "$cwd$DIR_SEPARATOR" . "test_run.data";
+$iterations = 50;
+$priority1 = 65;
+$priority2 = 70;
+$priority3 = 75;
+if ($^O eq "MSWin32")
+{
+    $priority1 = 6;
+    $priority2 = 1;
+    $priority3 = 5;
+}
 
 ACE::checkForTarget($cwd);
 
-print STDERR "\n********** MT Client Protocol & CLIENT_PROPAGATED combo Test\n\n";
-
+# Clean up leftovers from previous runs.
 unlink $iorfile;
+unlink $data_file;
 
-# CORBA priorities 65, 70 and 75 are for the SCHED_OTHER class on
-# Solaris.  May need to use different values for other platforms
-# depending on their native priorities scheme, i.e., based on the
-# available range.
 
 $server_args =
-    "-o $iorfile "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=65 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=75 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=70 "
-    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=65 "
-    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=75 "
-    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=70 ";
+    "-o $iorfile -ORBdebuglevel 1 -ORBsvcconf server.conf "
+    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority1 "
+    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority2 "
+    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=$priority3 "
+    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=$priority1 "
+    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=$priority2 "
+    ."-ORBendpoint shmiop://$TARGETHOSTNAME:0/priority=$priority3 ";
 
 $client_args =
-    "-o file://$iorfile -ORBdebuglevel 1 "
-    ."-a 65 -b 70 -e 1413566210 -f 0";
+    "-o file://$iorfile  "
+    ."-a $priority1 -b $priority2 -e 1413566210 -f 0 -n $iterations";
 
-if ($^O eq "MSWin32")
-{
-    $server_args =
-        "-o $iorfile1 -o $iorfile2 -a 3 -b 5 -c 2 -ORBSvcConf server.conf "
-            ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
-                ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
-                    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
-}
 
+print STDERR "\n********** MT Client Protocol & CLIENT_PROPAGATED combo Test\n\n";
+
+# Redirect the output of the test run to a file, so that we can process it later.
+open (OLDOUT, ">&STDOUT");
+open (STDOUT, ">$data_file") or die "can't redirect stdout: $!";
+open (OLDERR, ">&STDERR");
+open (STDERR, ">&STDOUT") or die "can't redirect stderror: $!";
+
+# Run server and client.
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        $server_args);
 
@@ -69,10 +79,25 @@ if ($server == -1) {
   $SV->Kill (); $SV->TimedWait (1);
 }
 
+close (STDERR);
+close (STDOUT);
+open (STDOUT, ">&OLDOUT");
+open (STDERR, ">&OLDERR");
+
 unlink $iorfile;
 
 if ($server != 0 || $client != 0) {
   exit 1;
 }
+
+# Run a processing script on the test output.
+$FL = Process::Create ($EXEPREFIX."process-output.pl",
+                       " $data_file $iterations $priority1 $priority2");
+$filter = $FL->TimedWait (60);
+if ($filter == -1) {
+  print STDERR "ERROR: filter timedout\n";
+  $FL->Kill (); $FL->TimedWait (1);
+}
+  print STDERR "\n";
 
 exit 0;
