@@ -1,3 +1,13 @@
+Fri May 16 00:02:33 1997    <irfan@TWOSTEP>
+
+	* ace/ReactorEx: Even though changes to the owner field are very
+ 	  well synchronized within the class code, the owner() accessor is
+ 	  public and can be called from out side the class. Therefore, I
+ 	  have added a owner_i() that does not do locking. All internal
+ 	  calls to check the owner will use the new accessor, whereas
+ 	  application code outside the class can still use the old
+ 	  synchronized accessor.
+
 Fri May 16 12:25:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-irix5.3-sgic++.h: Made a few changes to get ACE to
