@@ -3,10 +3,10 @@ Sat May 08 08:49:44 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/CDR_Stream.h: only use unsigned long for Boolean
           with Green Hills 1.8.8 on Chorus, not 1.8.9.
 
-        * ace/IOStream.h,README: added ACE_LACKS_UCHAR_STAR_RIGHT_SHIFT
+        * ace/IOStream.h,README: added ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
           and ACE_LACKS_CHAR_RIGHT_SHIFTS support.
 
-        * ace/config-chorus.h: added ACE_LACKS_UCHAR_STAR_RIGHT_SHIFT
+        * ace/config-chorus.h: added ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS
           #define for g++.
 
         * ace/config-vxworks5.x.h: added ACE_LACKS_CHAR_RIGHT_SHIFTS
