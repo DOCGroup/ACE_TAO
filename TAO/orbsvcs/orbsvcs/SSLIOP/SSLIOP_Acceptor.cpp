@@ -104,8 +104,8 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   if (this->endpoint_count_ == 0)
     return -1;
 
-  // If RT_CORBA is enabled, only one IIOP profile is created for
-  // <mprofile> and all IIOP endpoints are added into that profile.
+  // If RT_CORBA is enabled, only one IIOP profile is created per
+  // <mprofile> and all SSLIOP endpoints are added into that profile.
   // If RT_CORBA is not enabled, we create a separate profile for each
   // endpoint.
 
@@ -121,6 +121,7 @@ TAO_SSLIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
 
+  // Create a profile for each acceptor endpoint.
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       TAO_SSLIOP_Profile *pfile = 0;
@@ -188,7 +189,7 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
   TAO_Profile *pfile = 0;
   TAO_SSLIOP_Profile *ssliop_profile = 0;
 
-  // First see if <mprofile> already contains a IIOP profile.
+  // First see if <mprofile> already contains a SSLIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
@@ -265,6 +266,7 @@ TAO_SSLIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
 
           index = 1;
     }
+
   // Add any remaining endpoints to the SSLIOP_Profile.
   for (;
        index < this->endpoint_count_;

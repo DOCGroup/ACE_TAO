@@ -39,7 +39,7 @@ class TAO_Export TAO_Profile
   //   Defines the Profile interface
   //
   // = DESCRIPTION
-  //   An abstract base class for representing object address or location
+  //   An abstract base class for representing object location
   //   information.  This is based on the CORBA IOR definitions.
   //
 public:
@@ -58,9 +58,6 @@ public:
   const TAO_GIOP_Version& version (void) const;
   // Return a pointer to this profile's version.  This object
   // maintains ownership.
-
-  virtual TAO_Endpoint *endpoint (void) = 0;
-  //
 
   TAO_ORB_Core *orb_core (void) const;
   // Get a poiter to the TAO_ORB_Core
@@ -108,10 +105,15 @@ public:
   // Obtain the object key, return 0 if the profile cannot be parsed.
   // The memory is owned by the caller!
 
+  virtual TAO_Endpoint *endpoint (void) = 0;
+  // Return pointer to this profile's endpoint.  If the profile
+  // contains more than one endpoint, i.e., a list, the method returns
+  // the head of the list.
+
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
   // Return true if this profile is equivalent to other_profile.  Two
-  // profiles are equivalent iff their tag, port, host, object_key and
-  // version are the same.
+  // profiles are equivalent iff their tag, object_key, version and
+  // all endpoints are the same.
 
   virtual CORBA::ULong hash (CORBA::ULong max,
                              CORBA::Environment &ACE_TRY_ENV) = 0;
@@ -209,7 +211,6 @@ public:
   // Create the profile
 
   // = The TAO_Profile methods look above
-  virtual TAO_Endpoint *endpoint (void);
   virtual int parse_string (const char *string,
                             CORBA::Environment &ACE_TRY_ENV);
   virtual char object_key_delimiter (void) const;
@@ -218,6 +219,7 @@ public:
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual const TAO_ObjectKey &object_key (void) const;
   virtual TAO_ObjectKey *_key (void) const;
+  virtual TAO_Endpoint *endpoint (void);
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max,
                              CORBA::Environment &ACE_TRY_ENV);

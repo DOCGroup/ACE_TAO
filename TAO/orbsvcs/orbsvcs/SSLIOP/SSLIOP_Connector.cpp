@@ -497,7 +497,7 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
       ACE_Synch_Options synch_options (ACE_Synch_Options::USE_TIMEOUT,
                                        *max_wait_time);
 
-      // The connect call will set the hint () stored in the Profile
+      // The connect call will set the hint () stored in the Endpoint
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.
@@ -508,7 +508,7 @@ TAO_SSLIOP_Connector::connect (TAO_Endpoint *endpoint,
     }
   else
     {
-      // The connect call will set the hint () stored in the Profile
+      // The connect call will set the hint () stored in the Endpoint
       // object; but we obtain the transport in the <svc_handler>
       // variable. Other threads may modify the hint, but we are not
       // affected.

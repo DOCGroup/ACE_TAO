@@ -87,10 +87,10 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   if (this->endpoint_count_ == 0)
     return -1;
 
-  // If RT_CORBA is enabled, only one IIOP profile is created for
-  // <mprofile> and all IIOP endpoints are added into that profile.
+  // If RT_CORBA is enabled, only one IIOP profile is created per
+  // <mprofile>, and all IIOP endpoints are added into that profile.
   // If RT_CORBA is not enabled, we create a separate profile for each
-  // endpoint.
+  // acceptor endpoint.
 
 #if (TAO_HAS_RT_CORBA == 1)
 
@@ -104,6 +104,7 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
 
+  // Create a profile for each acceptor endpoint.
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
       // @@ Use autopointer here.
@@ -162,7 +163,7 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
       }      
     }
 
-  // If <mprofile> doesn't contain IIOP_Profile, we need to create
+  // If <mprofile> doesn't contain a IIOP_Profile, we need to create
   // one.
   if (iiop_profile == 0)
     {
@@ -198,7 +199,7 @@ TAO_IIOP_Acceptor::create_rt_mprofile (const TAO_ObjectKey &object_key,
       index = 1;
     }
 
-  // Add any remaining endpoints to the IIOP_Profile.
+  // Add any remaining acceptor endpoints to the IIOP_Profile.
   for (; 
        index < this->endpoint_count_; 
        ++index)
