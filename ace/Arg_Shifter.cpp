@@ -1,6 +1,7 @@
 // $Id$
 
 #define ACE_BUILD_DLL
+
 // #include "ace/OS.h"
 #include "ace/Arg_Shifter.h"
 
@@ -21,7 +22,7 @@ ACE_Arg_Shifter::ACE_Arg_Shifter (int& argc,
   if (this->temp_ == 0)
     ACE_NEW (this->temp_,
              char*[this->total_size_]);
-  
+
   if (this->temp_ != 0)
     {
       // Fill the temporary array.
@@ -46,18 +47,18 @@ ACE_Arg_Shifter::~ACE_Arg_Shifter (void)
   delete [] temp_;
 }
 
-char* 
+char*
 ACE_Arg_Shifter::get_current (void) const
 {
   char* retval = 0;
-  
+
   if (this->is_anything_left ())
     retval =  this->temp_[current_index_];
 
   return retval;
 }
 
-char* 
+char*
 ACE_Arg_Shifter::is_or_contains_ignore_case(const char* flag)
 {
   // Check for a current argument
@@ -104,7 +105,7 @@ ACE_Arg_Shifter::consume_arg (int number)
 	   i < number;
 	   ++i, ++j, ++this->current_index_)
 	this->argv_[j] = this->temp_[this->current_index_];
-      
+
       this->back_ -= number;
       retval = 1;
     }
@@ -148,7 +149,7 @@ ACE_Arg_Shifter::is_option_next (void) const
 int
 ACE_Arg_Shifter::is_parameter_next (void) const
 {
-  return this->is_anything_left () 
+  return this->is_anything_left ()
     && this->temp_[this->current_index_][0] != '-';
 }
 
