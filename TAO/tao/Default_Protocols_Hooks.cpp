@@ -1,4 +1,5 @@
 
+
 // $Id$
 
 #include "Default_Protocols_Hooks.h"
@@ -136,9 +137,9 @@ TAO_Default_Protocols_Hooks::update_client_protocol_properties (TAO_Stub *,
 }
   
 int 
-TAO_Default_Protocols_Hooks::update_server_protocol_properties (CORBA::Policy *policy,
-								       TAO_Connection_Handler *,
-								       const char *)
+TAO_Default_Protocols_Hooks::update_server_protocol_properties (CORBA::Policy *,
+								TAO_Connection_Handler *,
+								const char *)
 {
   return 0;
 }
