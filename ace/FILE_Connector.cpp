@@ -37,7 +37,7 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
 						 remote_sap.get_path_name (),
 						 flags, perms);
   new_io.set_handle (handle);
-  new_io.remote_addr_ = remote_sap; // class copy.
+  new_io.addr_ = remote_sap; // class copy.
   return handle == ACE_INVALID_HANDLE ? -1 : 0;
 }
 
