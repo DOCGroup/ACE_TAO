@@ -1,5 +1,5 @@
 Thu Aug  7 16:39:14 2003  Dale Wilson  <wilson_d@ociweb.com>
-        ***Move oci_haft change log entries from $ACE_ROOT/ChangeLog to here 
+        ***Move oci_haft change log entries from $ACE_ROOT/ChangeLog to here
 
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
@@ -46,9 +46,9 @@ Thu Jul 31 14:36:01 2003  Dale Wilson  <wilson_d@ociweb.com>
         * tests/FT_App/FT_TestReplica.idl:
         * tests/FT_App/FT_TestReplica_i.h:
           Housekeeping.
-	
+
         * orbsvcs/orbsvcs/FT_Detector.idl:
-	  Renamed to be:
+          Renamed to be:
         * orbsvcs/orbsvcs/FT_FaultDetectorFactory.idl:
 
         These changes were made in the oci_haft branch.

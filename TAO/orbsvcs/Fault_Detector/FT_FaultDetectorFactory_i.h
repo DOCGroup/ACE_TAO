@@ -44,8 +44,8 @@ class Fault_Detector_i;
  * that the Fault_Detector_i object is deleted at the right time.
  * Hence, the FaultDetector life cycle:
  *  Creation:
- *  The create_object method of the factory creates a Fault_Detector_i 
- *  
+ *  The create_object method of the factory creates a Fault_Detector_i
+ *
  *  A pointer to the Fault_Detector_i is stored in the detectors_ table.
  *
  *  The start method of the Fault_Detector_i is called to create a thread
