@@ -338,6 +338,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
     servant_upcall.servant ()->_dispatch (req,
                                           &servant_upcall
                                           ACE_ENV_ARG_PARAMETER);
+
     ACE_CHECK_RETURN (result);
   }
 

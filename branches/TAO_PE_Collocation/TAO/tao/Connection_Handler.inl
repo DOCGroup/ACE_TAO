@@ -45,3 +45,19 @@ TAO_Connection_Handler::set_dscp_codepoint (CORBA::Boolean)
 {
   return 0;
 }
+
+ACE_INLINE void
+TAO_Connection_Handler::set_op_signature (TAO_Skeleton &skeleton,
+                                          TAO_Servant_Base *&servant)
+{
+  this->op_signature_ = skeleton;
+  this->servant_ = servant;
+}
+
+ACE_INLINE void
+TAO_Connection_Handler::get_op_signature (TAO_Skeleton &operation_ptr,
+                                          TAO_Servant_Base *&servant)
+{
+  operation_ptr = this->op_signature_;
+  servant = this->servant_;
+}

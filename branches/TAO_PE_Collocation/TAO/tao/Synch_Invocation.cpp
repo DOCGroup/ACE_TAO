@@ -17,6 +17,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
+#include "tao/GIOP_Message_State.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Synch_Invocation.inl"
@@ -62,11 +63,10 @@ namespace TAO
     static bool once = true;
     if (once)
       {
-#endif
         once = false;
-
-        this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+#endif
+    this->init_target_spec (tspec ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
 #if defined (TAO_HAS_HEADER_CACHING)
       }
@@ -91,44 +91,68 @@ namespace TAO
     {
 
 #if defined (TAO_HAS_HEADER_CACHING)
-      TAO_OutputCDR cdr;
-#else
-      static TAO_OutputCDR &cdr;
+      static bool header_cached = true;
+      static int skip_length = 0;
 #endif
 
+      TAO_OutputCDR &cdr =
+            this->resolver_.transport ()->out_stream ();
+
 #if defined (TAO_HAS_HEADER_CACHING)
-      static bool not_same_header = true;
-      if (not_same_header)
+      if (header_cached)
         {
-          not_same_header = false;
-          static TAO_OutputCDR &cdr =
-#else
-          TAO_OutputCDR &cdr =
+          header_cached = false;
 #endif
-     this->resolver_.transport ()->out_stream ();
-
-     this->write_header (tspec,
-                          cdr
-                          ACE_ENV_ARG_PARAMETER);
-     ACE_CHECK_RETURN (s);
+          this->write_header (tspec,
+                              cdr
+                              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (s);
 
 #if defined (TAO_HAS_HEADER_CACHING)
+          skip_length = cdr.total_length ();
         }
-#endif
+      else
+        {
+          // Reset
+          cdr.reset ();
 
-        this->marshal_data (cdr
-                            ACE_ENV_ARG_PARAMETER);
-        ACE_CHECK_RETURN (s);
+          // Ptr to first buffer.
+          char *buf = (char *) cdr.buffer ();
 
+          // Need to update request id field
+#if !defined (ACE_ENABLE_SWAP_ON_WRITE)
+          *ACE_reinterpret_cast (CORBA::ULong *, buf +
+                                 TAO_GIOP_MESSAGE_HEADER_LEN)
+            = this->details_.request_id ();
+#else
+            if (!stream.do_byte_swap ())
+              *ACE_reinterpret_cast (CORBA::ULong *,
+                                     buf + TAO_GIOP_MESSAGE_HEADER_LEN)
+                = this->details.request_id ();
+            else
+              ACE_CDR::swap_4 (ACE_reinterpret_cast (char *,
+                                                     &this->details.request_id ()),
+                               buf + TAO_GIOP_MESSAGE_HEADER_LEN);
+#endif /*ACE_ENABLE_SWAP_ON_WRITE */
 
-        // Register a reply dispatcher for this invocation. Use the
-        // preallocated reply dispatcher.
-        TAO_Bind_Dispatcher_Guard dispatch_guard (
-          this->details_.request_id (),
-          &rd,
-          this->resolver_.transport ()->tms ());
+          // Skip from start
+          cdr.skip_from_start (skip_length);
+        }
 
-        if (dispatch_guard.status () != 0)
+#endif /* TAO_HAS_HEADER_CACHING */
+
+       // Marshal the data
+      this->marshal_data (cdr ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (s);
+
+      // Register a reply dispatcher for this invocation. Use the
+      // preallocated reply dispatcher.
+      TAO_Bind_Dispatcher_Guard dispatch_guard (
+        this->details_.request_id (),
+        &rd,
+        this->resolver_.transport ()->tms ());
+
+      if (dispatch_guard.status () != 0)
           {
             // @@ What is the right way to handle this error? Why should
             // we close the connection?

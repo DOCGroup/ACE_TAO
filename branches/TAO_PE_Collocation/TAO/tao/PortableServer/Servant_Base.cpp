@@ -15,6 +15,10 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
+#if defined (TAO_CACHE_SERVANT_REF)
+# include "tao/Transport.h"
+# include "tao/Connection_Handler.h"
+#endif
 
 ACE_RCSID (PortableServer,
            Servant_Base,
@@ -226,6 +230,7 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
 
   ACE_TRY
     {
+
       // Invoke the skeleton, it will demarshal the arguments,
       // invoke the right operation on the skeleton class
       // (<derived_this>), and marshal any results.
@@ -234,6 +239,13 @@ void TAO_ServantBase::synchronous_upcall_dispatch (TAO_ServerRequest &req,
             servant_upcall
             ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+#if defined (TAO_CACHE_SERVANT_REF)
+      TAO_Connection_Handler *handler =
+        req.transport ()->connection_handler ();
+      handler->set_op_signature (skel,
+                                 static_cast<TAO_Servant_Base *> (derived_this));
+#endif
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent

@@ -329,6 +329,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
 
   return transport;
 #else
+  ACE_UNUSED_ARG (r);
   ACE_UNUSED_ARG (desc);
   ACE_UNUSED_ARG (max_wait_time);
   return 0;
