@@ -1,3 +1,10 @@
+Mon Apr 12 11:08:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* TAO_IDL/be/be_visitor_field/field_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+
+	  Fixed wrabings (and an errror) in the daily builds. 
+
 Mon Apr 12 10:50:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/Container_i.cpp (destroy_i):

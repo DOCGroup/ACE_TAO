@@ -139,7 +139,7 @@ be_visitor_field_ci::visit_typedef (be_typedef *node)
 }
 
 int
-be_visitor_field_ci::visit_union (be_union *)
+be_visitor_field_ci::visit_union (be_union *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef
       && node->is_child (this->ctx_->scope ()))
