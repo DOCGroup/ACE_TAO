@@ -793,11 +793,6 @@ namespace ACE
                                        const ACE_Time_Value *timeout,
                                        size_t *bytes_transferred);
 
-  /// Hex characters.
-  extern const ACE_TCHAR hex_chars_[];
-
-  /// Are we debugging ACE?
-  extern char debug_;
 }
 
 #if defined (__ACE_INLINE__)

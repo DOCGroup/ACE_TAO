@@ -37,14 +37,6 @@ ACE_RCSID (ace,
            "$Id$")
 
 
-// Static data members.
-
-// Keeps track of whether we're in some global debug mode.
-char ACE::debug_ = 0;
-
-// Hex characters.
-const ACE_TCHAR ACE::hex_chars_[] = ACE_LIB_TEXT ("0123456789abcdef");
-
 namespace ACE
 {
   // private:
@@ -55,6 +47,10 @@ namespace ACE
 
   // Size of a VM page.
   size_t pagesize_ = 0;
+
+  // Are we debugging ACE?
+  // Keeps track of whether we're in some global debug mode.
+  char debug_;
 }
 
 
@@ -156,6 +152,18 @@ ACE::compiler_beta_version (void)
 #else
   return 0;
 #endif
+}
+
+char
+ACE::debug (void)
+{
+  return ACE::debug_;
+}
+
+void
+ACE::debug (char c)
+{
+  ACE::debug_ = c;
 }
 
 int
