@@ -8,8 +8,7 @@
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  *
- *  This file restore the original alignment rules.
- *
+ *  This file restores the original alignment rules.
  *
  */
 //=============================================================================

@@ -8,9 +8,8 @@
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  *
- *  This file save the original alignment rules and changes the alignment
+ *  This file saves the original alignment rules and changes the alignment
  *  boundary to ACE's default.
- *
  *
  */
 //=============================================================================
