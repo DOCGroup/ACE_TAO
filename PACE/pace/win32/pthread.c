@@ -81,7 +81,7 @@ pthread_getschedparam (pace_pthread_t thread,
 		       int * policy,
 		       pace_sched_param * param)
 {
-  PACE_UNUSED_ARG (policy)
+  PACE_UNUSED_ARG (policy);
   if (param != (pace_sched_param*)0)
     {
       param->sched_priority = GetThreadPriority (thread);
