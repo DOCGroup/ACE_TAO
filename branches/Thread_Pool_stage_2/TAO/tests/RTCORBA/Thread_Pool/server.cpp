@@ -63,7 +63,7 @@ write_ior_to_file (CORBA::ORB_ptr orb,
   CORBA::String_var ior =
     orb->object_to_string (test,
                            ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   char filename[BUFSIZ];
   ACE_OS::sprintf (filename,
@@ -107,7 +107,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
     root_poa->create_implicit_activation_policy
       (PortableServer::IMPLICIT_ACTIVATION,
        ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Thread pool policy.
   policies[1] =
@@ -120,7 +120,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
     rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                           default_priority,
                                           ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Create the POA under the RootPOA.
   PortableServer::POA_var poa =
@@ -128,7 +128,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
                           poa_manager,
                           policies,
                           ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Creation of POAs is over. Destroy the Policy objects.
   for (CORBA::ULong i = 0;
@@ -136,7 +136,7 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
        ++i)
     {
       policies[i]->destroy (ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (-1);
     }
 
   test_i *servant =
@@ -149,13 +149,13 @@ create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
 
   test_var test =
     servant->_this (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   int result =
     write_ior_to_file (orb,
                        test.in (),
                        ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   return result;
 }
@@ -281,8 +281,8 @@ main (int argc, char *argv[])
                                          root_poa.in (),
                                          orb.in (),
                                          rt_orb.in (),
-                                         ACE_TRY_ENV)
-        ACE_TRY_CHECK;
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (result != 0)
         return result;
 
@@ -293,8 +293,8 @@ main (int argc, char *argv[])
                                          root_poa.in (),
                                          orb.in (),
                                          rt_orb.in (),
-                                         ACE_TRY_ENV)
-        ACE_TRY_CHECK;
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       if (result != 0)
         return result;
 

@@ -466,11 +466,11 @@ realclean: clean
  testS_T.h testS_T.i testS_T.cpp testS.i \
  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServer.h \
  $(TAO_ROOT)/tao/RTPortableServer/rtportableserver_export.h \
- $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
  $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
  $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+ $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.h \
  $(TAO_ROOT)/tao/RTPortableServer/RTPortableServerC.i \
  ../check_supported_priorities.cpp \
  $(ACE_ROOT)/ace/Sched_Params.h \

@@ -746,6 +746,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
+ $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
+ $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
+ $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/Task.i \
  $(ACE_ROOT)/ace/Task_T.h \
@@ -777,12 +782,6 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp \
- $(TAO_ROOT)/tao/RTCORBA/RTCORBA.h \
- $(TAO_ROOT)/tao/RTCORBA/rtcorba_export.h \
- $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.h \
- $(TAO_ROOT)/tao/RTCORBA/RTCORBAC.i \
- $(TAO_ROOT)/tao/Thread_Lane_Resources.h \
- $(TAO_ROOT)/tao/Thread_Lane_Resources.i \
  $(TAO_ROOT)/tao/RTCORBA/Thread_Pool.i
 
 .obj/testC.o .obj/testC.so .shobj/testC.o .shobj/testC.so: testC.cpp testC.h \
