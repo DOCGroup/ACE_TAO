@@ -1,3 +1,11 @@
+Thu Feb 19 20:25:10 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Trader.cpp:
+	  TAO_Trader_Factory::manufacture_trader was not applying
+	  import_attributes and support_attributes correctly. 
+	  Thanks to Jean-Marc Prud'homme <JPrudhomme@interstarinc.com>
+	  for contributing this fix.
+
 Thu Feb 19 18:55:13 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.h: 	
