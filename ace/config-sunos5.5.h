@@ -107,6 +107,11 @@
   // stdlib.h and Green Hills' ctype.h.
 # include <stdlib.h>
 
+#elif defined (__KCC) /* KAI compiler */
+
+# define ACE_HAS_ANSI_CASTS
+# include "ace/config-kcc-common.h"
+
 #else  /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
 # error unsupported compiler in ace/config-sunos5.5.h
 #endif /* ! __SUNPRO_CC && ! __GNUG__  && ! ghs */
