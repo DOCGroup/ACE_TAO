@@ -90,6 +90,7 @@ Client_i::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
+			   " [-b Initial Balance]"
                            " [-n loopcount]"
                            " [-f ior-file]"
                            " [-k ior]"
@@ -119,23 +120,16 @@ Client_i::withdraw (CORBA::Float withdrawl_amount)
       server_->withdraw (withdrawl_amount,
 			 TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
-      ACE_DEBUG ((LM_DEBUG,
-		  "Pass\n"));
     }
   TAO_CATCHANY
     {
-      // @@ Please check to make sure that you aren't incurring a
-      // memory leak here...  For instance, can you use
-      // Bank::Account::Overdraft_var instead of
-      // Bank::Account::Overdraft *?
-      Bank::Account::Overdraft *except =
+      Bank::Account::Overdraft_ptr except =
 	Bank::Account::Overdraft::_narrow
 	(TAO_TRY_ENV.exception ());
 
-      ACE_DEBUG((LM_DEBUG,
-		 "exception%s",
-		 (char *) except->reason));
+      ACE_DEBUG ((LM_DEBUG,
+		  "exception%s",
+		  (char *) except->reason));
     }
   TAO_ENDTRY;
 }
@@ -148,6 +142,14 @@ Client_i::open (const char *name,
   return this->accountmanager_server_->open (name,
 					     initial_balance,
 					     env);
+}
+
+void
+Client_i::close (Bank::Account_ptr account,
+		 CORBA::Environment &env)
+{
+  this->accountmanager_server_->close (account,
+				       env);
 }
 
 CORBA::Float
@@ -164,27 +166,26 @@ Client_i::check_accounts (void)
 {
   TAO_TRY
     {
-      this->server_ = open ("Vishal",
-			    initial_balance_,
-			    this->env_);
+      this->server_ = this->open ("Vishal",
+				  this->initial_balance_,
+				  this->env_);
       TAO_CHECK_ENV;
 
-      CORBA::Float my_balance = balance (this->env_);
+      CORBA::Float my_balance = this->balance (this->env_);
 
-      ACE_ASSERT (initial_balance_ == my_balance);
+      ACE_ASSERT (this->initial_balance_ == my_balance);
 
-      deposit (100.00, this->env_);
+      this->deposit (100.00, this->env_);
       TAO_CHECK_ENV;
 
-      my_balance = balance (this->env_);
+      my_balance = this->balance (this->env_);
 
-      ACE_ASSERT (my_balance == initial_balance_ + 100.00);
+      ACE_ASSERT (my_balance == this->initial_balance_ + 100.00);
 
-      withdraw (50.00);
+      this->withdraw (50.00);
 
+      my_balance = this->balance (this->env_);
       TAO_CHECK_ENV;
-
-      my_balance = balance (this->env_);
 
       ACE_ASSERT (my_balance == initial_balance_ + 50.00);
 
@@ -192,45 +193,56 @@ Client_i::check_accounts (void)
 		  "Opening an account for Kachroo\n"));
 
       Bank::Account_var server = open ("Kachroo",
-				       initial_balance_,
+				       this->initial_balance_,
 				       this->env_);
       TAO_CHECK_ENV;
 
-      ACE_ASSERT (server.in () != server_.in ());
-
-      ACE_DEBUG((LM_DEBUG,
-		 "%s,%s\n",
-		 server_->name(),
-		 server->name()));
+      ACE_DEBUG ((LM_DEBUG,
+		  "%s,%s\n",
+		  // @@ Please rename this server1_ and server2_.
+		  this->server_->name (),
+		  this->server->name ()));
 
       Bank::Account_var server2 = open ("Vishal",
-					initial_balance_,
+					this->initial_balance_,
 					this->env_);
 
-      ACE_DEBUG((LM_DEBUG,
-		 "%s,%s\n",
-		 server_->name(),
-		 server2->name()));
+      ACE_DEBUG ((LM_DEBUG,
+		  "%s,%s\n",
+		  ths->server_->name(),
+		  this->server2->name()));
 
       TAO_CHECK_ENV;
 
       // Make sure we get back the same object reference!
 
-      ACE_ASSERT (server2->_is_equivalent (server_.in (), TAO_TRY_ENV));
-
+      ACE_ASSERT (server2->_is_equivalent (server_.in (),
+					   TAO_TRY_ENV));
       TAO_CHECK_ENV;
 
-      deposit (150.00, this->env_);
-
+      this->deposit (150.00, this->env_);
       TAO_CHECK_ENV;
 
-      my_balance = balance (this->env_);
+      my_balance = this->balance (this->env_);
+      TAO_CHECK_ENV;
 
-      ACE_ASSERT (my_balance = initial_balance_ + 200.00);
+      ACE_ASSERT (my_balance = this->initial_balance_ + 200.00);
 
-      // @@ Finally, I recommend that you also check to make sure that
-      // you get back a DIFFERENT object reference if you open a
-      // different account.
+      // Following assertion checks if we get back a DIFFERENT object
+      // reference for a different account.
+
+      ACE_ASSERT (server_->_is_equivalent (server.in (),
+					   TAO_TRY_ENV) == FALSE);
+      TAO_CHECK_ENV;
+
+      // Close the Account for "Kachroo".
+      this->close (server.in (),
+		   this->env_);
+      TAO_CHECK_ENV;
+
+      this->open ("Kachroo",
+		  initial_balance_,
+		  this->env_);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -252,11 +264,21 @@ Client_i::run (void)
 
   this->check_accounts ();
 
-  // @@ Please update this when you've got it done.
-  if (this->shutdown_)
-    ACE_DEBUG ((LM_DEBUG,
-		"Operation Shutdown not defined\n"));
-  return 0;
+  TAO_TRY
+    {
+      if (this->shutdown_)
+      this->accountmanager_server_->shutdown (TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+    }
+  TAO_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Unable to shut down the server\n"));
+    }
+  TAO_ENDTRY;
+
+return 0;
+
 }
 
 Client_i::~Client_i (void)
@@ -279,7 +301,7 @@ Client_i::obtain_initial_references (void)
       CosNaming::Name account_manager_name (1);
       account_manager_name.length (1);
       account_manager_name[0].id =
-        CORBA::string_dup ("AccountManager");
+      CORBA::string_dup ("AccountManager");
 
       CORBA::Object_var account_manager_obj =
         my_name_client_->resolve (account_manager_name,
