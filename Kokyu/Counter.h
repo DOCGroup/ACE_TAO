@@ -17,6 +17,7 @@ namespace Kokyu {
       struct object_id {
         uint32_t id;
         uint32_t tid;
+        uint32_t queue_id;
       };
 
       Object_Counter ();
