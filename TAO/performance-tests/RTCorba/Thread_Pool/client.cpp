@@ -12,7 +12,7 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "testC.h"
 #include "tests/RTCORBA/common_args.cpp"
-#include "fudge_priorities.cpp"
+#include "tests/RTCORBA/check_supported_priorities.cpp"
 
 ACE_RCSID(Thread_Pool, client, "$Id$")
 
@@ -38,7 +38,6 @@ static int set_priority = 1;
 static Priority_Setting priority_setting = AFTER_THREAD_CREATION;
 static int individual_continuous_worker_stats = 0;
 static int print_missed_invocations = 0;
-static int continuous_workers_are_rt = 1;
 static ACE_hrtime_t test_start;
 static CORBA::ULong prime_number = 9619;
 static int count_missed_end_deadlines = 0;
@@ -63,7 +62,7 @@ int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv,
-                        "c:e:g:hi:j:k:m:p:q:r:t:u:v:w:x:y:z:" //client options
+                        "c:e:g:hi:k:m:p:q:r:t:u:v:w:x:y:z:" //client options
                         "b:f:hl:n:o:s:" // server options
                         );
   int c;
@@ -88,11 +87,6 @@ parse_args (int argc, char *argv[])
 
       case 'i':
         individual_continuous_worker_stats =
-          ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 'j':
-        continuous_workers_are_rt =
           ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
@@ -175,7 +169,6 @@ parse_args (int argc, char *argv[])
                            "\t-g <show history> (defaults to %d)\n"
                            "\t-h <help: shows options menu>\n"
                            "\t-i <print stats of individual continuous workers> (defaults to %d)\n"
-                           "\t-j <continuous workers have real time scope and scheduling policies> (defaults to %d)\n"
                            "\t-k <ior> (defaults to %s)\n"
                            "\t-m <print missed invocations for paced workers> (defaults to %d)\n"
                            "\t-p <invocation priorities file> (defaults to %s)\n"
@@ -194,7 +187,6 @@ parse_args (int argc, char *argv[])
                            count_missed_end_deadlines,
                            do_dump_history,
                            individual_continuous_worker_stats,
-                           continuous_workers_are_rt,
                            ior,
                            print_missed_invocations,
                            invocation_priorities_file,
@@ -901,8 +893,28 @@ Continuous_Worker::svc (void)
   return 0;
 }
 
+class Task : public ACE_Task_Base
+{
+public:
+
+  Task (ACE_Thread_Manager &thread_manager,
+        CORBA::ORB_ptr orb);
+
+  int svc (void);
+
+  CORBA::ORB_var orb_;
+
+};
+
+Task::Task (ACE_Thread_Manager &thread_manager,
+            CORBA::ORB_ptr orb)
+  : ACE_Task_Base (&thread_manager),
+    orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
 int
-main (int argc, char *argv[])
+Task::svc (void)
 {
   Synchronizers synchronizers;
 
@@ -910,19 +922,8 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      int result =
-        parse_args (argc, argv);
-      if (result != 0)
-        return result;
-
-      fudge_priorities (orb.in ());
-
       CORBA::Object_var object =
-        orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
+        this->orb_->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       test_var test =
@@ -930,8 +931,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("RTCurrent"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("RTCurrent"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::Current_var current =
@@ -940,8 +941,8 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       object =
-        orb->resolve_initial_references ("PriorityMappingManager"
-                                         ACE_ENV_ARG_PARAMETER);
+        this->orb_->resolve_initial_references ("PriorityMappingManager"
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       RTCORBA::PriorityMappingManager_var mapping_manager =
@@ -953,7 +954,7 @@ main (int argc, char *argv[])
         *mapping_manager->mapping ();
 
       ULong_Array rates;
-      result =
+      int result =
         get_values ("client",
                     rates_file,
                     "rates",
@@ -1036,12 +1037,8 @@ main (int argc, char *argv[])
                                            synchronizers);
       long flags =
         THR_NEW_LWP |
-        THR_JOINABLE;
-
-      if (continuous_workers_are_rt)
-        flags |=
-          orb->orb_core ()->orb_params ()->scope_policy () |
-          orb->orb_core ()->orb_params ()->sched_policy ();
+        THR_JOINABLE |
+        this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
       CORBA::Short CORBA_priority =
         continuous_worker_priority;
@@ -1083,8 +1080,7 @@ main (int argc, char *argv[])
       flags =
         THR_NEW_LWP |
         THR_JOINABLE |
-        orb->orb_core ()->orb_params ()->scope_policy () |
-        orb->orb_core ()->orb_params ()->sched_policy ();
+        this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
       for (i = 0;
            i < rates.size ();
@@ -1150,6 +1146,59 @@ main (int argc, char *argv[])
           test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught:");
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+int
+main (int argc, char *argv[])
+{
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      int result =
+        parse_args (argc, argv);
+      if (result != 0)
+        return result;
+
+      // Make sure we can support multiple priorities that are required
+      // for this test.
+      check_supported_priorities (orb.in ());
+
+      // Thread Manager for managing task.
+      ACE_Thread_Manager thread_manager;
+
+      // Create task.
+      Task task (thread_manager,
+                 orb.in ());
+
+      // Task activation flags.
+      long flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        orb->orb_core ()->orb_params ()->thread_creation_flags ();
+
+      // Activate task.
+      result =
+        task.activate (flags);
+      ACE_ASSERT (result != -1);
+      ACE_UNUSED_ARG (result);
+
+      // Wait for task to exit.
+      result =
+        thread_manager.wait ();
+      ACE_ASSERT (result != -1);
     }
   ACE_CATCHANY
     {

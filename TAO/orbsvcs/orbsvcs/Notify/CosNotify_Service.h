@@ -64,9 +64,6 @@ protected:
   /// Create the Builder for Notify objects.
   virtual void init_builder (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// Apply ORB Scheduling policy to main thread and set its priority to the lowest available.
-  void init_main_thread (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL);
-
   /// Set thread options on <qos>.
   void set_threads (CosNotification::QoSProperties &qos, int threads);
 

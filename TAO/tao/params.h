@@ -137,13 +137,42 @@ public:
   int std_profile_components (void) const;
   void std_profile_components (int x);
 
-  /// Thread scheduling policy.
+  /// Scheduling policy.
+  /**
+   * Scheduling policy specified by the user through the
+   * -ORBSchedPolicy option.  This value is typically used by
+   * functions like ACE_OS::thr_setprio() and
+   * ACE_Sched_Params::priority_min(). Legal values are ACE_SCHED_RR,
+   * ACE_SCHED_FIFO, and ACE_SCHED_OTHER.
+   */
+  int ace_sched_policy (void) const;
+  void ace_sched_policy (int x);
+
+  /// Scheduling policy flag.
+  /**
+   * Scheduling policy specified by the user through the
+   * -ORBSchedPolicy option.  This value is typically used by ACE
+   * thread creation functions. Legal values are THR_SCHED_RR,
+   * THR_SCHED_FIFO, and THR_SCHED_DEFAULT.
+   */
   long sched_policy (void) const;
   void sched_policy (long x);
 
-  /// Thread scope policy.
+  /// Scheduling scope flag.
+  /**
+   * Scheduling policy specified by the user through the
+   * -ORBScopePolicy option.  This value is typically used by ACE
+   * thread creation functions. Legal values are THR_SCOPE_SYSTEM and
+   * THR_SCOPE_PROCESS.
+   */
   long scope_policy (void) const;
   void scope_policy (long x);
+
+  /// Thread creation flags.
+  /**
+   * Shorthand for OR'ing together the scope_policy and sched_policy.
+   */
+  long thread_creation_flags (void) const;
 
   /// Single read optimization.
   int single_read_optimization (void) const;
@@ -209,10 +238,32 @@ private:
   /// If true then the standard OMG components are not generated.
   int std_profile_components_;
 
-  /// Thread scheduling policy.
+  /// Scheduling policy.
+  /**
+   * Scheduling policy specified by the user through the
+   * -ORBSchedPolicy option.  This value is typically used by
+   * functions like ACE_OS::thr_setprio() and
+   * ACE_Sched_Params::priority_min(). Legal values are ACE_SCHED_RR,
+   * ACE_SCHED_FIFO, and ACE_SCHED_OTHER.
+   */
+  int ace_sched_policy_;
+
+  /// Scheduling policy flag.
+  /**
+   * Scheduling policy specified by the user through the
+   * -ORBSchedPolicy option.  This value is typically used by ACE
+   * thread creation functions. Legal values are THR_SCHED_RR,
+   * THR_SCHED_FIFO, and THR_SCHED_DEFAULT.
+   */
   long sched_policy_;
 
-  /// Thread scope policy.
+  /// Scheduling scope flag.
+  /**
+   * Scheduling policy specified by the user through the
+   * -ORBScopePolicy option.  This value is typically used by ACE
+   * thread creation functions. Legal values are THR_SCOPE_SYSTEM and
+   * THR_SCOPE_PROCESS.
+   */
   long scope_policy_;
 
   /// Single read optimization.

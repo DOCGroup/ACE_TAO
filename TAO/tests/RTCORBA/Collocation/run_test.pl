@@ -14,7 +14,6 @@ $T = new PerlACE::Process ("Collocation");
 
 $test = $T->SpawnWaitKill(60);
 if ($test == 2) {
-  print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
   # Mark as no longer running to avoid errors on exit.
   $T->{RUNNING} = 0;
 } else {

@@ -473,6 +473,9 @@ CORBA::SystemException::_info (void) const
         case TAO_AMH_REPLY_LOCATION_CODE:
           location = "Failure when trying to send AMH reply";
           break;
+        case TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE:
+          location = "Failure in thread creation for RTCORBA thread pool";
+          break;
         default:
           location = "unknown location";
         }

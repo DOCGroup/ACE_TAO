@@ -124,6 +124,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     reverse_lock_ (*lock_),
     non_servant_upcall_condition_ (thread_lock_),
     non_servant_upcall_in_progress_ (0),
+    non_servant_upcall_nesting_level_ (0),
     non_servant_upcall_thread_ (ACE_OS::NULL_thread),
     root_ (0),
     default_validator_ (orb_core),
@@ -1211,13 +1212,27 @@ TAO_Object_Adapter::iteratable_poa_name::end (void) const
 
 TAO_Object_Adapter::Non_Servant_Upcall::Non_Servant_Upcall (TAO_POA &poa)
   : object_adapter_ (poa.object_adapter ()),
-    poa_ (poa)
+    poa_ (poa),
+    previous_ (0)
 {
-  // Mark the fact that a non-servant upcall is in progress.
-  this->object_adapter_.non_servant_upcall_in_progress_ = this;
+  // Check if this is a nested non_servant_upcall.
+  if (this->object_adapter_.non_servant_upcall_nesting_level_ != 0)
+    {
+      // Remember previous instance of non_servant_upcall.
+      this->previous_ = this->object_adapter_.non_servant_upcall_in_progress_;
+
+      // Assert that the thread is the same as the one before.
+      ACE_ASSERT (this->object_adapter_.non_servant_upcall_thread_ == ACE_OS::thr_self ());
+    }
 
   // Remember which thread is calling the adapter activators.
   this->object_adapter_.non_servant_upcall_thread_ = ACE_OS::thr_self ();
+
+  // Mark the fact that a non-servant upcall is in progress.
+  this->object_adapter_.non_servant_upcall_in_progress_ = this;
+
+  // Adjust the nesting level.
+  this->object_adapter_.non_servant_upcall_nesting_level_++;
 
   // Release the Object Adapter lock.
   this->object_adapter_.lock ().release ();
@@ -1228,34 +1243,41 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
   // Reacquire the Object Adapter lock.
   this->object_adapter_.lock ().acquire ();
 
-  // We are no longer in a non-servant upcall.
-  this->object_adapter_.non_servant_upcall_in_progress_ = 0;
+  // We are done with this nested upcall.
+  this->object_adapter_.non_servant_upcall_in_progress_ = this->previous_;
 
-  // Reset thread id.
-  this->object_adapter_.non_servant_upcall_thread_ =
-    ACE_OS::NULL_thread;
+  // Adjust the nesting level.
+  this->object_adapter_.non_servant_upcall_nesting_level_--;
 
-  // Check if all pending requests are over.
-  if (this->poa_.waiting_destruction () &&
-      this->poa_.outstanding_requests () == 0)
+  // If we are at the outer nested upcall.
+  if (this->object_adapter_.non_servant_upcall_nesting_level_ == 0)
     {
-      ACE_TRY_NEW_ENV
-        {
-          this->poa_.complete_destruction_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_TRY_CHECK;
-        }
-      ACE_CATCHANY
-        {
-          // Ignore exceptions
-          ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_POA::~complete_destruction_i");
-        }
-      ACE_ENDTRY;
-    }
+      // Reset thread id.
+      this->object_adapter_.non_servant_upcall_thread_ =
+        ACE_OS::NULL_thread;
 
-  // If locking is enabled.
-  if (this->object_adapter_.enable_locking_)
-    // Wakeup all waiting threads.
-    this->object_adapter_.non_servant_upcall_condition_.broadcast ();
+      // Check if all pending requests are over.
+      if (this->poa_.waiting_destruction () &&
+          this->poa_.outstanding_requests () == 0)
+        {
+          ACE_TRY_NEW_ENV
+            {
+              this->poa_.complete_destruction_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+              ACE_TRY_CHECK;
+            }
+          ACE_CATCHANY
+            {
+              // Ignore exceptions
+              ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_POA::~complete_destruction_i");
+            }
+          ACE_ENDTRY;
+        }
+
+      // If locking is enabled.
+      if (this->object_adapter_.enable_locking_)
+        // Wakeup all waiting threads.
+        this->object_adapter_.non_servant_upcall_condition_.broadcast ();
+    }
 }
 
 TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_ORB_Core *oc)

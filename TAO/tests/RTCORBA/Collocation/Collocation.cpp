@@ -2,6 +2,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Array_Base.h"
+#include "ace/Task.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "testS.h"
@@ -270,37 +271,37 @@ test_i::thread_info (const char *method_name)
     this->orb_->orb_core ()->get_tss_resources ();
 
   /// Get the lane attribute in TSS.
-  TAO_Thread_Lane *lane =
-    (TAO_Thread_Lane *) tss->lane_;
+    TAO_Thread_Lane *lane =
+      (TAO_Thread_Lane *) tss->lane_;
 
-  if (lane)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) %s (pool = %d; lane = %d); priority = %d (should be %d)\n",
-                  method_name,
-                  lane->pool ().id (),
-                  lane->id (),
-                  this->current_->the_priority (),
-                  this->invocation_priority ()));
+    if (lane)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) %s (pool = %d; lane = %d); priority = %d (should be %d)\n",
+                    method_name,
+                    lane->pool ().id (),
+                    lane->id (),
+                    this->current_->the_priority (),
+                    this->invocation_priority ()));
 
-      ACE_ASSERT (this->pool_ == lane->pool ().id ());
-      ACE_ASSERT (this->lane_ == lane->id ());
-      ACE_ASSERT (this->current_->the_priority () ==
-                  this->invocation_priority ());
-    }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) %s (default thread pool); priority = %d (should be %d)\n",
-                  method_name,
-                  this->current_->the_priority (),
-                  this->invocation_priority ()));
+        ACE_ASSERT (this->pool_ == lane->pool ().id ());
+        ACE_ASSERT (this->lane_ == lane->id ());
+        ACE_ASSERT (this->current_->the_priority () ==
+                    this->invocation_priority ());
+      }
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%t) %s (default thread pool); priority = %d (should be %d)\n",
+                    method_name,
+                    this->current_->the_priority (),
+                    this->invocation_priority ()));
 
-      ACE_ASSERT (this->pool_ == 0);
-      ACE_ASSERT (this->lane_ == 0);
-      ACE_ASSERT (this->current_->the_priority () ==
-                  this->invocation_priority ());
-    }
+        ACE_ASSERT (this->pool_ == 0);
+        ACE_ASSERT (this->lane_ == 0);
+        ACE_ASSERT (this->current_->the_priority () ==
+                    this->invocation_priority ());
+      }
 }
 
 void
@@ -356,26 +357,25 @@ setup_test_parameters (Test_Object_And_Servant *test,
         orb->orb_core ()->get_tss_resources ();
 
       /// Get the lane attribute in TSS.
-      TAO_Thread_Lane *lane =
-        (TAO_Thread_Lane *) tss->lane_;
+        TAO_Thread_Lane *lane =
+          (TAO_Thread_Lane *) tss->lane_;
 
-      if (lane)
-        {
-          test->servant_->invocation_pool_and_lane (lane->pool ().id (),
-                                                    lane->id ());
-        }
-      else
-        {
-          test->servant_->invocation_pool_and_lane (0, 0);
-        }
+        if (lane)
+          {
+            test->servant_->invocation_pool_and_lane (lane->pool ().id (),
+                                                      lane->id ());
+          }
+        else
+          {
+            test->servant_->invocation_pool_and_lane (0, 0);
+          }
     }
 }
 
 class Server
 {
 public:
-  Server (int argc,
-          char *argv[]
+  Server (CORBA::ORB_ptr orb
           ACE_ENV_ARG_DECL);
 
   void create_servant_in_root_poa (ACE_ENV_SINGLE_ARG_DECL);
@@ -407,10 +407,10 @@ public:
   CORBA::ULong max_request_buffer_size_;
 };
 
-Server::Server (int argc,
-                char *argv[]
+Server::Server (CORBA::ORB_ptr orb
                 ACE_ENV_ARG_DECL)
-  : stacksize_ (0),
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    stacksize_ (0),
     static_threads_ (1),
     dynamic_threads_ (0),
     allow_request_buffering_ (0),
@@ -418,17 +418,6 @@ Server::Server (int argc,
     max_buffered_requests_ (0),
     max_request_buffer_size_ (0)
 {
-  this->orb_ =
-    CORBA::ORB_init (argc,
-                     argv,
-                     ""
-                     ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  // Make sure we can support multiple priorities that are required
-  // for this test.
-  check_supported_priorities (this->orb_.in ());
-
   CORBA::Object_var object =
     this->orb_->resolve_initial_references ("RTORB"
                                             ACE_ENV_ARG_PARAMETER);
@@ -470,7 +459,6 @@ Server::Server (int argc,
   this->poa_manager_->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 }
-
 
 void
 Server::create_servant_in_root_poa (ACE_ENV_SINGLE_ARG_DECL)
@@ -851,13 +839,32 @@ Server::shutdown (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 }
 
+class Task : public ACE_Task_Base
+{
+public:
+
+  Task (ACE_Thread_Manager &thread_manager,
+        CORBA::ORB_ptr orb);
+
+  int svc (void);
+
+  CORBA::ORB_var orb_;
+
+};
+
+Task::Task (ACE_Thread_Manager &thread_manager,
+            CORBA::ORB_ptr orb)
+  : ACE_Task_Base (&thread_manager),
+    orb_ (CORBA::ORB::_duplicate (orb))
+{
+}
+
 int
-main (int argc, char *argv[])
+Task::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
-      Server server (argc,
-                     argv
+      Server server (this->orb_.in ()
                      ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -902,7 +909,71 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception caught:");
-      return 1;
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}
+
+int
+main (int argc, char *argv[])
+{
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ORB_var orb =
+        CORBA::ORB_init (argc,
+                         argv,
+                         ""
+                         ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      // Make sure we can support multiple priorities that are
+      // required for this test.
+      check_supported_priorities (orb.in ());
+
+      // Thread Manager for managing task.
+      ACE_Thread_Manager thread_manager;
+
+      // Create task.
+      Task task (thread_manager,
+                 orb.in ());
+
+      // Task activation flags.
+      long flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        orb->orb_core ()->orb_params ()->thread_creation_flags ();
+
+      // Activate task.
+      int result =
+        task.activate (flags);
+      if (result == -1)
+        {
+          if (errno == EPERM)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot create thread with scheduling policy %s\n"
+                                 "because the user does not have the appropriate privileges, terminating program....\n"
+                                 "Check svc.conf options and/or run as root\n",
+                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                                2);
+            }
+          else
+            // Unexpected error.
+            ACE_ASSERT (0);
+        }
+
+      // Wait for task to exit.
+      result =
+        thread_manager.wait ();
+      ACE_ASSERT (result != -1);
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Exception caught:");
+      return -1;
     }
   ACE_ENDTRY;
 

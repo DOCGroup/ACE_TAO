@@ -3,7 +3,6 @@
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
-#include "../check_supported_priorities.cpp"
 
 const char *ior1 = "file://test1.ior";
 const char *ior2 = "file://test2.ior";
@@ -91,11 +90,7 @@ main (int argc, char *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
-        return 1;
-
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
+        return -1;
 
       // Test object 1.
       CORBA::Object_var object =
@@ -105,16 +100,16 @@ main (int argc, char *argv[])
       Test_var server1 = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (server1.in (), "server1") == -1)
-        return 1;
+        return -1;
 
       // Test object 2.
       object = orb->string_to_object (ior2 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-          Test_var server2 = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
+      Test_var server2 = Test::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (server2.in (), "server2") == -1)
-        return 1;
+        return -1;
 
       // Check that test objects are configured with SERVER_DECLARED
       // PriorityModelPolicy, and get their server priorities.
@@ -124,17 +119,17 @@ main (int argc, char *argv[])
         check_policy (server1.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-          if (server1_priority == -1)
-        return 1;
+      if (server1_priority == -1)
+        return -1;
 
-          // Test object 2.
+      // Test object 2.
       CORBA::Short server2_priority =
         check_policy (server2.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (server2_priority == -1)
-        return 1;
+        return -1;
 
-          // Testing: make several invocations on test objects.
+      // Testing: make several invocations on test objects.
       for (int i = 0; i < 5; ++i)
         {
           server1->test_method (server1_priority ACE_ENV_ARG_PARAMETER);
@@ -142,8 +137,7 @@ main (int argc, char *argv[])
 
           server2->test_method (server2_priority ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
-
-          }
+        }
 
       // Testing over. Shut down Server ORB.
       server1->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -153,8 +147,8 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-       "Unexpected exception in Server_Declared test client:");
-      return 1;
+                           "Unexpected exception in Server_Declared test client:");
+      return -1;
     }
   ACE_ENDTRY;
 

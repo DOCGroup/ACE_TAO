@@ -4,7 +4,6 @@
 #include "ace/Get_Opt.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/Strategies/advanced_resource.h"
-#include "../check_supported_priorities.cpp"
 
 const char *ior = "file://test.ior";
 
@@ -44,11 +43,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
-        return 1;
-        
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
+        return -1;
 
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
@@ -63,7 +58,7 @@ main (int argc, char *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Object reference <%s> is nil\n",
                              ior),
-                            1);
+                            -1);
         }
 
       // Make an invocation on the obtained Test object.
@@ -74,7 +69,7 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Caught exception:");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 

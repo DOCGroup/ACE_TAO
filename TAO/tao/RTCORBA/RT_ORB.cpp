@@ -7,6 +7,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
+#include "ace/Sched_Params.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_ORB.i"
@@ -235,7 +236,7 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                             CORBA::Boolean keep_alive,
                                             CORBA::Boolean dont_route,
                                             CORBA::Boolean no_delay,
-					    CORBA::Boolean enable_network_priority
+                                            CORBA::Boolean enable_network_priority
                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException ))
 {
@@ -246,7 +247,7 @@ TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
                                         keep_alive,
                                         dont_route,
                                         no_delay,
-					enable_network_priority),
+                                        enable_network_priority),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (RTCORBA::TCPProtocolProperties::_nil ());
@@ -399,6 +400,50 @@ TAO_Thread_Pool_Manager &
 TAO_RT_ORB::tp_manager (void)
 {
   return *this->tp_manager_;
+}
+
+/* static */
+int
+TAO_RT_ORB::modify_thread_scheduling_policy (CORBA::ORB_ptr orb)
+{
+  //
+  // This method changes the scheduling policy of the calling thread
+  // to match the scheduling policy specified in the svc.conf file.
+  // The priority of the calling thread will be set to the minimum
+  // priority supported by that scheduling policy.
+  //
+  // This method make sense on those platform (e.g., Linux) where
+  // PTHREAD_SCOPE_SYSTEM is the only scheduling scope supported.  On
+  // other platforms, this method is a no-op since the only way to get
+  // the real-time threading behavior is to setup the
+  // PTHREAD_SCOPE_SYSTEM scheduling scope when a thread is being
+  // created.  On such platforms, one can set the correct scheduling
+  // scope and policy when creating the thread, thus not needing to
+  // use this method.
+  //
+
+#if defined (linux)
+
+  int sched_policy =
+    orb->orb_core ()->orb_params ()->ace_sched_policy ();
+
+  int minimum_priority =
+    ACE_Sched_Params::priority_min (sched_policy);
+
+  ACE_hthread_t thread_id;
+  ACE_Thread::self (thread_id);
+
+  return ACE_Thread::setprio (thread_id,
+                              minimum_priority,
+                              sched_policy);
+
+#else /* linux */
+
+  ACE_UNUSED_ARG (orb);
+  ACE_NOTSUP_RETURN (-1);
+
+#endif /* linux */
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

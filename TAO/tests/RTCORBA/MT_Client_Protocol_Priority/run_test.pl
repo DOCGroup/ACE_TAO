@@ -22,8 +22,8 @@ $data_file = PerlACE::LocalFile ("test_run.data");
 
 $debug_level = 1;
 $iterations = 50;
-$priority1 = 65;
-$priority2 = 70;
+$priority1 = 45;
+$priority2 = 50;
 
 if ($^O eq "MSWin32") {
     $priority1 = 2;
@@ -42,15 +42,12 @@ elsif ($^O eq "hpux") {
 unlink $iorfile;
 unlink $data_file;
 
-$server_conf = PerlACE::LocalFile ("server$PerlACE::svcconf_ext");
-$client_conf = PerlACE::LocalFile ("client$PerlACE::svcconf_ext");
-
 $server_args =
-    "-o $iorfile -ORBdebuglevel $debug_level -ORBsvcconf $server_conf "
+    "-o $iorfile -ORBdebuglevel $debug_level "
     ."-ORBendpoint iiop:// -ORBendpoint shmiop:// ";
 
 $client_args =
-    "-ORBSvcConf $client_conf -o file://$iorfile  "
+    "-o file://$iorfile  "
     ."-a $priority1 -b $priority2 -e 1413566210 -f 0 -n $iterations";
 
 $SV = new PerlACE::Process ("server", $server_args);
@@ -85,7 +82,6 @@ if (PerlACE::waitforfile_timed ($iorfile, 10) == -1)
         open (STDOUT, ">&OLDOUT");
         open (STDERR, ">&OLDERR");
         
-        print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
         # Mark as no longer running to avoid errors on exit.
         $SV->{RUNNING} = 0;
         exit $status;

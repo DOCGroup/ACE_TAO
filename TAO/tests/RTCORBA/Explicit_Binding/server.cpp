@@ -6,7 +6,6 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
-#include "../check_supported_priorities.cpp"
 
 class Test_i : public POA_Test
 {
@@ -44,7 +43,7 @@ Test_i::test_method (ACE_ENV_SINGLE_ARG_DECL_NOT_USED/* ACE_ENV_SINGLE_ARG_PARAM
 
 void
 Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
 }
@@ -145,11 +144,7 @@ main (int argc, char *argv[])
 
       // Parse arguments.
       if (parse_args (argc, argv) != 0)
-        return 1;
-        
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
+        return -1;
 
       // RootPOA.
       CORBA::Object_var object =
@@ -159,7 +154,7 @@ main (int argc, char *argv[])
         PortableServer::POA::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
-        return 1;
+        return -1;
 
       // POAManager.
       PortableServer::POAManager_var poa_manager =
@@ -178,7 +173,7 @@ main (int argc, char *argv[])
                               ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result == -1)
-        return 1;
+        return -1;
 
       // Run ORB Event loop.
       poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -192,11 +187,10 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-      "Unexpected exception caught in Explicit_Binding test server:");
-      return 1;
+                           "Unexpected exception caught in Explicit_Binding test server:");
+      return -1;
     }
   ACE_ENDTRY;
 
   return 0;
 }
-

@@ -833,6 +833,7 @@ const CORBA::ULong TAO_POA_BEING_DESTROYED                    = (0x11U << 7);
 const CORBA::ULong TAO_POA_INACTIVE                           = (0x12U << 7);
 const CORBA::ULong TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE  = (0x13U << 7);
 const CORBA::ULong TAO_AMH_REPLY_LOCATION_CODE                = (0x14U << 7);
+const CORBA::ULong TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE  = (0x15U << 7);
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
 //@}
 

@@ -6,7 +6,6 @@
 #include "tao/RTCORBA/RT_Policy_i.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/Strategies/advanced_resource.h"
-#include "../check_supported_priorities.cpp"
 
 class Test_i : public POA_Test
 {
@@ -32,7 +31,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 
 void
 Test_i::shutdown (ACE_ENV_SINGLE_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "Received request to shut down the ORB\n"));
@@ -93,8 +92,8 @@ check_default_server_protocol (CORBA::ORB_ptr orb
   // is no standard way to access ORB default policies).
   CORBA::Policy_var server_protocol =
     orb->orb_core ()->get_default_policies ()->get_policy (
-      RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
-      ACE_ENV_ARG_PARAMETER);
+                                                           RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+                                                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   RTCORBA::ServerProtocolPolicy_var policy =
@@ -177,11 +176,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       if (parse_args (argc, argv) != 0)
-        return 1;
-
-      // Make sure we can support multiple priorities that are required
-      // for this test.
-      check_supported_priorities (orb.in());
+        return -1;
 
       CORBA::Object_var object =
         orb->resolve_initial_references("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -211,7 +206,7 @@ main (int argc, char *argv[])
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       if (result != 0)
-        return 1;
+        return -1;
 
       // If a protocol type was indicated using command line option,
       // create a child POA with ServerProtocolPolicy containing
@@ -276,7 +271,7 @@ main (int argc, char *argv[])
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                ior_output_file),
-                              1);
+                              -1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
           ACE_OS::fclose (output_file);
         }
@@ -294,7 +289,7 @@ main (int argc, char *argv[])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Exception caught:");
-      return 1;
+      return -1;
     }
   ACE_ENDTRY;
 
