@@ -384,14 +384,11 @@ test_concurrent (const ACE_TCHAR *prog,
     ACE_DEBUG ((LM_DEBUG, "Reactor::run_event_loop finished\n"));
 
 #if defined (_TEST_USES_THREADS)
-#else
-  ACE_Process_Manager::instance ()->wait ();
-
-#if defined (ACE_HAS_THREADS)
   // We need to call this method if we use the
   // ACE_Thread_Strategy<Echo_Handler>.
   ACE_Thread_Manager::instance ()->wait ();
-#endif /* ACE_HAS_THREADS */
+#else
+  ACE_Process_Manager::instance ()->wait ();
 #endif /* _TEST_USES_THREADS */
 
   if (acceptor.close () == -1)
