@@ -15,6 +15,7 @@
 
 #include "JobS.h"
 #include "Task_Stats.h"
+#include "ace/SString.h"
 
 class ACE_Arg_Shifter;
 class DT_Creator;

@@ -32,6 +32,7 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/OS.h"
 #include "ace/ACE.h"
+#include "ace/SString.h"
 
 class AccountManager_i : public POA_Bank::AccountManager
 {

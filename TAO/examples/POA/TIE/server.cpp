@@ -15,6 +15,7 @@
 // =========================================================================
 
 #include "ace/streams.h"
+#include "ace/SString.h"
 #include "test_i.h"
 
 ACE_RCSID(TIE, server, "$Id$")
