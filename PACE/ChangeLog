@@ -1,3 +1,9 @@
+Sat Jul 29 09:31:59 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * tests/mqueue_test.c: got it to compile cleanly on OSF1,
+          by adding an unused arg to msg_handler, and commenting
+          the characters after an #endif.
+
 Sat Jul 29 09:19:01 2000  David L. Levine <levine@cs.wustl.edu>
 
         * include/makeinclude/rules.common.h (CFLAGS): on OSF1, added
