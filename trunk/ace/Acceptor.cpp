@@ -441,7 +441,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    ACE_Scheduling_Strategy<SVC_HANDLER> *sch_s,
    const ASYS_TCHAR *service_name,
-   const ASYS_TCHAR *service_description)
+   const ASYS_TCHAR *service_description,
+   int use_select)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open");
 
@@ -501,6 +502,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
     }
   this->scheduling_strategy_ = sch_s;
 
+  this->use_select_ = use_select;
+
   return this->reactor ()->register_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
@@ -510,7 +513,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
   (const ASYS_TCHAR service_name[],
-   const ASYS_TCHAR service_description[])
+   const ASYS_TCHAR service_description[],
+   int use_select)
     : creation_strategy_ (0),
       delete_creation_strategy_ (0),
       accept_strategy_ (0),
@@ -530,6 +534,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
   if (service_description != 0)
     ACE_ALLOCATOR (this->service_description_,
                    ACE_OS::strdup (service_description));
+  this->use_select_ = use_select;
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
@@ -541,12 +546,13 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    ACE_Scheduling_Strategy<SVC_HANDLER> *sch_s,
    const ASYS_TCHAR service_name[],
-   const ASYS_TCHAR service_description[])
+   const ASYS_TCHAR service_description[],
+   int use_select)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::ACE_Strategy_Acceptor");
 
   if (this->open (addr, reactor, cre_s, acc_s, con_s, sch_s,
-                  service_name, service_description) == -1)
+                  service_name, service_description, use_select) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Strategy_Acceptor::ACE_Strategy_Acceptor")));
 }
 

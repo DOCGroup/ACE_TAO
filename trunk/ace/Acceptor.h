@@ -151,7 +151,7 @@ protected:
   virtual int resume (void);
   // This method calls <Reactor::resume>.
 
-private:
+protected:
   ACE_PEER_ACCEPTOR peer_acceptor_;
   // Concrete factory for accepting connections from clients...
 
@@ -184,7 +184,8 @@ class ACE_Strategy_Acceptor : public ACE_Acceptor <SVC_HANDLER, ACE_PEER_ACCEPTO
 public:
   // = Initialization and termination methods.
   ACE_Strategy_Acceptor (const ASYS_TCHAR service_name[] = 0,
-			 const ASYS_TCHAR service_description[] = 0);
+			 const ASYS_TCHAR service_description[] = 0,
+                         int use_select = 1);
   // Default constructor.
 
   ACE_Strategy_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
@@ -194,7 +195,8 @@ public:
 			 ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
 			 ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
 			 const ASYS_TCHAR service_name[] = 0,
-			 const ASYS_TCHAR service_description[] = 0);
+			 const ASYS_TCHAR service_description[] = 0,
+                         int use_select = 1);
   // Initialize the appropriate strategies for creation, passive
   // connection acceptance, and concurrency, and then register <this>
   // with the Reactor and listen for connection requests at the
@@ -207,7 +209,8 @@ public:
 	    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
 	    ACE_Scheduling_Strategy<SVC_HANDLER> * = 0,
 	    const ASYS_TCHAR *service_name = 0,
-	    const ASYS_TCHAR *service_description = 0);
+	    const ASYS_TCHAR *service_description = 0,
+            int use_select = 1);
   // Initialize the appropriate strategies for creation, passive
   // connection acceptance, and concurrency, and then register <this>
   // with the Reactor and listen for connection requests at the
