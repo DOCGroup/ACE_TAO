@@ -8,7 +8,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-BIN   	= test_proactor
+BIN   	= test_proactor test_aiosig_ace
 LSRC 	= $(addsuffix .cpp,$(BIN))
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 BUILD 	= $(VBIN)
