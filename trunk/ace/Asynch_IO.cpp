@@ -132,7 +132,11 @@ ACE_Asynch_Operation::cancel (void)
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
+#if defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0400)
   return (int) ::CancelIo (this->handle_);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif /* (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0400) */
 }
 
 // ************************************************************

@@ -1,5 +1,7 @@
 Tue Mar 10 13:22:24 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* ace/Asynch_IO.cpp (cancel): CancelIo is not supported on Win95.
+
 	* ace/SString.cpp (set): Use ACE_WString::wstrlen().
 
 Tue Mar 10 06:59:42 1998  David L. Levine  <levine@cs.wustl.edu>
