@@ -1,3 +1,9 @@
+Fri Jun 27 12:52:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Process.h:
+          Added forward declaration of ACE_Time_Value to fix compile
+          erros in Jaws server app.
+
 Thu Jun 26 21:34:43 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* ace/QtReactor.cpp: Removed precompiled header include residue
@@ -69,7 +75,7 @@ Wed Jun 25 17:00:00 2003  Justin Michel  <michel_j@ociweb.com>
         * bin/MakeProjectCreator/templates/vc6dsp.mpd:
         * bin/MakeProjectCreator/templates/vc7.mpd:
 
-          Fixes for various mpc generation problems. 
+          Fixes for various mpc generation problems.
 
 Wed Jun 25 13:14:00 2003  Justin Michel  <michel_j@ociweb.com>
 
@@ -82,11 +88,11 @@ Wed Jun 25 13:14:00 2003  Justin Michel  <michel_j@ociweb.com>
 
 Wed Jun 25 12:45:44 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/topinfo_iorsize_stats.sh (s_id): 
+	* bin/topinfo_iorsize_stats.sh (s_id):
 	* bin/topinfo_simple_stats.sh: We used 'top' to determine the
 	  runtime memory used by the process. A better way to get this
 	  done is to use /proc/processid/status. The scripts have been
-	  changed to use the proc info instead of 'top'. 
+	  changed to use the proc info instead of 'top'.
 
 Wed Jun 25 11:00:00 2003  Justin Michel  <michel_j@ociweb.com>
 

@@ -49,7 +49,7 @@ ACEXML_Entity_Manager::reset (void)
 }
 
 
-ACEXML_INLINE const size_t
+ACEXML_INLINE size_t
 ACEXML_Entity_Manager::size (void) const
 {
   return this->entities_.current_size();
