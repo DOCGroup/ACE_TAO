@@ -1,7 +1,12 @@
 // $Id$
 
-#define ACE_BUILD_SVC_DLL
-#define Alt_Resource_Factory_BUILD_DLL
+#ifndef ACE_BUILD_SVC_DLL
+# define ACE_BUILD_SVC_DLL
+#endif
+
+#ifndef Alt_Resource_Factory_BUILD_DLL
+# define Alt_Resource_Factory_BUILD_DLL
+#endif
 
 #include "Time_Date.h"
 #include "tao/TAO_Singleton_Manager.h"
