@@ -20,6 +20,7 @@ DIRS = \
 	Connection_Purging \
 	Crash_On_Write \
 	Crashed_Callback \
+        DLL_Orb \
 	DSI_Gateway \
 	DynAny_Test \
 	Explicit_Event_Loop \
