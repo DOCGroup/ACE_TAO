@@ -64,6 +64,7 @@ option
 	   source type (cpp) "POA.cpp"
 	   source type (cpp) "PortableServerC.cpp"
 	   source type (cpp) "Pluggable.cpp"
+	   source type (cpp) "Transport.cpp"
 	   source type (cpp) "PolicyC.cpp"
 	   source type (cpp) "PolicyS.cpp"
 	   source type (cpp) "Principal.cpp"

@@ -29,21 +29,22 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SSL/SSL_SOCK_Stream.h"
-#include "ace/Synch.h"
-#include "ace/Svc_Handler.h"
-
-#include "tao/Pluggable.h"
+#include "tao/Transport.h"
 #include "tao/operation_details.h"
 #include "tao/GIOP_Message_State.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/IIOPC.h"
+
+#include "ace/SSL/SSL_SOCK_Stream.h"
+#include "ace/Synch.h"
+#include "ace/Svc_Handler.h"
 
 // Forward decls.
 class TAO_SSLIOP_Handler_Base;
 class TAO_SSLIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Pluggable_Messaging;
+class TAO_Acceptor;
 
 typedef ACE_Svc_Handler<ACE_SSL_SOCK_STREAM, ACE_NULL_SYNCH>
         TAO_SSL_SVC_HANDLER;

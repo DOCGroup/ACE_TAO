@@ -8,6 +8,7 @@
 #include "Dynamic_Adapter.h"
 #include "Object_KeyC.h"
 #include "debug.h"
+#include "Transport.h"
 #include "Pluggable.h"
 #include "Connector_Registry.h"
 #include "Wait_Strategy.h"

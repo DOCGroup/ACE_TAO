@@ -1,25 +1,21 @@
-//$Id$
+// $Id$
 
-#include "tao/GIOP_Message_Base.h"
-#include "tao/operation_details.h"
-#include "tao/GIOP_Utils.h"
-#include "tao/Pluggable.h"
-#include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/Leader_Follower.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/GIOP_Message_Locate_Header.h"
+#include "GIOP_Message_Base.h"
+#include "operation_details.h"
+#include "GIOP_Utils.h"
+#include "Pluggable.h"
+#include "debug.h"
+#include "ORB_Core.h"
+#include "Leader_Follower.h"
+#include "TAO_Server_Request.h"
+#include "GIOP_Message_Locate_Header.h"
+#include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Base.i"
+# include "GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
-
-
-
 ACE_RCSID(tao, GIOP_Message_Base, "$Id$")
-
-
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core)
   : message_handler_ (orb_core,

@@ -45,6 +45,7 @@
 #include "Protocols_Hooks.h"
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Thread_Manager.h"
 
 // Forward declarations
 class TAO_Acceptor;
@@ -394,7 +395,7 @@ public:
 
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
   TAO_Protocols_Hooks * get_protocols_hooks (void);
-  
+
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
   static void dynamic_adapter_name (const char *name);
 
@@ -608,10 +609,10 @@ public:
 
   // Name of the protocols_hooks that needs to be instantiated.
   // The default value is "Protocols_Hooks". If RTCORBA option is
-  // set, its value will be set to 
+  // set, its value will be set to
   // be "RT_Protocols_Hooks".
   static const char *protocols_hooks_name_;
-  
+
   /// Obtain the TSS resources of this orb.
   TAO_ORB_Core_TSS_Resources* get_tss_resources (void);
 

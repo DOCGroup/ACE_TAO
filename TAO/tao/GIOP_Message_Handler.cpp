@@ -1,20 +1,18 @@
+// $Id$
+
 #include "tao/GIOP_Message_Handler.h"
 #include "tao/GIOP_Message_Generator_Parser_Impl.h"
 #include "tao/ORB_Core.h"
 #include "tao/Pluggable.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
-
+#include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_RCSID(tao, GIOP_Message_Handler, "$Id$")
-
-
 
 TAO_GIOP_Message_Handler::TAO_GIOP_Message_Handler (TAO_ORB_Core * orb_core,
                                                     TAO_GIOP_Message_Base *base)
@@ -38,7 +36,7 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
   // Read the message from the transport. The size of the message read
   // is the maximum size of the buffer that we have less the amount of
   // data that has already been read in to the buffer.
-  ssize_t n = transport->read (this->current_buffer_.wr_ptr (),
+  ssize_t n = transport->recv (this->current_buffer_.wr_ptr (),
                                this->current_buffer_.space ());
 
   if (n == -1)
@@ -67,6 +65,11 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
   // Now we have a succesful read. First adjust the write pointer
   this->current_buffer_.wr_ptr (n);
 
+  if (TAO_debug_level > 8)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - received %d bytes\n", n));
+    }
+
   // Check what message are we waiting for and take suitable action
   if (this->message_status_ == TAO_GIOP_WAITING_FOR_HEADER)
     {
@@ -83,6 +86,11 @@ TAO_GIOP_Message_Handler::read_parse_message (TAO_Transport *transport)
 int
 TAO_GIOP_Message_Handler::parse_header (void)
 {
+  if (TAO_debug_level > 8)
+    {
+      ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) - parsing header\n"));
+    }
+
   // Check whether we have a GIOP Message in the first place
   if (this->parse_magic_bytes () == -1)
     return -1;

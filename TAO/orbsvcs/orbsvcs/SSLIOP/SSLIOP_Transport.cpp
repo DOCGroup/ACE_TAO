@@ -184,9 +184,9 @@ TAO_SSLIOP_Transport::recv (char *buf,
                             size_t len,
                             const ACE_Time_Value * /*max_wait_time*/)
 {
-  return this->service_handler ()->peer ().recv_n (buf,
-                                                   len /*,
-                                                   max_wait_time*/);
+  return this->service_handler ()->peer ().recv (buf,
+                                                 len
+                                                 /*, max_wait_time*/);
 }
 
 

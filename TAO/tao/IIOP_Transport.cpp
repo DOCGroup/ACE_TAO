@@ -28,10 +28,9 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Boolean flag)
   : TAO_Transport (TAO_TAG_IIOP_PROFILE,
-                   orb_core),
-    connection_handler_ (handler),
-    messaging_object_ (0),
-    bidirectional_flag_ (-1)
+                   orb_core)
+  , connection_handler_ (handler)
+  , messaging_object_ (0)
 {
   if (flag)
     {
@@ -136,9 +135,9 @@ TAO_IIOP_Transport::recv (char *buf,
                           size_t len,
                           const ACE_Time_Value *max_wait_time)
 {
-  return this->service_handler ()->peer ().recv_n (buf,
-                                                   len,
-                                                   max_wait_time);
+  return this->service_handler ()->peer ().recv (buf,
+                                                 len,
+                                                 max_wait_time);
 }
 
 
@@ -312,17 +311,17 @@ TAO_IIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
   // regarding this before...
   if (this->orb_core ()->bidir_giop_policy () &&
       this->messaging_object_->is_ready_for_bidirectional () &&
-      this->bidirectional_flag_ < 0)
+      this->bidirectional_flag () < 0)
     {
       this->set_bidir_context_info (opdetails);
 
       // Set the flag to 0
-      this->bidirectional_flag_ = 0;
+      this->bidirectional_flag (0);
     }
 
   // Modify the request id if we have BiDirectional client/server
   // setup
-  opdetails.modify_request_id (this->bidirectional_flag_);
+  opdetails.modify_request_id (this->bidirectional_flag ());
 
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
@@ -343,14 +342,6 @@ TAO_IIOP_Transport::messaging_init (CORBA::Octet major,
   return 1;
 }
 
-void
-TAO_IIOP_Transport::bidirectional_flag (int flag)
-{
-  this->bidirectional_flag_ = flag;
-}
-
-
-
 int
 TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
@@ -366,7 +357,7 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 
   // As we have received a bidirectional information, set the flag to
   // 1
-  this->bidirectional_flag_ = 1;
+  this->bidirectional_flag (1);
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
 
