@@ -1,3 +1,11 @@
+Sat Jan 19 10:58:53 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/ServerRequestInfo.cpp (server_id, orb_id):
+
+	  Fixed code that didn't conform to the C++ mapping.  The caller
+	  owns the storage.  Return a string using CORBA::string_dup().
+	  Don't just return a string with the const-ness casted away.
+
 Sat Jan 19 11:36:22 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/tests/Miop/McastHello/server.cpp (main):
