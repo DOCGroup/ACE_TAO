@@ -1,3 +1,16 @@
+Tue Nov 30 14:24:31 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* acconfig.h:
+
+	  Minor cosmetic updates.
+	  
+	* configure.in:
+
+	  Only enable POSIX semaphore support if process shared semaphores
+	  are supported.  Presumably process shared semaphores are only
+	  available if the _POSIX_THREAD_PROCESS_SHARED macro is defined
+	  by the platform.  [Bug 304]
+
 Tue Nov 30 00:22:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Malloc_Test.cpp: Changed to store the mmap allocator in an
