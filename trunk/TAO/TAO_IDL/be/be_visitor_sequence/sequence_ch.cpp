@@ -307,6 +307,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                          "Bad element type\n"), -1);
     }
 
+  *os << "class " << node->local_name () << ";" << be_nl;
+  *os << "class " << node->local_name () << "_var;" << be_nl;
+  *os << "typedef " << node->local_name () << "* "
+      << node->local_name () << "_ptr;" << be_nl << be_nl;
+
   *os << "// *************************************************************"
       << be_nl
       << "// " << node->local_name () << be_nl
@@ -368,7 +373,16 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << ");" << be_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &); // copy ctor" << be_nl;
-  *os << "~" << node->local_name () << " (void); // dtor\n";
+  *os << "~" << node->local_name () << " (void); // dtor\n\n";
+
+  // generate the _ptr_type and _var_type typedefs
+  // but we must protect against certain versions of g++
+  *os << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)\n";
+  os->indent ();
+  *os << "typedef " << node->local_name () << "_ptr _ptr_type;" << be_nl
+      << "typedef " << node->local_name () << "_var _var_type;\n"
+      << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n\n";
+  os->decr_indent ();
 
   // TAO provides extensions for octet sequences, first find out if
   // the base type is an octet (or an alias for octet)
@@ -405,10 +419,6 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   os->decr_indent ();
   *os << "};" << be_nl;
-
-  // define a _ptr type. This is just an extension for convenience
-  *os << "typedef " << node->local_name () << " *"
-      << node->local_name () << "_ptr;\n";
 
   os->gen_endif (); // endif macro
 

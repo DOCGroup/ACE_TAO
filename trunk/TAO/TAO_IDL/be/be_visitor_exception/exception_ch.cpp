@@ -56,18 +56,24 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       *os << "class " << node->local_name () << ";" << be_nl;
       // generate the _ptr declaration
       *os << "typedef " << node->local_name () << " *"
-	  << node->local_name () << "_ptr;" << be_nl;
+	        << node->local_name () << "_ptr;" << be_nl;
       os->gen_endif ();
 
       os->gen_ifdef_macro (node->flat_name ());
 
       os->indent ();
       *os << "class " << idl_global->stub_export_macro ()
-	  << " " << node->local_name ()
-	  << " : public CORBA::UserException" << be_nl;
+	        << " " << node->local_name ()
+	        << " : public CORBA::UserException" << be_nl;
       *os << "{" << be_nl
-	  << "public:\n";
+	        << "public:\n\n";
+
+      // generate the _ptr_type and _var_type typedefs
+      // but we must protect against certain versions of g++
+      *os << "#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)\n";
       os->incr_indent ();
+      *os << "typedef " << node->local_name () << "_ptr _ptr_type;\n"
+          << "#endif /* ! __GNUC__ || g++ >= 2.8 */\n\n";
 
       // generate code for field members
       if (this->visit_scope (node) == -1)
@@ -86,7 +92,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           << " &); // copy ctor" << be_nl;
       *os << "~" << node->local_name () << " (void); // dtor" << be_nl;
 
-      os->indent ();
       // assignment operator
       *os << node->local_name () << " &operator= (const "
           << node->local_name () << " &);\n\n";
