@@ -427,39 +427,39 @@ TAO_IIOP_Profile::add_endpoint (TAO_IIOP_Endpoint *endp)
 char *
 TAO_IIOP_Profile::to_string (CORBA::Environment &)
 {
-  //   CORBA::String_var key;
-  //   TAO_ObjectKey::encode_sequence_to_string (key.inout(),
-  //                                             this->object_key_);
+  CORBA::String_var key;
+  TAO_ObjectKey::encode_sequence_to_string (key.inout(),
+                                            this->object_key_);
 
-  u_int buflen = (ACE_OS::strlen (::prefix_) +
-//                   3 /* "loc" */ +
+  u_int buflen = (8 /* "corbaloc" */ +
                   1 /* colon separator */ +
-                  2 /* double-slash separator */ +
+                  ACE_OS::strlen (::prefix_) +
+                  1 /* colon separator */ +
                   1 /* major version */ +
                   1 /* decimal point */ +
                   1 /* minor version */ +
                   1 /* `@' character */ +
                   ACE_OS::strlen (this->endpoint_.host ()) +
                   1 /* colon separator */ +
-                  5 /* port number */);
-//                   1 /* object key separator */ +
-//                   ACE_OS::strlen (key.in ()));
+                  5 /* port number */ +
+                  1 /* object key separator */ +
+                  ACE_OS::strlen (key.in ()));
 
-  CORBA::String_var buf = CORBA::string_alloc (buflen);
+  char * buf = CORBA::string_alloc (buflen);
 
   static const char digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf.inout (),
-                   "%s://%c.%c@%s:%d",
+  ACE_OS::sprintf (buf,
+                   "corbaloc:%s:%c.%c@%s:%d%c%s",
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
                    this->endpoint_.host (),
-                   this->endpoint_.port ());
-//                    this->object_key_delimiter_,
-//                    key.in ());
+                   this->endpoint_.port (),
+                   this->object_key_delimiter_,
+                   key.in ());
 
-  return buf._retn ();
+  return buf;
 }
 
 

@@ -1,3 +1,15 @@
+Tue Apr 10 12:14:44 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.cpp (_tao_get_omg_exception_description):
+
+	  Added missing comma in BAD_PARAM minor code description table.
+	  This fixes a problem where the wrong description was returned.
+
+	* tao/IIOP_Profile.cpp (to_string):
+
+	  Fixed code that was inadvertently committed.  URL style
+	  (corbaloc) IIOP IORs are once again properly generated.
+
 Tue Apr 10 13:55:27 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:

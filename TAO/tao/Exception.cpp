@@ -621,32 +621,32 @@ CORBA_SystemException::_tao_get_omg_exception_description (
 
   static const char *BAD_PARAM_TABLE[] =
     {
-        "Failure to register, unregister, or lookup value factory." // 1
-        "RID already defined in IFR.",                              // 2
-        "Name already used in the context in IFR.",                 // 3
-        "Target is not a valid container.",                         // 4
-        "Name clash in inherited context.",                         // 5
-        "Incorrect type for abstract interface.",                   // 6
+        "Failure to register, unregister, or lookup value factory.", // 1
+        "RID already defined in IFR.",                               // 2
+        "Name already used in the context in IFR.",                  // 3
+        "Target is not a valid container.",                          // 4
+        "Name clash in inherited context.",                          // 5
+        "Incorrect type for abstract interface.",                    // 6
         "string_to_object conversion failed due to a bad scheme name.", // 7
-        "string_to_object conversion failed due to a bad address.", // 8
+        "string_to_object conversion failed due to a bad address.",  // 8
         "string_to_object conversion failed due to a bad schema specific part.",// 9
         "string_to_object conversion failed due to non specific reason.", // 10
         "Attempt to derive abstract interface from non-abstract base interface in the Interface Repository.", // 11
         "Attempt to let a ValueDef support more than one non-abstract interface in the Interface Repository.", // 12
-        "Attempt to use an incomplete TypeCode as a parameter.",    // 13
-        "Invalid object id passed to POA::create_reference_by_id.", // 14
-        "Bad name argument in TypeCode operation.",                 // 15
-        "Bad RepositoryId argument in TypeCode operation.",         // 16
-        "Invalid member namein TypeCode operation.",                // 17
-        "Duplicate label value in create_union_tc.",                // 18
+        "Attempt to use an incomplete TypeCode as a parameter.",     // 13
+        "Invalid object id passed to POA::create_reference_by_id.",  // 14
+        "Bad name argument in TypeCode operation.",                  // 15
+        "Bad RepositoryId argument in TypeCode operation.",          // 16
+        "Invalid member namein TypeCode operation.",                 // 17
+        "Duplicate label value in create_union_tc.",                 // 18
         "Incompatible TypeCode of label and discriminator in create_union_tc.", // 19
         "Supplied discriminator type illegitimate in create_union_tc.", // 20
         "Any passed to ServerRequest::set_exception does not contain an exception.", // 21
         "Unlisted user exception passed to ServerRequest::set_exception", // 22
-        "Invalid service context ID in portable interceptor.",      // 23
+        "Invalid service context ID in portable interceptor.",       // 23
         "Attempt to call register_initial_reference with a null Object.", // 24
-        "Invalid component ID in portable interceptor.",            // 25
-        "Invalid profile ID in portable interceptor."               // 26
+        "Invalid component ID in portable interceptor.",             // 25
+        "Invalid profile ID in portable interceptor."                // 26
     };
 
   static const char *IMP_LIMIT_TABLE[] =
