@@ -1,3 +1,11 @@
+Mon Sep  1 10:19:16 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_exception/exception_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+
+          Uninlined the generation of the (de)marshal_value overrides
+          for exception containing a local interface at some level.
+
 Mon Sep  1 09:34:44 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
