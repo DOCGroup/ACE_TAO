@@ -210,7 +210,7 @@ private:
   int timeout_;
   // Time period for updating system time
 
-  const char *poolname_;
+  LPCTSTR poolname_;
   // Pool name for backing store
 
   int blocking_semantics_;
@@ -773,7 +773,7 @@ ACE_TS_Clerk_Processor::parse_args (int argc, char *argv[])
 	  break;
 	case 'p':
 	  // Get the poolname
-	  this->poolname_ = get_opt.optarg;
+	  this->poolname_ = ACE_WIDE_STRING (get_opt.optarg);
 	  break;
 	case 'b':
 	  // Blocking semantics

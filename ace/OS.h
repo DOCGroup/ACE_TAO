@@ -1024,7 +1024,8 @@ typedef void (*ACE_SignalHandlerV)(...);
 #include /**/ <sys/timeb.h>
 
 // The following 3 defines are used by the ACE Name Server...
-#define ACE_DEFAULT_NAMESPACE_DIR __TEXT ("C:\\temp")
+#define ACE_DEFAULT_NAMESPACE_DIR_W L"C:\\temp"
+#define ACE_DEFAULT_NAMESPACE_DIR_A "C:\\temp"
 #define ACE_DEFAULT_LOCALNAME "\\localnames"
 #define ACE_DEFAULT_GLOBALNAME "\\globalnames"
 
@@ -1047,7 +1048,6 @@ typedef void (*ACE_SignalHandlerV)(...);
 // Default semaphore key and mutex name
 #define ACE_DEFAULT_SEM_KEY "ACE_SEM_KEY"
 #define ACE_INVALID_SEM_KEY 0
-#define ACE_DEFAULT_MUTEX __TEXT ("ACE_MUTEX")
 
 #define ACE_SEH_TRY __try
 #define ACE_SEH_EXCEPT(X) __except(X)
@@ -1056,8 +1056,10 @@ typedef void (*ACE_SignalHandlerV)(...);
 #define ACE_DEV_NULL "nul"
 
 // Define the pathname separator characters for Win32 (ugh).
-#define ACE_DIRECTORY_SEPARATOR_STR __TEXT ("\\")
-#define ACE_DIRECTORY_SEPARATOR_CHAR __TEXT ('\\')
+#define ACE_DIRECTORY_SEPARATOR_STR_A "\\"
+#define ACE_DIRECTORY_SEPARATOR_STR_W L"\\"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_A '\\'
+#define ACE_DIRECTORY_SEPARATOR_CHAR_W L'\\'
 #define ACE_LD_SEARCH_PATH "PATH"
 #define ACE_LD_SEARCH_PATH_SEPARATOR_STR ";"
 #define ACE_LOGGER_KEY __TEXT ("\\temp\\server_daemon")
@@ -1244,6 +1246,12 @@ typedef const char *LPCTSTR;
 typedef char *LPTSTR;
 typedef char TCHAR;
 
+#if (defined (ACE_HAS_UNICODE) && (defined (UNICODE)))
+#define __TEXT(STRING) L##STRING
+#else
+#define __TEXT(STRING) STRING 
+#endif /* UNICODE && ACE_HAS_UNICODE */
+
 #if defined (m88k)
 #define RUSAGE_SELF 1
 #endif  //  m88k
@@ -1251,10 +1259,30 @@ typedef char TCHAR;
 // Default semaphore key
 #define ACE_DEFAULT_SEM_KEY 1234
 #define ACE_INVALID_SEM_KEY -1
-#define ACE_DEFAULT_MUTEX "ACE_MUTEX"
+
+// Define the pathname separator characters for UNIX.
+#define ACE_DIRECTORY_SEPARATOR_STR_A "/"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_A '/'
+#if defined (ACE_HAS_UNICODE)
+#define ACE_DIRECTORY_SEPARATOR_STR_W L"/"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_W L'/'
+#else
+#define ACE_DIRECTORY_SEPARATOR_STR_W "/"
+#define ACE_DIRECTORY_SEPARATOR_CHAR_W '/'
+#endif /* ACE_HAS_UNICODE */
+#define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
+#define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
+#define ACE_LOGGER_KEY "/tmp/server_daemon"
+#define ACE_DLL_SUFFIX ".so"
+#define ACE_DLL_PREFIX "lib"
 
 // The following 3 defines are used by the ACE Name Server...
-#define ACE_DEFAULT_NAMESPACE_DIR "/tmp"
+#define ACE_DEFAULT_NAMESPACE_DIR_A "/tmp"
+#if defined (ACE_HAS_UNICODE)
+#define ACE_DEFAULT_NAMESPACE_DIR_W L"/tmp"
+#else
+#define ACE_DEFAULT_NAMESPACE_DIR_W "/tmp"
+#endif /* ACE_HAS_UNICODE */
 #define ACE_DEFAULT_LOCALNAME "/localnames"
 #define ACE_DEFAULT_GLOBALNAME "/globalnames"
 
@@ -1282,15 +1310,6 @@ typedef char TCHAR;
 
 // The "null" device on UNIX.
 #define ACE_DEV_NULL "/dev/null"
-
-// Define the pathname separator characters for UNIX.
-#define ACE_DIRECTORY_SEPARATOR_STR "/"
-#define ACE_DIRECTORY_SEPARATOR_CHAR '/'
-#define ACE_LD_SEARCH_PATH "LD_LIBRARY_PATH"
-#define ACE_LD_SEARCH_PATH_SEPARATOR_STR ":"
-#define ACE_LOGGER_KEY "/tmp/server_daemon"
-#define ACE_DLL_SUFFIX ".so"
-#define ACE_DLL_PREFIX "lib"
 
 // Wrapper for NT events on UNIX.
 struct ACE_event_t
@@ -2246,7 +2265,6 @@ public:
 #if defined (ACE_WIN32)
   static wchar_t *strstr (const wchar_t *s, const wchar_t *t);
   static wchar_t *strdup (const wchar_t *s);
-  static int sprintf (wchar_t *buf, const char *format, ...);
   static int sprintf (wchar_t *buf, const wchar_t *format, ...);
 
   static int access (const wchar_t *path, int amode);
@@ -2257,6 +2275,8 @@ public:
   static ACE_HANDLE open (const wchar_t *filename, int mode, int perms = 0);
   static int unlink (const wchar_t *path);
   static void *dlopen (ACE_WIDE_DL_TYPE filename, int mode);
+  static wchar_t *mktemp (wchar_t *t);
+  static int mkdir (const wchar_t *path, mode_t mode = ACE_DEFAULT_DIR_PERMS);
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_HAS_UNICODE */
@@ -2399,6 +2419,37 @@ private:
      if (POINTER == 0) { errno = ENOMEM; return; } \
      } while (0)
 
+
+#define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
+
+#if defined (UNICODE)
+
+#define ACE_DEFAULT_NAMESPACE_DIR ACE_DEFAULT_NAMESPACE_DIR_W
+#define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_W
+#define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_W
+
+#define ACE_DEFAULT_MUTEX_W L"ACE_MUTEX"
+#define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_W
+
+#else
+
+#define ACE_DEFAULT_NAMESPACE_DIR ACE_DEFAULT_NAMESPACE_DIR_A
+#define ACE_DIRECTORY_SEPARATOR_STR ACE_DIRECTORY_SEPARATOR_STR_A
+#define ACE_DIRECTORY_SEPARATOR_CHAR ACE_DIRECTORY_SEPARATOR_CHAR_A
+
+#define ACE_DEFAULT_MUTEX_W "ACE_MUTEX"
+#define ACE_DEFAULT_MUTEX ACE_DEFAULT_MUTEX_A
+
+#endif /* UNICODE */
+
+#if defined (UNICODE)
+#include "ace/SString.h"
+#define ACE_WIDE_STRING(ASCII) \
+ACE_WString (ASCII).fast_rep ()
+#else
+#define ACE_WIDE_STRING(ASCII) ASCII
+#endif /* UNICODE */
+
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #if defined (ACE_INLINE)
 #undef ACE_INLINE
@@ -2406,14 +2457,5 @@ private:
 #define ACE_INLINE inline
 #include "ace/OS.i"
 #endif /* ACE_HAS_INLINED_OSCALLS */
-
-#include "ace/SString.h"
-
-#if defined (UNICODE)
-#define ACE_WIDE_STRING(ASCII) \
-ACE_WString (ASCII).fast_rep ()
-#else
-#define ACE_WIDE_STRING(ASCII) ASCII
-#endif /* UNICODE */
 
 #endif  /* ACE_OS_H */

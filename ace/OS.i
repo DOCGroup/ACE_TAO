@@ -2589,7 +2589,7 @@ ACE_INLINE int
 ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
   long ip_addr = ACE_OS::inet_addr (host_name);
-  if (ip_addr == htonl ((ACE_UINT32) -1)
+  if (ip_addr == (long) htonl ((ACE_UINT32) -1)
       // Broadcast addresses are weird...
       && ACE_OS::strcmp (host_name, "255.255.255.255") != 0)
     return 0;
@@ -5458,19 +5458,6 @@ ACE_OS::dlopen (ACE_WIDE_DL_TYPE filename, int mode)
 }
 
 ACE_INLINE int 
-ACE_OS::sprintf (wchar_t *buf, const char *format, ...)
-{
-  // ACE_TRACE ("ACE_OS::sprintf");
-  int result;
-  ACE_WString w_format (format);
-  va_list ap;
-  va_start (ap, w_format);
-  ACE_OSCALL (::vswprintf (buf, w_format.fast_rep (), ap), int, -1, result);
-  va_end (ap);
-  return result;
-}
-
-ACE_INLINE int 
 ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
   // ACE_TRACE ("ACE_OS::sprintf");
@@ -5506,6 +5493,20 @@ ACE_INLINE int
 ACE_OS::system (const wchar_t *command)
 {
   ACE_OSCALL_RETURN (::_wsystem (command), int, -1);    
+}
+
+wchar_t *
+ACE_OS::mktemp (wchar_t *s)
+{
+  // ACE_TRACE ("ACE_OS::mktemp");
+  return ::_wmktemp (s);
+}
+
+ACE_INLINE int 
+ACE_OS::mkdir (const wchar_t *path, mode_t mode)
+{
+  // ACE_TRACE ("ACE_OS::mkdir");
+  ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);  
 }
 
 #endif /* ACE_WIN32 */

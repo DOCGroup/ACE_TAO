@@ -16,6 +16,9 @@ Tue Dec 10 22:59:26 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 	  Tokens_Test.cpp 
 	  UPIPE_SAP_Test.cpp
 
+	* netsvcs/lib: Added/Fixed UNICODE behavior of the following:
+	  ACE_TS_Clerk_Processor::poolname_
+	
 Tue Dec 10 00:33:08 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.i (inet_aton): We need to cast -1 to (ACE_UINT32).
@@ -262,7 +265,9 @@ Mon Dec  9 02:06:48 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 	  ACE_OS::fopen
 	  ACE_OS::getenv
 	  ACE_OS::system
-
+	  ACE_OS::mkdir
+	  ACE_OS::mktemp	
+	
 Sun Dec  8 19:00:45 1996  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
         * ace/Reactor.cpp (handle_events): Updated this method to use the
