@@ -1276,6 +1276,23 @@ sub get_component_list {
 }
 
 
+sub need_to_write_project {
+  my($self)  = shift;
+  foreach my $key (keys %{$self->{'valid_components'}}) {
+    my($names) = $self->{$key};
+    foreach my $name (keys %$names) {
+      foreach my $key (sort keys %{$names->{$name}}) {
+        if (defined $names->{$name}->{$key}->[0]) {
+          return 1;
+        }
+      }
+    }
+  }
+  
+  return 0;
+}
+
+
 sub write_output_file {
   my($self)     = shift;
   my($name)     = shift;
@@ -1346,29 +1363,31 @@ sub write_project {
     &$progress();
   }
 
-  ## Writing the non-static file so set it to 0
-  if ($self->{'want_dynamic_projects'}) {
-    $self->{'writing_type'} = 0;
-    $self->process_assignment('project_name',
-                              $prjname . $self->get_type_append());
-    ($status, $error) = $self->write_output_file($name);
-  }
+  if ($self->need_to_write_project()) {
+    ## Writing the non-static file so set it to 0
+    if ($self->{'want_dynamic_projects'}) {
+      $self->{'writing_type'} = 0;
+      $self->process_assignment('project_name',
+                                $prjname . $self->get_type_append());
+      ($status, $error) = $self->write_output_file($name);
+    }
 
-  if ($status && $self->{'want_static_projects'} &&
-      $self->separate_static_project()) {
-    ## Set the project name back to what it originally was
-    $self->process_assignment('project_name', $prjname);
-    $name = $self->transform_file_name($self->static_project_file_name());
+    if ($status && $self->{'want_static_projects'} &&
+        $self->separate_static_project()) {
+      ## Set the project name back to what it originally was
+      $self->process_assignment('project_name', $prjname);
+      $name = $self->transform_file_name($self->static_project_file_name());
 
-    ## Writing the static file so set it to 1
-    $self->{'writing_type'} = 1;
-    $self->process_assignment('project_name',
-                              $prjname . $self->get_type_append());
-    ($status, $error) = $self->write_output_file($name);
-  }
+      ## Writing the static file so set it to 1
+      $self->{'writing_type'} = 1;
+      $self->process_assignment('project_name',
+                                $prjname . $self->get_type_append());
+      ($status, $error) = $self->write_output_file($name);
+    }
 
-  if (!$status) {
-    print STDERR "$error\n";
+    if (!$status) {
+      print STDERR "$error\n";
+    }
   }
 
   return $status;
