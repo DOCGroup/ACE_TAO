@@ -96,6 +96,10 @@ SOURCE=.\cubitC.cpp
 # Begin Group "Header Files"
 
 # PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
+# Begin Source File
+
+SOURCE=.\cubitC.h
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
