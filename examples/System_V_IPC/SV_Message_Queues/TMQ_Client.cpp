@@ -14,7 +14,7 @@ main (int, char *[])
 
   ACE_Typed_SV_Message_Queue<Message_Data> msgque (key_t (SRV_KEY));
 
-  Message_Data msg_data (pid, ACE_OS::cuserid (0), "did you get this?");
+  Message_Data msg_data (pid, ACE_OS::cuserid (ACE_static_cast (char *, 0)), "did you get this?");
 
   ACE_Typed_SV_Message<Message_Data> send_msg (msg_data,
 					       SRV_ID,
