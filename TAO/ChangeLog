@@ -1,3 +1,11 @@
+Wed Mar 23 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/Mcast/Simple/consumer.cpp:
+          Added this file, it seems I forgot it to add it some years ago
+
+        * orbsvcs/tests/Event/Mcast/Simple/Simple.mpc:
+          Do build the consumer
+
 Wed Mar 23 14:20:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/RequestProcessingStrategyDefaultServant.cpp:
