@@ -1374,6 +1374,7 @@ Points of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Arulanthu</a>
 <a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a>
 <p>Status:
 <ul>
+
 We've implemented the callback model of the <A
 HREF="http://www.cs.wustl.edu/~schmidt/CORBA-docs/98-05-05.pdf.gz">Messaging
 specification</a>.  To activate the AMI for TAO and the TAO IDL
@@ -1381,7 +1382,11 @@ compiler define <tt>TAO_HAS_CORBA_MESSAGING</tt>,
 <tt>TAO_HAS_AMI_CALLBACK</tt>, <tt>TAO_HAS_VALUETYPE</tt> and
 <tt>IDL_HAS_VALUETYPE</tt> in your config.h file.  The TAO IDL
 compiler can generate the AMI stubs, ReplyHandler und reply stubs
-using the -GC switch.</ul>
+using the -GC switch.
+<p>
+For an example see <tt>$TAO_ROOT\tests\AMI</tt> and <tt>$TAO_ROOT\examples\AMI</tt>.
+
+</ul>
 
 <p> Finished work:
 <ul>
@@ -1390,12 +1395,13 @@ the AbstractSyntaxTree and generate the implied-IDL code in memory.
 This reduced the amount of AMI specific IDL compiler code dramatically.</li>
 <li>Support for exceptions</li>
 <li>Support for attributes</li>
+<li>Support for deferred synchronous invocations. 
+<a href="mailto:parsons@cs.wustl.edu">Jeff Parsons</a></li>
 </ul>
 <p> Future Work:
 <ul>
 <li>Testing the current implementation</li>
 <li>Implementation of the poller model.</li>
-<li>Supporting deferred synchronous invocations.</li>
 </ul>
 <p>
 <hr>
