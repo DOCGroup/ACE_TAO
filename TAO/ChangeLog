@@ -1,3 +1,25 @@
+Sat Jan 22 19:57:16 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* tao/XtResource_Loader.h (Module):
+	* tao/XtResource_Loader.cpp (Module):
+	* tao/XtResource_Factory.h (Module):
+	* tao/XtResource_Factory.cpp (Module):
+	* tao/TkResource_Loader.h (Module):
+	* tao/TkResource_Loader.cpp (Module):
+	* tao/TkResource_Factory.h (Module):
+	* tao/TkResource_Factory.cpp (Module):
+	* tao/QtResource_Loader.h (Module):
+	* tao/QtResource_Loader.cpp (Module):
+	* tao/QtResource_Factory.h (Module):
+	* tao/QtResource_Factory.cpp (Module):
+	* tao/GUIResource_Factory.h (Module):
+	* tao/GUIResource_Factory.cpp (Module):
+	* tao/FlResource_Loader.h (Module):
+	* tao/FlResource_Loader.cpp (Module):
+	* tao/FlResource_Factory.h (Module):
+	* tao/FlResource_Factory.cpp (Module):
+	Style changes, addedin internal locking in factory when creating reactor.
+
 Wed Jan 19 22:52:34 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* tests/Xt_Stopwatch/server.cpp:

@@ -13,16 +13,14 @@
 #ifndef TAO_XTRESOURCE_FACTORY_H
 #define TAO_XTRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
-
-#include "TAO_XtResource_Export.h"
-
+#include /**/ <X11/Intrinsic.h>
+#include "tao/TAO_XtResource_Export.h"
+#include "ace/XtReactor.h"
+#include "tao/GUIResource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/XtReactor.h"
-#include "tao/GUIResource_Factory.h"
 
 namespace TAO
 {
@@ -37,6 +35,7 @@ namespace TAO
    * TAO_ORB_Core::set_gui_resource_factory method which is usually
    * done by TAO_XtResource_Loader.
    */
+
   class TAO_XtResource_Export XtResource_Factory : public GUIResource_Factory
   {
   public:
@@ -52,6 +51,9 @@ namespace TAO
 
     /// Xt context for XtReactor
     XtAppContext  context_;
+
+    /// for internal locking
+    TAO_SYNCH_MUTEX lock_;
   };
 }
 

@@ -1,10 +1,12 @@
 //$Id$
 
-#include /**/ "FlResource_Factory.h"
-#include /**/ "debug.h"
-#include /**/ "ace/FlReactor.h"
+#include "FlResource_Factory.h"
+#include "debug.h"
+#include "ace/FlReactor.h"
 
-ACE_RCSID(tao, FlResource_Factory, "$Id$");
+ACE_RCSID( TAO_FlResource,
+           FlResource_Factory,
+           "$Id$");
 
 namespace TAO
 {
@@ -17,6 +19,7 @@ namespace TAO
   ACE_Reactor_Impl *
   FlResource_Factory::reactor_impl (void)
   {
+    // synchronized by external locks
     if (!this->reactor_impl_)
     {
       ACE_NEW_RETURN (this->reactor_impl_,

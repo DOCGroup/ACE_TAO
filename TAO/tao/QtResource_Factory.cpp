@@ -4,9 +4,9 @@
 #include "debug.h"
 #include "ace/QtReactor.h"
 
-ACE_RCSID(TAO_QtResource,
-          QtResource_Factory,
-          "$Id$");
+ACE_RCSID( TAO_QtResource,
+           QtResource_Factory,
+           "$Id$");
 
 namespace TAO
 {
@@ -19,7 +19,7 @@ namespace TAO
 
   ACE_Reactor_Impl *
   QtResource_Factory::reactor_impl (void)
-  {
+  {    // synchronized by external locks
     if (this->qapp_ == 0)
       {
         ACE_ERROR ((LM_ERROR,
@@ -28,7 +28,6 @@ namespace TAO
         return 0;
       }
 
-    // @@Marek, do we need a lock here??
     if (!this->reactor_impl_)
       {
 

@@ -1,10 +1,12 @@
 //$Id$
 
-#include /**/ "TkResource_Factory.h"
-#include /**/ "debug.h"
-#include /**/ "ace/TkReactor.h"
+#include "tao/TkResource_Factory.h"
+#include "tao/debug.h"
+#include "ace/TkReactor.h"
 
-ACE_RCSID(tao, TkResource_Factory, "$Id$");
+ACE_RCSID( TAO_TkResource,
+           TkResource_Factory,
+           "$Id$");
 
 
 namespace TAO
@@ -18,6 +20,7 @@ namespace TAO
   ACE_Reactor_Impl *
   TkResource_Factory::reactor_impl (void)
   {
+    // synchronized by external locks
     if (!this->reactor_impl_)
     {
       ACE_NEW_RETURN (this->reactor_impl_,
