@@ -29,7 +29,7 @@ class ACE_Export ACE_Get_Opt
 public:
   ACE_Get_Opt (int argc, 
 	       char **argv, 
-	       char *optstring, 
+	       const char *optstring, 
 	       int skip_argv0 = 1, 
 	       int report_errors = 0);
   // Initialize the internal data when the first call is made.  Start
@@ -117,7 +117,7 @@ private:
   // If this is zero, or a null string, it means resume the scan
   // by advancing to the next <argv>-element.
 
-  char *optstring_;
+  const char *optstring_;
   // Holds the option string.
 };
 
