@@ -1,7 +1,8 @@
 $Id$
 
-In short, stay away for now.  This is all work in progress and really
-rough around the edges.  
+Here are a few tests for the ImplRepo.  The best way to test is to
+use the run_test.pl passing it either airplane or airplane_ir to
+test out the airplane server.
 
 More information about the Implementation Repository can be found in 
 TAO/docs.
