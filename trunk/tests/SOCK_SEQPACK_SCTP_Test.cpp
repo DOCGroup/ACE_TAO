@@ -45,7 +45,7 @@ typedef struct tdesc tdesc_t;
 #define SELECT_WIDTH(x) (x)
 #endif
 
-void *
+ACE_THR_FUNC_RETURN
 Server (void *arg)
 {
   ACE_SOCK_SEQPACK_Acceptor *AcceptorSocket =
@@ -122,7 +122,7 @@ Server (void *arg)
                         0);
     }
 
-    char byte = BYTE_MESG;
+    unsigned char byte = BYTE_MESG;
 
     if (-1 == Stream.send_n (&byte, 1))
     {
@@ -169,7 +169,7 @@ Server (void *arg)
   return 0;
 }
 
-void *
+ACE_THR_FUNC_RETURN
 Client(void *arg)
 {
   ACE_Multihomed_INET_Addr *ServerAddr =
@@ -310,7 +310,7 @@ spawn_test(bool ipv6_test)
   }
 #elif defined (ACE_HAS_THREADS)
   if (-1 == ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (Server),
+      (Server,
        ACE_reinterpret_cast(void *, &AcceptorSocket),
        THR_NEW_LWP | THR_DETACHED))
   {
@@ -320,7 +320,7 @@ spawn_test(bool ipv6_test)
   }
 
   if (-1 == ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (Client),
+      (Client,
        ACE_reinterpret_cast(void *, &ServerAddr),
        THR_NEW_LWP | THR_DETACHED))
   {
