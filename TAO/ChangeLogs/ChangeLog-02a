@@ -1,3 +1,12 @@
+Fri Jan 18 15:55:59 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Portable_Interceptors/ForwardRequest/client.dsp:
+	* tests/Portable_Interceptors/ForwardRequest/server.dsp:
+
+	  Added missing TAO_IDL include flag and ValueType generation
+	  flag.  PortableInteceptor.pidl now has support for
+	  ObjectReferenceTemplates, which requires ValueType support.
+
 Fri Jan 18 22:30:03 GMT 2002  Boris Kolpackov <bosk@ipmce.ru>
 
         * tests/OBV/Any/*:
