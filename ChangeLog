@@ -1,3 +1,11 @@
+Thu Aug  2 18:37:23 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/RW_Process_Mutex.cpp: Added ACE_DEFAULT_OPEN_PERMS
+	  to the constructor call to ACE_RW_Process_Mutex so that it does
+ 	  the right thing on Win32.  Thanks to Wayne Erchak
+ 	  <werchak@stentor.com> for reporting this.  This fixes
+	  bugid 996.
+
 Thu Aug 02 13:04:19 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.icc: Added Intrusive_List.cpp to the TEMPLATE_FILES
