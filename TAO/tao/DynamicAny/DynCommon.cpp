@@ -449,7 +449,7 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value,
         {
           good_type = 0;
         }
-      else
+      else if (!CORBA::is_nil (value))
         {
           const char *value_id = value->_interface_repository_id ();
 
