@@ -45,6 +45,7 @@
 struct TAO_Exception_Data;
 class TAO_Profile;
 class TAO_Transport;
+class TAO_Endpoint;
 
 enum TAO_Invoke_Status
 {
@@ -106,14 +107,13 @@ public:
   TAO_OutputCDR &out_stream (void);
   // Return the underlying output stream.
 
-  TAO_Profile *select_profile_based_on_policy (
-      CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    )
+  void select_endpoint_based_on_policy (CORBA_Environment &ACE_TRY_ENV 
+                                       = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Select the profile we will use to in this invocation, based on
-  // policies for this object.  (Currently the decision is based on a
-  // single Policy, TAO::Client_Priority_Policy.)  I think this
+  // Select the endpoint (and profile) we will use to in this
+  // invocation, based on TAO::Client_Priority_Policy.)  I think this  
   // function may be more appropriate in TAO_Stub class.
+
 protected:
   void start (CORBA_Environment &ACE_TRY_ENV =
                 TAO_default_environment ())
@@ -173,7 +173,10 @@ protected:
   // This invocation is using this transport, may change...
 
   TAO_Profile *profile_;
-  // This invocation is using this transport, may change...
+  // This invocation is this profile.
+
+  TAO_Endpoint *endpoint_;
+  // This invocation is using this endpoint from <profile_>.
 
   ACE_Time_Value max_wait_time_value_;
   ACE_Time_Value *max_wait_time_;

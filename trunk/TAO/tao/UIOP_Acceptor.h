@@ -74,7 +74,7 @@ public:
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
                                TAO_MProfile &mprofile);
-  virtual int is_collocated (const TAO_Profile* profile);
+  virtual int is_collocated (const TAO_Endpoint* endpoint);
   virtual CORBA::ULong endpoint_count (void);
 
   virtual int object_key (IOP::TaggedProfile &profile,
@@ -93,6 +93,17 @@ private:
   int init_uiop_properties (void);
   // Obtains uiop properties that must be used by this acceptor, i.e.,
   // initializes <uiop_properties_>.
+
+  int create_rt_mprofile (const TAO_ObjectKey &object_key,
+                          TAO_MProfile &mprofile);
+  // Rather than creating a profile for each endpoint, this version of
+  // <create_mprofile> adds an endpoint to an existing UIOP profile
+  // if one already exists.
+
+  int create_profile (const TAO_ObjectKey &object_key,
+                      TAO_MProfile &mprofile);
+  // Create a UIOP profile representing this acceptor.  Factors out
+  // common functionality of <create_mprofile> and <create_rt_mprofile>.
 
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;

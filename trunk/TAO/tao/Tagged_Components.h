@@ -74,13 +74,6 @@ public:
   // Gets a copy of the IOP::TAG_CODE_SETS component value, return 0
   // if the component is not present.
 
-  // = TAO specific components
-  void set_tao_priority (CORBA::Short priority);
-  // The the TAO_TAG_PRIORITY component value.
-
-  int get_tao_priority (CORBA::Short& min_priority) const;
-  // Gets the TAO_TAG_PRIORITY component value.
-
   // = Generic components
 
   void set_component (const IOP::TaggedComponent& component);
@@ -136,7 +129,7 @@ private:
   CONV_FRAME::CodeSetComponentInfo code_sets_;
   // The ORB_TYPE component value
 
-  CORBA::Short tao_priority_;
+  //  CORBA::Short tao_priority_;
   // The TAO_PRIORITY priorities
 
   IOP::MultipleComponentProfile components_;
@@ -146,7 +139,6 @@ private:
   // A flag for each component...
   CORBA::Octet orb_type_set_;
   CORBA::Octet code_sets_set_;
-  CORBA::Octet tao_priority_set_;
 };
 
 #if defined (__ACE_INLINE__)

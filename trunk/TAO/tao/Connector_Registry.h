@@ -75,7 +75,7 @@ public:
   // For this list of preconnections call the connector specific
   // preconnect method for each preconnection.
 
-  int connect (TAO_Profile *&profile,
+  int connect (TAO_Endpoint *endpoint,
                TAO_Transport *&transport,
                ACE_Time_Value *max_wait_time = 0);
   // This is where the transport protocol is selected based on some

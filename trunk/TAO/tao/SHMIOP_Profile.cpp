@@ -5,12 +5,12 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "tao/SHMIOP_Connect.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
+#include "tao/iiop_endpoints.h"
 
 ACE_RCSID(tao, SHMIOP_Profile, "$Id$")
 
@@ -32,17 +32,14 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
                                         const TAO_ObjectKey &object_key,
                                         const TAO_GIOP_Version &version,
                                         TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_SHMEM_PROFILE,
-                 orb_core),
-    host_ (),
-    port_ (0),
-    version_ (version),
+  : TAO_Profile (TAO_TAG_SHMEM_PROFILE, orb_core, version),
+    endpoint_ (addr, 
+               orb_core->orb_params ()->use_dotted_decimal_addresses ()),
+    count_ (1),
+    endpoints_encoded_ (0),
     object_key_ (object_key),
-    object_addr_ (addr.get_remote_addr ()),
-    hint_ (0),
     tagged_profile_ ()
 {
-  this->set (addr.get_remote_addr ());
 }
 
 TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char* host,
@@ -51,30 +48,26 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char* host,
                                         const ACE_INET_Addr &addr,
                                         const TAO_GIOP_Version &version,
                                         TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_SHMEM_PROFILE,
-                 orb_core),
-    host_ (),
-    port_ (port),
-    version_ (version),
+  : TAO_Profile (TAO_TAG_SHMEM_PROFILE, orb_core, version),
+    endpoint_ (host, port, addr),
+    count_ (1),
+    endpoints_encoded_ (0),
     object_key_ (object_key),
-    object_addr_ (addr),
-    hint_ (0)
+    tagged_profile_ ()
 {
-  if (host != 0)
-    this->host_ = host;
 }
 
 TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char *string,
                                         TAO_ORB_Core *orb_core,
                                         CORBA::Environment &ACE_TRY_ENV)
   : TAO_Profile (TAO_TAG_SHMEM_PROFILE,
-                 orb_core),
-    host_ (),
-    port_ (0),
-    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
+                 orb_core,
+                 TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
+    endpoint_ (),
+    count_ (1),
+    endpoints_encoded_ (0),
     object_key_ (),
-    object_addr_ (),
-    hint_ (0)
+    tagged_profile_ ()
 {
   parse_string (string, ACE_TRY_ENV);
   ACE_CHECK;
@@ -82,48 +75,34 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char *string,
 
 TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SHMEM_PROFILE,
-                 orb_core),
-    host_ (),
-    port_ (0),
-    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
+                 orb_core,
+                 TAO_GIOP_Version (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR)),
+    endpoint_ (),
+    count_ (1),
+    endpoints_encoded_ (0),
     object_key_ (),
-    object_addr_ (),
-    hint_ (0)
+    tagged_profile_ ()
 {
-}
-
-int
-TAO_SHMIOP_Profile::set (const ACE_INET_Addr &addr)
-{
-  char tmp_host[MAXHOSTNAMELEN + 1];
-
-  if (this->orb_core ()->orb_params ()->use_dotted_decimal_addresses ()
-      || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
-    {
-      const char *tmp = addr.get_host_addr ();
-      if (tmp == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO (%P|%t) ")
-                        ACE_TEXT ("SHMIOP_Profile::set ")
-                        ACE_TEXT ("- %p\n\n"),
-                        ACE_TEXT ("cannot determine hostname")));
-          return -1;
-        }
-      else
-        this->host_ = tmp;
-    }
-  else
-    this->host_ = CORBA::string_dup (tmp_host);
-
-  this->port_ = addr.get_port_number();
-
-  return 0;
 }
 
 TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile (void)
 {
+  // Clean up endpoint list.
+  TAO_Endpoint *tmp = 0;
+
+  for (TAO_Endpoint *next = this->endpoint ()->next ();
+       next != 0;
+       next = tmp)
+    {
+      tmp = next->next ();
+      delete next;
+    }
+}
+
+TAO_Endpoint*
+TAO_SHMIOP_Profile::endpoint (void)
+{
+  return &this->endpoint_;
 }
 
 // return codes:
@@ -154,8 +133,8 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
   }
 
   // Get host and port
-  if (cdr.read_string (this->host_.out ()) == 0
-      || cdr.read_ushort (this->port_) == 0)
+  if (cdr.read_string (this->endpoint_.host_.out ()) == 0
+      || cdr.read_ushort (this->endpoint_.port_) == 0)
     {
       if (TAO_debug_level > 0)
         {
@@ -189,10 +168,13 @@ TAO_SHMIOP_Profile::decode (TAO_InputCDR& cdr)
                   encap_len));
     }
 
+  // Decode endpoints if any.
+  this->decode_endpoints ();
+
   if (cdr.good_bit ())
     {
       // Invalidate the object_addr_ until first access.
-      this->object_addr_.set_type (-1);
+      this->endpoint_.object_addr_.set_type (-1);
 
       return 1;
     }
@@ -284,7 +266,7 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
   ACE_OS::strncpy (tmp.inout (), cp + 1, length);
   tmp[length] = '\0';
 
-  this->port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
+  this->endpoint_.port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
 
   length = cp - start;
 
@@ -293,10 +275,10 @@ TAO_SHMIOP_Profile::parse_string (const char *string,
   ACE_OS::strncpy (tmp.inout (), start, length);
   tmp[length] = '\0';
 
-  this->host_ = tmp._retn ();
+  this->endpoint_.host_ = tmp._retn ();
 
-  if (this->object_addr_.set (this->port_,
-                              this->host_.in ()) == -1)
+  if (this->endpoint_.object_addr_.set (this->endpoint_.port_,
+                                        this->endpoint_.host_.in ()) == -1)
     {
       if (TAO_debug_level > 0)
         {
@@ -326,21 +308,43 @@ TAO_SHMIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 
   ACE_ASSERT (op->object_key_.length () < UINT_MAX);
 
-  return this->port_ == op->port_
-    && this->object_key_ == op->object_key_
-    && ACE_OS::strcmp (this->host_.in (), op->host_.in ()) == 0
-    && this->version_ == op->version_;
+  if (!(this->object_key_ == op->object_key_
+        && this->version_ == op->version_
+        && this->count_ == op->count_))
+    return 0;
+
+  // Check endpoints equivalence.
+  // @@ Are we guaranteed that the endpoints in both profiles will be
+  // in the same order?   
+  const TAO_SHMIOP_Endpoint *other_endp = &op->endpoint_;
+  for (TAO_SHMIOP_Endpoint *endp = &this->endpoint_;
+       endp != 0;
+       endp = endp->next_)
+    {
+      if (endp->is_equivalent (other_endp))
+        other_endp = other_endp->next_;
+      else
+        return 0;
+    }
+
+  return 1;
 }
 
 CORBA::ULong
 TAO_SHMIOP_Profile::hash (CORBA::ULong max,
                           CORBA::Environment &)
 {
-  CORBA::ULong hashval =
-    ACE::hash_pjw (this->host_.in ())
-    + this->port_
-    + this->version_.minor
-    + this->tag ();
+  // Get the hashvalue for all endpoints.
+  CORBA::ULong hashval = 0;
+  for (TAO_SHMIOP_Endpoint *endp = &this->endpoint_;
+       endp != 0;
+       endp = endp->next_)
+    {
+      hashval += endp->hash ();
+    }
+
+  hashval += this->version_.minor;
+  hashval += this->tag ();
 
   if (this->object_key_.length () >= 4)
     {
@@ -351,37 +355,13 @@ TAO_SHMIOP_Profile::hash (CORBA::ULong max,
   return hashval % max;
 }
 
-int
-TAO_SHMIOP_Profile::addr_to_string (char *buffer, size_t length)
-{
-  size_t actual_len =
-    ACE_OS::strlen (this->host_.in ()) // chars in host name
-    + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
-    + sizeof ('\0');
-
-  if (length < actual_len)
-    return -1;
-
-  ACE_OS::sprintf (buffer, "%s:%d",
-                   this->host_.in (), this->port_);
-
-  return 0;
-}
-
-const char *
-TAO_SHMIOP_Profile::host (const char *h)
-{
-  this->host_ = h;
-
-  return this->host_.in ();
-}
-
 void
-TAO_SHMIOP_Profile::reset_hint (void)
+TAO_SHMIOP_Profile::add_endpoint (TAO_SHMIOP_Endpoint *endp)
 {
-  if (this->hint_)
-    this->hint_->cleanup_hint ((void **) &this->hint_);
+  endp->next_ = this->endpoint_.next_;
+  this->endpoint_.next_ = endp;
+
+  this->count_++;
 }
 
 char *
@@ -399,7 +379,7 @@ TAO_SHMIOP_Profile::to_string (CORBA::Environment &)
                   1 /* decimal point */ +
                   1 /* minor version */ +
                   1 /* `@' character */ +
-                  ACE_OS::strlen (this->host_.in ()) +
+                  ACE_OS::strlen (this->endpoint_.host ()) +
                   1 /* colon separator */ +
                   5 /* port number */ +
                   1 /* object key separator */ +
@@ -414,8 +394,8 @@ TAO_SHMIOP_Profile::to_string (CORBA::Environment &)
                    ::prefix_,
                    digits [this->version_.major],
                    digits [this->version_.minor],
-                   this->host_.in (),
-                   this->port_,
+                   this->endpoint_.host (),
+                   this->endpoint_.port (),
                    this->object_key_delimiter_,
                    key.in ());
   return buf;
@@ -508,17 +488,121 @@ TAO_SHMIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   encap.write_octet (this->version_.minor);
 
   // STRING hostname from profile
-  encap.write_string (this->host_.in ());
+  encap.write_string (this->endpoint_.host ());
 
   // UNSIGNED SHORT port number
-  encap.write_ushort (this->port_);
+  encap.write_ushort (this->endpoint_.port ());
 
   // OCTET SEQUENCE for object key
   encap << this->object_key_;
+
+  // Encode profile endpoints.
+  TAO_SHMIOP_Profile *p = 
+    ACE_const_cast (TAO_SHMIOP_Profile *, this);
+  if (!endpoints_encoded_)
+    p->encode_endpoints ();
 
   if (this->version_.major > 1
       || this->version_.minor > 0)
     this->tagged_components ().encode (encap);
 }
+
+int
+TAO_SHMIOP_Profile::encode_endpoints (void)
+{
+  // Create a data structure with endpoint info for wire transfer.
+  TAO_IIOPEndpointSequence endpoints;
+  endpoints.length (this->count_);
+
+  TAO_SHMIOP_Endpoint *endpoint = &this->endpoint_;
+  for (size_t i = 0; 
+       i < this->count_;
+       ++i)
+    {
+      endpoints[i].host = endpoint->host ();
+      endpoints[i].port = endpoint->port ();
+      endpoints[i].priority = endpoint->priority ();
+      
+      endpoint = endpoint->next_;
+    }
+
+  // Encode.
+  TAO_OutputCDR out_cdr;
+  out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+  out_cdr << endpoints;
+  CORBA::ULong length = out_cdr.total_length ();
+
+  IOP::TaggedComponent tagged_component;
+  tagged_component.tag = TAO_TAG_ENDPOINTS;
+  tagged_component.component_data.length (length);
+  CORBA::Octet *buf = 
+    tagged_component.component_data.get_buffer ();
+
+  for (const ACE_Message_Block *iterator = out_cdr.begin ();
+       iterator != 0;
+       iterator = iterator->cont ())
+    {
+      CORBA::ULong i_length = iterator->length ();
+      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+
+      buf += i_length;
+    }
+
+  // Eventually we add the TaggedComponent to the TAO_TaggedComponents
+  // member variable.
+  tagged_components_.set_component (tagged_component);
+  this->endpoints_encoded_ = 1;
+
+  return  1;
+}
+
+int
+TAO_SHMIOP_Profile::decode_endpoints (void)
+{
+  IOP::TaggedComponent tagged_component;
+  tagged_component.tag = TAO_TAG_ENDPOINTS;
+
+  if (this->tagged_components_.get_component (tagged_component))
+    {
+      const CORBA::Octet *buf =
+        tagged_component.component_data.get_buffer ();
+      
+      TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+                           tagged_component.component_data.length ());
+      
+      // Extract the Byte Order.
+      CORBA::Boolean byte_order;
+      if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+        return 0;
+      in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+      
+      // Extract endpoints sequence.
+      TAO_IIOPEndpointSequence endpoints;
+      in_cdr >> endpoints;
+      
+      // Get the priority of the first endpoint.  It's other data is
+      // extracted as part of the standard iiop decoding.
+      this->endpoint_.priority (endpoints[0].priority);
+
+      // Start with the second endpoint, because the first endpoint is
+      // always extracted through standard iiop profile body. 
+      for (CORBA::ULong i = 1; i < endpoints.length (); ++i)
+        {
+          TAO_SHMIOP_Endpoint *endpoint = 0;
+          ACE_NEW_RETURN (endpoint,
+                          TAO_SHMIOP_Endpoint (endpoints[i].host,
+                                               endpoints[i].port,
+                                               endpoints[i].priority),
+                          0);
+
+          this->add_endpoint (endpoint);
+        }
+    }
+
+  this->endpoints_encoded_ = 1;
+  return 1;
+}
+
+
 
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */

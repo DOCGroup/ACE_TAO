@@ -6,6 +6,7 @@
 
 #include "tao/Timeprobe.h"
 #include "tao/Object_KeyC.h"
+#include "tao/Endpoint.h"
 #include "tao/debug.h"
 #include "tao/Pluggable.h"
 #include "tao/Connector_Registry.h"
@@ -86,6 +87,8 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (TAO_Stub *stub,
                  orb_core->to_unicode ()),
     orb_core_ (orb_core),
     transport_ (0),
+    profile_ (0),
+    endpoint_ (0),
     max_wait_time_ (0)
 {
 }
@@ -94,8 +97,8 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
 }
 
-TAO_Profile *
-TAO_GIOP_Invocation::select_profile_based_on_policy
+void
+TAO_GIOP_Invocation::select_endpoint_based_on_policy
 (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -104,7 +107,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
 
   ACE_UNUSED_ARG (ACE_TRY_ENV);
   this->profile_ = this->stub_->profile_in_use ();
-  return this->profile_;
+  this->endpoint_ = this->profile_->endpoint ();
 
 #else
 
@@ -118,7 +121,7 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
     // Policy is not set.
     {
       this->profile_ = this->stub_->profile_in_use ();
-      return this->profile_;
+      this->endpoint_ = this->profile_->endpoint ();
     }
   else
     // Policy is set.
@@ -133,63 +136,74 @@ TAO_GIOP_Invocation::select_profile_based_on_policy
       if (mode == TAO::USE_NO_PRIORITY)
         {
           this->profile_ = this->stub_->profile_in_use ();
-          return this->profile_;
-        }
-
-      // Care about priority.
-
-      // Determine  priority range used to select the profile.
-      CORBA::Short min_priority;
-      CORBA::Short max_priority;
-
-      if (mode == TAO::USE_PRIORITY_RANGE)
-        {
-          min_priority = priority_spec.min_priority;
-          max_priority = priority_spec.max_priority;
+          this->endpoint_ = profile_->endpoint ();
         }
       else
-        // mode == TAO::USE_THREAD_PRIORITY
         {
-          if (this->orb_core_->get_thread_priority (min_priority) == -1)
-            ACE_THROW_RETURN (CORBA::DATA_CONVERSION (1,
-                                                      CORBA::COMPLETED_NO),
-                              0);
-          max_priority = min_priority;
-        }
-      if (TAO_debug_level > 3)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) - matching priority range %d %d\n"),
-                    min_priority,
-                    max_priority));
+          // Care about priority.
 
-      // Select a base profile whose priority is in the range.
-      this->profile_ = 0;
-      const TAO_MProfile& mprofile = this->stub_->base_profiles ();
-
-      for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
-        {
-          const TAO_Profile *profile = mprofile.get_profile (i);
-          const TAO_Tagged_Components &tc = profile->tagged_components ();
-          CORBA::Short profile_priority;
-          if (tc.get_tao_priority (profile_priority) == 0)
-            continue;
-
-          if (profile_priority >= min_priority
-              && profile_priority <= max_priority)
+          // Determine  priority range used to select the profile.
+          CORBA::Short min_priority;
+          CORBA::Short max_priority;
+          
+          if (mode == TAO::USE_PRIORITY_RANGE)
             {
-              this->profile_ =
-                ACE_const_cast(TAO_Profile*,profile);
-
+              min_priority = priority_spec.min_priority;
+              max_priority = priority_spec.max_priority;
             }
+          else
+            // mode == TAO::USE_THREAD_PRIORITY
+            {
+              if (this->orb_core_->get_thread_priority (min_priority) == -1)
+                ACE_THROW (CORBA::DATA_CONVERSION (1,
+                                                   CORBA::COMPLETED_NO));
+              max_priority = min_priority;
+            }
+          if (TAO_debug_level > 3)
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - matching priority range %d %d\n"),
+                        min_priority,
+                        max_priority));
+          
+          // Select profile/endpoint satisfying the priority range.
+          // We start the search from <profile_in_use>.
+          // @@ Optimization: if this->profile_ != 0, we can start the
+          // search from this->profile_.
+          TAO_MProfile& mprofile = this->stub_->base_profiles ();
+          this->endpoint_ = 0;
+
+          for (TAO_PHandle i = mprofile.get_current_handle (); 
+               i < mprofile.profile_count (); 
+               ++i)
+            {
+              TAO_Profile *profile = mprofile.get_profile (i);
+
+              // Check if this profile contains any endpoints of the
+              // right priority.
+              for (TAO_Endpoint *endp = profile->endpoint ();
+                   endp != 0;
+                   endp = endp->next ())
+                {
+                  CORBA::Short priority = endp->priority ();
+                  if (priority >= min_priority
+                      && priority <= max_priority)
+                    {
+                      this->profile_ = profile;
+                      this->endpoint_ = endp;
+                      break;
+                    }
+                }
+              
+              if (this->endpoint_ != 0)
+                break;
+            }
+         
+          // We were not able to find profile with the endpoint of the
+          // right priority.
+          if (this->endpoint_ == 0)
+            ACE_THROW (CORBA::INV_POLICY ());
         }
-
-      if (this->profile_ == 0)
-        ACE_THROW_RETURN (CORBA::INV_POLICY (),
-                          0);
-      else
-        return this->profile_;
     }
-
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 0 */
 
 }
@@ -341,18 +355,34 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   for (;;)
     {
       // Select the profile for this invocation.
-      this->select_profile_based_on_policy (ACE_TRY_ENV);
+      this->select_endpoint_based_on_policy (ACE_TRY_ENV);
       ACE_CHECK;
 
       // Get the transport object.
       if (this->transport_ != 0)
         this->transport_->idle ();
 
-      int result = conn_reg->connect (this->profile_,
+      int result = conn_reg->connect (this->endpoint_,
                                       this->transport_,
                                       this->max_wait_time_);
       if (result == 0)
-        break;
+        {
+          // Now that we have the client connection handler object we need to
+          // set the right messaging protocol for in the client side transport.
+          const TAO_GIOP_Version& version = this->profile_->version ();
+          result = this->transport_->messaging_init (version.major,
+                                                     version.minor);
+          if (result == -1)
+            {
+              if (TAO_debug_level > 0)
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%N|%l|%p|%t) init_mesg_protocol () failed \n")));
+                }
+            }
+          else
+            break;
+        }
 
       if (errno == ETIME)
         {
@@ -484,7 +514,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
       this->transport_->close_connection ();
       this->transport_ = 0;
 
-      this->profile_->reset_hint ();
+      this->endpoint_->reset_hint ();
 
       return TAO_INVOKE_RESTART;
     }
@@ -518,7 +548,8 @@ TAO_GIOP_Invocation::close_connection (void)
   this->transport_->idle ();
   this->transport_ = 0;
 
-  this->profile_->reset_hint ();
+  this->endpoint_->reset_hint ();
+  this->endpoint_ = 0;
   this->profile_ = 0;
 
   // @@ Get rid of any forwarding profiles and reset
@@ -1392,7 +1423,7 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       this->transport_->close_connection ();
       this->transport_ = 0;
 
-      this->profile_->reset_hint ();
+      this->endpoint_->reset_hint ();
 
       // @@ This code abort if the connection for the currenct profile
       //    fails.  Should we transparently try new profiles until one

@@ -25,11 +25,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Tagged_Components.h"
-
 #include "tao/PolicyC.h"
+#include "tao/GIOP_Message_State.h"
 
 class TAO_MProfile;
 class TAO_Stub;
+class TAO_Endpoint;
 class TAO_ORB_Core;
 
 class TAO_Export TAO_Profile
@@ -42,8 +43,10 @@ class TAO_Export TAO_Profile
   //   information.  This is based on the CORBA IOR definitions.
   //
 public:
+
   TAO_Profile (CORBA::ULong tag,
-               TAO_ORB_Core *orb_core);
+               TAO_ORB_Core *orb_core,
+               const TAO_GIOP_Version &version);
   // Constructor
 
   virtual ~TAO_Profile (void);
@@ -51,6 +54,13 @@ public:
 
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
+
+  const TAO_GIOP_Version& version (void) const;
+  // Return a pointer to this profile's version.  This object
+  // maintains ownership.
+
+  virtual TAO_Endpoint *endpoint (void) = 0;
+  //
 
   TAO_ORB_Core *orb_core (void) const;
   // Get a poiter to the TAO_ORB_Core
@@ -107,17 +117,6 @@ public:
                              CORBA::Environment &ACE_TRY_ENV) = 0;
   // Return a hash value for this object.
 
-  virtual int addr_to_string (char *buffer, size_t length) = 0;
-  // Return a string representation for the address.  Returns
-  // -1 if buffer is too small.  The purpose of this method is to
-  // provide a general interface to the underlying address object's
-  // addr_to_string method.  This allows the protocol implementor to
-  // select the appropriate string format.
-
-  virtual void reset_hint (void) = 0;
-  // This method is used with a connection has been reset requiring
-  // the hint to be cleaned up and reset to NULL.
-
   virtual IOP::TaggedProfile &create_tagged_profile (void) = 0;
   // This method is used to get the IOP::taggedProfile. The profile
   // information that is received from the server side would have
@@ -148,6 +147,9 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Profile&))
 
 protected:
+  TAO_GIOP_Version version_;
+  // IIOP version number.
+
   TAO_Tagged_Components tagged_components_;
   // The tagged components
 
@@ -207,6 +209,7 @@ public:
   // Create the profile
 
   // = The TAO_Profile methods look above
+  virtual TAO_Endpoint *endpoint (void);
   virtual int parse_string (const char *string,
                             CORBA::Environment &ACE_TRY_ENV);
   virtual char object_key_delimiter (void) const;

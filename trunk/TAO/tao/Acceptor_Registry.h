@@ -73,8 +73,7 @@ public:
   // Close all open acceptors.
 
   size_t endpoint_count (void);
-  // Returns the total number of endpoints, i.e., the number of
-  // profiles that have been created.
+  // Returns the total number of endpoints in all of its acceptors.
 
   int make_mprofile (const TAO_ObjectKey& object_key,
                      TAO_MProfile &mprofile,

@@ -30,12 +30,10 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/Profile.h"
-#include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
-#include "tao/GIOP_Message_State.h"
+#include "tao/SHMIOP_Endpoint.h"
 
 #include "ace/Synch.h"
-#include "ace/MEM_Addr.h"
 
 class TAO_SHMIOP_Client_Connection_Handler;
 
@@ -83,6 +81,12 @@ public:
   ~TAO_SHMIOP_Profile (void);
   // Destructor is to be called only through <_decr_refcnt>.
 
+  virtual TAO_Endpoint *endpoint (void);
+  //
+
+  void add_endpoint (TAO_SHMIOP_Endpoint *endp);
+  //
+
   int parse_string (const char *string,
                     CORBA::Environment &ACE_TRY_ENV =
                       TAO_default_environment ());
@@ -116,67 +120,32 @@ public:
                        TAO_default_environment ());
   // Return a hash value for this object.
 
-  int addr_to_string (char *buffer, size_t length);
-  // Return a string representation for the address.
-
-  const ACE_INET_Addr &object_addr (void) const;
-  // Return a reference to the object_addr.
-
-  const char *host (void) const;
-  // Return a pointer to the host string.  This object maintains
-  // ownership of this string.
-
-  const char *host (const char *h);
-  // Copy the string h into <host_> and return the resulting pointer.
-  // This object maintains ownership of this string.
-
-  CORBA::UShort port (void) const;
-  // Return the port number.
-
-  CORBA::UShort port (CORBA::UShort p);
-  // Set the port number.
-
-  const TAO_GIOP_Version& version (void) const;
-  // Return a pointer to this profile's version.  This object
-  // maintains ownership.
-
-  TAO_SHMIOP_Client_Connection_Handler *&hint (void);
-  //  This is a hint for which connection handler to use.
-
-  void reset_hint (void);
-  //  Reset the hint's value.
-
   IOP::TaggedProfile &create_tagged_profile (void);
   // Please refer to Profile.h for the documentation of this method
-
-private:
-  int set (const ACE_INET_Addr &addr);
-  // helper method to set the INET_Addr.
 
 private:
 
   void create_profile_body (TAO_OutputCDR &cdr) const;
   // Create an encapsulation of the struct ProfileBody in <cdr>
+  
+  int encode_endpoints (void);
+  // Encodes endpoints from this profile into a tagged component.
 
-  CORBA::String_var host_;
-  // String representing the hosts name.
+  int decode_endpoints (void);
+  // Decodes endpoints of this profile from a tagged component.
 
-  CORBA::UShort port_;
-  // TCP port number
+  TAO_SHMIOP_Endpoint endpoint_;
+  //
 
-  TAO_GIOP_Version version_;
-  // GIOP version number.
+  size_t count_;
+  // Number of endpoints this profile contains.
+
+  int endpoints_encoded_;
+  // Flag indicating whether endpoints have already been encoded,
+  // saving us from repeatedly encoding them over and over.
 
   TAO_ObjectKey object_key_;
   // object_key associated with this profile.
-
-  ACE_INET_Addr object_addr_;
-  // Cached instance of <ACE_INET_Addr> for use in making
-  // invocations, etc.
-
-  TAO_SHMIOP_Client_Connection_Handler *hint_;
-  // Pointer to a connection handler which we successfully used
-  // already.
 
   IOP::TaggedProfile tagged_profile_;
   // The tagged profile info

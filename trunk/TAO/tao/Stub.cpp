@@ -10,6 +10,7 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
+#include "tao/Endpoint.h"
 #include "tao/Stub.h"
 #include "tao/Sequence.h"
 #include "tao/Object.h"
@@ -119,7 +120,7 @@ TAO_Stub::~TAO_Stub (void)
           // it being destroy()ed, then no connectors exist so do not
           // reset the hint in case it points to non-existent
           // connection handler.
-          this->profile_in_use_->reset_hint ();
+          this->profile_in_use_->endpoint ()->reset_hint ();
         }
 
       // decrease reference count on profile
