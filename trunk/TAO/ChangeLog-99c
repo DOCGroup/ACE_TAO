@@ -1,5 +1,7 @@
 Tue Sep  7 11:25:04 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
+	* orbsvcs/orbsvcs/AV/ntp-time.h: 
+	Removed warnings on the Single Threaded build
 	* orbsvcs/orbsvcs/AV/UDP.cpp: 
 	Removed the IP_MULTICAST_LOOP undefined error on VXWorks
 
