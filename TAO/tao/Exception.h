@@ -174,6 +174,16 @@ public:
 
   virtual void _raise (void);
 
+  void print_exception_tao_ (FILE *f = stdout) const;
+  // Print the system exception <ex> to output determined by f.
+  // This function is not CORBA compliant.
+
+  static CORBA::ULong minor_code_tao_ (u_int location, int errno_value);
+  // Helper to create a minor status value.
+
+  static CORBA::ULong errno_tao_ (int errno_value);
+  // Helper to translate a platform-specific errno to a TAO errno value.
+
 private:
 
   CORBA::ULong minor_;
