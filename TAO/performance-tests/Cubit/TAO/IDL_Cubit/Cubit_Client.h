@@ -49,7 +49,7 @@ public:
 
   ~Cubit_Client (void);
 
-  int run (void);
+  int run ();
   // Execute client example code.
 
   int init (int argc, char **argv, char *collocation_test_ior = 0);
@@ -71,46 +71,57 @@ private:
                     ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
   // Prints the time stats.
 
-  void cube_union (void);
+  void cube_union (CORBA::Environment &ACE_TRY_ENV);
   // Exercise the union.  Cube a union.
 
-  void cube_struct (int i);
+  void cube_struct (int i,
+                    CORBA::Environment &ACE_TRY_ENV);
   // calculate the cube from a struct.
 
-  void cube_long (int i);
+  void cube_long (int i,
+                  CORBA::Environment &ACE_TRY_ENV);
   // calculate the cube from a long.
 
-  void cube_oneway (int i);
+  void cube_oneway (int i,
+                    CORBA::Environment &ACE_TRY_ENV);
   // Oneway operation test.
 
-  void cube_void (int i);
+  void cube_void (int i,
+                  CORBA::Environment &ACE_TRY_ENV);
   // Twoway operation test.
 
-  void cube_octet (int i);
+  void cube_octet (int i,
+                   CORBA::Environment &ACE_TRY_ENV);
   // Cube an octet.
 
-  void cube_short (int i);
+  void cube_short (int i,
+                   CORBA::Environment &ACE_TRY_ENV);
   // Cube a short.
 
-  void cube_long_sequence (int i, int l);
+  void cube_long_sequence (int i, int l,
+                           CORBA::Environment &ACE_TRY_ENV);
   // Cube a sequence <l> is the length of the sequence.
 
-  void cube_octet_sequence (int i, int l);
+  void cube_octet_sequence (int i, int l,
+                            CORBA::Environment &ACE_TRY_ENV);
   // Cube a sequence of octets, <l> is the length of the sequence.
 
-  void cube_many_sequence (int i, int l);
+  void cube_many_sequence (int i, int l,
+                           CORBA::Environment &ACE_TRY_ENV);
   // Cube a sequence of manys, <l> is the length of the sequence.
 
-  void cube_rti_data (int i, int numUpdates, int numAttrs);
+  void cube_rti_data (int i, int numUpdates, int numAttrs,
+                      CORBA::Environment &ACE_TRY_ENV);
   // Cube a sequence <l> is the length of the sequence.
 
-  int run_void (void);
+  int run_void (CORBA::Environment &ACE_TRY_ENV);
   // This method runs only the cube_void() test.
 
-  int run_oneway (void);
+  int run_oneway (CORBA::Environment &ACE_TRY_ENV);
   // This method runs only the cube_oneway() test.
 
-  int shutdown_server (int do_shutdown);
+  int shutdown_server (int do_shutdown,
+                       CORBA::Environment &ACE_TRY_ENV);
   // Invoke the method with <do_shutdown> != 0 to shutdown the server.
   // When testing collocation, <do_shutdown> has no effect (it always
   // shuts the server down.
@@ -132,9 +143,6 @@ private:
 
   Cubit_Factory_var factory_;
   // factory pointer for cubit.
-
-  CORBA::Environment env_;
-  // Environment variable.
 
   Cubit_var cubit_;
   // Cubit obj ref.

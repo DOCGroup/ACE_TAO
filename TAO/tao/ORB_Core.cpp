@@ -25,6 +25,10 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/INET_Addr.h"
 
+#if defined(ACE_MVS)
+#include "ace/Codeset_IBM1047.h"
+#endif /* ACE_MVS */
+
 ACE_RCSID(tao, ORB_Core, "$Id$")
 
 typedef ACE_TSS_Singleton<TAO_ORB_Core_TSS_Resources, ACE_SYNCH_MUTEX>
@@ -63,13 +67,22 @@ TAO_ORB_Core::TAO_ORB_Core (const char* orbid)
     use_global_collocation_ (1),
     poa_current_ (0),
     object_adapter_ (0),
-    tm_ ()
+    tm_ (),
+    from_iso8859_ (0),
+    to_iso8859_ (0),
+    from_unicode_ (0),
+    to_unicode_ (0)
 {
   ACE_NEW (this->poa_current_,
            TAO_POA_Current);
 
   // Make sure that the thread manager does not wait for threads
   this->tm_.wait_on_exit (0);
+
+#if defined(ACE_MVS)
+  ACE_NEW (this->from_iso8859_, ACE_ISO8859_IBM1047);
+  ACE_NEW (this->to_iso8859_,   ACE_IBM1047_ISO8859);
+#endif /* ACE_MVS */
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -82,6 +95,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->poa_current_;
 
   delete this->object_adapter_;
+
+  delete this->from_iso8859_;
+  delete this->to_iso8859_;
 }
 
 int
@@ -762,25 +778,15 @@ TAO_ORB_Core::init (int &argc, char *argv[])
     return -1;
 
   // init the ORB core's pointer
-  this->protocol_factories (trf->get_protocol_factories ());
+  this->protocol_factories_ = trf->get_protocol_factories ();
 
   // Now that we have a complete list of available protocols and their
   // related factory objects, initial;ize the registries!
 
-  // Init the connector registry ... this initializes the registry
-  // pointer in the ORB core.  The actual registry is either in TSS or global
-  // memory.
-  this->connector_registry (trf->get_connector_registry ());
-
-  // tell the registry to open all registered interfaces
+  // Init the connector registry and create a connector for each
+  // configured protocol.
   if (this->connector_registry ()->open (this) != 0)
     return -1;
-
-  // Init acceptor_registry_
-  this->acceptor_registry (trf->get_acceptor_registry ());
-
-  //   if (this->acceptor_registry ()->open (this) == -1)
-  //     return -1;
 
   // Have registry parse the preconnects
   if (this->orb_params ()->preconnects ().is_empty () == 0)
@@ -846,12 +852,18 @@ TAO_ORB_Core::fini (void)
 
   // Close connectors before acceptors!
   // Ask the registry to close all registered connectors.
-  this->connector_registry ()->close_all ();
-  delete this->connector_registry_;
+  if (this->connector_registry_ != 0)
+    {
+      this->connector_registry_->close_all ();
+      delete this->connector_registry_;
+    }
 
   // Ask the registry to close all registered acceptors.
-  this->acceptor_registry ()->close_all ();
-  delete this->acceptor_registry_;
+  if (this->acceptor_registry_ != 0)
+    {
+      this->acceptor_registry_->close_all ();
+      delete this->acceptor_registry_;
+    }
 
   TAO_Internal::close_services ();
 

@@ -125,7 +125,8 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 
   // Get a pointer to the connector registry, which might be in
   // thread-specific storage, depending on the concurrency model.
-  TAO_Connector_Registry *conn_reg = this->orb_core_->connector_registry ();
+  TAO_Connector_Registry *conn_reg =
+    this->orb_core_->connector_registry ();
 
   if (conn_reg == 0)
     ACE_THROW (CORBA::INTERNAL ());

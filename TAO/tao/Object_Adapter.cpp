@@ -941,10 +941,15 @@ TAO_Object_Adapter::Servant_Upcall::~Servant_Upcall ()
       // Finally, since the object adapter lock was acquired, we must
       // release it.
       this->object_adapter_.lock ().release ();
+
+    default:
+      // @@ Keep compiler happy, the states above are the only
+      //    possible ones.
+      break;
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
+// ****************************************************************
 
 TAO_POA_Current_Impl::TAO_POA_Current_Impl (void)
   : poa_impl_ (0),

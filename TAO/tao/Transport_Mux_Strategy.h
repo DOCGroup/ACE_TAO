@@ -139,9 +139,6 @@ public:
   virtual void destroy_cdr_stream (TAO_InputCDR *);
 
 protected:
-  ACE_SYNCH_MUTEX lock_;
-  // Synchronize the internal state
-
   CORBA::ULong request_id_generator_;
   // Used to generate a different request_id on each call to
   // request_id()
