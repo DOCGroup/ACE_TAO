@@ -1,3 +1,11 @@
+Wed Jul 31 07:40:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/*.doxygen:
+          Enabled warnings to get them in the doxygen scoreboard.
+
+        * ace/Configuration.cpp:
+          Fixed method argument names to fix doxygen warnings.
+
 Tue Jul 30 15:45:23 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/SOCK_Dgram.h: Fixed the comment for send(), which had a
