@@ -560,7 +560,8 @@ ACE_Select_Reactor::renew (void)
 {
   ACE_TRACE ("ACE_Select_Reactor::renew");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  this->token_.renew (this->requeue_position_);
+  if (this->supress_renew () == 0)
+    this->token_.renew (this->requeue_position_);
 #endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 }
 
@@ -626,7 +627,8 @@ ACE_Select_Reactor_Token::sleep_hook (void)
 #endif /* ACE_MT_SAFE */
 
 ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify (void)
-  : max_notify_iterations_ (-1)
+  : max_notify_iterations_ (-1),
+    supress_renew_ (0)
 {
 }
 
