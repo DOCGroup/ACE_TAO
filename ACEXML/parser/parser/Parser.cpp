@@ -3161,7 +3161,7 @@ ACEXML_Parser::parse_encoding_decl (ACEXML_ENV_SINGLE_ARG_DECL)
       ACEXML_CHECK;
     }
   const ACEXML_Char* encoding = this->current_->getInputSource()->getEncoding();
-  if (ACE_OS::strcmp (astring, encoding) != 0)
+  if (encoding != 0 && ACE_OS::strcmp (astring, encoding) != 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Detected Encoding is %s ")
                   ACE_TEXT (": Declared Encoding is %s\n"),
@@ -3351,11 +3351,14 @@ ACEXML_Parser::reset (void)
   if (this->ctx_stack_.pop (this->current_) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Mismatched push/pop of Context stack")));
-  this->current_->getInputSource()->getCharStream()->rewind();
+  if (this->current_)
+    {
+      this->current_->getInputSource()->getCharStream()->rewind();
 
-  this->current_->setInputSource (0);
-  delete this->current_;
-  this->current_ = 0;
+      this->current_->setInputSource (0);
+      delete this->current_;
+      this->current_ = 0;
+    }
 
   ACEXML_Char* temp = 0;
   while (this->GE_reference_.pop (temp) != -1)

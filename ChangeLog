@@ -1,3 +1,10 @@
+Tue Sep 21 12:16:39 2004  Steve Huston  <shuston@riverace.com>
+
+	* ACEXML/parser/parser/Parser.cpp: parse_encoding_decl(), don't
+	  crash if the input source doesn't declare an encoding.
+	  reset(), if current_ is already 0 (the case if no parsing ever
+	  really got started) don't dereference it.
+
 Tue Sep 21 15:29:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/QtReactor_Test.cpp:
