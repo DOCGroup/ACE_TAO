@@ -83,3 +83,45 @@ create_MyFoo (CORBA::ORB_ptr orb,
   return servant;
 }
 
+
+extern "C" GENERIC_SERVANT_Export PortableServer::Servant supply_servant (const PortableServer::ObjectId &oid,
+                                                                          PortableServer::POA_ptr poa,
+                                                                          CORBA::ORB_ptr orb);
+
+// The servant pointer is returned which will be of Base class
+// type. The binding to the servant will happen at run-time.
+
+PortableServer::Servant
+supply_servant (const PortableServer::ObjectId &oid,
+                PortableServer::POA_ptr poa,
+                CORBA::ORB_ptr orb)
+{
+  PortableServer::Servant servant = 0;
+
+  // Convert ObjectId to String.
+  CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
+
+  if (ACE_OS::strstr (s.in (), "Foo") != 0)
+    ACE_NEW_RETURN (servant,
+                    MyFooServant (orb,
+                                  poa,
+                                  0),
+                    0);
+  return servant;
+}
+
+extern "C" GENERIC_SERVANT_Export void destroy_servant (const PortableServer::ObjectId &oid,
+                                                        PortableServer::POA_ptr poa,
+                                                        PortableServer::Servant servant);
+
+// This function will take care of the destruction of the servant.
+
+void
+destroy_servant (const PortableServer::ObjectId &oid,
+                PortableServer::POA_ptr poa,
+                 PortableServer::Servant servant)
+{
+  delete servant;
+}
+
+
