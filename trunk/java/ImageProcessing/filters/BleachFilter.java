@@ -19,6 +19,11 @@ public class BleachFilter extends RGBImageFilter implements MedFilter
 {
   private int percent;
 
+  public BleachFilter()
+    {
+      this(25);
+    }
+  
   public BleachFilter(int percent) 
   {
     Assert.notFalse(percent >= 0 && percent <= 100);
