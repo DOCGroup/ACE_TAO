@@ -1,21 +1,23 @@
-// $Id$
+//$Id$
 
-#include "Client_i.h"
+# include "Echo_Client_i.h"
 
-ACE_RCSID(Echo, client, "$Id$")
-
-// This function runs the echo test.
+// The client program for the application.
 
 int
 main (int argc, char **argv)
 {
-  Client_i client;
+  Echo_Client_i client;
+  
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n\techo client\n\n"));
+              "\nEcho client\n\n"));
 
-  if (client.init (argc, argv) == -1)
-    return -1;
+  if (client.run (argc, argv) == -1)
+    return -1; 
   else
-    return client.run ();
+    return 0;
+   
 }
+
+                                 
