@@ -138,10 +138,11 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   // call.  Note that this code is portable as long as ACE_UNIT32 is
   // always 32 bits on both the sender and receiver side.
 
-  switch (ACE_OS::recv (handle,
-			(char *) &length,
-			sizeof length,
-			MSG_PEEK))
+  ssize_t count = ACE_OS::recv (handle,
+                                (char *) &length,
+                                sizeof length,
+                                MSG_PEEK);
+  switch (count)
     {
       // Handle shutdown and error cases.
     default:
@@ -163,14 +164,70 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
       /* NOTREACHED */
 
     case sizeof length:
-      // Process normal data reception.
-      if (ACE_OS::recv (handle,
-			(char *) &log_record,
-			(int) length) != length)
-	ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "recv"),
-                          0);
+#if defined (ACE_WIN32)
+      // This is a special-case sent from near line 610 in
+      // Log_Msg.cpp.  Without this code Win32 sockets are never
+      // closed, so this server will quickly run out of handles.
+      if (length == ~0)
+        {
+          if (ACE_Reactor::instance ()->remove_handler
+              (handle,
+               ACE_Event_Handler::READ_MASK
+               | ACE_Event_Handler::EXCEPT_MASK
+               | ACE_Event_Handler::DONT_CALL) == -1)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "%n: %p\n",
+                               "remove_handler"), 
+                              0);
+ 
+          ACE_OS::closesocket (handle);
+          ACE_DEBUG ((LM_DEBUG,
+                      "client closing down\n"));
+          return 0;
+        }
+#endif /* ACE_WIN32 */
+ 
+      ssize_t retrieved = ACE_OS::recv (handle,
+                                        (char *) &log_record,
+                                        (int) length);
+ 
+      // This is a recv error, incomplete send.  Try once more, then
+      // abandon all hope on this socket.
+      if (retrieved != length)
+       {
+           ACE_DEBUG ((LM_DEBUG,
+                       "partial message retrieved, attempting second try...\n"));
+ 
+          int remainder = length - retrieved;
+ 
+           int secondtry = ACE_OS::recv (handle,
+                                         ((char *) &log_record) + retrieved,
+                                         remainder);
+           if (secondtry != remainder)
+             {
+               ACE_DEBUG ((LM_DEBUG,
+                           "second try failed\n"));
+ 
+               if (ACE_Reactor::instance ()->remove_handler
+                   (handle,
+                    ACE_Event_Handler::READ_MASK
+                    | ACE_Event_Handler::EXCEPT_MASK
+                    | ACE_Event_Handler::DONT_CALL) == -1)
+                 {
+                   ACE_ERROR_RETURN ((LM_ERROR,
+                                      "%n: %p\n",
+                                      "remove_handler"), 
+                                     0);
+                 }
+ 
+               ACE_OS::closesocket (handle);
+               
+               ACE_ERROR_RETURN ((LM_ERROR,
+                                  "%p\n",
+                                  "recv"),
+                                 0);
+             }
+       }
     }
 #endif /* ACE_HAS_STREAM_PIPES */
 
