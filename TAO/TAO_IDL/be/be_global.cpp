@@ -371,6 +371,13 @@ BE_GlobalData::be_get_server_template_inline_fname (int base_name_only)
 }
 
 const char *
+BE_GlobalData::be_get_anyop_header_fname (int base_name_only)
+{
+  return be_get_anyop_header (idl_global->stripped_filename (),
+                              base_name_only);
+}
+
+const char *
 BE_GlobalData::be_get_anyop_source_fname (int base_name_only)
 {
   return be_get_anyop_source (idl_global->stripped_filename (),

@@ -43,6 +43,7 @@ TAO_CodeGen::TAO_CodeGen (void)
     server_template_skeletons_ (0),
     server_inline_ (0),
     server_template_inline_ (0),
+    anyop_header_ (0),
     anyop_source_ (0),
     gperf_input_stream_ (0),
     gperf_input_filename_ (0),
@@ -55,6 +56,19 @@ TAO_CodeGen::TAO_CodeGen (void)
     {
       int status = 0;
 
+      status =
+        this->start_anyop_header (
+                  be_global->be_get_anyop_header_fname ()
+                );
+
+      if (status == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                             "(%N:%l) TAO_CodeGen::"
+                             "TAO_CodeGen - "
+                             "Error opening anyop header file\n"));
+        }
+                  
       status =
         this->start_anyop_source (
                   be_global->be_get_anyop_source_fname ()
@@ -84,6 +98,7 @@ TAO_CodeGen::~TAO_CodeGen (void)
   delete this->client_inline_;
   delete this->server_inline_;
   delete this->server_template_inline_;
+  delete this->anyop_header_;
   delete this->anyop_source_;
 #if !defined (linux) && !defined (__QNX__)
   // This causes a seg fault on Linux RH 5.1.  Let it leak . . .
@@ -808,6 +823,67 @@ TAO_CodeGen::server_template_inline (void)
 }
 
 int
+TAO_CodeGen::start_anyop_header (const char *fname)
+{
+  // Retrieve the singleton instance to the outstream factory.
+  TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
+
+  // Retrieve a specialized instance.
+  this->anyop_header_ = factory->make_outstream ();
+
+  if (!this->anyop_header_)
+    {
+      return -1;
+    }
+
+  if (this->anyop_header_->open (fname,
+                                 TAO_OutStream::TAO_CLI_HDR)
+       == -1)
+    {
+      return -1;
+    }
+
+  *this->anyop_header_ << be_nl 
+                       << "// TAO_IDL - Generated from" << be_nl
+                       << "// " << __FILE__ << ":" << __LINE__
+                       << be_nl << be_nl;
+
+  // Generate the #ident string, if any.
+  this->gen_ident_string (this->anyop_header_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->anyop_header_,
+                           "_TAO_IDL_",
+                           "_ANYOP_H_");
+
+  if (be_global->pre_include () != 0)
+    {
+      *this->anyop_header_ << "#include /**/ \""
+                           << be_global->pre_include ()
+                           << "\"" << be_nl;
+    }
+
+  this->gen_standard_include (this->anyop_header_,
+                              "tao/orbconf.h");
+
+  // Generate the TAO_EXPORT_MACRO macro.
+  *this->anyop_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
+  *this->anyop_header_ << "#undef TAO_EXPORT_MACRO\n";
+  *this->anyop_header_ << "#endif\n";
+  *this->anyop_header_ << "#define TAO_EXPORT_MACRO "
+                       << be_global->stub_export_macro ();
+
+  return 0;
+}
+
+TAO_OutStream *
+TAO_CodeGen::anyop_header (void)
+{
+  return this->anyop_header_;
+}
+
+int
 TAO_CodeGen::start_anyop_source (const char *fname)
 {
   // Retrieve the singleton instance to the outstream factory.
@@ -840,6 +916,12 @@ TAO_CodeGen::start_anyop_source (const char *fname)
   // need to put only the base names. Path info is not required.
   *this->anyop_source_ << "\n#include \""
                        << be_global->be_get_client_hdr_fname (1)
+                       << "\"";
+
+  // Generate the include statement for the anyop header. We just
+  // need to put only the base names. Path info is not required.
+  *this->anyop_source_ << "\n#include \""
+                       << be_global->be_get_anyop_header_fname (1)
                        << "\"";
 
   this->gen_standard_include (this->anyop_source_,
@@ -1176,6 +1258,24 @@ TAO_CodeGen::end_server_skeletons (void)
 {
   // Code to put the last #endif.
   *this->server_skeletons_ << "\n\n#endif /* ifndef */\n";
+
+  return 0;
+}
+
+int
+TAO_CodeGen::end_anyop_header (void)
+{
+  // Code to put the last #endif.
+  *this->anyop_header_ << "\n\n";
+
+  if (be_global->post_include () != 0)
+    {
+      *this->anyop_header_ << "#include /**/ \""
+                           << be_global->post_include ()
+                           << "\"\n\n";
+    }
+
+  *this->anyop_header_ << "#endif /* ifndef */" << be_nl << be_nl;
 
   return 0;
 }

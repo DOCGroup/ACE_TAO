@@ -33,6 +33,30 @@
 
 #include /**/ "ace/pre.h"
 
+#include "tao/orbconf.h"
+
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_Export
+
+//======= Handcrafted
+namespace CORBA
+{
+  // TAO_IDL - Generated from
+  // be/be_visitor_typecode/typecode_decl.cpp:44
+
+  TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_OctetSeq;
+}
+
+// TAO_IDL - Generated from
+// be/be_visitor_sequence/any_op_ch.cpp:52
+
+TAO_Export void operator<<= (CORBA::Any &, const CORBA::OctetSeq &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, CORBA::OctetSeq*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::OctetSeq *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::OctetSeq *&);
+
 #include /**/ "ace/post.h"
 
 #endif /* ifndef */

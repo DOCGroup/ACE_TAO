@@ -275,6 +275,7 @@ public:
   int start_server_template_skeletons (const char *fname);
   // Set the server template skeletons stream.
 
+  int start_anyop_header (const char *fname);
   int start_anyop_source (const char *fname);
   // TAO developers only.
 
@@ -303,6 +304,7 @@ public:
   int end_server_skeletons (void);
   // Put a last #endif in the server skeletons.
 
+  int end_anyop_header (void);
   int end_anyop_source (void);
   // TAO developers only.
 
@@ -436,6 +438,7 @@ private:
   TAO_OutStream *server_template_inline_;
   // Server side template inline file.
 
+  TAO_OutStream *anyop_header_;
   TAO_OutStream *anyop_source_;
   // For use by TAO developers only.
 

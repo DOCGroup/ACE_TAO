@@ -97,6 +97,9 @@ public:
   static const char *be_get_server_template_inline_fname (
       int base_name_only = 0
     );
+  static const char *be_get_anyop_header_fname (
+      int base_name_only = 0
+    );
   static const char *be_get_anyop_source_fname (
       int base_name_only = 0
     );
