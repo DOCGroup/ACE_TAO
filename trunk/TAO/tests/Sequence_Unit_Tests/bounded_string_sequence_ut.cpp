@@ -13,6 +13,7 @@
 #include "testing_range_checking.hpp"
 
 #include "bounded_string_sequence.hpp"
+#include "bounded_wstring_sequence.hpp"
 
 #include "string_sequence_tester.hpp"
 
@@ -29,15 +30,16 @@ using namespace TAO;
 
 CORBA::ULong const MAXIMUM = 32;
 
+template<class tested_sequence>
 struct Tester
 {
-  typedef char char_type;
-  typedef char * value_type;
-  typedef char const * const_value_type;
+  typedef typename tested_sequence::character_type char_type;
+  typedef string_sequence_test_helpers<char_type> helper;
+  typedef typename tested_sequence::value_type value_type;
+  typedef typename tested_sequence::const_value_type const_value_type;
 
-  typedef TAO::bounded_string_sequence<MAXIMUM> tested_sequence;
-  typedef tested_sequence::element_traits tested_element_traits;
-  typedef tested_sequence::allocation_traits tested_allocation_traits;
+  typedef typename tested_sequence::element_traits tested_element_traits;
+  typedef typename tested_sequence::allocation_traits tested_allocation_traits;
   typedef TAO::details::range_checking<value_type,true> range;
 
   void test_set_length_less_than_maximum()
@@ -69,20 +71,20 @@ struct Tester
   value_type * alloc_and_init_buffer()
   {
     value_type * buf = tested_sequence::allocbuf();
-    buf[0] = tested_element_traits::duplicate("1");
-    buf[1] = tested_element_traits::duplicate("4");
-    buf[2] = tested_element_traits::duplicate("9");
-    buf[3] = tested_element_traits::duplicate("16");
+    buf[0] = helper::to_string(1);
+    buf[1] = helper::to_string(4);
+    buf[2] = helper::to_string(9);
+    buf[3] = helper::to_string(16);
 
     return buf;
   }
 
   void check_values(tested_sequence const & a)
   {
-    BOOST_CHECK_EQUAL(const_cast<char const*>("1"),  a[0]);
-    BOOST_CHECK_EQUAL(const_cast<char const*>("4"),  a[1]);
-    BOOST_CHECK_EQUAL(const_cast<char const*>("9"),  a[2]);
-    BOOST_CHECK_EQUAL(const_cast<char const*>("16"), a[3]);
+    BOOST_CHECK(helper::compare(1,  a[0]));
+    BOOST_CHECK(helper::compare(4,  a[1]));
+    BOOST_CHECK(helper::compare(9,  a[2]));
+    BOOST_CHECK(helper::compare(16, a[3]));
   }
 
   void test_buffer_constructor_default()
@@ -340,8 +342,19 @@ init_unit_test_suite(int, char*[])
   std::auto_ptr<test_suite> ts(
       BOOST_TEST_SUITE("bounded string sequence unit test"));
 
-  boost::shared_ptr<Tester> tester(Tester::allocate());
-  tester->add_all(ts.get());
+  {
+    typedef TAO::bounded_string_sequence<MAXIMUM> s_sequence;
+    typedef Tester<s_sequence> nTester;
+    boost::shared_ptr<nTester> tester(nTester::allocate());
+    tester->add_all(ts.get());
+  }
+
+  {
+    typedef TAO::bounded_wstring_sequence<MAXIMUM> w_sequence;
+    typedef Tester<w_sequence> wTester;
+    boost::shared_ptr<wTester> tester(wTester::allocate());
+    tester->add_all(ts.get());
+  }
 
   return ts.release();
 }
