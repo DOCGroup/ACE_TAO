@@ -69,8 +69,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "CORBA::Object_ptr obj" << be_uidt_nl
       << ")\n";
 
-  os->incr_indent (0);
-  *os << "{" << be_idt_nl
+  *os << "{" << be_nl
       << "TAO_Stub *stub = obj->_stubobj ();" << be_nl << be_nl
       << "switch (stub->servant_orb_var ()->orb_core"
       << " ()->get_collocation_strategy ())" << be_idt_nl
@@ -85,12 +84,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
 
   if (idl_global->gen_direct_collocation ())
-    *os << "{" << be_idt_nl
-        << "void *servant = ACE_reinterpret_cast (void*, obj->_servant ());" << be_nl
+    *os << "if (obj->_servant () != 0)" << be_idt_nl
+        << "{" << be_idt_nl
+        << node->full_skel_name () << "* servant = ACE_reinterpret_cast ("
+        << node->full_skel_name () << "*, obj->_servant ()->_downcast (\""
+        << node->repoID () << "\"));" << be_nl
         << "if (servant != 0)" << be_idt_nl
         << "return new " << node->full_coll_name (be_interface::DIRECT)
-        << " (ACE_reinterpret_cast (" << node->full_skel_name ()
-        << "*, servant), stub);" << be_uidt << be_uidt_nl
+        << " (servant, stub);" << be_uidt << be_uidt_nl
         << "}" << be_uidt_nl;
 
   *os << "break;" << be_uidt_nl
@@ -99,6 +100,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         << "}" << be_uidt_nl
       << "return 0;" << be_uidt_nl
       << "}\n\n";
+
+  os->indent ();
 
   *os << "int _TAO_collocation_POA_" << node->flatname ()
       << "_Stub_Factory_Initializer"
@@ -119,7 +122,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << node->flatname () << "_Stub_Factory_Initializer));"
       << be_uidt_nl;
 
-  os->incr_indent (0);
+  os->indent ();
 
   // constructor
   *os << "// skeleton constructor" << be_nl;
@@ -271,7 +274,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "}\n\n";
 
   // the downcast method.
-  os->indent ();
   *os << "void* " << node->full_skel_name ()
       << "::_downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
@@ -297,7 +299,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
 
   // now the dispatch method
-  os->indent ();
   *os << "void " << node->full_skel_name () <<
     "::_dispatch (CORBA::ServerRequest &req, " <<
     "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
