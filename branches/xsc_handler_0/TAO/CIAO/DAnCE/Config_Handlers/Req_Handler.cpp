@@ -9,27 +9,27 @@ namespace CIAO
   namespace Config_Handlers
   {
 
-    Requirement_Handler::Requirement_Handler (void)
+    Req_Handler::Req_Handler (void)
     {
     }
 
-    Requirement_Handler::~Requirement_Handler (void)
+    Req_Handler::~Req_Handler (void)
     {
     }
 
     void
-    Requirement_Handler::get_Requirement (
+    Req_Handler::get_Requirement (
                          Deployment::Requirement& toconfig,
                          Requirement& desc)
     {
-      //Map the basic string types to their Deployment::Requirement
+      //Map the basic string types to their Deployment::Req
       //counterparts.
       toconfig.name = CORBA::string_dup (desc.name ().c_str ());
       toconfig.resourceType = 
         CORBA::string_dup (desc.resourceType ().c_str ()); 
         
-      //Map the XSC Requirement's property into the next
-      //position in the IDL Requirement's sequence.
+      //Map the XSC Req's property into the next
+      //position in the IDL Req's sequence.
       Prop_Handler prophandler;
       toconfig.property.length (toconfig.property.length () + 1);
       prophandler.get_Property (

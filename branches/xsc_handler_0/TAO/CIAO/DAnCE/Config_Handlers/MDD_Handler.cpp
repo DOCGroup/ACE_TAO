@@ -1,9 +1,15 @@
+
 // $Id$
 
+
 #include "MDD_Handler.h"
-#include "Req_Handler.h"
-#include "Prop_Handler.h"
+#include "Basic_Deployment_Data.hpp"
 #include "ciao/Deployment_DataC.h"
+#include "ADD_Handler.h"
+#include "Prop_Handler.h"
+#include "Req_Handler.h"
+
+
 
 namespace CIAO
 {
@@ -19,66 +25,63 @@ namespace CIAO
     }
 
 
-    void 
+    void
     MDD_Handler::get_MonolithicDeploymentDescription (
-                    Deployment::MonolithicDeploymentDescription& toconfig,
+                    Deployment::MonolithicDeploymentDescription& toconfig, 
                     MonolithicDeploymentDescription& desc)
     {
-      //Transfer the name.
-      toconfig.name = CORBA::string_dup (desc.name ().c_str ());
+
+
       
-      //Increase the length of the sequence.
-      toconfig.source.length (toconfig.source.length () + 1);
+      toconfig.name=
+           CORBA::string_dup (desc.name ().c_str ());
       
-      //The IDL specifies a sequence for source, but the
-      //schema specifies a string, so we map that single string
-      //to the first position in the sequence.
-      toconfig.source[toconfig.source.length () - 1] = 
-        CORBA::string_dup (desc.source ().c_str ());
-        
-      /*
-       * 
-       * 
-       *    NEED TO FIGURE OUT WHAT THE VALUE
-       *    THAT GETS STORED IN artifactRef will be
-       * 
-       *    IT WILL GO HERE
-       */
-       
-       
-       if (desc.execParameter_p ())
-         {
-           //Create the property handler to
-           //delegate to.
-           Prop_Handler phandler; 
-           
-           //Lengthen the sequence for the new element.
-           toconfig.execParameter.length (
-             toconfig.execParameter.length () + 1);
-           
-           //Configure the new property using the handler.
-           phandler.get_Property (
-             toconfig.execParameter[toconfig.execParameter.length () -1],
-             desc.execParameter ());
-         }
+      toconfig.source.length (
+           toconfig.source.length () + 1);
+         toconfig.source[toconfig.source.length () - 1]=
+           CORBA::string_dup (desc.source ().c_str ());
       
-       if (desc.deployRequirement_p ())
-         {
-           //Create the Requirement handler.
-           Requirement_Handler reqhandler; 
-           
-           //Lengthen the sequence for the new element.
-           toconfig.deployRequirement.length (
-             toconfig.deployRequirement.length () + 1);
-             
-           //Configure the new requirement using the handler.
-           reqhandler.get_Requirement (
-             toconfig.deployRequirement[toconfig.deployRequirement.length () -1],
-             desc.deployRequirement ());
-         }
+      ADD_Handler artifact_handler;
+      ACE_TString artifact_id;
+      for (MonolithicDeploymentDescription::artifact_iterator
+           item (desc.begin_artifact ());
+           item != desc.end_artifact ();
+           ++item)
+        {
+	 
+          toconfig.artifactRef.length (
+            toconfig.artifactRef.length () + 1);
+          
+          artifact_id = item->id ().c_str ();
+          artifact_handler.get_ref (
+            artifact_id,
+            toconfig.artifactRef[toconfig.artifactRef.length () - 1]);
+            
+        }
       
+      if (desc.execParameter_p ())
+        {
+	 			  Prop_Handler handler;
+          toconfig.execParameter.length (
+            toconfig.execParameter.length () + 1);
+          handler.get_Property (
+            toconfig.execParameter[toconfig.execParameter.length () - 1],
+            desc.execParameter ());
+        }
+      
+      if (desc.deployRequirement_p ())
+        {
+	 			  Req_Handler handler;
+          toconfig.deployRequirement.length (
+            toconfig.deployRequirement.length () + 1);
+          handler.get_Requirement (
+            toconfig.deployRequirement[toconfig.deployRequirement.length () - 1],
+            desc.deployRequirement ());
+        }
+
       
     }
-    
+
   }
+
 }

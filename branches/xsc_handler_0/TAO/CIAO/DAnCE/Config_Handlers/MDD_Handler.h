@@ -1,4 +1,5 @@
-//==============================================================
+
+      //==============================================================
 /**
  *  @file  MDD_Handler.h
  *
@@ -8,19 +9,23 @@
  */
 //================================================================
 
-#ifndef CIAO_CONFIG_HANDLERS_MDD_HANDLER_H
-#define CIAO_CONFIG_HANDLERS_MDD_HANDLER_H
+#ifndef CIAO_CONFIG_HANDLERS_MDD_Handler_H
+#define CIAO_CONFIG_HANDLERS_MDD_Handler_H
 #include /**/ "ace/pre.h"
 
-#include "Basic_Deployment_Data.hpp"
+#include "Base_Handler.h"
+#include "Config_Handlers_export.h"
+#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+
+
 namespace Deployment
 {
-  struct MonolithicDeploymentDescription;
+  class MonolithicDeploymentDescription;
 }
 
 
@@ -29,34 +34,36 @@ namespace CIAO
 
   namespace Config_Handlers
   {
+
+   class MonolithicDeploymentDescription;
+
+
    /*
     * @class MDD_Handler
     *
     * @brief Handler class for <MonolithicDeploymentDescription> types.
     *
     * This class defines handler methods to map values from
-    * XSC MonolithicDeploymentDescription objects, parsed from
-    * the descriptor files, to the corresponding CORBA IDL type.
+    * XSC MonolithicDeploymentDescription objects, parsed from the descriptor files, to the
+    * corresponding CORBA IDL Any type.
     *
     */
     
-    class MDD_Handler{
+    class Config_Handlers_Export MDD_Handler : public Base_Handler{
      
       public:
-       
+
         MDD_Handler (void);
         virtual ~MDD_Handler (void);
-  
-        ///This method takes a <Deployment::MonolithicDeploymentDescription>
-        ///and maps the values from the passed in XSC 
-        ///MonolithicDeploymentDescription to its members.
+
         void get_MonolithicDeploymentDescription (
-                    Deployment::MonolithicDeploymentDescription& toconfig,
-                    MonolithicDeploymentDescription& desc);          
+             Deployment::MonolithicDeploymentDescription& toconfig, 
+             MonolithicDeploymentDescription& desc);
 
     };
   }
 }
 
-#include /**/ "ace/post.h"
-#endif /* CIAO_CONFIG_HANDLERS_MDD_HANDLER_H*/
+#include /**/ "ace/post.h" 
+#endif /* CIAO_CONFIG_HANDLERS_MDD_Handler_H */
+

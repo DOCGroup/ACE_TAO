@@ -1,3 +1,23 @@
+Tue Sep 21 19:47:02 2004  Jules White <jules@dre.vanderbilt.edu>
+  
+  * MDD_Handler.h:
+  * MDD_Handler.cpp:
+  * ADD_Handler.h:
+  * ADD_Handler.cpp:
+  * Req_Handler.h:
+  * Req_Handler.cpp:
+  
+    Added classes to handle MonolithicDeploymentDescription and
+    ArtifactDeploymentDescription. Changed Requirement_Handler to 
+    Req_Handler.
+
+Mon Sep 20 14:02:32 2004  Jules White <jules@dre.vanderbilt.edu>
+
+  * Base_Handler.h:
+  * Base_Handler.cpp:
+
+    Added a base class for the configuration handlers.
+    
 Mon Sep 13 12:44:19 2004  Jules White <jules@dre.vanderbilt.edu>
 
   * Config_Handlers.mpc:
