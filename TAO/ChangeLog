@@ -1,3 +1,8 @@
+Fri Aug  1 12:32:56 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/Persistent_ID/server.cpp:
+          Fixed incorrect Id string
+
 Thu Jul 31 22:39:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
@@ -51,22 +56,22 @@ Thu Jul 31 18:00:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Jul 31 12:26:27 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* tests/RTScheduling/RTScheduling_tests.dsw: 
-	* tests/RTScheduling/VoidData/VoidData.dsp: 
-	* tests/RTScheduling/Thread_Cancel/Thread_Cancel.dsp: 
-	* tests/RTScheduling/DT_Spawn/DT_Spawn.dsp: 
-	* tests/RTScheduling/Current/Current.dsp: 
-	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.dsp: 
-	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp: 
+	* tests/RTScheduling/RTScheduling_tests.dsw:
+	* tests/RTScheduling/VoidData/VoidData.dsp:
+	* tests/RTScheduling/Thread_Cancel/Thread_Cancel.dsp:
+	* tests/RTScheduling/DT_Spawn/DT_Spawn.dsp:
+	* tests/RTScheduling/Current/Current.dsp:
+	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Server.dsp:
+	* tests/RTScheduling/Scheduling_Interceptor/Scheduler_Interceptor_Client.dsp:
 
 	  Added windows project and workspace files to compile
 	  RTScheduling tests on windows.
-	
-	* examples/RTScheduling/rtschedulers.dsw: 	
-	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.dsp: 
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.dsp: 
-	* examples/RTScheduling/Starter.dsp: 
-	* examples/RTScheduling/Common_IDL_Gen.dsp: 
+
+	* examples/RTScheduling/rtschedulers.dsw:
+	* examples/RTScheduling/MIF_Scheduler/MIF_Scheduler.dsp:
+	* examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler.dsp:
+	* examples/RTScheduling/Starter.dsp:
+	* examples/RTScheduling/Common_IDL_Gen.dsp:
 
 	  Added windows project and workspace files to compile
 	  RTScheduling examples on windows.
@@ -90,7 +95,7 @@ Wed Jul 30 18:25:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/fe/idl.yy:
         * TAO_IDL/fe/y.tab.cpp:
 
-	  Fixed cut and paste error in code that adds attribute 
+	  Fixed cut and paste error in code that adds attribute
 	  exceptions to the AST.
 
         * orbsvcs/IFR_Service/be_produce.cpp:
@@ -110,7 +115,7 @@ Wed Jul 30 18:25:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
         * orbsvcs/orbsvcs/IFRService/Repository_i.h:
 
-	  A start on debugging and testing the IFR's support of 
+	  A start on debugging and testing the IFR's support of
 	  IDL3 types.
 
         * tao/Typecode.cpp:
@@ -132,10 +137,10 @@ Wed Jul 30 18:25:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  Updates and minor changes.
 
 Wed Jul 30 17:00:03 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
-	
+
 	* examples/RTScheduling/FP_SchedulingC.h:
 	* examples/RTScheduling/FP_SchedulingC.cpp:
-	* examples/RTScheduling/FP_SchedulingC.i:	
+	* examples/RTScheduling/FP_SchedulingC.i:
 	* examples/RTScheduling/MIF_SchedulingC.h:
 	* examples/RTScheduling/MIF_SchedulingC.cpp:
 	* examples/RTScheduling/MIF_SchedulingC.i:
@@ -145,21 +150,21 @@ Wed Jul 30 17:00:03 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 Wed Jul 30 16:09:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp: 
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
 
 	  Fixed compile errors from improper exception specifications.
 
-	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: This missed my last commit. 
+	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: This missed my last commit.
 
 	  This should fix compile errors in the core builds.
 
 Wed Jul 30 18:34:34 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
-	* orbsvcs/orbsvcs/AV/UDP.cpp: 
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
 	  - Change mtu() to return the maximum theoretical MTU for UDP.
 	    The existing value was too low, and was silently corrupting
-	    data by silently truncating it. 
+	    data by silently truncating it.
 	  - Make the the iovec version of send_frame() like the other versions.
 
 Wed Jul 30 13:12:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
@@ -171,9 +176,9 @@ Wed Jul 30 12:53:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation: A new test
 	  for testing some simple FT ORB features. Please see the README
-	  file for more details. 
+	  file for more details.
 
-	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Fixed a typo. 
+	* orbsvcs/tests/FaultTolerance/IOGR/svc.conf: Fixed a typo.
 	* orbsvcs/tests/FaultTolerance/IOGR/Manager.cpp: Fixed some
 	  obvious memory leaks.
 
@@ -183,7 +188,7 @@ Wed Jul 30 12:50:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Profile.cpp: Added two new methods, hash_service_i () and
 	  is_profile_equivalent_i (). These methods are basically hooks
 	  for is_equivalent () and  hash () calls declared in the profile
-	  classes. The hook serves to address the following problem 
+	  classes. The hook serves to address the following problem
 
 	  - services like FTCORBA have additional requirements to decide
 	    whether two objects or profiles are equivalent. This hook
@@ -196,28 +201,28 @@ Wed Jul 30 12:50:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Strategies/SHMIOP_Profile.cpp:
 	* tao/Strategies/SCIOP_Profile.cpp: Calls to hash () and
 	  is_equivalent (), invokes the above new methods in their base
-	  classes in addition to the computations that is already done. 
-	  
+	  classes in addition to the computations that is already done.
+
 	  Thanks to Didier Becu <didier.becu@fr.thalesgroup.com> for
 	  motivating these changes.
 
 
-	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp: 
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.cpp:
 
 	  Fixed a subtle problem which prevented location forwarded IOR's
-	  to be overlooked when trying to search for a primary. 	  
+	  to be overlooked when trying to search for a primary.
 
 	* orbsvcs/orbsvcs/FT_ORB.bor: Added the new file to the borland
-	  Makefile.   
+	  Makefile.
 
-	
+
 	Integration from the branch. The relevant ChangeLog entries are:
-	
+
 	Thu Jul 10 11:20:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Makefile.FaulTolerance: Added new files.
-	
-	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: Make the IDL spec compatible. 
+
+	* orbsvcs/orbsvcs/FT_CORBA_ORB.idl: Make the IDL spec compatible.
 
 	Thu Jul 10 11:09:25 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
@@ -227,11 +232,11 @@ Wed Jul 30 12:50:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  now used to modify the service context list that is passed to
 	  the server side. The interceptor is setup using the standard
 	  svc.conf mechanism. This fixes some of the subtle bugs that have
-	  been reported in the past that arose from 
+	  been reported in the past that arose from
 
 	  - A new IOGR version showing up from the server through a
 	    location forward mechanism but the service context list
-	    sending older group version information to the server. 
+	    sending older group version information to the server.
 
 	  - The policy for request_duration_time not accessible if set on
 	    the PolicyManager.
@@ -239,14 +244,14 @@ Wed Jul 30 12:50:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.cpp:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_ORBInitializer.h: Register the
 	  server side and client side interceptors through the
-	  initializer. 
+	  initializer.
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.cpp:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Policy_i.h: The latest specs
 	  changed the attribute in FTRequestDurationPolicy from
 	  request_duration_policy to
 	  request_duration_policy_value. Changed the accesor to match the
-	  IDL file. 
+	  IDL file.
 
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
 	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h: Removed
@@ -1974,7 +1979,7 @@ Wed Jul 16 16:28:47 2003  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/tests/Notify/Basic/Sequence.cpp:
 
           Added useful debug messages.
-	
+
 Wed Jul 16 14:13:24 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
         * tests/RTScheduling/Scheduler.cpp:
