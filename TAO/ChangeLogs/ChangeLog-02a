@@ -9,6 +9,11 @@ Tue Jul  2 18:01:56 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 	  Uninlined the CDR stream operators.
 
+	* tao/AbstractBase.cpp:
+
+	  Added #include of debug.h, needed by the Debian Minimum Static
+	  build.
+
 Tue Jul 02 16:51:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/TAO.dsp:
