@@ -123,7 +123,7 @@
 // don't.
 #if defined (ACE_HAS_USING_KEYWORD)
 #define TAO_NAMESPACE namespace
-#define TAO_NAMESPACE_STORAGE_CLASS extern
+#define TAO_NAMESPACE_STORAGE_CLASS static
 #else
 #define TAO_NAMESPACE struct TAO_EXPORT_MACRO
 #define TAO_NAMESPACE_STORAGE_CLASS static
