@@ -1,3 +1,18 @@
+Wed Jan  2 09:41:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvvcs/IFR_Service/drv_init_ifr.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvvcs/IFR_Service/ifr_visitor.h:
+
+          Changes related to corresponding changes in the TAO IDL
+          compiler regarding value types and #pragma prefix.
+
 Tue Jan  1 17:40:23 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
