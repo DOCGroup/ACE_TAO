@@ -1,3 +1,60 @@
+Thu Nov 16 15:31:20 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * include/makeinclude/platform_linux_kcc.GNU:
+          Builds with static libraries under Linux/KCC were failing due to
+          some magical -Bstatic options in the configuration file.  When
+          the options are removed the problem went away.
+
+Thu Nov 16 15:17:18 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * Makefile:
+        * html/doxygen.css:
+        * html/index.html:
+          New html directory.  People normally don't expect html documents
+          to show up under the man directory.
+
+        * configure.in:
+        * bin/bootstrap:
+        * man/Makefile.am:
+        * man/html/Makefile.am:
+          Remove the man/html directory.
+
+        * bin/make_release:
+          Insert code to generate the man pages index.
+
+        * docs/ACE-categories.html:
+          Change references to man/html so they point to the new doxygen
+          generated files.
+
+        * bin/README.html:
+        * bin/class2hxxcxx:
+        * bin/class2hxxcxxsingle:
+        * bin/class2info:
+        * bin/class2info.awk:
+        * bin/class2man:
+        * bin/class2mml:
+        * bin/class2src:
+        * bin/classinfo.ps:
+        * bin/generate_html_windex:
+        * bin/generate_man_pages:
+        * bin/hiding.fmt:
+        * bin/html-windex:
+        * bin/info2doc.awk:
+        * bin/info2doc.fmt:
+        * bin/info2head:
+        * bin/info2head.fmt:
+        * bin/info2headsrc:
+        * bin/info2man:
+        * bin/info2mml:
+        * bin/info2src:
+        * bin/info2src.awk:
+        * bin/man2html:
+        * bin/man2html1.awk:
+        * bin/man2html2.awk:
+        * bin/vendor.fmt:
+          Remove old scripts used in man page and html document
+          generation. We do everything with doxygen now.
+
 Thu Nov 16 15:09:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/TkReactor_Test.cpp:
@@ -5,16 +62,16 @@ Thu Nov 16 15:09:25 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed Nov 15 14:23:54 2000  Ossama Othman  <ossama@uci.edu>
 
-	* configure.in:
+        * configure.in:
 
-	  Fixed bug in the auto_ptr / C++ std namespace test where the
-	  template argument for the auto_ptr being instantiated was
-	  a non-existent type.
-	  Reported by Kevin Marhsall <KCMarshall@att.net>
+          Fixed bug in the auto_ptr / C++ std namespace test where the
+          template argument for the auto_ptr being instantiated was
+          a non-existent type.
+          Reported by Kevin Marhsall <KCMarshall@att.net>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Kevin to the hall of fame list.
+          Added Kevin to the hall of fame list.
 
 Wed Nov 15 10:19:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
