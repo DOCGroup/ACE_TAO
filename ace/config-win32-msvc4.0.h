@@ -76,7 +76,6 @@
 // Define the following macro if you're compiling with WinSock 2.0.
 // #define ACE_HAS_WINSOCK2
 
-// Needed for timeval.
 #if defined (ACE_HAS_WINSOCK2)
 #if !defined (_WINSOCK2API_)
 #include /**/ <winsock2.h>		// will also include windows.h, if not present
