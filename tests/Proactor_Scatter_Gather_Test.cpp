@@ -305,7 +305,7 @@ private:
   ACE_Message_Block *partial_chunk_;
 };
 
-class Writer : public ACE_Service_Handler
+class Writer : public ACE_Handler
 {
   friend class Receiver;
 
