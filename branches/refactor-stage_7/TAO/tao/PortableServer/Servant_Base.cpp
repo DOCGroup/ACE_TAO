@@ -126,8 +126,7 @@ TAO_ServantBase::_find (const char *opname,
                         const unsigned int length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-//  return optable_->find (opname, skelfunc, length);
-return 0;
+  return optable_->find (opname, skelfunc, length);
 }
 
 int
@@ -137,8 +136,7 @@ TAO_ServantBase::_find (const char *opname,
                         const unsigned int length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-//  return optable_->find (opname, skelfunc, st, length);
-return 0;
+  return optable_->find (opname, skelfunc, st, length);
 }
 
 /*int
@@ -326,13 +324,13 @@ TAO_RefCountServantBase::~TAO_RefCountServantBase (void)
 }
 
 void
-TAO_RefCountServantBase::_add_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_RefCountServantBase::_add_ref (void)
 {
   ++this->ref_count_;
 }
 
 void
-TAO_RefCountServantBase::_remove_ref (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_RefCountServantBase::_remove_ref (void)
 {
   const CORBA::ULong new_count = --this->ref_count_;
 

@@ -145,7 +145,9 @@ CORBA::Request::~Request (void)
 void
 CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::Boolean argument_flag = this->args_->_lazy_has_arguments ();
+  CORBA::Boolean argument_flag =
+    this->args_->_lazy_has_arguments ();
+
 
   TAO_GIOP_DII_Invocation call (this->target_->_stubobj (),
                                 this->opname_,
