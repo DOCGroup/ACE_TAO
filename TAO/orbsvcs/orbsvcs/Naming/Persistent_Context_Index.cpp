@@ -4,7 +4,8 @@
 #include "Persistent_Naming_Context.h"
 #include "ace/Auto_Ptr.h"
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
 template class ACE_Auto_Basic_Ptr<TAO_Naming_Context>;
 template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
 template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> >;

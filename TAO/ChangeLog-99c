@@ -1,98 +1,104 @@
+Thu Sep 02 14:04:23 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+          use the explicit template instantiations even with ACE_HAS_GNU_REPO.
+          g++ 2.91.66 misses them with -frepo.
+
 Thu Sep  2 11:45:29 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/ntp-time.h:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	* orbsvcs/orbsvcs/AV/AV_Core.h :
-	* orbsvcs/orbsvcs/AV/MCast.cpp:
-	* orbsvcs/orbsvcs/AV/Policy.cpp:
-	* orbsvcs/orbsvcs/AV/source.cpp:
-	* orbsvcs/orbsvcs/AV/RTCP.cpp:
-	* orbsvcs/orbsvcs/AV/TCP.cpp:
-	* orbsvcs/orbsvcs/AV/Transport.cpp:
-	* orbsvcs/orbsvcs/AV/UDP.cpp :
-	* orbsvcs/orbsvcs/AV/media-timer.cpp:
-	* orbsvcs/orbsvcs/AV/ntp-time.h:
-	* orbsvcs/orbsvcs/AV/sfp.cpp: Fixed warnings & errors on
-	  NT. Thanks to Michael Kircher & Andy for reporting these.
+        * orbsvcs/orbsvcs/AV/ntp-time.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.h :
+        * orbsvcs/orbsvcs/AV/MCast.cpp:
+        * orbsvcs/orbsvcs/AV/Policy.cpp:
+        * orbsvcs/orbsvcs/AV/source.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp :
+        * orbsvcs/orbsvcs/AV/media-timer.cpp:
+        * orbsvcs/orbsvcs/AV/ntp-time.h:
+        * orbsvcs/orbsvcs/AV/sfp.cpp: Fixed warnings & errors on
+          NT. Thanks to Michael Kircher & Andy for reporting these.
 
 Thu Sep 02 10:47:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp (start_client_header): Changed to
-	  include <tao/corbafwd.h> intead of <tao/corba.h> in client
-	  header when generating locality constraint objects.  Thanks to
-	  Carlos for suggesting that.
+        * TAO_IDL/be/be_codegen.cpp (start_client_header): Changed to
+          include <tao/corbafwd.h> intead of <tao/corba.h> in client
+          header when generating locality constraint objects.  Thanks to
+          Carlos for suggesting that.
 
 Thu Sep  2 07:54:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/decode.cpp:
-	* tao/deep_free.cpp:
-	* tao/encode.cpp:
-	  Fix to pointer alignment adjustment calculation in
-	  TAO_Marshal_Struct::*. The old one was failing with
-	  Borland Builder. Thanks to
-	  Christopher Kohlhoff <chris_kohlhoff@yahoo.com> for
-	  sending in the Borland fix and his efforts to find a
-	  single portable one.
+        * tao/decode.cpp:
+        * tao/deep_free.cpp:
+        * tao/encode.cpp:
+          Fix to pointer alignment adjustment calculation in
+          TAO_Marshal_Struct::*. The old one was failing with
+          Borland Builder. Thanks to
+          Christopher Kohlhoff <chris_kohlhoff@yahoo.com> for
+          sending in the Borland fix and his efforts to find a
+          single portable one.
 
 Wed Sep  1 20:27:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/ntp-time.h:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-	* orbsvcs/orbsvcs/AV/Policy.cpp:
-	* orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
-	* orbsvcs/orbsvcs/AV/RTCP.cpp :
-	* orbsvcs/orbsvcs/AV/RTP.cpp:
-	* orbsvcs/orbsvcs/AV/TCP.cpp:
-	* orbsvcs/orbsvcs/AV/Transport.cpp:
-	* orbsvcs/orbsvcs/AV/UDP.cpp:
-	* orbsvcs/orbsvcs/AV/media-timer.cpp:
-	* orbsvcs/orbsvcs/AV/media-timer.h:
-	* orbsvcs/orbsvcs/AV/source.cpp: Fixed warnings/errors in SunOS5.0
-	  with exceptions turned on. Also tested on Linux EGCS
+        * orbsvcs/orbsvcs/AV/ntp-time.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/Policy.cpp:
+        * orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP.cpp :
+        * orbsvcs/orbsvcs/AV/RTP.cpp:
+        * orbsvcs/orbsvcs/AV/TCP.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/media-timer.cpp:
+        * orbsvcs/orbsvcs/AV/media-timer.h:
+        * orbsvcs/orbsvcs/AV/source.cpp: Fixed warnings/errors in SunOS5.0
+          with exceptions turned on. Also tested on Linux EGCS
 
 Wed Sep  1 21:17:17 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* tao/default_resource.{h,cpp}: Added support for ORBReactorType
-	  option for TkReactor.  Thanks to Philipp Slusallek
- 	  <slusallek@graphics.stanford.edu> for reporting this.
+        * tao/default_resource.{h,cpp}: Added support for ORBReactorType
+          option for TkReactor.  Thanks to Philipp Slusallek
+          <slusallek@graphics.stanford.edu> for reporting this.
 
 Wed Sep  1 20:27:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/sfp.cpp : Fixed warnings on SunOS EGCS. This
-	  is with native exceptions disabled.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/sfp.cpp : Fixed warnings on SunOS EGCS. This
+          is with native exceptions disabled.
 
 Wed Sep  1 19:18:53 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile :  Added the missing AV files to the AV
-	  sources.
+        * orbsvcs/orbsvcs/Makefile :  Added the missing AV files to the AV
+          sources.
 
 Wed Sep  1 17:08:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO/tao/IIOP_Connect.i:
-	* TAO/tao/IIOP_Connect.cpp:
-	* TAO/tao/UIOP_Connect.i:
-	* TAO/tao/UIOP_Connect.cpp:
-	  Moved virtual methods the the .cpp file, there is no sense in
-	  inlining them.
+        * TAO/tao/IIOP_Connect.i:
+        * TAO/tao/IIOP_Connect.cpp:
+        * TAO/tao/UIOP_Connect.i:
+        * TAO/tao/UIOP_Connect.cpp:
+          Moved virtual methods the the .cpp file, there is no sense in
+          inlining them.
 
-	* TAO/tao/corbafwd.h:
-	  Defined protocol TAG for the Boeing custom protocol.
+        * TAO/tao/corbafwd.h:
+          Defined protocol TAG for the Boeing custom protocol.
 
-	* TAO/tao/Profile.h:
-	  Minor cosmetic fixes
+        * TAO/tao/Profile.h:
+          Minor cosmetic fixes
 
 Wed Sep 01 16:32:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IORS.h:
-	  The copy constructor is private and unimplemented to avoid any
-	  copying.
+        * tao/IORS.h:
+          The copy constructor is private and unimplemented to avoid any
+          copying.
 
-	* tao/TAO.dsp:
-	* tao/TAO_Static.dsp:
-	  Added new files Profile.{h,i,cpp}
+        * tao/TAO.dsp:
+        * tao/TAO_Static.dsp:
+          Added new files Profile.{h,i,cpp}
 
 Wed Sep 01 16:04:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
