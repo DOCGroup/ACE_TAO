@@ -379,5 +379,13 @@ SOURCE=.\SSLIOPC.i
 
 # PROP Default_Filter ""
 # End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "rc"
+# Begin Source File
+
+SOURCE=.\SSLIOP.rc
+# End Source File
+# End Group
 # End Target
 # End Project

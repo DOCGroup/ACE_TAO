@@ -295,5 +295,13 @@ SOURCE=.\Event\RT_Task.i
 SOURCE=.\Event\Timer_Module.i
 # End Source File
 # End Group
+# Begin Group "Resource Files"
+
+# PROP Default_Filter "rc"
+# Begin Source File
+
+SOURCE=.\RTOldEvent.rc
+# End Source File
+# End Group
 # End Target
 # End Project
