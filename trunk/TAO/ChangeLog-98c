@@ -1,6 +1,15 @@
+Mon Dec 14 20:38:54 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+	* TAO_IDL/be/be_init.cpp (BE_init): Changed to initialize tao_cg
+	  to 0 and delay the actual initialization in BE_init.  This avoid
+	  the "order of initialization" problem and allow us to trace
+	  TAO_IDL.  The output if not pretty though.  Thanks to Ulf
+	  Jaehrig <jaehrig@desys.com> for reporting this.
+
 Mon Dec 14 16:16:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Environment.cpp: 
+	* tao/Environment.cpp:
 	  Added the CORBA_Environment::exception_id() method, thanks to
 	  diesel@dekwl.abb.com (sorry, your name was not in the message!)
 	  for reporting this problem.
@@ -13,7 +22,7 @@ Mon Dec 14 16:16:34 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  TradingServiceIOR environment variable. Removed the bit about
 	  having the export_test use -ORBport 0 when run on the same
 	  machine as the trader it's testing, since this is now the
-	  default. Thanks to Carlos O'Ryan for pointing this out.      
+	  default. Thanks to Carlos O'Ryan for pointing this out.
 
 Mon Dec 14 12:21:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
