@@ -1,3 +1,18 @@
+Fri Dec 18 00:20:37 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/Servant_Locator.{h,cpp}:
+	  This interface of the Servant_Manager loads the servant per
+	  client request.
+
+	* examples/POA/On_Demand_Loading/run_test_pl: This script is used
+	  to run this example.
+
+	* examples/POA/On_Demand_Loading/server.cpp: Added changes to
+	  incorporate the Servant Locator interface.
+
+	* examples/POA/On_Demand_Loading/README: Added changes about the
+	  Servant Locator.
+	
 Fri Dec 18 23:02:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/POA/On_Demand_Loading: Removed the following entries:
