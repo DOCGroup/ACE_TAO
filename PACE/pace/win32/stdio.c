@@ -46,6 +46,6 @@ pace_win32_fseek (FILE * stream, long offset, int whence)
 #   endif  /* SEEK_SET != FILE_BEGIN
            || SEEK_CUR != FILE_CURRENT
            || SEEK_END != FILE_END */
-  PACE_OSCALL_RETURN (::fseek (stream, offset, whence), int, -1);
+  PACE_OSCALL_RETURN (fseek (stream, offset, whence), int, -1);
 }
 #endif /* PACE_HAS_POSIX_FM_UOF */

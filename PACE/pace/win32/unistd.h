@@ -92,14 +92,20 @@ typedef ssize_t pace_ssize_t;
 
 #if (PACE_HAS_POSIX_FM_UOF)
   pace_off_t pace_win32_lseek (PACE_HANDLE fildes,
-                          pace_off_t offset,
-                          int whence);
+                               pace_off_t offset,
+                               int whence);
 #endif /* PACE_HAS_POSIX_FM_UOF */
 
 #if (PACE_HAS_POSIX_DI_UOF)
   pace_ssize_t pace_win32_write (PACE_HANDLE fildes,
-                       const void * buf,
-                       size_t nbyte);
+                                 const void * buf,
+                                 pace_size_t nbyte);
+#endif /* PACE_HAS_POSIX_DI_UOF */
+
+#if (PACE_HAS_POSIX_DI_UOF)
+  pace_ssize_t pace_win32_read (PACE_HANDLE fildes,
+                                const void * buf,
+                                pace_size_t nbyte);
 #endif /* PACE_HAS_POSIX_DI_UOF */
 
 #if defined (PACE_HAS_CPLUSPLUS)
