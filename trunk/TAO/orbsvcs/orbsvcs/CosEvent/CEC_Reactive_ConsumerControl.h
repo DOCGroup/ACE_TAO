@@ -74,7 +74,7 @@ private:
  * = LOCKING
  * = TODO
  */
-class TAO_Event_Serv_Export TAO_CEC_Reactive_ConsumerControl 
+class TAO_Event_Serv_Export TAO_CEC_Reactive_ConsumerControl
   : public TAO_CEC_ConsumerControl
 {
 public:
@@ -164,13 +164,13 @@ private:
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   /// The timer id
-  int timer_id_;
+  long timer_id_;
 #endif /* TAO_HAS_CORBA_MESSAGING */
 };
 
 // ****************************************************************
 
-class TAO_CEC_Ping_Push_Consumer 
+class TAO_CEC_Ping_Push_Consumer
   : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
 {
 public:
@@ -185,7 +185,7 @@ private:
 
 // ****************************************************************
 
-class TAO_CEC_Ping_Pull_Consumer 
+class TAO_CEC_Ping_Pull_Consumer
   : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier>
 {
 public:
