@@ -41,7 +41,9 @@ release of <A HREF="TAO.html">TAO</A>:
 <A HREF="#poa">Portable Object Adapter</A></LI>
 
 <LI>
-<A HREF="#services">CORBA Services</A></LI>
+<A HREF="#nservices">CORBA Naming Service</A></LI>
+<LI>
+<A HREF="#tservices">CORBA Trader Service</A></LI>
 
 <LI>
 <A HREF="#ace">ORB-related ACE Changes</A></LI>
@@ -54,8 +56,7 @@ release of <A HREF="TAO.html">TAO</A>:
     <H3><A NAME="idl"></A>IDL Compiler</H3>
     Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Andy Gokhale</A>
 
-    <BLOCKQUOTE>
-      Current status
+      <P>Current status
 
       <UL>
 	<LI> Generates C++ stubs and skeletons that use TAO's <A
@@ -116,13 +117,13 @@ release of <A HREF="TAO.html">TAO</A>:
 	engine in terms of size/performance/determinism will be
 	made.</LI>
       </UL>
-    </BLOCKQUOTE>
 
 <HR>
 <H3>
 <A NAME="eventchannel"></A>Real-time Event Channel</H3>
 Point of contact: <A HREF="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</A>
-<BLOCKQUOTE>Current status:
+
+<P>Current status:
 <UL>
 <LI>
 The current Event Channel is running under Orbix, fully distributed, the
@@ -158,24 +159,25 @@ of suppliers or consumers. I think it would be convenient to have a library
 and binaries for it, including a tool to dump the results in a C++ compilable
 form.</LI>
 </UL>
-</BLOCKQUOTE>
 
 <HR>
 <H3>
 <A NAME="apps"></A>Test &amp; Example Applications</H3>
 Point of contact: <A HREF="mailto:sumedh@cs.wustl.edu">Sumedh Mungee</A>
-<BLOCKQUOTE>Current status:
+
+<P>Current status:
 
 <P>The TAO test application is meant to serve as a starting point for real-time
 tests on the TAO system. It comprises the following parts:
 <UL>
 <LI>
-<I>Server.</I> The server creates multiple CORBA objects (servants), each
-with different real-time priorities. This priority is implemented by using
-real-time thread support provided by the operating system. Thus, requests
-sent to a high-priority servant are handled by a high-priority real-time
-thread, and those sent to a lower priority servant are handled by correspondingly
-lower priority threads.</LI>
+
+<I>Server.</I> The server creates multiple CORBA objects (servants),
+each with different real-time priorities. This priority is implemented
+by using real-time thread support provided by the operating
+system. Thus, requests sent to a high-priority servant are handled by
+a high-priority real-time thread, and those sent to a lower priority
+servant are handled by correspondingly lower priority threads. <P>
 
 <LI>
 <I>Client.</I> The client component binds to the servants, and sends a
@@ -200,26 +202,28 @@ Study the impacts of scheduling &amp; concurrency strategies on performance.</LI
 Evolve into a testbed for discovering sources of performance non-determinism
 &amp; priority inversion.</LI>
 </UL>
-</BLOCKQUOTE>
 
 <HR>
 <H3>
 <A NAME="poa"></A>Portable Object Adapter</H3>
 Point of contact: <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyrarli</A>
-<BLOCKQUOTE>Current Status:
+
+<P>Current Status:
 <UL>
 <LI>
 The POA is not integrated into this release, though we've begun migrating
 TAO's OA to use POA method names.</LI>
 </UL>
 Critical work:
-<BLOCKQUOTE>
+
+<UL>
 <LI>
 Re-generate win32 project files with new file names.</LI>
 
 <LI>
 Add resolve_initial_references() to resolve the "RootPOA" entry.</LI>
-</BLOCKQUOTE>
+</UL>
+
 Future work:
 <UL>
 <LI>
@@ -230,15 +234,14 @@ Portability Specifications [orbos/97-05-15]</A> published by OMG.</LI>
 Provide extensions of the specification to ensure real-time delivery of
 messages.</LI>
 </UL>
-</BLOCKQUOTE>
 
 <HR>
 <H3>
-<A NAME="services"></A>CORBA Services</H3>
-Point of contact: <A HREF="mailto:marina@cs.wustl.edu">Marina Spivak</A>
-<BLOCKQUOTE>
-<H4>
-<A NAME="naming"></A>NAMING SERVICE</H4>
+<A NAME="nservices"></A>CORBA Naming Service</H3>
+Point of contact: <A HREF="mailto:sergio@cs.wustl.edu">Sergio
+Flores-Gaitan</A> and <A HREF="mailto:marina@cs.wustl.edu">Marina
+Spivak</A><P>
+
 The Naming Service is a non-persistent implementation of the OMG Naming
 Service specification.
 
@@ -253,10 +256,13 @@ Future work:
 Port to TAO (once IDL compiler is available and stable).</LI>
 </UL>
 
-<H4>
-<A NAME="trading"></A>TRADING SERVICE</H4>
-The Trading Service is an implementation conforming to OMG Trading Service
-specification.
+<HR>
+<H3>
+<A NAME="tservices"></A>CORBA Trader Service</H3>
+Point of contact: <A HREF="mailto:sbw1@cs.wustl.edu">Seth Widoff</A> <P>
+
+The Trading Service is an implementation conforming to OMG Trading
+Service specification.
 
 <P>Current status:
 <UL>
@@ -272,15 +278,13 @@ Port to TAO.</LI>
 <LI>
 Implement Type Repository and Admin Interfaces for Trading Service.</LI>
 </UL>
-</BLOCKQUOTE>
 
 <HR>
 <H3>
 <A NAME="ace"></A>ORB-related ACE Changes</H3>
 Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and <A HREF="mailto:irfan@cs.wustl.edu">Irfan Pyrarli</A>
 
-    <BLOCKQUOTE>
-      Task List:
+      <P>Task List:
 
       <ul>
 	<li>Insure that the Reactor_Performance_Test portion that
@@ -312,14 +316,11 @@ Points of contact: <A HREF="mailto:cleeland@cs.wustl.edu">Chris Cleeland</A> and
 	 
       </ul>
       
-    </BLOCKQUOTE>
 
 </BODY>
-    <hr>
-    <address><a href="mailto:cleeland@cs.wustl.edu">Chris Cleeland</a></address>
-<pre>
-$Id$
-</pre>
+<hr><P>    
+    This page maintained by <a
+      href="mailto:cleeland@cs.wustl.edu">Chris Cleeland</a> <P>
 <!-- Created: Mon Oct 20 09:53:33 CDT 1997 -->
 <!-- hhmts start -->
 Last modified: Wed Oct 22 16:50:56 CDT 1997
