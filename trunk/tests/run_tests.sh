@@ -63,7 +63,6 @@ run Notify_Performance_Test             # uses Event_Handler, Reactor
 run Reader_Writer_Test                  # uses Thread_Manager, Mutex
 run Priority_Reactor_Test               # uses Priority_Reactor, Acceptor/Connector...
 run SOCK_Test                           # uses Thread_Manager, SOCK_SAP
-run Conn_Test                           # uses Thread_Manager, Acceptor/Connector, SOCK_SAP
 run MT_SOCK_Test                        # uses Thread_Manager, Acceptor/Connector
 
 # ifdef ACE_HAS_STREAM_PIPES
@@ -90,6 +89,7 @@ run Service_Config_Test                 # uses Service_Config
 run Priority_Task_Test                  # uses Task with priorities
 run IOStream_Test                       # uses ACE_IOStream and ACE_SOCK_Stream
 run Enum_Interfaces_Test                # uses ACE::get_ip_interfaces()
+run Conn_Test                           # uses Thread_Manager, Acceptor/Connector, SOCK_SAP
 
 echo "Tests complete..."
 
