@@ -155,7 +155,17 @@ TAO_Stub::hash (CORBA::ULong max,
   // we rely on the profile object that its address info
   if (profile_in_use_)
     return profile_in_use_->hash (max, ACE_TRY_ENV);
-  ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT ("(%P|%t) hash called on a null profile!\n")), 0);
+
+  if (TAO_debug_level > 3)
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) hash called on a null profile\n")));
+
+  ACE_THROW_RETURN (CORBA::INTERNAL (
+    CORBA_SystemException::_tao_minor_code (
+       TAO_DEFAULT_MINOR_CODE,
+       EINVAL),
+    CORBA::COMPLETED_NO),
+    0);
 }
 
 // Expensive comparison of objref data, to see if two objrefs
