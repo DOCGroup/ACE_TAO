@@ -1,3 +1,10 @@
+Thu Apr 29 22:56:04 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Deployment.idl:
+
+          Rolled back some changes made on the TargetDataModel
+          structures.
+
 Thu Apr 29 22:34:41 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Deployment.idl:
