@@ -98,6 +98,8 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address (const ACE_INET_Addr &mcast_addr,
       multicast_address_.imr_interface.s_addr = socket_address->sin_addr.s_addr;
     }
   else
+#else
+	ACE_UNUSED_ARG(net_if);
 #endif /* ACE_WIN32 */
     multicast_address_.imr_interface.s_addr = INADDR_ANY;
 

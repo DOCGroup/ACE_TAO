@@ -147,6 +147,10 @@
 #define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 #define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
 
+// keep the compiler from complaining of
+// parameters which are not used.
+#define ACE_UNUSED_ARG(a) (a)
+
 // These hooks enable ACE to have all dynamic memory management
 // automatically handled on a per-object basis.
 

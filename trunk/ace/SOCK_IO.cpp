@@ -28,7 +28,7 @@ ACE_SOCK_IO::recv (iovec *io_vec)
     return -1;
   else if (inlen > 0)
     {
-      io_vec->iov_base = new char[inlen];
+      ACE_NEW_RETURN (io_vec->iov_base, char[inlen], -1);
       io_vec->iov_len = this->recv (io_vec->iov_base, inlen);
       return io_vec->iov_len;
     }

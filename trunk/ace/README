@@ -64,6 +64,7 @@ ACE_HAS_PTHREAD_GETSPECIFIC_DATAPTR	pthread_getspecific() takes a data pointer f
 ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP	Platform has pthread_mutexattr_setkind_np().
 ACE_HAS_PTHREAD_T			Platform has pthread_t defined.
 ACE_HAS_PTHREAD_YIELD_VOIDPTR		pthread_yield() takes a void pointer arg.
+ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS	Platform will recurse infinitely on thread exits from TSS cleanup routines (e.g., AIX).  
 ACE_HAS_REENTRANT_FUNCTIONS 		Platform supports reentrant functions (i.e., all the POSIX *_r functions).
 ACE_HAS_REGEX				Platform supports the POSIX regular expression library
 ACE_HAS_RTLD_LAZY_V			Explicit dynamic linking permits "lazy" symbol resolution

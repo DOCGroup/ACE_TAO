@@ -100,12 +100,14 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
 {
   ACE_TRACE ("ACE_Handle_Set::sync");
 #if !defined(ACE_WIN32)
-  this->size_ = 0;
+	this->size_ = 0;
 
-  for (int i = (max - 1) / ACE_Handle_Set::WORDSIZE; i >= 0; i--)
-    this->size_ += count_bits (this->mask_.fds_bits[i]);
+	for (int i = (max - 1) / ACE_Handle_Set::WORDSIZE; i >= 0; i--)
+	this->size_ += count_bits (this->mask_.fds_bits[i]);
 
-  this->set_max (max);
+	this->set_max (max);
+#else
+	ACE_UNUSED_ARG(max);
 #endif /* !ACE_WIN32 */
 }
 
@@ -116,6 +118,7 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
 {
   ACE_TRACE ("ACE_Handle_Set::set_max");
 #if !defined(ACE_WIN32)
+	
   if (this->size_ == 0)
     this->max_handle_ = -1;
   else
@@ -137,6 +140,8 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
   // Do some sanity checking...
   if (this->max_handle_ >= ACE_Handle_Set::MAXSIZE)
     this->max_handle_ = ACE_Handle_Set::MAXSIZE - 1;
+#else
+	ACE_UNUSED_ARG(current_max);
 #endif /* !ACE_WIN32 */
 }
 

@@ -72,6 +72,8 @@ ACE_IO_SAP::enable (int signum) const
       return ACE_IO_SAP::INVALID_HANDLE;
     }
 
+#else
+	ACE_UNUSED_ARG(signum);
 #endif /* !ACE_WIN32 */
 
   return 0;
@@ -116,6 +118,8 @@ ACE_IO_SAP::disable (int signum) const
       return ACE_IO_SAP::INVALID_HANDLE;
     }
 
+#else
+	ACE_UNUSED_ARG(signum);
 #endif /* !ACE_WIN32 */
 
   return 0;
