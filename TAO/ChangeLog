@@ -1,3 +1,13 @@
+Wed Mar 19 12:52:22 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Exception.cpp (operator<<=, operator>>=):
+
+          Once again placed the definitions of these Any insertion and
+	  extraction operators in the CORBA namespace.  The fix was
+	  reverted in the latest Any implementation changes.  Fixes
+	  "unresolved symbol" link-time errors when using these
+	  operators.
+
 Wed Mar 19 13:27:09 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/CodeSets/simple/Makefile: Fix the dependancies so that the
