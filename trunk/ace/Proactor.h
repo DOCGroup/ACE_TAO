@@ -133,7 +133,7 @@ public:
 
   ACE_Proactor (size_t number_of_threads = 0, 
 		Timer_Queue *tq = 0,
-		int used_with_reactorEx_event_loop = 0);
+		int used_with_reactor_event_loop = 0);
   // A do nothing constructor.
   
   virtual ~ACE_Proactor (void);
@@ -314,12 +314,12 @@ protected:
   // This will manage the thread in the Timer_Handler
 
   ACE_Auto_Event event_;
-  // This event is used in conjunction with ReactorEx when we try to
-  // integrate the event loops of ReactorEx and the Proactor.
+  // This event is used in conjunction with Reactor when we try to
+  // integrate the event loops of Reactor and the Proactor.
 
-  int used_with_reactorEx_event_loop_;
+  int used_with_reactor_event_loop_;
   // Flag that indicates whether we are used in conjunction with
-  // ReactorEx
+  // Reactor
 
 private:
   static ACE_Proactor *proactor_;

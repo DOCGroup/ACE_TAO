@@ -18,7 +18,6 @@
 #if !defined (ACE_TIMER_QUEUE_T_H)
 #define ACE_TIMER_QUEUE_T_H
 
-#include "ace/Time_Value.h"
 #include "ace/Signal.h"
 #include "ace/Free_List.h"
 #include "ace/Signal.h"

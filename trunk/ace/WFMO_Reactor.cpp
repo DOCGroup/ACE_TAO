@@ -1,40 +1,28 @@
-// ReactorEx.cpp
 // $Id$
 
 #define ACE_BUILD_DLL
-#include "ace/ReactorEx.h"
-#include "ace/Timer_List.h"
+
+#include "ace/WFMO_Reactor.h"
+
+#include "ace/Handle_Set.h"
+#include "ace/Timer_Heap.h"
 #include "ace/Thread.h"
-#include "ace/Service_Config.h"
 
 #if defined (ACE_WIN32)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Handle_Set.h"
-#include "ace/ReactorEx.i"
+#include "ace/WFMO_Reactor.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Ptr.h"
 
-// Process-wide ACE_ReactorEx.
-ACE_ReactorEx *ACE_ReactorEx::reactorEx_ = 0;
-
-// Controls whether the ReactorEx is deleted when we shut down (we can
-// only delete it safely if we created it!)
-int ACE_ReactorEx::delete_reactorEx_ = 0;
-
-// Terminate the eventloop.
-sig_atomic_t ACE_ReactorEx::end_event_loop_ = 0;
-
-/************************************************************/
-
-ACE_ReactorEx_Handler_Repository::ACE_ReactorEx_Handler_Repository (ACE_ReactorEx &reactorEx)
-  : reactorEx_ (reactorEx)
+ACE_WFMO_Reactor_Handler_Repository::ACE_WFMO_Reactor_Handler_Repository (ACE_WFMO_Reactor &wfmo_reactor)
+  : wfmo_reactor_ (wfmo_reactor)
 {
 }
 
 int
-ACE_ReactorEx_Handler_Repository::open (size_t size)
+ACE_WFMO_Reactor_Handler_Repository::open (size_t size)
 {
   // Dynamic allocation
   ACE_NEW_RETURN (this->current_handles_, ACE_HANDLE[size], -1);
@@ -57,7 +45,7 @@ ACE_ReactorEx_Handler_Repository::open (size_t size)
   return 0;
 }
 
-ACE_ReactorEx_Handler_Repository::~ACE_ReactorEx_Handler_Repository (void)
+ACE_WFMO_Reactor_Handler_Repository::~ACE_WFMO_Reactor_Handler_Repository (void)
 {
   // Free up dynamically allocated space
   delete[] this->current_handles_;
@@ -67,8 +55,8 @@ ACE_ReactorEx_Handler_Repository::~ACE_ReactorEx_Handler_Repository (void)
 }
 
 void
-ACE_ReactorEx_Handler_Repository::remove_network_events_i (long &existing_masks,
-							   ACE_Reactor_Mask to_be_removed_masks)
+ACE_WFMO_Reactor_Handler_Repository::remove_network_events_i (long &existing_masks,
+							      ACE_Reactor_Mask to_be_removed_masks)
 {
   if (ACE_BIT_STRICTLY_ENABLED (to_be_removed_masks, ACE_Event_Handler::READ_MASK))
     ACE_CLR_BITS (existing_masks, FD_READ);
@@ -96,9 +84,9 @@ ACE_ReactorEx_Handler_Repository::remove_network_events_i (long &existing_masks,
 }
 
 int
-ACE_ReactorEx_Handler_Repository::unbind_i (ACE_HANDLE handle,
-					    ACE_Reactor_Mask mask,
-					    int &changes_required)
+ACE_WFMO_Reactor_Handler_Repository::unbind_i (ACE_HANDLE handle,
+					       ACE_Reactor_Mask mask,
+					       int &changes_required)
 {
   int error = 0;
 
@@ -148,8 +136,8 @@ ACE_ReactorEx_Handler_Repository::unbind_i (ACE_HANDLE handle,
 }
 
 int 
-ACE_ReactorEx_Handler_Repository::remove_handler_i (size_t index,
-						    ACE_Reactor_Mask to_be_removed_masks)
+ACE_WFMO_Reactor_Handler_Repository::remove_handler_i (size_t index,
+						       ACE_Reactor_Mask to_be_removed_masks)
 {
   // I/O entries
   if (this->current_info_[index].io_entry_)
@@ -186,8 +174,8 @@ ACE_ReactorEx_Handler_Repository::remove_handler_i (size_t index,
 }
 
 int 
-ACE_ReactorEx_Handler_Repository::remove_suspended_handler_i (size_t index,
-							      ACE_Reactor_Mask to_be_removed_masks)
+ACE_WFMO_Reactor_Handler_Repository::remove_suspended_handler_i (size_t index,
+								 ACE_Reactor_Mask to_be_removed_masks)
 {
   // I/O entries
   if (this->current_suspended_info_[index].io_entry_)
@@ -224,8 +212,8 @@ ACE_ReactorEx_Handler_Repository::remove_suspended_handler_i (size_t index,
 }
 
 int
-ACE_ReactorEx_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
-						     int &changes_required)
+ACE_WFMO_Reactor_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
+							int &changes_required)
 {
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
@@ -258,8 +246,8 @@ ACE_ReactorEx_Handler_Repository::suspend_handler_i (ACE_HANDLE handle,
 }
 
 int
-ACE_ReactorEx_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
-						    int &changes_required)
+ACE_WFMO_Reactor_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
+						       int &changes_required)
 {
   // Remember this value; only if it changes do we need to wakeup
   // the other threads
@@ -290,10 +278,10 @@ ACE_ReactorEx_Handler_Repository::resume_handler_i (ACE_HANDLE handle,
 }
 
 void
-ACE_ReactorEx_Handler_Repository::unbind_all (void)
+ACE_WFMO_Reactor_Handler_Repository::unbind_all (void)
 {
   {
-    ACE_GUARD (ACE_Process_Mutex, ace_mon, this->reactorEx_.lock_);
+    ACE_GUARD (ACE_Process_Mutex, ace_mon, this->wfmo_reactor_.lock_);
     
     // Remove all the handlers 
     for (size_t i = 0; i < this->max_handlep1_; i++)
@@ -306,16 +294,16 @@ ACE_ReactorEx_Handler_Repository::unbind_all (void)
   
   // Wake up all threads in WaitForMultipleObjects so that they can
   // reconsult the handle set
-  this->reactorEx_.wakeup_all_threads ();
+  this->wfmo_reactor_.wakeup_all_threads ();
 }
 
 int
-ACE_ReactorEx_Handler_Repository::bind_i (int io_entry,
-					  ACE_Event_Handler *event_handler,
-					  long network_events,
-					  ACE_HANDLE io_handle,
-					  ACE_HANDLE event_handle, 
-					  int delete_event)
+ACE_WFMO_Reactor_Handler_Repository::bind_i (int io_entry,
+					     ACE_Event_Handler *event_handler,
+					     long network_events,
+					     ACE_HANDLE io_handle,
+					     ACE_HANDLE event_handle, 
+					     int delete_event)
 {
   // Make sure that the <handle> is valid
   if (event_handle == ACE_INVALID_HANDLE)
@@ -324,9 +312,9 @@ ACE_ReactorEx_Handler_Repository::bind_i (int io_entry,
     return -1;
   
   size_t current_size = this->max_handlep1_ + 
-                        this->handles_to_be_added_ - 
-                        this->handles_to_be_deleted_ +
-                        this->suspended_handles_;
+    this->handles_to_be_added_ - 
+    this->handles_to_be_deleted_ +
+    this->suspended_handles_;
 
   // Make sure that there's room in the table.
   if (current_size < this->max_size_)
@@ -342,12 +330,9 @@ ACE_ReactorEx_Handler_Repository::bind_i (int io_entry,
       
       this->handles_to_be_added_++;
 
-      // Assign *this* <ReactorEx> to the <Event_Handler>.
-      event_handler->reactorEx (&this->reactorEx_);      
-
       // Wake up all threads in WaitForMultipleObjects so that they can
       // reconsult the handle set
-      this->reactorEx_.wakeup_all_threads ();
+      this->wfmo_reactor_.wakeup_all_threads ();
     }
   else
     return -1;
@@ -356,7 +341,7 @@ ACE_ReactorEx_Handler_Repository::bind_i (int io_entry,
 }
 
 int
-ACE_ReactorEx_Handler_Repository::handle_deletions (void)
+ACE_WFMO_Reactor_Handler_Repository::handle_deletions (void)
 {
   // Go through the entire valid array and check for all handles that
   // have been schedule for deletion
@@ -375,7 +360,7 @@ ACE_ReactorEx_Handler_Repository::handle_deletions (void)
 	      // will only call it once per deregistering <Event_Handler>.
 	      // This is essential in the case when the <Event_Handler> will
 	      // do something like delete itself and we have multiple
-	      // threads in ReactorEx.
+	      // threads in WFMO_Reactor.
 	      //
 	      // Make sure that the DONT_CALL mask is not set
 	      ACE_Reactor_Mask masks = this->current_info_[i].close_masks_;
@@ -392,7 +377,7 @@ ACE_ReactorEx_Handler_Repository::handle_deletions (void)
 		  this->current_info_[i].event_handler_->handle_close (handle, masks);
 		}
 
-	      // If <ReactorEx> created the event, we need to clean it up
+	      // If <WFMO_Reactor> created the event, we need to clean it up
 	      if (this->current_info_[i].delete_event_)
 		ACE_OS::event_destroy (&this->current_handles_[i]);
 	      
@@ -447,7 +432,7 @@ ACE_ReactorEx_Handler_Repository::handle_deletions (void)
 }
 
 int
-ACE_ReactorEx_Handler_Repository::handle_additions (void)
+ACE_WFMO_Reactor_Handler_Repository::handle_additions (void)
 {
   // Go through the <to_be_added_*> arrays
   for (int i = 0; i < (int) this->handles_to_be_added_; i++)
@@ -478,7 +463,7 @@ ACE_ReactorEx_Handler_Repository::handle_additions (void)
 	      // will only call it once per deregistering <Event_Handler>.
 	      // This is essential in the case when the <Event_Handler> will
 	      // do something like delete itself and we have multiple
-	      // threads in ReactorEx.
+	      // threads in WFMO_Reactor.
 	      //
 	      // Make sure that the DONT_CALL mask is not set
 	      ACE_Reactor_Mask masks = this->current_suspended_info_[i].close_masks_;
@@ -495,7 +480,7 @@ ACE_ReactorEx_Handler_Repository::handle_additions (void)
 		  this->current_suspended_info_[i].event_handler_->handle_close (handle, masks);
 		}
 	  
-	      // If <ReactorEx> created the event, we need to clean it up
+	      // If <WFMO_Reactor> created the event, we need to clean it up
 	      if (this->current_suspended_info_[i].delete_event_)
 		ACE_OS::event_destroy (&this->current_suspended_info_[i].event_handle_);
 
@@ -542,12 +527,15 @@ ACE_ReactorEx_Handler_Repository::handle_additions (void)
 
 /************************************************************/
 
-ACE_ReactorEx::ACE_ReactorEx (ACE_Sig_Handler *sh,
-			      ACE_Timer_Queue *tq)
-  : timer_queue_ (0),
+ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
+				    ACE_Timer_Queue *tq)
+  : signal_handler_ (0),
+    delete_signal_handler_ (0),
+    timer_queue_ (0),
     delete_timer_queue_ (0),
     handler_rep_ (*this),
     delete_handler_rep_ (0),
+    lock_adapter_ (lock_),
     // this event is initially signaled
     ok_to_wait_ (1), 
     // this event is initially unsignaled
@@ -560,18 +548,21 @@ ACE_ReactorEx::ACE_ReactorEx (ACE_Sig_Handler *sh,
     change_state_thread_ (0),
     open_for_business_ (0)
 {
-  if (this->open (ACE_ReactorEx::DEFAULT_SIZE, 0, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ReactorEx"));
+  if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq) == -1)
+    ACE_ERROR ((LM_ERROR, "%p\n", "WFMO_Reactor"));
 }
 
-ACE_ReactorEx::ACE_ReactorEx (size_t size,
-			      int unused,
-			      ACE_Sig_Handler *sh,
-			      ACE_Timer_Queue *tq)
-  : timer_queue_ (0),
+ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
+				    int unused,
+				    ACE_Sig_Handler *sh,
+				    ACE_Timer_Queue *tq)
+  : signal_handler_ (0),
+    delete_signal_handler_ (0),
+    timer_queue_ (0),
     delete_timer_queue_ (0),
     handler_rep_ (*this),
     delete_handler_rep_ (0),
+    lock_adapter_ (lock_),
     // this event is initially signaled
     ok_to_wait_ (1), 
     // this event is initially unsignaled
@@ -587,120 +578,14 @@ ACE_ReactorEx::ACE_ReactorEx (size_t size,
   ACE_UNUSED_ARG (unused);
 
   if (this->open (size, 0, sh, tq) == -1)
-    ACE_ERROR ((LM_ERROR, "%p\n", "ReactorEx"));
-}
-
-ACE_ReactorEx *
-ACE_ReactorEx::instance (void)
-{
-  ACE_TRACE ("ACE_ReactorEx::instance");
-
-  if (ACE_ReactorEx::reactorEx_ == 0)
-    {
-      // Perform Double-Checked Locking Optimization.
-      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-				*ACE_Static_Object_Lock::instance (), 0));
-
-      if (ACE_ReactorEx::reactorEx_ == 0)
-	{
-	  ACE_NEW_RETURN (ACE_ReactorEx::reactorEx_, ACE_ReactorEx, 0);
-	  ACE_ReactorEx::delete_reactorEx_ = 1;
-	}
-    }
-
-  return ACE_ReactorEx::reactorEx_;
-}
-
-ACE_ReactorEx *
-ACE_ReactorEx::instance (ACE_ReactorEx *r)
-{
-  ACE_TRACE ("ACE_ReactorEx::instance");
-
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
-			    *ACE_Static_Object_Lock::instance (), 0));
-  ACE_ReactorEx *t = ACE_ReactorEx::reactorEx_;
-  // We can't safely delete it since we don't know who created it!
-  ACE_ReactorEx::delete_reactorEx_ = 0;
-
-  ACE_ReactorEx::reactorEx_ = r;
-  return t;
-}
-
-void
-ACE_ReactorEx::close_singleton (void)
-{
-  ACE_TRACE ("ACE_ReactorEx::close_singleton");
-
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-		     *ACE_Static_Object_Lock::instance ()));
-
-  if (ACE_ReactorEx::delete_reactorEx_)
-    {
-      delete ACE_ReactorEx::reactorEx_;
-      ACE_ReactorEx::reactorEx_ = 0;
-      ACE_ReactorEx::delete_reactorEx_ = 0;
-    }
+    ACE_ERROR ((LM_ERROR, "%p\n", "WFMO_Reactor"));
 }
 
 int
-ACE_ReactorEx::run_event_loop (void)
-{
-  ACE_TRACE ("ACE_ReactorEx::run_event_loop");
-
-  while (ACE_ReactorEx::end_event_loop_ == 0)
-    {
-      int result = ACE_ReactorEx::instance ()->handle_events ();
-
-      if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
-      
-      else if (result == -1)
-	return -1;
-    }
-  /* NOTREACHED */
-  return 0;
-}
-
-
-int
-ACE_ReactorEx::run_event_loop (ACE_Time_Value &tv)
-{
-  ACE_TRACE ("ACE_ReactorEx::run_event_loop");
-
-  while (ACE_ReactorEx::end_event_loop_ == 0 && tv != ACE_Time_Value::zero)
-    {
-      int result = ACE_ReactorEx::instance ()->handle_events (tv);
-      if (ACE_Service_Config::reconfig_occurred ())
-	ACE_Service_Config::reconfigure ();
-      else if (result == -1)
-	return result;
-    }
-  
-  /* NOTREACHED */
-  return 0;
-}
-
-int
-ACE_ReactorEx::end_event_loop (void)
-{
-  ACE_TRACE ("ACE_ReactorEx::end_event_loop");
-  ACE_ReactorEx::end_event_loop_ = 1;
-  return ACE_ReactorEx::instance ()->notify ();
-}
-
-/* static */
-sig_atomic_t
-ACE_ReactorEx::event_loop_done (void)
-{
-  ACE_TRACE ("ACE_ReactorEx::end_event_loop");
-  return ACE_ReactorEx::end_event_loop_;
-}
-
-int
-ACE_ReactorEx::open (size_t size,
-		     int unused,
-		     ACE_Sig_Handler *sh,
-		     ACE_Timer_Queue *tq)
+ACE_WFMO_Reactor::open (size_t size,
+			int unused,
+			ACE_Sig_Handler *sh,
+			ACE_Timer_Queue *tq)
 {
   ACE_UNUSED_ARG (unused);
   ACE_UNUSED_ARG (sh);
@@ -716,9 +601,9 @@ ACE_ReactorEx::open (size_t size,
   this->atomic_wait_array_[0] = this->lock_.lock ().proc_mutex_;
   this->atomic_wait_array_[1] = this->ok_to_wait_.handle ();
   
-  // This is to guard against reopens of ReactorEx
+  // This is to guard against reopens of WFMO_Reactor
   if (this->delete_handler_rep_)
-    this->handler_rep_.~ACE_ReactorEx_Handler_Repository ();
+    this->handler_rep_.~ACE_WFMO_Reactor_Handler_Repository ();
 
   // Open the handle repository
   // Two additional handles for internal purposes
@@ -768,6 +653,21 @@ ACE_ReactorEx::open (size_t size,
       this->delete_timer_queue_ = 0;
     }
 
+  // Signal Handler 
+  if (this->delete_signal_handler_)
+    delete this->signal_handler_;
+
+  if (sh == 0)
+    {
+      ACE_NEW_RETURN (this->signal_handler_, ACE_Sig_Handler, -1);
+      this->delete_signal_handler_ = 1;
+    }
+  else 
+    {
+      this->signal_handler_ = sh;
+      this->delete_signal_handler_ = 0;
+    }
+
   // We are open for business
   this->open_for_business_ = 1;
   
@@ -775,7 +675,7 @@ ACE_ReactorEx::open (size_t size,
 }
 
 int
-ACE_ReactorEx::close (void)
+ACE_WFMO_Reactor::close (void)
 {
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
@@ -792,7 +692,7 @@ ACE_ReactorEx::close (void)
   return 0;
 }
 
-ACE_ReactorEx::~ACE_ReactorEx (void)
+ACE_WFMO_Reactor::~ACE_WFMO_Reactor (void)
 {
   this->close ();
 
@@ -802,13 +702,20 @@ ACE_ReactorEx::~ACE_ReactorEx (void)
       this->timer_queue_ = 0;
       this->delete_timer_queue_ = 0;      
     }
+  
+  if (this->delete_signal_handler_)
+    {
+      delete this->signal_handler_;
+      this->signal_handler_ = 0;
+      this->delete_signal_handler_ = 0;
+    }
 }
 
 int 
-ACE_ReactorEx::register_handler_i (ACE_HANDLE event_handle,
-				   ACE_HANDLE io_handle,
-				   ACE_Event_Handler *event_handler,
-				   ACE_Reactor_Mask mask)
+ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
+				      ACE_HANDLE io_handle,
+				      ACE_Event_Handler *event_handler,
+				      ACE_Reactor_Mask mask)
 {
   // Make sure that the <handle> is valid
   if (io_handle == ACE_INVALID_HANDLE)
@@ -868,8 +775,8 @@ ACE_ReactorEx::register_handler_i (ACE_HANDLE event_handle,
 }
 
 int 
-ACE_ReactorEx::schedule_wakeup_i (ACE_HANDLE io_handle,
-				  ACE_Reactor_Mask masks_to_be_added)
+ACE_WFMO_Reactor::schedule_wakeup_i (ACE_HANDLE io_handle,
+				     ACE_Reactor_Mask masks_to_be_added)
 {
   // Make sure that the <handle> is valid
   if (this->handler_rep_.invalid_handle (io_handle))
@@ -897,11 +804,11 @@ ACE_ReactorEx::schedule_wakeup_i (ACE_HANDLE io_handle,
 
 
 int
-ACE_ReactorEx_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
-							ACE_HANDLE io_handle,
-							long &new_masks,
-							ACE_HANDLE &event_handle,
-							int &delete_event)
+ACE_WFMO_Reactor_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
+							   ACE_HANDLE io_handle,
+							   long &new_masks,
+							   ACE_HANDLE &event_handle,
+							   int &delete_event)
 {
   int found = 0;
   size_t i;
@@ -964,10 +871,10 @@ ACE_ReactorEx_Handler_Repository::add_network_events_i (ACE_Reactor_Mask mask,
 // Waits for and dispatches all events.  Returns -1 on error, 0 if
 // max_wait_time expired, or the number of events that were dispatched.
 int 
-ACE_ReactorEx::event_handling (ACE_Time_Value *max_wait_time,
-			       int alertable)
+ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time,
+				  int alertable)
 {
-  ACE_TRACE ("ACE_ReactorEx::event_handling");
+  ACE_TRACE ("ACE_WFMO_Reactor::event_handling");
 
   // Make sure we are not closed 
   if (!this->open_for_business_)
@@ -992,7 +899,7 @@ ACE_ReactorEx::event_handling (ACE_Time_Value *max_wait_time,
   this->lock_.release ();
 
   // Update the countdown to reflect time waiting to play with the
-  // mutex and event.
+  // mut and event.
   countdown.update ();
 
   // Wait for event to happen
@@ -1006,8 +913,8 @@ ACE_ReactorEx::event_handling (ACE_Time_Value *max_wait_time,
 }
 
 int
-ACE_ReactorEx::ok_to_wait (ACE_Time_Value *max_wait_time,
-			   int alertable)
+ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
+			      int alertable)
 {
   // Calculate the max time we should spend here 
   //
@@ -1041,14 +948,14 @@ ACE_ReactorEx::ok_to_wait (ACE_Time_Value *max_wait_time,
 }
 
 int
-ACE_ReactorEx::wait_for_multiple_events (ACE_Time_Value *max_wait_time,
-					 int alertable)
+ACE_WFMO_Reactor::wait_for_multiple_events (ACE_Time_Value *max_wait_time,
+					    int alertable)
 {
   int timeout = this->calculate_timeout (max_wait_time);
 
   // Wait for any of handles_ to be active, or until timeout expires.
   // If <alertable> is enabled allow asynchronous completion of
-  // ReadFileEx and WriteFileEx operations.
+  // ReadFile and WriteFile operations.
   return ::WaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
 				     this->handler_rep_.handles (),
 				     FALSE,
@@ -1057,7 +964,7 @@ ACE_ReactorEx::wait_for_multiple_events (ACE_Time_Value *max_wait_time,
 }
 
 int
-ACE_ReactorEx::calculate_timeout (ACE_Time_Value *max_wait_time)
+ACE_WFMO_Reactor::calculate_timeout (ACE_Time_Value *max_wait_time)
 {
   ACE_Time_Value *time = 0;
   if (this->owner_ == ACE_Thread::self ())
@@ -1073,12 +980,14 @@ ACE_ReactorEx::calculate_timeout (ACE_Time_Value *max_wait_time)
 
 
 int
-ACE_ReactorEx::dispatch (int wait_status)
+ACE_WFMO_Reactor::dispatch (int wait_status)
 {
+  int handlers_dispatched = 0;
+
   // If "owner" thread
   if (ACE_Thread::self () == this->owner_)
-    // Expire all pending timers.
-    this->timer_queue_->expire ();
+    // expire all pending timers.
+    handlers_dispatched += this->timer_queue_->expire ();
 
   switch (wait_status)
     {
@@ -1087,11 +996,12 @@ ACE_ReactorEx::dispatch (int wait_status)
       return -1;
     case WAIT_TIMEOUT: // Timeout.
       errno = ETIME;
-      return 0;
+      return handlers_dispatched;
     case WAIT_ABANDONED_0:
-      // We'll let dispatch worry about abandoned mutexes.
+      // We'll let dispatch worry about abandoned mutes.
     default:  // Dispatch.
-      return this->dispatch_handles (wait_status - WAIT_OBJECT_0);
+      handlers_dispatched += this->dispatch_handles (wait_status - WAIT_OBJECT_0);
+      return handlers_dispatched;
     }
 }
 
@@ -1100,7 +1010,7 @@ ACE_ReactorEx::dispatch (int wait_status)
 // through our handle set looking for active handles.
 
 int
-ACE_ReactorEx::dispatch_handles (size_t index)
+ACE_WFMO_Reactor::dispatch_handles (size_t index)
 {
   for (int number_of_handlers_dispatched = 1;
        ; 
@@ -1140,14 +1050,14 @@ ACE_ReactorEx::dispatch_handles (size_t index)
 // handler was removed.
 
 int
-ACE_ReactorEx::dispatch_handler (int index)
+ACE_WFMO_Reactor::dispatch_handler (int index)
 {
   // Dispatch the handler if it has not been scheduled for deletion.
   // Note that this is a very week test if there are multiple threads
   // dispatching this index as no locks are held here. Generally, you
   // do not want to do something like deleting the this pointer in
   // handle_close() if you have registered multiple times and there is
-  // more than one thread in ReactorEx->handle_events().
+  // more than one thread in WFMO_Reactor->handle_events().
   if (!this->handler_rep_.scheduled_for_deletion (index))
     {
       ACE_HANDLE event_handle = *(this->handler_rep_.handles () + index);
@@ -1161,8 +1071,8 @@ ACE_ReactorEx::dispatch_handler (int index)
 }
 
 int
-ACE_ReactorEx::simple_dispatch_handler (int index, 
-					ACE_HANDLE event_handle)
+ACE_WFMO_Reactor::simple_dispatch_handler (int index, 
+					   ACE_HANDLE event_handle)
 {
   // This dispatch is used for non-I/O entires
 
@@ -1178,12 +1088,12 @@ ACE_ReactorEx::simple_dispatch_handler (int index,
 }
 
 int
-ACE_ReactorEx::complex_dispatch_handler (int index, 
-					 ACE_HANDLE event_handle)
+ACE_WFMO_Reactor::complex_dispatch_handler (int index, 
+					    ACE_HANDLE event_handle)
 {
   // This dispatch is used for I/O entires
 
-  ACE_ReactorEx_Handler_Repository::Current_Info &current_info = 
+  ACE_WFMO_Reactor_Handler_Repository::Current_Info &current_info = 
     this->handler_rep_.current_info ()[index];
   
   // Upcall
@@ -1197,10 +1107,10 @@ ACE_ReactorEx::complex_dispatch_handler (int index,
 }
 
 int
-ACE_ReactorEx::upcall (ACE_Event_Handler *event_handler,
-		       ACE_HANDLE io_handle, 
-		       ACE_HANDLE event_handle, 
-		       long interested_events)
+ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
+			  ACE_HANDLE io_handle, 
+			  ACE_HANDLE event_handle, 
+			  long interested_events)
 {
   // This method figures out what exactly has happened to the socket and then calls appropriate methods
   int result = 0;
@@ -1250,7 +1160,7 @@ ACE_ReactorEx::upcall (ACE_Event_Handler *event_handler,
 }
 
  
-ACE_ReactorEx::update_state (void)
+ACE_WFMO_Reactor::update_state (void)
 {
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
@@ -1308,22 +1218,22 @@ ACE_ReactorEx::update_state (void)
 
 // ************************************************************
 
-ACE_ReactorEx_Notify::ACE_ReactorEx_Notify (void)
+ACE_WFMO_Reactor_Notify::ACE_WFMO_Reactor_Notify (void)
   : max_notify_iterations_ (-1),
     timer_queue_ (0)
 {
 }
 
 int 
-ACE_ReactorEx_Notify::open (ACE_ReactorEx &reactorEx,
-			    ACE_Timer_Queue *timer_queue)
+ACE_WFMO_Reactor_Notify::open (ACE_WFMO_Reactor &wfmo_reactor,
+			       ACE_Timer_Queue *timer_queue)
 {
   timer_queue_ = timer_queue;
-  return reactorEx.register_handler (this);
+  return wfmo_reactor.register_handler (this);
 }
 
 ACE_HANDLE
-ACE_ReactorEx_Notify::get_handle (void) const
+ACE_WFMO_Reactor_Notify::get_handle (void) const
 {
   return this->wakeup_one_thread_.handle ();
 }
@@ -1331,9 +1241,9 @@ ACE_ReactorEx_Notify::get_handle (void) const
 // Handle all pending notifications.
 
 int
-ACE_ReactorEx_Notify::handle_signal (int signum, 
-				     siginfo_t *siginfo, 
-				     ucontext_t *)
+ACE_WFMO_Reactor_Notify::handle_signal (int signum, 
+					siginfo_t *siginfo, 
+					ucontext_t *)
 {
   ACE_UNUSED_ARG (signum);
 
@@ -1341,7 +1251,7 @@ ACE_ReactorEx_Notify::handle_signal (int signum,
   if (siginfo->si_handle_ != this->wakeup_one_thread_.handle ())
     return -1;
 
-  // This will get called when <ReactorEx->wakeup_one_thread_> event
+  // This will get called when <WFMO_Reactor->wakeup_one_thread_> event
   // is signaled.
   //  ACE_DEBUG ((LM_DEBUG, "(%t) waking up to handle internal notifications\n"));
 
@@ -1405,14 +1315,14 @@ ACE_ReactorEx_Notify::handle_signal (int signum,
     }
 }
 
-// Notify the ReactorEx, potentially enqueueing the
-// <ACE_Event_Handler> for subsequent processing in the ReactorEx
+// Notify the WFMO_Reactor, potentially enqueueing the
+// <ACE_Event_Handler> for subsequent processing in the WFMO_Reactor
 // thread of control.
 
 int 
-ACE_ReactorEx_Notify::notify (ACE_Event_Handler *eh, 
-			      ACE_Reactor_Mask mask,
-			      ACE_Time_Value *timeout)
+ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *eh, 
+				 ACE_Reactor_Mask mask,
+				 ACE_Time_Value *timeout)
 {
   if (eh != 0)
     {
@@ -1442,9 +1352,9 @@ ACE_ReactorEx_Notify::notify (ACE_Event_Handler *eh,
 }
 
 void 
-ACE_ReactorEx_Notify::max_notify_iterations (int iterations)
+ACE_WFMO_Reactor_Notify::max_notify_iterations (int iterations)
 {
-  ACE_TRACE ("ACE_ReactorEx_Notify::max_notify_iterations");
+  ACE_TRACE ("ACE_WFMO_Reactor_Notify::max_notify_iterations");
   // Must always be > 0 or < 0 to optimize the loop exit condition.
   if (iterations == 0)
     iterations = 1;
@@ -1453,16 +1363,16 @@ ACE_ReactorEx_Notify::max_notify_iterations (int iterations)
 }
 
 int 
-ACE_ReactorEx_Notify::max_notify_iterations (void)
+ACE_WFMO_Reactor_Notify::max_notify_iterations (void)
 {
-  ACE_TRACE ("ACE_ReactorEx_Notify::max_notify_iterations");
+  ACE_TRACE ("ACE_WFMO_Reactor_Notify::max_notify_iterations");
   return this->max_notify_iterations_;
 }
 
 void 
-ACE_ReactorEx::max_notify_iterations (int iterations)
+ACE_WFMO_Reactor::max_notify_iterations (int iterations)
 {
-  ACE_TRACE ("ACE_ReactorEx::max_notify_iterations");
+  ACE_TRACE ("ACE_WFMO_Reactor::max_notify_iterations");
   ACE_GUARD (ACE_Process_Mutex, monitor, this->lock_);
 
   // Must always be > 0 or < 0 to optimize the loop exit condition.
@@ -1470,15 +1380,15 @@ ACE_ReactorEx::max_notify_iterations (int iterations)
 }
 
 int 
-ACE_ReactorEx::max_notify_iterations (void)
+ACE_WFMO_Reactor::max_notify_iterations (void)
 {
-  ACE_TRACE ("ACE_ReactorEx::max_notify_iterations");
+  ACE_TRACE ("ACE_WFMO_Reactor::max_notify_iterations");
   ACE_GUARD_RETURN (ACE_Process_Mutex, monitor, this->lock_, -1);
 
   return this->notify_handler_.max_notify_iterations ();
 }
 
-// No-op WinSOCK2 methods to help ReactorEx compile
+// No-op WinSOCK2 methods to help WFMO_Reactor compile
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
 int 
 WSAEventSelect (SOCKET s,
@@ -1504,54 +1414,6 @@ WSAEnumNetworkEvents (SOCKET s,
   return -1;
 }
 #endif /* !defined ACE_HAS_WINSOCK2 */
-
-#else /* ACE_WIN32 */
-
-ACE_ReactorEx *
-ACE_ReactorEx::instance (void)
-{
-  return NULL;
-}
-
-ACE_ReactorEx *
-ACE_ReactorEx::instance (ACE_ReactorEx *r)
-{
-  ACE_UNUSED_ARG (r);
-  return NULL;
-}
-
-void
-ACE_ReactorEx::close_singleton (void)
-{
-}
-
-int 
-ACE_ReactorEx::run_event_loop (void)
-{
-  // not implemented
-  return -1;
-}
-
-int 
-ACE_ReactorEx::run_event_loop (ACE_Time_Value &tv)
-{
-  // not implemented
-  ACE_UNUSED_ARG (tv);
-  return -1;
-}
-
-int 
-ACE_ReactorEx::end_event_loop (void)
-{
-  // not implemented
-  return -1;
-}
-
-sig_atomic_t 
-ACE_ReactorEx::event_loop_done (void)
-{
-  return sig_atomic_t(1);
-}
 
 #endif /* ACE_WIN32 */
 

@@ -11,10 +11,8 @@
 #include "ace/Service_Types.h"
 #include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
-
-#include "ace/Reactor.h"
 #include "ace/Proactor.h"
-#include "ace/ReactorEx.h"
+#include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 
 #include "ace/Service_Config.h"
@@ -109,39 +107,11 @@ ACE_Service_Config::reactor (ACE_Reactor *r)
   return ACE_Reactor::instance (r);
 }
 
-ACE_Proactor *
-ACE_Service_Config::proactor (size_t threads)
-{
-  ACE_TRACE ("ACE_Service_Config::proactor");
-  return ACE_Proactor::instance (threads);
-}
-
-ACE_Proactor *
-ACE_Service_Config::proactor (ACE_Proactor *r)
-{
-  ACE_TRACE ("ACE_Service_Config::proactor");
-  return ACE_Proactor::instance (r);
-}
-
-ACE_ReactorEx *
-ACE_Service_Config::reactorEx (void)
-{
-  ACE_TRACE ("ACE_Service_Config::reactorEx");
-  return ACE_ReactorEx::instance ();
-}
-
-ACE_ReactorEx *
-ACE_Service_Config::reactorEx (ACE_ReactorEx *r)
-{
-  ACE_TRACE ("ACE_Service_Config::reactorEx");
-  return ACE_ReactorEx::instance (r);
-}
-
 ACE_Service_Repository *
 ACE_Service_Config::svc_rep ()
 {
   ACE_TRACE ("ACE_Service_Config::svc_rep");
-  return ACE_Service_Repository::instance();
+  return ACE_Service_Repository::instance ();
 }
 
 ACE_Service_Repository *
@@ -216,7 +186,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
 
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
-  ACE_Reactor::instance (size);
+  ACE_Reactor::instance ();
 
 // There's no point in dealing with this on NT since it doesn't really
 // support signals very well...
@@ -260,7 +230,7 @@ ACE_Service_Config::parse_args (int argc, char *argv[])
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 	  ACE_Service_Config::signum_ = ACE_OS::atoi (getopt.optarg);
 
-	  if (ACE_Reactor::instance()->register_handler
+	  if (ACE_Reactor::instance ()->register_handler
 	      (ACE_Service_Config::signum_,
 	       &ACE_Service_Config::signal_handler_) == -1)
 	    ACE_ERROR ((LM_ERROR, "cannot obtain signal handler\n"));
@@ -285,8 +255,8 @@ ACE_Service_Config::initialize (const char svc_name[],
 
   ACE_DEBUG ((LM_DEBUG, "opening static service %s\n", svc_name));
 
-  if (ACE_Service_Repository::instance()->find (svc_name,
-						(const ACE_Service_Type **) &srp) == -1)
+  if (ACE_Service_Repository::instance ()->find (svc_name,
+						 (const ACE_Service_Type **) &srp) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%s not found\n", svc_name), -1);
 
   else if (srp->type ()->init (args.argc (), args.argv ()) == -1)
@@ -311,7 +281,7 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
 
   ACE_DEBUG ((LM_DEBUG, "opening dynamic service %s\n", sr->name ()));
 
-  if (ACE_Service_Repository::instance()->insert (sr) == -1)
+  if (ACE_Service_Repository::instance ()->insert (sr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "insertion failed, %p\n", sr->name ()), -1);
 
   else if (sr->type ()->init (args.argc (), args.argv ()) == -1)
@@ -391,7 +361,7 @@ ACE_Service_Config::load_static_svcs (void)
       ACE_NEW_RETURN (sr, ACE_Service_Type (ssd->name_, stp,
 					      0, ssd->active_), -1);
 
-      if (ACE_Service_Repository::instance()->insert (sr) == -1)
+      if (ACE_Service_Repository::instance ()->insert (sr) == -1)
 	return -1;
     }
   return 0;
@@ -417,11 +387,11 @@ ACE_Service_Config::open (const char program_name[])
 
   // Initialize the Service Repository (this will still work if user
   // forgets to define an object of type ACE_Service_Config).
-  ACE_Service_Repository::instance(ACE_Service_Config::MAX_SERVICES);
+  ACE_Service_Repository::instance (ACE_Service_Config::MAX_SERVICES);
 
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).
-  ACE_Reactor::instance(ACE_Service_Config::MAX_SERVICES);
+  ACE_Reactor::instance ();
 
   // Register ourselves to receive reconfiguration requests via
   // signals!
@@ -559,7 +529,6 @@ ACE_Service_Config::close_singletons (void)
   ACE_TRACE ("ACE_Service_Config::close_singletons");
 
   ACE_Reactor::close_singleton ();
-  ACE_ReactorEx::close_singleton ();
   ACE_Proactor::close_singleton ();
   ACE_Thread_Manager::close_singleton ();
 
@@ -573,69 +542,6 @@ ACE_Service_Config::~ACE_Service_Config (void)
 {
   ACE_TRACE ("ACE_Service_Config::~ACE_Service_Config");
   ACE_Service_Config::close ();
-}
-
-int
-ACE_Service_Config::run_proactor_event_loop (void)
-{
-  ACE_TRACE ("ACE_Service_Config::run_proactor_event_loop");
-  return ACE_Proactor::run_event_loop ();
-}
-
-// Handle events for -tv- time.  handle_events updates -tv- to reflect
-// time elapsed, so do not return until -tv- == 0, or an error occurs.
-int
-ACE_Service_Config::run_proactor_event_loop (ACE_Time_Value &tv)
-{
-  ACE_TRACE ("ACE_Service_Config::run_proactor_event_loop");
-  return ACE_Proactor::run_event_loop (tv);
-}
-
-int
-ACE_Service_Config::end_proactor_event_loop (void)
-{
-  ACE_TRACE ("ACE_Service_Config::end_proactor_event_loop");
-  return ACE_Proactor::end_event_loop ();
-}
-
-/* static */
-sig_atomic_t
-ACE_Service_Config::proactor_event_loop_done (void)
-{
-  ACE_TRACE ("ACE_Service_Config::proactor_event_loop_done");
-  return ACE_Proactor::event_loop_done ();
-}
-
-// ************************************************************
-
-int
-ACE_Service_Config::run_reactorEx_event_loop (void)
-{
-  ACE_TRACE ("ACE_Service_Config::run_reactorEx_event_loop");
-  return ACE_ReactorEx::run_event_loop ();
-}
-
-
-int
-ACE_Service_Config::run_reactorEx_event_loop (ACE_Time_Value &tv)
-{
-  ACE_TRACE ("ACE_Service_Config::run_reactorEx_event_loop");
-  return ACE_ReactorEx::run_event_loop (tv);
-}
-
-int
-ACE_Service_Config::end_reactorEx_event_loop (void)
-{
-  ACE_TRACE ("ACE_Service_Config::end_reactorEx_event_loop");
-  return ACE_ReactorEx::end_event_loop ();
-}
-
-/* static */
-sig_atomic_t
-ACE_Service_Config::reactorEx_event_loop_done (void)
-{
-  ACE_TRACE ("ACE_Service_Config::reactorEx_event_loop_done");
-  return ACE_ReactorEx::event_loop_done ();
 }
 
 // ************************************************************

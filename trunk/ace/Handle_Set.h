@@ -29,7 +29,7 @@ public:
 
   enum 
   {
-    MAXSIZE = ACE_DEFAULT_REACTOR_SIZE
+    MAXSIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE
   };
 
   // = Initialization methods.

@@ -18,7 +18,6 @@
 #define ACE_SERVICE_CONFIG_H
 
 #include "ace/Service_Object.h"
-//#include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 #include "ace/Containers.h"
 
@@ -27,8 +26,6 @@ class ACE_Service_Repository;
 class ACE_Service_Type;
 class ACE_Allocator;
 class ACE_Reactor;
-class ACE_Proactor;
-class ACE_ReactorEx;
 class ACE_Thread_Manager;
 
 extern "C"
@@ -75,7 +72,7 @@ class ACE_Export ACE_Service_Config
   //     configuration of services.
 {
 public:
-  enum {MAX_SERVICES = ACE_DEFAULT_REACTOR_SIZE};
+  enum {MAX_SERVICES = ACE_DEFAULT_SELECT_REACTOR_SIZE};
 
   // = Initialization and termination methods.
 
@@ -143,56 +140,6 @@ public:
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
   // Use ACE_Reactor::event_loop_done() instead.
 
-  // = Proactor event loop management methods.
-  static int run_proactor_event_loop (void);
-  // Run the event loop until the <ACE_Proactor::handle_events>
-  // method returns -1 or the <end_proactor_event_loop> method
-  // is invoked.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Proactor::run_event_loop() instead.
-
-  static int run_proactor_event_loop (ACE_Time_Value &tv);
-  // Run the event loop until the <ACE_Proactor::handle_events>
-  // method returns -1, the <end_proactor_event_loop> method
-  // is invoked, or the <ACE_Time_Value> expires.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Proactor::run_event_loop() instead.
-
-  static int end_proactor_event_loop (void);
-  // Instruct the <ACE_Service_Config> to terminate its event loop.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Proactor::end_event_loop() instead.
-
-  static sig_atomic_t proactor_event_loop_done (void);
-  // Report if the proactor event loop is finished.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Proactor::event_loop_done() instead.
-
-  // = ReactorEx event loop management methods.
-  static int run_reactorEx_event_loop (void);
-  // Run the event loop until the <ACE_ReactorEx::handle_events>
-  // method returns -1 or the <end_reactorEx_event_loop> method
-  // is invoked.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_ReactorEx::run_event_loop() instead.
-
-  static int run_reactorEx_event_loop (ACE_Time_Value &tv);
-  // Run the event loop until the <ACE_ReactorEx::handle_events>
-  // method returns -1, the <end_reactorEx_event_loop> method
-  // is invoked, or the <ACE_Time_Value> expires.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_ReactorEx::run_event_loop() instead.
-
-  static int end_reactorEx_event_loop (void);
-  // Instruct the <ACE_Service_Config> to terminate its event loop.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_ReactorEx::end_event_loop() instead.
-
-  static sig_atomic_t reactorEx_event_loop_done (void);
-  // Report if the ReactorEx event loop is finished.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_ReactorEx::event_loop_done() instead.
-
   static sig_atomic_t reconfig_occurred (void);
   // True if reconfiguration occurred.
 
@@ -204,9 +151,8 @@ public:
 
   // = The following methods are static in order to enforce Singleton
   // semantics for the Reactor, Service_Repository, Thread_Manager,
-  // Acceptor/Connector Strategy factory, Proactor, and ReactorEx.
-  // Other portions of the system may need to access them at some
-  // point or another...
+  // and Acceptor/Connector Strategy factory.  Other portions of the
+  // system may need to access them at some point or another...
 
   // = Accessors and mutators for process-wide Singletons.
 
@@ -223,30 +169,6 @@ public:
   // pointer.
   // DO NOT USE THIS METHOD. It may be unsupported in future releases.
   // Use ACE_Reactor::instance() instead.
-
-  static ACE_Proactor *proactor (size_t threads = 0);
-  // Get pointer to a process-wide <ACE_Proactor>.  <threads> should
-  // be part of another method.  It's only here because I'm just a
-  // grad student and not in charge.  No, I'm not bitter about this.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Proactor::instance() instead.
-
-  static ACE_Proactor *proactor (ACE_Proactor *);
-  // Set pointer to a process-wide <ACE_Proactor> and return existing
-  // pointer.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_Proactor::instance() instead.
-
-  static ACE_ReactorEx *reactorEx (void);
-  // Get pointer to a process-wide <ACE_ReactorEx>.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_ReactorEx::instance() instead.
-
-  static ACE_ReactorEx *reactorEx (ACE_ReactorEx *);
-  // Set pointer to a process-wide <ACE_ReactorEx> and return existing
-  // pointer.
-  // DO NOT USE THIS METHOD. It may be unsupported in future releases.
-  // Use ACE_ReactorEx::instance() instead.
 
   static ACE_Service_Repository *svc_rep (void);
   // Get pointer to a process-wide <ACE_Service_Repository>.
@@ -367,7 +289,5 @@ private:
 // (only left here for to not break applications 
 //  which rely on this - no real need any longer)
 #include "ace/Reactor.h"
-#include "ace/Proactor.h"
-#include "ace/ReactorEx.h"
 #include "ace/Svc_Conf_Tokens.h"
 #endif /* ACE_SERVICE_CONFIG_H */
