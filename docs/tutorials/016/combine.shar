@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-10-29 15:09 EST by <jcej@caldera.lads.com>.
-# Source directory was `/scsiA/home/jcej/projects/ACE_wrappers/docs/tutorials/016'.
+# Made on 1999-02-14 14:20 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/016'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -12,12 +12,12 @@
 # length mode       name
 # ------ ---------- ------------------------------------------
 #    422 -rw-rw-r-- hdr
-#     50 -rw-rw-r-- bodies
-#    789 -rw-rw-r-- page01.pre
-#   1350 -rw-rw-r-- page02.pre
+#     51 -rw-rw-r-- bodies
+#   2917 -rw-rw-r-- page01.pre
+#   1351 -rw-rw-r-- page02.pre
 #    248 -rw-rw-r-- page03.pre
-#    309 -rw-rw-r-- page04.pre
-#    605 -rw-rw-r-- page05.pre
+#    310 -rw-rw-r-- page04.pre
+#    606 -rw-rw-r-- page05.pre
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -64,7 +64,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh03957; then
+if mkdir _sh31855; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -124,12 +124,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'bodies:' 'MD5 check failed'
-06c11389b22b88d88110d2338c4dbaaf  bodies
+53b96616ae101b38fd1e30b2ab8707a2  bodies
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
-    test 50 -eq "$shar_count" ||
-    $echo 'bodies:' 'original size' '50,' 'current size' "$shar_count!"
+    test 51 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '51,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page01.pre ==============
@@ -153,20 +153,73 @@ In this tutorial, I'll create a wrapper class around the ACE_Condition
 and the assorted housekeeping items necessary to make it work.  I'll
 use a simple integer as the condition variable but keep in mind that
 you can use any data type you want.
+<P>
+Kirthika's abstract:
+<ul>
+An ACE_Condition class is a synchronisation mechanism employed in
+situations where one or more threads cannot access the shared resource
+unless some 'condition' becomes true. The ACE_Condition is associated
+with a Mutex-lock which is released before blocking internally in the 
+wait call. Once the blocked thread is signaled to wake up again it 
+internally re-acquires the lock before checking the condition. 
+Unless the condition is true and it has the lock, it cant go ahead. 
+Once the shared resource is freed, a signal is sent to the waiting 
+threads which can now contend for the lock and access the resource.
+<P>
+Pizza-delivery metaphor: (courtesy Dr.Schmidt)
+<ul>
+Pizza delivery boy --  thread<br>
+keys to delivery van -- mutex-lock<br>
+pizza ready for delivery -- condition<br>
+</Ul>
+Situation: <br>
+<ul>
+Five pizza delivery boys use the same van. While the van is
+unavailable, the boys go to sleep. When the van returns and the keys
+are returned, the current user of the van nudges the other sleeping boys
+to wake up and fight for the keys. Once the keys are obtained and the
+pizza
+is ready and out of the kitchen, the boy with the pizza and the keys can 
+now deliver it.
+</ul>
+<P>
+This tutorial makes use of  a wrapper class around the ACE_Condition and 
+uses a integer value as the condition. The four kinds of condition
+implemented
+are: !=, >=, <=, == by using C++ operator overloading. Guards are used
+within 
+the methods to make sure that the method is thread-safe. Once the thread
+completes
+its job, it broadcasts to the waiting on it.
+<P>
+An ACE_Task is used to stress test the various conditions.
+A test object is created for each condition and the main thread waits
+until the condition becomes true. For instance: <= condition:
+Five threads are spwaned which in turn increment the condition
+variable, which is initialised to 1 by 2. Remember that you are waiting
+on
+the <= condition. So once 3 threads have been thru it, the value becomes
+6 
+and the condition becomes true!
+<P>
+This simple example shows us how to program and use the Condition
+variable for
+synchronisation.
+</ul>
 SHAR_EOF
-  $shar_touch -am 1029153198 'page01.pre' &&
+  $shar_touch -am 0214140699 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-aa9f5774f5415d7a430891e9296bfab0  page01.pre
+37032e8a180a426e2677f3c2848162bb  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 789 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '789,' 'current size' "$shar_count!"
+    test 2917 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2917,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -228,12 +281,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-ccf4d7623038838df6249b5134827402  page02.pre
+d3230a58558843154d2363ce940dbb9b  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 1350 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '1350,' 'current size' "$shar_count!"
+    test 1351 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '1351,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -283,12 +336,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pre:' 'MD5 check failed'
-b6694ddc18814a64feeb56f46ffd7d17  page04.pre
+a2b2c42216f88e006a18d37adcb31c1d  page04.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
-    test 309 -eq "$shar_count" ||
-    $echo 'page04.pre:' 'original size' '309,' 'current size' "$shar_count!"
+    test 310 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '310,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page05.pre ==============
@@ -320,13 +373,13 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pre:' 'MD5 check failed'
-f63c4bfe37b1fe5785a6af9b204cb0bf  page05.pre
+3926547773016bf56d809fae9170625e  page05.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
-    test 605 -eq "$shar_count" ||
-    $echo 'page05.pre:' 'original size' '605,' 'current size' "$shar_count!"
+    test 606 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '606,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh03957
+rm -fr _sh31855
 exit 0

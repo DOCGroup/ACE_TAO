@@ -92,6 +92,7 @@ int <font color=#008888>Server::run</font>(void)
 int <font color=#008888>Server::close</font>(void)
 {
     finished_ = 1;
+    <font color=#008888>ACE_Reactor::instance</font>()->notify();
     return(0);
 }
 </PRE>

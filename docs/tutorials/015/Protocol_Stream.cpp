@@ -21,6 +21,16 @@
 typedef ACE_Module<ACE_MT_SYNCH> Module;
 typedef ACE_Thru_Task<ACE_MT_SYNCH> Thru_Task;
 
+/* An ACE_Stream is a collection of ACE_Modules.  You can think of it
+   as a doubly-linked list if you like.  Each Module contains two
+   ACE_Task derivatives.  One of these tasks is used when sending data 
+   "upstream", the other is used for "downstream" operation.  In some
+   cases, you'll only need to move data in one direction.  To provide
+   a placeholder for the other direction, ACE_Thru_Task can be used.
+   ACE_Thru_Task responds to the put() by simply invoking put_next()
+   to send the data to the next module.
+ */
+
 /* Do-nothing constructor and destructor
  */
   
@@ -47,14 +57,14 @@ Protocol_Stream::open (ACE_SOCK_Stream &peer,
   // Construct (and remember) the Recv object so that we can read from
   // the peer().
   ACE_NEW_RETURN (recv_,
-                  Recv (peer ()),
+                  Recv ( this->peer ()),
                   -1);
 
   // Add the transmit and receive tasks to the head of the stream.  As
   // we add more modules these will get pushed downstream and end up
   // nearest the tail by the time we're done.
   if (stream ().push (new Module ("Xmit/Recv",
-                                  new Xmit (peer ()),
+                                  new Xmit ( this->peer ()),
                                   recv_)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",

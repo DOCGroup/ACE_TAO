@@ -3,8 +3,8 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-11-10 14:42 EST by <jcej@caldera.lads.com>.
-# Source directory was `/scsiA/home/jcej/projects/ACE_wrappers/docs/tutorials/017'.
+# Made on 1999-02-14 14:25 EST by <jcej@chiroptera.tragus.org>.
+# Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/017'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
 #
@@ -12,11 +12,11 @@
 # length mode       name
 # ------ ---------- ------------------------------------------
 #    422 -rw-rw-r-- hdr
-#     44 -rw-rw-r-- bodies
-#    843 -rw-rw-r-- page01.pre
-#    419 -rw-rw-r-- page02.pre
+#     45 -rw-rw-r-- bodies
+#   1397 -rw-rw-r-- page01.pre
+#    420 -rw-rw-r-- page02.pre
 #    739 -rw-rw-r-- page03.pre
-#    478 -rw-rw-r-- page04.pre
+#    479 -rw-rw-r-- page04.pre
 #    375 -rw-rw-r-- page05.pre
 #
 save_IFS="${IFS}"
@@ -64,7 +64,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh01874; then
+if mkdir _sh32003; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -124,12 +124,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'bodies:' 'MD5 check failed'
-1b7c57aab2c61f845219723b8558bea6  bodies
+4924294a77d6ba78dcf667e92c341b4f  bodies
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
-    test 44 -eq "$shar_count" ||
-    $echo 'bodies:' 'original size' '44,' 'current size' "$shar_count!"
+    test 45 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '45,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page01.pre ==============
@@ -156,20 +156,36 @@ continuing.
 In this tutorial I'll create a simple wrapper for the ACE_Barrier.  In 
 reality, the ACE_Barrier is so easy that a wrapper isn't really
 needed.  I created the wrapper anyway though just because I wanted to.
+<P>
+Kirthika's abstract:
+<ul>
+The ACE_Barrier class is used for collective thread syncronisation. All
+the threads block at the barrier and advance only after everyone is at
+the
+barrier. A thread blocks by calling the wait() method and stays until
+all the other threads invoke wait() one-by-one at the barrier and then
+all
+move ahead.
+Here, an abstract barrier class is created which incorporates the
+ACE_Barrier
+mechanism and is used in a test case of an ACE_Task with 10 and 5
+threads respectively
+which illustrate the use of the barrier pattern.
+</ul>
 SHAR_EOF
-  $shar_touch -am 1110144198 'page01.pre' &&
+  $shar_touch -am 0214142599 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-30840e2b3e8bf84d94abb9177bffbbec  page01.pre
+2c9cb9ca7f82997142a59a9324d5fe17  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 843 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '843,' 'current size' "$shar_count!"
+    test 1397 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1397,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -195,12 +211,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-72dd8d286e36d8911945824bf2c91cc3  page02.pre
+9e2b4b85abf1bff15b94b6d20bc20f91  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 419 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '419,' 'current size' "$shar_count!"
+    test 420 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '420,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -260,12 +276,12 @@ SHAR_EOF
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page04.pre:' 'MD5 check failed'
-bed05089cb64c075cceec277e2a7da5f  page04.pre
+0c46b51370a57179cea56ef57fd0b1f4  page04.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page04.pre'`"
-    test 478 -eq "$shar_count" ||
-    $echo 'page04.pre:' 'original size' '478,' 'current size' "$shar_count!"
+    test 479 -eq "$shar_count" ||
+    $echo 'page04.pre:' 'original size' '479,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page05.pre ==============
@@ -300,5 +316,5 @@ SHAR_EOF
     $echo 'page05.pre:' 'original size' '375,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh01874
+rm -fr _sh32003
 exit 0
