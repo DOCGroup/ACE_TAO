@@ -71,12 +71,12 @@ Test_DynEnum::run_test (void)
       ACE_DEBUG ((LM_DEBUG,
                  "testing: value_as_string\n"));
 
-      de1->value_as_string ("FIRST",
+      de1->value_as_string ("TE_FIRST",
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;
       CORBA::String_var s = de1->value_as_string (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (!ACE_OS::strcmp (s.in (), "FIRST"))
+      if (!ACE_OS::strcmp (s.in (), "TE_FIRST"))
         ACE_DEBUG ((LM_DEBUG,
                    "++ OK ++\n"));
       else 
