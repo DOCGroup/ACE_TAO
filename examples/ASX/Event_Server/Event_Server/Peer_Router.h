@@ -73,6 +73,9 @@ public:
   void release (void);
   // Decrement the reference count and delete <this> when count == 0;
 
+  void duplicate (void);
+  // Increment the reference count 
+
 private:
   Peer_Router *peer_router_;
   // Pointer to the <Peer_Router> that we are accepting for.

@@ -6,6 +6,7 @@
 Consumer_Router::Consumer_Router (Peer_Router_Context *prc)
   : Peer_Router (prc)
 {
+  this->context ()->duplicate ();
 }
 
 // Initialize the Router. 
@@ -22,6 +23,7 @@ Consumer_Router::open (void *)
 
       // Make this an active object to handle the error cases in a
       // separate thread.
+      this->context ()->duplicate ();
       return this->activate (Options::instance ()->t_flags ());
     }
   else // if (this->is_reader ())
