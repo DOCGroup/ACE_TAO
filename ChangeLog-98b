@@ -16,6 +16,9 @@ Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/config-linux-common.h: restored ACE_LACKS_GETPGID,
           because ::getpgid () isn't found on Alpha with glibc 2.0.7.
 
+        * tests/Timeprobe_Test.cpp: disabled ACE_ENABLE_TIMEPROBES,
+          because the ACE lib is built by default without them.
+
 1998-12-09  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * tests/Collection_Test.cpp: Added new test for ACE collections.
