@@ -31,12 +31,13 @@
 
 ACE_RCSID(tests, SOCK_Test, "$Id$")
 
+#if !defined (ACE_WIN32)
+
 static const ACE_TCHAR ACE_ALPHABET[] =
   ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
 
 // This length is used for the "big buffer" send/receive.
 static const size_t big_size = (BUFSIZ * 4);
-
 
 static void *
 client (void *arg)
@@ -284,3 +285,17 @@ main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return errors;
 }
+
+#else
+int
+main (int, ACE_TCHAR *[])
+{
+  ACE_START_TEST (ACE_TEXT ("FIFO_Test"));
+
+  ACE_ERROR ((LM_INFO, ACE_TEXT ("FIFOs are not supported on this platform\n")));
+
+  ACE_END_TEST;
+  return 0;
+}
+
+#endif /* !ACE_WIN32 */

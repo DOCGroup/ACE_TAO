@@ -256,6 +256,8 @@ ACE_Stream_Tail<ACE_SYNCH_USE>::put (ACE_Message_Block *mb,
           /* NOTREACHED */
         default:
           mb->release ();
+          return 0;
+          /* NOTREACHED */
         }
     }
 
