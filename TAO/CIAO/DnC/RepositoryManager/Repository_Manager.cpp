@@ -7,7 +7,6 @@
 #include "NodeManager/NodeDaemonC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
-#include <map>
 
 const char * exec_ior = "file://exec_mgr.ior";
 const char * node_daemon_ior = 0;
@@ -15,8 +14,8 @@ const char * node_daemon_ior = 0;
 class Null_Dom_Document { };
 // exception thrown when we have a null dom document.
 
-typedef std::map<std::string, int> REF_MAP;
-typedef std::map<int, int> ART_REF_MAP;
+typedef ACE_Hash_Map_Manager<ACE_TString, int, ACE_Null_Mutex> REF_MAP;
+typedef ACE_Hash_Map_Manager<int, int, ACE_Null_Mutex> ART_REF_MAP;
 
 void traverse_instance (Deployment::SubcomponentInstantiationDescription 
                         &instance,
@@ -193,6 +192,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Pass the parsed plan to the Execution Manager to start the
       // Deployment Process.
 
+
       CORBA::Object_var obj = orb->string_to_object (exec_ior
                                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -278,7 +278,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Executor: destroy the manager....."));
       exec_mgr->destroyManager (dapp_mgr.in ());
-      exec_mgr->shutdown ();
+      //exec_mgr->shutdown ();
+
       ACE_DEBUG ((LM_DEBUG, "[success]\n"));
 
       if (node_daemon_ior != 0)
@@ -368,10 +369,11 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
 		  plan.artifact[art_length].name = 
                        mid.primaryArtifact[q].name;
 		  plan.artifact[art_length].node = plan.instance[l].node;
-                  ref_map[std::string((const char*)plan.artifact
-                        [art_length].name)] = art_length;
-                  primary_ref_map[std::string((const char*)plan.artifact
-                        [art_length].name)] = art_length;
+                  ACE_TString artifact_name = 
+                     (const char*)plan.artifact[art_length].name;
+                  ref_map.bind (artifact_name, art_length);
+                  primary_ref_map.bind (artifact_name,
+                                        art_length);
 		  CORBA::ULong
 		    art_ref_len (plan.implementation[impl_length].
                                  artifactRef.length ());
@@ -403,19 +405,15 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
 		  for (CORBA::ULong g = 0; 
                        g < pack_iad.dependsOn.length (); ++g)
 		    {
-                      REF_MAP::iterator map_iter
-                         = ref_map.find (std::string((const
-                                         char*)pack_iad.dependsOn[g].name));
-                      REF_MAP::iterator primary_map_iter
-                         = primary_ref_map.find (std::string((const
-                                         char*)pack_iad.dependsOn[g].name));
-                      if (map_iter != ref_map.end ())
+                      ACE_TString dep_name =
+                         (const char*)pack_iad.dependsOn[g].name;
+                      int arti_len;
+
+                      if (ref_map.find (dep_name, arti_len) == 0)
                         {
-                          if (primary_map_iter == primary_ref_map.end ())
+                          if (primary_ref_map.find (dep_name, arti_len) != 0)
                             {
-                              ART_REF_MAP::iterator art_ref_map_iter
-                                = art_ref_map.find (map_iter->second);
-                              if (art_ref_map_iter == art_ref_map.end ())
+                              if (art_ref_map.find (arti_len, arti_len) != 0)
                                 {
 		                  CORBA::ULong
 		                    new_art_ref_len 
@@ -426,9 +424,8 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
                                        (new_art_ref_len + 1);
 		                  plan.implementation[impl_length].
                                      artifactRef[new_art_ref_len] =
-                                       map_iter->second;
-                                  art_ref_map[map_iter->second] = 
-                                     map_iter->second;
+                                       arti_len;
+                                  art_ref_map.bind (arti_len, arti_len);
                                 }
                             }
                         }
@@ -456,9 +453,9 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
                                  location[new_art_loc_len]
 			           = depends_iad.location[h];
 		            }
-                          ref_map[std::string((const char*)plan.
-                                  artifact[new_art_length].
-                                  name)] = new_art_length;
+                          ref_map.bind (
+                             (const char*)plan.artifact[new_art_length].name,
+                              new_art_length);
 		          CORBA::ULong
 		            new_art_ref_len (plan.implementation[impl_length].
                                          artifactRef.length ());
@@ -466,7 +463,7 @@ void traverse_instance (Deployment::SubcomponentInstantiationDescription
                                 (new_art_ref_len + 1);
 		          plan.implementation[impl_length].
                                 artifactRef[new_art_ref_len] = new_art_length;
-                          art_ref_map[new_art_length] = new_art_length;
+                          art_ref_map.bind (new_art_length, new_art_length);
                         }
                     }
 		}
