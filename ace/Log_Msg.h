@@ -410,7 +410,7 @@ public:
    *  + 'c': print a character
    *  + 'C': print a character string
    *  + 'i', 'd': print a decimal number
-   *  + 'I', indent according to nesting depth
+   *  + 'I', indent according to nesting depth (obtained from <ACE_Trace::get_nesting_indent>).
    *  + 'e', 'E', 'f', 'F', 'g', 'G': print a double
    *  + 'l', print line number where an error occurred.
    *  + 'm': Return the message corresponding to errno value, e.g., as done by strerror()

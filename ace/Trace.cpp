@@ -62,6 +62,14 @@ ACE_Trace::set_nesting_indent (int indent)
   ACE_Trace::nesting_indent_ = indent;
 }
 
+// Get the nesting indentation level.
+
+int
+ACE_Trace::get_nesting_indent (void)
+{
+  return ACE_Trace::nesting_indent_;
+}
+
 // Perform the first part of the trace, which prints out the string N,
 // the LINE, and the ACE_FILE as the function is entered.
 

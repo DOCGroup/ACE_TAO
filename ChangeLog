@@ -1,3 +1,16 @@
+Thu Jan 25 05:34:58 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Connector.cpp (connector): Added an ACE_const_cast() to
+	  get rid of the const for the accessor method!
+  
+	* ace/Acceptor.cpp (acceptor): Added an ACE_const_cast() to
+	  get rid of the const for the accessor method!
+
+	* ace/Log_Msg.{h,cpp},
+	* ace/Trace.{h,cpp}: The Log_Msg -I flag now uses the current
+	  ACE_Trace nesting level rather than always using 1.  Thanks to
+ 	  Mike Curtis for providing this.
+
 Wed Jan 24 19:43:24 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (lstat,stat): Separated win32 cases out.
