@@ -22,14 +22,13 @@ $CIAO_ROOT=$ENV{'CIAO_ROOT'};
 unlink $daemon_ior;
 unlink $am_ior;
 
-#$DEBUG="-ORBdebuglevel 4";
 
 # CIAO Daemon command line arguments
-$daemon_args = "$DEBUG -ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
+$daemon_args = "-ORBEndpoint iiop://localhost:10000 -o $daemon_ior -i CIAO_Installation_Data.ini -n $CIAO_ROOT/tools/ComponentServer/ComponentServer";
 
-$assembly_manager_args = "$DEBUG -o $am_ior -c test.dat";
+$assembly_manager_args = "-o $am_ior -c test.dat";
 
-$ad_args = "$DEBUG -k file://$am_ior -a RoundTripClient.cad";
+$ad_args = " -k file://$am_ior -a RoundTripClient.cad";
 
 # CIAO daemon process definition
 $DS = new PerlACE::Process ("$CIAO_ROOT/tools/Daemon/CIAO_Daemon",
@@ -56,22 +55,25 @@ $AD = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Deployer
                            $ad_args);
 $AD->Spawn ();
 
+sleep (5);
+
 #Start the client to send the trigger message
-$CL = new PerlACE::Process ("../RoundTripClient/client", "-k file://test.ior");
+$CL = new PerlACE::Process ("../RoundTripClient/client", "");
 $CL->Spawn();
 
+$ctrl = $DS->WaitKill (5);
+$AM->WaitKill(5);
+$AD->WaitKill(5);
 
-$ctrl = $DS->WaitKill (60);
-$AM->WaitKill(60);
-$AD->WaitKill(60);
-$AM->Kill ();
-$AD->Kill ();
+#$AM->Kill ();
+#$AD->Kill ();
 
 if ($ctrl != 0) {
     print STDERR "ERROR: CIAODaemon didn't shutdown gracefully $ctrl\n";
     $DS->Kill ();
     exit 1;
 }
+$CL->Kill ();
 
 unlink $daemon_ior;
 unlink $am_ior;
