@@ -1,3 +1,9 @@
+Mon Jun 25 12:10:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Incoming_Message_Queue.{h,cpp,inl}:
+	* tao/LIST_OF_TODO:
+	* tao/GIOP_Message_State.inl: Added these to my branch.
+
 Mon Jun 25 07:54:31 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/* : Merged the files from the main branch.
