@@ -12,7 +12,8 @@ Sat Nov  8 21:27:34 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
  	  where being passed as references.  This is silly, so I changed
  	  them to non-references.
 
-	* tao/connect.cpp (open): Replaced a use of
+	* tao/connect.cpp (open),
+	  tao/poa.cpp (create): Replaced a use of
  	  ACE_INET_Addr::get_host_name(void) with
  	  ACE_INET_Addr::get_host_name (char *, size_t), which is
  	  reentrant.

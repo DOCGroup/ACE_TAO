@@ -84,8 +84,8 @@ CORBA_POA::~CORBA_POA (void)
 
 CORBA::Object_ptr
 CORBA_POA::create (CORBA::OctetSeq &key,
-             CORBA::String type_id,
-             CORBA::Environment &env)
+                   CORBA::String type_id,
+                   CORBA::Environment &env)
 {
   CORBA::String id;
   IIOP_Object *data;
@@ -97,13 +97,15 @@ CORBA_POA::create (CORBA::OctetSeq &key,
 
   IIOP::Version ver (IIOP::MY_MAJOR, IIOP::MY_MINOR);
   const ACE_INET_Addr &addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
-  // Cast below de-warns on Sun's C++.
-  CORBA::String h = (char *) addr.get_host_name ();
 
+  char host[MAXHOSTNAMELEN + 1];
+  if (addr.get_host_name (host, MAXHOSTNAMELEN) == -1)
+    return 0;
+  
   data = new IIOP_Object (id, IIOP::Profile (ver,
-						 h,
-						 addr.get_port_number (),
-						 key));
+                                             host,
+                                             addr.get_port_number (),
+                                             key));
   if (data != 0)
     env.clear ();
   else
