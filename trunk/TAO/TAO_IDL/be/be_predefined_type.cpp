@@ -383,7 +383,7 @@ int
 be_predefined_type::gen_encapsulation (void)
 {
   if ((this->pt () == AST_PredefinedType::PT_any)
-      || (this->pt () == AST_PredefinedType::PT_psuedo))
+      || (this->pt () == AST_PredefinedType::PT_pseudo))
     {
       TAO_OutStream *cs; // output stream
       TAO_NL  nl;        // end line
