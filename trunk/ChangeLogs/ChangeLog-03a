@@ -1,3 +1,10 @@
+Sun Dec 08 09:45:34 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Map_Manager.h:
+        * ace/SString.h:
+        * ace/Unbounded_Queue.h:
+          Improved doxygen documentation
+
 Sun Dec 08 09:37:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/*.doxygen:
