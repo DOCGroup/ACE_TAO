@@ -247,9 +247,9 @@ TAO_Active_Demux_ObjTable::bind (const PortableServer::ObjectId &id,
   CORBA::ULong generation = 0;
   int result = this->parse_object_id (id, index, generation);
 
-  if (result != 0 ||
-      index > this->tablesize_ ||
-      this->table_[index].generation_ != generation)
+  if (result != 0 
+      || index > this->tablesize_ 
+      || this->table_[index].generation_ != generation)
     return -1;
 
   ACE_ASSERT (this->table_[index].is_free_ == 0);
@@ -266,10 +266,10 @@ TAO_Active_Demux_ObjTable::find (const PortableServer::ObjectId &id,
   CORBA::ULong generation = 0;
   int result = this->parse_object_id (id, index, generation);
 
-  if (result != 0 ||
-      index > this->tablesize_ ||
-      this->table_[index].generation_ != generation ||
-      this->table_[index].is_free_ != 0)
+  if (result != 0 
+      || index > this->tablesize_ 
+      || this->table_[index].generation_ != generation 
+      || this->table_[index].is_free_ != 0)
     return -1;
 
   servant = this->table_[index].servant_;
