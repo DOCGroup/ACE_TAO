@@ -1,3 +1,19 @@
+Wed Dec  3 12:57:45 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
+          build FT_ReplicationManager after FT_ReplicationManager_Lib
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Encoder.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp:
+          Improved documentation.
+          Change parameter to Properties_Encoder::from var & to pointer.
+
 Wed Dec  3 09:18:34 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.h:

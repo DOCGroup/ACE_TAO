@@ -34,28 +34,28 @@ void TAO_PG::Properties_Encoder::add (
 }
 
 void TAO_PG::Properties_Encoder::encode (
-  PortableGroup::Properties_var & property_set) const
+  PortableGroup::Properties * property_set) const
 {
+  ACE_ASSERT (property_set != 0);
   size_t count = values_.size();
   property_set->length(count);
   for( size_t nItem = 0; nItem < count; ++nItem )
   {
     const NamedValue & nv = values_[nItem];
-    PortableGroup::Property & property = property_set[nItem];
+    PortableGroup::Property & property = (*property_set)[nItem];
     PortableGroup::Name & nsName = property.nam;
     PortableGroup::Value & anyValue = property.val;
     // assign the value
     anyValue = (nv.second());
 
     // assign the name
-    // TODO: This restricts the name to a single level with no "kind"
-    // TODO: remove this restriction (?)
+    // @@: This restricts the name to a single level with no "kind"
+    // @@: remove this restriction (?)
     nsName.length(1);
     CosNaming::NameComponent & nc = nsName[0];
 
     nc.id = CORBA::string_dup (nv.first().c_str());
     // nc.kind defaults to empty.  Leave it that way (for now)
-
   }
 }
 

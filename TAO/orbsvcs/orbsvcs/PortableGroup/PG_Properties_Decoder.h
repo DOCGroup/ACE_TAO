@@ -11,6 +11,8 @@
  *  Note: this started as a simple helper class to make decoding sets of properties
  *  easier, but expanded to provide more general support for managing sets of properties.
  *
+ *  A more appropriate name would be PG_Properties_Set.  Maybe this can be changed someday.
+ *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================
@@ -32,7 +34,12 @@ namespace TAO_PG
    *
    * It supports "chains" of property sets to implement default value semantics.
    * If a requested property is not found in this set, the default set(s) are searched.
-   * Thus any property found at this level overrides the defaults.
+   * Thus, any property found at this level overrides the defaults.
+   * 
+   * See: PG_Properties_Support for more details on use of this object.
+   *
+   * A Properties_Decoder may also be used for it's original purpose as a stand-alone
+   * helper class for extracting values from PortableGroup::Properties.
    */
 
   class TAO_PortableGroup_Export Properties_Decoder

@@ -40,6 +40,39 @@ namespace TAO
   /**
   * Implement the ReplicationManager interfaces.
   *
+  * The ReplicationManager does most of its work by delegating to
+  * support objects.  These include:
+  *
+  *  TAO::PG_Group_Factory group_factory_;
+  *   The group factory contains a collection of TAO::PG_Object_Groups
+  *   It provides methods to create new groups, destroy old groups and
+  *   find existing groups.
+  *
+  *  TAO::PG_Object_Group
+  *   These objects which can be found through the group factory provde
+  *   methods to create and add group members, remove and delete group
+  *   members and set group properties.
+  *
+  *  TAO::PG_Properties_Support properties_support_;
+  *   This object maintains sets of properties.  In particular it has
+  *   one default property set, and a collection of property sets indexed
+  *   by type_id.  The default property set acts as a parent to the type_id
+  *   property sets and the type_id property sets act as parents to the
+  *   property sets contained in PG_Object_Group.
+  *
+  *  FT::FaultNotifier_var fault_notifier_;
+  *   This notification channel is "the" source of fault notifications.
+  *
+  *  TAO::FT_FaultConsumer fault_consumer_;
+  *   This object subscribes to the fault_notifier_as a fault consumer. It
+  *   analyzes incoming fault notifications and calls appropriate ReplicationManager
+  *   methods to respond to the fault.
+  *
+  *  TAO::PG_FactoryRegistry factory_registry_;
+  *   This object maintains a collection of factory registrations.  When a factory
+  *   is started it registeres itself with the ReplicationManager (delegated to this
+  *   object).  When a member needs to be created in an object group this factory
+  *   registry is queried to find factories that can create the member.
   */
   class FT_ReplicationManager
     : public virtual POA_FT::ReplicationManager,
@@ -51,13 +84,15 @@ namespace TAO
 
   public:
     /**
-    * Default constructor.
-    */
+     * Default constructor.
+     * Call init after constructing the object to prepare it for use.
+     */
     FT_ReplicationManager ();
 
     /**
-    * Destructor.
-    */
+     * Destructor.
+     * Actual cleanup happens in the fini function.
+     */
     virtual ~FT_ReplicationManager ();
 
   public:
@@ -186,7 +221,7 @@ namespace TAO
 
     /**
      * Set properties associated with a given Replica type.  These
-     * properties override the default properties.
+     * properties override the default properties on a name-by-name basis.
      */
     virtual void set_type_properties (
         const char * type_id,
@@ -253,8 +288,7 @@ namespace TAO
      */
     //@{
 
-    /// Create a member using the ObjectGroupManager, and
-    /// add the created object to the ObjectGroup.
+    /// Create a member in an object group.
     virtual PortableGroup::ObjectGroup_ptr create_member (
         PortableGroup::ObjectGroup_ptr object_group,
         const PortableGroup::Location & the_location,
@@ -281,11 +315,15 @@ namespace TAO
                       PortableGroup::ObjectNotAdded));
 
     /**
-     * Remove an object at a specific location from the given
-     * ObjectGroup.  Deletion of application created objects must be
+     * Remove the member at a specific location from an
+     * ObjectGroup.  Application created objects must be
      * deleted by the application.  Objects created by the
      * infrastructure (replication manager) will be deleted by the
      * infrastructure.
+     * For infrastructure-controlled membership: After the member 
+     * is removed from the group the minumum number of members 
+     * parameter will be checked and new members will be created
+     * as necessary (if possible.)
      */
     virtual PortableGroup::ObjectGroup_ptr remove_member (
         PortableGroup::ObjectGroup_ptr object_group,
@@ -315,25 +353,29 @@ namespace TAO
       ACE_THROW_SPEC ((CORBA::SystemException,
                       PortableGroup::ObjectGroupNotFound));
 
-    /// ?
+    /**
+     * Return an update the IOGR for an object group.  If no changes have
+     * been made in the group the return value will be the same as the object_group
+     * parameter.
+     */
     virtual PortableGroup::ObjectGroup_ptr get_object_group_ref (
         PortableGroup::ObjectGroup_ptr object_group
         ACE_ENV_ARG_DECL)
       ACE_THROW_SPEC ((CORBA::SystemException,
                       PortableGroup::ObjectGroupNotFound));
 
-  /**
-   * TAO-specific extension.
-   * Return the ObjectGroup reference for the given ObjectGroupId.
-   */
-   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-        PortableGroup::ObjectGroupId group_id
-        ACE_ENV_ARG_DECL
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-        , PortableGroup::ObjectGroupNotFound
-      ));
+    /**
+     * TAO-specific extension.
+     * Return the ObjectGroup reference for the given ObjectGroupId.
+     */
+     virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+          PortableGroup::ObjectGroupId group_id
+          ACE_ENV_ARG_DECL
+        )
+        ACE_THROW_SPEC ((
+          CORBA::SystemException
+          , PortableGroup::ObjectGroupNotFound
+        ));
 
     /**
      * Return the reference corresponding to the Replica of a given
@@ -375,6 +417,10 @@ namespace TAO
      * restrictions defined by the provided Criteria.  The out
      * FactoryCreationId parameter may be passed to the delete_object()
      * method to delete the object.
+     *
+     * Infrastructure controlled membership:  The initial number of members
+     * property will be honored by creating new members and adding them to
+     * the group.
      */
     virtual CORBA::Object_ptr create_object (
         const char * type_id,
@@ -390,10 +436,10 @@ namespace TAO
                       PortableGroup::CannotMeetCriteria));
 
     /**
-     * Delete the object corresponding to the provided
-     * FactoryCreationId.  If the object is actually an ObjectGroup,
-     * then all members within the ObjectGroup will be deleted.
-     * Afterward, the ObjectGroup itself will be deleted.
+     * Delete the object group corresponding to the provided
+     * FactoryCreationId.  For infratructure-controlled membership
+     * all members will be deleted.  For application-controlled membership
+     * the application is responsible for deleting group members.
      */
     virtual void delete_object (
         const PortableGroup::GenericFactory::FactoryCreationId &
@@ -450,9 +496,10 @@ namespace TAO
     /// A human-readable string to identify this Replication Manager.
     ACE_CString identity_;
 
+    /// an object that manages a collection of object groups
     TAO::PG_Group_Factory group_factory_;
 
-
+    /// an object that manages default and type_id related properties
     TAO::PG_Properties_Support properties_support_;
 
     /// The fault notifier.

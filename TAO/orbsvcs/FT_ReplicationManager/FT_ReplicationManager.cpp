@@ -87,10 +87,7 @@ TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
   // cleanup happens in fini
 }
 
-
-//////////////////////////////////////////////////////
-// FT_ReplicationManager public, non-CORBA methods
-
+//public
 int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "n:o:f:");
@@ -130,11 +127,13 @@ int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
   return 0;
 }
 
+//public
 const char * TAO::FT_ReplicationManager::identity () const
 {
   return this->identity_.c_str ();
 }
 
+//public
 int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
   int result = 0;
@@ -304,6 +303,7 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   return result;
 }
 
+//public
 int TAO::FT_ReplicationManager::idle (int & result)
 {
   ACE_UNUSED_ARG (result);
@@ -311,6 +311,7 @@ int TAO::FT_ReplicationManager::idle (int & result)
 }
 
 
+//public
 int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
   int result = 0;
@@ -333,35 +334,7 @@ int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
   return result;
 }
 
-////////////////////////////////////////////
-// FT_ReplicationManager private methods
-
-int TAO::FT_ReplicationManager::write_ior ()
-{
-  int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
-  if (out)
-  {
-    CORBA::String_var ior_str = this->orb_->object_to_string (
-      this->replication_manager_ref_.in ());
-    ACE_OS::fprintf (out, "%s", ior_str.in ());
-    ACE_OS::fclose (out);
-    result = 0;
-  }
-  else
-  {
-    ACE_ERROR ( (LM_ERROR,
-      ACE_TEXT ("%T %n (%P|%t) - Open failed for %s\n"), this->ior_output_file_
-    ));
-  }
-  return result;
-}
-
-
-//////////////////////////////////////////////////////
-// FT::ReplicationManager methods
-
-/// Registers the Fault Notifier with the Replication Manager.
+//CORBA
 void
 TAO::FT_ReplicationManager::register_fault_notifier (
   FT::FaultNotifier_ptr fault_notifier
@@ -371,6 +344,7 @@ TAO::FT_ReplicationManager::register_fault_notifier (
   this->register_fault_notifier_i (fault_notifier ACE_ENV_ARG_PARAMETER);
 }
 
+//private
 void
 TAO::FT_ReplicationManager::register_fault_notifier_i (
   FT::FaultNotifier_ptr fault_notifier
@@ -459,7 +433,8 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
 }
 
 
-/// Returns the reference of the Fault Notifier.
+// Returns the reference of the Fault Notifier.
+//CORBA
 FT::FaultNotifier_ptr
 TAO::FT_ReplicationManager::get_fault_notifier (
   ACE_ENV_SINGLE_ARG_DECL)
@@ -473,7 +448,8 @@ TAO::FT_ReplicationManager::get_fault_notifier (
 }
 
 
-/// TAO-specific find factory registry
+// TAO-specific find factory registry
+//CORBA
 ::PortableGroup::FactoryRegistry_ptr
 TAO::FT_ReplicationManager::get_factory_registry (
   const PortableGroup::Criteria & selection_criteria
@@ -484,7 +460,8 @@ TAO::FT_ReplicationManager::get_factory_registry (
   return this->factory_registry_.reference ();
 }
 
-/// TAO-specific shutdown operation.
+// TAO-specific shutdown operation.
+//public
 void TAO::FT_ReplicationManager::shutdown (
   ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ( (CORBA::SystemException))
@@ -493,6 +470,7 @@ void TAO::FT_ReplicationManager::shutdown (
 }
 
 // Get the type_id associated with an object group.
+//CORBA
 char * TAO::FT_ReplicationManager::type_id (
   PortableGroup::ObjectGroup_ptr object_group
   ACE_ENV_ARG_DECL)
@@ -514,6 +492,7 @@ char * TAO::FT_ReplicationManager::type_id (
 //////////////////////////////////////////////////////
 // PortableGroup::PropertyManager methods
 
+//CORBA
 void
 TAO::FT_ReplicationManager::set_default_properties (
   const PortableGroup::Properties & props
@@ -527,6 +506,7 @@ TAO::FT_ReplicationManager::set_default_properties (
   //@@ validate properties?
 }
 
+//CORBA
 PortableGroup::Properties *
 TAO::FT_ReplicationManager::get_default_properties (
     ACE_ENV_SINGLE_ARG_DECL)
@@ -536,6 +516,7 @@ TAO::FT_ReplicationManager::get_default_properties (
       ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
+//CORBA
 void
 TAO::FT_ReplicationManager::remove_default_properties (
     const PortableGroup::Properties & props
@@ -548,6 +529,7 @@ TAO::FT_ReplicationManager::remove_default_properties (
     ACE_ENV_ARG_PARAMETER);
 }
 
+//CORBA
 void
 TAO::FT_ReplicationManager::set_type_properties (
     const char *type_id,
@@ -563,6 +545,7 @@ TAO::FT_ReplicationManager::set_type_properties (
     ACE_ENV_ARG_PARAMETER);
 }
 
+//CORBA
 PortableGroup::Properties *
 TAO::FT_ReplicationManager::get_type_properties (
     const char *type_id
@@ -573,6 +556,7 @@ TAO::FT_ReplicationManager::get_type_properties (
      ACE_ENV_ARG_PARAMETER);
 }
 
+//CORBA
 void
 TAO::FT_ReplicationManager::remove_type_properties (
     const char *type_id,
@@ -588,6 +572,7 @@ TAO::FT_ReplicationManager::remove_type_properties (
     ACE_ENV_ARG_PARAMETER);
 }
 
+//CORBA
 void
 TAO::FT_ReplicationManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -611,6 +596,7 @@ TAO::FT_ReplicationManager::set_properties_dynamically (
   }
 }
 
+//CORBA
 PortableGroup::Properties *
 TAO::FT_ReplicationManager::get_properties (
     PortableGroup::ObjectGroup_ptr object_group
@@ -639,6 +625,7 @@ TAO::FT_ReplicationManager::get_properties (
 // FT::FTObjectGroupManager methods
 
 /// Sets the primary member of a group.
+//CORBA
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::set_primary_member (
   PortableGroup::ObjectGroup_ptr object_group,
@@ -679,6 +666,7 @@ TAO::FT_ReplicationManager::set_primary_member (
   METHOD_RETURN (TAO::FT_ReplicationManager::set_primary_member) result._retn ();
 }
 
+//CORBA
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::create_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -716,6 +704,7 @@ TAO::FT_ReplicationManager::create_member (
 }
 
 
+//CORBA
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -756,6 +745,7 @@ TAO::FT_ReplicationManager::add_member (
   METHOD_RETURN (TAO::FT_ReplicationManager::add_member) result._retn ();
 }
 
+//CORBA
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -789,6 +779,7 @@ TAO::FT_ReplicationManager::remove_member (
   return result._retn ();
 }
 
+//CORBA
 PortableGroup::Locations *
 TAO::FT_ReplicationManager::locations_of_members (
     PortableGroup::ObjectGroup_ptr object_group
@@ -819,6 +810,7 @@ TAO::FT_ReplicationManager::locations_of_members (
   return result;
 }
 
+//CORBA
 PortableGroup::ObjectGroups *
 TAO::FT_ReplicationManager::groups_at_location (
     const PortableGroup::Location & the_location
@@ -828,6 +820,7 @@ TAO::FT_ReplicationManager::groups_at_location (
   return this->group_factory_.groups_at_location (the_location ACE_ENV_ARG_PARAMETER);
 }
 
+//CORBA
 PortableGroup::ObjectGroupId
 TAO::FT_ReplicationManager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group
@@ -856,6 +849,7 @@ TAO::FT_ReplicationManager::get_object_group_id (
   return result;
 }
 
+//CORBA
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::get_object_group_ref (
     PortableGroup::ObjectGroup_ptr object_group
@@ -884,6 +878,7 @@ TAO::FT_ReplicationManager::get_object_group_ref (
   return result._retn();
 }
 
+//CORBA, TAO specific
 PortableGroup::ObjectGroup_ptr
 TAO::FT_ReplicationManager::get_object_group_ref_from_id (
     PortableGroup::ObjectGroupId group_id
@@ -914,6 +909,7 @@ TAO::FT_ReplicationManager::get_object_group_ref_from_id (
   return result._retn();
 }
 
+//CORBA
 CORBA::Object_ptr
 TAO::FT_ReplicationManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -949,6 +945,7 @@ TAO::FT_ReplicationManager::get_member_ref (
 //////////////////////////////////////////////////////
 // PortableGroup::GenericFactory methods
 
+//CORBA
 CORBA::Object_ptr
 TAO::FT_ReplicationManager::create_object (
   const char * type_id,
@@ -1004,6 +1001,7 @@ TAO::FT_ReplicationManager::create_object (
   METHOD_RETURN (TAO::FT_ReplicationManager::create_object) group->reference ();
 }
 
+//CORBA
 void
 TAO::FT_ReplicationManager::delete_object (
   const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id
@@ -1025,3 +1023,26 @@ TAO::FT_ReplicationManager::delete_object (
     ACE_THROW (PortableGroup::ObjectNotFound ());
   }
 }
+
+//private
+int TAO::FT_ReplicationManager::write_ior ()
+{
+  int result = -1;
+  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  if (out)
+  {
+    CORBA::String_var ior_str = this->orb_->object_to_string (
+      this->replication_manager_ref_.in ());
+    ACE_OS::fprintf (out, "%s", ior_str.in ());
+    ACE_OS::fclose (out);
+    result = 0;
+  }
+  else
+  {
+    ACE_ERROR ( (LM_ERROR,
+      ACE_TEXT ("%T %n (%P|%t) - Open failed for %s\n"), this->ior_output_file_
+    ));
+  }
+  return result;
+}
+
