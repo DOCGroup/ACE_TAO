@@ -2,6 +2,33 @@
 
 [Hints on writing portable code using ACE]
 
+  [Testing Non-Window based ACE programs]
+     Rumor has it that Microsoft will provide a DOS shell in their
+     next release of CE.  Oh well, I made it up and there'll probably
+     no DOS prompt in the future CE.  All current ACE programs are
+     text-based.  They all need a shell to start from.  
+
+     [Dialog Based]
+        This is a collection of files that combined with any ACE
+     program to run on CE.  To use this template, compile your main
+     project with all the cpp and rc files under $ACE_ROOT/windoezCE/.
+     
+     The program will start by asking you the command line argument
+     that you want to pass to the original ACE program.  We should be
+     able to get this infomation automatically if we execute the
+     program from "Start -> Run...".  However, that'll require us to
+     implement this window using Win32 API (it's written with MFC
+     classes now.)  Notice that GetCommandLine is not available on
+     CE.
+
+        [Future Improvement]
+           
+            Get the command line argument automatically.
+
+            Buffered keyboard input (stdin.)
+
+            Scrollable output.
+
   [Unicode Trivia]
         Since most APIs take wide char strings as their arguments when
         strings are needed, some pre-cautions must be taken...
@@ -14,13 +41,20 @@
         other paltforms.
 
     [ASYS_TEXT] A macro that converts a char text to a wchar text
-        only under CE.
+        only under CE. 
 
     [ASYS_WIDE_STRING] A macro that converts char strings to wchar
-        strings using ACE_WString.
+        strings using ACE_WString only when
+        ACE_HAS_MOSTLY_UNICODE_APIS is defined.
 
     [ASYS_MULTIBYTE_STRING] A macro that converts wchar strings to
-        char strings using ACE_WString.
+        char strings using ACE_WString while
+        ACE_HAS_MOSTLY_UNICODE_APIS is not defined but UNICODE is
+        defined.
+
+    [ASYS_ONLY_MULTIBYTE_STRING] Like ASYS_MULTIBYTE_STRING but only
+        convert a string when ACE_HAS_MOSTLY_UNICODE_APIS defined and
+        UNICODE not defined. 
 
     [ACE_TRACE] When using ACE_TRACE macros, you don't need to use
         wide char string in it.  ACE converts the char string to wchar
@@ -28,6 +62,7 @@
 
 
 [ACE File list]
+  Here is a trace of ACE files about their status on CE.
   [Legend]
            (.)    Defered.
            (x)    Compiled successfully. (Doesn't mean it will run. ;-)
