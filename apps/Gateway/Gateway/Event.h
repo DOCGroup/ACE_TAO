@@ -172,6 +172,8 @@ public:
   enum { MAX_PAYLOAD_SIZE = 1024 };
   // The maximum size of an Event.
 
+  Event () : header_ (0, -1, 0, 0) {};
+
   Event_Header header_;
   // Event header.
 
