@@ -3607,7 +3607,7 @@ init_parameter_list
         }
         ;
 
-at_least_one_in_parameter : in_parameters in_parameter ;
+at_least_one_in_parameter : in_parameter in_parameters ;
 
 in_parameters
         : in_parameters
