@@ -175,8 +175,6 @@ Svc_Handler::idle (u_long flags)
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::idle (flags);
 }
 
-// ****************************************
-
 // The following works around bugs with some operating systems, which
 // don't allow multiple threads/process to call accept() on the same
 // listen-mode port/socket.
@@ -469,12 +467,10 @@ server (void *arg)
               return 0;
             }
           else
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ASYS_TEXT ("(%P|%t) %p\n"),
-                                 ASYS_TEXT ("accept failed, shutting down")),
-                                0);
-            }
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ASYS_TEXT ("(%P|%t) %p\n"),
+                               ASYS_TEXT ("accept failed, shutting down")),
+                              0);
         }
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) client %s connected from %d\n"),
@@ -576,14 +572,19 @@ spawn_threads (ACCEPTOR *acceptor,
 #if defined (VXWORKS)
   // Assign thread (VxWorks task) names to test that feature.
   ACE_thread_t *server_name;
-  ACE_NEW_RETURN (server_name, ACE_thread_t[n_servers], -1);
+  ACE_NEW_RETURN (server_name,
+                  ACE_thread_t[n_servers],
+                  -1);
 
   // And test ability to provide stacks.
   size_t *stack_size;
-  ACE_NEW_RETURN (stack_size, size_t[n_servers], -1);
+  ACE_NEW_RETURN (stack_size,
+                  size_t[n_servers],
+                  -1);
   char **stack;
-  ACE_NEW_RETURN (stack, char *[n_servers], -1);
-
+  ACE_NEW_RETURN (stack,
+                  char *[n_servers],
+                  -1);
   int i;
 
   for (i = 0; i < n_servers; ++i)
@@ -704,10 +705,12 @@ main (int argc, ASYS_TCHAR *argv[])
     {
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%P|%t) starting server at port %d\n"),
+
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_LACKS_FORK)
-      if (spawn_processes (&acceptor, &server_addr) == -1)
+      if (spawn_processes (&acceptor,
+                           &server_addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("(%P|%r) %p\n"),
                            ASYS_TEXT ("spawn_processes")),
@@ -716,7 +719,8 @@ main (int argc, ASYS_TCHAR *argv[])
       status = spawn_threads (&acceptor, &server_addr);
 #else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
       ACE_ERROR ((LM_ERROR,
-                  ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 1));
+                  ASYS_TEXT ("(%P|%t) only one thread may be run in a process on this platform\n%a"), 
+                  1));
 #endif /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
     }
 
