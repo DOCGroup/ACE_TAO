@@ -1,3 +1,9 @@
+Wed Aug 18 22:15:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/run_tests.sh:
+	  It was running the DISABLED tests, thanks to David for pointing
+	  this out.
+
 Wed Aug 18 21:48:52 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added Toshio Hori <lttoshi@etl.go.jp>
