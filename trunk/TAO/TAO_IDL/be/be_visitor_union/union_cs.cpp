@@ -193,7 +193,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       os->indent ();
       *os << "// the virtual overloaded access method" << be_nl;
       *os << "void *" << node->name () << "::_access ("
-          << " CORBA::Boolean alloc_flag)" << be_nl;
+          << " CORBA::Boolean /*alloc_flag*/)" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "switch (this->disc_)" << be_nl;
       *os << "{" << be_idt_nl;
