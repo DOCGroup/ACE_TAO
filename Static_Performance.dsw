@@ -249,21 +249,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "gperf_lib"=.\apps\gperf\src\gperf_lib.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE dynamic library
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Global:
 
 Package=<5>
