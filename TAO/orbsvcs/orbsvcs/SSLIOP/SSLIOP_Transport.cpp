@@ -110,11 +110,11 @@ TAO_SSLIOP_Transport::send_i (iovec *iov,
 ssize_t
 TAO_SSLIOP_Transport::recv_i (char *buf,
                               size_t len,
-                              const ACE_Time_Value * /*max_wait_time*/)
+                              const ACE_Time_Value *max_wait_time)
 {
   ssize_t n = this->connection_handler_->peer ().recv (buf,
-                                                       len
-                                                       /* ,max_wait_time */);
+                                                       len,
+                                                       max_wait_time);
 
   // Most of the errors handling is common for
   // Now the message has been read
