@@ -25,7 +25,7 @@ by the client.
 client:
 -------
 
-./client -d <datatype> -p <port_num> -h <server_hostname> -n <num_calls> -t <num_of_clients>
+./client -d <datatype> -p <port_num> -h <server_hostname> -n <num_calls> -t <num_of_clients> [-r]
 
 <datatype> is one of the following:
 
@@ -49,6 +49,8 @@ automatically constructs the IOR's for the servants
 <num_of_clients> is the total number of concurrent clients to be
 created. The clients will have successively decreasing
 priorities. 
+
+The -r option can be used to turn on the thread-per-rate tests.
 
 Results
 -------
