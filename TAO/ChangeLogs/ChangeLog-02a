@@ -23,8 +23,12 @@ Mon Mar 13 14:19:27 2000  Carlos O'Ryan  <coryan@uci.edu>
 	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
 	  Had to revert Jeff fix for the _tao_any_destructor functions
 	  declared in deeply nested modules.  GCC gets utterly confused by
-	  this declaration
-	  void ::Foo::Bar::_tao_any_destructor (void *) ....
+	  this declaration:
+	     void ::Foo::Bar::_tao_any_destructor (void *) ....
+	  it tolerates this one:
+	     void Foo::Bar::_tao_any_destructor (void *) ....
+	  but fails with this one:
+	     void Foo::Bar::Foo::_tao_any_destructor (void *) ....
 
 	* tao/Makefile:
 	* tao/deep_free.cpp:
