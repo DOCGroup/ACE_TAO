@@ -1,9 +1,9 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Local targets
-#	GNU version
-#	Requires GNU make
+#       Local targets
+#       GNU version
+#       Requires GNU make
 #----------------------------------------------------------------------------
 
 ifndef OBJDIRS
@@ -11,14 +11,14 @@ ifndef OBJDIRS
 endif # OBJDIRS
 
 #### TEMPLATE_REPOSITORY can be set in individual platform files
-#### to create template repository directories.	 See
+#### to create template repository directories.  See
 #### platform_sunos5_sunc++.GNU for an example.
 OBJDIRS += $(TEMPLATE_REPOSITORY)
 
 all.local: build.objdirs build.local install.local
 
 #----------------------------------------------------------------------------
-#	C/C++ compilation targets
+#       C/C++ compilation targets
 #----------------------------------------------------------------------------
 
 build.local: $(BUILD)
@@ -41,22 +41,22 @@ build.local: $(BUILD)
 
 # C++ related targets
 
-$(VDIR)%.o:	%.c
+$(VDIR)%.o: %.c
 	$(COMPILE.c) -o $@ $<
 	${MVCMD}
 
-$(VDIR)%.o:	%.cpp
+$(VDIR)%.o: %.cpp
 	$(COMPILE.cc) -o $@ $<
 	${MVCMD}
 
-#$(VDIR)%.o:	%.C
+#$(VDIR)%.o: %.C
 #	$(COMPILE.cc) -o $@ $<
 
-#$(VDIR)%.o:	%.cc
+#$(VDIR)%.o: %.cc
 #	$(COMPILE.cc) -o $@ $<
 
 # If SOLINK is defined, then the .so file is built from the .o file via
-# separate rules in the same directory.	 Otherwise, the .so and .o are
+# separate rules in the same directory.  Otherwise, the .so and .o are
 # built via the same rule.  SOLINK is required for the repository under
 # gcc.
 ifndef SOLINK
@@ -71,19 +71,19 @@ else
 $(VSHDIR)%.$(SOEXT): %.cpp
 	$(SOBUILD)
 endif
-$(VSHDIR)%.o:	%.cpp
+$(VSHDIR)%.o: %.cpp
 	$(COMPILE.cc) $(PIC) -o $@ $<
-$(VSHDIR)%.o:	%.cc
+$(VSHDIR)%.o: %.cc
 	$(COMPILE.cc) $(PIC) -o $@ $<
-$(VSHDIR)%.$(SOEXT):	$(VSHDIR)%.o
+$(VSHDIR)%.$(SOEXT): $(VSHDIR)%.o
 	$(SOLINK)
 endif
 
 #----------------------------------------------------------------------------
-#	Library generation targets
+#       Library generation targets
 #----------------------------------------------------------------------------
 
-.PRECIOUS:	$(VLIB)
+.PRECIOUS: $(VLIB)
 
 #### show_statics shows static objects in locally-created object files.
 #### It assumes that the object files were built using g++.
@@ -100,10 +100,10 @@ show_uninit:
 	-@$(TOOLDIR)nm$(TOOLENV) -Co $(VSHDIR)*o | egrep ' b '
 
 #----------------------------------------------------------------------------
-#	Installation targets
+#       Installation targets
 #----------------------------------------------------------------------------
 
-install.local:	$(INSTALL)
+install.local: $(INSTALL)
 
 deinstall.local:
 	$(RM) $(INSTALL) $(LIB:%.a=$(INSLIB)/%*.a) $(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
@@ -130,7 +130,7 @@ $(INSMAN)/mann/% :
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F) -> $(@D)" ; \
-			ln -s $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
+			ln -s -f $(shell pwd)/$(@F:%.$(SOEXT)$(ACE_LDSO_Version_Number)=%.$(SOEXT)) $(@) ; \
 		fi ; \
 	fi
 ifdef MVSLIB
@@ -140,13 +140,13 @@ ifdef MVSLIB
 			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
 		else \
 			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
-			ln -s $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
+			ln -s -f $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
 endif
 
 #----------------------------------------------------------------------------
-#	Cleanup targets
+#       Cleanup targets
 #----------------------------------------------------------------------------
 
 clean.local:
@@ -158,7 +158,7 @@ realclean.local: clean.local
 	-$(RM) -f $(BIN:%=%) $(BIN:%=%_debug) $(BIN:%=%_profile) $(BIN:%=%_optimize) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%)
 
 #----------------------------------------------------------------------------
-#	Dependency generation target
+#       Dependency generation target
 #----------------------------------------------------------------------------
 
 ifndef MAKEFILE
@@ -196,14 +196,14 @@ depend.local: $(MAKEFILE)
 	$(RM) -f $(MAKEFILE).old ;
 
 #----------------------------------------------------------------------------
-#	RCS info target
+#       RCS info target
 #----------------------------------------------------------------------------
 
 rcs_info.local:
 	@rcs info
 
 #----------------------------------------------------------------------------
-#	Variant targets and conditional macros
+#       Variant targets and conditional macros
 #----------------------------------------------------------------------------
 
 build.objdirs: $(OBJDIRS)
