@@ -1,3 +1,8 @@
+Thu Dec 2 16:42:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_vxworks5.5.x.GNU:
+	  Added explicit 'signed-char' flags for ppc and arm builds.
+
 Thu Dec  2 11:08:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/Threads/Guards.cpp: Fixed "unused parameter" warning.
