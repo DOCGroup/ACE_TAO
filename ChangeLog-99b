@@ -1,3 +1,8 @@
+Tue Jul  6 18:21:36 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Map_Manager.cpp: Made this file conform to the ACE programming
+	  guidelines.
+
 Tue Jul  6 18:31:34 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.x_sgic++.GNU:
