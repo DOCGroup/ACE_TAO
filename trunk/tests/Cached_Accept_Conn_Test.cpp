@@ -149,13 +149,15 @@ typedef Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
     defined (ACE_HAS_GNU_REPO)
   // The explicit instantiations are necessary with g++ 2.91.66
   // with -frepo, because it misses some of them.
-
+# if defined (ghs) && defined(ACE_WIN32)
+template class ACE_Node<ACE_HANDLE>;
+# endif
 // = Handle Gobbler
-#if (ACE_SIZEOF_INT != 4) && !defined (ACE_WIN32)
+# if (ACE_SIZEOF_INT != 4) && !defined (ACE_WIN32)
 // These might be already instantiated in ace/stats.cpp 
 // (if ACE_HANDLE == int && ACE_INT32 == int)
 template class ACE_Node<ACE_HANDLE>;
-#endif /* ACE_SIZEOF_INT != 4 && !ACE_WIN32 */
+# endif /* ACE_SIZEOF_INT != 4 && !ACE_WIN32 */
 template class ACE_Unbounded_Set<ACE_HANDLE>;
 template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
 

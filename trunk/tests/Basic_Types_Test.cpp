@@ -84,10 +84,10 @@ main (int, ACE_TCHAR *[])
   errors += check (ACE_TEXT ("ACE_SIZEOF_LONG: %u%s"),
                    sizeof (long), ACE_SIZEOF_LONG);
   errors += check (ACE_TEXT ("ACE_SIZEOF_LONG_LONG: %u%s"),
-#if defined (ACE_WIN32)
-                   sizeof (unsigned __int64),
-#elif defined (ACE_LACKS_LONGLONG_T)
+#if defined (ACE_LACKS_LONGLONG_T)
                    sizeof (ACE_U_LongLong),
+#elif defined (ACE_WIN32)
+                   sizeof (unsigned __int64),
 #else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
                    sizeof (long long),
 #endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
