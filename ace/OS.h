@@ -26,9 +26,13 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_MALLOC_ALIGN)
-#define ACE_MALLOC_ALIGN ((int) sizeof (long))
-#endif /* ACE_MALLOC_ALIGN */
+# if !defined (ACE_MALLOC_ALIGN)
+#   define ACE_MALLOC_ALIGN ((int) sizeof (long))
+# endif /* ACE_MALLOC_ALIGN */
+
+# if !defined (ACE_HAS_POSITION_INDEPENDENT_POINTERS)
+#   define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
+# endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS */
 
 // States of a recyclable object.
 enum ACE_Recyclable_State

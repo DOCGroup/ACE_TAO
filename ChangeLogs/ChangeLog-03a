@@ -1,3 +1,28 @@
+Sat Feb 12 15:15:01 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/README (ACE_HAS_POSITION_INDEPENDENT_POINTERS): Renamed
+	  the depricated ACE_HAS_POSITION_INDEPENDENT_MALLOC to
+	  ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+
+	* ace/OS.h: Made ACE_HAS_POSITION_INDEPENDENT_POINTERS=1 the default
+	  if it is not defined already.  If you don't want the support of
+	  position independent pointers (which means you don't care about
+	  position independent malloc,)  define
+	  ACE_HAS_POSITION_INDEPENDENT_POINTERS to 0.
+
+	* ace/MEM_SAP.h:
+	* ace/MEM_SAP.cpp:
+	* ace/Malloc.h:
+	* ace/Malloc.cpp:
+	* ace/Malloc.i:
+	* ace/Malloc_T.i:
+	* ace/Memory_Pool.cpp: Changed ACE_HAS_POSITION_INDEPENDENT_MALLOC
+	  to ACE_HAS_POSITION_INDEPENDENT_POINTERS.
+
+	* ace/config-sunos5.5.h:
+	* ace/config-win32-common.h: Removed depricated
+	  ACE_HAS_POSITION_INDEPENDENT_MALLOC.
+
 Sat Feb 12 14:40:20 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/Connection/misc/Connection_Handler.cpp,
