@@ -75,7 +75,7 @@ main (int argc, char *argv [])
       ACE_TRY_CHECK;
 #else
       ACE_DEBUG ((LM_DEBUG,
-                  "CORBA Messaging disabled in this condiguration,"
+                  "CORBA Messaging disabled in this configuration,"
                   " test may not be optimally configured\n"));
 #endif /* TAO_HAS_MESSAGING */
 
