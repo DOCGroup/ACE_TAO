@@ -1,3 +1,9 @@
+Fri Sep 12 10:54:14 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/client.dsp:
+
+          Turned on RTTI for all configurations.
+
 Thu Sep 11 15:41:47 2003  George Edwards <g.edwards@vanderbilt.edu>
 
 	* tests/OBV/Supports/Supports_Test_impl.cpp:
