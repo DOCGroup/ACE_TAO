@@ -187,8 +187,8 @@ public:
   enum Constants
   {
     /* Reply message types. */
-    SUCCESS = 1, // Reply for successful operation.
-    FAILURE = 2, // Reply for failed operation.
+    ACE_SUCCESS = 1, // Reply for successful operation.
+    ACE_FAILURE = 2, // Reply for failed operation.
 
     /* Class-specific constant values. */
     MAX_NAME_LENGTH = MAXPATHLEN + 1
