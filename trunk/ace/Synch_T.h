@@ -283,12 +283,12 @@ private:
  * thread-specific functions.  It uses the <C++ operator->> to
  * shield applications from the details of accessing
  * thread-specific storage.
- * NOTE:  TYPE cannot be a built-in type, but instead must be a
- * user-defined class.  (Some compilers will allow a built-in
- * type, but shouldn't.  Sun C++ won't, properly detecting the
- * improper return type from <operator->>.)  See template class
- * ACE_TSS_Type_Adapter, below, for adapting built-in types to
- * work with ACE_TSS.
+ *
+ * NOTE: For maximal portability, <TYPE> cannot be a built-in type,
+ * but instead should be a user-defined class (some compilers will
+ * allow a built-in type, others won't).  See template class
+ * ACE_TSS_Type_Adapter, below, for adapting built-in types to work
+ * with ACE_TSS.
  */
 template <class TYPE>
 class ACE_TSS

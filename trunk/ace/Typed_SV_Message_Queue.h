@@ -1,16 +1,14 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    Typed_SV_Message_Queue.h
  *
  *  $Id$
  *
- *  @author Doug Schmidt
+ *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_TYPED_MESSAGE_QUEUE_H
 #define ACE_TYPED_MESSAGE_QUEUE_H
@@ -27,7 +25,7 @@
 /**
  * @class ACE_Typed_SV_Message_Queue
  *
- * @brief Defines the header file for the C++ wrapper for message queues.
+ * @brief Defines the header file for the C++ wrapper facade for typed message queues.
  */
 template <class T>
 class ACE_Typed_SV_Message_Queue
