@@ -5,11 +5,11 @@
 #include "Messaging_ORBInitializer.h"
 
 #include "ace/Auto_Ptr.h"
-// #include "tao/Stub.h"
 #include "tao/Exception_Data.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"
+#include "tao/CDR.h"
 
 ACE_RCSID (tao,
            Messaging,

@@ -25,6 +25,10 @@ CPP_SRCS += IFR_BaseC \
             IFR_BasicC \
             IFR_ExtendedC \
             IFR_ComponentsC \
+            IFR_BaseA \
+            IFR_BasicA \
+            IFR_ExtendedA \
+            IFR_ComponentsA \
             IFR_Client_Adapter_Impl
 
 FILES = $(CPP_SRCS)

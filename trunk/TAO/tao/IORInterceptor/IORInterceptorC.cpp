@@ -26,10 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be\be_codegen.cpp:323
 
 
 #include "IORInterceptorC.h"
+#include "tao/CDR.h"
+#include "tao/Object_Argument_T.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -39,21 +42,38 @@
 #include "IORInterceptorC.i"
 #endif /* !defined INLINE */
 
-#include "ace/OS_NS_string.h"
-
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// be\be_visitor_arg_traits.cpp:64
 
 // Arg traits specializations.
 namespace TAO
 {
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_CS_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_CS_
+  
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_IORInterceptor_Export Arg_Traits<PortableInterceptor::ObjectReferenceFactory>
+    : public
+        Object_Arg_Traits_T<
+            PortableInterceptor::ObjectReferenceFactory *,
+            PortableInterceptor::ObjectReferenceFactory_var,
+            PortableInterceptor::ObjectReferenceFactory_out,
+            TAO::Value_Traits<PortableInterceptor::ObjectReferenceFactory>
+          >
+  {
+  };
+
+#endif /* end #if !defined */
 }
 
+
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for PortableInterceptor::IORInfo.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInfo_ptr
 TAO::Objref_Traits<PortableInterceptor::IORInfo>::tao_duplicate (
     PortableInterceptor::IORInfo_ptr p
@@ -62,6 +82,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInfo>::tao_duplicate (
   return PortableInterceptor::IORInfo::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableInterceptor::IORInfo>::tao_release (
     PortableInterceptor::IORInfo_ptr p
@@ -70,23 +91,25 @@ TAO::Objref_Traits<PortableInterceptor::IORInfo>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInfo_ptr
 TAO::Objref_Traits<PortableInterceptor::IORInfo>::tao_nil (void)
 {
   return PortableInterceptor::IORInfo::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::IORInfo>::tao_marshal (
     PortableInterceptor::IORInfo_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_IORInfo_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -107,10 +130,27 @@ PortableInterceptor::IORInfo::_narrow (
     {
       return IORInfo::_nil ();
     }
-
+  
   IORInfo_ptr proxy =
     dynamic_cast<IORInfo_ptr> (_tao_objref);
+  
+  return IORInfo::_duplicate (proxy);
+}
 
+PortableInterceptor::IORInfo_ptr
+PortableInterceptor::IORInfo::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return IORInfo::_nil ();
+    }
+  
+  IORInfo_ptr proxy =
+    dynamic_cast<IORInfo_ptr> (_tao_objref);
+  
   return IORInfo::_duplicate (proxy);
 }
 
@@ -121,7 +161,7 @@ PortableInterceptor::IORInfo::_duplicate (IORInfo_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -166,10 +206,11 @@ PortableInterceptor::IORInfo::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_interface/interface_cs.cpp:60
+// be\be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for PortableInterceptor::IORInterceptor.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInterceptor_ptr
 TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_duplicate (
     PortableInterceptor::IORInterceptor_ptr p
@@ -178,6 +219,7 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_duplicate (
   return PortableInterceptor::IORInterceptor::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_release (
     PortableInterceptor::IORInterceptor_ptr p
@@ -186,23 +228,25 @@ TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 PortableInterceptor::IORInterceptor_ptr
 TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_nil (void)
 {
   return PortableInterceptor::IORInterceptor::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<PortableInterceptor::IORInterceptor>::tao_marshal (
     PortableInterceptor::IORInterceptor_ptr p,
     TAO_OutputCDR & cdr
   )
 {
-  return p->marshal (cdr);
+  return CORBA::Object::marshal (p, cdr);
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*PortableInterceptor__TAO_IORInterceptor_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -223,10 +267,27 @@ PortableInterceptor::IORInterceptor::_narrow (
     {
       return IORInterceptor::_nil ();
     }
-
+  
   IORInterceptor_ptr proxy =
     dynamic_cast<IORInterceptor_ptr> (_tao_objref);
+  
+  return IORInterceptor::_duplicate (proxy);
+}
 
+PortableInterceptor::IORInterceptor_ptr
+PortableInterceptor::IORInterceptor::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return IORInterceptor::_nil ();
+    }
+  
+  IORInterceptor_ptr proxy =
+    dynamic_cast<IORInterceptor_ptr> (_tao_objref);
+  
   return IORInterceptor::_duplicate (proxy);
 }
 
@@ -237,7 +298,7 @@ PortableInterceptor::IORInterceptor::_duplicate (IORInterceptor_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -286,29 +347,53 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// be\be_visitor_root/root.cpp:1628
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class TAO::Objref_Traits<PortableInterceptor::IORInterceptor>;
+  template class
+    TAO::Objref_Traits<
+        PortableInterceptor::IORInterceptor
+      >;
 
   template class
     TAO_Objref_Var_T<
         PortableInterceptor::IORInterceptor
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::IORInterceptor
       >;
 
-  template class TAO::Objref_Traits<PortableInterceptor::IORInfo>;
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_TMPLINST_CS_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_TMPLINST_CS_
+
+  template class
+     TAO::Arg_Traits<
+        PortableInterceptor::ObjectReferenceFactory
+      >;
+
+  template class
+    TAO::Object_Arg_Traits_T<
+        PortableInterceptor::ObjectReferenceFactory *,
+        PortableInterceptor::ObjectReferenceFactory_var,
+        PortableInterceptor::ObjectReferenceFactory_out,
+        TAO::Objref_Traits<PortableInterceptor::ObjectReferenceFactory> 
+      >;
+
+#endif /* end #if !defined */
+
+  template class
+    TAO::Objref_Traits<
+        PortableInterceptor::IORInfo
+      >;
 
   template class
     TAO_Objref_Var_T<
         PortableInterceptor::IORInfo
       >;
-
+  
   template class
     TAO_Objref_Out_T<
         PortableInterceptor::IORInfo
@@ -316,28 +401,53 @@ PortableInterceptor::IORInterceptor::marshal (TAO_OutputCDR &)
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate TAO::Objref_Traits<PortableInterceptor::IORInterceptor>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        PortableInterceptor::IORInterceptor \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         PortableInterceptor::IORInterceptor
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::IORInterceptor
       >
 
-# pragma instantiate TAO::Objref_Traits<PortableInterceptor::IORInfo>
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_TMPLINST_CS_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate \
+     TAO::Arg_Traits< \
+        PortableInterceptor::ObjectReferenceFactory \
+      >
+
+# pragma instantiate \
+    TAO::Object_Arg_Traits_T< \
+        PortableInterceptor::ObjectReferenceFactory *, \
+        PortableInterceptor::ObjectReferenceFactory_var, \
+        PortableInterceptor::ObjectReferenceFactory_out, \
+        TAO::Objref_Traits<PortableInterceptor::ObjectReferenceFactory>  \
+      >
+
+#endif /* end #if !defined */
+
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        PortableInterceptor::IORInfo \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         PortableInterceptor::IORInfo
       >
-
+  
 # pragma instantiate \
     TAO_Objref_Out_T< \
         PortableInterceptor::IORInfo
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+
