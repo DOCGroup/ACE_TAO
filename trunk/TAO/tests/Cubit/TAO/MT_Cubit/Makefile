@@ -21,8 +21,8 @@ PROG_SRCS = server.cpp \
 
 LSRC = $(IDL_SRC) $(PROG_SRCS)
 
-CUBIT_SVR_OBJS = cubitC.o cubitS.o server.o cubit_i.o tmplinst.cpp
-CUBIT_CLIENT_OBJS = cubitC.o Task_Client.o client.o Util_Thread.o tmplinst.cpp
+CUBIT_SVR_OBJS = cubitC.o cubitS.o server.o cubit_i.o tmplinst.o
+CUBIT_CLIENT_OBJS = cubitC.o Task_Client.o client.o Util_Thread.o tmplinst.o
 
 BIN = server client
 BUILD = $(BIN)
