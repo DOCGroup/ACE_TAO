@@ -1,3 +1,16 @@
+Sat Jul 17 12:38:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (unmask_type): Changed
+	  the exception from AlreadyMasked to NotMasked since (1) this is
+ 	  what's in the throw spec and (2) this appears to be the right
+ 	  exception.
+  
+	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp (validate_supertypes): 
+	  Changed the throw spec from CosTrading::DuplicatePropertyName to
+ 	  CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName
+ 	  because that's the type of exception that's thrown in the body
+ 	  of this method.
+
 Sat Jul 17 12:48:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/orbconf.h:

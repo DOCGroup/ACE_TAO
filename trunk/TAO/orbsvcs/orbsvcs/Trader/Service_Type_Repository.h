@@ -254,7 +254,7 @@ public:
                             CORBA::Environment &)
     ACE_THROW_SPEC ((CosTrading::IllegalServiceType,
                      CosTrading::UnknownServiceType,
-                     CosTrading::DuplicatePropertyName));
+                     CosTradingRepos::ServiceTypeRepository::DuplicateServiceTypeName));
   // Confirm that the each super type exists, and cram them into super_map.
 
   void validate_inheritance (Prop_Map &prop_map,
