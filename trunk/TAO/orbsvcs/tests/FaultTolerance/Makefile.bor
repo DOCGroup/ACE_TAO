@@ -5,6 +5,7 @@
 
 DIRS = \
         IOGR \
-        IOGRManipulation
+        IOGRManipulation \
+	GroupRef_Manipulation
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
