@@ -10,17 +10,9 @@
 # The following targets arrange to build both unshared and shared libraries
 #----------------------------------------------------------------------------
 
-ifndef OBJEXT
-  OBJEXT=o
-endif
-
-ifndef SOEXT
-  SOEXT=so
-endif
-
 VSHLIB  = $(SHLIB:%.$(SOEXT)=%$(VAR).$(SOEXT))
 ifdef SHLIBA
-VSHLIBA = $(SHLIBA:%.a=%$(VAR).a)
+VSHLIBA = $(SHLIBA:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 endif
 
 VLOBJS   = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VDIR)$(notdir $(file))))
@@ -28,22 +20,22 @@ VLOBJS   = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VDIR)$(notdir $(file
 LSRC    += $(LSRC2)
 ifdef PRELIB
 ifdef PRELIB_USES_OBJ_ONLY
-  VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+  VSHOBJS = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
 else  # ! PRELIB_USES_OBJ_ONLY
-  VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+  VSHOBJS = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
 endif # ! PRELIB_USES_OBJ_ONLY
   VSHOBJS1 = $(VSHOBJS)
 else  # ! PRELIB
-  VSHOBJS = $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+  VSHOBJS = $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
   VSHOBJS1 = \
-    $(subst .cpp,.o,$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
+    $(subst .cpp,.$(OBJEXT),$(foreach file,$(LSRC),$(VSHDIR)$(notdir $(file))))
 endif # ! PRELIB
 
 # Comment out for now...
 # $(DEFS:%=$(INSINC)/%) \
 
 ifdef static_libs
-  INSTALL += $(VLIB:%.a=$(INSLIB)/%.a)
+  INSTALL += $(VLIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT))
 endif # static_libs
 
 ifdef shared_libs
@@ -72,10 +64,10 @@ endif
 #ifdef PRELIB
 #	$(PRELIB)
 #endif
-#	$(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)*.o
+#	$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(LDFLAGS) $(VSHDIR)*.$(OBJEXT)
 
 # Uncomment the remaining lines if you want to build both *.a and *.so libraries...
-VLIB    = $(LIB:%.a=%$(VAR).a)
+VLIB    = $(LIB:%.$(LIBEXT)=%$(VAR).$(LIBEXT))
 
 $(VLIB): $(VLOBJS)
 
@@ -84,9 +76,9 @@ ifeq (1,$(repo))
     #### With repo, link in all of the ace object files to the lib.
     #### This avoids multiple instantiations.  We haven't found it to
     #### be necessary with shared libs, so just do it for static libs.
-    vpath %.o $(ACE_ROOT)/ace/$(VDIR)
+    vpath %.$(OBJEXT) $(ACE_ROOT)/ace/$(VDIR)
 
-    $(VLIB): $(ACE_ROOT)/ace/$(VDIR)*.o
+    $(VLIB): $(ACE_ROOT)/ace/$(VDIR)*.$(OBJEXT)
   endif # ! ACELIB
 endif # repo
 
@@ -96,7 +88,7 @@ endif
 ifeq (1,$(ace_lib_prelink))
         #### Attempt a link (which will fail), to add template instantiations
         #### to lib files, for example.
-	-$(LINK.cc) -o ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
+	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
 endif # ace_lib_prelink
 	$(AR) $(ARFLAGS) $@ $?
 ifdef TEMPINCDIR
@@ -104,9 +96,9 @@ ifdef TEMPINCDIR
 # templates.
 	if test -s ./$(TEMPINCDIR)/*.C; \
 	then \
-		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
+		$(LINK.cc) $(LINK_OUTPUT_FLAG) dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
 		$(RM) dummy; \
-		$(AR) $(ARFLAGS) $@ tempinc/*.o; \
+		$(AR) $(ARFLAGS) $@ tempinc/*.$(OBJEXT); \
 	fi
 endif
 	-chmod a+r $@
@@ -128,7 +120,7 @@ ifdef TEMPINCDIR
 # templates before building the library.
 	if test -s ./$(TEMPINCDIR)/*.C; \
 	then \
-		$(LINK.cc) -o dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
+		$(LINK.cc) $(LINK_OUTPUT_FLAG) dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
 		$(RM) dummy; \
 	fi
 endif
@@ -136,19 +128,19 @@ ifdef SHLIBBUILD
 	$(SHLIBBUILD)
 else
 ifdef TEMPINCDIR
-	if test -s ./$(TEMPINCDIR)/*.o; \
+	if test -s ./$(TEMPINCDIR)/*.$(OBJEXT); \
         then \
-       	        $(SOLINK.cc) -o $@ $(VSHOBJS1) $(TEMPINCDIR)/*.o $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
+		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(TEMPINCDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
         else \
-		$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
+		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
 	fi
 else
 ifeq (1,$(ace_lib_prelink))
         #### Attempt a link (which will fail), to add template instantiations
         #### to lib files, for example.
-	-$(LINK.cc) -o ace-templ_inst $(VSHOBJS1) $(LDFLAGS) $(ACE_NUL_STDERR)
+	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $(VSHOBJS1) $(LDFLAGS) $(ACE_NUL_STDERR)
 endif # ace_lib_prelink
-	$(SOLINK.cc) -o $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+	$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
 endif
 	-chmod a+rx $@
 endif

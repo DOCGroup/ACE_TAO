@@ -6,16 +6,12 @@
 #       Requires GNU make
 #----------------------------------------------------------------------------
 
-ifndef OBJEXT
-  OBJEXT=o
-endif # ! OBJEXT
-
 VOBJS = \
   $(subst .cpp,.$(OBJEXT),$(foreach file,$(SRC),$(VDIR)$(notdir $(file))))
 
 ifeq ($(CHORUSLINK),true)
-$(BIN): %: $(VDIR)%.o $(VOBJS)
-	$(LINK.cc) -o $@ $^   $(VLDLIBS) $(LDFLAGS) $(POSTLINK)
+$(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
+	$(LINK.cc) $(CC_OUTPUT_FLAG) $@ $^   $(VLDLIBS) $(LDFLAGS) $(POSTLINK)
 #	$(MERGEDIR)/dtool/mkctors $@.xp.o > $@.ct.s
 #	$(CXX) -c $@.ct.s
 #	$(RM) $@.ct.s
@@ -23,6 +19,6 @@ $(BIN): %: $(VDIR)%.o $(VOBJS)
 #	$(RM) $@.xp.o
 #	$(RM) $@.ct.o
 else
-$(BIN): %: $(VDIR)%.o $(VOBJS)
-	$(LINK.cc) -o $@ $^ $(LDFLAGS) $(VLDLIBS) $(POSTLINK)
+$(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
+	$(LINK.cc) $(CC_OUTPUT_FLAG) $@ $^ $(LDFLAGS) $(VLDLIBS) $(POSTLINK)
 endif
