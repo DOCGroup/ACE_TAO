@@ -33,6 +33,7 @@ Mon Jan 31 19:02:34 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/tests/Event/Basic/Makefile:
         * orbsvcs/tests/Event/Basic/Bitmask.cpp:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
           New test for the bitmask filters.
 
         * orbsvcs/tests/Event/Basic/Atomic_Reconnect.h:
