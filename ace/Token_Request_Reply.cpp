@@ -28,8 +28,11 @@ ACE_Token_Request::ACE_Token_Request (int token_type,
   this->token_type (token_type);
   this->proxy_type (proxy_type);
   this->operation_type (operation_type);
-  this->options (options);
+  this->requeue_position (0);      // to avoid Purify UMR
+  this->notify (0);                // to avoid Purify UMR
+  transfer_.arg_ = 0;              // to avoid Purify UMR
   this->token_name (token_name, client_id);
+  this->options (options);
 }
 
 // Encode the transfer buffer into network byte order 
