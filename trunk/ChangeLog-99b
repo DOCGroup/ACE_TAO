@@ -1,25 +1,30 @@
+Tue Jan 19 16:15:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/g++dep: removed /project/doc/pkg/gnu/bin from PATH so that
+          I can run make depend on Linux.
+
 Tue Jan 19 12:14:09 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* Makefile (CONTROLLED_FILES): Added ChangeLog-98b to the
- 	  CONTROLLED_FILES macro.  Thanks to Susan Liebeskind
- 	  <susan.liebeskind@gtri.gatech.edu> for suggesting this.
+        * Makefile (CONTROLLED_FILES): Added ChangeLog-98b to the
+          CONTROLLED_FILES macro.  Thanks to Susan Liebeskind
+          <susan.liebeskind@gtri.gatech.edu> for suggesting this.
 
 Tue Jan 19 10:24:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * apps/JAWS/PROTOTYPE/HTTPU/HTTPU.{dsp, dsw}: converted to MSVC++ 6.0
-	  (and backward compatible) format.
+          (and backward compatible) format.
 
-        * apps/JAWS/PROTOTYPE/HTTPU/http_headers.{cpp, h}: fixed ACE_RB_Tree 
-	  templates, template instantiations.  Thanks to Sridhar Sabella
-	  (ssabbella@cemax.com) for pointing this out.
+        * apps/JAWS/PROTOTYPE/HTTPU/http_headers.{cpp, h}: fixed ACE_RB_Tree
+          templates, template instantiations.  Thanks to Sridhar Sabella
+          (ssabbella@cemax.com) for pointing this out.
 
 Tue Jan 19 00:42:44 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/Log_Msg/test_callback.cpp (log): Removed the use of
- 	  cerr and used ACE_OS::printf() instead.
-	
-	* ace/Log_Record.cpp (print): Fixed comparison between signed and
- 	  unsigned.  Thanks to David Levine for pointing this out.
+        * examples/Log_Msg/test_callback.cpp (log): Removed the use of
+          cerr and used ACE_OS::printf() instead.
+
+        * ace/Log_Record.cpp (print): Fixed comparison between signed and
+          unsigned.  Thanks to David Levine for pointing this out.
 
 Mon Jan 18 23:55:03 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -28,12 +33,12 @@ Mon Jan 18 23:55:03 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Jan 18 23:07:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp (open): Files opened with CreateFileA (on Win32 of
-	  course,) are now opened with FILE_SHARE_DELETE flag set.  This
-	  allows ACE_OS::unlink to work as it should.  However, I haven't
-	  figured out how to make unlink work with file opened with fopen
-	  yet.  Apparently, fopen does not open file with
-	  FILE_SHARE_DELETE.
+        * ace/OS.cpp (open): Files opened with CreateFileA (on Win32 of
+          course,) are now opened with FILE_SHARE_DELETE flag set.  This
+          allows ACE_OS::unlink to work as it should.  However, I haven't
+          figured out how to make unlink work with file opened with fopen
+          yet.  Apparently, fopen does not open file with
+          FILE_SHARE_DELETE.
 
 Mon Jan 18 22:54:18 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -47,12 +52,12 @@ Mon Jan 18 22:54:18 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Jan 18 22:14:00 1999  James CE Johnson  <jcej@chiroptera.tragus.org>
 
-	* docs/tutorials/011/message_queue.cpp:
-	* docs/tutorials/011/page02.html:
-	ACE_Message_Block::copy() will advance the wr_ptr() for us.
-	Previously, I was doing that myself in run_test().  The test only
-	worked because I never wrote data to the block after that.  If I
-	had, things would have broken horribly.
+        * docs/tutorials/011/message_queue.cpp:
+        * docs/tutorials/011/page02.html:
+        ACE_Message_Block::copy() will advance the wr_ptr() for us.
+        Previously, I was doing that myself in run_test().  The test only
+        worked because I never wrote data to the block after that.  If I
+        had, things would have broken horribly.
 
 Mon Jan 18 20:41:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
