@@ -302,7 +302,11 @@ be_decl::compute_repoID (void)
       this->repoID_[0] = '\0';
       ACE_OS::sprintf (this->repoID_, "%s", "IDL:");
       ACE_OS::strcat (this->repoID_, this->prefix ());
-      ACE_OS::strcat (this->repoID_, "/");
+
+      // Add the "/" only if there is a prefix
+      if (ACE_OS::strcmp (this->prefix (), "") != 0)
+        ACE_OS::strcat (this->repoID_, "/");
+
       i = new UTL_IdListActiveIterator (this->name ());
       first = I_TRUE;
       second = I_FALSE;
