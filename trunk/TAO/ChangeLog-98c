@@ -1,3 +1,7 @@
+Wed Jul  9 14:44:31 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* TAO-Install: Added installation instructions for NT
+
 Tue Jul  8 20:52:06 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/PC_Install.bat: Made it very quiet.
