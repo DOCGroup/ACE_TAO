@@ -1,3 +1,15 @@
+Thu Dec 25 11:09:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
+	* orbsvcs/orbsvcs/FT_ClientORB.dsp:
+	* orbsvcs/orbsvcs/FT_ServerORB.dsp:
+
+	  They needed more massaging. They now depend on portable group
+	  and CosNaming. This is not fun. If I were doing things, I would
+	  have split the required definitions into a seperate IDL file and
+	  include the generated code in both the projects. This is simply
+	  not right!
+
 Wed Dec 24 20:06:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/FTORB_Utils.dsp:
