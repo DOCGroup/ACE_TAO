@@ -335,8 +335,12 @@ pid_t ACE_Log_Msg::pid_ = -1;
 int ACE_Log_Msg::msg_off_ = 0;
 
 // Default per-thread priority mask
+// By default, no priorities are enabled.
+u_long ACE_Log_Msg::default_priority_mask_ = 0; 
+
+// Default per-process priority mask
 // By default, all priorities are enabled.
-u_long ACE_Log_Msg::default_priority_mask_ = LM_SHUTDOWN
+u_long ACE_Log_Msg::process_priority_mask_ = LM_SHUTDOWN
                                            | LM_TRACE
                                            | LM_DEBUG
                                            | LM_INFO
@@ -347,10 +351,6 @@ u_long ACE_Log_Msg::default_priority_mask_ = LM_SHUTDOWN
                                            | LM_CRITICAL
                                            | LM_ALERT
                                            | LM_EMERGENCY;
-
-// Default per-process priority mask
-// By default, no priorities are enabled.
-u_long ACE_Log_Msg::process_priority_mask_ = 0;
 
 void
 ACE_Log_Msg::close (void)
