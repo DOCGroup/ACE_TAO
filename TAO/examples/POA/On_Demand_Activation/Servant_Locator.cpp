@@ -58,7 +58,7 @@ MyFooServantLocator::preinvoke (const PortableServer::ObjectId &oid,
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
       //
       //CORBA::Exception *exception =
-      //  new CORBA::OBJECT_NOT_EXIST (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO);
+      //  new CORBA::OBJECT_NOT_EXIST ();
       //env.exception (exception);
       //return 0;
     }

@@ -35,10 +35,10 @@ CC_LockSetFactory::create (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, CosConcurrencyControl::LockSet::_nil ());
 
-  TAO_IN_ENV.exception (new CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  TAO_IN_ENV.exception (new CORBA::NO_MEMORY ());
   ACE_NEW_THROW_EX (ls,
                     CC_LockSet,
-                    CORBA::NO_MEMORY(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY());
   ACE_CHECK_RETURN (CosConcurrencyControl::LockSet::_nil ());
 
   return ls->_this (ACE_TRY_ENV);
@@ -54,10 +54,10 @@ CC_LockSetFactory::create_related (CosConcurrencyControl::LockSet_ptr which,
 
   // @@ I commented out the following statement becuase it doesn't make any
   //    sense at all.    -- Nanbor
-  //  TAO_IN_ENV.exception (new CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  //  TAO_IN_ENV.exception (new CORBA::NO_MEMORY ());
   ACE_NEW_THROW_EX (ls,
                     CC_LockSet (which),
-                    CORBA::NO_MEMORY(TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                    CORBA::NO_MEMORY());
   ACE_CHECK_RETURN (CosConcurrencyControl::LockSet::_nil ());
 
   return ls->_this (ACE_TRY_ENV);

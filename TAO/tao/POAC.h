@@ -339,7 +339,11 @@ TAO_NAMESPACE PortableServer{
     static ThreadPolicy_ptr _narrow (CORBA::Object_ptr obj, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     static ThreadPolicy_ptr _nil (void);
 
+#if 1                           // ongoing
     virtual ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+#else
+    virtual ThreadPolicyValue value (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ()) = 0;
+#endif
     virtual CORBA::Boolean _is_a (const CORBA::Char *type_id, CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
     virtual const char* _interface_repository_id (void) const;
   protected:

@@ -205,7 +205,7 @@ TAO_Marshal_TypeCode::append (CORBA::TypeCode_ptr,
             ACE_DEBUG ((LM_DEBUG,
                         "TAO_Marshal_TypeCode: "
                         "Bad kind_ value in CDR stream\n"));
-          env.exception (new CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+          env.exception (new CORBA::BAD_TYPECODE ());
           return CORBA::TypeCode::TRAVERSE_STOP;
         }
     }
@@ -466,7 +466,7 @@ TAO_Marshal_Union::append (CORBA::TypeCode_ptr  tc,
                                   }
                                   break;
                                 default:
-                                  env.exception (new CORBA::BAD_TYPECODE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+                                  env.exception (new CORBA::BAD_TYPECODE ());
                                   return CORBA::TypeCode::TRAVERSE_STOP;
                                 }// end of switch
 
@@ -612,7 +612,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "marshaling TAO_Marshal_Sequence::append detected error\n"));
-  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::MARSHAL ());
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 
@@ -657,7 +657,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "TAO_Marshal_Sequence::append detected error"));
-  env.exception (new CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  env.exception (new CORBA::MARSHAL ());
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
 

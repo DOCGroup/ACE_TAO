@@ -199,7 +199,7 @@ CORBA::PolicyType CORBA_Policy::policy_type (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -247,7 +247,7 @@ CORBA_Policy_ptr CORBA_Policy::copy (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+    ACE_THROW_RETURN (CORBA::INV_OBJREF (), _tao_retval);
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -294,7 +294,7 @@ void CORBA_Policy::destroy (
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
-    ACE_THROW (CORBA::INV_OBJREF (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA::INV_OBJREF ());
 
 
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -446,7 +446,7 @@ CORBA_PolicyList * CORBA_PolicyManager::get_policy_overrides (
 {
   CORBA_PolicyList* _tao_retval = 0;
   ACE_UNUSED_ARG(_tao_retval);
-  ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO), _tao_retval);
+  ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 }
 
 void CORBA_PolicyManager::set_policy_overrides (
@@ -455,7 +455,7 @@ void CORBA_PolicyManager::set_policy_overrides (
     CORBA::Environment &ACE_TRY_ENV
   )
 {
-  ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA::MARSHAL ());
 }
 
 CORBA::Boolean CORBA_PolicyManager::_is_a (const CORBA::Char *value, CORBA::Environment &env)

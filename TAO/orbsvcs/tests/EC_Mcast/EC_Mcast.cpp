@@ -250,7 +250,7 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec,
   if (this->endpoint_.dgram ().open (ACE_Addr::sap_any) == -1)
     {
       // @@ TODO throw an application specific exception.
-      TAO_IN_ENV.exception (new CORBA::COMM_FAILURE (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+      TAO_IN_ENV.exception (new CORBA::COMM_FAILURE ());
       return;
     }
   ACE_INET_Addr ignore_from;

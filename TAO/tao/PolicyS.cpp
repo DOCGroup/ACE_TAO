@@ -127,7 +127,7 @@ void POA_CORBA::Policy::_get_policy_type_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -150,7 +150,7 @@ void POA_CORBA::Policy::copy_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -255,7 +255,7 @@ void POA_CORBA::Policy::_dispatch (CORBA::ServerRequest &req, void *context, COR
   // find the skeleton corresponding to this opname
   if (this->_find (opname, skel) == -1)
   {
-    env.exception (new CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    env.exception (new CORBA_BAD_OPERATION ());
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
   }
 else
@@ -371,7 +371,7 @@ void* POA_CORBA::PolicyManager::_downcast (
 void POA_CORBA::PolicyManager::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
   // @@ TODO
-  ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA_BAD_OPERATION ());
 }
 
 const char* POA_CORBA::PolicyManager::_interface_repository_id (void) const
@@ -486,7 +486,7 @@ void* POA_CORBA::PolicyCurrent::_downcast (
 
 void POA_CORBA::PolicyCurrent::_dispatch (CORBA::ServerRequest &req, void *context, CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+  ACE_THROW (CORBA_BAD_OPERATION ());
 }
 
 const char* POA_CORBA::PolicyCurrent::_interface_repository_id (void) const

@@ -123,7 +123,7 @@ void POA_PortableServer::ThreadPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 }
 
 void POA_PortableServer::ThreadPolicy::_is_a_skel (
@@ -216,7 +216,7 @@ void POA_PortableServer::ThreadPolicy::_dispatch (CORBA::ServerRequest &req, voi
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -402,7 +402,7 @@ void POA_PortableServer::LifespanPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -496,7 +496,7 @@ void POA_PortableServer::LifespanPolicy::_dispatch (CORBA::ServerRequest &req, v
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -679,7 +679,7 @@ void POA_PortableServer::IdUniquenessPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -773,7 +773,7 @@ void POA_PortableServer::IdUniquenessPolicy::_dispatch (CORBA::ServerRequest &re
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -956,7 +956,7 @@ void POA_PortableServer::IdAssignmentPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -1050,7 +1050,7 @@ void POA_PortableServer::IdAssignmentPolicy::_dispatch (CORBA::ServerRequest &re
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -1235,7 +1235,7 @@ void POA_PortableServer::ImplicitActivationPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -1329,7 +1329,7 @@ void POA_PortableServer::ImplicitActivationPolicy::_dispatch (CORBA::ServerReque
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -1512,7 +1512,7 @@ void POA_PortableServer::ServantRetentionPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -1606,7 +1606,7 @@ void POA_PortableServer::ServantRetentionPolicy::_dispatch (CORBA::ServerRequest
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -1789,7 +1789,7 @@ void POA_PortableServer::RequestProcessingPolicy::_get_value_skel (
   if (!(
     (_tao_out << _tao_retval)
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -1883,7 +1883,7 @@ void POA_PortableServer::RequestProcessingPolicy::_dispatch (CORBA::ServerReques
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2048,7 +2048,7 @@ void POA_PortableServer::POAManager::_dispatch (CORBA::ServerRequest &req, void 
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2233,7 +2233,7 @@ void POA_PortableServer::AdapterActivator::_dispatch (CORBA::ServerRequest &req,
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2376,7 +2376,7 @@ void POA_PortableServer::ServantManager::_dispatch (CORBA::ServerRequest &req, v
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2509,7 +2509,7 @@ void POA_PortableServer::ServantActivator::_dispatch (CORBA::ServerRequest &req,
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2675,7 +2675,7 @@ void POA_PortableServer::ServantLocator::_dispatch (CORBA::ServerRequest &req, v
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -2844,7 +2844,7 @@ void POA_PortableServer::POA::_dispatch (CORBA::ServerRequest &req, void *contex
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
@@ -3326,7 +3326,7 @@ void POA_PortableServer::Current::get_POA_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -3349,7 +3349,7 @@ void POA_PortableServer::Current::get_object_id_skel (
   if (!(
     (_tao_out << _tao_retval.in ())
   ))
-    ACE_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO) );
+    ACE_THROW (CORBA::MARSHAL () );
 
 }
 
@@ -3443,7 +3443,7 @@ void POA_PortableServer::Current::_dispatch (CORBA::ServerRequest &req, void *co
   if (this->_find (opname, skel) == -1)
   {
     ACE_ERROR ((LM_ERROR, "Bad operation <%s>\n", opname));
-    ACE_THROW (CORBA_BAD_OPERATION (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_NO));
+    ACE_THROW (CORBA_BAD_OPERATION ());
   }
   else
     skel (req, this, context, ACE_TRY_ENV);
