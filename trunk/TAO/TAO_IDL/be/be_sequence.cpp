@@ -192,7 +192,13 @@ be_sequence::managed_type (void)
               (prim_type);
             if (bpd->pt () == AST_PredefinedType::PT_pseudo)
               {
-                this->mt_ = be_sequence::MNG_PSEUDO;
+                // if this pseudo is a CORBA::Object, then the managed type is
+                // an objref
+                if (!ACE_OS::strcmp (bpd->local_name ()->get_string (),
+                                     "Object")) 
+                  this->mt_ = be_sequence::MNG_OBJREF;
+                else
+                  this->mt_ = be_sequence::MNG_PSEUDO;
               }
             else
               {
