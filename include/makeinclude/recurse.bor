@@ -17,10 +17,10 @@ all: $(DIRS)
 # automatically restored when the sub-directory is finished.
 $(DIRS):
 	@echo Entering directory $<
-	@$(MAKE) $(MAKE_FLAGS) -f&&!
+	@$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f&&!
 all:
 	@cd $<
-	$(MAKE) $(MAKE_FLAGS) -fMakefile.bor
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -fMakefile.bor
 !
 
 # This ugliness is to remove extra spaces from between the items in the list.
@@ -36,10 +36,10 @@ clean: $(DIRS_CLEAN)
 # automatically restored when the sub-directory is finished.
 $(DIRS_CLEAN):
 	@echo Cleaning directory $(<:.Clean=)
-	@$(MAKE) $(MAKE_FLAGS) -f&&!
+	@$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f&&!
 all:
 	@cd $(<:.Clean=)
-	$(MAKE) $(MAKE_FLAGS) -fMakefile.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -fMakefile.bor clean
 !
 
 !endif
@@ -56,7 +56,7 @@ MAKEFILES_ALL = $(MAKEFILES_ALL_4:%=.All )
 all: $(MAKEFILES_ALL)
 
 $(MAKEFILES_ALL):
-	$(MAKE) $(MAKE_FLAGS) -f$(<:.All=)
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(<:.All=)
 
 # This ugliness is to remove extra spaces from between the items in the list.
 MAKEFILES_CLEAN_1 = $(MAKEFILES) $(BLANK_SPACE)
@@ -68,6 +68,6 @@ MAKEFILES_CLEAN = $(MAKEFILES_CLEAN_4:%=.Clean )
 clean: $(MAKEFILES_CLEAN)
 
 $(MAKEFILES_CLEAN):
-	$(MAKE) $(MAKE_FLAGS) -f$(<:.Clean=) clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f$(<:.Clean=) clean
 
 !endif
