@@ -1,5 +1,7 @@
 ##  Process this file with automake to create Makefile.in
 
+includedir = @includedir@/tao
+
 ACE_ROOT = $(top_srcdir)/..
 ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
@@ -316,7 +318,7 @@ libTAO_la_LDFLAGS = \
 libTAO_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS = \
+nobase_include_HEADERS = \
   Abstract_Servant_Base.h \
   Acceptor_Filter.h \
   Acceptor_Impl.h \
@@ -902,6 +904,9 @@ nobase_pkginclude_HEADERS = \
   Var_Size_SArgument_T.cpp \
   orb.idl
 
+EXTRA_DIST = \
+  tao.rc
+
 
 ## Makefile.BiDir_GIOP.am 
 
@@ -931,7 +936,7 @@ libTAO_BiDirGIOP_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   BiDir_GIOP/BiDirGIOP.h \
   BiDir_GIOP/BiDirPolicyC.h \
   BiDir_GIOP/BiDirPolicy_Validator.h \
@@ -941,6 +946,9 @@ nobase_pkginclude_HEADERS += \
   BiDir_GIOP/bidirgiop_export.h \
   BiDir_GIOP/BiDirPolicyC.i \
   BiDir_GIOP/BiDir_Policy_i.inl
+
+EXTRA_DIST += \
+  BiDir_GIOP/TAO_BiDir_GIOP.rc
 
 
 ## Makefile.Valuetype.am 
@@ -972,7 +980,7 @@ libTAO_Valuetype_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   Valuetype/AbstractBase.h \
   Valuetype/AbstractBase_Invocation_Adapter.h \
   Valuetype/AbstractBase_T.h \
@@ -993,6 +1001,9 @@ nobase_pkginclude_HEADERS += \
   Valuetype/AbstractBase_T.cpp \
   Valuetype/Sequence_T.cpp \
   Valuetype/Value_VarOut_T.cpp
+
+EXTRA_DIST += \
+  Valuetype/TAO_Valuetype.rc
 
 
 ## Makefile.ObjRefTemplate.am 
@@ -1019,10 +1030,13 @@ libTAO_ObjRefTemplate_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   ObjRefTemplate/ObjectReferenceTemplateC.h \
   ObjRefTemplate/ort_export.h \
   ObjRefTemplate/ObjectReferenceTemplateC.i
+
+EXTRA_DIST += \
+  ObjRefTemplate/TAO_ObjRefTemplate.rc
 
 
 ## Makefile.IORInterceptor.am 
@@ -1053,7 +1067,7 @@ libTAO_IORInterceptor_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   IORInterceptor/IORInterceptorC.h \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
   IORInterceptor/IORInterceptor_Adapter_Impl.h \
@@ -1061,6 +1075,9 @@ nobase_pkginclude_HEADERS += \
   IORInterceptor/iorinterceptor_export.h \
   IORInterceptor/IORInterceptorC.i \
   IORInterceptor/IORInterceptor_List.inl
+
+EXTRA_DIST += \
+  IORInterceptor/TAO_IORInterceptor.rc
 
 
 ## Makefile.PortableServer.am 
@@ -1123,7 +1140,7 @@ libTAO_PortableServer_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   PortableServer/AMH_Response_Handler.h \
   PortableServer/Active_Object_Map.h \
   PortableServer/Collocated_Object_Proxy_Broker.h \
@@ -1186,6 +1203,9 @@ nobase_pkginclude_HEADERS += \
   PortableServer/ServerRequestInfo.inl \
   PortableServer/PolicyS_T.cpp
 
+EXTRA_DIST += \
+  PortableServer/TAO_PortableServer.rc
+
 
 ## Makefile.IFR_Client.am 
 
@@ -1218,7 +1238,7 @@ libTAO_IFR_Client_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   IFR_Client/IFR_BaseC.h \
   IFR_Client/IFR_BaseS.h \
   IFR_Client/IFR_BasicC.h \
@@ -1230,6 +1250,9 @@ nobase_pkginclude_HEADERS += \
   IFR_Client/IFR_BasicC.i \
   IFR_Client/IFR_ComponentsC.i \
   IFR_Client/IFR_ExtendedC.i
+
+EXTRA_DIST += \
+  IFR_Client/TAO_IFR_Client.rc
 
 
 ## Makefile.Domain.am 
@@ -1260,13 +1283,16 @@ libTAO_Domain_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   Domain/DomainS.h \
   Domain/DomainS_T.h \
   Domain/domain_export.h \
   Domain/DomainS.i \
   Domain/DomainS_T.i \
   Domain/DomainS_T.cpp
+
+EXTRA_DIST += \
+  Domain/TAO_Domain.rc
 
 
 ## Makefile.DynamicAny.am 
@@ -1302,7 +1328,7 @@ libTAO_DynamicAny_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   DynamicAny/DynAnyFactory.h \
   DynamicAny/DynAny_i.h \
   DynamicAny/DynArray_i.h \
@@ -1315,6 +1341,9 @@ nobase_pkginclude_HEADERS += \
   DynamicAny/DynamicAnyC.h \
   DynamicAny/dynamicany_export.h \
   DynamicAny/DynamicAnyC.i
+
+EXTRA_DIST += \
+  DynamicAny/TAO_DynamicAny.rc
 
 
 ## Makefile.Messaging.am 
@@ -1358,7 +1387,7 @@ libTAO_Messaging_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   Messaging/Asynch_Invocation.h \
   Messaging/Asynch_Invocation_Adapter.h \
   Messaging/Asynch_Reply_Dispatcher.h \
@@ -1387,6 +1416,9 @@ nobase_pkginclude_HEADERS += \
   Messaging/Messaging_SyncScope_PolicyC.i \
   Messaging/TAO_ExtC.i \
   Messaging/MessagingS_T.cpp
+
+EXTRA_DIST += \
+  Messaging/TAO_Messaging.rc
 
 
 ## Makefile.DynamicInterface.am 
@@ -1429,7 +1461,7 @@ libTAO_DynamicInterface_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   DynamicInterface/Context.h \
   DynamicInterface/DII_Arguments.h \
   DynamicInterface/DII_CORBA_methods.h \
@@ -1449,6 +1481,9 @@ nobase_pkginclude_HEADERS += \
   DynamicInterface/ExceptionList.inl \
   DynamicInterface/Request.inl \
   DynamicInterface/Server_Request.inl
+
+EXTRA_DIST += \
+  DynamicInterface/TAO_DynamicInterface.rc
 
 
 ## Makefile.IORManipulation.am 
@@ -1477,12 +1512,15 @@ libTAO_IORManip_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   IORManipulation/IORC.h \
   IORManipulation/IORManip_Loader.h \
   IORManipulation/IORManipulation.h \
   IORManipulation/ior_manip_export.h \
   IORManipulation/IORC.i
+
+EXTRA_DIST += \
+  IORManipulation/TAO_IORManip.rc
 
 
 ## Makefile.IORTable.am 
@@ -1511,13 +1549,16 @@ libTAO_IORTable_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   IORTable/IORTable.h \
   IORTable/IORTableC.h \
   IORTable/IOR_Table_Impl.h \
   IORTable/Table_Adapter.h \
   IORTable/iortable_export.h \
   IORTable/IORTableC.i
+
+EXTRA_DIST += \
+  IORTable/TAO_IORTable.rc
 
 
 ## Makefile.RTCORBA.am 
@@ -1572,7 +1613,7 @@ libTAO_RTCORBA_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   RTCORBA/Continuous_Priority_Mapping.h \
   RTCORBA/Direct_Priority_Mapping.h \
   RTCORBA/Linear_Network_Priority_Mapping.h \
@@ -1626,6 +1667,9 @@ nobase_pkginclude_HEADERS += \
   RTCORBA/RT_Transport_Descriptor_Property.inl \
   RTCORBA/Thread_Pool.i
 
+EXTRA_DIST += \
+  RTCORBA/TAO_RTCORBA.rc
+
 
 ## Makefile.RTPortableServer.am 
 
@@ -1665,7 +1709,7 @@ libTAO_RTPortableServer_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   RTPortableServer/RTPortableServer.h \
   RTPortableServer/RTPortableServerC.h \
   RTPortableServer/RT_Acceptor_Filters.h \
@@ -1679,6 +1723,9 @@ nobase_pkginclude_HEADERS += \
   RTPortableServer/RT_Acceptor_Filters.i \
   RTPortableServer/RT_Collocation_Resolver.i \
   RTPortableServer/RT_POA.i
+
+EXTRA_DIST += \
+  RTPortableServer/TAO_RTPortableServer.rc
 
 
 ## Makefile.RTScheduler.am 
@@ -1720,7 +1767,7 @@ libTAO_RTScheduler_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   RTScheduling/Current.h \
   RTScheduling/Distributable_Thread.h \
   RTScheduling/RTScheduler.h \
@@ -1734,6 +1781,9 @@ nobase_pkginclude_HEADERS += \
   RTScheduling/rtscheduler_export.h \
   RTScheduling/RTSchedulerC.i \
   RTScheduling/RTScheduler_Manager.i
+
+EXTRA_DIST += \
+  RTScheduling/TAO_RTScheduler.rc
 
 
 ## Makefile.SmartProxies.am 
@@ -1759,10 +1809,13 @@ libTAO_SmartProxies_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   SmartProxies/Smart_Proxies.h \
   SmartProxies/smartproxies_export.h \
   SmartProxies/Smart_Proxies.inl
+
+EXTRA_DIST += \
+  SmartProxies/SmartProxies.rc
 
 
 ## Makefile.Strategies.am 
@@ -1824,7 +1877,7 @@ libTAO_Strategies_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   Strategies/DIOP_Acceptor.h \
   Strategies/DIOP_Connection_Handler.h \
   Strategies/DIOP_Connector.h \
@@ -1887,6 +1940,9 @@ nobase_pkginclude_HEADERS += \
   Strategies/sciop_endpoints.i \
   Strategies/uiop_endpoints.i
 
+EXTRA_DIST += \
+  Strategies/TAO_Strategies.rc
+
 
 ## Makefile.TypeCodeFactory.am 
 
@@ -1915,13 +1971,16 @@ libTAO_TypeCodeFactory_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   TypeCodeFactory/TypeCodeFactoryC.h \
   TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h \
   TypeCodeFactory/TypeCodeFactory_Loader.h \
   TypeCodeFactory/TypeCodeFactory_i.h \
   TypeCodeFactory/typecodefactory_export.h \
   TypeCodeFactory/TypeCodeFactoryC.inl
+
+EXTRA_DIST += \
+  TypeCodeFactory/TypeCodeFactory.rc
 
 
 ## Makefile.Utils.am 
@@ -1956,7 +2015,7 @@ libTAO_Utils_la_LIBADD = \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
-nobase_pkginclude_HEADERS += \
+nobase_include_HEADERS += \
   Utils/Auto_Functor.h \
   Utils/Implicit_Deactivator.h \
   Utils/ORB_Destroyer.h \
