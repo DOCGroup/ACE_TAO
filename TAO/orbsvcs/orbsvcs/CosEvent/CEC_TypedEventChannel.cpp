@@ -112,17 +112,17 @@ TAO_CEC_TypedEventChannel::shutdown (ACE_ENV_SINGLE_ARG_DECL)
       // Deactivate the Typed EC
       PortableServer::POA_var t_poa =
         this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-  
+      ACE_CHECK;
+
       PortableServer::ObjectId_var t_id =
         t_poa->servant_to_id (this ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       t_poa->deactivate_object (t_id.in () ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
 
       this->orb_->shutdown(0);
-      ACE_TRY_CHECK;
+      ACE_CHECK;
     }
 }
 
@@ -252,12 +252,12 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_
       // Lookup the Interface Name in the IFR
       CORBA::Contained_var contained =
         this->interface_repository_->lookup_id (interface_ ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // Narrow the interface
       CORBA::InterfaceDef_var interface =
         CORBA::InterfaceDef::_narrow (contained.in () ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       if (CORBA::is_nil (interface.in () ))
         {
@@ -272,7 +272,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_
           // Obtain the full interface description
           CORBA::InterfaceDef::FullInterfaceDescription_var fid =
             interface->describe_interface (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
 
           // Obtain the base interfaces
           this->base_interfaces_ = fid->base_interfaces;
@@ -529,14 +529,14 @@ TAO_CEC_TypedEventChannel::for_consumers (ACE_ENV_SINGLE_ARG_DECL)
 {
   return this->typed_consumer_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-  
+
 CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
 TAO_CEC_TypedEventChannel::for_suppliers (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return this->typed_supplier_admin_->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
-  
+
 void
 TAO_CEC_TypedEventChannel::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
