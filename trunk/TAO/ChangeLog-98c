@@ -1,3 +1,13 @@
+Wed Apr  1 11:07:53 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* orbsvcs/tests/Simulator/DOVEBrowser/VisCompFactory.java:
+  Implemented a Factory pattern to generate the Visualization 
+  Components and the Java class loader is now used to instantiate
+  the JavaBeans Visualization Components.
+
+  * orbsvcs/tests/Simulator/DOVEBrowser, DOVEMIB and Event Supplier
+  are running under NT properly.
+
 Wed Apr  1 09:46:53 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	The following fix was also made by Carlos simultaneously. Here is
