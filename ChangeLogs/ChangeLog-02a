@@ -1,3 +1,11 @@
+Wed Feb 28 00:25:42 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * bin/auto_run_tests.lst:
+
+          The examples/POA/Adapter_Activator/run_test.pl test was being run
+          twice.  In fairness to all the other tests that only get to run once,
+          I removed the second instance.  
+
 Tue Feb 27 17:31:48 2001  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_hpux_aCC.GNU: Turn on -D_REENTRANT for
