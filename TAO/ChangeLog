@@ -1,3 +1,91 @@
+Sun Jan 23 01:52:50 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/Xt_Stopwatch/timer.h:
+	* tests/Xt_Stopwatch/timer.cpp:
+	* tests/Xt_Stopwatch/test_i.h:
+	* tests/Xt_Stopwatch/test_i.cpp:
+	* tests/Xt_Stopwatch/svc.conf.xml:
+	* tests/Xt_Stopwatch/svc.conf:
+	* tests/Xt_Stopwatch/server.cpp:
+	* tests/Xt_Stopwatch/client.cpp:
+	* tests/Xt_Stopwatch/Xt_Stopwatch.mpc:
+	* tests/Xt_Stopwatch/Stopwatch_display.h:
+	* tests/Xt_Stopwatch/Stopwatch_display.cpp:
+	* tests/Xt_Stopwatch/README:
+	* tests/Xt_Stopwatch/Control.h:
+	* tests/Xt_Stopwatch/Control.cpp:
+	* tests/Xt_Stopwatch/Client.h:
+	* tests/QtTests/test_i.h:
+	* tests/QtTests/test_i.cpp:
+	* tests/QtTests/svc.conf.xml:
+	* tests/QtTests/svc.conf:
+	* tests/QtTests/server.cpp:
+	* tests/QtTests/client.h:
+	* tests/QtTests/client.cpp:
+	* tests/QtTests/README:
+	* tests/QtTests/QtTests.mpc:
+	* tests/FL_Cube/test_i.h:
+	* tests/FL_Cube/test_i.cpp:
+	* tests/FL_Cube/svc.conf.xml:
+	* tests/FL_Cube/svc.conf:
+	* tests/FL_Cube/server.cpp:
+	* tests/FL_Cube/client.cpp:
+	* tests/FL_Cube/FL_Cube.mpc:
+	* tao/Strategies/advanced_resource.h (Module):
+	* tao/Strategies/advanced_resource.cpp (Module):
+	* tao/xt_resource.i (Module):
+	* tao/xt_resource.h (Module):
+	* tao/xt_resource.cpp (Module):
+	* tao/tao.mpc (Module):
+	* tao/qt_resource.i (Module):
+	* tao/qt_resource.h (Module):
+	* tao/qt_resource.cpp (Module):
+	* tao/XtResource_Loader.h (Module):
+	* tao/XtResource_Loader.cpp (Module):
+	* tao/XtResource_Factory.h (Module):
+	* tao/XtResource_Factory.cpp (Module):
+	* tao/XtResource.mpc (Module):
+	* tao/TkResource_Loader.h (Module):
+	* tao/TkResource_Loader.cpp (Module):
+	* tao/TkResource_Factory.h (Module):
+	* tao/TkResource_Factory.cpp (Module):
+	* tao/TkResource.mpc (Module):
+	* tao/TSS_Resources.h (Module):
+	* tao/TSS_Resources.cpp (Module):
+	* tao/TAO_XtResource_Export.h (Module):
+	* tao/TAO_TkResource_Export.h (Module):
+	* tao/TAO_QtResource_Export.h (Module):
+	* tao/TAO_FlResource_Export.h (Module):
+	* tao/Strategies.mpc (Module):
+	* tao/QtResource_Loader.h (Module):
+	* tao/QtResource_Loader.cpp (Module):
+	* tao/QtResource_Factory.h (Module):
+	* tao/QtResource_Factory.cpp (Module):
+	* tao/QtResource.mpc (Module):
+	* tao/ORB_Core.h (Module):
+	* tao/ORB_Core.cpp (Module):
+	* tao/Leader_Follower.cpp (Module):
+	* tao/GUIResource_Factory.h (Module):
+	* tao/GUIResource_Factory.cpp (Module):
+	* tao/FlResource_Loader.h (Module):
+	* tao/FlResource_Loader.cpp (Module):
+	* tao/FlResource_Factory.h (Module):
+	* tao/FlResource_Factory.cpp (Module):
+	* tao/FlResource.mpc (Module):
+	* examples/AMI/FL_Callback/svc.conf.xml (Module):
+	* examples/AMI/FL_Callback/svc.conf (Module):
+	* examples/AMI/FL_Callback/progress.cpp (Module):
+	* examples/AMI/FL_Callback/README (Module):
+	* examples/AMI/FL_Callback/Progress_i.h (Module):
+	* examples/AMI/FL_Callback/Progress_i.cpp (Module):
+	* examples/AMI/FL_Callback/FL_Callback.mpc (Module):
+	* docs/Options.html (Module):
+	Changes related with separation of GUI reactors.
+	The additional information is avalaible in ChangeLog at REACTOR_SEPARATION branch.
+
+	* .cvsignore:
+	To make cvs silent.
+
 Sat Jan 22 12:34:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Shutdown_Utilities.{h,cpp}:
@@ -23,7 +111,527 @@ Fri Jan 21 17:10:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
           Added Pkgconfig_Files definitions.
 
+
 Fri Jan 21 18:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+
+          Used VMCID while trying to propogate system exception with minor
+          code.
+
+Wed Dec  1 12:00:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl:
+
+          Correct typo in client's server IOR parameter.
+
+Wed Dec  1 11:38:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Update.
+
+        * orbsvcs/orbsvcs/FTORB.mpc:
+
+          Added PortableGroup_Simple_export.h, PortableGroup_Simple_DSS_T.h
+          to Header_Files; PortableGroup_Simple_DSS_T.inl to Inline_Files;
+          and PortableGroup_Simple_DSS_T.cpp to Template_Files so headers
+          will be installed.
+
+Wed Dec  1 19:29:32 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/SystemException.cpp:
+
+          Moved some of the minor code changes from Johnn's branch to the
+          main trunk. The minor code specification was slightly out of
+          whack with the CORBA specification.
+
+Wed Dec  1 17:19:39 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+
+          Added minor code while throwing BAD_OPERATION exception in
+          conformance with the CORBA spec.
+
+        * tao/IIOP_Endpoint.cpp:
+
+          Removed a weird DEBUG statemnet.
+
+        * tao/SystemException.cpp:
+
+          Added a minor code lookup table for BAD_OPERATION.
+
+Wed Dec  1 16:30:00 UTC 2004  Simon Massey  <sma@prismtech.com>
+
+        * TAO/TAO_IDL/util/utl_global.cpp
+
+          Fixed bugzilla 1995 - TAO_IDL Compiler - Memory buffer
+          overflow & File handle resource leak
+
+Wed Dec  1 15:30:00 UTC 2004  Simon Massey  <sma@prismtech.com>
+
+        * TAO/orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp
+        * TAO/orbsvcs/orbsvcs/IFRService/StructDef_i.cpp
+        * TAO/orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp
+
+          Fixed bugzilla 1996 - IFR - Dereferencing NULL pointer
+          when compound object has been deleted.  Thanks to Johnny
+          Willemsen <jwillemsen@remedy.nl> for pointing out emulated
+          exceptions were wrongly used in the previous fix.
+
+Wed Dec  1 14:00:00 UTC 2004  Simon Massey  <sma@prismtech.com>
+
+        * TAO/orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp
+        * TAO/orbsvcs/orbsvcs/IFRService/StructDef_i.cpp
+        * TAO/orbsvcs/orbsvcs/IFRService/UnionDef_i.cpp
+
+          Fixed bugzilla 1996 - IFR - Dereferencing NULL pointer
+          when compound object has been deleted
+
+Wed Dec  1 07:18:37 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+
+          Fixed build warnings about mismatch parameter types with
+          fprintf.
+
+Tue Nov 30 16:33:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/orbsvcs/Makefile.am:
+
+          Add replace_key.cpp to FTRT_EventChannel sources.
+
+Tue Nov 30 11:42:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any_Arg_Traits.h:
+
+          New file, containing template specializations of the
+          stub and skeleton arg traits classes for CORBA::Any.
+          These specializations were formerly in generated code.
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_arg_traits.cpp:
+        * TAO_IDL/be_include/be_visitor_arg_traits.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/util/utl_global.cpp:
+
+          Added check for an Any used as an operation parameter, and
+          code to include the new file above if one is seen. This
+          was the only predefined type for which arg traits class
+          specializations were generated, so the
+          visit_predefined_type() method was removed from the
+          arg traits visitor, defaulting execution to the base
+          class method which is a no-op. Thanks to Greg Bostrum
+          <greg.bostrom@hp.com> for reporting a problem with code
+          generation in the Notification Service when multiple IDL
+          file are passed to the IDL compiler on a single command
+          line. After processing each file, all nodes in the AST
+          are destroyed except for the predefined types, and now,
+          at least for the arg traits, all predefined types are
+          handled the same. This fix closes [BUGID:1978].
+
+Tue Nov 30 11:15:29 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+          Missing namespace qualifier on argument.
+
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.h:
+        * orbsvcs/orbsvcs/Notify/EventTypeSeq.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer_T.cpp:
+        * orbsvcs/orbsvcs/Notify/ConsumerAdmin.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier_T.cpp:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+          Replace another overloading of the init method name
+          with a unique and more descriptive name.
+
+        * orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Any/ProxyPushConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/Reconnection_Registry.cpp:
+        * orbsvcs/orbsvcs/Notify/Routing_Slip.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+        * orbsvcs/orbsvcs/Notify/SupplierAdmin.cpp:
+          BCB6 builds complaining about undefined "ex" in ACE_TRY_NEW_ENV{ ... }ACE_CATCHANY
+          s/ACE_TRY_NEW_ENV/ACE_DECLARE_NEW_ENV;ACE_TRY/
+
+        * orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+          Unused ENV argument
+
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+          Remove unnecessary virtual inheritence
+
+Tue Nov 30 09:53:57 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+
+          Renamed the init method in Topology_Object to initialize to avoid
+          ambiguity with the TAO_NotifyProxyConsumer init method.
+
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+
+          Changed the fprintf format from %d to %ld for the long int
+          parameter.
+
+Tue Nov 30 08:38:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+          Fixed compile problems.
+
+Mon Nov 29 21:57:06 MST 2004  Scott Harris <harris_s@ociweb.com>
+
+        * examples/Load_Balancing_persistent/Identity_Client.cpp:
+        * examples/Load_Balancing_persistent/Load_Balancer_i.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Transport.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+
+          Removed extra commas after ACE_TEXT macros that should
+          not have been there because the strings should have
+          been concatenated.  Originally found a bad log output
+          and searched for other similar problems.
+
+Mon Nov 29 16:45:00 2004 Huang-Ming Huang <hh1@cse.wustl.edu>
+        * orbsvcs/orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.cpp
+          Fixed problem when the immediate successor of the primary crashes. Thanks
+          to Thia Chang Chao <tchangch@dso.org.sg> for reporting the bug.
+
+Mon Nov 29 14:44:16 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.h:
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+          Another instance of the ambiguous init method.
+
+Mon Nov 29 13:23:14 2004  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/Admin.cpp:
+        * orbsvcs/orbsvcs/Notify/EventChannel.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Notify/ProxySupplier.cpp:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+        * orbsvcs/orbsvcs/Notify/Topology_Object.cpp:
+          Ambiguous resolution of init method.  Some compilers
+          don't notice that the base class method is hidden
+          (intentionally) by the derived class method.
+
+Mon Nov 29 17:45:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.h:
+
+          Added a bool which holds the  details of when the endpoint is
+          encodable. For example, endpoints created by RTCORBA for
+          multiple priorities need to be encoded whereas endpoints created
+          for preffered netwroks need not be encoded.
+
+        * tao/IIOP_Profile.cpp:
+
+          Check the status of the bool before encoding th eendpoint.
+
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/SCIOP_Profile.cpp:
+
+          Repeat the above changes for SCIOP.
+
+Mon Nov 29 07:19:16 2004  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/Discarding/run_test.pl:
+          Increased startup time for sequence server as tests on
+          some machines were failing.
+
+Mon Nov 29 13:15:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/tests/FT_App/FT_ReplicationManagerController.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * orbsvcs/tests/FT_App/ReplicationManagerFaultConsumerAdapter.cpp:
+        * orbsvcs/tests/FT_App/FT_Creator.h:
+        * orbsvcs/tests/FT_App/FT_Creator.cpp:
+        * orbsvcs/tests/FT_App/FT_Client.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+          Fixed problems with use of iostreams for
+          ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
+
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.h:
+          Fixed problems with use of iostreams for
+          ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
+          Also fixed incorrect use of 'throw' instead of ACE_THROW_SPEC.
+
+Mon Nov 29 13:10:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV/pluggable_av_log:
+          Removed this file, it is a partly changelog that is really ancient
+
+Mon Nov 29 12:39:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/IIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+
+          Fixed a stupid typo which resulted in some tests failing in the
+          daily builds.  Thanks to Johnny for pointing me to the builds.
+
+Mon Nov 29 10:00:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Interoperable_Naming/ncontextext_client_i.cpp:
+          Replaced cout with ACE_ERROR
+
+Sun Nov 28 18:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+          Replaced fprintf to stdout with ACE_DEBUG to be more portable
+
+Sun Nov 28 18:21:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/RTCosScheduling/server.cpp:
+          Replaced NULL with 0, more portable. Also replaced ofstream usage
+          with fopen/fprintf to write the IOR to disk.
+
+Sun Nov 28 18:16:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/RTCosScheduling/Object1_i.{h,cpp}:
+          Replaced throw with ACE_THROW_SPEC to fix compile problems with
+          building without native excption support
+
+Sun Nov 28 18:00:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/IORInterceptor/IORInterceptor.pidl:
+
+          Added some documentation for applying diffs.
+
+        * tao/IORInterceptor/IORInterceptorC.h:
+
+          Cosmetic hand craft to minimize the number of lines of diffs.
+
+        * tao/IORInterceptor/diff/IORInterceptor.diff:
+
+          New file for maintenence.
+
+Sun Nov 28 17:41:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/IORInterceptor/IORInterceptor.h:
+
+          A new header file which can be included by trhe applications to
+          pull in IORInterceptor symbols even in static mode.
+
+        * tao/IORInterceptor/IORInterceptorC.cpp:
+        * tao/IORInterceptor/IORInterceptorC.h:
+
+          Regenerated the files with our standard  trick to prevent
+          applications including this file directly.
+
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h:
+        * tao/IORInterceptor/IORInterceptor_Adapter_Impl.h:
+        * tao/IORInterceptor/IORInterceptor_List.h:
+
+          Reduced inter-header dependancies.
+
+        * orbsvcs/examples/ORT/Server_IORInterceptor.h:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_IORInterceptor.h:
+        * tests/ORT/ORT_test_IORInterceptor.h:
+        * tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h:
+        * tests/Portable_Interceptors/PolicyFactory/IORInterceptor.h:
+
+          #included IORInterceptor.h
+
+Sun Nov 28 15:14:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/Simple/grid/Grid_Client_i.cpp:
+        * orbsvcs/examples/LoadBalancing/client.cpp:
+          Fixed problems with use of iostreams for
+          ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
+
+Sun Nov 28 15:07:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/notify_tests.GNU:
+          Removed this file, it is not needed anymore with MPC
+
+Sun Nov 28 15:02:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/Simulator/Event_Supplier/Event_Con.cpp:
+          Fixed problems with use of iostreams for
+          ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
+
+Sun Nov 28 11:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/Topology_Object.h:
+          Don't mix virtual and non-virtual inheritance, use virtual for both
+          bases, fixes HPUX warnings
+
+Sun Nov 28 11:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Notify/notify_persist_export.h:
+          Fixed this file for static builds
+
+        * orbsvcs/orbsvcs/CosNotification.mpc:
+          Removed commented out stuff
+
+Sun Nov 28 11:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Saver.cpp:
+          Added include of OS_NS_stdio.h to get fprintf
+
+Sun Nov 28 06:10:36 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * docs/Options.html (scenario):
+
+          Documentation for the options.
+
+Sat Nov 27 23:44:56 2004  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/Notify/Standard_Event_Persistence.h:
+        * orbsvcs/Notify/XML_Topology_Factory.h
+          Moved ACE_FACTORY_DECLARE to within TAO_NOTIFY namespace.
+
+        * orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+        * orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h:
+          Added dummy method to remove warnings 'hidden overloaded
+          virtual method'.
+
+Sun Nov 28 05:14:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * tao/Connector_Registry.cpp:
+
+          Used an auto_ptr <> instead of using delete's in the error
+          paths.
+
+        The following checkin adds a simple command line option which
+        allows configuring the client ORB during initializing with a
+        capability to choose preferred interface(s). This is very useful
+        for clients on a multihomed hosts, allowing clients to choose
+        specific interfaces/networks to communicate with a remote
+        target. This capability comes through two options
+        -ORBPreferredInterfaces, and
+        -ORBEnforcePreferredInterfaces. Please see docs/Options.html for
+        more details.
+
+        * tao/Endpoint.h:
+
+          Cosmetic fixes.
+
+        * tao/IIOP_Connection_Handler.cpp:
+
+          Added a debug statement
+
+        * tao/IIOP_Connector.cpp:
+
+          Used the local addr for connect () instead of using the default
+          ACE_Addr::sap_any.
+
+        * tao/IIOP_Endpoint.cpp:
+        * tao/IIOP_Endpoint.h:
+
+          Added preferred_interfaces (), and a copy constructor. The
+          former is used to parse the option and store the preferred path
+          for every target end point. A list of preferred paths are
+          organized as multiple endpoints (with same target) with different
+          preferred networks stringed through the next_ pointer. This
+          allows the Invocation code path to pick things through its
+          iteration process.
+
+        * tao/IIOP_Profile.cpp:
+
+          Called TAO_IIOP_Endpoint::preferred_interfaces () from within
+          decode_profile ().
+
+        * tao/IIOP_Profile.h:
+
+          Added documentation.
+
+        * tao/ORB_Core.cpp:
+
+          Added the two new options.
+
+        * tao/params.cpp:
+        * tao/params.h:
+
+          Stored the options.
+
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * tao/Strategies/SCIOP_Connector.cpp:
+        * tao/Strategies/SCIOP_Endpoint.cpp:
+        * tao/Strategies/SCIOP_Endpoint.h:
+        * tao/Strategies/SCIOP_Profile.cpp:
+        * tao/Strategies/SCIOP_Profile.h:
+
+          Cut and pasted the changes from IIOP for SCIOP. There is too
+          much of similar code out here. We can do some nice
+          implementation inheritance to save some footprint.
+
+          Thanks to LMCO EAGAN, for motivating to address this issue in
+          TAO.
+
+Sat Nov 27 12:52:57 2004  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Notify/XML_Loader.h:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Saver.h:
+        * orbsvcs/tests/Notify/PluggableTopology/Test_Saver.cpp:
+        * orbsvcs/tests/Notify/Sequence_Multi_Filter/Sequence_Supplier.cpp:
+          Fixed problems with use of iostreams for
+          ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
+
+Sat Nov 27 14:34:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * utils/examples/mfc/client.cpp:
+          Fixed problems with use of iostreams for
+          ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
+
+Sat Nov 27 14:26:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * utils/performance-tests/Cubit/TAO/MT_Cubit/server.cpp:
+          Fixed problems with use of iostreams for
+          ACE_LACKS_IOSTREAM_TOTALLY builds (VxWorks DIAB).
+
+Sat Nov 27 14:19:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * utils/catior/catior.cpp:
+          Fixed incompatibility with ACE_LACKS_IOSTREAM_TOTALLY builds
+          (VxWorks DIAB).
+
+Fri Nov 26 17:49:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+        * orbsvcs/tests/Log/Basic_Log_Test/run_test.pl:
+
+          New file.
+
+Fri Nov 26 17:53:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+        * TAO-INSTALL.html:
+
+          Removed references to TAOACE.dsw. They are no longer available
+          in the repository.
+
+Fri Nov 26 14:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.cpp:
+          Fixed compile problem
+
+Fri Nov 26 10:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1535_Regression/Bug_1535_Regression.mpc:
+          Add minimum_corba as base project, instead of adding
+          avoids += minimum_corba, the base does just the same and
+          make it a little bit better maintainable in the future
+
+Fri Nov 26 09:58:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/ECG_Complex_Address_server.cpp:
+          Changed use of iostreams to ACE_DEBUG because of compile problems
+          with ACE_LACKS_IOSTREAMS_TOTALLY (VxWorks).
+
+Fri Nov 26 09:43:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO-INSTALL.html:
           Updated supported platforms matrix

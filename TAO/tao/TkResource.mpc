@@ -1,0 +1,15 @@
+project(TAO_TkResource) : acelib, taolib, taoversion, core, tao_output, taodefaults, ace_tkreactor {
+  sharedname   = TAO_TkResource
+  dynamicflags += TAO_TKRESOURCE_BUILD_DLL
+  Header_Files {
+    TkResource_Factory.h
+    TkResource_Loader.h
+    TAO_TkResource_Export.h
+  }
+  Source_Files(TAO_COMPONENTS) {
+    Default_Resources {
+      TkResource_Factory.cpp
+      TkResource_Loader.cpp
+    }
+  }
+}

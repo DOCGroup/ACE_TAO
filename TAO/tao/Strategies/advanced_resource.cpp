@@ -1,5 +1,5 @@
 // $Id$
-
+#include "ace/Service_Config.h"
 #include "advanced_resource.h"
 
 #include "UIOP_Factory.h"
@@ -19,14 +19,13 @@
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 #include "tao/StringSeqC.h"
+#include "tao/ORB_Core.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Service_Config.h"
 #include "ace/Select_Reactor.h"
-#include "ace/FlReactor.h"
-#include "ace/TkReactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/TP_Reactor.h"
@@ -39,6 +38,7 @@ ACE_RCSID(Strategies, advanced_resource, "$Id$")
 
 TAO_Resource_Factory_Changer::TAO_Resource_Factory_Changer (void)
 {
+
   TAO_ORB_Core::set_resource_factory ("Advanced_Resource_Factory");
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factory);
 
@@ -100,6 +100,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
   }
   this->options_processed_ = 1;
 
+
   // If the default resource factory exists, then disable it.
   // This causes any directives for the "Resource_Factory" to
   // report warnings.
@@ -150,19 +151,6 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
                                        ACE_TEXT("select_st")) == 0)
             this->reactor_type_ = TAO_REACTOR_SELECT_ST;
           else if (ACE_OS::strcasecmp (current_arg,
-                                       ACE_TEXT("fl")) == 0)
-#if defined(ACE_HAS_FL)
-            this->reactor_type_ = TAO_REACTOR_FL;
-#else
-            this->report_unsupported_error (ACE_TEXT("FlReactor"));
-#endif /* ACE_HAS_FL */
-          else if (ACE_OS::strcasecmp (current_arg, ACE_TEXT("tk_reactor")) == 0)
-#if defined(ACE_HAS_TK)
-            this->reactor_type_ = TAO_REACTOR_TK;
-#else
-            this->report_unsupported_error (ACE_TEXT("TkReactor"));
-#endif /* ACE_HAS_TK */
-          else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("wfmo")) == 0)
 #if defined(ACE_WIN32)
             this->reactor_type_ = TAO_REACTOR_WFMO;
@@ -180,6 +168,16 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
           else if (ACE_OS::strcasecmp (current_arg,
                                        ACE_TEXT("tp")) == 0)
             this->reactor_type_ = TAO_REACTOR_TP;
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_TEXT("fl")) == 0)
+            this->report_option_value_error (
+                ACE_TEXT("FlReactor not supported by Advanced_Resources_Factory. Please use TAO_FlResource_Loader instead."),
+                         current_arg);
+          else if (ACE_OS::strcasecmp (current_arg,
+                                       ACE_TEXT("tk")) == 0)
+            this->report_option_value_error (
+                ACE_TEXT("TkReactor not supported by Advanced_Resources_Factory. Please use TAO_TkResource_Loader instead."),
+                         current_arg);
           else
             this->report_option_value_error (ACE_TEXT("-ORBReactorType"), current_arg);
 
@@ -276,7 +274,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO_Advanced_Resource_Factory: -ORBReactorThreadQueue ")
                 ACE_TEXT ("option can only be used with -ORBReactorType ")
-                ACE_TEXT ("tp (default).\n")));
+                ACE_TEXT ("tp.\n")));
   // Explicitely set the default only if not set.
   else if (this->threadqueue_type_ == TAO_THREAD_QUEUE_NOT_SET)
     this->threadqueue_type_ = TAO_THREAD_QUEUE_LIFO;
@@ -305,6 +303,7 @@ TAO_Advanced_Resource_Factory::load_default_protocols (void)
 int
 TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 {
+
   // If the default resource factory exists, then disable it.
   // This causes any directives for the "Resource_Factory" to
   // report warnings.
@@ -618,6 +617,8 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
  return 0;
 }
 
+
+
 TAO_ProtocolFactorySet *
 TAO_Advanced_Resource_Factory::get_protocol_factories (void)
 {
@@ -648,18 +649,6 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
                                              (ACE_Reactor_Notify*)0,
                                              this->reactor_mask_signals_),
                       0);
-      break;
-
-    case TAO_REACTOR_FL:
-#if defined(ACE_HAS_FL)
-      ACE_NEW_RETURN (impl, ACE_FlReactor, 0);
-#endif /* ACE_HAS_FL */
-      break;
-
-    case TAO_REACTOR_TK:
-#if defined(ACE_HAS_TK)
-      ACE_NEW_RETURN (impl, ACE_TkReactor, 0);
-#endif /* ACE_HAS_TK */
       break;
 
     case TAO_REACTOR_WFMO:

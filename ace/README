@@ -723,7 +723,6 @@ ACE_HAS_WINSOCK2                        The Win32 platform supports
                                         WinSock 2.0
 ACE_HAS_XLI                             Platform has the XLI version
                                         of TLI
-ACE_HAS_XT                              Platform has Xt and Motif
 ACE_HAS_XTI                             Platform has XTI
                                         (X/Open-standardized superset
                                         of TLI).  Implies ACE_HAS_TLI
@@ -1706,18 +1705,6 @@ ACE_USES_GPROF:
     When using gprof mainly on Linux, #define ACE_USES_GPROF
     will add calls to getitimer/setitimer in order to initialize profile
     timer and overcome the problem of gprof with multithreaded applications.
-ACE_HAS_QT:
-----------------------------
-  Used in:
-    ace/QtReactor.cpp
-    ace/QtReactor.h
-    tests/QtReactor_Test.cpp
-    tests/QtReactor_Test.h
-    TAO/tao/qt_resource.h
-    TAO/tao/qt_resource.cpp
-    TAO/tests/QtTests/*
-  Notes:
-    Turns on integration with Qt.
 
 ACE_QTREACTOR_CLEAR_PENDING_EVENTS:
 ----------------------------

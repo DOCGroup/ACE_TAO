@@ -26,21 +26,6 @@
 
 ACE_RCSID(tests, FlReactor_Test, "$Id$")
 
-#if !defined (ACE_HAS_FL)
-
-int
-run_main (int, ACE_TCHAR*[])
-{
-  ACE_START_TEST (ACE_TEXT ("FlReactor_Test"));
-
-  ACE_ERROR ((LM_INFO,
-              "FL not supported on this platform\n"));
-  ACE_END_TEST;
-
-  return 0;
-}
-
-#else
 
 #include "ace/FlReactor.h"
 #include "ace/Event_Handler.h"
@@ -299,5 +284,3 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-#endif /* ACE_HAS_FL */

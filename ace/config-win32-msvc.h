@@ -139,12 +139,5 @@
 #     endif /* !STRICT */
 #   endif /* ACE_HAS_STRICT */
 
-// Define QT_DLL for QtReactor to be compiled correct
-#   if defined (ACE_HAS_QT)
-#     if !defined (QT_DLL)   /* may already be defined */
-#       define QT_DLL
-#     endif /* !QT_DLL */
-#   endif
-
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_H */

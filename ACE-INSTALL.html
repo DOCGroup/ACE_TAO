@@ -41,6 +41,7 @@ report process</a>.<p>
   </li><li><a href="#aceinstall">Building and Installing ACE</a>
   </li><li><a href="#svcsinstall">Building and Installing ACE Network Services</a>
   </li><li><a href="#sslinstall">Building and Installing The ACE_SSL Library</a>
+  </li><li><a href="#guireactor_install">Building and Using GUI Reactors Libraries</a>
   </li><li><a href="#minimum_build">What Do I Need to Build for TAO?</a>
   </li><li><a href="#resource_requirements">System Resource Requirements</a>
   </li><li><a href="#MPC">General MPC Information</a>
@@ -159,7 +160,7 @@ document</a>.</p><p>
         Tandem; SCO; FreeBSD; NetBSD; OpenBSD;
         Macintosh OS X;
         Chorus; OS/9; PharLap TNT Embedded ToolSuite 9.1;
-        QNX RTP and Neutrino 2.0; LynxOS; RTEMS; Interix 
+        QNX RTP and Neutrino 2.0; LynxOS; RTEMS; Interix
         (Windows Services for Unix)
     </td>
   </tr><tr>
@@ -205,8 +206,8 @@ of ACE (TAO and CIAO) includes GNUmakefiles for UNIX platforms, VC6
 project files, and VC71 solution files. If it is necessary to generate
 files for build tools for other compilers such as Visual Age for IBM,
 and Windows CE users have to run MPC themselves to generate the
-appropriate files. Please see <a href="MPC/USAGE"> USAGE </a>, 
-<a href="MPC/README"> README </a> and 
+appropriate files. Please see <a href="MPC/USAGE"> USAGE </a>,
+<a href="MPC/README"> README </a> and
 <a href="bin/MakeProjectCreator/README">README for ACE</a> files for
 details. The options that have been used to generate the above build
 files can be found in <a href="bin/MakeProjectCreator/config/global.features">
@@ -233,8 +234,8 @@ global.features</a> file.
       <a href="#mingw">GNU g++ with MinGW</a>,
       <a href="#cygwin">GNU g++ with Cygwin</a>,
       <a href="#borland">Borland C++ Builder 6.0
-      and Borland C++ BuilderX</a>, 
-      <a href="#interix">Interix (Windows Services for Unix)</a>, 
+      and Borland C++ BuilderX</a>,
+      <a href="#interix">Interix (Windows Services for Unix)</a>,
       and IBM's VisualAge C++ compiler.
       Since we don't have these compilers we rely on the ACE+TAO users
       community to maintain these ports.  Therefore, please send email
@@ -334,7 +335,7 @@ global.features</a> file.
       without any modifications on RedHat 5.1 and later, and on
       Debian 2.1 on both Intel and Alpha.  Use the
       <code>platform_linux.GNU</code> and <code>ace/config-linux.h</code>
-      in your <code>platform_macros.GNU</code> and 
+      in your <code>platform_macros.GNU</code> and
       <code>config.h</code> files, respectively.  The same
       files can be used on PowerPC, with LinuxPPC
       1999 (R5), with glibc 2.1.1.</p><p>
@@ -600,7 +601,7 @@ global.features</a> file.
       5.4 and earlier don't support the C++ features ACE needs.</p><p>
 
       Tornado 2.2/VxWorks 5.5 support IP multicast.  That is not enabled
-      by default in ACE for VxWorks, because it depends on your 
+      by default in ACE for VxWorks, because it depends on your
       kernel configuration.  To enable it, add
       <code>#define ACE_HAS_IP_MULTICAST</code> to your
       <code>ace/config.h</code>.</p><p>
@@ -1765,37 +1766,37 @@ of the various tests on Cygwin and the different Windows flavors.
 
 <p>
 <H4><a name="interix">Building and Installing ACE on Win32 with Interix</H4>
-<P>Interix comes with a BSD style make you need GNUmake. 
+<P>Interix comes with a BSD style make you need GNUmake.
 </P>
-<P>Make builds easily under Interix or there is a pre-built 
+<P>Make builds easily under Interix or there is a pre-built
 package at: </P>
-<P><A 
+<P><A
 href="http://www.interopsystems.com/tools/warehouse.htm">http://www.interopsystems.com/tools/warehouse.htm</A> </P>
-<P>If you are building for a machine without a network 
+<P>If you are building for a machine without a network
 card, you may want to check <A href="#win32nonic" ><FONT color=#0000ff>here</FONT></A> first. </P>
-<P>This port was built and tested under Interix 3.5. a.k.a. 
-<A href="http://www.microsoft.com/windows/sfu/">Windows 
+<P>This port was built and tested under Interix 3.5. a.k.a.
+<A href="http://www.microsoft.com/windows/sfu/">Windows
 Services for UNIX 3.5.</A></P>
-<P>To build follow the <A href="#unix_traditional" >Traditional ACE/GNU Make 
+<P>To build follow the <A href="#unix_traditional" >Traditional ACE/GNU Make
 Configuration</A> instructions replacing the following include directives:</P>
-<P><TT>#include 
+<P><TT>#include
 "ace/config-win32-interix.h"</TT> </P>
 <P>for the config.h header </P>
 <P>and: </P>
-<P><TT>include 
+<P><TT>include
 $(ACE_ROOT)/include/makeinclude/platform_win32_interix.GNU</TT></P>
 <P>for your platform_macros.GNU file.</P>
-<P>ACE should build fine with just '<TT>make</TT>', the only other option&nbsp;tried thus far is 
-'<TT>make static_libs_only=1</TT>' which also works. Any 
+<P>ACE should build fine with just '<TT>make</TT>', the only other option tried thus far is
+'<TT>make static_libs_only=1</TT>' which also works. Any
 other options may not work.</P>
 <P><b>ACE TESTS</B> </P>
-<p>The tests are located in <TT>$ACE_ROOT/tests</TT>. After building the library, you can 
+<p>The tests are located in <TT>$ACE_ROOT/tests</TT>. After building the library, you can
 change to that directory and run make: </P><code></CODE>
 <P><TT>% cd $ACE_ROOT/tests </TT><BR><TT>% make </TT>
 <p>Once you build all the tests, you can run <code>run_test.pl</CODE> in the <code>tests</CODE> directory to try all the tests: </P>
 <P><TT>% run_test.pl </TT></P>
-<p>If you are using ACE as a shared library, you will need 
-to modify your LD_LIBRARY_PATH&nbsp;as explained in&nbsp;<A href="#unix_traditional" ><FONT color=#800080>Traditional ACE/GNU Make Configuration</FONT></A>. </P>
+<p>If you are using ACE as a shared library, you will need
+to modify your LD_LIBRARY_PATH as explained in <A href="#unix_traditional" ><FONT color=#800080>Traditional ACE/GNU Make Configuration</FONT></A>. </P>
 <p></P>
 
 <p></p><hr align="left" width="50%"><p>
@@ -1929,7 +1930,7 @@ without spawning another thread by using:<p>
 spaef ace_main, "arg1" [, ...]
 </code></pre>
 
-Be aware of the fact that when you execute <code>ace_main</code> that argc 
+Be aware of the fact that when you execute <code>ace_main</code> that argc
 will be zero and argv* will also be zero. Using argv[0] will then not return
 the program name, but will result in a crash.</p>
 
@@ -2028,7 +2029,7 @@ the <a href="mailto:ace-users@cs.wustl.edu">ACE mailing list</a>.<p>
 
 <strong>NOTE:</strong>The make (version 3.74) that is provided with
 Tornado 2.2 cannot be used to build ACE. A working version is available
-from the WindRiver support site, download the 
+from the WindRiver support site, download the
 <a href="https://secure.windriver.com/cgi-bin/windsurf/downloads/view_binary.cgi?binaryid=838">
 make3_80.gvk_patches</a> and the
 <a href="https://secure.windriver.com/cgi-bin/windsurf/downloads/view_binary.cgi?binaryid=100340">
@@ -2139,7 +2140,7 @@ on Windows NT hosts:
       And create a
       <code>$ACE_ROOT/include/makeinclude/platform_macros.GNU</code>
       that looks like:<p>
-      </p><pre>   
+      </p><pre>
       WIND_BASE = /tornado
       WIND_HOST_TYPE = x86-win32
       CPU = I80486
@@ -2156,7 +2157,7 @@ on Windows NT hosts:
 <h5>TAO on NT Tornado host, VxWorks target.</h5>
 
 <ol>
-  <li>Build ACE and TAO_IDL in the NT tree as already documented. 
+  <li>Build ACE and TAO_IDL in the NT tree as already documented.
       Be sure to build ACE's gperf on NT, in
       <code>ACE_wrappers/apps/gperf/src</code>.<p>
 
@@ -2468,7 +2469,7 @@ below.</p>
 </ol>
 <h3>Borland C++</h3>
 <p>Support for building ACE's ACE_SSL library and TAO's SSLIOP
-   pluggable protocol with Borland C++ does exist. 
+   pluggable protocol with Borland C++ does exist.
 <ol>
   <li>Set the <code>SSL_ROOT</code> environment variable to the location
       of the directory containing the OpenSSL <code>inc32</code> and
@@ -2481,6 +2482,89 @@ below.</p>
 </ol>
 </p>
 
+<hr><p>
+</p><h3><a name="guireactor_install">Building and Using GUI Reactors Libraries</a></h3>
+There is a general method for building and using <code>ACE_Reactors</code> for various GUI
+libraries.
+    <h4> Building GUI Reactor Library </h4>
+    <ol>
+      <li>Try to generate build files using MPC. Inspect the output of MPC to find out which features are
+        necessary to build given reactor. Add these features to
+        <code>ACE_wrappers/bin/MakeProjectCreator/*.features</code> file, or pass them directly to MPC
+        using <code>-features</code> command line option. For example, for <code>FlReactor</code> the procedure
+        consists of five steps
+        <ol>
+          <li> In the first pass one gets that <code>x11</code> (X11 libraries) is missing.<br>
+            <code>$ mwc.pl
+              Skipping ACE_FlReactor (ace_flreactor.mpc), it requires x11.
+            </code></li>
+            Ensure that <code>X11</code> libraries are installed, then pass <code>x11=1</code> feature to MPC.
+          <li>In the second pass one gets that <code>gl</code> (OpenGL library) is missing.<br>
+            <code>$ mwc.pl -features x11=1 ace.mwc
+              Skipping ACE_FlReactor (ace_flreactor.mpc), it requires gl.
+            </code></li>
+            Ensure that <code>OpenGL</code> libraries are installed, then pass <code>gl=1</code> feature to MPC.
+          <li>In the third pass one gets that <code>fl</code> (Fast Light Toolkit) is missing.<br>
+            <code>$ mwc.pl -features x11=1,gl=1 ace.mwc
+              Skipping ACE_FlReactor (ace_flreactor.mpc), it requires fl.
+            </code></li>
+            Ensure that <code>Fast Light Toolkit</code> libraries are installed, then pass <code>fl=1</code>
+            feature to MPC.
+          <li>In the fourth pass one gets that <code>ace_flreactor</code> feature is missing<br>
+            <code>$ mwc.pl -features x11=1,gl=1,fl=1 ace.mwc
+              Skipping ACE_FlReactor (ace_flreactor.mpc), it requires ace_flreactor.
+            </code></li>
+          Allow MPC to generate makefiles for <code>FlReactor</code> by setting <code>ace_flreactor=1</code> feature.
+          <li>In the last pass one obtains files for building <code>FlReactor</code>.<br>
+            <code>$ mwc.pl -features x11=1,gl=1,fl=1,ace_flreactor=1 ace.mwc
+            </code></li>
+        </ol>
+      </li>
+      <li> Required build files are generated now, it is enough then to invoke build tool.
+      For example for under <code>MPC::gnuace</code> one has to call
+      <code>make x11=1 gl=1 fl=1 ace_flreactor=1</code>. For <code>MPC::vc7</code> target all features are
+      encoded in generated project files, thus it is enough to compile ACE using MSVC.</li>
+  </ol>
+    The build procedure leads to a specific GUI Reactor library. For example, for
+    <code>Qt</code> and <code>Linux </code> one gets <code>libQtReactor.so</code>, while for
+    <code>Windows</code> the results are shared <code>QtReactor.dll</code> and import
+    <code>QtReactor.lib</code> libraries or their variants depending on build options.
+  <h4> Using GUI Reactor Library </h4>
+    MPC-based application projects depending on specific [Gui]Reactor may inherit settings from
+    <code>ace_[gui]reactor.mpb</code> base projects. These base projects ensure that all necessary libraries
+    are linked to the aplpication, specifies feature necessary to build a project and moreover impose a
+    build order consistant with ACE. For example, the application project using <code>XtReactor</code> should be
+    derived from <code>ace_xtreactor.mpb</code>.
+  <h4>Notes on specific GUI Reactors</h4>
+    <ul>
+      <li> <code>QtReactor</code></li>
+        The build is controlled by <code>ace_glreactor</code> feature.
+        To build this reactor one has to provide feature <code>qt</code> (Qt library). Moreover,
+        it is assumed that <code>Qt</code> was installed in a standard way
+        and <code>QTDIR</code> points to <code>Qt</code> installation folder. To build TAO
+        support for <code>Qt</code> one should use <code>tao_qtresource</code> feature.
+      <li> <code>XtReactor</code></li>
+        The build is controlled by <code>ace_xtreactor</code> feature.
+        To build this reactor one has to provide the following features: <code>x11</code> (X11 libraries) and
+        <code>xt</code> (X11 Toolkit). Moreover, some examples and tests related with <code>XtReactor</code>
+        needs additionall features namely either <code>motif</code> (Motif/Lesstif libraries) or
+        <code>athena</code> (Athena widgets). To build TAO
+        support for <code>xt</code> one should use <code>tao_xtresource
+        </code> feature.
+      <li> <code>TkReactor</code></li>
+        The is controlled by <code>ace_tkreactor</code> feature. To build this reactor one has to provide
+        <code>tk</code> (Tcl libraries) feature. To build TAO
+        support for <code>Tk</code> one should use <code>tao_tkresource</code> feature.
+      <li> <code>FlReactor</code></li>
+        The  build is controlled by <code>ace_flreactor</code> feature.
+        To build this reactor one has to provide the following features: <code>x11</code> (X11 libraries),
+        <code>gl</code> (OpenGl) and <code>fl</code> (Fast Light Toolkit). To build TAO
+        support for <code>Fl</code> one should use <code>tao_flresource</code> feature.
+        <strong>MS Windows:</strong> The paths to <code>fltkdll</code> and
+        <code>OpenGL32</code> libraries, as well as <code>fltk</code> header files
+        should be setup manually for succesfull compilation. Obviosuly,
+        <code>x11</code>switch is ignored for this platform.</li>
+    </ul>
 
 <hr><p>
 </p><h3><a name="minimum_build">What Do I Need to Build for TAO?</a></h3>
@@ -2655,7 +2739,7 @@ ACE_Object_Manager</a></h4> The ACE_Object_Manager can be instantiated
 as a static object, can be instantiated on the stack of the main
 program thread, or can be explicitly instantiated and destroyed by the
 application with <code>ACE::init ()</code> and <code>ACE::fini
-()</code>.  The comments in the header file, 
+()</code>.  The comments in the header file,
 <a href="ace/Object_Manager.h"><code>ace/Object_Manager.h</code></a>, as well as Section 1.6.3 in
 <a href="http://www.riverace.com/docs">The ACE Programmer's Guide</a>
 provide more detail.<p>
@@ -2792,7 +2876,7 @@ faster even on single-CPU UNIX machines with <code>make -j
 
 ACE further supports the following flags.  They can be enabled either
 on the command line, e.g., "make purify=1", or added to your
-<code>platform_macros.GNU</code>.  To disable the option, 
+<code>platform_macros.GNU</code>.  To disable the option,
 set the flag to null,
 e.g., "make debug=".  Some flags support setting to 0 disable, e.g.,
 "make debug=0".  debug=1 is enabled in the platform files that are
@@ -2851,7 +2935,6 @@ xt_reactor       Build the XtReactor.
 fl_reactor       Build the FlReactor.
 tk_reactor       Build the TkReactor.
 qt_reactor       Build the QtReactor.
-gtk_reactor      Build the GtkReactor.
 ssl              Build with OpenSSL support.
 rapi             Build with RAPI
 split            Build the library by first splitting up the ACE source
@@ -2906,7 +2989,7 @@ quickly.
   vc71</code> to generate VC71 project and solution files.
 
   </p></li><li>If you want to build TAO+CIAO and its associated libraries
-  please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a><a> and 
+  please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a><a> and
   </a><a href="TAO/CIAO/CIAO-INSTALL.html">CIAO-INSTALL</a> for details.
 </li></ul>
 
@@ -2925,7 +3008,7 @@ from
 <EM><br> -->
 
 <!-- hhmts start -->
-Last modified: Sun Jan  9 19:48:58 PST 2005
+Last modified: Sat Jan 22 21:22:10 CET 2005
 <!-- hhmts end -->
 
 

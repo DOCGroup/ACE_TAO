@@ -1,4 +1,72 @@
+Sun Jan 23 01:54:59 2005  Marek Brudka  <mbrudka@aster.pl>
+	* */.cvsignore:
+	To make cvs silent.
+
+	* tests/tests.mpc:
+	* tests/XtReactor_Test.cpp:
+	* tests/XtMotifReactor_Test.cpp:
+	* tests/XtAthenaReactor_Test.cpp:
+	* tests/TkReactor_Test.cpp:
+	* tests/QtReactor_Test.h:
+	* tests/QtReactor_Test.cpp:
+	* tests/FlReactor_Test.cpp:
+	* include/makeinclude/wrapper_macros.GNU:
+	* include/makeinclude/platform_sunos5_g++.GNU:
+	* include/makeinclude/platform_lynxos.GNU:
+	* include/makeinclude/platform_linux_pgi.GNU:
+	* include/makeinclude/platform_linux_icc.GNU:
+	* include/makeinclude/platform_linux_borland.GNU:
+	* include/makeinclude/platform_linux.GNU:
+	* examples/Misc/test_XtReactor2.cpp:
+	* examples/Misc/test_XtReactor1.cpp:
+	* examples/Misc/Misc.mpc:
+	* bin/MakeProjectCreator/config/tao_xtresource.mpb:
+	* bin/MakeProjectCreator/config/tao_tkresource.mpb:
+	* bin/MakeProjectCreator/config/tao_qtresource.mpb:
+	* bin/MakeProjectCreator/config/tao_flresource.mpb:
+	* bin/MakeProjectCreator/config/strategies.mpb:
+	* bin/MakeProjectCreator/config/global.features:
+	* bin/MakeProjectCreator/config/acedefaults.mpb:
+	* bin/MakeProjectCreator/config/ace_xtreactor.mpb:
+	* bin/MakeProjectCreator/config/ace_xt.mpb:
+	* bin/MakeProjectCreator/config/ace_x11.mpb:
+	* bin/MakeProjectCreator/config/ace_tkreactor.mpb:
+	* bin/MakeProjectCreator/config/ace_tk.mpb:
+	* bin/MakeProjectCreator/config/ace_qtreactor.mpb:
+	* bin/MakeProjectCreator/config/ace_qt.mpb:
+	* bin/MakeProjectCreator/config/ace_motif.mpb:
+	* bin/MakeProjectCreator/config/ace_gtk.mpb:
+	* bin/MakeProjectCreator/config/ace_gl.mpb:
+	* bin/MakeProjectCreator/config/ace_flreactor.mpb:
+	* bin/MakeProjectCreator/config/ace_fl.mpb:
+	* bin/MakeProjectCreator/config/ace_athena.mpb:
+	* ace/config-win32-msvc.h:
+	* ace/config-doxygen.h:
+	* ace/ace_xtreactor.mpc:
+	* ace/ace_tkreactor.mpc:
+	* ace/ace_qtreactor.mpc:
+	* ace/ace_flreactor.mpc:
+	* ace/ace.mwc:
+	* ace/ace.mpc:
+	* ace/XtReactor.h:
+	* ace/XtReactor.cpp:
+	* ace/TkReactor.h:
+	* ace/TkReactor.cpp:
+	* ace/README:
+	* ace/QtReactor.h:
+	* ace/QtReactor.cpp:
+	* ace/FlReactor.h:
+	* ace/FlReactor.cpp:
+	* ace/ACE_XtReactor_export.h:
+	* ace/ACE_TkReactor_export.h:
+	* ace/ACE_QtReactor_export.h:
+	* ace/ACE_FlReactor_export.h:
+	* ACE-INSTALL.html:
+	Changes related with separation of GUI reactors.
+	The additional information is avalaible in ChangeLog at REACTOR_SEPARATION branch.
+
 Sat Jan 22 21:18:58 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
+
 
 	* ace/Logging_Strategy.cpp (handle_timeout): Fixed when defined ACE_LACKS_IOSTREAM_TOTALLY.
         Use ftell instead of fseek in order to get the current file length.
@@ -9,7 +77,7 @@ Sat Jan 22 21:13:11 2005  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
 	* tests/Test_Output.cpp(close): Fixed when ACE_LACKS_IOSTREAM_TOTALLY - fflush and fclose
         should be called only when output_file_ is valid, and it points to the same current
         ACE_LOG_MSG->msg_ostream ().
-	
+
 Fri Jan 21 19:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:

@@ -2,20 +2,9 @@
 
 #include "test_i.h"
 #include "ace/Get_Opt.h"
-#include "tao/Strategies/advanced_resource.h"
+#include "tao/FlResource_Loader.h"
 
 ACE_RCSID(FL_Cube, server, "$Id$")
-
-#if !defined (ACE_HAS_FL)
-
-int main (int, char *[])
-{
-  ACE_ERROR ((LM_INFO,
-              "FL not supported on this platform\n"));
-  return 0;
-}
-
-#else
 
 #include <FL/Fl.h>
 
@@ -51,6 +40,7 @@ int
 main (int argc, char *argv[])
 {
   Fl_Window window(300, 300);
+  TAO::FlResource_Loader fl_loader;
 
   Simple_Window sw (10, 10,
                     window.w () - 20, window.h () - 20);
@@ -131,4 +121,3 @@ main (int argc, char *argv[])
   return 0;
 }
 
-#endif /* ACE_HAS_FL */
