@@ -111,16 +111,16 @@ sub dirname {
 
 
 sub strip_line {
-  my($self) = shift;
-  my($line) = shift;
+  #my($self) = shift;
+  #my($line) = shift;
 
   ## Override strip_line() from Parser.
   ## We need to preserve leading space and
   ## there is no comment string in templates.
-  ++$self->{'line_number'};
-  $line =~ s/\s+$//;
+  ++$_[0]->{'line_number'};
+  $_[1] =~ s/\s+$//;
 
-  return $line;
+  return $_[1];
 }
 
 
@@ -130,10 +130,9 @@ sub strip_line {
 sub append_current {
   my($self)  = shift;
   my($value) = shift;
-  my($index) = $self->{'foreach'}->{'count'};
 
-  if ($index >= 0) {
-    $self->{'foreach'}->{'text'}->[$index] .= $value;
+  if ($self->{'foreach'}->{'count'} >= 0) {
+    $self->{'foreach'}->{'text'}->[$self->{'foreach'}->{'count'}] .= $value;
   }
   else {
     $self->{'built'} .= $value;
@@ -412,30 +411,28 @@ sub process_foreach {
 
 
 sub handle_end {
-  my($self)        = shift;
-  my($name)        = shift;
-  my($status)      = 1;
-  my($errorString) = undef;
-  my($end)         = pop(@{$self->{'sstack'}});
+  my($self) = shift;
+  my($name) = shift;
+  my($end)  = pop(@{$self->{'sstack'}});
   pop(@{$self->{'lstack'}});
 
   if (!defined $end) {
-    $status = 0;
-    $errorString = "Unmatched $name\n";
+    return 0, "Unmatched $name\n";
   }
   elsif ($end eq 'endif') {
     $self->{'if_skip'} = 0;
   }
   elsif ($end eq 'endfor') {
     my($index) = $self->{'foreach'}->{'count'};
-    ($status, $errorString) = $self->process_foreach();
+    my($status, $error) = $self->process_foreach();
     if ($status) {
       --$self->{'foreach'}->{'count'};
       $self->append_current($self->{'foreach'}->{'text'}->[$index]);
     }
+    return $status, $error;
   }
 
-  return $status, $errorString;
+  return 1, undef;
 }
 
 
@@ -776,24 +773,6 @@ sub handle_marker {
 }
 
 
-## Given a line that starts with an identifier, we split
-## then name from the possible value stored inside ()'s and
-## we stop looking at the line when we find the %> ending
-sub split_name_value {
-  my($self)   = shift;
-  my($line)   = shift;
-  my($name)   = undef;
-  my($val)    = undef;
-
-  if ($line =~ /([^%\(]+)(\(([^%]+)\))?%>/) {
-    $name = $1;
-    $val  = $3;
-  }
-
-  return lc($name), $val;
-}
-
-
 sub process_name {
   my($self)        = shift;
   my($line)        = shift;
@@ -804,7 +783,12 @@ sub process_name {
   if ($line eq '') {
   }
   elsif ($line =~ /^(\w+)(\(([^\)]+|\".*\"|flag_overrides\([^\)]+,\s*[^\)]+\))\)|\->\w+([\w\-\>]+)?)?%>/) {
-    my($name, $val) = $self->split_name_value($line);
+    ## Split the line into a name and value
+    my($name, $val) = ();
+    if ($line =~ /([^%\(]+)(\(([^%]+)\))?%>/) {
+      $name = lc($1);
+      $val  = $3;
+    }
 
     $length += length($name);
     if (defined $val) {
@@ -932,23 +916,6 @@ sub collect_data {
 }
 
 
-sub is_only_keyword {
-  my($self) = shift;
-  my($line) = shift;
-
-  ## Does the line contain only a keyword?
-  ## Checking for spaces allows nesting in the template.
-  if ($line =~ /^\s*<%(.*)%>$/) {
-    my($part) = $1;
-    if ($part !~ /%>/) {
-      $part =~ s/\(.*//;
-      return (defined $keywords{$part} ? 1 : 0);
-    }
-  }
-  return 0;
-}
-
-
 sub parse_line {
   my($self)        = shift;
   my($ih)          = shift;
@@ -957,16 +924,22 @@ sub parse_line {
   my($errorString) = undef;
   my($length)      = length($line);
   my($name)        = 0;
-  my($startempty)  = ($line eq '' ? 1 : 0);
+  my($startempty)  = ($length == 0 ? 1 : 0);
   my($append_name) = 0;
 
   ## If processing a foreach or the line only
   ## contains a keyword, then we do
   ## not need to add a newline to the end.
-  if ($self->{'foreach'}->{'processing'} == 0 &&
-      !$self->is_only_keyword($line)) {
-    $line   .= $self->{'crlf'};
-    $length += $self->{'clen'};
+  if ($self->{'foreach'}->{'processing'} == 0) {
+    my($is_only_keyword) = undef;
+    if ($line =~ /^\s*<%(\w+)(\([^\)]+\))?%>$/) {
+      $is_only_keyword = defined $keywords{$1};
+    }
+
+    if (!$is_only_keyword) {
+      $line   .= $self->{'crlf'};
+      $length += $self->{'clen'};
+    }
   }
 
   if ($self->{'foreach'}->{'count'} < 0) {
@@ -992,7 +965,7 @@ sub parse_line {
     elsif ($name) {
       my($substr)  = substr($line, $i);
       my($efcheck) = ($substr =~ /^endfor\%\>/);
-      my($focheck) = ($substr =~ /^foreach\(/);
+      my($focheck) = ($efcheck ? 0 : ($substr =~ /^foreach\(/));
 
       if ($focheck && $self->{'foreach'}->{'count'} >= 0) {
         ++$self->{'foreach'}->{'nested'};
