@@ -35,8 +35,7 @@
 #define MAX_OBJ_KEY_LEN     100
 #define MAX_HOSTNAME_LEN     64
 
-
-class IOR
+struct IOR
 {
   // = TITLE
   //     This is the useful information obtained from parsing an IOR.
