@@ -70,11 +70,6 @@ module UnionDiscTest
       {
         case 'a': string value;
       };
-
-    union WCharUnion switch (wchar)
-      {
-        case L'a': string value;
-      };
 	};
 
 

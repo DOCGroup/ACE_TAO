@@ -32,24 +32,9 @@ module frag
 };
 
 // These three are reopened in reopened_modules.idl.
-module Y
-{
-};
-
-module X
-{
-};
-
 module XX 
 {
   typedef long whah;
-};
-
-module A
-{
-  module B
-  {
-  };
 };
 
 module A
