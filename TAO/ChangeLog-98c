@@ -1,3 +1,33 @@
+Mon Sep 29 13:50:34 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO ORB changes:
+
+	any.*: Added _var and _out classes.
+	
+	corbacom.{h,i} : Added _out types for primitive types, added _out and
+	updated _var classes for String. Added corbacom.i for implementing
+	the String's _var and _out classes
+
+	sequence.{h,i}: Added a number of templates for _var and _out
+	classes. However, these are yet to be used and tested.
+
+	* Alpha release of TAO IDL compiler added to this release. This is
+	an alpha release and we are currently putting it to rigorous
+	test. A large amount of code for the back end is added under the 
+	TAO/TAO_IDL/be_include and TAO/TAO_IDL/be/ directories.
+
+	In addition, some amount of ACEification done to methods belonging
+	to the TAO/TAO_IDL/utils/ classes.
+
+	A few errors in the IDL grammar have been fixed in
+	fe/idl.yy. These had to do with the valid types for parameters and
+	operation return types. There are still some errors recognizing
+	unions which will be fixed later. The scanner (fe/idl.l) was
+	modified to recognize the OMG IDL data type "any".
+
+	* The ChangeLog file under TAO/TAO_IDL is removed and its contents
+	are inserted appropriately in this ChangeLog file
+
 Sun Sep 28 17:01:27 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tests/multiCubit: Added a multi-threaded version of Cubit.
@@ -259,6 +289,12 @@ Thu Aug 28 14:04:44 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/nvlist.h (CORBA_NamedValue): Initialized refcount_ in the
  	CTOR.
+
+Mon Aug 18 16:39:40 1997  Carlos O'Ryan  <coryan@mambo.cs.wustl.edu>
+
+	* Makefile for TAO compiler: 
+	  $(SOEXT) must be used instead of just .so, the former does not
+	  work on all platforms, notably HP-UX.
 
 Mon Aug 18 16:39:29 1997  Carlos O'Ryan  <coryan@mambo.cs.wustl.edu>
 
@@ -1084,6 +1120,11 @@ Fri Jun 27 14:27:49 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 	* connect.cp, factories.cpp: Added code that hardcodes the socket
 	buffer sizes to 64K. This is a hack for the time being.
 
+Thu Jun 26 10:02:47 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
+
+	* Some more progress on IDL compiler. Generates the client and
+	server side files without much contents in it.
+
 Thu Jun 26 09:49:38 1997  Aniruddha Gokhale  <gokhale@merengue.cs.wustl.edu>
 
 	* Added a full range of optimizations to the TAO IIOP interpretive
@@ -1299,6 +1340,11 @@ Mon May 19 10:07:00 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
  	table and the parameters repository so that they use the right
  	class names.
 
+Sat May 17 17:18:38 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* First pass at providing a backend to the SunSoft's CORBA IDL
+	compiler front end.
+	
 Fri May 16 17:30:31 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* IIOP/lib/svrrqst.*: Corrected some comments, adjusted some
