@@ -19,7 +19,7 @@ Sun Sep 01 07:25:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_borland.GNU:
           Added first version of platform .GNU file for the Borland Kylix
-          compiler. Thanks to Newton Aird <naird@ix.netcom.com) for
+          compiler. Thanks to Newton Aird <naird@ix.netcom.com> for
           providing this first version.
 
         * THANKS: Added Newton Aird <naird@ix.netcom.com>
@@ -30,6 +30,7 @@ Sat Aug 31 14:57:53 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	  fame.
 
 Sat Aug 31 13:55:52 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+  
 	* ace/OS.i (ctime_r): This fixes a problem on Linux for the call
 	  to ::ctime_r where the pointer returned (result) is the same as
 	  the pointer (buf) passed in, causing the buffer to get clobbed
