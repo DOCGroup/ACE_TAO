@@ -20,8 +20,8 @@
 // 
 // ============================================================================
 
-#include "test_config.h"
-#include "Select_Reactor_Test.h"
+#include "CLASSIX_test_config.h"
+#include "CLASSIX_Select_Reactor_Test.h"
 
 #if defined (ACE_HAS_THREADS)
 

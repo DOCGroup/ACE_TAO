@@ -20,7 +20,7 @@
 #include "ace/CLASSIX/CLASSIX_OS.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/CLASSIX/CLASSIX_Reactor.h"
+#include "ace/CLASSIX/CLASSIX_Select_Reactor.h"
 
 /* ------------------------------------------------------------------------- */
 
