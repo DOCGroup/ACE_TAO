@@ -23,6 +23,8 @@ public:
   static int HTTP_month (const char *month);
   static const char * HTTP_month (int month);
 
+  static char * HTTP_decode_string (char *path);
+
 private:
 
   static int fixyear (int year);
