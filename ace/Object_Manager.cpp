@@ -152,8 +152,9 @@ ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations ()
 }
 
 ACE_Object_Manager::ACE_Object_Manager (void)
-  // , lock_ is initialized in the function body.  With
-  // ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call to
+  // , lock_ is initialized in the function body.
+  //
+  // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call to
   // ACE_OS::tss_open () in the function body.
 {
   ACE_NEW (registered_objects_, ACE_Unbounded_Queue<ACE_Cleanup_Info>);
@@ -792,7 +793,7 @@ ACE_Static_Object_Lock::instance (void)
     }
   else
     // Return the preallocated ACE_STATIC_OBJECT_LOCK.
-    return ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object 
+    return ACE_Managed_Object<ACE_Recursive_Thread_Mutex>::get_preallocated_object
       (ACE_Object_Manager::ACE_STATIC_OBJECT_LOCK);
 }
 
