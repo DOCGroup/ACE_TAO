@@ -1,5 +1,45 @@
 Wed Jul 29 04:19:05 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* Integrate TP_Reactor into ACE.  Major framwork designed by
+	  Irfan.  Here's his changelog:
+
+	  * ace/TP_Reactor.h (ACE_TP_Reactor): One of the short comings of
+	    the Select_Reactor in ACE was that it did not support a thread
+ 	    pool based event dispatching model, similar to the one in
+ 	    WFMO_Reactor.  In Select_Reactor, only thread can be blocked
+ 	    in handle_events() at any given time.
+
+	    A new Reactor has been added to ACE that removes this
+ 	    short-coming.  TP_Reactor is a specialization of Select
+ 	    Reactor to support thread-pool based event dispatching. This
+ 	    Reactor takes advantage of the fact that events reported by
+ 	    select() are persistent if not acted upon immediately.  It
+ 	    works by remembering the event handler that just got
+ 	    activated, releasing the internal lock (so that some other
+ 	    thread can start waiting in the event loop) and then
+ 	    dispatching the event handler outside the context of the
+ 	    Reactor lock.
+
+	    This Reactor is best suited for situations when the callbacks
+ 	    to event handlers can take arbitrarily long and/or a number of
+ 	    threads are available to run the event loops.
+
+	    Note that callback code in Event Handlers
+ 	    (e.g. Event_Handler::handle_input) does not have to be
+ 	    modified or made thread-safe for this Reactor.  This is
+ 	    because an activated Event Handler is suspended in the Reactor
+ 	    before the upcall is made and resumed after the upcall
+ 	    completes.  Therefore, one Event Handler cannot be called by
+ 	    multiple threads simultaneously.
+
+	  * ace/Reactor.cpp (ACE_Reactor):
+	    ACE_USE_TP_REACTOR_FOR_REACTOR_IMPL can be used to make the
+ 	    TP_Reactor the default Reactor implementation that will be
+ 	    used by ACE_Reactor.
+	  
+	  I still need to add the reliable shutdown method and a
+	  TP_Reactor_Test.
+
 	* ace/Select_Reactor.{h,i,cpp} (renew): Moved decision of renew
 	  supression from ACE_Select_Reactor_Notify::handle_input to this
  	  method, which is a more appropriate place.
