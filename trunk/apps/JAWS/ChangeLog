@@ -1,3 +1,10 @@
+Tue Sep 21 11:47:00 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* server/HTTP_Server.cpp (init):
+	
+	  Changed cast style to make gcc 2.95.1 happy.  Thanks to Jeffrey
+	  Franks <Jeffrey_Franks@i-o.com> for reporting the problems.
+
 Tue Aug 31 05:10:32 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* server/HTTP_Handler.cpp (destroy_http_handler): Switched

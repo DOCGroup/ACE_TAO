@@ -1,10 +1,21 @@
+Tue Sep 21 11:41:33 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Event_Channel.cpp (open):
+
+	  Changed cast style to make gcc 2.95.1 happy.  Thanks to Jeffrey
+	  Franks <Jeffrey_Franks@i-o.com> for reporting the problems.
+
+	* THANKS:
+
+	  Added Jeffrey to the list of contributors.
+
 Tue Sep 21 11:25:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* bin/auto_compile:
 	  Print the most recent ChangeLog entries in the log file.
 	  Report successful builds by default.
-	  Reformat email to make Darrell happier, btw, he gave most of
-	  this suggestions.
+	  Reformat email to make Darrell happier, btw, he made most of
+	  these suggestions.
 
 Tue Sep 21 11:13:21 1999  Steve Huston  <shuston@riverace.com>
 
