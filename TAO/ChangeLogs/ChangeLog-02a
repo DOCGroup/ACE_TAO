@@ -1,3 +1,7 @@
+Wed Mar 28 06:15:02 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/AMI/client.cpp: Fixed a compile error in Windoows build.
+
 Tue Mar 27 22:00:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Invocation_Endpoint_Selectors.cpp:
