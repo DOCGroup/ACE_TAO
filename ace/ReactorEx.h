@@ -26,14 +26,27 @@
 // Forward decl.
 class ACE_ReactorEx;
  
-class ACE_Export ACE_ReactorEx_Handler_Repository : public ACE_Event_Handler
+class ACE_Export ACE_Wakeup_All_Threads_Handler : public ACE_Event_Handler
+  // = TITLE
+  //     This is a helper class whose sole purpose is to handle events
+  //     on <ACE_ReactorEx->wakeup_all_threads_>  
+{
+public:
+
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  // Called when the <ACE_ReactorEx->wakeup_all_threads_>
+  
+private:
+};
+
+class ACE_Export ACE_ReactorEx_Handler_Repository
   // = TITLE
   //     Used to map <ACE_HANDLE>s onto the appropriate
   //     <ACE_Event_Handler> *. 
   // 
 {
 public:
-  ACE_ReactorEx_Handler_Repository (ACE_ReactorEx &);
+  ACE_ReactorEx_Handler_Repository (ACE_ReactorEx &reactorEx);
   // Constructor.
 
   ~ACE_ReactorEx_Handler_Repository (void);
@@ -73,11 +86,6 @@ public:
   // Pointer to the beginning of the current array of
   // <ACE_Event_Handler> *'s.
 
-  // = Event handler called when registering/removing handles.
-
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
-  // Called when the <ACE_ReactorEx->wakeup_all_threads_>
-
   virtual int changes_required ();
   // Check if changes to the handle set are required.
 
@@ -88,13 +96,19 @@ public:
   // Dump the state of an object.
 
 private:
-  int remove_handler (size_t index,
-		      ACE_Reactor_Mask mask = 0);
-  // Removes the <ACE_Event_Handler> at <index> from the table.
-
   ACE_ReactorEx &reactorEx_;
   // Reference to our <ReactorEx>.
   
+  int handle_deletions ();
+  // Add handles to the handle set
+
+  int handle_additions ();
+  // Remove handles from the handle set
+
+  int remove_handler_i (size_t index,
+			ACE_Reactor_Mask mask = 0);
+  // Removes the <ACE_Event_Handler> at <index> from the table.
+
   size_t max_size_;
   // Maximum number of handles.
 
@@ -117,13 +131,13 @@ private:
   ACE_Event_Handler **to_be_added_event_handlers_;
   // Corresponding Event Handler to the above
 
-  int number_added_;
+  int handles_to_be_added_;
   // A count of the number of records to be added
   
   int *to_be_deleted_set_;
   // These are going to be deleted from the <current_handles_>
   
-  int number_deleted_;
+  int handles_to_be_deleted_;
   // A count of the number of records to be deleted
 };
 
@@ -143,7 +157,7 @@ class ACE_Export ACE_ReactorEx_Notify : public ACE_Event_Handler
   //     <handle_*> method is dispatched.
 {
 public:
-  ACE_ReactorEx_Notify ();
+  ACE_ReactorEx_Notify (void);
   // Constructor
 
   int open (ACE_ReactorEx &reactorEx);
@@ -236,8 +250,6 @@ public:
   // = Event loop drivers.  
 
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0,
-			     int wait_all = 0,
-			     ACE_Event_Handler *wait_all_callback = 0,
 			     int alertable = 0);
   // This event loop driver blocks for up to <max_wait_time> before
   // returning.  It will return earlier if timer events, I/O events,
@@ -251,15 +263,6 @@ public:
   // application wishes to handle events for some fixed amount of
   // time.
   // 
-  // If <wait_all> is TRUE, then handle_events will only dispatch the
-  // handlers if *all* handles become active.  If a timeout occurs,
-  // then no handlers will be dispatched.  If <wait_all_callback> is 0
-  // then we dispatch the <handle_signal> method on each and every
-  // registered HANDLE.  Otherwise, we just call back the
-  // <handle_signal> method of the <wait_all_callback> object, after
-  // first assigning the siginfo_t <si_handles_> argument to point to
-  // the array of signaled handles.
-  // 
   // WaitForMultipleObjectsEx> is used as the demultiplexing call
   // 
   // Returns the total number of <ACE_Event_Handler>s that were
@@ -267,8 +270,6 @@ public:
   // any handlers, or -1 if an error occurs.
 
   virtual int handle_events (ACE_Time_Value &max_wait_time,
-			     int wait_all = 0,
-			     ACE_Event_Handler *wait_all_callback = 0,
 			     int alertable = 0);
   // This method is just like the one above, except the
   // <max_wait_time> value is a reference and can therefore never be
@@ -347,30 +348,21 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+  virtual int ok_to_wait (ACE_Time_Value *max_wait_time,
+			  int alertable);
+  // Check to see if it is ok to enter ::WaitForMultipleObjects()
+  
   virtual int wait_for_multiple_events (ACE_Time_Value *max_wait_time,
-					int wait_all,
 					int alertable);
   // Wait for timer and I/O events to occur.
 
-  virtual dispatch (int wait_status,
-		    int wait_all,
-		    ACE_Event_Handler *wait_all_callback);
+  virtual int dispatch (int wait_status);
   // Dispatches the timers and I/O handlers.
 
   int dispatch_handles (size_t index);
   // Dispatches any active handles from handles_[<index>] to
   // handles_[active_handles_] using <WaitForMultipleObjects> to poll
   // through our handle set looking for active handles.
-
-  int dispatch_callbacks (ACE_Event_Handler *wait_all_callback);
-  // This is called when the user called handle_events() with the
-  // <wait_all> parameter enabled.  In this case, all the handlers are
-  // now signaled.  If <wait_all_callback> is NULL then we dispatch
-  // the <handle_signal> method on each and every HANDLE in the
-  // dispatch array.  Otherwise, we just call back the <handle_signal>
-  // method of the <wait_all_callback> object, after first assigning
-  // the siginfo_t <si_handles_> argument to point to the array of
-  // signaled handles.
 
   int dispatch_handler (int index);
   // Dispatches a single handler.  Returns 0 on success, -1 if the
@@ -387,6 +379,10 @@ private:
   int update_state ();
   // Update the state of the handler repository
 
+  void wakeup_all_threads ();
+  // Wake up all threads in WaitForMultipleObjects so that they can
+  // reconsult the handle set
+
   ACE_Timer_Queue *timer_queue_;
   // Defined as a pointer to allow overriding by derived classes...
 
@@ -396,6 +392,11 @@ private:
 
   ACE_Process_Mutex lock_;
   // Synchronization for the ACE_Reactor.
+  // A Process Mutex is used here because of two reasons:
+  // (a) The implementation of ACE_Thread_Mutex uses CriticalSections
+  //     CriticalSections are not waitable using ::WaitForMultipleObjects
+  // (b) This is really not a process mutex because it is not
+  //     named. No other process can use this mutex.
 
   ACE_ReactorEx_Handler_Repository handler_rep_;
   // Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
@@ -412,6 +413,9 @@ private:
   // when <ACE_Event_Handlers> are bounded and unbound from the
   // handler repository).
 
+  ACE_Wakeup_All_Threads_Handler wakeup_all_threads_handler_;
+  // Used when <wakeup_all_threads_> is signaled
+
   ACE_Auto_Event waiting_to_change_state_;
   // The changing thread waits on this event, till all threads are not
   // active anymore 
@@ -423,7 +427,9 @@ private:
   // The thread which is "owner" of the ReactorEx. The owner concept
   // is used because we don't want multiple threads to try to expire
   // timers. Therefore the "owner" thread is the only one allowed to
-  // expire timers. Note that the ownership can be transferred.  
+  // expire timers. Also, the owner thread is the only thread which
+  // waits on the notify handle. Note that the ownership can be
+  // transferred.
 
   ACE_thread_t change_state_thread_;
   // This is the thread which is responsible for the changing the

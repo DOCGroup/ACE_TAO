@@ -45,6 +45,14 @@ ACE_Timer_Node::ACE_Timer_Node (ACE_Event_Handler *h,
   ACE_TRACE ("ACE_Timer_Node::ACE_Timer_Node");
 }
 
+ACE_Timer_Queue_Iterator::ACE_Timer_Queue_Iterator (void)
+{
+}
+
+ACE_Timer_Queue_Iterator::~ACE_Timer_Queue_Iterator (void)
+{
+}
+
 // Determines the maximum amount of time that the Reactor must wait
 // before timing out.  This is computed as the smaller of (1) the
 // amount the caller requested when calling handle_events() and (2)
@@ -123,7 +131,7 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 
   int number_of_timers_expired = 0;
 
-  ACE_Timer_Queue_Iterator &iter (this->iter ());
+  ACE_Timer_Queue_Iterator &iter = this->iter ();
 
   // Keep looping while there are timers remaining and the earliest
   // timer is <= the <cur_time> passed in to the method.
@@ -136,7 +144,7 @@ ACE_Timer_Queue::expire (const ACE_Time_Value &cur_time)
 	(ACE_Event_Handler *) expired->handler_;
       const void *arg = expired->arg_;
       int reclaim = 1;
-
+      
       // Check if this is an interval timer.
       if (expired->interval_ > ACE_Time_Value::zero)
 	{
