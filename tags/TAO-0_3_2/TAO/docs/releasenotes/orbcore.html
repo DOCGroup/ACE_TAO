@@ -1,0 +1,505 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.5b2 [en] (WinNT; I) [Netscape]">
+   <TITLE>ORB Core Status</TITLE>
+<!-- $Id$ -->
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<H3>
+<A NAME="orb"></A>ORB &amp; ORB Core</H3>
+Point of contact: <A HREF="mailto:nanbor@cs.wustl.edu">Nanbor Wang</A>
+<P>Last Update: $Date$
+<P><B>Current status:</B>
+<UL>
+<LI>
+Provides dynamically linked wholesale assignment of ORB strategies for
+communication, concurrency, demultiplexing, scheduling, and dispatching
+using the ACE Service Configurator framework.</LI>
+
+<LI>
+Supports several concurrency models out of the box: Reactive, Thread-per-Connection,
+and ORB-per-thread. The ORB-per-thread design is optimized for real-time
+I/O subsystems. (See: <A HREF="../configurations.html">Configuration Guide</A>.)</LI>
+
+<LI>
+Supports <TT>resolve_initial_references("&lt;CORBA Service>")</TT> using
+ACE support for multicast.</LI>
+</UL>
+<B>Known issues:</B>
+<UL>
+<LI>
+
+Some CORBA objects need to have access to the ORB. We tend to use
+<CODE>TAO_ORB_Core_instance()->orb()</CODE> to fetch the right ORB the
+object is using. This is most often true when implementing the
+shutdown method which allow other process to shutdown a remote
+ORB. Althought this may be the "right" thing to do in TAO, it is not
+CORBA compliant and hurts the portability of object implementation.  A
+common way of getting around this problem is to cache the ORB pointer
+in the object when it is created and simply use the cached ORB when
+needed.  However, remember that there could be multiple ORBs in a
+process and a POA may be shared by several ORBs. That means, we may
+not handling the object with the same ORB it was created. Collocation
+optimization further complicated the problem. <P> At the moment, using
+<CODE>TAO_ORB_Core_instance()->orb()</CODE> is the only sane way to
+get arond the problem. Though there may be a better way. <P>
+
+<LI> Object references for objects dynamically created within a server
+may not have proper host. (See also <A HREF="#hostfix">recent
+fix</A>.) When an object is dynamically created and its object
+reference returned, it simply has to "guess" at the host information
+that is returned in the IIOP Profile.  Currently, it guesses using the
+host name, which is a reasonable guess in most cases.  However, if
+there are multiple interfaces on a machine <I>and</I> they have
+different host names, it is possible that the desired effect will not
+be realized, i.e., the connection to that new object may use a
+different interface from the original object. Currently the only way
+to change this is to use the <A
+HREF="../Options.html#-ORBhost"><B>-ORBhost</B> option</A> to manually
+specify that dynamically-created objects bind to a specific interface
+so that their IIOP Profile has the desired hostname. A more desirable
+fix is being investigated.<P> </UL>
+
+<B>Recently Completed Work:</B>
+<UL>
+<LI>
+The ORB Core is ready to throw exceptions received from the wire as a native
+C++ exception. Similarly, on the server side, native C++ exceptions are
+catched and sent over the wire to the client.</LI>
+
+<LI>
+Added new option <TT>-ORBiioplite</TT> when this option is enabled the
+ORB removes a few fields of the GIOP messages that are normally not used,
+such as the version numbers, the magic 'GIOP' string, the service context,
+the Principal object, etc. This option give us a slight performance improvement
+but it is important for extremely low-latency systems (such as avionics),
+that fortunately have tightly controlled environments so this kind of optimization
+is safe to use.</LI>
+
+<LI>
+The buffers for outgoing CDR streams are allocated from TSS memory pools,
+reducing locking on the critical path.</LI>
+
+<LI>
+Several optimizations on the critical path have been implemented, carefully
+removing excesive locking, memory allocations and data copying. In some
+cases special demarshaling and marshaling functions where written for the
+request headers.</LI>
+
+<LI>
+Adding a new option into TAO_Resource_Factory to control the internal lock
+used by ORB's reacotr. With "<TT>-ORBreactorlock null</TT>" added into
+<TT>svc.conf</TT>, you can eliminate the token inside the Select_Reactor
+inside the ORB even on multi-threaded platforms. This eliminate some overheads
+caused by synchronizing access to the Select_Reactor. Usually, if you have
+TSS ORB and are using reactive concurrency startegy, the ORB are not accessed
+by multiple threads, then, you can safely turn the lock off.
+
+<LI>
+Strategized the connection management scheme so that we don't always have
+to pay the price of a look up in the connection cache. Basically, we "hold"
+a service handler for a string of requests.</LI>
+
+<LI>
+There is no need to call ORB::open if the port is 0. It will automagically
+be called when the first stub is created.
+
+<LI> The ORB now handles nested upcalls correctly. See <A
+HREF="../leader_follower.html">this </A>for details on the design of
+the solution.
+
+<LI> Making the collocation table configurable. We can either use a
+global collocation table to share objects among ORBs, or use the
+per-ORB collocation table.
+
+<LI>
+Implement the inheritance mechanism in Default_Server_Connection_Handler
+to access the parent's POA. This is necessary when we are using thread-per-connection
+concurrency model.
+
+<LI> It is often desireable for a server to start up and not have to
+specify the TCP port number on which the ORB will listen, i.e., let
+the OS decide.  While this works properly (by providing an argument
+<TT>-ORBport 0</TT>), the actual port number used by the server won't
+be available after the server starts listening. TAO now tries to bind
+the address when <TT>-ORBport 0</TT> is issued so it can get the
+actual address to publish the IOR for clients' use.
+
+<LI> Added optimization for collocated objects. This optimization
+enables TAO to bypass communication layers and talks to collocated
+objects directly.
+
+<LI>
+Broke the tight coupling between <TT>CORBA_Object</TT> and <TT>IIOP_Object</TT>
+so that multiple <TT>CORBA_Object</TT>s can share a single <TT>IIOP_Object</TT>.
+This has a big win in <TT>_narrow</TT> operations.
+
+<LI>
+Eliminated substantial memory leaks in servers.
+
+<LI>
+Added documentation for <B><A HREF="../Options.html#-ORBpoa">-ORBpoa</A></B>,
+which allows individual tweaking of the POA's locality (global vs. thread-specific)
+independent of the locality of other ORB resources. Also, <B><A HREF="../Options.html#-ORBpoalock">-ORBpoalock</A></B>
+and <B><A HREF="../Options.html#-ORBpoamgrlock">-ORBpoamgrlock</A></B>
+control locking in the POA and POA manager, respectively, according to
+application needs.
+
+<LI>
+Began the process of changing the internals of TAO to use the "underbar"
+namespace mapping. This should be completed soon.
+
+<LI>
+The ORBs manipulation of object keys and object ids is now consistent.
+Canonically, everything is managed as an opaque sequence of octets. Conversion
+to/from strings is permitted, with non-printables turning into a trigraph
+<B>\hl</B> where <B>h</B> is the high nibble digit in hex, and <B>l</B>
+is the low nibble in hex.</LI>
+
+<LI>
+<TT>CORBA_ORB::run()</TT> should be able to be called multiply in the same
+execution path now.</LI>
+
+<LI>
+Fixed the <B>LOCATION_FORWARD</B> capabilities to work as described in
+the CORBA 2.1 and the POA specification.</LI>
+
+<LI>
+Fixed problem in the IDL Cubit example which caused the server to dump
+core when dealing with <TT>_out</TT> sequence types <I>ONLY</I> when compiled
+with G++. It seems that G++ decided to interpret the expression <TT>output
+== 0</TT> (where <TT>output</TT> is of type <TT>vector_out</TT>) differently
+from Sun's C++ compiler.</LI>
+
+<LI>
+Fixed a slight problem in <A HREF="#hostfix">other recent work</A> where
+a servant listening on <TT>INADDR_ANY</TT> reported an IOR with address
+<TT>0.0.0.0</TT>. It now reports the default hostname instead.</LI>
+
+<LI>
+Working version of TAO on VxWorks with VME transport.</LI>
+
+<LI>
+TAO now reacts gracefully in the face of a non-existent <TT>svc.conf</TT>
+file or simply missing entries in the file. It logs a warning message and
+uses default values versions of items which it would normally obtain from
+the Service Repository.</LI>
+
+<LI>
+<A NAME="hostfix"></A>Fixed problem where object references for objects
+dynamically created within a server do not have proper host, at least if
+the desired host was specified using <B><A HREF="../Options.html#-ORBhost">-ORBhost</A></B>
+on the command line.</LI>
+
+<LI>
+Added support for <B><A HREF="../Options.html#-ORBsndsock">-ORBsndsock</A></B>
+and <B><A HREF="../Options.html#-ORBrcvsock">-ORBrcvsock</A></B> ORB options.
+See <A HREF="../Options.html">options documentation</A> for details.</LI>
+
+<LI>
+Added support for pre-established connections using the <B><A HREF="../Options.html#-ORBpreconnect">-ORBpreconnect</A></B>
+option. This allows connections to be esablished before any CORBA requests
+are made. See <A HREF="../Options.html">options documentation</A> for details.</LI>
+
+<LI>
+Eliminated deprecated <B>-OAxxx</B> options parsed by the Object Adapter
+<TT>init</TT> method but no longer used by part of the ORB.</LI>
+
+<LI>
+Made argument parsing within the ORB and POA consume the arguments it parses.</LI>
+
+<LI>
+Placed an optimization in IIOP::Profile that should speed up invocations
+on the client side rather substantially. This was done by caching an instance
+of <TT>ACE_INET_Addr</TT> in the private portion of <TT>Profile</TT> because
+the cost of constructing one for every invocation (in <TT>TAO_GIOP_Invocation::start</TT>)
+was simply enormous--the construction was something like 100 cycles on
+Solaris. This is all because deep down this ends up calling <TT>gethostbyname()</TT>,
+which can be very costly. Of course, this is platform-dependent, so the
+improvements may not be as great on a different platform.</LI>
+
+<LI>
+Got rid of need to have compile in TSS ORB Core (<TT>-DTAO_HAS_TSS_ORBCORE</TT>).
+This is accomplished by having a Resource Factory (<TT>TAO_Resource_Factory</TT>)
+singleton which the ORB Core consults in order to get pointers to resources.
+The Resource Factory can be configured to return pointers from thread-specific
+storage, or process-global storage. By doing this, the ORB Core is shielded
+from ever having to know whether or not its resources are global or not.</LI>
+
+<LI>
+Made all command-line like options look like the standard-professed options,
+i.e., <B>-ORBxxx</B> or <B>-OAxxxx</B>.</LI>
+
+<LI>
+Moved ORB option parsing into <TT>TAO_ORB_Core::init()</TT> rather than
+in <TT>ORB_init()</TT>.</LI>
+
+<LI>
+Define <TT>_FAR</TT> for all cases as an interim fix for LynxOS.</LI>
+
+<LI>
+Fixed TAO so that the default port of 5001 is defined in <TT>orb_core.h</TT>
+config header somewhere rather than in <TT>orbobj.cpp</TT>, and use <B>MAXHOSTNAMELEN</B>
+ACE
+constant for the hostname buffer.</LI>
+
+<LI>
+Eliminated need for <TT>CORBA::Object</TT> to keep a pointer to its orb
+sitting around anywhere.</LI>
+
+<LI>
+Tested <TT>CORBA_ORB::shutdown()</TT> as a manner in which a thread of
+control can request that <TT>CORBA_ORB::run()</TT> should return and no
+longer service requests. It only honors a <I>wait_for_completion</I> argument
+of <B>FALSE</B> right now because we haven't fully explored the issues
+which surround doing all the completion.</LI>
+
+<LI>
+Created a brief section in <TT><A HREF="../../TAO-INSTALL.html">$TAO_ROOT/TAO-INSTALL.html</A></TT>
+that <I>briefly</I> documents installation on Unix platforms. There is
+also a brief section which documents issues that apply across ALL platforms,
+such as the fact that TAO and its application will likely not work well
+if your ACE is linked through Orbix, VisiBroker, or another ORB. <A HREF="../../ChangeLog">ChangeLog</A>
+discovery attribution for this should go to <I>Steve Wohlever &lt;wohlever@mitre.org></I>.</LI>
+
+<LI>
+Implemented <TT>CORBA_ORB::shutdown()</TT> as a manner in which a thread
+of control can request that <TT>CORBA_ORB::run()</TT> should return and
+no longer service requests.</LI>
+
+<LI>
+Validated movement of Strategy Connector into ORB Core.</LI>
+
+<LI>
+Tested and commited <TT>Connector::connect_n</TT> changes to ACE.</LI>
+
+<LI>
+ACE &amp; TAO compiling cleanly using Sun's CC on Solaris and G++ on Linux.
+Also, the ACE tests run properly.</LI>
+
+<LI>
+Use <TT>truss</TT> to verify for <A HREF="mailto:PAUL.G.WEHLAGE@cdev.com">Paul
+Wehlage</A> that TAO really uses <TT>select</TT> vs. <TT>recv</TT> for
+<B>-R</B> vs. <B>-T</B>.</LI>
+
+<LI>
+Renamed <TT>boa.*</TT> to <TT>poa.*</TT>.</LI>
+
+<LI>
+Renamed following files: Orb_Core.* ->orb_core.* &amp; orbobj.* -> corba_orb.*.</LI>
+
+<LI>
+The lock used in <TT>giop.cpp:626</TT> originally appeared in the IIOP-1.4
+code base. Its purpose was to protect access to the <TT>fwd_profile</TT>
+data member. The original features are available, but they are currently
+not used because none of our concurrency models present a thread-unsafe
+condition. The <A HREF="../../ChangeLog">ChangeLog</A> presents more details
+on the subject.</LI>
+
+<LI>
+Fixed problems seen by <A HREF="mailto:brian.r.mendel@boeing.com">Brian
+Mendel</A> of Boeing where the Cubit server application was crashing in
+<TT>TAO_OA_Connection_Handler::handle_message</TT> when it was trying to
+call <TT>CORBA::POA::handle_request</TT> through a NULL <TT>root_poa</TT>
+pointer. The NULL pointer resulted from the inadvertent use of the Thread-per-Connection
+concurrency model, which is currently incompatible with the ORB-per-thread
+model. It was not caught because the change is normally done in configuration
+files parsed by the Service Configurator, and VxWorks requires special
+code in that area which was not tested until Boeing got hold of the code.</LI>
+
+<LI>
+Clean up build under g++. All 'function used before declared inline' warnings
+have been eliminated. Also, all other warnings (except for one that is
+nearly unavoidable) have been eliminated.</LI>
+
+<LI>
+Removed BOA and ROA names from the ORB.</LI>
+
+<LI>
+Changed <TT>CORBA_ORB::open()</TT> to return an error status (first cut
+at this already there--needs to be checked out).</LI>
+
+<LI>
+Added README file to multiCubit test.</LI>
+
+<LI>
+Added support for the -ORBInitRef option. This allows run-time specification of
+an ObjectId:IOR mapping. It is used by resolve_initial_references () and
+overrides the orb-install-time defaults.</LI>
+
+</UL>
+<B>Ongoing Work:</B>
+<UL>
+<LI>
+Verify ACE &amp; TAO on Linux using g++, Solaris using CC, and Solaris
+using g++.</LI>
+
+<LI>
+Use Purify to eliminate straggling problems.</LI>
+
+<LI>
+Clean up the internals and analyze for performance bottlenecks using Quantify.</LI>
+
+<LI>
+Resolve <TT>// @@</TT> comment blocks. These are questions or comments
+placed in the code by a reviewer (typically Doug).</LI>
+
+<LI>
+Make more and better documentation on the internals of TAO.</LI>
+</UL>
+<B>Current Work:</B>
+<UL>Verify that, in the ORB-per-thread concurrency model, it's possible
+to have a factory in each thread that creates a client and returns an object
+reference to that client within that thread. This is different from the
+model that Sumedh originally had where the factory was trying to turn out
+a client in a separate thread/ORB combination.
+There is no application which attempts this at the moment, so both a
+client and a server will need to be manufactured. Using existing Cubit-like
+examples (that poor app is so weary) should reduce development time to
+a couple of hours.
+The real strategy/solution is to make <TT>CORBA::Object</TT> not keep
+a pointer to its orb sitting around anywhere. It should only get it when
+it needs it. This should not be difficult to change.</UL>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The interface Dynamic
+Any (CORBA v.2.2) is being implemented. It will conform to and implement
+all areas of the spec except for the following:
+<UL>
+<LI>
+Interface DynFixed not implemented since TAO does not currently support
+the IDL fixed data type.</LI>
+
+<LI>
+Long double data type not supported in accessor and mutator functions.</LI>
+
+<LI>
+Wstring (wide character string) data type not supported in accessor and
+mutator functions.</LI>
+
+<LI>
+DynUnion attribute set_as_default in treated as read only.</LI>
+</UL>
+<B>Critical Work:</B>
+<UL>
+<LI>
+Identify/fix the problems in multithreaded client with TSS resources. This
+could be done using the leader-follower model (thread-pool.)</LI>
+
+<LI>
+Support new concurrency models, e.g., Thread-per-Request, thread pool,
+etc..</LI>
+</UL>
+<B>Future work:</B>
+<UL>
+<LI>
+Performance optimizations, such as:</LI>
+
+<OL>
+<LI>
+Replace all uses of <TT>new</TT> and <TT>delete</TT> with allocators that
+can be put into TSS. The main motivation for this is to eliminate lock
+contention when multiple threads need to allocate/deallocate memory, however
+it might also be possible to substitute an allocator better-tuned to an
+application's specific usage.</LI>
+</OL>
+
+<LI>
+Robustness improvements:</LI>
+
+<OL>
+<LI>
+Improve connection cache so that it won't crash when there are no more
+slots or sockets.</LI>
+
+<LI>
+Add an option to the ORB core, e.g., <B>-ORBnameservicetimeout</B>, to
+allow specification of an upper bound on the itime-to-wait for a response
+from the ORB's multicast "search" for a running name server.</LI>
+</OL>
+
+<LI>
+New features:</LI>
+
+<OL>
+<LI>
+Implement <TT>ORB::perform_work</TT> and <TT>ORB::work_pending</TT> so
+that <TT>ORB::run</TT> <I>could</I> be implemented in terms of them.</LI>
+
+<LI>
+Improve the <TT>Service Configurator</TT> service entry faking on VxWorks.</LI>
+
+<LI>
+Integrate with realtime upcalls (RTUs).</LI>
+</OL>
+
+<LI>
+Internal restructuring:</LI>
+
+<OL>
+<LI>
+Create some sort of internal "request" object which carries enough context
+to suport deferred method invocation such as one might find in the thread-pool
+approach or wherever queuing might occur.</LI>
+</OL>
+
+<LI>
+Documentation:</LI>
+
+<OL>
+<LI>
+Update ORB Patterns paper to reflect the latest TAO has to offer. Specifically</LI>
+
+<UL>
+<LI>
+sections on the Abstract Factory and Concurrency strategies need to be
+updated, and the entire paper needs to be reviewed for accuracy w.r.t the
+current TAO.</LI>
+
+<LI>
+Metrics must be re-computed.</LI>
+
+<LI>
+Tighten existing discussions.</LI>
+
+<LI>
+Add information on new patterns (such as TSS) which have been used since
+initial work.</LI>
+</UL>
+
+<LI>
+Make the section in <TT><A HREF="../../TAO-Install.html">$TAO_ROOT/TAO-Install.html</A></TT>
+that documents installation on Unix platforms more complete.</LI>
+</OL>
+
+<LI>
+Miscellany:</LI>
+
+<OL>
+<LI>
+Assist in porting higher level services (e.g., <A HREF="ec.html">Event
+Channel</A>) to TAO.</LI>
+
+<LI>
+Compile and verify ACE and TAO on Linux using the Kuck and Associates,
+Inc. (KAI) compiler tools.</LI>
+</OL>
+
+<LI>
+Potential Optimizations:</LI>
+
+<OL>
+<LI>
+There is a certain amount of overhead introduced by the use of TSS Singletons.
+TSS singletons are very convenient as the variable does not have to be
+passed from function to function. Even though sort of access is generally
+acceptable, the overhead of this approach maybe too high when used in code
+which is executed frequently (e.g., during an upcall). This critical code
+may have to be restructured not to use TSS Singletons because of the high
+overhead associated with it.</LI>
+</OL>
+</UL>
+
+</BODY>
+</HTML>

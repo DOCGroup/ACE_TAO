@@ -1,0 +1,73 @@
+// $Id$
+
+// =========================================================================================================
+//
+// = FILE  
+//     NavWeap.idl
+//
+// = DESCRIPTION
+//    Navigation and Weapon structs for the DOVE/EventService demo.
+
+// = AUTHORS
+//     Michael Kircher <mk1@cec.wustl.edu>
+//     Modified by
+//     Chris Gill <cdgill@cs.wustl.edu>
+// ========================================================================================================= 
+
+#include "CosTimeBase.idl"
+
+struct Navigation {
+	long position_latitude;
+	long position_longitude;
+	unsigned long altitude;
+	long heading;
+	long roll;
+	long pitch;
+	// common part
+	double utilization;
+	double overhead;
+	TimeBase::TimeT arrival_time;
+	TimeBase::TimeT deadline_time;
+	TimeBase::TimeT completion_time;	
+	TimeBase::TimeT computation_time;
+        unsigned long criticality;
+        unsigned long update_data;
+};
+
+
+
+struct Weapons {
+
+	unsigned long number_of_weapons;
+	string weapon1_identifier;
+	unsigned long weapon1_status;
+	string weapon2_identifier;
+	unsigned long weapon2_status;
+	string weapon3_identifier;
+	unsigned long weapon3_status;
+	string weapon4_identifier;
+	unsigned long weapon4_status;
+	string weapon5_identifier;
+	unsigned long weapon5_status;
+	// common part
+	double utilization;
+	double overhead;
+	TimeBase::TimeT arrival_time;
+	TimeBase::TimeT deadline_time;
+	TimeBase::TimeT completion_time;	
+	TimeBase::TimeT computation_time;
+        unsigned long criticality;
+        unsigned long update_data;
+}; 
+
+interface NavWeapTerminator
+    // = DESCRIPTION
+    // This interface specifies a single operation, used
+    // to shut down the orb.  This allows the orb to
+    // be shut down cleanly, from within a synchronously 
+    // servant dispatched servant, but with the request
+    // originating from another thread.
+{
+    void shutdown ();
+};
+
