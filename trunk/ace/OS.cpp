@@ -1777,20 +1777,11 @@ ACE_Thread_Adapter::invoke (void)
 int
 ACE_Thread_Adapter::rethrow_w32_structural_exception ()
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) Win32 structured exception exiting thread\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%t) Win32 structured exception exiting thread\n")));
   return (DWORD) EXCEPTION_CONTINUE_SEARCH;
 }
 #endif /* ACE_WIN32 */
-
-ACE_Cleanup::~ACE_Cleanup ()
-{
-}
-
-void
-ACE_Cleanup::cleanup (void *)
-{
-  delete this;
-}
 
 extern "C" void
 ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
