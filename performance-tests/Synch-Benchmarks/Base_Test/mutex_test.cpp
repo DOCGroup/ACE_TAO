@@ -9,6 +9,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Semaphore.h"
 #include "ace/Null_Semaphore.h"
+#include "ace/Process_Semaphore.h"
 #include "Baseline_Test.h"
 
 template<class LOCK>
