@@ -329,7 +329,11 @@ class ACE_Export ACE_Static_Object_Lock
 {
 public:
   static ACE_Recursive_Thread_Mutex *instance (void);
-  // static lock access point
+  // Static lock access point.
+
+  static void cleanup_lock (void);
+  // For use only by ACE_Object_Manager to clean up lock if it
+  // what dynamically allocated.
 };
 
 #endif /* ACE_HAS_THREADS */
