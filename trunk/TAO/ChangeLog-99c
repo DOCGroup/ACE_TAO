@@ -1,3 +1,8 @@
+Wed Sep  8 11:45:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_field.cpp (dump):
+	  Replaced an ACE_ASSERT with ACE_ERROR.
+
 Wed Sep  8 10:37:49 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp:
