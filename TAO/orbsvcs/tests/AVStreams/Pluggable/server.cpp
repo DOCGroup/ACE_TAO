@@ -42,7 +42,6 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::receive_frame\n"));
   while (frame != 0)
     {
-      ACE_hrtime_t stamp;
       int result = ACE_OS::fwrite (frame->rd_ptr (),
                                    frame->length (),
                                    1,
