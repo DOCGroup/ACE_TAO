@@ -1,3 +1,10 @@
+Mon Jan 26 16:14:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* include/makeinclude/clean.bor:
+	  Changed this file a little, special independent clean fules for cbx
+	  and other versions and dependent on the version used the right clean
+	  rule is used.
+
 Mon Jan 26 16:02:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
