@@ -2120,31 +2120,6 @@ typedef u_int ACE_thread_key_t;
 /* #define T_NOFPU         0x00000000   Not using FPU */
 /* #define T_FPU           0x00000002   Using FPU bit */
 
-//// forward declaration of cond_t emulation class
-//class ACE_cond_t;
-//
-//// Wrapper for NT events on pSOS.
-//class ACE_Export ACE_event_t
-//{
-//  friend class ACE_OS;
-//protected:
-//  ACE_mutex_t lock_;
-//  // Protect critical section.
-//
-//  ACE_cond_t condition_;
-//// Keeps track of waiters.
-//
-//int manual_reset_;
-//// Specifies if this is an auto- or manual-reset event.
-//
-//int is_signaled_;
-//// "True" if signaled.
-//
-//u_long waiting_threads_;
-//// Number of waiting threads.
-//};
-
-
 #   elif defined (VXWORKS)
 // For mutex implementation using mutual-exclusion semaphores (which
 // can be taken recursively).
@@ -2389,6 +2364,35 @@ typedef rwlock_t ACE_rwlock_t;
 #       define ACE_THR_PRI_FIFO_DEF 0
 #     endif /* ! ACE_WTHREADS */
 #   endif /* ! ACE_THR_PRI_FIFO_DEF */
+
+#if defined (ACE_WIN32)
+typedef ACE_thread_mutex_t ACE_recursive_thread_mutex_t;
+#else
+class ACE_recursive_thread_mutex_t
+{
+  // = TITLE
+  //     Implement a thin C++ wrapper that allows nested acquisition
+  //     and release of a mutex that occurs in the same thread.
+  //
+  // = DESCRIPTION
+  //     This implementation is based on an algorithm sketched by Dave
+  //     Butenhof <butenhof@zko.dec.com>.  Naturally, I take the
+  //     credit for any mistakes ;-)
+public:
+  ACE_thread_mutex_t nesting_mutex_;
+  // Guards the state of the nesting level and thread id.
+
+  ACE_cond_t lock_available_;
+  // This condition variable suspends other waiting threads until the
+  // mutex is available.
+
+  int nesting_level_;
+  // Current nesting level of the recursion.
+
+  ACE_thread_t owner_id_;
+  // Current owner of the lock.
+};
+#endif /* ACE_WIN32 */
 
 # else /* !ACE_HAS_THREADS, i.e., the OS/platform doesn't support threading. */
 
@@ -4806,6 +4810,33 @@ public:
                     int sync);
   static int munmap (void *addr,
                      size_t len);
+
+  // = A set of wrappers for recursive mutex locks.
+  static int recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
+                                   LPCTSTR name = 0,
+                                   void *arg = 0,
+                                   LPSECURITY_ATTRIBUTES sa = 0);
+  static int recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m);
+
+  static int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m);
+  // Win32 note: Abandoned mutexes are not treated differently. 0 is
+  // returned since the calling thread does get the ownership.
+
+  static int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
+                                   int &abandoned);
+  // This method is only implemented for Win32.  For abandoned
+  // mutexes, <abandoned> is set to 1 and 0 is returned.
+
+  static int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
+  // Win32 note: Abandoned mutexes are not treated differently. 0 is
+  // returned since the calling thread does get the ownership.
+
+  static int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m,
+                                      int &abandoned);
+  // This method is only implemented for Win32.  For abandoned
+  // mutexes, <abandoned> is set to 1 and 0 is returned.
+
+  static int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
 
   // = A set of wrappers for mutex locks.
   static int mutex_init (ACE_mutex_t *m,
