@@ -1,63 +1,65 @@
 Mon Apr 24 15:24:19 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/examples/RtEC/Makefile:
-	* orbsvcs/examples/RtEC/MCast/Makefile:
-	* orbsvcs/examples/RtEC/MCast/README:
-	* orbsvcs/examples/RtEC/MCast/svc.conf:
-	* orbsvcs/examples/RtEC/MCast/AddrServer.h:
-	* orbsvcs/examples/RtEC/MCast/AddrServer.cpp:
-	* orbsvcs/examples/RtEC/MCast/Consumer.h:
-	* orbsvcs/examples/RtEC/MCast/Consumer.cpp:
-	* orbsvcs/examples/RtEC/MCast/MCast.h:
-	* orbsvcs/examples/RtEC/MCast/MCast.cpp:
-	* orbsvcs/examples/RtEC/MCast/MCast.dsp:
-	* orbsvcs/examples/RtEC/MCast/Supplier.cpp:
-	* orbsvcs/examples/RtEC/MCast/Supplier.h:
+        * orbsvcs/examples/RtEC/Makefile:
+        * orbsvcs/examples/RtEC/MCast/Makefile:
+        * orbsvcs/examples/RtEC/MCast/README:
+        * orbsvcs/examples/RtEC/MCast/svc.conf:
+        * orbsvcs/examples/RtEC/MCast/AddrServer.h:
+        * orbsvcs/examples/RtEC/MCast/AddrServer.cpp:
+        * orbsvcs/examples/RtEC/MCast/Consumer.h:
+        * orbsvcs/examples/RtEC/MCast/Consumer.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.h:
+        * orbsvcs/examples/RtEC/MCast/MCast.cpp:
+        * orbsvcs/examples/RtEC/MCast/MCast.dsp:
+        * orbsvcs/examples/RtEC/MCast/Supplier.h:
+        * orbsvcs/examples/RtEC/MCast/Supplier.cpp:
+          A new simple example that shows how to use multicast to federate
+          multiple event channels. This fixes [BUGID:344]
 
-	* orbsvcs/examples/RtEC/Simple/Consumer.h:
-	* orbsvcs/examples/RtEC/Simple/Supplier.h:
-	  Fixed the comments.
+        * orbsvcs/examples/RtEC/Simple/Consumer.h:
+        * orbsvcs/examples/RtEC/Simple/Supplier.h:
+          Fixed the comments.
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	  It was rejecting the ACE_ES_UNDEFINED_EVENT which is the first
-	  event available to the user.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          It was rejecting the ACE_ES_UNDEFINED_EVENT which is the first
+          event available to the user.
 
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
-	  Use STL style iterators for the event header collection.
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+          Use STL style iterators for the event header collection.
 
 Mon Apr 24 14:38:15 2000  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	* orbsvcs/orbsvcs/AV_Static.dsp:
-	* orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
-	* orbsvcs/orbsvcs/CosEvent_Static.dsp:
-	* orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
-	* orbsvcs/orbsvcs/CosNaming_Static.dsp:
-	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
-	* orbsvcs/orbsvcs/CosProperty_Static.dsp:
-	* orbsvcs/orbsvcs/CosTime_Static.dsp:
-	* orbsvcs/orbsvcs/CosTrading_Static.dsp:
-	* orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
-	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
-	* orbsvcs/orbsvcs/RTSched_Static.dsp:
-	* orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
-	  New project to build each service as a static library.
+        * orbsvcs/orbsvcs/orbsvcs_static.dsw:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+        * orbsvcs/orbsvcs/AV_Static.dsp:
+        * orbsvcs/orbsvcs/CosConcurrency_Static.dsp:
+        * orbsvcs/orbsvcs/CosEvent_Static.dsp:
+        * orbsvcs/orbsvcs/CosLifeCycle_Static.dsp:
+        * orbsvcs/orbsvcs/CosNaming_Static.dsp:
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+        * orbsvcs/orbsvcs/CosProperty_Static.dsp:
+        * orbsvcs/orbsvcs/CosTime_Static.dsp:
+        * orbsvcs/orbsvcs/CosTrading_Static.dsp:
+        * orbsvcs/orbsvcs/DsLogAdmin_Static.dsp:
+        * orbsvcs/orbsvcs/RTEvent_Static.dsp:
+        * orbsvcs/orbsvcs/RTSched_Static.dsp:
+        * orbsvcs/orbsvcs/Svc_Utils_Static.dsp:
+          New project to build each service as a static library.
 
-	* tao/TAO_Static.dsp:
-	  In Release mode ACE is compiled with inline functions enabled,
-	  so should be the TAO static library.
+        * tao/TAO_Static.dsp:
+          In Release mode ACE is compiled with inline functions enabled,
+          so should be the TAO static library.
 
-	* examples/Simple/time/client.dsp:
-	* examples/Simple/time/client_static.dsp:
-	* examples/Simple/time/server_static.dsp:
-	  Use the new static ORBSVCS libraries.
-	  Compile using the correct macro settings (TAO_NAMING_HAS_DLL=0,
-	  ACE_NO_INLINE cannot be defined for release builds, etc.)
-	  Remove obsolete dependencies on the TAO IDL compiler.
+        * examples/Simple/time/client.dsp:
+        * examples/Simple/time/client_static.dsp:
+        * examples/Simple/time/server_static.dsp:
+          Use the new static ORBSVCS libraries.
+          Compile using the correct macro settings (TAO_NAMING_HAS_DLL=0,
+          ACE_NO_INLINE cannot be defined for release builds, etc.)
+          Remove obsolete dependencies on the TAO IDL compiler.
 
-	* orbsvcs/orbsvcs/CosTrading.dsp:
-	  Remove template files from the release build.
+        * orbsvcs/orbsvcs/CosTrading.dsp:
+          Remove template files from the release build.
 
 Mon Apr 24 11:46:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
@@ -67,8 +69,8 @@ Mon Apr 24 11:46:56 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Mon Apr 24 13:16:23 2000  Shawn Hannan  <hannan@tango.cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Simple/Supplier.h: 
-	* orbsvcs/examples/RtEC/Simple/Consumer.h:  Fixed minor typos
+        * orbsvcs/examples/RtEC/Simple/Supplier.h:
+        * orbsvcs/examples/RtEC/Simple/Consumer.h:  Fixed minor typos
 
 Sun Apr 23 16:15:16 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -197,10 +199,10 @@ Sat Apr 22 20:53:11 2000  Darrell Brunsch <brunsch@uci.edu>
 
 Sat Apr 22 01:31:13 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/Options.html: Added a reminder for compiling idl files with
-	  -Gd flag if "direct" collocation strategy is to be used on those
-	  interfaces.  Thanks to Klemen Zagar <klemen.zagar@ijs.si> for
-	  uncovering the inadquency.
+        * docs/Options.html: Added a reminder for compiling idl files with
+          -Gd flag if "direct" collocation strategy is to be used on those
+          interfaces.  Thanks to Klemen Zagar <klemen.zagar@ijs.si> for
+          uncovering the inadquency.
 
 Fri Apr 21 20:04:53 2000  Darrell Brunsch <brunsch@uci.edu>
 
