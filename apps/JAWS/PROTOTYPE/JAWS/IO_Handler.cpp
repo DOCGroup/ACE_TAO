@@ -399,7 +399,7 @@ JAWS_Asynch_IO_Handler::accept_called_already (void)
 JAWS_IO_Handler *
 JAWS_Asynch_IO_Handler_Factory::create_io_handler (void)
 {
-  JAWS_TRACE ("JAWS_Synch_IO_Handler_Factory::create");
+  JAWS_TRACE ("JAWS_Asynch_IO_Handler_Factory::create");
 
   JAWS_Asynch_IO *io;
   JAWS_Asynch_IO_Handler *handler;
