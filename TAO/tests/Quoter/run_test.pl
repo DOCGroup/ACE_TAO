@@ -128,11 +128,12 @@ for ($i = 0; $i <= $#ARGV; $i++)
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-leave              -- leaves the servers running and their windows open\n";
+      print "-onewin             -- keeps all tests in one window on NT\n";
       print "-d                  -- runs each in debug mode\n";
       print "-h                  -- prints this information\n";
       print "-cm                 -- use more than one thread in the client\n";
       print "-sm                 -- use more than one thread in the server\n";
-      print "-ns -sv -ff -cl -gf -- runs only one of the executables\n";
+      print "-ns -sv -ff -gf -cl -- runs only one of the executables\n";
       exit;
     }
     if ($ARGV[$i] eq "-n")
@@ -197,6 +198,15 @@ for ($i = 0; $i <= $#ARGV; $i++)
       $s_conf = "s.conf";
       last SWITCH; 
     }
+    if ($ARGV[$i] eq "-onewin")
+    {
+      if ($^O eq "MSWin32")
+      {
+        $Process::newwindow = "no";
+      }
+      last SWITCH;
+    }
+    
     $other = $other." ".$ARGV[$i];
   }
 }
