@@ -1,3 +1,7 @@
+Tue Jun 23 20:33:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Synch.h (ACE_Adaptive_Lock): Added ACE_Export.
+
 Tue Jun 23 18:59:31 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/Acceptor.cpp (ACE_Strategy_Acceptor<>::resume()): Don't

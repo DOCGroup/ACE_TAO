@@ -90,7 +90,7 @@ public:
   // already had the lock, <errno> is set to <EBUSY>.
 };
 
-class ACE_Adaptive_Lock : public ACE_Lock
+class ACE_Export ACE_Adaptive_Lock : public ACE_Lock
 {
   // = TITLE
   //    An adaptive general locking class that defers the decision of
