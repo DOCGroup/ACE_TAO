@@ -1,3 +1,15 @@
+Wed Nov 27 20:35:49 2002  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Add Visual Age C++ 6 to
+          the list of compiler versions it knows about. For VA 6, use the
+          new -qtemplateregistry build option to try to be more efficient
+          about template compilation. It's still lamer than most though, and
+          Visual Age C++ 6 needs the aixshr filter to weed out the Duplicate
+          Symbol warnings.
+
+        * include/makeinclude/rules.local.GNU: Add templateregistry to the
+          files/directories removed on clean. It's used by Visual Age C++ 6.
+
 Wed Nov 27 19:42:51 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/MT_Reactor_Upcall_Test.cpp: Send and receive each message

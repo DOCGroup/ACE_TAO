@@ -1,10 +1,10 @@
 # $Id$
 
 # This file is for use with AIX 4.3 and up, using either of the IBM
-# compilers (IBM C/C++ 3.6.6 or Visual Age C++ 5 batch compiler).
+# compilers (IBM C/C++ 3.6.6 or Visual Age C++ 5 or 6 batch compiler).
 # If you wish to use the CSet++ compiler, please use platform_aix4_cset++.GNU.
 # Note that as of ACE 6.0, the only supported compiler from IBM will
-# be Visual Age C++ 5 and up (either batch or incremental).
+# be Visual Age C++ 5 (batch mode only) and up.
 
 ifeq (,$(debug))
   debug = 1
@@ -36,9 +36,9 @@ endif
 # from the vacpp compiler newsgroup.
 # It relies on the preprocessor defining __xlC__ to the proper version
 # number of the compiler.
-XLCVERSION := $(shell echo "__xlC__" > ./testAIXCompilerVersion.cpp)
-XLCVERSION := $(shell xlC -E ./testAIXCompilerVersion.cpp | tail -1')
-ACE_AIX_CLEAN := $(shell $(RM) ./testAIXCompilerVersion.cpp)
+XLCVERSION := $(shell echo "__xlC__" > ./testxlCvers.cpp;xlC -E ./testxlCvers.cpp | tail -1;$(RM) testxlCvers.cpp)
+#XLCVERSION := $(shell xlC -E ./testAIXCompilerVersion.cpp | tail -1')
+#ACE_AIX_CLEAN := $(shell $(RM) ./testAIXCompilerVersion.cpp)
 
 # In case anything here or in the config depends on OS version number,
 # grab it here and pass it all to the compiler as well.
@@ -61,7 +61,7 @@ SOEXT       = a
 # aix_build turns on the funky shared library building code in
 # rules.lib.GNU
 aix_build = 1
-SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
+#SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
 
 ifeq ($(threads),1)
 # Note - the _r form of the compiler command turns on -qthreads and the
@@ -78,9 +78,8 @@ endif
 
 ARFLAGS	    = ruv
 AR	    = ar
-LD          = $(ACE_ROOT)/bin/aix_shr $(CXX)
+LD          = $(SHR_FILTER) $(CXX)
 RANLIB	    = ranlib
-TEMPINCDIR  = tempinc
 
 CPPFLAGS    += -DACE_AIX_VERS=$(AIX_VERS)
 # -qinitauto seems like an interesting option, but some tests (specifically
@@ -90,15 +89,26 @@ DCFLAGS     += -g -qcheck=nobounds:div:null
 
 # Now sort out the compiler differences here...
 ifeq ($(XLCVERSION),0x0306)
- CCFLAGS    += -qlanglvl=ansi -qflag=e:e
- SOFLAGS    += -p 0
+  SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
+  CCFLAGS    += -qlanglvl=ansi -qflag=e:e -qonce -qtempinc
+  SOFLAGS    += -p 0
+  TEMPINCDIR  = tempinc
 # ibmcxx_build turns on the extra step for instantiating and compiling
 # template instances in rules.lib.GNU.
- ibmcxx_build = 1
- rtti = 0
-else
- ifeq ($(XLCVERSION),0x0500)
-  CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect
+  ibmcxx_build = 1
+  rtti = 0
+else    # Visual Age 5 and 6
+  SHR_FILTER=$(ACE_ROOT)/bin/aix_shr
+  ifeq ($(XLCVERSION),0x0500)
+    CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qonce -qtempinc
+    TEMPINCDIR  = tempinc
+  else
+    ifeq ($(XLCVERSION),0x0600)
+      CCFLAGS    += -qflag=w:w -qstaticinline -qfuncsect -qtemplateregistry
+    else
+      CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
+    endif
+  endif
   DLD         = $(CXX) -qmkshrobj
   SOFLAGS    += $(CCFLAGS) $(CPPFLAGS) $(INCLDIRS)
   ifeq ($(buildbits),64)
@@ -106,17 +116,10 @@ else
     CCFLAGS += -q64
     ARFLAGS := -X64 $(ARFLAGS)
   endif
- else
-  CXX = echo "Unrecognized compiler version $(XLCVERSION)\n"
- endif
 endif
 
-# -qextchk is handy, but produces false type mismatches when linking
-# netsvcs, so it's disabled.  IBM reports this fixed in 3.6.4, but it's
-# still producing the warnings... should be looked at.
-CCFLAGS     += $(CFLAGS) -qonce -qtempinc
 ifeq ($(exceptions),0)
-CCFLAGS     += -qnoeh
+  CCFLAGS     += -qnoeh
 endif
 
 ifeq (1,$(rtti))
