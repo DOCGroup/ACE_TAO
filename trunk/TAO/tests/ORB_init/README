@@ -44,15 +44,18 @@ behaviors it tests:
                  // Do something with exc.
               }
 
+ORB_init also makes a call to CORBA::ORB::string_to_object() to aid in
+debugging during TAO_Stub destruction (memory leaks, etc).
+
 Simply run the `ORB_init' program with out any argument to begin the
 test.  The correct output is:
 
-        The ORB <my_orb> was successfully returned from a second
+        The ORB <mighty_orb> was successfully returned from a second
         call to CORBA::ORB_init() after it was released in
         a previous scope.
 
 
-        A new ORB with ORBid <my_orb> was successfully returned
+        A new ORB with ORBid <mighty_orb> was successfully returned
         from a second call to CORBA::ORB_init() after the
         first ORB with the same ORBid was destroyed.
 
