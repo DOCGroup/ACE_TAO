@@ -1146,6 +1146,12 @@ AH_TEMPLATE([ACE_USE_POLL],
 
 AH_TEMPLATE([ACE_POLL_IS_BROKEN],[Platform has broken poll()])
 
+AH_TEMPLATE([ACE_HAS_EVENT_POLL],[Platform (Linux) supports event poll 
+  interface.])
+
+AH_TEMPLATE([ACE_HAS_DEV_POLL],[Platform (Linux) supports /dev/poll character
+  device.])
+
 AH_TEMPLATE([ACE_USES_ASM_SYMBOL_IN_DLSYM],
 [Platform uses assembly symbols instead of C symbols in dlsym()])
 

@@ -24,6 +24,7 @@ lib_LTLIBRARIES += libACE_SSL.la
 libACE_SSL_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
   -I$(ACE_BUILDDIR) \
+  -I$(ACE_KERBEROS_INCLUDES) \
   -DACE_SSL_BUILD_DLL
 
 libACE_SSL_la_SOURCES = \
@@ -39,7 +40,7 @@ libACE_SSL_la_LDFLAGS = \
  -version-number @ACE_MAJOR@:@ACE_MINOR@:@ACE_BETA@
 
 libACE_SSL_la_LIBADD = \
- $(ACE_BUILDDIR)/ace/libACE.la
+ $(ACE_BUILDDIR)/ace/libACE.la -lssl -lcrypto
 
 nobase_include_HEADERS += \
   SSL_Asynch_BIO.h \
@@ -61,6 +62,8 @@ endif BUILD_SSL
 
 ## Clean up template repositories, etc.
 clean-local:
-	-rm -f *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-rm -f gcctemp.c gcctemp so_locations
+	-rm -f *~ *.bak *.rpo *.sym lib*.*_pure_* core core.*
+	-rm -f gcctemp.c gcctemp so_locations *.ics
+	-rm -rf cxx_repository ptrepository ti_files
+	-rm -rf templateregistry ir.out
 	-rm -rf ptrepository SunWS_cache Templates.DB
