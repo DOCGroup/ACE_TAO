@@ -1,3 +1,9 @@
+Wed Oct  8 14:17:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          When using Kylix use a different $(BIN) rule. This will fix a lot
+          of the errors we have in the Kylix build.
+
 Wed Oct  8 13:56:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/soreduce/Library.cpp:
