@@ -78,18 +78,10 @@ private:
               const ACE_INET_Addr& addr);
   // Implement the common part of the open*() methods.
 
-  int parse_options (const char *options);
+  virtual int parse_options (const char *options);
   // Parse protocol specific options.
 
-private:
-  TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
-  // the concrete acceptor, as a pointer to it's base class.
-
-  TAO_IIOP_CREATION_STRATEGY *creation_strategy_;
-  TAO_IIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
-  TAO_IIOP_ACCEPT_STRATEGY *accept_strategy_;
-  // Acceptor strategies.
-
+protected:
   ACE_INET_Addr address_;
   ACE_CString host_;
   // Cache the information about the endpoint serviced by this
@@ -104,6 +96,16 @@ private:
 
   TAO_ORB_Core *orb_core_;
   // ORB Core.
+
+private:
+  TAO_IIOP_BASE_ACCEPTOR base_acceptor_;
+  // the concrete acceptor, as a pointer to it's base class.
+
+  TAO_IIOP_CREATION_STRATEGY *creation_strategy_;
+  TAO_IIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
+  TAO_IIOP_ACCEPT_STRATEGY *accept_strategy_;
+  // Acceptor strategies.
+
 };
 
 #if defined(__ACE_INLINE__)

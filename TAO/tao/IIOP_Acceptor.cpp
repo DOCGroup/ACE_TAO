@@ -43,12 +43,12 @@ template class TAO_Accept_Strategy<TAO_IIOP_Server_Connection_Handler, ACE_SOCK_
 
 TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
   : TAO_Acceptor (TAO_IOP_TAG_INTERNET_IOP),
+    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
+    orb_core_ (0),
     base_acceptor_ (),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
-    accept_strategy_ (0),
-    version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
-    orb_core_ (0)
+    accept_strategy_ (0)
 {
 }
 
