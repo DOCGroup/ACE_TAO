@@ -1,3 +1,8 @@
+Thu May 30 16:45:10 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	[Bug 1208]
+	* ace/OS_String.inl (strstr): Remove wcwcs(), use wcsstr() instead.
+
 Thu May 30 9:15:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
   
         Thanks to Edan Ayal <edanayal@yahoo.com> and Alex Libman
