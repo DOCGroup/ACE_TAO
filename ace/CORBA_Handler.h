@@ -37,7 +37,7 @@
 class ACE_Export ACE_CORBA_Handler : public ACE_Service_Object
 {
   // = TITLE
-  //     Handle CORBA requests in conjunction with ACE.
+  //     Handle Orbix requests in conjunction with ACE.
   //
   // = DESCRIPTION
   //     Note, do *NOT* inherit from this class!  Instead, use the
@@ -96,10 +96,16 @@ private:
 };
 
 class ACE_Export ACE_ST_CORBA_Handler : public ACE_CORBA_Handler
-  // = TITLE
-  //     Handle single-threaded CORBA requests in conjunction with the
-  //     <ACE_Reactor>.
 {
+  // = TITLE
+  //     Handle single-threaded Orbix requests in conjunction with the
+  //     <ACE_Reactor>.
+  // 
+  // = DESCRIPTION
+  //     You should NOT use this class unless you've got a VERY old
+  //     version of Orbix that only supports single-threading.  If
+  //     you're using a more recent version of Orbix use the
+  //     <ACE_MT_CORBA_Handler>.
 public:
   // = Singleton access point.
   static ACE_CORBA_Handler *instance (void);
@@ -158,8 +164,17 @@ protected:
 class ACE_Export ACE_MT_CORBA_Handler : public ACE_CORBA_Handler, public ACE_CORBA_1 (ThreadFilter)
 {
   // = TITLE
-  //     Handle multi-threaded CORBA requests in conjunction with the
+  //     Handle multi-threaded Orbix requests in conjunction with the
   //     <ACE_Reactor>.
+  //
+  // = DESCRIPTION
+  //     If you are using MT-Orbix (which has been the default Orbix
+  //     for years) you should use this class rather than
+  //     <ACE_ST_CORBA_Handler>.  See
+  //
+  //     www.cs.wustl.edu/~schmidt/COOTS-96.ps.gz
+  //
+  //     for an explanation of what this class does for Orbix.
 public:
   // = Singleton access point.
   static ACE_CORBA_Handler *instance (void);
