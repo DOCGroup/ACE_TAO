@@ -35,13 +35,6 @@
 
 #include <math.h>
 
-static unsigned int LOW_PRIORITY;
-static unsigned int HIGH_PRIORITY;
-
-// global test configuration parameters
-static unsigned long num_iterations = 1000;
-static unsigned int new_lwp = 0;
-
 // @@ Should we put this into a more general file, e.g., OS.h?
 //
 // I will integrate this, together with the sqrt() function when
@@ -208,7 +201,7 @@ public:
 
   u_int run_server_utilization_test_;
   // flag to indicate we are to run the utilization test of the server.
-  // This means we are not sending requests at a determined frequency, 
+  // This means we are not sending requests at a determined frequency,
   // but rather "let it rip"!
 };
 
@@ -246,7 +239,7 @@ private:
   void put_latency (double *jitter,
                     double latency,
                     u_int thread_id,
-		    u_int count);
+                    u_int count);
   // Records the latencies in the <Task_State>.
 
   int parse_args (int, char **);
