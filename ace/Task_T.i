@@ -5,13 +5,13 @@
 
 template <ACE_SYNCH_1> ACE_INLINE void
 ACE_Task<ACE_SYNCH_2>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd, 
-				    size_t size)
+				    size_t wm_size)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_2>::water_marks");
   if (cmd == ACE_IO_Cntl_Msg::SET_LWM)
-    this->msg_queue_->low_water_mark (size);
+    this->msg_queue_->low_water_mark (wm_size);
   else /* cmd == ACE_IO_Cntl_Msg::SET_HWM */
-    this->msg_queue_->high_water_mark (size);
+    this->msg_queue_->high_water_mark (wm_size);
 }
 
 template <ACE_SYNCH_1> ACE_INLINE int 
