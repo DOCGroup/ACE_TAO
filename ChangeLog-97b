@@ -1,5 +1,13 @@
 Mon Sep 15 12:08:38 1997    <irfan@TWOSTEP>
 
+	* ace/Reactor (register_handler): Originally this interface was
+ 	  available for all platforms, but because ACE_HANDLE is an int on
+ 	  non-Win32 platforms, compilers are not able to tell the
+ 	  difference between
+ 	  register_handler(ACE_Event_Handler*,ACE_Reactor_Mask) and
+ 	  register_handler(ACE_Event_Handler*,ACE_HANDLE). Therefore, we
+ 	  have restricted this method to Win32 only.
+
 	* ace/WFMO_Reactor.h: Removed non-Win32 version of the
  	  WFMO_Reactor. This is no longer required in the new scheme.
 
