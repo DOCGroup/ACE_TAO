@@ -166,4 +166,8 @@
 // Enables use of POSIX termios struct
 #define ACE_USES_NEW_TERMIOS
 
+// IRIX 6.5 supports AIO
+#define ACE_HAS_AIO_CALLS
+#define ACE_POSIX_AIOCB_PROACTOR
+
 #endif /* ACE_CONFIG_IRIX6X_COMMON_H */
