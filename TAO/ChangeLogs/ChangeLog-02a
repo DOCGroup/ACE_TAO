@@ -1,3 +1,22 @@
+Mon Feb 04 09:19:53 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	  AMH_*ExceptionHolder valuetypes do not need to derive from
+	  Messaging::ExceptionHolder, that would make it possible to use
+	  AMH even if CORBA Messaging is disabled at compile time, plus it
+	  makes the ExceptionHolders lighter-weight.
+	  
+	* TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+	  Improved the checks to detect *_excep() operations.
+	  Generate the right call to the raise_*() operation.
+	  Fixed indentation in the generated code.
+
+	* TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+	  Started changes to add the ExceptionHolder factory method.
+
+	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+	  Cosmetic fixes.
+
 Mon Feb  4 10:47:52 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
@@ -293,6 +312,7 @@ Thu Jan 31 14:14:32 2002  Boris Kolpackov <bosk@ipmce.ru>
 	  Added generation of nested into valuetype exceptions. 
 	
 Thu Jan 31 13:06:12 2002  Boris Kolpackov <bosk@ipmce.ru>
+
 	* TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
 
 	  Eliminated code that triggers bug with fully-qualified names

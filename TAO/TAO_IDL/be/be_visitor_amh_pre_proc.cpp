@@ -103,7 +103,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 
   // Create the ResponseHandler class
   be_interface *response_handler =
-    this->create_response_handler (node, 
+    this->create_response_handler (node,
                                    excep_holder);
 
   if (response_handler == 0)
@@ -117,7 +117,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   response_handler->set_defined_in (node->defined_in ());
 
   // Insert the response handler after the node.
-  module->be_add_interface (response_handler, 
+  module->be_add_interface (response_handler,
                             node);
 
   // Remember from whom we were cloned
@@ -125,7 +125,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
 
   // Add the ExceptionHolder after the ResponseHandler, seems to
   // generate the code in the right order....
-  module->be_add_interface (excep_holder, 
+  module->be_add_interface (excep_holder,
                             node);
 
   return 0;
@@ -256,8 +256,8 @@ be_visitor_amh_pre_proc::create_response_handler_operation (
       return -1;
     }
 
-  return this->add_exception_reply (node, 
-                                    response_handler, 
+  return this->add_exception_reply (node,
+                                    response_handler,
                                     exception_holder);
 }
 
@@ -286,15 +286,15 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                   -1);
 
   // Create the name...
-  UTL_ScopedName *operation_name = node->compute_name ("", 
+  UTL_ScopedName *operation_name = node->compute_name ("",
                                                        "_excep");
 
   be_operation *node_excep = 0;
   ACE_NEW_RETURN (node_excep,
-                  be_operation (rt, 
+                  be_operation (rt,
                                 AST_Operation::OP_noflags,
-                                operation_name, 
-                                1, 
+                                operation_name,
+                                1,
                                 0),
                   -1);
 
@@ -350,8 +350,8 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                   node->name ()->last_component ()->get_string ()
                 );
 
-  UTL_ScopedName *op_name = 
-    ACE_static_cast (UTL_ScopedName *, 
+  UTL_ScopedName *op_name =
+    ACE_static_cast (UTL_ScopedName *,
                      response_handler->name ()->copy ());
 
   ACE_NEW_RETURN (id,
@@ -500,7 +500,7 @@ be_visitor_amh_pre_proc::visit_attribute (be_attribute *node)
   // Assign it to the attribute as set_operation strategy.
   if (set_operation_strategy)
     {
-      be_operation_strategy *sos = 
+      be_operation_strategy *sos =
         node->set_set_strategy (set_operation_strategy);
       delete sos;
       sos = 0;
@@ -520,7 +520,7 @@ be_visitor_amh_pre_proc::visit_attribute (be_attribute *node)
 
   if (get_operation_strategy)
     {
-      be_operation_strategy *gos = 
+      be_operation_strategy *gos =
         node->set_get_strategy (get_operation_strategy);
       delete gos;
       gos = 0;
@@ -549,8 +549,8 @@ be_visitor_amh_pre_proc::visit_scope (be_scope *node)
       }
 
       AST_Decl **elements;
-      ACE_NEW_RETURN (elements, 
-                      AST_Decl *[number_of_elements], 
+      ACE_NEW_RETURN (elements,
+                      AST_Decl *[number_of_elements],
                       -1);
 
       {
@@ -577,7 +577,7 @@ be_visitor_amh_pre_proc::visit_scope (be_scope *node)
               delete [] elements;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"), 
+                                 "bad node in this scope\n"),
                                 -1);
 
             }
@@ -600,7 +600,7 @@ be_visitor_amh_pre_proc::visit_scope (be_scope *node)
               delete [] elements;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "codegen for scope failed\n"), 
+                                 "codegen for scope failed\n"),
                                 -1);
 
             }
@@ -615,13 +615,7 @@ be_visitor_amh_pre_proc::visit_scope (be_scope *node)
 be_valuetype *
 be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
 {
-  Identifier *id = 0;
-  UTL_ScopedName *sn = 0;
-
-  ACE_NEW_RETURN (id,
-                  Identifier ("Messaging"),
-                  0);
-
+#if 0
   // Create a virtual module named "Messaging" and a valuetype
   // "ExceptionHolder" from which we inherit.
   UTL_ScopedName *inherit_name = 0;
@@ -650,6 +644,7 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                   0);
 
   inherit_vt->set_name (inherit_name);
+  inherit_vt->set_imported (I_TRUE);
 
   ACE_NEW_RETURN (id,
                   Identifier ("Messaging"),
@@ -669,22 +664,27 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
   // "Messaging" module.
   inherit_vt->set_defined_in (msg);
 
-  UTL_ScopedName *excep_holder_name = node->compute_name ("AMH_", 
-                                                          "ExceptionHolder");
-
+  const int inherit_count = 1;
   AST_Interface **p_intf = 0;
   ACE_NEW_RETURN (p_intf,
                   AST_Interface*[1],
                   0);
-                  
-  p_intf[0] = ACE_static_cast (AST_Interface *, 
+
+  p_intf[0] = ACE_static_cast (AST_Interface *,
                                inherit_vt);
+#else
+  const int inherit_count = 0;
+  AST_Interface **p_intf = 0;
+#endif
+
+  UTL_ScopedName *excep_holder_name =
+    node->compute_name ("AMH_", "ExceptionHolder");
 
   be_valuetype *excep_holder = 0;
   ACE_NEW_RETURN (excep_holder,
                   be_valuetype (excep_holder_name,  // name
                                 p_intf,             // list of inherited
-                                1,                  // number of inherited
+                                inherit_count,      // number of inherited
                                 0),                 // set abstract
                   0);
 
