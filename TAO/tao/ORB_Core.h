@@ -1423,7 +1423,7 @@ typedef TAO_TSS_Singleton<TAO_TSS_Resources, TAO_SYNCH_MUTEX>
 
 TAO_SINGLETON_DECLARE (TAO_TSS_Singleton,
                        TAO_TSS_Resources,
-                       TAO_SYNCH_MUTEX);
+                       TAO_SYNCH_MUTEX)
 
 // ****************************************************************
 
