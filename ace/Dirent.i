@@ -47,16 +47,16 @@ ACE_Dirent::~ACE_Dirent (void)
 ACE_INLINE dirent *
 ACE_Dirent::read (void)
 {
-  return ACE_OS::readdir (this->dirp_);
+  return this->dirp_ ? ACE_OS::readdir (this->dirp_) : 0;
 }
 
 ACE_INLINE int
 ACE_Dirent::read (struct dirent *entry,
                   struct dirent **result)
 {
-  return ACE_OS::readdir_r (this->dirp_,
-                            entry,
-                            result);
+  return this->dirp_
+         ? ACE_OS::readdir_r (this->dirp_, entry, result)
+         : 0;
 }
 
 ACE_INLINE void
@@ -74,18 +74,20 @@ ACE_Dirent::close (void)
 ACE_INLINE void
 ACE_Dirent::rewind (void)
 {
-  ACE_OS::rewinddir (this->dirp_);
+  if (this->dirp_)
+    ACE_OS::rewinddir (this->dirp_);
 }
 
 ACE_INLINE void
 ACE_Dirent::seek (long loc)
 {
-  ACE_OS::seekdir (this->dirp_, loc);
+  if (this->dirp_)
+    ACE_OS::seekdir (this->dirp_, loc);
 }
 
 ACE_INLINE long
 ACE_Dirent::tell (void)
 {
-  return ACE_OS::telldir (this->dirp_);
+  return this->dirp_ ? ACE_OS::telldir (this->dirp_) : 0;
 }
 
