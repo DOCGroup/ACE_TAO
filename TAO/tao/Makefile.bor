@@ -127,7 +127,6 @@ OBJFILES = \
 	$(OBJDIR)\ORBInitInfo.obj \
 	$(OBJDIR)\ORBInitializer_Registry.obj \
 	$(OBJDIR)\operation_details.obj \
-	$(OBJDIR)\PortableInterceptorC.obj \
 	$(OBJDIR)\OctetSeqC.obj \
 	$(OBJDIR)\StringSeqC.obj \
 	$(OBJDIR)\Object_Ref_Table.obj \
@@ -145,7 +144,6 @@ OBJFILES = \
 	$(OBJDIR)\PolicyFactory_Registry.obj \
 	$(OBJDIR)\PollableC.obj \
 	$(OBJDIR)\Pool_Per_Endpoint.obj \
-	$(OBJDIR)\PortableInterceptor.obj \
 	$(OBJDIR)\PortableInterceptorC.obj \
 	$(OBJDIR)\Principal.obj \
 	$(OBJDIR)\Priority_Mapping.obj \
