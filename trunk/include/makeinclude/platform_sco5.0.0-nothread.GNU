@@ -20,5 +20,5 @@ SOFLAGS = $(CPPFLAGS) -b elf -fpic -G
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB  = (echo "main() { }" > gcctemp.c && \
           $(COMPILE.cc) -o gcctemp.o gcctemp.c && \
-          $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) $(VLDLIBS); \
+          $(LINK.cc) -o gcctemp gcctemp.o $^ $(LDFLAGS) -lACE $(LIBS); \
           status=$$?; exit $$status)
