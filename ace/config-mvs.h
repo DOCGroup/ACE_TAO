@@ -12,6 +12,8 @@
 #undef log
 #endif /* log */
 
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+
 #define ACE_LACKS_TCP_H
 
 // Platform supports getpagesize() call.
