@@ -101,9 +101,6 @@
 // Compiler/platform supports SVR4 dynamic linking semantics.
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 
-// Andreas Ueltschi tells me this is a good thing...
-#define ACE_HAS_SVR5_GETTIMEOFDAY
-
 // Compiler/platform supports SVR4 signal typedef.
 #define ACE_HAS_SVR4_SIGNAL_T
 

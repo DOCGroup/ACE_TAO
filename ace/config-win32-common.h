@@ -251,9 +251,6 @@ typedef unsigned __int64 ACE_UINT64;
 #define ACE_HAS_GETRUSAGE
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
-// Andreas Ueltschi tells me this is a good thing...
-#define ACE_HAS_SVR5_GETTIMEOFDAY
-
 // Compiler/platform supports SVR4 signal typedef.
 //define ACE_HAS_SVR4_SIGNAL_T
 
