@@ -1,3 +1,8 @@
+Wed Apr  3 18:01:33 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/SOCK_Dgram.cpp (shared_open): Add PF_INET6 to the test for
+          need to bind an unused port if ACE_HAS_IPV6 is defined.
+
 Wed Apr  3 10:15:00 2002  Si Mong Park  <spark@ociweb.com>
 
         * tests/Atomic_Op_Test_WinCE.vcp:

@@ -102,7 +102,11 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
   int error = 0;
 
   if (local == ACE_Addr::sap_any
-      && protocol_family == PF_INET)
+      && (protocol_family == PF_INET
+#if defined (ACE_HAS_IPV6)
+          || protocol_family == PF_INET6
+#endif /* ACE_HAS_IPV6 */
+          ))
     {
       if (ACE::bind_port (this->get_handle ()) == -1)
         error = 1;
