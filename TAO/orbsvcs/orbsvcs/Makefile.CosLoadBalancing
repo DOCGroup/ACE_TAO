@@ -6024,11 +6024,12 @@ realclean: clean
 
 .obj/LB_Component.o .obj/LB_Component.so .shobj/LB_Component.o .shobj/LB_Component.so: LoadBalancing/LB_Component.cpp \
  LoadBalancing/LB_Component.h $(ACE_ROOT)/ace/pre.h \
- LB_ORTC.h \
- $(TAO_ROOT)/tao/corba.h \
+ LoadBalancing/LoadBalancing_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
+ LB_ORTC.h \
+ $(TAO_ROOT)/tao/corba.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -6205,7 +6206,6 @@ realclean: clean
  $(TAO_ROOT)/tao/IOPC.h \
  $(TAO_ROOT)/tao/IOPC.i \
  $(TAO_ROOT)/tao/PortableInterceptorC.i \
- LoadBalancing/LoadBalancing_export.h \
  $(TAO_ROOT)/tao/Messaging/Messaging.h \
  $(TAO_ROOT)/tao/Messaging/messaging_export.h \
  $(TAO_ROOT)/tao/Messaging/MessagingC.h \
