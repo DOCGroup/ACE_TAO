@@ -20,6 +20,15 @@ Tue Mar 18 08:12:22 1997  David L. Levine  <levine@cs.wustl.edu>
 	  already defined (and if ACE_HAS_SVR4_DYNAMIC_LINKING is defined).
 	  Thanks to Chris Lahey <CLahey@cccis.com> for providing this fix.
 
+	* ace/Local_Name_Space_T.h: moved #include of Local_Name_Space.h up
+	  because this file needs declaration of ACE_NS_String.	 There
+	  _shouldn't_ be a circular include problem because the #includes are
+	  protected.  Thanks to Daniel Montalibet
+	  <daniel_montalibet@stortek.com> for reporting this problem and
+	  providing the fix.
+
+	* ace/Local_Name_Space.h: removed #include of ace/Service_Config.h.
+
 	* tests/IOStream_test.cpp: added checks for receipt of proper values.
 
 Tue Mar 18 01:38:14 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
