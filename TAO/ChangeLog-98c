@@ -1,3 +1,9 @@
+Tue Feb 17 13:25:52 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO-INSTALL.html: Added instructions on using the CPP_LOCATION
+	  environment variable in NT's section.  You can also use it on
+	  UNIX but NT is the only platform which depends on it.
+
 Tue Feb 17 11:30:53 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/orbconf.h: set TAO_ALIGNMENT_MAGIC_NUMBER to 128 if
