@@ -82,6 +82,11 @@ RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
                 ACE_wrappers/ACE-INSTALL \
                 ACE_wrappers/man
 
+ALL_RELEASE_FILES = $(addprefix ACE_wrappers/,$(CONTROLLED_FILES)) \
+                    ACE_wrappers/ACE-INSTALL \
+                    ACE_wrappers/man \
+		    ACE_wrappers/TAO
+
 RELEASE_LIB_FILES = \
                 ACE_wrappers/STL \
                 ACE_wrappers/VERSION \
@@ -173,6 +178,13 @@ release: ACE-INSTALL
            cpio -o -H tar | gzip -9 > ACE-lib.tar.gz; \
          chmod a+r ACE.tar.gz ACE-lib.tar.gz; \
          mv ACE.tar.gz ACE-lib.tar.gz ./ACE_wrappers/)
+
+releaseall: ACE-INSTALL
+	@$(TIMESTAMP) (cd ..; \
+         find $(ALL_RELEASE_FILES) $(FILTER) | \
+           cpio -o -H tar | gzip -9 > TAO-ACE.tar.gz; \
+         chmod a+r TAO-ACE.tar.gz \
+         mv TAO-ACE.tar.gz ./ACE_wrappers/)
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
