@@ -24,7 +24,7 @@
 // <akg@na47sun05.cern.ch>.
 #if defined (ACE_NDEBUG)
 #define ACE_ASSERT(x)
-#else
+#elif !defined (ACE_ASSERT)
 #define ACE_ASSERT(X) \
   do { if(!(X)) { \
   int __ace_error = ACE_OS::last_error (); \

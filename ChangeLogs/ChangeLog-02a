@@ -1,3 +1,10 @@
+Mon Apr  9 18:48:02 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Log_Msg.h: Only define the ACE_ASSERT macro if it's not
+	  already defined.  This make it easy for developers to override
+ 	  this macro in their config.h file.  Thanks to Nathalie D'Amours
+ 	  <nathalie@stentor.com> for motivating this change.	
+  
 Mon Apr  9 15:36:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * ace/High_Res_Timer.cpp:
