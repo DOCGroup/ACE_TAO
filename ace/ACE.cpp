@@ -1251,7 +1251,7 @@ ACE::writev (ACE_HANDLE handle,
 // Modifications by Todd Montgomery.
 
 int
-ACE::format_hexdump (const ASYS_TCHAR *buffer, int size,
+ACE::format_hexdump (const char *buffer, int size,
                      ASYS_TCHAR *obuf, int obuf_sz)
 {
   ACE_TRACE ("ACE::format_hexdump");
