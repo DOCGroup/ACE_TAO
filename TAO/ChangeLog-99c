@@ -1,25 +1,25 @@
 Sat May  8 16:10:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
-	  Added non-const accesor for array fields in valuetypes. Thanks
-	  to David Levine for pointing this out.
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+          Added non-const accesor for array fields in valuetypes. Thanks
+          to David Levine for pointing this out.
 
 Sat May  8 15:02:37 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/GIOP.h (TAO_GIOP): 
-	* tao/GIOP.cpp:
-	* tao/Connect.cpp:
-	* tao/corbafwd.h: Changed the exception type defined as an enum in
- 	  corbafwd.h as 'ExceptionType' to 'exception_type'. This is
-	  defined in the spec in chapter-3, pg.3-38, section 3.15.1 under
-	  Standard Exception Definitions in CORBAv2.2 spec. The vsOrb test 
-	  suite also tests for this with this spelling. 
-	
-  	  The previous spelling 'ExceptionType' seems to a
- 	  spill out of the CORBA-COM, CORBA-OLE specs.  Changes to other
- 	  *.cpp and *.h files listed above to acommodate the change made
- 	  in corbafwd.h.
+        * tao/GIOP.h (TAO_GIOP):
+        * tao/GIOP.cpp:
+        * tao/Connect.cpp:
+        * tao/corbafwd.h: Changed the exception type defined as an enum in
+          corbafwd.h as 'ExceptionType' to 'exception_type'. This is
+          defined in the spec in chapter-3, pg.3-38, section 3.15.1 under
+          Standard Exception Definitions in CORBAv2.2 spec. The vsOrb test
+          suite also tests for this with this spelling.
+
+          The previous spelling 'ExceptionType' seems to a
+          spill out of the CORBA-COM, CORBA-OLE specs.  Changes to other
+          *.cpp and *.h files listed above to acommodate the change made
+          in corbafwd.h.
 
 Sat May 08 08:42:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
@@ -35,7 +35,7 @@ Sat May 08 08:20:48 1999  David L. Levine  <levine@cs.wustl.edu>
 Sat May 08 08:17:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/DynUnion_i_T.{h,cpp} (DU_Extractor): added virtual
-          destructor, to please egcs 1.1.2.
+          destructor, to please egcs 1.1.2/VxWorks.
 
 Sat May 08 03:45:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
