@@ -887,7 +887,7 @@ int
 ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
                                              ACE_Notification_Buffer &buffer)
 {
-  ACE_TRACE ("ACE_Select_Reactor_Notify::dispatch_notify");
+  ACE_TRACE ("ACE_Select_Reactor_Notify::read_notify_pipe");
 
   ssize_t n = 0;
 
