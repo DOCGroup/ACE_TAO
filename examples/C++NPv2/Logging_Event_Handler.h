@@ -43,8 +43,13 @@ public:
                             ACE_Reactor_Mask = 0);
 
   // Return socket handle of the contained <Logging_Handler>.
-  virtual ACE_HANDLE get_handle (void) const
-    { return logging_handler_.peer ().get_handle (); };
+  virtual ACE_HANDLE get_handle (void) const {
+    // Need a non-const reference to call peer(), but that's
+    // safe since we call a const method using it.
+    Logging_Handler& h =
+      ACE_const_cast (Logging_Handler&, logging_handler_);
+    return h.peer ().get_handle ();
+  };
 
   // Get a reference to the contained <ACE_SOCK_Stream>.
   ACE_SOCK_Stream &peer () { return logging_handler_.peer (); };
