@@ -1,3 +1,29 @@
+Thu Mar 14 09:26:54 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/Makefile.CosNaming:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.h:
+        * orbsvcs/orbsvcs/Naming/Flat_File_Persistence.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Service_Container.cpp:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h:
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable.h:
+        * orbsvcs/orbsvcs/Naming/Storable.inl:
+        * orbsvcs/orbsvcs/Naming/Storable.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+
+          Adding a flat file Naming Service persistence originally written
+          by Chanaka Liyanaarachchi <chanaka@ociweb.com> and Bruce Trask
+          <trask_b@ociweb.com>.  A new option, -u, was added to use the flat
+          file persistence instead of the mmap() persistence.  The -u option
+          takes a parameter which specifies which directory is used to
+          store the persistence files.
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+
+          Update the test to include a test for -u.
+
 Thu Mar 14 09:51:06 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/performance-tests/Makefile:

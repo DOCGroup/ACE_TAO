@@ -28,6 +28,7 @@ $ns_multicast_port = 10001 + PerlACE::uniqueid (); # Can not be 10000 on Chorus 
 $ns_orb_port = 12000 + PerlACE::uniqueid ();
 $iorfile = PerlACE::LocalFile ("ns.ior");
 $persistent_ior_file = PerlACE::LocalFile ("pns.ior");
+$file_persistent_ior_file = PerlACE::LocalFile ("fpns.ior");
 $persistent_log_file = PerlACE::LocalFile ("test_log");
 $data_file = PerlACE::LocalFile ("test_run.data");
 
@@ -35,9 +36,8 @@ $status = 0;
 
 sub name_server
 {
-    my $args = "@_ "."-ORBNameServicePort $ns_multicast_port -o $iorfile -m 1";
+    my $args = "-ORBNameServicePort $ns_multicast_port -o $iorfile -m 1 @_";
     my $prog = "../../Naming_Service/Naming_Service";
-
     $NS = new PerlACE::Process ($prog, $args);
 
     unlink $iorfile;
@@ -74,11 +74,15 @@ sub client
          "-e -ORBInitRef NameService=file://$iorfile",
          "-y -ORBInitRef NameService=file://$iorfile",
          "-p $persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile");
+         "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile",
+         "-p $file_persistent_ior_file -ORBInitRef NameService=file://$iorfile",
+         "-c file://$file_persistent_ior_file -ORBInitRef NameService=file://$iorfile");
 
 @server_opts = ("", "", "", "", "", "",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file");
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u .",
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u .");
 
 @comments = ("Simple Test: \n",
              "Simple Test (using multicast to locate the server): \n",
@@ -86,12 +90,15 @@ sub client
              "Iterator Test: \n",
              "Exceptions Test: \n",
              "Destroy Test: \n",
-             "Persistent Test (Part 1): \n",
-             "Persistent Test (Part 2): \n");
+             "mmap() Persistent Test (Part 1): \n",
+             "mmap() Persistent Test (Part 2): \n",
+             "Flat File Persistent Test (Part 1): \n",
+             "Flat File Persistent Test (Part 2): \n");
 
 $test_number = 0;
 
-unlink $persistent_ior_file, $persistent_log_file;
+unlink ($persistent_ior_file, $file_persistent_ior_file,
+        $persistent_log_file, "NameService", "NameService_0");
 
 # Run server and client for each of the tests.  Client uses ior in a
 # file to bootstrap to the server.
@@ -106,7 +113,8 @@ foreach $o (@opts) {
     $test_number++;
 }
 
-unlink $persistent_ior_file, $persistent_log_file;
+unlink ($persistent_ior_file, $file_persistent_ior_file, \
+        $persistent_log_file, "NameService", "NameService_0");
 
 # Now run the multithreaded test, sending output to the file.
 print STDERR "\n          Multithreaded Test:\n";

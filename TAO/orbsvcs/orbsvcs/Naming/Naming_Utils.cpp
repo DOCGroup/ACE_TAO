@@ -3,6 +3,8 @@
 #include "Naming_Utils.h"
 #include "Transient_Naming_Context.h"
 #include "Persistent_Context_Index.h"
+#include "Storable_Naming_Context.h"
+#include "Flat_File_Persistence.h"
 #include "orbsvcs/CosNamingC.h"
 
 #include "tao/debug.h"
@@ -28,7 +30,8 @@ TAO_Naming_Server::TAO_Naming_Server (void)
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
-    multicast_ (0)
+    multicast_ (0),
+    use_storable_context_ (0)
 {
 }
 
@@ -39,7 +42,8 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                                       int resolve_for_existing_naming_service,
                                       const ACE_TCHAR *persistence_location,
                                       void *base_addr,
-                                      int enable_multicast)
+                                      int enable_multicast,
+                                      int use_storable_context)
   : naming_context_ (),
     ior_multicast_ (0),
     naming_service_ior_ (),
@@ -49,7 +53,8 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
     context_size_ (ACE_DEFAULT_MAP_SIZE),
     persistence_file_name_ (0),
     base_address_ (TAO_NAMING_BASE_ADDR),
-    multicast_ (0)
+    multicast_ (0),
+    use_storable_context_ (0)
 {
   if (this->init (orb,
                   poa,
@@ -58,7 +63,8 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
                   resolve_for_existing_naming_service,
                   persistence_location,
                   base_addr,
-                  enable_multicast) == -1)
+                  enable_multicast,
+                  use_storable_context) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%P|%t) %p\n",
                 "TAO_Naming_Server::init"));
@@ -73,7 +79,8 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                          int resolve_for_existing_naming_service,
                          const ACE_TCHAR *persistence_location,
                          void *base_addr,
-                         int enable_multicast)
+                         int enable_multicast,
+                         int use_storable_context)
 {
   if (resolve_for_existing_naming_service)
     {
@@ -127,14 +134,15 @@ TAO_Naming_Server::init (CORBA::ORB_ptr orb,
                                 persistence_location,
                                 base_addr,
                                 context_size,
-                                enable_multicast);
+                                enable_multicast,
+                                use_storable_context);
 }
 
 int
 TAO_Naming_Server::parse_args (int argc,
                                char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:f:m:");
+  ACE_Get_Opt get_opts (argc, argv, "b:do:p:s:f:m:u:");
   int c;
   int size, result;
   long address;
@@ -178,6 +186,10 @@ TAO_Naming_Server::parse_args (int argc,
       case 'm':
         this->multicast_ = ACE_OS::atoi(get_opts.opt_arg ());
         break;
+      case 'u':
+        this->use_storable_context_ = 1;
+        this->persistence_file_name_ = get_opts.opt_arg ();
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -187,7 +199,8 @@ TAO_Naming_Server::parse_args (int argc,
                            "-p <pid_file_name> "
                            "-f <persistence_file_name> "
                            "-b <base_address> "
-                           "-m <1=enable multicast, 0=disable multicast(default)>"
+                           "-m <1=enable multicast, 0=disable multicast(default) "
+                           "-u <storable_persistence_directory (not used with -f)> "
                            "\n",
                            argv [0]),
                           -1);
@@ -283,7 +296,8 @@ TAO_Naming_Server::init_with_orb (int argc,
                            0,
                            this->persistence_file_name_,
                            this->base_address_,
-                           this->multicast_);
+                           this->multicast_,
+                           this->use_storable_context_);
       if (result == -1)
         return result;
     }
@@ -322,16 +336,42 @@ TAO_Naming_Server::init_with_orb (int argc,
 int
 TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                     PortableServer::POA_ptr poa,
-                                    const ACE_TCHAR
-                                    *persistence_location,
+                                    const ACE_TCHAR *persistence_location,
                                     void *base_addr,
                                     size_t context_size,
-                                    int enable_multicast)
+                                    int enable_multicast,
+                                    int use_storable_context)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      if (persistence_location != 0)
+      if (use_storable_context)
+        {
+          // In lieu of a fully implemented service configurator version
+          // of this Reader and Writer, let's just take something off the
+          // command line for now.
+          TAO_Naming_Service_Persistence_Factory *persFactory = 0;
+          ACE_NEW_RETURN(persFactory, TAO_NS_FlatFileFactory, -1);
+
+          // Was a location specified?
+          if (persistence_location == 0)
+            {
+              // No, assign the default location "."
+              persistence_location = ".";
+            }
+
+          this->naming_context_ =
+            TAO_Storable_Naming_Context::recreate_all(orb,
+                                                      poa,
+                                                      TAO_ROOT_NAMING_CONTEXT,
+                                                      context_size,
+                                                      0,
+                                                      persFactory,
+                                                      persistence_location
+                                                      ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+        }
+      else if (persistence_location != 0)
         //
         // Initialize Persistent Naming Service.
         //
