@@ -48,6 +48,9 @@ public:
   u_long generation (void) const;
   // Get the generation number.
   
+  int operator== (const ACE_Active_Map_Manager_Key &rhs);
+  // Compare keys.
+
   // = These really should be protected but because of template
   // friends, they are not.
 

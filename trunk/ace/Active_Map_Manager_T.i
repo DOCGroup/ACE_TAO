@@ -206,7 +206,7 @@ ACE_Active_Map_Manager<T>::total_size (void)
 template <class T> ACE_INLINE void 
 ACE_Active_Map_Manager<T>::dump (void) const
 {
-  return BASE::dump ();
+  BASE::dump ();
 }
 
 template <class T> ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> 
