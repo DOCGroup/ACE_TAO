@@ -200,7 +200,7 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
       if (TAO_debug_level)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - IIOP_Transport[%d]::send_message, ")
-                    ACE_TEXT (" write failure - %m\n"),
+                    ACE_TEXT ("write failure - %m\n"),
                     this->id ()));
       return -1;
     }
@@ -389,8 +389,8 @@ TAO_IIOP_Transport::get_listen_point (
                                local_interface.out ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Could not resolve local host")
-                         ACE_TEXT (" name \n")),
+                         ACE_TEXT ("(%P|%t) Could not resolve local host ")
+                         ACE_TEXT ("name \n")),
                         -1);
     }
 
