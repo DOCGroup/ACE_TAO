@@ -290,10 +290,10 @@ Client::test_get_properties (CORBA::Environment &ACE_TRY_ENV)
   names = names_ptr;
 
   names->length (3);
-  names [0] = CORBA::string_dup ("float_property");
+  names [0u] = CORBA::string_dup ("float_property");
   //names [1] = CORBA::string_dup ("string_property");
-  names [1] = CORBA::string_dup ("long_property");
-  names [2] = CORBA::string_dup ("char_property");
+  names [1u] = CORBA::string_dup ("long_property");
+  names [2u] = CORBA::string_dup ("char_property");
   //names [2] = CORBA::string_dup ("no_property");
 
 

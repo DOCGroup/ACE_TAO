@@ -263,8 +263,8 @@ Trading_Service::bootstrap_to_federation (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_DEBUG ((LM_DEBUG,
               "*** Linking self to all linked traders.\n"));
-  for (int i = link_name_seq->length () - 1;
-       i >= 0;
+  for (CORBA::ULong i = link_name_seq->length () - 1;
+       i > 0;
        i--)
     {
       // Avoid linking to ourselves.
