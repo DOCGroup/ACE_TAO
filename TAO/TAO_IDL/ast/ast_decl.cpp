@@ -389,28 +389,34 @@ AST_Decl::compute_repoID (void)
   long second = I_FALSE;
   char *name = 0;
   const char *prefix = this->prefix_;
+  UTL_Scope *scope = this->defined_in ();
 
-  // If our prefix is empty, we use the parent's, if any, which may also
-  // be empty.
-  if (ACE_OS::strcmp (prefix, "") == 0)
+  // If our prefix is empty, we check to see if an ancestor has one.
+  while (ACE_OS::strcmp (prefix, "") == 0 && scope != 0)
     {
-      UTL_Scope *parent_scope = this->defined_in ();
-
-      if (parent_scope != 0)
-        {
-          AST_Decl *parent = ScopeAsDecl (parent_scope);
-
-          prefix = parent->prefix ();
-        }
+      AST_Decl *parent = ScopeAsDecl (scope);
+      prefix = parent->prefix ();
+      scope = ScopeAsDecl (scope)->defined_in ();
     }
 
   // in the first loop compute the total length
   namelen += ACE_OS::strlen (prefix) + 1;
 
-  if (this->version_ != 0)
+  const char *version = this->version_;
+  scope = this->defined_in ();
+
+  // If our version is has not bee set, we use the parent's, if any.
+  while (version == 0 && scope != 0)
+    {
+      AST_Decl *parent = ScopeAsDecl (scope);
+      version = parent->version ();
+      scope = ScopeAsDecl (scope)->defined_in ();
+    }
+
+  if (version != 0)
     {
       // Version member string + ':'
-      namelen += ACE_OS::strlen (this->version_) + 1;
+      namelen += ACE_OS::strlen (version) + 1;
     }
   else
     {
@@ -519,12 +525,12 @@ AST_Decl::compute_repoID (void)
         }
     }
 
-  if (this->version_ != 0)
+  if (version != 0)
     {
       ACE_OS::strcat (this->repoID_,
                       ":");
       ACE_OS::strcat (this->repoID_,
-                      this->version_);
+                      version);
     }
   else
     {
