@@ -3790,8 +3790,6 @@ operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Pseudo_Object_Manager<CORBA::TypeCode>;
-
 template class ACE_Hash_Map_Entry<const char *,
                                   ACE_Unbounded_Queue<CORBA::Long> *>;
 template class ACE_Hash_Map_Manager_Ex<const char *,
@@ -3860,8 +3858,6 @@ template class TAO::Ret_Object_SArgument_T<CORBA::TypeCode_ptr,
                                            CORBA::TypeCode_var>;
 #endif /*if 0*/
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate TAO_Pseudo_Object_Manager<CORBA::TypeCode>
 
 #pragma instantiate ACE_Hash_Map_Entry<const char *, \
                                        ACE_Unbounded_Queue<CORBA::Long> *>

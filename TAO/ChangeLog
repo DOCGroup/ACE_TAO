@@ -1,3 +1,24 @@
+Thu Nov 20 19:16:28 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/DomainC.cpp:
+	* tao/DomainC.h:
+	* tao/DomainC.i:
+	* tao/ServicesC.cpp:
+	* tao/ServicesC.h:
+	* tao/ServicesC.i:
+	
+	  Regenerated the code and removed the duplicate explicit template
+	  instantations.  
+
+        * tao/Tagged_Components.cpp:
+	* tao/Typecode.cpp:
+
+	  Removed duplicate explicit template instantiations.
+	
+	* tao/diffs/Domain.diff
+
+	  Updated the diff files.
+
 Thu Nov 20 18:28:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IFR_Client_Adapter.h:
