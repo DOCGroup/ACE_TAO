@@ -1311,10 +1311,10 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       int tracing = this->tracing_enabled ();
       this->stop_tracing ();
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (ACE_PSOS)
       // Make this block signal-safe.
       ACE_Log_Msg_Sig_Guard sb;
-#endif /* ACE_WIN32 */
+#endif /* !ACE_WIN32 && !ACE_PSOS */
 
       // Make sure that the lock is held during all this.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,

@@ -188,7 +188,7 @@ ACE_Event_Handler::register_stdin_handler (ACE_Event_Handler *eh,
 					   ACE_Thread_Manager *thr_mgr,
 					   int flags)
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_PSOS)
   ACE_UNUSED_ARG (reactor);
 
   eh->reactor (reactor);
@@ -200,7 +200,7 @@ ACE_Event_Handler::register_stdin_handler (ACE_Event_Handler *eh,
   return reactor->register_handler (ACE_STDIN,
                                     eh,
                                     ACE_Event_Handler::READ_MASK);
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || ACE_PSOS */
 }
 
 int
