@@ -1,3 +1,9 @@
+Thu Feb  6 16:06:29 2003  Rich Seibel <seibel_r@ociweb.com>
+
+        * ace/config-tru64.h: Added a guard around the
+          ACE_HAS_SNPRINTF as versions earlier than 5.0 do not seem
+          have this function.
+
 Thu Feb  6 15:03:04 2003  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * include/makeinclude/rules.local.GNU: Make the removal of IDL
