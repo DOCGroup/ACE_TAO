@@ -1,8 +1,15 @@
+Mon Aug 23 15:30:28 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Connector.cpp (preconnect): Chagned to use
+	  ACE_Auto_Array_Ptr to hold the INET_Addr array and
+	  ACE_Auto_Basic_Array_Ptr to hold the array of connection handler
+	  pointers.
+
 Mon Aug 23 14:12:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/include.utl_scope.h:
 	* TAO_IDL/util/utl_scope.cpp:
-	  Changes to lookup_by_name() and 
+	  Changes to lookup_by_name() and
 	  iter_lookup_by_name_local() which cause the lookup
 	  process to exit immediately once the scoped name
 	  argument is completely matched. This removes the problem
