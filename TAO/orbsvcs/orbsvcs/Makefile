@@ -219,6 +219,9 @@ ifneq (,$(findstring  RTEventLog, $(TAO_ORBSVCS)))
   endif
   MKLIST += Makefile.RTEventLogAdmin
 endif
+ifeq ($(security),1)
+  TAO_ORBSVCS += Security
+endif
 ifneq (,$(findstring  Security, $(TAO_ORBSVCS)))
   MKLIST += Makefile.Security
 endif

@@ -56,6 +56,11 @@ TAO_DYNAMIC_LIBS=-lTAO_DynamicInterface -lTAO_Messaging
 ####
 #### Macro customization.
 ####
+security ?= 0
+ifeq ($(security),1)
+  ACE_MAKE_OPTIONS += security
+endif # security
+
 ifeq ($(minimum_corba),1)
   ifndef interceptors
     interceptors = 0

@@ -26,7 +26,8 @@ DIRS    = tao \
           examples \
           performance-tests \
           utils \
-	  docs/tutorials/Quoter
+	  docs/tutorials/Quoter \
+          CIAO
 
 CLONE   = Makefile \
           tao \

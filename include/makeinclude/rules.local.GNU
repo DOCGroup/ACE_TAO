@@ -320,6 +320,9 @@ CLEANUP_OBJS += $(addsuffix .o, $(addprefix $(VDIR),$(CLEANUP_BIN)))
 ifdef SRC
   CLEANUP_OBJS = $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(SRC)))))
 endif # SRC
+ifneq ($(CLEANUP_BIN),)
+  CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VDIR),$(basename $(notdir $(CLEANUP_BIN)))))
+endif # CLEANUP_BIN
 ifdef LSRC
   CLEANUP_OBJS += $(addsuffix .$(OBJEXT),$(addprefix $(VSHDIR),$(basename $(notdir $(LSRC)))))
 endif # LSRC

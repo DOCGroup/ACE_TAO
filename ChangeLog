@@ -1,3 +1,22 @@
+Thu Jan  1 17:23:44 UTC 2004  Don Hinton  <dhinton@dresystems.com>
+
+        * include/makeinclude/rules.local.GNU:
+          Added CLEANUP_BIN to the list of objects cleaned up during a
+          clean, since they aren't always added to SRC.  They get cleaned
+          when you do a realclean since it removes the .obj directory, but
+          this allows you to use clean correctly too.
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Make sure that all appropriate variables are added to the
+          cleanup targets, e.g., we used to test for LIB, then LIB2, then
+          LIB_UNCHECKED in that order, but quit testing once we found
+          one.  Now, we test them all and add them.  This fixes a bug with
+          realclean discovered because MPC defines LIB in terms of
+          LIB_UNCHECKED, then sets LIB= if sufficient components weren't
+          built, but only after we already set CLEANUP_LIB=$LIB.  Which
+          meant we ended up not cleaning anything.  Thanks to Bala for
+          noticing the problem and motivating the fix.        
+
 Thu Jan  1 16:00:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ASNMP/asnmp/asn1.cpp:
@@ -276,7 +295,7 @@ Tue Dec 30 13:02:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
           Modified these to work with the new Borland template.  The
           defaults have not been changed and the changes that were made
-          should be backward compatibile with the existing Borland
+          should be backward compatible with the existing Borland
           makefiles.
 
 Tue Dec 30 15:16:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
