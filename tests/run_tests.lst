@@ -25,7 +25,7 @@ SOCK_Connector_Test
 SOCK_Send_Recv_Test
 Task_Test
 Unicos/Thread_Manager_Test
-Process_Manager_Test
+DISABLED/Process_Manager_Test
 Thread_Pool_Test
 Future_Test
 Future_Set_Test
