@@ -1,38 +1,15 @@
-Sun Jul 18 21:19:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Mon Jul 19 00:57:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Transport.h:
+	* orbsvcs/orbsvcs/ATLAS.idl:
+	* orbsvcs/orbsvcs/CSI.idl:
+	* orbsvcs/orbsvcs/CSIIOP.idl:
+	* orbsvcs/orbsvcs/GSSUP.idl:
+	* orbsvcs/orbsvcs/SL3CSI.idl:
+	* orbsvcs/orbsvcs/SL3TCPIP.idl:
+	* orbsvcs/orbsvcs/SL3TLS.idl:
+	* orbsvcs/orbsvcs/SecurityLevel3.idl:
 
-	  Started moving classes into the "TAO" C++ namespace.
-
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.i:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp (setup, teardown):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.h (setup, teardown):
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp:
-
-	  Minor code cleanup.
-
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Endpoint.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_InvocationInterceptor.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Profile.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Util.cpp:
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.cpp:
-
-	  Corrected ACE_RCSID.
+	  New CSIv2 IDL source files.
 
 Sun Jul 18 21:09:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
