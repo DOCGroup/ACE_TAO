@@ -1,3 +1,10 @@
+Mon May  5 13:20:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* performance-tests/*/Makefile: Updated dependencies.
+
+	* performance-tests/Latency/AMH/Single_Threaded/Makefile: Added
+	  TAO_Valuetype library to the command line.
+
 Mon May  5 13:09:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/RTPortableServer/Makefile.bor:
