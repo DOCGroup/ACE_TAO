@@ -1,46 +1,42 @@
-//
-// $Id$
-//
+// -*- IDL -*-
+
 // ================================================================
-//
-// = LIBRARY
-//   TAO
-//
-// = FILENAME
-//   TAO.pidl
-//
-// = DESCRIPTION
-//   This file contains TAO-specific idl interfaces (not part of CORBA
-//   2.3).
-//
-//   The steps to regenerate the code are as follows:
-//
-//   1. Run the tao_idl compiler on the pidl file.  The command used for
-//   this is:
-//
-//   tao_idl
-//       -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
-//       -Wb,export_macro=TAO_Export
-//       -Wb,pre_include="ace/pre.h"
-//       -Wb,post_include="ace/post.h"
-//       -Wb,export_include="tao/corbafwd.h" TAO.pidl
-//
-//   2. Then patch the generated code.  The patch fixes the interface
-//   repository IDs, disables the code under certain configurations,
-//   and eliminates cycles in the include dependencies.
-//
-//   Apply patches using the following commands:
-//
-//   patch < diffs/TAOC.h.diff
-//   patch < diffs/TAOC.i.diff
-//   patch < diffs/TAOC.cpp.diff
-//
-//   Note: The diffs were generated with these commands:
-//
-//   diff -wBbu orig/TAOC.h TAOC.h > diffs/TAOC.h.diff
-//   diff -wBbu orig/TAOC.i TAOC.i > diffs/TAOC.i.diff
-//   diff -wBbu orig/TAOC.cpp TAOC.cpp > diffs/TAOC.cpp.diff
-//
+/**
+ *  @file TAO.pidl
+ *
+ *  $Id$
+ *
+ *  This file contains TAO-specific idl interfaces (not part of CORBA
+ *  2.6).
+ *
+ *  The steps to regenerate the code are as follows:
+ *
+ * 1. Run the tao_idl compiler on the pidl file.  The command used for
+ *   this is:
+ *
+ *   tao_idl
+ *       -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *       -Wb,export_macro=TAO_Export
+ *       -Wb,pre_include="ace/pre.h"
+ *       -Wb,post_include="ace/post.h"
+ *       -Wb,export_include="tao/corbafwd.h" TAO.pidl
+ *
+ *   2. Then patch the generated code.  The patch fixes the interface
+ *   repository IDs, disables the code under certain configurations,
+ *   and eliminates cycles in the include dependencies.
+ *
+ *   Apply patches using the following commands:
+ *
+ *   patch < diffs/TAOC.h.diff
+ *   patch < diffs/TAOC.i.diff
+ *   patch < diffs/TAOC.cpp.diff
+ *
+ *   @note The diffs were generated with these commands:
+ *
+ *   diff -wBbu orig/TAOC.h TAOC.h > diffs/TAOC.h.diff
+ *   diff -wBbu orig/TAOC.i TAOC.i > diffs/TAOC.i.diff
+ *   diff -wBbu orig/TAOC.cpp TAOC.cpp > diffs/TAOC.cpp.diff
+ */
 // ================================================================
 
 #ifndef TAO_TAO_IDL
@@ -81,7 +77,7 @@ module TAO
     };
 
   // = TAO specific.
-  const Messaging::SyncScope SYNC_EAGER_BUFFERING   = SYNC_NONE;
+  const Messaging::SyncScope SYNC_EAGER_BUFFERING   = Messaging::SYNC_NONE;
   const Messaging::SyncScope SYNC_DELAYED_BUFFERING = -2;
 
 };
