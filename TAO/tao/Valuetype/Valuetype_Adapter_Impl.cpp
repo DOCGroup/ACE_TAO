@@ -6,11 +6,12 @@
 #include "ValueFactory_Map.h"
 
 #include "tao/ORB_Core.h"
-#include "tao/Typecode.h"
+
 
 ACE_RCSID (Valuetype,
            Valuetype_Adapter_Impl,
            "$Id$")
+
 
 TAO_Valuetype_Adapter_Impl::TAO_Valuetype_Adapter_Impl (void)
 {

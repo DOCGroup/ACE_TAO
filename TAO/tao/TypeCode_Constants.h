@@ -58,8 +58,6 @@ namespace CORBA
   extern TypeCode_ptr const _tc_Component;
   extern TypeCode_ptr const _tc_Home;
 
-  extern TypeCode_ptr const _tc_ValueBase;
-  extern TypeCode_ptr const _tc_EventBase;
   //@}
 }
 

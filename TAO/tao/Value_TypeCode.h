@@ -58,7 +58,7 @@ namespace TAO
       Value (char const * id,
              char const * name,
              CORBA::ValueModifier modifier,
-             CORBA::TypeCode_ptr * concrete_base,
+             CORBA::TypeCode_ptr const * concrete_base,
              Value_Field<StringType> const * fields,
              CORBA::ULong nfields);
 
@@ -138,7 +138,7 @@ namespace TAO
 
       /// The @c TypeCode corresponding to the concrete base
       /// @c valuetype or @c eventtype.
-      CORBA::TypeCode_ptr * const concrete_base_;
+      CORBA::TypeCode_ptr const * const concrete_base_;
 
       /// The number of fields in the OMG IDL value.
       CORBA::ULong const nfields_;
