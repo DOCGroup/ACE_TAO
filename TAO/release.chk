@@ -44,7 +44,7 @@ Legend:
 
 [1111x ] Param_Test compiles
 [101xx ] 	SII short
-[x01xx ] 	SII ubstring
+[101xx ] 	SII ubstring
 [x01xx ] 	SII fixed_struct
 [x0xxx ] 	SII strseq
 [x00xx ] 	SII var_struct
