@@ -149,7 +149,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                           TAO_Naming_Context,
                           -1);
 
-          // Put c_impl into the auto pointer temporarily, in case
+          // Put <c> into the auto pointer temporarily, in case
           // next allocation fails.
           ACE_Auto_Basic_Ptr<TAO_Naming_Context> temp (c);
 
