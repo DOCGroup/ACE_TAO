@@ -1021,7 +1021,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           int       wp = 0;      // Width/precision extracted from args
           int       done = 0;
           int       skip_nul_locate = 0;
-          int       this_len;    // How many chars s[n]printf wrote
+          int       this_len = 0;    // How many chars s[n]printf wrote
 
           fp = format;
           *fp++ = *format_str++;   // Copy in the %
