@@ -2601,7 +2601,7 @@ TAO_POA::encode_sequence_to_string (CORBA::String &str,
   // allocation once.
   u_int len = 3 * seq.length() + 1 /* for zero termination */;
   str = CORBA::string_alloc (len);
-  
+
   char *cp = str;
 
   for (u_int i = 0;
@@ -2654,7 +2654,7 @@ TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
       seq.length (0);
       return;
     }
-  
+
   u_int length = ACE_OS::strlen (str);
   char *eos = str + length;
   char *cp = str;
@@ -2664,7 +2664,8 @@ TAO_POA::decode_string_to_sequence (TAO_Unbounded_Sequence<CORBA::Octet> &seq,
   // length later.
   seq.length (length);
 
-  for (u_int i = 0;
+  u_int i = 0;
+  for (;
        cp < eos && i < seq.length ();
        i++)
     {
@@ -2715,7 +2716,7 @@ TAO_POA::wstring_to_ObjectId (const CORBA::WChar *id)
   // artifact of the way strings are stored in C.
   CORBA::ULong id_length = ACE_OS::strlen (id);
   size_t bufsize = id_length * sizeof(CORBA::WChar);
-  
+
   // Create the buffer for the Id
   CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (bufsize);
 
