@@ -54,7 +54,7 @@ enum
 
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_UIOP_Connect_Timeprobe_Description,
-                                  TAO_UIOP_SERVER_CONNECTION_HANDLER_SEND_RESPONSE_START);
+                                  TAO_UIOP_SERVER_CONNECTION_HANDLER_HANDLE_INPUT_START);
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
