@@ -321,14 +321,15 @@ public:
   // Process one service configuration <directive>, which is passed as
   // a string.  Returns the number of errors that occurred.
 
+  static int process_directives (void);
+  // Process (or re-process) service configuration requests that are
+  // provided in the svc.conf file(s).  Returns the number of errors
+  // that occurred.
+
   static void handle_signal (int sig, siginfo_t *, ucontext_t *);
   // Handles signals to trigger reconfigurations.
 
 protected:
-  static int process_directives (void);
-  // Process service configuration requests that are provided in the
-  // svc.config file(s).  Returns the number of errors that occurred.
-
   static int process_commandline_directives (void);
   // Process service configuration requests that were provided on the
   // command-line.  Returns the number of errors that occurred.
