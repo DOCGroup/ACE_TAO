@@ -20,7 +20,8 @@ Thu Jul 02 09:14:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (thr_create): on VxWorks only, check if thr_id
           points to a zero char *.  If so, assign the VxWorks task
-          name pointer to it (*thr_id).
+          name pointer to it (*thr_id).  Thanks to Bill Backstrom
+          <backstr@anubis.network.com> for this suggestion.
 
         * ace/Thread_Manager.cpp (spawn_i): on VxWorks only, augmented
           comment to explain the various cases for t_id and *t_id values.
