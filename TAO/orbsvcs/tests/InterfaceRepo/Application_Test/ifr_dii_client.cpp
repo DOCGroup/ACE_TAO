@@ -115,11 +115,11 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("InterfaceRepository"
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   this->repo_ = CORBA::Repository::_narrow (obj.in ()
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   // Is there a contained object of some kind at any level in the
   // repository called "warehouse"?
@@ -129,7 +129,7 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
                               CORBA::dk_all,    // Any type of contained object.
                               1                 // Exclude parents of interfaces.
                               ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN(-1);
 
   CORBA::ULong length = candidates->length ();
   CORBA::Container_var candidate;
@@ -150,7 +150,7 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
       candidate =
         CORBA::Container::_narrow (candidates[i].in ()
                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN(-1);
 
       // Is this contained item itself a container?
       if (!CORBA::is_nil (candidate.in ()))
@@ -159,7 +159,7 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
           interfaces = candidate->contents (CORBA::dk_Interface,
                                             1     // Exclude parents.
                                             ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN(-1);
 
           n_interfaces = interfaces->length ();
 
@@ -180,14 +180,14 @@ IFR_DII_Client::lookup_interface_def (ACE_ENV_SINGLE_ARG_DECL)
   for (CORBA::ULong j = 0; j < n_interfaces  ; ++j)
     {
       name = interfaces[j]->name (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN(-1);
 
       if (!ACE_OS::strcmp (name.in (), this->interface_name.in ()))
         {
           this->target_def_ =
             CORBA::InterfaceDef::_narrow (interfaces[j].in ()
                                           ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK;
+          ACE_CHECK_RETURN(-1);
         }
     }
   return 0;
