@@ -9,6 +9,12 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs \
+            -I$(TAO_ROOT)
 LDLIBS    =  -lorbsvcs -lTAO 
 
 PROG_SRCS =  client.cpp server.cpp
@@ -17,8 +23,6 @@ LSRC = $(PROG_SRCS)
 
 AVStreams_SERVER_OBJS = server.o
 AVStreams_CLIENT_OBJS = client.o
-
-VLDLIBS = $(LDLIBS:%=%$(VAR))
 
 BIN2 = client server
 
@@ -35,21 +39,13 @@ endif # AV
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
-#include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
-endif
-
-DCFLAGS = -g
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)
-
 server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
-	$(LINK.cc) $(LDFAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
 client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
