@@ -22,15 +22,19 @@ Thu Oct 31 14:48:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	
 	* tao/Transport_Connector.cpp:
 	* tao/Transport_Connector.h: Added another connect () method with
-	  a timeout value. Both the connect methods are not pure virtual
-	  methods. 
+	  a timeout value. Made the connect () methods non-pure-virtual,
+	  such that we could share some code and maintain backward
+	  comaptibility. Further, the pure-virtual method make_connection
+	  () passes a timeout value. This shouldnt break backward
+	  compatibility either.
 	
 	* tao/IIOP_Connector.cpp:
 	* tao/IIOP_Connector.h: Added a timeout argument to the
-	  make_connect () method. This method gets called from
+	  make_connection () method. This method gets called from
 	  TAO_Connector::connect () method which has a timeout. The
-	  implementation is now changed to just use the timeout value that
-	  is passed instead of selecting a timeout value.
+	  implementation of the make_connection () method is now changed
+	  to just use the timeout value that is passed instead of
+	  selecting a timeout value. 
 	  
 	* tao/Invocation.cpp: Selects a timeout from the two possible
 	  alternatives and passes one of the values to the connect ()
