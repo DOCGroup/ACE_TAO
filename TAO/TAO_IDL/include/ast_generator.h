@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_argument.h"
 #include "ast_predefined_type.h"
 #include "ast_union_label.h"
+#include "idl_uns_long.h"
 
 class UTL_LabelList;
 class UTL_ExprList;
@@ -283,7 +284,7 @@ public:
   virtual AST_Expression *create_expr (long v,
                                        AST_Expression::ExprType t);
 
-  virtual AST_Expression *create_expr (ACE_UINT64 v,
+  virtual AST_Expression *create_expr (idl_uns_long v,
                                        AST_Expression::ExprType t);
 
   virtual AST_Expression *create_expr (UTL_String *s);

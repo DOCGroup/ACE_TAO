@@ -23,6 +23,7 @@
 #define BE_EXPRESSION_H
 
 #include "ast_expression.h"
+#include "idl_uns_long.h"
 
 class be_visitor;
 
@@ -44,7 +45,7 @@ public:
   be_expression (long l,
                  AST_Expression::ExprType t);
 
-  be_expression (ACE_UINT64 l,
+  be_expression (idl_uns_long l,
                  AST_Expression::ExprType t);
 
   be_expression (UTL_String *s);

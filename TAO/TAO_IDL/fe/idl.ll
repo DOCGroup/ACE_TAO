@@ -67,6 +67,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * idl.ll - Lexical scanner for IDL 1.1
  */
 
+#include "idl_uns_long.h"
 #include "utl_strlist.h"
 #include "utl_exprlist.h"
 #include "utl_labellist.h"
@@ -89,7 +90,7 @@ static ACE_CDR::WChar   idl_wchar_escape_reader (char *);
 static char             idl_escape_reader (char *);
 static double           idl_atof (char *);
 static long             idl_atoi (char *, long);
-static ACE_UINT64	idl_atoui (char *, long);
+static idl_uns_long     idl_atoui (char *, long);
 static void		idl_parse_line_and_file (char *);
 static void		idl_store_pragma (char *);
 static char *           idl_get_pragma_string (char *);
@@ -726,10 +727,10 @@ idl_atoi(char *s, long b)
 /*
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
-static ACE_UINT64
+static idl_uns_long
 idl_atoui(char *s, long b)
 {
-  ACE_UINT64    r = 0;
+  idl_uns_long  r = 0;
 
   if (b == 8 && *s == '0')
     {

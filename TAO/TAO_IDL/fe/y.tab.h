@@ -212,7 +212,7 @@ typedef union TAO_YYSTYPE {
   FE_Declarator                 *deval;         /* Declarator value     */
   idl_bool                      bval;           /* Boolean value        */
   long                          ival;           /* Long value           */
-  ACE_UINT64                    uival;          /* Unsigned long value  */
+  idl_uns_long                  uival;          /* Unsigned long value  */
   double                        dval;           /* Double value         */
   float                         fval;           /* Float value          */
   char                          cval;           /* Char value           */
