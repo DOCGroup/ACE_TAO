@@ -100,68 +100,69 @@ module PortableGroup {
   // Specification of PropertyManager Interface
   interface PropertyManager {
 
-    void set_default_properties(in Properties props)
+    void set_default_properties (in Properties props)
       raises (InvalidProperty, UnsupportedProperty);
 
     Properties get_default_properties();
 
-    void remove_default_properties(in Properties props)
+    void remove_default_properties (in Properties props)
       raises (InvalidProperty, UnsupportedProperty);
 
-    void set_type_properties(in TypeId type_id, in Properties overrides)
+    void set_type_properties (in TypeId type_id, in Properties overrides)
       raises (InvalidProperty, UnsupportedProperty);
 
-    Properties get_type_properties(in TypeId type_id);
+    Properties get_type_properties (in TypeId type_id);
 
-    void remove_type_properties(in TypeId type_id, in Properties props)
+    void remove_type_properties (in TypeId type_id, in Properties props)
       raises (InvalidProperty, UnsupportedProperty);
 
-    void set_properties_dynamically(in ObjectGroup object_group,
-                                    in Properties overrides)
-      raises(ObjectGroupNotFound,
-             InvalidProperty,
-             UnsupportedProperty);
+    void set_properties_dynamically (in ObjectGroup object_group,
+                                     in Properties overrides)
+      raises (ObjectGroupNotFound,
+              InvalidProperty,
+              UnsupportedProperty);
 
-    Properties get_properties(in ObjectGroup object_group)
-      raises(ObjectGroupNotFound);
+    Properties get_properties (in ObjectGroup object_group)
+      raises (ObjectGroupNotFound);
 
   }; // end PropertyManager
 
   // Specification of ObjectGroupManager Interface
   interface ObjectGroupManager {
-    ObjectGroup create_member(in ObjectGroup object_group,
-                              in Location the_location,
-                              in TypeId type_id,
-                              in Criteria the_criteria)
-      raises(ObjectGroupNotFound,
-             MemberAlreadyPresent,
-             NoFactory,
-             ObjectNotCreated,
-             InvalidCriteria,
-             CannotMeetCriteria);
 
-    ObjectGroup add_member(in ObjectGroup object_group,
-                           in Location the_location,
-                           in Object member)
-      raises(ObjectGroupNotFound,
-             MemberAlreadyPresent,
-             ObjectNotAdded);
+    ObjectGroup create_member (in ObjectGroup object_group,
+                               in Location the_location,
+                               in TypeId type_id,
+                               in Criteria the_criteria)
+      raises (ObjectGroupNotFound,
+              MemberAlreadyPresent,
+              NoFactory,
+              ObjectNotCreated,
+              InvalidCriteria,
+              CannotMeetCriteria);
 
-    ObjectGroup remove_member(in ObjectGroup object_group,
-                              in Location the_location)
-      raises(ObjectGroupNotFound, MemberNotFound);
+    ObjectGroup add_member (in ObjectGroup object_group,
+                            in Location the_location,
+                            in Object member)
+      raises (ObjectGroupNotFound,
+              MemberAlreadyPresent,
+              ObjectNotAdded);
 
-    Locations locations_of_members(in ObjectGroup object_group)
-      raises(ObjectGroupNotFound);
+    ObjectGroup remove_member (in ObjectGroup object_group,
+                               in Location the_location)
+      raises (ObjectGroupNotFound, MemberNotFound);
 
-    ObjectGroupId get_object_group_id(in ObjectGroup object_group)
-      raises(ObjectGroupNotFound);
+    Locations locations_of_members (in ObjectGroup object_group)
+      raises (ObjectGroupNotFound);
 
-    ObjectGroup get_object_group_ref(in ObjectGroup object_group)
-      raises(ObjectGroupNotFound);
+    ObjectGroupId get_object_group_id (in ObjectGroup object_group)
+      raises (ObjectGroupNotFound);
 
-    Object get_member_ref(in ObjectGroup object_group, in Location loc)
-      raises(ObjectGroupNotFound, MemberNotFound);
+    ObjectGroup get_object_group_ref (in ObjectGroup object_group)
+      raises (ObjectGroupNotFound);
+
+    Object get_member_ref (in ObjectGroup object_group, in Location loc)
+      raises (ObjectGroupNotFound, MemberNotFound);
 
   }; // end ObjectGroupManager
 
@@ -170,16 +171,16 @@ module PortableGroup {
 
     typedef any FactoryCreationId;
 
-    Object create_object(in TypeId type_id,
-                         in Criteria the_criteria,
-                         out FactoryCreationId factory_creation_id)
-      raises(NoFactory,
-             ObjectNotCreated,
-             InvalidCriteria,
-             InvalidProperty,
-             CannotMeetCriteria);
+    Object create_object (in TypeId type_id,
+                          in Criteria the_criteria,
+                          out FactoryCreationId factory_creation_id)
+      raises (NoFactory,
+              ObjectNotCreated,
+              InvalidCriteria,
+              InvalidProperty,
+              CannotMeetCriteria);
 
-    void delete_object(in FactoryCreationId factory_creation_id)
+    void delete_object (in FactoryCreationId factory_creation_id)
       raises (ObjectNotFound);
 
   }; // end GenericFactory
