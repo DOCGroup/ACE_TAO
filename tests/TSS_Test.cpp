@@ -161,8 +161,8 @@ worker (void *c)
           // Use the guard to serialize access to errors.
           ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock,
                                     0));
-          ACE_DEBUG ((LM_ERROR, "use of ACE_TSS_Type_Adapter failed, value "
-                      "is %u, it should be 37!\n", (*u)->operator u_int ()));
+          ACE_DEBUG ((LM_ERROR, ASYS_TEXT ("use of ACE_TSS_Type_Adapter failed, value ")
+                      ASYS_TEXT ("is %u, it should be 37!\n"), (*u)->operator u_int ()));
           ++errors;
         }
 

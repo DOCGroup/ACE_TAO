@@ -135,7 +135,7 @@ reader (void *)
           current_writers++;
 
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) upgraded to write lock!\n"));
+                      ASYS_TEXT ("(%t) upgraded to write lock!\n")));
 
           ACE_thread_t self = ACE_Thread::self ();
           
