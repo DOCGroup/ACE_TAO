@@ -1,3 +1,9 @@
+Mon Feb  7 15:19:40 2005  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_orb_tests.lst:
+          Added CodeSet test to the list. This should run on all platforms
+          except those using GIOP 1.0 explicitly.
+
 Mon Feb 7 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release:
