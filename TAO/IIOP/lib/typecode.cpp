@@ -25,7 +25,9 @@
 #include	"cdr.hh"
 #include	"thread.hh"
 
+#if !defined (VXWORKS)
 #include	<memory.h>
+#endif
 #include	<sys/types.h>
 
 #include	<initguid.h>
