@@ -1,3 +1,85 @@
+Tue Jan  2 16:25:22 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/IFR_Service/IFR.dsw:
+        * orbsvcs/IFR_Service/Makefile:
+
+          Modifications corresponding to the addition of the new files 
+          and projects added below.
+
+        * orbsvcs/IFR_Service/Makefile.BE:
+        * orbsvcs/IFR_Service/Makefile.EX:
+        * orbsvcs/IFR_Service/Makefile.am:
+        * orbsvcs/IFR_Service/Makefile.dependencies:
+        * orbsvcs/IFR_Service/Makefile.tao_ifr:
+        * orbsvcs/IFR_Service/TAO_IFR_BE_DLL.dsp:
+        * orbsvcs/IFR_Service/TAO_IFR_BE_Export.h:
+        * orbsvcs/IFR_Service/be_extern.h:
+        * orbsvcs/IFR_Service/be_global.cpp:
+        * orbsvcs/IFR_Service/be_global.h:
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/drv_args_ifr.cpp:
+        * orbsvcs/IFR_Service/drv_extern_ifr.h:
+        * orbsvcs/IFR_Service/drv_init_ifr.cpp:
+        * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
+        * orbsvcs/IFR_Service/drv_private_ifr.cpp:
+        * orbsvcs/IFR_Service/drv_private_ifr.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.h:
+        * orbsvcs/IFR_Service/ifr_removing_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_removing_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/ifr_visitor_macro.h:
+        * orbsvcs/IFR_Service/tao_ifr.cpp:
+        * orbsvcs/IFR_Service/tao_ifr.dsp:
+
+          New files comprising the backend library and executable for
+          'tao_ifr', which processes IDL files and administers the IfR.
+          For the frontend library, the existing TAO_IDL_FE_DLL is
+          used. The class IFR_Visitor overrides all the pure virtual 
+          functions of its base class AST_Visitor with no-ops, so that
+          further subclasses can override only the functions they need.
+
+        * TAOACE.dsw:
+
+          New projects above added to workspace.
+
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+
+          Cosmetic changes.
+
+        * orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
+        * orbsvcs/tests/InterfaceRepo/Makefile:
+
+          Modifications corresponding to the addition of the new files below.
+
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_client.dsp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Application_Test_server.dsp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/Makefile:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/README:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/main.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/server.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/test.idl:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/test_i.cpp:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/test_i.h:
+
+          New files for IfR test which is intended to simulate an application,
+          using tao_ifr in both its adding and removing capacity, and 
+          constructing a DII request based on information obtained by
+          querying the IfR.
+
 Tue Jan  2 14:19:03 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Param_Test/run_test_dii.pl:
