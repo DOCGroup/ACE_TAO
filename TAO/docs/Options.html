@@ -922,6 +922,19 @@ flushes the queue as soon as it becomes "full", and blocks the thread
 until all the data is sent.
         </td>
       </tr>
+      <tr>
+        <td><code>-ORBDropRepliesDuringShutdown</code> <em>0|1</em></td>
+        <td><a name="-ORBDropRepliesDuringShutdown"></a> Strategy to
+        make the ORB wait for replies to show up even if the ORB is
+        shutdown. The default is to drop replies. For example, clients
+        comunicating with misbehaved servers will continue to hang if
+        replies don't show up and even if the client ORB is shutdown
+        from another thread. This strategy helps the ORB decide to
+        wait for the replies or drop replies. Some clients may not
+        want to drop replies, and may want all their requests to be
+        processed until ORB::destroy () is called. Setting the value
+        of this option to 0 would help with that. </td>
+      </tr>
     </tbody>
   </table>
   </p>
