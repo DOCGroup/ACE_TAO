@@ -28,6 +28,7 @@ IorHandler::hexChar2int (char thisChar)
     case 'e': return (14);
     case 'f': return (15);
     }
+  return -1;
 }
 
 u_long
@@ -121,7 +122,7 @@ IorHandler::skipSpaceIfAny(char *readPtr, int *hexCharsRead)
 void
 IorHandler::skipNullOctets (char *readPtr, int *hexCharsRead, int expectingStr)
 {
-  char nullOctet[2];
+  char nullOctet[4];
   int offset;
 
   *hexCharsRead = 0;
@@ -163,9 +164,7 @@ int
 IorHandler::findIfVisiIor(char *readPtr, int *hexCharsRead)
 {
   char nullOctet[2];
-  char visiPreamble[6];
   int offset;
-  int visiPreambleLen = 5;
   int hasVisiPreamble = 0;
 
   *hexCharsRead = 0;

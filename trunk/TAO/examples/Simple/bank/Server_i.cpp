@@ -53,7 +53,6 @@ Server_i::parse_args (void)
                            "\n",
                            argv_ [0]),
                           1);
-	break;
       }
 
   // Indicates successful parsing of command line.
