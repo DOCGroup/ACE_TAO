@@ -79,8 +79,8 @@
 #if !defined (ACE_IOSTREAM_H)
 #define ACE_IOSTREAM_H
 
-#include "ace/OS.h"
 #include "ace/INET_Addr.h"
+#include "ace/Handle_Set.h"
 #include <iomanip.h>
 
 #if defined (ACE_HAS_STRING_CLASS)
@@ -93,6 +93,10 @@ typedef String ACE_IOStream_String;
 #endif /* ACE_HAS_STRING_CLASS */
 
 #if defined (ACE_HAS_STRING_CLASS)
+
+#if defined (__alpha)
+#include <stl_macros>
+#endif /* __alpha */
 
 class QuotedString : public ACE_IOStream_String
 {

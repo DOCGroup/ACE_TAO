@@ -1,5 +1,16 @@
 Thu May  8 00:40:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Containers.i (size): Changed <TYPE> to <T> so that this
+ 	  compiles on the Alpha.  Thanks to James CE Johnson
+ 	  <jcej@lads.com> for this.
+
+	* ace/IOStream.h: Include the std_macros header on the Alpha.
+  	  Thanks to James CE Johnson <jcej@lads.com> for this.
+
+	* include/makeinclude/platform_osf1_4.0.GNU (SOBUILD): Removed
+ 	  -lACE from the link line.  Thanks to James CE Johnson
+ 	  <jcej@lads.com> for this.
+
 	* tests/Timer_Queue_Test.cpp: Changed all the int timer ids to
  	  long so that the test will work on DEC ALPHAs.  Thanks to Thilo
  	  Kielmann <kielmann@informatik.uni-siegen.de> for reporting this.
