@@ -137,6 +137,11 @@ AST_check_fwd_interface()
     d = ast_fwds[i];
     itf = d->full_definition();
     if (!(itf->is_defined()))
-      idl_global->err()->fwd_decl_not_defined(itf);
+      {
+        // The old pointer may now be garbage.
+        itf->set_file_name (idl_global->filename ());
+
+        idl_global->err()->fwd_decl_not_defined(itf);
+      }
   }
 }
