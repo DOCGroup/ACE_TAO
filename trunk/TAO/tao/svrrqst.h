@@ -114,12 +114,13 @@ public:
 				    void **ppv);
 
   // private:
-  CORBA::String _opname;
-  CDR *_incoming;
-  CORBA::NVList_ptr _params;
-  CORBA::Any_ptr _retval;
-  CORBA::Any_ptr _exception;
-  CORBA::ExceptionType _ex_type;
+  // @@ Please comment me.
+  CORBA::String opname_;
+  CDR *incoming_;
+  CORBA::NVList_ptr params_;
+  CORBA::Any_ptr retval_;
+  CORBA::Any_ptr exception_;
+  CORBA::ExceptionType ex_type_;
 
   void release (void) { refcount_--; }
   // Just drop the refcount, don't destroy the object; most of these
@@ -130,9 +131,9 @@ private:
 
   u_int refcount_;
 
-  CORBA::ORB_ptr _orb;
+  CORBA::ORB_ptr orb_;
 
-  CORBA::BOA_ptr _boa;
+  CORBA::BOA_ptr boa_;
 };
 
 #endif /* TAO_SVRRQST_H */

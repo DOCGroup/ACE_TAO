@@ -34,12 +34,12 @@ IIOP_ServerRequest::~IIOP_ServerRequest (void)
 {
   ACE_ASSERT (refcount_ == 0);
 
-  if (_params)
-    CORBA::release (_params);
-  if (_retval)
-    delete _retval;
-  if (_exception)
-    delete _exception;
+  if (params_)
+    CORBA::release (params_);
+  if (retval_)
+    delete retval_;
+  if (exception_)
+    delete exception_;
 }
  
 ULONG __stdcall
@@ -95,18 +95,13 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
 {
   env.clear ();
 
-  // Save params for later use when marshaling reply
-  _params = list;
+  // Save params for later use when marshaling the reply.
+  this->params_ = list;
 
-  // Then unmarshal each "in" and "inout" parameter
+  // Then unmarshal each "in" and "inout" parameter.
   for (u_int i = 0; i < list->count (); i++) 
     {
-      CORBA::NamedValue_ptr nv;
-      CORBA::Any_ptr any;
-      CORBA::TypeCode_ptr tc;
-      void *value;
-
-      nv = list->item (i);
+      CORBA::NamedValue_ptr nv = list->item (i);
 
       if (ACE_BIT_DISABLED (nv->flags (), CORBA::ARG_IN | CORBA::ARG_INOUT))
 	continue;
@@ -117,13 +112,16 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
       // NOTE: desirable to have a way to let the dynamic
       // implementation routine preallocate this data, for
       // environments where DSI is just being used in lieu of a
-      // language mapped server side API and the size is really
+      // language mapped server-side API and the size is really
       // knowable in advance.
 
-      any = nv->value ();
-      tc = any->type ();
+      CORBA::Any_ptr any = nv->value ();
+      CORBA::TypeCode_ptr tc = any->type ();
+
       tc->AddRef ();
       ACE_NEW (value, char [tc->size (env)]);
+
+      void *value;
       any->replace (tc, value, CORBA::B_TRUE, env);
 
       // Decrement the refcount of "tc".
@@ -138,16 +136,16 @@ IIOP_ServerRequest::params (CORBA::NVList_ptr list,
       tc->Release ();
 
       // Then just unmarshal the value.
-      (void) _incoming->decode (tc, value, 0, env);
+      (void) incoming_->decode (tc, value, 0, env);
     }
 
   // If any data is left over, it'd be context values ... else error.
   // We don't support context values, so it's always an error.
 
-  if (_incoming->bytes_remaining () != 0) 
+  if (incoming_->bytes_remaining () != 0) 
     {
       dmsg1 ("params (), %d bytes remaining (error)", 
-	     _incoming->bytes_remaining ());
+	     incoming_->bytes_remaining ());
       env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
     }
 }
@@ -162,10 +160,10 @@ IIOP_ServerRequest::result (CORBA::Any_ptr value,
 {
   env.clear ();
 
-  if (!_params || _retval || _exception)
+  if (!params_ || retval_ || exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else
-    _retval = value;
+    retval_ = value;
     
   // XXX send the message now!
 }
@@ -177,13 +175,13 @@ IIOP_ServerRequest::exception (CORBA::ExceptionType type,
 			       CORBA::Any_ptr value,
 			       CORBA::Environment &env)
 {
-  if (!_params || _retval || _exception)
+  if (!params_ || retval_ || exception_)
     env.exception (new CORBA::BAD_INV_ORDER (CORBA::COMPLETED_NO));
   else 
     {
       env.clear ();
-      _exception = value;
-      _ex_type = type;
+      exception_ = value;
+      ex_type_ = type;
     }
 
   // XXX send the message now!
@@ -194,7 +192,7 @@ IIOP_ServerRequest::exception (CORBA::ExceptionType type,
 CORBA::String __stdcall
 IIOP_ServerRequest::op_name (void)
 {
-  return _opname;
+  return opname_;
 }
 
 CORBA::Object_ptr __stdcall
@@ -214,11 +212,11 @@ IIOP_ServerRequest::caller (void)
 CORBA::ORB_ptr __stdcall
 IIOP_ServerRequest::orb (void)
 {
-  return _orb;
+  return orb_;
 }
 
 CORBA::BOA_ptr __stdcall
 IIOP_ServerRequest::oa (void)
 {
-  return _boa;
+  return boa_;
 }
