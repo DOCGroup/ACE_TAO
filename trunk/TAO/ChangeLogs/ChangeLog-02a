@@ -1,3 +1,17 @@
+Wed Feb 27 09:32:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Makefile.bor:
+          Added new BCB makefile for this library
+
+        * tao/Messaging/TAO_Messaging.rc:
+          Added resource file for this library
+
+        * tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+          Fixed compile error when __ACE_INLINE__ is not defined
+
+        * tao/Makefile.bor:
+          Added new Messaging directory
+
 Tue Feb 26 21:29:05 2002  Ossama Othman  <ossama@uci.edu>
 
 	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp (visit_interface):
@@ -18,19 +32,19 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	* tao/Asynch_Reply_Dispatcher.i:
 	  Moved the TAO_Asynch_Reply_Dispatcher class to this file in the
 	  Messaging directory.
-	
+
 	* tao/Asynch_Reply_Dispatcher_Base.cpp:
 	* tao/Asynch_Reply_Dispatcher_Base.h:
 	* tao/Asynch_Reply_Dispatcher_Base.i:
-	  Moved the TAO_Asynch_Reply_Dispatcher class to its own file in the 
+	  Moved the TAO_Asynch_Reply_Dispatcher class to its own file in the
 	  Messaging directory and the class TAO_Asynch_Reply_Dispatcher_Base
 	  remained in this file.
-	
+
 	* tao/Asynch_Timeout_Handler.cpp:
 	* tao/Asynch_Timeout_Handler.h:
 	  Moved the class TAO_Asynch_Timeout_Handler to its own file in the
 	  Messaging directory.
-	
+
 	* tao/Connection_Handler.cpp:
 	* tao/IIOP_Connection_Handler.cpp:
 	* tao/Invocation.cpp:
@@ -39,12 +53,12 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	  There is no need to #include tao/Messaging_Policy_i.h, the classes
 	  in that file are not used at all, probably old code left
 	  around.
-	  
+
 	* tao/Makefile:
 	* tao/Makefile.am:
 	  Removed all links to the Messaging files in the Makefile.
 	  Links are made to the new Messading directory.
-	
+
 	* tao/Messaging.cpp:
 	* tao/Messaging.h:
 	* tao/Messaging.pidl:
@@ -65,34 +79,34 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	  Moved all the Messaging classes in the Messaging NAMESPACE except
 	  the variables SyncScope and SynScope_out to the new Messaging
 	  directory. The variables SyncScope and SyncScope_out are needed
-	  by the ORB. So they are moved to a new file 
+	  by the ORB. So they are moved to a new file
 	  Messaging_SyncScopeC.h in the TAO/tao directory.
-	
+
 	* tao/Messaging_SyncScope.pidl:
 	* tao/Messaging_SyncScopeC.cpp:
 	* tao/Messaging_SyncScopeC.h:
 	* tao/Messaging_SyncScopeC.i:
 	  The variables SyncScope and SyncScope_out in the Messaging
 	  NAMESPACE are needed by the ORB. So they are not moved to the new
-	  Messaging directory and are moved to these new files in the 
+	  Messaging directory and are moved to these new files in the
 	  TAO/tao directory.
-	
+
 	* tao/ORB.cpp:
 	  Moved the ORB_Initializer for the Messaging class to the
 	  Messaging directory.
-	 
+
 	* tao/PortableInterceptor.pidl:
 	  Removed the #include "Messaging.pidl and added the
-	  #include "Messaging_SyncScope.idl". THe new idl file is used 
+	  #include "Messaging_SyncScope.idl". THe new idl file is used
 	  to create the idl stubs for just the SyncScope and the SyncScope_out
-	  variables in the Messaging class. 
-	
+	  variables in the Messaging class.
+
 	* tao/PortableInterceptorC.h:
 	* tao/Profile.cpp:
-	  Added #include Messaging_SyncScopeC.h and removed 
+	  Added #include Messaging_SyncScopeC.h and removed
 	  #include MessagingC.h to include only those variables in the
 	  Messaging namespace that are not in the new Messaging directory.
-	
+
 	* tao/DynamicInterface/Makefile:
 	* tao/BiDir_GIOP/Makefile:
 	* tao/Domain/Makefile:
@@ -101,28 +115,28 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	* tao/IORManipulation/Makefile:
 	* tao/IORTable/Makefile:
 	  Make changes in the Makefile to link the new TAO_Messaging library.
-	
+
 	* tao/DynamicInterface/DII_Reply_Dispatcher.h:
 	* tao/DynamicInterface/Request.h:
 	  Change all #includes to point to the new Messaging directory.
 	  For example, change #include MessagingC.h to
 	  #include tao/Messaging/MessagingC.h.
-	
+
 	* tao/Messaging/Asynch_Reply_Dispatcher.cpp:
 	* tao/Messaging/Asynch_Reply_Dispatcher.h:
 	* tao/Messaging/Asynch_Reply_Dispatcher.i:
 	  Moved the TAO_Asynch_Reply_Dispatcher class to its own file
 	  in the Messaging directory.
-	
+
 	* tao/Messaging/Asynch_Timeout_Handler.cpp:
 	* tao/Messaging/Asynch_Timeout_Handler.h:
 	  Moved the TAO_Asynch_Timeout_Handler to its own file in the
 	  Messaging directory.
-	  
+
 	* tao/Messaging/Makefile:
 	  Added a new Makefile in the Messaging directory to create the
 	  new library TAO_messaging.
-	
+
 	* tao/Messaging/Messaging.cpp:
 	* tao/Messaging/Messaging.h:
 	* tao/Messaging/Messaging.pidl:
@@ -145,29 +159,29 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	  Moved all the Messaging classes in the Messaging NAMESPACE except
 	  the variables SyncScope and SynScope_out to the new Messaging
 	  directory. The variables SyncScope and SyncScope_out are needed
-	  by the ORB. So they are moved to a new file 
+	  by the ORB. So they are moved to a new file
 	  Messaging_SyncScopeC.h in the TAO/tao directory.
-	
+
 	* tao/Messaging/Twoway_Asynch_Invocation.cpp:
 	* tao/Messaging/Twoway_Asynch_Invocation.h:
 	* tao/Messaging/Twoway_Asynch_Invocation.i:
 	  Moved the TAO_GIOP_Twoway_Asynch_Invocation to its own file in
 	  the Messaging directory.
-	
+
 	* tao/Messaging/messaging_export.h:
 	  Created a new TAO_Messaging_Export type in the new Messaging
 	  library.
-	
+
 	* tao/Messaging/diffs/Messaging.diff:
-	  Added a new diffs directory for the new Messaging directory and 
+	  Added a new diffs directory for the new Messaging directory and
 	  generated new diff files for future use.
-	
+
 	* tao/PortableServer/Makefile:
 	* tao/PortableServer/Makefile.bor:
 	  Changed the Makefile to remove links to the Messaging files.
 	  All the Messaging files in this directory are moved to their
 	  own files in the Messaging directory.
-	
+
 	* tao/PortableServer/MessagingS.cpp:
 	* tao/PortableServer/MessagingS.h:
 	* tao/PortableServer/MessagingS.i:
@@ -176,7 +190,7 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	* tao/PortableServer/MessagingS_T.i:
 	  Moved all the Messaging files in the PortableServer directory
 	  to their own files in the Messaging directory.
-	
+
 	* tao/RTCORBA/Makefile:
 	* tao/RTPortableServer/Makefile:
 	* tao/SmartProxies/Makefile:
@@ -184,7 +198,7 @@ Mon Feb 26 18:10:24 2002 Jaiganesh Balasubramanian <jai@kelvar.ece.uci.edu>
 	* tao/TypeCodeFactory/Makefile:
 	  Made changes to link to the messaging SyncScope files in the
 	  tao directory.
-	
+
 	* tao/Strategies/DIOP_Connection_Handler.cpp:
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
 	* tao/Strategies/UIOP_Connection_Handler.cpp:
