@@ -49,7 +49,7 @@ Server_i::parse_args (void)
                            " [-o] <ior_output_file>"
                            "\n",
                            argv_ [0]),
-                          1);
+                          -1);
       }
 
   // Indicates successful parsing of command line.
