@@ -1,3 +1,9 @@
+Fri Mar 13 09:57:51 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/corbacom.h: use types of known sizes, such as ACE_UINT32
+          and ACE_INT16, instead of native types for Boolean, Short,
+          UShort, Float, and Double.
+
 Thu Mar 12 21:23:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/debug.cpp (_dmsg_x): Changed ex->id () to ex->_id ().
