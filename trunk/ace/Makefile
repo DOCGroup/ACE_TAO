@@ -271,6 +271,7 @@ TEMPLATE_FILES = \
            Synch_T \
            Task_T \
            Template_Instantiations \
+	   Test_and_Set \
            Timeprobe_T \
            Timer_Hash_T \
            Timer_Heap_T \
