@@ -1,3 +1,11 @@
+Mon Apr 20 13:23:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Server_Request.h: 
+	* tao/Server_Request.cpp: 
+	  We keep a flag to determine whether the exceptions stored with
+	  the set_exception() method are user exceptions or system
+	  exceptions.
+
 Mon Apr 20 09:48:01 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/CDR/growth.cpp (main): cast ACE_ONE_SECOND_IN_USECS
