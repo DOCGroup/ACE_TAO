@@ -204,7 +204,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
   return 0;
 }
 
-int be_visitor_interface_smart_proxy_ch::visit_component (be_interface *node)
+int be_visitor_interface_smart_proxy_ch::visit_component (be_component *node)
 {
   return this->visit_interface (node);
 }
