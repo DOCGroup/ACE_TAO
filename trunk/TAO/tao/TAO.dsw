@@ -327,6 +327,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTScheduler"=.\RTScheduling\TAO_RTScheduler.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "SmartProxies"=.\SmartProxies\SmartProxies.dsp - Package Owner=<4>
 
 Package=<5>
@@ -422,18 +434,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name IFR_Client_Static
     End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "Valuetype"=.\Valuetype\TAO_Valuetype.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
 }}}
 
 ###############################################################################

@@ -1110,6 +1110,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTScheduler"=.\tao\RTScheduling\TAO_RTScheduler.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RT_Notification DLL"=.\orbsvcs\orbsvcs\RT_Notification.dsp - Package Owner=<4>
 
 Package=<5>
