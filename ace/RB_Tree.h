@@ -478,10 +478,10 @@ protected:
 
   /**
    * Retrieves a pointer to the item corresponding to the
-   * given key. Returns 0 for success, or -1 if it cannot find the key
-   * in the tree.
+   * given key. If find_exact==1, find the exact match node. Otherwise just find a match node
+   * returns 0 for success, or -1 if it cannot find the key in the tree.
    */
-  int find_i (const EXT_ID &ext_id, ACE_RB_Tree_Node<EXT_ID, INT_ID>* &entry);
+  int find_i (const EXT_ID &ext_id, ACE_RB_Tree_Node<EXT_ID, INT_ID>* &entry, int find_exact = 1);
 
   /**
    * Inserts a *copy* of the key and the item into the tree: both the
@@ -600,6 +600,20 @@ protected:
   ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
                              int set_first);
 
+  /**
+   * Constructor.  Takes an ACE_RB_Tree over which to iterate, and
+   * a pointer to a node in the tree.
+   */
+  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+                             ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry);
+
+  /**
+   * Constructor.  Takes an ACE_RB_Tree over which to iterate, and a key.
+   * The key must come first to distinguish the case of EXT_ID == int.
+   */
+  ACE_RB_Tree_Iterator_Base (const EXT_ID& key,
+                             ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS,ACE_LOCK> &tree);
+
   /// Copy constructor.
   ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
@@ -656,6 +670,19 @@ public:
    */
   ACE_RB_Tree_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
                         int set_first = 1);
+  /**
+   * Constructor.  Takes an ACE_RB_Tree over which to iterate
+   * and a pointer to a node in the tree.
+   */
+  ACE_RB_Tree_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+                        ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry);
+
+   /**
+   * Constructor.  Takes an ACE_RB_Tree over which to iterate, and a key;
+   * the key comes first in order to distinguish the case of EXT_ID == int.
+   */
+  ACE_RB_Tree_Iterator (const EXT_ID &key,
+                        ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
   /// Destructor.
   ~ACE_RB_Tree_Iterator (void);
@@ -761,6 +788,20 @@ public:
    */
   ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
                                 int set_last = 1);
+
+  /**
+   * Constructor.  Takes an ACE_RB_Tree over which to iterate, and 
+   * a point to a node in the tree.
+   */  
+  ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+                                ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry);
+
+  /**
+   * Constructor.  Takes an ACE_RB_Tree over which to iterate, and a key;
+   * the key comes first in order to distinguish the case of EXT_ID == int.
+   */
+  ACE_RB_Tree_Reverse_Iterator (const EXT_ID &key,
+                                ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
   /// Destructor.
   ~ACE_RB_Tree_Reverse_Iterator (void);

@@ -1,3 +1,11 @@
+Wed Oct 16 14:02:27 2002  Yuanfang Zhang <yfzhang@cse.wustl.edu>
+
+	* ace/RB_Tree.cpp:
+	* ace/RB_Tree.h:
+
+	  forward and reverse partial tree traversal.
+	  Changed the find_i method.
+	
 Wed Oct 16 12:18:03 2002  Stephen Torri <storri@cse.wustl.edu>
 
 	* examples/C++v1/Makefile:
