@@ -28,12 +28,17 @@
 /**
  * @class ACE_Method_Request
  *
- * @brief Reifies a method into a request.  Subclasses provide
+ * @brief Reifies a method into a request.  Subclasses must provide
  * the necessary state and behavior.
  *
- * A <Method_Request> is inserted in the <Activation_Queue>,
- * where it is subsequently removed by a <Scheduler>, which
- * invokes the <call> method.
+ * An ACE_Method_Request is inserted in an ACE_Activation_Queue,
+ * where it is subsequently removed by a scheduler object (often
+ * derived from ACE_Task), which invokes the @c call() method.
+ *
+ * This class is discussed in depth in the Active Object chapter
+ * of POSA2.
+ *
+ * @sa ACE_Activation_Queue
  */
 class ACE_Export ACE_Method_Request
 {
@@ -50,10 +55,28 @@ public:
   unsigned long priority (void) const;
 
   /// Set priority.
+  /**
+   * Priority values are user-defined. The default (set in the constructor)
+   * is 0. The priority value is used in the ACE_Activation_Queue::enqueue()
+   * method to order the method requests in the queue by priority.
+   * 0 is the lowest priority.
+   *
+   * @arg prio   unsigned long, the new priority value for this object.
+   *
+   * @sa ACE_Activation_Queue::enqueue
+   */
   void priority (unsigned long);
 
   // = Invocation method (must be overridden by subclasses).
-  /// Invoked when the <Method_Request> is scheduled to run.
+  /// Invoked by the scheduler to execute the request.
+  /**
+   * This method must be implemented by the subclass to perform the
+   * desired actions.
+   *
+   * @return int; not interpreted by ACE. The scheduler class must
+   *         decide the meaning of this return value and act on it
+   *         if needed.
+   */
   virtual int call (void) = 0;
 
 protected:
