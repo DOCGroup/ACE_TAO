@@ -1056,7 +1056,7 @@ public:
   static const u_long max_ticks;
     // max number of ticks supported in a single system call
 private:
-  // constants for prying info out of the pSOS time encoding
+  // = Constants for prying info out of the pSOS time encoding.
   static const u_long year_mask;
   static const u_long month_mask;
   static const u_long day_mask;
@@ -2614,29 +2614,27 @@ typedef unsigned int size_t;
 # endif /* IOV_MAX */
 
 # if defined (ACE_PSOS_SNARFS_HEADER_INFO)
-
-  // header information snarfed from compiler provided header files
+  // Header information snarfed from compiler provided header files
   // that are not included because there is already an identically
-  // named file provided with pSOS, which does not have this info
+  // named file provided with pSOS, which does not have this info from
+  // compiler supplied stdio.h.
+  extern FILE *fdopen (int, const char *);
+  extern int getopt (int, char *const *, const char *);
+  extern char *tempnam (const char *, const char *);
+  extern "C" int fileno (FILE *);
 
-  // from compiler supplied stdio.h
-  extern FILE *fdopen(int, const char *);
-  extern int getopt(int, char *const *, const char *);
-  extern char *tempnam(const char *, const char *);
-  extern "C" int fileno(FILE *);
-
-//  #define fileno(stream)      ((stream)->_file)
+//  #define fileno(stream) ((stream)->_file)
 
   // from compiler supplied string.h
-  extern char *strdup(const char *);
+  extern char *strdup (const char *);
 
   // from compiler supplied stat.h
-  extern mode_t umask(mode_t);
-  extern int mkfifo(const char *, mode_t);
-  extern int mkdir(const char *, mode_t);
+  extern mode_t umask (mode_t);
+  extern int mkfifo (const char *, mode_t);
+  extern int mkdir (const char *, mode_t);
 
   // from compiler supplied stdlib.h
-  extern int putenv(char *);
+  extern int putenv (char *);
 
   int isatty (ACE_HANDLE h);
 
@@ -2650,7 +2648,6 @@ typedef unsigned int size_t;
 #   define islower iswlower
 #   define isdigit iswdigit
 # endif /* ACE_HAS_WINCE */
-
 
 // If the user wants minimum IOStream inclusion, we will just include
 // the forward declarations

@@ -11,9 +11,7 @@ OBJFILES = \
 	$(OBJDIR)\HTTP_Response.obj \
 	$(OBJDIR)\Parse_Headers.obj \
 	$(OBJDIR)\IO.obj \
-        $(OBJDIR)\main.obj
-XXLIBFILES = \
-        $(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
+   $(OBJDIR)\main.obj
 
 !include <$(ACE_ROOT)\apps\build.bor>
 

@@ -5,5 +5,4 @@ OBJFILES = \
         $(OBJDIR)\Peer.obj \
         $(OBJDIR)\peerd.obj
 !include <$(ACE_ROOT)\apps\build.bor>
-LIBFILES= $(ACE_ROOT)\bin\ace$(LIB_DECORATOR).lib
 
