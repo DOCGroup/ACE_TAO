@@ -16,7 +16,7 @@
 #define ACE_OS_DIRENT_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS_Export.h"
+#include "ace/ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -25,13 +25,13 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Export.h"
+#include "ace/ACE_export.h"
 /**
  * @class ACE_Cleanup
  *
  * @brief Base class for objects that are cleaned by ACE_Object_Manager.
  */
-class ACE_OS_Export ACE_Cleanup
+class ACE_Export ACE_Cleanup
 {
 public:
   /// No-op constructor.
@@ -45,7 +45,7 @@ public:
 };
 
 // Adapter for cleanup, used by ACE_Object_Manager.
-extern "C" ACE_OS_Export
+extern "C" ACE_Export
 void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
 
 /**
@@ -53,7 +53,7 @@ void ace_cleanup_destroyer (ACE_Cleanup *, void *param = 0);
  *
  * @brief Hold cleanup information for thread/process
  */
-class ACE_OS_Export ACE_Cleanup_Info
+class ACE_Export ACE_Cleanup_Info
 {
 public:
   /// Default constructor.
@@ -84,7 +84,7 @@ class ACE_Cleanup_Info_Node;
  *
  * For internal use by the ACE library, only.
  */
-class ACE_OS_Export ACE_OS_Exit_Info
+class ACE_Export ACE_OS_Exit_Info
 {
 public:
   /// Default constructor.
