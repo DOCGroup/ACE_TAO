@@ -186,6 +186,55 @@ private:
   // The samples.
 };
 
+// ****************************************************************
+
+class ACE_Export ACE_Throughput_Stats
+{
+  // = TITLE
+  //   A simple class to make throughput and latency analysis.
+  //
+  // = DESCRIPTION
+  //   Keep the relevant information to perform throughput and latency 
+  //   analysis, including:
+  //   1) Minimum, Average and Maximum latency
+  //   2) Jitter for the latency
+  //   3) Linear regression for throughput
+  //   4) Accumulate results from several samples to obtain aggregated 
+  //      results, across several threads or experiments.
+  //
+public:
+  ACE_Throughput_Stats (void);
+  // Default constructor.
+
+  void sample (ACE_UINT64 throughput, ACE_UINT64 latency);
+  // Store one sample
+
+  void accumulate (const ACE_Throughput_Stats &throughput);
+  // Update the values to reflect the stats in <throughput>
+
+  void dump_results (const char* msg, ACE_UINT32 scale_factor);
+  // Print down the stats
+
+private:
+  ACE_UINT64 samples_count_;
+  // The number of samples
+
+  ACE_UINT64 latency_min_;
+  ACE_UINT64 latency_max_;
+  ACE_UINT64 latency_sum_;
+  ACE_UINT64 latency_sum2_;
+  // The stadigraphs for latency computation
+
+  ACE_UINT64 throughput_last_;
+  ACE_UINT64 throughput_sum_x_;
+  ACE_UINT64 throughput_sum_x2_;
+  ACE_UINT64 throughput_sum_y_;
+  ACE_UINT64 throughput_sum_y2_;
+  ACE_UINT64 throughput_sum_xy_;
+  // The stadigraphs for throughput computation
+};
+
+
 #if defined (__ACE_INLINE__)
 # include "ace/Stats.i"
 #endif /* __ACE_INLINE__ */
