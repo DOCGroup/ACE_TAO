@@ -782,7 +782,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Any &x)
       return 0;
     }
   TAO_ENDTRY;
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 ACE_INLINE CORBA_Boolean
@@ -804,7 +804,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object *x)
       return 0;
     }
   TAO_ENDTRY;
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 ACE_INLINE CORBA_Boolean
@@ -826,7 +826,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::TypeCode *x)
       return 0;
     }
   TAO_ENDTRY;
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 // The following use the helper classes
