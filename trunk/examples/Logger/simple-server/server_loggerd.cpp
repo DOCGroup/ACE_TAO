@@ -32,7 +32,11 @@ main (int argc, char *argv[])
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  Logging_Acceptor peer_acceptor;
+  Logging_Acceptor *peer_acceptor;
+  ACE_NEW_RETURN (peer_acceptor,
+                  Logging_Acceptor,
+                  1);
+
   ACE_INET_Addr addr (PORT);
 
   ACE_Get_Opt get_opt (argc, argv, "p:");
@@ -47,16 +51,19 @@ main (int argc, char *argv[])
 	 break;
        }
 
-  if (peer_acceptor.open (addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+  if (peer_acceptor->open (addr) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "open"),
+                      -1);
   else if (REACTOR::instance ()->register_handler
-	   (&peer_acceptor,
+	   (peer_acceptor,
 	    ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "registering service with ACE_Reactor\n"),
 		       -1);
 
-  // Run forever, performing logging service.
+  // Run forever, performing the logging service.
 
   ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) starting up server logging daemon\n"));
@@ -66,7 +73,6 @@ main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
 	      "(%P|%t) shutting down server logging daemon\n"));
-
   return 0;
 }
 

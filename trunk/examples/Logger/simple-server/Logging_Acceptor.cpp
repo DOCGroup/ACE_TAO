@@ -31,13 +31,14 @@ Logging_Acceptor::Logging_Acceptor (void)
 int
 Logging_Acceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
-  return this->peer_acceptor_.close ();
+  this->peer_acceptor_.close ();
+  // Note, this object MUST be allocated dynamically!
+  delete this;
+  return 0;
 }
 
 Logging_Acceptor::~Logging_Acceptor (void)
 {
-  this->handle_close (ACE_INVALID_HANDLE, 
-		      ACE_Event_Handler::ACCEPT_MASK);
 }
 
 // Returns underlying device descriptor.

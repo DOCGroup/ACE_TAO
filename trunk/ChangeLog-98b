@@ -1,3 +1,9 @@
+Tue Nov  3 16:06:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Logger/simple-server: Fixed the server so that it shuts
+ 	  down cleanly when ^C is given.  Thanks to Avi Nash
+ 	  <anash@RedBrick.COM> for reporting this.
+
 Tue Nov 03 13:17:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.{h,i,cpp} (thread_desc_self): Changed this
