@@ -37,7 +37,7 @@
  */
 class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_FilterFactory : public virtual PortableServer::RefCountServantBase
                                                              , public virtual POA_CosNotifyFilter::FilterFactory
-                                                             , public TAO_Notify_FilterFactory
+                                                             , public virtual TAO_Notify_FilterFactory
 {
 public:
   /// Constuctor
