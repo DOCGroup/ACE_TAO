@@ -41,7 +41,7 @@ void
 Notifier_i::register_callback (const char *stock_name,
                                CORBA::Long threshold_value,
                                Callback_Quoter::Consumer_ptr consumer_handler,
-                               CORBA::Environment &TAO_IN_ENV)
+                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Store the client information.
   Consumer_Data consumer_data;
@@ -52,7 +52,7 @@ Notifier_i::register_callback (const char *stock_name,
   consumer_data.consumer_ =
     Callback_Quoter::Consumer::_duplicate (consumer_handler);
  
- consumer_data.desired_value_= threshold_value;
+  consumer_data.desired_value_= threshold_value;
 
   CONSUMERS *consumers = 0;
 
@@ -65,7 +65,7 @@ Notifier_i::register_callback (const char *stock_name,
   if (this->consumer_map_.find (stock_name, consumers) == 0)
     {
      if ( consumers->insert (consumer_data) == -1)
-       TAO_IN_ENV.exception (new Callback_Quoter::Invalid_Stock
+       ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock
                               ("Insertion failed! Invalid Stock!\n"));
      else
       ACE_DEBUG ((LM_DEBUG,
@@ -81,13 +81,13 @@ Notifier_i::register_callback (const char *stock_name,
       
       // the unbounded set entry is created.
       // NOTE:: its pathetic, but to make this macro call its necessary to name 
-      // your environment variable TAO_IN_ENV
+      // your environment variable ACE_TRY_ENV
       ACE_NEW_THROW (consumers, CONSUMERS, CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 
       // When a new entry is tried to be inserted into the unbounded set and it 
       // fails an exception is raised.
       if (consumers->insert (consumer_data) == -1)
-        TAO_IN_ENV.exception (new Callback_Quoter::Invalid_Stock 
+        ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Stock 
                        ("Insertion failed! Invalid Stock!\n"));
 
       // The bond between the stockname <hash_key> and the consumers <hash_value>
@@ -116,7 +116,7 @@ Notifier_i::orb (CORBA::ORB_ptr orb)
 
 void
 Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
-                                 CORBA::Environment &env)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   // The consumer_map consists of a map of stocknames with consumers
   // and their threshold values attached to it. To unregister a
@@ -148,8 +148,8 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
        // removed an exception is raised.
 
        if ((*iter).int_id_->remove (consumer_to_remove) == -1)
-	 env.exception (new Callback_Quoter::Invalid_Handle 
-                        ("Unregistration failed! Invalid Consumer Handle!\n"));
+	 ACE_TRY_ENV.exception (new Callback_Quoter::Invalid_Handle 
+                                ("Unregistration failed! Invalid Consumer Handle!\n"));
                                 
        else
         ACE_DEBUG ((LM_DEBUG,
@@ -163,7 +163,7 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer,
 void
 Notifier_i::market_status (const char *stock_name,
                            CORBA::Long stock_value,
-                           CORBA::Environment &env)
+                           CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_DEBUG ((LM_DEBUG,
 	      "Notifier_i:: The stockname is %s with price %d\n",
@@ -217,7 +217,7 @@ Notifier_i::market_status (const char *stock_name,
 }
 
 void
-Notifier_i::shutdown (CORBA::Environment &env)
+Notifier_i::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   if ( this->consumer_map_.close () > 0)
     ACE_ERROR ((LM_ERROR,
