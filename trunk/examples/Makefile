@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id$
 #
 #	Makefile for the ACE examples directory
 #----------------------------------------------------------------------------
@@ -16,6 +16,7 @@ DIRS  =	ASX \
 	IOStream \
 	Logger \
 	Log_Msg \
+	Map_Manager \
 	Mem_Map \
 	Misc \
 	Naming \
@@ -25,11 +26,11 @@ DIRS  =	ASX \
 	Shared_Memory \
 	System_V_IPC \
 	Threads \
-	Timer_Queue 
+	Timer_Queue
 
 # Makefiles TBD:
-#	ttcp 
-#       CORBA 
+#	ttcp
+#       CORBA
 
 
 #----------------------------------------------------------------------------
@@ -41,4 +42,3 @@ include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
-
