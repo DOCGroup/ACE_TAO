@@ -1,3 +1,8 @@
+Tue Nov  4 17:58:29 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/UUID.cpp: Added explicit instantiation of
+	  ACE_Singleton::singleton_ to work around g++ issue on HP-UX and AIX.
+
 Tue Nov  4 20:40:26 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * tests/test_config.h:
@@ -101,7 +106,7 @@ Tue Nov  4 06:20:18 2003  Chad Elliott  <elliott_c@ociweb.com>
         * bin/MakeProjectCreator/templates/vc7lib.mpt:
         * bin/MakeProjectCreator/templates/vc7libexe.mpt:
 
-          Split static projects from dyanmic projects ala VC6.  When one VC7
+          Split static projects from dynamic projects ala VC6.  When one VC7
           static library project depends on another, they are linked
           together as the second one is built.  This causes the contents of
           each library to grow tremendously.  Splitting the projects allows
