@@ -443,6 +443,66 @@ NAME="multiorb-tpool"></A> (Not yet implemented.)
 </UL>
 </blockquote>
 
+<HR>
+
+<H3 ALIGN=CENTER>Hints</H3>
+
+    <P>
+      Choosing the right configuration is hard and,
+      of course,
+      depends on your application.
+      In the following section we will attempt to describe some
+      motivations for features in TAO,
+      hopefully that can guide you through the choice of your
+      configuration options.
+    </P>
+
+    <UL>
+      <LI>
+	<P><B>ORB-per-thread</B>
+	  The main motivation behind this options
+	  is to minimize priority invertion,
+	  since threads share no ORB resources no locking is required
+	  and thus,
+	  priority is preserved in most cases (assuming proper support
+	  from the OS).
+	  If you are not too concerned about priority inversion try to
+	  use a global ORB,
+	  using ORB-per-thread has some tradeoffs
+	  (like calling ORB_init on each thread, activation of a servant
+	  is more complicated, etc.)
+	  Some of the problems, can be minimized, but they require
+	  even more careful analysis.
+	  For example,
+	  object activation can be simplified by using a global POA;
+	  the careful reader will wonder how could global POA be
+	  useful in anyway since it will require locks and thus
+	  introduce priority inversions again;
+	  some applications activate all their objects beforehand so
+	  locks in the POA are not always needed;
+	  other applications only activate a few objects after
+	  startup,
+	  so they can use a child POA with the right locking policy
+	  for the dynamic servants and the root poa (with no locking)
+	  for the majority of the servants.
+	</P>
+	<P>
+	  As the reader will note this is a delicate configuration
+	  option, the rule of thumb should be <B>not</B> to use
+	  ORB-per-thread unless it is really required.
+	</P>
+      </LI>
+      <LI><B>Collocation tables</B>
+	Why could the application what a non-global collocation table?
+	If objects are to serve requests only at a well known priority
+	the application can be configured with the ORB-per-thread
+	option, and the object is activated only in the thread (ORB)
+	corresponding to the desired priority.
+	But using a global table would subert the priority assignment
+	(because calls would run at the priority of the client).
+      </LI>
+    </UL>
+
 <P><HR><P>
 Back to the TAO <A HREF="components.html">components documentation</A>.
 
