@@ -44,7 +44,7 @@
    //    used".
 
 #    define ACE_RCSID(path, file, id) \
-      inline const char* get_rcsid_ ## path ## _ ## file (const char*) \
+      static inline const char* get_rcsid_ ## path ## _ ## file (const char*) \
       { \
         return id ; \
       } \

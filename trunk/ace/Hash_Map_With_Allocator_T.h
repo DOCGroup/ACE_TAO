@@ -15,6 +15,7 @@
 #include "ace/pre.h"
 
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Synch.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

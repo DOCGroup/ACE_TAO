@@ -54,8 +54,6 @@ protected:
     ACE_SOCK_Stream logging_peer;
 
     while (acceptor ().accept (logging_peer) != -1) {
-      master_handle_set_.set_bit (logging_peer.get_handle ());
-
       ACE_FILE_IO *log_file = new ACE_FILE_IO;
 
       // Use the client's hostname as the logfile name.
