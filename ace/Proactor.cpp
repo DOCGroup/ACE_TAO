@@ -6,6 +6,7 @@
 // This only works on Win32 platforms and on Unix platforms with aio
 // calls.
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Proactor_Impl.h"
 #include "ace/Object_Manager.h"
 #include "ace/Task_T.h"
