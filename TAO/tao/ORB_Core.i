@@ -123,42 +123,11 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
   return retval;
 }
 
-
-
-ACE_INLINE void
-TAO_ORB_Core:: services_log_msg_rcv (TAO_Message_State_Factory &state)
-{
-    if (this->ft_service_.service_callback ())
-      {
-        this->ft_service_.service_callback ()->service_log_msg_rcv (state);
-      }
-}
-
-ACE_INLINE void
-TAO_ORB_Core:: services_log_msg_pre_upcall (TAO_ServerRequest &req)
-{
-    if (this->ft_service_.service_callback ())
-      {
-        this->ft_service_.service_callback ()->service_log_msg_pre_upcall (req);
-      }
-}
-
-ACE_INLINE void
-TAO_ORB_Core:: services_log_msg_post_upcall (TAO_ServerRequest &req)
-{
-    if (this->ft_service_.service_callback ())
-      {
-        this->ft_service_.service_callback ()->service_log_msg_post_upcall (req);
-      }
-}
-
-
 ACE_INLINE TAO_Fault_Tolerance_Service &
 TAO_ORB_Core::fault_tolerance_service (void)
 {
   return this->ft_service_;
 }
-
 
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr (void)

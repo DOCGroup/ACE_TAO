@@ -854,18 +854,6 @@ public:
   int service_raise_transient_failure (TAO_GIOP_Invocation *invoke,
                                        TAO_Profile *profile
                                        ACE_ENV_ARG_DECL);
-
-  /// Hook for logging of messages by the Logging & Recovery service
-  /// of an FT service.
-  void services_log_msg_rcv (TAO_Message_State_Factory &state);
-
-  /// Hook for logging of messages by the Logging & Recovery service
-  /// of an FT service.
-  void services_log_msg_pre_upcall (TAO_ServerRequest &req);
-
-  /// Hook for logging of messages by the Logging & Recovery service
-  /// of an FT service.
-  void services_log_msg_post_upcall (TAO_ServerRequest &req);
   //@}
 
   /**
