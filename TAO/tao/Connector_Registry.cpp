@@ -69,16 +69,13 @@ TAO_Connector_Registry::close_all (void)
 {
   TAO_ConnectorSetItor end =
                 this->connectors_.end ();
-  TAO_ConnectorSetItor connector =
-                this->connectors_.begin ();
-
-  for (;
-       connector != end ;
-       ++connector)
+  for (TAO_ConnectorSetItor i = this->connectors_.begin (); i != end; ++i)
     {
-      if (*connector)
-        (*connector)->close ();
+      if (*i == 0)
+        continue;
+      (*i)->close ();
     }
+  this->connectors_.reset ();
   return 0;
 }
 
