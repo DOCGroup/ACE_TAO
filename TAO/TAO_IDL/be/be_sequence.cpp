@@ -124,17 +124,19 @@ be_sequence::be_sequence (AST_Expression *v,
 
   AST_Decl::NodeType nt = t->node_type ();
   AST_Typedef *td = 0;
+  AST_Type *pbt = 0;
 
   if (nt == AST_Decl::NT_typedef)
     {
       td = AST_Typedef::narrow_from_decl (t);
-      nt = td->primitive_base_type ()->node_type ();
+      pbt = td->primitive_base_type ();
+      nt = pbt->node_type ();
     }
 
   if (nt == AST_Decl::NT_pre_defined)
     {
       AST_PredefinedType *pdt = 
-        AST_PredefinedType::narrow_from_decl (td ? td : t);
+        AST_PredefinedType::narrow_from_decl (pbt ? pbt : t);
 
       switch (pdt->pt ())
         {
