@@ -1,3 +1,11 @@
+Tue Nov 25 07:16:43 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/Naming_Service/Makefile:
+
+	  Fixed a small typo that caused the Makefile not to build any of
+	  the executables. This should fix the strange errors that were
+	  caused when Naming_Service wasn't built. 
+
 Tue Nov 25 10:55:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:

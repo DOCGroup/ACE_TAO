@@ -20,11 +20,6 @@ BIN2 = Naming_Service
 #### If the TAO orbsvcs library wasn't built with sufficient components,
 #### don't try to build here.
 TAO_ORBSVCS := $(shell sh $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq ($(corba_messaging),1)
-  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
-    BIN = $(BIN2)
-  endif # Naming
-endif # corba_messaging
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -33,6 +28,11 @@ endif # corba_messaging
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+ifeq ($(corba_messaging),1)
+  ifeq (Naming,$(findstring Naming,$(TAO_ORBSVCS)))
+    BIN = $(BIN2)
+  endif # Naming
+endif # corba_messaging
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
