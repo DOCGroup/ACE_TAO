@@ -1,3 +1,17 @@
+Tue Jan 29 17:13:53 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/lex.yy.cpp:
+
+          Changed the code in idl_store_pragma() to keep track of how
+          many characters it 'crunches' when removing whitespace
+          between the '#' and the 'pragma'. When the trailing '\n' of
+          the pragma string is removed later on, it must be shifted
+          this many places to the left, to skip over the characters
+          that have now become garbage. Thanks to Ossama Othman 
+          <ossama@doc.ece.uci.edu> for providing the KCC preprocessor
+          output that showed the source of the problem.
+
 Tue Jan 29 23:31:14 2002  Oliver Kellogg <oliver.kellogg@sysde.eads.net>
 
 	* rules.tao.GNU:
