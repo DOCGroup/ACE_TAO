@@ -1453,7 +1453,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
             // Note that we still hold the lock
             return 0;  
           case WAIT_TIMEOUT:
-            errno = ETIME;
+            errno = EBUSY;
             return -1;
           default:
             errno = ::GetLastError ();
@@ -1470,8 +1470,11 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 #elif defined (VXWORKS)
   if (::semTake (*m, NO_WAIT) == ERROR)
     if (errno == S_objLib_OBJ_TIMEOUT)
-      // couldn't get the semaphore
-      return 1;
+      {
+	// couldn't get the semaphore
+	errno = EBUSY;
+	return -1;
+      }
     else
       // error
       return -1;
@@ -1503,7 +1506,7 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m, int &abandoned)
             abandoned = 1;        
             return 0;  // something goofed, but we hold the lock ... 
           case WAIT_TIMEOUT:
-            errno = ETIME;
+            errno = EBUSY;
             return -1;
           default:
             errno = ::GetLastError ();
@@ -1647,7 +1650,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_WIN32_TRYLOCK */
 #elif defined (VXWORKS)
-  return mutex_trylock (m);
+  return ACE_OS::mutex_trylock (m);
 #endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);
@@ -1666,7 +1669,7 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
   ::LeaveCriticalSection (m);
   return 0;
 #elif defined (VXWORKS)
-  return mutex_unlock (m);
+  return ACE_OS::mutex_unlock (m);
 #endif /* ACE_HAS_STHREADS || ACE_HAS_DCETHREADS || ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);
@@ -2072,7 +2075,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
                      int, -1);
 #elif defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS)
-  // STHREADS semaphores set errno to EBUSY if trywait fails
+  // STHREADS semaphores set errno to EBUSY if trywait fails.
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_trywait (s), 
                                        ace_result_), 
                      int, -1);
@@ -2106,6 +2109,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     }
 
 #elif defined (VXWORKS)
+  // @@ David, should this be changed to set errno to EBUSY?
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, NO_WAIT), ace_result_), 
                      int, -1);
 #endif /* ACE_HAS_STHREADS */
@@ -6509,8 +6513,14 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   lock->lock_.l_len = len;
   lock->lock_.l_type = F_WRLCK;         // set write lock
 
-  // Does not block, if no access, returns -1.
-  ACE_OSCALL_RETURN (::fcntl (lock->handle_, F_SETLK, &lock->lock_), int, -1);
+  int result = 0;
+  // Does not block, if no access, returns -1 and set errno = EBUSY;
+  ACE_OSCALL (::fcntl (lock->handle_, F_SETLK, &lock->lock_), int, -1, result);
+
+  if (result == -1 && (errno == EACCES || errno == EAGAIN))
+    errno = EBUSY;
+
+  return result;
 #endif /* ACE_WIN32 */
 }
 
@@ -6537,8 +6547,14 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock, short whence, off_t start, o
   lock->lock_.l_len = len;
   lock->lock_.l_type = F_RDLCK;         // set read lock
 
-  // Does not block, if no access, returns -1.
-  ACE_OSCALL_RETURN (::fcntl (lock->handle_, F_SETLK, &lock->lock_), int, -1);
+  int result = 0;
+  // Does not block, if no access, returns -1 and set errno = EBUSY;
+  ACE_OSCALL (::fcntl (lock->handle_, F_SETLK, &lock->lock_), int, -1, result);
+
+  if (result == -1 && (errno == EACCES || errno == EAGAIN))
+    errno = EBUSY;
+
+  return result;
 #endif /* ACE_WIN32 */
 }
 
