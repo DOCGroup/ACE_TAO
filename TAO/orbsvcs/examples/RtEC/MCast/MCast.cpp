@@ -32,16 +32,8 @@ main (int argc, char* argv[])
   // so we have to explicitly invoke this function.
   TAO_EC_Default_Factory::init_svcs ();
 
-  // The exception macros are described in:
-  //
-  // $ACE_ROOT/docs/exceptions.html
-  //
-  // and defined in:
-  //
-  // $ACE_ROOT/TAO/tao/orbconf.h - for Environment parameter definitions
-  //
-  // $ACE_ROOT/ace/CORBA_macros.h - for try/catch et al.
-  //
+  // The exception macros are described in $ACE_ROOT/docs/exceptions.html
+  // and defined in $ACE_ROOT/ace/CORBA_macros.h.
   // If your platform supports native exceptions, and TAO was compiled
   // with native exception support then you can simply use try/catch
   // and avoid the ACE_ENV_SINGLE_ARG_PARAMETER argument.
