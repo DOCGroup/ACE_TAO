@@ -1,3 +1,12 @@
+Wed May 26 16:24:54 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* DnC/Core/Deployment.idl
+
+          Modified the IDL interface of the DomainApplicationManager, 
+          which now integrates the functionality of both 
+          DomainApplicationManager and DomainApplication in the original
+          DnC spec. The old DomainApplication interface is deleted.
+
 Wed May 26 11:33:11 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/Core/CCM_Core.mpc
