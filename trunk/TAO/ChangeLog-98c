@@ -1,3 +1,9 @@
+1998-09-16  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Simple/echo/run_test.pl: 
+	modified the script so that it works for the test
+	example with Naming service.
+
 Wed Sep 16 18:47:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp (push): Added a cast to
@@ -65,6 +71,7 @@ Tue Sep 15 20:10:37 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	/Client_i.h
 	/Echo_i.cpp
 	/Echo_i.h
+	/Echo.idl
 	/Makefile
 	/Server_i.cpp
 	/Server_i.h

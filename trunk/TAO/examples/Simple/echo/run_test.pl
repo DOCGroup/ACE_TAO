@@ -4,22 +4,16 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-
-#unshift @INC, '../../../../bin';
 use lib "../../../../bin";
 require ACEutils;
 require Process;
 
-$iorfile = "echo.ior";
 
-$SV = Process::Create ("server$Process::EXE_EXT", "-o $iorfile ");
+$SV = Process::Create ("server$Process::EXE_EXT", " ");
 
-ACE::waitforfile ($iorfile);
-
-$status  = system ("client$Process::EXE_EXT -f $iorfile -x");
+sleep($ACE::sleeptime);
+$status  = system ("client$Process::EXE_EXT  -x");
 
 $SV->Kill (); $SV->Wait ();
-
-unlink $iorfile;
 
 exit $status;
