@@ -1,17 +1,17 @@
 Wed Oct 21 14:19:11 EDT 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
         * docs/tutorials/007/thread_pool.cpp
-	* docs/tutorials/007/thread_pool.h
-	Alison Greig's question caused me to look back at these and
-	I find that an older g++ is unhappy about the close() methods.
-	It seems to confuse the baseclass 'close(u_long flags=0)' with
-	my derived 'close(void)' even though I also have 'close(u_long)'.
-	Anyway, I removed my 'close(void)' and now do all of my work in
-	the other method.
+        * docs/tutorials/007/thread_pool.h
+        Alison Greig's question caused me to look back at these and
+        I find that an older g++ is unhappy about the close() methods.
+        It seems to confuse the baseclass 'close(u_long flags=0)' with
+        my derived 'close(void)' even though I also have 'close(u_long)'.
+        Anyway, I removed my 'close(void)' and now do all of my work in
+        the other method.
 
         * docs/tutorials/007/client_handler.cpp:handle_input()
-	Now using ACE_OS::thr_equal() instead of operator==()
-	This fixes Alison's problem.   (Thanks for the solution David!)
+        Now using ACE_OS::thr_equal() instead of operator==()
+        This fixes Alison's problem.   (Thanks for the solution David!)
 
 Wed Oct 21 07:12:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -45,6 +45,12 @@ Wed Oct 21 07:12:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Timer_Heap_T.cpp (reschedule): only declare local "timerID"
           without ACE_NDEBUG, to avoid compile warning with debug=0.
+
+        * ace/SV_Message_Queue.h: fixed #ifndef protection to use
+          ACE_SV_MESSAGE_QUEUE_H instead of ACE_MESSAGE_QUEUE_H, to
+          prevent collision with the Message_Queue.h's protection.
+          Thanks to Rainer Blome <rainer_blome@de.ibm.com> for
+          reporting this.
 
 Tue Oct 20 19:40:41 1998  Steve Huston  <shuston@riverace.com>
 
