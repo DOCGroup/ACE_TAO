@@ -437,7 +437,7 @@ TAO_Service_Type_Repository
 	  
 	  // insert property into the map.
 	  string prop_name = (const char*) property.name;
-	  if (prop_map.insert (prop_name, &property).second == 0)
+	  if (prop_map.insert (make_pair (prop_name, &property)).second == 0)
 	    {
 	      // if already there, check that it is compatible with
 	      // properties of other types. Value Types have to be the
