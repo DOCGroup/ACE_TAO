@@ -14,7 +14,7 @@ SHLIB    = $(LIBNAME).$(SOEXT)
 
 VPATH=.:PortableGroup
 
-ACE_SHLIBS = -lTAO_PortableServer -lTAO -lACE
+ACE_SHLIBS = -lTAO_CosNaming -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
