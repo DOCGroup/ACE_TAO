@@ -1,3 +1,7 @@
+Thu May 24 18:08:27 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/run_test.lst: Re-enable MT_Reactor_Timer_Test.
+
 Thu May 24 15:34:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/IPC_SAP/SOCK_SAP/CPP-memclient.cpp: Changed <gets> to
