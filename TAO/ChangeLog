@@ -1,3 +1,10 @@
+Sun Nov 23 22:53:58 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/RTCORBA_includeC.h:
+
+	  Removed the inclusion of the inlined files since they are are
+	  not required. Thanks to Don for catching the problem. 
+
 Mon Nov 24 02:38:58 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * rules.tao.GNU:
