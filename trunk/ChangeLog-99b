@@ -1,31 +1,35 @@
+Fri Mar 12 12:09:14 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: fixed comment after #endif to match its #ifdef.
+
 Fri Mar 12 11:46:55 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
-	Added two new functions tzset () and timezone (). The former sets the 
-	timezone information based on an environment variable TZ which is
-	set when the user logs on. (For St. Louis TZ=US/Central and 
-	timezone = 360 minutes or 6 hrs. from GMT.). timezone () retrieves 
-	the timezone value in seconds.
- 	
-	* ace/OS.h (ACE_OS): Added a wrapper for timezone () and tzset ().
-	* ace/OS.i (ACE_OS): Added Implementation for the above functions.
+        Added two new functions tzset () and timezone (). The former sets the
+        timezone information based on an environment variable TZ which is
+        set when the user logs on. (For St. Louis TZ=US/Central and
+        timezone = 360 minutes or 6 hrs. from GMT.). timezone () retrieves
+        the timezone value in seconds.
 
-	The timezone information is being used in the Time Service.
-	
+        * ace/OS.h (ACE_OS): Added a wrapper for timezone () and tzset ().
+        * ace/OS.i (ACE_OS): Added Implementation for the above functions.
+
+        The timezone information is being used in the Time Service.
+
 Thu Mar 11 20:11:13 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Get_Opt.cpp (operator): Reverted the following change since
- 	  it will break documented behavior.  Thanks to Jon Biggar for
- 	  reporting this.
+        * ace/Get_Opt.cpp (operator): Reverted the following change since
+          it will break documented behavior.  Thanks to Jon Biggar for
+          reporting this.
 
-	* ace/Get_Opt.cpp (operator): When the getopt encountered an
- 	  unknown option or an option with a missing required argument, it
- 	  returned '?' and continues to allow processing with the next
- 	  argument (no problem so far).  However, if it encountered an
- 	  argument that is not an option (i.e. no '-' in front) or if it
- 	  encounters a double dash (i.e. '--') it returns EOF which
- 	  disallows further processing.  Now, it returns a '?'  after
- 	  advancing optind to allow further processing.  Thanks to Mark
- 	  Laffoon <mark.laffoon@centraxcorp.com> for reporting this.
+        * ace/Get_Opt.cpp (operator): When the getopt encountered an
+          unknown option or an option with a missing required argument, it
+          returned '?' and continues to allow processing with the next
+          argument (no problem so far).  However, if it encountered an
+          argument that is not an option (i.e. no '-' in front) or if it
+          encounters a double dash (i.e. '--') it returns EOF which
+          disallows further processing.  Now, it returns a '?'  after
+          advancing optind to allow further processing.  Thanks to Mark
+          Laffoon <mark.laffoon@centraxcorp.com> for reporting this.
 
 Thu Mar 11 15:34:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
