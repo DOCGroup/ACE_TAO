@@ -1,3 +1,9 @@
+Mon Jan 21 20:59:09 GMT 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+        * tests/OBV/Any/Makefile:
+
+          Fixed minor bug.
+
 Mon Jan 21 10:51:52 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/Notify/Filter/Filter.dsp:
