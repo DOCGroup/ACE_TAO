@@ -1,3 +1,9 @@
+Tue May 11 08:58:33 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/ace.mpc:
+
+          Removed non-existent headers from the Header_Files section.
+
 Tue May 11 09:30:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Registry.h:
@@ -28,27 +34,27 @@ Mon May 10 19:17:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon May 10 14:42:29 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/APG/Active_Objects/AO.cpp:
-	* examples/APG/Active_Objects/AO2.cpp:
-	* examples/APG/ThreadManagement/Coop_Cancel.cpp:
-	* examples/APG/ThreadManagement/Priorities.cpp:
-	* examples/APG/ThreadManagement/Pool.cpp:
-	* examples/APG/ThreadManagement/Signals.cpp:
-	* examples/APG/ThreadManagement/Signals2.cpp:
-	* examples/APG/ThreadPools/LF_ThreadPool.cpp:
-	* examples/APG/ThreadPools/Futures.cpp:
-	* examples/APG/ThreadPools/Task_ThreadPool.cpp:
-	* examples/APG/ThreadPools/ThreadPool.cpp:
-	* examples/APG/ThreadPools/TP_Reactor.cpp:
-	* examples/APG/ThreadSafety/Barrier.cpp:
-	* examples/APG/ThreadSafety/Mutex.cpp:
-	* examples/APG/ThreadSafety/RW_Lock.cpp:
-	* examples/APG/ThreadSafety/Semaphore.cpp:
-	* examples/APG/ThreadSafety/TSS.cpp:
-	* examples/APG/Threads/Condition_Variables.cpp:
-	* examples/APG/Threads/Mutexes.cpp:
-	* examples/APG/Threads/Message_Queue.cpp:
-	  Fixed to compile without ACE_HAS_THREADS enabled.
+        * examples/APG/Active_Objects/AO.cpp:
+        * examples/APG/Active_Objects/AO2.cpp:
+        * examples/APG/ThreadManagement/Coop_Cancel.cpp:
+        * examples/APG/ThreadManagement/Priorities.cpp:
+        * examples/APG/ThreadManagement/Pool.cpp:
+        * examples/APG/ThreadManagement/Signals.cpp:
+        * examples/APG/ThreadManagement/Signals2.cpp:
+        * examples/APG/ThreadPools/LF_ThreadPool.cpp:
+        * examples/APG/ThreadPools/Futures.cpp:
+        * examples/APG/ThreadPools/Task_ThreadPool.cpp:
+        * examples/APG/ThreadPools/ThreadPool.cpp:
+        * examples/APG/ThreadPools/TP_Reactor.cpp:
+        * examples/APG/ThreadSafety/Barrier.cpp:
+        * examples/APG/ThreadSafety/Mutex.cpp:
+        * examples/APG/ThreadSafety/RW_Lock.cpp:
+        * examples/APG/ThreadSafety/Semaphore.cpp:
+        * examples/APG/ThreadSafety/TSS.cpp:
+        * examples/APG/Threads/Condition_Variables.cpp:
+        * examples/APG/Threads/Mutexes.cpp:
+        * examples/APG/Threads/Message_Queue.cpp:
+          Fixed to compile without ACE_HAS_THREADS enabled.
 
 Mon May 10 18:40:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -79,16 +85,16 @@ Mon May 10 06:22:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May  9 13:12:37 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
-	* bin/MakeProjectCreator/config/global.features:
-	  Added dnc to the default features to avoid unintentional
-	  building of $CIAO_ROOT/DnC directory.
+        * bin/MakeProjectCreator/config/global.features:
+          Added dnc to the default features to avoid unintentional
+          building of $CIAO_ROOT/DnC directory.
 
 Sun May 9 16:07:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
 
-	* bin/fuzz.pl:
-	Script checks now if file names are not too long. Names exceeding 50 characters
-	are classified as an error (QNX limit), MPC files longer than 30 characters
-	lead to warnings as MPC can add some characters eg. .depend.GNUmakefile.
+        * bin/fuzz.pl:
+        Script checks now if file names are not too long. Names exceeding 50 characters
+        are classified as an error (QNX limit), MPC files longer than 30 characters
+        lead to warnings as MPC can add some characters eg. .depend.GNUmakefile.
 
 Sun May  9 13:20:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -106,107 +112,107 @@ Sun May  9 12:59:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sat May  8 16:25:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* ace/Time_Value.h:
-	* ace/Time_Value.inl:
+        * ace/Time_Value.h:
+        * ace/Time_Value.inl:
 
-	  Added an operatot=. Without this, the
-	  ACE_HAS_TIMED_MESSAGE_BLOCK has no chance of working.
+          Added an operatot=. Without this, the
+          ACE_HAS_TIMED_MESSAGE_BLOCK has no chance of working.
 
 Sat May  8 00:10:23 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* apps/JAWS3/jaws3/Concurrency.h:
+        * apps/JAWS3/jaws3/Concurrency.h:
 
-	  Use the "ACE_SYNCH" trait instead of "ACE_MT_SYNCH".  Doing so
-	  allows the JAWS3 library to build in a single threaded
-	  environment.  Fixes single-threaded build compile-time errors.
+          Use the "ACE_SYNCH" trait instead of "ACE_MT_SYNCH".  Doing so
+          allows the JAWS3 library to build in a single threaded
+          environment.  Fixes single-threaded build compile-time errors.
 
-	* ace/Synch_Traits.h:
+        * ace/Synch_Traits.h:
 
-	  Corrected doxygen documentation.
+          Corrected doxygen documentation.
 
 Fri May  7 15:59:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Kokyu/tests/DSRT_MIF/MIF.cpp (svc):
+        * Kokyu/tests/DSRT_MIF/MIF.cpp (svc):
 
-	  Fixed "variable set but never used" Compaq C++ warning.
+          Fixed "variable set but never used" Compaq C++ warning.
 
-	* ace/TMCast/Protocol.cpp:
+        * ace/TMCast/Protocol.cpp:
 
-	  Fixed "declared but never referenced" Compaq C++ warning.
+          Fixed "declared but never referenced" Compaq C++ warning.
 
 Fri May  7 14:45:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* GNUmakefile:
+        * GNUmakefile:
 
-	  Removed this GNUmakefile.  It must now be generated by MPC.  The
-	  kit creation code in this file will be moved to the
-	  bin/make_release script.
+          Removed this GNUmakefile.  It must now be generated by MPC.  The
+          kit creation code in this file will be moved to the
+          bin/make_release script.
 
 Fri May  7 17:26:33 2004  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_aix_ibm.GNU: Changed the rtti default
-	  to 1 and changed the associated -qrtti option from dynamiccast to
-	  all since some parts of ACE use type IDs.
+        * include/makeinclude/platform_aix_ibm.GNU: Changed the rtti default
+          to 1 and changed the associated -qrtti option from dynamiccast to
+          all since some parts of ACE use type IDs.
 
-	* ASNMP/asnmp/sagent.h: Added implied keyword "private" to sagent's
-	  derivation. Quiets a warning from Visual Age C++.
+        * ASNMP/asnmp/sagent.h: Added implied keyword "private" to sagent's
+          derivation. Quiets a warning from Visual Age C++.
 
-	* apps/JAWS3/jaws3/Event_Dispatcher.cpp: Added #include
-	  "ace/Log_Msg.h" to pick up logging macros. Removed #include
-	  "ace/OS.h".
+        * apps/JAWS3/jaws3/Event_Dispatcher.cpp: Added #include
+          "ace/Log_Msg.h" to pick up logging macros. Removed #include
+          "ace/OS.h".
 
-	* examples/Reactor/Proactor/test_cancel.cpp:
-	* examples/Reactor/Proactor/test_proactor.cpp:
-	* examples/Reactor/Proactor/test_udp_proactor.cpp:
-	* performance-tests/Synch-Benchmarks/synch_driver.cpp:
-	* performance-tests/Synch-Benchmarks/Perf_Test/adaptive_mutex_test.cpp:
-	* performance-tests/Synch-Benchmarks/Perf_Test/adaptive_recursive_lock_test.cpp:
-	* performance-tests/Synch-Benchmarks/Perf_Test/adaptive_sema_test.cpp:
-	* performance-tests/Synch-Benchmarks/Perf_Test/pipe_proc_test.cpp:
-	* performance-tests/Synch-Benchmarks/Perf_Test/pipe_thr_test.cpp:
-	* performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
-	* performance-tests/Synch-Benchmarks/Base_Test/base_test.cpp:
-	* performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
-	  Added #include for OS_NS_*.h methods and/or "ace/Log_Msg.h" to
-	  pick up logging macros.
+        * examples/Reactor/Proactor/test_cancel.cpp:
+        * examples/Reactor/Proactor/test_proactor.cpp:
+        * examples/Reactor/Proactor/test_udp_proactor.cpp:
+        * performance-tests/Synch-Benchmarks/synch_driver.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/adaptive_mutex_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/adaptive_recursive_lock_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/adaptive_sema_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/pipe_proc_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/pipe_thr_test.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/base_test.cpp:
+        * performance-tests/Synch-Benchmarks/Base_Test/mutex_test.cpp:
+          Added #include for OS_NS_*.h methods and/or "ace/Log_Msg.h" to
+          pick up logging macros.
 
-	* performance-tests/Synch-Benchmarks/Perf_Test/guard_test.cpp: Added
-	  #include "ace/Guard_T.h" to see ACE_GUARD macros and classes.
+        * performance-tests/Synch-Benchmarks/Perf_Test/guard_test.cpp: Added
+          #include "ace/Guard_T.h" to see ACE_GUARD macros and classes.
 
-	* performance-tests/Synch-Benchmarks/Perf_Test/memory_test.cpp: Added
-	  #include "ace/OS_NS_string.h" to see ACE_OS stuff.
+        * performance-tests/Synch-Benchmarks/Perf_Test/memory_test.cpp: Added
+          #include "ace/OS_NS_string.h" to see ACE_OS stuff.
 
-	* performance-tests/Synch-Benchmarks/Perf_Test/recursive_lock_test.cpp:
-	  Added #include "ace/Recursive_Thread_Mutex.h" to find that class.
+        * performance-tests/Synch-Benchmarks/Perf_Test/recursive_lock_test.cpp:
+          Added #include "ace/Recursive_Thread_Mutex.h" to find that class.
 
-	* performance-tests/Synch-Benchmarks/Perf_Test/rwrd_test.cpp:
-	* performance-tests/Synch-Benchmarks/Perf_Test/rwwr_test.cpp: Added
-	  #include "ace/RW_Mutex.h" to find that class.
+        * performance-tests/Synch-Benchmarks/Perf_Test/rwrd_test.cpp:
+        * performance-tests/Synch-Benchmarks/Perf_Test/rwwr_test.cpp: Added
+          #include "ace/RW_Mutex.h" to find that class.
 
 Fri May  7 14:25:07 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Log_Msg.cpp:
+        * ace/Log_Msg.cpp:
 
-	  Don't bother checking if errno is less than sys_nerr on glibc
-	  platforms.  strerror() can handle values greater than sys_nerr
-	  gracefully.  Fixes "`sys_nerr' is deprecated; use `strerror' or
-	  `strerror_r' instead" link-time warnings.
+          Don't bother checking if errno is less than sys_nerr on glibc
+          platforms.  strerror() can handle values greater than sys_nerr
+          gracefully.  Fixes "`sys_nerr' is deprecated; use `strerror' or
+          `strerror_r' instead" link-time warnings.
 
-	  Replaced deprecated ACE cast macro usage with ANSI C++ cast
-	  counterparts.
+          Replaced deprecated ACE cast macro usage with ANSI C++ cast
+          counterparts.
 
 Fri May  7 09:38:06 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/Mutex.h:
+        * ace/Mutex.h:
 
-	  Fixed doxygen documentation.
+          Fixed doxygen documentation.
 
-	  Removed "ace/Log_Msg.h" include.  It isn't needed in this
-	  header.
+          Removed "ace/Log_Msg.h" include.  It isn't needed in this
+          header.
 
-	* ace/Mutex.cpp:
+        * ace/Mutex.cpp:
 
-	  Include "ace/Log_Msg.h" to pull in ACE_ERROR macros.
+          Include "ace/Log_Msg.h" to pull in ACE_ERROR macros.
 
 Fri May  7 08:08:05 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -664,10 +670,10 @@ Mon May  3 09:58:25 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Mon May  3 00:00:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* Makefile*:
+        * Makefile*:
 
-	  Removed all Makefiles.  GNUmakefiles must now be generated by
-	  MPC.
+          Removed all Makefiles.  GNUmakefiles must now be generated by
+          MPC.
 
 Sun May  2 13:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
