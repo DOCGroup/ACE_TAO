@@ -1,9 +1,17 @@
+Tue Dec 04 21:35:04 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Acceptor_Registry.h:
+	* tao/Protocol_Factory.h:
+	* tao/PortableServer/Servant_Dispatcher.h: Removed forward
+	  declaration of ACE_CString but instead including "ace/SString.h"
+	  instead.  ACE_CString is now typedef'ed.
+
 Tue Dec  4 10:25:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/driver/drv_preproc.cpp:
 
-          Added missing commas between strings supplied to an 
-          ACE_ERROR message. Thanks to Chris Kohlhoff 
+          Added missing commas between strings supplied to an
+          ACE_ERROR message. Thanks to Chris Kohlhoff
           <kohlhoff@pop.ihug.com.au>n for pointing this out.
 
         * TAO_IDL/tao_idl.cpp:
