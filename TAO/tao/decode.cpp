@@ -445,7 +445,7 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                                            -1 * (offset - 4));
 
 
-                continue_decoding = indir_stream.good_bit ();
+                continue_decoding = (CORBA::Boolean) indir_stream.good_bit ();
 
                 // Get "kind" and length of target typecode
                 //
@@ -454,8 +454,8 @@ TAO_Marshal_TypeCode::decode (CORBA::TypeCode_ptr,
                 // typecode -- not the right assumption; see how the
                 // TypeCode interpreter does it.
 
-                CORBA::ULong indir_kind;
-                CORBA::ULong indir_len;
+                CORBA::ULong indir_kind = 0;
+                CORBA::ULong indir_len = 0;
 
                 // retrieve the typecode kind
                 if (continue_decoding)

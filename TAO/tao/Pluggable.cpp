@@ -122,7 +122,7 @@ TAO_Unknown_Profile::is_equivalent (const TAO_Profile* other_profile)
   const TAO_Unknown_Profile *op =
     ACE_dynamic_cast (const TAO_Unknown_Profile*, other_profile);
 
-  return (this->body_ == op->body_);
+  return (CORBA::Boolean) (this->body_ == op->body_);
 }
 
 CORBA::ULong

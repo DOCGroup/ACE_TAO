@@ -37,7 +37,7 @@ CORBA::TypeCode::_nil (void)
 ACE_INLINE CORBA::TCKind
 CORBA_TypeCode::kind (CORBA::Environment &) const
 {
-  return this->kind_;
+  return (CORBA::TCKind) this->kind_;
 }
 
 // Returns true if the two typecodes are identical

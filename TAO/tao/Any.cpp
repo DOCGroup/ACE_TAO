@@ -888,7 +888,9 @@ CORBA_Any::operator>>= (CORBA::Any &a) const
                                &a,
                                0,
                                ACE_TRY_ENV);
-             return (retval == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+             return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE) 
+                                      ? 1 
+                                      : 0);
             }
         }
       else
@@ -990,7 +992,9 @@ CORBA_Any::operator>>= (CORBA::TypeCode_ptr &tc) const
                                0,
                                ACE_TRY_ENV);
               ACE_TRY_CHECK;
-              return (retval == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;
+             return (CORBA::Boolean) ((retval == CORBA::TypeCode::TRAVERSE_CONTINUE) 
+                                      ? 1 
+                                      : 0);
             }
         }
       else
@@ -1263,7 +1267,9 @@ CORBA_Any::operator>>= (to_object obj) const
 
               // Because of the CORBA 2.3 change mentioned above, there is no
               // need to assign to this->value_.
-              return (status == CORBA::TypeCode::TRAVERSE_CONTINUE) ? 1 : 0;;
+             return (CORBA::Boolean) ((status == CORBA::TypeCode::TRAVERSE_CONTINUE) 
+                                      ? 1 
+                                      : 0);
             }
         }
       else

@@ -195,7 +195,7 @@ TAO_IIOP_Connector::preconnect (const char *preconnects)
               *sep = '\0';
               tport = sep + 1;
 
-              dest.set (ACE_OS::atoi (tport), thost);
+              dest.set ((u_short) ACE_OS::atoi (tport), thost);
               dests.push (dest);
             }
           else

@@ -460,7 +460,7 @@ TAO_POA::creation_time (void)
 ACE_INLINE CORBA::Boolean
 TAO_POA::system_id (void)
 {
-  return this->system_id_;
+  return (CORBA::Boolean) this->system_id_;
 }
 
 
@@ -474,7 +474,7 @@ TAO_POA::root (void)
 ACE_INLINE CORBA::Boolean
 TAO_POA::persistent (void)
 {
-  return this->persistent_;
+  return (CORBA::Boolean) this->persistent_;
 }
 
 ACE_INLINE const ACE_CString &

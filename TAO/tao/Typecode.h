@@ -248,7 +248,7 @@ public:
   CORBA::Long byte_order_;
   // The byte order in the encapsulated stream.
 
-  CORBA::TCKind kind_;
+  CORBA::Long kind_;
   // the TypeCode kind
 
   CORBA::TypeCode_ptr parent_;
