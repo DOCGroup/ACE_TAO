@@ -1208,8 +1208,9 @@ TAO_Stub::client_protocol (void)
         result = policy_manager->client_protocol ();
     }
 
-  if (result == 0)
-    result = this->orb_core_->default_client_protocol ();
+  // No default is used for client priority policy (default creates
+  // conflict in case the policy is also set for the object on the
+  // server side).
 
   return result;
 }

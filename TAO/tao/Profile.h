@@ -115,6 +115,9 @@ public:
   // contains more than one endpoint, i.e., a list, the method returns
   // the head of the list.
 
+  virtual size_t endpoint_count (void) = 0;
+  // Return how many endpoints this profile contains.
+
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile) = 0;
   // Return true if this profile is equivalent to other_profile.  Two
   // profiles are equivalent iff their tag, object_key, version and
@@ -226,6 +229,7 @@ public:
   virtual const TAO_ObjectKey &object_key (void) const;
   virtual TAO_ObjectKey *_key (void) const;
   virtual TAO_Endpoint *endpoint (void);
+  virtual size_t endpoint_count (void);
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max,
                              CORBA::Environment &ACE_TRY_ENV);

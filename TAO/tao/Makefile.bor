@@ -67,6 +67,7 @@ OBJFILES = \
 	$(OBJDIR)\IIOP_Transport.obj \
 	$(OBJDIR)\InterfaceC.obj \
 	$(OBJDIR)\Invocation.obj \
+	$(OBJDIR)\Invocation_Endpoint_Selectors.obj \
 	$(OBJDIR)\IOPC.obj \
 	$(OBJDIR)\IOPS.obj \
 	$(OBJDIR)\IOR_Parser.obj \

@@ -1392,6 +1392,25 @@ SOURCE=.\Invocation.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Endpoint_Selectors.cpp
+
+!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOPC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3639,6 +3658,10 @@ SOURCE=.\Invocation.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Invocation_Endpoint_Selectors.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IOPC.h
 # End Source File
 # Begin Source File
@@ -4264,6 +4287,10 @@ SOURCE=.\InterfaceC.i
 # Begin Source File
 
 SOURCE=.\Invocation.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation_Endpoint_Selectors.i
 # End Source File
 # Begin Source File
 

@@ -104,6 +104,12 @@ TAO_UIOP_Profile::endpoint (void)
   return &this->endpoint_;
 }
 
+size_t
+TAO_UIOP_Profile::endpoint_count (void)
+{
+  return this->count_;
+}
+
 int
 TAO_UIOP_Profile::parse_string (const char *string,
                                 CORBA::Environment &ACE_TRY_ENV)

@@ -413,6 +413,12 @@ TAO_IIOP_Profile::endpoint (void)
   return &this->endpoint_;
 }
 
+size_t
+TAO_IIOP_Profile::endpoint_count (void)
+{
+  return this->count_;
+}
+
 void
 TAO_IIOP_Profile::add_endpoint (TAO_IIOP_Endpoint *endp)
 {
