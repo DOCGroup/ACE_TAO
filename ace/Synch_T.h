@@ -211,10 +211,11 @@ public:
 
   ACE_TSS (TYPE *ts_obj = 0);
   // If caller has passed us a non-NULL ts_obj *, then we'll just use
-  // this to initialize the thread-specific value.  Thus, subsequent
-  // calls to operator->() will return this value.  This is useful
-  // since it enables us to assign objects to thread-specific data
-  // that have arbitrarily complex constructors!
+  // this to initialize the thread-specific value (but only for the
+  // calling thread).  Thus, subsequent calls to operator->() in this
+  // thread will return this value.  This is useful since it enables
+  // us to assign objects to thread-specific data that have
+  // arbitrarily complex constructors.
 
   virtual ~ACE_TSS (void);
   // Deregister with thread-key administration.

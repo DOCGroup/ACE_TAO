@@ -23,7 +23,7 @@ struct Hash_Token
 
 template <class TYPE, class FUNCTOR, class LOCK>
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::ACE_Timer_Hash_Upcall (void)
-  : timer_hash_ (NULL)
+  : timer_hash_ (0)
 {
   // Nothing
 }
@@ -41,8 +41,8 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::ACE_Timer_Hash_Upcall (ACE_Timer_Que
 
 template <class TYPE, class FUNCTOR, class LOCK> int
 ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-						     ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>, 
-						     ACE_Null_Mutex> &timer_queue,
+						                       ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>, 
+								       ACE_Null_Mutex> &timer_queue,
                                                      ACE_Event_Handler *handler,
                                                      const void *arg,
                                                      const ACE_Time_Value &cur_time)
@@ -98,12 +98,11 @@ ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, LOCK>::deletion (ACE_Timer_Queue_T<ACE_Even
 
 template <class TYPE, class FUNCTOR, class LOCK, class BUCKET>
 ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>::ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET> &hash)
-  timer_hash_(hash);
+  : timer_hash_ (hash)
 {
   this->first();
   // Nothing
 }
-
 
 // Positions the iterator at the first node in the timing hash table
 
@@ -124,7 +123,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>::first (void)
     }
   
   // Didn't find any
-  this->iter_ = NULL;
+  this->iter_ = 0;
 }
 
 
@@ -152,7 +151,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>::next (void)
         }
   
       // Didn't find any
-      this->iter_ = NULL;
+      this->iter_ = 0;
     }
   else
     this->iter_->next ();
@@ -164,7 +163,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>::next (void)
 template <class TYPE, class FUNCTOR, class LOCK, class BUCKET> int 
 ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>::isdone (void)
 {
-  return this->iter_ == NULL;
+  return this->iter_ == 0;
 }
 
 
@@ -174,7 +173,7 @@ template <class TYPE, class FUNCTOR, class LOCK, class BUCKET> ACE_Timer_Node_T<
 ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, LOCK, BUCKET>::item (void)
 {
   if (this->isdone ())
-    return NULL;
+    return 0;
 
   return this->iter_->item ();
 }
@@ -414,7 +413,7 @@ template <class TYPE, class FUNCTOR, class LOCK, class BUCKET> ACE_Timer_Node_T<
 ACE_Timer_Hash_T<TYPE, FUNCTOR, LOCK, BUCKET>::remove_first (void)
 {
   if (this->is_empty ())
-    return NULL;
+    return 0;
 
   ACE_Timer_Node_T<TYPE> *temp = this->table_[this->earliest_position_]->remove_first ();
 

@@ -259,6 +259,7 @@ ACE_NEEDS_SYSTIME_H			<time.h> doesn't automatically #include /**/ <sys/time.h>
 ACE_NEEDS_WRITEV			Platform doesn't define writev, so use our own
 ACE_NLOGGING				Turns off the LM_DEBUG and LM_ERROR logging macros...
 ACE_NTRACE				Turns off the tracing feature.
+ACE_NO_THREAD_ADAPTER			Don't use the ACE_Thread_Adapter feature... 
 ACE_PAGE_SIZE				Defines the page size of the system (not used on Win32 or with ACE_HAS_GETPAGESIZE).
 ACE_REDEFINES_XTI_FUNCTIONS		Platform redefines the t_... names (UnixWare)
 ACE_SELECT_USES_INT			Platform uses int for select() rather than fd_set
