@@ -1,3 +1,13 @@
+Tue Jun 22 14:21:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_sequence/gen_bounded_sequence_cs.cpp:
+	  Methods allocbuf() in *C.i and _allocate_buffer() in *C.cpp
+	  always allocate the maximum for the bounded sequence, so the
+	  ULong 'length" arg was always unused. Commented it out in the
+	  generated code. Warnings reported on Linux builds.
+
 Tue Jun 22 14:02:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/OBV/Typed_Events/Makefile
