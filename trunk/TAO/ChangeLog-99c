@@ -1,39 +1,45 @@
+Thu Apr 29 16:33:31 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp: added
+          ACE_Guard<ACE_Reverse_Lock<ACE_Lock> > explicit instantiation,
+          for old g++.
+
 Thu Apr 29 16:23:15 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* TAO_IDL/COPYING.sun: Split out the copyright information
-	  from the INSTALL.sun file.
+        * TAO_IDL/COPYING.sun: Split out the copyright information
+          from the INSTALL.sun file.
 
 Thu Apr 29 15:58:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/performance-tests/Pluggable/PP_Test_Server.{h,cpp}:
-	* TAO/performance-tests/Pluggable/server.dsp:
-	  Fixed servant deletion to deactivate under the POA 
-	  before doing so. Also added some files to the server
-	  MSVC project for convenience.
+        * TAO/performance-tests/Pluggable/PP_Test_Server.{h,cpp}:
+        * TAO/performance-tests/Pluggable/server.dsp:
+          Fixed servant deletion to deactivate under the POA
+          before doing so. Also added some files to the server
+          MSVC project for convenience.
 
 Thu Apr 29 13:57:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Context.cpp:
-	  Fixed an include problem that was causing string_dup
-	  and string_free not to be found when linking to TAO.
+        * tao/Context.cpp:
+          Fixed an include problem that was causing string_dup
+          and string_free not to be found when linking to TAO.
 
 Thu Apr 29 12:15:22 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
-	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
-	Provided a temporary fix for the <destroy> methods, to avoid
-	crashing since the new POA changes.  Appropriate fix will be
-	committed soon together with the restructured version of Naming
-	implementation classes.
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        Provided a temporary fix for the <destroy> methods, to avoid
+        crashing since the new POA changes.  Appropriate fix will be
+        committed soon together with the restructured version of Naming
+        implementation classes.
 
-	* orbsvcs/tests/Simple_Naming/client.cpp:
-	Updated for servants to deregister from POA before being destroyed.
+        * orbsvcs/tests/Simple_Naming/client.cpp:
+        Updated for servants to deregister from POA before being destroyed.
 
 Thu Apr 29 10:36:59 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Servant_Base.{h,cpp}: Changed the type of ref_count_ to
-	  CORBA::ULong and removed the template instantiation for
-	  Atomic_Ops.
+        * tao/Servant_Base.{h,cpp}: Changed the type of ref_count_ to
+          CORBA::ULong and removed the template instantiation for
+          Atomic_Ops.
 
 Thu Apr 29 09:34:40 1999  David L. Levine  <levine@cs.wustl.edu>
 
