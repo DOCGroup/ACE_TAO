@@ -543,6 +543,7 @@ ACE_OS::fsync (ACE_HANDLE handle)
   // ACE_TRACE ("ACE_OS::fsync");
 # if defined (ACE_LACKS_FSYNC)
   ACE_UNUSED_ARG (handle);
+  ACE_NOTSUP_RETURN (-1);
 # else
   ACE_OSCALL_RETURN (::fsync (handle), int, -1);
 # endif /* ACE_LACKS_FCNTL */
