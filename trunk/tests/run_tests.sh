@@ -178,7 +178,7 @@ run Recursive_Mutex_Test                # tests ACE_Service_Config, ACE_Recursiv
 
 # Time_Service_Test: UNICOS fails dlopen() - no shared libs on UNICOS
 if [ -f ../netsvcs/servers/main ]; then
-  test $TOKEN && (test $chorus || test $LynxOS || test $Unicos || run Time_Service_Test) # tests libnetsvcs
+  test $TOKEN && (test $chorus || test $Unicos || run Time_Service_Test) # tests libnetsvcs
 fi
 # Tokens_Test: UNICOS fails dlopen() - no shared libs on UNICOS
 test $TOKEN && (test $chorus || test $LynxOS || test $Unicos || run Tokens_Test) # tests ACE_Token
