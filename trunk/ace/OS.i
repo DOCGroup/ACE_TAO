@@ -1196,22 +1196,22 @@ ACE_OS::memcmp (const void *t, const void *s, size_t len)
   return ::memcmp (t, s, len);
 }
 
-ACE_INLINE void *
+ACE_INLINE const void *
 ACE_OS::memchr (const void *s, int c, size_t len)
 {
 #if defined (ACE_HAS_MEMCHR)
   ACE_TRACE ("ACE_OS::memchr");
   return ::memchr (s, c, len);
 #else
-  unsigned char *t = (unsigned char *) s;
-  unsigned char *e = (unsigned char *) s + len;
+  u_char *t = (u_char *) s;
+  u_char *e = (u_char *) s + len;
+
   while (t < e)
-    {
-      if (((int) *t) == c)
-        return t;
-      else
-        t++;
-    }
+    if (((int) *t) == c)
+      return t;
+    else
+      t++;
+
   return 0;
 #endif /* ACE_HAS_MEMCHR */
 }
@@ -5217,8 +5217,8 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 #if defined (ACE_HAS_IP6)
   ACE_OSCALL_RETURN (::inet_ntop (family, addrptr, strptr, len), const char *, 0);
 #else
-  const unsigned char *p =
-    ACE_reinterpret_cast (const unsigned char *, addrptr);
+  const u_char *p =
+    ACE_reinterpret_cast (const u_char *, addrptr);
 
   if (family == AF_INET)
     {
@@ -8852,7 +8852,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 # if defined (ACE_LACKS_LONGLONG_T)
   ACE_UINT32 least, most;
   ACE_OS::memcpy (&least, &now, sizeof (ACE_UINT32));
-  ACE_OS::memcpy (&most, (unsigned char *) &now + sizeof (ACE_UINT32),
+  ACE_OS::memcpy (&most, (u_char *) &now + sizeof (ACE_UINT32),
                   sizeof (ACE_UINT32));
 
   ACE_hrtime_t ret (least, most);
