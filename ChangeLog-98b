@@ -1,3 +1,14 @@
+Fri Sep 25 10:10:12 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.i (cond_timedwait): Add EINTR to the list of errno values
+	  that get changed to ETIME on wait timeout. EINTR is from LynxOS.
+	  Thanks to David Levine for this fix.
+
+	* tests/Semaphore_Test.cpp: Remove the assertion that a timed out
+	  semaphore will return EINTR for ACE_HAS_PTHREADS_DRAFT4.  All
+	  platforms expect ETIME, which is normalized in
+	  ACE_OS::cond_timedwait.
+
 Thu Sep 24 22:31:30 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: hard-coded the ACE_THR_PRI_* values on suns.
