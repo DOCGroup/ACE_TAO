@@ -1,3 +1,50 @@
+Sat Apr 05 13:11:04 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.{h,cpp},Log_Msg.{h,cpp}: fixes from Matthias Kerkhoff
+	  <make@cs.tu-berlin.de> to avoid memory-leak reports when MFC
+	  or (the CrtHeapXXX()-functions of the Win32 runtime library)
+	  are used.
+
+	  The problem is, that MFC (and so may other Win32 applications
+	  do) allocates a thread specific storage slot for each running
+	  thread which contains various control and debug informations.
+	  Part of this information is an object, which when constructed
+	  makes a snapshop of the heap. When this object is destroyed,
+	  the snapshot is compared to the actual heap. All object still
+	  existing on the heap are reported as memory leaks (which
+	  is in most situations correct).  Because the object is deleted
+	  when the thread (or programs main) is left and this happens
+	  before atexit is called, some leak reports are false (because,
+	  e.g., all these ACE_Log_Msg's will be deleted in atexit).
+
+	  The fix for ACE_Log_Msg consists of three changes (two only
+	  relevant for Win32, one relevant for all platforms.)
+	  Description of changes:
+
+	  a) Introduced a new macro ACE_NO_HEAP_CHECK, which turns
+	  off the built in heap checking until the current code block
+	  is left. (defined for all platforms, but only does something
+	  for Win32). This changes os.h and config-win32-common.h.
+
+	  b) Added a static member function to ACE_Log_Msg. The function
+	  (exists) returns 0 if the calling thread don't have an ACE_Log_Msg
+	  and non-null if an ACE_Log_Msg exists. This changes Log_Msg.h
+	  and Log_Msg.cpp.
+
+	  c) Changed ACE_Thread_Adapter in a way that creating a new
+	  thread does not automatically create an ACE_Log_Msg for the
+	  calling thread. This happened until now, because the new
+	  thread inherited the log settings of the calling thread.
+	  This behaviour makes no sense, if the calling thread does
+	  not have an ACE_Log_Msg, so i use ACE_Log_Msg::exists() (see
+	  above) to prevent the implicit creation of an ACE_Log_Msg
+	  for the calling thread.
+
+	  Thanks, Matthias!
+
+	* ace/config-win32.h and config-win32-common.h: new, consolidated
+	  Win32 config files.  Thanks, again, Matthias!
+
 Fri Apr 04 12:28:40 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-mvs.h: removed ACE_HAS_IP_MULTICAST because MVS
