@@ -232,6 +232,12 @@ be_type::fwd_helper_name (void) const
 }
 
 void
+be_type::fwd_helper_name (const char *name)
+{
+  this->fwd_helper_name_ = name;
+}
+
+void
 be_type::gen_common_varout (TAO_OutStream *os)
 {
   if (this->common_varout_gen_ == 1)

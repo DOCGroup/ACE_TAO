@@ -50,6 +50,9 @@ be_visitor_valuetype_fwd_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   // This will be a no-op if it has already been done for this node.
   bfd->gen_var_out_seq_decls ();
 
+  // Copy the fwd helper name back to the forward declared interface node.
+  node->fwd_helper_name (bfd->fwd_helper_name ());
+
   node->cli_hdr_gen (I_TRUE);
   return 0;
 }

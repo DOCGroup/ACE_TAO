@@ -236,8 +236,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
           << node->local_name () << "," << be_nl
           << "TAO_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl
-          << elem->nested_type_name (scope, "_var") << "," << be_nl
+          << elem->nested_type_name (scope) << "," << be_nl;
+      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
           << elem->fwd_helper_name () << "_life" << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl 
@@ -249,8 +249,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "," << be_nl
           << node->local_name () << "_var," << be_nl
           << "TAO_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl
-          << elem->nested_type_name (scope, "_var") << "," << be_nl
+          << elem->nested_type_name (scope) << "," << be_nl;
+      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
           << elem->fwd_helper_name () << "_life" << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
@@ -262,8 +262,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
           << node->local_name () << "," << be_nl
           << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl
-          << elem->nested_type_name (scope, "_var") << "," << be_nl
+          << elem->nested_type_name (scope) << "," << be_nl;
+      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
           << elem->fwd_helper_name () << "_life" << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl 
@@ -275,8 +275,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "," << be_nl
           << node->local_name () << "_var," << be_nl
           << "TAO_Abstract_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl
-          << elem->nested_type_name (scope, "_var") << "," << be_nl
+          << elem->nested_type_name (scope) << "," << be_nl;
+      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
           << elem->fwd_helper_name () << "_life" << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
@@ -288,8 +288,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
           << node->local_name () << "," << be_nl
           << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl
-          << elem->nested_type_name (scope, "_var") << be_uidt_nl
+          << elem->nested_type_name (scope) << "," << be_nl;
+      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl 
           << node->local_name () << "_var;" << be_uidt;
@@ -300,8 +300,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "," << be_nl
           << node->local_name () << "_var," << be_nl
           << "TAO_Pseudo_Object_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl
-          << elem->nested_type_name (scope, "_var") << be_uidt_nl
+          << elem->nested_type_name (scope) << "," << be_nl;
+      *os << elem->nested_type_name (scope, "_var") << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
           << node->local_name () << "_out;" << be_uidt;
@@ -312,8 +312,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << "TAO_MngSeq_Var_T<" << be_idt << be_idt_nl
           << node->local_name () << "," << be_nl
           << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl
-          << elem->nested_type_name (scope, "_var") << "," << be_nl
+          << elem->nested_type_name (scope) << "," << be_nl;
+      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
           << elem->fwd_helper_name () << "_life" << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl 
@@ -325,8 +325,8 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
           << node->local_name () << "," << be_nl
           << node->local_name () << "_var," << be_nl
           << "TAO_Valuetype_Manager<" << be_idt << be_idt_nl
-          << elem->nested_type_name (scope) << "," << be_nl
-          << elem->nested_type_name (scope, "_var") << "," << be_nl
+          << elem->nested_type_name (scope) << "," << be_nl;
+      *os << elem->nested_type_name (scope, "_var") << "," << be_nl
           << elem->fwd_helper_name () << "_life" << be_uidt_nl
           << ">" << be_uidt << be_uidt_nl
           << ">" << be_uidt_nl
