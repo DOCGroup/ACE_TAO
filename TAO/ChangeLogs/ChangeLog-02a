@@ -59,7 +59,7 @@ Sat Mar  9 20:02:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  The above two fixes should solve the problem reported in
 	  tao-users newsgroup under the thread "wide-strings in
-	  exceptions". Thanks to Val Dumiterscu
+	  exceptions". Thanks to Val Dumitrescu
 	  <val.dumitrescu@am-beo.com> for reporting the problem and Duane
 	  Binder <duane.binder@veritas.com> for helping me to narrow down
 	  the problem. 
