@@ -1,125 +1,136 @@
+Wed Nov 24 20:17:01 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.tao.GNU: re-enabled IDL_EXT and IDL_EXT2 on WIN32
+          host for VxWorks, reverting this change:
+          ChangeLogTag: Fri Oct 29 10:11:37 1999  David L. Levine
+          <levine@cs.wustl.edu>
+          It was preventing generation of C++ files from .idl files.
+          Thanks to Stephane Chatre <schatre@oresis.com> for
+          reporting this problem and to Erik Johannes
+          <ejohannes@oresis.com> for verifying the fix.
+
 Wed Nov 24 19:14:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
-	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
-	  Tom Ziomek <tomz@cc.comm.mot.com> raises the issue as to whether 
-	  the event channel should invoke the disconnect_push_XXXX()
-	  callback when the user calls disconnect_push_YYYY() on the
-	  proxy.  It seems like the tide is for performing the callback
-	  all the time, not only when the event channel is going down, but 
-	  it is not clear if that is the case and we could break backwards 
-	  compatibility if we do that change.
-	  Instead we added a flag to the EC to control its behavior, like
-	  the supplier and consumer reconnections.
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+        * orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+          Tom Ziomek <tomz@cc.comm.mot.com> raises the issue as to whether
+          the event channel should invoke the disconnect_push_XXXX()
+          callback when the user calls disconnect_push_YYYY() on the
+          proxy.  It seems like the tide is for performing the callback
+          all the time, not only when the event channel is going down, but
+          it is not clear if that is the case and we could break backwards
+          compatibility if we do that change.
+          Instead we added a flag to the EC to control its behavior, like
+          the supplier and consumer reconnections.
 
-	* orbsvcs/orbsvcs/Event/EC_Defaults.h:
-	  Made it easier to override the default configuration for the
-	  event channel.
+        * orbsvcs/orbsvcs/Event/EC_Defaults.h:
+          Made it easier to override the default configuration for the
+          event channel.
 
-	* orbsvcs/tests/Event/Basic/Makefile:
-	* orbsvcs/tests/Event/Basic/Basic.dsw:
-	* orbsvcs/tests/Event/Basic/Disconnect.dsp:
-	* orbsvcs/tests/Event/Basic/run_test.pl:
-	* orbsvcs/tests/Event/Basic/Disconnect.h:
-	* orbsvcs/tests/Event/Basic/Disconnect.cpp:
-	  Added a new test for the disconnect callback feature.
+        * orbsvcs/tests/Event/Basic/Makefile:
+        * orbsvcs/tests/Event/Basic/Basic.dsw:
+        * orbsvcs/tests/Event/Basic/Disconnect.dsp:
+        * orbsvcs/tests/Event/Basic/run_test.pl:
+        * orbsvcs/tests/Event/Basic/Disconnect.h:
+        * orbsvcs/tests/Event/Basic/Disconnect.cpp:
+          Added a new test for the disconnect callback feature.
 
 Tue Nov 23 00:30:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
-        
+
         * tests/Smart_Proxies/client.cpp:
-          Added ACE_UNUSED_ARG macro for <test_factory> to make the KAI 
+          Added ACE_UNUSED_ARG macro for <test_factory> to make the KAI
           complier happy.
 
 Tue Nov 23 18:30:34 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA.cpp (create_reference_with_id_i and create_reference_i):
-	  Bug 180: POA's active object map consumes memory even with
-	  NON_RETAIN policy.  In create_reference_i() and
-	  create_reference_with_id_i(), we were always creating an entry
-	  in the Active Object Map.  This is not necessary with the
-	  NON_RETAIN policy.  Therefore, changes were made such that in
-	  create_reference_with_id_i() the user provided id is used as the
-	  system id and in create_reference_i an empty object id is used.
-	  In both cases, no entries are added to the Active Object Map.
+        * tao/POA.cpp (create_reference_with_id_i and create_reference_i):
+          Bug 180: POA's active object map consumes memory even with
+          NON_RETAIN policy.  In create_reference_i() and
+          create_reference_with_id_i(), we were always creating an entry
+          in the Active Object Map.  This is not necessary with the
+          NON_RETAIN policy.  Therefore, changes were made such that in
+          create_reference_with_id_i() the user provided id is used as the
+          system id and in create_reference_i an empty object id is used.
+          In both cases, no entries are added to the Active Object Map.
 
-	  Two other changes were required: (a) in reference_to_id() no
-	  transformations were required from system id to user id since
-	  user id and system id are the same. (b) in locate_servant_i() no
-	  transformations were required from system id to user id since
-	  user id and system id are the same and
-	  <poa_current_impl.object_id_> simply gets a (smart) copy of
-	  system id.
+          Two other changes were required: (a) in reference_to_id() no
+          transformations were required from system id to user id since
+          user id and system id are the same. (b) in locate_servant_i() no
+          transformations were required from system id to user id since
+          user id and system id are the same and
+          <poa_current_impl.object_id_> simply gets a (smart) copy of
+          system id.
 
-	  This fixes Bug 180.  Thanks to Stefan Ullrich
-	  <SULLRICH@t-online.de> for originally reporting this and to
-	  Lothar Werzinger <werzinger.lothar@krones.de> for the reminder.
+          This fixes Bug 180.  Thanks to Stefan Ullrich
+          <SULLRICH@t-online.de> for originally reporting this and to
+          Lothar Werzinger <werzinger.lothar@krones.de> for the reminder.
 
 Tue Nov 23 19:48:27 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/GIOP.cpp:
-	* tao/Invocation.cpp:
-	* tao/TAOC.h:
-	* tao/TAOC.cpp:
-	  Changes to deal with the TAO SyncScope extension
-	  SYNC_FLUSH correctly.
+        * tao/GIOP.cpp:
+        * tao/Invocation.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.cpp:
+          Changes to deal with the TAO SyncScope extension
+          SYNC_FLUSH correctly.
 
 Tue Nov 23 17:44:50 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/DomainC.cpp:
-	* tao/InterfaceC.cpp:
-	* tao/MessagingC.cpp:
-	* tao/POAC.cpp:
-	* tao/PolicyC.cpp:
-	* tao/PollableC.cpp:
-	* tao/Object.cpp:
-	  Changed code around calls to
-	  TAO_GIOP_Invoccation::prepare_header(). It is part
-	  of the changes relating to the request header required
-	  by reliable oneways. I had overlooked these calls.
-	  Thanks to Irfan for uncovering the tip of this iceberg.
+        * tao/DomainC.cpp:
+        * tao/InterfaceC.cpp:
+        * tao/MessagingC.cpp:
+        * tao/POAC.cpp:
+        * tao/PolicyC.cpp:
+        * tao/PollableC.cpp:
+        * tao/Object.cpp:
+          Changed code around calls to
+          TAO_GIOP_Invoccation::prepare_header(). It is part
+          of the changes relating to the request header required
+          by reliable oneways. I had overlooked these calls.
+          Thanks to Irfan for uncovering the tip of this iceberg.
 
-	* tao/Stub.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
-	  Changed the type of flag variable (declared to be an
-	  argument to prepare_header) to be CORBA::Short. Nanbor
-	  had made these CORBA::Long, thinking that was the type
-	  of TAO::SyncScope.
+        * tao/Stub.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+          Changed the type of flag variable (declared to be an
+          argument to prepare_header) to be CORBA::Short. Nanbor
+          had made these CORBA::Long, thinking that was the type
+          of TAO::SyncScope.
 
 Tue Nov 23 11:43:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Revised guidelines on "adding IDL to your
-	  project settings".  Thanks to Ben Bourner <ben@orion.no> for the
-	  suggesting this.
+        * TAO-INSTALL.html: Revised guidelines on "adding IDL to your
+          project settings".  Thanks to Ben Bourner <ben@orion.no> for the
+          suggesting this.
 
 Tue Nov 23 11:04:20 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
-	* orbsvcs/tests/AVStreams/benchmark/child.cpp:
-	  Fixed the tests so they run with the pluggable protocols framework
-	  Thanks to Thomas Huang <Thomas.Huang@jpl.nasa.gov> for pointing
-	  this out.
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/child.cpp:
+          Fixed the tests so they run with the pluggable protocols framework
+          Thanks to Thomas Huang <Thomas.Huang@jpl.nasa.gov> for pointing
+          this out.
 
 Tue Nov 23 00:59:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp (gen_marshal_and_invoke):
-	* TAO_IDL/be/be_visitor_operation/ami_cs.cpp (gen_marshal_and_invoke):
-	* tao/Stub.cpp (do_static_call,do_dynamic_call): Changed to store
-	  the enum value into a CORBA::Long and then casted it to Octet
-	  before passing it to prepare_header.  This is a solution that
-	  KCC and CC 4.2 both agree on.
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp (gen_marshal_and_invoke):
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp (gen_marshal_and_invoke):
+        * tao/Stub.cpp (do_static_call,do_dynamic_call): Changed to store
+          the enum value into a CORBA::Long and then casted it to Octet
+          before passing it to prepare_header.  This is a solution that
+          KCC and CC 4.2 both agree on.
 
-	* tao/Invocation.cpp (invoke): Removed an unreachable return
-	  statement.
+        * tao/Invocation.cpp (invoke): Removed an unreachable return
+          statement.
 
 Mon Nov 22 21:48:03 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	  Fixed the project files too.
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Fixed the project files too.
 
 Mon Nov 22 20:47:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -142,7 +153,7 @@ Mon Nov 22 20:47:21 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Added a new filter composite.  It accepts only the events that
           its child rejects and rejects the ones the child accepts.  It is
           useful to express "i don't want this events", thanks to Trey
-	  Grubbs <t-grubbs1@raytheon.com> for asking about this filter
+          Grubbs <t-grubbs1@raytheon.com> for asking about this filter
 
         * orbsvcs/tests/Event/Basic/Makefile:
         * orbsvcs/tests/Event/Basic/Negation.h:
