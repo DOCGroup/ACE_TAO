@@ -10,29 +10,37 @@
 //    Local_Tokens.h
 //
 // = AUTHOR
-//    Karl-Heinz Dorn (kdorn@erlh.siemens.de)
-//    Douglas C. Schmidt (schmidt@cs.wustl.edu)
-//    Tim Harrison (harrison@cs.wustl.edu)
+//    Karl-Heinz Dorn <kdorn@erlh.siemens.de>,
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>, and
+//    Tim Harrison <harrison@cs.wustl.edu>
 //
 // = DESCRIPTION
 //   This file contains definitions for the following classes:
 //
-// public:
-//   7. ACE_Token_Proxy
-//   8. ACE_Null_Token : public ACE_Token_Proxy
-//   9. ACE_Local_Mutex : public ACE_Token_Proxy
-//   *. ACE_Local_RLock : public ACE_Local_Mutex
-//   &. ACE_Local_WLock : public ACE_Local_Mutex
-// private:
-//   1. ACE_TOKEN_CONST
-//   3. ACE_TPQ_Entry
-//   b. ACE_TSS_TPQ_Entry
-//   c. ACE_TPQ_Iterator
-//   4. ACE_Token_Proxy_Queue
-//   5. ACE_Tokens
-//   6. ACE_Mutex_Token : public ACE_Tokens
-//   12. ACE_RW_Token : public ACE_Tokens
-//   a. ACE_Token_Name
+//   public:
+//     7. ACE_Token_Proxy
+//     8. ACE_Null_Token : public ACE_Token_Proxy
+//     9. ACE_Local_Mutex : public ACE_Token_Proxy
+//     *. ACE_Local_RLock : public ACE_Local_Mutex
+//     &. ACE_Local_WLock : public ACE_Local_Mutex
+//   private:
+//     1. ACE_TOKEN_CONST
+//     3. ACE_TPQ_Entry
+//     b. ACE_TSS_TPQ_Entry
+//     c. ACE_TPQ_Iterator
+//     4. ACE_Token_Proxy_Queue
+//     5. ACE_Tokens
+//     6. ACE_Mutex_Token : public ACE_Tokens
+//     12. ACE_RW_Token : public ACE_Tokens
+//     a. ACE_Token_Name
+//
+//    Note that the locking classes defined in this file are *not*
+//    intended to be used as general-purpose synchronization
+//    mechanisms, such as mutexes or semaphores.  Instead, you should
+//    use the <ACE_Recursive_Thread_Mutex>, <ACE_Thread_Mutex>,
+//    <ACE_Thread_Semaphore>, etc., that are defined in
+//    $ACE_ROOT/ace/Synch.h and $ACE_ROOT/ace/Synch_T.h or the
+//    <ACE_Token> that's defined in $ACE_ROOT/ace/Token.h.
 //
 // ============================================================================
 
@@ -162,8 +170,6 @@ private:
   // Sleep hook.
 };
 
-// ************************************************************
-
 // b..
 #if defined (ACE_NO_TSS_TOKENS)
 typedef ACE_TPQ_Entry ACE_TPQ_ENTRY;
@@ -215,8 +221,6 @@ private:
   const ASYS_TCHAR *client_id_;
   // Client_id.
 };
-
-// ************************************************************
 
 class ACE_Token_Proxy_Queue;
 
