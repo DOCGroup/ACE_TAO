@@ -77,7 +77,9 @@ collocation_test:
         This test demonstrates how collocation optimization improve
 performance of collocated objects.  Run the test without any argument
 to see results with collocation optimization.  Run it with
-<-ORBcollocation no> to perform the same test without the optimization.
+<-ORBcollocation no> to perform the same test without the
+optimization.  Notice that the executable of collocation_test is
+generated in the subdirectory ./collocation/.
 
 
 run_test.pl:
