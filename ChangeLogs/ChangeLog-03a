@@ -1,3 +1,15 @@
+Tue Jan  4 14:09:51 2000  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+
+	  Fixed test that checks if sched.h is needed for thread
+	  scheduling definitions.  This should correct problems discovered
+	  on RedHat 6.1 installations.
+
+	  Improved sys_nerr and sys_errlist[] tests by checking for
+	  external global variables in libraries.  This should correct a
+	  problem discovered in an AIX configure script run.
+
 Tue Jan  4 13:23:26 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Service_Config: Updated the documentation for the various
