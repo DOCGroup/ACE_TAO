@@ -57,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
                                         "buttontest",
                                         NULL,
                                         0,
-					&argc,
+                                        &argc,
                                         argv,
                                         NULL,
                                         NULL);
@@ -87,8 +87,8 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
 
   // Print a message every 10 seconds
   if (reactor.schedule_timer (stdin_, 0,
-			      ACE_Time_Value (10),
-			      ACE_Time_Value (10)) == -1)
+                              ACE_Time_Value (10),
+                              ACE_Time_Value (10)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "schedule_timer"), -1);
