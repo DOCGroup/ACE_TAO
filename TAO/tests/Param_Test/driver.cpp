@@ -264,13 +264,13 @@ Driver::run (void)
         else
           retstatus = client->run_dii_test ();
         delete client;
-        
+
         Param_Test_Client<Test_Unbounded_Struct_Sequence> *client2 = new
           Param_Test_Client<Test_Unbounded_Struct_Sequence>
           (this->orb_.in (),
            this->objref_.in(),
            new Test_Unbounded_Struct_Sequence);
-        
+
         if (opt->invoke_type () == Options::SII)
           retstatus = client2->run_sii_test ();
         else
@@ -481,6 +481,7 @@ template class Param_Test_Client<Test_Var_Struct>;
 template class Param_Test_Client<Test_Nested_Struct>;
 template class Param_Test_Client<Test_Objref_Struct>;
 template class Param_Test_Client<Test_Struct_Sequence>;
+template class Param_Test_Client<Test_Unbounded_Struct_Sequence>;
 template class Param_Test_Client<Test_Bounded_Struct_Sequence>;
 template class Param_Test_Client<Test_ObjRef>;
 template class Param_Test_Client<Test_ObjRef_Sequence>;
@@ -506,6 +507,7 @@ template class Param_Test_Client<Test_Exception>;
 #pragma instantiate Param_Test_Client<Test_Nested_Struct>
 #pragma instantiate Param_Test_Client<Test_Objref_Struct>
 #pragma instantiate Param_Test_Client<Test_Struct_Sequence>
+#pragma instantiate Param_Test_Client<Test_Unbounded_Struct_Sequence>
 #pragma instantiate Param_Test_Client<Test_Bounded_Struct_Sequence>
 #pragma instantiate Param_Test_Client<Test_ObjRef>
 #pragma instantiate Param_Test_Client<Test_ObjRef_Sequence>
