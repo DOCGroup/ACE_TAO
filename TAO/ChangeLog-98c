@@ -1,5 +1,7 @@
 Wed Oct 22 12:55:19 1997    <nw1@CHA-CHA>
 
+	* tao/TAO.{mdp,mak}:  Updated files in project file.
+	
 	* tao/TAO.dsp: Removed boa, Orb_Core and added poa, orb_core to
  	  the project file.
 
