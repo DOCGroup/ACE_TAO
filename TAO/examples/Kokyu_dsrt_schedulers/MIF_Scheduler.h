@@ -6,8 +6,9 @@
 #include "tao/RTScheduling/RTSchedulerC.h"
 #include "MIF_SchedulingC.h"
 #include "Kokyu_dsrt.h"
+#include "Kokyu_dsrt_schedulers_export.h"
 
-class MIF_Sched_Param_Policy:
+class Kokyu_DSRT_Schedulers_Export MIF_Sched_Param_Policy:
 public MIF_Scheduling::SchedulingParameterPolicy,
        public TAO_Local_RefCounted_Object
 {
@@ -24,7 +25,7 @@ public MIF_Scheduling::SchedulingParameterPolicy,
     MIF_Scheduling::SchedulingParameter value_;
 };
 
-class MIF_Scheduler:
+class Kokyu_DSRT_Schedulers_Export MIF_Scheduler:
 public MIF_Scheduling::Scheduler,
 public TAO_Local_RefCounted_Object
 {

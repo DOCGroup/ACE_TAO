@@ -8,25 +8,23 @@
 namespace
 {
   static const IOP::ServiceId service_id = 0xdddd;
-}
+  static ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
+  void guid_copy( Kokyu::GuidType& lhs, const RTScheduling::Current::IdType& rhs)
+  {
+    lhs.length(rhs.length ());
+    ACE_OS::memcpy(lhs.get_buffer (),
+                   rhs.get_buffer (),
+                   rhs.length ());
+  }
 
-void guid_copy( Kokyu::GuidType& lhs, const RTScheduling::Current::IdType& rhs)
-{
-  lhs.length(rhs.length ());
-  ACE_OS::memcpy(lhs.get_buffer (),
-                 rhs.get_buffer (),
-                 rhs.length ());
+  void guid_copy( RTScheduling::Current::IdType& lhs, const Kokyu::GuidType& rhs)
+  {
+    lhs.length(rhs.length ());
+    ACE_OS::memcpy(lhs.get_buffer (),
+                   rhs.get_buffer (),
+                   rhs.length ());
+  }
 }
-
-void guid_copy( RTScheduling::Current::IdType& lhs, const Kokyu::GuidType& rhs)
-{
-  lhs.length(rhs.length ());
-  ACE_OS::memcpy(lhs.get_buffer (),
-                 rhs.get_buffer (),
-                 rhs.length ());
-}
-
-ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
 MIF_Scheduling::SchedulingParameter
 MIF_Sched_Param_Policy::value (void)

@@ -2,38 +2,29 @@
 
 #include "MUF_Scheduler.h"
 #include "ace/Atomic_Op.h"
-#include "../Kokyu_qosC.h"
+#include "Kokyu_qosC.h"
 
 //this needs to be formally defined in IOP.pidl
 namespace
 {
   static const IOP::ServiceId service_id = 0xdddd;
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
+  void guid_copy( Kokyu::GuidType& lhs, const RTScheduling::Current::IdType& rhs)
+  {
+    lhs.length(rhs.length ());
+    ACE_OS::memcpy(lhs.get_buffer (),
+                   rhs.get_buffer (),
+                   rhs.length ());
+  }
+
+  void guid_copy( RTScheduling::Current::IdType& lhs, const Kokyu::GuidType& rhs)
+  {
+    lhs.length(rhs.length ());
+    ACE_OS::memcpy(lhs.get_buffer (),
+                   rhs.get_buffer (),
+                   rhs.length ());
+  }
 }
-
-ACE_Time_Value time_base_to_tv (TimeBase::TimeT time)
-{
-  ACE_Time_Value tv(0,time/10);
-
-  return tv;
-}
-
-void guid_copy( Kokyu::GuidType& lhs, const RTScheduling::Current::IdType& rhs)
-{
-  lhs.length(rhs.length ());
-  ACE_OS::memcpy(lhs.get_buffer (),
-                 rhs.get_buffer (),
-                 rhs.length ());
-}
-
-void guid_copy( RTScheduling::Current::IdType& lhs, const Kokyu::GuidType& rhs)
-{
-  lhs.length(rhs.length ());
-  ACE_OS::memcpy(lhs.get_buffer (),
-                 rhs.get_buffer (),
-                 rhs.length ());
-}
-
-ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
 
 MUF_Scheduling::SchedulingParameter
 MUF_Sched_Param_Policy::value (void)
@@ -54,8 +45,9 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb)
 {
   Kokyu::DSRT_ConfigInfo config;
 
-  config.sched_strategy_ = Kokyu::DSRT_MUF;
-  kokyu_dispatcher_ = Kokyu::Dispatcher_Factory::create_DSRT_dispatcher (config);
+  kokyu_dispatcher_ =
+    Kokyu::DSRT_Dispatcher_Factory<MUF_Scheduler_Traits>::
+    create_DSRT_dispatcher (config);
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current"
@@ -129,14 +121,14 @@ MUF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
                   this->current_->id ()->get_buffer (),
                   this->current_->id ()->length ());
 
-  Kokyu::DSRT_QoSDescriptor qos;
+  MUF_Scheduler_Traits::QoSDescriptor_t qos;
   MUF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
     MUF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
 
   MUF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
 
-  qos.deadline_ = time_base_to_tv (sched_param->deadline);
-  qos.exec_time_ = time_base_to_tv (sched_param->estimated_initial_execution_time);
+  qos.deadline_ = sched_param->deadline;
+  qos.exec_time_ = sched_param->estimated_initial_execution_time;
   qos.criticality_ = sched_param->criticality;
 
   kokyu_dispatcher_->schedule (count, qos);
@@ -177,10 +169,10 @@ MUF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
     MUF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
 
   MUF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
-  Kokyu::DSRT_QoSDescriptor qos;
+  MUF_Scheduler_Traits::QoSDescriptor_t qos;
 
-  qos.deadline_ = time_base_to_tv (sched_param->deadline);
-  qos.exec_time_ = time_base_to_tv (sched_param->estimated_initial_execution_time);
+  qos.deadline_ = sched_param->deadline;
+  qos.exec_time_ = sched_param->estimated_initial_execution_time;
   qos.criticality_ = sched_param->criticality;
 
   kokyu_dispatcher_->update_schedule (count, qos);
@@ -411,10 +403,10 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       sched_param_out.ptr () = this->create_scheduling_parameter (sched_param);
     }
 
-  Kokyu::DSRT_QoSDescriptor qos;
-  qos.criticality_ = criticality;
-  qos.deadline_ = time_base_to_tv (deadline);
-  qos.exec_time_ = time_base_to_tv (exec_time);
+  MUF_Scheduler_Traits::QoSDescriptor_t qos;
+  qos.deadline_ =   qos.criticality_ = criticality;
+  qos.deadline_ = deadline;
+  qos.exec_time_ = exec_time;
 
   this->kokyu_dispatcher_->schedule (id, qos);
 
@@ -578,10 +570,10 @@ MUF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
                   guid));
     }
 
-  Kokyu::DSRT_QoSDescriptor qos;
-  qos.criticality_ = criticality;
-  qos.deadline_ = time_base_to_tv (deadline);
-  qos.exec_time_ = time_base_to_tv (exec_time);
+  MUF_Scheduler_Traits::QoSDescriptor_t qos;
+  qos.deadline_ =   qos.criticality_ = criticality;
+  qos.deadline_ = deadline;
+  qos.exec_time_ = exec_time;
   this->kokyu_dispatcher_->schedule (guid, qos);
 }
 
