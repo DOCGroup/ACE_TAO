@@ -1,5 +1,13 @@
 Fri May 14 16:46:42 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Task_T: Added a new class called ACE_Buffered_Task that
+ 	  buffers up its ACE_Message_Blocks until (1) the buffer is full
+ 	  or (2) a timeout elapses, at which point the buffers are written
+ 	  out using some type of writev()-like mechanism.
+	  
+	* ace/OS.h: Added a new macro called ACE_DEFAULT_WRITEV_MAX, which
+ 	  defaults to the maximum value that writev() can have.
+
 	* ace/Message_Block.cpp: Added a new method called total_size()
  	  that returns the total number of bytes in a composite
  	  Message_Block (i.e., a Message_Block that has a chain of

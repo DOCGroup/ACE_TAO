@@ -1,3 +1,10 @@
+Fri May 14 17:00:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp (send),
+	  tao/UIOP_Transport.cpp (send): Removed the local const for 
+	  TAO_WRITEV_MAX and replaced it with the new
+	  ACE_DEFAULT_WRITEV_MAX. 
+
 Fri May 14 17:14:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Priority_Dispatching.cpp:

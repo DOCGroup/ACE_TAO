@@ -161,8 +161,7 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
 
   // @@ Fred, this should NOT be a local constant...  It should use a
   // macro defined in OS.h...
-  const int TAO_WRITEV_MAX = 16;
-  iovec iov[TAO_WRITEV_MAX];
+  iovec iov[ACE_DEFAULT_WRITEV_MAX];
   int iovcnt = 0;
   ssize_t n = 0;
   ssize_t nbytes = 0;
@@ -183,8 +182,8 @@ TAO_IIOP_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *s)
           // platforms do not implement writev() there we should copy
           // the data into a buffer and call send_n(). In other cases
           // there may be some limits on the size of the iovec, there
-          // we should set TAO_WRITEV_MAX to that limit.
-          if (iovcnt == TAO_WRITEV_MAX)
+          // we should set ACE_DEFAULT_WRITEV_MAX to that limit.
+          if (iovcnt == ACE_DEFAULT_WRITEV_MAX)
             {
               n = this->handler_->peer ().sendv_n ((const iovec *) iov,
                                                    iovcnt);
