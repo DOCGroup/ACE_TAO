@@ -1,3 +1,192 @@
+Sun Sep 14 10:35:57 1997    <irfan@TWOSTEP>
+
+	* ace/Reactor: The Reactor classes (ACE_Reactor and ACE_ReactorEx)
+ 	  have changed.  The motivation for this change was to allow users
+ 	  to program abstractly and use the most efficient implementation
+ 	  available on their platform.  At the same time, we wanted to
+ 	  make the changes required by the users kept to a minimal.  
+
+	  Here is a layout of the new Reactor hierarchy in ACE (an example
+ 	  of the GOF Bridge Pattern).  Thanks to Thomas Jordan
+ 	  (Thomas_Jordan@deluxedata.com) for suggesting this new design.
+
+
+	                Reactor -----> Reactor_Impl
+				          ^
+			                  |
+				--------------------
+				^                  ^
+				|                  |
+			 Select_Reactor         WFMO_Reactor
+
+	  Reactor: 
+
+	    The Reactor class now becomes an interface class that contains
+ 	    a pointer to an implementation class. All methods of the
+ 	    Reactor class forward all calls to the appropriate
+ 	    implementation class.  Users can pass in their own
+ 	    implementation class.  If an implementation class is not
+ 	    supplied at creation time, the following default rules apply:
+	  
+	    On non-Win32 platforms: An instance of the Select_Reactor
+ 	    class will be created and used as the implementation.
+
+	    On Win32 platforms: An instance of the WFMO_Reactor class will
+ 	    be created and used as the implementation.  This default
+ 	    behavior can be overwritten at compile-time by setting the
+ 	    ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL flag. In this case, an
+ 	    instance of the Select_Reactor class will be created and used
+ 	    as the implementation.
+	    
+	  Reactor_Impl: 
+
+	     Reactor_Impl is an abstract class (i.e., the Bridge).
+  	     Select_Reactor and WFMO_Reactor inherit from this class.
+
+	  Select_Reactor:
+	  
+	     Previously known as the Reactor class.  This class implements
+ 	     the Reactor_Impl interface by using the select() system
+ 	     call. This implementation is available on all platforms
+	     (including Win32).
+
+	  WFMO_Reactor:
+
+	     WFMO (Wait For Multiple Objects) Reactor, previously known as
+ 	     the ReactorEx class.  This class implements the Reactor_Impl
+ 	     interface by using the WaitForMultipleObjects() system call.
+  	     This implementation is currently only available on Win32
+	     platforms. 
+
+	  Code changes for users:
+    	
+	     The higher authorities of ACE have decided that ReactorEx was
+ 	     a "goofy" name and made little sense in the new hierarchy.
+  	     Therefore users using the old ReactorEx will have to change
+ 	     over to start using the Reactor class (and make sure that the
+ 	     implementation class being used is WFMO_Reactor).
+	     
+	     Also users that have extended Reactor or ReactorEx must
+	     now subclass from Select_Reactor or WFMO_Reactor,
+	     respectively. 
+	
+	* ace/ReactorEx: 
+
+	  The ReactorEx interface has been extended to be identical to the
+ 	  Reactor interface.  Some of these new operations will not be
+ 	  supported in this version.  However, we will have interface
+ 	  compatability at this point. This allows the creation of the new
+ 	  Reactor hierarchy in ACE.
+
+	  Removed all static (singleton) methods from ReactorEx. These are
+ 	  not necessary anymore since ReactorEx will become an
+ 	  implementation class. Reactor will take over this functionality.
+
+	  Changed methods names from resume_all to resume_handlers and
+ 	  suspend_all to suspend_handlers. This increases the similarity
+ 	  between ReactorEx and Reactor.
+
+	  Add a lock_adapter so that we can return an ACE_Lock form of our
+	  internal lock.
+
+	  Added signal handling capabilities to ReactorEx.
+
+	  Added handler, requeue_position, mask_ops, and ready_ops
+ 	  operations.  However, they are not supported in this
+ 	  version. They are mostly here for interface compatibility with
+ 	  Reactor.
+
+	  Added a size() accessor that returns the current size of the
+ 	  ReactorEx's internal descriptor table.
+
+	  Added an initialized() accessor that returns true if ReactorEx
+ 	  has been successfully initialized, else false.
+
+	* ace/Reactor: 
+
+	  The Reactor interface has been extended to be identical to the
+ 	  ReactorEx interface.  Some of these new operations will not be
+ 	  supported in this version.  However, we will have interface
+ 	  compatability at this point. This allows the creation of the new
+ 	  Reactor hierarchy in ACE.
+
+	  Added resume_handler(ACE_Handle_Set &) and
+ 	  suspend_handler(ACE_Handle_Set &) to the Reactor.  This
+ 	  increases the similarity between ReactorEx and Reactor.
+
+	  Add a lock_adapter so that we can return an ACE_Lock form of our
+ 	  internal lock. This changes the signature of the return type
+ 	  from ACE_Reactor_Lock to ACE_Lock.
+
+	  Added a size() accessor that returns the current size of the
+ 	  Reactor's internal descriptor table.
+
+	  Added wakeup_all_thread() operation. Currently it just does a
+ 	  notify.  
+
+	  Added alertable_handle_events() operation.  Currently it just
+	  calls handle_events().
+	
+	  Added register_handler (that take event handles) operations.
+  	  However, they are not supported in this version. They are mostly
+ 	  here for interface compatibility with ReactorEx.
+
+	* ace/XtReactor: Now inherits from Select_Reactor instead of
+ 	  Reactor.
+
+	* ace/Timer_Queue_T.h: Removed the inclusion of Time_Value.h. This
+ 	  file does not exist anymore
+
+	* ace/Synch_T (ACE_Lock_Adapter): Changed the implementation of
+ 	  the adapter such that the user is allowed to (optionally) pass
+ 	  in the locking mechanism.
+
+	* ace/Strategies: Removed ACE_ReactorEx_Notification_Strategy.
+
+	* ace/Service_Config: Updated Service_Config so that all ReactorEx
+ 	  and Proactor methods are removed. ReactorEx does not exist any
+ 	  longer and Proactor methods are available as statics methods on
+ 	  the Proactor class.
+
+	* ace/OS.h (ACE_DEFAULT_SELECT_REACTOR_SIZE): Changed
+ 	  ACE_DEFAULT_REACTOR_SIZE to ACE_DEFAULT_SELECT_REACTOR_SIZE.
+  	  There is no default size dictated by the Reactor class anymore.
+
+	* ace/Local_Tokens,Token: Added new methods: acquire_read,
+ 	  acquire_write, tryacquire_read, tryacquire_write.  These methods
+ 	  allow the Tokens to be used by the ACE_Lock_Adapter class.
+
+	* ace/Handle_Set.h (MAXSIZE): Changed ACE_DEFAULT_REACTOR_SIZE to
+ 	  ACE_DEFAULT_SELECT_REACTOR_SIZE.  There is no default size
+ 	  dictated by the Reactor class anymore.
+
+	* ace/Event_Handler: Removed the Proactor and ReactorEx pointers
+ 	  from Event_Handler.  The Proactor has its own event handler
+	  (ACE_Handler), and the ReactorEx does not exist anymore.
+
+	* ace/Proactor: 
+
+	  Changed Proactor to work with the new Reactor.
+
+	  Updated Proactor to bring it upto date with the recent changes
+ 	  to the Timer_Queue.
+
+        * tests: 
+
+	  Removed the ACE_NEW_THREAD macro. With the new thread adapter,
+ 	  the log stream for the new thread will automatically be set to
+ 	  the creator thread's stream.  Therefore, this macro is not
+ 	  needed.	
+
+	  Removed the inclusion of Service_Config.h. All tests are now
+ 	  accessing the singletons that are supported by the class directly.
+
+	* examples/Reactor/Proactor: Updated examples to use and access
+ 	  the new Reactor class instead of the old ReactorEx.
+
+	* examples/Reactor/ReactorEx: Updated examples to use and access
+ 	  the new Reactor class instead of the old ReactorEx.
+
 Sun Sep 14 09:50:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Singleton.i (ACE_Singleton): Moved the definition of the
