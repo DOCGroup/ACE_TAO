@@ -8,6 +8,10 @@
 #include "ace/config.h"
 #include "ace/Timer_Wheel.h"
 
+#if defined (ACE_HPUX_BROKEN_TEMPLATES)
+#include "ace/Timer_Wheel_T.cpp"
+#endif /* ACE_HPUX_BROKEN_TEMPLATES */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Timer_Wheel_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX>;
 template class ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX>;

@@ -230,9 +230,9 @@ private:
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+#if defined (ACE_TEMPLATES_REQUIRE_SOURCE) && !defined(ACE_HPUX_BROKEN_TEMPLATES)
 #include "ace/Timer_Hash_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#endif /* ACE_TEMPLATES_REQUIRE_SOURCE && !ACE_HPUX_BROKEN_TEMPLATES */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_Hash_T.cpp")

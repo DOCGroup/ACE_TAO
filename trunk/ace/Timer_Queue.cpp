@@ -9,6 +9,10 @@
 #include "ace/Containers.h"
 #include "ace/Timer_Queue.h"
 
+#if defined (ACE_HPUX_BROKEN_TEMPLATES)
+#include "ace/Timer_Queue_T.cpp"
+#endif /* ACE_HPUX_BROKEN_TEMPLATES */
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Event_Handler *> *>;
 template class ACE_Node<ACE_Timer_Node_T<ACE_Event_Handler *> *>;

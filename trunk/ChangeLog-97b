@@ -1,3 +1,24 @@
+Fri Oct 17 21:58:04 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/Timer_Queue_Adapters.h: 
+	* ace/Timer_Queue_Adapters.i: 
+	  Changed the method name from lock() to mutex(), this should
+	  workaround a bug in the HP/C++ compiler.
+
+	* ace/Timer_Hash.cpp: 
+	* ace/Timer_Hash_T.h: 
+	* ace/Timer_Heap.cpp: 
+	* ace/Timer_Heap_T.h: 
+	* ace/Timer_List.cpp: 
+	* ace/Timer_List_T.h: 
+	* ace/Timer_Queue.cpp: 
+	* ace/Timer_Queue_T.h: 
+	* ace/Timer_Wheel.cpp: 
+	* ace/Timer_Wheel_T.h: 
+	  Workaround HP/C++ compiler bug, we cannot include the .cpp file
+	  from the header file, but it must be included in the point of
+	  instantiation.
+
 Fri Oct 17 18:34:00 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Atomic_Op.i (lock): Added an accessor to ACE_Atomic_Op to
