@@ -44,7 +44,6 @@ OBJFILES = \
 	$(OBJDIR)\Exception.obj \
 	$(OBJDIR)\Exclusive_TMS.obj \
 	$(OBJDIR)\FILE_Parser.obj \
-	$(OBJDIR)\FT_CORBAC.obj \
 	$(OBJDIR)\GIOP_Message_Accept_State.obj \
 	$(OBJDIR)\GIOP_Message_Acceptors.obj \
 	$(OBJDIR)\GIOP_Message_Base.obj \
