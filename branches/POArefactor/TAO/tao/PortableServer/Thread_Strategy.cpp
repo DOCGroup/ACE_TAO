@@ -5,14 +5,14 @@
 #include "ThreadPolicy.h"
 
 ACE_RCSID (PortableServer,
-           ThreadPolicyFactory,
+           Thread_Strategy
            "$Id$")
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 namespace TAO
 {
-  namespace PortableServer
+  namespace Portable_Server
   {
     //
   }
