@@ -1,3 +1,10 @@
+Tue Sep 14 08:35:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Sequence_T.i:
+	  Fixed two calls to allocbuf() - I was using the
+	  wrong template class. Solaris/SunCC5 and Irix picked
+	  this up.
+
 Mon Sep 13 18:31:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/TimeService.idl (CosTime): Renamed variable name
