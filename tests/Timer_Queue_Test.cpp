@@ -66,8 +66,8 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &,
 			      const void *arg)
   {
-    ACE_ASSERT ((int) arg == 42 || (int) arg == 007);
-    if ((int) arg != 42)
+    ACE_ASSERT (arg == (const void *) 42 || arg == (const void *)007);
+    if (arg != (const void *)42)
       return -1;
     else
       return 0;
