@@ -16,6 +16,9 @@
 #include "Trader.h"
 #include "Offer_Iterators_T.h"
 
+// The following #include is needed only for the instantiation pragmas.
+#include "Trader_Interfaces.h"
+
 ACE_RCSID(Trader, Trader, "$Id$")
 
   // *************************************************************
