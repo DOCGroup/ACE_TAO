@@ -1,5 +1,22 @@
 Sun Oct 26 15:07:18 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/giop.cpp: Changed calls to
+ 	TAO_Client_Connection_Handler::in_use() to call the underlying
+ 	Svc_Handler::idle().
+
+	* tao/connect.{h,i}: Eliminated in_use() flags because they're no
+ 	longer needed with the new Strategy Connector.
+
+	* tao/iioporb.cpp (string_to_object): Removed setting of the orb
+ 	in the underlying CORBA::Object because it's no longer there.
+
+	* tao/object.{h,i} (CORBA_Object): Eliminated the pointer to an orb
+ 	within this object.  This should help solve some problems in
+ 	passing object references across the wire.
+
+	* tao/connect.cpp: Added template instantiations for
+ 	ACE_Hash_Map_Iterator to reflect Irfan's recent changes.
+
 	* tests/IDL_Cubit/README: Updated documentation on the server to
  	reflect current reality.
 

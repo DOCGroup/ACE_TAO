@@ -39,16 +39,6 @@ public:
   // = <Connector> hook.
   virtual int open (void *);
   // Initialization hook
-
-  void in_use (CORBA::Boolean);
-  // Set the in-use flag.
-
-  CORBA::Boolean in_use (void);
-  // Return state of the in-use flag.
-
-private:
-  CORBA::Boolean in_use_;
-  // True value indicates that something is using this handler.
 };
 
 // = Useful typedef.
