@@ -104,10 +104,11 @@ ACE_XtReactor::TimerCallbackProc (XtPointer closure, XtIntervalId *id)
 
 void 
 ACE_XtReactor::InputCallbackProc (XtPointer closure, 
-				  int * source, 
+				  int *source,
 				  XtInputId *)
 {
   ACE_XtReactor *self = (ACE_XtReactor *) closure;
+  ACE_HANDLE handle = (ACE_HANDLE) *source;
 
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("ACE_XtReactor::Input on fd %d\n"), *source));
 
@@ -118,14 +119,14 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
   // Deal with one file event
     
   // - read which kind of event
-  if (self->wait_set_.rd_mask_.is_set (*source))
-    wait_set.rd_mask_.set_bit (*source);
-  if (self->wait_set_.wr_mask_.is_set (*source))
-    wait_set.wr_mask_.set_bit (*source);
-  if (self->wait_set_.ex_mask_.is_set (*source))
-    wait_set.ex_mask_.set_bit (*source);
+  if (self->wait_set_.rd_mask_.is_set (handle))
+    wait_set.rd_mask_.set_bit (handle);
+  if (self->wait_set_.wr_mask_.is_set (handle))
+    wait_set.wr_mask_.set_bit (handle);
+  if (self->wait_set_.ex_mask_.is_set (handle))
+    wait_set.ex_mask_.set_bit (handle);
 
-  int result = ACE_OS::select (*source + 1, 
+  int result = ACE_OS::select (int (handle) + 1,
 			       wait_set.rd_mask_,
 			       wait_set.wr_mask_,
 			       wait_set.ex_mask_, &zero);
@@ -135,12 +136,12 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
   // - Use only that one file event (removes events for other files)
   if (result > 0)
     {
-      if (wait_set.rd_mask_.is_set (*source))
-	dispatch_set.rd_mask_.set_bit (*source);
-      if (wait_set.wr_mask_.is_set (*source))
-	dispatch_set.wr_mask_.set_bit (*source);
-      if (wait_set.ex_mask_.is_set (*source))
-	dispatch_set.ex_mask_.set_bit (*source);
+      if (wait_set.rd_mask_.is_set (handle))
+	dispatch_set.rd_mask_.set_bit (handle);
+      if (wait_set.wr_mask_.is_set (handle))
+	dispatch_set.wr_mask_.set_bit (handle);
+      if (wait_set.ex_mask_.is_set (handle))
+	dispatch_set.ex_mask_.set_bit (handle);
 
       self->dispatch (1, dispatch_set);
     }
@@ -188,9 +189,10 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
 				   ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_XtReactor::register_handler_i");
-
+#if defined (ACE_WIN32)
+  ACE_NOTSUP_RETURN (-1);
+#else
   ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("+++%d\n"), handle));
-
   int result = ACE_Select_Reactor::register_handler_i (handle, handler, mask);
 
   if (result == -1)
@@ -244,6 +246,7 @@ ACE_XtReactor::register_handler_i (ACE_HANDLE handle,
       ids_[handle].good_id_ = 1;
     }
   return 0;
+#endif /* ACE_WIN32 */
 }
 
 int
@@ -259,8 +262,11 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
 				 ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_XtReactor::remove_handler_i");
-  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("---%d\n"), handle));
 
+#if defined (ACE_WIN32)
+  ACE_NOTSUP_RETURN (-1);
+#else
+  ACE_DEBUG ((LM_DEBUG,  ASYS_TEXT ("---%d\n"), handle));
   int result = ACE_Select_Reactor::remove_handler_i (handle, mask);
 
   if (handle <= id_len_)
@@ -278,6 +284,7 @@ ACE_XtReactor::remove_handler_i (ACE_HANDLE handle,
     return result;
   else
     return 0;
+#endif /* ACE_WIN32 */
 }
 
 int 

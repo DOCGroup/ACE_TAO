@@ -1,3 +1,14 @@
+Thu Apr 23 06:38:15 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/XtReactor.cpp: Commented out most of the logic if we're
+ 	  running on Win32 because (1) it doesn't work correctly since
+ 	  HANDLEs are not ints and (2) there's no X windows on Win32
+ 	  anyhow...
+
+	* ace/XtReactor.h: Made ACE_XtReactor be ACE_Export'd.  Thanks to
+ 	  Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
+ 	  this.
+
 Thu Apr 23 06:11:27 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_chorus.GNU: include dtool/htgt-cf.rf

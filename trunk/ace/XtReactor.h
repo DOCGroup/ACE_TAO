@@ -28,7 +28,7 @@
 // Forward decl.
 struct ACE_XtReactorID;
 
-class ACE_XtReactor : public ACE_Select_Reactor
+class ACE_Export ACE_XtReactor : public ACE_Select_Reactor
 {
   // = TITLE
   //     An object oriented event demultiplexor and event handler
