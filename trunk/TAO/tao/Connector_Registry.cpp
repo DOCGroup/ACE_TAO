@@ -146,6 +146,11 @@ TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
           (*connector)->preconnect (i->c_str ());
     }
 
+  // No longer need the preconnect set since all associated
+  // preconnections have been opened by now.  Reclaim the memory used
+  // by the preconnect set.
+  preconnections.reset ();
+
   return 0;  // Success
 }
 

@@ -12,6 +12,7 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/GIOP_Message_Acceptors.h"
 #include "tao/GIOP_Message_Lite.h"
+#include "tao/Server_Strategy_Factory.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/SHMIOP_Connect.i"
@@ -217,6 +218,15 @@ TAO_SHMIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
   --this->refcount_;
   if (this->refcount_ == 0)
     {
+      // Remove the handle from the ORB Core's handle set so that it
+      // isn't included in the set that is passed to the reactor upon
+      // ORB destruction.
+      TAO_Server_Strategy_Factory *f =
+        this->orb_core_->server_factory ();
+
+      if (f->activate_server_connections () == 0)
+        (void) this->orb_core_->remove_handle (handle);
+
       this->peer().remove ();
       return TAO_SHMIOP_SVC_HANDLER::handle_close (handle, rm);
     }

@@ -1,3 +1,49 @@
+Mon Jul 24 01:27:53 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Acceptor_Registry.cpp (open):
+	* tao/Connector_Registry.cpp (preconnect):
+
+	  Reclaim the memory used by the each endpoint set stored in
+	  TAO_ORB_Parameters by reseting its contents.  The endpoint set
+	  is no longer needed once corresponding acceptors/connectors have
+	  been initialized.
+
+	* tao/ORB_Core.h (handle_set_):
+	* tao/ORB_Core.i (register_handle, remove_handle):
+
+	  New methods that are used when keeping track of open connections
+	  when the "reactive" ORB concurrency model is used.  The methods
+	  simply add or remove a handle to the ORB Core's newly added open
+	  connection handle set.
+
+	* tao/ORB_Core.cpp (fini):
+
+	  Explicitly shutdown all open connections that have been
+	  registered with the ORB Core by removing them from the Reactor
+	  upon ORB destruction.  This allows the ORB to use a Singleton
+	  reactor, for example, instead of an ORB-specific one.
+
+	* tao/Acceptor_Impl.cpp (activate_svc_handler):
+
+	  Keep track of open connections within the ORB Core so that they
+	  can be explicitly removed from the reactor prior to shutting down
+	  the ORB.  This is particularly important for dynamically loaded
+	  ORBs where an application level reactor, such as the Singleton
+	  reactor, is used instead of an ORB created one.  Register the
+	  handle (not handler) associated with the connection that was just
+	  accepted with the ORB Core.  This form of open connection
+	  tracking is only performed when the "reactive" ORB concurrency
+	  model is selected.
+
+	* tao/IIOP_Connect.cpp (handle_close):
+	* tao/SHMIOP_Connect.cpp (handle_close):
+	* tao/UIOP_Connect.cpp (handle_close):
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp (handle_close):
+
+	  Deregister the handle corresponding to the Connection Handler
+	  being shutdown from the ORB Core so that the ORB Core doesn't
+	  attempt to remove it from the Reactor upon ORB destruction.
+
 Sun Jul 23 22:01:23 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Fixed the following project/make files that still
@@ -15,9 +61,8 @@ Sun Jul 23 18:18:35 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
 	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
 	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
-		
+
 	Fixed Compile Warnings
-		
 
 Sat Jul 22 17:36:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
