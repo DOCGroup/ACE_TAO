@@ -1,3 +1,9 @@
+Mon Jun 22 21:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+        * TAO_IDL/be/be_sequence.cpp
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp: Making
+	  a special treatment for sequence of octets. 
+
 Mon Jun 22 20:32:25 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Trader/Attributes.{h,cpp}:
@@ -36,7 +42,7 @@ Mon Jun 22 11:54:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Mon Jun 22 11:32:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-        * TAO/docs/releasenotes/index.html: Added documentation
+        * docs/releasenotes/index.html: Added documentation
           about the changes in the TAO IDL compiler.
 
 Mon Jun 22 11:32:00 1998  Michael Kircher  <mk1@cs.wustl.edu>

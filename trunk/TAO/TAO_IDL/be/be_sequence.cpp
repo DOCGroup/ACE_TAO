@@ -376,10 +376,33 @@ be_sequence::instance_name ()
       break;
     default: // not a managed type
       if (this->unbounded ())
-        ACE_OS::sprintf (namebuf, 
-                         "_TAO_Unbounded_Sequence_%s",
-                         this->flatname());
-                         //prim_type->flatname ());
+      {
+        // @@ This needs to be fixed. (Michael)
+        //determine if it is a primitive type, if yes do all of that
+        be_predefined_type * bpt = 
+          be_predefined_type::narrow_from_decl (this->base_type());
+        if (bpt)
+        {
+          /*ACE_DEBUG ((LM_ERROR,
+                      "(%N:%l) be_visitor_sequence_ch::"
+                      "gen_instantiate_name - "
+                      "Bad element type\n"));
+          return 0;*/
+          if (bpt->pt() == AST_PredefinedType::PT_octet)
+              ACE_OS::sprintf (namebuf, 
+                               "TAO_Unbounded_Sequence<CORBA::Octet>");
+          else
+            ACE_OS::sprintf (namebuf, 
+                             "_TAO_Unbounded_Sequence_%s",
+                             this->flatname());
+                             // or prim_type->flatname ());
+        }        
+        else
+          ACE_OS::sprintf (namebuf, 
+                           "_TAO_Unbounded_Sequence_%s",
+                           this->flatname());
+                           // or prim_type->flatname ());
+      }
       else
         ACE_OS::sprintf (namebuf, 
                          "_TAO_Bounded_Sequence_%s_%d",
