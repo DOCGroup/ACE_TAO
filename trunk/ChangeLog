@@ -1,3 +1,11 @@
+Mon Feb  9 16:10:07 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Memory_Pool.cpp: ACE_Shared_Memory_Pool::commit_backing_store_name()
+	  and ACE_Shared_Memory_Pool::handle_signal() ACE_ERROR_RETURN
+ 	  macros were returning the wrong value (0 instead of -1).  Thanks
+ 	  to Kobi Cohen-Arazi <kobi-co@barak-online.net> for reporting
+ 	  this problem.
+
 Mon Feb  9 13:58:30 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/DependencyGenerator/GNUObjectGenerator.pm:
