@@ -5,10 +5,11 @@
 CC		= cxvxppc
 CXX		= $(CC)
 CFLAGS		+= $(DCFLAGS)
-CCFLAGS		+= $(CFLAGS) --no_rtti -tnone --no_auto_instantiation
+CCFLAGS		+= $(CFLAGS) --no_rtti -tnone
 DCFLAGS		+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
+LDFLAGS		= --no_auto_instantiation
 LIBS            += /appl/newgreen/vxppc603/ghsbltin.o /appl/newgreen/vxppc603/ghsmath.o
 PIC		=
 AR		= ax
