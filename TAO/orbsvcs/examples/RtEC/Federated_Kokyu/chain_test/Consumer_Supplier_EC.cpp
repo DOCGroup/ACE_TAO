@@ -78,7 +78,7 @@ public:
                    consumer_event_channel.in(),
                    supplier_scheduler.in(),
                    consumer_scheduler.in(),
-                   "gateway1", "gateway2"
+                   "gateway2", "gateway3"
                    ACE_ENV_ARG_PARAMETER);
 
       ACE_CHECK;
@@ -207,7 +207,7 @@ main (int argc, char* argv[])
 {
   //TAO_EC_Default_Factory::init_svcs ();
 #ifdef ACE_HAS_DSUI
-  ds_control* ds_cntl = new ds_control ("Federated_Test_Supplier","supplier_enabled.dsui");
+  ds_control* ds_cntl = new ds_control ("Chain_Test_Consumer_Supplier","consumer_supplier_enabled.dsui");
 #endif //ACE_HAS_DSUI
 
   TAO_EC_Kokyu_Factory::init_svcs ();
@@ -377,7 +377,7 @@ int parse_args (int argc, char *argv[])
                           -1);
       }
   if (ior_output_file == 0)
-    ior_output_file = ACE_OS::fopen ("supplier_ec.ior", "w");
+    ior_output_file = ACE_OS::fopen ("consumer_supplier_ec.ior", "w");
   // Indicates sucessful parsing of the command line
   return 0;
 }
