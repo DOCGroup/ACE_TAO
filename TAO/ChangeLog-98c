@@ -3,6 +3,10 @@ Sat Sep 12 20:42:49 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: Fixed the bugs in
 	  latency and jitter calculation.
 
+	* tests/Cubit/TAO/MT_Cubit/Globals.h : Removed the
+          TIME_IN_MICROSEC macro as all time calculations are made 
+	  uniformly in microseconds.
+	
 Sat Sep 12 18:45:03 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp: Guarded the
