@@ -33,6 +33,7 @@
 #include "tao/IIOP_Acceptor.h"
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
+#include "tao/Request.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB.i"
@@ -310,21 +311,22 @@ CORBA_ORB::shutdown (CORBA::Boolean wait_for_completion)
 
 void
 CORBA_ORB::create_list (CORBA::Long count,
-                        CORBA::NVList_ptr &retval)
+                        CORBA::NVList_ptr &new_list,
+                        CORBA_Environment &)
 {
   assert (CORBA::ULong (count) <= UINT_MAX);
 
   // create an empty list
-  retval = new CORBA::NVList;
+  new_list = new CORBA::NVList;
 
   // if count is greater than 0, create a list of NamedValues
   if (count != 0)
     {
-      retval->max_ = (CORBA::ULong) count;
+      new_list->max_ = (CORBA::ULong) count;
       for (CORBA::Long i=0; i < count; i++)
         {
           CORBA::NamedValue_ptr nv = new CORBA::NamedValue;
-          retval->values_.enqueue_tail (nv);
+          new_list->values_.enqueue_tail (nv);
         }
     }
 }
@@ -1733,6 +1735,81 @@ CORBA_ORB::_tao_find_in_IOR_table (ACE_CString &object_id,
   obj = this->string_to_object (ior.c_str ());
 
   return 0;
+}
+
+// The following functions are not implemented - they just throw
+// CORBA::NO_IMPLEMENT.
+
+void 
+CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &,
+                               CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void 
+CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &,
+                                  CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void 
+CORBA_ORB::create_context_list (CORBA::ContextList_ptr &,
+                                CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void 
+CORBA_ORB::get_default_context (CORBA::Context_ptr &,
+                                CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void 
+CORBA_ORB::create_environment (CORBA::Environment_ptr &,
+                               CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void 
+CORBA_ORB::send_multiple_requests_oneway (const CORBA_ORB_RequestSeq,
+                                          CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void 
+CORBA_ORB::send_multiple_requests_deferred (const CORBA_ORB_RequestSeq,
+                                            CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+void 
+CORBA_ORB::get_next_response (CORBA_Request_ptr &,
+                              CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                  CORBA::COMPLETED_NO));
+}
+
+CORBA::Boolean 
+CORBA_ORB::poll_next_response (CORBA_Environment &ACE_TRY_ENV)
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
+                                         CORBA::COMPLETED_NO),
+                    0);
 }
 
 // ****************************************************************
