@@ -1,3 +1,13 @@
+Thu Jul 22 14:10:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/tests/AVStreams/benchmark/client.cpp:
+          removed ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
+          explicit instantiation because it's in tao/IIOP_Connector.cpp.
+          removed ACE_Task<ACE_SYNCH> explicit instantiation because
+          it's in ace/Service_Types.cpp.  With these deletions,
+          client builds successfully on Green Hills/VxWorks.  Thanks
+          to Denis Ouellet <douellet@gel.ulaval.ca> for reporting this.
+
 Thu Jul 22 14:03:26 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Pluggable/server.cpp (main): removed
