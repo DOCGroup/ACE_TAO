@@ -37,10 +37,8 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (void)
   (void) ACE_OS::memset ((void *) &this->unix_addr_, 0, sizeof this->unix_addr_);
 }
 
-// Copy constructor. 
-
-ACE_UNIX_Addr::ACE_UNIX_Addr (const ACE_UNIX_Addr &sa)
-  : ACE_Addr (AF_UNIX, sa.get_size ())
+void
+ACE_UNIX_Addr::set (const ACE_UNIX_Addr &sa)
 {
   size_t size = sa.get_size ();
 
@@ -51,6 +49,14 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (const ACE_UNIX_Addr &sa)
 
   this->unix_addr_.sun_family = AF_UNIX;
   ACE_OS::strcpy (this->unix_addr_.sun_path, sa.unix_addr_.sun_path);
+}
+
+// Copy constructor. 
+
+ACE_UNIX_Addr::ACE_UNIX_Addr (const ACE_UNIX_Addr &sa)
+  : ACE_Addr (AF_UNIX, sa.get_size ())
+{
+  this->set (sa);
 }
 
 void
