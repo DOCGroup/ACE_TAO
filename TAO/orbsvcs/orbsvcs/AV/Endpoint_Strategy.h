@@ -181,7 +181,7 @@ class TAO_ORBSVCS_Export TAO_AV_Child_Process
 public:
   TAO_AV_Child_Process ();
   int init (int argc, char **argv);
-  int run (ACE_Time_Value &tv = 0);
+  int run (ACE_Time_Value *tv = 0);
 
  protected:
   char *stream_endpoint_name_;
@@ -197,6 +197,16 @@ public:
   int release_semaphore ();
 
   TAO_ORB_Manager orb_manager_;
+  // The ORB Manager
+
+  CosNaming::NamingContext_var naming_context_;
+  // The root Naming Context of the TAO naming service
+
+  T_StreamEndPoint stream_endpoint_;
+  // The stream endpoint member
+
+  T_VDev vdev_;
+  // The virtual device
 };
 
 // ----------------------------------------------------------------------
