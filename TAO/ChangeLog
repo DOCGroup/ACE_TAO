@@ -1,3 +1,100 @@
+Wed Oct  8 08:09:11 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.dsp
+	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.dsw
+	* examples/Kokyu_dsrt_schedulers/Kokyu_DSRT_Schedulers.mpc
+	* examples/Kokyu_dsrt_schedulers/Kokyu_dsrt_schedulers_export.h 
+	* examples/Kokyu_dsrt_schedulers/Makefile.Kokyu_DSRT_Schedulers
+	* examples/Kokyu_dsrt_schedulers/Makefile
+	* examples/Kokyu_dsrt_schedulers/README
+	* examples/Kokyu_dsrt_schedulers/Kokyu_qosC.cpp
+	* examples/Kokyu_dsrt_schedulers/Kokyu_qosC.h
+	* examples/Kokyu_dsrt_schedulers/Kokyu_qosC.i
+	* examples/Kokyu_dsrt_schedulers/Kokyu_qos.pidl
+	* examples/Kokyu_dsrt_schedulers/Kokyu_qosC.h.diff
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduler.h
+	* examples/Kokyu_dsrt_schedulers/FP_SchedulingC.cpp
+	* examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h
+	* examples/Kokyu_dsrt_schedulers/FP_SchedulingC.i
+	* examples/Kokyu_dsrt_schedulers/FP_Scheduling.pidl
+	* examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h.diff
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduler.h
+	* examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.cpp
+	* examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h
+	* examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.i
+	* examples/Kokyu_dsrt_schedulers/MIF_Scheduling.pidl
+	* examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h.diff
+	* examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp
+	* examples/Kokyu_dsrt_schedulers/MUF_Scheduler.h
+	* examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.cpp
+	* examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.h
+	* examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.i
+	* examples/Kokyu_dsrt_schedulers/MUF_Scheduling.pidl
+	* examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.h.diff
+	* examples/Kokyu_dsrt_schedulers/Task_Stats.cpp
+	* examples/Kokyu_dsrt_schedulers/Task_Stats.h
+	* examples/Kokyu_dsrt_schedulers/Task_Stats.inl
+	* examples/Kokyu_dsrt_schedulers/utils.cpp
+	* examples/Kokyu_dsrt_schedulers/utils.h
+	  
+	  Added initial implementations of DSRTCORBA schedulers based on
+	  Kokyu ($ACE_ROOT/Kokyu) dispatching mechanisms.
+	        
+	* examples/Kokyu_dsrt_schedulers/fp_example/Makefile
+	* examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_client
+	* examples/Kokyu_dsrt_schedulers/fp_example/Makefile.fp_server
+	* examples/Kokyu_dsrt_schedulers/fp_example/README
+	* examples/Kokyu_dsrt_schedulers/fp_example/fp_client.dsp
+	* examples/Kokyu_dsrt_schedulers/fp_example/fp_example.dsw
+	* examples/Kokyu_dsrt_schedulers/fp_example/fp_example.mpc
+	* examples/Kokyu_dsrt_schedulers/fp_example/fp_server.dsp
+	* examples/Kokyu_dsrt_schedulers/fp_example/client.cpp:
+	* examples/Kokyu_dsrt_schedulers/fp_example/server.cpp:
+	* examples/Kokyu_dsrt_schedulers/fp_example/test.idl:
+	* examples/Kokyu_dsrt_schedulers/fp_example/test_i.cpp:
+	* examples/Kokyu_dsrt_schedulers/fp_example/test_i.h:
+	* examples/Kokyu_dsrt_schedulers/fp_example/test_i.i:
+
+	  Added example using fixed priority DSRTCORBA scheduler based on
+	  Kokyu.
+	
+	* examples/Kokyu_dsrt_schedulers/mif_example/Makefile
+	* examples/Kokyu_dsrt_schedulers/mif_example/Makefile.mif_client
+	* examples/Kokyu_dsrt_schedulers/mif_example/Makefile.mif_server
+	* examples/Kokyu_dsrt_schedulers/mif_example/README
+	* examples/Kokyu_dsrt_schedulers/mif_example/mif_client.dsp
+	* examples/Kokyu_dsrt_schedulers/mif_example/mif_example.dsw
+	* examples/Kokyu_dsrt_schedulers/mif_example/mif_example.mpc
+	* examples/Kokyu_dsrt_schedulers/mif_example/mif_server.dsp
+	* examples/Kokyu_dsrt_schedulers/mif_example/client.cpp:
+	* examples/Kokyu_dsrt_schedulers/mif_example/server.cpp:
+	* examples/Kokyu_dsrt_schedulers/mif_example/test.idl:
+	* examples/Kokyu_dsrt_schedulers/mif_example/test_i.cpp:
+	* examples/Kokyu_dsrt_schedulers/mif_example/test_i.h:
+	* examples/Kokyu_dsrt_schedulers/mif_example/test_i.i:
+
+	  Added example using Maximum Importance First (MIF) DSRTCORBA
+	  scheduler based on Kokyu.
+	
+	* examples/Kokyu_dsrt_schedulers/muf_example/Makefile
+	* examples/Kokyu_dsrt_schedulers/muf_example/Makefile.muf_client
+	* examples/Kokyu_dsrt_schedulers/muf_example/Makefile.muf_server
+	* examples/Kokyu_dsrt_schedulers/muf_example/muf_client.dsp
+	* examples/Kokyu_dsrt_schedulers/muf_example/muf_example.dsw
+	* examples/Kokyu_dsrt_schedulers/muf_example/muf_example.mpc
+	* examples/Kokyu_dsrt_schedulers/muf_example/muf_server.dsp
+	* examples/Kokyu_dsrt_schedulers/muf_example/client.cpp:
+	* examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
+	* examples/Kokyu_dsrt_schedulers/muf_example/test.idl:
+	* examples/Kokyu_dsrt_schedulers/muf_example/test_i.cpp:
+	* examples/Kokyu_dsrt_schedulers/muf_example/test_i.h:
+	* examples/Kokyu_dsrt_schedulers/muf_example/test_i.i:
+
+	  Added example using Maximium Urgency First (MUF) DSRTCORBA
+	  scheduler based on Kokyu.
+	
 Wed Oct  8 07:29:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/RTScheduling/Fixed_Priority_Scheduler/Fixed_Priority_Scheduler_Starter.bor:
