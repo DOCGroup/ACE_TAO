@@ -964,6 +964,13 @@ ACE_OS::memcpy (void *s, const void *t, size_t len)
 }
 
 ACE_INLINE void *
+ACE_OS::memmove (void *s, const void *t, size_t len)
+{
+  // ACE_TRACE ("ACE_OS::memcpy");
+  return ::memmove (s, t, len);
+}
+
+ACE_INLINE void *
 ACE_OS::memset (void *s, int c, size_t len)
 {
   // ACE_TRACE ("ACE_OS::memset");
