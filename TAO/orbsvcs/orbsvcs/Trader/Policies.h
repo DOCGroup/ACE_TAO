@@ -250,15 +250,15 @@ public:
   // END SPEC
 
   CosTrading::PolicySeq* policies_to_forward (void);
+  // Policies to forward to the next trader in a directed federated query.
   
   CosTrading::PolicySeq*
     policies_to_pass (CosTrading::FollowOption def_pass_on_follow_rule,
 		      CORBA::ULong offers_returned,
 		      CosTrading::Admin_ptr admin_if);
   // Policies to pass on to the next generation of queries. Decrements 
-  // the hop counter, removes the first link of the starting_trader,
-  // adds a link_follow_rule if none exists, adjusts the return_card,
-  // and adds the stem_id if none exists.
+  // the hop counter,adds a link_follow_rule if none exists, adjusts
+  // the return_card, and adds the stem_id if none exists.
   
 private:
 

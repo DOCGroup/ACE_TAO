@@ -1,3 +1,16 @@
+Sun Mar 15 22:36:08 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Trader/Admin.*
+	* orbsvcs/orbsvcs/Trader/Lookup.*
+	* orbsvcs/orbsvcs/Trader/Policies.*
+	* orbsvcs/orbsvcs/Trader/Policy_Manager.*
+	* orbsvcs/orbsvcs/Trader/Offer_Iterator_Collection.*
+	Added the logic to perform federated queries. At this point I'm
+	halting further coding of the Trading Service to concentrate on
+	testing and debugging. The only portion of the specfication left
+	unimplemented is the Proxy interface, which isn't of immediate
+	practical use anyway.
+
 Sun Mar 15 07:56:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_field.cpp
