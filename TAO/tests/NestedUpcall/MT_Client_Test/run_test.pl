@@ -17,18 +17,18 @@ $ior2file = "server2.ior";
 unlink $ior1file;
 unlink $ior2file;
 
-$SV1 = Process::Create ("server".$Process::EXE_EXT, 
+$SV1 = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT, 
                         " -ORBport $server1_port -o $ior1file ".
 			" -ORBobjrefstyle url");
 
-$SV2 = Process::Create ("server".$Process::EXE_EXT, 
+$SV2 = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT, 
                         " -ORBport $server2_port -o $ior2file ".
 			" -ORBobjrefstyle url");
 
 ACE::waitforfile ($ior1file);
 ACE::waitforfile ($ior2file);
 
-$status = system ("client".$Process::EXE_EXT.
+$status = system ($EXEPREFIX."client".$Process::EXE_EXT.
 		  " -ORBport $client_port ".
 		  " -f $ior1file -g $ior2file -n 2 -i 10 -s 5");
 
