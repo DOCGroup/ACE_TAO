@@ -67,7 +67,13 @@ public:
   /// the refcount reaches zero.
   int incr_refcount (void);
   void decr_refcount (void);
-
+  
+  void update_protocol_properties (int send_buffer_size,
+                                   int recv_buffer_size,
+                                   int no_delay,
+                                   int enable_network_priority);
+  
+  
 protected:
 
   /// Return our TAO_ORB_Core pointer
