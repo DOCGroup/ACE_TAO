@@ -13,12 +13,14 @@
 ACE_RCSID(Event, ECG_Mcast_EH, "$Id$")
 
 TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
-                                    const ACE_TCHAR *net_if)
+                                    const ACE_TCHAR *net_if,
+                                    CORBA::ULong sz)
   : net_if_ (net_if?ACE_OS::strdup (net_if):0)
-  , subscriptions_ ()
-  , receiver_ (recv)
-  , observer_ ()
-  , auto_observer_disconnect_ ()
+    , subscriptions_ ()
+    , receiver_ (recv)
+    , recvbuf_size_ (sz)
+    , observer_ ()
+    , auto_observer_disconnect_ ()
 {
     ACE_ASSERT (this->receiver_);
 }
@@ -224,6 +226,19 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
 
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
       socket->enable (ACE_NONBLOCK);
+
+      if (this->recvbuf_size_ != 0
+          && (((ACE_SOCK_Dgram *)socket)->set_option(SOL_SOCKET,
+                                                     SO_RCVBUF,
+                                                     (void *) &this->recvbuf_size_,
+                                                     sizeof (this->recvbuf_size_)) == -1)
+          && errno != ENOTSUP )
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Error: %d - Unable to set mcast_eh recvbuf_size:%d\n",
+                      errno,
+                      this->recvbuf_size_));
+        }
       socket->subscribe (new_subscription.mcast_addr, 1, this->net_if_);
       (void) this->reactor ()->register_handler (
                                          socket->get_handle (),
