@@ -3,6 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Service_Record.h"
+#include "ace/Stream_Modules.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Service_Record.i"
