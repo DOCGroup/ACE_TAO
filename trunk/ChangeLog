@@ -1,7 +1,13 @@
+Sun Feb  8 14:25:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/MakeProjectCreator/templates/cbx.mpd:
+	  Added first version support of using the Cygwin compiler within
+	  the CBuilderX Development Environment
+
 Sun Feb  8 14:02:53 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* bin/MakeProjectCreator/templates/cbx.mpd:
-	  Added MinGW support
+	  Added MinGW support for in the CBuilderX IDE
 
 Sun Feb  8 13:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
