@@ -86,12 +86,12 @@ ifdef orbix
   LDFLAGS       += $(PIC) -L$(ORBIX_ROOT)/corba2/lib \
                    -R $(ACE_ROOT)/ace -R./ -R $(ORBIX_ROOT)/corba2/lib
 ifeq ($(mt_orbix),1)
-  LIBS          += -lITinimt -liiopmt -lorbixmt
+  LIBS          += -lITinimt -liiopmt -lorbixmt -lthread
 else
   LIBS          += -lITini -liiop -lorbix
 endif
 
-  LIBS          += -lsocket -ldl -lnsl -lthread -lgen -lposix4
+  LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
   CPPFLAGS      += -I$(ORBIX_ROOT)/corba2/include
 else
 ifeq ($(distrib),0)
