@@ -22,6 +22,9 @@ ACE_SHLIBS = -lTAO_CosProperty -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableSer
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(TAO_ROOT)/rules.tao.GNU
+
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
 override TAO_IDLFLAGS += \
@@ -79,9 +82,11 @@ LSRC  = $(IDL_SRC) \
 	$(addsuffix .cpp,$(CPP_SRCS)) \
 	$(addsuffix .c,  $(C_SRCS))
 
-ADDITIONAL_INCLUDE = $(TAO_ROOT)/rules.tao.GNU
-REQUIRED_COMPONENTS = AV
-include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 #----------------------------------------------------------------------------
 #       Local targets (and local hacks)
