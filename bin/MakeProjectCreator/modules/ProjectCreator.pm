@@ -1202,7 +1202,14 @@ sub generate_defaults {
 
   ## Generate default project name
   if (!defined $self->get_assignment('project_name')) {
-    $self->process_assignment('project_name', $self->base_directory());
+    my($current) = $self->get_current_input();
+    if ($current eq '') {
+      $self->process_assignment('project_name', $self->base_directory());
+    }
+    else {
+      $current =~ s/\.[^\.]+$//;
+      $self->process_assignment('project_name', $current);
+    }
   }
 
   my(@files) = $self->generate_default_file_list();

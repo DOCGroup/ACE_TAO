@@ -210,11 +210,17 @@ sub generate_default_components {
 
 sub generate_defaults {
   my($self) = shift;
-  my($base) = $self->base_directory();
 
   ## Generate default workspace name
   if (!defined $self->{'workspace_name'}) {
-    $self->{'workspace_name'} = $base;
+    my($current) = $self->get_current_input();
+    if ($current eq '') {
+      $self->{'workspace_name'} = $self->base_directory();
+    }
+    else {
+      $current =~ s/\.[^\.]+$//;
+      $self->{'workspace_name'} = $current;
+    }
   }
 
   my(@files) = $self->generate_default_file_list();

@@ -80,8 +80,8 @@ project(project_name) : baseproject, anotherbaseproject {
 
 
 The (project_name) part of the project declaration is optional.  If it is
-left off, the project name will default to the directory name.  Inheritance
-is optional.
+left off, the project name will default to the name of the mpc file without
+the extension.  Inheritance is optional.
 
 
 Project Keywords
@@ -151,7 +151,7 @@ Defaulting Behavior
 -------------------
 1) If a project name is not specified
 
-   it will be defaulted to the name of the current directory
+   it will be defaulted to the name of the mpc file without the extension
 
 2) If a particular list is not specified (Source_Files, Header_Files, etc.)
 
