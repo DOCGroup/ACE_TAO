@@ -15,7 +15,7 @@ Notify_Service::~Notify_Service (void)
   // No-Op.
 }
 
-void
+int
 Notify_Service::init_ORB  (int& argc, char *argv [],
                              CORBA::Environment &ACE_TRY_ENV)
 {
@@ -23,27 +23,34 @@ Notify_Service::init_ORB  (int& argc, char *argv [],
                                 argv,
                                 "",
                                 ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
-  CORBA::Object_ptr poa_object  =
+  CORBA::Object_var poa_obj  =
     this->orb_->resolve_initial_references("RootPOA",
                                            ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  if (CORBA::is_nil (poa_obj.in ()))
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Unable to resolve the RootPOA.\n"),
+                      -1);
 
   this->poa_ =
-    PortableServer::POA::_narrow (poa_object,
+    PortableServer::POA::_narrow (poa_obj,
                                   ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   poa_manager->activate (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
-void
+int
 Notify_Service::startup (int argc, char *argv[],
                           CORBA::Environment &ACE_TRY_ENV)
 {
@@ -51,19 +58,23 @@ Notify_Service::startup (int argc, char *argv[],
               "\nStarting up the Notification Service...\n"));
 
   // initalize the ORB.
-  this->init_ORB (argc, argv,
-                  ACE_TRY_ENV);
-  ACE_CHECK;
+  if (this->init_ORB (argc, argv,
+                      ACE_TRY_ENV) != 0)
+  return -1;
+
+  ACE_CHECK_RETURN (-1);
 
   // Resolve the naming service.
-  this->resolve_naming_service (ACE_TRY_ENV);
-  ACE_CHECK;
+  if (this->resolve_naming_service (ACE_TRY_ENV) != 0)
+    return -1;
+
+  ACE_CHECK_RETURN (-1);
 
   // Activate the factory
   this->notify_factory_ =
     TAO_Notify_EventChannelFactory_i::create (this->poa_.in (),
                                               ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
 
@@ -84,29 +95,35 @@ Notify_Service::startup (int argc, char *argv[],
   this->naming_->rebind (name,
                          this->notify_factory_.in (),
                          ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "Registered with the naming service as: %s\n",
               this->notify_factory_name_));
+
+  return 0;
 }
 
-void
+int
 Notify_Service::resolve_naming_service (CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService",
                                             ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
-    ACE_THROW (CORBA::UNKNOWN ());
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       " (%P|%t) Unable to resolve the Naming Service.\n"),
+                      -1);
 
   this->naming_ =
     CosNaming::NamingContext::_narrow (naming_obj.in (),
                                        ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 int
@@ -115,7 +132,7 @@ Notify_Service::run (void)
   ACE_DEBUG ((LM_DEBUG, "%s: Running the Notification Service\n",
               __FILE__));
   if (this->orb_->run () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "run"), -1);
 
   return 0;
 }
@@ -154,9 +171,12 @@ main (int argc, char *argv[])
 
   ACE_TRY_NEW_ENV
     {
-      service.startup (argc,
-                       argv,
-                       ACE_TRY_ENV);
+      if (service.startup (argc,
+                           argv,
+                           ACE_TRY_ENV) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Failed to start the Notification Service.\n"),
+                          1);
       ACE_TRY_CHECK;
 
       if (service.run () == -1)
