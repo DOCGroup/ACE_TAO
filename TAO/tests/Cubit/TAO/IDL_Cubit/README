@@ -21,8 +21,16 @@ server:
 % server [-d] [-s] [-ORBhost <serverhost>] [-ORBport <portnum>]
            [-n <number-of-cubit-objects>] [-o <ior_output_file>] 
 
--s option tells the server not to register the cubit-factory object 
-  with the Naming Service.
+Options:
+-------
+-s       Tells the server not to register the cubit-factory object 
+         with the Naming Service.
+
+-d       Debug flag (It is additive more -d flags will give debugging).
+
+-o      Outputs the cubit_factory ior file to the file
+
+-n      Number of cubit objects exported by the server
 
 The server cubit factory maintains num_of_cubit objects (default =
 1). They are assigned keys that look like "key0", "key1", ...
@@ -40,8 +48,6 @@ Using -d turns on debugging messages.  It is additive, i.e., the more
 only 2 levels of debugging are implemented, and more than 2 -d options
 are ignored.
 
-Using the -o option the Cubit_Factory_obj IOR can be outputted to a file.	
-Irrespective of the -o option the IOR will be outputted on the screen.
 
 client:
 -------
@@ -66,6 +72,16 @@ Options:
 	
 	3. Get it from the Naming Service (which is the default client
        	   behavior).  
+
+IDL_Cubit_Test:
+--------------
+
+        This is a simple test program which tests the server and
+client using the default options of the server and client. To test
+using this just run 
+
+        %IDL_Cubit_Test       
+
 
 Sample Run- Using files to communicate IOR:
 ------------------------------------------
@@ -110,3 +126,15 @@ Sample Run-Using Naming Service:
 		if you don't want the server to shutdown.
 	%client -ORBport 19998  -x
 		if you want to shutdown the server after this request.
+
+3. If Multicast is not supported the naming service can be reached by
+the  following 2 methods.
+        
+        a) use the -ORBnameserviceior flag to the client to give the
+        naming service ior outputted by the server.
+        
+        b)set the ENVIRONMENT variable "NameService"
+        
+       This might be helpful if more than one person is running the
+        Naming service in which case Multicast might cause confusion with some
+        other Naming Service trying to answer your call.
