@@ -937,7 +937,7 @@ dnl Check for libtool and turn on Automake processing for Libtool
 AC_PROG_LIBTOOL
 
 dnl Enable C++ support in libtool
-AC_LIBTOOL_CXX
+dnl AC_LIBTOOL_CXX
 
 dnl Temporary hack until I get integrate libtool's new tag support
 dnl into automake.
@@ -4360,6 +4360,10 @@ dnl name.
      dnl such as FreeBSD 4, appear to have a missing prototype.  If
      dnl the prototype is missing, then don't use pthread_cancel.
      dnl Creating a prototype for it in ACE is probably a bad idea.
+
+     ace_save_CPPFLAGS="$CPPFLAGS"
+     CPPFLAGS="$CPPFLAGS $ACE_THR_CPPFLAGS"
+
      AC_EGREP_HEADER([pthread_cancel], [pthread.h],
        [
         dnl Do nothing if the prototype exists.
@@ -4367,6 +4371,9 @@ dnl name.
        [
         AC_DEFINE(ACE_LACKS_PTHREAD_CANCEL)
        ])
+
+     dnl Reset the preprocessor flags
+     CPPFLAGS="$ace_save_CPPFLAGS"
     ],
     [
      AC_DEFINE(ACE_LACKS_PTHREAD_CANCEL)
@@ -4751,7 +4758,7 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
      ace_cv_lib_has_strtok_r_prototype,
         [
          ace_save_CPPFLAGS="$CPPFLAGS"
-         ace_no_posix="-U_POSIX_SOURCE"
+         ace_no_posix="-U_POSIX_SOURCE $ACE_THR_CPPFLAGS"
          CPPFLAGS="$CPPFLAGS $ace_no_posix"
          AC_EGREP_HEADER([[^_]+strtok_r], string.h,
            [
@@ -4760,7 +4767,7 @@ if test "$ace_user_enable_reentrant_funcs" = yes; then
            [
             ace_cv_lib_has_strtok_r_prototype=no
            ])
-           dnl Reset the compiler flags
+           dnl Reset the preprocessor flags
            CPPFLAGS="$ace_save_CPPFLAGS"
         ],, AC_DEFINE(ACE_LACKS_STRTOK_R_PROTOTYPE))
     ],)
@@ -7013,8 +7020,18 @@ fi
 if test "$ace_user_enable_threads" != yes ||
    test "$ace_has_pthreads" != yes &&
    test "$ace_has_sthreads" != yes; then
-dnl We don't have a usable thread library!
+  dnl We don't have a usable thread library!
   ace_user_enable_threads=no
+  dnl Make sure _REENTRANT and _THREAD_SAFE are not in the
+  dnl preprocessor flags since thread support is being disabled.
+  dnl Removal of these flags is only performed if the configure script
+  dnl added them.
+  if test -n "$ACE_THR_CPPFLAGS"; then
+changequote(, )dnl
+  CPPFLAGS=`eval "echo $CPPFLAGS | sed -e 's/$ACE_THR_CPPFLAGS//' -e 's/-D_THREAD_SAFE\(=[0-9]*\)\?//'"`
+changequote([, ])dnl
+  fi
+
   AC_MSG_WARN(It appears that you do NOT have any usable thread libraries)
   AC_MSG_WARN(or thread support was explicitly disabled.)
   AC_MSG_WARN(Disabling thread support.)
@@ -7037,7 +7054,7 @@ dnl        reentrant functions!  However, we don't want to define them if
 dnl        the UNIX International threads library was detected.
   AC_DEFINE(ACE_HAS_THREADS)
   AC_DEFINE(ACE_MT_SAFE)
-  ACE_CXXFLAGS="$ACE_CXXFLAGS -D_REENTRANT"
+  ACE_CPPFLAGS="$ACE_CPPFLAGS $ACE_THR_CPPFLAGS"
   if test "$ace_has_pthreads" = yes &&
      test "$ace_has_sthreads" != yes; then
    AC_DEFINE(_POSIX_THREADS)

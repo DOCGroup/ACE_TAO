@@ -84,6 +84,14 @@ ACE_WSOCK_VERSION                       A parameter list indicating
                                         "1, 1" is version 1.1).
 
 ACE_HAS_AIO_CALLS                       Platform supports POSIX aio* calls.
+ACE_HAS_ALT_CUSERID                     Use ACE's alternate cuserid()
+                                        implementation since a system
+                                        cuserid() may not exist, or it
+                                        is not desirable to use it.
+                                        The implementation requires
+                                        ACE_LACKS_PWD_FUNCTIONS to be
+                                        undefined and that the
+                                        geteuid() system call exists.
 ACE_HAS_ANSI_CASTS                      Platform supports new C++
                                         style casts (dynamic_cast,
                                         static_cast, reinterpret_cast
