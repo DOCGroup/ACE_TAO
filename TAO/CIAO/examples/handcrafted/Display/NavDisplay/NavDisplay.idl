@@ -1,0 +1,21 @@
+// $Id$
+
+/**
+ * @file navDisplay.idl
+ *
+ * Definition of the navigation display component.
+ *
+ * @author Nanbor Wang <nanbor@cs.wustl.edu>
+ */
+
+#include "HUDisplay.idl"
+
+Module HUDisplay
+{
+
+  component navDisplay
+    {
+      consumes tick Refresh;
+      uses position GetLocation;
+    };
+};
