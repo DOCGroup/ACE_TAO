@@ -1,6 +1,7 @@
 Sun Jan 23 15:47:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/OS/Process/process.cpp:
+        * examples/IPC_SAP/TLI_SAP/CPP-client.cpp:
           Fixed unicode build error
 
 Sun Jan 23 13:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
