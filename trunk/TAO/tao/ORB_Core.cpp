@@ -159,7 +159,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
            TAO_RT_ORB);
 
   ACE_NEW (this->rt_current_,
-           TAO_RT_Current);
+           TAO_RT_Current (this));
 
   ACE_NEW (this->priority_mapping_manager_,
            TAO_Priority_Mapping_Manager);
