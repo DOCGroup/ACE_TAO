@@ -585,11 +585,13 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
         Test_Object::_narrow (result_obj_ref.in (),
                               ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (!CORBA::is_nil (result_object.in ())
-          && result_object->id (ACE_TRY_ENV) == CosNaming_Client::OBJ1_ID)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Resolved name OK\n"));
-      ACE_TRY_CHECK;
+      if (!CORBA::is_nil (result_object.in ()))
+        {
+          CORBA::Short id = result_object->id (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          if (id == CosNaming_Client::OBJ1_ID)
+            ACE_DEBUG ((LM_DEBUG, "Resolved name OK\n"));
+        }
 
       // Unbind the object from the Naming Context.
       root_context->unbind (test_name,
@@ -1274,6 +1276,10 @@ Persistent_Test_Begin::Persistent_Test_Begin (CORBA::ORB_ptr orb)
 {
 }
 
+Persistent_Test_Begin::~Persistent_Test_Begin (void)
+{
+}
+
 int
 Persistent_Test_Begin::execute (TAO_Naming_Client &root_context)
 {
@@ -1323,6 +1329,10 @@ Persistent_Test_End::Persistent_Test_End (CORBA::ORB_ptr orb,
                                           const char *ior)
   : orb_ (orb),
     ior_ (ior)
+{
+}
+
+Persistent_Test_End::~Persistent_Test_End (void)
 {
 }
 

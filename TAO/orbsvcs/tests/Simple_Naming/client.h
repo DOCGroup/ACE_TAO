@@ -243,6 +243,9 @@ public:
   Persistent_Test_Begin (CORBA::ORB_ptr orb);
   // Constructor.  Takes in an orb pointer.
 
+  virtual ~Persistent_Test_Begin (void);
+  // Destructor.
+
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the persistent test (part 1) code.
 
@@ -271,6 +274,9 @@ public:
                        const char * ior);
   // Constructor.  Takes in an orb pointer and the ior received from
   // <Persistent_Test_Begin>.
+
+  virtual ~Persistent_Test_End (void);
+  // Destructor.
 
   virtual int execute (TAO_Naming_Client &root_context);
   // Execute the persistent test (part 2).
