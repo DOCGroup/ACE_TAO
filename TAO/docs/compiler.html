@@ -107,18 +107,36 @@ bgcolor="#ffffff">
 	<TD>It is passed to the preprocessor</TD></TR>
       <TR NAME="Y">
 	<TD><CODE>-Y</CODE></TD>
-	<TD>It is passed to the preprocessor</TD></TR>
-     <TR NAME="P">
-	<TD><CODE>-P</CODE></TD>
-	<TD>IDL-Compiler-Generated Skeleton uses  Perfect Hashed
-            Operation Lookup Strategy. Uses
-            $ACE_ROOT/apps/gperf/src/<A
-            HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz"> gperf 
-            </A>.</TD></TR>
-     <TR NAME="hc">
-            <TD><CODE>-hc</CODE></TD>
-            <TD>Client's header file name ending. Default is
-                "C.h".</TD></TR> 
+        <TD>It is passed to the preprocessor</TD></TR>
+     <TR NAME="H">
+	<TD><CODE>-H</CODE></TD>
+	<TD>IDL-Compiler-Generated Skeleton uses  Dynamic Hashed
+            Operation Lookup Strategy. Default operation lookup
+            strategy is Perfect hashing which uses <A
+            HREF="http://www.cs.wustl.edu/~schmidt/gperf.ps.gz">gperf 
+            </A> program, to generate lookup methods.
+        </TD>
+      </TR>
+      <TR NAME="g">
+           <TD><CODE>-g</CODE></TD>
+           <TD> To specify the path for the perfect hasing program 
+               (GPERF). Default is $ACE_ROOT/bin/gperf.
+           </TD>
+       </TR>
+
+       <TR NAME="o">
+            <TD><CODE>-o</CODE></TD>
+            <TD> To specify the output directory to IDL compiler  as to where
+                all the IDL-compiler-generated files are to be put. By
+                default, all the files are put in the current directory
+                from where <tao_idl> is called.
+            </TD>
+          </TR>
+          
+          <TR NAME="hc">
+      <TD><CODE>-hc</CODE></TD>
+      <TD>Client's header file name ending. Default is
+          "C.h".</TD></TR> 
     <TR NAME="hs">
             <TD><CODE>-hs</CODE></TD>
             <TD>Server's header file name ending. Default is
