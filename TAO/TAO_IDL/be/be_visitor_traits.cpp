@@ -25,6 +25,7 @@
 #include "be_component.h"
 #include "be_component_fwd.h"
 #include "be_field.h"
+#include "be_union_branch.h"
 #include "be_exception.h"
 #include "be_structure.h"
 #include "be_union.h"
@@ -281,6 +282,29 @@ be_visitor_traits::visit_field (be_field *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_traits::"
                          "visit_field - visit field type failed\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_traits::visit_union_branch (be_union_branch *node)
+{
+  be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  AST_Decl::NodeType nt = ft->node_type ();
+  
+  // All we are trying to catch in here are anonymous array members.
+  if (nt != AST_Decl::NT_array)
+    {
+      return 0;
+    }
+
+  if (ft->accept (this) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_traits::"
+                         "visit_union_branch - visit field type failed\n"),
                         -1);
     }
 

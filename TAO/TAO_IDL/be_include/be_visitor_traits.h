@@ -49,6 +49,8 @@ public:
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
   
   virtual int visit_field (be_field *node);
+
+  virtual int visit_union_branch (be_union_branch *node);
   
   virtual int visit_exception (be_exception *node);
   
