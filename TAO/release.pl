@@ -88,4 +88,4 @@ $COM = qq/$CVSCOM commit -m'$TAO_VERSION' $VERSION $CHANGELOG && $CVSCOM rtag $v
 print $COM;
 system $COM;
 
-#unlink @inplace;
+unlink @inplace;
