@@ -22,6 +22,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "CCM_ContainerC.h"
 #include "Deployment_CoreC.h"
+#include "CIAO_Server_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
