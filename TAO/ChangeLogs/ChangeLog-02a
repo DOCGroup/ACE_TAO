@@ -1,3 +1,10 @@
+Sat Aug 26 15:14:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/Makefile.EXE:
+
+	  Reversed the order of loading for the FE and BE libraries.
+	  Seems to causing link problems with the static libraries.
+
 Sat Aug 26 15:03:40 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* Updated dependencies of the Makefiles in $TAO_ROOT/examples.
