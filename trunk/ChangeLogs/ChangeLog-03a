@@ -1,3 +1,15 @@
+Wed Oct 16 11:44:27 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (check_state):  Changed to return 0 if
+	  the thread id is not managed by the Thread_Manager.
+
+	* ace/Thread_Manager.h: Updated documentation for testcancel(),
+	  testsuspend(), and testresume ().  They all return false now if
+	  the you try to test the status of a tid that is not managed by
+	  the Thread_Manager.
+
+	  Thanks to Giovanni Zito <g.zito@acsys.it> for reporting it.
+
 Wed Oct 16 12:41:29 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/Makefile: Add C++NPv1 and C++NPv2 to the DIRS list.
@@ -41,7 +53,7 @@ Wed Oct 16 10:55:11 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* ace/config-linux-common.h: Added support for ACE_CC_NAME,
 	  ACE_CC_MAJOR_VERSION and ACE_CC_MINOR_VERSION for linux. Thanks
 	  to Jaroslaw Nozderko <jaroslaw.nozderko@polkomtel.com.pl> for
-	  suggesting this. 
+	  suggesting this.
 
 Wed Oct 16 10:55:44 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
@@ -57,7 +69,7 @@ Tue Oct 15 18:49:25 2002  Stephen Torri <storri@cse.wustl.edu>
 	  Test 2: repeat of test 1 but with a 2 second delay
 	  after main thread signals the waiting thread. (Works)
 	  Test 3: repeat of test 1 but with 4 threads waiting
-	  on the condition variable. (Broken - no threads 
+	  on the condition variable. (Broken - no threads
 	  awaken).
 
 Tue Oct 15 17:27:34 2002  Krishnakumar B  <kitty@cse.wustl.edu>

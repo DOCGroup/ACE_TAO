@@ -671,7 +671,10 @@ public:
   /// Suspend a group of threads.
   int suspend_grp (int grp_id);
 
-  /// True if <t_id> is inactive (i.e., suspended), else false.
+  /**
+   * True if <t_id> is inactive (i.e., suspended), else false.  Always
+   * return false if <t_id> is not managed by the Thread_Manager.
+   */
   int testsuspend (ACE_thread_t t_id);
 
   // = Resume methods, which isn't supported on POSIX pthreads (will not block).
@@ -684,7 +687,10 @@ public:
   /// Resume a group of threads.
   int resume_grp (int grp_id);
 
-  /// True if <t_id> is active (i.e., resumed), else false.
+  /**
+   * True if <t_id> is active (i.e., resumed), else false.  Always
+   * return false if <t_id> is not managed by the Thread_Manager.
+   */
   int testresume (ACE_thread_t t_id);
 
   // = Send signals to one or more threads without blocking.
@@ -719,7 +725,8 @@ public:
   int cancel_grp (int grp_id, int async_cancel = 0);
 
   /**
-   * True if <t_id> is cancelled, else false.
+   * True if <t_id> is cancelled, else false.  Always return false if
+   * <t_id> is not managed by the Thread_Manager.
    */
   int testcancel (ACE_thread_t t_id);
 
