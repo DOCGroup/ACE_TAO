@@ -11,18 +11,14 @@
 #include "tao/ImR_Client/ServerObject_i.h"
 #include "tao/ImR_Client/ImplRepoC.h"
 
-ACE_RCSID (IFR_Client,
-           IFR_Client_Adapter_Impl,
+ACE_RCSID (ImR_Client,
+           ImR_Client_Adapter_Impl,
            "$Id$")
 
 namespace TAO
 {
   namespace ImR_Client
   {
-    ImR_Client_Adapter_Impl::~ImR_Client_Adapter_Impl (void)
-    {
-    }
-
     void
     ImR_Client_Adapter_Impl::imr_notify_startup (
       TAO_Root_POA* poa ACE_ENV_ARG_DECL)

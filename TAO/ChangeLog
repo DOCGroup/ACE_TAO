@@ -1,3 +1,47 @@
+Tue Feb 22 10:36:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/AMI/AMI.mpc:
+        * tests/AMI_Buffering/AMI_Buffering.mpc:
+        * tests/AMI_Timeouts/AMI_Timeouts.mpc:
+        * tests/BiDirectional/BiDirectional.mpc:
+        * tests/BiDirectional_MultipleORB/destroy.mpc:
+        * tests/BiDirectional_NestedUpcall/BiDirectional_NestedUpcall.mpc:
+        * tests/Big_Twoways/Big_Twoways.mpc:
+        * tests/Blocking_Sync_None/Blocking_Sync_None.mpc:
+        * tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.mpc:
+        * tests/Bug_1020_Regression/Bug_1020_Regression.mpc:
+        * tests/Bug_1269_Regression/Bug_1269_Regression.mpc:
+        * tests/Bug_1270_Regression/Bug_1270_Regression.mpc:
+        * tests/Bug_1361_Regression/Bug_1361_Regression.mpc:
+        * tests/Bug_1476_Regression/Bug_1476_Regression.mpc:
+        * tests/Bug_1535_Regression/Bug_1535_Regression.mpc:
+        * tests/Bug_1635_Regression/Bug_1635_Regression.mpc:
+        * tests/Bug_1636_Regression/test.mpc:
+        * tests/Bug_1693_Test/Bug_1693_Test.mpc:
+        * tests/CodeSets/simple/CodeSets_simple.mpc:
+        * tests/Codec/Codec.mpc:
+        * tests/Collocation/Collocation.mpc:
+        * tests/Connection_Timeout/Connection_Timeout.mpc:
+        * tests/Crashed_Callback/Crashed_Callback.mpc:
+        * tests/DSI_Gateway/DSI_Gateway.mpc:
+        * tests/DynAny_Test/DynAny_Test.mpc:
+        * tests/FL_Cube/FL_Cube.mpc:
+        * tests/Faults/Faults.mpc:
+        * tests/File_IO/File_IO.mpc:
+        * tests/InterOp-Naming/InterOp-Naming.mpc:
+        * tests/Leader_Followers/Leader_Followers.mpc:
+        * tests/LongUpcalls/LongUpcalls.mpc:
+        * tests/MProfile/MProfile.mpc:
+        * tests/MProfile_Connection_Timeout/MProfile_Connection_Timeout.mpc:
+        * tests/Native_Exceptions/Native_Exceptions.mpc:
+        * tests/POA/Etherealization/Etherealization.mpc:
+        * tests/POA/Identity/Identity.mpc:
+        * tests/Server_Port_Zero/Server_Port_Zero.mpc:
+        * tests/Smart_Proxies/On_Demand/SP_On_Demand.mpc:
+        * tests/Stack_Recursion/Stack_Recursion.mpc:
+        * tests/UNKNOWN_Exception/UNKNOWN_Exception.mpc:
+          Use taoserver/taoclient as base projects and some cleanup
+
 Tue Feb 22 02:28:58 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Messaging/MessagingA.cpp:
