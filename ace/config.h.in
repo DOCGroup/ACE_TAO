@@ -403,6 +403,10 @@
    setrlimit() prototype. */
 #undef ACE_HAS_BROKEN_SETRLIMIT
 
+/* Compiler/platform has the wrong prototype for t_error(), i.e.,
+   t_error(char *) rather than t_error(const char *). */
+#undef ACE_HAS_BROKEN_T_ERROR
+
 /* platform define struct timespec members as ts_sec and ts_nsec
    instead of tv_sec and tv_nsec.  This is highly non-portable.
    Currently only FreeBSD 2.1.x uses it. */
@@ -411,6 +415,9 @@
 /* OS/compiler omits the const from the iovec parameter in the
    writev() prototype. */
 #undef ACE_HAS_BROKEN_WRITEV
+
+/* OS header files have some problems with XTI (HP/UX 11). */
+#undef ACE_HAS_BROKEN_XTI_MACROS
 
 /* Platform has <bstring.h> (which contains bzero() prototype) */
 #undef ACE_HAS_BSTRING

@@ -1270,6 +1270,41 @@ AC_CHECK_HEADER(tiuser.h, dnl
    AC_DEFINE(ACE_HAS_TLI)
   ],)
 
+dnl Check if XTI headers are broken
+if test "$ac_cv_header_xti_h" = yes ||
+   test "$ac_cv_header_sys_xti_h"  = yes ||
+   test "$ac_cv_header_tiuser_h" = yes; then
+  ACE_CACHE_CHECK([if TCP macros are defined in XTI headers],
+    [ace_cv_lib_has_broken_xti_macros],
+    [
+     AC_EGREP_CPP([ACE_BROKEN_XTI_MACROS],
+       [
+#if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
+#  if defined (ACE_HAS_TIUSER_H)
+#    include /**/ <tiuser.h>
+#  elif defined (ACE_HAS_SYS_XTI_H)
+#    include /**/ <sys/xti.h>
+#  else
+#    include /**/ <xti.h>
+#  endif /* ACE_HAS_SYS_XTI_H */
+#endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
+
+#if defined (TCP_NODELAY) || defined (TCP_MAXSEG)
+ACE_BROKEN_XTI_MACROS
+#endif  /* TCP_NODELAY || TCPMAXSEG  */
+       ],
+       [
+        ace_cv_lib_has_broken_xti_macros=yes
+       ],
+       [
+        ace_cv_lib_has_broken_xti_macros=no
+       ])
+    ],
+    [
+     AC_DEFINE(ACE_HAS_BROKEN_XTI_MACROS)
+    ],)
+fi
+
 if test "$ac_cv_header_tiuser_h" = yes; then
   ACE_CACHE_CHECK(if tiuser.h is protected by extern \"C\",
       ace_cv_lib_tiuser_with_extern_c,[
@@ -1308,20 +1343,18 @@ dnl We only check for t_accept.  This should hopefully be enough.
 #endif
 
 #if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
+#  if defined (ACE_HAS_BROKEN_XTI_MACROS)
+#    undef TCP_NODELAY
+#    undef TCP_MAXSEG
+#  endif /* ACE_HAS_BROKEN_XTI_MACROS */
 #  if defined (ACE_HAS_TIUSER_H)
 #    include /**/ <tiuser.h>
+#  elif defined (ACE_HAS_SYS_XTI_H)
+#    define class ace_xti_class
+#    include /**/ <sys/xti.h>
+#    undef class
 #  else
-#    if defined (ACE_HAS_BROKEN_XTI_MACROS)
-#      undef TCP_NODELAY
-#      undef TCP_MAXSEG
-#    endif /* ACE_HAS_BROKEN_XTI_MACROS */
-#    if defined ACE_HAS_SYS_XTI_H
-#      define class ace_xti_class
-#      include /**/ <sys/xti.h>
-#      undef class
-#    else
-#      include /**/ <xti.h>
-#    endif /* ACE_HAS_SYS_XTI_H */
+#    include /**/ <xti.h>
 #  endif /* ACE_HAS_TIUSER_H */
 #endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
 
@@ -1353,29 +1386,23 @@ dnl Check for t_errno type in TLI headers
 #endif
 
 #if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
+#  if defined (ACE_HAS_BROKEN_XTI_MACROS)
+#    undef TCP_NODELAY
+#    undef TCP_MAXSEG
+#  endif /* ACE_HAS_BROKEN_XTI_MACROS */
 #  if defined (ACE_HAS_TIUSER_H)
 #    include /**/ <tiuser.h>
+#  elif defined (ACE_HAS_SYS_XTI_H)
+#    define class ace_xti_class
+#    include /**/ <sys/xti.h>
+#    undef class
 #  else
-#    if defined (ACE_HAS_BROKEN_XTI_MACROS)
-#      undef TCP_NODELAY
-#      undef TCP_MAXSEG
-#    endif /* ACE_HAS_BROKEN_XTI_MACROS */
-#    if defined ACE_HAS_SYS_XTI_H
-#      define class ace_xti_class
-#      include /**/ <sys/xti.h>
-#      undef class
-#    else
-#      include /**/ <xti.h>
-#    endif /* ACE_HAS_SYS_XTI_H */
+#    include /**/ <xti.h>
 #  endif /* ACE_HAS_TIUSER_H */
 #endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
 
 #if defined (ACE_HAS_XLI)
 # include <xliuser.h>
-#endif
-
-#ifndef _THREAD_SAFE
-# define _THREAD_SAFE
 #endif
      ],
      [
@@ -1385,6 +1412,56 @@ dnl Check for t_errno type in TLI headers
       ace_cv_lib_has_t_errno=no
      ])
   ], , AC_DEFINE(ACE_LACKS_T_ERRNO))
+
+dnl Check if t_error incorrectly accepts char *
+ ACE_CACHE_CHECK(if t_error incorrectly accepts char *,
+  ace_cv_lib_has_broken_t_error,
+  [
+   dnl Check if t_errno is declared in the TLI headers
+   AC_TRY_COMPILE(
+     [
+#if defined (ACE_HAS_TIMOD_H)
+# include <sys/timod.h>
+#endif
+
+#if defined (ACE_HAS_OSF_TIMOD_H)
+# include <tli/timod.h>
+#endif
+
+#if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI)
+#  if defined (ACE_HAS_BROKEN_XTI_MACROS)
+#    undef TCP_NODELAY
+#    undef TCP_MAXSEG
+#  endif /* ACE_HAS_BROKEN_XTI_MACROS */
+#  if defined (ACE_HAS_TIUSER_H)
+#    include /**/ <tiuser.h>
+#  elif defined (ACE_HAS_SYS_XTI_H)
+#    define class ace_xti_class
+#    include /**/ <sys/xti.h>
+#    undef class
+#  else
+#    include /**/ <xti.h>
+#  endif /* ACE_HAS_TIUSER_H */
+#endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
+
+#if defined (ACE_HAS_XLI)
+# include <xliuser.h>
+#endif
+     ],
+     [
+      const char *ace_errmsg = "FOO";
+      t_error (errmsg);
+     ],
+     [
+      ace_cv_lib_has_broken_t_error=no
+     ],
+     [
+      ace_cv_lib_has_broken_t_error=yes
+     ])
+  ],,
+  [
+   AC_DEFINE(ACE_HAS_BROKEN_T_ERROR)
+  ])
 
 fi dnl test "$ace_has_tli" = yes
 fi dnl test "$ace_has_tli_funcs" = yes
@@ -4245,8 +4322,48 @@ dnl  AC_CHECK_FUNC(sched_yield,,) dnl
 dnl We already check for this during the library checks.
 
 dnl Check for Unix98 pthreads extensions
-  ACE_CHECK_STRUCT(pthread_rwlock_t,,)dnl
-  ACE_CHECK_STRUCT(pthread_rwlockattr_t,,)dnl
+  ACE_CACHE_CHECK([for struct pthread_rwlock_t],
+    [ace_cv_struct_pthread_rwlock_t],
+    [
+     dnl Since we are checking for siginfo_t in more than one header
+     dnl we can't use the ACE_CHECK_STRUCT macro so we have to do things
+     dnl manually.
+     ACE_TRY_COMPILE_STRUCT(pthread_rwlock_t, pthread.h,
+       [
+        ace_cv_struct_pthread_rwlock_t=yes
+       ],
+       [
+        ACE_TRY_COMPILE_STRUCT(pthread_rwlock_t, sys/types.h,
+          [
+           ace_cv_struct_pthread_rwlock_t=yes
+          ],
+          [
+           ace_cv_struct_pthread_rwlock_t=no
+          ])
+       ])
+    ],,)
+
+  ACE_CACHE_CHECK([for struct pthread_rwlockattr_t],
+    [ace_cv_struct_pthread_rwlockattr_t],
+    [
+     dnl Since we are checking for siginfo_t in more than one header
+     dnl we can't use the ACE_CHECK_STRUCT macro so we have to do things
+     dnl manually.
+     ACE_TRY_COMPILE_STRUCT(pthread_rwlockattr_t, pthread.h,
+       [
+        ace_cv_struct_pthread_rwlockattr_t=yes
+       ],
+       [
+        ACE_TRY_COMPILE_STRUCT(pthread_rwlockattr_t, sys/types.h,
+          [
+           ace_cv_struct_pthread_rwlockattr_t=yes
+          ],
+          [
+           ace_cv_struct_pthread_rwlockattr_t=no
+          ])
+       ])
+    ],,)
+
   AC_CHECK_FUNC(pthread_continue,,)dnl
   AC_CHECK_FUNC(pthread_suspend,,)dnl
   AC_CHECK_FUNC(pthread_rwlock_init,,)dnl
@@ -6836,13 +6953,15 @@ WE_HAVE_PTHREADS_D4
              [
 #ifndef _REENTRANT
 #define _REENTRANT
-#endif 
-
-#ifndef _THREAD_SAFE
-#define _THREAD_SAFE
-#endif           
+#endif
 
 #include <pthread.h>
+
+/* _THREAD_SAFE is defined in <pthread.h> on some platforms. */
+#ifndef _THREAD_SAFE
+#define _THREAD_SAFE
+#endif
+
 #include <stdio.h>
 
 #ifdef __cplusplus
@@ -6940,13 +7059,15 @@ main (int argc, char *argv[])
              [
 #ifndef _REENTRANT
 #define _REENTRANT
-#endif 
-
-#ifndef _THREAD_SAFE
-#define _THREAD_SAFE
-#endif           
+#endif
 
 #include <pthread.h>
+
+/* _THREAD_SAFE is defined in <pthread.h> on some platforms. */
+#ifndef _THREAD_SAFE
+#define _THREAD_SAFE
+#endif
+
 #include <stdio.h>
 #include <errno.h>
 
