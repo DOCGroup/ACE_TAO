@@ -14,6 +14,9 @@ require Process;
 # amount of delay between running the servers
 $sleeptime = 3;
 
+# error register
+$status = 0;
+
 # Starts the Logging Service
 sub service
 {
@@ -29,7 +32,7 @@ sub test
   my $args = "";
   my $prog = $EXEPREFIX."Logging_Test".$EXE_EXT;
 
-  system ("$prog $args");
+  $CL = Process::Create ($prog, $args);
 }
 
 # Start the service
@@ -42,7 +45,13 @@ sleep $sleeptime;
 test ();
 
 # Give the client time to log and exit
-sleep 3;
+if ($CL->TimedWait (60) == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+  $status = 1;
+}
 
 # Kill the service
-$SV->Kill ();
+$SV->Kill (); $SV->TimedWait (1);
+
+exit $status;

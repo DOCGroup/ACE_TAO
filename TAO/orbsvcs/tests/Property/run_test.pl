@@ -15,6 +15,7 @@ require Uniqueid;
 # amount of delay between running the servers
 
 $sleeptime = 6;
+$status = 0;
 
 # variables for parameters
 
@@ -53,6 +54,15 @@ sleep $sleeptime;
 client ();
 sleep $sleeptime;
 
-$NS->Kill ();
-$SV->Kill ();
+
+if ($CL->TimedWait (60) == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $status = 1;
+  $CL->Kill (); $CL->TimedWait (1);
+}
+
+$NS->Kill (); $NS->TimedWait (1);
+$SV->Kill (); $NS->TimedWait (1);
+
+exit $status;
 
