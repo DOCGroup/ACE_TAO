@@ -9,48 +9,48 @@ Legend:
 
 	A = Solaris/CC
 	B = NT (MSVC++ 5.0)
-	C = Solaris/g++
-	D = IRIX
-	E = Linux/g++
-	F = Other (Linux/egcs, Solaris/egcs, etc.)
+        C = Solaris/g++
+        D = IRIX
+        E = Linux/g++
+        F = Other (Linux/egcs, Solaris/egcs, etc.)
 
-	The state is indicated as a tri-state value, e.g.,
+        The state is indicated as a tri-state value, e.g.,
 
-	0 = doesn't work
-	1 = works
-	x = not attempted or unknown
+        0 = doesn't work
+        1 = works
+        x = not attempted or unknown
 
 
-[1111  ]   libTAO and TAO_IDL compile.
-[1111  ]   IDL_Cubit compiles
-        [1111  ] Runs
-[1111  ]   Param_Test compiles and runs for
-        [x111  ] DII short
-        [x111  ] DII ubstring
-        [x011  ] DII fixed_struct
-        [x100  ] DII strseq
-        [x100  ] DII var_struct
-        [x100  ] DII nested_struct
-        [x000  ] DII struct_seq
-        [x000  ] DII objref
+[111x1 ]   libTAO and TAO_IDL compile.
+[111x1 ]   IDL_Cubit compiles
+        [1x1x1x] Runs
+[1x1x1x]   Param_Test compiles and runs for
+        [xxxxxx] DII short
+        [xxxxxx] DII ubstring
+        [xxxxxx] DII fixed_struct
+        [xxxxxx] DII strseq
+        [xxxxxx] DII var_struct
+        [xxxxxx] DII nested_struct
+        [xxxxxx] DII struct_seq
+        [xxxxxx] DII objref
 
-        [1111  ] SII short
-        [1111  ] SII ubstring
-        [1011  ] SII fixed_struct
-        [1111  ] SII strseq
-        [1111  ] SII var_struct
-        [1111  ] SII nested_struct
-        [0000  ] SII struct_seq
-        [0000  ] SII objref
-[1110  ] MT_Cubit compiles
-        [101x  ] runs for Octet
-        [101x  ] runs for Short
-        [101x  ] runs for Long
-        [101x  ] runs for Struct
-[1101  ] orbsvcs compiles
-        [10 x  ] Event_Latency runs
-        [0x x  ] Simple_Naming runs
-        [xx x  ] Logger runs
+        [xxxxxx] SII short
+        [xxxxxx] SII ubstring
+        [xxxxxx] SII fixed_struct
+        [xxxxxx] SII strseq
+        [xxxxxx] SII var_struct
+        [xxxxxx] SII nested_struct
+        [xxxxxx] SII struct_seq
+        [xxxxxx] SII objref
+[000000] MT_Cubit compiles
+        [000000] runs for Octet
+        [000000] runs for Short
+        [000000] runs for Long
+        [000000] runs for Struct
+[11xxxx] orbsvcs compiles
+        [10xxxx] Event_Latency runs
+        [xxxxxx] Simple_Naming runs
+        [xxxxxx] Logger runs
 
 NOTES
 * Solaris/CC
