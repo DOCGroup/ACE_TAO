@@ -165,11 +165,28 @@ ACE_Test_Output::set_output (const char *filename, int append)
 {
   char temp[BUFSIZ];
   // Ignore the error value since the directory may already exist.
-  ACE_OS::mkdir (ACE_LOG_DIRECTORY_A);
+
   ACE_OS::sprintf (temp, "%s%s%s", 
 		   ACE_LOG_DIRECTORY_A, 
 		   ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR_A),
 		   ".log");
+
+#if defined (VXWORKS)
+  // This is the only way I could figure out to avoid a console warning
+  // about opening an existing file (w/o O_CREAT), or attempting to unlink
+  // a non-existant one.
+  int fd;
+  if ((fd = ACE_OS::open (temp, O_WRONLY | O_CREAT, 0x644)) != ERROR)
+    {
+      ACE_OS::close (fd);
+      ACE_OS::unlink (temp);
+    }
+#else
+  // This doesn't seem to work on VxWorks if the directory doesn't
+  // exist, and causes a wierd console error message about
+  // "cat: input error on standard input: Is a directory" if it does.
+  ACE_OS::mkdir (ACE_LOG_DIRECTORY_A);
+#endif /* ! VXWORKS */
 
   int flags = ios::out;
   if (append)
@@ -177,7 +194,9 @@ ACE_Test_Output::set_output (const char *filename, int append)
 
   this->output_file_.open (temp, flags);
   if (this->output_file_.bad ())
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream.output_file ()); 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER ); 
