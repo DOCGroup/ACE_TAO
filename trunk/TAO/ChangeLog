@@ -1,3 +1,8 @@
+Wed Sep 18 09:23:44 2002  Priyanka Gontla  <pgontla@ociweb.com>
+
+	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (reregister_server): 
+	  Fix the mismatch throw warning in borland builds.
+
 Wed Sep 18 07:47:43 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation/Diamond.bor:
