@@ -1,6 +1,6 @@
 Tue Sep 28 13:44:00 1999  Martin Botzler  <martin.botzler@mchp.siemens.de>
 
-        * examples/mfc/*:
+	* examples/mfc/*:
           Added a tao-mfc example.
 
 Tue Sep 28 13:26:51 1999  Jeff Parsons  <parsons@cs.wustl.edu>
