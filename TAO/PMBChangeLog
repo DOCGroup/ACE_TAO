@@ -2,6 +2,7 @@ Tue Mar 18 14:57:07 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* VERSION:
 	* ChangeLog:
+	* tao/tao.mpc:
 	* tao/Version.h:
 	* tao/IIOP_Transport.cpp:
 	* tao/MCAST_Parser.cpp:
