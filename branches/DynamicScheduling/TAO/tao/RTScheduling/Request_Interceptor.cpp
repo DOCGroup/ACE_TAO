@@ -10,7 +10,7 @@
 // {
 // } 
 
-ACE_Atomic_Op<ACE_Thread_Mutex, long> server_guid_counter;
+
 
 void 
 Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
@@ -30,10 +30,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
   current = ACE_static_cast (TAO_RTScheduler_Current_i *,
 				  tss->rtscheduler_current_impl_);
   
-  if (current == 0)
-    ACE_DEBUG ((LM_DEBUG,
-		"No Scheduling Segment Context\n"));
-  else 
+  if (current != 0)
     {
       // If this is a one way request
       if (!ri->response_expected ()) 
@@ -69,8 +66,11 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 	    {
 	      ACE_DEBUG ((LM_DEBUG,
 			  "No Scheduling Segment Context\n"));
+	      ACE_THROW (CORBA::INTERNAL ());
 	      
 	    }
+
+          // @@ Store implicit_sched_param in a var
 	  
 	  // Create new temporary current. Note that
 	  // the new <sched_param> is the current
@@ -81,12 +81,11 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 					      current->dt_hash (),
 					      guid,
 					      0,
-					      current->implicit_scheduling_parameter (),
+					      current->implicit_scheduling_parameter (ACE_ENV_SINGLE_ARG_PARAMETER),
 					      0,
 					      dt.in (),
 					      current));
-      
-      
+	  
 	  // Install new current in the ORB.
 	  //current->implementation (new_current);
 	  tss->rtscheduler_current_impl_ = new_current;
@@ -110,12 +109,21 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 }
 
 void 
-Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr
+Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri
 			       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
     ACE_DEBUG ((LM_DEBUG,
 	      "Client_Interceptor::send_poll\n"));
+
+    TAO_RTScheduler_Current_i *current = 0;
+    
+    TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+    
+    current = ACE_static_cast (TAO_RTScheduler_Current_i *,
+			       tss->rtscheduler_current_impl_);
+    if (current != 0)
+      current->scheduler ()->receive_reply (ri);
     
 }
 
@@ -147,13 +155,6 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
   ACE_DEBUG ((LM_DEBUG,
 	      "Client_Interceptor::receive_exception\n"));
 
-  CORBA::Any_var ex = ri->received_exception ();
-  CORBA::TypeCode_var type = ex->type ();
-  const char * id = type->id ();
-
-  ACE_DEBUG ((LM_DEBUG,
-	      "Received Exception %s\n",
-	      id));
   
   TAO_RTScheduler_Current_i *current = 0;
   
@@ -164,6 +165,15 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
   
   if (current != 0)
     {
+
+      CORBA::Any_var ex = ri->received_exception ();
+      CORBA::TypeCode_var type = ex->type ();
+      const char * id = type->id ();
+      
+      ACE_DEBUG ((LM_DEBUG,
+		  "Received Exception %s\n",
+		  id));
+      
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
@@ -245,60 +255,54 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   char* name = 0;
   CORBA::Policy_ptr sched_param = 0;
   CORBA::Policy_ptr implicit_sched_param = 0;
-  
-  TAO_RTScheduler_Current_i* new_current = this->current_->implementation ();
 
-  if (new_current != 0)
-    {
+  TAO_RTScheduler_Current_i* new_current;
+  ACE_NEW_THROW_EX (new_current,
+		    TAO_RTScheduler_Current_i (this->current_->orb (),
+					       this->current_->dt_hash ()),
+			  CORBA::NO_MEMORY (
+					    CORBA::SystemException::_tao_minor_code (
+					  TAO_DEFAULT_MINOR_CODE,
+					  ENOMEM),
+					  CORBA::COMPLETED_NO));
 
-      // Scheduler retrieves scheduling parameters
-      // from request and populates the out
-      // parameters.
-      new_current->scheduler()->receive_request(ri,
-						guid,
-						name,
-						sched_param,
-						implicit_sched_param);
-      //***************************************
-      // Generate GUID.
-      guid.length (sizeof(long));
   
-      long temp = ++server_guid_counter;
-      ACE_OS::memcpy (guid.get_buffer (),
-		      &temp,
-		      sizeof(long));
+  // Scheduler retrieves scheduling parameters
+  // from request and populates the out
+  // parameters.
+  new_current->scheduler()->receive_request(ri,
+					    guid.out (),
+					    name,
+					    sched_param,
+					    implicit_sched_param);
+
+
       
-      int id;
-      ACE_OS::memcpy (&id,
-		      guid.get_buffer (),
-		      guid.length ());
+  // Create new DT.
+  RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
       
-      ACE_DEBUG ((LM_DEBUG,
-		  "The Guid is %d %d\n",
-		  id,
-		  server_guid_counter.value_i ()));
-      //***************************************
-      
-      // Create new DT.
-      RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
-      
-      // Add new DT to map.
-      new_current->dt_hash ()->bind (guid, dt.in ());
+  // Add new DT to map.
+  new_current->dt_hash ()->bind (guid, dt.in ());
   
-      // Create new temporary current. Note that
-      // the new <sched_param> is the current
-      // <implicit_sched_param> and there is no
-      // segment name.
-      new_current->id (guid);
-      new_current->name (name);
-      new_current->scheduling_parameter (sched_param);
-      new_current->implicit_scheduling_parameter (implicit_sched_param);
-      new_current->DT (dt.in ());
+  // Create new temporary current. Note that
+  // the new <sched_param> is the current
+  // <implicit_sched_param> and there is no
+  // segment name.
+  new_current->id (guid);
+  new_current->name (name);
+  new_current->scheduling_parameter (sched_param);
+  new_current->implicit_scheduling_parameter (implicit_sched_param);
+  new_current->DT (dt.in ());
 	  
-      // Install new current in the ORB.
-      //current->implementation (new_current);
-      this->current_->implementation (new_current);
-    }
+  // Install new current in the ORB and store the previous
+  // current implementation
+  //current->implementation (new_current) 
+
+  TAO_RTScheduler_Current_i *current = 0;
+  
+  TAO_TSS_Resources *tss = TAO_TSS_RESOURCES::instance ();
+  
+  tss->rtscheduler_previous_current_impl_ = this->current_->implementation (new_current);
 }
 
 void 
@@ -328,6 +332,20 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri
 
       current->cleanup_DT ();
       current->cleanup_current ();
+
+      // Get the previous current if any.
+      current = ACE_static_cast (TAO_RTScheduler_Current_i *,
+				 tss->rtscheduler_previous_current_impl_);
+
+      if (current != 0)
+	{
+	  // Restore the previous current.
+	  tss->rtscheduler_current_impl_ = current;
+
+	  // Reset the previous current pointer.
+	  tss->rtscheduler_previous_current_impl_ = 0;
+	}
+      
     }
 }
   
@@ -349,7 +367,7 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
   if (current != 0)
     {
       // Inform scheduler that upcall is complete.
-      current->scheduler ()->send_other (ri);
+      current->scheduler ()->send_exception (ri);
       
       current->cleanup_DT ();
       current->cleanup_current ();

@@ -171,34 +171,6 @@ public:
 
 
 
-////////////////////////////////////////////////////////////////////////////////
-
-/**
- * @class TAO_DTId_Hash
- *
- * @brief Hashing class for Distributable Thread Ids.
- *
- * Define the hash() method for Object Ids.
- */
-
-typedef TAO_Unbounded_Sequence<CORBA::Octet> IdType;
-
-class TAO_Export TAO_DTId_Hash
-{
-public:
-
-  /// Returns hash value.
-  u_long operator () (const IdType &id) const;
-};
-
-
-////////////////////////////////////////////////////////////////////////////////
-
-typedef ACE_Hash_Map_Manager_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Null_Mutex> DT_Hash_Map;
-typedef ACE_Hash_Map_Iterator_Ex<IdType, CORBA::Object_ptr, TAO_DTId_Hash, ACE_Equal_To<IdType>, ACE_Null_Mutex> DT_Hash_Map_Iterator;
-typedef ACE_Hash_Map_Entry <IdType,CORBA::Object_ptr> DT_Hash_Map_Entry;
-
-
 // ****************************************************************
 
 /**
@@ -960,8 +932,6 @@ public:
   InitRefMap * init_ref_map (void);
 
 
-  ///Return a pointer to the Distributable Thread Hash Map.
-  DT_Hash_Map * dt_hash (void);
 
 protected:
 
@@ -1115,8 +1085,7 @@ protected:
   /// resolve_initial_references() mechanism.
   TAO_Object_Ref_Table object_ref_table_;
 
-  DT_Hash_Map dt_hash_;
-
+  
   /// The ORBid for this ORB.
   char *orbid_;
 
@@ -1435,6 +1404,8 @@ public:
   void *poa_current_impl_;
 
   void *rtscheduler_current_impl_;
+
+  void *rtscheduler_previous_current_impl_;
 
   /// The default environment for the thread.
   CORBA_Environment *default_environment_;
