@@ -214,15 +214,12 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
                     ACE_TEXT ("TAO (%P|%t) - wait (leader):to enter reactor event loop on <%x>\n"),
                     this->transport_));
 
-      while (1)
+      // If we got our reply, no need to run the event loop any
+      // further.
+      while (!reply_received)
         {
           // Run the event loop.
           result = reactor->handle_events (max_wait_time);
-
-          // If we got our reply, no need to run the event loop any
-          // further.
-          if (reply_received)
-            break;
 
           // Did we timeout? If so, stop running the loop.
           if (result == 0 &&
