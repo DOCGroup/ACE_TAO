@@ -1,5 +1,7 @@
 Sat Mar 21 20:34:39 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
 
+	* tao/connect.cpp (open): fixed a bug due to wrong parens
+ 	location.
 	* tests/Cubit/TAO/MT_Cubit/server.cpp:	
 	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:	
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:	
