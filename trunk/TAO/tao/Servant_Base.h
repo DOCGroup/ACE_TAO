@@ -79,7 +79,7 @@ protected:
   // Register a CORBA IDL operation name.
 
   virtual const char *_interface_repository_id (void) const = 0;
-  // Get this interface's repository id.
+  // Get this interface's repository id (TAO specific).
 
   TAO_Operation_Table *optable_;
   // The operation table for this servant, it is initialized by the
