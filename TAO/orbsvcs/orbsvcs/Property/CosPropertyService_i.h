@@ -147,7 +147,7 @@ public:
 
   virtual void define_properties (const CosPropertyService::Properties &nproperties,
                                   CORBA::Environment &env)
-    ACE_THROW_SPEC (CosPropertyService::MultipleExceptions ());
+    ACE_THROW_SPEC ((CosPropertyService::MultipleExceptions));
   // Define a sequence of properties at a time.
 
   virtual CORBA::ULong get_number_of_properties (CORBA::Environment &env);
@@ -441,7 +441,7 @@ public:
   virtual CosPropertyService::PropertySet_ptr
   create_initial_propertyset (const CosPropertyService::Properties &initial_properties,
                               CORBA::Environment &env)
-    ACE_THROW_SPEC ((CosPropertyService::MutlipleExceptions));
+    ACE_THROW_SPEC ((CosPropertyService::MultipleExceptions));
   // Allows a client to create a new TAO_PropertySet with specific
   // initial properties."All the properties will have *fixed-normal"
   // modes".
