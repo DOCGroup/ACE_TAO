@@ -88,7 +88,7 @@ public:
 
 private:
   Cubit_i_ptr *my_cubit_;
-  int numobjs_;
+  u_int numobjs_;
 };
 
 #endif /* _CUBIT_I_HH */
