@@ -1,3 +1,27 @@
+Tue Jan 25 00:00:51 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/PortableServer/POA.cpp (reference_to_id):
+	* orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.cpp
+	  (handle_input):
+	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp
+	  (visit_component_assoc):
+	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp
+	  (bind_new_context):
+	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp
+	  (bind_new_context):
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp
+	  (visit_component_assoc):
+
+	  Fixed "control reaches end of non-void function" warnings
+	  exhibited by the latest GNU G++ 4.0 CVS snapshot.
+
+	* orbsvcs/orbsvcs/Notify/Persistent_File_Allocator.cpp
+	  (allocate_nowrite):
+
+	  Explicitly cast "~0" to a "size_t".  Addresses a warning
+	  exhibited by the latest GNU G++ 4.0 CVS snapshot regarding
+	  passing a negative value as a "size_t" function argument.
+
 Mon Jan 24 22:06:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/ORB_Core.h (TAO_ORB_Core):
