@@ -18,8 +18,8 @@
 
 #include "ace/OS.h"
 
-#if defined (ACE_WIN32)
-// This only works on Win32 platforms
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
+// This only works on platforms that support async i/o
 
 #include "ace/Asynch_IO.h"
 
@@ -176,6 +176,6 @@ private:
 #pragma implementation ("Asynch_Acceptor.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#endif /* ACE_WIN32 */
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 #endif /* ACE_ASYNCH_ACCEPTOR_H */
 
