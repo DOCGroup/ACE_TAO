@@ -77,6 +77,7 @@ trap 'kill -15 $server_pid; /bin/rm -f $ior_file; exit 0' 0 1 2 15
 ########
 ######## Start server and save its pid.
 ########
+/bin/rm -f $ior_file
 $server_exec_prefix ./server -f $ior_file -t $threads $gioplite > \
   ${tmp}server.log 2>&1 &
 server_pid=$!
