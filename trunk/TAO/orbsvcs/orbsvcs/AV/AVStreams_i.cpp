@@ -256,7 +256,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                                                                  the_flows,
                                                                  ACE_TRY_ENV);
           if (!result)
-            ACE_ERROR_RETURN ((LM_ERROR,"set_Mcast_peer failed\n"),-1);
+            ACE_ERROR_RETURN ((LM_ERROR,"set_Mcast_peer failed\n"),0);
         }
 
       if (CORBA::is_nil (a_party))
