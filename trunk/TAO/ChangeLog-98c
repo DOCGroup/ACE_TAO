@@ -1,3 +1,9 @@
+Sat Jul 18 15:39:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/client.dsp: Updated this MSVC
+	  project file to use the latest changes to the Simple 
+	  Naming test.
+
 Sat Jul 18 15:30:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * docs/forwarding.html: Added some optimization
