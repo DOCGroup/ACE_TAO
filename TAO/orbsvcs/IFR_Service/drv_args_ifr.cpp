@@ -104,6 +104,8 @@ DRV_parse_args (int ac, char *av[])
     {
       if (av[i][0] == '-')
         {
+          idl_global->append_idl_flag (av[i]);
+
           switch (av[i][1])
             {
             case 0:
@@ -116,6 +118,8 @@ DRV_parse_args (int ac, char *av[])
                 {
                   if (i < ac - 1)
                     {
+                      idl_global->append_idl_flag (av[i+1]);
+
                       ACE_NEW (buffer,
                                char[ACE_OS::strlen (av[i]) 
                                     + ACE_OS::strlen (av[i + 1]) 
@@ -162,7 +166,8 @@ DRV_parse_args (int ac, char *av[])
               be_global->removing (I_TRUE);
               break;
             case 't':
-              idl_global->temp_dir (av [i+1]);
+              idl_global->append_idl_flag (av[i+1]);
+              idl_global->temp_dir (av[i+1]);
               i++;
               break;
             case 'u':
