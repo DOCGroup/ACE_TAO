@@ -1,3 +1,9 @@
+Mon Apr 12 13:36:43 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * utils/NamingViewer/NamingViewer.mpc:
+
+          Removed a misleading comment.
+
 Mon Apr 12 18:16:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/ObjectIdListC.{h,cpp.i}:
