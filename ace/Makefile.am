@@ -545,6 +545,7 @@ nobase_include_HEADERS = \
   Map_Manager.h \
   Map_T.h \
   Mem_Map.h \
+  Memory_Pool.h \
   Message_Block.h \
   Message_Block_T.h \
   Message_Queue.h \

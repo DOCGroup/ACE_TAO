@@ -429,6 +429,7 @@ project(ACE) : acedefaults, aceversion, core, qt_reactor, other, codecs, token, 
     Log_Priority.h
     Malloc_Base.h
     Method_Object.h
+    Memory_Pool.h
     Min_Max.h
     Null_Barrier.h
     Null_Condition.h

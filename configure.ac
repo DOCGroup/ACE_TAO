@@ -7304,15 +7304,6 @@ AC_CONFIG_FILES([
   ASNMP/examples/trap/Makefile
   ASNMP/examples/walk/Makefile
   ASNMP/tests/Makefile
-  ACEXML/Makefile
-  ACEXML/common/Makefile
-  ACEXML/parser/Makefile
-  ACEXML/parser/parser/Makefile
-  ACEXML/apps/Makefile
-  ACEXML/apps/svcconf/Makefile
-  ACEXML/examples/Makefile
-  ACEXML/examples/SAXPrint/Makefile
-  ACEXML/tests/Makefile
   apps/Makefile
   apps/Gateway/Makefile
   apps/Gateway/Gateway/Makefile
@@ -7463,6 +7454,20 @@ AC_CONFIG_FILES([
 ])
 
 dnl Configure subdirectories if they are present.
+if test -d $srcdir/ACEXML -a X$ace_user_with_acexml = Xyes; then
+  AC_CONFIG_FILES([
+    ACEXML/Makefile
+    ACEXML/common/Makefile
+    ACEXML/parser/Makefile
+    ACEXML/parser/parser/Makefile
+    ACEXML/apps/Makefile
+    ACEXML/apps/svcconf/Makefile
+    ACEXML/examples/Makefile
+    ACEXML/examples/SAXPrint/Makefile
+    ACEXML/tests/Makefile
+  ])
+fi
+
 if test -d $srcdir/Kokyu; then
   AC_CONFIG_FILES([
     Kokyu/Makefile
