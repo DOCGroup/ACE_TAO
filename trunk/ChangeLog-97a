@@ -1,3 +1,41 @@
+Mon Jan 27 21:33:00 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests/Naming_Test.cpp (main): Made modifications to the test to
+	  make it more dynamic.  Also made it work with UNICODE and
+	  ACE_Naming_Context.
+
+	* ace/Local_Name_Space_T.cpp (create_manager_i): Added a better
+	  naming scheme for the locks.
+
+	* ace: Changed the calculations of string lengths such that the
+ 	  size of the character type is carefully considered.
+
+	  The following were affected:
+	  
+	  ACE.cpp (ACE::ldfind)
+	  Local_Token.cpp (ACE_TPQ_Entry::ACE_TPQ_Entry)
+	  Log_Msg.cpp (ACE_Log_Msg::msg, ACE_Log_Msg::find)
+	  Memory_Pool.cpp (ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool)
+	  Naming_Context.cpp (ACE_Naming_Context::open)
+	  Parse_Node.cpp (ACE_Location_Node::open_handle)
+	  Registry.cpp (ACE_Predefined_Naming_Contexts::is_local_host, 
+	                ACE_Registry::Binding_Iterator::Object_Iteration::next_n,
+			ACE_Registry::Binding_Iterator::Context_Iteration::next_n)
+			
+	* ace/OS.h: Added UNICODE support for ACE_DEFAULT_LOCALNAME.
+
+	* ace/Proactor.cpp: Redid "lost" changes to add UNICODE support to:
+
+	  /* Proactor */
+          ACE_Overlapped_File::ACE_Overlapped_File
+          ACE_Overlapped_File::open
+
+	* ace/Registry_Name_Space.h: Changed the order of #include and
+	  #define as that the correct set of MACROS are defined for the
+	  include files.
+
+	* tests/MM_Shared_Memory_Test.cpp: Added UNICODE support.
+	
 Mon Jan 27 09:16:03 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++.GNU,
