@@ -1,3 +1,29 @@
+Wed Apr 19 14:46:13 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/IIOP_Transport.cpp (messaging_init): 
+	* tao/SHMIOP_Transport.cpp:
+	* tao/UIOP_Transport.cpp:
+	* tao/GIOP_Message_Accept_State.cpp:
+	* tao/GIOP_Message_Accept_State.h:
+	* tao/GIOP_Message_Accept_State.i:
+	* tao/GIOP_Message_Acceptors.cpp:
+	* tao/GIOP_Message_Acceptors.i:
+	* tao/GIOP_Message_Base.cpp:
+	* tao/GIOP_Message_Connectors.cpp:
+	* tao/GIOP_Message_Connectors.i:
+	* tao/GIOP_Message_Headers.cpp:
+	* tao/GIOP_Message_Headers.h:
+	* tao/GIOP_Message_Headers.i:
+	* tao/GIOP_Message_Lite.cpp:
+	* tao/GIOP_Message_Lite.h:
+	* tao/GIOP_Message_Lite.i:
+	* tao/GIOP_Server_Request.h:
+	* tao/GIOP_Server_Request.i:
+	* tao/GIOP_Utils.h: Implemented the GIOP1.2 message formats. The
+	  clients and servers would now be able to recognise the 1.2
+	  message formats. I have not switched the GIOP format for TAO
+	  from 1.1 to 1.2, as some more work is pending. 
+	
 Wed Apr 19 12:11:47 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/Simulator/Event_Supplier/DOVE_Supplier.cpp:

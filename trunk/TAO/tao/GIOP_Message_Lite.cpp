@@ -15,41 +15,7 @@
 # include "tao/GIOP_Message_Lite.i"
 #endif /* __ACE_INLINE__ */
 
-TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core)
-    :cdr_buffer_alloc_ (orb_core->resource_factory ()->output_cdr_buffer_allocator ()), 
-     cdr_dblock_alloc_ (orb_core->resource_factory ()->output_cdr_dblock_allocator ())
-{
-#if defined (ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (this->repbuf_,
-                         '\0',
-                         sizeof this->repbuf_);
-#endif /* ACE_HAS_PURIFY */
-  ACE_NEW (this->output_,
-           TAO_OutputCDR (this->repbuf_,
-                          sizeof this->repbuf_,
-                          TAO_ENCAP_BYTE_ORDER,
-                          this->cdr_buffer_alloc_,
-                          this->cdr_dblock_alloc_,
-                          orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                          orb_core->to_iso8859 (),
-                          orb_core->to_unicode ()));
-}
 
-TAO_GIOP_Message_Lite::~TAO_GIOP_Message_Lite (void)
-{
-  // Explicitly call the destructor of the output CDR first. They need 
-  // the allocators during destruction.
-  delete this->output_;
-  
-  // Then call the destructor of our allocators
-  if (this->cdr_dblock_alloc_ != 0)
-    this->cdr_dblock_alloc_->remove ();
-  //  delete this->cdr_dblock_alloc_;
-  
-  if (this->cdr_buffer_alloc_ != 0)
-    this->cdr_buffer_alloc_->remove ();
-  //  delete this->cdr_buffer_alloc_;
-}
 
 CORBA::Boolean
 TAO_GIOP_Message_Lite::
@@ -858,14 +824,14 @@ TAO_GIOP_Message_Lite::
 #if (TAO_NO_IOR_TABLE == 0)
 
       const CORBA::Octet *object_key =
-        locate_request.target_address ().object_key ().get_buffer ();
+        locate_request.object_key ().get_buffer ();
 
       if (ACE_OS::memcmp (object_key,
                           &TAO_POA::objectkey_prefix[0],
                           TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         {
           CORBA::ULong len =
-            locate_request.target_address ().object_key ().length ();
+            locate_request.object_key ().length ();
 
           ACE_CString object_id (ACE_reinterpret_cast (const char *,
                                                        object_key),
@@ -912,9 +878,9 @@ TAO_GIOP_Message_Lite::
 
       // This could be tricky if the target_address does not have the
       // object key. Till then .. Bala
-      TAO_ObjectKey tmp_key (locate_request.target_address ().object_key ().length (),
-                             locate_request.target_address ().object_key ().length (),
-                             locate_request.target_address ().object_key ().get_buffer (),
+      TAO_ObjectKey tmp_key (locate_request.object_key ().length (),
+                             locate_request.object_key ().length (),
+                             locate_request.object_key ().get_buffer (),
                              0);
 
       // Set it to an error state
@@ -1100,16 +1066,11 @@ TAO_GIOP_Message_Lite::
   // Store it in the Locate request classes
   request.request_id (req_id);
 
-  TAO_ObjectKey object_key;
+  TAO_ObjectKey &object_key = 
+    request.object_key ();
 
   // Note that here there are no unions and so no problems
   hdr_status = hdr_status && (msg >> object_key);
-
-  // Get the underlying TargetAddress from the request class
-  GIOP::TargetAddress &target = request.target_address ();
-
-  // Put this object key in the target_adderss
-  target.object_key (object_key);
 
   return hdr_status ? 0 : -1;
 }

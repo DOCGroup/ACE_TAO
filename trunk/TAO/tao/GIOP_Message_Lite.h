@@ -20,7 +20,6 @@
 #define TAO_GIOP_MESSAGE_LITE_H
 #include "ace/pre.h"
 
-//#include "tao/target_specification.h"
 #include "tao/CDR.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -30,6 +29,7 @@
 
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
+#include "tao/ORB_Core.h"
 
 class TAO_GIOP_ServerRequest;
 class TAO_GIOP_Locate_Request_Header;

@@ -7,10 +7,7 @@
 //     TAO
 //
 // = FILENAME
-//   @@ Bala: if you change the name of the file don't forget to
-//   change the documentation too (i hate this, IMHO the RCS id is
-//   enough, but it is part of the guidelines).
-//     GIOP_Assorted_Header.h
+//     GIOP_Message_Headers.h
 //
 // = DESCRIPTION
 //     Some assorted GIOP structure mappings
@@ -30,7 +27,7 @@
 // @@ them? Only the Locate_Request header?!
 
 // @@ Bala: the TAO_Export macros are missing here too!
-class TAO_GIOP_Locate_Request_Header
+class TAO_Export TAO_GIOP_Locate_Request_Header
 {
   // = TITLE
   //   Location service support
@@ -45,20 +42,17 @@ public:
   CORBA::ULong request_id (void);
   // Get the request id
 
-  void addressing_disposition (CORBA::Short discriminant);
-  // Set the addressing the disposition
+  const TAO_ObjectKey &object_key (void) const;
+  // Get the object_key in read mode..
 
-  CORBA::Short addressing_disposition (void);
-  // Return the addressing disposition
+  TAO_ObjectKey &object_key (void);
+  // Get the object_key in read/write mode..
 
-  const GIOP::TargetAddress &target_address (void) const;
-  // Get in read mode
+  IOP::TaggedProfile &tagged_profile (void);
+  // get the tagged_profile in the read/write mode
 
-  GIOP::TargetAddress &target_address (void);
-  // Get in read/write mode
-
-  //  TAO_ObjectKey &object_key_ref (void);
-  // Get the Object Key in read/write mode
+  GIOP::IORAddressingInfo &addressing_info (void);
+  // get the addressing info in the read/write mode
 
   TAO_InputCDR &incoming_stream (void);
   // Get the CDR stream for read/write
@@ -67,14 +61,20 @@ private:
   CORBA::ULong request_id_;
   // Request id
 
-  CORBA::Short addressing_disposition_;
-  // This is the discrminant type for the union encapsulated in
-  // TargetAddress.
+  TAO_ObjectKey object_key_;
+  // Object Key
 
-  GIOP::TargetAddress  target_address_;
-  // Introduced by GIOP 1.2. Will not cause us any harm if it is there
-  // for other versions.
+  IOP::TaggedProfile profile_;
+  // The Tagged profile. This class would have the Tagged Profile
 
+  GIOP::IORAddressingInfo addr_info_;
+  // The addressing info
+
+  // The above two declarations are not used in TAO as on date. It is
+  // here so that we can use this if we get to that point. The
+  // object_key extracted  from these would still be available in
+  // <object_key_>. 
+  
   TAO_InputCDR *incoming_;
   // Incoming CDR stream
 };

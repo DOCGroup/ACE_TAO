@@ -346,10 +346,15 @@ TAO_UIOP_Client_Transport::
                                0);
               break;
             case 1:
-          ACE_NEW_RETURN  (this->client_mesg_factory_,
-                           TAO_GIOP_Message_Connector_11,
-                           0);
-          break;
+              ACE_NEW_RETURN  (this->client_mesg_factory_,
+                               TAO_GIOP_Message_Connector_11,
+                               0);
+              break;
+            case 2:
+              ACE_NEW_RETURN  (this->client_mesg_factory_,
+                               TAO_GIOP_Message_Connector_12,
+                               0);
+              break;
             default:
               if (TAO_debug_level > 0)
                 {

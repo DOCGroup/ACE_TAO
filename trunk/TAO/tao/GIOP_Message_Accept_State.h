@@ -50,7 +50,7 @@ class TAO_OutputCDR;
 class TAO_GIOP_Locate_Status_Msg;
 class TAO_Pluggable_Reply_Params;
 
-class TAO_GIOP_Message_Accept_State
+class TAO_Export TAO_GIOP_Message_Accept_State
 {
   // = TITLE
   //   TAO_GIOP_Message_Accept_State
@@ -91,9 +91,28 @@ public:
 protected:
   CORBA::Boolean marshal_svc_ctx (TAO_OutputCDR &output,
                                   TAO_Pluggable_Reply_Params &reply);
+  // Marshalls the service context
   
   void marshal_reply_status (TAO_OutputCDR &output,
                              TAO_Pluggable_Reply_Params &reply);
+  // Marshall the reply status
+  
+  virtual CORBA::Boolean 
+  unmarshall_object_key (TAO_ObjectKey &object_key,
+                         TAO_InputCDR &cdr);
+  // Unmarshals the received object key
+  
+  virtual CORBA::Boolean 
+  unmarshall_iop_profile (TAO_ObjectKey &object_key, 
+                          IOP::TaggedProfile &profile,
+                          TAO_InputCDR &cdr);
+  // Unmarshall the IOP::TaggedProfile
+
+  virtual CORBA::Boolean 
+  unmarshall_ref_addr (TAO_ObjectKey &object_key, 
+                       GIOP::IORAddressingInfo &profile,
+                       TAO_InputCDR &cdr);
+  // Unmarshalls the GIOP::IORAddressingInfo
 };
 
 
@@ -113,7 +132,7 @@ protected:
 //   is set)?  I think it is OK if GIOP 1.1 depends on 1.0 (and 1.2
 //   depends on both), but not vice-versa....
 
-class TAO_GIOP_Message_Accept_State_10 : public TAO_GIOP_Message_Accept_State
+class TAO_Export TAO_GIOP_Message_Accept_State_10 : public TAO_GIOP_Message_Accept_State
 {
   // = TITLE
   //   TAO_GIOP_Message_Accept_State_10
@@ -151,7 +170,7 @@ public:
 
 /*****************************************************************/ 
 
-class TAO_GIOP_Message_Accept_State_11: public TAO_GIOP_Message_Accept_State_10
+class TAO_Export TAO_GIOP_Message_Accept_State_11: public TAO_GIOP_Message_Accept_State_10
 {
   // = TITLE
   //   TAO_GIOP_Message_Accept_State_11
@@ -163,7 +182,7 @@ public:
 
 
 /********************************************************************/ 
-class TAO_GIOP_Message_Accept_State_12 : public TAO_GIOP_Message_Accept_State
+class TAO_Export TAO_GIOP_Message_Accept_State_12 : public TAO_GIOP_Message_Accept_State
 {
   // = TITLE
   //   TAO_GIOP_Message_Accept_State_12
@@ -197,16 +216,24 @@ public:
   virtual CORBA::Octet major_version (void);
   virtual CORBA::Octet minor_version (void);
   // Our versions
+
   
 private:
-  CORBA::Boolean unmarshall_target_addr (TAO_GIOP_ServerRequest &request,
-                                         TAO_InputCDR &input);
+  virtual CORBA::Boolean 
+  unmarshall_iop_profile (TAO_ObjectKey &object_key, 
+                          IOP::TaggedProfile &profile,
+                          TAO_InputCDR &cdr);
+  
+  virtual CORBA::Boolean 
+  unmarshall_ref_addr (TAO_ObjectKey &object_key, 
+                       GIOP::IORAddressingInfo &ref_addr,
+                       TAO_InputCDR &cdr);
 };
 
 
 /*****************************************************************/
 
-class TAO_GIOP_Message_Accept_Impl
+class TAO_Export TAO_GIOP_Message_Accept_Impl
 {
   // = TITLE
   // = DESCRIPTION
@@ -217,8 +244,10 @@ class TAO_GIOP_Message_Accept_Impl
                                  CORBA::Octet incoming_minor);
   // Performs a check of the revision tags
 
+  
   TAO_GIOP_Message_Accept_State_10 version_10;
   TAO_GIOP_Message_Accept_State_11 version_11;
+  TAO_GIOP_Message_Accept_State_12 version_12;
   // The concrete implementations that we hold
 };
 

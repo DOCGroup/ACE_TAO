@@ -89,6 +89,49 @@ TAO_GIOP_Message_Accept_State::marshal_reply_status (TAO_OutputCDR &output,
     }
 }
 
+CORBA::Boolean 
+TAO_GIOP_Message_Accept_State::
+  unmarshall_object_key (TAO_ObjectKey &object_key,
+                         TAO_InputCDR &input)
+{
+  CORBA::Boolean hdr_status = 
+    (CORBA::Boolean) input.good_bit ();
+  
+  CORBA::Long key_length = 0;
+  hdr_status = hdr_status && input.read_long (key_length);
+  if (hdr_status)
+    {
+      object_key.replace (key_length, 
+                          key_length,
+                          (CORBA::Octet*)input.rd_ptr (),
+                          0);
+      input.skip_bytes (key_length);
+    }
+  
+  return hdr_status;
+}
+
+
+
+CORBA::Boolean 
+TAO_GIOP_Message_Accept_State::
+unmarshall_iop_profile (TAO_ObjectKey & /*object_key*/, 
+                        IOP::TaggedProfile & /*profile*/,
+                        TAO_InputCDR & /*cdr*/)
+{
+  return 0;
+}
+
+
+CORBA::Boolean 
+TAO_GIOP_Message_Accept_State::
+unmarshall_ref_addr (TAO_ObjectKey & /*object_key*/, 
+                     GIOP::IORAddressingInfo & /*profile*/,
+                     TAO_InputCDR & /*cdr*/)
+{
+  return 0;
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // TAO_GIOP_Message_Accept_State_10 methods 
@@ -109,15 +152,13 @@ TAO_GIOP_Message_Accept_State_10::
   // Get the input CDR in the request class
   TAO_InputCDR& input = request.incoming ();
 
-  IOP::ServiceContextList service_info;
+  IOP::ServiceContextList &service_info = 
+    request.service_info ();
+  
   input >> service_info;
 
-  // This method is going to a copy?? Data copy?? Need to figure out a
-  // way to avoid this
-  request.service_info (service_info);
-
-
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = 
+    (CORBA::Boolean) input.good_bit ();
 
   CORBA::ULong req_id;
   // Get the rest of the request header ...
@@ -139,15 +180,8 @@ TAO_GIOP_Message_Accept_State_10::
   // the reference count on the CDR message block, because this key
   // will not outlive the request (or the message block).
 
-  CORBA::Long key_length = 0;
-  hdr_status = hdr_status && input.read_long (key_length);
-  if (hdr_status)
-    {
-      request.object_key ().replace (key_length, key_length,
-                                     (CORBA::Octet*)input.rd_ptr (),
-                                     0);
-      input.skip_bytes (key_length);
-    }
+  hdr_status = this->unmarshall_object_key (request.object_key (),
+                                            input);
 
   ACE_CString operation_name;
   if (input.char_translator () == 0)
@@ -305,18 +339,10 @@ TAO_GIOP_Message_Accept_State_10::
   // Store it in the Locate request classes
   request.request_id (req_id);
 
-  TAO_ObjectKey object_key;
-
-  // Note that here there are no unions and so no problems
-  hdr_status = hdr_status && (msg >> object_key);
-
-  // Get the underlying TargetAddress from the request class
-  GIOP::TargetAddress &target = request.target_address ();
-
-  // Put this object key in the target_adderss
-  // This has a "new" in it. Need to change that to something more
-  // efficient 
-  target.object_key (object_key);
+  // Get the object key
+  hdr_status = 
+    this->unmarshall_object_key (request.object_key (),
+                                 msg);
 
   return hdr_status ? 0 : -1;
 }
@@ -335,7 +361,8 @@ write_locate_reply_mesg (TAO_OutputCDR &output,
 
   if (status_info.status == TAO_GIOP_OBJECT_FORWARD)
     {
-      CORBA::Object_ptr object_ptr = status_info.forward_location_var.in ();
+      CORBA::Object_ptr object_ptr = 
+        status_info.forward_location_var.in ();
       if ((output << object_ptr) == 0)
         {
           if (TAO_debug_level > 0)
@@ -410,8 +437,34 @@ TAO_GIOP_Message_Accept_State_12::
   // message header instead.
   request.sync_with_server ((response_flags == 129));
 
-  hdr_status = hdr_status && this->unmarshall_target_addr (request,
-                                                           input);
+  // Read the discriminant of the union.
+  CORBA::Short disc = 0;
+  hdr_status = hdr_status && input.read_short (disc);
+
+  if (hdr_status)
+    {
+      if (disc == GIOP::KeyAddr)
+          {
+            hdr_status = 
+              this->unmarshall_object_key (request.object_key (),
+                                           input);
+          }
+       else if (disc == GIOP::ProfileAddr)
+          {
+            hdr_status = 
+              this->unmarshall_iop_profile (request.object_key (),
+                                            request.tagged_profile (),
+                                            input);
+          }
+      else if (disc == GIOP::ReferenceAddr)
+        {
+             hdr_status = 
+               this->unmarshall_ref_addr (request.object_key (),
+                                          request.addressing_info (),
+                                          input);
+        }
+    }
+
   ACE_CString operation_name;
   if (input.char_translator () == 0)
     {
@@ -450,13 +503,14 @@ TAO_GIOP_Message_Accept_State_12::
   // verify a digital signature, if that is required in this security
   // environment.  It may be required even when using IPSEC security
   // infrastructure.
-  IOP::ServiceContextList service_info;
-  input >> service_info;
+  IOP::ServiceContextList &service_info = 
+    request.service_info ();
   
-  // This method is going to a copy?? Data copy?? Need to figure out a
-  // way to avoid this 
-  request.service_info (service_info);
+  input >> service_info;
 
+  // Reset the read_ptr to an 8-byte boundary
+  input.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
+  
   return hdr_status ? 0 : -1;
 }
 
@@ -477,80 +531,188 @@ TAO_GIOP_Message_Accept_State_12::
   // Store it in the Locate request classes
   request.request_id (req_id);
 
-  // 
-  // ADD STUFF
-  // 
-  //
+    // Read the discriminant of the union.
+  CORBA::Short disc = 0;
+  hdr_status = 
+    hdr_status && msg.read_short (disc);
 
-
+  if (hdr_status)
+    {
+      if (disc == GIOP::KeyAddr)
+          {
+            hdr_status = 
+              this->unmarshall_object_key (request.object_key (),
+                                           msg);
+          }
+       else if (disc == GIOP::ProfileAddr)
+          {
+            hdr_status = 
+              this->unmarshall_iop_profile (request.object_key (),
+                                            request.tagged_profile (),
+                                            msg);
+          }
+      else if (disc == GIOP::ReferenceAddr)
+        {
+             hdr_status = 
+               this->unmarshall_ref_addr (request.object_key (),
+                                          request.addressing_info (),
+                                          msg);
+        }
+    }
+  
+  // Reset the pointer to an 8-byte bouns]dary
+  msg.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
 
   return hdr_status ? 0 : -1;
 }
 
 
 
-
-CORBA::Boolean
+CORBA::Boolean 
 TAO_GIOP_Message_Accept_State_12::
-  unmarshall_target_addr (TAO_GIOP_ServerRequest &request,
-                          TAO_InputCDR &input)  
+  unmarshall_iop_profile (TAO_ObjectKey &object_key,
+                          IOP::TaggedProfile &profile_addr,
+                          TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
-
-  // We use ad-hoc demarshalling here: there is no need to increase
-  // the reference count on the CDR message block, because this key
-  // will not outlive the request (or the message block).
+  CORBA::Boolean hdr_status = 
+    (CORBA::Boolean) input.good_bit ();
   
-  // Read the discriminant of the union.
-  CORBA::Short disc = 0;
-  hdr_status = hdr_status && input.read_short (disc);
-
+  // Extract the TaggedProfile
+  // @@We can also look in to the CDR stream to extract the
+  // members of the struct (TaggedProfile) directly. A place
+  // for optimzation. Once we have this working we can implement
+  // this 
+  hdr_status &= input >> profile_addr;
+  
+  // Extract the object key from the TaggedProfile
   if (hdr_status)
     {
-      if (disc == GIOP::KeyAddr)
-          {
-            CORBA::Long key_length = 0;
-            hdr_status = hdr_status && input.read_long (key_length);
-            if (hdr_status)
-              {
-                request.object_key ().replace (key_length, key_length,
-                                               (CORBA::Octet*)input.rd_ptr (),
-                                               0);
-                input.skip_bytes (key_length);
-              }
-          }
-      else if (disc == GIOP::ProfileAddr)
-        {
-          // Need to add stuff here, Bala
-        }
-         
-      else if (disc == GIOP::ReferenceAddr)
-        {
-          // Need to add stuff here, Bala
-        }
+      object_key.replace (profile_addr.profile_data.length (),
+                          profile_addr.profile_data.length (),
+                          profile_addr.profile_data.get_buffer ());
+                          
+    }
+
+  return hdr_status;
+}
+
+
+CORBA::Boolean 
+TAO_GIOP_Message_Accept_State_12::
+  unmarshall_ref_addr (TAO_ObjectKey &object_key,
+                       GIOP::IORAddressingInfo &addr_info,
+                       TAO_InputCDR &input)
+{
+  CORBA::Boolean hdr_status = 
+    (CORBA::Boolean) input.good_bit ();
+
+  //Extract the Addressing info
+  // @@We can also look in to the CDR stream to extract the
+  // members of the struct (AddressingInfo) directly. A place
+  // for optimzation. Once we have this working we can implement
+  // this 
+  hdr_status &= input>> addr_info;
+  
+  // Extract the object key
+  if (hdr_status)
+    {
+      // Get the IOP::TaggedProfile
+      IOP::TaggedProfile &tag = 
+        addr_info.ior.profiles [addr_info.selected_profile_index];
+      
+      // Replace the object key
+      object_key.replace (tag.profile_data.length (),
+                          tag.profile_data.length (),
+                          tag.profile_data.get_buffer ());
     }
   
   return hdr_status;
 }
 
 
+
+
 CORBA::Boolean
 TAO_GIOP_Message_Accept_State_12::
-write_reply_header (TAO_OutputCDR & /*output*/,
-                    TAO_Pluggable_Reply_Params & /*reply_params*/,
+write_reply_header (TAO_OutputCDR & output,
+                    TAO_Pluggable_Reply_Params &reply,
                     CORBA::Environment & /*ACE_TRY_ENV*/)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  // Write the request ID
+  output.write_ulong (reply.request_id_);
+  
+   // Write the reply status
+  if (reply.reply_status_ == 
+      TAO_PLUGGABLE_MESSAGE_LOCATION_FORWARD_PERM)
+    {
+      // Not sure when we will use this.
+      output.write_ulong (TAO_GIOP_LOCATION_FORWARD_PERM);
+    }
+  else if (reply.reply_status_ ==
+           TAO_PLUGABLE_MESSAGE_NEEDS_ADDRESSING_MODE)
+    {
+      // Not sure when we will use this.
+      output.write_ulong (TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE);
+    }
+  else
+    {
+      this->marshal_reply_status (output, 
+                                  reply);
+    }
+
+  // Service context list
+  this->marshal_svc_ctx (output,
+                         reply);
+  
+  if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
+    return 0;
+
   return 1;
 }
 
 
 CORBA::Boolean 
 TAO_GIOP_Message_Accept_State_12::
-write_locate_reply_mesg (TAO_OutputCDR & /*output*/,
-                         CORBA::ULong /*request_id*/,
-                         TAO_GIOP_Locate_Status_Msg & /*status*/)
+write_locate_reply_mesg (TAO_OutputCDR & output,
+                         CORBA::ULong request_id,
+                         TAO_GIOP_Locate_Status_Msg &status_info)
 {
+  // Make the header for the locate request
+  output.write_ulong (request_id);
+  output.write_ulong (status_info.status);
+
+  if (output.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
+    return 0;
+
+  switch (status_info.status)
+    {
+
+      // More likely than not we will not have this in TAO
+    case TAO_GIOP_OBJECT_FORWARD:
+    case TAO_GIOP_OBJECT_FORWARD_PERM:
+      {
+        CORBA::Object_ptr object_ptr = 
+          status_info.forward_location_var.in ();
+        if ((output << object_ptr) == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("TAO (%P|%t|%N|%l) write_locate_reply_mesg-")
+                        ASYS_TEXT (" cannot marshal object reference\n")));
+        }
+      }
+      break;
+    case TAO_GIOP_LOC_SYSTEM_EXCEPTION:
+    case TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE:
+      // Do we do these in TAO??
+      // What to do here???? I dont really know. I have to do a survey
+      // of the specifications that uses this.
+      break;
+    default:
+      break;
+    }
+
   return 1;
 }
 

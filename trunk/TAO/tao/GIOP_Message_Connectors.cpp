@@ -531,8 +531,52 @@ TAO_GIOP_Message_Connector_12::
 
 int
 TAO_GIOP_Message_Connector_12::
-parse_reply (TAO_Message_State_Factory & /*mesg_state*/,
-             TAO_Pluggable_Reply_Params & /*params*/)
+parse_reply (TAO_Message_State_Factory &mesg_state,
+             TAO_Pluggable_Reply_Params &params)
 {
+  // Cast to the GIOP Message state
+  TAO_GIOP_Message_State *state = ACE_dynamic_cast (TAO_GIOP_Message_State *,
+                                                    &mesg_state);
+  if (TAO_GIOP_Message_Connectors::parse_reply (*state,
+                                                params)
+      == -1)
+    return -1;
+
+  switch (state->message_type)
+    {
+    case TAO_GIOP_REQUEST:
+      // We could get this in Bi_Dir GIOP
+      // So, we take some action. 
+      break;
+    case TAO_GIOP_CANCELREQUEST:
+    case TAO_GIOP_LOCATEREQUEST:
+      // Errors
+    case TAO_GIOP_CLOSECONNECTION:
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ASYS_TEXT ("TAO (%P|%t) %N:%l parse_reply: ")
+                           ASYS_TEXT ("wrong message.\n")),
+                          -1);
+    case TAO_GIOP_LOCATEREPLY:
+      // Handle after the switch
+      break;
+    case TAO_GIOP_REPLY:
+      if ((state->cdr >> params.svc_ctx_) == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("TAO (%P|%t) parse_reply, ")
+                        ASYS_TEXT ("extracting context\n")));
+          return -1;
+        }
+      // Rest of the stuff after the switch
+      break;
+    case TAO_GIOP_FRAGMENT:
+      // Never happens: why??
+      break;
+    }
+  
+  // Align the read pointer on an 8-byte boundary
+  state->cdr.align_read_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR);
   return 0;
 }

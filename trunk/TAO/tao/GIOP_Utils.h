@@ -24,8 +24,9 @@
 #include "tao/Pluggable_Messaging.h"
 #include "tao/Object.h"
 
-// @@ Bala: i believe we still have a guideline to use #pragma once on
-// platforms that support it...
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 typedef enum GIOP_Messages
 {
@@ -56,11 +57,7 @@ typedef enum GIOP_LocateStatusType
   TAO_GIOP_LOC_NEEDS_ADDRESSING_MODE //GIOP 1.2
 }TAO_GIOP_Locate_Status_Type;
 
-// @@ Bala: what about the TAO_Export?  If a user tries to plug a
-// protocol on NT and need this class for something he would not be
-// able to use it without the export macro.
-
-class TAO_GIOP_Locate_Status_Msg
+class TAO_Export TAO_GIOP_Locate_Status_Msg
 {
   // =TITLE
   //  Hold the relevant information for every type of Locate mesg.
@@ -104,9 +101,8 @@ typedef enum GIOP_ReplyStatusType
 
 } TAO_GIOP_Reply_Status_Type;
 
-// @@ Bala: more missing TAO_Export macros.
 
-class TAO_GIOP_ReplyHeader
+class TAO_Export TAO_GIOP_ReplyHeader
 {
   // = TITLE
   //   This class embodies the header of a GIOP reply.

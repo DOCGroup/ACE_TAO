@@ -19,8 +19,8 @@ TAO_GIOP_Message_Accept_Impl::check_revision (CORBA::Octet incoming_major,
   // @@ Bala: does this means that we reject GIOP 1.2 messages? I
   // think you are right to do so, because we don't export GIOP 1.2
   // IORs....
-  if (incoming_major > 1 ||
-      incoming_minor > 1)
+  if (incoming_major > TAO_DEF_GIOP_MAJOR ||
+      incoming_minor > TAO_DEF_GIOP_MINOR)
     return 0;
 
   return 1;
