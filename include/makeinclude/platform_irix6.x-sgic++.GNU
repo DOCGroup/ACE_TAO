@@ -55,7 +55,7 @@ PIC		= -KPIC
 AR		= ar
 ARFLAGS		= r
 RANLIB		= echo
-SOFLAGS		= -shared $(CCFLAGS) $(CPPFLAGS) -all
+SOFLAGS		= -shared $(CCFLAGS) $(CPPFLAGS) -all -multigot
 SOBUILD		= $(RM) $@; $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.o $< && \
 		  /bin/ln $(VSHDIR)$*.o $@
 
