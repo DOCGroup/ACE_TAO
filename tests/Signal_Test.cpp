@@ -284,7 +284,11 @@ worker_parent (void *)
                   ASYS_TEXT ("(%P|%t) got signal!\n")));
     }
 #else
-  pm.wait ();
+  int status;
+  pm.wait (&status);
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("(%P|%t) reaped child with status %d\n"),
+              status));
 #endif /* */ 
 
   ACE_DEBUG ((LM_DEBUG,
