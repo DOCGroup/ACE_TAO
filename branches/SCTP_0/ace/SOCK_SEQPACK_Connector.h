@@ -21,6 +21,7 @@
 #include "ace/ACE_export.h"
 
 #include "ace/SOCK_SEQPACK_Association.h"
+#include "ace/Multihomed_INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -98,6 +99,15 @@ public:
                       int perms = 0,
                       int protocol = 0);
 
+  ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
+                      const ACE_Addr &remote_sap,
+                      const ACE_Time_Value *timeout,
+                      const ACE_Multihomed_INET_Addr &local_sap,
+                      int reuse_addr = 0,
+                      int flags = 0,
+                      int perms = 0,
+                      int protocol = 0);
+
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_SEQPACK_Association
    * object if the connection succeeds.
@@ -141,6 +151,15 @@ public:
                const ACE_Addr &remote_sap,
                const ACE_Time_Value *timeout = 0,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               int reuse_addr = 0,
+               int flags = 0,
+               int perms = 0,
+               int protocol = 0);
+
+  int connect (ACE_SOCK_SEQPACK_Association &new_association,
+               const ACE_Addr &remote_sap,
+               const ACE_Time_Value *timeout,
+               const ACE_Multihomed_INET_Addr &local_sap,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
@@ -201,6 +220,10 @@ protected:
   int shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
                             const ACE_Time_Value *timeout,
                             const ACE_Addr &local_sap);
+
+  int shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
+                            const ACE_Time_Value *timeout,
+                            const ACE_Multihomed_INET_Addr &local_sap);
 
   /// Perform operations that must be called after <ACE_OS::connect>.
   int shared_connect_finish (ACE_SOCK_SEQPACK_Association &new_association,

@@ -99,6 +99,56 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
     return 0;
 }
 
+// Multihomed version of same
+int
+ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
+                                          const ACE_Time_Value *timeout,
+                                          const ACE_Multihomed_INET_Addr &local_sap)
+{
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_connect_start");
+
+  if (local_sap.ACE_Addr::operator!= (ACE_Addr::sap_any))
+    {
+      // The total number of addresses is the number of secondary
+      // addresses plus one.
+      size_t num_addresses = local_sap.get_num_secondary_addresses() + 1;
+      
+      // Create an array of sockaddr_in to hold the underlying
+      // representations of the primary and secondary
+      // addresses.
+      sockaddr_in*  local_inet_addrs = 0;
+      ACE_NEW_NORETURN(local_inet_addrs,
+                       sockaddr_in[num_addresses]);
+      if (!local_inet_addrs)
+        return -1;
+
+      // Populate the array by invoking the get_addresses method on
+      // the Multihomed_INET_Addr
+      local_sap.get_addresses(local_inet_addrs, num_addresses);
+
+      // Call bind
+      if (ACE_OS::bind (new_association.get_handle (),
+                        ACE_reinterpret_cast (sockaddr *,
+                                              local_inet_addrs),
+                        (sizeof (sockaddr_in))*num_addresses) == -1)
+        {
+          // Save/restore errno.
+          ACE_Errno_Guard error (errno);
+          new_association.close ();
+          return -1;
+        }
+
+      delete [] local_inet_addrs;
+    }
+
+  // Enable non-blocking, if required.
+  if (timeout != 0
+      && new_association.enable (ACE_NONBLOCK) == -1)
+    return -1;
+  else
+    return 0;
+}
+
 int
 ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association &new_association,
                                            const ACE_Time_Value *timeout,
@@ -146,6 +196,39 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
                              const ACE_Addr &remote_sap,
                              const ACE_Time_Value *timeout,
                              const ACE_Addr &local_sap,
+                             int reuse_addr,
+                             int /* flags */,
+                             int /* perms */,
+                             int protocol)
+{
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::connect");
+
+  if (this->shared_open (new_association,
+                         remote_sap.get_type (),
+                         protocol,
+                         reuse_addr) == -1)
+    return -1;
+  else if (this->shared_connect_start (new_association,
+                                       timeout,
+                                       local_sap) == -1)
+    return -1;
+
+  int result = ACE_OS::connect (new_association.get_handle (),
+                                ACE_reinterpret_cast (sockaddr *,
+                                                      remote_sap.get_addr ()),
+                                remote_sap.get_size ());
+
+  return this->shared_connect_finish (new_association,
+                                      timeout,
+                                      result);
+}
+
+// Multihomed version of same
+int
+ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
+                             const ACE_Addr &remote_sap,
+                             const ACE_Time_Value *timeout,
+                             const ACE_Multihomed_INET_Addr &local_sap,
                              int reuse_addr,
                              int /* flags */,
                              int /* perms */,
@@ -232,6 +315,33 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
                                         const ACE_Addr &remote_sap,
                                         const ACE_Time_Value *timeout,
                                         const ACE_Addr &local_sap,
+                                        int reuse_addr,
+                                        int flags,
+                                        int perms,
+                                        int protocol)
+{
+  ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector");
+
+  if (this->connect (new_association,
+                     remote_sap,
+                     timeout,
+                     local_sap,
+                     reuse_addr,
+                     flags,
+                     perms,
+                     protocol) == -1
+      && timeout != 0
+      && !(errno == EWOULDBLOCK || errno == ETIME || errno == ETIMEDOUT))
+    ACE_ERROR ((LM_ERROR,
+                ACE_LIB_TEXT ("%p\n"),
+                ACE_LIB_TEXT ("ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector")));
+}
+
+// Multihomed version of same
+ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
+                                        const ACE_Addr &remote_sap,
+                                        const ACE_Time_Value *timeout,
+                                        const ACE_Multihomed_INET_Addr &local_sap,
                                         int reuse_addr,
                                         int flags,
                                         int perms,
