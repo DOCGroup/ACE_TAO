@@ -1,3 +1,8 @@
+Wed Feb 25 10:48:17 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
+
+        * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
+          Fixed problems in emulated exception build.
+
 Wed Feb 25 10:44:17 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/Quoter/On_Demand_Activation/client.cpp:

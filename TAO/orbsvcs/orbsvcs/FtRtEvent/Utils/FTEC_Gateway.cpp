@@ -167,25 +167,24 @@ FTEC_Gateway::activate(PortableServer::POA_ptr root_poa ACE_ENV_ARG_DECL)
     char** argv = 0;
     impl_->orb = CORBA::ORB_init(argc, argv, "FTEC_GatewayORB"
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK_RETURN(0);
 
     Interceptor_Destoryer::execute(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
 
     poa = resolve_init<PortableServer::POA>(impl_->orb.in(), "RootPOA"
       ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK_RETURN(0);
 
     mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK_RETURN(0);
 
     mgr->activate(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
   else {
     poa = PortableServer::POA::_duplicate(root_poa);
     mgr = poa->the_POAManager(ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_TRY_CHECK;
   }
+  ACE_CHECK_RETURN(0);
 
   PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
     poa->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID
