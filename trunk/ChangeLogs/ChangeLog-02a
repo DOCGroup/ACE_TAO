@@ -1,3 +1,9 @@
+Thu Dec 27 06:41:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* tests/Proactor_Timer_Test.cpp: Added #ifndefs to guard against
+	  trying to compile this test on platforms that don't support the
+ 	  Proactor!  Thanks to Venkita for noticing this.
+
 Wed Dec 26 15:51:28 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* ace/Get_Opt.h: 
