@@ -1,3 +1,8 @@
+Mon Feb 22 19:18:55 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* examples/Simple/bank/Makefile :
+	Updated dependencies
+
 Mon Feb 22 19:13:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Simple/bank/Bank_Client_i.cpp: 
