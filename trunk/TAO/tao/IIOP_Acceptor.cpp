@@ -34,7 +34,7 @@ TAO_IIOP_Acceptor::create_profile (TAO_ObjectKey &)
   return 0;
 }
 
-ACE_Event_Handler* 
+ACE_Event_Handler*
 TAO_IIOP_Acceptor::acceptor (void)
 {
   return &base_acceptor_;

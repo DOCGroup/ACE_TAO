@@ -1,3 +1,21 @@
+Sun Feb 14 12:41:55 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Invocation.cpp: 
+	* tao/Pluggable.cpp: 
+	  We must always check the environment after passing it down to
+	  another function.
+
+	* tao/IIOP_Acceptor.cpp: 
+	* tao/IIOP_Connector.cpp: 
+	* tao/IIOP_ORB.cpp: 
+	* tao/IIOP_Profile.cpp: 
+	* tao/ORB.cpp: 
+	* tao/Object_KeyC.cpp: 
+	* tao/POAC.cpp: 
+	* tao/Typecode_Constants.cpp: 
+	* tao/orbconf.h: 
+	  Several cosmetic fixes, mostly trailing spaces removed.
+
 Sat Feb 13 17:52:01 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	Changed the following to make the time returned in units of 100

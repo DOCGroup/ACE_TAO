@@ -248,7 +248,7 @@ TAO_TypeCodes::init (void)
     TAO_ENCAP_BYTE_ORDER, // byte order
     25, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f4964), ACE_NTOHL (0x656e7469), ACE_NTOHL (0x66696572), ACE_NTOHL (0x3a312e30), ACE_NTOHL (0xfdfdfd),  // repository ID = IDL:CORBA/Identifier:1.0
     11, ACE_NTOHL (0x4964656e), ACE_NTOHL (0x74696669), ACE_NTOHL (0x657200fd),  // name = Identifier
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0, // string length
   };
 
@@ -263,7 +263,7 @@ TAO_TypeCodes::init (void)
     TAO_ENCAP_BYTE_ORDER, // byte order
     27, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5265), ACE_NTOHL (0x706f7369), ACE_NTOHL (0x746f7279), ACE_NTOHL (0x49643a31), ACE_NTOHL (0x2e3000fd),  // repository ID = IDL:CORBA/RepositoryId:1.0
     13, ACE_NTOHL (0x5265706f), ACE_NTOHL (0x7369746f), ACE_NTOHL (0x72794964), ACE_NTOHL (0xfdfdfd),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0, // string length
   };
   CORBA::_tc_RepositoryId = new CORBA::TypeCode (CORBA::tk_alias,

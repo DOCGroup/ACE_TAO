@@ -7,7 +7,7 @@
 // Information on TAO is available at
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-// Take care: The typecodes are platform dependent, therefor 
+// Take care: The typecodes are platform dependent, therefore
 // a ifdef is needed right now. This is going to be changed in
 // the future.
 
@@ -56,7 +56,7 @@ static const CORBA::Long _oc_PortableServer_ObjectId[] =
   0,
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ObjectId (CORBA::tk_alias, sizeof
-                                                        (_oc_PortableServer_ObjectId), (char *) &_oc_PortableServer_ObjectId, 
+                                                        (_oc_PortableServer_ObjectId), (char *) &_oc_PortableServer_ObjectId,
                                                         0, sizeof (PortableServer::ObjectId));
 CORBA::TypeCode_ptr PortableServer::_tc_ObjectId = &_tc_TAO_tc_PortableServer_ObjectId;
 
@@ -168,10 +168,10 @@ static const CORBA::Long _oc_PortableServer_ForwardRequest[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ForwardRequest (CORBA::tk_except,
                                                               sizeof
-                                                              (_oc_PortableServer_ForwardRequest), 
+                                                              (_oc_PortableServer_ForwardRequest),
                                                               (char *)
-                                                              &_oc_PortableServer_ForwardRequest, 0, 
-                                                              sizeof (PortableServer::ForwardRequest)); 
+                                                              &_oc_PortableServer_ForwardRequest, 0,
+                                                              sizeof (PortableServer::ForwardRequest));
 CORBA::TypeCode_ptr PortableServer::_tc_ForwardRequest = &_tc_TAO_tc_PortableServer_ForwardRequest;
 
 
@@ -261,7 +261,7 @@ static const CORBA::Long _oc_PortableServer_ThreadPolicy[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ThreadPolicy (CORBA::tk_objref,
                                                             sizeof
-                                                            (_oc_PortableServer_ThreadPolicy), 
+                                                            (_oc_PortableServer_ThreadPolicy),
                                                             (char *)
                                                             &_oc_PortableServer_ThreadPolicy, 0,
                                                             sizeof (PortableServer::ThreadPolicy));
@@ -279,7 +279,7 @@ static const CORBA::Long _oc_PortableServer_LifespanPolicyValue[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_LifespanPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_LifespanPolicyValue), (char *)
- &_oc_PortableServer_LifespanPolicyValue, 0, 
+ &_oc_PortableServer_LifespanPolicyValue, 0,
 sizeof (PortableServer::LifespanPolicyValue));
 CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicyValue = &_tc_TAO_tc_PortableServer_LifespanPolicyValue;
 
@@ -355,9 +355,9 @@ static const CORBA::Long _oc_PortableServer_LifespanPolicy[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_LifespanPolicy (CORBA::tk_objref,
                                                               sizeof
-                                                              (_oc_PortableServer_LifespanPolicy), 
+                                                              (_oc_PortableServer_LifespanPolicy),
                                                               (char *)
-                                                              &_oc_PortableServer_LifespanPolicy, 
+                                                              &_oc_PortableServer_LifespanPolicy,
                                                               0,
                                                               sizeof (PortableServer::LifespanPolicy));
 CORBA::TypeCode_ptr PortableServer::_tc_LifespanPolicy = &_tc_TAO_tc_PortableServer_LifespanPolicy;
@@ -448,7 +448,7 @@ static const CORBA::Long _oc_PortableServer_IdUniquenessPolicy[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdUniquenessPolicy
 (CORBA::tk_objref, sizeof (_oc_PortableServer_IdUniquenessPolicy), (char *)
- &_oc_PortableServer_IdUniquenessPolicy, 0, 
+ &_oc_PortableServer_IdUniquenessPolicy, 0,
  sizeof (PortableServer::IdUniquenessPolicy));
 CORBA::TypeCode_ptr PortableServer::_tc_IdUniquenessPolicy = &_tc_TAO_tc_PortableServer_IdUniquenessPolicy;
 
@@ -538,7 +538,7 @@ static const CORBA::Long _oc_PortableServer_IdAssignmentPolicy[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_IdAssignmentPolicy
 (CORBA::tk_objref, sizeof (_oc_PortableServer_IdAssignmentPolicy), (char *)
- &_oc_PortableServer_IdAssignmentPolicy, 
+ &_oc_PortableServer_IdAssignmentPolicy,
  0,
  sizeof (PortableServer::IdAssignmentPolicy));
 CORBA::TypeCode_ptr PortableServer::_tc_IdAssignmentPolicy = &_tc_TAO_tc_PortableServer_IdAssignmentPolicy;
@@ -555,7 +555,7 @@ static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicyValue[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ImplicitActivationPolicyValue
 (CORBA::tk_enum, sizeof (_oc_PortableServer_ImplicitActivationPolicyValue),
- (char *) &_oc_PortableServer_ImplicitActivationPolicyValue, 0, 
+ (char *) &_oc_PortableServer_ImplicitActivationPolicyValue, 0,
  sizeof (PortableServer::ImplicitActivationPolicyValue));
 CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicyValue = &_tc_TAO_tc_PortableServer_ImplicitActivationPolicyValue;
 
@@ -628,8 +628,8 @@ static const CORBA::Long _oc_PortableServer_ImplicitActivationPolicy[] =
   25, ACE_NTOHL (0x496d706c), ACE_NTOHL (0x69636974), ACE_NTOHL (0x41637469), ACE_NTOHL (0x76617469), ACE_NTOHL (0x6f6e506f), ACE_NTOHL (0x6c696379), ACE_NTOHL (0xfdfdfd),  // name = ImplicitActivationPolicy,
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ImplicitActivationPolicy
-(CORBA::tk_objref, sizeof (_oc_PortableServer_ImplicitActivationPolicy), 
- (char *)&_oc_PortableServer_ImplicitActivationPolicy, 0, 
+(CORBA::tk_objref, sizeof (_oc_PortableServer_ImplicitActivationPolicy),
+ (char *)&_oc_PortableServer_ImplicitActivationPolicy, 0,
  sizeof (PortableServer::ImplicitActivationPolicy));
 CORBA::TypeCode_ptr PortableServer::_tc_ImplicitActivationPolicy = &_tc_TAO_tc_PortableServer_ImplicitActivationPolicy;
 
@@ -644,8 +644,8 @@ static const CORBA::Long _oc_PortableServer_ServantRetentionPolicyValue[] =
   11, ACE_NTOHL (0x4e4f4e5f), ACE_NTOHL (0x52455441), ACE_NTOHL (0x494e00fd),  // name = NON_RETAIN
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantRetentionPolicyValue
-(CORBA::tk_enum, sizeof (_oc_PortableServer_ServantRetentionPolicyValue), 
- (char *) &_oc_PortableServer_ServantRetentionPolicyValue, 0, 
+(CORBA::tk_enum, sizeof (_oc_PortableServer_ServantRetentionPolicyValue),
+ (char *) &_oc_PortableServer_ServantRetentionPolicyValue, 0,
  sizeof (PortableServer::ServantRetentionPolicyValue));
 CORBA::TypeCode_ptr PortableServer::_tc_ServantRetentionPolicyValue = &_tc_TAO_tc_PortableServer_ServantRetentionPolicyValue;
 
@@ -809,7 +809,7 @@ static const CORBA::Long _oc_PortableServer_RequestProcessingPolicy[] =
   24, ACE_NTOHL (0x52657175), ACE_NTOHL (0x65737450), ACE_NTOHL (0x726f6365), ACE_NTOHL (0x7373696e), ACE_NTOHL (0x67506f6c), ACE_NTOHL (0x69637900),  // name = RequestProcessingPolicy,
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_RequestProcessingPolicy
-(CORBA::tk_objref, sizeof (_oc_PortableServer_RequestProcessingPolicy), 
+(CORBA::tk_objref, sizeof (_oc_PortableServer_RequestProcessingPolicy),
  (char *) &_oc_PortableServer_RequestProcessingPolicy, 0, sizeof
  (PortableServer::RequestProcessingPolicy));
 CORBA::TypeCode_ptr PortableServer::_tc_RequestProcessingPolicy = &_tc_TAO_tc_PortableServer_RequestProcessingPolicy;
@@ -831,7 +831,7 @@ static const CORBA::Long _oc_PortableServer_SynchronizationPolicyValue[] =
     12, ACE_NTOHL (0x54485245), ACE_NTOHL (0x41445f4c), ACE_NTOHL (0x4f434b00),  // name = THREAD_LOCK
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_SynchronizationPolicyValue
-(CORBA::tk_enum, sizeof (_oc_PortableServer_SynchronizationPolicyValue), 
+(CORBA::tk_enum, sizeof (_oc_PortableServer_SynchronizationPolicyValue),
  (char *) &_oc_PortableServer_SynchronizationPolicyValue, 0, sizeof
  (PortableServer::SynchronizationPolicyValue));
 CORBA::TypeCode_ptr PortableServer::_tc_SynchronizationPolicyValue = &_tc_TAO_tc_PortableServer_SynchronizationPolicyValue;
@@ -1058,9 +1058,9 @@ static const CORBA::Long _oc_PortableServer_POAManager[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager (CORBA::tk_objref,
                                                           sizeof
-                                                          (_oc_PortableServer_POAManager), 
+                                                          (_oc_PortableServer_POAManager),
                                                           (char *)
-                                                          &_oc_PortableServer_POAManager, 0, 
+                                                          &_oc_PortableServer_POAManager, 0,
                                                           sizeof (PortableServer::POAManager));
 CORBA::TypeCode_ptr PortableServer::_tc_POAManager = &_tc_TAO_tc_PortableServer_POAManager;
 
@@ -1170,9 +1170,9 @@ static const CORBA::Long _oc_PortableServer_ServantManager[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantManager (CORBA::tk_objref,
                                                               sizeof
-                                                              (_oc_PortableServer_ServantManager), 
+                                                              (_oc_PortableServer_ServantManager),
                                                               (char *)
-                                                              &_oc_PortableServer_ServantManager, 
+                                                              &_oc_PortableServer_ServantManager,
                                                               0,
                                                               sizeof (PortableServer::ServantManager));
 CORBA::TypeCode_ptr PortableServer::_tc_ServantManager = &_tc_TAO_tc_PortableServer_ServantManager;
@@ -1285,11 +1285,11 @@ static const CORBA::Long _oc_PortableServer_ServantLocator[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_ServantLocator (CORBA::tk_objref,
                                                               sizeof
-                                                              (_oc_PortableServer_ServantLocator), 
+                                                              (_oc_PortableServer_ServantLocator),
                                                               (char *)
                                                               &_oc_PortableServer_ServantLocator,
                                                               0,
-                                                              sizeof (PortableServer::ServantLocator)); 
+                                                              sizeof (PortableServer::ServantLocator));
 CORBA::TypeCode_ptr PortableServer::_tc_ServantLocator = &_tc_TAO_tc_PortableServer_ServantLocator;
 
 PortableServer::POA_ptr PortableServer::POA::_duplicate (PortableServer::POA_ptr obj)
@@ -1416,7 +1416,7 @@ static const CORBA::Long _oc_PortableServer_POA_AdapterAlreadyExists[] =
   21, ACE_NTOHL (0x41646170), ACE_NTOHL (0x74657241), ACE_NTOHL (0x6c726561), ACE_NTOHL (0x64794578), ACE_NTOHL (0x69737473), ACE_NTOHL (0xfdfdfd),  // name = AdapterAlreadyExists
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists
-(CORBA::tk_except, sizeof (_oc_PortableServer_POA_AdapterAlreadyExists), 
+(CORBA::tk_except, sizeof (_oc_PortableServer_POA_AdapterAlreadyExists),
  (char *) &_oc_PortableServer_POA_AdapterAlreadyExists, 0, sizeof
  (PortableServer::POA::AdapterAlreadyExists));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_AdapterAlreadyExists = &_tc_TAO_tc_PortableServer_POA_AdapterAlreadyExists;
@@ -1815,7 +1815,7 @@ static const CORBA::Long _oc_PortableServer_POA_NoServant[] =
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_NoServant (CORBA::tk_except,
                                                              sizeof
-                                                             (_oc_PortableServer_POA_NoServant), 
+                                                             (_oc_PortableServer_POA_NoServant),
                                                              (char *)
                                                              &_oc_PortableServer_POA_NoServant, 0,
                                                              sizeof (PortableServer::POA::NoServant));
@@ -1913,7 +1913,7 @@ static const CORBA::Long _oc_PortableServer_POA_ObjectAlreadyActive[] =
   0, // member count
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ObjectAlreadyActive
-(CORBA::tk_except, sizeof (_oc_PortableServer_POA_ObjectAlreadyActive), 
+(CORBA::tk_except, sizeof (_oc_PortableServer_POA_ObjectAlreadyActive),
  (char *) &_oc_PortableServer_POA_ObjectAlreadyActive, 0, sizeof
  (PortableServer::POA::ObjectAlreadyActive));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ObjectAlreadyActive = &_tc_TAO_tc_PortableServer_POA_ObjectAlreadyActive;
@@ -2107,7 +2107,7 @@ static const CORBA::Long _oc_PortableServer_POA_ServantAlreadyActive[] =
   0, // member count
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_POA_ServantAlreadyActive
-(CORBA::tk_except, sizeof (_oc_PortableServer_POA_ServantAlreadyActive), 
+(CORBA::tk_except, sizeof (_oc_PortableServer_POA_ServantAlreadyActive),
  (char *) &_oc_PortableServer_POA_ServantAlreadyActive, 0, sizeof
  (PortableServer::POA::ServantAlreadyActive));
 CORBA::TypeCode_ptr PortableServer::POA::_tc_ServantAlreadyActive = &_tc_TAO_tc_PortableServer_POA_ServantAlreadyActive;
@@ -2601,7 +2601,7 @@ static const CORBA::Long _oc_PortableServer_Current[] =
   8, ACE_NTOHL (0x43757272), ACE_NTOHL (0x656e7400),  // name = Current,
 };
 static CORBA::TypeCode _tc_TAO_tc_PortableServer_Current (CORBA::tk_objref, sizeof
-                                                       (_oc_PortableServer_Current), (char *) &_oc_PortableServer_Current, 
+                                                       (_oc_PortableServer_Current), (char *) &_oc_PortableServer_Current,
                                                        0,
                                                        sizeof (PortableServer::Current));
 CORBA::TypeCode_ptr PortableServer::_tc_Current = &_tc_TAO_tc_PortableServer_Current;

@@ -201,7 +201,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile *pfile)
     refcount_ (1),
     fwd_profiles_ (0)
 {
-  
+
   ACE_NEW (this->host_,
            char[ACE_OS::strlen (pfile->host_) + 1]);
   ACE_OS::strcpy (this->host_, pfile->host_);
@@ -222,7 +222,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const TAO_IIOP_Profile &pfile)
     refcount_ (1),
     fwd_profiles_ (0)
 {
-  
+
   ACE_NEW (this->host_,
            char[ACE_OS::strlen (pfile.host_) + 1]);
   ACE_OS::strcpy (this->host_, pfile.host_);
@@ -318,7 +318,7 @@ TAO_IIOP_Profile:: ~TAO_IIOP_Profile ()
   {
     delete fwd_profiles_;
   }
-  
+
 }
 
 CORBA::ULong
@@ -337,13 +337,13 @@ TAO_IIOP_Profile::transport (void)
   return 0;
 }
 
-const TAO_ObjectKey & 
+const TAO_ObjectKey &
 TAO_IIOP_Profile::object_key (void) const
 {
   return this->object_key_;
 }
 
-TAO_ObjectKey & 
+TAO_ObjectKey &
 TAO_IIOP_Profile::object_key (TAO_ObjectKey& objkey)
 {
   this->object_key_ = objkey;
@@ -351,7 +351,7 @@ TAO_IIOP_Profile::object_key (TAO_ObjectKey& objkey)
 }
 
 TAO_ObjectKey *
-TAO_IIOP_Profile::_key (CORBA::Environment &env)
+TAO_IIOP_Profile::_key (CORBA::Environment &)
 {
   return new TAO_ObjectKey (this->object_key_);
 }
@@ -360,13 +360,13 @@ TAO_IIOP_Profile::_key (CORBA::Environment &env)
 // -1 -> error
 //  0 -> can't understand this version
 //  1 -> success.
-int 
-TAO_IIOP_Profile::parse (TAO_InputCDR& cdr, 
+int
+TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
                          CORBA::Boolean &continue_decoding,
                          CORBA::Environment &env)
 {
   CORBA::ULong encap_len = cdr.length ();
-  
+
   // Read and verify major, minor versions, ignoring IIOP
   // profiles whose versions we don't understand.
   //
@@ -387,7 +387,7 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
     delete [] this->host_;
     this->host_ = 0;
   }
-   
+
   // Get host and port
   if (cdr.decode (CORBA::_tc_string,
                   &this->host_,
@@ -423,8 +423,8 @@ TAO_IIOP_Profile::parse (TAO_InputCDR& cdr,
   }
   return 1;
 }
-  
-int 
+
+int
 TAO_IIOP_Profile::parse_string (const char *string,
                                 CORBA::Environment &env)
 {
@@ -434,7 +434,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   // Remove the "N.N//" prefix, and verify the version's one
   // that we accept
-  
+
   if (isdigit (string [0])
       && isdigit (string [2])
       && string [1] == '.'
@@ -480,7 +480,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
   if (this->host_)
   {
     // @@ You are setting this->host_ using CORBA::string_alloc() a
-    // couple of lines below, you should then use CORBA::string_free() 
+    // couple of lines below, you should then use CORBA::string_free()
     // to release it!  In general use a single form of memory
     // allocation for a field/variable to avoid new/free() and
     // malloc/delete() mismatches.
@@ -520,7 +520,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
 //  TAO_InputCDR cdr (body.get_buffer (), body.length (), body[0]);
 //
-// @@ 
+// @@
 //  CORBA::Boolean byte_order;
 //  cdr >> CORBA::Any::to_boolean (byte_order);
 //  cdr >> this->version_.major;
@@ -531,13 +531,13 @@ TAO_IIOP_Profile::parse_string (const char *string,
 //  this->object_addr_.set(this->port_, this->host_);
 // }
 
-const TAO_opaque& 
+const TAO_opaque&
 TAO_IIOP_Profile::body (void) const
 {
   return this->body_;
 }
 
-void 
+void
 TAO_IIOP_Profile::create_body (void)
 {
   TAO_OutputCDR cdr;
@@ -549,7 +549,7 @@ TAO_IIOP_Profile::create_body (void)
 //   cdr << this->host_;
 //   cdr << this->port_;
 //   cdr << this->object_key_;
-// 
+//
 //   // Create a copy by making a temporary TAO_opaque object.
 //   // @@ TODO the CDR stream may contain several fragments, need to
 //   // merge them...
@@ -559,7 +559,7 @@ TAO_IIOP_Profile::create_body (void)
 //                             0);            // not own
 // }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_IIOP_Profile::is_equivalent (TAO_Profile *other_profile,
                                  CORBA::Environment &env)
 {
@@ -584,9 +584,9 @@ TAO_IIOP_Profile::hash (CORBA::ULong max,
                         CORBA::Environment &env)
 {
   CORBA::ULong hashval;
-  
+
   env.clear ();
-  
+
   // Just grab a bunch of convenient bytes and hash them; could do
   // more (hostname, full key, exponential hashing) but no real need
   // to do so except if performance requires a more costly hash.
@@ -645,7 +645,7 @@ TAO_IIOP_Profile::host (const char *h)
     delete [] this->host_;
     this->host_ = 0;
   }
-  
+
   if (h)
   {
     ACE_NEW_RETURN (this->host_,
@@ -720,7 +720,7 @@ TAO_IIOP_Profile::operator= (const TAO_IIOP_Profile &src)
     delete [] this->host_;
     this->host_ = 0;
   }
-  
+
   if (src.host_)
   {
     ACE_NEW_RETURN (this->host_,
@@ -763,7 +763,7 @@ TAO_IIOP_Profile::_decr_refcnt (void)
 }
 
 
-void 
+void
 TAO_IIOP_Profile::fwd_profiles (TAO_MProfile *mprofiles)
 {
   // we assume ownership of the profile list!!
@@ -825,7 +825,7 @@ TAO_IIOP_Profile::prefix ()
   return ::prefix_;
 }
 
-CORBA::TypeCode::traverse_status 
+CORBA::TypeCode::traverse_status
 TAO_IIOP_Profile::encode (TAO_OutputCDR *&stream,
                           CORBA::Environment &env)
 {
@@ -886,4 +886,3 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR *&stream,
 
   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 }
-
