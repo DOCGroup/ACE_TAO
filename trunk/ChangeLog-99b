@@ -1,9 +1,9 @@
-Mon Aug 02 13:21:10 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Mon Aug 02 13:36:56 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.h (ACE_Name_Node): Added an unimplemented assignment
-	  operator for this class.  Otherwise, some compilers will try to
-	  use ACE_Base_Pointer_Base<T>::operator= which is not
-	  implemented.
+	* ace/Malloc.h (ACE_Malloc_Header,ACE_Name_Node,ACE_Control_Block):
+	  Added an unimplemented assignment operator for this class.
+	  Otherwise, some compilers will try to use
+	  ACE_Based_Pointer_Base<T>::operator= which is not implemented.
 
 Mon Aug  2 09:58:20 1999  Ossama Othman  <othman@cs.wustl.edu>
 
