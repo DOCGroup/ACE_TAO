@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:186
+// be\be_codegen.cpp:171
 
 #ifndef _TAO_IDL_ORIG_WRONGTRANSACTIONC_H_
 #define _TAO_IDL_ORIG_WRONGTRANSACTIONC_H_
@@ -67,13 +67,13 @@
 #endif /* __BORLANDC__ */
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:48
+// be\be_visitor_module/module_ch.cpp:48
 
 namespace CORBA
 {
   
   // TAO_IDL - Generated from
-  // be/be_visitor_exception/exception_ch.cpp:51
+  // be\be_visitor_exception/exception_ch.cpp:51
 
 #if !defined (_CORBA_WRONGTRANSACTION_CH_)
 #define _CORBA_WRONGTRANSACTION_CH_
@@ -108,25 +108,25 @@ namespace CORBA
       );
     
     // TAO_IDL - Generated from
-    // be/be_visitor_exception/exception_ch.cpp:125
+    // be\be_visitor_exception/exception_ch.cpp:125
     
     virtual CORBA::TypeCode_ptr _type (void) const;
   };
   
   // TAO_IDL - Generated from
-  // be/be_visitor_typecode/typecode_decl.cpp:44
+  // be\be_visitor_typecode/typecode_decl.cpp:44
   
   TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_WrongTransaction;
 
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_module/module_ch.cpp:66
+// be\be_visitor_module/module_ch.cpp:66
 
 } // module CORBA
 
 // TAO_IDL - Generated from
-// be/be_visitor_traits.cpp:59
+// be\be_visitor_traits.cpp:59
 
 // Traits specializations.
 namespace TAO
@@ -134,23 +134,21 @@ namespace TAO
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:48
+// be\be_visitor_exception/any_op_ch.cpp:52
 
-#ifndef __ACE_INLINE__
+TAO_Export void operator<<= (CORBA::Any &, const CORBA::WrongTransaction &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, CORBA::WrongTransaction*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, CORBA::WrongTransaction *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const CORBA::WrongTransaction *&);
 
 // TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_ch.cpp:52
+// be\be_visitor_exception/cdr_op_ch.cpp:52
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::WrongTransaction &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::WrongTransaction &);
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/cdr_op.cpp:64
-
-#endif /* __ACE_INLINE__ */
-
-// TAO_IDL - Generated from
-// be/be_codegen.cpp:1050
+// be\be_codegen.cpp:978
 
 #if defined (__ACE_INLINE__)
 #include "WrongTransactionC.i"

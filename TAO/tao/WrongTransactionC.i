@@ -26,32 +26,3 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 
-// TAO_IDL - Generated from
-// be/be_visitor_exception/cdr_op_ci.cpp:71
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const CORBA::WrongTransaction &_tao_aggregate
-  )
-{
-  // First marshal the repository ID.
-  if (strm << _tao_aggregate._rep_id ())
-    {
-      return 1;
-    }
-  else
-    {
-      return 0;
-    }
-}
-
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &,
-    CORBA::WrongTransaction&
-  )
-{
-  return 1;
-}
-

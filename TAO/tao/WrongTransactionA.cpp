@@ -26,12 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 #include "WrongTransactionC.h"
-#include "WrongTransactionA.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
 
-// TAO_IDL - Generated from 
-// be/be_visitor_exception/any_op_cs.cpp:50
+// TAO_IDL - Generated from
+// be\be_visitor_exception/any_op_cs.cpp:50
 
 ACE_TEMPLATE_SPECIALIZATION
 CORBA::Boolean
@@ -40,12 +39,12 @@ TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
   )
 {
   CORBA::String_var id;
-  
+
   if ((cdr >> id.out ()) == 0)
     {
       return 0;
     }
-  
+
   ACE_TRY_NEW_ENV
     {
       this->value_->_tao_decode (cdr ACE_ENV_ARG_PARAMETER);
@@ -56,7 +55,7 @@ TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
       return 0;
     }
   ACE_ENDTRY;
-  
+
   return 1;
 }
 
@@ -131,5 +130,5 @@ CORBA::Boolean operator>>= (
         CORBA::WrongTransaction \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
