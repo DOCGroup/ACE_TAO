@@ -1,3 +1,10 @@
+Mon Jul 29 12:43:39 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * docs/releasenotes/index.html:
+        * docs/releasenotes/obv.html:
+
+          Updated entries for the IDL compiler and for valuetypes.
+
 Mon Jul 29 16:12:18 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: Change ACE_Hash_Map template
