@@ -85,8 +85,7 @@ test_impl::test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
 
 test_impl::~test_impl (void)
 {
-  this->orb_->shutdown (0 ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  this->orb_->shutdown (0);
 }
 
 void
@@ -123,7 +122,7 @@ test_impl::pass_obj_graph_out (
     CORBA::SystemException))
 {
   vt_graph_impl * the_vt_graph = 0;
-  ACE_NEW (the_vt_graph, vt_graph_impl (4));
+  ACE_NEW (the_vt_graph, vt_graph_impl (4 ACE_ENV_ARG_PARAMETER));
   graph_param = the_vt_graph->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -142,7 +141,7 @@ test_impl::pass_vt_graph_out (
 {
 
   vt_graph_impl * the_vt_graph = 0;
-  ACE_NEW (the_vt_graph, vt_graph_impl (4));
+  ACE_NEW (the_vt_graph, vt_graph_impl (4 ACE_ENV_ARG_PARAMETER));
   vt_graph_param = the_vt_graph;
 
   ACE_ASSERT (vt_graph_param->size (ACE_ENV_SINGLE_ARG_PARAMETER) == 4);
