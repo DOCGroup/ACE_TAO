@@ -1,5 +1,8 @@
 Thu Jun 11 09:39:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp: removed
+          ACE_EC_Gateway template instantiations.
+
         * tests/Cubit/TAO/MT_Cubit/server.cpp (start_servants):
           changed types of local i, and global num_of_objs, to u_int
           to avoid signed/unsigned comparisons.
