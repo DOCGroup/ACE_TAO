@@ -1,3 +1,20 @@
+Fri Aug 31 16:48:10 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* pace/vxworks/types.h: 
+	  Removed extraneous blank lines.
+
+	* pace/vxworks/pthread.inl: 
+	  Cleaned up comment for popping cleanup routines.
+
+	* pace/vxworks/pthread.c: 
+	  Removed duplicate code (for C and C++) and fixed
+	  VxWorks unld errors by making the main thread detached
+	  and unregistering the cleanup function when the
+	  last non-main thread is done.
+
+	* pace/vxworks/pthread.h: 
+	  Added PACE_PTHREAD_MUTEX_INITIALIZER initializer.
+
 Fri Aug 24 08:24:43 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/vxworks/stdio.inl: 
